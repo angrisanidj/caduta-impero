@@ -180,7 +180,7 @@ var MONUMENTI={
   /* quel che viene costruito, o distrutto, durante la storia */
   emilia:[[0,'uso'],[410,'bruciato']], marcello:[[0,'uso'],[537,'cava']], venere:[[0,'uso'],[392,'chiuso'],[630,'spogliato']],
   sole:[[0,'assente'],[274,'uso'],[392,'chiuso']], arcocostantino:[[0,'assente'],[315,'uso']], termecostantino:[[0,'assente'],[315,'uso'],[537,'chiuso']],
-  croce:[[0,'assente'],[330,'uso']], lorenzo:[[0,'assente'],[335,'uso']], agnese:[[0,'assente'],[350,'uso']], paolo:[[0,'assente'],[390,'uso'],[801,'crollato'],[806,'uso']],
+  croce:[[0,'assente'],[330,'uso']], lorenzo:[[0,'assente'],[335,'uso']], lorenzopelagio:[[0,'assente'],[580,'uso']], agnese:[[0,'assente'],[350,'uso']], paolo:[[0,'assente'],[390,'uso'],[801,'crollato'],[806,'uso']],
   sabina:[[0,'assente'],[432,'uso']], mariamaggiore:[[0,'assente'],[434,'uso']], stefano:[[0,'assente'],[475,'uso']], cosma:[[0,'assente'],[527,'uso']],
   foca:[[0,'assente'],[608,'uso']],
   /* il quartiere che cresce attorno a San Pietro */
@@ -292,7 +292,8 @@ var SCHEDE={
   arcocostantino:{cosa:"Arco trionfale accanto al Colosseo.", date:[[315,"Dedicato dal Senato per la vittoria su Massenzio, probabilmente il 25 luglio 315, all'inizio delle feste per i dieci anni di regno. Molti rilievi vengono da monumenti di Traiano, Adriano e Marco Aurelio: da dove li si prese è discusso."]]},
   termecostantino:{cosa:"Le ultime grandi terme di Roma, sul Quirinale.", date:[[315,"Costruite sotto Costantino, probabilmente prima del 315."],[443,"Restaurate dal prefetto urbano dopo gravi danni."],["VI sec.","Non si sa quando chiudono; qui si assume il 537, come per le altre grandi terme."]]},
   croce:{cosa:"Chiesa ricavata in un'aula del palazzo Sessoriano, residenza di Elena, madre di Costantino.", date:[[330,"Trasformata in chiesa sotto Costantino, probabilmente dopo il ritorno di Elena dalla Terrasanta (326-328): l'anno non è noto."]]},
-  lorenzo:{cosa:"Basilica sulla via Tiburtina, presso la tomba del martire.", date:[["IV sec.","Fondata da Costantino; la cronologia precisa non è nota."],[580,"Papa Pelagio II costruisce una nuova chiesa sopra la tomba."]]},
+  lorenzo:{cosa:"La basilica maggiore di San Lorenzo: una grande aula cimiteriale a forma di circo, sulla via Tiburtina, accanto alla tomba del martire.", date:[["IV sec.","Fondata da Costantino; la cronologia precisa non è nota."],[580,"Papa Pelagio II costruisce una chiesa più piccola direttamente sopra la tomba, una trentina di metri più a nord."]]},
+  lorenzopelagio:{cosa:"Chiesa costruita sopra la tomba di san Lorenzo, incassata nella collina, con gallerie sopra le navate laterali.", date:[[580,"Voluta da papa Pelagio II (579-590): nel mosaico dell'arco, del VI secolo, il papa compare accanto a Cristo e ai santi."],["XIII sec.","Onorio III abbatte l'abside e aggiunge una nuova navata verso ovest: la chiesa di Pelagio diventa il presbiterio della basilica attuale."]]},
   agnese:{cosa:"Basilica cimiteriale e mausoleo di Costantina, sulla via Nomentana.", date:[[338,"Basilica fondata da Costantina, figlia di Costantino, fra il 337 e il 351: l'anno non è noto."],[351,"Il mausoleo è finito attorno alla metà del secolo; secondo alcuni qualche anno dopo."]]},
   paolo:{cosa:"Basilica sulla tomba dell'apostolo, sulla via Ostiense: grande quanto San Pietro.", date:[[386,"Tre imperatori ordinano di sostituire la piccola chiesa costantiniana (lettera al prefetto Sallustio, 386) e ne rovesciano l'orientamento: abside verso la via Ostiense, facciata verso il Tevere."],[390,"Consacrata da papa Siricio, probabilmente nel 390 (la data è su una colonna); i lavori finiscono sotto Onorio, nei primi anni del V secolo."],[801,"Il terremoto del 29 aprile fa crollare gran parte del tetto con le sue travi; papa Leone III lo ricostruisce."],[846,"Saccheggiata dai Saraceni secondo il Liber Pontificalis; per gli Annali di San Bertino quelli diretti qui furono fermati e uccisi dalla gente della Campagna."]]},
   sabina:{cosa:"Basilica sull'Aventino.", date:[[432,"Fondata da Pietro d'Illiria sotto Celestino I (422-432) e finita sotto Sisto III. Le ventiquattro colonne vengono tutte da uno stesso edificio antico, non identificato."]]},
@@ -349,7 +350,8 @@ var CERTEZZA={
   arcocostantino:['A',"Intero."],
   termecostantino:['B',"Distrutte fra Seicento e Ottocento; la pianta è nota dai disegni di Palladio e di altri."],
   croce:['B',"L'aula antica è in piedi dentro la chiesa attuale: un vano solo di circa 36 x 22 metri, alto quanto largo, con due ordini di cinque finestre per lato e l'abside aggiunta sotto Costantino. Le misure vengono dalle descrizioni correnti, non dal rilievo; l'altezza è indicativa."],
-  lorenzo:['C',"La basilica costantiniana, scavata nel 1950, aveva la forma di un circo e stava accanto, non qui; quella che si vede è sul sito della chiesa di Pelagio II (580), che sopravvive nella chiesa attuale."],
+  lorenzo:['B',"Scavata nel 1950 e nel 1957 sotto il cimitero del Verano: lunga 99 metri e larga 35, a forma di circo. Alzato e tetti sono ricostruiti per analogia con le altre basiliche a circo di Roma; la distanza dalla chiesa di Pelagio (una trentina di metri a sud) viene dalle descrizioni correnti, non dal rilievo, e l'abside a ovest è un'ipotesi ripresa da quella chiesa."],
+  lorenzopelagio:['A',"È in piedi: è il presbiterio rialzato della basilica attuale. Manca l'abside, a ovest, demolita nel Duecento e ritrovata negli scavi; le proporzioni del modello sono indicative."],
   agnese:['B',"Il mausoleo di Costantina è in piedi (Santa Costanza); della grande basilica a forma di circo restano i muri perimetrali."],
   paolo:['A',"Bruciata nel 1823 e ricostruita sulla stessa pianta, con le stesse misure."],
   sabina:['A',"La basilica del V secolo è conservata."],

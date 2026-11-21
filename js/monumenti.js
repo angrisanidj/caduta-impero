@@ -173,7 +173,13 @@ var M=[
         B.striscia(es,0,es,1.7,P.tufo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });
     });
     inForo(B,10.7,-8.9,IMP,function(B){ portico(B,12,4.2,0,0,0,1.2); B.tempio(1.8,2.4,1.5,4.6,0,-PI/2,{fronte:6}); });            // foro di Nerva, Minerva: lo attraversa l'Argileto
-    inForo(B,16.9,-2.6,IMP,function(B){ portico(B,10,10,0,0,0,1.2,P.prato); });                                                   // tempio della Pace
+    inForo(B,16.9,-2.6,IMP,function(B){                                                                                           // tempio della Pace: una piazza a giardino di circa 125 x 110 m (le misure pubblicate vanno da 135 x 100 a 110 x 135)
+      portico(B,12.6,9.2,0,0,-.9,1.2,P.prato);
+      B.scatola(4.4,1.7,1.8,4.1,0,4.6,P.mattone).scatola(4.5,.12,1.9,4.1,1.7,4.6,P.coppi);                                         // le aule sul lato di fondo (sud-est); quella all'angolo sud è Santi Cosma e Damiano
+      B.tempio(3.2,2.4,2.1,0,4.5,PI,{fronte:6,podio:.2});                                                                          // il tempio: un'aula dietro il portico, da cui sporge solo il pronao a sei colonne
+      [-1,1].forEach(function(q){ for(var k=0;k<3;k++) B.scatola(.42,.14,5,q*(1.4+k*1.2),.1,-1.5,P.mattone).scatola(.3,.04,4.86,q*(1.4+k*1.2),.24,-1.5,P.acqua); });      // le sei lunghe vasche fra le aiuole
+      B.scatola(.5,.3,.5,0,.1,1.5,P.marmo);                                                                                        // l'altare davanti al tempio
+    });
     inForo(B,-1.3,-27.8,IMP,function(B){
       portico(B,11.5,9,0,0,0,1.3);                                                             // foro di Traiano
       B.scatola(.62,.34,.34,0,.1,0,P.marmo).scatola(.56,.2,.18,0,.72,0,P.statua).scatola(.12,.26,.13,.3,.86,0,P.statua).scatola(.12,.3,.13,-.02,.92,0,P.statua);      // la statua equestre di Traiano, al centro della piazza
@@ -290,7 +296,23 @@ var M=[
     B.cilindro(W*.34,1.75,-L/2,0,0,P.mattone,null,14).cono(W*.36,.45,-L/2,1.75,0,P.coppi,14);  // l'abside aggiunta quando l'aula diventa chiesa
     B.vano(L/2+.03,0,0,0,1,.45,.9).vano(L/2+.03,1.25,0,0,1,.5,.6);
  }},
- {id:'lorenzo', nome:'San Lorenzo fuori le mura', x:299.5,z:-111.6, ry:.35, sc:.7, zone:[[0,0,8]], fa:function(B){ chiesa(B,10,6); }},
+ /* San Lorenzo: la basilica di Costantino è un'aula cimiteriale a forma di circo, 99 x 35 m, parallela alla tomba e una trentina di metri più a sud (scavi del 1950 e del 1957);
+    nel 580 Pelagio II costruisce sopra la tomba una chiesa più piccola, a gallerie, con l'abside a ovest: è il presbiterio della basilica attuale. */
+ {id:'lorenzo', nome:'San Lorenzo, la basilica maggiore', x:303.3,z:-106.9, ry:.35+PI, zone:[[0,0,6]], fa:function(B){
+    var L=9.9, W=3.55, Ln=L-(W-1.9), pr=function(w){ return RM.stadio(L-(W-w),w,8,10); }, est=pr(W), nav=pr(1.9), x1=Ln/2-.95;
+    B.striscia(est,0,est,1,P.mattone).striscia(est,1,nav,1.35,P.coppi).striscia(nav,1.35,nav,2.1,P.mattone);                  // navatella che gira attorno all'abside, come nelle altre basiliche a circo
+    B.falde(x1+Ln/2,.5,2,(x1-Ln/2)/2,2.1,0,P.coppi,0,P.mattone).cono(1,.5,x1,2.1,0,P.coppi,14);
+    B.fornici(est,.35,.45,.4,1,false).fornici(nav,1.5,.42,.4,1,false);
+    B.vano(-L/2-.03,0,0,0,-1,.5,.95);
+ }},
+ {id:'lorenzopelagio', nome:'San Lorenzo, la chiesa di Pelagio II', x:299.5,z:-111.6, ry:.35, zone:[[0,0,3]], fa:function(B){
+    var L=3.2;
+    B.scatola(L,1.95,.95,0,0,0,P.mattone).falde(L,.4,1.05,0,1.95,0,P.coppi,0,P.mattone);                                      // navata alta quasi venti metri
+    [-1,1].forEach(function(q){ B.scatola(L,1.35,.58,0,0,q*.76,P.mattone).scatola(L+.06,.1,.62,0,1.35,q*.76,P.coppi); });      // navatelle a due piani: sopra, le gallerie
+    [1,-1].forEach(function(q){ var a=-q*(L/2-.2), b=q*(L/2-.2); B.aperture(a,q*1.05,b,q*1.05,6,.85,.38,.24).aperture(a,q*.475,b,q*.475,6,1.5,.34,.22); });
+    B.cilindro(.45,1.5,-L/2,0,0,P.mattone,null,12).cono(.48,.4,-L/2,1.5,0,P.coppi,12);
+    B.vano(-.3,0,1.08,1,0,.44,.8);                                                                                            // l'ingresso sul fianco sud
+ }},
  {id:'agnese', nome:"Sant'Agnese e Santa Costanza", x:278.3,z:-338.2, ry:-.8, sc:.7, zone:[[0,0,7],[-6.1,11.5,4.5]], fa:function(B){
     chiesa(B,10,6); B.cilindro(2.4,1,-8.75,0,16.4,P.mattone,null,24).cono(2.5,.4,-8.75,1,16.4,P.coppi,24).cilindro(1.5,2,-8.75,0,16.4,P.mattone,null,20).cupola(1.5,-8.75,2,16.4,P.coppi,.6);   // mausoleo rotondo di Costanza, 130 m a ovest della basilica (posizione reale)
  }},
@@ -430,7 +452,7 @@ RM.statoMonumento=function(id,anno){
    c = incuria: dal 390 circa la manutenzione pubblica si dirada per tutti, e accelera dopo la chiusura. Si vede come crepe, colature, erba, coppi mancanti.
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0};
+var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
