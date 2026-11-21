@@ -1,0 +1,1521 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-21T13:50:25Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 1429382773,
+  "lat": 41.9025010,
+  "lon": 12.4729627,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap",
+    "name": "Acqua Vergine",
+    "wikidata": "Q76958894"
+  }
+},
+{
+  "type": "node",
+  "id": 1777920462,
+  "lat": 41.8990827,
+  "lon": 12.5103192,
+  "tags": {
+    "bench": "yes",
+    "bin": "no",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Ramni/Porta Tiburtina",
+    "network": "ATAC",
+    "network:wikidata": "Q530087",
+    "network:wikipedia": "it:ATAC",
+    "operator": "ATAC",
+    "public_transport": "platform",
+    "ref": "74318",
+    "shelter": "yes",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 2330145181,
+  "lat": 41.8872243,
+  "lon": 12.5042124,
+  "tags": {
+    "bench": "no",
+    "bin": "no",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "lit": "yes",
+    "name": "Piazza San Giovanni in Laterano",
+    "network": "ATAC",
+    "network:wikidata": "Q530087",
+    "network:wikipedia": "it:ATAC",
+    "note:en": "stop temporarely suspended",
+    "operator": "ATAC",
+    "public_transport": "platform",
+    "ref": "20279",
+    "shelter": "no",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 5222287585,
+  "lat": 41.9006565,
+  "lon": 12.4625854,
+  "tags": {
+    "addr:city": "Roma",
+    "addr:street": "Lungotevere in Sassia",
+    "amenity": "hospital",
+    "emergency": "yes",
+    "healthcare": "hospital",
+    "name": "Pronto Soccorso Ospedale \"Santo Spirito in Sassia\""
+  }
+},
+{
+  "type": "way",
+  "id": 22878472,
+  "bounds": {
+    "minlat": 41.8870216,
+    "minlon": 12.5054563,
+    "maxlat": 41.8873099,
+    "maxlon": 12.5063018
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 22885429,
+  "bounds": {
+    "minlat": 41.8863888,
+    "minlon": 12.5039763,
+    "maxlat": 41.8868374,
+    "maxlon": 12.5045146
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 22885513,
+  "bounds": {
+    "minlat": 41.8868374,
+    "minlon": 12.5045146,
+    "maxlat": 41.8870807,
+    "maxlon": 12.5046256
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 22885515,
+  "bounds": {
+    "minlat": 41.8870192,
+    "minlon": 12.5046256,
+    "maxlat": 41.8870807,
+    "maxlon": 12.5049514
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23646009,
+  "bounds": {
+    "minlat": 41.8888213,
+    "minlon": 12.5146786,
+    "maxlat": 41.8894314,
+    "maxlon": 12.5151901
+  },
+  "tags": {
+    "highway": "secondary",
+    "is_in:city": "Roma",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Croce in Gerusalemme",
+    "note": "Presa dal gps",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23764152,
+  "bounds": {
+    "minlat": 41.8988401,
+    "minlon": 12.5085920,
+    "maxlat": 41.9006005,
+    "maxlon": 12.5096906
+  },
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "name": "Viale di Porta Tiburtina",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "sidewalk:both:surface": "asphalt",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24154107,
+  "bounds": {
+    "minlat": 41.8888213,
+    "minlon": 12.5141241,
+    "maxlat": 41.8891296,
+    "maxlon": 12.5146786
+  },
+  "tags": {
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Santa Croce in Gerusalemme",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24154109,
+  "bounds": {
+    "minlat": 41.8879895,
+    "minlon": 12.5141882,
+    "maxlat": 41.8882864,
+    "maxlon": 12.5142551
+  },
+  "tags": {
+    "highway": "secondary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Croce in Gerusalemme",
+    "note": "Presa dal gps",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24576038,
+  "bounds": {
+    "minlat": 41.8879895,
+    "minlon": 12.5142551,
+    "maxlat": 41.8886036,
+    "maxlon": 12.5147773
+  },
+  "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Croce in Gerusalemme",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24776083,
+  "bounds": {
+    "minlat": 41.8872994,
+    "minlon": 12.5059106,
+    "maxlat": 41.8876154,
+    "maxlon": 12.5065617
+  },
+  "tags": {
+    "highway": "service",
+    "name": "Piazza San Giovanni in Laterano",
+    "oneway": "yes",
+    "service": "parking_aisle",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 24776084,
+  "bounds": {
+    "minlat": 41.8873002,
+    "minlon": 12.5063632,
+    "maxlat": 41.8874694,
+    "maxlon": 12.5063639
+  },
+  "tags": {
+    "highway": "service",
+    "name": "Piazza San Giovanni in Laterano",
+    "service": "parking_aisle",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 24776085,
+  "bounds": {
+    "minlat": 41.8873010,
+    "minlon": 12.5061711,
+    "maxlat": 41.8874206,
+    "maxlon": 12.5061724
+  },
+  "tags": {
+    "highway": "service",
+    "name": "Piazza San Giovanni in Laterano",
+    "service": "parking_aisle",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 44132631,
+  "bounds": {
+    "minlat": 41.8860514,
+    "minlon": 12.5041390,
+    "maxlat": 41.8862454,
+    "maxlon": 12.5044443
+  },
+  "tags": {
+    "alt_name": "San Giovanni in Fonte",
+    "amenity": "place_of_worship",
+    "building": "baptistery",
+    "contact:phone": "+39 06 69886452",
+    "contact:website": "https://www.battisterolaterano.it/",
+    "height": "15 m",
+    "name": "Battistero Lateranense",
+    "name:de": "Lateran-Baptisterium",
+    "name:fr": "Baptistère du Latran",
+    "name:hu": "Lateráni keresztelőkápolna",
+    "opening_hours": "09:00-19:00",
+    "religion": "christian",
+    "tourism": "attraction",
+    "wheelchair": "limited",
+    "wikidata": "Q2519438",
+    "wikimedia_commons": "Category:Lateran Baptistry (Rome)",
+    "wikipedia": "it:Battistero lateranense"
+  }
+},
+{
+  "type": "way",
+  "id": 66832136,
+  "bounds": {
+    "minlat": 41.9007942,
+    "minlon": 12.4609202,
+    "maxlat": 41.9013892,
+    "maxlon": 12.4615235
+  },
+  "tags": {
+    "air_conditioning": "no",
+    "alt_name": "Sanctuary of Divine Mercy",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "check_date": "2024-10-15",
+    "contact:website": "https://www.divinamisericordia.it/",
+    "denomination": "catholic",
+    "name": "Chiesa di Santo Spirito in Sassia",
+    "religion": "christian",
+    "service_times": "Mo-Sa 07:30,18:30; Su 10:00,11:00,12:30,18:30",
+    "wikidata": "Q1428488",
+    "wikimedia_commons": "Category:Santo Spirito in Sassia (Rome) - Church",
+    "wikipedia": "it:Chiesa di Santo Spirito in Sassia"
+  }
+},
+{
+  "type": "way",
+  "id": 79660975,
+  "bounds": {
+    "minlat": 41.8968559,
+    "minlon": 12.5097221,
+    "maxlat": 41.8987682,
+    "maxlon": 12.5110221
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Viale di Porta Tiburtina",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 92856899,
+  "bounds": {
+    "minlat": 41.8886036,
+    "minlon": 12.5146786,
+    "maxlat": 41.8888213,
+    "maxlon": 12.5148076
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Croce in Gerusalemme",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 106129554,
+  "bounds": {
+    "minlat": 41.8868374,
+    "minlon": 12.5045146,
+    "maxlat": 41.8870192,
+    "maxlon": 12.5049514
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 106366988,
+  "bounds": {
+    "minlat": 41.8865664,
+    "minlon": 12.5039704,
+    "maxlat": 41.8869825,
+    "maxlon": 12.5040519
+  },
+  "tags": {
+    "emergency": "yes",
+    "highway": "service",
+    "lanes": "1",
+    "motor_vehicle": "no",
+    "name": "Piazza di San Giovanni in Laterano",
+    "oneway": "yes",
+    "psv": "yes",
+    "service": "bus",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 106366989,
+  "bounds": {
+    "minlat": 41.8872343,
+    "minlon": 12.5033048,
+    "maxlat": 41.8872756,
+    "maxlon": 12.5035748
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via di San Giovanni in Laterano",
+    "oneway": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 106366991,
+  "bounds": {
+    "minlat": 41.8866474,
+    "minlon": 12.5040412,
+    "maxlat": 41.8869943,
+    "maxlon": 12.5041033
+  },
+  "tags": {
+    "emergency": "yes",
+    "highway": "service",
+    "lanes": "1",
+    "motor_vehicle": "no",
+    "name": "Piazza di San Giovanni in Laterano",
+    "oneway": "yes",
+    "psv": "yes",
+    "service": "bus",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 112715260,
+  "bounds": {
+    "minlat": 41.8910449,
+    "minlon": 12.5087085,
+    "maxlat": 41.8921389,
+    "maxlon": 12.5106634
+  },
+  "tags": {
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Santa Croce in Gerusalemme",
+    "parking:both": "lane",
+    "parking:both:fee": "yes",
+    "parking:both:orientation": "perpendicular",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 113706833,
+  "bounds": {
+    "minlat": 41.9015709,
+    "minlon": 12.4583736,
+    "maxlat": 41.9016106,
+    "maxlon": 12.4583867
+  },
+  "tags": {
+    "highway": "footway",
+    "name": "Salita Santi Michele e Magno",
+    "official_name": "Salita SS. Michele e Magno",
+    "source": "Bing",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 113711442,
+  "bounds": {
+    "minlat": 41.9013977,
+    "minlon": 12.4583996,
+    "maxlat": 41.9015356,
+    "maxlon": 12.4584487
+  },
+  "tags": {
+    "access": "yes",
+    "highway": "steps",
+    "name": "Scala Santi Michele e Magno",
+    "official_name": "Salita SS. Michele e Magno",
+    "source": "Bing",
+    "surface": "paved",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 113711443,
+  "bounds": {
+    "minlat": 41.9015356,
+    "minlon": 12.4583901,
+    "maxlat": 41.9015610,
+    "maxlon": 12.4583996
+  },
+  "tags": {
+    "handrail": "yes",
+    "highway": "steps",
+    "incline": "up",
+    "name": "Salita Santi Michele e Magno",
+    "official_name": "Salita SS. Michele e Magno",
+    "ramp": "no",
+    "source": "Bing",
+    "step_count": "6",
+    "surface": "paving_stones",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 113711444,
+  "bounds": {
+    "minlat": 41.9015610,
+    "minlon": 12.4583867,
+    "maxlat": 41.9015709,
+    "maxlon": 12.4583901
+  },
+  "tags": {
+    "handrail": "no",
+    "highway": "steps",
+    "incline": "up",
+    "name": "Salita Santi Michele e Magno",
+    "official_name": "Salita SS. Michele e Magno",
+    "ramp": "no",
+    "source": "Bing",
+    "step_count": "9",
+    "surface": "paving_stones",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 113800553,
+  "bounds": {
+    "minlat": 41.9012995,
+    "minlon": 12.4586722,
+    "maxlat": 41.9015104,
+    "maxlon": 12.4590727
+  },
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housenumber": "21",
+    "addr:postcode": "00193",
+    "addr:street": "Borgo Santo Spirito",
+    "alt_name": "San Michele in Sassia",
+    "alt_name:nl": "Kerk van de Friezen",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "contact:website": "https://www.friezenkerk.nl/",
+    "denomination": "roman_catholic",
+    "name": "Chiesa dei Santi Michele e Magno",
+    "name:de": "St. Michael und Magnus",
+    "name:nl": "Friezenkerk",
+    "religion": "christian",
+    "service_times": "Su 10:30",
+    "wikidata": "Q28082",
+    "wikimedia_commons": "Category:Santi Michele e Magno",
+    "wikipedia": "it:Chiesa dei Santi Michele e Magno"
+  }
+},
+{
+  "type": "way",
+  "id": 120513792,
+  "bounds": {
+    "minlat": 41.8870192,
+    "minlon": 12.5049514,
+    "maxlat": 41.8871258,
+    "maxlon": 12.5061093
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 120513793,
+  "bounds": {
+    "minlat": 41.8866474,
+    "minlon": 12.5041033,
+    "maxlat": 41.8870807,
+    "maxlon": 12.5046256
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 122185751,
+  "bounds": {
+    "minlat": 41.8863888,
+    "minlon": 12.5039763,
+    "maxlat": 41.8865664,
+    "maxlon": 12.5040519
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 122185756,
+  "bounds": {
+    "minlat": 41.8871930,
+    "minlon": 12.5039321,
+    "maxlat": 41.8871990,
+    "maxlon": 12.5040029
+  },
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Piazza di San Giovanni in Laterano",
+    "oneway": "no",
+    "smoothness": "excellent",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 122185783,
+  "bounds": {
+    "minlat": 41.8874903,
+    "minlon": 12.4980680,
+    "maxlat": 41.8889392,
+    "maxlon": 12.5027411
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di San Giovanni in Laterano",
+    "oneway": "yes",
+    "smoothness": "good",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 122705899,
+  "bounds": {
+    "minlat": 41.8869825,
+    "minlon": 12.5039321,
+    "maxlat": 41.8871990,
+    "maxlon": 12.5039704
+  },
+  "tags": {
+    "check_date:surface": "2022-03-08",
+    "emergency": "yes",
+    "highway": "service",
+    "lanes": "1",
+    "motor_vehicle": "no",
+    "name": "Piazza di San Giovanni in Laterano",
+    "oneway": "yes",
+    "psv": "yes",
+    "service": "bus",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 123981329,
+  "bounds": {
+    "minlat": 41.8865664,
+    "minlon": 12.5040519,
+    "maxlat": 41.8866474,
+    "maxlon": 12.5041033
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 123981331,
+  "bounds": {
+    "minlat": 41.8870807,
+    "minlon": 12.5040029,
+    "maxlat": 41.8871930,
+    "maxlon": 12.5046256
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 123981340,
+  "bounds": {
+    "minlat": 41.8869943,
+    "minlon": 12.5040029,
+    "maxlat": 41.8871930,
+    "maxlon": 12.5040412
+  },
+  "tags": {
+    "emergency": "yes",
+    "highway": "service",
+    "lanes": "1",
+    "motor_vehicle": "no",
+    "name": "Piazza di San Giovanni in Laterano",
+    "oneway": "yes",
+    "psv": "yes",
+    "service": "bus",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 124046208,
+  "bounds": {
+    "minlat": 41.8870807,
+    "minlon": 12.5046256,
+    "maxlat": 41.8873099,
+    "maxlon": 12.5054563
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 139680017,
+  "bounds": {
+    "minlat": 41.8882864,
+    "minlon": 12.5141945,
+    "maxlat": 41.8888213,
+    "maxlon": 12.5146786
+  },
+  "tags": {
+    "highway": "secondary",
+    "is_in:city": "Roma",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Croce in Gerusalemme",
+    "note": "Presa dal gps",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 139680022,
+  "bounds": {
+    "minlat": 41.8880436,
+    "minlon": 12.5138946,
+    "maxlat": 41.8882864,
+    "maxlon": 12.5141945
+  },
+  "tags": {
+    "highway": "secondary",
+    "is_in:city": "Roma",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Croce in Gerusalemme",
+    "note": "Presa dal gps",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 139680029,
+  "bounds": {
+    "minlat": 41.8886036,
+    "minlon": 12.5147773,
+    "maxlat": 41.8896130,
+    "maxlon": 12.5153640
+  },
+  "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Croce in Gerusalemme",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 154747061,
+  "bounds": {
+    "minlat": 41.8870807,
+    "minlon": 12.5046011,
+    "maxlat": 41.8871824,
+    "maxlon": 12.5046256
+  },
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 154747064,
+  "bounds": {
+    "minlat": 41.8871824,
+    "minlon": 12.5046011,
+    "maxlat": 41.8873099,
+    "maxlon": 12.5054563
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 154747065,
+  "bounds": {
+    "minlat": 41.8871824,
+    "minlon": 12.5040029,
+    "maxlat": 41.8871930,
+    "maxlon": 12.5046011
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "surface": "asphalt",
+    "tourist_bus": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 166170341,
+  "bounds": {
+    "minlat": 41.8891296,
+    "minlon": 12.5137179,
+    "maxlat": 41.8893586,
+    "maxlon": 12.5141241
+  },
+  "tags": {
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Santa Croce in Gerusalemme",
+    "oneway": "yes",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 177853127,
+  "bounds": {
+    "minlat": 41.8879306,
+    "minlon": 12.5140610,
+    "maxlat": 41.8879895,
+    "maxlon": 12.5142551
+  },
+  "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Croce in Gerusalemme",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 191159413,
+  "bounds": {
+    "minlat": 41.8870216,
+    "minlon": 12.5061093,
+    "maxlat": 41.8870787,
+    "maxlon": 12.5063018
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 191159414,
+  "bounds": {
+    "minlat": 41.8874264,
+    "minlon": 12.5058201,
+    "maxlat": 41.8876475,
+    "maxlon": 12.5066277
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "parking:condition:both": "ticket",
+    "parking:lane:both": "parallel",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 201007336,
+  "bounds": {
+    "minlat": 41.8889392,
+    "minlon": 12.4967937,
+    "maxlat": 41.8893311,
+    "maxlon": 12.4980680
+  },
+  "tags": {
+    "alt_name": "Gay street di Roma",
+    "alt_name:en": "Gay Street",
+    "bus": "no",
+    "highway": "residential",
+    "lanes": "1",
+    "name": "Via di San Giovanni in Laterano",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 204434550,
+  "bounds": {
+    "minlat": 41.8860287,
+    "minlon": 12.5038333,
+    "maxlat": 41.8860872,
+    "maxlon": 12.5039225
+  },
+  "tags": {
+    "amenity": "police",
+    "building": "yes",
+    "name": "Gendarmeria vaticana presso San Giovanni in Laterano",
+    "name:de": "Vatikanische Gendarmerie bei Sankt Johann im Lateran",
+    "name:en": "Vatican Gendarme Corps at Saint John Lateran",
+    "name:it": "Gendarmeria vaticana presso San Giovanni in Laterano",
+    "operator": "Gendarmeria dello Stato della Città del Vaticano"
+  }
+},
+{
+  "type": "way",
+  "id": 222227759,
+  "bounds": {
+    "minlat": 41.8893586,
+    "minlon": 12.5133484,
+    "maxlat": 41.8895630,
+    "maxlon": 12.5137179
+  },
+  "tags": {
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Santa Croce in Gerusalemme",
+    "parking:both": "lane",
+    "parking:both:fee": "yes",
+    "parking:both:orientation": "parallel",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 222227762,
+  "bounds": {
+    "minlat": 41.8891296,
+    "minlon": 12.5137179,
+    "maxlat": 41.8893586,
+    "maxlon": 12.5141241
+  },
+  "tags": {
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Santa Croce in Gerusalemme",
+    "oneway": "yes",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 222227764,
+  "bounds": {
+    "minlat": 41.8895630,
+    "minlon": 12.5124989,
+    "maxlat": 41.8900351,
+    "maxlon": 12.5133484
+  },
+  "tags": {
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Santa Croce in Gerusalemme",
+    "parking:both": "lane",
+    "parking:both:fee": "yes",
+    "parking:both:orientation": "perpendicular",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 366647669,
+  "bounds": {
+    "minlat": 41.8872756,
+    "minlon": 12.5027411,
+    "maxlat": 41.8874903,
+    "maxlon": 12.5033048
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di San Giovanni in Laterano",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 472150285,
+  "bounds": {
+    "minlat": 41.8904351,
+    "minlon": 12.5106634,
+    "maxlat": 41.8910449,
+    "maxlon": 12.5117946
+  },
+  "tags": {
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Santa Croce in Gerusalemme",
+    "parking:both": "lane",
+    "parking:both:fee": "yes",
+    "parking:both:orientation": "perpendicular",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 472150286,
+  "bounds": {
+    "minlat": 41.8900351,
+    "minlon": 12.5117946,
+    "maxlat": 41.8904351,
+    "maxlon": 12.5124989
+  },
+  "tags": {
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes:backward": "1",
+    "lanes:forward": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Santa Croce in Gerusalemme",
+    "parking:both": "lane",
+    "parking:both:fee": "yes",
+    "parking:both:orientation": "diagonal",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 477680018,
+  "bounds": {
+    "minlat": 41.8873099,
+    "minlon": 12.5054563,
+    "maxlat": 41.8874264,
+    "maxlon": 12.5058201
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 993231732,
+  "bounds": {
+    "minlat": 41.8900999,
+    "minlon": 12.4942280,
+    "maxlat": 41.8901468,
+    "maxlon": 12.4943666
+  },
+  "tags": {
+    "bus": "no",
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di San Giovanni in Laterano",
+    "oneway": "yes",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 998191514,
+  "bounds": {
+    "minlat": 41.8880119,
+    "minlon": 12.5154474,
+    "maxlat": 41.8884395,
+    "maxlon": 12.5162669
+  },
+  "tags": {
+    "amenity": "place_of_worship",
+    "basilica": "minor",
+    "building": "church",
+    "contact:website": "http://www.santacroceroma.it",
+    "denomination": "roman_catholic",
+    "description:de": "Pilgerkirche: Eine der sieben Pilgerkirchen in Rom",
+    "name": "Basilica di Santa Croce in Gerusalemme",
+    "name:de": "Basilika des Heiligen Kreuzes in Jerusalem",
+    "name:en": "Basilica of the Holy Cross in Jerusalem",
+    "name:la": "Basilica Sanctae Crucis in Hierusalem",
+    "name:ru": "Церковь Санта-Кроче ин Джерузалемме (Церковь Святого Креста в Иерусалиме)",
+    "opening_hours": "07:30-19:00",
+    "religion": "christian",
+    "service_times": "Mo-Sa 08:00,19:00; Su 08:00,10:00,11:30,19:00",
+    "tourism": "attraction",
+    "wikidata": "Q685940",
+    "wikimedia_commons": "Category:Santa Croce in Gerusalemme (Rome)",
+    "wikipedia": "it:Basilica di Santa Croce in Gerusalemme"
+  }
+},
+{
+  "type": "way",
+  "id": 1192782216,
+  "bounds": {
+    "minlat": 41.9013375,
+    "minlon": 12.4584280,
+    "maxlat": 41.9014587,
+    "maxlon": 12.4586862
+  },
+  "tags": {
+    "area": "yes",
+    "highway": "pedestrian",
+    "name": "Piazza Santi Michele e Magno"
+  }
+},
+{
+  "type": "way",
+  "id": 1236922730,
+  "bounds": {
+    "minlat": 41.8893311,
+    "minlon": 12.4943666,
+    "maxlat": 41.8900999,
+    "maxlon": 12.4967937
+  },
+  "tags": {
+    "alt_name": "Gay street di Roma",
+    "alt_name:en": "Gay Street",
+    "bus": "no",
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di San Giovanni in Laterano",
+    "oneway": "yes",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 1236923663,
+  "bounds": {
+    "minlat": 41.8871990,
+    "minlon": 12.5035748,
+    "maxlat": 41.8872343,
+    "maxlon": 12.5039321
+  },
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via di San Giovanni in Laterano",
+    "oneway": "no",
+    "smoothness": "excellent",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1390965274,
+  "bounds": {
+    "minlat": 41.9025298,
+    "minlon": 12.4836344,
+    "maxlat": 41.9026921,
+    "maxlon": 12.4837871
+  },
+  "tags": {
+    "area": "yes",
+    "historic": "ruins",
+    "historic:civilization": "ancient_roman",
+    "name": "Acquedotto Vergine",
+    "name:en": "Aqueduct Ruins",
+    "tourism": "attraction",
+    "wikidata": "Q600139",
+    "wikimedia_commons": "Category:Aqua Virgo (Rome)",
+    "wikipedia": "en:Aqua Virgo"
+  }
+},
+{
+  "type": "relation",
+  "id": 36444,
+  "bounds": {
+    "minlat": 41.8851403,
+    "minlon": 12.5046398,
+    "maxlat": 41.8863831,
+    "maxlon": 12.5065319
+  },
+  "tags": {
+    "addr:city": "Roma",
+    "addr:postcode": "00184",
+    "addr:street": "Piazza di San Giovanni in Laterano",
+    "amenity": "place_of_worship",
+    "basilica": "major",
+    "building": "basilica",
+    "contact:website": "https://www.basilicasangiovanni.va/",
+    "denomination": "catholic",
+    "information:de": "Pilgerkirche: Eine der sieben Pilgerkirchen in Rom",
+    "ise": "Zona extraterritoriale della Santa Sede",
+    "name": "Basilica di San Giovanni in Laterano",
+    "name:cs": "Lateránská bazilika svatého Jana",
+    "name:de": "Lateranbasilika",
+    "name:en": "Basilica of Saint John Lateran",
+    "name:es": "Basílica de San Juan de Letrán",
+    "name:fr": "Basilique Saint-Jean-de-Latran",
+    "name:hu": "Lateráni bazilika",
+    "name:nl": "Sint-Jan van Lateranen",
+    "name:pl": "Bazylika św. Jana na Lateranie",
+    "name:ru": "Базилика Сан Джованни ин Латерано",
+    "name:sk": "Bazilika svätého Jána v Lateráne",
+    "name:zh": "拉特朗聖若望大殿",
+    "official_name": "Papale Arcibasilica del Santissimo Salvatore e Santi Giovanni Battista e Giovanni Evangelista in Laterano",
+    "opening_hours": "Mo-Su 07:00-18:30",
+    "religion": "christian",
+    "service_times": "Mo-Fr 07:00,07:30,08:00,09:00,10:00,11:00,12:00,17:30; Su 07:00,08:00,09:00,10:00,11:30,12:30,17:30",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wheelchair": "yes",
+    "wikidata": "Q84090",
+    "wikimedia_commons": "Category:Archbasilica of Saint John Lateran",
+    "wikipedia": "it:Basilica di San Giovanni in Laterano"
+  }
+},
+{
+  "type": "relation",
+  "id": 1059297,
+  "bounds": {
+    "minlat": 41.9004273,
+    "minlon": 12.4613099,
+    "maxlat": 41.9016863,
+    "maxlon": 12.4634056
+  },
+  "tags": {
+    "alt_name": "Ospedale Santo Spirito in Saxia",
+    "amenity": "hospital",
+    "building": "yes",
+    "healthcare": "hospital",
+    "name": "Ospedale Santo Spirito in Sassia",
+    "name:fr": "Hôpital Santo Spirito in Saxia",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wikidata": "Q3621743"
+  }
+},
+{
+  "type": "relation",
+  "id": 2578845,
+  "bounds": {
+    "minlat": 41.8861150,
+    "minlon": 12.5037379,
+    "maxlat": 41.8873470,
+    "maxlon": 12.5067205
+  },
+  "tags": {
+    "area": "yes",
+    "bicycle": "yes",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:cs": "náměstí Svatého Jana v Lateránu",
+    "name:de": "Johannes-im-Lateran-Platz",
+    "note": "this is only the pedestrian space, there is a square object for the whole square",
+    "sorting_name:cs": "Svatého Jana v Lateránu",
+    "surface": "paving_stones",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 2719708,
+  "bounds": {
+    "minlat": 41.9009932,
+    "minlon": 12.4611344,
+    "maxlat": 41.9014879,
+    "maxlon": 12.4618568
+  },
+  "tags": {
+    "alt_name": "Palazzo del Commendatore del Santo Spirito in Saxia",
+    "building": "yes",
+    "name": "Palazzo del Commendatore del Santo Spirito in Sassia",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13394462,
+  "bounds": {
+    "minlat": 41.8881052,
+    "minlon": 12.5146937,
+    "maxlat": 41.8890879,
+    "maxlon": 12.5159685
+  },
+  "tags": {
+    "bicycle": "yes",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza di Santa Croce in Gerusalemme",
+    "name:de": "Heiligkreuzplatz",
+    "surface": "sett",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13445465,
+  "bounds": {
+    "minlat": 41.8860828,
+    "minlon": 12.5036948,
+    "maxlat": 41.8877221,
+    "maxlon": 12.5067205
+  },
+  "tags": {
+    "name": "Piazza di San Giovanni in Laterano",
+    "name:de": "Johannesplatz",
+    "place": "square",
+    "type": "multipolygon"
+  }
+}
+
+  ]
+}

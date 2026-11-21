@@ -106,7 +106,26 @@ var M=[
     var w=RM.ellisse(8.7,7.2,n), wc=RM.ellisse(8.74,7.24,n);
     B.striscia(w,0,w,3,P.travertino).fornici(w,.22,.9,.5).fornici(w,1.45,.88,.5).striscia(w,3,m1,3.08,P.tufo);
     [1.28,2.48].forEach(function(y){ B.striscia(wc,y,wc,y+.1,P.marmo); });
-    B.cilindro(.5,1.6,-12.5,0,2.5,P.mattone,.18,10).cilindro(.42,3.2,-10.5,0,-7,P.oro,.3,8);                     // Meta Sudans e Colosso
+    /* i pali del velario: duecentoquaranta nella realtà, infilati nelle mensole dell'attico; qui uno ogni tre */
+    e.forEach(function(p){ B.scatola(.05,.95,.05,p[0]*.997,4.45,p[1]*.997,P.tronco); });
+    B.scatola(1,.5,1,-11.7,0,-4.65,P.marmo);                                                                     // il basamento del Colosso (sette metri di lato, rivestito di marmo): resta fino al 1936
+ }},
+ /* Il Colosso: statua di bronzo di circa 35 m, sul basamento reale (OpenStreetMap, way 709011412). La figura è indicativa: stante, corona di raggi, timone nella destra e globo
+    nella sinistra come sulle monete; da che parte guardasse non si sa. */
+ {id:'colosso', nome:'Colosso del Sole', x:47.2,z:18.1, ry:-.3, come:'colosseo', fa:function(B){
+    var S=P.statua, k;
+    [-.2,.2].forEach(function(x){ B.cilindro(.17,1.5,x,.5,0,S,.14,8); });                                         // gambe
+    B.cilindro(.31,1.15,0,2,0,S,.38,10);                                                                         // torso
+    B.geo(new THREE.SphereGeometry(.2,10,8).translate(0,3.5,0),S).cilindro(.1,.18,0,3.15,0,S,.1,8);             // testa e collo
+    B.cilindro(.09,1.15,.48,2,0,S,.1,6).scatola(.05,2.3,.05,.62,.5,.14,S).scatola(.05,.5,.3,.62,.5,.14,S);       // braccio destro e timone
+    B.cilindro(.09,.55,-.48,2.6,0,S,.1,6).geo(new THREE.CylinderGeometry(.08,.08,.5,6).rotateX(PI/2).translate(-.48,2.62,.25),S).geo(new THREE.SphereGeometry(.13,8,6).translate(-.48,2.74,.52),S);   // braccio sinistro e globo
+    for(k=-3;k<=3;k++) B.geo(new THREE.ConeGeometry(.035,.42,5).translate(0,.4,0).rotateZ(-k*.42).translate(0,3.5,0),P.oro);      // i raggi del Sole
+ }},
+ /* Meta Sudans: fontana conica flavia, con la vasca di 21 m rifatta nel IV secolo. Demolita nel 1936; la posizione è quella delle coordinate correnti (41°53'24" N, 12°29'27" E),
+    a nord dell'arco di Costantino: vale entro una quindicina di metri. Altezza del cono (circa 17 m) dalle ricostruzioni correnti. */
+ {id:'metasudans', nome:'Meta Sudans', x:45.6,z:27.8, ry:0, come:'colosseo', fa:function(B){
+    B.cilindro(1.05,.14,0,0,0,P.marmo,1.05,24).cilindro(.95,.03,0,.13,0,P.acqua,.95,24);
+    B.cilindro(.37,.36,0,.12,0,P.marmo,.34,14).cilindro(.31,1.2,0,.48,0,P.marmo,.07,14).geo(new THREE.SphereGeometry(.09,8,6).translate(0,1.74,0),P.marmo);
  }},
  {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], et:1, fa:function(B){ circo(B,62,14,2.5,true); }},
  {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
@@ -138,8 +157,8 @@ var M=[
     });
  }},
  {id:'emilia', nome:'Basilica Emilia', x:7.2,z:-1, ry:-.35, come:'fori', fa:function(B){ basilica(B,8,3.4,1.8,0,0); }},
- {id:'giove', nome:'Tempio di Giove Capitolino', x:-29,z:0, ry:.5, zone:[[0,0,9]], fa:function(B){
-    B.scatola(7.4,.7,8,0,0,0,P.tufo).dentro(0,.7,0,0,function(B){ B.tempio(5.6,6.4,3,0,0,0,{fronte:6,lati:7,tetto:P.oro,podio:.6,r:.2}); });
+ {id:'giove', nome:'Tempio di Giove Capitolino', x:-29,z:0, ry:.5, zone:[[0,0,7.5]], fa:function(B){      // basamento di circa 54 x 62 m, la misura più citata (le stime pubblicate vanno da 50 a 74 m di lato: pianta discussa)
+    B.scatola(5.4,.7,6.2,0,0,0,P.tufo).dentro(0,.7,0,0,function(B){ B.tempio(4.5,5.3,2.8,0,0,0,{fronte:6,lati:7,tetto:P.oro,podio:.5,r:.17}); });
  }},
  {id:'palatino', nome:'Palazzi del Palatino', x:13,z:47, ry:-.62, zone:[[-7,-1,13],[7,-1,13],[0,6,12]], fa:function(B){
     arcato(B,27,1.5,18,0,-.4,0,P.mattone,2,22);                                                // sostruzioni
@@ -184,7 +203,7 @@ var M=[
  }},
  {id:'pompeo', x:-98,z:-30, ry:-PI/2, zone:[[0,0,10],[0,-14,10]], fa:function(B){ teatro(B,8,2.6); B.tempio(2,2.6,1.4,0,6.6,PI,{fronte:6}); portico(B,13,18,0,0,-11.5,1.1,P.prato); }},   // teatro e portici di Pompeo
  {id:'marcello', nome:'Teatro di Marcello', x:-46,z:7, ry:PI*.8, zone:[[0,0,8]], fa:function(B){ teatro(B,6.5,2.9); }},
- {id:'laterano', nome:'San Giovanni in Laterano', x:169,z:73, ry:.1, zone:[[0,0,8],[8,0,6]], fa:function(B){ chiesa(B,10,6); B.cilindro(1.2,1.6,-3,0,6.5,P.mattone,null,8).cono(1.3,.7,-3,1.6,6.5,P.coppi,8); }},
+ {id:'laterano', nome:'San Giovanni in Laterano', x:169,z:73, ry:.1, zone:[[0,0,8],[8,0,6],[-11.3,-3.5,2.6]], fa:function(B){ chiesa(B,10,6); B.cilindro(1.2,1.6,-11.3,0,-3.5,P.mattone,null,8).cono(1.3,.7,-11.3,1.6,-3.5,P.coppi,8); }},      // il battistero ottagonale, dov'è oggi (OpenStreetMap): dietro l'abside, verso nord
  {id:'pietro', nome:'San Pietro', x:-259,z:-108, ry:0, zone:[[0,0,9],[10,0,7]], et:1, fa:function(B){
     chiesa(B,11.5,6.6,true);
     B.scatola(.5,.3,.5,3.6,0,6.6,P.travertino).cilindro(.2,2.4,3.6,.3,6.6,P.sabbia,.12,4).cono(.13,.25,3.6,2.7,6.6,P.sabbia,4);      // l'obelisco del circo di Nerone, sul fianco sud
@@ -194,7 +213,7 @@ var M=[
     portico(B,8,13,0,0,0,1.2); B.cilindro(1.9,.3,0,.1,-1.5,P.travertino,null,24).cilindro(1.5,1.7,0,.4,-1.5,P.marmo,null,24).cupola(1.5,0,2.1,-1.5,P.bronzo,.6);
     for(var k=0;k<14;k++) B.cilindro(.08,1.5,1.8*Math.cos(k*.449),.4,-1.5+1.8*Math.sin(k*.449),P.marmo,.07,7);
  }},
- {id:'arcocostantino', nome:'Arco di Costantino', x:44.9,z:27.5, ry:-.3, zone:[[0,0,3]], fa:function(B){
+ {id:'arcocostantino', nome:'Arco di Costantino', x:44.5,z:30.4, ry:-.3, zone:[[0,0,3]], fa:function(B){
     B.scatola(2.6,1.5,.75,0,0,0,P.marmo).scatola(2.72,.14,.87,0,1.5,0,P.marmo).scatola(2.6,.5,.75,0,1.64,0,P.marmo);          // fornici, cornice, attico
     B.aperture(-.33,.38,.33,.38,1,0,1.15,.62).aperture(-1.05,.38,-.55,.38,1,0,.72,.34).aperture(.55,.38,1.05,.38,1,0,.72,.34);
     B.aperture(.33,-.38,-.33,-.38,1,0,1.15,.62).aperture(-.55,-.38,-1.05,-.38,1,0,.72,.34).aperture(1.05,-.38,.55,-.38,1,0,.72,.34);
@@ -234,9 +253,9 @@ var M=[
       B.scatola(7.56,.12,1.5,lx,q+1.05,0,P.coppi).colonne(lx-3.6,-.6,lx+3.6,-.6,8,1.35,.06,q-.3).colonne(lx-3.6,.6,lx+3.6,.6,8,1.35,.06,q-.3); }
     [[-34.5,-10],[-34.5,3.5]].forEach(function(p){ casa(B,y(p[0],p[1]),p[0],p[1],2.6,3.4,1.3); });      // gli episcopia di papa Simmaco, a destra e a sinistra dell'atrio
  }},
- {id:'scholae', nome:'Scholae dei pellegrini', x:-233,z:-108, ry:0, zone:[[32,9,5],[14,8.5,5],[-8,17,5],[-12,-11,5],[-32,12.5,4]], fa:function(B){
+ {id:'scholae', nome:'Scholae dei pellegrini', x:-233,z:-108, ry:0, zone:[[33.5,12.5,5],[14,9,5],[-8,17,5],[-12,-11,5],[-32,12.5,4]], fa:function(B){
     var y=suTerreno(-233,-108,0), q;
-    [[32,9],[14,8.5],[-8,17],[-12,-11]].forEach(function(p){                                  // Sassoni (verso il fiume), Frisoni, Franchi (a sud dell'atrio), Longobardi (a nord: posizione discussa)
+    [[33.5,12.5],[14,9],[-8,17],[-12,-11]].forEach(function(p){       // Sassoni e Frisoni sui siti di Santo Spirito in Sassia e dei Santi Michele e Magno (OpenStreetMap)                                  // Sassoni (verso il fiume), Frisoni, Franchi (a sud dell'atrio), Longobardi (a nord: posizione discussa)
       q=y(p[0],p[1]); casa(B,q,p[0]-1.2,p[1],3.6,2.4,1.2); casa(B,q,p[0]+1.4,p[1]+2,1.6,3,1,PI/2);
       B.scatola(1.3,1.8,2.6,p[0]+2.6,q-.3,p[1]-1.6,P.mattone).falde(2.6,.4,1.5,p[0]+2.6,q+1.5,p[1]-1.6,P.coppi,PI/2,P.mattone).cilindro(.5,1.4,p[0]+2.6,q-.3,p[1]-3,P.mattone,null,10);
     });
@@ -337,7 +356,7 @@ RM.statoMonumento=function(id,anno){
    c = incuria: dal 390 circa la manutenzione pubblica si dirada per tutti, e accelera dopo la chiusura. Si vede come crepe, colature, erba, coppi mancanti.
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, testaccio:.5};
+var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, testaccio:.5, colosso:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){

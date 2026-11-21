@@ -62,7 +62,7 @@ var mura=(function(){
 var acque=(function(){
   var LINEE=[{passo:3.6, p:[[619,361,9],[420,170,8.8],[249,12,8.6],[163,62,8.45],[89,74,8.3],[40,54,8.2],[29,51,8.18]]},       // Claudia e Anio Novus fino a porta Maggiore, poi archi neroniani sul Celio fino al Palatino
              {passo:3.2, p:[[600,330,8.5],[400,140,8.25],[255,5,8],[208.5,-53.5,7.9],[160,-84,7.8],[136,-92,7.75]]},              // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina, poi interrate verso le terme di Diocleziano
-             {passo:1.5, p:[[-22,-175,3.9],[-19,-150,3.85],[-17,-93,3.75],[-44,-74,3.7]]},                                    // Vergine: esce dalle pendici del Pincio e attraversa il Campo Marzio
+             {passo:1.5, p:[[-22,-175,3.9],[-19,-150,3.85],[-13.2,-112.4,3.79],[-17,-93,3.75],[-44,-74,3.7]]},                                    // Vergine: esce dalle pendici del Pincio e attraversa il Campo Marzio
              {passo:1.6, suolo:.5, p:[[-422,28],[-371,37.8],[-311,40.8],[-263,41.8],[-240,43.5],[-198,46],[-160,33]]},
              /* Antoniniano (212-213), il ramo per le terme di Caracalla. Punti reali: i resti di piazza Galeria e l'arco detto di Druso (OpenStreetMap). Secondo Ashby correva interrato o su
                 sostruzioni lungo la via Latina e saliva su arcate solo presso le mura e sulla via Appia: qui si vede dove il terreno scende sotto il canale. La quota sull'arco di Druso

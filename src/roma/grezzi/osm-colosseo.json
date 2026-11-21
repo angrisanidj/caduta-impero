@@ -1,0 +1,399 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-21T13:52:28Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 297376921,
+  "lat": 41.8916678,
+  "lon": 12.4917043,
+  "tags": {
+    "name": "Colosseo",
+    "public_transport": "stop_position",
+    "railway": "stop",
+    "subway": "yes",
+    "wikimedia_commons": "Category:Metropolitana di Roma linea B - Colosseo"
+  }
+},
+{
+  "type": "node",
+  "id": 1675888348,
+  "lat": 41.8899029,
+  "lon": 12.4941169,
+  "tags": {
+    "name": "Colosseo",
+    "network": "ATAC",
+    "network:wikidata": "Q530087",
+    "network:wikipedia": "it:ATAC",
+    "operator": "ATAC",
+    "public_transport": "stop_position",
+    "railway": "tram_stop",
+    "ref": "70940",
+    "tram": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1709283551,
+  "lat": 41.8916255,
+  "lon": 12.4914461,
+  "tags": {
+    "bicycle:conditional": "yes @ Mo-Th 20:00-23:30; Fr 20:00-24:00; Sa 00:00-01:30, 05:30-24:00; Su 00:00-01:30, 05:30-23:30; PH 05:30-24:00",
+    "name": "Colosseo",
+    "network": "Metropolitana di Roma",
+    "note": "folding bikes always allowed, electric bikes with lead batteries not allowed",
+    "outdoor_seating": "no",
+    "railway": "subway_entrance",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 5978649686,
+  "lat": 41.8910113,
+  "lon": 12.4943495,
+  "tags": {
+    "name": "Colosseo",
+    "name:it": "Colosseo",
+    "name:ru": "колизей",
+    "tourism": "viewpoint"
+  }
+},
+{
+  "type": "node",
+  "id": 11599863852,
+  "lat": 41.8912684,
+  "lon": 12.4913087,
+  "tags": {
+    "alt_name": "Colosseo – Fori Imperiali",
+    "bicycle": "no",
+    "bicycle:conditional": "yes @ (Mo-Th 20:00-23:30; Fr 20:00-24:00; Sa 00:00-01:30, 05:30-24:00; Su 00:00-01:30, 05:30-23:30; PH 05:30-23:30)",
+    "name": "Colosseo",
+    "network": "ATAC",
+    "note": "folding bikes always allowed, electric bikes with Pb batteries not allowed",
+    "operator": "ATAC",
+    "platforms": "4",
+    "public_transport": "station",
+    "railway": "station",
+    "station": "subway",
+    "subway": "yes",
+    "wheelchair": "yes",
+    "wikidata": "Q1229235",
+    "wikimedia_commons": "Category:Colosseo station (Rome metro)",
+    "wikipedia": "it:Colosseo (metropolitana di Roma)"
+  }
+},
+{
+  "type": "node",
+  "id": 11599863868,
+  "lat": 41.8916852,
+  "lon": 12.4916229,
+  "tags": {
+    "name": "Colosseo",
+    "public_transport": "stop_position",
+    "railway": "stop",
+    "subway": "yes",
+    "wikimedia_commons": "Category:Metropolitana di Roma linea B - Colosseo"
+  }
+},
+{
+  "type": "node",
+  "id": 13261731541,
+  "lat": 41.8913606,
+  "lon": 12.4915439,
+  "tags": {
+    "bicycle:conditional": "yes @ Mo-Th 20:00-23:30; Fr 20:00-24:00; Sa 00:00-01:30, 05:30-24:00; Su 00:00-01:30, 05:30-23:30; PH 05:30-24:00",
+    "entrance": "yes",
+    "name": "Colosseo",
+    "network": "Metropolitana di Roma",
+    "note": "folding bikes always allowed, electric bikes with lead batteries not allowed",
+    "railway": "subway_entrance",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 23590989,
+  "bounds": {
+    "minlat": 41.8897062,
+    "minlon": 12.4905081,
+    "maxlat": 41.8898183,
+    "maxlon": 12.4908255
+  },
+  "tags": {
+    "building": "triumphal_arch",
+    "height": "21",
+    "historic": "monument",
+    "image": "41.88977598623146, 12.490683019894265",
+    "inscription": "IMP·CAES·FL·CONSTANTINO·MAXIMO·P·F·AVGUSTO·S·P·Q·R·QVOD·INSTINCTV·DIVINITATIS·MENTIS·MAGNITVDINE·CVM·EXERCITV·SVO·TAM·DE·TYRANNO·QVAM·DE·OMNI·EIVS·FACTIONE·VNO·TEMPORE·IVSTIS·REM-PVBLICAM·VLTVS·EST·ARMIS·ARCVM·TRIVMPHIS·INSIGNEM·DICAVIT",
+    "name": "Arco di Costantino",
+    "name:ar": "قوس قسطنطين",
+    "name:cs": "Konstantinův oblouk",
+    "name:de": "Konstantinsbogen",
+    "name:el": "Αψίδα Μεγάλου Κωνσταντίνου",
+    "name:en": "Arch of Constantine",
+    "name:es": "Arco de Constantino",
+    "name:fr": "Arc de Constantin",
+    "name:it": "Arco di Costantino",
+    "name:ko": "콘스탄티누스 개선문",
+    "name:lt": "Konstantino arka",
+    "name:nl": "Boog van Constantijn",
+    "name:ru": "Триумфальная арка Константина",
+    "name:zh": "君士坦丁凯旋门",
+    "start_date": "315",
+    "tourism": "attraction",
+    "wheelchair": "limited",
+    "wikidata": "Q5786",
+    "wikimedia_commons": "Category:Arch of Constantine (Rome)",
+    "wikipedia": "en:Arch of Constantine"
+  }
+},
+{
+  "type": "way",
+  "id": 215801333,
+  "bounds": {
+    "minlat": 41.8894087,
+    "minlon": 12.4910938,
+    "maxlat": 41.8909705,
+    "maxlon": 12.4937409
+  },
+  "tags": {
+    "addr:postcode": "00184",
+    "addr:street": "Piazza del Colosseo",
+    "contact:facebook": "parcocolosseo",
+    "description": "Dal 18 ottobre 2023 il biglietto sarà nominativo.",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Colosseo",
+    "name:bg": "Колизей",
+    "name:ca": "Colosseu",
+    "name:cs": "Koloseum",
+    "name:da": "Colosseum",
+    "name:de": "Kolosseum",
+    "name:en": "Colosseum",
+    "name:es": "Coliseo",
+    "name:eu": "Koliseoa",
+    "name:fr": "Colisée",
+    "name:he": "קולוסיאום",
+    "name:hi": "कोलोसियम",
+    "name:it": "Colosseo",
+    "name:ko": "콜로세움",
+    "name:lt": "Koliziejus",
+    "name:lv": "Kolizejs",
+    "name:nl": "Colosseum",
+    "name:pl": "Koloseum",
+    "name:pt": "Coliseu",
+    "name:ro": "Colosseum",
+    "name:ru": "Колизей",
+    "name:sk": "Koloseum",
+    "name:sl": "Kolosej",
+    "name:sv": "Colosseum",
+    "name:th": "โคลอสเซียม",
+    "name:tr": "Kolezyum",
+    "name:uk": "Колізей",
+    "note:en": "this way needs for calculation of pedestrians' routing",
+    "note:it": "questa way serve per il calcolo dei percorsi pedonali",
+    "old_name": "Anfiteatro Flavio",
+    "opening_hours": "Nov 01-Feb 15: 08:30-16:30; Feb 16-Mar 31: 08:30-17:00; Apr-Aug: 08:30-19:15; Sep: 08:30-19:00; Oct 08:30-18:30; May 01 off; Jan 01 off; Dec 25 off",
+    "phone": "+39 06 3996 7700",
+    "smoothness": "intermediate",
+    "surface": "sett",
+    "website": "https://parcocolosseo.it/",
+    "wikimedia_commons": "Category:Colosseum",
+    "wikipedia": "it:Colosseo"
+  }
+},
+{
+  "type": "way",
+  "id": 709011412,
+  "bounds": {
+    "minlat": 41.8907852,
+    "minlon": 12.4908701,
+    "maxlat": 41.8909526,
+    "maxlon": 12.4911142
+  },
+  "tags": {
+    "access": "yes",
+    "area": "yes",
+    "building": "yes",
+    "historic": "ruins",
+    "historic:civilization": "ancient_roman",
+    "name": "Base del Colosso di Nerone",
+    "name:de": "Sockel des Koloss des Nero",
+    "name:en": "pedestal of colossus of Nero",
+    "name:it": "Base del Colosso di Nerone",
+    "name:ru": "Колосс Нерона",
+    "source": "https://www.info.roma.it/monumenti_dettaglio.asp?ID_schede=538",
+    "website": "https://www.info.roma.it/monumenti_dettaglio.asp?ID_schede=538",
+    "wikidata": "Q1570519",
+    "wikimedia_commons": "Category:Colossus of Nero",
+    "wikipedia": "en:Colossus of Nero"
+  }
+},
+{
+  "type": "way",
+  "id": 1375061349,
+  "bounds": {
+    "minlat": 41.8895760,
+    "minlon": 12.4940010,
+    "maxlat": 41.8900059,
+    "maxlon": 12.4941735
+  },
+  "tags": {
+    "bench": "no",
+    "bin": "no",
+    "bus": "yes",
+    "highway": "platform",
+    "lit": "yes",
+    "name": "Colosseo",
+    "public_transport": "platform",
+    "railway": "platform",
+    "ref": "70940",
+    "shelter": "no",
+    "tactile_paving": "no",
+    "tram": "yes"
+  }
+},
+{
+  "type": "relation",
+  "id": 1834818,
+  "bounds": {
+    "minlat": 41.8896078,
+    "minlon": 12.4913001,
+    "maxlat": 41.8909127,
+    "maxlon": 12.4934472
+  },
+  "tags": {
+    "access": "yes",
+    "addr:postcode": "00184",
+    "addr:street": "Piazza del Colosseo",
+    "alt_name:cs": "Římské koloseum",
+    "alt_name:en": "Flavian Amphitheatre",
+    "archaeological_site": "amphitheatre",
+    "building": "amphitheatre",
+    "building:architecture": "antique",
+    "building:colour": "sand",
+    "building:part": "no",
+    "contact:facebook": "https://www.facebook.com/parcocolosseo/",
+    "description": "Dal 18 ottobre 2023 il biglietto è nominativo.",
+    "fee": "yes",
+    "heritage": "1",
+    "heritage:since": "1980",
+    "heritage:url": "https://whc.unesco.org/en/list/91",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "historic:period": "principate",
+    "image": "https://photos.app.goo.gl/MqkcR7WV9ovkWmup9",
+    "importance": "international",
+    "landmark": "1",
+    "name": "Colosseo",
+    "name:ar": "الكولوسيوم",
+    "name:bg": "Колизей",
+    "name:ca": "Colosseu",
+    "name:ckb": "کۆلۆسیۆم",
+    "name:cs": "Koloseum",
+    "name:da": "Colosseum",
+    "name:de": "Kolosseum",
+    "name:en": "Colosseum",
+    "name:eo": "Koloseo",
+    "name:es": "Coliseo",
+    "name:eu": "Koliseoa",
+    "name:fr": "Colisée",
+    "name:he": "קולוסיאום",
+    "name:hi": "कोलोसियम",
+    "name:ia": "Colosseo",
+    "name:it": "Colosseo",
+    "name:ka": "კოლეზეუმი",
+    "name:ko": "콜로세움",
+    "name:la": "Colosseum",
+    "name:lt": "Koliziejus",
+    "name:lv": "Kolizejs",
+    "name:nl": "Colosseum",
+    "name:nn": "Colosseum",
+    "name:pl": "Koloseum",
+    "name:pt": "Coliseu",
+    "name:ro": "Colosseum",
+    "name:ru": "Колизей",
+    "name:sk": "Koloseum",
+    "name:sl": "Kolosej",
+    "name:sv": "Colosseum",
+    "name:th": "โคลอสเซียม",
+    "name:tr": "Kolezyum",
+    "name:tt": "Колизей",
+    "old_name": "Anfiteatro Flavio",
+    "old_name:cs": "Flaviovský amfiteátr",
+    "old_name:de": "Flavisches Amphitheater",
+    "old_name:en": "Flavian Amphitheatre",
+    "old_name:eo": "Flavia Amfiteatro",
+    "old_name:es": "Anfiteatro Flavio",
+    "old_name:eu": "Flaviar Anfiteatroa",
+    "old_name:fr": "Amphithéâtre Flavien",
+    "old_name:ia": "Amphitheatro Flavian",
+    "old_name:it": "Anfiteatro Flavio",
+    "old_name:la": "Amphitheatrum Flavium",
+    "old_name:lt": "Flavijaus amfiteatras",
+    "old_name:lv": "Flāvija amfiteātris",
+    "old_name:pl": "Amfiteatr Flawiuszów",
+    "old_name:pt": "Anfiteatro Flaviano",
+    "old_name:ru": "амфитеатр Флавиев",
+    "old_name:sk": "Flaviovský amfiteáter",
+    "old_name:sl": "Flavíjski amfiteáter",
+    "old_name:tr": "Flavianus Amfitiyatro",
+    "opening_hours": "Mar 29-Sep 30 08:30-19:15; Oct 01-Oct 24 08:30-18:30; Oct 25-Feb 28 08:30-16:30; Jan 01 off; Dec 25 off",
+    "phone": "+39 06 3996 7700",
+    "rank": "0",
+    "ref:whc": "91",
+    "reservation": "yes",
+    "roof:colour": "sand",
+    "source:website": "https://www.beniculturali.it/comunicato/25369",
+    "start_date": "80",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "website": "https://colosseo.it/",
+    "website:tickets": "https://ticketing.colosseo.it/",
+    "wheelchair": "limited",
+    "wikidata": "Q10285",
+    "wikimedia_commons": "Category:Colosseum",
+    "wikipedia": "it:Colosseo"
+  }
+},
+{
+  "type": "relation",
+  "id": 2825965,
+  "bounds": {
+    "minlat": 41.8895882,
+    "minlon": 12.4939270,
+    "maxlat": 41.8900223,
+    "maxlon": 12.4941023
+  },
+  "tags": {
+    "name": "Colosseo",
+    "public_transport": "stop_area",
+    "type": "public_transport"
+  }
+},
+{
+  "type": "relation",
+  "id": 11376453,
+  "bounds": {
+    "minlat": 41.8887126,
+    "minlon": 12.4901421,
+    "maxlat": 41.8899819,
+    "maxlon": 12.4910446
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza dell'Arco di Costantino",
+    "surface": "sett",
+    "type": "multipolygon"
+  }
+}
+
+  ]
+}

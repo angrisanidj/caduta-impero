@@ -1,0 +1,5 @@
+[out:json][timeout:90];
+(
+  nwr["name"~"Battistero Lateranense|San Giovanni in Fonte|Porta Tiburtina|Santo Spirito in Sassia|Santi Michele e Magno|Santa Croce in Gerusalemme|Arcibasilica|San Giovanni in Laterano|Acquedotto Vergine|Aqua Virgo|Acqua Vergine"](41.880,12.455,41.910,12.520);
+);
+out tags bb;

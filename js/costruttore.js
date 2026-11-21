@@ -7,11 +7,11 @@ var RM=window.RM; if(!RM||RM.guasto) return;
 /* tavolozza (colori lineari) */
 var P=RM.P={ travertino:RM.col(0xe8dcc2), marmo:RM.col(0xf3ede0), tufo:RM.col(0xc9b08a), mattone:RM.col(0xb39274), intonaco:RM.col(0xe3cfa8),
   coppi:RM.col(0xb0603e), bronzo:RM.col(0x7d8a5f), oro:RM.col(0xd9b24a), ombra:RM.col(0x2c221b), sabbia:RM.col(0xd8c08f),
-  prato:RM.col(0x74a04a), chioma:RM.col(0x3d6b2c), chioma2:RM.col(0x5c8a3a), tronco:RM.col(0x5a4633), selce:RM.col(0xb9ad98), acqua:RM.col(0x6d9aa0), cocci:RM.col(0x9c7355) };
+  prato:RM.col(0x74a04a), chioma:RM.col(0x3d6b2c), chioma2:RM.col(0x5c8a3a), tronco:RM.col(0x5a4633), selce:RM.col(0xb9ad98), acqua:RM.col(0x6d9aa0), cocci:RM.col(0x9c7355), statua:RM.col(0x7a6238) };
 
 function C(){ this.pos=[]; this.nor=[]; this.col=[]; this.tip=[]; this.pila=[new THREE.Matrix4()]; }
 /* tipo del materiale: 0 muratura, 1 copertura (coppi, bronzo, oro), 2 verde. Serve al degrado. */
-function tipoDi(c){ return (c===P.coppi||c===P.oro||c===P.bronzo)?1:(c===P.prato||c===P.chioma||c===P.chioma2||c===P.acqua)?2:0; }
+function tipoDi(c){ return (c===P.coppi||c===P.oro||c===P.bronzo)?1:(c===P.prato||c===P.chioma||c===P.chioma2||c===P.acqua||c===P.statua)?2:0; }      // il tipo 2 non prende conci, crepe né crolli
 var m4=new THREE.Matrix4(), a=new THREE.Vector3(), b=new THREE.Vector3(), c=new THREE.Vector3(), n=new THREE.Vector3(), ab=new THREE.Vector3(), ac=new THREE.Vector3();
 
 /* sistema di riferimento locale: tutto ciò che fn costruisce è spostato e ruotato */
