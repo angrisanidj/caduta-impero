@@ -118,8 +118,10 @@ var TAGLIO=[
   '  float rq=clamp(vLoc.y/uAlt,0.0,1.0);',
   '  if(rq>1.0-uRovina*(0.25+1.7*rn)) discard;',
   '  if(vTipo>0.5 && 0.55*rmN(vec3(vLoc.xz*1.1,2.0))+0.45*rmH(vec3(floor(vLoc.xz*5.0+0.19),2.0))<uRovina*2.0+uCrepe*uCrepe*0.2) discard;',   // coppi caduti: chiazze irregolari
-  '}'].join(NL);
-var DICHIARA=['uniform float uRovina; uniform float uSpoglio; uniform float uAlt; uniform float uCrepe;','varying float vTipo; varying vec3 vLoc; varying vec3 vNor;',
+  '}',
+  /* smontaggio da un lato solo (il fronte sud del Colosseo): sparisce l'anello esterno, a partire dal punto più a sud e allargandosi */
+  'if(uSud>0.001){ vec2 qs=vLoc.xz/uSudR; float ro=length(qs); if(ro>0.94){ float an=acos(clamp(dot(qs/ro,uSudDir),-1.0,1.0)); if(an<3.1416*uSud*(0.9+0.2*rmH(vec3(floor(vLoc.xz*0.9),6.0)))) discard; } }'].join(NL);
+var DICHIARA=['uniform float uRovina; uniform float uSpoglio; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR;','varying float vTipo; varying vec3 vLoc; varying vec3 vNor;',
   'float rmH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
   'vec2 rmH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',
   'float rmN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f);',
@@ -149,7 +151,7 @@ var COLORA=[
   'if(vTipo>0.5 && vTipo<1.5){ diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio); }',
   'if(vTipo<1.5) diffuseColor.rgb*=mix(0.74,1.0,smoothstep(0.0,0.2,rq2));'].join(NL);      // ombra d'appoggio al piede
 function innesta(sh,u,colore){
-  sh.uniforms.uRovina=u.uRovina; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe;
+  sh.uniforms.uRovina=u.uRovina; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe; sh.uniforms.uSud=u.uSud; sh.uniforms.uSudDir=u.uSudDir; sh.uniforms.uSudR=u.uSudR;
   sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute float tipo;','varying float vTipo;','varying vec3 vLoc;','varying vec3 vNor;'].join(NL))
     .replace('#include <begin_vertex>',['#include <begin_vertex>','vTipo=tipo; vLoc=position; vNor=normal;'].join(NL));
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA);
@@ -157,7 +159,7 @@ function innesta(sh,u,colore){
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',TAGLIO+NL+'#include <clipping_planes_fragment>');
 }
 RM.matRovina=function(alt){
-  var u={uRovina:{value:0},uSpoglio:{value:0},uAlt:{value:alt||1},uCrepe:{value:0}};
+  var u={uRovina:{value:0},uSpoglio:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)}};
   var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
   m.onBeforeCompile=function(sh){ innesta(sh,u,true); };
   m.userData.u=u;

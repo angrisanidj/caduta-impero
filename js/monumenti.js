@@ -301,6 +301,8 @@ RM.moduli.push(function(anno){
     o.mat.color.copy(TINTA[q.s0]).lerp(TINTA[q.s1],q.t);
     o.presenza=p; o.g.visible=p>.01; o.g.scale.y=Math.max(p,.001);
     var rv=RM.rovina(o.id,anno); o.mat.userData.u.uRovina.value=rv.r; o.mat.userData.u.uSpoglio.value=rv.s; o.mat.userData.u.uCrepe.value=rv.c;
+    if(o.id==='colosseo'){ var us=o.mat.userData.u; us.uSudDir.value.set(-Math.sin(o.ry),Math.cos(o.ry)); us.uSudR.value.set(9.4,7.8);
+      us.uSud.value=.2*RM.sfuma(523,800,anno)+.3*RM.sfuma(846.6,847,anno); us.uRovina.value*=.4; }      // il fronte sud: cava dal VI secolo; nell'847, secondo il Parco del Colosseo, cade quel che ne resta
   });
 });
 
