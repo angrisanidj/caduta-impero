@@ -98,6 +98,15 @@ RM.h = function(x,z){
     d=Math.hypot(x-q.x,z-q.z); if(d<q.r+7){ w=1-RM.sfuma(q.r,q.r+7,d); if(w>meglio){ meglio=w; hb=q.h; } } }
   return meglio?y*(1-meglio)+hb*meglio:y;
 };
+/* quota letta da una griglia riempita al bisogno: per ciò che si muove a ogni fotogramma (passanti, fumo), dove RM.h costerebbe troppo */
+var GR=2, GX0=-360, GZ0=-430, GNX=361, GNZ=446, griglia=null;
+function nodo(c,r){ var i=r*GNX+c, v=griglia[i]; if(v!==v){ v=griglia[i]=RM.h(GX0+c*GR,GZ0+r*GR); } return v; }
+RM.hRapida = function(x,z){
+  var c=(x-GX0)/GR, r=(z-GZ0)/GR; if(c<0||r<0||c>=GNX-1||r>=GNZ-1) return RM.h(x,z);
+  if(!griglia){ griglia=new Float32Array(GNX*GNZ); for(var k=0;k<griglia.length;k++) griglia[k]=NaN; }
+  var c0=c|0, r0=r|0, fc=c-c0, fr=r-r0;
+  return (nodo(c0,r0)*(1-fc)+nodo(c0+1,r0)*fc)*(1-fr)+(nodo(c0,r0+1)*(1-fc)+nodo(c0+1,r0+1)*fc)*fr;
+};
 RM.casuale = function(seme){            // generatore ripetibile
   var s=seme>>>0;
   return function(){ s=(s+0x6D2B79F5)>>>0; var t=Math.imul(s^(s>>>15),1|s); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; };
@@ -114,10 +123,10 @@ RM.grana = grana;
 var contenitore=document.getElementById('scena'), renderer;
 try{ renderer=new THREE.WebGLRenderer({antialias:true}); }
 catch(e){ document.getElementById('errore').hidden=false; RM.guasto=true; return; }
-var piccolo=Math.min(window.innerWidth,window.innerHeight)<700;
+var piccolo=Math.min(window.innerWidth,window.innerHeight)<700; RM.piccolo=piccolo;
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,piccolo?1.5:2));
 renderer.outputEncoding=THREE.sRGBEncoding;
-renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1;
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.07;
 renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap; renderer.shadowMap.autoUpdate=false;
 contenitore.appendChild(renderer.domElement);
 RM.col=function(hex){ return new THREE.Color(hex).convertSRGBToLinear(); };
@@ -160,7 +169,7 @@ RM.frame.push(function(dt){
 });
 
 /* ---- cielo, sole, luna ---- */
-var G={ alto:RM.col(0x7fa3cf), basso:RM.col(0xe6dcc8), emiSu:RM.col(0xcfe0ff), emiGiu:RM.col(0x7a6f5c), sole:RM.col(0xfff0da), iSole:2.7, iEmi:.62 };
+var G={ alto:RM.col(0x9fb9cc), basso:RM.col(0xefe3c8), emiSu:RM.col(0xcfe0ff), emiGiu:RM.col(0x6c6a84), sole:RM.col(0xffe4bb), iSole:2.9, iEmi:.66 };      // sole caldo, ombre fredde, orizzonte color carta
 var N={ alto:RM.col(0x05070f), basso:RM.col(0x1a2238), emiSu:RM.col(0x2a3a66), emiGiu:RM.col(0x05060a), sole:RM.col(0x8fa6e8), iSole:.85, iEmi:.36 };
 var cielo=new THREE.Mesh(new THREE.SphereGeometry(3600,32,16), new THREE.ShaderMaterial({
   side:THREE.BackSide, depthWrite:false, fog:false,
@@ -182,13 +191,13 @@ var sole=new THREE.DirectionalLight(0xffffff,G.iSole);
 /* sole basso da ovest-nord-ovest: le ombre cadono verso chi guarda */
 sole.position.set(-600,330,-170); sole.target.position.set(10,0,0); scene.add(sole); scene.add(sole.target);
 sole.castShadow=true;
-var lato=piccolo?2048:4096; sole.shadow.mapSize.set(lato,lato);
+var lato=piccolo?1536:4096; sole.shadow.mapSize.set(lato,lato);
 var oc=sole.shadow.camera; oc.left=-420; oc.right=420; oc.top=420; oc.bottom=-420; oc.near=150; oc.far=1500; oc.updateProjectionMatrix();
 sole.shadow.bias=-.0007; sole.shadow.normalBias=.5;
 RM.moduli.push(function(){ renderer.shadowMap.needsUpdate=true; });
 
 /* ---- terreno: maglia fitta sulla città, larga in campagna. Si posa dopo che i monumenti hanno dichiarato le loro terrazze (RM.posa) ---- */
-var CAMPI=[0x8f9a62,0x7f8f58,0xa9a06c,0x9a9464,0x768a52,0xb0a674].map(RM.col), URBE=RM.col(0xa99d88), RIVA=RM.col(0x71844a), PRATO=RM.col(0x87935c);
+var CAMPI=[0x86a056,0x759a4c,0xb3aa62,0x9aa35a,0x6a9348,0xc0b06a].map(RM.col), URBE=RM.col(0xb8a684), RIVA=RM.col(0x5f8c46), PRATO=RM.col(0x7fa054);
 function coloreSuolo(x,z,c){
   var df=RM.distFiume(x,z), bordo=RM.distLinea(x,z,RM.MURA,true), dentro=RM.dentroMura(x,z);
   var ca=.82, sa=.57, u=(x*ca+z*sa)/26, v=(-x*sa+z*ca)/19;                  // campi: scacchiera ruotata
@@ -202,7 +211,7 @@ function coloreSuolo(x,z,c){
 }
 function nucleo(x,z){ var t=0; RM.NUCLEI.forEach(function(n){ var d=Math.hypot(x-n[0],z-n[1]); t=Math.max(t,n[2]*Math.exp(-(d*d)/(n[3]*n[3]))); }); return Math.min(1,t+.25*Math.exp(-RM.distFiume(x,z)/45)); }
 function posaSuolo(){
-  var S=300, geo=new THREE.PlaneGeometry(2,2,S,S); geo.rotateX(-Math.PI/2);
+  var S=piccolo?220:300, geo=new THREE.PlaneGeometry(2,2,S,S); geo.rotateX(-Math.PI/2);
   var pos=geo.attributes.position, uv=geo.attributes.uv, col=new Float32Array(pos.count*3), urb=new Float32Array(pos.count*2), c=new THREE.Color(), i, x, z;
   var curva=function(t){ var a=Math.abs(t); return (t<0?-1:1)*(.3*a+.7*a*a*a)*3400; };
   for(i=0;i<pos.count;i++){
@@ -227,7 +236,12 @@ function posaSuolo(){
         'float pe=sin(vXZ.x*0.21+sin(vXZ.y*0.13)*2.0)*sin(vXZ.y*0.19+sin(vXZ.x*0.11)*2.0)*0.5+0.5;',
         'float gr=dot(diffuseColor.rgb,vec3(0.34))/0.42;',
         'diffuseColor.rgb=mix(diffuseColor.rgb,uVerde*(0.72+0.4*pe)*clamp(gr,0.7,1.25),vUrb.x*smoothstep(0.1,0.5,uErba-vUrb.y*0.95)*(0.6+0.4*pe));',
-        'diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.27,0.25,0.15)*(0.8+0.4*pe),smoothstep(0.025,0.2,vPend)*0.8);'].join(A));      // scarpate: tufo e macchia
+        'diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.27,0.25,0.15)*(0.8+0.4*pe),smoothstep(0.025,0.2,vPend)*0.8);',
+        /* lontano dalla città il terreno diventa una carta antica: fondo color pergamena, tratteggio a inchiostro */
+        'float lont=smoothstep(480.0,820.0,length(vXZ));',
+        'vec3 carta=vec3(0.83,0.74,0.56)*(0.95+0.05*sin(vXZ.x*0.09)*sin(vXZ.y*0.09));',
+        'float tratto=1.0-0.3*smoothstep(0.9,1.0,sin((vXZ.x+vXZ.y)*0.4))*smoothstep(0.25,0.8,lont);',
+        'diffuseColor.rgb=mix(diffuseColor.rgb,carta*tratto,lont);'].join(A));
   };
   var suolo=new THREE.Mesh(geo,matSuolo);
   suolo.receiveShadow=true; scene.add(suolo); RM.suolo=suolo;
@@ -251,7 +265,18 @@ RM.nastro=function(linea,larga,materiale,alza,quotaFissa){
 var matStrada=new THREE.MeshStandardMaterial({color:RM.col(0xcdbfa3),roughness:1,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
 
 /* Tevere */
-RM.matFiume=new THREE.MeshStandardMaterial({color:RM.col(0x5f8a8c),roughness:.28,metalness:.1,side:THREE.DoubleSide});
+RM.matFiume=new THREE.MeshStandardMaterial({color:RM.col(0x4f97a6),roughness:.2,metalness:.1,side:THREE.DoubleSide});
+RM.tempoAcqua={value:0};
+RM.matFiume.onBeforeCompile=function(sh){                       // corrente che scorre e schiuma lungo le rive
+  var A=String.fromCharCode(10); sh.uniforms.uTempo=RM.tempoAcqua;
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying vec2 vRiva;').replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vRiva=uv;');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying vec2 vRiva; uniform float uTempo;').replace('#include <color_fragment>',['#include <color_fragment>',
+    'float bordo=abs(vRiva.x-0.5)*2.0;',
+    'float onda=sin(vRiva.y*5.0-uTempo*1.2+sin(vRiva.x*7.0+uTempo*0.5)*1.3)*0.5+0.5;',
+    'diffuseColor.rgb*=0.88+0.26*onda*(1.0-bordo);',
+    'diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*2.2+0.08,smoothstep(0.8,0.97,bordo)*(0.35+0.4*onda));'].join(A));
+};
+RM.frame.push(function(dt){ RM.tempoAcqua.value+=dt; });
 RM.posa=function(){
   if(RM.suolo) return;
   posaSuolo();
@@ -261,7 +286,7 @@ RM.posa=function(){
 
 /* ---- giorno / notte ---- */
 RM.notte=0;
-var fiumeG=RM.col(0x5f8a8c), fiumeN=RM.col(0x0d1626);
+var fiumeG=RM.col(0x4f97a6), fiumeN=RM.col(0x0d1626);
 RM.applicaLuce=function(n){
   RM.notte=n;
   cielo.material.uniforms.alto.value.copy(G.alto).lerp(N.alto,n); cielo.material.uniforms.basso.value.copy(G.basso).lerp(N.basso,n);
@@ -279,12 +304,26 @@ function misura(){
 }
 window.addEventListener('resize',misura); misura();
 if(window.ResizeObserver) new ResizeObserver(misura).observe(contenitore);
-var orologio=new THREE.Clock();
+/* Regolatore: se i fotogrammi durano troppo, la scena rinuncia per gradi a ciò che costa di più.
+   1 = risoluzione a un pixel per pixel; 2 = niente ombre; 3 = niente passanti né fumo. Non risale: evita di oscillare. */
+RM.livello=0;
+function alleggerisci(){
+  RM.livello++;
+  if(RM.livello===1){ renderer.setPixelRatio(1); misura(); }
+  else if(RM.livello===2){ sole.castShadow=false; }
+  else if(RM.livello===3){ RM.leggero=true; }
+}
+var orologio=new THREE.Clock(), somma=0, quanti=0, scalda=40;
 (function ciclo(){
   requestAnimationFrame(ciclo);
-  var dt=Math.min(orologio.getDelta(),.1);
+  var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1);
+  if(!document.hidden && grezzo<.4){                       // le pause (scheda nascosta, caricamento) non contano
+    if(scalda>0) scalda--; else { somma+=grezzo; quanti++; }
+    if(quanti>=50){ if(somma/quanti>.036 && RM.livello<3){ alleggerisci(); scalda=20; } somma=0; quanti=0; }
+  }
   for(var i=0;i<RM.frame.length;i++) RM.frame[i](dt);
   controlli.update();
   renderer.render(scene,camera);
 })();
+
 })();

@@ -201,3 +201,7 @@ body.roma-grande .pellegrino{top:98px}
 @media (max-width:700px){ .pellegrino{font-size:9.5px;padding:5px 9px} }
 
 .scheda{z-index:4}.evento{z-index:2}.stazioni3d{z-index:1}
+
+/* vignettatura calda attorno alla scena */
+.riquadro.roma::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,rgba(0,0,0,0) 58%,rgba(70,40,12,.3) 100%)}
+.conta,.notte,.grande,.pellegrino{z-index:3}

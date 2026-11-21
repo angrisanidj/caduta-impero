@@ -76,8 +76,8 @@ var texLumi=RM.tela(128,128,function(g,W,H){
   FIN.forEach(function(f){ if(f[4]){ g.fillStyle='#ffc070'; g.fillRect(f[0],f[1],f[2],f[3]); } });
 });
 var texCoppi=RM.tela(64,64,function(g,W,H){
-  g.fillStyle='#9b6248'; g.fillRect(0,0,W,H);
-  for(var x=0;x<W;x+=4){ g.fillStyle=x%8?'#8c573f':'#b07a5c'; g.fillRect(x,0,2,H); }
+  g.fillStyle='#aa6243'; g.fillRect(0,0,W,H);
+  for(var x=0;x<W;x+=4){ g.fillStyle=x%8?'#9a573e':'#be8263'; g.fillRect(x,0,2,H); }
   for(var i=0;i<140;i++){ g.fillStyle='rgba('+(rf()<.5?'70,40,25':'230,170,120')+','+(.05+rf()*.12)+')'; g.fillRect(rf()*W,rf()*H,3,5); }
   g.fillStyle='rgba(60,35,22,.22)'; for(var y=0;y<H;y+=8) g.fillRect(0,y,W,1);
 }); texCoppi.repeat.set(2,1.5);
@@ -145,33 +145,50 @@ var geoTettoRotto=(function(){ var f=new Forma();
   return f.fine(); })();
 /* cumulo di macerie */
 var geoMacerie=(function(){ var f=new Forma(), r=RM.casuale(99);                 // tre cumuli bassi e sformati, non un solo cono
-  [[-.14,-.1,.36],[.2,.16,.26],[.1,-.28,.2]].forEach(function(c){
-    var n=7, est=[], int=[], k, j, alto=.5+.5*r();
+  [[-.12,-.08,.38],[.2,.2,.26]].forEach(function(c){
+    var n=5, est=[], int=[], k, j, alto=.5+.5*r();
     for(k=0;k<n;k++){ var a=k/n*6.283+r(), re=c[2]*(.8+.4*r()), ri=c[2]*(.35+.3*r()); est.push([c[0]+Math.cos(a)*re,0,c[1]+Math.sin(a)*re]); int.push([c[0]+Math.cos(a)*ri,alto*(.6+.4*r()),c[1]+Math.sin(a)*ri]); }
     for(k=0;k<n;k++){ j=(k+1)%n; f.t(0,est[k],int[k],est[j]).t(0,est[j],int[k],int[j]).t(0,int[k],[c[0],alto*.85,c[1]],int[j]); }
   });
   return f.fine(); })();
 /* sterpi e alberelli cresciuti fra i muri */
 var geoSterpi=(function(){ var B=new RM.Costruttore(), secco=RM.col(0x8a8a5c), rovo=RM.col(0x66744a);
-  [[-.3,-.26,.13,rovo],[.3,.32,.16,P.chioma2],[.12,-.42,.1,secco],[-.42,.33,.11,secco],[.02,.06,.14,rovo]].forEach(function(c){
-    B.geo(new THREE.SphereGeometry(c[2],5,3).scale(1,.75,1).translate(c[0],c[2]*.45,c[1]),c[3]); });
+  [[-.3,-.26,.14,rovo],[.3,.32,.17,P.chioma2],[.12,-.42,.11,secco],[-.38,.3,.12,secco]].forEach(function(c){
+    B.geo(new THREE.SphereGeometry(c[2],4,2).scale(1,.75,1).translate(c[0],c[2]*.45,c[1]),c[3]); });
   return B.geometria(); })();
 
 /* ---------- maglie ---------- */
 var matMuri=new THREE.MeshStandardMaterial({map:texMuri,roughness:.95,side:THREE.DoubleSide,emissive:new THREE.Color(0xffffff),emissiveMap:texLumi,emissiveIntensity:0});
 var matTetti=new THREE.MeshStandardMaterial({map:texCoppi,roughness:.9,side:THREE.DoubleSide});
 var matCorte=new THREE.MeshStandardMaterial({color:RM.col(0x8f7f6a),roughness:1});
+/* ombra d'appoggio: le pareti si scuriscono verso il suolo, così le case sembrano posate e non incollate */
+function appoggio(mat){ var A=String.fromCharCode(10); mat.onBeforeCompile=function(sh){
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying float vAlto;').replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vAlto=position.y;');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying float vAlto;').replace('#include <color_fragment>','#include <color_fragment>'+A+'diffuseColor.rgb*=mix(0.6,1.0,smoothstep(0.0,0.5,vAlto));'); }; return mat; }
+appoggio(matMuri);
 function istanze(geo,mat,quante){ var m=new THREE.InstancedMesh(geo,mat,quante); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.castShadow=m.receiveShadow=true; m.frustumCulled=false; RM.scene.add(m); return m; }
+/* Pacco di istanze compattato: le istanze a scala zero (case sparite, rovine non ancora nate) non vengono inviate alla scheda grafica.
+   Si scrive per indice come su una InstancedMesh; stringi() ricopia in testa solo quelle vive e aggiorna il conteggio. */
+function pacco(geo,mat,quante){
+  var m=istanze(geo,mat,quante), M=new Float32Array(quante*16), C=new Float32Array(quante*3), vivo=new Uint8Array(quante);
+  m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(quante*3),3); m.instanceColor.setUsage(THREE.DynamicDrawUsage); m.count=0;
+  return { maglia:m,
+    setMatrixAt:function(i,mat){ var e=mat.elements, o=i*16; for(var j=0;j<16;j++) M[o+j]=e[j]; vivo[i]=(e[0]*e[0]+e[1]*e[1]+e[2]*e[2])>1e-10?1:0; },
+    setColorAt:function(i,c){ C[i*3]=c.r; C[i*3+1]=c.g; C[i*3+2]=c.b; },
+    stringi:function(){ var k=0, a=m.instanceMatrix.array, ca=m.instanceColor.array, i, j, o, t;
+      for(i=0;i<quante;i++) if(vivo[i]){ o=i*16; t=k*16; for(j=0;j<16;j++) a[t+j]=M[o+j]; ca[k*3]=C[i*3]; ca[k*3+1]=C[i*3+1]; ca[k*3+2]=C[i*3+2]; k++; }
+      m.count=k; m.instanceMatrix.needsUpdate=true; m.instanceColor.needsUpdate=true; } };
+}
 var conta=[0,0,0]; isolati.forEach(function(b){ b.ti=conta[b.tipo]++; });
-var vivi=FORME.map(function(g,k){ return istanze(g,[matMuri,matTetti,matCorte],Math.max(1,conta[k])); });
-var ruderi=istanze(geoRudere,new THREE.MeshStandardMaterial({map:texRudere,roughness:1,side:THREE.DoubleSide}),N);
-var tettiRotti=istanze(geoTettoRotto,new THREE.MeshStandardMaterial({map:texCoppi,roughness:1,side:THREE.DoubleSide}),N);
-var macerie=istanze(geoMacerie,new THREE.MeshStandardMaterial({roughness:1,side:THREE.DoubleSide,flatShading:true}),N);
-var sterpi=istanze(geoSterpi,RM.matPietra(),N); sterpi.castShadow=false;
+var vivi=FORME.map(function(g,k){ return pacco(g,[matMuri,matTetti,matCorte],Math.max(1,conta[k])); });
+var ruderi=pacco(geoRudere,appoggio(new THREE.MeshStandardMaterial({map:texRudere,roughness:1,side:THREE.DoubleSide})),N);
+var tettiRotti=pacco(geoTettoRotto,new THREE.MeshStandardMaterial({map:texCoppi,roughness:1,side:THREE.DoubleSide}),N);
+var macerie=pacco(geoMacerie,new THREE.MeshStandardMaterial({roughness:1,side:THREE.DoubleSide,flatShading:true}),N);
+var sterpi=pacco(geoSterpi,RM.matPietra(),N); sterpi.maglia.castShadow=false;
 var geoPiano=new THREE.PlaneGeometry(1,1); geoPiano.rotateX(-Math.PI/2);
-var incolti=istanze(geoPiano,new THREE.MeshStandardMaterial({map:texIncolto,roughness:1,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}),N); incolti.castShadow=false;
+var incolti=pacco(geoPiano,new THREE.MeshStandardMaterial({map:texIncolto,roughness:1,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}),N); incolti.maglia.castShadow=false;
 var geoOrto=new THREE.PlaneGeometry(1,1); geoOrto.rotateX(-Math.PI/2);
-var orti=istanze(geoOrto,new THREE.MeshStandardMaterial({map:texOrto,roughness:1,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}),N); orti.castShadow=false;
+var orti=pacco(geoOrto,new THREE.MeshStandardMaterial({map:texOrto,roughness:1,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}),N); orti.maglia.castShadow=false;
 
 /* alberi: cipressi e pini a ombrello */
 var matAlbero=RM.matPietra();
@@ -192,7 +209,7 @@ gLuci.setAttribute('position',new THREE.BufferAttribute(pPos,3)); gLuci.setAttri
 var luci=new THREE.Points(gLuci,new THREE.PointsMaterial({size:11,map:texAlone,vertexColors:true,blending:THREE.AdditiveBlending,transparent:true,opacity:0,depthWrite:false,sizeAttenuation:true,fog:false}));
 luci.visible=false; luci.frustumCulled=false; RM.scene.add(luci);
 
-var INTONACI=[0xe6d6b4,0xd9bf9a,0xe8e0cf,0xd6b09a,0xeee8da,0xdccaa6].map(RM.col), CAMPI=[0xf2f0e0,0xe6dcae,0xd3dcae,0xd6c896,0xc9c2a0].map(RM.col);
+var INTONACI=[0xf0dfb8,0xe6c79c,0xf2e9d2,0xe3b89c,0xf6efde,0xe8d2a6].map(RM.col), CAMPI=[0xf2f0e0,0xe6dcae,0xd3dcae,0xd6c896,0xc9c2a0].map(RM.col);
 var MURO_VECCHIO=[0xb48f72,0xa98a70,0x9d9278,0xb89a7c].map(RM.col), MACERIA=RM.col(0xa58c74), MACERIA_VECCHIA=RM.col(0x8f8468), ERBE=[0xffffff,0xe9e6c8,0xd6e0b8,0xf0e2c0].map(RM.col), COPPI_ROTTI=RM.col(0xb8a898);
 var d=new THREE.Object3D(), c=new THREE.Color(), bianco=new THREE.Color(1,1,1);
 
@@ -244,13 +261,12 @@ function aggiorna(anno){
     var mosso=false;
     lista.forEach(function(al,j){
       var qa=al.b<0?1:isolati[al.b].alb; if(Math.abs(qa-al.q0)<.002) return;
-      al.q0=qa; mosso=true; d.rotation.set(0,j,0); d.position.set(al.x,al.y-.05,al.z); d.scale.setScalar(al.s*qa); d.updateMatrix(); magliaAlberi[k].setMatrixAt(j,d.matrix);
+      al.q0=qa; mosso=true; d.rotation.set(0,j,0); d.position.set(al.x,al.y-.05,al.z); d.scale.setScalar(al.s*qa*1.25); d.updateMatrix(); magliaAlberi[k].setMatrixAt(j,d.matrix);
     });
     if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;
   });
   if(toccati){
-    vivi.forEach(function(m){ m.instanceMatrix.needsUpdate=true; if(m.instanceColor) m.instanceColor.needsUpdate=true; });
-    [ruderi,tettiRotti,macerie,sterpi,incolti,orti].forEach(function(m){ m.instanceMatrix.needsUpdate=true; if(m.instanceColor) m.instanceColor.needsUpdate=true; });
+    vivi.concat([ruderi,tettiRotti,macerie,sterpi,incolti,orti]).forEach(function(p){ p.stringi(); });
     gLuci.attributes.color.needsUpdate=true;
   }
   matMuri.emissiveIntensity=RM.notte*2.2; luci.material.opacity=RM.notte; luci.visible=RM.notte>.02;

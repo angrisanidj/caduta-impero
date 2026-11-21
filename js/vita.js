@@ -6,7 +6,7 @@ var RM=window.RM; if(!RM||RM.guasto||!RM.isolati) return;
 var D=window.RM_DATI, P=RM.P, rnd=RM.casuale(1453), isolati=RM.isolati, N=isolati.length, annoOra=235, quotaGente=1, tempo=0;
 
 /* ---------- gente ---------- */
-var PER_ISOLATO=2, NR=N*PER_ISOLATO, NV=1500, NZ=700, NG=360, NP=NR+NV+NZ+NG, quotaPellegrini=0;
+var PER_ISOLATO=RM.piccolo?1:2, NR=N*PER_ISOLATO, NV=RM.piccolo?600:1500, NZ=RM.piccolo?350:700, NG=RM.piccolo?200:360, NP=NR+NV+NZ+NG, quotaPellegrini=0;
 var pos=new Float32Array(NP*3), col=new Float32Array(NP*3), giro=new Float32Array(NP), passo=new Float32Array(NP);
 var ABITI=[0xfaf6ec,0x7a4a2e,0x8a5a3a,0x9c3b2e,0x4a5a6c,0x5f5a3c,0x3c342c,0xb5803f].map(RM.col), i, c;
 for(i=0;i<NP;i++){
@@ -55,13 +55,13 @@ function muoviGente(dt){
     if(n>=visibili){ pos[o+1]=-60; continue; }
     w.s+=w.vel*dt; if(w.s>1||w.s<0){ w.vel=-w.vel; w.s=Math.max(0,Math.min(1,w.s)); }
     var pp=vie[w.v].p, t=w.s*(pp.length-1), k0=Math.min(pp.length-2,t|0), a=pp[k0], bb=pp[k0+1], g=t-k0, dx=bb.x-a.x, dz=bb.z-a.z, L=Math.hypot(dx,dz)||1;
-    pos[o]=a.x+dx*g-dz/L*w.lato; pos[o+2]=a.z+dz*g+dx/L*w.lato; pos[o+1]=RM.h(pos[o],pos[o+2])+.2;
+    pos[o]=a.x+dx*g-dz/L*w.lato; pos[o+2]=a.z+dz*g+dx/L*w.lato; pos[o+1]=RM.hRapida(pos[o],pos[o+2])+.2;
   }
   var inPiazza=Math.round(NZ*quotaGente);
   for(n=0;n<NZ;n++,j++){
     o=j*3; var u=folla[n];
     if(n>=inPiazza){ pos[o+1]=-60; continue; }
-    u.a+=u.vel*dt; pos[o]=u.p[0]+Math.cos(u.a)*u.r*u.p[2]; pos[o+2]=u.p[1]+Math.sin(u.a)*u.r*u.p[3]; pos[o+1]=RM.h(pos[o],pos[o+2])+.3;
+    u.a+=u.vel*dt; pos[o]=u.p[0]+Math.cos(u.a)*u.r*u.p[2]; pos[o+2]=u.p[1]+Math.sin(u.a)*u.r*u.p[3]; pos[o+1]=RM.hRapida(pos[o],pos[o+2])+.3;
   }
   var arrivati=Math.round(NG*quotaPellegrini);
   for(n=0;n<NG;n++,j++){
@@ -69,7 +69,7 @@ function muoviGente(dt){
     if(n>=arrivati){ pos[o+1]=-60; continue; }
     if(n%2){ pg.a+=pg.vel*dt*3; pos[o]=-246+Math.cos(pg.a)*pg.r*5.5; pos[o+2]=-108+Math.sin(pg.a)*pg.r*4.2; }                       // sagrato e atrio
     else{ pg.s+=pg.vel*dt; if(pg.s>1||pg.s<0){ pg.vel=-pg.vel; pg.s=Math.max(0,Math.min(1,pg.s)); } pos[o]=-158-89*pg.s; pos[o+2]=-111.5+3.5*pg.s+pg.lato; }   // dal ponte alla basilica
-    pos[o+1]=RM.h(pos[o],pos[o+2])+.3;
+    pos[o+1]=RM.hRapida(pos[o],pos[o+2])+.3;
   }
   gGente.attributes.position.needsUpdate=true;
 }
@@ -139,5 +139,10 @@ RM.moduli.push(function(anno){
   mostraForni();
   matGente.opacity=1-.8*RM.notte;
 });
-RM.frame.push(function(dt){ tempo+=dt; muoviGente(dt); muoviFumo(); muoviBarche(dt); });
+RM.frame.push(function(dt){
+  tempo+=dt;
+  if(RM.leggero){ if(gente.visible){ gente.visible=false; fumo.visible=false; } }       // regolatore al terzo grado: si rinuncia a passanti e fumo
+  else { muoviGente(dt); muoviFumo(); }
+  muoviBarche(dt);
+});
 })();

@@ -7,7 +7,7 @@ var RM=window.RM; if(!RM||RM.guasto) return;
 /* tavolozza (colori lineari) */
 var P=RM.P={ travertino:RM.col(0xe8dcc2), marmo:RM.col(0xf3ede0), tufo:RM.col(0xc9b08a), mattone:RM.col(0xb39274), intonaco:RM.col(0xe3cfa8),
   coppi:RM.col(0xb0603e), bronzo:RM.col(0x7d8a5f), oro:RM.col(0xd9b24a), ombra:RM.col(0x2c221b), sabbia:RM.col(0xd8c08f),
-  prato:RM.col(0x7c8f4a), chioma:RM.col(0x3f5a2e), chioma2:RM.col(0x56703a), tronco:RM.col(0x5a4633), selce:RM.col(0xb9ad98), acqua:RM.col(0x6d9aa0) };
+  prato:RM.col(0x74a04a), chioma:RM.col(0x3d6b2c), chioma2:RM.col(0x5c8a3a), tronco:RM.col(0x5a4633), selce:RM.col(0xb9ad98), acqua:RM.col(0x6d9aa0) };
 
 function C(){ this.pos=[]; this.nor=[]; this.col=[]; this.tip=[]; this.pila=[new THREE.Matrix4()]; }
 /* tipo del materiale: 0 muratura, 1 copertura (coppi, bronzo, oro), 2 verde. Serve al degrado. */
@@ -146,7 +146,8 @@ var COLORA=[
   '  } else diffuseColor.rgb*=1.0-0.34*uCrepe*smoothstep(0.5,0.8,rmN(vec3(cp.x*4.0,vLoc.y*0.45,3.0)));',                                              // colature
   '}',
   'if(vTipo<1.5){ float rm=smoothstep(0.35,0.72,rmN(vLoc*2.3+0.11)); diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.5,0.56,0.38),clamp((uRovina*2.4+uCrepe*0.5)*rm*(1.15-rq2),0.0,1.0)); }',
-  'if(vTipo>0.5 && vTipo<1.5){ diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio); }'].join(NL);
+  'if(vTipo>0.5 && vTipo<1.5){ diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio); }',
+  'if(vTipo<1.5) diffuseColor.rgb*=mix(0.74,1.0,smoothstep(0.0,0.2,rq2));'].join(NL);      // ombra d'appoggio al piede
 function innesta(sh,u,colore){
   sh.uniforms.uRovina=u.uRovina; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe;
   sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute float tipo;','varying float vTipo;','varying vec3 vLoc;','varying vec3 vNor;'].join(NL))
