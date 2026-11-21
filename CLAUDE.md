@@ -1,6 +1,6 @@
 # Come finisce un impero
 
-Infografica interattiva in italiano: l'Occidente romano dal 235 all'852. Due scene fisse (mappa dell'Impero in SVG, Roma in 3D) guidate da una linea del tempo di 46 tappe in sei atti. Pagina statica, nessun bundler. Si risponde all'utente in italiano.
+Infografica interattiva in italiano: l'Occidente romano dal 235 all'852. Due scene fisse (mappa dell'Impero in SVG, Roma in 3D) guidate da una linea del tempo di 47 tappe in sei atti. Pagina statica, nessun bundler. Si risponde all'utente in italiano.
 
 Pubblicata su https://angrisanidj.github.io/caduta-impero/ (repository `angrisanidj/caduta-impero`, ramo `main`, Pages dalla radice).
 
