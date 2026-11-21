@@ -1,0 +1,7 @@
+[out:json][timeout:90];
+(
+  way["name"~"^Via (Beniamino Franklin|Rubattino|Giovanni Branca|Marmorata|Florio|Giovanni Battista Bodoni|Luigi Vanvitelli|Amerigo Vespucci)$"](41.874,12.468,41.886,12.482);
+  way["name"~"^(Via delle Botteghe Oscure|Via Michelangelo Caetani|Via dei Delfini|Via dei Polacchi|Via Latina|Piazza Galeria)$"](41.870,12.474,41.897,12.512);
+  nwr["name"~"Porta Latina|Porta San Sebastiano|Palazzo Mattei"](41.870,12.474,41.897,12.512);
+);
+out tags bb;

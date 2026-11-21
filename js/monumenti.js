@@ -254,6 +254,36 @@ var M=[
     casa(B,.1,-2.2,.2,3.4,2.2,1.7); B.aperture(-3.6,1.33,-.8,1.33,4,.1,.75,.4);        // domus a due piani con portico ad arcate
     casa(B,.1,2.6,-.1,2.6,2,1.4);
  }},
+ /* Teatro e Crypta di Balbo. Posizioni reali (OpenStreetMap): l'isolato del museo fra via Caetani, via delle Botteghe Oscure, via dei Polacchi e via dei Delfini è la crypta;
+    la cavea (95 m di diametro) sta a ovest, sotto palazzo Mattei. Misure del portico e forma dell'esedra sono indicative. */
+ {id:'balbo', nome:'Teatro e Crypta di Balbo', x:-57.7,z:-21.5, ry:-PI/2, zone:[[0,2.4,5.6],[0,-5.6,6.8]], et:1, fa:function(B){
+    teatro(B,4.75,2);                                                                              // cavea verso ovest, scena lungo l'odierna via Caetani
+    portico(B,9,8.4,0,0,-5.6,.9);                                                                  // la crypta: cortile porticato dietro la scena
+    var es=RM.ellisse(1.1,1.1,12,PI,2*PI).map(function(p){ return [p[0],p[1]-9.8]; });             // l'esedra sul lato est: tombe nel VI secolo, scarico nel VII, calcara nell'VIII
+    B.striscia(es,0,es,1.5,P.mattone,false).fornici(es,.2,.8,.5,1,false);
+ }},
+ /* Emporio. La Porticus Aemilia è posta sul muro superstite fra via Rubattino e via Florio (OpenStreetMap, relazione 17192321), che ne dà l'orientamento, e va da via Marmorata
+    a via Franklin: 487 x 60 m, cinquanta navate a gradoni verso il fiume (ricostruzione di G. Gatti sulla Forma Urbis). Che il muro sia al centro dell'edificio è una nostra scelta.
+    I magazzini di Galba (circa 200 x 155 m, tre cortili) sono dietro, verso il Testaccio: la posizione è indicativa, la pianta è schematica. Banchine lungo la riva reale. */
+ {id:'emporio', nome:'Emporio e Porticus Aemilia', x:-89.6,z:133, ry:.764, lunga:[48.7,4.2], zone:[[-15,13,8.6],[-5,13,8.6]], et:1, fa:function(B){
+    var n=50, w=48.7/n, r=w/2-.04, j, k, i;
+    for(j=0;j<4;j++){ var z0=-3+j*1.5, hh=.62+j*.17, arco=[];
+      for(i=0;i<=5;i++) arco.push([r*Math.cos(PI*i/5), hh+r*Math.sin(PI*i/5)]);
+      B.scatola(48.7,hh,1.5,0,0,z0+.75,P.tufo);
+      for(k=0;k<n;k++){ var cx=-24.35+(k+.5)*w;
+        for(i=0;i<5;i++){
+          B.quad([cx+arco[i][0],arco[i][1],z0],[cx+arco[i+1][0],arco[i+1][1],z0],[cx+arco[i+1][0],arco[i+1][1],z0+1.5],[cx+arco[i][0],arco[i][1],z0+1.5],P.intonaco);
+          B.tri([cx,hh,z0],[cx+arco[i][0],arco[i][1],z0],[cx+arco[i+1][0],arco[i+1][1],z0],j?P.tufo:P.ombra);                              // testata della volta: aperta verso il fiume
+          if(j===3) B.tri([cx,hh,z0+1.5],[cx+arco[i][0],arco[i][1],z0+1.5],[cx+arco[i+1][0],arco[i+1][1],z0+1.5],P.tufo);
+        }
+      }
+    }
+    B.aperture(24.35,-3,-24.35,-3,n,.05,.5);
+    for(k=0;k<4;k++){ var ax=-19.1+k*6.07; B.scatola(1.8,.95,15.5,ax,0,13,P.mattone).falde(15.6,.4,1.9,ax,.95,13,P.coppi,PI/2,P.mattone); }     // magazzini di Galba: quattro ali di celle, tre cortili
+    [-1,1].forEach(function(q){ B.scatola(20,.95,1.8,-10,0,13+q*6.85,P.mattone).falde(20.1,.4,1.9,-10,.95,13+q*6.85,P.coppi,0,P.mattone); });
+    B.scatola(47,1.5,1,0,-1.75,-13.7,P.travertino);                                                                                         // muro di banchina
+    for(k=-4;k<=4;k++) B.scatola(1.8,1.15,1.2,k*5.2,-1.75,-14.6,P.travertino);                                                             // scale e rampe verso l'acqua
+ }},
  {id:'testaccio', nome:'Monte Testaccio', x:-84,z:184, ry:0, zone:[[4,-10,6],[0,-3,10.5],[1,5,11],[4,11,6]], et:1, fa:function(B){       // collina di cocci d'anfora: 35 m sul piano, qui 1,8 volte tanto come gli altri rilievi
     var H=6.3, giri=[[1,-.15],[.86,.42*H],[.72,.78*H],[.6,.95*H],[.45,H]], k, a, b;
     function giro(s){ return TESTACCIO.map(function(p){ return [p[0]*s,p[1]*s]; }); }
@@ -290,7 +320,8 @@ M.forEach(function(o){
   RM.scene.add(o.g);
   if(o.et){ o.div=document.createElement('span'); o.div.textContent=o.nome; etichette.appendChild(o.div); o.div.addEventListener('click',function(){ if(RM.apriScheda) RM.apriScheda(o.id); }); }
 });
-RM.MONUMENTI=M.filter(function(o){ return o.nome; }).concat([{id:'mura', nome:'Mura Aureliane', x:106,z:-203, raggio:28, alto:2}, {id:'acquedotti', nome:'Acquedotti', note:{chiuso:'tagliati nel 537'}, x:249,z:12, raggio:30, alto:3}]);
+RM.MONUMENTI=M.filter(function(o){ return o.nome; }).concat([{id:'mura', nome:'Mura Aureliane', x:106,z:-203, raggio:28, alto:2}, {id:'acquedotti', nome:'Acquedotti', note:{chiuso:'tagliati nel 537'}, x:249,z:12, raggio:30, alto:3},
+  {id:'antoniniano', nome:'Acquedotto Antoniniano', note:{chiuso:'tagliato nel 537'}, x:120,z:200, raggio:26, alto:2}]);
 
 /* stato in un dato anno: {s0, s1, t}, con t che sfuma nei sei anni prima del cambio. Le comparse decadono verso il 500. */
 var COMPARSA=[[0,'uso'],[500,'chiuso']];

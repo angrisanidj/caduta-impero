@@ -55,14 +55,18 @@ var mura=(function(){
    La Traiana arrivava al Gianicolo quasi a livello del suolo e scendeva il pendio verso i mulini: qui è un muro basso che segue il terreno.
    La rovina nel tempo. Documentati: il taglio del 537 (Procopio); i quattro condotti rifatti da Adriano I (Liber Pontificalis, vita di Adriano, cc. 59-65):
    Sabbatina cioè Traiana e Iobia, rotte da vent'anni (quindi, per Duchesne, dall'assedio di Astolfo del 756 e in funzione prima), Claudia, che serviva il Laterano
-   e portava ormai poca acqua, Vergine, «piena di rovine». La Iobia era un ramo della Marcia verso porta Appia e il Tevere, che qui non è disegnato: della linea
-   della Marcia torna in piedi solo il tronco fuori città, fino al punto dove il ramo si staccava (porta Furba). Ipotesi nostre: quali tratti cadono e quando,
+   e portava ormai poca acqua, Vergine, «piena di rovine». La Iobia, secondo l'ipotesi più diffusa (Lanciani, Duchesne; Ashby dubita), è il ramo che Caracalla
+   costruì per le sue terme, l'Antoniniano: della linea della Marcia torna in piedi solo il tronco fuori città, e con esso questo ramo. Ipotesi nostre: quali tratti cadono e quando,
    quanto fosse stato riparato dopo il 554, e che gli archi neroniani oltre il Laterano, mai nominati dalle fonti, non vengano più rialzati. I tratti rifatti nell'VIII secolo hanno il colore del mattone di recupero. */
 var acque=(function(){
   var LINEE=[{passo:3.6, p:[[619,361,9],[420,170,8.8],[249,12,8.6],[163,62,8.45],[89,74,8.3],[40,54,8.2],[29,51,8.18]]},       // Claudia e Anio Novus fino a porta Maggiore, poi archi neroniani sul Celio fino al Palatino
              {passo:3.2, p:[[600,330,8.5],[400,140,8.25],[255,5,8],[208.5,-53.5,7.9],[160,-84,7.8],[136,-92,7.75]]},              // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina, poi interrate verso le terme di Diocleziano
              {passo:1.5, p:[[-22,-175,3.9],[-19,-150,3.85],[-17,-93,3.75],[-44,-74,3.7]]},                                    // Vergine: esce dalle pendici del Pincio e attraversa il Campo Marzio
-             {passo:1.6, suolo:.5, p:[[-422,28],[-371,37.8],[-311,40.8],[-263,41.8],[-240,43.5],[-198,46],[-160,33]]}];                                             // Traiana: lungo l'Aurelia (dove oggi corre l'acqua Paola, che ne riusa il percorso), poi giù dal Gianicolo fino ai mulini di Trastevere
+             {passo:1.6, suolo:.5, p:[[-422,28],[-371,37.8],[-311,40.8],[-263,41.8],[-240,43.5],[-198,46],[-160,33]]},
+             /* Antoniniano (212-213), il ramo per le terme di Caracalla. Punti reali: i resti di piazza Galeria e l'arco detto di Druso (OpenStreetMap). Secondo Ashby correva interrato o su
+                sostruzioni lungo la via Latina e saliva su arcate solo presso le mura e sulla via Appia: qui si vede dove il terreno scende sotto il canale. La quota sull'arco di Druso
+                (fondo del canale a 41,4 m sul mare, circa otto metri sopra la strada) è misurata; il resto del profilo e l'arrivo alle cisterne delle terme sono ricostruiti. */
+             {passo:1.5, p:[[240,214,4.42],[175.4,200.9,4.28],[133.7,208.1,4.15],[68,175,4.02]]}];                                             // Traiana: lungo l'Aurelia (dove oggi corre l'acqua Paola, che ne riusa il percorso), poi giù dal Gianicolo fino ai mulini di Trastevere
   var el=[], rnd=RM.casuale(537), CIMA=.48;                                     // altezza del pezzo d'arcata (arco e canale), in quota della luce
   LINEE.forEach(function(l,li){
     for(var i=0;i<l.p.length-1;i++){
@@ -74,14 +78,15 @@ var acque=(function(){
       }
     }
   });
-  var sorte={}, RIPARA=[.5,.85,.4,1], INCURIA=[.3,.2,.35,.1];                    // per linea: quota dei tagli riparati dopo il 554; quota dei tratti che cedono per incuria fra VI e VIII secolo
+  var sorte={}, RIPARA=[.5,.85,.4,1,.85], INCURIA=[.3,.2,.35,.1,.2], VENTI={1:1,3:1,4:1};        // VENTI: le linee «rotte da vent'anni» del Liber Pontificalis (Marcia-Iobia, Sabbatina, e l'Antoniniano se è la Iobia)
+  // RIPARA e INCURIA, per linea: quota dei tagli riparati dopo il 554; quota dei tratti che cedono per incuria fra VI e VIII secolo
   el.forEach(function(e){
     var b=sorte[e.blocco]||(sorte[e.blocco]=[rnd(),rnd(),rnd(),rnd()]), c=sorte['c'+e.blocchetto]||(sorte['c'+e.blocchetto]=[rnd(),rnd()]);
     e.taglio=b[0]<.4?536.9+b[1]*.5:9999;                                           // il taglio del 537 colpisce tratti contigui
     e.ripara=e.taglio<9999&&!e.perso&&b[2]<RIPARA[e.li]?556+b[3]*50:9999;          // riparazioni dopo la Prammatica Sanzione
     e.cede=c[0]<(e.perso?.65:INCURIA[e.li])?570+c[1]*190:9999;                     // crolli per incuria
-    e.rotto756=(e.li===1||e.li===3)&&b[1]<.45?756+b[3]*.4:9999;                    // Sabbatina e Iobia: di nuovo rotte, probabilmente nell'assedio di Astolfo
-    e.rifatto=e.perso?9999:(e.li===1||e.li===3?775:776)+b[3]*(e.li===1||e.li===3?3:13);   // Adriano I
+    e.rotto756=VENTI[e.li]&&b[1]<.45?756+b[3]*.4:9999;                    // Sabbatina e Iobia: di nuovo rotte, probabilmente nell'assedio di Astolfo
+    e.rifatto=e.perso?9999:(VENTI[e.li]?775:776)+b[3]*(VENTI[e.li]?3:13);   // Adriano I
   });
   el=el.filter(function(e){ return e.vis; }); RM.campateAcquedotti=el;          // sotto le arcate non si costruisce (js/citta.js)
   /* arcata: due mezze pile, arco a tutto sesto, canale. Pila: le due mezze pile sotto l'imposta, allungate fino al suolo */

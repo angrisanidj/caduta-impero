@@ -1,0 +1,1987 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-07-28T02:16:18Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 365322259,
+  "lat": 41.8765186,
+  "lon": 12.5024875,
+  "tags": {
+    "access": "yes",
+    "bus": "no",
+    "hgv": "no",
+    "historic": "city_gate",
+    "horse": "yes",
+    "maxwidth": "2.5",
+    "name": "Porta Latina",
+    "wikidata": "Q1720229",
+    "wikimedia_commons": "File:Porta Latina, Parco Egerio, Roma, Italia Sep 01, 2020 01-08-26 PM.jpeg",
+    "wikipedia": "en:Porta Latina"
+  }
+},
+{
+  "type": "way",
+  "id": 22884964,
+  "bounds": {
+    "minlat": 41.8741792,
+    "minlon": 12.5064646,
+    "maxlat": 41.8745857,
+    "maxlon": 12.5068028
+  },
+  "tags": {
+    "fixme": "this is a dual carriageway",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza Galeria",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 22956208,
+  "bounds": {
+    "minlat": 41.8774267,
+    "minlon": 12.4796428,
+    "maxlat": 41.8780891,
+    "maxlon": 12.4805163
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "sidewalk:right:surface": "asphalt",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 22979124,
+  "bounds": {
+    "minlat": 41.8937995,
+    "minlon": 12.4783174,
+    "maxlat": 41.8949032,
+    "maxlon": 12.4784135
+  },
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "name": "Via Michelangelo Caetani",
+    "name:etymology:wikidata": "Q969336",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 23265952,
+  "bounds": {
+    "minlat": 41.8818194,
+    "minlon": 12.4769422,
+    "maxlat": 41.8818483,
+    "maxlon": 12.4770069
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Marmorata",
+    "sidewalk": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23265954,
+  "bounds": {
+    "minlat": 41.8785841,
+    "minlon": 12.4724080,
+    "maxlat": 41.8798700,
+    "maxlon": 12.4742365
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Giovanni Branca",
+    "sidewalk": "both"
+  }
+},
+{
+  "type": "way",
+  "id": 23265955,
+  "bounds": {
+    "minlat": 41.8798700,
+    "minlon": 12.4735978,
+    "maxlat": 41.8803592,
+    "maxlon": 12.4742365
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Rubattino",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 23265956,
+  "bounds": {
+    "minlat": 41.8792227,
+    "minlon": 12.4726969,
+    "maxlat": 41.8797140,
+    "maxlon": 12.4733489
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Florio",
+    "oneway": "yes",
+    "sidewalk": "both"
+  }
+},
+{
+  "type": "way",
+  "id": 23266221,
+  "bounds": {
+    "minlat": 41.8797140,
+    "minlon": 12.4726969,
+    "maxlat": 41.8803592,
+    "maxlon": 12.4735978
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Amerigo Vespucci",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 23266222,
+  "bounds": {
+    "minlat": 41.8803592,
+    "minlon": 12.4735978,
+    "maxlat": 41.8808807,
+    "maxlon": 12.4743137
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Amerigo Vespucci",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 23275671,
+  "bounds": {
+    "minlat": 41.8802549,
+    "minlon": 12.4761089,
+    "maxlat": 41.8808108,
+    "maxlon": 12.4775509
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Luigi Vanvitelli",
+    "oneway": "yes",
+    "sidewalk": "both"
+  }
+},
+{
+  "type": "way",
+  "id": 23286272,
+  "bounds": {
+    "minlat": 41.8764685,
+    "minlon": 12.5024875,
+    "maxlat": 41.8765186,
+    "maxlon": 12.5026212
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Porta Latina",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23920868,
+  "bounds": {
+    "minlat": 41.8799753,
+    "minlon": 12.4772109,
+    "maxlat": 41.8802524,
+    "maxlon": 12.4779483
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Giovanni Battista Bodoni",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24501267,
+  "bounds": {
+    "minlat": 41.8766563,
+    "minlon": 12.4730687,
+    "maxlat": 41.8776419,
+    "maxlon": 12.4738282
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Beniamino Franklin"
+  }
+},
+{
+  "type": "way",
+  "id": 25372241,
+  "bounds": {
+    "minlat": 41.8746706,
+    "minlon": 12.5048414,
+    "maxlat": 41.8753323,
+    "maxlon": 12.5060197
+  },
+  "tags": {
+    "foot": "yes",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Latina",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 25372242,
+  "bounds": {
+    "minlat": 41.8745857,
+    "minlon": 12.5060197,
+    "maxlat": 41.8746706,
+    "maxlon": 12.5068028
+  },
+  "tags": {
+    "foot": "yes",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza Galeria",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 25372250,
+  "bounds": {
+    "minlat": 41.8745857,
+    "minlon": 12.5060197,
+    "maxlat": 41.8748610,
+    "maxlon": 12.5068028
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Piazza Galeria",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 25372600,
+  "bounds": {
+    "minlat": 41.8758816,
+    "minlon": 12.5026212,
+    "maxlat": 41.8764685,
+    "maxlon": 12.5035768
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "name": "Via Latina",
+    "oneway": "yes",
+    "sidewalk": "right"
+  }
+},
+{
+  "type": "way",
+  "id": 25372601,
+  "bounds": {
+    "minlat": 41.8760175,
+    "minlon": 12.5026212,
+    "maxlat": 41.8764685,
+    "maxlon": 12.5036579
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Latina",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 25695405,
+  "bounds": {
+    "minlat": 41.8818099,
+    "minlon": 12.4756094,
+    "maxlat": 41.8823897,
+    "maxlon": 12.4764014
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Amerigo Vespucci",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 25695406,
+  "bounds": {
+    "minlat": 41.8808807,
+    "minlon": 12.4743137,
+    "maxlat": 41.8818099,
+    "maxlon": 12.4756094
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Amerigo Vespucci",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 25820510,
+  "bounds": {
+    "minlat": 41.8756109,
+    "minlon": 12.5035768,
+    "maxlat": 41.8758816,
+    "maxlon": 12.5041615
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Latina",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 26835894,
+  "bounds": {
+    "minlat": 41.8743046,
+    "minlon": 12.5085168,
+    "maxlat": 41.8743108,
+    "maxlon": 12.5085647
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Latina",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "source:width": "ARCore",
+    "surface": "asphalt",
+    "width": "4"
+  }
+},
+{
+  "type": "way",
+  "id": 27030013,
+  "bounds": {
+    "minlat": 41.8771160,
+    "minlon": 12.5012198,
+    "maxlat": 41.8774975,
+    "maxlon": 12.5016255
+  },
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "unclassified",
+    "lane_markings": "no",
+    "name": "Via San Giovanni a Porta Latina",
+    "short_name": "Via S. Giovanni a Porta Latina",
+    "source:width": "ARCore",
+    "surface": "sett",
+    "width": "10.2"
+  }
+},
+{
+  "type": "way",
+  "id": 27030014,
+  "bounds": {
+    "minlat": 41.8772642,
+    "minlon": 12.5014822,
+    "maxlat": 41.8775552,
+    "maxlon": 12.5019196
+  },
+  "tags": {
+    "amenity": "parking",
+    "name": "San Giovanni a Porta Latina"
+  }
+},
+{
+  "type": "way",
+  "id": 27030110,
+  "bounds": {
+    "minlat": 41.8770922,
+    "minlon": 12.5017949,
+    "maxlat": 41.8773710,
+    "maxlon": 12.5021405
+  },
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "catholic",
+    "name": "Chiesa di San Giovanni a Porta Latina",
+    "name:en": "Saint John at the Latin Gate",
+    "religion": "christian",
+    "tourism": "attraction",
+    "wikidata": "Q592799",
+    "wikimedia_commons": "Category:San Giovanni a Porta Latina (Rome)",
+    "wikipedia": "it:Chiesa di San Giovanni a Porta Latina"
+  }
+},
+{
+  "type": "way",
+  "id": 27519297,
+  "bounds": {
+    "minlat": 41.8733750,
+    "minlon": 12.5013165,
+    "maxlat": 41.8735823,
+    "maxlon": 12.5017525
+  },
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housenumber": "18",
+    "addr:postcode": "00179",
+    "addr:street": "Via di Porta San Sebastiano",
+    "building": "yes",
+    "historic": "city_gate",
+    "historic:civilization": "ancient_roman",
+    "name": "Porta San Sebastiano",
+    "old_name": "Porta Appia",
+    "wikidata": "Q1234193",
+    "wikimedia_commons": "Category:Porta San Sebastiano (Rome)",
+    "wikipedia": "it:Porta San Sebastiano"
+  }
+},
+{
+  "type": "way",
+  "id": 27521898,
+  "bounds": {
+    "minlat": 41.8744428,
+    "minlon": 12.5061655,
+    "maxlat": 41.8745656,
+    "maxlon": 12.5064161
+  },
+  "tags": {
+    "bicycle": "yes",
+    "highway": "footway",
+    "name": "Piazza Galeria",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 28867489,
+  "bounds": {
+    "minlat": 41.8948626,
+    "minlon": 12.4774293,
+    "maxlat": 41.8949412,
+    "maxlon": 12.4794812
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via delle Botteghe Oscure",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "sidewalk:right:surface": "asphalt",
+    "surface": "asphalt",
+    "wikidata": "Q4010851",
+    "wikipedia": "it:Via delle Botteghe Oscure"
+  }
+},
+{
+  "type": "way",
+  "id": 32493906,
+  "bounds": {
+    "minlat": 41.8793186,
+    "minlon": 12.4962337,
+    "maxlat": 41.8794292,
+    "maxlon": 12.4964244
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Porta San Sebastiano",
+    "oneway": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 41156427,
+  "bounds": {
+    "minlat": 41.8937639,
+    "minlon": 12.4786126,
+    "maxlat": 41.8938175,
+    "maxlon": 12.4793721
+  },
+  "tags": {
+    "foot": "yes",
+    "highway": "service",
+    "name": "Via dei Delfini",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 41156431,
+  "bounds": {
+    "minlat": 41.8941698,
+    "minlon": 12.4794812,
+    "maxlat": 41.8949412,
+    "maxlon": 12.4798966
+  },
+  "tags": {
+    "foot": "yes",
+    "highway": "service",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via dei Polacchi",
+    "oneway": "yes",
+    "service": "alley"
+  }
+},
+{
+  "type": "way",
+  "id": 48637471,
+  "bounds": {
+    "minlat": 41.8737997,
+    "minlon": 12.4972185,
+    "maxlat": 41.8787225,
+    "maxlon": 12.5014469
+  },
+  "tags": {
+    "bus": "yes",
+    "emergency": "yes",
+    "hgv": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "motor_vehicle:conditional": "no @ (Su, PH 00:00-24:00)",
+    "name": "Via di Porta San Sebastiano",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "psv": "yes",
+    "sidewalk": "no",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett",
+    "tourist_bus": "no",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 63019607,
+  "bounds": {
+    "minlat": 41.8739533,
+    "minlon": 12.5097934,
+    "maxlat": 41.8741008,
+    "maxlon": 12.5105375
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Latina",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 97165965,
+  "bounds": {
+    "minlat": 41.8817884,
+    "minlon": 12.4765053,
+    "maxlat": 41.8823062,
+    "maxlon": 12.4768832
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 102216542,
+  "bounds": {
+    "minlat": 41.8734945,
+    "minlon": 12.5015176,
+    "maxlat": 41.8735505,
+    "maxlon": 12.5015329
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxheight:signed": "no",
+    "maxspeed": "50",
+    "name": "Via di Porta San Sebastiano",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "cobblestone",
+    "tunnel": "building_passage"
+  }
+},
+{
+  "type": "way",
+  "id": 103776375,
+  "bounds": {
+    "minlat": 41.8762569,
+    "minlon": 12.5029150,
+    "maxlat": 41.8763872,
+    "maxlon": 12.5030293
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Latina",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 107321638,
+  "bounds": {
+    "minlat": 41.8742367,
+    "minlon": 12.5085647,
+    "maxlat": 41.8743046,
+    "maxlon": 12.5090192
+  },
+  "tags": {
+    "bridge": "yes",
+    "highway": "tertiary",
+    "lanes": "1",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxweightrating": "3.5",
+    "name": "Via Latina",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 114099008,
+  "bounds": {
+    "minlat": 41.8742017,
+    "minlon": 12.5061566,
+    "maxlat": 41.8743118,
+    "maxlon": 12.5063702
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "name": "Piazza Galeria",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 114099009,
+  "bounds": {
+    "minlat": 41.8743118,
+    "minlon": 12.5060197,
+    "maxlat": 41.8746706,
+    "maxlon": 12.5061566
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "name": "Piazza Galeria",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 114099010,
+  "bounds": {
+    "minlat": 41.8741500,
+    "minlon": 12.5057669,
+    "maxlat": 41.8746706,
+    "maxlon": 12.5061710
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Piazza Galeria",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 114099012,
+  "bounds": {
+    "minlat": 41.8742574,
+    "minlon": 12.5063020,
+    "maxlat": 41.8745564,
+    "maxlon": 12.5065654
+  },
+  "tags": {
+    "bicycle": "yes",
+    "highway": "footway",
+    "name": "Piazza Galeria",
+    "surface": "concrete"
+  }
+},
+{
+  "type": "way",
+  "id": 121897342,
+  "bounds": {
+    "minlat": 41.8818194,
+    "minlon": 12.4765564,
+    "maxlat": 41.8823236,
+    "maxlon": 12.4769422
+  },
+  "tags": {
+    "access": "no",
+    "highway": "service",
+    "lanes:psv": "2",
+    "name": "Via Marmorata",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 122106669,
+  "bounds": {
+    "minlat": 41.8787047,
+    "minlon": 12.4769422,
+    "maxlat": 41.8818194,
+    "maxlon": 12.4791181
+  },
+  "tags": {
+    "access": "no",
+    "emergency": "yes",
+    "highway": "service",
+    "lanes:psv": "2",
+    "name": "Via Marmorata",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 122652393,
+  "bounds": {
+    "minlat": 41.8786116,
+    "minlon": 12.4790558,
+    "maxlat": 41.8786514,
+    "maxlon": 12.4790807
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 124679152,
+  "bounds": {
+    "minlat": 41.8789004,
+    "minlon": 12.4770069,
+    "maxlat": 41.8818483,
+    "maxlon": 12.4790836
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "name:ja": "マルモラータ通り",
+    "oneway": "yes",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 125374961,
+  "bounds": {
+    "minlat": 41.8938316,
+    "minlon": 12.4777696,
+    "maxlat": 41.8941953,
+    "maxlon": 12.4783494
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Palazzo Mattei di Giove",
+    "source": "Bing, Local knowledge",
+    "wikidata": "Q1324944",
+    "wikimedia_commons": "Category:Palazzo Mattei di Giove (Rome)",
+    "wikipedia": "it:Palazzo Mattei di Giove"
+  }
+},
+{
+  "type": "way",
+  "id": 125375053,
+  "bounds": {
+    "minlat": 41.8942134,
+    "minlon": 12.4774324,
+    "maxlat": 41.8948247,
+    "maxlon": 12.4779349
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Palazzo Mattei di Paganica"
+  }
+},
+{
+  "type": "way",
+  "id": 125742177,
+  "bounds": {
+    "minlat": 41.8808970,
+    "minlon": 12.4756286,
+    "maxlat": 41.8817884,
+    "maxlon": 12.4768832
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Giovanni Branca",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 125742178,
+  "bounds": {
+    "minlat": 41.8791630,
+    "minlon": 12.4768832,
+    "maxlat": 41.8817884,
+    "maxlon": 12.4787100
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 127515690,
+  "bounds": {
+    "minlat": 41.8787540,
+    "minlon": 12.4790836,
+    "maxlat": 41.8789004,
+    "maxlon": 12.4791808
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 128676650,
+  "bounds": {
+    "minlat": 41.8741865,
+    "minlon": 12.5061566,
+    "maxlat": 41.8743118,
+    "maxlon": 12.5061710
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "name": "Piazza Galeria",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 129413486,
+  "bounds": {
+    "minlat": 41.8803592,
+    "minlon": 12.4729463,
+    "maxlat": 41.8808573,
+    "maxlon": 12.4735978
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Rubattino",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 156222607,
+  "bounds": {
+    "minlat": 41.8797140,
+    "minlon": 12.4721505,
+    "maxlat": 41.8801318,
+    "maxlon": 12.4726969
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Florio",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 157137792,
+  "bounds": {
+    "minlat": 41.8782033,
+    "minlon": 12.4720159,
+    "maxlat": 41.8791420,
+    "maxlon": 12.4726766
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Beniamino Franklin",
+    "sidewalk": "both"
+  }
+},
+{
+  "type": "way",
+  "id": 181371881,
+  "bounds": {
+    "minlat": 41.8780891,
+    "minlon": 12.4792378,
+    "maxlat": 41.8786596,
+    "maxlon": 12.4796428
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "name:ja": "マルモラータ通り",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "smoothness": "intermediate",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 181371885,
+  "bounds": {
+    "minlat": 41.8769150,
+    "minlon": 12.4791796,
+    "maxlat": 41.8784672,
+    "maxlon": 12.4808684
+  },
+  "tags": {
+    "bicycle": "yes",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "sidewalk:right:surface": "asphalt",
+    "smoothness": "good",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 184688757,
+  "bounds": {
+    "minlat": 41.8753323,
+    "minlon": 12.5036579,
+    "maxlat": 41.8760175,
+    "maxlon": 12.5048414
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Latina",
+    "sidewalk:left": "yes",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 185334754,
+  "bounds": {
+    "minlat": 41.8741008,
+    "minlon": 12.5090192,
+    "maxlat": 41.8742367,
+    "maxlon": 12.5097934
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Latina",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 190361286,
+  "bounds": {
+    "minlat": 41.8790456,
+    "minlon": 12.4748392,
+    "maxlat": 41.8796945,
+    "maxlon": 12.4764948
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Giovanni Battista Bodoni",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 200237034,
+  "bounds": {
+    "minlat": 41.8823154,
+    "minlon": 12.4766189,
+    "maxlat": 41.8823756,
+    "maxlon": 12.4766779
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200237037,
+  "bounds": {
+    "minlat": 41.8818483,
+    "minlon": 12.4766779,
+    "maxlat": 41.8823154,
+    "maxlon": 12.4770069
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200237560,
+  "bounds": {
+    "minlat": 41.8786596,
+    "minlon": 12.4791808,
+    "maxlat": 41.8787540,
+    "maxlon": 12.4792378
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "source:maxspeed": "IT:urban",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 200237678,
+  "bounds": {
+    "minlat": 41.8785857,
+    "minlon": 12.4791560,
+    "maxlat": 41.8786515,
+    "maxlon": 12.4791994
+  },
+  "tags": {
+    "access": "yes",
+    "highway": "service",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200237734,
+  "bounds": {
+    "minlat": 41.8786514,
+    "minlon": 12.4787100,
+    "maxlat": 41.8791630,
+    "maxlon": 12.4790558
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "name:ja": "マルモラータ通り",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 203672999,
+  "bounds": {
+    "minlat": 41.8718575,
+    "minlon": 12.5109308,
+    "maxlat": 41.8738805,
+    "maxlon": 12.5174494
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Latina",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 203673000,
+  "bounds": {
+    "minlat": 41.8742946,
+    "minlon": 12.5068028,
+    "maxlat": 41.8745857,
+    "maxlon": 12.5085168
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Latina",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 217033997,
+  "bounds": {
+    "minlat": 41.8765457,
+    "minlon": 12.4964244,
+    "maxlat": 41.8793186,
+    "maxlon": 12.5024176
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "foot": "yes",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Porta Latina",
+    "oneway": "yes",
+    "shoulder": "both",
+    "sidewalk": "right",
+    "source:maxspeed": "IT:urban",
+    "source:width": "ARCore",
+    "surface": "asphalt",
+    "width": "4.8"
+  }
+},
+{
+  "type": "way",
+  "id": 217033999,
+  "bounds": {
+    "minlat": 41.8765186,
+    "minlon": 12.5024176,
+    "maxlat": 41.8765457,
+    "maxlon": 12.5024875
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Porta Latina",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "tunnel": "building_passage"
+  }
+},
+{
+  "type": "way",
+  "id": 223671083,
+  "bounds": {
+    "minlat": 41.8950266,
+    "minlon": 12.4790007,
+    "maxlat": 41.8950904,
+    "maxlon": 12.4799151
+  },
+  "tags": {
+    "footway": "sidewalk",
+    "highway": "footway",
+    "name": "Via delle Botteghe Oscure",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 223671503,
+  "bounds": {
+    "minlat": 41.8949655,
+    "minlon": 12.4775729,
+    "maxlat": 41.8949904,
+    "maxlon": 12.4779341
+  },
+  "tags": {
+    "footway": "sidewalk",
+    "highway": "footway",
+    "name": "Via delle Botteghe Oscure",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 223671504,
+  "bounds": {
+    "minlat": 41.8949549,
+    "minlon": 12.4773122,
+    "maxlat": 41.8949655,
+    "maxlon": 12.4775729
+  },
+  "tags": {
+    "footway": "sidewalk",
+    "highway": "footway",
+    "name": "Via delle Botteghe Oscure",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 225177936,
+  "bounds": {
+    "minlat": 41.8776419,
+    "minlon": 12.4726766,
+    "maxlat": 41.8782033,
+    "maxlon": 12.4730687
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Beniamino Franklin",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 232393120,
+  "bounds": {
+    "minlat": 41.8791420,
+    "minlon": 12.4718262,
+    "maxlat": 41.8794177,
+    "maxlon": 12.4720159
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Beniamino Franklin",
+    "sidewalk": "both"
+  }
+},
+{
+  "type": "way",
+  "id": 232393121,
+  "bounds": {
+    "minlat": 41.8794177,
+    "minlon": 12.4716496,
+    "maxlat": 41.8796427,
+    "maxlon": 12.4718262
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Beniamino Franklin",
+    "oneway": "yes",
+    "sidewalk": "right"
+  }
+},
+{
+  "type": "way",
+  "id": 232393122,
+  "bounds": {
+    "minlat": 41.8794177,
+    "minlon": 12.4716496,
+    "maxlat": 41.8796427,
+    "maxlon": 12.4718262
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Beniamino Franklin",
+    "oneway": "yes",
+    "sidewalk": "right"
+  }
+},
+{
+  "type": "way",
+  "id": 232393131,
+  "bounds": {
+    "minlat": 41.8774539,
+    "minlon": 12.4707433,
+    "maxlat": 41.8782033,
+    "maxlon": 12.4726766
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Giovanni Battista Bodoni",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 232393132,
+  "bounds": {
+    "minlat": 41.8782033,
+    "minlon": 12.4726766,
+    "maxlat": 41.8790456,
+    "maxlon": 12.4748392
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Giovanni Battista Bodoni",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 232393134,
+  "bounds": {
+    "minlat": 41.8784672,
+    "minlon": 12.4790807,
+    "maxlat": 41.8786116,
+    "maxlon": 12.4791796
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232765095,
+  "bounds": {
+    "minlat": 41.8949412,
+    "minlon": 12.4794812,
+    "maxlat": 41.8949619,
+    "maxlon": 12.4801356
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via delle Botteghe Oscure",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 234894449,
+  "bounds": {
+    "minlat": 41.8737544,
+    "minlon": 12.5014469,
+    "maxlat": 41.8737997,
+    "maxlon": 12.5014597
+  },
+  "tags": {
+    "hgv": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Porta San Sebastiano",
+    "oneway": "yes",
+    "psv": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "cobblestone",
+    "tourist_bus": "no",
+    "tunnel": "building_passage"
+  }
+},
+{
+  "type": "way",
+  "id": 234894450,
+  "bounds": {
+    "minlat": 41.8732529,
+    "minlon": 12.5015329,
+    "maxlat": 41.8734945,
+    "maxlon": 12.5015797
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Porta San Sebastiano",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 234894451,
+  "bounds": {
+    "minlat": 41.8735505,
+    "minlon": 12.5014597,
+    "maxlat": 41.8737544,
+    "maxlon": 12.5015176
+  },
+  "tags": {
+    "bus": "yes",
+    "emergency": "yes",
+    "hgv": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "motor_vehicle:conditional": "no @ (Su,PH 00:00-24:00)",
+    "name": "Via di Porta San Sebastiano",
+    "oneway": "yes",
+    "psv": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "paving_stones",
+    "tourist_bus": "no",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 234894453,
+  "bounds": {
+    "minlat": 41.8732924,
+    "minlon": 12.5015329,
+    "maxlat": 41.8734945,
+    "maxlon": 12.5017640
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Porta San Sebastiano",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 366796439,
+  "bounds": {
+    "minlat": 41.8937808,
+    "minlon": 12.4793721,
+    "maxlat": 41.8941698,
+    "maxlon": 12.4798966
+  },
+  "tags": {
+    "foot": "yes",
+    "highway": "service",
+    "name": "Via dei Delfini",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 366798642,
+  "bounds": {
+    "minlat": 41.8786515,
+    "minlon": 12.4791181,
+    "maxlat": 41.8787047,
+    "maxlon": 12.4791560
+  },
+  "tags": {
+    "access": "no",
+    "emergency": "yes",
+    "highway": "service",
+    "lanes:psv": "2",
+    "name": "Via Marmorata",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 432946306,
+  "bounds": {
+    "minlat": 41.8771117,
+    "minlon": 12.4795096,
+    "maxlat": 41.8781372,
+    "maxlon": 12.4809147
+  },
+  "tags": {
+    "access": "no",
+    "emergency": "yes",
+    "highway": "service",
+    "lanes:psv": "2",
+    "name": "Via Marmorata",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1008405024,
+  "bounds": {
+    "minlat": 41.8740393,
+    "minlon": 12.5055831,
+    "maxlat": 41.8749984,
+    "maxlon": 12.5068174
+  },
+  "tags": {
+    "name": "Piazza Galeria",
+    "place": "square"
+  }
+},
+{
+  "type": "way",
+  "id": 1137951735,
+  "bounds": {
+    "minlat": 41.8949900,
+    "minlon": 12.4781057,
+    "maxlat": 41.8950250,
+    "maxlon": 12.4789159
+  },
+  "tags": {
+    "footway": "sidewalk",
+    "highway": "footway",
+    "lit": "yes",
+    "name": "Via delle Botteghe Oscure",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1137951736,
+  "bounds": {
+    "minlat": 41.8950250,
+    "minlon": 12.4789159,
+    "maxlat": 41.8950266,
+    "maxlon": 12.4790007
+  },
+  "tags": {
+    "crossing": "uncontrolled",
+    "crossing:island": "no",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "lit": "yes",
+    "name": "Via delle Botteghe Oscure",
+    "surface": "asphalt",
+    "tactile_paving": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1298029981,
+  "bounds": {
+    "minlat": 41.8787225,
+    "minlon": 12.4964244,
+    "maxlat": 41.8793186,
+    "maxlon": 12.4972185
+  },
+  "tags": {
+    "bus": "yes",
+    "emergency": "yes",
+    "hgv": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "motor_vehicle:conditional": "no @ (Su, PH 00:00-24:00)",
+    "name": "Via di Porta San Sebastiano",
+    "oneway": "yes",
+    "psv": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett",
+    "tourist_bus": "no",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1302643494,
+  "bounds": {
+    "minlat": 41.8817884,
+    "minlon": 12.4768832,
+    "maxlat": 41.8818194,
+    "maxlon": 12.4769422
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Marmorata",
+    "sidewalk": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1393649880,
+  "bounds": {
+    "minlat": 41.8746539,
+    "minlon": 12.5062374,
+    "maxlat": 41.8747050,
+    "maxlon": 12.5066059
+  },
+  "tags": {
+    "bicycle": "yes",
+    "footway": "sidewalk",
+    "highway": "footway",
+    "name": "Piazza Galeria"
+  }
+},
+{
+  "type": "way",
+  "id": 1393649881,
+  "bounds": {
+    "minlat": 41.8745656,
+    "minlon": 12.5061655,
+    "maxlat": 41.8747050,
+    "maxlon": 12.5062374
+  },
+  "tags": {
+    "bicycle": "yes",
+    "footway": "crossing",
+    "highway": "footway",
+    "name": "Piazza Galeria"
+  }
+},
+{
+  "type": "way",
+  "id": 1393649887,
+  "bounds": {
+    "minlat": 41.8741792,
+    "minlon": 12.5063702,
+    "maxlat": 41.8742017,
+    "maxlon": 12.5064646
+  },
+  "tags": {
+    "foot": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "name": "Piazza Galeria",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1393649889,
+  "bounds": {
+    "minlat": 41.8739651,
+    "minlon": 12.5061243,
+    "maxlat": 41.8741865,
+    "maxlon": 12.5061710
+  },
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "name": "Piazza Galeria",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1414477567,
+  "bounds": {
+    "minlat": 41.8781372,
+    "minlon": 12.4791994,
+    "maxlat": 41.8785857,
+    "maxlon": 12.4795096
+  },
+  "tags": {
+    "access": "yes",
+    "highway": "service",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1424648353,
+  "bounds": {
+    "minlat": 41.8741505,
+    "minlon": 12.5062368,
+    "maxlat": 41.8741556,
+    "maxlon": 12.5062457
+  },
+  "tags": {
+    "bicycle": "yes",
+    "highway": "footway",
+    "name": "Piazza Galeria",
+    "surface": "concrete"
+  }
+},
+{
+  "type": "way",
+  "id": 1424648355,
+  "bounds": {
+    "minlat": 41.8745564,
+    "minlon": 12.5065654,
+    "maxlat": 41.8745666,
+    "maxlon": 12.5065687
+  },
+  "tags": {
+    "bicycle": "yes",
+    "highway": "footway",
+    "name": "Piazza Galeria",
+    "surface": "concrete"
+  }
+},
+{
+  "type": "way",
+  "id": 1429908012,
+  "bounds": {
+    "minlat": 41.8741556,
+    "minlon": 12.5062368,
+    "maxlat": 41.8742000,
+    "maxlon": 12.5062654
+  },
+  "tags": {
+    "bicycle": "yes",
+    "highway": "footway",
+    "name": "Piazza Galeria",
+    "surface": "concrete"
+  }
+},
+{
+  "type": "way",
+  "id": 1429908013,
+  "bounds": {
+    "minlat": 41.8742000,
+    "minlon": 12.5062654,
+    "maxlat": 41.8742574,
+    "maxlon": 12.5063020
+  },
+  "tags": {
+    "bicycle": "yes",
+    "crossing": "marked",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "name": "Piazza Galeria",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1457854204,
+  "bounds": {
+    "minlat": 41.8771818,
+    "minlon": 12.4805163,
+    "maxlat": 41.8774267,
+    "maxlon": 12.4811691
+  },
+  "tags": {
+    "cycleway:right": "separate",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Marmorata",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "sidewalk:right:surface": "asphalt",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+}
+
+  ]
+}
