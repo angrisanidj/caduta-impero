@@ -6,22 +6,22 @@ var G=window.RM_MAPPA, ospite=document.getElementById('mappa'); if(!G||!ospite) 
 var NS='http://www.w3.org/2000/svg';
 function el(tipo,attr,padre){ var e=document.createElementNS(NS,tipo); for(var k in attr) e.setAttribute(k,attr[k]); if(padre) padre.appendChild(e); return e; }
 
-var STATI=[['roma','governo di Roma'],['usurpatore','impero separato'],['conteso','conteso'],['federati','federati, per trattato'],['regno','regno autonomo'],['oriente','corte d\'Oriente'],['califfato','califfato'],['carolingio','impero dei Franchi'],['perso','fuori dall\'impero']];
+var STATI=[['roma','governo di Roma'],['usurpatore','impero separato'],['conteso','conteso'],['federati','federati, per trattato'],['regno','regno autonomo'],['oriente','corte d\'Oriente'],['califfato','califfato'],['carolingio','impero dei Franchi'],['chiesa','terre della Chiesa'],['perso','fuori dall\'impero']];
 var svg=el('svg',{viewBox:'95 55 810 518',   /* ritaglio sull'Occidente: stesso rapporto del riquadro */ role:'img','aria-label':'Mappa dell\'Impero romano','preserveAspectRatio':'xMidYMid slice'},ospite);
 var defs=el('defs',{},svg), trama=el('pattern',{id:'trama-conteso',width:7,height:7,patternUnits:'userSpaceOnUse',patternTransform:'rotate(40)'},defs);
 el('rect',{width:7,height:7,fill:'#DCD0B8'},trama); el('rect',{width:3.2,height:7,fill:'#9A2F2A'},trama);
 el('rect',{'class':'m-mare',width:G.w,height:G.h},svg);
 el('path',{'class':'m-terra',d:G.terra},svg);
 
-var regioni={}, nomi={};
+var regioni={}, nomi={}, NOMI={britannia:'Britannia',gallia:'Gallie',belgica:'Belgica',aquitania:'Aquitania',hispania:'Hispania',italia_nord:'Italia',africa:'Africa',mauretania:'Mauretanie',pannonia:'Pannonia',balcani:'Balcani',anatolia:'Asia Minore',dacia:'Dacia',levante:'Siria',egitto:'Egitto'};
 Object.keys(G.regioni).forEach(function(id){
   var r=G.regioni[id];
   regioni[id]=el('path',{'class':'m-regione perso',d:r.d},svg);
   el('title',{},regioni[id]).textContent=r.nome;
 });
 Object.keys(G.regioni).forEach(function(id){
-  var r=G.regioni[id]; if(id==='isole'||id==='provenza'||id==='rezia') return;   // troppo piccole per un nome
-  nomi[id]=el('text',{'class':'m-nome',x:r.c[0],y:r.c[1]},svg); nomi[id].textContent=r.nome;
+  var r=G.regioni[id]; if(!NOMI[id]) return;                                    // solo le regioni abbastanza grandi hanno il nome scritto sopra
+  nomi[id]=el('text',{'class':'m-nome',x:r.c[0],y:r.c[1]+(id==='italia_nord'?-14:id==='belgica'?-6:0)},svg); nomi[id].textContent=NOMI[id];
 });
 var citta=el('g',{'class':'m-citta'},svg);
 ['roma','ravenna','milano','treviri','cartagine','costantinopoli'].forEach(function(id){
@@ -74,8 +74,14 @@ window.RM_mappa={
   /* quota dell'Occidente governata da Roma, pesata per regione: federati e contesi valgono metà */
   territorio:function(stati){
     var tot=0, ok=0;
-    for(var id in G.regioni){ var p=G.regioni[id].peso; tot+=p; ok+=p*(stati[id]==='roma'?1:(stati[id]==='federati'||stati[id]==='conteso')?.5:0); }
+    for(var id in G.regioni){ if(G.regioni[id].est) continue; var p=G.regioni[id].peso; tot+=p; ok+=p*(stati[id]==='roma'?1:(stati[id]==='federati'||stati[id]==='conteso')?.5:0); }
     return ok/tot*100;
+  },
+  /* territori governati dalla corte d'Oriente, fatto 100 l'Oriente del 395 (senza la Dacia, già perduta): con Giustiniano supera 100, perché riprende pezzi d'Occidente */
+  territorioEst:function(stati){
+    var base=0, ok=0, id, p, s;
+    for(id in G.regioni){ p=G.regioni[id].peso; s=stati[id]; if(G.regioni[id].est && id!=='dacia') base+=p; ok+=p*((s==='oriente'||(G.regioni[id].est&&s==='roma'))?1:(G.regioni[id].est&&s==='conteso')?.5:0); }
+    return ok/base*100;
   }
 };
 })();

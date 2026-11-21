@@ -5,7 +5,7 @@
   --ink:#2B2420;--carta:#F4ECDC;--carta2:#FBF6EA;--line:#D8CCB6;--muted:#6F6356;
   --porpora:#8E2A2A;--vetro:rgba(33,25,18,.78);
   /* stati delle regioni */
-  --st-roma:#9A2F2A;--st-usurpatore:#C98A2B;--st-federati:#6E8B5B;--st-regno:#4D6B7C;--st-oriente:#8A7399;--st-califfato:#3F8F86;--st-carolingio:#5A3F78;--st-perso:#DCD0B8;
+  --st-roma:#9A2F2A;--st-usurpatore:#C98A2B;--st-federati:#6E8B5B;--st-regno:#4D6B7C;--st-oriente:#8A7399;--st-califfato:#3F8F86;--st-carolingio:#5A3F78;--st-perso:#DCD0B8;--st-chiesa:#E6C55A;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -318,3 +318,6 @@ body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bot
 #mappa{aspect-ratio:1000/640;height:auto;flex:none}
 .legenda-mappa,.legenda-popoli{position:static;width:auto;max-width:none;background:none;border-radius:0;padding:6px 10px;border-top:1px solid var(--line);font-size:12.5px;gap:3px 12px}
 .legenda-popoli em{color:var(--muted);font-size:12px}
+.m-regione.chiesa{fill:var(--st-chiesa)}
+.m-regione{stroke-width:.7}
+.spia path.altra{stroke:#8A7399;stroke-dasharray:3 2.5;stroke-width:1.1;fill:none;opacity:.9}

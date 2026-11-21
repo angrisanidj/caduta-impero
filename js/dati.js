@@ -17,19 +17,51 @@ var ATTI=[
  {n:'VI', nome:'La città dei papi',  da:590, a:852}
 ];
 
-/* Stati di una regione: roma | usurpatore | conteso | federati | regno | perso | oriente | califfato | carolingio
-   "cambia" elenca solo ciò che muta rispetto alla tappa precedente. */
+/* Stati di una regione: roma | usurpatore | conteso | federati | regno | perso | oriente | califfato | carolingio | chiesa.
+   CAMBI elenca, per anno di tappa, solo ciò che muta rispetto alla tappa precedente. Le regioni sono quelle di src/mappa/genera.mjs (unioni di province reali).
+   È una semplificazione dichiarata: una regione, un colore. Scelte da sapere: l'impero delle Gallie e Palmira sono «usurpatore»; la Britannia di Carausio pure (286-296);
+   la Gallia del nord di Egidio e Siagrio (461-486) è «usurpatore», perché resta romana ma non obbedisce più a Ravenna; la Dalmazia resta «roma» fino al 480, con Giulio Nepote;
+   i regni franchi sono «regno» fino all'800, poi «carolingio»; dal 756 Lazio ed Emilia sono «chiesa». Gli stati dell'Oriente servono solo alla linea tratteggiata del cruscotto.
+   Scritti a memoria sui manuali correnti: DA VERIFICARE. */
+var OVEST=['britannia','gallia','belgica','aquitania','provenza','burgundia','hispania','gallaecia','italia_nord','ravenna','spoleto','roma','benevento','calabria','sicilia','isole','rezia','pannonia','dalmazia','africa','mauretania','decumati'],
+    EST=['dacia','balcani','anatolia','levante','egitto'];
+var CAMBI={
+ 235:{},
+ 260:{britannia:'usurpatore',gallia:'usurpatore',belgica:'usurpatore',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore',hispania:'usurpatore',gallaecia:'usurpatore',decumati:'perso'},
+ 271:{hispania:'roma',gallaecia:'roma',provenza:'roma',dacia:'perso',levante:'usurpatore',egitto:'usurpatore',anatolia:'conteso'},
+ 274:{britannia:'roma',gallia:'roma',belgica:'roma',aquitania:'roma',burgundia:'roma',levante:'roma',egitto:'roma',anatolia:'roma'},
+ 293:{britannia:'usurpatore'},
+ 301:{britannia:'roma'},
+ 395:{balcani:'oriente',anatolia:'oriente',levante:'oriente',egitto:'oriente'},
+ 406:{gallia:'conteso',belgica:'conteso',britannia:'usurpatore'},
+ 409:{britannia:'perso',hispania:'conteso',gallaecia:'conteso'},
+ 418:{aquitania:'federati',gallia:'roma',gallaecia:'regno'},
+ 429:{mauretania:'conteso'},
+ 439:{africa:'regno',pannonia:'perso'},
+ 451:{burgundia:'federati'},
+ 455:{isole:'regno',mauretania:'perso',sicilia:'conteso'},
+ 458:{belgica:'regno'},
+ 468:{sicilia:'regno',gallia:'usurpatore'},
+ 472:{hispania:'regno',aquitania:'regno',burgundia:'regno',provenza:'conteso'},
+ 476:{italia_nord:'regno',ravenna:'regno',spoleto:'regno',roma:'regno',benevento:'regno',calabria:'regno',provenza:'regno',rezia:'perso'},
+ 493:{gallia:'regno',rezia:'regno',dalmazia:'regno'},
+ 537:{africa:'oriente',isole:'oriente',sicilia:'oriente',dalmazia:'oriente',calabria:'oriente',benevento:'oriente',roma:'conteso',spoleto:'conteso',ravenna:'conteso',italia_nord:'conteso'},
+ 568:{italia_nord:'regno',ravenna:'oriente',spoleto:'oriente',roma:'oriente'},
+ 589:{spoleto:'regno',benevento:'regno',balcani:'conteso'},
+ 663:{levante:'califfato',egitto:'califfato'},
+ 711:{africa:'califfato',mauretania:'califfato',hispania:'califfato',gallaecia:'califfato'},
+ 727:{gallaecia:'regno'},
+ 756:{ravenna:'chiesa',roma:'chiesa'},
+ 800:{gallia:'carolingio',belgica:'carolingio',aquitania:'carolingio',provenza:'carolingio',burgundia:'carolingio',rezia:'carolingio',decumati:'carolingio',italia_nord:'carolingio',spoleto:'carolingio'},
+ 846:{sicilia:'conteso'}
+};
 var TAPPE=[
- {anno:235, titolo:"L'imperatore ucciso dai suoi soldati", testo:"A Magonza i soldati assassinano Severo Alessandro e acclamano Massimino. In cinquant'anni si conteranno oltre venti imperatori, senza contare gli usurpatori: quasi tutti uccisi dalle proprie truppe o in battaglia.",
-  cambia:{britannia:'roma',gallia:'roma',aquitania:'roma',provenza:'roma',hispania:'roma',italia:'roma',isole:'roma',rezia:'roma',illirico:'roma',africa:'roma',mauretania:'roma',oriente:'roma'}},
+ {anno:235, titolo:"L'imperatore ucciso dai suoi soldati", testo:"A Magonza i soldati assassinano Severo Alessandro e acclamano Massimino. In cinquant'anni si conteranno oltre venti imperatori, senza contare gli usurpatori: quasi tutti uccisi dalle proprie truppe o in battaglia."},
  {anno:251, titolo:'La peste e un imperatore caduto in battaglia', testo:"Un'epidemia attraversa l'impero per più di dieci anni. Ad Abritto Decio muore combattendo i Goti: per le fonti romane è il primo imperatore caduto contro un nemico esterno, ma i Persiani rivendicavano già la morte di Gordiano III, nel 244.",
   storici:"Quanto pesò la peste di Cipriano? Per Kyle Harper è una delle cause della crisi; altri la considerano impossibile da misurare con le fonti che abbiamo."},
- {anno:260, titolo:"Valeriano prigioniero, l'Occidente si stacca", testo:"L'imperatore Valeriano è catturato dai Persiani. L'Occidente si stacca sotto Postumo: Gallie, Britannia e Hispania hanno un loro imperatore, loro consoli, una loro moneta.",
-  cambia:{britannia:'usurpatore',gallia:'usurpatore',aquitania:'usurpatore',provenza:'usurpatore',hispania:'usurpatore'}},
- {anno:271, titolo:'Roma torna a costruire mura', testo:"Aureliano cinge la città con diciannove chilometri di mura: non accadeva da secoli. In Oriente Zenobia di Palmira controlla dall'Egitto all'Anatolia.",
-  cambia:{hispania:'roma',oriente:'usurpatore'}},
- {anno:274, titolo:"L'impero ricucito", testo:"In tre anni Aureliano riprende Palmira e le Gallie. L'impero è di nuovo uno; una riforma ferma il crollo della moneta, che però contiene ormai solo il cinque per cento d'argento.",
-  cambia:{britannia:'roma',gallia:'roma',aquitania:'roma',provenza:'roma',oriente:'roma'}},
+ {anno:260, titolo:"Valeriano prigioniero, l'Occidente si stacca", testo:"L'imperatore Valeriano è catturato dai Persiani. L'Occidente si stacca sotto Postumo: Gallie, Britannia e Hispania hanno un loro imperatore, loro consoli, una loro moneta."},
+ {anno:271, titolo:'Roma torna a costruire mura', testo:"Aureliano cinge la città con diciannove chilometri di mura: non accadeva da secoli. In Oriente Zenobia di Palmira controlla dall'Egitto all'Anatolia."},
+ {anno:274, titolo:"L'impero ricucito", testo:"In tre anni Aureliano riprende Palmira e le Gallie. L'impero è di nuovo uno; una riforma ferma il crollo della moneta, che però contiene ormai solo il cinque per cento d'argento."},
  {intermezzo:true, anno:284, titolo:'La moneta', testo:"Intermezzo: dal denario all'antoniniano, la svalutazione del III secolo e il ritorno all'oro con il solido."},
 
  {anno:293, titolo:'Quattro imperatori, nessuno a Roma', testo:"Diocleziano divide il comando fra due augusti e due cesari. Non ci sono più capitali ma residenze vicine agli eserciti, che cambiano con le campagne: Treviri, Milano, Sirmio, Nicomedia."},
@@ -38,15 +70,12 @@ var TAPPE=[
  {anno:357, titolo:"L'imperatore in visita", testo:"Costanzo II entra a Roma per la prima volta e la guarda come un forestiero, stupito dal Foro di Traiano. La città è un monumento, non più una sede di governo."},
  {anno:378, titolo:'Adrianopoli', testo:"I Goti, accolti dentro l'impero due anni prima e ridotti alla fame, distruggono l'esercito dell'imperatore Valente: secondo Ammiano se ne salva appena un terzo. Muore lo stesso Valente.",
   storici:"Invasione o crisi di accoglienza? I Goti del 376 chiesero di entrare e furono ammessi. Per Heather a spingerli sul Danubio sono gli Unni; Halsall ridimensiona gli Unni e guarda alla politica romana oltre il fiume. Sulla rivolta concordano: nasce da come Roma gestì i profughi."},
- {anno:395, titolo:'Due corti', testo:"Alla morte di Teodosio l'impero passa ai due figli, uno a Costantinopoli e uno a Milano. Nessuno la considera una divisione definitiva; lo diventerà.",
-  cambia:{oriente:'oriente'}},
+ {anno:395, titolo:'Due corti', testo:"Alla morte di Teodosio l'impero passa ai due figli, uno a Costantinopoli e uno a Milano. Nessuno la considera una divisione definitiva; lo diventerà."},
  {intermezzo:true, anno:395, titolo:'I commerci', testo:"Intermezzo: relitti, anfore, piombo nei ghiacci. Che cosa misura davvero l'archeologia quando parla di crollo degli scambi."},
 
  {anno:402, titolo:'La corte si chiude a Ravenna', testo:"Stilicone affronta Alarico a Pollenzo e a Verona e lo costringe a lasciare l'Italia. La corte lascia Milano per Ravenna, protetta dalle paludi; a Roma Onorio fa restaurare mura, porte e torri, e forse è allora che la cinta raddoppia in altezza."},
- {anno:406, titolo:'Il Reno attraversato', testo:"Nell'ultima notte dell'anno (del 405, secondo alcuni studiosi) Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito acclama un imperatore dopo l'altro; nel 407 il terzo, Costantino, porta le truppe in Gallia.",
-  cambia:{gallia:'conteso'}},
- {anno:409, titolo:'La Britannia lasciata a sé stessa', testo:"Rimaste senza truppe, le città britanniche cacciano i funzionari dell'usurpatore e provvedono da sole alla difesa; Roma non tornerà più. I gruppi entrati in Gallia passano i Pirenei.",
-  cambia:{britannia:'perso',hispania:'conteso'}},
+ {anno:406, titolo:'Il Reno attraversato', testo:"Nell'ultima notte dell'anno (del 405, secondo alcuni studiosi) Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito acclama un imperatore dopo l'altro; nel 407 il terzo, Costantino, porta le truppe in Gallia."},
+ {anno:409, titolo:'La Britannia lasciata a sé stessa', testo:"Rimaste senza truppe, le città britanniche cacciano i funzionari dell'usurpatore e provvedono da sole alla difesa; Roma non tornerà più. I gruppi entrati in Gallia passano i Pirenei."},
  {anno:410, titolo:'Il sacco di Roma', testo:"Al terzo assedio in tre anni, fallite le trattative, i Goti di Alarico entrano in città e la saccheggiano per tre giorni (sei, secondo un altro cronista). Alarico era stato generale romano.",
   /* Girolamo, Commento a Ezechiele, prologhi ai libri I e III (latino letto su epistolae.unisi.it, lettera 274; traduzione nostra): «Postquam vero clarissimum terrarum omnium lumen
      exstinctum est, immo romani imperii truncatum caput et, ut verius dicam, in una urbe totus orbis interiit, obmutui»; «Quis crederet ut totius orbis exstructa victoriis Roma corrueret,
@@ -58,39 +87,29 @@ var TAPPE=[
         {testo:"«Forse Roma non perisce, se non periscono i Romani. […] Che cos'è Roma, infatti, se non i Romani? Non si tratta di pietre e di legni, di alti caseggiati e di mura grandissime. Tutto questo era stato fatto in modo che un giorno dovesse cadere.»",
          chi:"Agostino, vescovo di Ippona, Discorso 81, 9. Lo predica in Africa pochi mesi dopo il sacco, in risposta a chi diceva: «Ecco, è nei tempi cristiani che Roma perisce»."}],
   storici:"Alarico è il caso di scuola: capo di un popolo o comandante di un esercito romano senza paga? Le due letture, invasione e guerra civile, partono dagli stessi fatti."},
- {anno:418, titolo:'Un regno dentro l\'impero', testo:"I Visigoti si insediano in Aquitania per accordo (nel 418 o nel 419, secondo le cronache), come federati in cambio del servizio militare; se ricevano terre o una quota delle imposte è discusso. Non è il primo patto del genere, ma da questo nasce un regno.",
-  cambia:{aquitania:'federati',gallia:'roma'}},
- {anno:429, titolo:'I Vandali passano in Africa', testo:"Genserico attraversa lo stretto con il suo popolo, forse ottantamila persone in tutto. Nel 430, durante l'assedio di Ippona, muore Agostino.",
-  cambia:{mauretania:'conteso'}},
- {anno:439, titolo:'Cartagine', testo:"I Vandali prendono Cartagine a sorpresa, in tempo di pace. Roma perde le province più ricche, il grano dell'annona e i porti da cui ora partono le flotte vandale: è il colpo da cui l'Occidente non si riprende.",
-  cambia:{africa:'regno',illirico:'conteso'}},
+ {anno:418, titolo:'Un regno dentro l\'impero', testo:"I Visigoti si insediano in Aquitania per accordo (nel 418 o nel 419, secondo le cronache), come federati in cambio del servizio militare; se ricevano terre o una quota delle imposte è discusso. Non è il primo patto del genere, ma da questo nasce un regno."},
+ {anno:429, titolo:'I Vandali passano in Africa', testo:"Genserico attraversa lo stretto con il suo popolo, forse ottantamila persone in tutto. Nel 430, durante l'assedio di Ippona, muore Agostino."},
+ {anno:439, titolo:'Cartagine', testo:"I Vandali prendono Cartagine a sorpresa, in tempo di pace. Roma perde le province più ricche, il grano dell'annona e i porti da cui ora partono le flotte vandale: è il colpo da cui l'Occidente non si riprende."},
  {intermezzo:true, anno:439, titolo:'I barbari', testo:"Intermezzo: quanti erano, chi erano, che rapporto giuridico avevano con Roma. Nemici, federati, soldati regolari, re."},
 
  {anno:451, titolo:'Ezio e Attila', testo:"Ai Campi Catalaunici l'esercito che ferma gli Unni è fatto soprattutto di Visigoti, con Alani, Franchi, Burgundi e altri alleati. Il generale romano Ezio comanda una coalizione."},
- {anno:455, titolo:'Il secondo sacco', testo:"Ucciso Valentiniano III, Genserico arriva dal mare e spoglia Roma per quattordici giorni. Porta via anche metà delle tegole dorate del tempio di Giove.",
-  cambia:{isole:'regno',mauretania:'perso'}},
- {anno:458, titolo:'Una legge contro chi smonta la città', testo:"Maggioriano vieta di demolire gli edifici pubblici per ricavarne materiali. Tenta riforme e la riconquista dell'Africa; nel 461 sarà deposto e ucciso da Ricimero, il suo generale.",
-  cambia:{hispania:'conteso'}},
+ {anno:455, titolo:'Il secondo sacco', testo:"Ucciso Valentiniano III, Genserico arriva dal mare e spoglia Roma per quattordici giorni. Porta via anche metà delle tegole dorate del tempio di Giove."},
+ {anno:458, titolo:'Una legge contro chi smonta la città', testo:"Maggioriano vieta di demolire gli edifici pubblici per ricavarne materiali. Tenta riforme e la riconquista dell'Africa; nel 461 sarà deposto e ucciso da Ricimero, il suo generale."},
  {anno:468, titolo:"L'ultima flotta", testo:"Le due corti armano insieme una spedizione enorme contro i Vandali, pagata quasi tutta da Costantinopoli. Va perduta davanti a Capo Bon, e con essa l'ultima speranza dell'Occidente di riavere l'Africa."},
- {anno:472, titolo:'Roma assediata dal proprio generale', testo:"Ricimero, che dal 456 fa e disfa imperatori, assedia e prende la città. Gli imperatori ormai governano poco più dell'Italia.",
-  cambia:{hispania:'regno',gallia:'conteso',aquitania:'regno'}},
+ {anno:472, titolo:'Roma assediata dal proprio generale', testo:"Ricimero, che dal 456 fa e disfa imperatori, assedia e prende la città. Gli imperatori ormai governano poco più dell'Italia."},
  {anno:476, titolo:'Odoacre', testo:"Un ufficiale dell'esercito d'Italia depone il giovane Romolo Augustolo e rimanda le insegne imperiali a Costantinopoli. A Roma il Senato continua a riunirsi.",
-  cambia:{italia:'regno',provenza:'regno',gallia:'perso',rezia:'perso'},
   storici:"Il 476 fu una data per i contemporanei? Registrarono la deposizione, non una fine: Giulio Nepote restò imperatore riconosciuto, in Dalmazia, fino al 480. Diventa «la fine» nelle cronache scritte a Costantinopoli nel secolo successivo (Marcellino Comes; lo ha mostrato Brian Croke nel 1983)."},
  {intermezzo:true, anno:476, titolo:'La città', testo:"Intermezzo: come si svuota una metropoli. Annona, acquedotti, spoliazioni, sepolture dentro le mura."},
 
- {anno:493, titolo:'Teodorico', testo:"Il re degli Ostrogoti governa l'Italia da Ravenna con funzionari romani. A Roma fa restaurare le mura e il teatro di Pompeo e vieta di deviare l'acqua degli acquedotti; al Colosseo si danno ancora cacce alle fiere (l'ultima notizia è del 523).",
-  cambia:{gallia:'regno',rezia:'regno',illirico:'regno'}},
- {anno:537, titolo:'Gli acquedotti tagliati', testo:"Nel 535 Giustiniano ha mandato Belisario a riprendere l'Italia. Durante l'assedio di Roma i Goti tagliano tutti gli acquedotti: le grandi terme si fermano e non riapriranno, anche se dopo la guerra alcuni condotti verranno riparati.",
-  cambia:{africa:'oriente',isole:'oriente',italia:'conteso',illirico:'oriente'}},
+ {anno:493, titolo:'Teodorico', testo:"Il re degli Ostrogoti governa l'Italia da Ravenna con funzionari romani. A Roma fa restaurare le mura e il teatro di Pompeo e vieta di deviare l'acqua degli acquedotti; al Colosseo si danno ancora cacce alle fiere (l'ultima notizia è del 523)."},
+ {anno:537, titolo:'Gli acquedotti tagliati', testo:"Nel 535 Giustiniano ha mandato Belisario a riprendere l'Italia. Durante l'assedio di Roma i Goti tagliano tutti gli acquedotti: le grandi terme si fermano e non riapriranno, anche se dopo la guerra alcuni condotti verranno riparati."},
  {anno:542, titolo:'La peste', testo:"La peste bubbonica parte dall'Egitto nel 541, l'anno dopo è a Costantinopoli, nel 543 raggiunge un'Italia in guerra da otto anni. Tornerà a ondate per due secoli."},
  {anno:546, titolo:'La città vuota', testo:"Totila prende Roma e porta via gli abitanti: secondo una cronaca la città resta deserta per quaranta giorni o più. Nel 550, ripresa Roma, vi assiste alle ultime corse di cavalli di cui si ha notizia.",
   /* Procopio, Guerre VII 22, 7-19 (Guerra gotica III 22), tradotto da noi dall'inglese di H. B. Dewing (Loeb 1924, letto su LacusCurtius): non dal greco. I tagli sono segnati. */
   voci:[{testo:"«Abbatté le fortificazioni in molti punti, così che ne andò distrutto circa un terzo. Stava anche per bruciare gli edifici più belli e più notevoli e per fare di Roma un pascolo per le pecore, ma Belisario lo seppe e gli mandò una lettera: “[…] L'hanno costruita a poco a poco, lasciando alle generazioni future il ricordo del valore di tutti: oltraggiare questi monumenti sarebbe un grande crimine contro gli uomini di ogni tempo”. […] Totila la lesse più volte, si convinse e non fece altro male a Roma. […] Non permise però che in città restasse anima viva, e la lasciò del tutto deserta.»",
          chi:"Procopio di Cesarea, Guerre VII 22. Era stato il consigliere di Belisario; la lettera, come i discorsi degli storici antichi, è scritta a modo suo, e il «terzo» delle mura è forse esagerato."}],
   storici:"Va preso alla lettera? Procopio scrive che Totila lasciò la città «del tutto deserta»; i «quaranta giorni o più», in cui a Roma sarebbero rimaste solo le bestie, vengono dal continuatore di Marcellino Comes. Una metropoli senza nessuno è poco credibile, ma l'immagine dice quanto fosse sceso il numero degli abitanti."},
- {anno:568, titolo:'I Longobardi', testo:"Quattordici anni dopo la fine ufficiale della guerra gotica, i Longobardi scendono in un'Italia spopolata: nel 568 secondo Paolo Diacono, nel 569 secondo un cronista del tempo. L'unità della penisola finisce qui, per tredici secoli.",
-  cambia:{italia:'conteso'}},
+ {anno:568, titolo:'I Longobardi', testo:"Quattordici anni dopo la fine ufficiale della guerra gotica, i Longobardi scendono in un'Italia spopolata: nel 568 secondo Paolo Diacono, nel 569 secondo un cronista del tempo. L'unità della penisola finisce qui, per tredici secoli."},
  {anno:589, titolo:'Il Tevere in città', testo:"Nell'autunno del 589, probabilmente a novembre, il Tevere esce dal letto, scavalca le mura, allaga i quartieri bassi e rovina i granai della Chiesa. Pochi mesi dopo torna la peste: ne muore papa Pelagio II, e al suo posto viene eletto Gregorio. Le piene torneranno: nel 716 o 717 l'acqua tiene la città per sette giorni, e in via Lata arriva a un'altezza d'uomo e mezza; poi nel dicembre 791."},
  {anno:593, titolo:"Dov'è il Senato, dov'è il popolo", testo:"Con i Longobardi di Agilulfo sotto le mura, papa Gregorio Magno predica: «Dov'è il Senato? Dov'è ormai il popolo?» (Omelie su Ezechiele, II, 6). È il vescovo, adesso, a distribuire il grano e a trattare con gli assedianti."},
 
@@ -98,15 +117,12 @@ var TAPPE=[
  {anno:609, apre:true, titolo:'Il Pantheon diventa una chiesa', testo:"Il 1° agosto 608 l'ultima colonna onoraria del Foro viene dedicata all'imperatore Foca; il 13 maggio 609 il Pantheon, donato da Foca a papa Bonifacio IV, è consacrato come chiesa. Dei templi antichi si salvano quelli che diventano chiese."},
  {anno:663, titolo:"L'ultimo imperatore a Roma", testo:"Costante II arriva il 5 luglio, resta dodici giorni e riparte con il bronzo dei monumenti, tegole del Pantheon comprese, diretto a Costantinopoli. Roma è una città di provincia dell'impero d'Oriente, governata di fatto dal papa."},
  {anno:711, titolo:'Il Mediterraneo si divide', testo:"Cartagine cade nel 698, la Spagna dei Visigoti nel 711. La sponda sud del mare che era stato di Roma passa al califfato; l'Occidente guarda ormai a nord.",
-  cambia:{africa:'califfato',mauretania:'califfato',hispania:'califfato'},
   storici:"Henri Pirenne vide qui la vera fine del mondo antico: non le invasioni germaniche, ma la rottura dell'unità del Mediterraneo. L'archeologia mostra però che i commerci erano crollati già prima."},
  {anno:727, titolo:"San Pietro, meta dell'Occidente", testo:"Re e pellegrini anglosassoni, franchi, longobardi vengono a pregare sulla tomba dell'apostolo. Attorno alla basilica, fuori le mura, crescono monasteri, ospizi e le «scholae» delle nazioni: un quartiere nuovo, mentre la città antica si svuota."},
  {anno:756, titolo:'I Longobardi alle porte', testo:"Astolfo assedia Roma per tre mesi. Il papa non chiede aiuto a Costantinopoli ma ai Franchi: Pipino scende in Italia e consegna al papa le terre riprese ai Longobardi. Nasce uno Stato della Chiesa."},
- {anno:780, titolo:'Adriano I ripara la città', testo:"Carlo Magno ha conquistato il regno longobardo nel 774. A Roma papa Adriano I fa riparare quattro acquedotti, le mura e i tetti delle basiliche, e amplia le domuscultae, le tenute agricole della Chiesa che sfamano la città.",
-  cambia:{italia:'regno'}},
+ {anno:780, titolo:'Adriano I ripara la città', testo:"Carlo Magno ha conquistato il regno longobardo nel 774. A Roma papa Adriano I fa riparare quattro acquedotti, le mura e i tetti delle basiliche, e amplia le domuscultae, le tenute agricole della Chiesa che sfamano la città."},
  {anno:791, titolo:'Il Tevere porta via una porta', testo:"Nel dicembre 791 il Tevere divelle dalle fondamenta porta Flaminia e la trascina lungo la via Lata, dove l'acqua supera le due altezze d'uomo; presso il ponte che oggi è ponte Sisto abbatte un tratto di mura. Per tre giorni il fiume corre per la città come nel proprio letto. Papa Adriano fa portare il cibo in barca a chi è chiuso in casa (Liber Pontificalis)."},
- {anno:800, titolo:'Natale in San Pietro', testo:"Il 25 dicembre papa Leone III incorona Carlo Magno imperatore. In Occidente c'è di nuovo un impero, ma il suo centro è oltre le Alpi. Roma, poche decine di migliaia di abitanti fra le rovine, è la città dei papi e dei pellegrini.",
-  cambia:{gallia:'carolingio',aquitania:'carolingio',provenza:'carolingio',rezia:'carolingio',italia:'carolingio'}},
+ {anno:800, titolo:'Natale in San Pietro', testo:"Il 25 dicembre papa Leone III incorona Carlo Magno imperatore. In Occidente c'è di nuovo un impero, ma il suo centro è oltre le Alpi. Roma, poche decine di migliaia di abitanti fra le rovine, è la città dei papi e dei pellegrini."},
  {anno:801, titolo:'La terra trema', testo:"Quattro mesi dopo l'incoronazione, la sera del 29 aprile 801 (il 30 nelle cronache), un terremoto fa crollare gran parte del tetto di San Paolo fuori le mura. È l'unico danno a Roma che le fonti ricordano. Papa Leone III lo fa ricostruire: le basiliche degli apostoli sono ormai gli edifici meglio curati della città."},
  {anno:846, titolo:'I Saraceni a San Pietro', testo:"Una flotta arrivata dall'Africa risale il Tevere. Le mura di Aureliano reggono, ma le due basiliche più venerate dell'Occidente sono fuori dalla cinta: San Pietro e San Paolo vengono saccheggiate."},
  {anno:852, epilogo:true, titolo:"Le mura dall'altra parte del fiume", testo:"Dopo il sacco saraceno e dopo l'incendio che nell'847 distrugge il Borgo, papa Leone IV chiude San Pietro dentro una cinta nuova: il 27 giugno 852 nasce la «città leonina». Le mura di Aureliano chiudono ancora diciannove chilometri di rovine, orti e vigne; quelle nuove proteggono una tomba. L'impero è finito da tempo, e Roma ha trovato un altro centro. Le rovine che vediamo oggi, però, sono in gran parte opera dei secoli seguenti, e più dei cantieri che dei terremoti: il lato sud del Colosseo fu usato come cava fin dal VI secolo, e quel che ne restava cadde in un terremoto: nell'847 secondo chi lo ha scavato, nel 1349 secondo la tradizione."}
@@ -343,10 +359,10 @@ function interp(punti,x){
   return punti[punti.length-1][1];
 }
 /* stato cumulato delle regioni a ogni tappa */
-var st={};
-TAPPE.forEach(function(t){ if(t.cambia) for(var k in t.cambia) st[k]=t.cambia[k]; t.regioni=JSON.parse(JSON.stringify(st)); });
+var st={}; OVEST.concat(EST).forEach(function(k){ st[k]='roma'; });
+TAPPE.forEach(function(t){ var c=!t.intermezzo&&CAMBI[t.anno]; if(c) for(var k in c) st[k]=c[k]; t.regioni=JSON.parse(JSON.stringify(st)); });
 /* l'atto avanza dopo ogni intermezzo: l'intermezzo chiude l'atto che lo precede */
 var atto=0; TAPPE.forEach(function(t){ if(t.apre) atto++; t.atto=atto; if(t.intermezzo) atto++; });   // "apre": la tappa inizia un atto nuovo
 
-return {ATTI:ATTI,TAPPE:TAPPE,CURVE:CURVE,ABITATI:ABITATI,MONUMENTI:MONUMENTI,MURA_ALTE:MURA_ALTE,EVENTI:EVENTI,SCHEDE:SCHEDE,CERTEZZA:CERTEZZA,CHIESE:CHIESE,ITINERARIO:ITINERARIO,interp:interp};
+return {ATTI:ATTI,TAPPE:TAPPE,CAMBI:CAMBI,CURVE:CURVE,ABITATI:ABITATI,MONUMENTI:MONUMENTI,MURA_ALTE:MURA_ALTE,EVENTI:EVENTI,SCHEDE:SCHEDE,CERTEZZA:CERTEZZA,CHIESE:CHIESE,ITINERARIO:ITINERARIO,interp:interp};
 })();

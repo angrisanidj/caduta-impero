@@ -14,7 +14,7 @@ Pubblicata su https://angrisanidj.github.io/caduta-impero/ (repository `angrisan
 ## Struttura
 
 - `index.html`, `css/stile.css`
-- `js/dati.js`: tutti i contenuti. `TAPPE` (con `cambia` per gli stati delle regioni, `storici` per il riquadro degli storici e `voci:[{testo,chi}]` per le citazioni dei contemporanei, tradotte da una fonte letta e annotata nel commento accanto), `CURVE` (popolazione con `banda` delle stime), `MONUMENTI` (storie `[anno, stato]`; stati: uso, chiuso, spogliato, cava, bruciato, crollato, assente), `SCHEDE`, `EVENTI` (sacchi, assedi, incendi; `piena:true` allaga le zone basse, `velo:true` vela il sole), `CHIESE`, `ITINERARIO`.
+- `js/dati.js`: tutti i contenuti. `TAPPE` (gli stati delle regioni della mappa stanno nella tabella `CAMBI`, per anno di tappa; `storici` per il riquadro degli storici e `voci:[{testo,chi}]` per le citazioni dei contemporanei, tradotte da una fonte letta e annotata nel commento accanto), `CURVE` (popolazione con `banda` delle stime), `MONUMENTI` (storie `[anno, stato]`; stati: uso, chiuso, spogliato, cava, bruciato, crollato, assente), `SCHEDE`, `EVENTI` (sacchi, assedi, incendi; `piena:true` allaga le zone basse, `velo:true` vela il sole), `CHIESE`, `ITINERARIO`.
 - `js/roma-topo.js`: generato da `src/roma/genera.mjs` (Tevere, mura, porte e strade da OpenStreetMap; quote SRTM). Non modificare a mano. Le strade (`VIE` nel generatore) uniscono uno scheletro a mano e le vie moderne eredi delle antiche, scaricate con `src/roma/grezzi/q2.txt`; le vie strette del centro antico (via Sacra, Argileto, vici e clivi) vengono da `q3.txt`. I centri reali dei resti del Foro stanno in `grezzi/osm-foro.json` (`q4.txt`).
 - `js/base.js`: renderer three.js r128 (script classici, niente moduli), terreno, colli (`COLLI`, rilievo accentuato 1,8 volte), strade, fiume, luce, effetti a tutto schermo, regolatore della qualità (`RM.livello`), `RM.h`, `RM.hRapida`, `RM.ll(lat,lon)`, `RM.vola`.
 - `js/costruttore.js`: `RM.Costruttore` (solidi fusi in una maglia) e `RM.matRovina` (shader del degrado: crepe, crolli, spoglio, lato sud).
@@ -23,6 +23,10 @@ Pubblicata su https://angrisanidj.github.io/caduta-impero/ (repository `angrisan
 - Comandi della scena (in `index.html`, stili in fondo a `css/stile.css`, logica in `js/pagina.js`): menu «Strumenti» in alto a destra, zoom, vista d'insieme e schermo intero in basso a destra; didascalie e schede stanno sopra la riga dei comandi e, a tutto schermo, sopra la linea del tempo (`--tempo`). Sui dispositivi al tocco la scena risponde al dito solo a tutto schermo (classe `tocco` su `body`). Ogni monumento con un `nome` si apre con un clic sulla scena (`RM.cliccabili` per mura e acquedotti).
 
 Convenzioni: 1 unità = 10 m; origine al Foro Romano (41.8925 N, 12.4853 E); x verso est, z verso sud. Ogni modulo registra `function(anno)` in `RM.moduli` e, se serve, `function(dt)` in `RM.frame`. Nomi e commenti in italiano.
+
+## Mappa
+
+`js/mappa-dati.js` è generato da `src/mappa/genera.mjs` (nella cartella `src/mappa`: `node genera.mjs`). Coste da Natural Earth; le 27 regioni sono unioni di province reali, dai poligoni del Digital Atlas of the Roman Empire (`src/mappa/grezzi/provinces.geojson`, licenza Creative Commons con attribuzione: l'attribuzione sta in fondo alla pagina e va tenuta). Nel generatore stanno anche `CITTA` e `POPOLI` (i gruppi in movimento: anno, longitudine, latitudine, rapporto con Roma). `js/mappa.js` disegna regioni, popoli e legende e calcola la quota di territorio dell'Occidente e dell'Oriente per il cruscotto.
 
 ## Lavorare
 

@@ -10,10 +10,11 @@ var idx=0, anno=T[0].anno, meta=anno, vel=0, notte=0, metaNotte=0, coda=null;
 
 /* ---------- cruscotto ---------- */
 var territorio=T.map(function(t){ return [t.anno, MAPPA?MAPPA.territorio(t.regioni):100]; });
+var territorioEst=T.map(function(t){ return [t.anno, MAPPA&&MAPPA.territorioEst?MAPPA.territorioEst(t.regioni):100]; });
 function aGradini(p){ var o=[]; p.forEach(function(q,i){ if(i) o.push([q[0],p[i-1][1]]); o.push(q); }); o.push([A1,p[p.length-1][1]]); return o; }
 function arrotonda(n){ var p=n>=200000?10000:n>=20000?5000:1000; return Math.round(n/p)*p; }
 var SPIE=[
- {id:'territorio', nome:'Occidente governato da Roma', nota:'quota schematica, per regioni', stima:true, punti:aGradini(territorio), max:100,
+ {id:'territorio', nome:'Occidente governato da Roma', nota:'quota di superficie, per regioni; tratteggio: i territori di Costantinopoli (395 = 100)', stima:true, punti:aGradini(territorio), altra:aGradini(territorioEst), max:125,
   val:function(a){ var k=0; for(var i=0;i<territorio.length;i++) if(territorio[i][0]<=a+.001) k=i; return Math.round(territorio[k][1])+'%'; }},
  {id:'argento', nome:D.CURVE.argento.nome, punti:D.CURVE.argento.punti, max:50, fine:D.CURVE.argento.fine,
   val:function(a){ return a<=D.CURVE.argento.fine ? Math.round(D.interp(this.punti,a))+'%' : 'oro'; },
@@ -38,6 +39,7 @@ SPIE.forEach(function(s){
     '<svg viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">'+(s.banda?'<path class="banda" d="'+
       s.banda.map(function(p,i){ return (i?'L':'M')+X(p[0]).toFixed(1)+' '+(38-p[2]/s.max*34).toFixed(1); }).join('')+
       s.banda.slice().reverse().map(function(p){ return 'L'+X(p[0]).toFixed(1)+' '+(38-p[1]/s.max*34).toFixed(1); }).join('')+'Z"/>':'')+
+    (s.altra?'<path class="altra" d="'+s.altra.map(function(p,i){ return (i?'L':'M')+X(p[0]).toFixed(1)+' '+(38-p[1]/s.max*34).toFixed(1); }).join('')+'"/>':'')+
     '<path d="'+d+'"/><line y1="0" y2="40"/></svg>';
   $('cruscotto').appendChild(box);
   s.b=box.querySelector('b'); s.small=box.querySelector('small'); s.linea=box.querySelector('line');

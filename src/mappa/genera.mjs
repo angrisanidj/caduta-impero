@@ -1,6 +1,5 @@
-/* Base geografica della mappa: coste da Natural Earth (world-atlas), regioni tracciate a mano
-   in longitudine/latitudine e ritagliate sulla terraferma. Uso: npm install && npm run build
-   I confini delle regioni sono schematici: servono a leggere chi controlla cosa, non sono confini provinciali. */
+/* Base geografica della mappa: coste da Natural Earth (world-atlas); regioni come unioni di province reali (Digital Atlas of the Roman Empire,
+   di Johan Åhlfeldt, tramite il progetto klokantech/roman-empire: grezzi/provinces.geojson, licenza Creative Commons con attribuzione). Uso: npm install && npm run build */
 import fs from 'fs';
 import * as d3 from 'd3-geo';
 import * as topojson from 'topojson-client';
@@ -32,22 +31,69 @@ for (const a of anelli) { try { TERRA = pc.xor(TERRA, [[a]]); } catch (err) { /*
 
 const tracciato = multi => multi.map(pol => pol.map(a => 'M' + a.map(p => f1(p[0]) + ' ' + f1(p[1])).join('L') + 'Z').join('')).join('');
 
-/* regioni: [lon, lat], generose sul mare (il ritaglio le porta sulla costa) */
-const ADRIATICO = [[13.2, 45.2], [14.6, 43.9], [16.5, 42.6], [18.6, 41.2], [19, 40]];
-const REGIONI = {
-  britannia:  { nome: 'Britannia', peso: 6,  p: [[-5.9, 49.8], [1.9, 50.8], [1.9, 53.2], [-1, 55.1], [-3.6, 55.1], [-5.2, 54.4], [-5.4, 51.5], [-5.9, 50.5]] },
-  gallia:     { nome: 'Gallie',    peso: 14, p: [[-5.2, 48.9], [-1.5, 50], [1.6, 51.2], [4.2, 52.2], [6.2, 51.8], [6.9, 50.5], [8.2, 49], [7.6, 47.6], [6, 46.5], [2.5, 46.6], [-2.3, 46.8], [-5.2, 47.5]] },
-  aquitania:  { nome: 'Aquitania', peso: 6,  p: [[-2.6, 46.8], [2.5, 46.6], [2.5, 43.9], [1.5, 42.6], [-1.9, 43.3], [-1.7, 45]] },
-  provenza:   { nome: 'Gallia meridionale', peso: 5, p: [[2.5, 46.6], [6, 46.5], [7.2, 45.2], [7.7, 43.6], [5, 42.8], [3.2, 42.3], [1.5, 42.6], [2.5, 43.9]] },
-  hispania:   { nome: 'Hispania',  peso: 20, p: [[-10, 44.2], [-1.9, 43.3], [1.5, 42.6], [3.4, 42.4], [4.6, 39], [0, 36.2], [-5.4, 35.97], [-10, 36]] },
-  italia:     { nome: 'Italia',    peso: 13, p: [[6.8, 46], [7.2, 45.2], [7.7, 43.6], [9.9, 43.3], [10, 41.5], [12, 37.2], [15.5, 36.4], [19, 40], ...ADRIATICO.slice().reverse(), [13.8, 46.6], [10.5, 47], [8.5, 46.5]] },
-  isole:      { nome: 'Sardegna e Corsica', peso: 2, p: [[8, 43.1], [9.75, 43.1], [9.95, 38.8], [8, 38.8]] },
-  rezia:      { nome: 'Rezia e Norico', peso: 5, p: [[7.6, 47.6], [8.5, 46.5], [10.5, 47], [13.8, 46.6], [16.2, 46.7], [16.9, 48.2], [13.4, 48.6], [11, 48.8], [9, 48.2]] },
-  illirico:   { nome: 'Pannonia e Dalmazia', peso: 9, p: [[13.8, 46.6], [16.2, 46.7], [16.9, 48.2], [18.9, 47.8], [19, 45.6], [20, 44.9], [19.4, 43.5], [19.6, 41.8], ...ADRIATICO.slice(0, 4).reverse()] },
-  africa:     { nome: 'Africa',    peso: 12, p: [[5, 37.7], [11.6, 37.7], [11.6, 34.2], [15.4, 32.8], [19, 31], [19, 29.8], [14, 30.6], [10, 32], [8, 33.6], [5, 34.4]] },
-  mauretania: { nome: 'Mauretanie', peso: 8, p: [[-6.4, 35.9], [-5.3, 35.93], [-2.5, 35.9], [0, 37.2], [5, 37.7], [5, 34.4], [-1, 33.8], [-5, 33.3], [-7.2, 33.6]] },
-  oriente:    { nome: 'Oriente',   peso: 0,  p: [[20, 44.9], [22.7, 44.6], [23, 43.8], [28, 44.2], [29.7, 45.3], [30, 42.3], [41.5, 42.3], [42, 39], [42, 37.2], [40.5, 36.3], [39, 34.3], [36.6, 32], [35.2, 29.5], [33.5, 28], [35, 24], [32, 24], [30, 26.5], [29, 29.5], [25, 30], [20, 29.8], [19, 31], [19.5, 32.5], [19.2, 39], [19.6, 41.8], [19.4, 43.5]] }
+/* Regioni del racconto: ciascuna è l'unione di province reali, dai poligoni del Digital Atlas of the Roman Empire (grezzi/provinces.geojson: le province
+   verso il 200 d.C. e, per l'Italia, le undici regioni augustee). Tre regioni che non coincidono con una provincia sono ritagliate con un poligono a mano:
+   gli Agri Decumates (oltre Reno e Danubio), la Burgundia (attorno a Lione e Ginevra), la Gallaecia (il nord-ovest della penisola iberica).
+   est: true = regioni che dal 395 dipendono da Costantinopoli; non entrano nella quota dell'Occidente. */
+const PROV = {}; for (const f of JSON.parse(fs.readFileSync(new URL('./grezzi/provinces.geojson', import.meta.url))).features) PROV[f.properties.name] = f.geometry;
+const TAGLI = {
+  decumati:  [[7.62, 47.56], [7.55, 48], [7.75, 48.58], [8.1, 48.9], [8.4, 49.3], [8.27, 50], [7.9, 50], [7.6, 50.36], [9, 51], [11.5, 50.6], [12.6, 49.3], [12.1, 49.02], [11.77, 48.85], [10.9, 48.7], [10, 48.4], [10.1, 47.9], [9.6, 47.55], [9, 47.67], [8.2, 47.6]],
+  burgundia: [[3.9, 46.9], [5.6, 47.9], [7.62, 47.56], [7.9, 46.6], [7, 45.9], [6.9, 45.1], [6, 44.5], [4.6, 44.5], [4.2, 45.4], [3.8, 46.1]],
+  gallaecia: [[-10.5, 44.6], [-5.9, 44.6], [-5.9, 41.9], [-6.6, 41.2], [-10.5, 41]]
 };
+const REGIONI = {
+  britannia:  { nome: 'Britannia', prov: ['Britannia'] },
+  gallia:     { nome: 'Gallia del nord', prov: ['Lugdunensis'], fuori: ['burgundia'] },
+  belgica:    { nome: 'Belgica e Germanie', prov: ['Belgica', 'Germania Inferior', 'Germania Superior'], fuori: ['decumati', 'burgundia'] },
+  aquitania:  { nome: 'Aquitania', prov: ['Aquitania'] },
+  provenza:   { nome: 'Gallia meridionale', prov: ['Narbonensis', 'Alpes Maritimae', 'Alpes Cottiae', 'Alpes Graiae et Poeninae'], fuori: ['burgundia'] },
+  burgundia:  { nome: 'Burgundia', prov: ['Lugdunensis', 'Germania Superior', 'Narbonensis', 'Alpes Graiae et Poeninae', 'Alpes Cottiae'], dentro: 'burgundia' },
+  hispania:   { nome: 'Hispania', prov: ['Tarraconensis', 'Baetica', 'Lusitania'], fuori: ['gallaecia'] },
+  gallaecia:  { nome: 'Gallaecia', prov: ['Tarraconensis', 'Lusitania'], dentro: 'gallaecia' },
+  italia_nord:{ nome: 'Italia del nord', prov: ['IX', 'X', 'XI', 'VII'] },
+  ravenna:    { nome: 'Emilia e Ravenna', prov: ['VIII'] },
+  spoleto:    { nome: 'Umbria e Piceno', prov: ['VI', 'V'] },
+  roma:       { nome: 'Lazio e Campania', prov: ['I'] },
+  benevento:  { nome: 'Sannio e Puglia', prov: ['IV', 'II'] },
+  calabria:   { nome: 'Lucania e Bruzio', prov: ['III'] },
+  sicilia:    { nome: 'Sicilia', prov: ['Sicilia'] },
+  isole:      { nome: 'Sardegna e Corsica', prov: ['Sardinia et Corsica'] },
+  rezia:      { nome: 'Rezia e Norico', prov: ['Raetia', 'Noricum'], fuori: ['decumati'] },
+  pannonia:   { nome: 'Pannonia', prov: ['Pannonia Superior', 'Pannonia Inferior'] },
+  dalmazia:   { nome: 'Dalmazia', prov: ['Dalmatia'] },
+  africa:     { nome: 'Africa', prov: ['Africa Proconsularis', 'Numidia'] },
+  mauretania: { nome: 'Mauretanie', prov: ['Mauretania Caesariensis', 'Mauretania Tingitana'] },
+  decumati:   { nome: 'Agri Decumates', prov: ['Germania Superior', 'Raetia'], dentro: 'decumati' },
+  dacia:      { nome: 'Dacia', prov: ['Dacia'], est: true },
+  balcani:    { nome: 'Balcani', prov: ['Moesia Superior', 'Moesia Inferior', 'Thracia', 'Macedonia', 'Achaia'], est: true },
+  anatolia:   { nome: 'Asia Minore', prov: ['Asia', 'Bithynia et Pontus', 'Galatia et Cappadocia', 'Lycia et Pamphylia', 'Cilicia', 'Cyprus'], est: true },
+  levante:    { nome: 'Siria e Palestina', prov: ['Syria', 'Iudaea', 'Arabia', 'Armenia Mesopotamia'], est: true },
+  egitto:     { nome: 'Egitto e Cirenaica', prov: ['Aegyptus', 'Creta et Cyrene'], est: true }
+};
+/* una geometria GeoJSON diventa un multipoligono piano, sfoltito: punti a meno di 0,4 unità dal precedente si saltano */
+function piano(geo) {
+  const pol = geo.type === 'Polygon' ? [geo.coordinates] : geo.coordinates, out = [];
+  for (const p of pol) {
+    const anelliP = [];
+    for (const a of p) {
+      const r = []; let u = null;
+      for (const c of a) { const q = proj(c); if (!q) continue; if (u && Math.hypot(q[0] - u[0], q[1] - u[1]) < .9) continue; u = q; r.push([f1(q[0]), f1(q[1])]); }
+      let ar = 0; for (let i = 0; i < r.length; i++) { const j = (i + 1) % r.length; ar += r[i][0] * r[j][1] - r[j][0] * r[i][1]; }
+      if (r.length > 3 && Math.abs(ar) / 2 > 2.5) { r.push(r[0]); anelliP.push(r); }      // isolette e scogli sotto i due pixel e mezzo quadrati si saltano
+    }
+    if (anelliP.length) out.push(anelliP);
+  }
+  return out;
+}
+const taglio = id => [[TAGLI[id].concat([TAGLI[id][0]]).map(c => proj(c))]];
+function forma(r) {
+  let m = [];
+  for (const n of r.prov) { if (!PROV[n]) throw new Error('provincia sconosciuta: ' + n); const g = piano(PROV[n]); m = m.length ? pc.union(m, g) : g; }
+  if (r.dentro) m = pc.intersection(m, taglio(r.dentro));
+  for (const t of r.fuori || []) m = pc.difference(m, taglio(t));
+  return m;
+}
+
 const CITTA = { roma: [12.48, 41.89, 'Roma'], ravenna: [12.2, 44.42, 'Ravenna'], milano: [9.19, 45.46, 'Milano'], treviri: [6.64, 49.75, 'Treviri'], arles: [4.63, 43.68, 'Arles'],
   cartagine: [10.32, 36.85, 'Cartagine'], costantinopoli: [28.98, 41.01, 'Costantinopoli'], londra: [-0.1, 51.51, 'Londinium'], sirmio: [19.61, 44.97, 'Sirmio'],
   antiochia: [36.16, 36.2, 'Antiochia'], alessandria: [29.92, 31.2, 'Alessandria'], tolosa: [1.44, 43.6, 'Tolosa'], adrianopoli: [26.56, 41.68, 'Adrianopoli'] };
@@ -73,15 +119,15 @@ const POPOLI = {
 const out = { w: W, h: H, terra: tracciato(TERRA), regioni: {}, citta: {}, popoli: {} };
 for (const [id, q] of Object.entries(POPOLI)) out.popoli[id] = { nome: q.nome, poi: q.poi || [], peso: q.peso, fine: q.fine, t: q.t.map(v => { const p = proj([v[1], v[2]]); return [v[0], f1(p[0]), f1(p[1]), v[3]]; }) };
 for (const [id, r] of Object.entries(REGIONI)) {
-  const anello = r.p.concat([r.p[0]]).map(p => proj(p));
-  const ritaglio = pc.intersection([[anello]], TERRA);
-  let area = 0, cx = 0, cy = 0;                         // baricentro del pezzo più grande, per l'etichetta
-  for (const pol of ritaglio) {
+  const m = forma(r);
+  let area = 0, tot = 0, cx = 0, cy = 0;                // baricentro del pezzo più grande, per l'etichetta; la superficie pesa la quota di territorio
+  for (const pol of m) {
     const a = pol[0]; let A = 0, x = 0, y = 0;
     for (let i = 0; i < a.length - 1; i++) { const k = a[i][0] * a[i + 1][1] - a[i + 1][0] * a[i][1]; A += k; x += (a[i][0] + a[i + 1][0]) * k; y += (a[i][1] + a[i + 1][1]) * k; }
+    tot += Math.abs(A) / 2;
     if (Math.abs(A) > area) { area = Math.abs(A); cx = x / (3 * A); cy = y / (3 * A); }
   }
-  out.regioni[id] = { nome: r.nome, peso: r.peso, d: tracciato(ritaglio), c: [f1(cx), f1(cy)] };
+  out.regioni[id] = { nome: r.nome, peso: Math.round(tot), est: !!r.est, d: tracciato(m), c: [f1(cx), f1(cy)] };
 }
 for (const [id, c] of Object.entries(CITTA)) { const p = proj([c[0], c[1]]); out.citta[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
 
