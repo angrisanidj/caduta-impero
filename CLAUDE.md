@@ -35,5 +35,6 @@ Convenzioni: 1 unità = 10 m; origine al Foro Romano (41.8925 N, 12.4853 E); x v
 - Controllo sintassi: `node --check js/<file>.js`.
 - Fra due tappe il tempo scorre in meno di due secondi: un evento si vede solo se cade nell'anno di una tappa.
 - Se il pannello di anteprima è nascosto le animazioni non girano: per vedere un fotogramma chiamare a mano `RM.frame.forEach(f=>f(.1))`.
+- Anteprima del link (`img/anteprima.jpg`, 1200 x 630, citata nei tag `og:` di `index.html`) e icone (`img/icona-*.png`): l'immagine è una cattura della pagina alla tappa del 476 fatta con Edge senza finestra (`msedge --headless=new --screenshot=… --window-size=1200,630 --virtual-time-budget=15000 "http://localhost:8766/#tappa-27"`), poi convertita in JPEG. Va rifatta se cambia l'aspetto della pagina.
 - Pubblicare: `node src/pubblica.mjs` (aggiorna la versione sui file e in fondo alla pagina), poi commit e push su `main`.
 - Le ricerche con subagenti sono la voce più costosa: controllare il consumo prima di avviarle. L'utente non vuole spendere in uso extra.
