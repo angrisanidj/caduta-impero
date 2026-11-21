@@ -32,14 +32,18 @@ for (const a of anelli) { try { TERRA = pc.xor(TERRA, [[a]]); } catch (err) { /*
 const tracciato = multi => multi.map(pol => pol.map(a => 'M' + a.map(p => f1(p[0]) + ' ' + f1(p[1])).join('L') + 'Z').join('')).join('');
 
 /* Regioni del racconto: ciascuna è l'unione di province reali, dai poligoni del Digital Atlas of the Roman Empire (grezzi/provinces.geojson: le province
-   verso il 200 d.C. e, per l'Italia, le undici regioni augustee). Tre regioni che non coincidono con una provincia sono ritagliate con un poligono a mano:
-   gli Agri Decumates (oltre Reno e Danubio), la Burgundia (attorno a Lione e Ginevra), la Gallaecia (il nord-ovest della penisola iberica).
+   verso il 200 d.C. e, per l'Italia, le undici regioni augustee). Sette regioni che non coincidono con una provincia sono ritagliate con un poligono a mano:
+   gli Agri Decumates (oltre Reno e Danubio), la Burgundia (attorno a Lione e Ginevra), la Gallaecia (il nord-ovest della penisola iberica), Creta, la Campania, la Romagna (l'Esarcato di Ravenna, staccato dall'Emilia longobarda), il Lazio (che prende anche l'Etruria a sud di Sutri).
    est: true = regioni che dal 395 dipendono da Costantinopoli; non entrano nella quota dell'Occidente. */
 const PROV = {}; for (const f of JSON.parse(fs.readFileSync(new URL('./grezzi/provinces.geojson', import.meta.url))).features) PROV[f.properties.name] = f.geometry;
 const TAGLI = {
   decumati:  [[7.62, 47.56], [7.55, 48], [7.75, 48.58], [8.1, 48.9], [8.4, 49.3], [8.27, 50], [7.9, 50], [7.6, 50.36], [9, 51], [11.5, 50.6], [12.6, 49.3], [12.1, 49.02], [11.77, 48.85], [10.9, 48.7], [10, 48.4], [10.1, 47.9], [9.6, 47.55], [9, 47.67], [8.2, 47.6]],
   burgundia: [[3.9, 46.9], [5.6, 47.9], [7.62, 47.56], [7.9, 46.6], [7, 45.9], [6.9, 45.1], [6, 44.5], [4.6, 44.5], [4.2, 45.4], [3.8, 46.1]],
-  gallaecia: [[-10.5, 44.6], [-5.9, 44.6], [-5.9, 41.9], [-6.6, 41.2], [-10.5, 41]]
+  gallaecia: [[-10.5, 44.6], [-5.9, 44.6], [-5.9, 41.9], [-6.6, 41.2], [-10.5, 41]],
+  romagna:   [[10.85, 43.6], [10.85, 44], [11, 44.6], [11.4, 44.95], [11.4, 45.3], [13, 45.3], [13, 43.6]],      // la Regio VIII a est del Panaro: l'Esarcato (Bologna, Ravenna, Rimini). A ovest, Modena, Parma e Piacenza sono longobarde dal VI-VII secolo
+  tuscia:    [[11.6, 41.6], [11.6, 42.3], [12.2, 42.45], [12.6, 42.5], [12.9, 42.3], [12.9, 41.6]],                  // l'Etruria a sud di Sutri e Orte: con Roma dal VI secolo (ducato romano), mentre il resto è longobardo
+  creta:     [[23, 34.6], [26.6, 34.6], [26.6, 35.9], [23, 35.9]],                                     // l'isola, che nella provincia sta insieme alla Cirenaica ma ha tutt'altra storia
+  campania:  [[13.76, 41], [13.78, 41.25], [13.95, 41.42], [14.1, 41.55], [15.3, 41.6], [15.3, 40.3], [13.76, 40.3]]      // la Regio I a est del Garigliano: dal 756 il Lazio è del papa, Napoli no
 };
 const REGIONI = {
   britannia:  { nome: 'Britannia', prov: ['Britannia'] },
@@ -50,10 +54,11 @@ const REGIONI = {
   burgundia:  { nome: 'Burgundia', prov: ['Lugdunensis', 'Germania Superior', 'Narbonensis', 'Alpes Graiae et Poeninae', 'Alpes Cottiae'], dentro: 'burgundia' },
   hispania:   { nome: 'Hispania', prov: ['Tarraconensis', 'Baetica', 'Lusitania'], fuori: ['gallaecia'] },
   gallaecia:  { nome: 'Gallaecia', prov: ['Tarraconensis', 'Lusitania'], dentro: 'gallaecia' },
-  italia_nord:{ nome: 'Italia del nord', prov: ['IX', 'X', 'XI', 'VII'] },
-  ravenna:    { nome: 'Emilia e Ravenna', prov: ['VIII'] },
+  italia_nord:{ nome: 'Italia del nord', prov: ['IX', 'X', 'XI', 'VII'], fuori: ['tuscia'], piu: [{ prov: ['VIII'], fuori: ['romagna'] }] },
+  ravenna:    { nome: 'Romagna e Ravenna', prov: ['VIII'], dentro: 'romagna' },
   spoleto:    { nome: 'Umbria e Piceno', prov: ['VI', 'V'] },
-  roma:       { nome: 'Lazio e Campania', prov: ['I'] },
+  roma:       { nome: 'Lazio', prov: ['I'], fuori: ['campania'], piu: [{ prov: ['VII'], dentro: 'tuscia' }] },
+  campania:   { nome: 'Campania', prov: ['I'], dentro: 'campania' },
   benevento:  { nome: 'Sannio e Puglia', prov: ['IV', 'II'] },
   calabria:   { nome: 'Lucania e Bruzio', prov: ['III'] },
   sicilia:    { nome: 'Sicilia', prov: ['Sicilia'] },
@@ -68,7 +73,8 @@ const REGIONI = {
   balcani:    { nome: 'Balcani', prov: ['Moesia Superior', 'Moesia Inferior', 'Thracia', 'Macedonia', 'Achaia'], est: true },
   anatolia:   { nome: 'Asia Minore', prov: ['Asia', 'Bithynia et Pontus', 'Galatia et Cappadocia', 'Lycia et Pamphylia', 'Cilicia', 'Cyprus'], est: true },
   levante:    { nome: 'Siria e Palestina', prov: ['Syria', 'Iudaea', 'Arabia', 'Armenia Mesopotamia'], est: true },
-  egitto:     { nome: 'Egitto e Cirenaica', prov: ['Aegyptus', 'Creta et Cyrene'], est: true }
+  egitto:     { nome: 'Egitto e Cirenaica', prov: ['Aegyptus', 'Creta et Cyrene'], fuori: ['creta'], est: true },
+  creta:      { nome: 'Creta', prov: ['Creta et Cyrene'], dentro: 'creta', est: true }
 };
 /* una geometria GeoJSON diventa un multipoligono piano, sfoltito: punti a meno di 0,4 unità dal precedente si saltano */
 function piano(geo) {
@@ -91,6 +97,7 @@ function forma(r) {
   for (const n of r.prov) { if (!PROV[n]) throw new Error('provincia sconosciuta: ' + n); const g = piano(PROV[n]); m = m.length ? pc.union(m, g) : g; }
   if (r.dentro) m = pc.intersection(m, taglio(r.dentro));
   for (const t of r.fuori || []) m = pc.difference(m, taglio(t));
+  for (const e of r.piu || []) m = pc.union(m, forma(e));                // pezzi di altre province, con i loro ritagli
   return m;
 }
 

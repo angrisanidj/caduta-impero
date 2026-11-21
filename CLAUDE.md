@@ -26,7 +26,7 @@ Convenzioni: 1 unità = 10 m; origine al Foro Romano (41.8925 N, 12.4853 E); x v
 
 ## Mappa
 
-`js/mappa-dati.js` è generato da `src/mappa/genera.mjs` (nella cartella `src/mappa`: `node genera.mjs`). Coste da Natural Earth; le 27 regioni sono unioni di province reali, dai poligoni del Digital Atlas of the Roman Empire (`src/mappa/grezzi/provinces.geojson`, licenza Creative Commons con attribuzione: l'attribuzione sta in fondo alla pagina e va tenuta). Nel generatore stanno anche `CITTA` e `POPOLI` (i gruppi in movimento: anno, longitudine, latitudine, rapporto con Roma). `js/mappa.js` disegna regioni, popoli e legende e calcola la quota di territorio dell'Occidente e dell'Oriente per il cruscotto.
+`js/mappa-dati.js` è generato da `src/mappa/genera.mjs` (nella cartella `src/mappa`: `node genera.mjs`). Coste da Natural Earth; le 29 regioni sono unioni di province reali (sei ritagliate a mano: Agri Decumates, Burgundia, Gallaecia, Creta, Campania, Romagna), dai poligoni del Digital Atlas of the Roman Empire (`src/mappa/grezzi/provinces.geojson`, licenza Creative Commons con attribuzione: l'attribuzione sta in fondo alla pagina e va tenuta). Nel generatore stanno anche `CITTA` e `POPOLI` (i gruppi in movimento: anno, longitudine, latitudine, rapporto con Roma). In `CAMBI` un regno si scrive `regno:<quale>` (visigoti, franchi, italia…): colore e nome stanno in `REGNI` di `js/mappa.js`. `js/mappa.js` disegna regioni (senza linee interne: una regione prende tutto il colore del suo stato), popoli (un punto, un cartellino col nome e la rotta recente) e legende (solo le voci presenti nella tappa) e calcola la quota di territorio dell'Occidente e dell'Oriente per il cruscotto.
 
 ## Lavorare
 

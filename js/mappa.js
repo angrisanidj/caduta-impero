@@ -6,7 +6,10 @@ var G=window.RM_MAPPA, ospite=document.getElementById('mappa'); if(!G||!ospite) 
 var NS='http://www.w3.org/2000/svg';
 function el(tipo,attr,padre){ var e=document.createElementNS(NS,tipo); for(var k in attr) e.setAttribute(k,attr[k]); if(padre) padre.appendChild(e); return e; }
 
-var STATI=[['roma','governo di Roma'],['usurpatore','impero separato'],['conteso','conteso'],['federati','federati, per trattato'],['regno','regno autonomo'],['oriente','corte d\'Oriente'],['califfato','califfato'],['carolingio','impero dei Franchi'],['chiesa','terre della Chiesa'],['perso','fuori dall\'impero']];
+var STATI=[['roma','governo di Roma'],['usurpatore','impero separato'],['conteso','conteso'],['federati','federati, per trattato'],['regno:svevi',''],['regno:vandali',''],['regno:visigoti',''],['regno:burgundi',''],['regno:franchi',''],['regno:italia',''],['regno:longobardi',''],['regno:anglosassoni',''],['regno:asturie',''],['oriente','corte d\'Oriente'],['califfato','califfato'],['carolingio','impero dei Franchi'],['chiesa','terre della Chiesa'],['perso','fuori dall\'impero']];
+/* i regni: colore e nome. I colori si ripetono solo fra regni che non sono mai sulla carta insieme. */
+var REGNI={svevi:['#D08C60','regno degli Svevi'],vandali:['#7B5B3A','regno dei Vandali'],visigoti:['#6A4C93','regno dei Visigoti'],burgundi:['#C08A9E','regno dei Burgundi'],franchi:['#3E5F7A','regni dei Franchi'],
+  italia:['#3D7A4F','regno d\'Italia'],longobardi:['#8A8F3A','regno e ducati dei Longobardi'],anglosassoni:['#7F95A3','regni anglosassoni'],asturie:['#D08C60','regno delle Asturie']};
 var svg=el('svg',{viewBox:'95 55 810 518',   /* ritaglio sull'Occidente: stesso rapporto del riquadro */ role:'img','aria-label':'Mappa dell\'Impero romano','preserveAspectRatio':'xMidYMid slice'},ospite);
 var defs=el('defs',{},svg), trama=el('pattern',{id:'trama-conteso',width:7,height:7,patternUnits:'userSpaceOnUse',patternTransform:'rotate(40)'},defs);
 el('rect',{width:7,height:7,fill:'#DCD0B8'},trama); el('rect',{width:3.2,height:7,fill:'#9A2F2A'},trama);
@@ -30,44 +33,91 @@ var citta=el('g',{'class':'m-citta'},svg);
   el('text',{x:c.x+(sinistra?7:-7),y:c.y+(id==='milano'?-7:id==='roma'?14:4),'text-anchor':sinistra?'start':'end'},citta).textContent=c.nome;
 });
 
-/* I popoli: ciascuno è una nuvola di punti che sta dove stava il grosso del gruppo e ha il colore del suo rapporto con Roma in quel momento.
-   Niente frecce: fra una tappa e l'altra la nuvola si sposta. */
-var RAPPORTI=[['fuori','oltre il confine'],['accolti','ammessi nell\'impero'],['federati','alleati per trattato'],['armi','in armi dentro l\'impero'],['regno','un regno proprio']];
-var popoli={}, stratoPopoli=el('g',{'class':'m-popoli'},svg);
-Object.keys(G.popoli||{}).forEach(function(id,k){
-  var q=G.popoli[id], g=el('g',{'class':'m-popolo fuori'},stratoPopoli), n=q.peso*3, i, s=k*97+13;
-  function caso(){ s=(s*16807+7)%2147483647; return s/2147483647; }
-  for(i=0;i<n;i++){ var a=caso()*6.283, r=Math.sqrt(caso())*(5+q.peso*1.5); el('circle',{cx:(Math.cos(a)*r).toFixed(1),cy:(Math.sin(a)*r*.72).toFixed(1),r:(1.5+caso()*1.2).toFixed(1)},g); }
-  var t=el('text',{y:-(9+q.peso*1.3)},g); t.textContent=q.nome;
-  popoli[id]={g:g,t:t,q:q};
+/* I popoli: ciascuno è un punto dove stava il grosso del gruppo e un cartellino col nome; il colore dice il rapporto con Roma in quel momento
+   (gli stessi colori delle regioni: verde per chi sta dentro per accordo, blu per chi ha un regno), la linea tratteggiata da dove veniva
+   (le ultime due tappe del cammino). Quando un gruppo ha un regno, il cartellino porta il nome del regno e la linea sparisce. */
+var RAPPORTI=[['fuori','oltre il confine'],['accordo','dentro l\'impero, per accordo'],['armi','in armi dentro l\'impero'],['regno','con un regno proprio (colore in legenda)']];
+var CLASSE={fuori:'fuori',accolti:'accordo',federati:'accordo',armi:'armi',regno:'regno'};
+var REGNO={goti:'Regno dei Visigoti',ostrogoti:'Regno degli Ostrogoti',vandali:'Regno dei Vandali',svevi:'Regno degli Svevi',burgundi:'Regno dei Burgundi',franchi:'Regno dei Franchi',sassoni:'Regni anglosassoni',longobardi:'Regno dei Longobardi'};
+var popoli={}, stratoRotte=el('g',{'class':'m-rotte'},svg), stratoPopoli=el('g',{'class':'m-popoli'},svg), ingr=0;
+Object.keys(G.popoli||{}).forEach(function(id){
+  var q=G.popoli[id], sotto=el('path',{'class':'m-rotta-f via'},stratoRotte), rotta=el('path',{'class':'m-rotta via'},stratoRotte), g=el('g',{'class':'m-popolo via'},stratoPopoli);
+  var punto=el('circle',{'class':'m-punto',r:4},g), c=el('g',{'class':'m-cartello'},g), fondo=el('rect',{rx:3,ry:3},c), t=el('text',{},c);
+  popoli[id]={g:g,c:c,fondo:fondo,t:t,punto:punto,q:q,rotta:rotta,sotto:sotto,nome:'',larga:0};
 });
 function mostraPopoli(anno){
-  for(var id in popoli){
-    var p=popoli[id], q=p.q, k=-1, i; for(i=0;i<q.t.length;i++) if(anno>=q.t[i][0]) k=i;
-    var c=k<0?'via':anno>q.fine?'via':q.t[k][3], v=q.t[Math.max(0,k)], nome=q.nome;
+  var messi=[], visti={}, id, i;
+  /* su uno schermo stretto la carta rimpicciolisce: cartellini e punti si ingrandiscono per restare leggibili */
+  var lw=svg.getBoundingClientRect().width, k=lw>0?Math.max(1,Math.min(1.8,.7/(lw/810))):1;
+  if(k!==ingr){ ingr=k; svg.style.setProperty('--pf',(11.5*k).toFixed(1)+'px'); for(id in popoli){ popoli[id].larga=0; popoli[id].punto.setAttribute('r',(4*k).toFixed(1)); } }
+  var H=15*k;
+  for(id in popoli){
+    var p=popoli[id], q=p.q, u=-1; for(i=0;i<q.t.length;i++) if(anno>=q.t[i][0]) u=i;
+    var via=u<0||anno>q.fine, cl=via?'via':CLASSE[q.t[u][3]], v=q.t[Math.max(0,u)], nome=q.nome;
     for(i=0;i<q.poi.length;i++) if(anno>=q.poi[i][0]) nome=q.poi[i][1];
-    p.g.setAttribute('class','m-popolo '+c); p.g.style.transform='translate('+v[1]+'px,'+v[2]+'px)';
-    if(p.t.textContent!==nome) p.t.textContent=nome;
+    if(cl==='regno' && REGNO[id]) nome=REGNO[id];
+    p.g.setAttribute('class','m-popolo '+cl); p.g.style.transform='translate('+v[1]+'px,'+v[2]+'px)';
+    if(p.nome!==nome){ p.nome=nome; p.t.textContent=nome; p.larga=0; }
+    var d='', da=Math.max(0,u-2), tratti=0;
+    if(!via && cl!=='regno' && anno-q.t[u][0]<=25) for(i=da;i<=u;i++){ if(i<u && q.t[u][0]-q.t[i][0]>40) continue; if(i>da && q.t[i][1]===q.t[i-1][1] && q.t[i][2]===q.t[i-1][2]) continue; if(d) tratti++; d+=(d?'L':'M')+q.t[i][1]+' '+q.t[i][2]; }
+    if(!tratti) d='';
+    p.rotta.setAttribute('d',d||'M0 0'); p.sotto.setAttribute('d',d||'M0 0'); p.rotta.setAttribute('class','m-rotta '+(d?cl:'via')); p.sotto.setAttribute('class','m-rotta-f'+(d?'':' via'));
+    if(via) continue;
+    visti[cl]=1;
+    if(!p.larga){ var w=0; try{ w=p.t.getComputedTextLength(); }catch(e){} p.larga=(w>4?w:nome.length*5.6*k)+12*k; }
+    /* il cartellino sta sopra il punto; se lì ce n'è già un altro va sotto, o più in alto */
+    var W=p.larga, cx=Math.max(97+W/2,Math.min(903-W/2,v[1])), prove=[-H-7*k,8*k,-2*H-9*k,H+10*k,-3*H-11*k], dy=prove[0], j, n, libero;
+    for(j=0;j<prove.length;j++){ libero=true;
+      for(n=0;n<messi.length;n++) if(Math.abs(messi[n][0]-cx)<(messi[n][2]+W)/2+2 && Math.abs(messi[n][1]-(v[2]+prove[j]+H/2))<H+1){ libero=false; break; }
+      if(libero){ dy=prove[j]; break; } }
+    messi.push([cx,v[2]+dy+H/2,W]);
+    p.fondo.setAttribute('x',(-W/2).toFixed(1)); p.fondo.setAttribute('width',W.toFixed(1)); p.fondo.setAttribute('height',H.toFixed(1)); p.t.setAttribute('y',(H*.72).toFixed(1));
+    p.c.style.transform='translate('+(cx-v[1]).toFixed(1)+'px,'+dy.toFixed(1)+'px)';
   }
+  return visti;
 }
 
-var legenda=document.getElementById('legendaMappa');
+/* Le legende mostrano solo ciò che c'è sulla carta in quella tappa, e le voci cambiano nome col tempo (l'impero «d'Occidente» esiste dal 395).
+   Lo spazio resta quello della legenda al completo, così la pagina non salta da una tappa all'altra. */
+function voceStato(s,anno){
+  if(s.indexOf('regno:')===0){ var c=s.slice(6); return c==='italia'?(anno<493?'regno d\'Italia di Odoacre':'regno degli Ostrogoti'):c==='franchi'&&anno<511?'regno dei Franchi':REGNI[c][1]; }
+  return s==='roma'?(anno<395?'impero romano':'impero d\'Occidente'):s==='usurpatore'?(anno<455?'impero separato, con un suo imperatore':'dominio romano che non obbedisce più a Ravenna'):s==='conteso'?'in guerra, contesa':
+    s==='federati'?'barbari insediati per trattato':s==='regno'?'regno':s==='oriente'?'impero d\'Oriente':
+    s==='califfato'?(anno<750?'califfato':'califfato ed emirati arabi'):s==='carolingio'?'impero dei Franchi':s==='chiesa'?'terre della Chiesa':(anno<395?'lasciata dall\'impero':'uscita dall\'impero');
+}
+var legenda=document.getElementById('legendaMappa'), legendaPopoli=document.getElementById('legendaPopoli'), vociStati={}, vociPopoli={};
 STATI.forEach(function(s){
-  var v=document.createElement('span'), i=document.createElement('i');
-  i.style.background=s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':'var(--st-'+s[0]+')';
-  if(s[0]==='oriente') i.style.opacity=.6;
-  v.appendChild(i); v.appendChild(document.createTextNode(s[1])); legenda.appendChild(v);
+  var v=document.createElement('span'), i=document.createElement('i'), t=document.createTextNode(s[1]||voceStato(s[0],600));
+  i.style.background=s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':s[0].indexOf('regno:')===0?REGNI[s[0].slice(6)][0]:'var(--st-'+s[0]+')';
+  v.appendChild(i); v.appendChild(t); legenda.appendChild(v); vociStati[s[0]]={v:v,t:t};
 });
-
-var legendaPopoli=document.getElementById('legendaPopoli');
-if(legendaPopoli && G.popoli) RAPPORTI.forEach(function(r){ var v=document.createElement('span'), i=document.createElement('i'); i.className='p-'+r[0]; v.appendChild(i); v.appendChild(document.createTextNode(r[1])); legendaPopoli.appendChild(v); });
+if(legendaPopoli && G.popoli) RAPPORTI.forEach(function(r){ var v=document.createElement('span'), i=document.createElement('i'); i.className='p-'+r[0]; v.appendChild(i); v.appendChild(document.createTextNode(r[1])); legendaPopoli.appendChild(v); vociPopoli[r[0]]=v; });
+var ultimo=null;
+function spazioLegende(){                                 // l'altezza minima è quella della tappa con più voci: la pagina non salta da una tappa all'altra
+  var prima=ultimo, T=(window.RM_DATI||{}).TAPPE||[], alta=0, r;
+  if(legendaPopoli){ legendaPopoli.style.minHeight=''; for(r in vociPopoli) vociPopoli[r].hidden=false; if(legendaPopoli.offsetHeight) legendaPopoli.style.minHeight=legendaPopoli.offsetHeight+'px'; }
+  legenda.style.minHeight='';
+  T.forEach(function(t){ if(t.intermezzo||!t.regioni) return; aggiornaLegende(t.regioni,t.anno,null); alta=Math.max(alta,legenda.offsetHeight); });
+  if(alta) legenda.style.minHeight=alta+'px';
+  ultimo=prima; if(ultimo) aggiornaLegende(ultimo[0],ultimo[1],ultimo[2]);
+}
+function aggiornaLegende(stati,anno,visti){
+  ultimo=[stati,anno,visti]; var ci={}, id, s;
+  for(id in regioni) ci[stati[id]||'perso']=1;
+  for(s in vociStati){ vociStati[s].v.hidden=!ci[s]; if(anno!=null){ var n=voceStato(s,anno); if(vociStati[s].t.nodeValue!==n) vociStati[s].t.nodeValue=n; } }
+  if(visti) for(s in vociPopoli) vociPopoli[s].hidden=!visti[s];
+}
+var attesa=0; window.addEventListener('resize',function(){ clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); },200); });
+spazioLegende();
 
 window.RM_mappa={
   mostra:function(stati,anno){
-    if(anno!=null) mostraPopoli(anno);
+    var visti=anno!=null?mostraPopoli(anno):null;
+    aggiornaLegende(stati,anno,visti);
     for(var id in regioni){
-      var s=stati[id]||'perso';
-      regioni[id].setAttribute('class','m-regione '+s);
+      var s=stati[id]||'perso', chi=s.indexOf('regno:')===0?s.slice(6):'';
+      if(chi) s='regno';
+      regioni[id].setAttribute('class','m-regione '+s); regioni[id].style.color=chi&&REGNI[chi]?REGNI[chi][0]:'';
       if(nomi[id]) nomi[id].setAttribute('class','m-nome'+(s==='perso'||s==='conteso'?' chiaro':''));
     }
   },

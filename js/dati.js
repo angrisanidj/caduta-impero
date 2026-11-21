@@ -25,11 +25,15 @@ var ATTI=[
  {n:'VI', nome:'La città dei papi',  da:590, a:852}
 ];
 
-/* Stati di una regione: roma | usurpatore | conteso | federati | regno | perso | oriente | califfato | carolingio | chiesa.
+/* Stati di una regione: roma | usurpatore | conteso | federati | regno:<quale> | perso | oriente | califfato | carolingio | chiesa.
+   Ogni regno ha un nome (regno:visigoti, regno:franchi, regno:italia per Odoacre e poi gli Ostrogoti…): sulla carta ha il suo colore e la sua voce in legenda.
+   I confini restano quelli delle regioni, cioè delle province romane: Aquitania, Burgundia e Gallia del sud passano ai Franchi nella tappa del 537 (in realtà nel 507, 534 e 537),
+   con la Rezia (protettorato franco dal 536-537); la Gallaecia sveva passa ai Visigoti nel 585; dal 774 il regno longobardo ha un re franco. Creta è una regione a sé
+   (agli Arabi verso l'824-827) e la Campania è staccata dal Lazio: resta all'impero con il ducato di Napoli, anche se Capua e Salerno sono longobarde.
    CAMBI elenca, per anno di tappa, solo ciò che muta rispetto alla tappa precedente. Le regioni sono quelle di src/mappa/genera.mjs (unioni di province reali).
    È una semplificazione dichiarata: una regione, un colore. Scelte da sapere: l'impero delle Gallie e Palmira sono «usurpatore»; la Britannia di Carausio pure (286-296);
    la Gallia del nord di Egidio e Siagrio (461-486) è «usurpatore», perché resta romana ma non obbedisce più a Ravenna; la Dalmazia resta «roma» fino al 480, con Giulio Nepote;
-   i regni franchi sono «regno» fino all'800, poi «carolingio»; dal 756 Lazio ed Emilia sono «chiesa». Gli stati dell'Oriente servono solo alla linea tratteggiata del cruscotto.
+   i regni franchi sono «regno» fino all'800, poi «carolingio»; dal 756 Lazio e Romagna (l'Esarcato di Ravenna, a est del Panaro) sono «chiesa»: la Pentapoli, da Pesaro ad Ancona, sta nella regione di Umbria e Piceno e non si vede. Gli stati dell'Oriente servono solo alla linea tratteggiata del cruscotto.
    Riveduti il 21 novembre 2026 (fonti in testa al file). Scelte da sapere, dopo la verifica: nel 409 la Gallia del sud è «usurpatore» (Costantino III ad Arles, riconosciuto da Onorio per pochi mesi);
    le Mauretanie tornano «roma» nel 451 (trattato del 442) e si perdono dopo il 455; i Franchi sono «federati» nel 458 (Childerico combatte con i generali romani) e «regno» dal 476;
    Rezia e Norico sono «conteso» nel 476: nel Norico Odoacre comanda ancora (lo sgombera nel 488), per la Rezia non ci sono prove; nella guerra gotica Ravenna è imperiale dal 540
@@ -37,8 +41,8 @@ var ATTI=[
    la Dalmazia è «conteso» dal 663 (Salona cade fra il 614 e il 640, le città della costa restano all'impero); la Hispania è «conteso» nel 711 perché la conquista dura fino al 718 circa,
    la Gallaecia è presa nel 713-714, lasciata dai presidi berberi verso il 741 e unita alle Asturie da Alfonso I; la Pannonia è «conteso» nell'800 (guerre avare, 791-803);
    nell'846 Sannio e Puglia sono «conteso» (Taranto ai Saraceni dall'840, Bari dall'847). Lo sgombero della Dacia è messo al 271, ma gli studiosi oscillano fra il 271 e il 275. */
-var OVEST=['britannia','gallia','belgica','aquitania','provenza','burgundia','hispania','gallaecia','italia_nord','ravenna','spoleto','roma','benevento','calabria','sicilia','isole','rezia','pannonia','dalmazia','africa','mauretania','decumati'],
-    EST=['dacia','balcani','anatolia','levante','egitto'];
+var OVEST=['britannia','gallia','belgica','aquitania','provenza','burgundia','hispania','gallaecia','italia_nord','ravenna','spoleto','roma','campania','benevento','calabria','sicilia','isole','rezia','pannonia','dalmazia','africa','mauretania','decumati'],
+    EST=['dacia','balcani','anatolia','levante','egitto','creta'];
 var CAMBI={
  235:{},
  260:{britannia:'usurpatore',gallia:'usurpatore',belgica:'usurpatore',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore',hispania:'usurpatore',gallaecia:'usurpatore',decumati:'perso'},
@@ -46,29 +50,30 @@ var CAMBI={
  274:{britannia:'roma',gallia:'roma',belgica:'roma',aquitania:'roma',burgundia:'roma',levante:'roma',egitto:'roma',anatolia:'roma'},
  293:{britannia:'usurpatore'},
  301:{britannia:'roma'},
- 395:{balcani:'oriente',anatolia:'oriente',levante:'oriente',egitto:'oriente'},
+ 395:{balcani:'oriente',anatolia:'oriente',levante:'oriente',egitto:'oriente',creta:'oriente'},
  406:{gallia:'conteso',belgica:'conteso',britannia:'usurpatore'},
  409:{britannia:'perso',hispania:'conteso',gallaecia:'conteso',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore'},
- 418:{aquitania:'federati',gallia:'roma',gallaecia:'regno',provenza:'roma',burgundia:'roma'},
+ 418:{aquitania:'federati',gallia:'roma',gallaecia:'regno:svevi',provenza:'roma',burgundia:'roma'},
  429:{mauretania:'conteso'},
- 439:{africa:'regno',pannonia:'perso'},
+ 439:{africa:'regno:vandali',pannonia:'perso'},
  451:{burgundia:'federati',mauretania:'roma'},
- 455:{isole:'regno',mauretania:'perso',sicilia:'conteso'},
+ 455:{isole:'regno:vandali',mauretania:'perso',sicilia:'conteso'},
  458:{belgica:'federati'},
- 468:{sicilia:'regno',gallia:'usurpatore'},
- 472:{hispania:'regno',aquitania:'regno',burgundia:'regno',provenza:'conteso'},
- 476:{italia_nord:'regno',ravenna:'regno',spoleto:'regno',roma:'regno',benevento:'regno',calabria:'regno',provenza:'regno',belgica:'regno',rezia:'conteso'},
- 493:{gallia:'regno',rezia:'regno',dalmazia:'regno'},
- 537:{africa:'oriente',isole:'oriente',sicilia:'oriente',dalmazia:'oriente',calabria:'oriente',benevento:'oriente',roma:'conteso',spoleto:'conteso',decumati:'regno'},
- 542:{ravenna:'oriente',italia_nord:'conteso',benevento:'conteso',calabria:'conteso'},
- 568:{italia_nord:'regno',spoleto:'oriente',roma:'oriente',benevento:'oriente',calabria:'oriente',britannia:'regno'},
- 589:{spoleto:'regno',benevento:'regno',balcani:'conteso'},
+ 468:{sicilia:'regno:vandali',gallia:'usurpatore'},
+ 472:{hispania:'regno:visigoti',aquitania:'regno:visigoti',burgundia:'regno:burgundi',provenza:'conteso'},
+ 476:{italia_nord:'regno:italia',ravenna:'regno:italia',spoleto:'regno:italia',roma:'regno:italia',campania:'regno:italia',benevento:'regno:italia',calabria:'regno:italia',sicilia:'regno:italia',provenza:'regno:visigoti',belgica:'regno:franchi',rezia:'conteso'},
+ 493:{gallia:'regno:franchi',rezia:'regno:italia',dalmazia:'regno:italia'},
+ 537:{africa:'oriente',isole:'oriente',sicilia:'oriente',dalmazia:'oriente',calabria:'oriente',benevento:'oriente',campania:'oriente',roma:'conteso',spoleto:'conteso',decumati:'regno:franchi',aquitania:'regno:franchi',burgundia:'regno:franchi',provenza:'regno:franchi',rezia:'regno:franchi'},
+ 542:{ravenna:'oriente',italia_nord:'conteso',benevento:'conteso',calabria:'conteso',campania:'conteso'},
+ 568:{italia_nord:'regno:longobardi',spoleto:'oriente',roma:'oriente',campania:'oriente',benevento:'oriente',calabria:'oriente',britannia:'regno:anglosassoni'},
+ 589:{spoleto:'regno:longobardi',benevento:'regno:longobardi',gallaecia:'regno:visigoti',balcani:'conteso'},
  663:{levante:'califfato',egitto:'califfato',dalmazia:'conteso'},
  711:{africa:'califfato',mauretania:'califfato',hispania:'conteso'},
  727:{hispania:'califfato',gallaecia:'conteso'},
- 756:{ravenna:'chiesa',roma:'chiesa',gallaecia:'regno'},
+ 756:{ravenna:'chiesa',roma:'chiesa',gallaecia:'regno:asturie'},
+ 780:{italia_nord:'regno:franchi',spoleto:'regno:franchi'},
  800:{gallia:'carolingio',belgica:'carolingio',aquitania:'carolingio',provenza:'carolingio',burgundia:'carolingio',rezia:'carolingio',decumati:'carolingio',italia_nord:'carolingio',spoleto:'carolingio',pannonia:'conteso'},
- 846:{sicilia:'conteso',benevento:'conteso',pannonia:'carolingio'}
+ 846:{sicilia:'conteso',benevento:'conteso',pannonia:'carolingio',creta:'califfato'}
 };
 var TAPPE=[
  {anno:235, titolo:"L'imperatore ucciso dai suoi soldati", testo:"A Magonza i soldati assassinano Severo Alessandro e acclamano Massimino. In cinquant'anni si conteranno oltre venti imperatori, senza contare gli usurpatori: quasi tutti uccisi dalle proprie truppe o in battaglia."},
