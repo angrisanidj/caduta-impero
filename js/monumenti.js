@@ -81,6 +81,46 @@ function chiesa(B,L,W,transetto){                         // basilica cristiana:
   portico(B,W*.8,W*.8,L/2+W*.4,0,0,1.1);
 }
 
+/* vani lungo un profilo curvo, sul lato che guarda il punto (cx,cz): servono alle facciate concave, dove C.fornici li metterebbe dietro il muro */
+function vaniVerso(B,prof,cx,cz,y,h,quota,quadra){
+  for(var i=0;i<prof.length-1;i++){ var a=prof[i], b=prof[i+1], mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, dx=b[0]-a[0], dz=b[1]-a[1], L=Math.hypot(dx,dz), nx=cx-mx, nz=cz-mz, m=Math.hypot(nx,nz)||1;
+    B.vano(mx+nx/m*.07,y,mz+nz/m*.07,dx/L,dz/L,L*(quota||.5),h,quadra); }
+}
+/* stadio per le gare atletiche: facciata a due ordini di arcate con le loro cornici, due settori di gradinate divisi da un muro, pista senza spina; ingressi al centro dei lati lunghi, sulla curva e sulla testata */
+function stadio(B,L,W,h){
+  var pr=function(w){ return RM.stadio(L-(W-w),w,26,14); }, est=pr(W), fas=pr(W+.14), cima=pr(W-1.1), mez=pr(W-2.7), pod=pr(W*.52);
+  var cen=pod.map(function(p){ return [Math.max(-L/2+3,Math.min(L/2-W/2,p[0])),0]; }), xm=-W/4;
+  B.striscia(est,0,est,h,P.travertino).striscia(est,h,cima,h,P.travertino).striscia(cima,h,cima,h-.25,P.travertino)
+   .striscia(cima,h-.25,mez,h*.55,P.tufo).striscia(mez,h*.55,mez,h*.55-.3,P.travertino)
+   .striscia(mez,h*.55-.3,pod,.45,P.tufo).striscia(pod,.45,pod,.12,P.travertino).striscia(pod,.12,cen,.12,P.sabbia);
+  [h*.46,h*.91].forEach(function(y){ B.striscia(fas,y,fas,y+.09,P.marmo).striscia(fas,y+.09,est,y+.09,P.marmo); });
+  B.fornici(est,.12,h*.36,.55,1,false).fornici(est,h*.46+.14,h*.33,.5,1,false).aperture(-L/2,-W/2+1.2,-L/2,W/2-1.2,7,.12,h*.38);
+  [-1,1].forEach(function(q){ var z=q*(W/2+.22);                                                    // gli avancorpi degli ingressi sui lati lunghi
+    B.scatola(2,h*.5,.44,xm,0,z,P.travertino).scatola(2.1,.1,.54,xm,h*.5,z,P.marmo).vano(xm,0,z+q*.24,1,0,.8,h*.4).colonne(xm-.75,z+q*.3,xm+.75,z+q*.3,2,h*.46,.07,0); });
+  B.scatola(.44,h*.5,2,L/2+.22,0,0,P.travertino).scatola(.54,.1,2.1,L/2+.22,h*.5,0,P.marmo).vano(L/2+.46,0,0,0,1,.8,h*.4).colonne(L/2+.52,-.75,L/2+.52,.75,2,h*.46,.07,0);      // l'ingresso sulla curva
+}
+/* San Pietro di Costantino: cinque navate con i tetti a scalare, transetto continuo più basso della navata, abside a ovest (-x), quadriportico con la fontana a est.
+   Misure: circa 110 m dalla facciata all'abside, 64 di larghezza, transetto di 90, navata alta poco più di 30 (pianta di Alfarano e scavi; le altezze sono indicative). */
+function sanPietro(B){
+  var Ln=9.7, xn=.9, xf=5.78;
+  B.scatola(Ln,3.3,2.4,xn,0,0,P.mattone).falde(Ln,.75,2.6,xn,3.3,0,P.coppi,0,P.mattone);
+  B.aperture(xn-Ln/2+.3,1.2,xn+Ln/2-.3,1.2,11,2.4,.6,.3).aperture(xn+Ln/2-.3,-1.2,xn-Ln/2+.3,-1.2,11,2.4,.6,.3);          // undici finestre per lato sopra i tetti delle navatelle
+  [-1,1].forEach(function(k){
+    B.scatola(Ln,2.05,1,xn,0,k*1.7,P.mattone).scatola(Ln+.06,.12,1.04,xn,2.05,k*1.7,P.coppi);                            // navatelle interne
+    B.scatola(Ln,1.4,1,xn,0,k*2.7,P.mattone).scatola(Ln+.06,.12,1.06,xn,1.4,k*2.7,P.coppi);                              // navatelle esterne, più basse
+  });
+  B.aperture(xn-Ln/2+.3,3.2,xn+Ln/2-.3,3.2,11,.65,.45,.26).aperture(xn+Ln/2-.3,-3.2,xn-Ln/2+.3,-3.2,11,.65,.45,.26);
+  B.scatola(1.8,3,9,-4.85,0,0,P.mattone).falde(9,.7,2,-4.85,3,0,P.coppi,PI/2,P.mattone);                                  // il transetto
+  B.aperture(-5.75,1.2,-5.75,4.2,3,1.9,.6,.3).aperture(-5.75,-4.2,-5.75,-1.2,3,1.9,.6,.3).aperture(-5.6,4.5,-4.1,4.5,2,1.9,.6,.3).aperture(-4.1,-4.5,-5.6,-4.5,2,1.9,.6,.3);
+  B.cilindro(.9,2.4,-5.75,0,0,P.mattone,null,14).cono(.95,.6,-5.75,2.4,0,P.coppi,14);                                    // l'abside, sopra la tomba
+  B.vano(xf,0,0,0,1,.5,1.05,true); [-1,1].forEach(function(k){ B.vano(xf,0,k*.8,0,1,.34,.85,true).vano(xf,0,k*2.2,0,1,.34,.8,true); });      // le cinque porte
+  [1.75,2.55].forEach(function(y){ [-.75,0,.75].forEach(function(z){ B.vano(xf,y,z,0,1,.38,.55); }); });                // due file di tre finestre in facciata
+  portico(B,5.28,6.2,8.39,0,0,1.1); B.scatola(5.28,1.45,.14,8.39,0,3.1,P.tufo);                                          // il quadriportico
+  B.cilindro(.36,.16,8.39,.1,0,P.acqua,null,10).colonne(8.11,-.28,8.67,-.28,2,.7,.04,.1).colonne(8.11,.28,8.67,.28,2,.7,.04,.1).scatola(.78,.08,.78,8.39,.8,0,P.bronzo).cono(.5,.28,8.39,.88,0,P.bronzo,4);      // la fontana sotto il baldacchino di bronzo
+  B.scatola(.7,1.7,3.4,11.35,0,0,P.mattone).scatola(.8,.12,3.5,11.35,1.7,0,P.coppi); [-1,0,1].forEach(function(z){ B.vano(11.73,0,z,0,1,.5,1); });      // l'ingresso a tre fornici
+  for(var g=0;g<3;g++) B.scatola(.3,.3-.1*g,5.4,11.87+.3*g,0,0,P.travertino);                                            // la gradinata
+}
+
 /* complessi su terreno in pendenza: ogni corpo poggia alla quota del suo punto */
 function quota(x,z){ return Math.min(RM.h(x,z),RM.h(x+5,z),RM.h(x-5,z),RM.h(x,z+5),RM.h(x,z-5))-.1; }
 function suTerreno(X,Z,ry){ var q=quota(X,Z), c=Math.cos(ry||0), s=Math.sin(ry||0); return function(lx,lz){ return RM.h(X+lx*c+lz*s,Z-lx*s+lz*c)-q; }; }
@@ -193,7 +233,25 @@ var M=[
       B.scatola(.5,.12,.5,0,4.15,-11.6,P.marmo).cilindro(.09,.5,0,4.27,-11.6,P.statua,.07,6);   // capitello e statua dell'imperatore
       B.scatola(2,1.8,2.6,-2.8,0,-11.6,P.mattone).scatola(2,1.8,2.6,2.8,0,-11.6,P.mattone);     // biblioteche
       B.tempio(3.8,5.4,2.4,0,-16.4,PI,{fronte:8,lati:9,podio:.7});                              // tempio del Divo Traiano
-      B.dentro(5.9,0,0,PI/2,function(B){ var em=RM.ellisse(5,5,16,0,PI); B.striscia(em,0,em,2.6,P.mattone,false).fornici(em,.15,.6,.5,1,false).fornici(em,.95,.5,.4,1,false).fornici(em,1.75,.5,.4,1,false); });   // mercati di Traiano
+      B.dentro(5.75,0,0,0,function(B){
+        /* Mercati di Traiano. Il grande emiciclo gira attorno all'esedra del foro, oltre una strada, e guarda la piazza con tre livelli: le botteghe, le finestre ad arco, un piano arretrato.
+           Su OpenStreetMap (relazione 13353038) la facciata ha un raggio di 22 m e il corpo è profondo 7; qui il raggio è di 29,5 m, perché l'esedra del modello è più larga del vero.
+           Dietro, più in alto sul pendio del Quirinale, gli isolati lungo la via Biberatica e, a nord, la Grande Aula: posizioni dal contorno di OpenStreetMap, forme e altezze schematiche. */
+        var arco=function(r,a,n){ return RM.ellisse(r,r,n||18,-a,a); }, f=arco(2.95,PI/2), t=arco(3.3,PI/2), o=arco(3.7,PI/2), cor=arco(2.9,PI/2), v=arco(3.7,PI*.36,12), u=arco(4.55,PI*.36,12);
+        var th=IMP-.35, c0=Math.cos(th), s0=Math.sin(th), q0=quota(3,-8), su=function(lx,lz){ lx+=5.75; return Math.max(0,RM.h(-1.3+lx*c0+lz*s0,-27.8-lx*s0+lz*c0)-q0); };      // quanto sale il terreno rispetto al piano del foro
+        B.striscia(f,0,f,1.3,P.mattone,false).striscia(f,1.3,t,1.3,P.selce,false).striscia(t,1.3,t,1.95,P.mattone,false).striscia(t,1.95,o,1.75,P.coppi,false).striscia(o,0,o,1.75,P.mattone,false);
+        B.striscia(cor,.62,cor,.7,P.travertino,false).striscia(cor,.7,f,.7,P.travertino,false);                                  // la cornice sopra le botteghe
+        vaniVerso(B,f,0,0,.04,.5,.5,true); vaniVerso(B,f,0,0,.78,.4,.42); vaniVerso(B,t,0,0,1.42,.3,.34,true);
+        [-1,1].forEach(function(q){ B.scatola(.9,1.75,.75,.45,0,q*3.32,P.mattone).cilindro(.55,1.5,-.25,0,q*3.32,P.mattone,null,12).cupola(.55,-.25,1.5,q*3.32,P.mattone,.36); });      // le due aule di testata, a semicupola
+        var hb=Math.max(1.75,su(4.1,0))+1.3;                                                                                      // gli isolati della via Biberatica
+        B.striscia(v,1.75,v,hb,P.mattone,false).striscia(v,hb,u,hb-.2,P.coppi,false).striscia(u,0,u,hb-.2,P.mattone,false);
+        [0,v.length-1].forEach(function(i){ B.quad([v[i][0],0,v[i][1]],[u[i][0],0,u[i][1]],[u[i][0],hb-.2,u[i][1]],[v[i][0],hb,v[i][1]],P.mattone); });
+        vaniVerso(B,v,0,0,hb-.95,.4,.3); vaniVerso(B,v,0,0,hb-.42,.24,.3,true);
+        var ya=su(6.2,-3.6), yc=su(4.9,-2.3);
+        B.scatola(3.4,ya+2,2.6,6.2,0,-3.6,P.mattone).falde(3.4,.6,2.7,6.2,ya+2,-3.6,P.coppi,0,P.mattone);                       // la Grande Aula
+        B.aperture(4.6,-2.3,7.8,-2.3,5,ya+.9,.6,.34).aperture(7.8,-4.9,4.6,-4.9,5,ya+.9,.6,.34);
+        B.scatola(1.9,yc+1.5,1.8,4.9,0,-2.3,P.mattone).scatola(2,.12,1.9,4.9,yc+1.5,-2.3,P.coppi);                               // il corpo centrale
+      });
     });
  }},
  {id:'arcotito', nome:'Arco di Tito', x:27.2,z:20.3, ry:1.38, zone:[[0,0,1.7]], fa:function(B){                          // un solo fornice, a cavallo della via Sacra; posizione reale (OpenStreetMap)
@@ -239,7 +297,7 @@ var M=[
     B.vano(0,.22,3.66,1,0,.62,1.15);                                                                                                // la grande porta di bronzo
     B.dentro(0,0,9.2,PI,function(B){ portico(B,7,6.2,0,0,0,.9,P.selce); });                                                         // piazza porticata, chiusa sul lato nord
  }},
- {id:'domiziano', nome:'Stadio di Domiziano', x:-101,z:-74, ry:PI/2, lunga:[28,7.5], fa:function(B){ circo(B,27.5,10.6,1.9,false); }},
+ {id:'domiziano', nome:'Stadio di Domiziano', x:-101,z:-74, ry:PI/2, lunga:[28,7.5], fa:function(B){ stadio(B,27.5,10.6,1.9); }},      // circa 275 x 106 m, la curva a nord: è piazza Navona. Ordini di arcate e altezza della facciata sono ricostruiti
  {id:'traiano', nome:'Terme di Traiano', x:88,z:5, ry:-.62, zone:[[0,0,23]], fa:function(B){ terme(B,31,32); }},
  {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ terme(B,33.7,32.8); }},
  {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36); }},
@@ -252,8 +310,18 @@ var M=[
     B.colonne(-1,-3.75,1,-3.75,4,1.5,.09,0).scatola(2.6,.14,.8,0,1.5,-3.7,P.marmo);                               // l'ingresso aggiunto sul fianco, verso la via Sacra
  }},
  {id:'venere', nome:'Tempio di Venere e Roma', x:36,z:18.6, ry:-.3, zone:[[0,0,9.5]], fa:function(B){                            // tempio di Venere e Roma
-    B.scatola(15,.7,10,0,0,0,P.travertino).colonne(-7,4.6,7,4.6,22,1.3,.09,.7).colonne(-7,-4.6,7,-4.6,22,1.3,.09,.7);
-    B.dentro(0,.7,0,PI/2,function(B){ B.tempio(4.8,10.6,2.6,0,0,0,{fronte:8,lati:16,tetto:P.oro,podio:.4}); });
+    /* Podio di 145 x 100 m rivestito di travertino; tempio decastilo e pseudodiptero, con colonne di 1,8 m di diametro e due celle schiena contro schiena, ciascuna con quattro colonne fra le ante;
+       sui lati lunghi del recinto, portici di colonne di granito grigio (Platner e Ashby). La cella di Roma guarda il Foro (-x), quella di Venere il Colosseo (+x).
+       Non lette: il numero delle colonne sui fianchi (qui 22) e le altezze. Le tegole erano di bronzo dorato: le porta via papa Onorio I verso il 630. */
+    B.scatola(14.5,.7,10,0,0,0,P.travertino);
+    for(var g=0;g<3;g++){ var hg=.7*(3-g)/4; B.scatola(.26,hg,6,-7.38-g*.26,0,0,P.travertino); [-1,1].forEach(function(q){ B.scatola(.26,hg,1.7,7.38+g*.26,0,q*3.9,P.travertino); }); }      // la scalinata verso il Foro e le due rampe verso il Colosseo
+    [-1,1].forEach(function(q){ B.colonne(-6.9,q*4.7,6.9,q*4.7,22,1.25,.09,.7,P.granito).scatola(14,.1,.5,0,1.95,q*4.7,P.coppi); });
+    B.scatola(10.9,.3,5.2,0,.7,0,P.marmo);
+    [-1,1].forEach(function(q){
+      B.scatola(4.6,1.9,3.3,q*2.3,1,0,P.marmo).vano(q*4.63,1,0,0,1,.7,1.45,true);                                            // la cella e la sua porta
+      B.colonne(q*5,-1,q*5,1,4,1.9,.09,1).colonne(q*5.3,-1.906,q*5.3,1.906,8,1.9,.09,1).colonne(-5.3,q*2.45,5.3,q*2.45,22,1.9,.09,1);
+    });
+    B.scatola(10.9,.32,5.2,0,2.9,0,P.marmo).falde(10.9,.72,5.3,0,3.22,0,P.oro,0,P.marmo);
  }},
  {id:'adriano', nome:'Mausoleo di Adriano', x:-157,z:-118, ry:.1, zone:[[0,0,10]], et:1, fa:function(B){
     B.scatola(8.9,1.5,8.9,0,0,0,P.marmo).scatola(9.05,.12,9.05,0,1.5,0,P.marmo).cilindro(3.2,2.1,0,1.62,0,P.travertino,null,40).cilindro(3.27,.1,0,3.62,0,P.marmo,null,40).cilindro(3,.3,0,3.72,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.9,0,P.marmo).scatola(1.6,.1,1.6,0,5.6,0,P.marmo);
@@ -273,7 +341,7 @@ var M=[
  {id:'marcello', nome:'Teatro di Marcello', x:-46,z:7, ry:PI*.8, zone:[[0,0,8]], fa:function(B){ teatro(B,6.5,2.9); }},
  {id:'laterano', nome:'San Giovanni in Laterano', x:169,z:73, ry:.1, zone:[[0,0,8],[8,0,6],[-11.3,-3.5,2.6]], fa:function(B){ chiesa(B,10,6); B.cilindro(1.2,1.6,-11.3,0,-3.5,P.mattone,null,8).cono(1.3,.7,-11.3,1.6,-3.5,P.coppi,8); }},      // il battistero ottagonale, dov'è oggi (OpenStreetMap): dietro l'abside, verso nord
  {id:'pietro', nome:'San Pietro', x:-259,z:-108, ry:0, zone:[[0,0,9],[10,0,7]], et:1, fa:function(B){
-    chiesa(B,11.5,6.6,true);
+    sanPietro(B);
     B.scatola(5.4,.07,7.2,13.7,0,0,P.selce).scatola(5.4,.1,.5,13.7,0,3.4,P.travertino).scatola(5.4,.1,.5,13.7,0,-3.4,P.travertino);      // il sagrato lastricato davanti all'atrio, dove si raccolgono i pellegrini
     B.scatola(.5,.3,.5,3.6,0,6.6,P.travertino).cilindro(.2,2.4,3.6,.3,6.6,P.sabbia,.12,4).cono(.13,.25,3.6,2.7,6.6,P.sabbia,4);      // l'obelisco del circo di Nerone, sul fianco sud
  }},
