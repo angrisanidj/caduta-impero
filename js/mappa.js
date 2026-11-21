@@ -73,7 +73,9 @@ Object.keys(G.popoli||{}).forEach(function(id){
 function mostraPopoli(anno){
   var messi=[], visti={}, id, i;
   /* su uno schermo stretto la carta rimpicciolisce: cartellini e punti si ingrandiscono per restare leggibili */
-  var lw=svg.getBoundingClientRect().width, k=lw>0?Math.max(1,Math.min(1.8,.7/(lw/810))):1;
+  /* a tutto schermo restano della stessa misura sullo schermo anche quando si ingrandisce la carta */
+  var lw=svg.getBoundingClientRect().width, ppu=lw>0?lw/larghezzaVista():1, k=lw<=0?1:grandeSi?Math.max(.4,Math.min(1.8,Math.max(10,Math.min(14,Math.min(window.innerWidth,window.innerHeight)/40))/11.5/ppu)):Math.max(1,Math.min(1.8,.7/ppu));      // a tutto schermo: scritte di 10-14 pixel
+  k=Math.round(k*20)/20;
   if(k!==ingr){ ingr=k; svg.style.setProperty('--pf',(11.5*k).toFixed(1)+'px'); for(id in popoli){ popoli[id].larga=0; popoli[id].punto.setAttribute('r',(4*k).toFixed(1)); } }
   var H=15*k;
   for(id in popoli){
@@ -132,10 +134,75 @@ function aggiornaLegende(stati,anno,visti){
   for(s in vociStati){ vociStati[s].v.hidden=!ci[s]; if(anno!=null){ var n=voceStato(s,anno); if(vociStati[s].t.nodeValue!==n) vociStati[s].t.nodeValue=n; } }
   if(visti) for(s in vociPopoli) vociPopoli[s].hidden=!visti[s];
 }
-var attesa=0; window.addEventListener('resize',function(){ clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); },200); });
+var attesa=0; window.addEventListener('resize',function(){ adatta(); clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); },200); });
 spazioLegende();
 
+/* A tutto schermo la carta riempie la finestra e si può ingrandire e trascinare (rotella, due dita, i bottoni + e −). La finestra sulla carta (viewBox) prende
+   il rapporto del riquadro, non esce mai dal disegno (G.w x G.h) e a ingrandimento 1 mostra almeno il ritaglio di sempre. Fuori dallo schermo intero la carta
+   resta ferma, così sui telefoni la pagina scorre. */
+var BASE=[95,55,810,518], vista={k:1,cx:500,cy:314,w:BASE[2],h:BASE[3]}, grandeSi=false, daRifare=0;
+function larghezzaVista(){ return !grandeSi?BASE[2]:(vista.alto?BASE[2]:vista.w)/vista.k; }
+function applicaVista(){
+  if(!grandeSi){ svg.setAttribute('viewBox',BASE.join(' ')); return; }
+  var w=vista.w/vista.k, h=vista.h/vista.k;
+  if(vista.alto){ w=BASE[2]/vista.k; h=Math.min(G.h,w*vista.alto/vista.aw); ospite.style.height=Math.round(vista.aw*h/w)+'px'; }      // schermo alto e stretto: ingrandendo, il riquadro cresce in altezza finché c'è posto
+  vista.cx=Math.max(w/2,Math.min(G.w-w/2,vista.cx)); vista.cy=Math.max(h/2,Math.min(G.h-h/2,vista.cy));
+  svg.setAttribute('viewBox',(vista.cx-w/2).toFixed(1)+' '+(vista.cy-h/2).toFixed(1)+' '+w.toFixed(1)+' '+h.toFixed(1));
+  if(!daRifare) daRifare=requestAnimationFrame(function(){ daRifare=0; if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); });
+}
+/* misura del riquadro della carta: tutta la finestra meno la linea del tempo, che non copre mai la carta */
+function adatta(){
+  if(!grandeSi) return;
+  var tp=document.querySelector('.tempo'), H=window.innerHeight, ht=tp?tp.offsetHeight+(H<560?18:24):116, aw=window.innerWidth, ah=Math.max(120,H-ht);
+  document.body.classList.remove('impero-largo');                       // le legende si misurano al loro posto, sotto la carta
+  var legende=legenda.offsetHeight+(legendaPopoli?legendaPopoli.offsetHeight:0)+8;
+  vista.alto=0; vista.aw=aw;
+  if(aw/Math.max(1,ah-legende)<BASE[2]/G.h){        // telefono in verticale: la carta in alto, le legende sotto
+    vista.alto=Math.max(120,ah-legende); ospite.style.width=aw+'px'; document.body.style.setProperty('--tempo',(tp?tp.offsetHeight:92)+'px'); applicaVista(); return;
+  }
+  var a=aw/ah, aa=Math.max(BASE[2]/G.h,Math.min(G.w/BASE[3],a)), mw=a>aa?ah*aa:aw, mh=a>aa?ah:aw/aa;
+  ospite.style.width=Math.round(mw)+'px'; ospite.style.height=Math.round(mh)+'px';
+  if(aa>=BASE[2]/BASE[3]){ vista.h=BASE[3]; vista.w=BASE[3]*aa; } else { vista.w=BASE[2]; vista.h=BASE[2]/aa; }
+  document.body.classList.toggle('impero-largo',ah-mh<150);            // sotto la carta non c'è posto per le legende: vanno sopra la carta, sull'Oceano
+  document.body.style.setProperty('--tempo',(tp?tp.offsetHeight:92)+'px');
+  applicaVista();
+}
+var comandi=document.createElement('div'); comandi.className='comandi-scena comandi-mappa';
+function bottone(t,et,cl){ var b=document.createElement('button'); b.type='button'; b.className=cl; b.textContent=t; b.setAttribute('aria-label',et); b.title=et; comandi.appendChild(b); return b; }
+var bMeno=bottone('−','Allontana','zoom'), bPiu=bottone('+','Avvicina','zoom'), bGrande=bottone('⤢','Carta a tutto schermo','grande'); bGrande.setAttribute('aria-pressed','false');
+ospite.appendChild(comandi);
+function grande(si){
+  grandeSi=si; document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');
+  bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Chiudi lo schermo intero':'Carta a tutto schermo');
+  if(si){ vista.k=1; vista.cx=500; vista.cy=314; adatta(); if(vista.alto){ vista.k=Math.max(1,BASE[2]*vista.alto/(G.h*vista.aw)); vista.cx=470; vista.cy=330; applicaVista(); } }      // in verticale si parte con la carta che riempie il riquadro, sull'Italia: il bottone − la mostra intera
+  else { vista.alto=0; ospite.style.width=ospite.style.height=''; applicaVista(); }
+  ingr=0; window.dispatchEvent(new Event('resize'));                    // il gestore qui sopra rifà misure, legende e cartellini
+}
+function unita(){ return larghezzaVista()/(svg.getBoundingClientRect().width||1); }      // unità della carta per pixel
+function zoomSu(f,px,py){
+  var k0=vista.k, k1=Math.max(1,Math.min(6,k0*f)); if(k1===k0) return;
+  if(px!=null){ var r=svg.getBoundingClientRect(), u=unita(); vista.cx+=(px-r.left-r.width/2)*u*(1-k0/k1); vista.cy+=(py-r.top-r.height/2)*u*(1-k0/k1); }      // resta fermo il punto sotto il cursore
+  vista.k=k1; applicaVista();
+}
+var dita={}, presa=null;
+function distanza(){ var id=Object.keys(dita), a=dita[id[0]], b=dita[id[1]]; return Math.hypot(a[0]-b[0],a[1]-b[1])||1; }
+function prendi(){ var id=Object.keys(dita); presa=id.length===1?{x:dita[id[0]][0],y:dita[id[0]][1],cx:vista.cx,cy:vista.cy}:id.length===2?{d:distanza(),k:vista.k}:null; }
+function lascia(e){ delete dita[e.pointerId]; prendi(); svg.style.cursor=''; }
+svg.addEventListener('pointerdown',function(e){ if(!grandeSi) return; dita[e.pointerId]=[e.clientX,e.clientY]; try{ svg.setPointerCapture(e.pointerId); }catch(x){} prendi(); svg.style.cursor='grabbing'; });
+svg.addEventListener('pointermove',function(e){
+  if(!grandeSi||!dita[e.pointerId]||!presa) return; dita[e.pointerId]=[e.clientX,e.clientY];
+  if(presa.d==null){ var u=unita(); vista.cx=presa.cx-(e.clientX-presa.x)*u; vista.cy=presa.cy-(e.clientY-presa.y)*u; }
+  else vista.k=Math.max(1,Math.min(6,presa.k*distanza()/presa.d));
+  applicaVista();
+});
+svg.addEventListener('pointerup',lascia); svg.addEventListener('pointercancel',lascia);
+svg.addEventListener('wheel',function(e){ if(!grandeSi) return; e.preventDefault(); zoomSu(Math.exp(-e.deltaY*.0015),e.clientX,e.clientY); },{passive:false});
+bPiu.addEventListener('click',function(){ zoomSu(1.5); }); bMeno.addEventListener('click',function(){ zoomSu(1/1.5); });
+bGrande.addEventListener('click',function(){ grande(!grandeSi); });
+window.addEventListener('keydown',function(e){ if(e.key==='Escape'&&grandeSi) grande(false); });
+
 window.RM_mappa={
+  grande:grande,
   mostra:function(stati,anno){
     var visti=anno!=null?mostraPopoli(anno):null;
     if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }

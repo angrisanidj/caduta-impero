@@ -44,7 +44,7 @@ h1{margin:4px 0 6px;font-family:var(--cap);font-weight:600;font-size:clamp(28px,
 /* scena a tutto schermo: la linea del tempo resta a portata di mano */
 body.roma-grande{overflow:hidden}
 body.roma-grande .riquadro.roma{display:block!important;position:fixed;inset:0;z-index:50;border:0;border-radius:0;aspect-ratio:auto}
-body.roma-grande .tempo{position:fixed;left:16px;right:16px;bottom:12px;z-index:60;margin:0;background:rgba(251,246,234,.92)}
+body.roma-grande .tempo,body.impero-grande .tempo{position:fixed;left:16px;right:16px;bottom:12px;z-index:60;margin:0;background:rgba(251,246,234,.92)}
 body.roma-grande .grande{bottom:auto;top:52px}
 body.roma-grande .etichette3d span{font-size:11px}
 /* didascalia dell'evento in corso (sacco, assedio) */
@@ -282,7 +282,7 @@ body.roma-grande .strumenti button{top:auto}
 .evento{bottom:58px;right:12px}
 .confronto{bottom:58px;right:12px}
 .riquadro.roma.confronto-attivo .evento{bottom:150px}
-body.roma-grande .tempo{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+body.roma-grande .tempo,body.impero-grande .tempo{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
 body.roma-grande .strumenti{top:12px;right:12px}
 body.roma-grande .comandi-scena{right:16px;bottom:calc(var(--tempo,92px) + 28px + env(safe-area-inset-bottom,0px))}
 body.roma-grande .evento,body.roma-grande .confronto{bottom:calc(var(--tempo,92px) + 78px + env(safe-area-inset-bottom,0px))}
@@ -301,7 +301,7 @@ body.roma-grande .riquadro.roma.confronto-attivo .evento{bottom:calc(var(--tempo
   .strumenti button{font-size:11px;padding:9px 13px}
   .comandi-scena button,body.roma-grande .comandi-scena button{width:44px;height:44px;font-size:23px}
   .legenda-sapere{top:72px}
-  body.roma-grande .tempo{left:8px;right:8px}
+  body.roma-grande .tempo,body.impero-grande .tempo{left:8px;right:8px}
   body.roma-grande .comandi-scena{right:10px}
   body.roma-grande .evento,body.roma-grande .confronto{left:10px;right:10px}
   .scheda,body.roma-grande .scheda{bottom:calc(8px + env(safe-area-inset-bottom,0px))}
@@ -348,3 +348,31 @@ body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bot
 .m-regione.chiesa{color:var(--st-chiesa)}
 .m-regione{stroke-width:.7}
 .spia path.altra{stroke:#8A7399;stroke-dasharray:3 2.5;stroke-width:1.1;fill:none;opacity:.9}
+
+/* ---- carta dell'Impero a tutto schermo: riempie la finestra, si ingrandisce e si trascina (js/mappa.js); la linea del tempo resta in basso ----
+   Su schermi alti e stretti le legende stanno sotto la carta; quando sotto non c'è posto (classe impero-largo) vanno sopra la carta, a sinistra, sull'Oceano. */
+.comandi-mappa .zoom{display:none}
+body.impero-grande{overflow:hidden}
+body.impero-grande .riquadro.impero{display:flex!important;position:fixed;inset:0;z-index:50;border:0;border-radius:0;align-items:center;justify-content:flex-start;overflow-y:auto;
+  padding-bottom:calc(var(--tempo,92px) + 24px + env(safe-area-inset-bottom,0px))}
+body.impero-grande .riquadro.impero::after{display:none}
+body.impero-grande #mappa{aspect-ratio:auto;flex:none;max-width:100%}
+body.impero-grande #mappa svg{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+body.impero-grande .comandi-mappa{position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top,0px));bottom:auto;z-index:65}
+body.impero-grande .comandi-mappa .zoom{display:grid}
+body.impero-grande .legenda-mappa,body.impero-grande .legenda-popoli{align-self:stretch}
+body.impero-grande .legenda-popoli:last-of-type{display:none}
+body.impero-largo .riquadro.impero{overflow:hidden;padding-bottom:0}
+body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{position:absolute;left:12px;z-index:2;align-self:auto;width:auto;max-width:230px;min-height:0!important;flex-direction:column;flex-wrap:nowrap;align-items:flex-start;gap:2px;
+  background:rgba(251,246,234,.88);border:0;border-radius:6px;padding:6px 9px;font-size:12px}
+body.impero-largo .legenda-mappa{top:clamp(46px,6.2vw,78px);right:auto;bottom:auto}
+body.impero-largo .legenda-popoli{top:auto;right:auto;bottom:calc(var(--tempo,92px) + 36px + env(safe-area-inset-bottom,0px))}
+@media (max-height:559px){ body.impero-largo .legenda-popoli{display:none} body.impero-largo .legenda-mappa{font-size:11px;max-width:190px;top:44px} }
+/* telefono coricato, a tutto schermo (carta o città): la linea del tempo torna su una riga sola, come sugli schermi larghi, per non coprire un terzo dello schermo */
+@media (max-height:559px) and (orientation:landscape){
+  body.impero-grande .tempo,body.roma-grande .tempo{flex-direction:row;align-items:center;gap:10px;padding:5px 8px}
+  body.impero-grande .tempo .comandi button,body.roma-grande .tempo .comandi button{flex:none;min-height:36px;padding:6px 10px}
+  body.impero-grande .tempo .linea button,body.roma-grande .tempo .linea button{height:20px}
+}
+/* a tutto schermo il riquadro della città è alto quanto la finestra: senza questo, su un telefono coricato l'altezza minima di 66vw lo fa uscire in basso, con i comandi */
+body.roma-grande .riquadro.roma{min-height:0}
