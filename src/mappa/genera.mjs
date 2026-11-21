@@ -38,7 +38,12 @@ const tracciato = multi => multi.map(pol => pol.map(a => 'M' + a.map(p => f1(p[0
 const PROV = {}; for (const f of JSON.parse(fs.readFileSync(new URL('./grezzi/provinces.geojson', import.meta.url))).features) PROV[f.properties.name] = f.geometry;
 /* Ritagli a mano, in [lon, lat]. I primi tre sono quelli di partenza; gli altri vengono dalla revisione del 21 novembre 2026 sui confini dei regni
    (voci di Wikipedia su Settimania, regno dei Burgundi, Spania, Esarcato d'Italia, primo impero bulgaro, Avari, Marca di Spagna, trattato di Verdun; Bury).
-   I VERTICI SONO INDICATIVI: seguono fiumi, crinali e città nominati dalle fonti, ma le coordinate sono messe a mano, non prese da un atlante. */
+   I VERTICI SONO INDICATIVI: seguono fiumi, crinali e città nominati dalle fonti, ma le coordinate sono messe a mano, non prese da un atlante.
+   Controllo del 21 novembre 2026, sera: ogni ritaglio è stato provato come elenco di città (coordinate di Wikidata, prova punto-in-poligono): le città che ne facevano parte
+   cadono dentro, le vicine che non ne facevano parte fuori. Corretti così Settimania (Arles e la Camargue restano fuori), Napoli (dentro Amalfi e Capri), corridoio (dentro Narni,
+   Otricoli, Città di Castello), Tuscia (dentro Bomarzo), Galles (la linea del vallo di Offa dal Dee al Wye) e le linee di Verdun. Restano discussi, e lasciati com'erano:
+   Gaeta (del ducato di Napoli ma staccata), Nola, Orvieto, Cordova, Granada e Cadice nella Spania, Dol in Bretagna, l'estensione del dominio di Siagrio, i confini di Sassonia,
+   Frisia e Turingia, la frontiera della marca di Spagna. */
 const TAGLI = {
   decumati:  [[7.62, 47.56], [7.55, 48], [7.75, 48.58], [8.1, 48.9], [8.4, 49.3], [8.27, 50], [7.9, 50], [7.6, 50.36], [9, 51], [11.5, 50.6], [12.6, 49.3], [12.1, 49.02], [11.77, 48.85], [10.9, 48.7], [10, 48.4], [10.1, 47.9], [9.6, 47.55], [9, 47.67], [8.2, 47.6]],
   burgundia: [[3.1, 47.05], [5.3, 48], [7.62, 47.56], [8.3, 47.5], [8.35, 46.55], [6.9, 45.1], [5.95, 44.2], [4.8, 43.95], [4.1, 45.4], [3.8, 46.3]],      // da Nevers e Langres a Basilea, e a sud fino alla Durance (confine dal 508-509)
@@ -47,12 +52,12 @@ const TAGLI = {
   asturie:   [[-9.3, 43.9], [-3.1, 43.7], [-3.2, 43], [-4.6, 42.85], [-5.9, 42.75], [-7, 42.1], [-8.2, 41.85], [-8.9, 41.85]],                               // Asturie e Cantabria: il nucleo del regno (Cangas de Onís, Covadonga)
   marca:     [[0.5, 42.9], [0.5, 42.4], [0.75, 42.15], [1.3, 41.95], [1.65, 41.85], [1.85, 41.55], [2.1, 41.3], [3.4, 41.6], [3.4, 42.9]],                    // la marca di Spagna fino al Llobregat (Barcellona 801)
   spania:    [[-6.3, 36.75], [-5.85, 36.85], [-4.6, 37.15], [-3.15, 37.4], [-2.6, 37.65], [-1.6, 38.05], [-0.6, 38.35], [0.3, 38.5], [0.3, 35.9], [-6.3, 35.9]],  // la costa bizantina da Cadice a Cartagena, 552-624 circa
-  settimania:[[4.75, 43.2], [4.62, 43.85], [4.68, 44.3], [4, 44.3], [3.3, 43.95], [2.6, 43.55], [2, 43.3], [1.85, 42.6], [1.85, 42.3], [3.3, 42.3]],          // la Narbonese a ovest del Rodano, senza Tolosa
+  settimania:[[4.42, 43.2], [4.42, 43.45], [4.58, 43.68], [4.6, 43.8], [4.68, 44.3], [4, 44.3], [3.3, 43.95], [2.6, 43.55], [2, 43.3], [1.85, 42.6], [1.85, 42.3], [3.3, 42.3]],          // la Narbonese a ovest del Rodano, senza Tolosa
   tolosano:  [[0.5, 44.3], [1.1, 44.1], [1.7, 43.9], [2.6, 43.55], [2, 43.3], [1.85, 42.6], [0.6, 42.6], [0.5, 43.4]],                                        // Tolosa: nel 200 sta nella Narbonese, ma dal 418 è la capitale dei Visigoti d'Aquitania
   alvernia:  [[0.95, 47.45], [0.95, 46.6], [0.85, 45.5], [1.15, 44.95], [1.05, 44.1], [2.6, 43.55], [3.9, 44.4], [4.1, 46.05], [3.1, 47], [2.8, 47.6]],       // l'Aquitania prima (Bourges, Clermont, Limoges): romana fino al 475
   soissons:  [[1.4, 50.2], [3, 49.95], [3.7, 49.8], [4.5, 49.65], [5, 49.2], [5, 48], [1.4, 48]],                                                             // la parte di Belgica che resta a Siagrio fino al 486 (quanto fosse grande è discusso)
   bretagna:  [[-1.95, 48.75], [-2, 48.1], [-2.1, 47.6], [-2.5, 47.3], [-5.5, 47.3], [-5.5, 48.9], [-3.5, 49.1]],                                              // a ovest della Rance e della Vilaine
-  galles:    [[-3.05, 53.5], [-3.05, 52.9], [-3.15, 52.5], [-3, 52], [-2.65, 51.5], [-5.6, 51.4], [-5.2, 53.6]],                                              // a ovest del vallo di Offa
+  galles:    [[-3.25, 53.45], [-3.12, 53.25], [-3.05, 52.9], [-3.15, 52.5], [-3, 52], [-2.68, 51.85], [-2.62, 51.62], [-2.65, 51.5], [-5.6, 51.4], [-5.2, 53.6]],                                              // a ovest del vallo di Offa
   cornovaglia:[[-4.2, 50.3], [-4.25, 50.7], [-4.55, 50.95], [-6.5, 50.9], [-6.5, 49.8], [-4.2, 49.8]],                                                        // a ovest del Tamar
   mauri:     [[5, 35.3], [6, 35.55], [7.2, 35.35], [8.3, 35.15], [9.3, 34.9], [10.3, 34], [11.3, 33.1], [13.2, 32.7], [15.5, 31.8], [15.5, 28.5], [5, 28.5]],  // l'interno (Aurès, predeserto, Tripolitania interna): dai regni mauri degli anni 480
   liguria:   [[7.5, 43.78], [7.75, 44.1], [8.3, 44.3], [8.95, 44.55], [9.5, 44.45], [10, 44.2], [10.1, 44], [10, 43.5], [7.5, 43.5]],                         // la costa ligure, bizantina fino a Rotari (643)
@@ -60,10 +65,10 @@ const TAGLI = {
   istria:    [[13.5, 45.6], [13.95, 45.6], [14.25, 45.35], [14.1, 44.8], [13.5, 44.8]],
   romagna:   [[10.85, 43.6], [10.85, 44], [11, 44.6], [11.4, 44.95], [11.4, 45.3], [13, 45.3], [13, 43.6]],                                                   // la Regio VIII a est del Panaro: l'Esarcato (Bologna, Ravenna, Rimini)
   pentapoli: [[12.4, 44.05], [12.25, 43.75], [12.45, 43.35], [12.75, 43.25], [13.15, 43.35], [13.5, 43.4], [13.65, 43.55], [13.3, 44.05]],                    // da Pesaro ad Ancona
-  corridoio: [[12.3, 43.25], [12.5, 43.2], [12.5, 42.75], [12.48, 42.46], [12.3, 42.46], [12.3, 42.75], [12.2, 43.1]],                                        // Perugia, Todi, Amelia: la striscia che tiene uniti Ravenna e Roma
-  tuscia:    [[11.6, 41.6], [11.6, 42.2], [11.8, 42.2], [12.05, 42.3], [12.25, 42.33], [12.4, 42.45], [12.9, 42.45], [12.9, 41.6]],                           // l'Etruria a sud di Blera, Sutri e Orte: con Roma dal VI secolo
+  corridoio: [[12.15, 43.5], [12.35, 43.5], [12.55, 43.3], [12.5, 43.2], [12.5, 42.75], [12.58, 42.5], [12.5, 42.38], [12.3, 42.42], [12.3, 42.75], [12.2, 43.1]],                                        // Perugia, Todi, Amelia: la striscia che tiene uniti Ravenna e Roma
+  tuscia:    [[11.6, 41.6], [11.6, 42.2], [11.8, 42.2], [12.05, 42.3], [12.2, 42.33], [12.2, 42.52], [12.32, 42.52], [12.4, 42.45], [12.9, 42.45], [12.9, 41.6]],                           // l'Etruria a sud di Blera, Sutri e Orte: con Roma dal VI secolo
   campania:  [[13.76, 41], [13.78, 41.25], [13.95, 41.42], [14.1, 41.55], [15.3, 41.6], [15.3, 40.3], [13.76, 40.3]],                                         // la Regio I a est del Garigliano
-  napoli:    [[13.95, 41], [14.3, 40.98], [14.55, 40.85], [14.65, 40.65], [14.35, 40.55], [13.85, 40.7]],                                                     // il ducato di Napoli, con Sorrento e Amalfi
+  napoli:    [[13.95, 41], [14.3, 40.98], [14.55, 40.85], [14.72, 40.62], [14.35, 40.5], [14.15, 40.5], [13.8, 40.68]],                                                     // il ducato di Napoli, con Sorrento e Amalfi
   bruzio:    [[15.6, 39.2], [16.1, 39.15], [16.35, 39.2], [16.5, 39.5], [16.75, 39.7], [17.3, 39.6], [17.3, 37.8], [15.5, 37.8]],                              // la Calabria di oggi a sud di Cosenza
   salento:   [[17.15, 40.55], [17.6, 40.6], [17.95, 40.7], [18.2, 40.7], [18.6, 40.1], [18.4, 39.7], [17.2, 40.2]],                                           // bizantino fino al 687 circa
   otranto:   [[17.95, 40.3], [18.5, 40.3], [18.6, 39.75], [17.95, 39.95]],                                                                                    // Otranto e Gallipoli, che restano all'impero
@@ -134,8 +139,8 @@ const REGIONI = {
 };
 /* la divisione di Verdun (843), disegnata come due linee sopra l'impero dei Franchi: dagli Annali di Saint-Bertin, nel riassunto della voce tedesca di Wikipedia */
 const VERDUN = {
-  linee: [[[3.55, 51.45], [3.7, 51.05], [3.4, 50.6], [3.1, 50.15], [3.9, 49.9], [4.4, 49.7], [4.9, 49.3], [5.1, 48.1], [5, 47.1], [4.83, 45.75], [4.75, 44.3], [4.65, 43.35]],
-          [[6.1, 51.85], [6.96, 50.94], [7.9, 49.97], [7.6, 49.6], [8.2, 48.97], [7.6, 47.56], [8.2, 47.55], [7.9, 46.6], [8.4, 46.5]]],
+  linee: [[[3.55, 51.45], [3.7, 51.05], [3.4, 50.6], [2.95, 50.45], [2.7, 50.3], [2.95, 50.1], [3.9, 49.9], [4.4, 49.7], [4.9, 49.3], [5.1, 48.1], [5, 47.1], [4.83, 45.75], [4.75, 44.3], [4.65, 43.81], [4.58, 43.68], [4.42, 43.44]],      // a Lotario Arras, Cambrai, Verdun, Lione, Vienne, Arles; a Carlo Reims, Laon, Amiens, Mâcon
+          [[6.1, 51.85], [6.47, 51.66], [6.73, 51.42], [6.75, 51.22], [6.96, 50.94], [7.12, 50.73], [7.62, 50.36], [7.9, 49.97], [7.6, 49.6], [8.2, 48.97], [7.6, 47.56], [8.2, 47.55], [7.9, 46.6], [8.4, 46.5]]],     // a Lotario Colonia, Bonn, Coblenza, Strasburgo; a Ludovico Magonza, Worms, Spira (Langres, Digione e Basilea: non nominate dalla fonte)
   nomi: [[0.3, 46.6, 'Carlo il Calvo'], [6.1, 46.9, 'Lotario'], [10.6, 50.3, 'Ludovico']]
 };
 /* una geometria GeoJSON diventa un multipoligono piano, sfoltito: punti a meno di 0,4 unità dal precedente si saltano */
@@ -205,7 +210,7 @@ const POPOLI = {
     [418, 0.4, 44.6, 'federati', [[2.86, 42.46], [3, 43.18], [1.44, 43.6]]],
     [472, 1.4, 43.6, 'regno'], [508, 3, 43.18, 'regno'], [537, -3.6, 40.2, 'regno']], fine: 711 },      // dopo Vouillé la corte lascia Tolosa: Narbona, poi la Hispania
   ostrogoti: { nome: 'Ostrogoti', peso: 8, t: [[235, 33, 47.2, 'fuori'], [378, 30, 46.5, 'fuori'], [455, 18, 46.5, 'federati', [[26, 46.5], [22, 47]]], [476, 25.4, 43.6, 'federati', [[20.46, 44.82], [22.88, 43.99]]],
-    [493, 11.8, 44.6, 'regno', [[22.88, 43.99], [21.2, 44.73], [20.46, 44.82], [19, 45.3], [16.37, 45.48], [14.5, 46.05], [13.6, 45.85], [10.99, 45.44], [9.19, 45.46], [9.5, 45.4]]]], fine: 554 },   // 488-493: Singidunum, Siscia, Isonzo, Verona, Adda, Ravenna
+    [493, 12.2, 44.42, 'regno', [[22.88, 43.99], [21.2, 44.73], [20.46, 44.82], [19, 45.3], [16.37, 45.48], [14.5, 46.05], [13.6, 45.85], [10.99, 45.44], [9.19, 45.46], [9.5, 45.4]]]], fine: 554 },   // 488-493: Singidunum, Siscia, Isonzo, Verona, Adda, Ravenna
   vandali:   { nome: 'Vandali e Alani', peso: 7, t: [[235, 20, 49.6, 'fuori'], [402, 15.5, 48.9, 'fuori'],
     [406, 8.27, 50, 'armi', [[12.1, 49.02], [9.93, 49.79]]],                                                                        // lungo Danubio e Meno (ipotesi); Magonza è il passaggio più citato
     [409, -1.65, 42.8, 'armi', [[4.03, 49.25], [2.3, 49.9], [1.9, 47.9], [0.6, 44.2], [-1.32, 43.01]]],                             // Reims e Amiens (Girolamo, lettera 123), poi l'Aquitania e i Pirenei, autunno 409 (Idazio)
@@ -224,7 +229,7 @@ const POPOLI = {
     [452, 10.75, 45.25, 'armi', [[17.9, 46.5], [14.5, 46.05], [13.37, 45.77], [9.19, 45.46], [9.16, 45.19]]],                       // Aquileia, Milano, Pavia, il Mincio
     [453, 20.2, 47, 'fuori', [[13.37, 45.77], [14.5, 46.05], [17.9, 46.5]]]], fine: 454 },
   sassoni:   { nome: 'Angli e Sassoni', peso: 4, t: [[235, 9.2, 54, 'fuori'], [409, 8.5, 53.8, 'fuori'], [451, 0.6, 52.4, 'armi'], [568, 0.6, 52.4, 'regno']], fine: 852 },      // il tratto verso la Britannia è davvero per mare
-  longobardi:{ nome: 'Longobardi', peso: 7, t: [[235, 10.6, 53.3, 'fuori'], [493, 16.2, 48.4, 'fuori'], [546, 18, 46.9, 'federati'], [568, 13.4, 46.1, 'armi', [[16.37, 45.9], [14.5, 46.05], [14.07, 45.9]]], [572, 9.2, 45.2, 'regno']], fine: 774 },
+  longobardi:{ nome: 'Longobardi', peso: 7, t: [[235, 10.6, 53.3, 'fuori'], [493, 16.2, 48.4, 'fuori'], [546, 18, 46.9, 'federati'], [568, 13.4, 46.1, 'armi', [[15.87, 46.42], [14.5, 46.05], [14.07, 45.9]]], [572, 9.2, 45.2, 'regno']], fine: 774 },
   avari:     { nome: 'Avari', peso: 5, t: [[562, 28.5, 45.3, 'fuori'], [568, 19.5, 46.8, 'regno', [[26, 45.7], [23.6, 46.77], [21.3, 46.2]]]], fine: 796 },
   bulgari:   { nome: 'Bulgari', peso: 5, t: [[663, 38.4, 46.8, 'fuori'], [680, 29.3, 45.4, 'fuori', [[34, 46.8], [31, 46.7]]], [681, 27.12, 43.38, 'regno', [[28.2, 45.2], [27.9, 44.2]]]], fine: 852 }
 };
