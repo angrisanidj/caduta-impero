@@ -1,10 +1,25 @@
 /* Dati. Stato delle verifiche:
+   - letti il 21 novembre 2026, tarda sera (ultima ricerca sulle letture non riuscite):
+     J. Durliat, De la ville antique à la ville byzantine, 1990, su Persée, pagina per pagina: p. 116, Roma nel IV secolo, «une population de citoyens originaires de Rome d'environ 650 000 personnes
+     et une population totale de quelque 800 000 habitants» (margine 700-900.000; usa poi 600.000 cittadini e 800.000 abitanti, e il numero «n'a guère varié avant 400»); pp. 159-160, al tempo di Gregorio Magno:
+     «Le minimum de 50 000 habitants est sans doute un minimum absolu et le nombre de 90 000, trop précis […] n'est peut-être pas très éloigné de la réalité» (i 90.000 sono di Krautheimer, «sans apporter la moindre justification»);
+     la tabella di p. 117 dà 800.000 / 350.000 / 500.000 / 350.000 / 60.000, ma le date delle colonne non si leggono nel testo riconosciuto: da guardare sull'immagine della pagina.
+     P. Heather, Empires and Barbarians, 2010 (archive.org, testo aperto), dove riassume la sua tesi del 1995: p. 178, «the crisis of 405-8 was caused by a number of Rome's other barbarian neighbours having decided that they would prefer
+     to take their chances in the Roman Empire rather than face the uncertainties of dealing with the Huns»; pp. 208-209, «the crises of 376-80 and 405-8 both saw the Huns push other groups across the imperial frontier»;
+     p. 177: Uldino è «a relatively minor figure», e gli Unni arrivano in massa nella pianura ungherese solo verso il 410-412. The Fall of the Roman Empire (2005) resta non letto.
+     Teofane, anno del mondo 6171 (trad. Mango e Scott 1997, pp. 497-499; rubrica «AD 678/9»): i Bulgari arrivano «as far as the Danube, which they crossed and came to Varna», sottomettono le Sette Tribù slave e l'imperatore
+     «made peace with them and agreed to pay them yearly tribute».
+     Erchemperto, Historia Langobardorum Beneventanorum (MGH SS rer. Lang., 1878): c. 16, p. 240, Bari («Pando quidem Barim regebat […] Saracenorum phalangas in adiutorium accitas iuxta murum urbis […] locavit»; entrano di notte;
+     data a margine dell'editore: 842); c. 19, p. 242, Ludovico II «inter duos predictos viros totam provinciam Beneventanam aequitatis discrimine sub iureiurando dispertivit» (la data a margine non si legge: l'849 resta dai manuali).
+     B. Lançon, Rome in Late Antiquity (2000): letti solo frammenti dalla ricerca di archive.org, senza pagina («reform of the annona which occurred during 419 leads to the supposition that the population had declined
+     by some 300,000 inhabitants»; «120,000 in 419 […] 80,000 in 452, around 15,000 in 530»: non si capisce se abitanti o iscritti); i 500.000 del 419 non compaiono e restano una deduzione (800.000 meno 300.000).
+     NON LETTI nemmeno questa volta: Purcell 1999, Wickham (Medieval Rome), Rea sul Colosseo, Meneghini e Santangeli Valenzani 1993 e 1995 sulle sepolture;
    - letto il 21 novembre 2026, notte, a brani (ricerca nel testo pieno di archive.org): A Companion to Rome c. 400-c. 1050, Brill 2026. Popolazione: Vitiello, cap. 6, pp. 141-142 (gli iscritti alle distribuzioni
      «from 300,000 […] in the time of Valentinian I» «to 120,000 in 419 and in 452 (or perhaps 141,120)», da cui un calo degli abitanti «from about 800,000 to 400,000»; «by the beginning of the Gothic War
      the old capital counted perhaps 60,000 or 50,000 inhabitants»; «Not until the years of Gregory I did the population again grow to over 50,000 people»; Bavant 1989: 25-30.000 nel VII-VIII secolo);
      Verardi, cap. 7, p. 166 (da «Krautheimer's 90,000 inhabitants» a «the mere 5000 religious people»; la stima preferita «assumes a stable urban population up to the year 1000 of around 20,000 to 30,000 inhabitants»,
      con rimando a Hodges e a Meneghini e Santangeli Valenzani 2023, pp. 205-08); vol. II p. 876 («Estimates for the fourth century are around 800,000 inhabitants»). Storey 1997: letto il solo sunto
-     («roughly 450,000 inhabitants», per la Roma imperiale in genere). NON RITROVATI: i 600-800.000 di Durliat, i 500.000 di Lançon per il 419, Purcell, i numeri di Wickham, i 35.000 carolingi di Krautheimer.
+     («roughly 450,000 inhabitants», per la Roma imperiale in genere). NON RITROVATI: Purcell, i numeri di Wickham, i 35.000 carolingi di Krautheimer (Durliat e Lançon: vedi sopra).
      Scavi, dallo stesso volume: foro di Cesare (p. 877: «the travertine pavement was stripped away» fra la fine dell'VIII e l'inizio del IX secolo, poi «vegetable gardens and vineyards», sostituiti
      «at the end of the ninth century by modest single-story houses»; p. 733: due capanne; le domus terrinee sono della prima metà del X); foro di Traiano (p. 880: «only towards the middle of the ninth century
      were the paving slabs systematically spoliated», forse bruciate in calce per le mura leonine; il foro «may have retained much of its integrity into the Carolingian period»: la calcara del VII-VIII secolo
@@ -34,7 +49,7 @@
      le insegne NON ci sono, vengono dall'Anonimo Valesiano 64); Vittore di Vita I 13 (Genserico tiene Bizacena, Abaritana, Getulia e parte della Numidia; dopo la morte di Valentiniano «totius Africae
      ambitum obtinuit»: per questo le Mauretanie sono vandale nel 455 e dei Mauri dal 493); Cronaca mozarabica del 754 (711, Musa fino al 714, Narbona verso il 719-720); Gregorio Magno, Registro XII 6
      (gennaio 602); Cassiodoro, Variae XII 25 (senza data: 536-537, forse 537); Prisco fr. 11 Blockley (la Pannonia presso la Sava ceduta agli Unni per trattato con Ezio: il 433 è una data degli studiosi).
-     ANCORA NON LETTI: Heather (nessun testo raggiungibile), Teofane AM 6171, Erchemperto e il Chronicon Salernitanum;
+     ANCORA NON LETTI: Heather 2005 (letto quello del 2010), il Chronicon Salernitanum;
    - tappa del 526, aggiunta il 21 novembre 2026: letto l'Anonimo Valesiano 86-96 (MGH, Chronica minora I): Boezio ucciso «in agro Calventiano», Simmaco a Ravenna, papa Giovanni morto «post paucos dies»,
      l'editto di mercoledì 26 agosto («septimo kalend. Septembr., indictione quarta, Olybrio consule») e la morte la domenica seguente: «fluxum ventris incurrit et dum intra triduum evacuatus fuisset,
      eodem die, quo se gaudebat ecclesias invadere, simul regnum et animam amisit. […] se autem vivo fecit sibi monimentum ex lapide quadrato, mirae magnitudinis opus, et saxum ingentem quem superponeret inquisivit».
@@ -250,14 +265,14 @@ var CURVE={
   /* Abitanti di Roma. "punti" è la linea che muove la scena; "banda" è la forchetta delle stime pubblicate [anno, minimo, massimo].
      Fonti delle forchette: Krautheimer 1980 (forse un milione prima di Costantino, circa 800.000 sotto Costantino e nel 400, 500.000 nel 452, forse 100.000 nel 500, non più di 30.000 dopo l'assedio goto,
      forse 90.000 con i profughi al tempo di Gregorio: brani letti nel testo pieno di archive.org; i 35.000 carolingi non ritrovati),
-     Durliat 1990 (600-800.000 nel IV secolo: non ritrovato; il Companion to Rome del 2026 dà circa 800.000), Lançon (500.000 nel 419: non ritrovato; Vitiello 2026 scende a 400.000), Novella 36 di Valentiniano III (450-500.000 verso il 452), A.H.M. Jones (650.000),
+     Durliat 1990, p. 116 (circa 800.000 abitanti nel IV secolo, fra 700 e 900.000, di cui 600-650.000 cittadini; così anche il Companion to Rome del 2026) e pp. 159-160 (da 50.000 a 90.000 al tempo di Gregorio), Lançon (un calo di circa 300.000 abitanti entro il 419, letto a frammenti: i 500.000 sono una nostra deduzione; Vitiello 2026 scende a 400.000), Novella 36 di Valentiniano III (450-500.000 verso il 452), A.H.M. Jones (650.000),
      Delogu (15-30.000 a metà VI), Santangeli Valenzani (50-60.000 a metà VI), Verardi 2026, p. 166 (20-30.000 stabili fino al Mille, da Meneghini e Santangeli Valenzani 2023), Bavant 1989 (25-30.000 nel VII-VIII secolo), Vitiello 2026 (50-60.000 all'inizio della guerra gotica; più di 50.000 sotto Gregorio), Wickham (20-25.000: non ritrovato),
      Meneghini e Santangeli Valenzani, in Roma altomedievale, 2023, p. 208 (50-60.000 credibili con un modello statico: letto nella recensione di Plekos 26, 2024). Stime estreme per l'VIII-IX secolo: da 5.000 (Hodges) a 90.000.
      Riviste il 21 novembre 2026: il minimo del III secolo scende a 450.000 (Storey 1997, letto nel solo sunto, che parla della Roma imperiale in genere: è la scuola della «piccola Roma»); la forchetta del 452 viene
      dalle 3.629.000 libbre di maiale distribuite in cinque mesi (Novella 36), cioè circa 145.000 razioni per 2,5-4 persone ciascuna (da 360.000 a 580.000 abitanti: ma le razioni vanno ai soli iscritti e il moltiplicatore è una scelta di chi calcola).
      Per il 419 la fonte è Codex Theodosianus 14.4.10 (Ravenna, 29 luglio 419), letta: fissa cinque libbre di carne per cinque mesi e quattromila razioni al giorno, non un numero di iscritti;
      i 120.000 sono gli iscritti alle distribuzioni, non gli abitanti, e sono una deduzione degli studiosi (Vitiello 2026, p. 141). Il calo fra il 408 e il 419 poggia anche su Olimpiodoro fr. 25, la cui lettura è discussa (Spera 2013, nota 104). Nel 547, dopo Totila, Procopio (VII 22) dice
-     la città vuota: è retorica, non un conteggio, e la curva non scende a zero. Non letti: Lo Cascio, Durliat, Lançon, Purcell, Wickham, Meneghini e Santangeli Valenzani.
+     la città vuota: è retorica, non un conteggio, e la curva non scende a zero. Non letti: Lo Cascio, Purcell, Wickham, Meneghini e Santangeli Valenzani; Lançon solo a frammenti.
      Il 476 non ha stime puntuali: è un'interpolazione. Il 550 è il valore minimo (Krautheimer), non il centro della forchetta. */
   popolazione:{nome:'Abitanti di Roma', nota:'stima',
     punti:[[235,900000],[300,800000],[367,750000],[408,750000],[419,500000],[452,500000],[476,250000],[500,100000],[535,80000],[550,30000],[590,45000],[600,50000],[680,32000],[750,25000],[801,30000],[852,30000]],
