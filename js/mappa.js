@@ -43,19 +43,25 @@ Object.keys(G.regioni).forEach(function(id){
   var gf=el('g',{'class':'m-fiumi'},svg);
   (G.fiumi||[]).forEach(function(f){ el('path',{d:f.d,'class':f.forte?'forte':''},gf); });
 })();
+/* ciò che i cartellini dei popoli non devono coprire: i nomi delle regioni e delle città, come [x del centro, y del centro, larghezza] */
+var ostacoli=[];
 Object.keys(G.regioni).forEach(function(id){
   var r=G.regioni[id]; if(!NOMI[id]) return;                                    // solo le regioni abbastanza grandi hanno il nome scritto sopra
-  nomi[id]=el('text',{'class':'m-nome',x:r.c[0],y:r.c[1]+(id==='italia_nord'?-14:id==='belgica'?-6:0)},svg); nomi[id].textContent=NOMI[id];
+  var yn=r.c[1]+(id==='italia_nord'?-14:id==='belgica'?-6:0);
+  nomi[id]=el('text',{'class':'m-nome',x:r.c[0],y:yn},svg); nomi[id].textContent=NOMI[id];
+  ostacoli.push([r.c[0],yn-4,NOMI[id].length*8.6+6]);
 });
 var annoCarta=document.createElement('p'); annoCarta.className='m-anno'; annoCarta.setAttribute('aria-hidden','true'); ospite.appendChild(annoCarta);
 var verdun=el('g',{'class':'m-verdun via'},svg);
 if(G.verdun){ G.verdun.linee.forEach(function(d){ el('path',{d:d},verdun); }); G.verdun.nomi.forEach(function(n){ el('text',{x:n[0],y:n[1]},verdun).textContent=n[2]; }); }      // 843: l'impero dei Franchi diviso fra i tre nipoti di Carlo Magno
-var citta=el('g',{'class':'m-citta'},svg);
+var citta=el('g',{'class':'m-citta'},svg), scritte={};
 if(G.citta.roma) el('circle',{'class':'m-battito',cx:G.citta.roma.x,cy:G.citta.roma.y,r:4},citta);      // Roma pulsa piano: è lì che guarda l'altra scena
 ['roma','ravenna','milano','treviri','cartagine','costantinopoli'].forEach(function(id){
   var c=G.citta[id]; el('circle',{cx:c.x,cy:c.y,r:3.2},citta);
   var sinistra=id==='ravenna'||id==='treviri';
-  el('text',{x:c.x+(sinistra?7:-7),y:c.y+(id==='milano'?-7:id==='roma'?14:4),'text-anchor':sinistra?'start':'end'},citta).textContent=c.nome;
+  var yc=c.y+(id==='milano'?-7:id==='roma'?14:4), larga=c.nome.length*6.3+4;
+  scritte[id]=el('text',{x:c.x+(sinistra?7:-7),y:yc,'text-anchor':sinistra?'start':'end'},citta); scritte[id].textContent=c.nome;
+  ostacoli.push([c.x+(sinistra?1:-1)*(7+larga/2),yc-4,larga]);
 });
 
 /* I popoli: ciascuno è un punto dove stava il grosso del gruppo e un cartellino col nome; il colore dice il rapporto con Roma in quel momento
@@ -71,7 +77,7 @@ Object.keys(G.popoli||{}).forEach(function(id){
   popoli[id]={g:g,c:c,fondo:fondo,t:t,punto:punto,q:q,rotta:rotta,sotto:sotto,nome:'',larga:0};
 });
 function mostraPopoli(anno){
-  var messi=[], visti={}, id, i;
+  var messi=ostacoli.slice(), visti={}, id, i;
   /* su uno schermo stretto la carta rimpicciolisce: cartellini e punti si ingrandiscono per restare leggibili */
   /* a tutto schermo restano della stessa misura sullo schermo anche quando si ingrandisce la carta */
   var lw=svg.getBoundingClientRect().width, ppu=lw>0?lw/larghezzaVista():1, k=lw<=0?1:grandeSi?Math.max(.4,Math.min(1.8,Math.max(10,Math.min(14,Math.min(window.innerWidth,window.innerHeight)/40))/11.5/ppu)):Math.max(1,Math.min(1.8,.7/ppu));      // a tutto schermo: scritte di 10-14 pixel
@@ -82,7 +88,7 @@ function mostraPopoli(anno){
     var p=popoli[id], q=p.q, u=-1; for(i=0;i<q.t.length;i++) if(anno>=q.t[i][0]) u=i;
     var via=u<0||anno>q.fine, cl=via?'via':CLASSE[q.t[u][3]], v=q.t[Math.max(0,u)], nome=q.nome;
     for(i=0;i<q.poi.length;i++) if(anno>=q.poi[i][0]) nome=q.poi[i][1];
-    if(cl==='regno' && REGNO[id]) nome=REGNO[id];
+    if(cl==='regno' && REGNO[id]) nome=id==='franchi'&&anno>=843?'Regni dei Franchi':id==='franchi'&&anno>=800?'Impero dei Franchi':REGNO[id];      // dopo il Natale dell'800 e dopo la divisione di Verdun il nome cambia
     p.g.setAttribute('class','m-popolo '+cl); p.g.style.transform='translate('+v[1]+'px,'+v[2]+'px)';
     if(p.nome!==nome){ p.nome=nome; p.t.textContent=nome; p.larga=0; }
     var d='', da=Math.max(0,u-1), tratti=0;      // solo l'ultimo tratto: il cammino che ha portato il gruppo dov'è ora
@@ -92,11 +98,12 @@ function mostraPopoli(anno){
     if(via) continue;
     visti[cl]=1;
     if(!p.larga){ var w=0; try{ w=p.t.getComputedTextLength(); }catch(e){} p.larga=(w>4?w:nome.length*5.6*k)+12*k; }
-    /* il cartellino sta sopra il punto; se lì ce n'è già un altro va sotto, o più in alto */
-    var W=p.larga, cx=Math.max(97+W/2,Math.min(903-W/2,v[1])), prove=[-H-7*k,8*k,-2*H-9*k,H+10*k,-3*H-11*k], dy=prove[0], j, n, libero;
-    for(j=0;j<prove.length;j++){ libero=true;
-      for(n=0;n<messi.length;n++) if(Math.abs(messi[n][0]-cx)<(messi[n][2]+W)/2+2 && Math.abs(messi[n][1]-(v[2]+prove[j]+H/2))<H+1){ libero=false; break; }
-      if(libero){ dy=prove[j]; break; } }
+    /* il cartellino sta sopra il punto; se lì copre un altro cartellino o un nome va sotto, di fianco, più in alto: vince il primo posto libero, o quello che copre di meno */
+    var W=p.larga, lato=W/2+9*k, prove=[[0,-H-7*k],[0,8*k],[lato,-H/2],[-lato,-H/2],[0,-2*H-9*k],[0,H+10*k],[0,-3*H-11*k]], meglio=0, minimo=1e9, j, n, cx, cy, tocca, ox, oy;
+    for(j=0;j<prove.length;j++){ cx=Math.max(97+W/2,Math.min(903-W/2,v[1]+prove[j][0])); cy=v[2]+prove[j][1]+H/2; tocca=0;
+      for(n=0;n<messi.length;n++){ ox=(messi[n][2]+W)/2+2-Math.abs(messi[n][0]-cx); oy=H+1-Math.abs(messi[n][1]-cy); if(ox>0&&oy>0) tocca+=ox*oy; }
+      if(tocca<minimo){ minimo=tocca; meglio=j; if(!tocca) break; } }
+    cx=Math.max(97+W/2,Math.min(903-W/2,v[1]+prove[meglio][0])); var dy=prove[meglio][1];
     messi.push([cx,v[2]+dy+H/2,W]);
     p.fondo.setAttribute('x',(-W/2).toFixed(1)); p.fondo.setAttribute('width',W.toFixed(1)); p.fondo.setAttribute('height',H.toFixed(1)); p.t.setAttribute('y',(H*.72).toFixed(1));
     p.c.style.transform='translate('+(cx-v[1]).toFixed(1)+'px,'+dy.toFixed(1)+'px)';
@@ -205,6 +212,7 @@ window.RM_mappa={
   grande:grande,
   mostra:function(stati,anno){
     var visti=anno!=null?mostraPopoli(anno):null;
+    if(anno!=null && scritte.costantinopoli){ var nc=anno<330?'Bisanzio':G.citta.costantinopoli.nome; if(scritte.costantinopoli.textContent!==nc) scritte.costantinopoli.textContent=nc; }
     if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
     aggiornaLegende(stati,anno,visti);
     for(var id in regioni){
