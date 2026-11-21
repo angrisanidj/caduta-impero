@@ -53,9 +53,11 @@ var mura=(function(){
    oltre porta Tiburtina). Le quote della sommità [x, z, quota] sono una ricostruzione, non un rilievo: rispettano l'ordine noto
    (la Claudia più alta della Marcia a porta Maggiore, la Vergine bassa sul Campo Marzio) dentro un rilievo accentuato 1,8 volte.
    La Traiana arrivava al Gianicolo quasi a livello del suolo e scendeva il pendio verso i mulini: qui è un muro basso che segue il terreno.
-   La rovina nel tempo. Documentati: il taglio del 537, riparazioni dopo il 554, i quattro condotti rimessi in funzione da Adriano I (Sabbatina cioè Traiana,
-   Claudia, Iovia, Vergine; la Iovia è qui la linea della Marcia, identificazione discussa). Ipotesi nostre: quali tratti cadono e quando, e che gli archi
-   neroniani oltre il Laterano, che ad Adriano non servivano, non vengano più rialzati. I tratti rifatti nell'VIII secolo hanno il colore del mattone di recupero. */
+   La rovina nel tempo. Documentati: il taglio del 537 (Procopio); i quattro condotti rifatti da Adriano I (Liber Pontificalis, vita di Adriano, cc. 59-65):
+   Sabbatina cioè Traiana e Iobia, rotte da vent'anni (quindi, per Duchesne, dall'assedio di Astolfo del 756 e in funzione prima), Claudia, che serviva il Laterano
+   e portava ormai poca acqua, Vergine, «piena di rovine». La Iobia era un ramo della Marcia verso porta Appia e il Tevere, che qui non è disegnato: della linea
+   della Marcia torna in piedi solo il tronco fuori città, fino al punto dove il ramo si staccava (porta Furba). Ipotesi nostre: quali tratti cadono e quando,
+   quanto fosse stato riparato dopo il 554, e che gli archi neroniani oltre il Laterano, mai nominati dalle fonti, non vengano più rialzati. I tratti rifatti nell'VIII secolo hanno il colore del mattone di recupero. */
 var acque=(function(){
   var LINEE=[{passo:3.6, p:[[619,361,9],[420,170,8.8],[249,12,8.6],[163,62,8.45],[89,74,8.3],[40,54,8.2],[29,51,8.18]]},       // Claudia e Anio Novus fino a porta Maggiore, poi archi neroniani sul Celio fino al Palatino
              {passo:3.2, p:[[600,330,8.5],[400,140,8.25],[255,5,8],[212,-54,7.9],[160,-84,7.8],[136,-92,7.75]]},              // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina, poi interrate verso le terme di Diocleziano
@@ -68,17 +70,18 @@ var acque=(function(){
       for(var k=0;k<n;k++){
         var t=(k+.5)/n, x=a[0]+(b[0]-a[0])*t, z=a[1]+(b[1]-a[1])*t, len=L/n, y=RM.h(x,z), ya=RM.h(x-ux*len/2,z-uz*len/2), yb=RM.h(x+ux*len/2,z+uz*len/2), giu=l.suolo?y:Math.min(y,ya,yb);
         var cima=l.suolo?y+l.suolo:a[2]+(b[2]-a[2])*t;
-        el.push({li:li,perso:li===0&&i>=3,x:x,z:z,ang:ang,len:len,y:giu-.2,cima:cima,suolo:!!l.suolo,pend:l.suolo?Math.atan2(yb-ya,len):0,vis:cima-y>.3,rot:rnd(),blocco:li*1000+i*100+Math.floor(k/6),blocchetto:li*1000+i*100+Math.floor(k/3)});
+        el.push({li:li,perso:(li===0&&i>=3)||(li===1&&x<489),x:x,z:z,ang:ang,len:len,y:giu-.2,cima:cima,suolo:!!l.suolo,pend:l.suolo?Math.atan2(yb-ya,len):0,vis:cima-y>.3,rot:rnd(),blocco:li*1000+i*100+Math.floor(k/6),blocchetto:li*1000+i*100+Math.floor(k/3)});
       }
     }
   });
-  var sorte={}, RIPARA=[.5,.3,.6,1], INCURIA=[.3,.38,.25,.1];                    // per linea: quota dei tagli riparati dopo il 554; quota dei tratti che cedono per incuria fra VI e VIII secolo
+  var sorte={}, RIPARA=[.5,.85,.4,1], INCURIA=[.3,.2,.35,.1];                    // per linea: quota dei tagli riparati dopo il 554; quota dei tratti che cedono per incuria fra VI e VIII secolo
   el.forEach(function(e){
     var b=sorte[e.blocco]||(sorte[e.blocco]=[rnd(),rnd(),rnd(),rnd()]), c=sorte['c'+e.blocchetto]||(sorte['c'+e.blocchetto]=[rnd(),rnd()]);
     e.taglio=b[0]<.4?536.9+b[1]*.5:9999;                                           // il taglio del 537 colpisce tratti contigui
     e.ripara=e.taglio<9999&&!e.perso&&b[2]<RIPARA[e.li]?556+b[3]*50:9999;          // riparazioni dopo la Prammatica Sanzione
     e.cede=c[0]<(e.perso?.65:INCURIA[e.li])?570+c[1]*190:9999;                     // crolli per incuria
-    e.rifatto=e.perso?9999:773+b[3]*16;                                            // Adriano I
+    e.rotto756=(e.li===1||e.li===3)&&b[1]<.45?756+b[3]*.4:9999;                    // Sabbatina e Iobia: di nuovo rotte, probabilmente nell'assedio di Astolfo
+    e.rifatto=e.perso?9999:(e.li===1||e.li===3?775:776)+b[3]*(e.li===1||e.li===3?3:13);   // Adriano I
   });
   el=el.filter(function(e){ return e.vis; }); RM.campateAcquedotti=el;          // sotto le arcate non si costruisce (js/citta.js)
   /* arcata: due mezze pile, arco a tutto sesto, canale. Pila: le due mezze pile sotto l'imposta, allungate fino al suolo */
@@ -98,8 +101,8 @@ var acque=(function(){
     var passo=Math.round(anno*4); if(passo===ultimo) return; ultimo=passo;
     el.forEach(function(e,j){
       var riparato=e.ripara<9999, perIncuria=e.cede<9999&&!(riparato&&e.cede<e.ripara);        // un crollo precedente alla riparazione viene rimesso su con quella
-      var giuTaglio=anno>=e.taglio&&!(anno>=e.ripara), giuIncuria=anno>=e.cede&&(perIncuria||anno<e.ripara), caduto=giuTaglio||giuIncuria, daQuando=giuTaglio?e.taglio:e.cede;
-      var rifatto=anno>=e.rifatto, toppa=rifatto&&((e.taglio<9999&&!riparato)||(perIncuria&&e.cede<e.rifatto)), rotto=caduto&&!rifatto, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
+      var giuTaglio=anno>=e.taglio&&!(anno>=e.ripara), giuIncuria=anno>=e.cede&&(perIncuria||anno<e.ripara), caduto=giuTaglio||giuIncuria||anno>=e.rotto756, daQuando=giuTaglio?e.taglio:giuIncuria?e.cede:e.rotto756;
+      var rifatto=anno>=e.rifatto, toppa=rifatto&&((e.taglio<9999&&!riparato)||(perIncuria&&e.cede<e.rifatto)||e.rotto756<9999), rotto=caduto&&!rifatto, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
       d.rotation.set(0,e.ang,0);
       if(rotto){ zero(arcate,j); zero(arcate,N+j); zero(pile,j); }
       else if(e.suolo){ d.rotation.z=e.pend; d.position.set(e.x,e.y,e.z); d.scale.set(e.len/Math.cos(e.pend)+.05,H/CIMA,larga); d.updateMatrix(); arcate.setMatrixAt(j,d.matrix); d.rotation.z=0; zero(arcate,N+j); zero(pile,j); }   // arcatelle basse, schiacciate, inclinate col pendio
