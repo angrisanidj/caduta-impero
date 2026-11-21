@@ -52,7 +52,10 @@ var mura=(function(){
    col terreno. Dove il suolo sale fino al canale l'acquedotto corre interrato e non si vede (la Vergine sotto il Pincio, la Marcia
    oltre porta Tiburtina). Le quote della sommità [x, z, quota] sono una ricostruzione, non un rilievo: rispettano l'ordine noto
    (la Claudia più alta della Marcia a porta Maggiore, la Vergine bassa sul Campo Marzio) dentro un rilievo accentuato 1,8 volte.
-   La Traiana arrivava al Gianicolo quasi a livello del suolo e scendeva il pendio verso i mulini: qui è un muro basso che segue il terreno. */
+   La Traiana arrivava al Gianicolo quasi a livello del suolo e scendeva il pendio verso i mulini: qui è un muro basso che segue il terreno.
+   La rovina nel tempo. Documentati: il taglio del 537, riparazioni dopo il 554, i quattro condotti rimessi in funzione da Adriano I (Sabbatina cioè Traiana,
+   Claudia, Iovia, Vergine; la Iovia è qui la linea della Marcia, identificazione discussa). Ipotesi nostre: quali tratti cadono e quando, e che gli archi
+   neroniani oltre il Laterano, che ad Adriano non servivano, non vengano più rialzati. I tratti rifatti nell'VIII secolo hanno il colore del mattone di recupero. */
 var acque=(function(){
   var LINEE=[{passo:3.6, p:[[619,361,9],[420,170,8.8],[249,12,8.6],[163,62,8.45],[89,74,8.3],[40,54,8.2],[29,51,8.18]]},       // Claudia e Anio Novus fino a porta Maggiore, poi archi neroniani sul Celio fino al Palatino
              {passo:3.2, p:[[600,330,8.5],[400,140,8.25],[255,5,8],[212,-54,7.9],[160,-84,7.8],[136,-92,7.75]]},              // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina, poi interrate verso le terme di Diocleziano
@@ -65,11 +68,18 @@ var acque=(function(){
       for(var k=0;k<n;k++){
         var t=(k+.5)/n, x=a[0]+(b[0]-a[0])*t, z=a[1]+(b[1]-a[1])*t, len=L/n, y=RM.h(x,z), ya=RM.h(x-ux*len/2,z-uz*len/2), yb=RM.h(x+ux*len/2,z+uz*len/2), giu=l.suolo?y:Math.min(y,ya,yb);
         var cima=l.suolo?y+l.suolo:a[2]+(b[2]-a[2])*t;
-        el.push({x:x,z:z,ang:ang,len:len,y:giu-.2,cima:cima,suolo:!!l.suolo,pend:l.suolo?Math.atan2(yb-ya,len):0,vis:cima-y>.3,rot:rnd(),blocco:li*1000+i*100+Math.floor(k/6)});
+        el.push({li:li,perso:li===0&&i>=3,x:x,z:z,ang:ang,len:len,y:giu-.2,cima:cima,suolo:!!l.suolo,pend:l.suolo?Math.atan2(yb-ya,len):0,vis:cima-y>.3,rot:rnd(),blocco:li*1000+i*100+Math.floor(k/6),blocchetto:li*1000+i*100+Math.floor(k/3)});
       }
     }
   });
-  var sorte={}; el.forEach(function(e){ if(sorte[e.blocco]==null) sorte[e.blocco]=rnd(); e.taglio=sorte[e.blocco]<.4; });   // il taglio colpisce tratti contigui
+  var sorte={}, RIPARA=[.5,.3,.6,1], INCURIA=[.3,.38,.25,.1];                    // per linea: quota dei tagli riparati dopo il 554; quota dei tratti che cedono per incuria fra VI e VIII secolo
+  el.forEach(function(e){
+    var b=sorte[e.blocco]||(sorte[e.blocco]=[rnd(),rnd(),rnd(),rnd()]), c=sorte['c'+e.blocchetto]||(sorte['c'+e.blocchetto]=[rnd(),rnd()]);
+    e.taglio=b[0]<.4?536.9+b[1]*.5:9999;                                           // il taglio del 537 colpisce tratti contigui
+    e.ripara=e.taglio<9999&&!e.perso&&b[2]<RIPARA[e.li]?556+b[3]*50:9999;          // riparazioni dopo la Prammatica Sanzione
+    e.cede=c[0]<(e.perso?.65:INCURIA[e.li])?570+c[1]*190:9999;                     // crolli per incuria
+    e.rifatto=e.perso?9999:773+b[3]*16;                                            // Adriano I
+  });
   el=el.filter(function(e){ return e.vis; }); RM.campateAcquedotti=el;          // sotto le arcate non si costruisce (js/citta.js)
   /* arcata: due mezze pile, arco a tutto sesto, canale. Pila: le due mezze pile sotto l'imposta, allungate fino al suolo */
   var A=new RM.Costruttore(), r=.3, c=.36, k, a0, a1;
@@ -81,12 +91,15 @@ var acque=(function(){
   A.scatola(1,CIMA-c,1.1,0,c,0,P.travertino);
   var Pl=new RM.Costruttore(); [-1,1].forEach(function(s){ Pl.scatola(.2,1,1,s*.4,0,0,P.tufo); });
   var R=new RM.Costruttore().scatola(.42,.5,.95,0,0,0,P.tufo); R.quad([-.21,.5,.47],[.21,.5,.47],[.21,.5,-.47],[-.21,.95,-.47],P.tufo).tri([-.21,.5,.47],[-.21,.95,-.47],[-.21,.5,-.47],P.tufo);   // moncone
-  var mat=RM.matPietra(), N=el.length, arcate=istanze(A.geometria(),mat,N*2), pile=istanze(Pl.geometria(),mat,N), monconi=istanze(R.geometria(),mat,N), ultimo=-1;
+  var mat=RM.matPietra(), N=el.length, arcate=istanze(A.geometria(),mat,N*2), pile=istanze(Pl.geometria(),mat,N), monconi=istanze(R.geometria(),mat,N), ultimo=-1, tinta=new THREE.Color(), MATTONE=RM.col(0xe4c6b2), BIANCO=new THREE.Color(1,1,1);
+  for(k=0;k<N;k++) monconi.setColorAt(k,BIANCO);                                 // le tre maglie condividono il materiale: tutte devono avere il colore per istanza
   function zero(maglia,j){ d.scale.set(0,0,0); d.updateMatrix(); maglia.setMatrixAt(j,d.matrix); }
-  return function(danno){
-    if(Math.abs(danno-ultimo)<.002) return; ultimo=danno;
+  return function(anno){
+    var passo=Math.round(anno*4); if(passo===ultimo) return; ultimo=passo;
     el.forEach(function(e,j){
-      var rotto=e.taglio&&danno>.6, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
+      var riparato=e.ripara<9999, perIncuria=e.cede<9999&&!(riparato&&e.cede<e.ripara);        // un crollo precedente alla riparazione viene rimesso su con quella
+      var giuTaglio=anno>=e.taglio&&!(anno>=e.ripara), giuIncuria=anno>=e.cede&&(perIncuria||anno<e.ripara), caduto=giuTaglio||giuIncuria, daQuando=giuTaglio?e.taglio:e.cede;
+      var rifatto=anno>=e.rifatto, toppa=rifatto&&((e.taglio<9999&&!riparato)||(perIncuria&&e.cede<e.rifatto)), rotto=caduto&&!rifatto, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
       d.rotation.set(0,e.ang,0);
       if(rotto){ zero(arcate,j); zero(arcate,N+j); zero(pile,j); }
       else if(e.suolo){ d.rotation.z=e.pend; d.position.set(e.x,e.y,e.z); d.scale.set(e.len/Math.cos(e.pend)+.05,H/CIMA,larga); d.updateMatrix(); arcate.setMatrixAt(j,d.matrix); d.rotation.z=0; zero(arcate,N+j); zero(pile,j); }   // arcatelle basse, schiacciate, inclinate col pendio
@@ -95,10 +108,11 @@ var acque=(function(){
         if(Hp>.02){ d.position.y=e.y; d.scale.set(e.len,Hp,larga); d.updateMatrix(); pile.setMatrixAt(j,d.matrix); } else zero(pile,j);
         if(Hp>T*1.7){ d.position.y=e.y+Hp*.5-T*.5; d.scale.set(e.len,e.len,larga); d.updateMatrix(); arcate.setMatrixAt(N+j,d.matrix); } else zero(arcate,N+j);   // le arcate più alte hanno un secondo ordine
       }
-      if(rotto){ d.position.set(e.x-Math.cos(e.ang)*e.len/2,e.y,e.z+Math.sin(e.ang)*e.len/2); d.scale.set(e.len,H*(.25+.6*e.rot),larga); d.updateMatrix(); monconi.setMatrixAt(j,d.matrix); }
+      if(rotto){ d.position.set(e.x-Math.cos(e.ang)*e.len/2,e.y,e.z+Math.sin(e.ang)*e.len/2); d.scale.set(e.len,H*(.25+.6*e.rot)*(1-.45*RM.sfuma(0,220,anno-daQuando)),larga); d.updateMatrix(); monconi.setMatrixAt(j,d.matrix); }
       else zero(monconi,j);
+      tinta.copy(toppa?MATTONE:BIANCO); arcate.setColorAt(j,tinta); arcate.setColorAt(N+j,tinta); pile.setColorAt(j,tinta);
     });
-    arcate.instanceMatrix.needsUpdate=true; pile.instanceMatrix.needsUpdate=true; monconi.instanceMatrix.needsUpdate=true;
+    arcate.instanceMatrix.needsUpdate=true; pile.instanceMatrix.needsUpdate=true; monconi.instanceMatrix.needsUpdate=true; arcate.instanceColor.needsUpdate=true; pile.instanceColor.needsUpdate=true;
   };
 })();
 
@@ -124,6 +138,6 @@ var acque=(function(){
 
 RM.moduli.push(function(anno){
   mura(D.interp(D.MURA_ALTE,anno), RM.sfuma(545.2,546,anno)*(1-.7*RM.sfuma(546.8,549,anno))*(1-RM.sfuma(715,790,anno)));   // Belisario le richiude in fretta nel 547: resta la cicatrice
-  acque(RM.sfuma(534,538,anno)*(1-.75*RM.sfuma(772,790,anno)));   // Adriano I ne rimette in funzione quattro
+  acque(anno);
 });
 })();

@@ -119,8 +119,8 @@ var TAGLIO=[
   '  if(rq>1.0-uRovina*(0.25+1.7*rn)) discard;',
   '  if(vTipo>0.5 && 0.55*rmN(vec3(vLoc.xz*1.1,2.0))+0.45*rmH(vec3(floor(vLoc.xz*5.0+0.19),2.0))<uRovina*2.0+uCrepe*uCrepe*0.2) discard;',   // coppi caduti: chiazze irregolari
   '}',
-  /* smontaggio da un lato solo (il fronte sud del Colosseo): sparisce l'anello esterno, a partire dal punto più a sud e allargandosi */
-  'if(uSud>0.001){ vec2 qs=vLoc.xz/uSudR; float ro=length(qs); if(ro>0.94){ float an=acos(clamp(dot(qs/ro,uSudDir),-1.0,1.0)); if(an<3.1416*uSud*(0.9+0.2*rmH(vec3(floor(vLoc.xz*0.9),6.0)))) discard; } }'].join(NL);
+  /* smontaggio da un lato solo (il fronte sud del Colosseo): sparisce l'anello esterno (e l'attico che gli sta sopra), a partire dal punto più a sud e allargandosi; resta il secondo anello */
+  'if(uSud>0.001){ vec2 qs=vLoc.xz/uSudR; float ro=length(qs); if(ro>0.94 || (ro>0.87 && vLoc.y>4.01)){ float an=acos(clamp(dot(qs/ro,uSudDir),-1.0,1.0)); if(an<3.1416*uSud*(0.9+0.2*rmH(vec3(floor(vLoc.xz*0.9),6.0)))) discard; } }'].join(NL);
 var DICHIARA=['uniform float uRovina; uniform float uSpoglio; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR;','varying float vTipo; varying vec3 vLoc; varying vec3 vNor;',
   'float rmH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
   'vec2 rmH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',

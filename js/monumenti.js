@@ -94,6 +94,10 @@ var M=[
      .striscia(po,.9,po,.25,P.marmo).striscia(po,.25,ar,.25,P.marmo).striscia(ar,.25,ce,.25,P.sabbia);
     B.fornici(e,.22,.9,.5).fornici(e,1.45,.88,.5).fornici(e,2.65,.88,.5).fornici(e,4.02,.34,.26,2);
     [1.28,2.48,3.7].forEach(function(y){ var c=RM.ellisse(9.5,7.9,n); B.striscia(c,y,c,y+.12,P.marmo); });      // cornici
+    /* secondo anello: il muro ad arcate che oggi fa da facciata sul lato sud, dove l'anello esterno è caduto. Più basso dell'esterno, senza attico; finché l'esterno è in piedi resta nascosto dietro */
+    var w=RM.ellisse(8.7,7.2,n), wc=RM.ellisse(8.74,7.24,n);
+    B.striscia(w,0,w,4,P.travertino).fornici(w,.22,.9,.5).fornici(w,1.45,.88,.5).fornici(w,2.65,.88,.5);
+    [1.28,2.48].forEach(function(y){ B.striscia(wc,y,wc,y+.1,P.marmo); });
     B.cilindro(.5,1.6,-12.5,0,2.5,P.mattone,.18,10).cilindro(.42,3.2,-10.5,0,-7,P.oro,.3,8);                     // Meta Sudans e Colosso
  }},
  {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], et:1, fa:function(B){ circo(B,62,14,2.5,true); }},
