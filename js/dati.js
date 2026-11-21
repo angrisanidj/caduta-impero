@@ -39,7 +39,12 @@ var ATTI=[
  {n:'VI', nome:'La città dei papi',  da:590, a:852}
 ];
 
-/* Stati di una regione: roma | usurpatore | conteso | federati | regno:<quale> | perso | oriente | califfato | carolingio | chiesa.
+/* REVISIONE DEI CONFINI, 21 novembre 2026 sera: le regioni sono 58, ritagliate dove il confine vero si scosta dalle province (elenco e fonti in src/mappa/genera.mjs),
+   più sette terre mai romane (stato «fuori» finché non le prende qualcuno: Unni, Gepidi, Avari, Turingi, Bulgari, Franchi). Aquitania prima romana fino al 475; Settimania visigota dal 462
+   al 720 circa, poi araba, franca dal 759; Liguria bizantina fino al 643; Esarcato, Pentapoli e corridoio di Perugia; Napoli, Otranto e il Bruzio restano all'impero; i Balcani
+   non sono più «conteso» per tre secoli: dal 663 Tracia e Grecia all'impero (con molti insediamenti slavi), le Mesie perdute e poi bulgare (681). Dove gli studiosi non concordano
+   o la fonte non è stata letta (Siagrio, Sapaudia, Asturie, Cornovaglia, Niš) il ritaglio è dichiarato indicativo nel generatore.
+   Stati di una regione: roma | usurpatore | conteso | federati | regno:<quale> | perso | fuori | oriente | califfato | carolingio | chiesa.
    Ogni regno ha un nome (regno:visigoti, regno:franchi, regno:italia per Odoacre e poi gli Ostrogoti…): sulla carta ha il suo colore e la sua voce in legenda.
    I confini restano quelli delle regioni, cioè delle province romane: Aquitania, Burgundia e Gallia del sud passano ai Franchi nella tappa del 537 (in realtà nel 507, 534 e 537),
    con la Rezia (protettorato franco dal 536-537); la Gallaecia sveva passa ai Visigoti nel 585; dal 774 il regno longobardo ha un re franco. Creta è una regione a sé
@@ -55,8 +60,16 @@ var ATTI=[
    la Dalmazia è «conteso» dal 663 (Salona cade fra il 614 e il 640, le città della costa restano all'impero); la Hispania è «conteso» nel 711 perché la conquista dura fino al 718 circa,
    la Gallaecia è presa nel 713-714, lasciata dai presidi berberi verso il 741 e unita alle Asturie da Alfonso I; la Pannonia è «conteso» nell'800 (guerre avare, 791-803);
    nell'846 Sannio e Puglia sono «conteso» (Taranto ai Saraceni dall'840, Bari dall'847). Lo sgombero della Dacia è messo al 271, ma gli studiosi oscillano fra il 271 e il 275. */
-var OVEST=['britannia','gallia','belgica','aquitania','provenza','burgundia','hispania','gallaecia','italia_nord','ravenna','spoleto','roma','campania','benevento','calabria','sicilia','isole','rezia','pannonia','dalmazia','africa','mauretania','decumati'],
-    EST=['dacia','balcani','anatolia','levante','egitto','creta'];
+var OVEST=['britannia','galles','gallia','bretagna','belgica','soissons','aquitania','alvernia','provenza','settimania','burgundia','sapaudia','hispania','gallaecia','asturie','marca','spania',
+           'italia_nord','liguria','venezia','ravenna','spoleto','pentapoli','roma','campania','napoli','benevento','salento','otranto','calabria','bruzio','sicilia','isole',
+           'rezia','carantania','pannonia','dalmazia','africa','numidia','mauri','mauretania','decumati'],
+    EST=['dacia','balcani','tracia','mesia_inf','mesia_sup','anatolia','levante','egitto','creta'],
+    OLTRE=['frisia','sassonia','turingia','moravia','alfold','valacchia','steppa'];         // terre mai romane: partono da «fuori» e non contano nella quota di territorio
+/* Una regione ritagliata dentro un'altra ne segue le sorti finché la tabella non dice altro: se in una tappa cambia la regione madre e la figlia non è nominata,
+   la figlia prende lo stesso stato. Dove la figlia ha già una storia sua (la Settimania visigota, Napoli bizantina) va quindi ripetuta a ogni cambio della madre. */
+var FIGLIE={settimania:'provenza',alvernia:'aquitania',sapaudia:'burgundia',soissons:'gallia',bretagna:'gallia',spania:'hispania',asturie:'hispania',marca:'hispania',galles:'britannia',
+  numidia:'africa',mauri:'africa',liguria:'italia_nord',venezia:'italia_nord',pentapoli:'spoleto',napoli:'campania',salento:'benevento',otranto:'benevento',bruzio:'calabria',
+  tracia:'balcani',mesia_inf:'balcani',mesia_sup:'balcani',carantania:'rezia'};
 var CAMBI={
  235:{},
  260:{britannia:'usurpatore',gallia:'usurpatore',belgica:'usurpatore',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore',hispania:'usurpatore',gallaecia:'usurpatore',decumati:'perso'},
@@ -64,30 +77,40 @@ var CAMBI={
  274:{britannia:'roma',gallia:'roma',belgica:'roma',aquitania:'roma',burgundia:'roma',levante:'roma',egitto:'roma',anatolia:'roma'},
  293:{britannia:'usurpatore'},
  301:{britannia:'roma'},
+ 378:{steppa:'regno:unni'},                                                      // gli Unni hanno travolto Alani e Goti fra il Don e il Dnestr (Ammiano XXXI 2-3)
  395:{balcani:'oriente',anatolia:'oriente',levante:'oriente',egitto:'oriente',creta:'oriente'},
+ 402:{valacchia:'regno:unni'},                                                   // Uldino a nord del basso Danubio, verso il 400
  406:{gallia:'conteso',belgica:'conteso',britannia:'usurpatore'},
  409:{britannia:'perso',hispania:'conteso',gallaecia:'conteso',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore'},
- 418:{aquitania:'federati',gallia:'roma',gallaecia:'regno:svevi',provenza:'roma',burgundia:'roma'},
- 429:{mauretania:'conteso'},
- 439:{africa:'regno:vandali',pannonia:'perso'},
- 451:{burgundia:'federati',mauretania:'roma'},
- 455:{isole:'regno:vandali',mauretania:'perso',sicilia:'conteso'},
- 458:{belgica:'federati'},
- 468:{sicilia:'regno:vandali',gallia:'usurpatore'},
- 472:{hispania:'regno:visigoti',aquitania:'regno:visigoti',burgundia:'regno:burgundi',provenza:'conteso'},
- 476:{italia_nord:'regno:italia',ravenna:'regno:italia',spoleto:'regno:italia',roma:'regno:italia',campania:'regno:italia',benevento:'regno:italia',calabria:'regno:italia',sicilia:'regno:italia',provenza:'regno:visigoti',belgica:'regno:franchi',rezia:'conteso'},
- 493:{gallia:'regno:franchi',rezia:'regno:italia',dalmazia:'regno:italia'},
- 537:{africa:'oriente',isole:'oriente',sicilia:'oriente',dalmazia:'oriente',calabria:'oriente',benevento:'oriente',campania:'oriente',roma:'conteso',spoleto:'conteso',decumati:'regno:franchi',aquitania:'regno:franchi',burgundia:'regno:franchi',provenza:'regno:franchi',rezia:'regno:franchi'},
- 542:{ravenna:'oriente',italia_nord:'conteso',benevento:'conteso',calabria:'conteso',campania:'conteso'},
- 568:{italia_nord:'regno:longobardi',spoleto:'oriente',roma:'oriente',campania:'oriente',benevento:'oriente',calabria:'oriente',britannia:'regno:anglosassoni'},
- 589:{spoleto:'regno:longobardi',benevento:'regno:longobardi',gallaecia:'regno:visigoti',balcani:'conteso'},
- 663:{levante:'califfato',egitto:'califfato',dalmazia:'conteso'},
- 711:{africa:'califfato',mauretania:'califfato',hispania:'conteso'},
- 727:{hispania:'califfato',gallaecia:'conteso'},
- 756:{ravenna:'chiesa',roma:'chiesa',gallaecia:'regno:asturie'},
- 780:{italia_nord:'regno:franchi',spoleto:'regno:franchi'},
- 800:{gallia:'carolingio',belgica:'carolingio',aquitania:'carolingio',provenza:'carolingio',burgundia:'carolingio',rezia:'carolingio',decumati:'carolingio',italia_nord:'carolingio',spoleto:'carolingio',pannonia:'conteso'},
- 846:{sicilia:'conteso',benevento:'conteso',pannonia:'carolingio',creta:'califfato'}
+ 418:{aquitania:'federati',alvernia:'roma',gallia:'roma',belgica:'roma',gallaecia:'regno:svevi',provenza:'roma',burgundia:'roma'},
+ 429:{mauretania:'conteso',alfold:'regno:unni'},                                 // gli Unni nella pianura ungherese: di solito negli anni 420
+ 439:{africa:'regno:vandali',numidia:'conteso',pannonia:'regno:unni'},           // le Pannonie cedute agli Unni nel 433
+ 451:{sapaudia:'federati',mauretania:'roma',numidia:'roma',turingia:'regno:turingi'},
+ 455:{isole:'regno:vandali',mauretania:'perso',numidia:'regno:vandali',sicilia:'conteso',pannonia:'federati',alfold:'regno:gepidi',valacchia:'fuori',steppa:'fuori'},      // dopo il Nedao (454): Ostrogoti in Pannonia, Gepidi sul Tibisco
+ 458:{belgica:'federati',burgundia:'federati'},
+ 468:{sicilia:'regno:vandali',gallia:'usurpatore',bretagna:'regno:britanni',settimania:'regno:visigoti'},
+ 472:{aquitania:'regno:visigoti',alvernia:'conteso',burgundia:'regno:burgundi',provenza:'conteso',settimania:'regno:visigoti',pannonia:'perso'},
+ 476:{italia_nord:'regno:italia',ravenna:'regno:italia',spoleto:'regno:italia',roma:'regno:italia',campania:'regno:italia',benevento:'regno:italia',calabria:'regno:italia',sicilia:'regno:italia',
+      provenza:'regno:visigoti',hispania:'regno:visigoti',alvernia:'regno:visigoti',belgica:'regno:franchi',rezia:'conteso'},
+ 493:{gallia:'regno:franchi',bretagna:'regno:britanni',rezia:'regno:italia',dalmazia:'regno:italia',mauri:'perso'},                 // l'interno dell'Africa ai regni mauri, dagli anni 480
+ 537:{africa:'oriente',mauri:'conteso',isole:'oriente',sicilia:'oriente',dalmazia:'oriente',calabria:'oriente',benevento:'oriente',campania:'oriente',roma:'conteso',spoleto:'conteso',
+      decumati:'regno:franchi',aquitania:'regno:franchi',burgundia:'regno:franchi',provenza:'regno:franchi',settimania:'regno:visigoti',rezia:'regno:franchi',turingia:'regno:franchi'},
+ 542:{ravenna:'oriente',italia_nord:'conteso',benevento:'conteso',calabria:'conteso',campania:'conteso',mauri:'oriente'},
+ 546:{pannonia:'federati'},                                                      // i Longobardi, alleati di Giustiniano
+ 568:{liguria:'oriente',venezia:'oriente',spoleto:'oriente',roma:'oriente',campania:'oriente',benevento:'oriente',calabria:'oriente',britannia:'regno:anglosassoni',galles:'regno:britanni',
+      spania:'oriente',pannonia:'regno:avari',alfold:'regno:avari',carantania:'perso'},
+ 589:{italia_nord:'regno:longobardi',liguria:'oriente',venezia:'oriente',spoleto:'regno:longobardi',pentapoli:'oriente',benevento:'regno:longobardi',salento:'oriente',otranto:'oriente',
+      campania:'regno:longobardi',napoli:'oriente',calabria:'regno:longobardi',bruzio:'oriente',gallaecia:'regno:visigoti',balcani:'conteso'},
+ 663:{levante:'califfato',egitto:'califfato',dalmazia:'perso',liguria:'regno:longobardi',spania:'regno:visigoti',balcani:'oriente',mesia_inf:'perso',mesia_sup:'perso'},
+ 711:{africa:'califfato',mauretania:'califfato',hispania:'conteso',mesia_inf:'regno:bulgari',valacchia:'regno:bulgari',salento:'regno:longobardi'},
+ 727:{hispania:'califfato',asturie:'regno:asturie',gallaecia:'califfato',settimania:'califfato'},
+ 756:{ravenna:'chiesa',roma:'chiesa',pentapoli:'chiesa',gallaecia:'regno:asturie',settimania:'conteso'},
+ 780:{italia_nord:'regno:franchi',venezia:'oriente',spoleto:'regno:franchi',pentapoli:'chiesa',settimania:'regno:franchi',sassonia:'conteso',carantania:'regno:franchi'},
+ 791:{sassonia:'regno:franchi',frisia:'regno:franchi',pannonia:'conteso',alfold:'conteso'},
+ 800:{gallia:'carolingio',bretagna:'regno:britanni',belgica:'carolingio',aquitania:'carolingio',provenza:'carolingio',burgundia:'carolingio',rezia:'carolingio',decumati:'carolingio',
+      italia_nord:'carolingio',venezia:'oriente',spoleto:'carolingio',pentapoli:'chiesa',turingia:'carolingio',sassonia:'carolingio',frisia:'carolingio',alfold:'fuori'},
+ 801:{marca:'carolingio'},
+ 846:{sicilia:'conteso',benevento:'conteso',otranto:'oriente',pannonia:'carolingio',creta:'califfato',mesia_sup:'regno:bulgari',moravia:'regno:moravi'}
 };
 var TAPPE=[
  {anno:235, titolo:"L'imperatore ucciso dai suoi soldati", testo:"A Magonza i soldati assassinano Severo Alessandro e acclamano Massimino. In cinquant'anni si conteranno oltre venti imperatori, senza contare gli usurpatori: quasi tutti uccisi dalle proprie truppe o in battaglia."},
@@ -108,7 +131,8 @@ var TAPPE=[
  {intermezzo:true, anno:395, titolo:'I commerci', testo:"Quanto commerciava l'impero? Nessuno lo registrò: l'archeologia lo deduce. I relitti nel Mediterraneo toccano il massimo nel I secolo d.C. e poi calano; ma i relitti contano le anfore e le pietre, non le botti o le merci deperibili, e molti sono datati con margini di secoli. Il piombo nei ghiacci della Groenlandia, figlio delle miniere d'argento, crolla nel 165 con la peste e non si riprende per cinque secoli: misura le miniere, non i mercati. I piatti africani, invece, arrivano su tutte le coste fino al VII secolo. Il quadro è un declino lungo e irregolare, non un crollo improvviso: per questo la curva dei commerci, qui, è solo un'indicazione."},
 
  {anno:402, titolo:'La corte si chiude a Ravenna', testo:"Stilicone affronta Alarico a Pollenzo e a Verona e lo costringe a lasciare l'Italia. La corte lascia Milano per Ravenna, protetta dalle paludi; a Roma Onorio fa restaurare mura, porte e torri, e forse è allora che la cinta raddoppia in altezza."},
- {anno:406, titolo:'Il Reno attraversato', testo:"Nell'ultima notte dell'anno (del 405, secondo alcuni studiosi) Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito acclama un imperatore dopo l'altro; nel 407 il terzo, Costantino, porta le truppe in Gallia."},
+ {anno:406, titolo:'Il Reno attraversato', testo:"Nell'ultima notte dell'anno (del 405, secondo alcuni studiosi) Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito acclama un imperatore dopo l'altro; nel 407 il terzo, Costantino, porta le truppe in Gallia.",
+  storici:"Che cosa spinse Vandali, Alani e Svevi oltre il Reno? Per il 376 le fonti sono esplicite: Ammiano fa degli Unni «il seme e l'origine» della rovina. Per il 405-406 nessun contemporaneo li nomina. Heather pensa che la loro avanzata verso il Danubio medio abbia messo in moto Radagaiso e poi Vandali, Alani e Svevi; Halsall, Goffart e Kulikowski vedono piuttosto barbari attirati da un confine sguarnito, perché le truppe del Reno difendevano l'Italia. Sulla carta il dominio degli Unni è in grigio scuro: nel 406 è ancora lontano dal Reno."},
  {anno:409, titolo:'La Britannia lasciata a sé stessa', testo:"Rimaste senza truppe, le città britanniche cacciano i funzionari dell'usurpatore e provvedono da sole alla difesa; Roma non tornerà più. I gruppi entrati in Gallia passano i Pirenei."},
  {anno:410, titolo:'Il sacco di Roma', testo:"Al terzo assedio in tre anni, fallite le trattative, i Goti di Alarico entrano in città e la saccheggiano per tre giorni (sei, secondo un altro cronista). Alarico era stato generale romano.",
   /* Girolamo, Commento a Ezechiele, prologhi ai libri I e III (latino letto su epistolae.unisi.it, lettera 274; traduzione nostra): «Postquam vero clarissimum terrarum omnium lumen
@@ -406,8 +430,8 @@ function interp(punti,x){
   return punti[punti.length-1][1];
 }
 /* stato cumulato delle regioni a ogni tappa */
-var st={}; OVEST.concat(EST).forEach(function(k){ st[k]='roma'; });
-TAPPE.forEach(function(t){ var c=!t.intermezzo&&CAMBI[t.anno]; if(c) for(var k in c) st[k]=c[k]; t.regioni=JSON.parse(JSON.stringify(st)); });
+var st={}; OVEST.concat(EST).forEach(function(k){ st[k]='roma'; }); OLTRE.forEach(function(k){ st[k]='fuori'; });
+TAPPE.forEach(function(t){ var c=!t.intermezzo&&CAMBI[t.anno], k; if(c){ for(k in FIGLIE) if(c[FIGLIE[k]]!=null && c[k]==null) st[k]=c[FIGLIE[k]]; for(k in c) st[k]=c[k]; } t.regioni=JSON.parse(JSON.stringify(st)); });
 /* l'atto avanza dopo ogni intermezzo: l'intermezzo chiude l'atto che lo precede */
 var atto=0; TAPPE.forEach(function(t){ if(t.apre) atto++; t.atto=atto; if(t.intermezzo) atto++; });   // "apre": la tappa inizia un atto nuovo
 

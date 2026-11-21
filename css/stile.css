@@ -303,6 +303,9 @@ body.tocco:not(.roma-grande) .esplora{display:block;position:absolute;left:10px;
 body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bottom:62px}
 
 /* ---------- i popoli sulla mappa ---------- */
+.m-verdun{transition:opacity .9s ease} .m-verdun.via{opacity:0}
+.m-verdun path{fill:none;stroke:#FBF6EA;stroke-width:1.6;stroke-dasharray:1 3.2;stroke-linecap:round}
+.m-verdun text{font-family:var(--serif);font-style:italic;font-size:10.5px;text-anchor:middle;fill:#FBF6EA}
 .m-popolo{transition:transform 1.8s ease,opacity .8s ease}
 .m-popolo.via{opacity:0}
 .m-punto{stroke:#FBF6EA;stroke-width:1.8;transition:fill .9s ease}
@@ -315,6 +318,7 @@ body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bot
 .m-popolo.fuori .m-punto,.legenda-popoli .p-fuori{fill:#2B2420;background:#2B2420} .m-popolo.fuori rect,.m-rotta.fuori{stroke:#2B2420}
 .m-popolo.accordo .m-punto,.legenda-popoli .p-accordo{fill:var(--st-federati);background:var(--st-federati)} .m-popolo.accordo rect,.m-rotta.accordo{stroke:var(--st-federati)}
 .m-popolo.armi .m-punto,.legenda-popoli .p-armi{fill:#D2401C;background:#D2401C} .m-popolo.armi rect,.m-rotta.armi{stroke:#D2401C}
+.m-rotta.regno{stroke:#2B2420}
 .m-popolo.regno .m-punto,.legenda-popoli .p-regno{fill:#FBF6EA;background:#FBF6EA;stroke:#2B2420} .m-popolo.regno rect{stroke:#2B2420}
 .legenda-mappa [hidden],.legenda-popoli [hidden]{display:none}
 .legenda-mappa,.legenda-popoli{align-content:flex-start}
