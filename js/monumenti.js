@@ -160,13 +160,24 @@ var M=[
       [1,-1].forEach(function(q){ B.vano(0,0,q*.575,1,0,.68,1.2).vano(-.78,0,q*.575,1,0,.34,.76).vano(.78,0,q*.575,1,0,.34,.76); B.colonne(-1.06,q*.66,1.06,q*.66,4,1.2,.06,.25); [-1.06,-.353,.353,1.06].forEach(function(x){ B.scatola(.2,.25,.2,x,0,q*.66,P.marmo); }); });
     });
     inForo(B,0,-13.2,IMP,function(B){ portico(B,7,15,0,0,0,1.1); B.tempio(2.6,3.6,1.7,0,-5.2,0,{fronte:8}); });                   // foro di Cesare, Venere Genitrice a nord-ovest
-    inForo(B,11.2,-19.5,IMP,function(B){ portico(B,10.5,9.5,0,0,0,1.2); B.tempio(3.4,4.6,2.3,2.3,0,-PI/2,{fronte:8,lati:8,podio:.7}).scatola(.5,3.3,10.5,5.5,0,0,P.tufo); });   // foro di Augusto, Marte Ultore contro il muro verso la Suburra
+    inForo(B,11.2,-19.5,IMP,function(B){                                                                                          // foro di Augusto: Marte Ultore contro il muro tagliafuoco verso la Suburra, le due esedre ai lati
+      portico(B,10.5,9.5,0,0,0,1.2); B.tempio(3.4,4.6,2.3,2.3,0,-PI/2,{fronte:8,lati:8,podio:.7}).scatola(.5,3.3,10.5,5.5,0,0,P.tufo);
+      [-1,1].forEach(function(q){ var es=RM.ellisse(2,2,10,q>0?0:PI,q>0?PI:2*PI).map(function(p){ return [p[0]+1.6,p[1]+q*4.75]; }), ce=es.map(function(){ return [1.6,q*4.75]; });
+        B.striscia(es,0,es,1.7,P.tufo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });
+    });
     inForo(B,10.7,-8.9,IMP,function(B){ portico(B,12,4.2,0,0,0,1.2); B.tempio(1.8,2.4,1.5,4.6,0,-PI/2,{fronte:6}); });            // foro di Nerva, Minerva: lo attraversa l'Argileto
     inForo(B,16.9,-2.6,IMP,function(B){ portico(B,10,10,0,0,0,1.2,P.prato); });                                                   // tempio della Pace
     inForo(B,-1.3,-27.8,IMP,function(B){
       portico(B,11.5,9,0,0,0,1.3);                                                             // foro di Traiano
-      basilica(B,17,5.6,2.4,0,-7.6,P.bronzo);                                                  // basilica Ulpia
-      B.cilindro(.21,3.8,0,0,-11.6,P.marmo,.19,12).scatola(.5,.5,.5,0,0,-11.6,P.marmo).cilindro(.1,.5,0,3.8,-11.6,P.oro,.08,6);   // colonna Traiana
+      B.scatola(.62,.34,.34,0,.1,0,P.marmo).scatola(.56,.2,.18,0,.72,0,P.statua).scatola(.12,.26,.13,.3,.86,0,P.statua).scatola(.12,.3,.13,-.02,.92,0,P.statua);      // la statua equestre di Traiano, al centro della piazza
+      [[-.2,-.06],[-.2,.06],[.2,-.06],[.2,.06]].forEach(function(p){ B.scatola(.05,.28,.05,p[0],.44,p[1],P.statua); });
+      [-1,1].forEach(function(q){ var es=RM.ellisse(2.3,2.3,10,q>0?-PI/2:PI/2,q>0?PI/2:3*PI/2).map(function(p){ return [p[0]+q*5.75,p[1]]; }), ce=es.map(function(){ return [q*5.75,0]; });
+        B.striscia(es,0,es,1.7,P.marmo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });        // le due grandi esedre ai lati della piazza
+      basilica(B,17,5.6,2.4,0,-7.6,P.bronzo);                                                  // basilica Ulpia, con le absidi alle due testate
+      [-1,1].forEach(function(q){ B.cilindro(2.5,2,q*8.5,0,-7.6,P.marmo,null,18).cilindro(2.5,.55,q*8.5,2,-7.6,P.bronzo,.3,18); });
+      B.scatola(.56,.55,.56,0,0,-11.6,P.marmo).cilindro(.26,.1,0,.55,-11.6,P.marmo,.23,14).cilindro(.21,3.5,0,.65,-11.6,P.marmo,.19,14);      // colonna Traiana: basamento, toro, fusto
+      for(var gk=1;gk<9;gk++) B.cilindro(.212,.025,0,.65+gk*.39,-11.6,P.travertino,.21,14);     // le spire del fregio, accennate
+      B.scatola(.5,.12,.5,0,4.15,-11.6,P.marmo).cilindro(.09,.5,0,4.27,-11.6,P.statua,.07,6);   // capitello e statua dell'imperatore
       B.scatola(2,1.8,2.6,-2.8,0,-11.6,P.mattone).scatola(2,1.8,2.6,2.8,0,-11.6,P.mattone);     // biblioteche
       B.tempio(3.8,5.4,2.4,0,-16.4,PI,{fronte:8,lati:9,podio:.7});                              // tempio del Divo Traiano
       B.dentro(5.9,0,0,PI/2,function(B){ var em=RM.ellisse(5,5,16,0,PI); B.striscia(em,0,em,2.6,P.mattone,false).fornici(em,.15,.6,.5,1,false).fornici(em,.95,.5,.4,1,false).fornici(em,1.75,.5,.4,1,false); });   // mercati di Traiano
@@ -196,9 +207,16 @@ var M=[
     arcato(B,9,2.9,1.3,10.5,-.4,9.6,P.marmo,3,8);                                              // Settizodio
  }},
  {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6]], et:1, fa:function(B){
-    B.cilindro(2.7,2.2,0,0,0,P.mattone,null,40).cilindro(2.78,.26,0,2.2,0,P.mattone,2.6,40).cilindro(2.55,.22,0,2.46,0,P.mattone,2.4,40).cupola(2.38,0,2.6,0,P.oro,.6,.17);
-    B.scatola(3.5,2.5,1.3,0,0,3,P.mattone).tempio(3.4,2.2,1.5,0,4.6,0,{fronte:8,podio:.25,tetto:P.bronzo});
-    B.scatola(7,.08,6,0,0,9,P.selce);
+    /* La rotonda: tamburo di 56 m di diametro alto circa 31, diviso in tre fasce da cornici; sopra, i gradoni che contengono la spinta e la calotta bassa
+       con l'occhio aperto, coperta di tegole di bronzo dorato (fino al 663). Davanti, l'avancorpo e il pronao a otto colonne; a nord la piazza porticata. */
+    B.cilindro(2.8,3.05,0,0,0,P.intonaco,null,44);
+    [1.22,2.2,3.02].forEach(function(y){ B.cilindro(2.87,.09,0,y,0,P.marmo,null,44); });
+    [[2.74,3.11],[2.6,3.25],[2.46,3.39],[2.32,3.53]].forEach(function(g){ B.cilindro(g[0],.14,0,g[1],0,P.oro,null,40); });
+    B.cupola(2.2,0,3.67,0,P.oro,.42,.2);
+    B.scatola(3.5,3.05,1.25,0,0,3,P.intonaco).falde(1.3,.5,3.5,0,3.05,3,P.bronzo,PI/2,P.intonaco);                                  // avancorpo, più alto del pronao
+    B.tempio(3.4,2.2,1.45,0,4.6,0,{fronte:8,podio:.22,tetto:P.bronzo});                                                             // pronao
+    B.vano(0,.22,3.66,1,0,.62,1.15);                                                                                                // la grande porta di bronzo
+    B.dentro(0,0,9.2,PI,function(B){ portico(B,7,6.2,0,0,0,.9,P.selce); });                                                         // piazza porticata, chiusa sul lato nord
  }},
  {id:'domiziano', nome:'Stadio di Domiziano', x:-101,z:-74, ry:PI/2, lunga:[28,7.5], fa:function(B){ circo(B,27.5,10.6,1.9,false); }},
  {id:'traiano', nome:'Terme di Traiano', x:88,z:5, ry:-.62, zone:[[0,0,23]], fa:function(B){ terme(B,31,32); }},
