@@ -205,3 +205,5 @@ body.roma-grande .pellegrino{top:98px}
 /* vignettatura calda attorno alla scena */
 .riquadro.roma::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,rgba(0,0,0,0) 58%,rgba(70,40,12,.3) 100%)}
 .conta,.notte,.grande,.pellegrino{z-index:3}
+
+.versione{margin:6px 0 0;font-size:12px;color:var(--muted);opacity:.8}
