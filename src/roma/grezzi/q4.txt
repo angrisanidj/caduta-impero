@@ -1,0 +1,7 @@
+[out:json][timeout:90];
+(
+  way["historic"]["name"](41.8905,12.4815,41.8968,12.4895);
+  relation["historic"]["name"](41.8905,12.4815,41.8968,12.4895);
+  way["building"]["name"~"Curia|Basilica|Tempio|Tabularium"](41.8905,12.4815,41.8968,12.4895);
+);
+out tags center;

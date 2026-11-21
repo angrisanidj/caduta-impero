@@ -14,7 +14,7 @@ RM.FIUME = TOPO.fiume;
 RM.MURA = TOPO.mura;
 /* vie principali: tengono liberi gli isolati e disegnano la città. Dove esiste, è il tracciato della via moderna che ricalca l'antica
    (via del Corso per la via Lata, via dei Coronari per la via Recta, l'Appia Antica…); dove manca, un tratto a mano fra punti noti.
-   L'elenco, con le vie moderne usate, è in src/roma/genera.mjs. Le prime otto sono le più larghe. */
+   L'elenco, con le vie moderne usate, è in src/roma/genera.mjs: prima le vie consolari, poi quelle strette del centro antico (via Sacra, Argileto, vici e clivi). */
 RM.STRADE = TOPO.strade;
 /* giardini dei colli: verdi dal principio alla fine */
 RM.HORTI = [[80,-167,20],[-36,-194,19],[138,-22,12],[171,-28,11],[221,-11,12],[20,-170,13],[236,48,9],[-150,120,12]];   // Sallustiani, Pincio, Mecenate, Lamiani, Liciniani, Luculliani, Spes Vetus, Cesare
@@ -268,7 +268,7 @@ RM.frame.push(function(dt){ RM.tempoAcqua.value+=dt; });
 RM.posa=function(){
   if(RM.suolo) return;
   posaSuolo();
-  RM.STRADE.forEach(function(s,i){ RM.nastro(s,i<8?.8:.6,matStrada,.06); });
+  RM.STRADE.forEach(function(s,i){ RM.nastro(s,TOPO.stradeLarghe[i],matStrada,.06); });
   RM.curvaFiume=RM.nastro(RM.FIUME,5.6,RM.matFiume,0,-.5).userData.curva;
 };
 

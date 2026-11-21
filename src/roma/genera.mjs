@@ -73,7 +73,7 @@ const VIE=[
   {nome:'Appia', p:[[35,61],[43,96],[126,172],[134,211],[200,330],[294,448],[420,560]], vie:['Via di San Gregorio','Via di Porta San Sebastiano','Via Appia Antica']},
   {nome:'Ostiense', p:[[-36,42],[-42,62],[-58,84],[-70,106],[-55,150],[-32,176],[-42,280],[-48,320],[-58,376],[-100,560]], vie:['Via Marmorata','Via Ostiense'], fissi:[[-32.1,176.1,12]]},
   {nome:'Aurelia', p:[[-50,36],[-110,45],[-198,46],[-300,40],[-458,28]], vie:['Via della Lungaretta','Via Aurelia Antica'], fissi:[[-198,45.5,12]]},
-  {nome:'Argileto, clivo Suburano e Tiburtina', p:[[39,-22],[132,-36],[210,-56],[282,-98],[619,-250]], vie:['Via della Madonna dei Monti','Via Leonina','Via in Selci','Via di San Vito','Via Tiburtina Antica','Via Tiburtina'], fissi:[[207.1,-55.3,10]]},
+  {nome:'Argileto, clivo Suburano e Tiburtina', p:[[-1,-1],[3,-5],[21,-20],[39,-22],[132,-36],[210,-56],[282,-98],[619,-250]], vie:['Argiletum','Via della Madonna dei Monti','Via Leonina','Via in Selci','Via di San Vito','Via Tiburtina Antica','Via Tiburtina'], fissi:[[207.1,-55.3,10]]},
   {nome:'Labicana e Prenestina', p:[[72,22],[249,12],[400,30],[619,50]], vie:['Via Labicana','Via Prenestina']},
   {nome:'Alta Semita e Nomentana', p:[[24,-78],[80,-128],[139,-179],[270,-326],[420,-500]], vie:['Via del Quirinale','Via Venti Settembre','Via Nomentana'], fissi:[[139.5,-178.5,28]]},
   {nome:'via Recta, ponte Elio, verso San Pietro', p:[[-44,-94],[-100,-89],[-150,-90],[-157,-104],[-157,-111],[-166,-112],[-185,-112],[-215,-110],[-247,-108]], vie:['Via delle Coppelle','Via dei Coronari'], fino:108, fermo:true},
@@ -82,9 +82,18 @@ const VIE=[
   {nome:'Portuense', p:[[-50,36],[-94,96],[-210,250],[-300,400]], vie:['Via Portuense']},
   {nome:'via Settimiana', p:[[-110,45],[-147,3],[-185,-50],[-196,-87]], vie:['Via della Lungara']},
   {nome:'Salaria', p:[[80,-128],[106,-203],[120,-330],[130,-500]], vie:['Via Salaria'], fissi:[[106.4,-203.3,10]]},
-  {nome:'verso il Laterano e porta Asinaria', p:[[66,34],[120,60],[194,76],[330,170]], vie:['Via dei Santi Quattro']}
+  {nome:'verso il Laterano e porta Asinaria', p:[[66,34],[120,60],[194,76],[330,170]], vie:['Via dei Santi Quattro']},
+  /* vie del centro antico (strette): nel Foro e sul Palatino sono i basolati antichi rilevati da OSM con il loro nome; fuori, la via moderna che li ricalca */
+  {nome:'via Sacra e clivo Capitolino', stretta:true, p:[[43,26],[31,22],[27,20],[17,9],[4,1],[-1,-1],[-7,-1],[-10,-2],[-12,1],[-17,6],[-19,5]], vie:['Via Sacra','Clivus Capitolinus']},
+  {nome:'vico Patrizio', stretta:true, p:[[61,-25],[80,-52],[96,-77]], vie:['Via Urbana'], innesto:4},
+  {nome:'vico Tusco', stretta:true, p:[[2,5],[-1,12],[-9,23],[-14,43],[-17,48]], vie:['Vicus Tuscus','Via di San Teodoro']},
+  {nome:'vico Iugario', stretta:true, p:[[-7,-1],[-10,4],[-28,16],[-39,18]], vie:['Vicus Iugarius','Vico Jugario']},
+  {nome:'clivo Argentario', stretta:true, p:[[-3,-4],[-6,-11],[-9,-18],[-22,-37]], vie:['Clivo Argentario']},
+  {nome:'via Nova', stretta:true, p:[[25,22],[17,18],[12,16],[6,13]], vie:['Via Nova']},
+  {nome:'clivo di Scauro e via Celimontana', stretta:true, tol:14, p:[[40,66],[59,69],[85,70],[125,68],[163,62]], vie:['Clivo di Scauro','Via di San Paolo della Croce','Via di Santo Stefano Rotondo']},
+  {nome:"vico Capo d'Africa", stretta:true, p:[[70,38],[103,47]], vie:["Via Capo d'Africa"]}
 ];
-const osmStrade=JSON.parse(fs.readFileSync(qui('./grezzi/osm-strade.json'),'utf8')).elements;
+const osmStrade=JSON.parse(fs.readFileSync(qui('./grezzi/osm-strade.json'),'utf8')).elements.concat(JSON.parse(fs.readFileSync(qui('./grezzi/osm-vie.json'),'utf8')).elements.filter(w=>w.tags&&w.tags.name&&w.geometry));   // query in grezzi/q2.txt e q3.txt
 /* ascissa lungo lo scheletro, scarto laterale con segno */
 function proietta(p,sk){
   let m=1e9, s=0, sc=0, lungo=0, fuori=false;
@@ -95,7 +104,7 @@ function proietta(p,sk){
 const dentroMura=p=>{ let d=false; for(let i=0,j=mura.length-1;i<mura.length;j=i++){ if((mura[i][1]>p[1])!==(mura[j][1]>p[1]) && p[0]<(mura[j][0]-mura[i][0])*(p[1]-mura[i][1])/(mura[j][1]-mura[i][1])+mura[i][0]) d=!d; } return d; };
 const mediana=v=>{ const o=v.slice().sort((a,b)=>a-b); return o[o.length>>1]; };
 const strade=VIE.map(v=>{
-  const sk=v.p, TOL=60, PASSO=4, nube=[];
+  const sk=v.p, ST=!!v.stretta, TOL=v.tol||(ST?3:60), PASSO=ST?1.5:4, nube=[];
   for(const w of osmStrade){ if(!v.vie.includes(w.tags.name)) continue;
     const g=w.geometry.map(q=>[X(q.lon),Z(q.lat)]);
     for(let i=0;i<g.length-1;i++){ const L=Math.hypot(g[i+1][0]-g[i][0],g[i+1][1]-g[i][1]), n=Math.max(1,Math.ceil(L));        // un punto ogni 10 m
@@ -103,13 +112,13 @@ const strade=VIE.map(v=>{
   /* per tratti di 40 m: si tiene il fascio principale (scarto vicino alla mediana) e se ne fa la media, così le due carreggiate dei viali diventano un asse solo */
   const tratti=new Map(); for(const q of nube){ const k=Math.floor(q.s/PASSO); if(!tratti.has(k)) tratti.set(k,[]); tratti.get(k).push(q); }
   let punti=[];
-  for(const [k,l] of tratti){ if(l.length<3) continue; const m=mediana(l.map(q=>q.sc)), buoni=l.filter(q=>Math.abs(q.sc-m)<2.5);
+  for(const [k,l] of tratti){ if(l.length<(ST?1:3)) continue; const m=mediana(l.map(q=>q.sc)), buoni=l.filter(q=>Math.abs(q.sc-m)<(ST?1.2:2.5));
     punti.push({sc:m, s:buoni.reduce((a,q)=>a+q.s,0)/buoni.length, p:[buoni.reduce((a,q)=>a+q.p[0],0)/buoni.length, buoni.reduce((a,q)=>a+q.p[1],0)/buoni.length], vero:true}); }
   (v.fissi||[]).forEach(f=>{ const pr=proietta(f,sk); punti=punti.filter(q=>Math.abs(q.s-pr.s)>f[2]); punti.push({s:pr.s,p:[f[0],f[1]],sc:0,fisso:true}); });
   /* i vertici dello scheletro restano dove la via moderna manca per più di 150 m */
   let lungo=0; const totale=sk.slice(1).reduce((a,p,i)=>a+Math.hypot(p[0]-sk[i][0],p[1]-sk[i][1]),0);
   const veri=punti.filter(q=>q.vero), fermi=punti.slice();
-  sk.forEach((p,i)=>{ if(i) lungo+=Math.hypot(p[0]-sk[i-1][0],p[1]-sk[i-1][1]); if(fermi.some(q=>Math.abs(q.s-lungo)<4) || (fermi.some(q=>q.s>=lungo&&q.s-lungo<15) && fermi.some(q=>q.s<=lungo&&lungo-q.s<15))) return;
+  sk.forEach((p,i)=>{ if(i) lungo+=Math.hypot(p[0]-sk[i-1][0],p[1]-sk[i-1][1]); const R1=ST?1.5:4, R2=ST?5:15; if(fermi.some(q=>Math.abs(q.s-lungo)<R1) || (fermi.some(q=>q.s>=lungo&&q.s-lungo<R2) && fermi.some(q=>q.s<=lungo&&lungo-q.s<R2))) return;
     /* fuori le mura lo scheletro è solo indicativo: lo si sposta di lato quanto la via vera più vicina, così i due tracciati si raccordano senza gomiti */
     if(i&&veri.length&&!v.fermo&&!dentroMura(p)){ const a=sk[Math.max(0,i-1)], b=sk[Math.min(sk.length-1,i+(i?0:1))], dx=b[0]-a[0], dz=b[1]-a[1], L=Math.hypot(dx,dz), vicino=veri.reduce((m,q)=>Math.abs(q.s-lungo)<Math.abs(m.s-lungo)?q:m);
       p=[p[0]+dz/L*vicino.sc, p[1]-dx/L*vicino.sc]; }
@@ -118,7 +127,7 @@ const strade=VIE.map(v=>{
   const coperta=punti.filter(q=>q.vero).length*PASSO/totale;
   /* lisciatura leggera (solo dove la via vera è continua: i punti a mano e le porte non si toccano) e semplificazione */
   let linea=punti.map((q,i)=>(i&&i<punti.length-1&&q.vero&&punti[i-1].vero&&punti[i+1].vero)?[(punti[i-1].p[0]+2*q.p[0]+punti[i+1].p[0])/4,(punti[i-1].p[1]+2*q.p[1]+punti[i+1].p[1])/4]:q.p);
-  linea=semplifica(linea,.6).map(p=>[r1(p[0]),r1(p[1])]);
+  linea=semplifica(linea,ST?.25:.6).map(p=>[r1(p[0]),r1(p[1])]);
   console.log('strada',v.nome.padEnd(42),'punti',String(linea.length).padStart(3),'da OSM',Math.round(Math.min(1,coperta)*100)+'%', process.argv.includes('-v')?linea.map(p=>p.map(Math.round).join(',')).join(' '):'');
   return {linea, v};
 });
@@ -140,7 +149,7 @@ for(let giro=0;giro<2;giro++){ const n=q.slice();
 const quote={ x0:r1(X(g.lon0)), dx:+(g.dLon*8287).toFixed(4), z0:r1(Z(g.lat0)), dz:+(g.dLat*11113.2).toFixed(4), colonne:g.colonne, righe:g.righe,   // riga 0 = sud (z0), le righe salgono verso nord
   q:q.map(v=>Math.round((v-14)))};                                                                                                                      // metri sopra la riva
 
-const out={fiume:fiume.map(p=>[r1(p[0]),r1(p[1])]), mura, porte, strade:strade.map(o=>o.linea), quote};
+const out={fiume:fiume.map(p=>[r1(p[0]),r1(p[1])]), mura, porte, strade:strade.map(o=>o.linea), stradeLarghe:strade.map((o,i)=>o.v.stretta?.45:i<8?.8:.6), quote};
 fs.writeFileSync(qui('../../js/roma-topo.js'),'/* Generato da src/roma/genera.mjs: non modificare a mano.\n   Tevere, mura, porte e strade: © OpenStreetMap contributors (ODbL). Quote: SRTM 30 m (NASA), via opentopodata.org. */\nwindow.RM_TOPO='+JSON.stringify(out)+';\n');
 
 /* pianta di controllo */

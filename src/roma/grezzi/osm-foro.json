@@ -1,0 +1,1702 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-21T09:07:07Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 23913953,
+  "center": {
+    "lat": 41.8906722,
+    "lon": 12.4885842
+  },
+  "tags": {
+    "building": "triumphal_arch",
+    "height": "15.4",
+    "historic": "monument",
+    "historic:civilization": "ancient_roman",
+    "historic:period": "roman",
+    "name": "Arco di Tito",
+    "name:ar": "قوس طيطوس",
+    "name:cs": "Titův oblouk",
+    "name:de": "Titusbogen",
+    "name:el": "Αψίδα του Τίτου",
+    "name:en": "Arch of Titus",
+    "name:es": "Arco de Tito",
+    "name:fr": "Arc de Titus",
+    "name:he": "שער טיטוס",
+    "name:it": "Arco di Tito",
+    "name:ja": "ティトの凱旋門",
+    "name:pt": "Arco de Tito",
+    "name:ru": "Триумфальная арка Тита",
+    "name:sv": "Titusbågen",
+    "name:uk": "Арка Тіта",
+    "name:zh": "提图斯凯旋门",
+    "start_date": "~82",
+    "tourism": "attraction",
+    "wheelchair": "yes",
+    "wikidata": "Q723887",
+    "wikimedia_commons": "Category:Arch of Titus (Rome)",
+    "wikipedia": "en:Arch of Titus"
+  }
+},
+{
+  "type": "way",
+  "id": 27350506,
+  "center": {
+    "lat": 41.8906059,
+    "lon": 12.4888219
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "historic": "yes",
+    "lit": "yes",
+    "name": "Via Sacra",
+    "smoothness": "bad",
+    "surface": "sett",
+    "wikipedia": "it:Via Sacra"
+  }
+},
+{
+  "type": "way",
+  "id": 32352952,
+  "center": {
+    "lat": 41.8906723,
+    "lon": 12.4885843
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "historic": "yes",
+    "name": "Via Sacra",
+    "surface": "unhewn_cobblestone",
+    "tunnel": "building_passage",
+    "tunnel:name": "Arco di Tito",
+    "wikipedia": "it:Via Sacra"
+  }
+},
+{
+  "type": "way",
+  "id": 49824161,
+  "center": {
+    "lat": 41.8928337,
+    "lon": 12.4847390
+  },
+  "tags": {
+    "building": "triumphal_arch",
+    "historic": "monument",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "name": "Arco di Settimio Severo",
+    "name:cs": "Oblouk Septimia Severa",
+    "name:en": "Arch of Septimius Severus",
+    "name:es": "Arco de Septimo Severo",
+    "name:fr": "Arc de Septime Sévère",
+    "name:it": "Arco di Settimio Severo",
+    "name:ru": "Арка Септимия Севера",
+    "name:uk": "Арка Септіміуса Северуса",
+    "name:zh": "赛普提米-塞维鲁凯旋门",
+    "start_date": "0203",
+    "wikidata": "Q162353",
+    "wikimedia_commons": "Category:Arch of Septimius Severus (Rome)",
+    "wikipedia": "en:Arch of Septimius Severus"
+  }
+},
+{
+  "type": "way",
+  "id": 111669472,
+  "center": {
+    "lat": 41.8906432,
+    "lon": 12.4812847
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Templi dell'Area Sacra di Sant'Omobono",
+    "name:de": "Tempel des Heiligen Bezirks von Sant'Omobono",
+    "name:en": "Temples of the Sacred Area of S. Omobono",
+    "name:it": "Templi dell'Area Sacra di Sant'Omobono",
+    "tourism": "attraction",
+    "wikidata": "Q2552044",
+    "wikimedia_commons": "Category:Sacred area of Sant'Omobono",
+    "wikipedia": "it:Area di Sant'Omobono"
+  }
+},
+{
+  "type": "way",
+  "id": 124808519,
+  "center": {
+    "lat": 41.8952348,
+    "lon": 12.4832020
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Sepolcro di Gaio Poplicio Bibulo",
+    "ruins": "yes",
+    "wikidata": "Q3955650",
+    "wikimedia_commons": "Category:Tomb of Gaius Publicius Bibulus",
+    "wikipedia": "it:Sepolcro di Gaio Publicio Bibulo"
+  }
+},
+{
+  "type": "way",
+  "id": 124808555,
+  "center": {
+    "lat": 41.8949171,
+    "lon": 12.4829336
+  },
+  "tags": {
+    "historic": "tomb",
+    "name": "Tomba del Milite Ignoto",
+    "name:hu": "Ismeretlen katona sírja",
+    "tomb": "war_grave"
+  }
+},
+{
+  "type": "way",
+  "id": 125226020,
+  "center": {
+    "lat": 41.8941188,
+    "lon": 12.4822530
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Insula dell'Ara Coeli",
+    "ruins": "yes",
+    "tourism": "attraction",
+    "wikidata": "Q2249182",
+    "wikimedia_commons": "Category:Ara Coeli Insula",
+    "wikipedia": "it:Insula dell'Ara Coeli"
+  }
+},
+{
+  "type": "way",
+  "id": 131451564,
+  "center": {
+    "lat": 41.8919543,
+    "lon": 12.4847813
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Basilica Iulia",
+    "name:it": "Basilica Giulia",
+    "source": "Bing",
+    "tourism": "attraction",
+    "wikidata": "Q616271",
+    "wikimedia_commons": "Category:Basilica Julia (Rome)",
+    "wikipedia": "en:Basilica Julia"
+  }
+},
+{
+  "type": "way",
+  "id": 131451776,
+  "center": {
+    "lat": 41.8924452,
+    "lon": 12.4848486
+  },
+  "tags": {
+    "heritage": "yes",
+    "historic": "monument",
+    "historic_1": "building",
+    "name": "Colonna di Foca",
+    "name:en": "Column of Phoca",
+    "ruins": "yes",
+    "wikidata": "Q369075",
+    "wikimedia_commons": "Category:Column of Phocas",
+    "wikipedia": "it:Colonna di Foca"
+  }
+},
+{
+  "type": "way",
+  "id": 131451819,
+  "center": {
+    "lat": 41.8920544,
+    "lon": 12.4859970
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio del Divo Giulio",
+    "name:cs": "Caesarův chrám",
+    "name:de": "Tempel des Divus Iulius",
+    "name:en": "Temple of Divus Iulius",
+    "name:it": "Tempio del Divo Giulio",
+    "name:la": "Aedes Divi Iulii",
+    "name:nl": "Tempel van Caesar",
+    "name:ru": "Храм Цезаря",
+    "start_date": "29 BC",
+    "wikidata": "Q1133288",
+    "wikimedia_commons": "Category:Temple of Iulius Caesar (Rome)",
+    "wikipedia": "it:Tempio del Divo Giulio"
+  }
+},
+{
+  "type": "way",
+  "id": 131557337,
+  "center": {
+    "lat": 41.8919845,
+    "lon": 12.4868148
+  },
+  "tags": {
+    "archaeological_site": "necropolis",
+    "area": "yes",
+    "historic": "archaeological_site",
+    "name": "Necropoli arcaica",
+    "name:la": "sepulcretum",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 131557543,
+  "center": {
+    "lat": 41.8925782,
+    "lon": 12.4843816
+  },
+  "tags": {
+    "building": "yes",
+    "historic": "memorial",
+    "memorial": "milestone",
+    "milestone_type": "kilometer_stone",
+    "name": "Miliarum Aureum",
+    "name:it": "Miliario Aureo",
+    "ruins": "yes",
+    "subject:wikidata": "Q329477",
+    "wikidata": "Q916963",
+    "wikimedia_commons": "Category:Milliarium Aureum",
+    "wikipedia": "it:Miliario aureo"
+  }
+},
+{
+  "type": "way",
+  "id": 140031952,
+  "center": {
+    "lat": 41.8960432,
+    "lon": 12.4815467
+  },
+  "tags": {
+    "amenity": "place_of_worship",
+    "basilica": "minor",
+    "building": "basilica",
+    "building:levels": "2",
+    "contact:website": "https://www.sanmarcoevangelista.it/",
+    "denomination": "catholic",
+    "historic": "church",
+    "name": "Basilica di San Marco",
+    "name:zh": "罗马圣马可教堂",
+    "opening_hours": "Sep-Jul Tu-Sa 10:00-13:00,16:00-18:00; Sep-Jul Su 10:00-13:00,16:00-20:00; Aug 16:00-20:00",
+    "religion": "christian",
+    "wheelchair": "limited",
+    "wikidata": "Q1479910",
+    "wikimedia_commons": "Category:San Marco (Rome)",
+    "wikipedia": "it:Basilica di San Marco Evangelista al Campidoglio"
+  }
+},
+{
+  "type": "way",
+  "id": 140264246,
+  "center": {
+    "lat": 41.8936943,
+    "lon": 12.4871653
+  },
+  "tags": {
+    "barrier": "retaining_wall",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio di Minerva",
+    "name:en": "Temple of Minerva",
+    "name:la": "Templum Minervae"
+  }
+},
+{
+  "type": "way",
+  "id": 429078984,
+  "center": {
+    "lat": 41.8933201,
+    "lon": 12.4829351
+  },
+  "tags": {
+    "artwork_type": "sculpture",
+    "description:it": "riproduzione di Statua equestre di Marco Aurelio",
+    "historic": "memorial",
+    "memorial": "statue",
+    "name": "Statua equestre di Marco Aurelio",
+    "name:en": "Equestrian statue of Marcus Aurelius",
+    "name:hu": "Marcus Aurelius császár lovasszobra",
+    "name:nl": "Ruiterstandbeeld van Marcus Aurelius",
+    "replica": "yes",
+    "start_date": "1981",
+    "statue": "equestrian",
+    "subject:wikidata": "Q907387",
+    "tourism": "artwork",
+    "wikidata": "Q21141671",
+    "wikimedia_commons": "Category:Replica of the Equestrian statue of Marcus Aurelius (Rome)"
+  }
+},
+{
+  "type": "way",
+  "id": 994987247,
+  "center": {
+    "lat": 41.8918709,
+    "lon": 12.4868304
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "historic": "yes",
+    "lit": "yes",
+    "name": "Via Sacra",
+    "smoothness": "intermediate",
+    "surface": "sett",
+    "wikipedia": "it:Via Sacra"
+  }
+},
+{
+  "type": "way",
+  "id": 995618424,
+  "center": {
+    "lat": 41.8926101,
+    "lon": 12.4852044
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "historic": "yes",
+    "lit": "yes",
+    "name": "Via Sacra",
+    "surface": "unhewn_cobblestone",
+    "wikipedia": "it:Via Sacra"
+  }
+},
+{
+  "type": "way",
+  "id": 995618433,
+  "center": {
+    "lat": 41.8924882,
+    "lon": 12.4854786
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "historic": "yes",
+    "lit": "yes",
+    "name": "Via Sacra",
+    "surface": "unhewn_cobblestone",
+    "wikidata": "Q655172",
+    "wikimedia_commons": "Category:Via Sacra (Rome)",
+    "wikipedia": "it:Via Sacra"
+  }
+},
+{
+  "type": "way",
+  "id": 997422782,
+  "center": {
+    "lat": 41.8948125,
+    "lon": 12.4854274
+  },
+  "tags": {
+    "artwork_type": "statue",
+    "building": "ruins",
+    "historic": "archaeological_site",
+    "name": "Equus Traiani",
+    "name:it": "presunta base della Statua equestre di Traiano",
+    "note": "base of Equus Traiani?",
+    "ruins": "yes",
+    "statue": "equestrian",
+    "wikidata": "Q1857818",
+    "wikimedia_commons": "Category:Equestrian statue of Trajan (Rome)",
+    "wikipedia": "it:Statua equestre di Traiano"
+  }
+},
+{
+  "type": "way",
+  "id": 998877106,
+  "center": {
+    "lat": 41.8917032,
+    "lon": 12.4853673
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "historic": "yes",
+    "name": "Vicus Tuscus",
+    "name:it": "Vicus Tuscus",
+    "name:la": "Vicus Tuscus",
+    "surface": "unhewn_cobblestone",
+    "wikidata": "Q1229845"
+  }
+},
+{
+  "type": "way",
+  "id": 1391027807,
+  "center": {
+    "lat": 41.8921931,
+    "lon": 12.4861186
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "historic": "yes",
+    "lit": "yes",
+    "name": "Via Sacra",
+    "smoothness": "good",
+    "surface": "concrete",
+    "wikipedia": "it:Via Sacra"
+  }
+},
+{
+  "type": "way",
+  "id": 1391027809,
+  "center": {
+    "lat": 41.8923344,
+    "lon": 12.4858247
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "historic": "yes",
+    "lit": "yes",
+    "name": "Via Sacra",
+    "smoothness": "good",
+    "surface": "concrete",
+    "wikidata": "Q655172",
+    "wikimedia_commons": "Category:Via Sacra (Rome)",
+    "wikipedia": "it:Via Sacra"
+  }
+},
+{
+  "type": "way",
+  "id": 1543173033,
+  "center": {
+    "lat": 41.8904269,
+    "lon": 12.4894656
+  },
+  "tags": {
+    "highway": "pedestrian",
+    "historic": "yes",
+    "lit": "yes",
+    "name": "Via Sacra",
+    "smoothness": "bad",
+    "surface": "sett",
+    "wikipedia": "it:Via Sacra"
+  }
+},
+{
+  "type": "relation",
+  "id": 1754380,
+  "center": {
+    "lat": 41.8951582,
+    "lon": 12.4851532
+  },
+  "tags": {
+    "architect": "Apollodorus of Damascus",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Foro di Traiano",
+    "name:de": "Trajansforum",
+    "name:el": "Φόρουμ του Τραϊανού",
+    "name:en": "Forum of Trajan",
+    "name:la": "Forum Traianii",
+    "name:pl": "Forum Trajana",
+    "name:ru": "Форум Траяна",
+    "name:uk": "Форум Траяна",
+    "opening_hours": "09:30-19:30",
+    "ruins": "yes",
+    "start_date": "143",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "website": "https://www.mercatiditraiano.it/",
+    "wikidata": "Q211295",
+    "wikimedia_commons": "Category:Trajan's Forum (Rome)",
+    "wikipedia": "en:Trajan's Forum"
+  }
+},
+{
+  "type": "relation",
+  "id": 1765428,
+  "center": {
+    "lat": 41.8915626,
+    "lon": 12.4858794
+  },
+  "tags": {
+    "archaeological_site": "fountain",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Lacus Iuturnae",
+    "name:de": "Juturna-Quelle",
+    "name:en": "Spring of Juturna",
+    "name:fr": "Fontaine de Juturne",
+    "name:la": "Lacus Iuturnae",
+    "name:ru": "Источник Ютурны",
+    "name:sv": "Juturnas källa",
+    "type": "multipolygon",
+    "wikidata": "Q1714672",
+    "wikipedia": "en:Lacus Juturnae"
+  }
+},
+{
+  "type": "relation",
+  "id": 1765429,
+  "center": {
+    "lat": 41.8919090,
+    "lon": 12.4864306
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Regia",
+    "name:uk": "Регія",
+    "type": "multipolygon",
+    "wikidata": "Q786489",
+    "wikimedia_commons": "Category:Regia (Rome)",
+    "wikipedia": "it:Regia (Roma)"
+  }
+},
+{
+  "type": "relation",
+  "id": 1765430,
+  "center": {
+    "lat": 41.8914647,
+    "lon": 12.4874530
+  },
+  "tags": {
+    "building": "ruins",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Sacello di Bacco",
+    "name:en": "Shrine of Bacchus",
+    "name:it": "Sacello di Bacco",
+    "name:la": "Sacellum Bacchi",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 1766532,
+  "center": {
+    "lat": 41.8926161,
+    "lon": 12.4860869
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Basilica Aemilia",
+    "name:cs": "Bazilika Aemilia",
+    "name:it": "Basilica Fulvia Emilia",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q522924",
+    "wikimedia_commons": "Category:Basilica Aemilia (Rome)",
+    "wikipedia": "en:Basilica Aemilia"
+  }
+},
+{
+  "type": "relation",
+  "id": 1766534,
+  "center": {
+    "lat": 41.8921373,
+    "lon": 12.4853836
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Colonne Onorarie",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 1766535,
+  "center": {
+    "lat": 41.8924504,
+    "lon": 12.4858976
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Tabernae Novae",
+    "name:la": "Tabernae Novae",
+    "type": "multipolygon",
+    "wikidata": "Q522924",
+    "wikipedia": "it:Basilica Emilia"
+  }
+},
+{
+  "type": "relation",
+  "id": 1767601,
+  "center": {
+    "lat": 41.8929432,
+    "lon": 12.4842018
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Tempio della Concordia",
+    "name:cs": "Chrám Concordie",
+    "name:de": "Concordia-Tempel",
+    "name:nl": "Tempel van Concordia",
+    "name:pl": "Świątynia Zgody w Rzymie",
+    "name:uk": "Храм Конкордії",
+    "start_date": "10",
+    "type": "multipolygon",
+    "wikidata": "Q828143",
+    "wikimedia_commons": "Category:Temple of Concord (Rome)",
+    "wikipedia": "it:Tempio della Concordia (Roma)"
+  }
+},
+{
+  "type": "relation",
+  "id": 1767603,
+  "center": {
+    "lat": 41.8927328,
+    "lon": 12.4839220
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Tempio di Vespasiano e Tito",
+    "name:cs": "Vespasianův chrám",
+    "name:de": "Tempel des Vespasian und des Titus",
+    "name:en": "Temple of Vespasian and Titus",
+    "name:nl": "Tempel van Vespasianus en Titus",
+    "name:pl": "Świątynia Wespazjana",
+    "name:uk": "Храм Веспасіана",
+    "start_date": "87",
+    "type": "multipolygon",
+    "wikidata": "Q731284",
+    "wikimedia_commons": "Category:Temple of Vespasianus (Rome)",
+    "wikipedia": "it:Tempio di Vespasiano"
+  }
+},
+{
+  "type": "relation",
+  "id": 1809171,
+  "center": {
+    "lat": 41.8941392,
+    "lon": 12.4848589
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio di Venere Genitrice",
+    "name:de": "Tempel der Venus Genetrix",
+    "name:en": "Temple of Venus Genetrix",
+    "name:lt": "Templum Veneris Genetricis",
+    "start_date": "46 BC",
+    "type": "multipolygon",
+    "wikidata": "Q2459870",
+    "wikimedia_commons": "Category:Temple of Venus Genetrix, Rome",
+    "wikipedia": "en:Temple of Venus Genetrix"
+  }
+},
+{
+  "type": "relation",
+  "id": 1835449,
+  "center": {
+    "lat": 41.8882328,
+    "lon": 12.4869790
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "importance": "international",
+    "name": "Palatino",
+    "rank": "0",
+    "tourism": "attraction",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841077,
+  "center": {
+    "lat": 41.8919706,
+    "lon": 12.4862958
+  },
+  "tags": {
+    "building": "yes",
+    "historic": "archaeological_site",
+    "name": "Arco di Augusto",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q1232346",
+    "wikipedia": "it:Arco di Augusto (Foro Romano)"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841078,
+  "center": {
+    "lat": 41.8918226,
+    "lon": 12.4883256
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Basilica di Massenzio",
+    "name:cs": "Maxentiova bazilika",
+    "name:en": "Basilica of Maxentius",
+    "name:he": "בזיליקת קונסטנטינוס",
+    "name:it": "Basilica di Massenzio",
+    "name:lt": "Basilica Maxentii",
+    "name:ru": "Базилика Максенция и Константина",
+    "start_date": "312",
+    "type": "multipolygon",
+    "wikidata": "Q371921",
+    "wikimedia_commons": "Category:Basilica of Maxentius and Constantine (Rome)",
+    "wikipedia": "en:Basilica of Maxentius"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841079,
+  "center": {
+    "lat": 41.8929618,
+    "lon": 12.4853957
+  },
+  "tags": {
+    "building": "yes",
+    "height": "31",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Curia Iulia",
+    "name:en": "Curia Julia",
+    "name:fr": "Curie julienne",
+    "outdoor_seating": "no",
+    "type": "multipolygon",
+    "wikidata": "Q1144514",
+    "wikimedia_commons": "Category:Curia Iulia",
+    "wikipedia": "en:Curia Julia"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841080,
+  "center": {
+    "lat": 41.8916837,
+    "lon": 12.4870791
+  },
+  "tags": {
+    "fee": "yes",
+    "heritage": "1",
+    "heritage:since": "1980",
+    "heritage:url": "https://whc.unesco.org/en/list/91",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "importance": "national",
+    "name": "Forum Romanum",
+    "name:ar": "المنتدى الروماني",
+    "name:cs": "Forum Romanum",
+    "name:da": "Forum Romanum",
+    "name:de": "Forum Romanum",
+    "name:en": "Roman Forum",
+    "name:es": "Foro Romano",
+    "name:et": "Rooma foorum",
+    "name:it": "Foro Romano",
+    "name:lt": "Forum Romanum",
+    "name:nl": "Forum Romanum",
+    "name:ru": "Римский форум",
+    "name:zh": "古羅馬廣場",
+    "ref:whc": "91",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wikidata": "Q180212",
+    "wikimedia_commons": "Category:Forum Romanum",
+    "wikipedia": "en:Roman Forum"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841081,
+  "center": {
+    "lat": 41.8936887,
+    "lon": 12.4852983
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Foro di Cesare",
+    "name:de": "Cäsarforum",
+    "name:en": "Forum of Caesar",
+    "name:he": "פורום קיסר",
+    "name:la": "Forum Iulii Caesaris",
+    "name:lt": "Forum Iulium",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wikidata": "Q856968",
+    "wikimedia_commons": "Category:Forum Iulium",
+    "wikipedia": "en:Forum of Caesar"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841087,
+  "center": {
+    "lat": 41.8911705,
+    "lon": 12.4887901
+  },
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housenumber": "4",
+    "addr:postcode": "00186",
+    "addr:street": "Piazza di Santa Francesca Romana",
+    "alt_name": "Santa Maria Nova",
+    "amenity": "place_of_worship",
+    "basilica": "minor",
+    "building": "church",
+    "contact:email": "monastero@abbaziasantamarianova.it",
+    "contact:facebook": "SantaFrancescaRomanaRoma",
+    "contact:phone": "+39 06 679 5528",
+    "denomination": "catholic",
+    "height": "14",
+    "historic": "church",
+    "image": "https://photos.app.goo.gl/ibu1L3u4W8FprYub6",
+    "name": "Basilica di Santa Francesca Romana",
+    "name:de": "Franziska-von-Rom-Kirche",
+    "name:ru": "Санта-Франческа-Романа",
+    "religion": "christian",
+    "type": "multipolygon",
+    "wikidata": "Q1091640",
+    "wikimedia_commons": "Category:Santa Francesca Romana (Rome)",
+    "wikipedia": "it:Basilica di Santa Francesca Romana"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841089,
+  "center": {
+    "lat": 41.8918590,
+    "lon": 12.4871943
+  },
+  "tags": {
+    "building": "yes",
+    "historic": "archaeological_site",
+    "name": "Tempio di Romolo",
+    "name:cs": "Romulův chrám",
+    "name:en": "Temple of Romulus",
+    "name:fr": "Temple de Romulus",
+    "name:ru": "Xрам Ромyла",
+    "name:zh": "罗慕路斯神殿",
+    "type": "multipolygon",
+    "wikidata": "Q338397",
+    "wikipedia": "it:Tempio del Divo Romolo"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841090,
+  "center": {
+    "lat": 41.8920957,
+    "lon": 12.4866574
+  },
+  "tags": {
+    "building": "temple",
+    "historic": "temple",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio di Antonino e Faustina",
+    "name:de": "Tempel des Antoninus Pius und der Faustina",
+    "name:en": "Temple of Antoninus and Faustina",
+    "name:es": "Templo de Antonino y Faustina",
+    "name:fr": "Temple d'Antonin et Faustine",
+    "name:he": "מקדש אנטונינוס ופאוסטינה",
+    "name:la": "Templum Antonini et Faustinae",
+    "name:nl": "Tempel van Antoninus en Faustina",
+    "name:ru": "Храм Антонина и Фаустины",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q752555",
+    "wikimedia_commons": "Category:Temple of Antoninus and Faustina (Rome)",
+    "wikipedia": "it:Tempio di Antonino e Faustina"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841091,
+  "center": {
+    "lat": 41.8908294,
+    "lon": 12.4896427
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Tempio di Venere e Roma",
+    "name:ar": "معبد فينوس وروما",
+    "name:en": "Temple of Venus and Roma",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q430792",
+    "wikipedia": "it:Tempio di Venere e Roma"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841167,
+  "center": {
+    "lat": 41.8926363,
+    "lon": 12.4873217
+  },
+  "tags": {
+    "alt_name": "Forum Pacis",
+    "historic": "archaeological_site",
+    "name": "Tempio della Pace",
+    "name:it": "Foro della Pace",
+    "name:la": "Templum Pacis",
+    "name:ru": "Храм Мира",
+    "type": "multipolygon",
+    "wikidata": "Q1456939",
+    "wikimedia_commons": "Category:Temple of Peace (Rome)",
+    "wikipedia": "it:Tempio della Pace"
+  }
+},
+{
+  "type": "relation",
+  "id": 1842058,
+  "center": {
+    "lat": 41.8913245,
+    "lon": 12.4866512
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Casa delle Vestali",
+    "name:de": "Haus der Vestalinnen",
+    "name:en": "House of the Vestal Virgins",
+    "name:fr": "Maison des vestales",
+    "name:it": "Casa delle Vestali",
+    "name:la": "Atrium Vestae",
+    "name:nl": "Huis van de Vestaalse Maagden",
+    "name:ru": "Дом весталок",
+    "name:uk": "Дім весталок",
+    "type": "multipolygon",
+    "wikidata": "Q285196",
+    "wikipedia": "en:House of the Vestals"
+  }
+},
+{
+  "type": "relation",
+  "id": 1842059,
+  "center": {
+    "lat": 41.8907776,
+    "lon": 12.4881982
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "landuse": "grass",
+    "name": "Casa di Marco Emilio Scauro",
+    "type": "multipolygon",
+    "website": "https://www.archeoroma.com/Foro%20Romano/casa_di_m_emilio_scauro.htm"
+  }
+},
+{
+  "type": "relation",
+  "id": 1842060,
+  "center": {
+    "lat": 41.8910799,
+    "lon": 12.4874844
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Horrea Vespasiani",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 1842061,
+  "center": {
+    "lat": 41.8916761,
+    "lon": 12.4856314
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Templum Castoris",
+    "name:de": "Tempel der Dioskuren",
+    "name:en": "Temple of Castor and Pollux",
+    "name:es": "Templo de Cástor y Pólux",
+    "name:fr": "Temple des Dioscures",
+    "name:it": "Tempio dei Dioscuri",
+    "name:la": "Aedes Castoris",
+    "name:nl": "Tempel van Castor en Pollux",
+    "name:pl": "Świątynia Kastora i Polluksa",
+    "name:ru": "Храм Диоскуров",
+    "name:sv": "Dioskurernas tempel",
+    "name:uk": "Храм Діоскурів",
+    "start_date": "6",
+    "type": "multipolygon",
+    "wikidata": "Q380530",
+    "wikimedia_commons": "Category:Temple of Castor and Pollux, Rome",
+    "wikipedia": "en:Temple of Castor and Pollux"
+  }
+},
+{
+  "type": "relation",
+  "id": 1842062,
+  "center": {
+    "lat": 41.8916935,
+    "lon": 12.4861984
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio di Vesta",
+    "name:cs": "Vestin chrám",
+    "name:de": "Tempel der Vesta",
+    "name:en": "Temple of Vesta",
+    "name:it": "Tempio di Vesta",
+    "name:la": "Templum Vestae",
+    "name:nl": "Tempel van Vesta",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q753791",
+    "wikimedia_commons": "Category:Temple of Vesta (Rome)",
+    "wikipedia": "en:Temple of Vesta"
+  }
+},
+{
+  "type": "relation",
+  "id": 1849828,
+  "center": {
+    "lat": 41.8922989,
+    "lon": 12.4853191
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Doliola",
+    "ruins": "yes",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 1849830,
+  "center": {
+    "lat": 41.8947045,
+    "lon": 12.4831835
+  },
+  "tags": {
+    "alt_name": "Vittoriano",
+    "alt_name:en": "Altar of the Fatherland",
+    "architect": "Giuseppe Sacconi",
+    "architect:wikidata": "Q1970026",
+    "building": "public",
+    "building:colour": "#f4f7f6",
+    "historic": "monument",
+    "image": "https://photos.app.goo.gl/aMjwrm7GVZ7ectbZ9",
+    "name": "Altare della Patria",
+    "name:cs": "Památník Viktora Emanuela II.",
+    "name:de": "Nationaldenkmal für Viktor Emanuel II.",
+    "name:el": "Μνημείο του Βιττόριο Εμμανουέλε Β΄",
+    "name:en": "Monument to Vittorio Emanuele II",
+    "name:es": "Monumento a Vittorio Emanuele II o Altar de la Patria",
+    "name:fr": "Monument à Victor-Emmanuel II",
+    "name:hi": "विक्टर इम्मानुएल २ स्मारक",
+    "name:hr": "Spomenik domovini",
+    "name:hu": "II. Viktor Emánuel király emlékműve",
+    "name:ko": "비토리오 에마누엘레 2세 기념관",
+    "name:nl": "Monument van Victor Emanuel II",
+    "name:ru": "Витториано",
+    "nat_name": "Vittoriano",
+    "official_name": "Monumento nazionale a Vittorio Emanuele II",
+    "official_name_1": "Monumento a Vittorio Emanuele II",
+    "roof:colour": "#e2e2e2",
+    "start_date": "1935",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wikidata": "Q506234",
+    "wikimedia_commons": "Category:Vittoriano (Rome)",
+    "wikipedia": "it:Vittoriano"
+  }
+},
+{
+  "type": "relation",
+  "id": 1849832,
+  "center": {
+    "lat": 41.8923600,
+    "lon": 12.4851498
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Piazza del Foro",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q180212"
+  }
+},
+{
+  "type": "relation",
+  "id": 1849833,
+  "center": {
+    "lat": 41.8931412,
+    "lon": 12.4844657
+  },
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "church",
+    "contact:website": "https://www.sangiuseppedeifalegnami.org/",
+    "denomination": "roman_catholic",
+    "height": "22",
+    "historic": "church",
+    "layer": "1",
+    "name": "Chiesa di San Giuseppe dei Falegnami al Foro Romano",
+    "religion": "christian",
+    "type": "multipolygon",
+    "wikidata": "Q1312988",
+    "wikimedia_commons": "Category:San Giuseppe dei Falegnami (Rome)",
+    "wikipedia": "it:Chiesa di San Giuseppe dei Falegnami"
+  }
+},
+{
+  "type": "relation",
+  "id": 1849835,
+  "center": {
+    "lat": 41.8924008,
+    "lon": 12.4840778
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio di Saturno",
+    "name:cs": "Saturnův chrám",
+    "name:de": "Tempel des Saturn",
+    "name:en": "Temple of Saturn",
+    "name:it": "Tempio di Saturno",
+    "name:nl": "Tempel van Saturnus",
+    "name:pl": "Świątynia Saturna",
+    "name:ru": "Храм Сатурна",
+    "name:uk": "Храм Сатурна",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q746721",
+    "wikimedia_commons": "Category:Temple of Saturn, Rome",
+    "wikipedia": "en:Temple of Saturn"
+  }
+},
+{
+  "type": "relation",
+  "id": 1860920,
+  "center": {
+    "lat": 41.8902502,
+    "lon": 12.4861715
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Domus Tiberiana",
+    "type": "multipolygon",
+    "wikidata": "Q1238767",
+    "wikipedia": "it:Domus Tiberiana"
+  }
+},
+{
+  "type": "relation",
+  "id": 1892857,
+  "center": {
+    "lat": 41.8964394,
+    "lon": 12.4840258
+  },
+  "tags": {
+    "building": "residential",
+    "historic": "building",
+    "name": "Palazzo Valentini",
+    "name:el": "Παλάτσο Βαλεντίνι",
+    "type": "multipolygon",
+    "wikidata": "Q751105",
+    "wikimedia_commons": "Category:Palazzo Valentini",
+    "wikipedia": "it:Palazzo Valentini"
+  }
+},
+{
+  "type": "relation",
+  "id": 1899638,
+  "center": {
+    "lat": 41.8942559,
+    "lon": 12.4866515
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Foro di Augusto",
+    "name:de": "Augustusforum",
+    "name:en": "Forum of Augustus",
+    "name:he": "פורום אוגוסטוס",
+    "name:it": "Foro di Augusto",
+    "name:la": "Forum Augustum",
+    "name:pl": "Forum Augusta",
+    "name:ru": "Форум Августа",
+    "name:uk": "Форум Августа",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wikidata": "Q770797",
+    "wikimedia_commons": "Category:Forum Augusti",
+    "wikipedia": "en:Forum of Augustus"
+  }
+},
+{
+  "type": "relation",
+  "id": 1899639,
+  "center": {
+    "lat": 41.8933007,
+    "lon": 12.4865881
+  },
+  "tags": {
+    "alt_name": "Forum Transitorium",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Foro di Nerva",
+    "name:de": "Nerva-Forum",
+    "name:en": "Forum of Nerva",
+    "name:it": "Foro di Nerva",
+    "name:la": "Forum Nervae",
+    "name:uk": "Форум Нерви",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wikidata": "Q686911",
+    "wikimedia_commons": "Category:Forum Nervae",
+    "wikipedia": "it:Foro di Nerva"
+  }
+},
+{
+  "type": "relation",
+  "id": 1899644,
+  "center": {
+    "lat": 41.8935770,
+    "lon": 12.4879462
+  },
+  "tags": {
+    "alt_name": "Torre Maggiore",
+    "building": "tower",
+    "height": "29 m",
+    "historic": "tower",
+    "landuse": "construction",
+    "name": "Torre dei Conti",
+    "name:ru": "Башня Конти",
+    "nat_name": "Torre Secura",
+    "ruined:building": "yes",
+    "start_date": "1203",
+    "type": "multipolygon",
+    "wikidata": "Q605721",
+    "wikipedia": "it:Torre dei Conti"
+  }
+},
+{
+  "type": "relation",
+  "id": 2051623,
+  "center": {
+    "lat": 41.8955346,
+    "lon": 12.4845757
+  },
+  "tags": {
+    "archaeological_site": "temple",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Basilica Ulpia",
+    "name:pl": "Bazylika Ulpia",
+    "ruins": "yes",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wikidata": "Q1266234",
+    "wikimedia_commons": "Category:Basilica Ulpia (Rome)",
+    "wikipedia": "it:Basilica Ulpia"
+  }
+},
+{
+  "type": "relation",
+  "id": 3376015,
+  "center": {
+    "lat": 41.8958088,
+    "lon": 12.4842733
+  },
+  "tags": {
+    "architect": "Apollodorus of Damascus",
+    "artwork_type": "sculpture",
+    "building": "yes",
+    "heritage": "1",
+    "heritage:since": "1980",
+    "heritage:url": "https://whc.unesco.org/en/list/91",
+    "historic": "monument",
+    "historic:civilization": "ancient_roman",
+    "inscription": "SENATVS·POPVLVSQVE·ROMANVS IMP·CAESARI·DIVI·NERVAE·F·NERVAE TRAIANO·AVG·GERM·DACICO·PONTIF MAXIMO·TRIB·POT·XVII·IMP·VI·COS·VI·P·P AD·DECLARANDVM·QVANTAE·ALTITVDINIS MONS·ET·LOCVS·TANT[IS·OPER]IBVS·SIT·EGESTVS",
+    "man_made": "column",
+    "name": "Colonna di Traiano",
+    "name:cs": "Trajánův sloup",
+    "name:de": "Trajanssäule",
+    "name:en": "Trajan's Column",
+    "name:es": "Columna de Trajano",
+    "name:fr": "Colonne de Trajan",
+    "name:he": "עמוד טריאנוס",
+    "name:hu": "Traianus oszlopa",
+    "name:it": "Colonna di Traiano",
+    "name:nl": "Zuil van Trajanus",
+    "name:pl": "Kolumna Trajana",
+    "name:ru": "Колонна Траяна",
+    "name:zh": "图拉真柱",
+    "ref:whc": "91",
+    "ruins": "yes",
+    "start_date": "0113",
+    "tourism": "artwork",
+    "type": "multipolygon",
+    "wheelchair": "limited",
+    "wikidata": "Q192784",
+    "wikimedia_commons": "Category:Trajan's Column",
+    "wikipedia": "it:Colonna Traiana"
+  }
+},
+{
+  "type": "relation",
+  "id": 13353038,
+  "center": {
+    "lat": 41.8952956,
+    "lon": 12.4859974
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Mercati di Traiano",
+    "name:en": "Trajan's Market",
+    "name:la": "Mercatus Troiani",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13353039,
+  "center": {
+    "lat": 41.8955588,
+    "lon": 12.4860417
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Mercati di Traiano",
+    "name:de": "Trajansmärkte",
+    "name:el": "Αγορά του Τραϊανού",
+    "name:it": "Mercati di Traiano",
+    "name:ru": "Рынок Траяна",
+    "name:zh": "图拉真市场",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wikidata": "Q478642",
+    "wikipedia": "it:Mercati di Traiano"
+  }
+},
+{
+  "type": "relation",
+  "id": 13353050,
+  "center": {
+    "lat": 41.8943117,
+    "lon": 12.4868616
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio di Marte Ultore",
+    "name:de": "Tempel des Mars Ultor",
+    "name:en": "Temple of Mars Ultor",
+    "name:it": "Tempio di Marte Ultore",
+    "name:la": "Templum Martis Ultoris",
+    "tourism": "attraction",
+    "type": "multipolygon",
+    "wheelchair": "no",
+    "wikidata": "Q679665",
+    "wikimedia_commons": "Category:Temple of Mars the Avenger, Rome",
+    "wikipedia": "it:Tempio di Marte Ultore"
+  }
+},
+{
+  "type": "relation",
+  "id": 13357828,
+  "center": {
+    "lat": 41.8927214,
+    "lon": 12.4845886
+  },
+  "tags": {
+    "alt_name": "Mundus",
+    "historic": "ruins",
+    "name": "Umbilicus Urbis Romae",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q205840",
+    "wikimedia_commons": "Category:Umbilicus Urbis Romae",
+    "wikipedia": "en:Umbilicus urbis Romae"
+  }
+},
+{
+  "type": "relation",
+  "id": 13357829,
+  "center": {
+    "lat": 41.8925938,
+    "lon": 12.4846353
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Rostra Vetera",
+    "name:la": "Rostra Vetera",
+    "type": "multipolygon",
+    "wikidata": "Q426372",
+    "wikimedia_commons": "Category:Rostra (Rome)",
+    "wikipedia": "it:Rostri"
+  }
+},
+{
+  "type": "relation",
+  "id": 13357832,
+  "center": {
+    "lat": 41.8940828,
+    "lon": 12.4845303
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Basilica Argentaria",
+    "name:la": "Basilica Argentaria",
+    "type": "multipolygon",
+    "wikidata": "Q1980093"
+  }
+},
+{
+  "type": "relation",
+  "id": 13357837,
+  "center": {
+    "lat": 41.8936395,
+    "lon": 12.4848039
+  },
+  "tags": {
+    "building": "ruins",
+    "historic": "ruins",
+    "name": "Latrine pubbliche",
+    "name:la": "Latrinae publicae",
+    "ruins": "yes",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13382702,
+  "center": {
+    "lat": 41.8952404,
+    "lon": 12.4857577
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Colonnata",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13382724,
+  "center": {
+    "lat": 41.8938918,
+    "lon": 12.4870846
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Esedra di Romolo",
+    "name:en": "Exedra of Romulus",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13382725,
+  "center": {
+    "lat": 41.8945083,
+    "lon": 12.4863683
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Esedra di Enea",
+    "name:en": "Exedra of Aeneas",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13382731,
+  "center": {
+    "lat": 41.8946530,
+    "lon": 12.4867650
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Colossus hall",
+    "ruins": "yes",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13382732,
+  "center": {
+    "lat": 41.8946821,
+    "lon": 12.4868136
+  },
+  "tags": {
+    "building": "ruins",
+    "historic": "archaeological_site",
+    "name": "Colossus base",
+    "ruins": "yes",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13402576,
+  "center": {
+    "lat": 41.8916088,
+    "lon": 12.4863462
+  },
+  "tags": {
+    "building": "ruins",
+    "historic": "ruins",
+    "name": "Edicola di culto",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 13402580,
+  "center": {
+    "lat": 41.8913882,
+    "lon": 12.4865997
+  },
+  "tags": {
+    "historic": "ruins",
+    "historic:civilization": "ancient_roman",
+    "name": "Atrio della Casa delle Vestali",
+    "name:en": "Atrium of the House of the Vestal Virgin",
+    "name:la": "Atrium Vestae",
+    "name:nl": "Atrium van het huis van Vestaalse Maagden",
+    "name:ru": "Атриум дома вестальских девственниц",
+    "type": "multipolygon",
+    "wikidata": "Q285196",
+    "wikipedia": "en:House of the Vestals"
+  }
+},
+{
+  "type": "relation",
+  "id": 13402598,
+  "center": {
+    "lat": 41.8915957,
+    "lon": 12.4871463
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Domus Publica",
+    "type": "multipolygon",
+    "wikidata": "Q2767155",
+    "wikipedia": "it:Domus Publica"
+  }
+},
+{
+  "type": "relation",
+  "id": 13426221,
+  "center": {
+    "lat": 41.8908294,
+    "lon": 12.4850664
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Horrea Agrippiana",
+    "name:ru": "Склады Агриппы",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q3786801",
+    "wikipedia": "it:Horrea Agrippiana"
+  }
+},
+{
+  "type": "relation",
+  "id": 13427100,
+  "center": {
+    "lat": 41.8959045,
+    "lon": 12.4868882
+  },
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "church",
+    "building:year": "1641",
+    "contact:phone": "+39 06 679 5100",
+    "contact:website": "http://www.ordinariatomilitare.it/s-caterina-a-magnanapoli/",
+    "denomination": "roman_catholic",
+    "description": "Chiesa principale dell'Ordinariato militare per l'Italia",
+    "historic": "church",
+    "name": "Santa Caterina a Magnanapoli",
+    "opening_hours": "Mo-Sa 07:30-18:30; Su 09:00-18:30",
+    "religion": "christian",
+    "start_date": "1628",
+    "type": "multipolygon",
+    "wikidata": "Q727508",
+    "wikipedia": "it:Chiesa di Santa Caterina a Magnanapoli"
+  }
+},
+{
+  "type": "relation",
+  "id": 13427102,
+  "center": {
+    "lat": 41.8959540,
+    "lon": 12.4866875
+  },
+  "tags": {
+    "building": "tower",
+    "historic": "tower",
+    "man_made": "tower",
+    "name": "Torre delle Milizie",
+    "name:it": "Torre delle Milizie",
+    "ruins": "yes",
+    "tourism": "attraction",
+    "tower:type": "defensive",
+    "type": "multipolygon",
+    "wikidata": "Q2547165",
+    "wikipedia": "it:Torre delle Milizie"
+  }
+},
+{
+  "type": "relation",
+  "id": 19781000,
+  "center": {
+    "lat": 41.8947799,
+    "lon": 12.4829809
+  },
+  "tags": {
+    "artist:wikidata": "Q3725686",
+    "artist_name": "Enrico Chiaradia",
+    "historic": "memorial",
+    "memorial": "statue",
+    "multipolygon": "yes",
+    "name": "Statua equestre di Vittorio Emanuele II",
+    "name:de": "Reiterstatue von Viktor Emanuel II.",
+    "name:en": "Equestrian statue of Victor Emanuele II",
+    "name:fr": "Statue équestre de Victor-Emmanuel II",
+    "name:hu": "II. Viktor Emánuel király lovasszobra",
+    "name:nl": "Ruiterstandbeeld van Victor Emanuel II",
+    "name:ru": "Конная статуя Витторио Эммануэле II",
+    "name:zh": "维托里奥·埃马努埃莱二世骑马雕像",
+    "statue": "equestrian",
+    "subject:wikidata": "Q168691",
+    "type": "multipolygon",
+    "wikidata": "Q63759614",
+    "wikimedia_commons": "Category:Equestrian statue of Victor Emmanuel II, Vittoriano (Rome)"
+  }
+},
+{
+  "type": "relation",
+  "id": 19906545,
+  "center": {
+    "lat": 41.8958722,
+    "lon": 12.4832557
+  },
+  "tags": {
+    "alt_name": "Ateneo di Adriano",
+    "alt_name:de": "Halle des Hadrian",
+    "alt_name:en": "Athenaeum of Hadrian",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Auditoria di Adriano",
+    "name:de": "Hadriansauditorien",
+    "name:el": "Ωδείο του Αδριανού",
+    "name:en": "Auditorium of Hadrian",
+    "ruins": "yes",
+    "source": "http://archeoroma.beniculturali.it/en/archaeological-site/adriano-s-auditoria",
+    "type": "multipolygon",
+    "website": "http://archeoroma.beniculturali.it/en/archaeological-site/adriano-s-auditoria",
+    "wikidata": "Q755454",
+    "wikimedia_commons": "Category:Hadrian's Athenaeum",
+    "wikipedia": "en:Athenaeum (ancient Rome)"
+  }
+}
+
+  ]
+}

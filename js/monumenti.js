@@ -85,6 +85,9 @@ var LEO=(function(){ var L=[[-162,-124],[-200,-128],[-235,-129],[-262,-130],[-28
     for(var k=0;k<n;k++){ var x=a[0]+(b[0]-a[0])*(k+.5)/n+215, z=a[1]+(b[1]-a[1])*(k+.5)/n+92; passi.push({x:x,z:z,len:len/n,ang:Math.atan2(-(b[1]-a[1]),b[0]-a[0])}); if(k%2===0) zone.push([x,z,2.4]); } }
   return {passi:passi,zone:zone}; })();
 
+/* dal mondo al riferimento locale del gruppo dei Fori (origine 3,-8; rotazione -.35): così gli edifici si scrivono con le loro coordinate di scena reali */
+function LF(x,z){ var dx=x-3, dz=z+8, c=Math.cos(-.35), s=Math.sin(-.35); return [dx*c-dz*s, dx*s+dz*c]; }
+function inForo(B,x,z,ry,fn){ var p=LF(x,z); return B.dentro(p[0],0,p[1],ry||0,fn); }
 /* ---------- elenco ---------- */
 var M=[
  {id:'colosseo', nome:'Colosseo', x:57,z:26, ry:-.3, zone:[[0,0,14.5]], et:1, fa:function(B){
@@ -101,27 +104,35 @@ var M=[
     B.cilindro(.5,1.6,-12.5,0,2.5,P.mattone,.18,10).cilindro(.42,3.2,-10.5,0,-7,P.oro,.3,8);                     // Meta Sudans e Colosso
  }},
  {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], et:1, fa:function(B){ circo(B,62,14,2.5,true); }},
- {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, zone:[[-8,9,15],[6,6,13],[-7,-12,13],[-7,-23,12],[8,-6,12],[20,-4,10]], et:1, fa:function(B){
-    B.scatola(26,.1,9.5,-7.5,0,8.7,P.selce);                                                   // piazza del Foro
-    basilica(B,10.5,4.9,1.9,-9,14.6);                                                         // Giulia (l'Emilia è un edificio a sé: brucia nel 410)
-    B.scatola(1.9,2.4,2.7,-13.6,0,2.8,P.mattone).falde(2.7,.6,2,-13.6,2.4,2.8,P.bronzo,PI/2,P.mattone);     // Curia
-    B.tempio(2.2,4,1.7,-17.2,12.2,PI/2,{fronte:6}).tempio(2.9,4.6,2,-.6,13.2,PI,{fronte:8,lati:9,podio:.8}); // Saturno, Castori
-    B.cilindro(.8,1.3,2.6,.3,11.2,P.marmo,null,16).cupola(.8,2.6,1.6,11.2,P.bronzo,.6);                      // Vesta
-    B.tempio(2.4,2.8,1.4,1.2,8.2,-PI/2,{fronte:6}).tempio(2.1,3.4,1.7,2,3.6,0,{fronte:6});                   // Divo Giulio, Antonino e Faustina
-    arcato(B,7.2,1.7,2.2,-21,0,8.6,P.tufo,2,9);                                                              // Tabularium
-    B.scatola(2.3,2.1,1.1,-15.2,0,6.8,P.marmo).aperture(-16.3,7.35,-14.1,7.35,3,.1,1.3).aperture(-14.1,6.25,-16.3,6.25,3,.1,1.3);   // arco di Settimio Severo
-    portico(B,15,7,-9.5,0,-3.2,1.1); B.tempio(2.6,3.6,1.7,-15,-3.2,PI/2,{fronte:8});           // foro di Cesare, Venere Genitrice
-    portico(B,10.5,8,6.5,0,-8.5,1.2); B.tempio(3.4,4.6,2.3,6.5,-10.4,0,{fronte:8,lati:8,podio:.7}).scatola(10.5,3.3,.5,6.5,0,-12.6,P.tufo);   // foro di Augusto, Marte Ultore
-    portico(B,11,3.6,6.5,0,-2.3,1.2); B.tempio(1.8,2.4,1.5,11,-2.3,-PI/2,{fronte:6});          // foro di Nerva, Minerva
-    portico(B,12,12,20,0,-3,1.2,P.prato);                                                      // tempio della Pace
-    portico(B,11.5,9,-7,0,-12.6,1.3);                                                          // foro di Traiano
-    basilica(B,17,5.6,2.4,-7,-20.2,P.bronzo);                                                  // basilica Ulpia
-    B.cilindro(.21,3.8,-7,0,-24.2,P.marmo,.19,12).scatola(.5,.5,.5,-7,0,-24.2,P.marmo).cilindro(.1,.5,-7,3.8,-24.2,P.oro,.08,6);   // colonna Traiana
-    B.scatola(2,1.8,2.6,-9.8,0,-24.2,P.mattone).scatola(2,1.8,2.6,-4.2,0,-24.2,P.mattone);     // biblioteche
-    B.tempio(3.8,5.4,2.4,-7,-29,PI,{fronte:8,lati:9,podio:.7});                                // tempio del Divo Traiano
-    B.dentro(-.6,0,-12.6,-PI/2,function(B){ var em=RM.ellisse(5,5,16,0,PI); B.striscia(em,0,em,2.6,P.mattone,false).fornici(em,.15,.6,.5,1,false).fornici(em,.95,.5,.4,1,false).fornici(em,1.75,.5,.4,1,false); });   // mercati di Traiano
+ {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
+    /* Posizioni reali: i centri dei resti rilevati in OpenStreetMap (src/roma/grezzi/osm-foro.json), scritti qui in coordinate di scena.
+       Orientamenti: il Foro Romano lungo il suo asse, i fori imperiali sulla loro griglia comune, girata di circa 58° rispetto al Foro.
+       Forme e misure restano schematiche; qualche edificio è accorciato di poco perché le vie vere gli passino accanto e non sopra. */
+    var IMP=1.022;
+    inForo(B,-1.2,1.6,0,function(B){ B.scatola(12.5,.1,5,0,0,0,P.selce); });                                                       // piazza del Foro
+    inForo(B,-4.6,6,0,function(B){ basilica(B,9.6,4.9,1.9,0,0); });                                                               // Giulia (l'Emilia è un edificio a sé: brucia nel 410)
+    inForo(B,.8,-5.1,0,function(B){ B.scatola(1.9,2.4,2.7,0,0,0,P.mattone).falde(2.7,.6,2,0,2.4,0,P.bronzo,PI/2,P.mattone); });   // Curia
+    inForo(B,-10.1,1.1,0,function(B){ B.tempio(2.2,4,1.7,0,0,PI/2,{fronte:6}); });                                                // Saturno
+    inForo(B,3,9.3,0,function(B){ B.tempio(2.9,4.6,2,0,0,PI,{fronte:8,lati:9,podio:.8}); });                                      // Castori
+    inForo(B,7.4,9,0,function(B){ B.cilindro(.8,1.3,0,.3,0,P.marmo,null,16).cupola(.8,0,1.6,0,P.bronzo,.6); });                   // Vesta
+    inForo(B,5.6,5.6,0,function(B){ B.tempio(2.4,2.8,1.4,0,0,-PI/2,{fronte:6}); });                                               // Divo Giulio
+    inForo(B,11.6,3.7,0,function(B){ B.tempio(2.1,3.4,1.7,0,0,0,{fronte:6}); });                                                  // Antonino e Faustina
+    inForo(B,-14.5,-5.2,PI/2,function(B){ arcato(B,7.2,1.7,2.2,0,0,0,P.tufo,2,9); });                                             // Tabularium
+    inForo(B,-4.6,-3.7,0,function(B){ B.scatola(2.3,2.1,1.1,0,0,0,P.marmo).aperture(-1.1,.55,1.1,.55,3,.1,1.3).aperture(1.1,-.55,-1.1,-.55,3,.1,1.3); });   // arco di Settimio Severo
+    inForo(B,0,-13.2,IMP,function(B){ portico(B,7,15,0,0,0,1.1); B.tempio(2.6,3.6,1.7,0,-5.2,0,{fronte:8}); });                   // foro di Cesare, Venere Genitrice a nord-ovest
+    inForo(B,11.2,-19.5,IMP,function(B){ portico(B,10.5,9.5,0,0,0,1.2); B.tempio(3.4,4.6,2.3,2.3,0,-PI/2,{fronte:8,lati:8,podio:.7}).scatola(.5,3.3,10.5,5.5,0,0,P.tufo); });   // foro di Augusto, Marte Ultore contro il muro verso la Suburra
+    inForo(B,10.7,-8.9,IMP,function(B){ portico(B,12,4.2,0,0,0,1.2); B.tempio(1.8,2.4,1.5,4.6,0,-PI/2,{fronte:6}); });            // foro di Nerva, Minerva: lo attraversa l'Argileto
+    inForo(B,16.9,-2.6,IMP,function(B){ portico(B,10,10,0,0,0,1.2,P.prato); });                                                   // tempio della Pace
+    inForo(B,-1.3,-27.8,IMP,function(B){
+      portico(B,11.5,9,0,0,0,1.3);                                                             // foro di Traiano
+      basilica(B,17,5.6,2.4,0,-7.6,P.bronzo);                                                  // basilica Ulpia
+      B.cilindro(.21,3.8,0,0,-11.6,P.marmo,.19,12).scatola(.5,.5,.5,0,0,-11.6,P.marmo).cilindro(.1,.5,0,3.8,-11.6,P.oro,.08,6);   // colonna Traiana
+      B.scatola(2,1.8,2.6,-2.8,0,-11.6,P.mattone).scatola(2,1.8,2.6,2.8,0,-11.6,P.mattone);     // biblioteche
+      B.tempio(3.8,5.4,2.4,0,-16.4,PI,{fronte:8,lati:9,podio:.7});                              // tempio del Divo Traiano
+      B.dentro(5.9,0,0,PI/2,function(B){ var em=RM.ellisse(5,5,16,0,PI); B.striscia(em,0,em,2.6,P.mattone,false).fornici(em,.15,.6,.5,1,false).fornici(em,.95,.5,.4,1,false).fornici(em,1.75,.5,.4,1,false); });   // mercati di Traiano
+    });
  }},
- {id:'emilia', nome:'Basilica Emilia', x:-4.74,z:-7.21, ry:-.35, come:'fori', fa:function(B){ basilica(B,10,3.7,1.8,0,0); }},
+ {id:'emilia', nome:'Basilica Emilia', x:7.2,z:-1, ry:-.35, come:'fori', fa:function(B){ basilica(B,8,3.4,1.8,0,0); }},
  {id:'giove', nome:'Tempio di Giove Capitolino', x:-29,z:0, ry:.5, zone:[[0,0,9]], fa:function(B){
     B.scatola(7.4,.7,8,0,0,0,P.tufo).dentro(0,.7,0,0,function(B){ B.tempio(5.6,6.4,3,0,0,0,{fronte:6,lati:7,tetto:P.oro,podio:.6,r:.2}); });
  }},
@@ -154,7 +165,7 @@ var M=[
       [-1,1].forEach(function(k){ B.scatola(2.6,2.4,2,i*2.72,0,k*2.3,P.mattone).volta(2,1.3,i*2.72,2.4,k*2.3,P.intonaco,PI/2).scatola(1.5,1.7,.1,i*2.72,.3,k*3.32,P.ombra); }); }
     B.falde(8.2,.9,2.6,0,3.5,0,P.bronzo,0,P.mattone);
  }},
- {id:'venere', nome:'Tempio di Venere e Roma', x:38,z:18, ry:-.3, zone:[[0,0,9.5]], fa:function(B){                            // tempio di Venere e Roma
+ {id:'venere', nome:'Tempio di Venere e Roma', x:36,z:18.6, ry:-.3, zone:[[0,0,9.5]], fa:function(B){                            // tempio di Venere e Roma
     B.scatola(15,.7,10,0,0,0,P.travertino).colonne(-7,4.6,7,4.6,22,1.3,.09,.7).colonne(-7,-4.6,7,-4.6,22,1.3,.09,.7);
     B.dentro(0,.7,0,PI/2,function(B){ B.tempio(4.8,10.6,2.6,0,0,0,{fronte:8,lati:16,tetto:P.oro,podio:.4}); });
  }},
@@ -178,7 +189,7 @@ var M=[
     portico(B,8,13,0,0,0,1.2); B.cilindro(1.9,.3,0,.1,-1.5,P.travertino,null,24).cilindro(1.5,1.7,0,.4,-1.5,P.marmo,null,24).cupola(1.5,0,2.1,-1.5,P.bronzo,.6);
     for(var k=0;k<14;k++) B.cilindro(.08,1.5,1.8*Math.cos(k*.449),.4,-1.5+1.8*Math.sin(k*.449),P.marmo,.07,7);
  }},
- {id:'arcocostantino', nome:'Arco di Costantino', x:42,z:35, ry:-.3, zone:[[0,0,3]], fa:function(B){
+ {id:'arcocostantino', nome:'Arco di Costantino', x:44.9,z:27.5, ry:-.3, zone:[[0,0,3]], fa:function(B){
     B.scatola(2.6,1.5,.75,0,0,0,P.marmo).scatola(2.72,.14,.87,0,1.5,0,P.marmo).scatola(2.6,.5,.75,0,1.64,0,P.marmo);          // fornici, cornice, attico
     B.aperture(-.33,.38,.33,.38,1,0,1.15,.62).aperture(-1.05,.38,-.55,.38,1,0,.72,.34).aperture(.55,.38,1.05,.38,1,0,.72,.34);
     B.aperture(.33,-.38,-.33,-.38,1,0,1.15,.62).aperture(-.55,-.38,-1.05,-.38,1,0,.72,.34).aperture(1.05,-.38,.55,-.38,1,0,.72,.34);
@@ -198,10 +209,10 @@ var M=[
      .cilindro(1.1,2.6,0,0,0,P.mattone,null,22).cono(1.2,.6,0,2.6,0,P.coppi,22);
     for(var k=0;k<22;k++) B.scatola(.12,.3,.06,1.12*Math.cos(k*.2856),2.1,1.12*Math.sin(k*.2856),P.ombra,-k*.2856+PI/2);
  }},
- {id:'cosma', nome:'Santi Cosma e Damiano', x:13.5,z:1.1, ry:-.35, come:'fori', fa:function(B){
+ {id:'cosma', nome:'Santi Cosma e Damiano', x:16.5,z:4, ry:-.35, come:'fori', fa:function(B){
     B.scatola(2.2,2,3.6,0,0,0,P.mattone).falde(3.6,.6,2.4,0,2,0,P.coppi,PI/2,P.mattone).cilindro(.9,1.4,0,0,2.6,P.mattone,null,16).cupola(.9,0,1.4,2.6,P.bronzo,.6);
  }},
- {id:'foca', nome:'Colonna di Foca', x:-7.43,z:-2.76, ry:-.35, come:'fori', fa:function(B){
+ {id:'foca', nome:'Colonna di Foca', x:-3.7,z:.6, ry:-.35, come:'fori', fa:function(B){
     B.scatola(1.1,.22,1.1,0,0,0,P.mattone).scatola(.7,.28,.7,0,.22,0,P.marmo).cilindro(.13,1.36,0,.5,0,P.marmo,.11,10).scatola(.3,.1,.3,0,1.86,0,P.marmo).scatola(.12,.3,.12,0,1.96,0,P.bronzo);
  }},
  /* ---- il quartiere di San Pietro: cresce mentre la città antica si svuota ---- */
@@ -234,7 +245,7 @@ var M=[
       B.scatola(.9,.6,.5,lx+.5,y+.26,-.62,P.intonaco).falde(1,.25,.6,lx+.5,y+.86,-.62,P.coppi,0,P.intonaco);
     });
  }},
- {id:'casenerva', nome:'Case nel foro di Nerva', x:9.9,z:-7.9, ry:-.35, come:'fori', fa:function(B){
+ {id:'casenerva', nome:'Case nel foro di Nerva', x:10.7,z:-8.9, ry:.672, come:'fori', fa:function(B){
     casa(B,.1,-2.2,.2,3.4,2.2,1.7); B.aperture(-3.6,1.33,-.8,1.33,4,.1,.75,.4);        // domus a due piani con portico ad arcate
     casa(B,.1,2.6,-.1,2.6,2,1.4);
  }},

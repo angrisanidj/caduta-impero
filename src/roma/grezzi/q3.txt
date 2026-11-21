@@ -1,0 +1,6 @@
+[out:json][timeout:90];
+(
+  way["highway"]["name"~"^(Via Sacra|Via Sacra Summa|Clivo Argentario|Vico Jugario|Via di San Teodoro|Clivo di Scauro|Via Urbana|Via Nova|Clivo Capitolino|Clivo Palatino|Clivus Palatinus|Clivus Capitolinus|Vicus Tuscus|Vicus Iugarius|Argiletum|Via Capo d'Africa|Via di San Martino ai Monti|Via del Velabro|Via di San Giovanni Decollato|Via dei Cerchi|Via di San Bonaventura|Via della Salara Vecchia|Via del Foro Romano|Via di Monte Tarpeo|Via Baccina|Via del Portico d'Ottavia|Via di Sant'Angelo in Pescheria|Via delle Botteghe Oscure|Via Tor de' Conti|Via di Santa Prassede|Via Santa Prassede)$"](41.880,12.470,41.905,12.510);
+  way["highway"](41.8885,12.4815,41.8945,12.4925);
+);
+out tags geom;

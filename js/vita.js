@@ -25,7 +25,7 @@ for(i=0;i<NV;i++){
   viandanti.push({v:k, s:dentro?rnd()*Math.min(1,230/vie[k].L):rnd(), vel:(rnd()<.5?-1:1)*(.9+rnd()*.9)/vie[k].L, lato:(rnd()-.5)*1.1});
 }
 /* piazze e spianate dove la folla si vede: Foro, foro di Traiano, Colosseo, Pantheon, Campo Marzio, Trastevere */
-var PIAZZE=[[-7,-2.5,6,3],[1,-22,4.5,3.5],[57,26,13.5,12],[-70,-77,4,3],[-95,-55,5,5],[-125,38,4,4],[30,-2,5,3]], folla=[];
+var PIAZZE=[[-1.2,1.6,5.5,2.2],[-1.3,-27.8,4.5,3.5],[57,26,13.5,12],[-70,-77,4,3],[-95,-55,5,5],[-125,38,4,4],[30,-2,5,3]], folla=[];
 for(i=0;i<NZ;i++){ var pz=PIAZZE[i%PIAZZE.length], an=rnd()*6.283, rr=(pz===PIAZZE[2]?.82+.18*rnd():Math.sqrt(rnd())); folla.push({p:pz,a:an,r:rr,vel:(rnd()-.5)*.12}); }
 /* pellegrini a San Pietro: metà nell'atrio e sul sagrato, metà in cammino lungo il portico da ponte Elio. Crescono mentre la città cala */
 var pellegrini=[]; for(i=0;i<NG;i++) pellegrini.push({s:rnd(), a:rnd()*6.283, r:Math.sqrt(rnd()), vel:(rnd()<.5?-1:1)*(.012+.02*rnd()), lato:(rnd()-.5)*1.6});

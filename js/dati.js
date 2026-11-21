@@ -182,7 +182,7 @@ var ITINERARIO={
    fuochi: [x, z, forza]; attorno a ogni fuoco gli isolati restano bruciati per qualche decennio (raggio "bruciati", in decine di metri).
    TUTTO DA VERIFICARE sulle fonti (Procopio, Orosio, Prospero, Liber Pontificalis). */
 var EVENTI=[
- {id:'sacco410', da:410, a:410.4, bruciati:14, fuochi:[[100,-192,1.2],[78,-165,1],[-4.7,-7.2,.9]],      // Procopio, Guerre III 2: case presso la porta e casa di Sallustio. Aventino e Celio: nessun incendio attribuibile con sicurezza
+ {id:'sacco410', da:410, a:410.4, bruciati:14, fuochi:[[100,-192,1.2],[78,-165,1],[7.2,-1,.9]],      // Procopio, Guerre III 2: case presso la porta e casa di Sallustio. Aventino e Celio: nessun incendio attribuibile con sicurezza
   testo:"24 agosto 410 · I Goti di Alarico entrano da Porta Salaria. Tre giorni di saccheggio: bruciano le case presso la porta e la casa di Sallustio; nel Foro brucia, probabilmente allora, la basilica Emilia. San Pietro e San Paolo sono rispettate come luoghi d'asilo."},
  {id:'sacco455', da:455, a:455.4, bruciati:0, fuochi:[],
   testo:"2-16 giugno 455 · I Vandali di Genserico restano quattordici giorni. Papa Leone ottiene che non ci siano stragi né incendi; il saccheggio è metodico: dal tempio di Giove portano via metà del tetto di bronzo dorato."},
