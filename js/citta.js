@@ -26,13 +26,15 @@ function tenutaSparsa(x,z){
   t+=.2*Math.exp(-RM.distFiume(x,z)/45)-.02*RM.h(x,z)-.22*RM.sfuma(140,300,Math.hypot(x-5,z-5));
   return t+(rnd()-.5)*.8;
 }
+/* 0 = occupato; 1 = libero; un anno = libero fino a quell'anno, quando sul sito si apre il cantiere di un monumento e le case vengono demolite
+   (per le terme di Diocleziano lo dice l'iscrizione dedicatoria: edifici comprati e abbattuti per far posto all'opera) */
 function libero(x,z,margine){
-  if(RM.distFiume(x,z)<9.5 || RM.distStrade(x,z)<2.5) return false;
-  var i, q;
-  for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(Math.hypot(x-q.x,z-q.z)<q.r+margine) return false; }
-  for(i=0;i<RM.HORTI.length;i++){ q=RM.HORTI[i]; if(Math.hypot(x-q[0],z-q[1])<q[2]+1) return false; }
-  for(i=0;i<RM.campateAcquedotti.length;i++){ q=RM.campateAcquedotti[i]; if(Math.abs(x-q.x)<6 && Math.hypot(x-q.x,z-q.z)<3.5+q.len*.25) return false; }   // né sotto le arcate degli acquedotti
-  return true;
+  if(RM.distFiume(x,z)<9.5 || RM.distStrade(x,z)<2.5) return 0;
+  var i, q, fino=1;
+  for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(Math.hypot(x-q.x,z-q.z)<q.r+margine){ if(!(q.dal>0)) return 0; fino=fino>1?Math.min(fino,q.dal):q.dal; } }
+  for(i=0;i<RM.HORTI.length;i++){ q=RM.HORTI[i]; if(Math.hypot(x-q[0],z-q[1])<q[2]+1) return 0; }
+  for(i=0;i<RM.campateAcquedotti.length;i++){ q=RM.campateAcquedotti[i]; if(Math.abs(x-q.x)<6 && Math.hypot(x-q.x,z-q.z)<3.5+q.len*.25) return 0; }   // né sotto le arcate degli acquedotti
+  return fino;
 }
 function quartiereDi(x,z){ var m=1e9, k=0; for(var i=0;i<QUARTIERI.length;i++){ var d=Math.hypot(x-QUARTIERI[i][0],z-QUARTIERI[i][1]); if(d<m){ m=d; k=i; } } return k; }
 QUARTIERI.forEach(function(Q,k){
@@ -43,13 +45,13 @@ QUARTIERI.forEach(function(Q,k){
     var dentro=RM.dentroMura(x,z), bordo=RM.distLinea(x,z,RM.MURA,true), centro=Math.hypot(x-5,z-5);
     var borgo=dentro?0:Math.exp(-((x+228)*(x+228)+(z+106)*(z+106))/(27*27));                  // attorno a San Pietro: case che nasceranno dal V secolo
     var dens=dentro ? .95-.28*RM.sfuma(150,290,centro) : Math.max(.36*Math.exp(-bordo/24),.8*borgo);
-    if(bordo<3.5 || rnd()>dens || !libero(x,z,2.4)) continue;
+    var lib; if(bordo<3.5 || rnd()>dens || !(lib=libero(x,z,2.4)) || (lib>1&&borgo>.3)) continue;
     var e=1.9, y0=RM.h(x,z), y1=RM.h(x+e,z+e), y2=RM.h(x-e,z+e), y3=RM.h(x+e,z-e), y4=RM.h(x-e,z-e), yMin=Math.min(y0,y1,y2,y3,y4);
     if(Math.max(y0,y1,y2,y3,y4)-yMin>2.2) continue;        // rupi e scarpate restano nude
     var fitto=1-RM.sfuma(30,240,centro), alt=dentro ? .9+1.7*fitto*(.5+.5*rnd())+.45*rnd() : .55+.5*rnd(), s=rnd();
     isolati.push({x:x,z:z,y:yMin,ry:Q[2]+(rnd()-.5)*.05,w:3.85+rnd()*.9,d:3.85+rnd()*.9,alt:alt,
       tipo:!dentro?(s<.6?2:0):(s<.5-.15*fitto?2:s<.92-.14*fitto?0:1),              // 0 a falde, 1 a corte, 2 a padiglione
-      k:tenuta(x,z)+(dentro?0:-.35), k1:tenutaSparsa(x,z)+(dentro?0:-.6), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0});
+      k:tenuta(x,z)+(dentro?0:-.35), k1:tenutaSparsa(x,z)+(dentro?0:-.6), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, via:lib>1?lib:0, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0});
   }
 });
 isolati.forEach(function(b){ if(b.nasce){ b.k=9; b.k1=9; b.alt=.6+.5*b.tono; } });      // il Borgo non si svuota: è l'unico quartiere che cresce
@@ -238,11 +240,12 @@ function aggiorna(anno){
       if(anno<b.fuocoFine){ arso=RM.sfuma(b.fuoco-.4,b.fuoco,anno)*(1-RM.sfuma(b.fuocoFine-Math.min(5,(b.fuocoFine-b.fuoco)*.5),b.fuocoFine,anno)); a*=1-arso; }   // poi, se il quartiere è ancora vivo, si ricostruisce
       if(b.fuoco<da0) da0=b.fuoco;
     }
+    var dm=b.via?RM.sfuma(b.via-3*b.sfasa-1,b.via-3*b.sfasa,anno):0; if(dm>0) a*=1-dm;       // demolita per far posto a un monumento: non restano rovine
     if(b.nasce) a=RM.sfuma(b.nasce-5,b.nasce,anno)*(1-arso); // casa del Borgo: prima della sua data non c'è nulla, nemmeno rovine
     if(a>.5) numVivi++;
     eta=a>.999?0:b.nasce?(arso>0?Math.max(0,anno-b.fuoco):0):Math.max(0,anno-da0);          // anni passati dall'abbandono (o dall'incendio)
     if(!(forza&&a>.01) && Math.abs(a-b.a0)<.002 && (a>.999 || Math.abs(eta-b.e0)<1.5 || (eta>430&&b.e0>430))) continue;
-    b.a0=a; b.e0=eta; toccati=true; v=b.nasce?arso:1-a;
+    b.a0=a; b.e0=eta; toccati=true; v=b.nasce?arso:(1-a)*(1-dm);
     crollo=b.fato===2?RM.sfuma(5,60,eta):RM.sfuma(8,95,eta); H=(1-(1-b.hFin)*crollo)*(1-.4*RM.sfuma(140,420,eta));   // nei secoli anche i gusci si abbassano
     q=(b.fato===2?RM.sfuma(50,120,eta):b.fato===1&&b.tono>.45?RM.sfuma(200,330,eta):0)*v; b.q0=q;   // 1 = ormai orto o vigna (dal VII secolo anche fra i ruderi bassi)
     b.alb=Math.max(q,b.fato===2?0:RM.sfuma(70,160,eta)*v);             // alberi: coltivati negli orti, selvatici altrove

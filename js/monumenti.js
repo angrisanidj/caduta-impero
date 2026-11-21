@@ -137,7 +137,7 @@ var M=[
  {id:'giove', nome:'Tempio di Giove Capitolino', x:-29,z:0, ry:.5, zone:[[0,0,9]], fa:function(B){
     B.scatola(7.4,.7,8,0,0,0,P.tufo).dentro(0,.7,0,0,function(B){ B.tempio(5.6,6.4,3,0,0,0,{fronte:6,lati:7,tetto:P.oro,podio:.6,r:.2}); });
  }},
- {id:'palatino', nome:'Palazzi del Palatino', x:16,z:40, ry:-.62, zone:[[-7,-1,13],[7,-1,13],[0,6,12]], fa:function(B){
+ {id:'palatino', nome:'Palazzi del Palatino', x:13,z:47, ry:-.62, zone:[[-7,-1,13],[7,-1,13],[0,6,12]], fa:function(B){
     arcato(B,27,1.5,18,0,-.4,0,P.mattone,2,22);                                                // sostruzioni
     B.dentro(0,1.1,0,0,function(B){
       portico(B,8.5,8,-7,0,-1,1.2,P.prato);                                                    // Domus Flavia: peristilio
@@ -158,9 +158,9 @@ var M=[
     B.scatola(7,.08,6,0,0,9,P.selce);
  }},
  {id:'domiziano', nome:'Stadio di Domiziano', x:-101,z:-74, ry:PI/2, lunga:[28,7.5], fa:function(B){ circo(B,27.5,10.6,1.9,false); }},
- {id:'traiano', nome:'Terme di Traiano', x:92,z:-2, ry:-.62, zone:[[0,0,23]], fa:function(B){ terme(B,31,32); }},
+ {id:'traiano', nome:'Terme di Traiano', x:88,z:5, ry:-.62, zone:[[0,0,23]], fa:function(B){ terme(B,31,32); }},
  {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ terme(B,33.7,32.8); }},
- {id:'diocleziano', nome:'Terme di Diocleziano', x:108,z:-118, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36); }},
+ {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36); }},
  {id:'massenzio', nome:'Basilica di Massenzio', x:25,z:7, ry:-.35, zone:[[0,0,7.5]], fa:function(B){
     B.scatola(8.2,3.5,2.6,0,0,0,P.mattone); for(var i=-1;i<=1;i++){ B.falde(2.7,.9,2.7,i*2.72,3.5,0,P.bronzo,PI/2,P.mattone);
       [-1,1].forEach(function(k){ B.scatola(2.6,2.4,2,i*2.72,0,k*2.3,P.mattone).volta(2,1.3,i*2.72,2.4,k*2.3,P.intonaco,PI/2).scatola(1.5,1.7,.1,i*2.72,.3,k*3.32,P.ombra); }); }
@@ -197,13 +197,13 @@ var M=[
     B.colonne(-1.2,.47,1.2,.47,4,1.3,.07,.1,P.sabbia).colonne(-1.2,-.47,1.2,-.47,4,1.3,.07,.1,P.sabbia);                    // colonne di giallo antico
  }},
  {id:'termecostantino', nome:'Terme di Costantino', x:13,z:-67, ry:-.2, sc:.45, zone:[[0,0,9]], fa:function(B){ terme(B,33,32); }},
- {id:'croce', nome:'Santa Croce in Gerusalemme', x:257,z:52, ry:.3, sc:.7, zone:[[0,0,7]], fa:function(B){ chiesa(B,9,6); }},
- {id:'lorenzo', nome:'San Lorenzo fuori le mura', x:292,z:-112, ry:.35, sc:.7, zone:[[0,0,8]], fa:function(B){ chiesa(B,10,6); }},
- {id:'agnese', nome:"Sant'Agnese e Santa Costanza", x:283,z:-342, ry:-.8, sc:.7, zone:[[0,0,9]], fa:function(B){
-    chiesa(B,10,6); B.cilindro(2.4,1,2,0,6.5,P.mattone,null,24).cono(2.5,.4,2,1,6.5,P.coppi,24).cilindro(1.5,2,2,0,6.5,P.mattone,null,20).cupola(1.5,2,2,6.5,P.coppi,.6);   // mausoleo rotondo
+ {id:'croce', nome:'Santa Croce in Gerusalemme', x:253.3,z:47.6, ry:2.72, sc:.7, zone:[[0,0,7]], fa:function(B){ chiesa(B,9,6); }},
+ {id:'lorenzo', nome:'San Lorenzo fuori le mura', x:299.5,z:-111.6, ry:.35, sc:.7, zone:[[0,0,8]], fa:function(B){ chiesa(B,10,6); }},
+ {id:'agnese', nome:"Sant'Agnese e Santa Costanza", x:278.3,z:-338.2, ry:-.8, sc:.7, zone:[[0,0,7],[-6.1,11.5,4.5]], fa:function(B){
+    chiesa(B,10,6); B.cilindro(2.4,1,-8.75,0,16.4,P.mattone,null,24).cono(2.5,.4,-8.75,1,16.4,P.coppi,24).cilindro(1.5,2,-8.75,0,16.4,P.mattone,null,20).cupola(1.5,-8.75,2,16.4,P.coppi,.6);   // mausoleo rotondo di Costanza, 130 m a ovest della basilica (posizione reale)
  }},
- {id:'paolo', nome:'San Paolo fuori le mura', x:-71,z:376, ry:PI, zone:[[0,0,10],[8,0,7]], et:1, fa:function(B){ chiesa(B,12.5,6.6,true); }},
- {id:'sabina', nome:'Santa Sabina', x:-46,z:89, ry:.5, sc:.62, zone:[[0,0,6]], fa:function(B){ chiesa(B,10,6); }},
+ {id:'paolo', nome:'San Paolo fuori le mura', x:-70.1,z:375.7, ry:2.98, zone:[[0,0,10],[8,0,7]], et:1, fa:function(B){ chiesa(B,12.5,6.6,true); }},
+ {id:'sabina', nome:'Santa Sabina', x:-46,z:89, ry:.785, sc:.62, zone:[[0,0,6]], fa:function(B){ chiesa(B,10,6); }},
  {id:'mariamaggiore', nome:'Santa Maria Maggiore', x:109,z:-57, ry:-.5, sc:.82, zone:[[0,0,8]], fa:function(B){ chiesa(B,10,6); }},
  {id:'stefano', nome:'Santo Stefano Rotondo', x:94.5,z:88, ry:0, zone:[[0,0,5.5]], fa:function(B){
     B.cilindro(3.2,.9,0,0,0,P.mattone,null,32).cono(3.3,.5,0,.9,0,P.coppi,32).cilindro(2.1,1.6,0,0,0,P.mattone,null,28).cono(2.2,.5,0,1.6,0,P.coppi,28)
@@ -264,7 +264,8 @@ function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return 
 var PENDIO={monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1};        // complessi che seguono il pendio: niente terrazza
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
-  (o.zone||[]).forEach(function(q){ var p=globale(o,q[0],q[1]); RM.zone.push({x:p[0],z:p[1],r:q[2],h:h}); });
+  var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?st[1][0]-8:0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)
+  (o.zone||[]).forEach(function(q){ var p=globale(o,q[0],q[1]); RM.zone.push({x:p[0],z:p[1],r:q[2],h:h,dal:dal}); });
   if(o.lunga){ var n=Math.ceil(o.lunga[0]/o.lunga[1]); for(var i=0;i<n;i++){ var p=globale(o,((i+.5)/n-.5)*o.lunga[0],0); RM.zone.push({x:p[0],z:p[1],r:o.lunga[1],h:h}); } }
 });
 RM.posa();

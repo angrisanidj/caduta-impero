@@ -1,0 +1,497 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-21T09:30:36Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 22716384,
+  "bounds": {
+    "minlat": 41.9048611,
+    "minlon": 12.4633059,
+    "maxlat": 41.9057535,
+    "maxlon": 12.4634200
+  },
+  "nodes": [
+    243639845,
+    13680745170,
+    3135817823,
+    12680457413,
+    153591704
+  ],
+  "geometry": [
+    { "lat": 41.9048611, "lon": 12.4633059 },
+    { "lat": 41.9056444, "lon": 12.4634162 },
+    { "lat": 41.9056639, "lon": 12.4634190 },
+    { "lat": 41.9057059, "lon": 12.4634200 },
+    { "lat": 41.9057535, "lon": 12.4634174 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Sforza Pallavicini",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 31981718,
+  "bounds": {
+    "minlat": 41.9001802,
+    "minlon": 12.4733105,
+    "maxlat": 41.9002442,
+    "maxlon": 12.4734154
+  },
+  "nodes": [
+    358419118,
+    1397852727
+  ],
+  "geometry": [
+    { "lat": 41.9002442, "lon": 12.4734154 },
+    { "lat": 41.9001802, "lon": 12.4733105 }
+  ],
+  "tags": {
+    "highway": "footway",
+    "name": "Passetto delle Cinque Lune",
+    "surface": "paving_stones",
+    "tunnel": "building_passage"
+  }
+},
+{
+  "type": "way",
+  "id": 35027806,
+  "bounds": {
+    "minlat": 41.9014437,
+    "minlon": 12.4474101,
+    "maxlat": 41.9016258,
+    "maxlon": 12.4476555
+  },
+  "nodes": [
+    410833117,
+    3757485309,
+    410833135,
+    1945962914,
+    410833136,
+    5113905554,
+    1190184423,
+    410833137,
+    1354368969,
+    410833138,
+    5113905555,
+    410833140,
+    1799200313,
+    1275664302,
+    1945962903,
+    410833142,
+    1945962920,
+    442579929,
+    1945962923,
+    1945962906,
+    410833145,
+    410833121,
+    5113905556,
+    3757485314,
+    3757485313,
+    410833117
+  ],
+  "geometry": [
+    { "lat": 41.9015422, "lon": 12.4476555 },
+    { "lat": 41.9015166, "lon": 12.4476535 },
+    { "lat": 41.9014924, "lon": 12.4476422 },
+    { "lat": 41.9014747, "lon": 12.4476261 },
+    { "lat": 41.9014580, "lon": 12.4476006 },
+    { "lat": 41.9014501, "lon": 12.4475805 },
+    { "lat": 41.9014449, "lon": 12.4475585 },
+    { "lat": 41.9014437, "lon": 12.4475175 },
+    { "lat": 41.9014518, "lon": 12.4474804 },
+    { "lat": 41.9014672, "lon": 12.4474496 },
+    { "lat": 41.9014808, "lon": 12.4474334 },
+    { "lat": 41.9014971, "lon": 12.4474208 },
+    { "lat": 41.9015125, "lon": 12.4474137 },
+    { "lat": 41.9015355, "lon": 12.4474101 },
+    { "lat": 41.9015585, "lon": 12.4474144 },
+    { "lat": 41.9015798, "lon": 12.4474263 },
+    { "lat": 41.9015983, "lon": 12.4474451 },
+    { "lat": 41.9016127, "lon": 12.4474695 },
+    { "lat": 41.9016221, "lon": 12.4474979 },
+    { "lat": 41.9016258, "lon": 12.4475286 },
+    { "lat": 41.9016237, "lon": 12.4475596 },
+    { "lat": 41.9016159, "lon": 12.4475889 },
+    { "lat": 41.9016061, "lon": 12.4476094 },
+    { "lat": 41.9015934, "lon": 12.4476269 },
+    { "lat": 41.9015712, "lon": 12.4476455 },
+    { "lat": 41.9015422, "lon": 12.4476555 }
+  ],
+  "tags": {
+    "addr:postcode": "00120",
+    "building": "yes",
+    "castle_type": "fortress",
+    "man_made": "tower",
+    "name": "Torre di San Giovanni",
+    "name:de": "Johannesturm",
+    "name:en": "St John's Tower",
+    "name:es": "Torre de San Juan",
+    "name:fr": "Tour Saint-Jean",
+    "name:it": "Torre di San Giovanni",
+    "name:la": "Turris Sanctus Ioannes",
+    "name:pt": "Torre de São João",
+    "tower:type": "defensive",
+    "wheelchair": "limited",
+    "wikidata": "Q6504489",
+    "wikimedia_commons": "Category:Saint John's Tower",
+    "wikipedia": "en:Saint John's Tower (Vatican City)"
+  }
+},
+{
+  "type": "way",
+  "id": 37732346,
+  "bounds": {
+    "minlat": 41.9011594,
+    "minlon": 12.4475889,
+    "maxlat": 41.9027480,
+    "maxlon": 12.4486693
+  },
+  "nodes": [
+    410833129,
+    1272451583,
+    5737556365,
+    410833128,
+    410833123,
+    410833121,
+    5113905556,
+    3757485314,
+    3757485313,
+    410833117,
+    1799200312,
+    410833116,
+    1275664301,
+    1284100346,
+    1275664298,
+    1275664299,
+    1275664297,
+    1275667421,
+    1275667429,
+    1275667432,
+    5737556364,
+    1275664300,
+    410833129
+  ],
+  "geometry": [
+    { "lat": 41.9027480, "lon": 12.4485600 },
+    { "lat": 41.9026998, "lon": 12.4485053 },
+    { "lat": 41.9026062, "lon": 12.4483863 },
+    { "lat": 41.9025268, "lon": 12.4482883 },
+    { "lat": 41.9024681, "lon": 12.4482084 },
+    { "lat": 41.9016159, "lon": 12.4475889 },
+    { "lat": 41.9016061, "lon": 12.4476094 },
+    { "lat": 41.9015934, "lon": 12.4476269 },
+    { "lat": 41.9015712, "lon": 12.4476455 },
+    { "lat": 41.9015422, "lon": 12.4476555 },
+    { "lat": 41.9015072, "lon": 12.4477594 },
+    { "lat": 41.9011594, "lon": 12.4486513 },
+    { "lat": 41.9011836, "lon": 12.4486693 },
+    { "lat": 41.9015768, "lon": 12.4476716 },
+    { "lat": 41.9016139, "lon": 12.4476350 },
+    { "lat": 41.9023740, "lon": 12.4481740 },
+    { "lat": 41.9023624, "lon": 12.4482117 },
+    { "lat": 41.9024242, "lon": 12.4482473 },
+    { "lat": 41.9024649, "lon": 12.4482990 },
+    { "lat": 41.9024782, "lon": 12.4482711 },
+    { "lat": 41.9025852, "lon": 12.4484053 },
+    { "lat": 41.9027332, "lon": 12.4485847 },
+    { "lat": 41.9027480, "lon": 12.4485600 }
+  ],
+  "tags": {
+    "building": "yes",
+    "name": "Mura Leonine",
+    "name:cs": "Leonské hradby",
+    "name:de": "Leoninische Mauer",
+    "name:en": "Leonine Wall",
+    "name:fr": "Mur Léonin",
+    "name:it": "Mura Leonine",
+    "name:pt": "Muralha Leonina",
+    "name:ru": "Львиная стена"
+  }
+},
+{
+  "type": "way",
+  "id": 121034575,
+  "bounds": {
+    "minlat": 41.8953470,
+    "minlon": 12.4735508,
+    "maxlat": 41.8954040,
+    "maxlon": 12.4736598
+  },
+  "nodes": [
+    1355641560,
+    757040820
+  ],
+  "geometry": [
+    { "lat": 41.8954040, "lon": 12.4735508 },
+    { "lat": 41.8953470, "lon": 12.4736598 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "name": "Passetto del Biscione",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 121034576,
+  "bounds": {
+    "minlat": 41.8954093,
+    "minlon": 12.4731452,
+    "maxlat": 41.8954155,
+    "maxlon": 12.4732775
+  },
+  "nodes": [
+    1420501909,
+    1420501907
+  ],
+  "geometry": [
+    { "lat": 41.8954155, "lon": 12.4731452 },
+    { "lat": 41.8954093, "lon": 12.4732775 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "name": "Passetto del Biscione",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 125988147,
+  "bounds": {
+    "minlat": 41.9000924,
+    "minlon": 12.4731749,
+    "maxlat": 41.9001802,
+    "maxlon": 12.4733105
+  },
+  "nodes": [
+    1397852727,
+    358419127
+  ],
+  "geometry": [
+    { "lat": 41.9001802, "lon": 12.4733105 },
+    { "lat": 41.9000924, "lon": 12.4731749 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "name": "Passetto delle Cinque Lune",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 128570571,
+  "bounds": {
+    "minlat": 41.8954040,
+    "minlon": 12.4732775,
+    "maxlat": 41.8954239,
+    "maxlon": 12.4735508
+  },
+  "nodes": [
+    1420501907,
+    6052706826,
+    1355641560
+  ],
+  "geometry": [
+    { "lat": 41.8954093, "lon": 12.4732775 },
+    { "lat": 41.8954239, "lon": 12.4734156 },
+    { "lat": 41.8954040, "lon": 12.4735508 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "layer": "-1",
+    "name": "Passetto del Biscione",
+    "surface": "sett",
+    "tunnel": "building_passage"
+  }
+},
+{
+  "type": "way",
+  "id": 201407863,
+  "bounds": {
+    "minlat": 41.8984943,
+    "minlon": 12.4868935,
+    "maxlat": 41.8988153,
+    "maxlon": 12.4870493
+  },
+  "nodes": [
+    2113798505,
+    2113798503,
+    2113798494,
+    2113798482,
+    2113798486,
+    1649777361,
+    2113798541,
+    2113798540,
+    2113798531,
+    2113798532,
+    2113798509,
+    2113798505
+  ],
+  "geometry": [
+    { "lat": 41.8985861, "lon": 12.4870363 },
+    { "lat": 41.8985787, "lon": 12.4870359 },
+    { "lat": 41.8985343, "lon": 12.4870332 },
+    { "lat": 41.8984943, "lon": 12.4870307 },
+    { "lat": 41.8984990, "lon": 12.4868935 },
+    { "lat": 41.8988153, "lon": 12.4869130 },
+    { "lat": 41.8988106, "lon": 12.4870493 },
+    { "lat": 41.8987887, "lon": 12.4870480 },
+    { "lat": 41.8987116, "lon": 12.4870433 },
+    { "lat": 41.8987128, "lon": 12.4870093 },
+    { "lat": 41.8985873, "lon": 12.4870015 },
+    { "lat": 41.8985861, "lon": 12.4870363 }
+  ],
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housenumber": "43",
+    "addr:postcode": "00187",
+    "addr:street": "Via Ventiquattro Maggio",
+    "building": "yes",
+    "description": "Famoso per il celebre affresco de \"L'Aurora\" dipinto da Guido Reni fra il 1613 e 1614 sulla volta dell'ambiente centrale del padiglione. Altre opere di rilievo sono gli affreschi di Paolo Bril, Antonio Tempesta, Giovanni Baglione e di Domenico Cresti.",
+    "name": "Casino dell'Aurora Pallavicini",
+    "phone": "+39 06 8346 7000",
+    "source": "Bing, Local knowledge",
+    "website": "http://www.casinoaurorapallavicini.it/index.htm"
+  }
+},
+{
+  "type": "way",
+  "id": 205146903,
+  "bounds": {
+    "minlat": 41.9031863,
+    "minlon": 12.4491575,
+    "maxlat": 41.9037506,
+    "maxlon": 12.4498706
+  },
+  "nodes": [
+    1284223143,
+    410833131,
+    1275667422,
+    1275667430,
+    410833132,
+    1284223143
+  ],
+  "geometry": [
+    { "lat": 41.9036897, "lon": 12.4497653 },
+    { "lat": 41.9032065, "lon": 12.4491575 },
+    { "lat": 41.9031863, "lon": 12.4491865 },
+    { "lat": 41.9037300, "lon": 12.4498706 },
+    { "lat": 41.9037506, "lon": 12.4498420 },
+    { "lat": 41.9036897, "lon": 12.4497653 }
+  ],
+  "tags": {
+    "building": "yes",
+    "name": "Mura Leonine",
+    "name:ar": "جدار ليونين",
+    "name:de": "Leoninische Mauer",
+    "name:en": "Leonine Wall",
+    "name:fr": "Mur Léonin",
+    "name:it": "Mura Leonine",
+    "source": "Bing"
+  }
+},
+{
+  "type": "way",
+  "id": 210665004,
+  "bounds": {
+    "minlat": 41.8950619,
+    "minlon": 12.4736477,
+    "maxlat": 41.8954003,
+    "maxlon": 12.4739921
+  },
+  "nodes": [
+    493573021,
+    1420501883,
+    757040820,
+    1411729804,
+    493573023,
+    1411729770,
+    757040845,
+    1420501844,
+    1411729733,
+    1420501829,
+    493573027,
+    1411729713,
+    1420501800,
+    757040809,
+    493573031,
+    757040872
+  ],
+  "geometry": [
+    { "lat": 41.8954003, "lon": 12.4736928 },
+    { "lat": 41.8953779, "lon": 12.4736746 },
+    { "lat": 41.8953470, "lon": 12.4736598 },
+    { "lat": 41.8953182, "lon": 12.4736524 },
+    { "lat": 41.8952900, "lon": 12.4736498 },
+    { "lat": 41.8952414, "lon": 12.4736477 },
+    { "lat": 41.8952144, "lon": 12.4736480 },
+    { "lat": 41.8951922, "lon": 12.4736519 },
+    { "lat": 41.8951713, "lon": 12.4736601 },
+    { "lat": 41.8951571, "lon": 12.4736712 },
+    { "lat": 41.8951399, "lon": 12.4736850 },
+    { "lat": 41.8951103, "lon": 12.4737191 },
+    { "lat": 41.8950877, "lon": 12.4737586 },
+    { "lat": 41.8950737, "lon": 12.4738069 },
+    { "lat": 41.8950695, "lon": 12.4738729 },
+    { "lat": 41.8950619, "lon": 12.4739921 }
+  ],
+  "tags": {
+    "foot": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "name": "Via di Grotta Pinta",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 284851267,
+  "bounds": {
+    "minlat": 41.8976731,
+    "minlon": 12.4869130,
+    "maxlat": 41.8988153,
+    "maxlon": 12.4881468
+  },
+  "nodes": [
+    1649777361,
+    2113798538,
+    2113738151,
+    2113813272,
+    1649777361
+  ],
+  "geometry": [
+    { "lat": 41.8988153, "lon": 12.4869130 },
+    { "lat": 41.8987765, "lon": 12.4880502 },
+    { "lat": 41.8976731, "lon": 12.4881468 },
+    { "lat": 41.8976973, "lon": 12.4869267 },
+    { "lat": 41.8988153, "lon": 12.4869130 }
+  ],
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housenumber": "43",
+    "addr:postcode": "00187",
+    "addr:street": "Via Ventiquattro Maggio",
+    "area": "yes",
+    "name": "Palazzo Rospigliosi-Pallavicini",
+    "tourism": "attraction",
+    "wikidata": "Q1817132",
+    "wikimedia_commons": "Category:Palazzo Rospigliosi Pallavicini (Rome)",
+    "wikipedia": "it:Palazzo Pallavicini Rospigliosi"
+  }
+}
+
+  ]
+}

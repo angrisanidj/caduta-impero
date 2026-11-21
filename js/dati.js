@@ -139,21 +139,21 @@ var MONUMENTI={
 /* Chiese minori attorno a cui si raccoglie l'abitato: [nome, latitudine, longitudine, anno in cui compare, tipo].
    Date controllate (titoli attestati al sinodo del 499, diaconie nell'elenco dell'807 del Liber Pontificalis, voci delle singole chiese);
    quando la fonte dà solo un secolo o una prima attestazione, l'anno è una scelta nostra dentro quell'intervallo.
-   Coordinate dell'edificio attuale; quattro sono spostate di poche decine di metri per non cadere su una strada o su un monumento del modello. */
+   Coordinate dell'edificio attuale, controllate su OpenStreetMap il 21 novembre 2026 (tutte entro 25 m dal centro dell'edificio; Santa Maria in Trastevere, Sant'Agata dei Goti e San Vito sono scostate di una ventina di metri per non cadere sulla strada che le costeggia). */
 var CHIESE=[
- ['San Marco',41.8960,12.4816,336,'titolo'],['Santa Maria in Trastevere',41.8894,12.4697,340,'titolo'],['San Lorenzo in Lucina',41.9034,12.4787,370,'titolo'],
- ['Santi Nereo e Achilleo',41.8806,12.4952,377,'titolo'],["Sant'Anastasia",41.8882,12.4841,380,'titolo'],['San Lorenzo in Damaso',41.8969,12.4717,380,'titolo'],
- ['Santa Susanna',41.9042,12.4937,380,'titolo'],['San Crisogono',41.8895,12.4735,380,'titolo'],['San Clemente',41.8893,12.4976,390,'titolo'],
- ['Santa Pudenziana',41.8985,12.4955,390,'titolo'],['Santi Giovanni e Paolo',41.8865,12.4926,398,'titolo'],['Santa Balbina',41.8805,12.4897,400,'titolo'],
+ ['San Marco',41.8960,12.4816,336,'titolo'],['Santa Maria in Trastevere',41.88924,12.46974,340,'titolo'],['San Lorenzo in Lucina',41.9034,12.4787,370,'titolo'],
+ ['Santi Nereo e Achilleo',41.88017,12.49476,377,'titolo'],["Sant'Anastasia",41.8882,12.4841,380,'titolo'],['San Lorenzo in Damaso',41.8969,12.4717,380,'titolo'],
+ ['Santa Susanna',41.9042,12.4937,380,'titolo'],['San Crisogono',41.88911,12.47351,380,'titolo'],['San Clemente',41.8893,12.4976,390,'titolo'],
+ ['Santa Pudenziana',41.8985,12.4955,390,'titolo'],['Santi Giovanni e Paolo',41.88655,12.49209,398,'titolo'],['Santa Balbina',41.8805,12.4897,400,'titolo'],
  ['San Vitale',41.8997,12.4907,402,'titolo'],['San Pietro in Vincoli',41.8939,12.4931,439,'titolo'],['Santa Cecilia',41.8876,12.4759,450,'titolo'],
- ['Santi Quattro Coronati',41.8883,12.4983,450,'titolo'],["Sant'Agata dei Goti",41.8965,12.4888,465,'chiesa'],['Santa Bibiana',41.8955,12.5092,468,'basilica'],
- ['Santa Prassede',41.8961,12.4986,490,'titolo'],['San Martino ai Monti',41.8945,12.4986,500,'titolo'],['Santa Maria in Cosmedin',41.8881,12.4816,550,'diaconia'],
- ['Santa Maria Antiqua',41.8913,12.4857,560,'chiesa'],['Santi Apostoli',41.8981,12.4831,570,'basilica'],['San Gregorio al Celio',41.8855,12.4906,575,'monastero'],
- ['San Teodoro',41.8904,12.4848,580,'diaconia'],['Santa Lucia in Selci',41.8947,12.4964,630,'diaconia'],['San Saba',41.8786,12.4855,650,'monastero'],
- ['Santa Maria in via Lata',41.8982,12.4808,700,'diaconia'],['Santa Maria in Domnica',41.8847,12.4956,700,'diaconia'],["Sant'Eustachio",41.8988,12.4758,720,'diaconia'],
+ ['Santi Quattro Coronati',41.8883,12.4983,450,'titolo'],["Sant'Agata dei Goti",41.89648,12.48920,465,'chiesa'],['Santa Bibiana',41.8955,12.5092,468,'basilica'],
+ ['Santa Prassede',41.8961,12.4986,490,'titolo'],['San Martino ai Monti',41.89460,12.49823,500,'titolo'],['Santa Maria in Cosmedin',41.8881,12.4816,550,'diaconia'],
+ ['Santa Maria Antiqua',41.89093,12.48555,560,'chiesa'],['Santi Apostoli',41.89808,12.48347,570,'basilica'],['San Gregorio al Celio',41.8855,12.4906,575,'monastero'],
+ ['San Teodoro',41.8904,12.4848,580,'diaconia'],['Santa Lucia in Selci',41.89453,12.49684,630,'diaconia'],['San Saba',41.8786,12.4855,650,'monastero'],
+ ['Santa Maria in via Lata',41.89812,12.48131,700,'diaconia'],['Santa Maria in Domnica',41.8847,12.4956,700,'diaconia'],["Sant'Eustachio",41.8988,12.4758,720,'diaconia'],
  ['Santa Maria in Aquiro',41.8999,12.4782,730,'diaconia'],['San Giorgio al Velabro',41.8896,12.4832,745,'diaconia'],['Santa Maria in Campo Marzio',41.9014,12.4765,750,'monastero'],
  ["Sant'Angelo in Pescheria",41.8925,12.4787,755,'diaconia'],['San Silvestro in Capite',41.9031,12.4806,761,'monastero'],["Sant'Apollinare",41.9009,12.4736,780,'monastero'],
- ['San Vito',41.8958,12.5017,780,'diaconia'],['San Bonifacio',41.8838,12.4786,780,'diaconia'],['Santa Maria Nova',41.8912,12.4889,850,'chiesa']
+ ['San Vito',41.89596,12.50173,780,'diaconia'],['San Bonifacio',41.8838,12.4786,780,'diaconia'],['Santa Maria Nova',41.8912,12.4889,850,'chiesa']
 ];
 
 /* Il percorso del pellegrino: Itinerario di Einsiedeln (Einsiedeln, Stiftsbibliothek, cod. 326, ff. 82v-84r), percorso VIII,

@@ -1,0 +1,6 @@
+[out:json][timeout:120];
+(
+  nwr["name"~"Traian|Giove|Iovis|Capitolin|Probi|Probo|Sublici|Teodosi|Costantin|Solis|Sol Invictus|Tempio del Sole|Oppio",i][~"^(historic|ruins|building|tourism|leisure|man_made|archaeological_site)$"~"."](41.855,12.44,41.94,12.53);
+  nwr["historic"](41.8920,12.4810,41.8945,12.4835);
+);
+out geom;

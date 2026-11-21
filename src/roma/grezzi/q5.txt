@@ -1,0 +1,12 @@
+[out:json][timeout:180];
+(
+  nwr["name"~"^(Circo Massimo|Pantheon|Piazza Navona|Stadio di Domiziano|Castel Sant.Angelo|Mausoleo di Adriano|Mausoleo di Augusto|Teatro di Marcello|Teatro di Pompeo|Domus Flavia|Domus Augustana|Isola Tiberina|Ponte Sant.Angelo|Ponte Sisto|Ponte Rotto|Ponte Milvio|Ponte Fabricio|Ponte Cestio|Ponte Emilio|Pons Aemilius|Porta Maggiore|Porta Tiburtina|Porta San Lorenzo|Fontana di Trevi|Porta San Pancrazio|Arco di Settimio Severo|Porta Asinaria)$"](41.855,12.44,41.94,12.53);
+  nwr["name"~"Terme di (Traiano|Caracalla|Diocleziano|Costantino)|Giove|Sole|Probo|Teodosio|Leonin|Santa Maria degli Angeli|Laterano|Santa Croce in Gerusalemme|San Lorenzo fuori|Agnese fuori|Costanza|San Paolo fuori|Santa Sabina|Santa Maria Maggiore|Santo Stefano Rotondo|Basilica di San Pietro|Basilica Papale|Tomba di San Pietro|Palazzo Caffarelli|Serapide|Serapeo|Pompeo|Navona|Domizian|Palatin",i][!"highway"][!"shop"]["amenity"!~"restaurant|cafe|bar|pharmacy|bank|fast_food|pub|ice_cream"]["tourism"!~"hotel|guest_house|apartment|hostel"](41.855,12.44,41.94,12.53);
+)->.a;
+.a out geom;
+(
+  way["amenity"="place_of_worship"](41.875,12.455,41.915,12.515);
+  relation["amenity"="place_of_worship"](41.875,12.455,41.915,12.515);
+  way["building"~"church|basilica|cathedral|chapel"]["name"](41.875,12.455,41.915,12.515);
+)->.b;
+.b out tags center;

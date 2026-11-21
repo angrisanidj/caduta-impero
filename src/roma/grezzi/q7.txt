@@ -1,0 +1,6 @@
+[out:json][timeout:120];
+(
+  way["name"~"Passetto|Corridore|Mura Leonine|Torre di San Giovanni|Pallavicini|Rospigliosi",i](41.895,12.44,41.91,12.495);
+  way["name"="Via di Grotta Pinta"](41.893,12.470,41.897,12.475);
+);
+out geom;

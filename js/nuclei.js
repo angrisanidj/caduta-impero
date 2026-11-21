@@ -6,7 +6,7 @@
 var RM=window.RM; if(!RM||RM.guasto) return;
 var D=window.RM_DATI, P=RM.P, PI=Math.PI, elenco=(D.CHIESE||[]).map(function(c){ var p=RM.ll(c[1],c[2]); return {nome:c[0],x:p[0],z:p[1],anno:c[3],tipo:c[4],p0:-1}; });
 if(!elenco.length) return;
-elenco.forEach(function(c){ RM.zone.push({x:c.x,z:c.z,r:2.8}); });                       // niente isolati sopra la chiesa
+elenco.forEach(function(c){ RM.zone.push({x:c.x,z:c.z,r:2.8,dal:c.anno-2}); });       // niente isolati sopra la chiesa, da quando c'è: prima, una casa come le altre
 var B=new RM.Costruttore();
 B.scatola(2.6,1.5,1.25,0,0,0,P.mattone).falde(2.7,.5,1.4,0,1.5,0,P.coppi,0,P.mattone);   // navata lungo x
 B.cilindro(.55,1.2,-1.3,0,0,P.mattone,null,10).cono(.6,.35,-1.3,1.2,0,P.coppi,10);       // abside

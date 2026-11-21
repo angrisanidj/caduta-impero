@@ -60,9 +60,9 @@ var mura=(function(){
    quanto fosse stato riparato dopo il 554, e che gli archi neroniani oltre il Laterano, mai nominati dalle fonti, non vengano più rialzati. I tratti rifatti nell'VIII secolo hanno il colore del mattone di recupero. */
 var acque=(function(){
   var LINEE=[{passo:3.6, p:[[619,361,9],[420,170,8.8],[249,12,8.6],[163,62,8.45],[89,74,8.3],[40,54,8.2],[29,51,8.18]]},       // Claudia e Anio Novus fino a porta Maggiore, poi archi neroniani sul Celio fino al Palatino
-             {passo:3.2, p:[[600,330,8.5],[400,140,8.25],[255,5,8],[212,-54,7.9],[160,-84,7.8],[136,-92,7.75]]},              // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina, poi interrate verso le terme di Diocleziano
+             {passo:3.2, p:[[600,330,8.5],[400,140,8.25],[255,5,8],[208.5,-53.5,7.9],[160,-84,7.8],[136,-92,7.75]]},              // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina, poi interrate verso le terme di Diocleziano
              {passo:1.5, p:[[-22,-175,3.9],[-19,-150,3.85],[-17,-93,3.75],[-44,-74,3.7]]},                                    // Vergine: esce dalle pendici del Pincio e attraversa il Campo Marzio
-             {passo:1.6, suolo:.5, p:[[-420,60],[-300,52],[-198,46],[-160,33]]}];                                             // Traiana, sul Gianicolo fino ai mulini di Trastevere
+             {passo:1.6, suolo:.5, p:[[-422,28],[-371,37.8],[-311,40.8],[-263,41.8],[-240,43.5],[-198,46],[-160,33]]}];                                             // Traiana: lungo l'Aurelia (dove oggi corre l'acqua Paola, che ne riusa il percorso), poi giù dal Gianicolo fino ai mulini di Trastevere
   var el=[], rnd=RM.casuale(537), CIMA=.48;                                     // altezza del pezzo d'arcata (arco e canale), in quota della luce
   LINEE.forEach(function(l,li){
     for(var i=0;i<l.p.length-1;i++){
