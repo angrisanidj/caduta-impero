@@ -15,7 +15,11 @@ var REGNI={svevi:['#D08C60','regno degli Svevi'],vandali:['#7B5B3A','regno dei V
 var svg=el('svg',{viewBox:'95 55 810 518',   /* ritaglio sull'Occidente: stesso rapporto del riquadro */ role:'img','aria-label':'Mappa dell\'Impero romano','preserveAspectRatio':'xMidYMid slice'},ospite);
 var defs=el('defs',{},svg), trama=el('pattern',{id:'trama-conteso',width:7,height:7,patternUnits:'userSpaceOnUse',patternTransform:'rotate(40)'},defs);
 el('rect',{width:7,height:7,fill:'#DCD0B8'},trama); el('rect',{width:3.2,height:7,fill:'#9A2F2A'},trama);
-el('rect',{'class':'m-mare',width:G.w,height:G.h},svg);
+/* il mare: più chiaro al centro, più fondo ai bordi; lungo le coste tre aloni chiari, come le linee d'acqua delle carte incise */
+var gm=el('radialGradient',{id:'g-mare',cx:'52%',cy:'58%',r:'75%'},defs); [[0,'#DCE7E2'],[.55,'#C7D6D3'],[1,'#A9BFC0']].forEach(function(p){ el('stop',{offset:p[0],'stop-color':p[1]},gm); });
+el('rect',{'class':'m-mare',width:G.w,height:G.h,fill:'url(#g-mare)'},svg);
+[15,9,4].forEach(function(w,k){ el('path',{'class':'m-acque',d:G.terra,'stroke-width':w,'stroke-opacity':[.16,.22,.34][k]},svg); });
+(G.mari||[]).forEach(function(m){ el('text',{'class':'m-nome-mare',x:m[0],y:m[1]},svg).textContent=m[2]; });
 el('path',{'class':'m-terra',d:G.terra},svg);
 
 var regioni={}, nomi={}, NOMI={britannia:'Britannia',gallia:'Gallie',belgica:'Belgica',aquitania:'Aquitania',hispania:'Hispania',italia_nord:'Italia',africa:'Africa',mauretania:'Mauretanie',pannonia:'Pannonia',balcani:'Grecia',tracia:'Tracia',anatolia:'Asia Minore',dacia:'Dacia',levante:'Siria',egitto:'Egitto'};
@@ -24,13 +28,43 @@ Object.keys(G.regioni).forEach(function(id){
   regioni[id]=el('path',{'class':'m-regione perso',d:r.d},svg);
   el('title',{},regioni[id]).textContent=r.nome;
 });
+/* sopra i colori: la grana della carta, il filo delle coste, i fiumi e le catene montuose */
+(function(){
+  try{                                                    // grana: un piccolo riquadro di rumore generato una volta sola e ripetuto
+    var c=document.createElement('canvas'), n=96, x=c.getContext('2d'); c.width=c.height=n; var im=x.createImageData(n,n), s=7;
+    for(var i=0;i<n*n;i++){ s=(s*16807+11)%2147483647; var v=150+(s%106); im.data[i*4]=v; im.data[i*4+1]=v-6; im.data[i*4+2]=v-18; im.data[i*4+3]=255; }
+    x.putImageData(im,0,0);
+    var pg=el('pattern',{id:'grana',width:n,height:n,patternUnits:'userSpaceOnUse'},defs); el('image',{href:c.toDataURL(),width:n,height:n},pg);
+    el('rect',{'class':'m-grana',x:0,y:0,width:G.w,height:G.h,fill:'url(#grana)'},svg);
+  }catch(e){}
+  el('path',{'class':'m-costa',d:G.terra},svg);
+  var gf=el('g',{'class':'m-fiumi'},svg);
+  (G.fiumi||[]).forEach(function(f){ el('path',{d:f.d,'class':f.forte?'forte':''},gf); });
+  /* i monti: file di piccole cime lungo la cresta, un fianco in luce e uno in ombra; due soli tracciati per tutta la carta */
+  var luce='', ombra='', seme=5;
+  function caso(){ seme=(seme*16807+3)%2147483647; return seme/2147483647; }
+  (G.monti||[]).forEach(function(m){
+    var P=m[0], file=m[1];
+    for(var i=0;i<P.length-1;i++){
+      var a=P[i], b=P[i+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), nx=-(b[1]-a[1])/L, ny=(b[0]-a[0])/L, quanti=Math.max(1,Math.round(L/6.5));
+      for(var k=0;k<quanti;k++) for(var f=0;f<file;f++){
+        var t=(k+caso()*.6)/quanti, o=(f-(file-1)/2)*6+(caso()-.5)*3, x=a[0]+(b[0]-a[0])*t+nx*o, y=a[1]+(b[1]-a[1])*t+ny*o, h=2.6+caso()*2.2;
+        luce+='M'+(x-h*1.05).toFixed(1)+' '+(y+h*.55).toFixed(1)+'L'+x.toFixed(1)+' '+(y-h*.75).toFixed(1)+'L'+(x+h*.1).toFixed(1)+' '+(y+h*.55).toFixed(1)+'Z';
+        ombra+='M'+x.toFixed(1)+' '+(y-h*.75).toFixed(1)+'L'+(x+h*1.15).toFixed(1)+' '+(y+h*.55).toFixed(1)+'L'+(x+h*.1).toFixed(1)+' '+(y+h*.55).toFixed(1)+'Z';
+      }
+    }
+  });
+  el('path',{'class':'m-monti-ombra',d:ombra||'M0 0'},svg); el('path',{'class':'m-monti-luce',d:luce||'M0 0'},svg);
+})();
 Object.keys(G.regioni).forEach(function(id){
   var r=G.regioni[id]; if(!NOMI[id]) return;                                    // solo le regioni abbastanza grandi hanno il nome scritto sopra
   nomi[id]=el('text',{'class':'m-nome',x:r.c[0],y:r.c[1]+(id==='italia_nord'?-14:id==='belgica'?-6:0)},svg); nomi[id].textContent=NOMI[id];
 });
+var annoCarta=document.createElement('p'); annoCarta.className='m-anno'; annoCarta.setAttribute('aria-hidden','true'); ospite.appendChild(annoCarta);
 var verdun=el('g',{'class':'m-verdun via'},svg);
 if(G.verdun){ G.verdun.linee.forEach(function(d){ el('path',{d:d},verdun); }); G.verdun.nomi.forEach(function(n){ el('text',{x:n[0],y:n[1]},verdun).textContent=n[2]; }); }      // 843: l'impero dei Franchi diviso fra i tre nipoti di Carlo Magno
 var citta=el('g',{'class':'m-citta'},svg);
+if(G.citta.roma) el('circle',{'class':'m-battito',cx:G.citta.roma.x,cy:G.citta.roma.y,r:4},citta);      // Roma pulsa piano: è lì che guarda l'altra scena
 ['roma','ravenna','milano','treviri','cartagine','costantinopoli'].forEach(function(id){
   var c=G.citta[id]; el('circle',{cx:c.x,cy:c.y,r:3.2},citta);
   var sinistra=id==='ravenna'||id==='treviri';
@@ -117,7 +151,7 @@ spazioLegende();
 window.RM_mappa={
   mostra:function(stati,anno){
     var visti=anno!=null?mostraPopoli(anno):null;
-    if(anno!=null) verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via'));
+    if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
     aggiornaLegende(stati,anno,visti);
     for(var id in regioni){
       var s=stati[id]||'perso', chi=s.indexOf('regno:')===0?s.slice(6):'';

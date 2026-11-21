@@ -74,8 +74,21 @@ body.roma-grande .scheda{top:96px;left:20px;max-height:calc(100% - 220px)}
 .errore[hidden]{display:none}
 
 /* ---- mappa ---- */
-.m-mare{fill:#C9D6D3}
-.m-terra{fill:var(--st-perso);stroke:#B9AB8E;stroke-width:.6}
+#mappa{position:relative}
+.m-acque{fill:none;stroke:#F4FAF6;stroke-linejoin:round}
+.m-terra{fill:var(--st-perso)}
+.m-nome-mare{font-family:var(--serif);font-style:italic;font-size:13px;letter-spacing:.34em;fill:#6E8F93;fill-opacity:.75;text-anchor:middle;pointer-events:none}
+.m-grana{mix-blend-mode:multiply;opacity:.2;pointer-events:none}
+.m-costa{fill:none;stroke:rgba(62,46,30,.55);stroke-width:.7;stroke-linejoin:round;pointer-events:none}
+.m-fiumi path{fill:none;stroke:#8FC0CF;stroke-opacity:.9;stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.m-fiumi path.forte{stroke:#9DD0DE;stroke-opacity:1;stroke-width:2.1}
+.m-monti-luce{fill:rgba(255,248,230,.6);stroke:rgba(46,34,22,.45);stroke-width:.4;stroke-linejoin:round;pointer-events:none}
+.m-monti-ombra{fill:rgba(46,34,22,.5);stroke:rgba(46,34,22,.45);stroke-width:.4;stroke-linejoin:round;pointer-events:none}
+.m-anno{position:absolute;left:14px;top:8px;margin:0;font-family:var(--cap);font-weight:600;font-size:clamp(26px,4.4vw,56px);line-height:1;letter-spacing:.02em;color:rgba(43,36,32,.8);text-shadow:0 1px 0 rgba(251,246,234,.7);pointer-events:none}
+.m-battito{fill:none;stroke:#FBF6EA;stroke-width:1.4;transform-box:fill-box;transform-origin:center;animation:battito 2.6s ease-out infinite;pointer-events:none}
+@keyframes battito{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.4);opacity:0}}
+@keyframes scorre{to{stroke-dashoffset:-17}}
+.riquadro.impero::after{content:"";position:absolute;left:0;right:0;top:0;aspect-ratio:1000/640;pointer-events:none;box-shadow:inset 0 0 60px rgba(70,45,20,.28)}
 .m-regione{color:var(--st-perso);fill:currentColor;stroke:currentColor;stroke-width:1.1;stroke-linejoin:round;transition:color .9s ease}
 .m-regione.roma{color:var(--st-roma)} .m-regione.usurpatore{color:var(--st-usurpatore)} .m-regione.federati{color:var(--st-federati)}
 .m-regione.regno{color:var(--st-regno)} .m-regione.oriente{color:var(--st-oriente)} .m-regione.perso{color:var(--st-perso)}
@@ -312,7 +325,7 @@ body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bot
 .m-cartello{transition:transform .9s ease}
 .m-cartello rect{fill:rgba(251,246,234,.95);stroke-width:1.5;transition:stroke .9s ease}
 .m-cartello text{font-family:var(--serif);font-style:italic;font-size:var(--pf,11.5px);text-anchor:middle;fill:var(--ink)}
-.m-rotta{fill:none;stroke-width:1.6;stroke-dasharray:5 3.5;stroke-linecap:round;stroke-linejoin:round;transition:opacity .6s ease}
+.m-rotta{fill:none;stroke-width:1.6;stroke-dasharray:5 3.5;stroke-linecap:round;stroke-linejoin:round;animation:scorre 1.5s linear infinite;transition:opacity .6s ease}
 .m-rotta-f{fill:none;stroke:rgba(251,246,234,.8);stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round;transition:opacity .6s ease}
 .m-rotta.via,.m-rotta-f.via{opacity:0}
 .m-popolo.fuori .m-punto,.legenda-popoli .p-fuori{fill:#2B2420;background:#2B2420} .m-popolo.fuori rect,.m-rotta.fuori{stroke:#2B2420}
@@ -326,7 +339,7 @@ body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bot
 .legenda-popoli b{font-family:var(--cap);font-weight:600;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .legenda-popoli span{display:inline-flex;align-items:center;gap:5px}
 .legenda-popoli i{width:10px;height:10px;border-radius:50%;border:1px solid rgba(43,36,32,.45)}
-@media (prefers-reduced-motion:reduce){ .m-popolo{transition:none} }
+@media (prefers-reduced-motion:reduce){ .m-popolo{transition:none} .m-rotta,.m-battito{animation:none} }
 @media (max-width:860px){ .legenda-popoli{position:static;width:auto;max-width:none;background:none;border-top:1px solid var(--line);border-radius:0;padding:6px 10px 8px} }
 /* le due legende della mappa stanno sotto la carta, non sopra: su schermi piccoli la coprivano */
 .riquadro.impero{aspect-ratio:auto;display:flex;flex-direction:column}

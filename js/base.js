@@ -136,6 +136,8 @@ controlli.maxPolarAngle=Math.PI*.475;
 controlli.autoRotate=true; controlli.autoRotateSpeed=.22;
 renderer.domElement.addEventListener('pointerdown',function(){ controlli.autoRotate=false; });
 RM.scene=scene; RM.camera=camera; RM.renderer=renderer; RM.controlli=controlli;
+/* apertura: la camera parte alta e lontana e scende sulla vista d'insieme in cinque secondi; un tocco o la rotella la fermano (si veda più sotto, dove «volo» si azzera) */
+RM.apertura=function(){ if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) return; camera.position.set(-330,640,1010); volo={t:0,dur:5,t0:controlli.target.clone(),p0:camera.position.clone(),t1:controlli.target.clone(),p1:new THREE.Vector3(-200,255,470)}; };
 /* volo di camera verso un punto: tiene la direzione da cui si sta guardando */
 var volo=null;
 RM.vola=function(x,z,dist,quota){
@@ -165,6 +167,7 @@ RM.zoom=function(f){
 };
 RM.inVistaInsieme=function(){ return Math.abs(camera.position.distanceTo(controlli.target)-567)<50 && Math.abs(camera.position.y-255)<60 && controlli.target.length()<25; };      // la rotazione lenta dell'avvio non conta: conta distanza, quota e punto guardato
 var INSIEME=new THREE.Vector3(-200,255,470);
+RM.apertura();
 RM.vistaInsieme=function(){ controlli.autoRotate=false; volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(0,0,5),p1:new THREE.Vector3(-200,255,470)}; };
 renderer.domElement.addEventListener('pointerdown',function(){ volo=null; });
 renderer.domElement.addEventListener('wheel',function(){ volo=null; },{passive:true});

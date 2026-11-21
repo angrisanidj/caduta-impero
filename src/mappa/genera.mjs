@@ -244,6 +244,41 @@ for (const [id, r] of Object.entries(REGIONI)) {
 for (const [id, c] of Object.entries(CITTA)) { const p = proj([c[0], c[1]]); out.citta[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
 
 out.verdun = { linee: VERDUN.linee.map(l => 'M' + l.map(c => { const p = proj(c); return f1(p[0]) + ' ' + f1(p[1]); }).join('L')), nomi: VERDUN.nomi.map(n => { const p = proj([n[0], n[1]]); return [f1(p[0]), f1(p[1]), n[2]]; }) };
+/* Fiumi e catene montuose, per dare alla carta il respiro di un atlante. I fiumi passano per le città che stanno davvero sulle loro rive (coordinate delle città);
+   fra una città e l'altra il corso è una linea retta: è uno schema, non un rilievo. Reno e Danubio sono il confine dell'impero e hanno il tratto più forte.
+   Le catene sono linee di cresta indicative, disegnate come file di monti alla maniera delle carte antiche. */
+const FIUMI = {
+  reno:    { forte: true, p: [[9.53, 46.85], [9.63, 47.5], [9.17, 47.66], [8.63, 47.7], [7.6, 47.56], [7.58, 48], [7.78, 48.57], [8.33, 49.03], [8.36, 49.63], [8.27, 50], [7.9, 49.97], [7.6, 50.36], [7.1, 50.73], [6.96, 50.94], [6.77, 51.22], [6.45, 51.66], [5.87, 51.85], [4.9, 51.88], [4.1, 51.98]] },
+  danubio: { forte: true, p: [[8.5, 47.95], [9.2, 48.05], [10, 48.4], [10.9, 48.72], [11.42, 48.76], [12.1, 49.02], [12.9, 48.83], [13.45, 48.57], [14.3, 48.3], [15.6, 48.4], [16.37, 48.21], [17.1, 48.14], [17.65, 47.75], [18.74, 47.8], [19.05, 47.5], [18.93, 46.9], [18.7, 45.99], [18.95, 45.55], [19.85, 45.25], [20.46, 44.82], [21.3, 44.67], [22, 44.6], [22.5, 44.7], [22.66, 44.62], [22.88, 43.99], [23.9, 43.75], [24.9, 43.7], [25.95, 43.85], [27.27, 44.12], [27.95, 44.4], [28.05, 45.43], [28.8, 45.33], [29.65, 45.15]] },
+  po:      { p: [[7.1, 44.7], [7.68, 45.07], [8.6, 45.15], [9.7, 45.05], [10.03, 45.13], [10.8, 45.05], [11.6, 44.9], [12.3, 44.95]] },
+  rodano:  { p: [[8.37, 46.57], [7.36, 46.23], [6.9, 46.4], [6.15, 46.2], [5.8, 45.9], [4.83, 45.76], [4.87, 44.93], [4.8, 43.95], [4.63, 43.68], [4.75, 43.35]] },
+  loira:   { p: [[4.22, 44.84], [4.07, 46.04], [3.16, 46.99], [1.9, 47.9], [0.69, 47.39], [-0.55, 47.42], [-1.55, 47.22], [-2.2, 47.27]] },
+  senna:   { p: [[4.7, 47.5], [4.08, 48.3], [2.35, 48.86], [1.1, 49.44], [0.1, 49.45]] },
+  ebro:    { p: [[-4, 43], [-2.45, 42.47], [-0.88, 41.65], [0.52, 40.81], [0.85, 40.72]] },
+  tago:    { p: [[-1.7, 40.3], [-4.02, 39.86], [-6.9, 39.7], [-9.14, 38.7]] },
+  tevere:  { p: [[12.08, 43.77], [12.4, 43.1], [12.52, 42.45], [12.48, 41.9], [12.24, 41.74]] }
+};
+const MONTI = [   // [linea di cresta, quante file]
+  [[[6.9, 44.1], [7, 45], [6.9, 45.8], [7.8, 45.95], [8.6, 46.5], [9.8, 46.5], [10.6, 46.9], [11.5, 47], [12.4, 47.1], [13.4, 47.1], [14.5, 46.5]], 2],                 // Alpi
+  [[[-1.6, 43.05], [-0.3, 42.75], [0.9, 42.65], [2, 42.45], [3, 42.45]], 1],                                                                                            // Pirenei
+  [[[8.6, 44.45], [9.6, 44.35], [10.6, 44.2], [11.6, 43.95], [12.4, 43.5], [13.2, 42.8], [13.6, 42.4], [14.1, 41.8], [14.9, 41.2], [15.8, 40.5], [16.2, 39.9], [16.4, 39.2]], 1],   // Appennini
+  [[[17.5, 48.8], [19.5, 49.3], [21.5, 49.3], [23.5, 48.3], [25.2, 47.5], [26.3, 46.3], [26, 45.6], [24.5, 45.5], [22.8, 45.3]], 1],                                    // Carpazi
+  [[[14.6, 45.5], [15.8, 44.6], [17, 43.9], [18.3, 43.2], [19.4, 42.6], [20, 41.8]], 1],                                                                                // Alpi Dinariche
+  [[[22.6, 43.3], [23.8, 42.8], [25, 42.75], [26.2, 42.8], [27.3, 42.8]], 1],                                                                                           // Balcani (Haemus)
+  [[[20.7, 40.6], [21.2, 39.8], [21.7, 39]], 1],                                                                                                                        // Pindo
+  [[[-7.5, 31.5], [-5.5, 32.8], [-3.5, 33.8], [-1, 34.3], [1.5, 35.3], [3.5, 36.3], [5.5, 36.2], [7, 35.6], [8.5, 35.5]], 2],                                           // Atlante
+  [[[-7.2, 42.9], [-5.5, 43.05], [-4, 43], [-2.5, 42.95]], 1],                                                                                                          // Cantabrici
+  [[[-3.8, 37.05], [-2.8, 37.1]], 1],                                                                                                                                   // Sierra Nevada
+  [[[2.7, 45.5], [3, 44.8], [3.6, 44.3]], 1],                                                                                                                           // Massiccio Centrale
+  [[[30, 37], [32, 37], [34, 37.4], [36, 37.8]], 1]                                                                                                                     // Tauro
+];
+const MARI = [[5.6, 39.2, 'Mare Nostrum'], [-8.3, 46.6, 'Oceano'], [18.6, 35.2, 'Mare Interno'], [32.5, 43.4, 'Ponto Eusino']];
+const linea = l => 'M' + l.map(c => { const p = proj(c); return f1(p[0]) + ' ' + f1(p[1]); }).join('L');
+/* un fiume è una curva morbida che passa per i punti medi fra una città e l'altra e piega alle città */
+const curva = l => { const P = l.map(c => proj(c)), m = (a, b) => f1((a[0] + b[0]) / 2) + ' ' + f1((a[1] + b[1]) / 2); let d = 'M' + f1(P[0][0]) + ' ' + f1(P[0][1]) + 'L' + m(P[0], P[1]); for (let i = 1; i < P.length - 1; i++) d += 'Q' + f1(P[i][0]) + ' ' + f1(P[i][1]) + ' ' + m(P[i], P[i + 1]); return d + 'L' + f1(P[P.length - 1][0]) + ' ' + f1(P[P.length - 1][1]); };
+out.fiumi = Object.values(FIUMI).map(f => ({ d: curva(f.p), forte: !!f.forte }));
+out.monti = MONTI.map(m => [m[0].map(c => { const p = proj(c); return [f1(p[0]), f1(p[1])]; }), m[1]]);
+out.mari = MARI.map(m => { const p = proj([m[0], m[1]]); return [f1(p[0]), f1(p[1]), m[2]]; });
 const dest = new URL('../../js/mappa-dati.js', import.meta.url);
 fs.writeFileSync(dest, '/* Generato da src/mappa/genera.mjs: non modificare a mano. */\nwindow.RM_MAPPA=' + JSON.stringify(out) + ';\n');
 console.log('mappa-dati.js', Math.round(fs.statSync(dest).size / 1024) + ' kB,', Object.keys(out.regioni).length, 'regioni');
