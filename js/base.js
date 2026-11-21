@@ -146,6 +146,17 @@ RM.vola=function(x,z,dist,quota){
   volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:t1,p1:p1};
 };
 RM.volaA=function(t,c){ controlli.autoRotate=false; volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(t[0],RM.h(t[0],t[1])+1,t[1]),p1:new THREE.Vector3(c[0],c[1],c[2])}; };   // verso un'inquadratura fissa
+/* La scena può scorrere dentro il suo riquadro, in pixel: quando una scheda o la linea del tempo ne coprono una parte, ciò che si guarda
+   deve restare al centro di quel che si vede, non al centro del riquadro. x positivo sposta la scena a destra, y positivo in alto. */
+var spost={x:0,y:0,mx:0,my:0};
+RM.sposta=function(x,y){ spost.mx=Math.round(x); spost.my=Math.round(y); };
+RM.frame.push(function(dt){
+  if(!spost.x && !spost.y && !spost.mx && !spost.my) return;
+  var k=Math.min(1,dt*6); spost.x+=(spost.mx-spost.x)*k; spost.y+=(spost.my-spost.y)*k;
+  if(Math.abs(spost.mx-spost.x)<.5) spost.x=spost.mx; if(Math.abs(spost.my-spost.y)<.5) spost.y=spost.my;
+  var w=contenitore.clientWidth||1, h=contenitore.clientHeight||1;
+  if(!spost.x && !spost.y) camera.clearViewOffset(); else camera.setViewOffset(w,h,-spost.x,spost.y,w,h);
+});
 /* zoom a passi: ci si avvicina o ci si allontana dal punto che si sta guardando */
 RM.zoom=function(f){
   controlli.autoRotate=false;

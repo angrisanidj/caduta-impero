@@ -71,14 +71,27 @@ function scriviScheda(){
   $('scheda').innerHTML='<button type="button" class="chiudi" aria-label="Chiudi la scheda">✕</button><h3>'+esc(m.nome)+'</h3>'+
     '<p class="stato"><span class="st '+st+'">'+NOMI_STATO[st]+'</span> nel '+Math.round(anno)+'</p>'+(sc.cosa?'<p class="cosa">'+esc(sc.cosa)+'</p>':'')+(ce?'<p class="certezza"><i class="c'+ce[0]+'"></i><span><b>Che cosa sappiamo:</b> '+NOMI_CERTEZZA[ce[0]]+(ce[1]?'. '+esc(ce[1]):'')+'</span></p>':'')+(righe?'<ul>'+righe+'</ul>':'');
 }
+/* la scena si sposta di metà di quanto è coperta: dal foglio in basso (telefono), dal riquadro a sinistra (schermi larghi), dalla linea del tempo (schermo intero) */
+function scostaScena(){
+  if(!RM.sposta) return;
+  var rq=document.querySelector('.riquadro.roma').getBoundingClientRect(), sc=$('scheda'), su=0, dx=0;
+  if(document.body.classList.contains('roma-grande')){ var tp=document.querySelector('.tempo'); if(tp) su=Math.max(0,rq.bottom-tp.getBoundingClientRect().top); }
+  if(schedaDi && !sc.hidden){
+    var r=sc.getBoundingClientRect();
+    if(r.width>rq.width*.7) su=Math.max(su,Math.min(rq.height*.8,rq.bottom-r.top));
+    else if(r.right>rq.left && r.left<rq.right && r.left-rq.left<rq.width*.4) dx=Math.min(rq.width*.6,r.right-rq.left);
+  }
+  RM.sposta(dx/2,Math.max(0,su)/2);
+}
 function apriScheda(m){
   schedaDi=m; schedaChiave=''; scriviScheda(); $('scheda').hidden=false; document.querySelector('.riquadro.roma').classList.add('con-scheda');
   voci.forEach(function(v){ v.li.classList.toggle('scelto',v.m===m); });
   if($('scene').getAttribute('data-vista')!=='roma'){ var b=document.querySelector('.schede button[data-vista="roma"]'); if(b) b.click(); }
   var r=document.querySelector('.riquadro.roma').getBoundingClientRect(); if(r.top<0||r.bottom>window.innerHeight+40) document.querySelector('.riquadro.roma').scrollIntoView({behavior:'smooth',block:'start'});
   if(RM.vola&&m.x!=null) RM.vola(m.x,m.z,Math.max(46,(m.raggio||6)*6));
+  scostaScena();
 }
-function chiudiScheda(){ if(!schedaDi) return; schedaDi=null; $('scheda').hidden=true; document.querySelector('.riquadro.roma').classList.remove('con-scheda'); voci.forEach(function(v){ v.li.classList.remove('scelto'); }); if(RM.vistaInsieme) RM.vistaInsieme(); }
+function chiudiScheda(){ if(!schedaDi) return; schedaDi=null; $('scheda').hidden=true; document.querySelector('.riquadro.roma').classList.remove('con-scheda'); scostaScena(); voci.forEach(function(v){ v.li.classList.remove('scelto'); }); if(RM.vistaInsieme) RM.vistaInsieme(); }
 $('scheda').addEventListener('click',function(ev){ if(ev.target.className==='chiudi') chiudiScheda(); });
 voci.forEach(function(v){
   v.li.tabIndex=0; v.li.setAttribute('role','button');
@@ -163,6 +176,7 @@ function grande(si){
   if(tocco && RM.controlli) RM.controlli.enabled=si;
   chiudiStrumenti();
   window.dispatchEvent(new Event('resize'));
+  setTimeout(scostaScena,0);
 }
 /* menu degli strumenti: chiuso di norma, perché non copra la scena; dopo una scelta si richiude */
 function compatto(){ return window.getComputedStyle($('btnStrumenti')).display!=='none'; }
@@ -174,7 +188,7 @@ $('btnPiu').addEventListener('click',function(){ if(RM.zoom) RM.zoom(.62); });
 $('btnMeno').addEventListener('click',function(){ if(RM.zoom) RM.zoom(1.6); });
 $('btnInsieme').addEventListener('click',function(){ if(schedaDi) chiudiScheda(); else if(RM.vistaInsieme) RM.vistaInsieme(); });
 $('btnEsplora').addEventListener('click',function(){ grande(true); });
-window.addEventListener('resize',function(){ if(document.body.classList.contains('roma-grande')){ var tp=document.querySelector('.tempo'); if(tp) document.body.style.setProperty('--tempo',tp.offsetHeight+'px'); } });
+window.addEventListener('resize',function(){ if(document.body.classList.contains('roma-grande')){ var tp=document.querySelector('.tempo'); if(tp) document.body.style.setProperty('--tempo',tp.offsetHeight+'px'); } setTimeout(scostaScena,0); });
 $('btnGrande').addEventListener('click',function(){ grande(!document.body.classList.contains('roma-grande')); });
 window.addEventListener('keydown',function(ev){ if(ev.key==='Escape'){ if(schedaDi) chiudiScheda(); else grande(false); } });
 [].forEach.call(document.querySelectorAll('.schede button'),function(b){
