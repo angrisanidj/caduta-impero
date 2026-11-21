@@ -114,7 +114,8 @@ function vai(i,subito){
   $('tAtto').innerHTML=(t.intermezzo?'':'<b>'+t.anno+'</b>')+(t.intermezzo?'Intermezzo':t.epilogo?'Epilogo':'Atto '+a.n+' · '+a.nome);
   $('tTitolo').textContent=t.titolo; $('tTesto').textContent=t.testo;
   $('tStorici').hidden=!t.storici; $('tStoriciTesto').textContent=t.storici||'';
-  $('tVoce').hidden=!t.voce; $('tVoceTesto').textContent=t.voce?t.voce.testo:''; $('tVoceChi').textContent=t.voce?t.voce.chi:'';      // parole di un contemporaneo, tradotte dalla fonte
+  var voci=t.voci||[], bv=$('tVoci'); $('tVoce').hidden=!voci.length; bv.textContent=''; $('tVoceTitolo').textContent=voci.length>1?'Voci di allora':'Una voce di allora';      // parole dei contemporanei, tradotte dalla fonte
+  voci.forEach(function(v){ var q=document.createElement('blockquote'), c=document.createElement('p'); q.textContent=v.testo; c.className='chi'; c.textContent=v.chi; bv.appendChild(q); bv.appendChild(c); });
   if(MAPPA) MAPPA.mostra(t.regioni);
   bottoni.forEach(function(b,k){ b.setAttribute('aria-current',k===idx?'true':'false'); b.classList.toggle('passata',k<idx); });
   gruppi.forEach(function(g,k){ g.g.classList.toggle('attivo',k===Math.min(t.atto,gruppi.length-1)); });

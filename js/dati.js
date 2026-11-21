@@ -1,7 +1,10 @@
-/* Dati dello scheletro. TUTTO DA VERIFICARE prima della pubblicazione:
-   - i testi sono bozze di due righe, senza fonti;
+/* Dati. Stato delle verifiche:
+   - i testi delle tappe dal 235 al 589 (e il fino dell'argento) sono stati controllati il 21 novembre 2026 sulle fonti: Ammiano XVI 10 e XXXI; Lattanzio, De mortibus 7;
+     Orosio VII; Zosimo VI; Procopio, Guerre II-VIII (trad. Dewing); Marcellino Comes e il suo continuatore; Cassiodoro, Variae; Anonimo Valesiano; Gregorio di Tours X 1;
+     Paolo Diacono; Liber Pontificalis (Duchesne); Bury, History of the Later Roman Empire. Citati a memoria dai verificatori e non riletti: Prospero, Idazio, Vittore di Vita, Malco, Giordane;
+   - le tappe dal 593 in poi sono verificate solo dove il testo cita la fonte;
    - lo stato delle regioni è una semplificazione (una regione = un colore);
-   - le curve sono punti orientativi, non serie pubblicate. */
+   - le curve sono punti orientativi, non serie pubblicate; le schede dei monumenti sono in gran parte ancora a memoria. */
 window.RM_DATI=(function(){
 'use strict';
 
@@ -45,10 +48,15 @@ var TAPPE=[
  {anno:409, titolo:'La Britannia lasciata a sé stessa', testo:"Rimaste senza truppe, le città britanniche cacciano i funzionari dell'usurpatore e provvedono da sole alla difesa; Roma non tornerà più. I gruppi entrati in Gallia passano i Pirenei.",
   cambia:{britannia:'perso',hispania:'conteso'}},
  {anno:410, titolo:'Il sacco di Roma', testo:"Al terzo assedio in tre anni, fallite le trattative, i Goti di Alarico entrano in città e la saccheggiano per tre giorni (sei, secondo un altro cronista). Alarico era stato generale romano.",
-  /* Agostino, Sermo 81, 9 (latino letto su augustinus.it; traduzione nostra): «Forte Roma non perit, si Romani non pereant. […] Roma enim quid est, nisi Romani?
+  /* Girolamo, Commento a Ezechiele, prologhi ai libri I e III (latino letto su epistolae.unisi.it, lettera 274; traduzione nostra): «Postquam vero clarissimum terrarum omnium lumen
+     exstinctum est, immo romani imperii truncatum caput et, ut verius dicam, in una urbe totus orbis interiit, obmutui»; «Quis crederet ut totius orbis exstructa victoriis Roma corrueret,
+     ut ipsa suis populis et mater fieret et sepulcrum, […] ut cotidie sancta Bethleem, nobiles quondam utriusque sexus atque omnibus divitiis affluentes, susciperet mendicantes?»
+     Agostino, Sermo 81, 9 (latino letto su augustinus.it; traduzione nostra): «Forte Roma non perit, si Romani non pereant. […] Roma enim quid est, nisi Romani?
      Non enim de lapidibus et lignis agitur, de excelsis insulis et amplissimis moenibus. Hoc sic erat factum, ut esset aliquando ruiturum.» La data del discorso (fine 410 o 411) è quella corrente, non controllata. */
-  voce:{testo:"«Forse Roma non perisce, se non periscono i Romani. […] Che cos'è Roma, infatti, se non i Romani? Non si tratta di pietre e di legni, di alti caseggiati e di mura grandissime. Tutto questo era stato fatto in modo che un giorno dovesse cadere.»",
-        chi:"Agostino, vescovo di Ippona, Discorso 81, 9. Lo predica in Africa pochi mesi dopo il sacco, in risposta a chi diceva: «Ecco, è nei tempi cristiani che Roma perisce»."},
+  voci:[{testo:"«Dopo che si è spenta la luce più splendente di tutta la terra, anzi è stato troncato il capo dell'impero romano e, per dirlo più esattamente, in una sola città è perito il mondo intero, sono ammutolito. […] Chi avrebbe creduto che Roma, costruita con le vittorie sul mondo intero, sarebbe crollata, che sarebbe diventata per i suoi popoli insieme madre e sepolcro, […] che ogni giorno la santa Betlemme avrebbe accolto, ridotti a mendicare, uomini e donne un tempo nobili e colmi di ogni ricchezza?»",
+         chi:"Girolamo, da Betlemme, dove arrivano i profughi: prologhi ai libri I e III del Commento a Ezechiele, scritto fra il 410 e il 414."},
+        {testo:"«Forse Roma non perisce, se non periscono i Romani. […] Che cos'è Roma, infatti, se non i Romani? Non si tratta di pietre e di legni, di alti caseggiati e di mura grandissime. Tutto questo era stato fatto in modo che un giorno dovesse cadere.»",
+         chi:"Agostino, vescovo di Ippona, Discorso 81, 9. Lo predica in Africa pochi mesi dopo il sacco, in risposta a chi diceva: «Ecco, è nei tempi cristiani che Roma perisce»."}],
   storici:"Alarico è il caso di scuola: capo di un popolo o comandante di un esercito romano senza paga? Le due letture, invasione e guerra civile, partono dagli stessi fatti."},
  {anno:418, titolo:'Un regno dentro l\'impero', testo:"I Visigoti si insediano in Aquitania per accordo (nel 418 o nel 419, secondo le cronache), come federati in cambio del servizio militare; se ricevano terre o una quota delle imposte è discusso. Non è il primo patto del genere, ma da questo nasce un regno.",
   cambia:{aquitania:'federati',gallia:'roma'}},
@@ -71,16 +79,19 @@ var TAPPE=[
   storici:"Il 476 fu una data per i contemporanei? Registrarono la deposizione, non una fine: Giulio Nepote restò imperatore riconosciuto, in Dalmazia, fino al 480. Diventa «la fine» nelle cronache scritte a Costantinopoli nel secolo successivo (Marcellino Comes; lo ha mostrato Brian Croke nel 1983)."},
  {intermezzo:true, anno:476, titolo:'La città', testo:"Intermezzo: come si svuota una metropoli. Annona, acquedotti, spoliazioni, sepolture dentro le mura."},
 
- {anno:493, titolo:'Teodorico', testo:"Il re degli Ostrogoti governa l'Italia da Ravenna con funzionari romani. Restaura mura, acquedotti e il teatro di Pompeo; al Colosseo si danno ancora spettacoli.",
+ {anno:493, titolo:'Teodorico', testo:"Il re degli Ostrogoti governa l'Italia da Ravenna con funzionari romani. A Roma fa restaurare le mura e il teatro di Pompeo e vieta di deviare l'acqua degli acquedotti; al Colosseo si danno ancora cacce alle fiere (l'ultima notizia è del 523).",
   cambia:{gallia:'regno',rezia:'regno',illirico:'regno'}},
- {anno:537, titolo:'Gli acquedotti tagliati', testo:"Giustiniano manda Belisario a riprendere l'Italia. Durante l'assedio di Roma i Goti tagliano gli acquedotti: le grandi terme si fermano e non riapriranno, anche se alcuni condotti verranno riparati.",
+ {anno:537, titolo:'Gli acquedotti tagliati', testo:"Nel 535 Giustiniano ha mandato Belisario a riprendere l'Italia. Durante l'assedio di Roma i Goti tagliano tutti gli acquedotti: le grandi terme si fermano e non riapriranno, anche se dopo la guerra alcuni condotti verranno riparati.",
   cambia:{africa:'oriente',isole:'oriente',italia:'conteso',illirico:'oriente'}},
- {anno:542, titolo:'La peste', testo:"La peste bubbonica arriva dall'Egitto e ritorna a ondate per due secoli. Colpisce un'Italia già al quarto anno di guerra."},
- {anno:546, titolo:'La città vuota', testo:"Totila prende Roma e porta via gli abitanti: secondo una cronaca la città resta deserta per quaranta giorni. Nel 550, ripresa Roma, organizza le ultime corse di cavalli di cui si ha notizia.",
-  storici:"Va preso alla lettera? Procopio scrive che Totila lasciò la città «del tutto deserta»; i quaranta giorni vengono da un'altra cronaca. Una metropoli senza nessuno è poco credibile, ma l'immagine dice quanto fosse sceso il numero degli abitanti."},
- {anno:568, titolo:'I Longobardi', testo:"Quattordici anni dopo la fine della guerra gotica, i Longobardi scendono in un'Italia spopolata. L'unità della penisola finisce qui, per tredici secoli.",
+ {anno:542, titolo:'La peste', testo:"La peste bubbonica parte dall'Egitto nel 541, l'anno dopo è a Costantinopoli, nel 543 raggiunge un'Italia in guerra da otto anni. Tornerà a ondate per due secoli."},
+ {anno:546, titolo:'La città vuota', testo:"Totila prende Roma e porta via gli abitanti: secondo una cronaca la città resta deserta per quaranta giorni o più. Nel 550, ripresa Roma, vi assiste alle ultime corse di cavalli di cui si ha notizia.",
+  /* Procopio, Guerre VII 22, 7-19 (Guerra gotica III 22), tradotto da noi dall'inglese di H. B. Dewing (Loeb 1924, letto su LacusCurtius): non dal greco. I tagli sono segnati. */
+  voci:[{testo:"«Abbatté le fortificazioni in molti punti, così che ne andò distrutto circa un terzo. Stava anche per bruciare gli edifici più belli e più notevoli e per fare di Roma un pascolo per le pecore, ma Belisario lo seppe e gli mandò una lettera: “[…] L'hanno costruita a poco a poco, lasciando alle generazioni future il ricordo del valore di tutti: oltraggiare questi monumenti sarebbe un grande crimine contro gli uomini di ogni tempo”. […] Totila la lesse più volte, si convinse e non fece altro male a Roma. […] Non permise però che in città restasse anima viva, e la lasciò del tutto deserta.»",
+         chi:"Procopio di Cesarea, Guerre VII 22. Era stato il consigliere di Belisario; la lettera, come i discorsi degli storici antichi, è scritta a modo suo, e il «terzo» delle mura è forse esagerato."}],
+  storici:"Va preso alla lettera? Procopio scrive che Totila lasciò la città «del tutto deserta»; i «quaranta giorni o più», in cui a Roma sarebbero rimaste solo le bestie, vengono dal continuatore di Marcellino Comes. Una metropoli senza nessuno è poco credibile, ma l'immagine dice quanto fosse sceso il numero degli abitanti."},
+ {anno:568, titolo:'I Longobardi', testo:"Quattordici anni dopo la fine ufficiale della guerra gotica, i Longobardi scendono in un'Italia spopolata: nel 568 secondo Paolo Diacono, nel 569 secondo un cronista del tempo. L'unità della penisola finisce qui, per tredici secoli.",
   cambia:{italia:'conteso'}},
- {anno:589, titolo:'Il Tevere in città', testo:"Nel novembre 589 il Tevere rompe gli argini, allaga i quartieri bassi e rovina i granai della Chiesa. Pochi mesi dopo torna la peste: ne muore papa Pelagio II, e al suo posto viene eletto Gregorio. Le piene torneranno: nel 716 o 717 l'acqua tiene la città per sette giorni, e in via Lata arriva a un'altezza d'uomo e mezza; poi nel dicembre 791."},
+ {anno:589, titolo:'Il Tevere in città', testo:"Nell'autunno del 589, probabilmente a novembre, il Tevere esce dal letto, scavalca le mura, allaga i quartieri bassi e rovina i granai della Chiesa. Pochi mesi dopo torna la peste: ne muore papa Pelagio II, e al suo posto viene eletto Gregorio. Le piene torneranno: nel 716 o 717 l'acqua tiene la città per sette giorni, e in via Lata arriva a un'altezza d'uomo e mezza; poi nel dicembre 791."},
  {anno:593, titolo:"Dov'è il Senato, dov'è il popolo", testo:"Con i Longobardi di Agilulfo sotto le mura, papa Gregorio Magno predica: «Dov'è il Senato? Dov'è ormai il popolo?» (Omelie su Ezechiele, II, 6). È il vescovo, adesso, a distribuire il grano e a trattare con gli assedianti."},
 
  /* ---- atto VI: da Gregorio Magno a Carlo Magno ---- */
@@ -189,7 +200,7 @@ var ITINERARIO={
 
 /* Sacchi e assedi, come si vedono in città. da/a: anni in cui l'evento è in scena.
    fuochi: [x, z, forza]; attorno a ogni fuoco gli isolati restano bruciati per qualche decennio (raggio "bruciati", in decine di metri).
-   TUTTO DA VERIFICARE sulle fonti (Procopio, Orosio, Prospero, Liber Pontificalis). */
+   Testi fino al 589 e piena del 791 controllati sulle fonti; gli altri solo in parte. Posizione e forza dei fuochi sono una nostra resa. */
 var EVENTI=[
  {id:'sacco410', da:410, a:410.4, bruciati:14, fuochi:[[100,-192,1.2],[78,-165,1],[7.2,-1,.9]],      // Procopio, Guerre III 2: case presso la porta e casa di Sallustio. Aventino e Celio: tracce d'incendio negli scavi (già in Bury), ma nessuna attribuibile al sacco con sicurezza
   testo:"24 agosto 410 · I Goti di Alarico entrano da Porta Salaria. Tre giorni di saccheggio secondo Orosio, sei secondo Marcellino Comes: bruciano le case presso la porta e la casa di Sallustio; nel Foro brucia, probabilmente allora, la basilica Emilia. San Pietro e San Paolo sono rispettate come luoghi d'asilo."},
@@ -198,13 +209,13 @@ var EVENTI=[
  {id:'assedio472', da:472, a:472.4, bruciati:0, fuochi:[],      // le fonti parlano di combattimenti e saccheggio, non di incendi
   testo:"Luglio 472 · Dopo mesi d'assedio Ricimero prende la città all'imperatore Antemio, asserragliato sul Palatino. Lo scontro decisivo è al ponte Elio, davanti al mausoleo di Adriano."},
  {id:'velo536', da:536.2, a:537.3, bruciati:0, fuochi:[], velo:true,      // Procopio, Guerre IV 14; Cassiodoro, Variae XII 25. La didascalia è quella dell'assedio, che viene dopo nell'elenco
-  testo:"536 · Per più di un anno il sole resta velato e non scalda."},
+  testo:"536 · Per circa un anno il sole resta velato e non scalda."},
  {id:'assedio537', da:537, a:538.2, bruciati:0, fuochi:[], campi:true,
   testo:"Marzo 537 - marzo 538 · Vitige assedia Belisario per un anno e nove giorni. Sette accampamenti goti: sei davanti alle porte da nord a est, uno oltre il Tevere. Gli acquedotti vengono tagliati. Da un anno il sole è velato: Procopio scrive che dava luce senza splendore, come la luna; Cassiodoro, in Italia, che a mezzogiorno i corpi non facevano ombra. Oggi lo si attribuisce a grandi eruzioni vulcaniche."},
- {id:'totila546', da:546, a:546.5, bruciati:10, fuochi:[[-125,40,1],[-112,62,.8]], brecce:true,      // Procopio VIII 22: incendi soprattutto oltre il Tevere
+ {id:'totila546', da:546, a:546.5, bruciati:10, fuochi:[[-125,40,1],[-112,62,.8]], brecce:true,      // Procopio VII 37.3 e VIII 22.3; continuatore di Marcellino Comes, a. 547: incendi, soprattutto oltre il Tevere
   testo:"17 dicembre 546 · Totila entra di notte da Porta Asinaria. Fa abbattere tratti delle mura, brucia parte di Trastevere e porta via gli abitanti: per settimane Roma resta vuota."},
- {id:'piena589', da:589, a:589.5, bruciati:0, fuochi:[], piena:true,      // Gregorio di Tours, Storie X 1
-  testo:"Novembre 589 · Il Tevere allaga la città bassa e rovina i granai della Chiesa (Gregorio di Tours). L'estensione dell'acqua qui disegnata è indicativa: le zone più basse e più vicine al fiume."},
+ {id:'piena589', da:589, a:589.5, bruciati:0, fuochi:[], piena:true,      // Gregorio di Tours, Storie X 1 («mense nono»: novembre per Duchesne); Gregorio Magno, Dialoghi III 19; Paolo Diacono III 23-24
+  testo:"Autunno 589 · Il Tevere allaga la città bassa e rovina i granai della Chiesa (Gregorio di Tours, che scrive «nel nono mese»: probabilmente novembre). L'estensione dell'acqua qui disegnata è indicativa: le zone più basse e più vicine al fiume."},
  {id:'piena791', da:791, a:791.5, bruciati:0, fuochi:[], piena:true,      // Liber Pontificalis, vita di Adriano I, cc. 94-95 (ed. Duchesne I, p. 513): «in vicesimo anno, mense decembrio, XV indictione»
   testo:"Dicembre 791 · Il Tevere divelle porta Flaminia e la trascina fino all'arco detto Tres Falciclas, sulla via Lata; lì l'acqua supera le due altezze d'uomo (Liber Pontificalis). L'estensione qui disegnata è indicativa."},
  {id:'costante663', da:663, a:663.4, bruciati:0, fuochi:[],
@@ -224,7 +235,7 @@ var EVENTI=[
 /* Schede dei monumenti: che cos'è, e le date che contano. Testi provvisori, scritti a memoria: DA VERIFICARE. */
 var SCHEDE={
   colosseo:{cosa:"Anfiteatro Flavio: cinquantamila posti o più.", date:[[80,"Inaugurato da Tito."],[217,"Un fulmine lo incendia; i restauri durano più di vent'anni."],["inizio V sec.","Vietati i combattimenti fra gladiatori (ultime menzioni verso il 435); restano le cacce."],["484 o 508","Restaurato dopo un terremoto a spese del senatore Decio Mario Venanzio Basilio."],[443,"Un terremoto lo danneggia; seguono restauri."],["c. 500","Mentre si danno ancora spettacoli, sul lato sud si apre un cantiere di smontaggio: un blocco porta il nome del senatore Geronzio (lettura discussa)."],[523,"Ultime cacce con animali di cui si ha notizia, sotto Teodorico."],["fine VI sec.","Cunicoli scavati per estrarre travertino e metallo; una vasca per spegnere la calce al primo ordine. Dalla seconda metà dell'VIII secolo lo spoglio diventa massiccio."],[847,"Secondo il Parco archeologico del Colosseo, dopo il terremoto di quest'anno cade ciò che restava del fronte sud, già in gran parte smontato, e forma un cumulo di travertini. Nessuna cronaca lo dice, e per i sismologi a Roma la scossa fu debole."],[1349,"La tradizione attribuiva il crollo al terremoto del 1349. Già nel 1993 chi ha scavato il monumento (R. Rea) scriveva: «il Colosseo non crolla, viene a più riprese smontato»."]]},
-  circo:{cosa:"Il più grande edificio per spettacoli di Roma: le corse dei carri.", date:[[357,"Costanzo II, in visita, assiste ai giochi."],[550,"Ultime corse di cavalli di cui si ha notizia, volute da Totila."]]},
+  circo:{cosa:"Il più grande edificio per spettacoli di Roma: le corse dei carri.", date:[[357,"Costanzo II, in visita, assiste ai giochi."],[550,"Ultime corse di cavalli di cui si ha notizia: vi assiste Totila, che ha ripreso la città (Procopio)."]]},
   fori:{cosa:"Foro Romano e Fori imperiali: il centro politico e monumentale.", date:[[283,"Un incendio devasta il Foro; Diocleziano ricostruisce la Curia."],[357,"Costanzo II, in visita, resta ammirato dal foro di Traiano."],[410,"Brucia, probabilmente nel sacco, la basilica Emilia."],[527,"Prima chiesa nell'area: Santi Cosma e Damiano."],[537,"Dopo l'assedio le funzioni pubbliche si spengono. Gli edifici restano in piedi."],["484 o 508","Un terremoto danneggia il tempio della Pace e quello di Marte Ultore."],[608,"Colonna di Foca: l'ultimo monumento eretto nel Foro."],[630,"Intorno al 630 papa Onorio I trasforma la Curia del Senato nella chiesa di Sant'Adriano."],["c. 500","Nel foro di Augusto il tempio di Marte Ultore viene quasi del tutto smontato: su un rocchio di colonna c'è il nome del proprietario, il patrizio Decio."],["VII-VIII sec.","Una calcara lavora nel foro di Traiano, che per il resto è ancora in piedi e in uso."],["inizio IX sec.","Tolto il lastricato del foro di Cesare: al suo posto capanne, orti, una vigna. Nel foro di Nerva sorgono case signorili fatte di blocchi antichi."],[850,"Verso la metà del secolo vengono asportate tutte le lastre della piazza del foro di Traiano, forse per farne calce."],[847,"Alcuni archeologi attribuiscono al terremoto crolli nel foro di Traiano e nella basilica Ulpia. Le cronache non lo dicono."],["XI sec.","Dopo la fine di questa storia la zona si impaluda: il villaggio nato nel foro di Cesare viene abbandonato e l'area prende il nome di «i Pantani», fino alla bonifica di fine Cinquecento."]]},
   emilia:{cosa:"Basilica civile sul lato nord del Foro.", date:[["inizio V sec.","Il tetto brucia, probabilmente nel sacco del 410: sul pavimento sono rimaste le monete, le più tarde del 409."],["dopo","L'aula non viene ricostruita e serve da cava di materiali. Secondo alcuni studiosi fu rifatto il portico di facciata; altri lo negano."]]},
   giove:{cosa:"Tempio di Giove Ottimo Massimo, sul Campidoglio.", date:[[392,"Vietati i culti pagani: il tempio chiude."],[408,"Prima di quest'anno Stilicone fa togliere le lamine d'oro dalle porte."],[455,"I Vandali asportano metà del tetto di bronzo dorato (Procopio)."],["VI sec.","Cassiodoro lo cita ancora fra le meraviglie di Roma. Poi le fonti tacciono."]]},

@@ -116,6 +116,7 @@ h2{margin:2px 0 8px;font-family:var(--cap);font-weight:600;font-size:clamp(22px,
 .voce{margin:18px 0 0;padding:12px 16px;border-left:3px solid var(--porpora);background:var(--carta2);border-radius:0 8px 8px 0;max-width:38em}
 .voce blockquote{margin:4px 0 0;font-style:italic}
 .voce .chi{margin:8px 0 0;font-size:.86em;opacity:.8}
+.voce .chi+blockquote{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
 .fonti{margin:16px 0 0;font-size:15px;font-style:italic;color:var(--muted)}
 
 .cruscotto{display:grid;grid-template-columns:1fr 1fr;gap:10px}
