@@ -1,0 +1,9 @@
+[out:json][timeout:90];
+(
+  way(23921018);
+  way(125241566);
+  relation(5660515);
+  relation(17192321);
+  way(234894452);
+);
+out geom;

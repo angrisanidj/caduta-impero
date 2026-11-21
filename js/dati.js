@@ -17,54 +17,58 @@ var ATTI=[
 /* Stati di una regione: roma | usurpatore | conteso | federati | regno | perso | oriente | califfato | carolingio
    "cambia" elenca solo ciò che muta rispetto alla tappa precedente. */
 var TAPPE=[
- {anno:235, titolo:"L'imperatore ucciso dai suoi soldati", testo:"A Magonza le legioni assassinano Severo Alessandro e acclamano Massimino. In cinquant'anni si conteranno oltre venti imperatori, quasi tutti morti di spada.",
+ {anno:235, titolo:"L'imperatore ucciso dai suoi soldati", testo:"A Magonza i soldati assassinano Severo Alessandro e acclamano Massimino. In cinquant'anni si conteranno oltre venti imperatori, senza contare gli usurpatori: quasi tutti uccisi dalle proprie truppe o in battaglia.",
   cambia:{britannia:'roma',gallia:'roma',aquitania:'roma',provenza:'roma',hispania:'roma',italia:'roma',isole:'roma',rezia:'roma',illirico:'roma',africa:'roma',mauretania:'roma',oriente:'roma'}},
- {anno:251, titolo:'La peste e un imperatore caduto in battaglia', testo:"Un'epidemia attraversa l'impero per più di dieci anni. Ad Abritto Decio muore combattendo i Goti: è il primo imperatore ucciso da un nemico esterno.",
+ {anno:251, titolo:'La peste e un imperatore caduto in battaglia', testo:"Un'epidemia attraversa l'impero per più di dieci anni. Ad Abritto Decio muore combattendo i Goti: per le fonti romane è il primo imperatore caduto contro un nemico esterno, ma i Persiani rivendicavano già la morte di Gordiano III, nel 244.",
   storici:"Quanto pesò la peste di Cipriano? Per Kyle Harper è una delle cause della crisi; altri la considerano impossibile da misurare con le fonti che abbiamo."},
- {anno:260, titolo:'Valeriano prigioniero, tre imperi', testo:"L'imperatore Valeriano è catturato dai Persiani. L'Occidente si stacca sotto Postumo: Gallie, Britannia e Hispania hanno un loro imperatore, un loro senato, una loro moneta.",
+ {anno:260, titolo:"Valeriano prigioniero, l'Occidente si stacca", testo:"L'imperatore Valeriano è catturato dai Persiani. L'Occidente si stacca sotto Postumo: Gallie, Britannia e Hispania hanno un loro imperatore, loro consoli, una loro moneta.",
   cambia:{britannia:'usurpatore',gallia:'usurpatore',aquitania:'usurpatore',provenza:'usurpatore',hispania:'usurpatore'}},
  {anno:271, titolo:'Roma torna a costruire mura', testo:"Aureliano cinge la città con diciannove chilometri di mura: non accadeva da secoli. In Oriente Zenobia di Palmira controlla dall'Egitto all'Anatolia.",
   cambia:{hispania:'roma',oriente:'usurpatore'}},
- {anno:274, titolo:"L'impero ricucito", testo:"In tre anni Aureliano riprende Palmira e le Gallie. L'impero è di nuovo uno, ma la moneta d'argento non contiene quasi più argento.",
+ {anno:274, titolo:"L'impero ricucito", testo:"In tre anni Aureliano riprende Palmira e le Gallie. L'impero è di nuovo uno; una riforma ferma il crollo della moneta, che però contiene ormai solo il cinque per cento d'argento.",
   cambia:{britannia:'roma',gallia:'roma',aquitania:'roma',provenza:'roma',oriente:'roma'}},
  {intermezzo:true, anno:284, titolo:'La moneta', testo:"Intermezzo: dal denario all'antoniniano, la svalutazione del III secolo e il ritorno all'oro con il solido."},
 
- {anno:293, titolo:'Quattro imperatori, nessuno a Roma', testo:"Diocleziano divide il comando fra due augusti e due cesari. Le capitali sono dove serve l'esercito: Treviri, Milano, Sirmio, Nicomedia."},
+ {anno:293, titolo:'Quattro imperatori, nessuno a Roma', testo:"Diocleziano divide il comando fra due augusti e due cesari. Non ci sono più capitali ma residenze vicine agli eserciti, che cambiano con le campagne: Treviri, Milano, Sirmio, Nicomedia."},
  {anno:301, titolo:'I prezzi fissati per legge', testo:"Un editto stabilisce il prezzo massimo di oltre mille merci e servizi, pena la morte. Non funziona, ma racconta uno Stato che vuole contare e tassare tutto."},
- {anno:330, titolo:'Una nuova Roma sul Bosforo', testo:"Costantino inaugura Costantinopoli. La sua moneta d'oro, il solido, resterà stabile per sette secoli; a Roma sorgono le prime grandi basiliche cristiane."},
+ {anno:330, titolo:'Una nuova Roma sul Bosforo', testo:"Costantino inaugura Costantinopoli. La sua moneta d'oro, il solido, resterà stabile per sette secoli; a Roma stanno sorgendo le prime grandi basiliche cristiane."},
  {anno:357, titolo:"L'imperatore in visita", testo:"Costanzo II entra a Roma per la prima volta e la guarda come un forestiero, stupito dal Foro di Traiano. La città è un monumento, non più una sede di governo."},
- {anno:378, titolo:'Adrianopoli', testo:"I Goti, accolti dentro l'impero due anni prima e ridotti alla fame, annientano l'esercito d'Oriente. Muore l'imperatore Valente.",
-  storici:"Invasione o crisi di accoglienza? I Goti del 376 chiesero di entrare e furono ammessi: per Halsall il disastro nasce dalla gestione romana, per Heather dalla pressione degli Unni."},
+ {anno:378, titolo:'Adrianopoli', testo:"I Goti, accolti dentro l'impero due anni prima e ridotti alla fame, distruggono l'esercito dell'imperatore Valente: secondo Ammiano se ne salva appena un terzo. Muore lo stesso Valente.",
+  storici:"Invasione o crisi di accoglienza? I Goti del 376 chiesero di entrare e furono ammessi. Per Heather a spingerli sul Danubio sono gli Unni; Halsall ridimensiona gli Unni e guarda alla politica romana oltre il fiume. Sulla rivolta concordano: nasce da come Roma gestì i profughi."},
  {anno:395, titolo:'Due corti', testo:"Alla morte di Teodosio l'impero passa ai due figli, uno a Costantinopoli e uno a Milano. Nessuno la considera una divisione definitiva; lo diventerà.",
   cambia:{oriente:'oriente'}},
  {intermezzo:true, anno:395, titolo:'I commerci', testo:"Intermezzo: relitti, anfore, piombo nei ghiacci. Che cosa misura davvero l'archeologia quando parla di crollo degli scambi."},
 
- {anno:402, titolo:'La corte si chiude a Ravenna', testo:"Stilicone ferma Alarico a Pollenzo. La corte lascia Milano per Ravenna, protetta dalle paludi; a Roma le mura vengono raddoppiate in altezza."},
- {anno:406, titolo:'Il Reno attraversato', testo:"Nell'ultima notte dell'anno Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito proclama un proprio imperatore, che porta le truppe in Gallia.",
+ {anno:402, titolo:'La corte si chiude a Ravenna', testo:"Stilicone affronta Alarico a Pollenzo e a Verona e lo costringe a lasciare l'Italia. La corte lascia Milano per Ravenna, protetta dalle paludi; a Roma Onorio fa restaurare mura, porte e torri, e forse è allora che la cinta raddoppia in altezza."},
+ {anno:406, titolo:'Il Reno attraversato', testo:"Nell'ultima notte dell'anno (del 405, secondo alcuni studiosi) Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito acclama un imperatore dopo l'altro; nel 407 il terzo, Costantino, porta le truppe in Gallia.",
   cambia:{gallia:'conteso'}},
- {anno:409, titolo:'La Britannia lasciata a sé stessa', testo:"Senza più truppe né funzionari, le città britanniche provvedono da sole alla difesa. I gruppi entrati in Gallia passano i Pirenei.",
+ {anno:409, titolo:'La Britannia lasciata a sé stessa', testo:"Rimaste senza truppe, le città britanniche cacciano i funzionari dell'usurpatore e provvedono da sole alla difesa; Roma non tornerà più. I gruppi entrati in Gallia passano i Pirenei.",
   cambia:{britannia:'perso',hispania:'conteso'}},
- {anno:410, titolo:'Il sacco di Roma', testo:"Dopo tre assedi e trattative fallite, i Goti di Alarico entrano in città e la saccheggiano per tre giorni. Alarico era stato generale romano.",
+ {anno:410, titolo:'Il sacco di Roma', testo:"Al terzo assedio in tre anni, fallite le trattative, i Goti di Alarico entrano in città e la saccheggiano per tre giorni (sei, secondo un altro cronista). Alarico era stato generale romano.",
+  /* Agostino, Sermo 81, 9 (latino letto su augustinus.it; traduzione nostra): «Forte Roma non perit, si Romani non pereant. […] Roma enim quid est, nisi Romani?
+     Non enim de lapidibus et lignis agitur, de excelsis insulis et amplissimis moenibus. Hoc sic erat factum, ut esset aliquando ruiturum.» La data del discorso (fine 410 o 411) è quella corrente, non controllata. */
+  voce:{testo:"«Forse Roma non perisce, se non periscono i Romani. […] Che cos'è Roma, infatti, se non i Romani? Non si tratta di pietre e di legni, di alti caseggiati e di mura grandissime. Tutto questo era stato fatto in modo che un giorno dovesse cadere.»",
+        chi:"Agostino, vescovo di Ippona, Discorso 81, 9. Lo predica in Africa pochi mesi dopo il sacco, in risposta a chi diceva: «Ecco, è nei tempi cristiani che Roma perisce»."},
   storici:"Alarico è il caso di scuola: capo di un popolo o comandante di un esercito romano senza paga? Le due letture, invasione e guerra civile, partono dagli stessi fatti."},
- {anno:418, titolo:'Un regno dentro l\'impero', testo:"I Visigoti ricevono terre in Aquitania, per accordo, in cambio del servizio militare. È il primo insediamento stabile riconosciuto da Roma.",
+ {anno:418, titolo:'Un regno dentro l\'impero', testo:"I Visigoti si insediano in Aquitania per accordo (nel 418 o nel 419, secondo le cronache), come federati in cambio del servizio militare; se ricevano terre o una quota delle imposte è discusso. Non è il primo patto del genere, ma da questo nasce un regno.",
   cambia:{aquitania:'federati',gallia:'roma'}},
  {anno:429, titolo:'I Vandali passano in Africa', testo:"Genserico attraversa lo stretto con il suo popolo, forse ottantamila persone in tutto. Nel 430, durante l'assedio di Ippona, muore Agostino.",
   cambia:{mauretania:'conteso'}},
- {anno:439, titolo:'Cartagine', testo:"I Vandali prendono Cartagine senza combattere. Roma perde la provincia più ricca, il grano dell'annona e la flotta: è il colpo da cui l'Occidente non si riprende.",
+ {anno:439, titolo:'Cartagine', testo:"I Vandali prendono Cartagine a sorpresa, in tempo di pace. Roma perde le province più ricche, il grano dell'annona e i porti da cui ora partono le flotte vandale: è il colpo da cui l'Occidente non si riprende.",
   cambia:{africa:'regno',illirico:'conteso'}},
  {intermezzo:true, anno:439, titolo:'I barbari', testo:"Intermezzo: quanti erano, chi erano, che rapporto giuridico avevano con Roma. Nemici, federati, soldati regolari, re."},
 
- {anno:451, titolo:'Ezio e Attila', testo:"Ai Campi Catalaunici l'esercito che ferma gli Unni è fatto in gran parte di Visigoti, Franchi e Burgundi. Il generale romano Ezio comanda una coalizione."},
- {anno:455, titolo:'Il secondo sacco', testo:"Ucciso Valentiniano III, Genserico sbarca a Ostia e spoglia Roma per quattordici giorni. Porta via anche metà delle tegole dorate del tempio di Giove.",
+ {anno:451, titolo:'Ezio e Attila', testo:"Ai Campi Catalaunici l'esercito che ferma gli Unni è fatto soprattutto di Visigoti, con Alani, Franchi, Burgundi e altri alleati. Il generale romano Ezio comanda una coalizione."},
+ {anno:455, titolo:'Il secondo sacco', testo:"Ucciso Valentiniano III, Genserico arriva dal mare e spoglia Roma per quattordici giorni. Porta via anche metà delle tegole dorate del tempio di Giove.",
   cambia:{isole:'regno',mauretania:'perso'}},
- {anno:458, titolo:'Una legge contro chi smonta la città', testo:"Maggioriano vieta di demolire gli edifici pubblici per ricavarne materiali. È l'ultimo imperatore a tentare riforme e riconquiste; sarà deposto e ucciso nel 461.",
+ {anno:458, titolo:'Una legge contro chi smonta la città', testo:"Maggioriano vieta di demolire gli edifici pubblici per ricavarne materiali. Tenta riforme e la riconquista dell'Africa; nel 461 sarà deposto e ucciso da Ricimero, il suo generale.",
   cambia:{hispania:'conteso'}},
- {anno:468, titolo:"L'ultima flotta", testo:"Le due corti armano insieme una spedizione enorme contro i Vandali. Va perduta davanti a Capo Bon, e con essa le ultime riserve finanziarie dell'Occidente."},
- {anno:472, titolo:'Roma assediata dal proprio generale', testo:"Ricimero, che da quindici anni fa e disfa imperatori, assedia e prende la città. Gli imperatori ormai governano poco più dell'Italia.",
+ {anno:468, titolo:"L'ultima flotta", testo:"Le due corti armano insieme una spedizione enorme contro i Vandali, pagata quasi tutta da Costantinopoli. Va perduta davanti a Capo Bon, e con essa l'ultima speranza dell'Occidente di riavere l'Africa."},
+ {anno:472, titolo:'Roma assediata dal proprio generale', testo:"Ricimero, che dal 456 fa e disfa imperatori, assedia e prende la città. Gli imperatori ormai governano poco più dell'Italia.",
   cambia:{hispania:'regno',gallia:'conteso',aquitania:'regno'}},
  {anno:476, titolo:'Odoacre', testo:"Un ufficiale dell'esercito d'Italia depone il giovane Romolo Augustolo e rimanda le insegne imperiali a Costantinopoli. A Roma il Senato continua a riunirsi.",
   cambia:{italia:'regno',provenza:'regno',gallia:'perso',rezia:'perso'},
-  storici:"Il 476 fu una data per i contemporanei? Quasi nessuno la notò. Diventa «la fine» nelle cronache orientali del secolo successivo."},
+  storici:"Il 476 fu una data per i contemporanei? Registrarono la deposizione, non una fine: Giulio Nepote restò imperatore riconosciuto, in Dalmazia, fino al 480. Diventa «la fine» nelle cronache scritte a Costantinopoli nel secolo successivo (Marcellino Comes; lo ha mostrato Brian Croke nel 1983)."},
  {intermezzo:true, anno:476, titolo:'La città', testo:"Intermezzo: come si svuota una metropoli. Annona, acquedotti, spoliazioni, sepolture dentro le mura."},
 
  {anno:493, titolo:'Teodorico', testo:"Il re degli Ostrogoti governa l'Italia da Ravenna con funzionari romani. Restaura mura, acquedotti e il teatro di Pompeo; al Colosseo si danno ancora spettacoli.",
@@ -108,7 +112,9 @@ var CURVE={
   popolazione:{nome:'Abitanti di Roma', nota:'stima',
     punti:[[235,900000],[300,800000],[367,750000],[408,750000],[419,450000],[452,450000],[476,250000],[500,100000],[535,80000],[550,30000],[590,45000],[600,50000],[680,32000],[750,25000],[801,30000],[852,30000]],
     banda:[[235,700000,1200000],[300,600000,1200000],[367,500000,1000000],[408,700000,1000000],[419,300000,500000],[452,400000,650000],[476,150000,400000],[500,60000,200000],[535,60000,200000],[550,15000,100000],[600,20000,90000],[700,20000,60000],[852,20000,60000]]},
-  argento:{nome:'Argento nella moneta', nota:'% di fino, fino alla riforma di Diocleziano', punti:[[235,45],[250,40],[260,18],[268,3],[274,5],[294,5]], fine:294, dopo:'dal 309 solido d\'oro, stabile'},
+  /* Fino della moneta d'argento: denario di Severo Alessandro 43-50%, Decio circa 40%, Gallieno 18% nel 260 e 2,5% a fine regno (dati Walker, in Katsari 2002);
+     riforma di Aureliano 5% garantito (RIC online). Le analisi di Walker sono di superficie e sovrastimano il fino (Butcher e Ponting): valori indicativi. */
+  argento:{nome:'Argento nella moneta', nota:'% di fino, stime, fino alla riforma di Diocleziano', punti:[[235,45],[250,40],[260,18],[268,3],[274,5],[294,5]], fine:294, dopo:'dal 309-310 solido d\'oro, stabile'},
   commerci:{nome:'Commerci', nota:'indice orientativo dai relitti (I secolo = 100)', punti:[[235,60],[300,45],[400,35],[439,25],[500,18],[568,12],[590,12],[700,6],[801,8],[852,8]]}
 };
 
@@ -133,7 +139,9 @@ var MONUMENTI={
   /* il quartiere che cresce attorno a San Pietro */
   monasteripietro:[[0,'assente'],[450,'uso']], porticopietro:[[0,'assente'],[400,'uso']], scholae:[[0,'assente'],[727,'uso']], leonine:[[0,'assente'],[852,'uso']],
   /* riuso */
-  mulini:[[0,'assente'],[537,'uso']], casenerva:[[0,'assente'],[850,'uso']]
+  mulini:[[0,'assente'],[537,'uso']], casenerva:[[0,'assente'],[850,'uso']],
+  /* luoghi del lavoro e dei commerci */
+  testaccio:[[0,'uso']]
 };
 
 /* Chiese minori attorno a cui si raccoglie l'abitato: [nome, latitudine, longitudine, anno in cui compare, tipo].
@@ -183,12 +191,12 @@ var ITINERARIO={
    fuochi: [x, z, forza]; attorno a ogni fuoco gli isolati restano bruciati per qualche decennio (raggio "bruciati", in decine di metri).
    TUTTO DA VERIFICARE sulle fonti (Procopio, Orosio, Prospero, Liber Pontificalis). */
 var EVENTI=[
- {id:'sacco410', da:410, a:410.4, bruciati:14, fuochi:[[100,-192,1.2],[78,-165,1],[7.2,-1,.9]],      // Procopio, Guerre III 2: case presso la porta e casa di Sallustio. Aventino e Celio: nessun incendio attribuibile con sicurezza
-  testo:"24 agosto 410 · I Goti di Alarico entrano da Porta Salaria. Tre giorni di saccheggio: bruciano le case presso la porta e la casa di Sallustio; nel Foro brucia, probabilmente allora, la basilica Emilia. San Pietro e San Paolo sono rispettate come luoghi d'asilo."},
+ {id:'sacco410', da:410, a:410.4, bruciati:14, fuochi:[[100,-192,1.2],[78,-165,1],[7.2,-1,.9]],      // Procopio, Guerre III 2: case presso la porta e casa di Sallustio. Aventino e Celio: tracce d'incendio negli scavi (già in Bury), ma nessuna attribuibile al sacco con sicurezza
+  testo:"24 agosto 410 · I Goti di Alarico entrano da Porta Salaria. Tre giorni di saccheggio secondo Orosio, sei secondo Marcellino Comes: bruciano le case presso la porta e la casa di Sallustio; nel Foro brucia, probabilmente allora, la basilica Emilia. San Pietro e San Paolo sono rispettate come luoghi d'asilo."},
  {id:'sacco455', da:455, a:455.4, bruciati:0, fuochi:[],
-  testo:"2-16 giugno 455 · I Vandali di Genserico restano quattordici giorni. Papa Leone ottiene che non ci siano stragi né incendi; il saccheggio è metodico: dal tempio di Giove portano via metà del tetto di bronzo dorato."},
+  testo:"2-16 giugno 455 · I Vandali di Genserico restano quattordici giorni. Papa Leone, scrive Prospero d'Aquitania, ottiene che non ci siano stragi né incendi; il saccheggio è metodico: dal tempio di Giove portano via metà del tetto di bronzo dorato."},
  {id:'assedio472', da:472, a:472.4, bruciati:0, fuochi:[],      // le fonti parlano di combattimenti e saccheggio, non di incendi
-  testo:"Luglio 472 · Dopo cinque mesi d'assedio Ricimero prende la città all'imperatore Antemio, asserragliato sul Palatino. Lo scontro decisivo è al ponte Elio, davanti al mausoleo di Adriano."},
+  testo:"Luglio 472 · Dopo mesi d'assedio Ricimero prende la città all'imperatore Antemio, asserragliato sul Palatino. Lo scontro decisivo è al ponte Elio, davanti al mausoleo di Adriano."},
  {id:'velo536', da:536.2, a:537.3, bruciati:0, fuochi:[], velo:true,      // Procopio, Guerre IV 14; Cassiodoro, Variae XII 25. La didascalia è quella dell'assedio, che viene dopo nell'elenco
   testo:"536 · Per più di un anno il sole resta velato e non scalda."},
  {id:'assedio537', da:537, a:538.2, bruciati:0, fuochi:[], campi:true,
@@ -230,7 +238,7 @@ var SCHEDE={
   adriano:{cosa:"Tomba di Adriano e dei suoi successori.", date:[[139,"Completato."],["III-V sec.","Inglobato nelle difese della città (sotto Aureliano o sotto Onorio: le fonti divergono)."],[537,"Gli assediati lanciano le statue sui Goti."]]},
   laterano:{cosa:"La cattedrale di Roma, voluta da Costantino.", date:[[318,"Consacrata il 9 novembre 318 secondo gli studi recenti; nel 324 secondo la tradizione."],[410,"I Goti portano via il grande baldacchino d'argento."],[455,"I Vandali asportano gli arredi; papa Leone I fa rifare i vasi sacri."]]},
   pietro:{cosa:"Basilica costantiniana sulla tomba dell'apostolo, fuori le mura.", date:[[320,"Inizio dei lavori, verso il 319-322; finita attorno alla metà del secolo."],[410,"Alarico la rispetta, con San Paolo, come luogo d'asilo."],[500,"Papa Simmaco costruisce residenze ai due lati dell'atrio, fontane e ospizi per i poveri."],[727,"Nasce la Schola Saxonum, primo ospizio di una nazione di pellegrini."],[800,"Carlo Magno vi è incoronato imperatore."],[846,"Saccheggiata dai Saraceni: pochi anni dopo sarà chiusa dentro le mura leonine."]]},
-  mura:{cosa:"Diciannove chilometri di cinta: Roma non aveva mura in uso da secoli.", date:[[271,"Iniziate da Aureliano, finite sotto Probo."],[403,"Onorio ne raddoppia l'altezza."],[546,"Totila ne abbatte dei tratti (un terzo secondo Procopio, che forse esagera); nel 547 Belisario richiude le brecce in venticinque giorni."],[715,"Papa Gregorio II avvia il restauro; Gregorio III ne rifà gran parte a sue spese, Adriano I lo prosegue per tutto il pontificato."]]},
+  mura:{cosa:"Diciannove chilometri di cinta: Roma non aveva mura in uso da secoli.", date:[[271,"Iniziate da Aureliano, finite sotto Probo."],[403,"Sotto Onorio, fra il 401 e il 403, mura, porte e torri vengono restaurate (lo dicono le iscrizioni sulle porte). Il raddoppio dell'altezza è attribuito da alcuni a questi lavori, da altri a Massenzio: qui lo si mostra sotto Onorio."],[546,"Totila ne abbatte dei tratti (un terzo secondo Procopio, che forse esagera); nel 547 Belisario richiude le brecce in venticinque giorni."],[715,"Papa Gregorio II avvia il restauro; Gregorio III ne rifà gran parte a sue spese, Adriano I lo prosegue per tutto il pontificato."]]},
   acquedotti:{cosa:"Undici condotti che portavano l'acqua a terme, fontane e mulini.", date:[[537,"Tagliati dai Goti durante l'assedio."],[554,"La Prammatica Sanzione di Giustiniano conferma i fondi per riparare gli acquedotti: è una norma, non la prova di lavori fatti. Verso il 600 papa Gregorio Magno scrive che sono trascurati al punto da rischiare la rovina."],[780,"Papa Adriano I (772-795) ne fa riparare quattro (Liber Pontificalis). La Sabbatina, l'antica Traiana, era rotta da vent'anni, con cento arcate a terra: torna a servire San Pietro e i mulini del Gianicolo. La Iovia, anch'essa ferma da vent'anni, è forse un ramo della Marcia. La Claudia riporta l'acqua al Laterano; della Vergine entrava pochissima acqua, e dopo i lavori disseta quasi tutta la città. Gli anni precisi non sono scritti: verso il 776 è una deduzione degli studiosi."]]},
   sole:{cosa:"Tempio del Sole Invitto.", date:[[274,"Dedicato da Aureliano il 25 dicembre 274, dopo la vittoria su Palmira."],[392,"Vietati i culti pagani."]]},
   arcocostantino:{cosa:"Arco trionfale accanto al Colosseo.", date:[[315,"Inaugurato il 25 luglio 315, dedicato dal Senato per la vittoria su Massenzio. Molti rilievi vengono da monumenti di Traiano, Adriano e Marco Aurelio: probabilmente presi dai depositi dello Stato più che da edifici ancora in piedi."]]},
@@ -251,9 +259,10 @@ var SCHEDE={
   marcello:{cosa:"Teatro voluto da Augusto, fra il Campidoglio e il Tevere.", date:[[370,"Parte dei suoi travertini serve a restaurare il ponte Cestio: è il più antico caso documentato di un monumento di Roma usato come cava."],[421,"Vi si collocano ancora statue: il teatro è in piedi e frequentato."]]},
   mulini:{cosa:"Mulini montati su barche ancorate nella corrente del Tevere.", date:[[537,"Tagliati gli acquedotti, i mulini del Gianicolo si fermano: Belisario fa legare coppie di barche subito sotto un ponte, con la ruota sospesa in mezzo (Procopio). Il ponte è probabilmente quello dove oggi c'è ponte Sisto."],["VIII-IX sec.","I mulini del Gianicolo tornano a macinare quando Adriano I ripara l'acquedotto che li muove, rotto da vent'anni (Liber Pontificalis). Che funzionassero già nel VII secolo lo dice un solo manoscritto, per papa Onorio I. Per i mulini sul fiume in questi secoli mancano documenti, ma resteranno sul Tevere fino al 1870."]]},
   casenerva:{cosa:"Due case signorili ai lati della strada che attraversa il foro di Nerva.", date:[["prima","Il foro è ridotto a una strada: sul pavimento spogliato restano i solchi dei carri."],[850,"In pieno IX secolo sorgono le due case. La maggiore misura circa dieci metri per diciannove: piano terra in blocchi antichi con portico ad archi, piano superiore in mattoni, scala esterna di marmo di recupero."],["XI sec.","Abbandonate."]]},
+  testaccio:{cosa:"Collina artificiale fatta di cocci: le anfore dell'olio sbarcate al porto sul Tevere e rotte qui, disposte a terrazze. Alta 35 metri, con quasi un chilometro di giro e i resti stimati di 53 milioni di anfore; in antico era probabilmente più alta.", date:[["I sec. a.C.?","Non si sa quando comincia lo scarico: gli strati più bassi non sono stati scavati. Quelli datati vanno dal 140 al 250 circa."],["fine II sec.","Il momento di massimo: fino a 130.000 anfore l'anno, quasi tutte dalla Betica, nel sud della Spagna, per l'olio distribuito dallo Stato."],["dopo il 260","Lo scarico si ferma. L'olio viaggia ormai in contenitori diversi, e forse cambiano gli approdi: la ragione non è certa."],["poi","La zona attorno resta dentro le mura ma si svuota. Che sul monte crescesse l'erba già in questi secoli è una nostra supposizione; nel Medioevo vi si terranno i giochi del carnevale."]]},
   cosma:{cosa:"Chiesa ricavata in un'aula del tempio della Pace.", date:[[527,"Voluta da papa Felice IV (526-530) in edifici donati da Teodorico e Amalasunta: è il primo luogo di culto cristiano nell'area del Foro."]]}
 };
-var MURA_ALTE=[[0,0],[270,0],[276,1],[400,1],[404,1.5]];   // rialzate nel 401-403
+var MURA_ALTE=[[0,0],[270,0],[276,1],[400,1],[404,1.5]];   // rialzate nel 401-403 (o già sotto Massenzio: discusso)
 
 function interp(punti,x){
   if(x<=punti[0][0]) return punti[0][1];

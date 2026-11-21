@@ -25,7 +25,7 @@ Convenzioni: 1 unità = 10 m; origine al Foro Romano (41.8925 N, 12.4853 E); x v
 
 ## Lavorare
 
-- Anteprima: `python -m http.server 8766` (configurazione `caduta` in `.claude/launch.json`). Il server non invalida la cache: prima di ricaricare, `fetch(file,{cache:'reload'})`.
+- Anteprima: `python -m http.server 8766` (configurazione `caduta` in `.claude/launch.json`). Il server non invalida la cache: prima di ricaricare, `fetch(src,{cache:'reload'})` con l'indirizzo esatto dei tag `<script>` e `<link>` (hanno `?v=…` in coda: senza, si rinfresca un'altra voce della cache).
 - Controllo sintassi: `node --check js/<file>.js`.
 - Fra due tappe il tempo scorre in meno di due secondi: un evento si vede solo se cade nell'anno di una tappa.
 - Se il pannello di anteprima è nascosto le animazioni non girano: per vedere un fotogramma chiamare a mano `RM.frame.forEach(f=>f(.1))`.

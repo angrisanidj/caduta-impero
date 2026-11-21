@@ -1,0 +1,7 @@
+[out:json][timeout:90];
+(
+  nwr["name"~"Monte Testaccio|Monte dei Cocci|Porticus Aemilia|Emporium|Emporio|Horrea|Crypta Balbi|Arco di Druso|Acquedotto Antoniniano|Aqua Antoniniana|Teatro di Balbo"](41.865,12.465,41.900,12.510);
+  nwr["historic"="aqueduct"](41.860,12.490,41.885,12.550);
+  nwr["natural"="peak"](41.870,12.470,41.880,12.480);
+);
+out tags center bb;

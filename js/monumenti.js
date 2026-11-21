@@ -90,6 +90,8 @@ var LEO=(function(){ var L=[[-163,-120],[-233.3,-121],[-250,-124],[-272,-127],[-
 /* dal mondo al riferimento locale del gruppo dei Fori (origine 3,-8; rotazione -.35): così gli edifici si scrivono con le loro coordinate di scena reali */
 function LF(x,z){ var dx=x-3, dz=z+8, c=Math.cos(-.35), s=Math.sin(-.35); return [dx*c-dz*s, dx*s+dz*c]; }
 function inForo(B,x,z,ry,fn){ var p=LF(x,z); return B.dentro(p[0],0,p[1],ry||0,fn); }
+/* Monte Testaccio: contorno reale (OpenStreetMap, way 23921018), in coordinate relative al centro (-84,184). */
+var TESTACCIO=[[-94.7,181.4],[-94.6,183.1],[-94.5,185],[-93.8,186.7],[-92.8,188.5],[-91.8,189.8],[-90.4,191.2],[-89.5,191.8],[-88.6,192],[-86,193.1],[-83.9,195.9],[-82.1,198.6],[-80.6,199.3],[-78.9,199.1],[-77.3,198.5],[-75.8,197.5],[-74.6,195.9],[-73,192.1],[-72.8,190.6],[-73.2,188],[-74,186.1],[-75.2,182.4],[-76.2,180.1],[-76.8,177.8],[-76.9,176.1],[-76.4,174.3],[-77,171.1],[-78,169.1],[-78.2,168.6],[-94.5,177.4],[-94.7,179.1]].map(function(p){ return [p[0]+84,p[1]-184]; });
 /* ---------- elenco ---------- */
 var M=[
  {id:'colosseo', nome:'Colosseo', x:57,z:26, ry:-.3, zone:[[0,0,14.5]], et:1, fa:function(B){
@@ -252,6 +254,12 @@ var M=[
     casa(B,.1,-2.2,.2,3.4,2.2,1.7); B.aperture(-3.6,1.33,-.8,1.33,4,.1,.75,.4);        // domus a due piani con portico ad arcate
     casa(B,.1,2.6,-.1,2.6,2,1.4);
  }},
+ {id:'testaccio', nome:'Monte Testaccio', x:-84,z:184, ry:0, zone:[[4,-10,6],[0,-3,10.5],[1,5,11],[4,11,6]], et:1, fa:function(B){       // collina di cocci d'anfora: 35 m sul piano, qui 1,8 volte tanto come gli altri rilievi
+    var H=6.3, giri=[[1,-.15],[.86,.42*H],[.72,.78*H],[.6,.95*H],[.45,H]], k, a, b;
+    function giro(s){ return TESTACCIO.map(function(p){ return [p[0]*s,p[1]*s]; }); }
+    for(k=0;k<giri.length-1;k++){ a=giri[k]; b=giri[k+1]; B.striscia(giro(a[0]),a[1],giro(b[0]),b[1],P.cocci); }
+    B.striscia(giro(.45),H,TESTACCIO.map(function(){ return [0,0]; }),H+.12,P.cocci);
+ }},
  {id:'leonine', nome:'Mura leonine', x:-215,z:-92, ry:0, zone:LEO.zone, fa:function(B){
     var y=suTerreno(-215,-92,0);
     LEO.passi.forEach(function(p,j){ var q=y(p.x,p.z); B.scatola(p.len+.15,1.35,.45,p.x,q-.3,p.z,P.tufo,p.ang); if(j%4===0) B.scatola(1,2.1,1,p.x,q-.3,p.z,P.tufo,p.ang).scatola(1.15,.12,1.15,p.x,q+1.8,p.z,P.mattone,p.ang); });
@@ -297,7 +305,7 @@ RM.statoMonumento=function(id,anno){
    c = incuria: dal 390 circa la manutenzione pubblica si dirada per tutti, e accelera dopo la chiusura. Si vede come crepe, colature, erba, coppi mancanti.
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5};
+var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, testaccio:.5};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){

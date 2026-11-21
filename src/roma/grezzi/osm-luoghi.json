@@ -1,0 +1,1351 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-21T13:02:30Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 1671721462,
+  "lat": 41.8829777,
+  "lon": 12.4763944,
+  "tags": {
+    "bench": "no",
+    "bin": "yes",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "lit": "yes",
+    "name": "Emporio",
+    "network": "ATAC",
+    "network:wikidata": "Q530087",
+    "operator": "ATAC",
+    "public_transport": "platform",
+    "ref": "70645",
+    "shelter": "no",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1675888367,
+  "lat": 41.8827621,
+  "lon": 12.4760422,
+  "tags": {
+    "bench": "no",
+    "bin": "no",
+    "bus": "yes",
+    "highway": "platform",
+    "name": "Emporio",
+    "network": "ATAC",
+    "network:wikidata": "Q530087",
+    "network:wikipedia": "it:ATAC",
+    "operator": "ATAC",
+    "public_transport": "platform",
+    "ref": "70877",
+    "shelter": "no",
+    "tactile_paving": "no",
+    "tram": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 1684931505,
+  "lat": 41.8827837,
+  "lon": 12.4764838,
+  "tags": {
+    "bench": "no",
+    "bin": "yes",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "lit": "yes",
+    "name": "Emporio",
+    "network": "ATAC",
+    "network:wikidata": "Q530087",
+    "network:wikipedia": "it:ATAC",
+    "operator": "ATAC",
+    "public_transport": "platform",
+    "ref": "70612",
+    "shelter": "no",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1753895604,
+  "lat": 41.8830600,
+  "lon": 12.4765547,
+  "tags": {
+    "bench": "no",
+    "bin": "no",
+    "bus": "yes",
+    "highway": "bus_stop",
+    "lit": "no",
+    "name": "Emporio",
+    "network": "ATAC",
+    "network:wikidata": "Q530087",
+    "operator": "ATAC",
+    "public_transport": "platform",
+    "ref": "70880",
+    "shelter": "no",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 1987147422,
+  "lat": 41.8827453,
+  "lon": 12.4760185,
+  "tags": {
+    "name": "Emporio",
+    "network": "ATAC",
+    "network:wikidata": "Q530087",
+    "network:wikipedia": "it:ATAC",
+    "operator": "ATAC",
+    "public_transport": "stop_position",
+    "railway": "tram_stop",
+    "tram": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 2339542764,
+  "lat": 41.8991505,
+  "lon": 12.4712155,
+  "tags": {
+    "addr:housenumber": "28",
+    "addr:street": "Via della Pace",
+    "amenity": "cafe",
+    "fax": "+39 06 68802938",
+    "name": "L'Emporio alla Pace",
+    "opening_hours": "Mo-Su 06:00-02:00",
+    "operator": "Simonetta Breccia",
+    "phone": "+39 06 6880 2938",
+    "ref:vatin": "IT07161991000",
+    "shop": "books"
+  }
+},
+{
+  "type": "node",
+  "id": 6330777585,
+  "lat": 41.8787204,
+  "lon": 12.4779772,
+  "tags": {
+    "addr:housenumber": "20",
+    "addr:postcode": "00153",
+    "addr:street": "Via Luca della Robbia",
+    "name": "Emporio delle Spezie",
+    "opening_hours": "Mo-Sa 09:00-13:30, 16:00-20:00",
+    "phone": "+39 0621119383",
+    "shop": "convenience",
+    "website": "https://www.emporiodellezpezie.it"
+  }
+},
+{
+  "type": "node",
+  "id": 9366038185,
+  "lat": 41.8772652,
+  "lon": 12.4759801,
+  "tags": {
+    "board_type": "history",
+    "information": "board",
+    "name": "Monte Testaccio",
+    "operator": "Il Museo diffuso del Rione Testaccio",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 9366053219,
+  "lat": 41.8800826,
+  "lon": 12.4737212,
+  "tags": {
+    "board_type": "history",
+    "information": "board",
+    "name": "Porticus Aemilia",
+    "operator": "Il Museo diffuso del Rione Testaccio",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 9366053220,
+  "lat": 41.8791331,
+  "lon": 12.4721426,
+  "tags": {
+    "board_type": "history",
+    "information": "board",
+    "name": "Porticus Aemilia",
+    "operator": "Il Museo diffuso del Rione Testaccio",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 9366053221,
+  "lat": 41.8816996,
+  "lon": 12.4739363,
+  "tags": {
+    "board_type": "history",
+    "information": "board",
+    "name": "Emporium",
+    "operator": "Il Museo diffuso del Rione Testaccio",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 9366053222,
+  "lat": 41.8828115,
+  "lon": 12.4754887,
+  "tags": {
+    "board_type": "history",
+    "information": "board",
+    "name": "Emporium",
+    "operator": "Il Museo diffuso del Rione Testaccio",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 9501019637,
+  "lat": 41.8827786,
+  "lon": 12.4760476,
+  "tags": {
+    "amenity": "taxi",
+    "name": "Taxi Emporio 060609"
+  }
+},
+{
+  "type": "node",
+  "id": 11495762804,
+  "lat": 41.8744243,
+  "lon": 12.5064626,
+  "tags": {
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "name": "Resti dell'Acquedotto Antoniniano"
+  }
+},
+{
+  "type": "node",
+  "id": 12813664034,
+  "lat": 41.8916472,
+  "lon": 12.4881989,
+  "tags": {
+    "archaeological_site": "storage",
+    "description": "remains of the Imperial Roman spice storage",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Horrea Piperataria",
+    "url": "https://www.artribune.com/arti-visive/archeologia-arte-antica/2024/12/horrea-piperataria-foro-roma-parco-colosseo-apertura/"
+  }
+},
+{
+  "type": "way",
+  "id": 23266158,
+  "bounds": {
+    "minlat": 41.8824956,
+    "minlon": 12.4754530,
+    "maxlat": 41.8826453,
+    "maxlon": 12.4762442
+  },
+  "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23921018,
+  "bounds": {
+    "minlat": 41.8745651,
+    "minlon": 12.4738733,
+    "maxlat": 41.8773284,
+    "maxlon": 12.4765088
+  },
+  "tags": {
+    "alt_name": "Monte de' Cocci",
+    "area": "yes",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Monte Testaccio",
+    "website": "https://www.sovraintendenzaroma.it/i_luoghi/roma_antica/monumenti/monte_testaccio",
+    "wikidata": "Q781595",
+    "wikimedia_commons": "Category:Monte Testaccio",
+    "wikipedia": "en:Monte Testaccio"
+  }
+},
+{
+  "type": "way",
+  "id": 23999011,
+  "bounds": {
+    "minlat": 41.8601322,
+    "minlon": 12.5430841,
+    "maxlat": 41.8602838,
+    "maxlon": 12.5431666
+  },
+  "tags": {
+    "building": "ruins",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 26172814,
+  "bounds": {
+    "minlat": 41.8828352,
+    "minlon": 12.4757262,
+    "maxlat": 41.8828540,
+    "maxlon": 12.4757508
+  },
+  "tags": {
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 26172815,
+  "bounds": {
+    "minlat": 41.8824956,
+    "minlon": 12.4757262,
+    "maxlat": 41.8828352,
+    "maxlon": 12.4762442
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 29017104,
+  "bounds": {
+    "minlat": 41.8751726,
+    "minlon": 12.4744050,
+    "maxlat": 41.8752757,
+    "maxlon": 12.4748027
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "source": "survey",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 29017105,
+  "bounds": {
+    "minlat": 41.8744965,
+    "minlon": 12.4748027,
+    "maxlat": 41.8767813,
+    "maxlon": 12.4766767
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "source": "survey"
+  }
+},
+{
+  "type": "way",
+  "id": 29017106,
+  "bounds": {
+    "minlat": 41.8752757,
+    "minlon": 12.4741579,
+    "maxlat": 41.8754686,
+    "maxlon": 12.4744050
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 29017107,
+  "bounds": {
+    "minlat": 41.8750310,
+    "minlon": 12.4744536,
+    "maxlat": 41.8751726,
+    "maxlon": 12.4748027
+  },
+  "tags": {
+    "highway": "service",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "source": "survey",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 29017108,
+  "bounds": {
+    "minlat": 41.8750310,
+    "minlon": 12.4741579,
+    "maxlat": 41.8754686,
+    "maxlon": 12.4744536
+  },
+  "tags": {
+    "highway": "service",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 29017110,
+  "bounds": {
+    "minlat": 41.8747682,
+    "minlon": 12.4744536,
+    "maxlat": 41.8750310,
+    "maxlon": 12.4746349
+  },
+  "tags": {
+    "highway": "service",
+    "name": "Via di Monte Testaccio",
+    "source": "survey",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 97165960,
+  "bounds": {
+    "minlat": 41.8823756,
+    "minlon": 12.4765034,
+    "maxlat": 41.8824856,
+    "maxlon": 12.4766189
+  },
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 97165974,
+  "bounds": {
+    "minlat": 41.8824856,
+    "minlon": 12.4765034,
+    "maxlat": 41.8826228,
+    "maxlon": 12.4765959
+  },
+  "tags": {
+    "access": "no",
+    "foot": "yes",
+    "highway": "service",
+    "lanes:psv": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 113758266,
+  "bounds": {
+    "minlat": 41.8709452,
+    "minlon": 12.5387042,
+    "maxlat": 41.8714819,
+    "maxlon": 12.5393485
+  },
+  "tags": {
+    "barrier": "wall",
+    "historic": "aqueduct",
+    "name": "Acqua Marcia",
+    "ruins": "yes",
+    "wikidata": "Q622943",
+    "wikipedia": "en:Aqua Marcia"
+  }
+},
+{
+  "type": "way",
+  "id": 121395873,
+  "bounds": {
+    "minlat": 41.8824856,
+    "minlon": 12.4763604,
+    "maxlat": 41.8833679,
+    "maxlon": 12.4765034
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 121396713,
+  "bounds": {
+    "minlat": 41.8823062,
+    "minlon": 12.4764014,
+    "maxlat": 41.8823897,
+    "maxlon": 12.4765053
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 121897308,
+  "bounds": {
+    "minlat": 41.8824303,
+    "minlon": 12.4764501,
+    "maxlat": 41.8824856,
+    "maxlon": 12.4765034
+  },
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv:backward": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 122106655,
+  "bounds": {
+    "minlat": 41.8823897,
+    "minlon": 12.4764014,
+    "maxlat": 41.8824303,
+    "maxlon": 12.4764501
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv:backward": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 122106671,
+  "bounds": {
+    "minlat": 41.8823236,
+    "minlon": 12.4764501,
+    "maxlat": 41.8824303,
+    "maxlon": 12.4765564
+  },
+  "tags": {
+    "access": "no",
+    "highway": "service",
+    "name": "Piazza dell'Emporio",
+    "oneway": "no",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 125241566,
+  "bounds": {
+    "minlat": 41.8940225,
+    "minlon": 12.4783850,
+    "maxlat": 41.8948449,
+    "maxlon": 12.4796415
+  },
+  "tags": {
+    "area": "yes",
+    "historic": "archaeological_site",
+    "name": "Crypta Balbi",
+    "toilets:wheelchair": "yes",
+    "tourism": "attraction",
+    "wheelchair": "limited",
+    "wikidata": "Q3005742",
+    "wikimedia_commons": "Category:Crypta Balbi",
+    "wikipedia": "it:Crypta Balbi"
+  }
+},
+{
+  "type": "way",
+  "id": 125241600,
+  "bounds": {
+    "minlat": 41.8944447,
+    "minlon": 12.4783850,
+    "maxlat": 41.8948449,
+    "maxlon": 12.4785407
+  },
+  "tags": {
+    "building": "yes",
+    "name": "Museo Nazionale Romano - Crypta Balbi",
+    "note": "Biglietto unico valido per 4 siti (Palazzo Massimo, Palazzo Altemps, Crypta Balbi, Terme di Diocleziano).",
+    "opening_hours": "Mo-Su 09:00-19:45; Mo off; Jan 1 off; May 1 off; Dec 25 off",
+    "phone": "+39 06 6977671",
+    "toilets:wheelchair": "yes",
+    "tourism": "museum",
+    "website": "http://archeoroma.beniculturali.it/musei/museo-nazionale-romano-crypta-balbi",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 129170807,
+  "bounds": {
+    "minlat": 41.8824303,
+    "minlon": 12.4757944,
+    "maxlat": 41.8828869,
+    "maxlon": 12.4764501
+  },
+  "tags": {
+    "access": "no",
+    "highway": "service",
+    "lanes:psv": "1",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 184476495,
+  "bounds": {
+    "minlat": 41.8751803,
+    "minlon": 12.5406219,
+    "maxlat": 41.8753388,
+    "maxlon": 12.5413188
+  },
+  "tags": {
+    "barrier": "wall",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman"
+  }
+},
+{
+  "type": "way",
+  "id": 184476498,
+  "bounds": {
+    "minlat": 41.8753787,
+    "minlon": 12.5414368,
+    "maxlat": 41.8760398,
+    "maxlon": 12.5453637
+  },
+  "tags": {
+    "barrier": "wall",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman"
+  }
+},
+{
+  "type": "way",
+  "id": 190028514,
+  "bounds": {
+    "minlat": 41.8754686,
+    "minlon": 12.4738643,
+    "maxlat": 41.8759043,
+    "maxlon": 12.4741579
+  },
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 190639859,
+  "bounds": {
+    "minlat": 41.8823897,
+    "minlon": 12.4762442,
+    "maxlat": 41.8824956,
+    "maxlon": 12.4764014
+  },
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200237031,
+  "bounds": {
+    "minlat": 41.8823154,
+    "minlon": 12.4765959,
+    "maxlat": 41.8826228,
+    "maxlon": 12.4766779
+  },
+  "tags": {
+    "access": "no",
+    "foot": "yes",
+    "highway": "service",
+    "lanes:psv": "1",
+    "lit": "yes",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200237033,
+  "bounds": {
+    "minlat": 41.8826228,
+    "minlon": 12.4765127,
+    "maxlat": 41.8834589,
+    "maxlon": 12.4766776
+  },
+  "tags": {
+    "access": "no",
+    "bus": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "lanes:psv": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "psv": "yes",
+    "service": "bus",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200237249,
+  "bounds": {
+    "minlat": 41.8823236,
+    "minlon": 12.4764014,
+    "maxlat": 41.8823897,
+    "maxlon": 12.4765564
+  },
+  "tags": {
+    "access": "no",
+    "highway": "service",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 234894452,
+  "bounds": {
+    "minlat": 41.8737415,
+    "minlon": 12.5013656,
+    "maxlat": 41.8738074,
+    "maxlon": 12.5015081
+  },
+  "tags": {
+    "building": "arch",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "man_made": "arch",
+    "name": "Arco di Druso",
+    "wikidata": "Q1107952",
+    "wikimedia_commons": "Category:Arch of Drusus (Rome)",
+    "wikipedia": "it:Arco di Druso"
+  }
+},
+{
+  "type": "way",
+  "id": 240248082,
+  "bounds": {
+    "minlat": 41.8760681,
+    "minlon": 12.5454977,
+    "maxlat": 41.8763579,
+    "maxlon": 12.5462319
+  },
+  "tags": {
+    "barrier": "wall",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman"
+  }
+},
+{
+  "type": "way",
+  "id": 243044347,
+  "bounds": {
+    "minlat": 41.8691056,
+    "minlon": 12.5270778,
+    "maxlat": 41.8859162,
+    "maxlon": 12.5407353
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 305532307,
+  "bounds": {
+    "minlat": 41.8608601,
+    "minlon": 12.5427591,
+    "maxlat": 41.8609259,
+    "maxlon": 12.5428295
+  },
+  "tags": {
+    "building": "ruins",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 305532328,
+  "bounds": {
+    "minlat": 41.8610403,
+    "minlon": 12.5426854,
+    "maxlat": 41.8611052,
+    "maxlon": 12.5427335
+  },
+  "tags": {
+    "building": "ruins",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 526492204,
+  "bounds": {
+    "minlat": 41.8668489,
+    "minlon": 12.5413326,
+    "maxlat": 41.8682830,
+    "maxlon": 12.5419741
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 801351282,
+  "bounds": {
+    "minlat": 41.8640289,
+    "minlon": 12.5424868,
+    "maxlat": 41.8640849,
+    "maxlon": 12.5424948
+  },
+  "tags": {
+    "barrier": "wall",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 801351283,
+  "bounds": {
+    "minlat": 41.8648544,
+    "minlon": 12.5420244,
+    "maxlat": 41.8663035,
+    "maxlon": 12.5423368
+  },
+  "tags": {
+    "barrier": "wall",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 801351284,
+  "bounds": {
+    "minlat": 41.8645033,
+    "minlon": 12.5424010,
+    "maxlat": 41.8646232,
+    "maxlon": 12.5424170
+  },
+  "tags": {
+    "barrier": "wall",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 801351285,
+  "bounds": {
+    "minlat": 41.8669380,
+    "minlon": 12.5407353,
+    "maxlat": 41.8691391,
+    "maxlon": 12.5419885
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 842258312,
+  "bounds": {
+    "minlat": 41.8598477,
+    "minlon": 12.5431623,
+    "maxlat": 41.8600666,
+    "maxlon": 12.5432831
+  },
+  "tags": {
+    "building": "ruins",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 842258313,
+  "bounds": {
+    "minlat": 41.8604665,
+    "minlon": 12.5429480,
+    "maxlat": 41.8606098,
+    "maxlon": 12.5430390
+  },
+  "tags": {
+    "building": "ruins",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 842260575,
+  "bounds": {
+    "minlat": 41.8546413,
+    "minlon": 12.5437702,
+    "maxlat": 41.8600601,
+    "maxlon": 12.5461160
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 842260577,
+  "bounds": {
+    "minlat": 41.8600601,
+    "minlon": 12.5429886,
+    "maxlat": 41.8620398,
+    "maxlon": 12.5437702
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 842351343,
+  "bounds": {
+    "minlat": 41.8620398,
+    "minlon": 12.5419885,
+    "maxlat": 41.8669575,
+    "maxlon": 12.5429886
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 997532476,
+  "bounds": {
+    "minlat": 41.8610420,
+    "minlon": 12.5427042,
+    "maxlat": 41.8611036,
+    "maxlon": 12.5427159
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "ruins": "yes",
+    "ruins:bridge": "aqueduct",
+    "ruins:waterway": "canal"
+  }
+},
+{
+  "type": "way",
+  "id": 1015248385,
+  "bounds": {
+    "minlat": 41.8828680,
+    "minlon": 12.4757699,
+    "maxlat": 41.8828869,
+    "maxlon": 12.4757944
+  },
+  "tags": {
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "oneway:psv": "no",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1015444846,
+  "bounds": {
+    "minlat": 41.8828540,
+    "minlon": 12.4757508,
+    "maxlat": 41.8828680,
+    "maxlon": 12.4757699
+  },
+  "tags": {
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1300090414,
+  "bounds": {
+    "minlat": 41.8608638,
+    "minlon": 12.5427724,
+    "maxlat": 41.8609173,
+    "maxlon": 12.5428013
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "ruins": "yes",
+    "ruins:bridge": "aqueduct",
+    "ruins:waterway": "canal"
+  }
+},
+{
+  "type": "way",
+  "id": 1300090416,
+  "bounds": {
+    "minlat": 41.8608681,
+    "minlon": 12.5427851,
+    "maxlat": 41.8609210,
+    "maxlon": 12.5428159
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "2",
+    "ruins": "yes",
+    "ruins:bridge": "aqueduct",
+    "ruins:waterway": "canal"
+  }
+},
+{
+  "type": "way",
+  "id": 1300090418,
+  "bounds": {
+    "minlat": 41.8610427,
+    "minlon": 12.5427141,
+    "maxlat": 41.8611044,
+    "maxlon": 12.5427248
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "2",
+    "ruins": "yes",
+    "ruins:bridge": "aqueduct",
+    "ruins:waterway": "canal"
+  }
+},
+{
+  "type": "relation",
+  "id": 1732880,
+  "bounds": {
+    "minlat": 41.8364605,
+    "minlon": 12.4938790,
+    "maxlat": 42.0129776,
+    "maxlon": 12.8924351
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "name": "Acquedotti Claudio e Anio novus",
+    "name:it": "Acquedotti Claudio e Anio novus",
+    "name:la": "Aqua Claudia et Anio Novus",
+    "route": "aqueduct",
+    "ruins": "yes",
+    "type": "site",
+    "wikipedia": "it:Acquedotto Claudio;it:Acquedotto Anio novus"
+  }
+},
+{
+  "type": "relation",
+  "id": 1842060,
+  "bounds": {
+    "minlat": 41.8907281,
+    "minlon": 12.4870487,
+    "maxlat": 41.8914318,
+    "maxlon": 12.4879200
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Horrea Vespasiani",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 5660515,
+  "bounds": {
+    "minlat": 41.8817892,
+    "minlon": 12.4738744,
+    "maxlat": 41.8829039,
+    "maxlon": 12.4754715
+  },
+  "tags": {
+    "archaeological_site": "River_port",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Emporium",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "website": "https://www.turismoroma.it/it/luoghi/emporium-antico-porto-fluviale-di-testaccio",
+    "wheelchair": "no",
+    "wikidata": "Q3053354",
+    "wikipedia": "it:Emporium"
+  }
+},
+{
+  "type": "relation",
+  "id": 11077947,
+  "bounds": {
+    "minlat": 41.8710148,
+    "minlon": 12.5406219,
+    "maxlat": 41.8884884,
+    "maxlon": 12.7325333
+  },
+  "tags": {
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "name": "Acquedotto Alessandrino",
+    "old_name": "Aqua Alexandrina",
+    "start_date": "226",
+    "type": "site"
+  }
+},
+{
+  "type": "relation",
+  "id": 13383818,
+  "bounds": {
+    "minlat": 41.8453742,
+    "minlon": 12.5148492,
+    "maxlat": 41.8925352,
+    "maxlon": 12.5650760
+  },
+  "tags": {
+    "historic": "aqueduct",
+    "name": "Acquedotto Felice",
+    "start_date": "1586",
+    "type": "site",
+    "wikidata": "Q14456361",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "relation",
+  "id": 13426221,
+  "bounds": {
+    "minlat": 41.8905148,
+    "minlon": 12.4846917,
+    "maxlat": 41.8911440,
+    "maxlon": 12.4854410
+  },
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Horrea Agrippiana",
+    "name:ru": "Склады Агриппы",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q3786801",
+    "wikipedia": "it:Horrea Agrippiana"
+  }
+},
+{
+  "type": "relation",
+  "id": 13475787,
+  "bounds": {
+    "minlat": 41.8823226,
+    "minlon": 12.4755824,
+    "maxlat": 41.8833121,
+    "maxlon": 12.4767324
+  },
+  "tags": {
+    "name": "Piazza dell'Emporio",
+    "place": "square",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 17192321,
+  "bounds": {
+    "minlat": 41.8794659,
+    "minlon": 12.4730008,
+    "maxlat": 41.8802375,
+    "maxlon": 12.4738403
+  },
+  "tags": {
+    "description": "building remains with arches near the Emporium, the port of the Ancient Repubblican Rome",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "historic:period": "roman_republic",
+    "name": "Porticus Aemilia",
+    "operator": "Soprintendenza speciale per i beni archeologici di Roma",
+    "start_date": "193 BC",
+    "type": "multipolygon",
+    "wikidata": "Q2366205",
+    "wikipedia": "it:Porticus Aemilia"
+  }
+}
+
+  ]
+}
