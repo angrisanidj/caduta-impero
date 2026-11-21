@@ -30,6 +30,27 @@ var citta=el('g',{'class':'m-citta'},svg);
   el('text',{x:c.x+(sinistra?7:-7),y:c.y+(id==='milano'?-7:id==='roma'?14:4),'text-anchor':sinistra?'start':'end'},citta).textContent=c.nome;
 });
 
+/* I popoli: ciascuno è una nuvola di punti che sta dove stava il grosso del gruppo e ha il colore del suo rapporto con Roma in quel momento.
+   Niente frecce: fra una tappa e l'altra la nuvola si sposta. */
+var RAPPORTI=[['fuori','oltre il confine'],['accolti','ammessi nell\'impero'],['federati','alleati per trattato'],['armi','in armi dentro l\'impero'],['regno','un regno proprio']];
+var popoli={}, stratoPopoli=el('g',{'class':'m-popoli'},svg);
+Object.keys(G.popoli||{}).forEach(function(id,k){
+  var q=G.popoli[id], g=el('g',{'class':'m-popolo fuori'},stratoPopoli), n=q.peso*3, i, s=k*97+13;
+  function caso(){ s=(s*16807+7)%2147483647; return s/2147483647; }
+  for(i=0;i<n;i++){ var a=caso()*6.283, r=Math.sqrt(caso())*(5+q.peso*1.5); el('circle',{cx:(Math.cos(a)*r).toFixed(1),cy:(Math.sin(a)*r*.72).toFixed(1),r:(1.5+caso()*1.2).toFixed(1)},g); }
+  var t=el('text',{y:-(9+q.peso*1.3)},g); t.textContent=q.nome;
+  popoli[id]={g:g,t:t,q:q};
+});
+function mostraPopoli(anno){
+  for(var id in popoli){
+    var p=popoli[id], q=p.q, k=-1, i; for(i=0;i<q.t.length;i++) if(anno>=q.t[i][0]) k=i;
+    var c=k<0?'via':anno>q.fine?'via':q.t[k][3], v=q.t[Math.max(0,k)], nome=q.nome;
+    for(i=0;i<q.poi.length;i++) if(anno>=q.poi[i][0]) nome=q.poi[i][1];
+    p.g.setAttribute('class','m-popolo '+c); p.g.style.transform='translate('+v[1]+'px,'+v[2]+'px)';
+    if(p.t.textContent!==nome) p.t.textContent=nome;
+  }
+}
+
 var legenda=document.getElementById('legendaMappa');
 STATI.forEach(function(s){
   var v=document.createElement('span'), i=document.createElement('i');
@@ -38,8 +59,12 @@ STATI.forEach(function(s){
   v.appendChild(i); v.appendChild(document.createTextNode(s[1])); legenda.appendChild(v);
 });
 
+var legendaPopoli=document.getElementById('legendaPopoli');
+if(legendaPopoli && G.popoli) RAPPORTI.forEach(function(r){ var v=document.createElement('span'), i=document.createElement('i'); i.className='p-'+r[0]; v.appendChild(i); v.appendChild(document.createTextNode(r[1])); legendaPopoli.appendChild(v); });
+
 window.RM_mappa={
-  mostra:function(stati){
+  mostra:function(stati,anno){
+    if(anno!=null) mostraPopoli(anno);
     for(var id in regioni){
       var s=stati[id]||'perso';
       regioni[id].setAttribute('class','m-regione '+s);

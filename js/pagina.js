@@ -130,7 +130,7 @@ function vai(i,subito){
   $('tStorici').hidden=!t.storici; $('tStoriciTesto').textContent=t.storici||'';
   var voci=t.voci||[], bv=$('tVoci'); $('tVoce').hidden=!voci.length; bv.textContent=''; $('tVoceTitolo').textContent=voci.length>1?'Voci di allora':'Una voce di allora';      // parole dei contemporanei, tradotte dalla fonte
   voci.forEach(function(v){ var q=document.createElement('blockquote'), c=document.createElement('p'); q.textContent=v.testo; c.className='chi'; c.textContent=v.chi; bv.appendChild(q); bv.appendChild(c); });
-  if(MAPPA) MAPPA.mostra(t.regioni);
+  if(MAPPA) MAPPA.mostra(t.regioni,t.anno);
   bottoni.forEach(function(b,k){ b.setAttribute('aria-current',k===idx?'true':'false'); b.classList.toggle('passata',k<idx); });
   gruppi.forEach(function(g,k){ g.g.classList.toggle('attivo',k===Math.min(t.atto,gruppi.length-1)); });
   $('btnPrima').disabled=idx===0; $('btnDopo').disabled=idx===T.length-1;

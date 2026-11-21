@@ -296,3 +296,25 @@ body.roma-grande .riquadro.roma.confronto-attivo .evento{bottom:calc(var(--tempo
 body.tocco:not(.roma-grande) #btnPiu,body.tocco:not(.roma-grande) #btnMeno,body.tocco:not(.roma-grande) #btnInsieme{display:none}
 body.tocco:not(.roma-grande) .esplora{display:block;position:absolute;left:10px;bottom:10px;z-index:5;font-family:var(--cap);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--gold2);border:0;border-radius:999px;padding:10px 14px;box-shadow:0 2px 8px rgba(0,0,0,.35)}
 body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bottom:62px}
+
+/* ---------- i popoli sulla mappa ---------- */
+.m-popolo{transition:transform 1.8s ease,opacity .8s ease}
+.m-popolo circle{stroke:rgba(43,36,32,.55);stroke-width:.5;transition:fill .9s ease}
+.m-popolo text{font-family:var(--serif);font-style:italic;font-size:11.5px;text-anchor:middle;fill:var(--ink);paint-order:stroke;stroke:rgba(251,246,234,.9);stroke-width:2.6px}
+.m-popolo.via{opacity:0}
+.m-popolo.fuori circle,.legenda-popoli .p-fuori{fill:#2B2420;background:#2B2420}
+.m-popolo.accolti circle,.legenda-popoli .p-accolti{fill:#E9DFA6;background:#E9DFA6}
+.m-popolo.federati circle,.legenda-popoli .p-federati{fill:#8FB36F;background:#8FB36F}
+.m-popolo.armi circle,.legenda-popoli .p-armi{fill:#E0612F;background:#E0612F}
+.m-popolo.regno circle,.legenda-popoli .p-regno{fill:#7FB2D0;background:#7FB2D0}
+.legenda-popoli{position:absolute;left:10px;top:8px;right:10px;width:fit-content;max-width:calc(100% - 20px);margin:0;padding:4px 8px;display:flex;flex-wrap:wrap;gap:3px 12px;align-items:center;font-size:12.5px;background:rgba(251,246,234,.86);border-radius:6px}
+.legenda-popoli b{font-family:var(--cap);font-weight:600;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.legenda-popoli span{display:inline-flex;align-items:center;gap:5px}
+.legenda-popoli i{width:10px;height:10px;border-radius:50%;border:1px solid rgba(43,36,32,.45)}
+@media (prefers-reduced-motion:reduce){ .m-popolo{transition:none} }
+@media (max-width:860px){ .legenda-popoli{position:static;width:auto;max-width:none;background:none;border-top:1px solid var(--line);border-radius:0;padding:6px 10px 8px} }
+/* le due legende della mappa stanno sotto la carta, non sopra: su schermi piccoli la coprivano */
+.riquadro.impero{aspect-ratio:auto;display:flex;flex-direction:column}
+#mappa{aspect-ratio:1000/640;height:auto;flex:none}
+.legenda-mappa,.legenda-popoli{position:static;width:auto;max-width:none;background:none;border-radius:0;padding:6px 10px;border-top:1px solid var(--line);font-size:12.5px;gap:3px 12px}
+.legenda-popoli em{color:var(--muted);font-size:12px}
