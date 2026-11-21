@@ -101,19 +101,22 @@ const CITTA = { roma: [12.48, 41.89, 'Roma'], ravenna: [12.2, 44.42, 'Ravenna'],
 /* I popoli in movimento: dove sta il grosso di ciascun gruppo, anno per anno, e in che rapporto è con Roma. [anno, lon, lat, rapporto].
    Rapporti: fuori (oltre il confine, senza patto) | accolti (ammessi dentro l'impero) | federati (patto: terre o paghe in cambio di soldati) |
    armi (in guerra dentro l'impero) | regno (un regno proprio su terre che erano di Roma).
-   PROVVISORIO: tappe e posizioni sono scritte a memoria sulla base dei manuali correnti (Heather, Halsall, Wickham) e NON sono ancora state verificate una per una.
+   Riveduti il 21 novembre 2026 (elenco delle fonti in testa a js/dati.js). Letti: Bury V e VI (Alarico in Epiro per conto di Stilicone nel 405-407; i Pirenei passati nell'autunno 409),
+   Bury VIII (lo stretto nel maggio 429, Ippona nel 430: dove fossero i Vandali a fine 429 non si sa, il punto è a mezza strada), Beda I 15 (i Sassoni accolti e poi in armi).
+   A memoria: la spartizione della Hispania nel 411 e i Vandali in Gallaecia fino al 420 (Idazio), i Franchi in Toxandria nel 358 (Ammiano XVII 8),
+   i Longobardi a Cividale nel 568 e a Pavia nel 572 (Paolo Diacono II). Le date in cui un popolo esce dalla mappa (`fine`) sono state ricontrollate.
    Un «popolo» qui è il nucleo armato e la sua gente, non un'etnia compatta: i punti dicono dove stava il centro di gravità, non un confine. */
 const POPOLI = {
-  goti:      { nome: 'Goti', poi: [[418, 'Visigoti']], peso: 9, t: [[235, 28, 47, 'fuori'], [251, 26.5, 43.5, 'armi'], [271, 26, 46.3, 'fuori'], [376, 27, 43.8, 'accolti'], [378, 26.6, 41.7, 'armi'], [382, 25, 43.3, 'federati'], [395, 22.5, 39.8, 'armi'], [402, 8.2, 44.8, 'armi'], [406, 15, 46.2, 'federati'], [409, 12.5, 42.3, 'armi'], [410, 12.5, 41.9, 'armi'], [418, 0.4, 44.6, 'federati'], [472, 1.4, 43.6, 'regno'], [537, -3.6, 40.2, 'regno']], fine: 711 },
+  goti:      { nome: 'Goti', poi: [[418, 'Visigoti']], peso: 9, t: [[235, 28, 47, 'fuori'], [251, 26.5, 43.5, 'armi'], [271, 26, 46.3, 'fuori'], [376, 27, 43.8, 'accolti'], [378, 26.6, 41.7, 'armi'], [382, 25, 43.3, 'federati'], [395, 22.5, 39.8, 'armi'], [402, 8.2, 44.8, 'armi'], [406, 20.7, 39.7, 'federati'], [409, 12.5, 42.3, 'armi'], [410, 12.5, 41.9, 'armi'], [418, 0.4, 44.6, 'federati'], [472, 1.4, 43.6, 'regno'], [537, -3.6, 40.2, 'regno']], fine: 711 },
   ostrogoti: { nome: 'Ostrogoti', peso: 8, t: [[235, 33, 47.2, 'fuori'], [378, 30, 46.5, 'fuori'], [455, 18, 46.5, 'federati'], [476, 24.5, 43.4, 'federati'], [493, 11.8, 44.6, 'regno']], fine: 554 },
-  vandali:   { nome: 'Vandali e Alani', peso: 7, t: [[235, 20, 49.6, 'fuori'], [402, 15.5, 48.9, 'fuori'], [406, 8.3, 50, 'armi'], [409, -4.5, 38.8, 'armi'], [418, -5.5, 37.5, 'armi'], [429, 5.5, 36.4, 'armi'], [439, 10.2, 36.5, 'regno']], fine: 534 },
-  svevi:     { nome: 'Svevi', peso: 4, t: [[235, 11.5, 50.3, 'fuori'], [406, 8, 49.6, 'armi'], [409, -8, 42.4, 'armi'], [418, -8, 42.4, 'regno']], fine: 585 },
+  vandali:   { nome: 'Vandali e Alani', peso: 7, t: [[235, 20, 49.6, 'fuori'], [402, 15.5, 48.9, 'fuori'], [406, 8.3, 50, 'armi'], [409, -1.6, 42.8, 'armi'], [418, -6.5, 42.5, 'armi'], [420, -5.5, 37.5, 'armi'], [429, 5.5, 36.4, 'armi'], [439, 10.2, 36.5, 'regno']], fine: 534 },
+  svevi:     { nome: 'Svevi', peso: 4, t: [[235, 11.5, 50.3, 'fuori'], [406, 8, 49.6, 'armi'], [409, -3.6, 42.3, 'armi'], [411, -8, 42.4, 'armi'], [418, -8, 42.4, 'regno']], fine: 585 },
   burgundi:  { nome: 'Burgundi', peso: 4, t: [[235, 14.5, 51.5, 'fuori'], [357, 10, 50, 'fuori'], [418, 8.4, 49.6, 'federati'], [451, 6.1, 46.2, 'federati'], [472, 4.9, 45.8, 'regno']], fine: 534 },
-  franchi:   { nome: 'Franchi', peso: 7, t: [[235, 7.4, 52.2, 'fuori'], [357, 5.2, 51.4, 'federati'], [476, 3.6, 50.2, 'regno'], [493, 3.2, 49.3, 'regno'], [537, 2.4, 48.8, 'regno']], fine: 852 },
+  franchi:   { nome: 'Franchi', peso: 7, t: [[235, 7.4, 52.2, 'fuori'], [358, 5.2, 51.4, 'federati'], [476, 3.6, 50.2, 'regno'], [493, 3.2, 49.3, 'regno'], [537, 2.4, 48.8, 'regno']], fine: 852 },
   alamanni:  { nome: 'Alamanni', peso: 4, t: [[235, 10.5, 49.6, 'fuori'], [260, 9.2, 48.5, 'fuori'], [406, 8.2, 47.9, 'fuori']], fine: 506 },
   unni:      { nome: 'Unni', peso: 8, t: [[357, 44, 47.5, 'fuori'], [378, 33, 47, 'fuori'], [406, 23.5, 46.5, 'fuori'], [429, 20.2, 47, 'fuori'], [451, 4.4, 48.9, 'armi'], [452, 12.5, 45.4, 'armi'], [453, 20.2, 47, 'fuori']], fine: 455 },
-  sassoni:   { nome: 'Angli e Sassoni', peso: 4, t: [[235, 9.2, 54, 'fuori'], [409, 8.5, 53.8, 'fuori'], [451, 0.6, 52.4, 'regno']], fine: 852 },
-  longobardi:{ nome: 'Longobardi', peso: 7, t: [[235, 10.6, 53.3, 'fuori'], [493, 16.2, 48.4, 'fuori'], [546, 18, 46.9, 'federati'], [568, 9.2, 45.2, 'regno']], fine: 774 },
+  sassoni:   { nome: 'Angli e Sassoni', peso: 4, t: [[235, 9.2, 54, 'fuori'], [409, 8.5, 53.8, 'fuori'], [451, 0.6, 52.4, 'armi'], [568, 0.6, 52.4, 'regno']], fine: 852 },
+  longobardi:{ nome: 'Longobardi', peso: 7, t: [[235, 10.6, 53.3, 'fuori'], [493, 16.2, 48.4, 'fuori'], [546, 18, 46.9, 'federati'], [568, 13.4, 46.1, 'armi'], [572, 9.2, 45.2, 'regno']], fine: 774 },
   avari:     { nome: 'Avari', peso: 5, t: [[568, 19.5, 46.8, 'fuori']], fine: 796 }
 };
 const out = { w: W, h: H, terra: tracciato(TERRA), regioni: {}, citta: {}, popoli: {} };

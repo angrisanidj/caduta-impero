@@ -4,7 +4,10 @@
      Paolo Diacono; Liber Pontificalis (Duchesne); Bury, History of the Later Roman Empire. Citati a memoria dai verificatori e non riletti: Prospero, Idazio, Vittore di Vita, Malco, Giordane;
    - le tappe dal 593 all'852, gli eventi dal 663 e le schede delle chiese sono state controllate il 21 novembre 2026 sul Liber Pontificalis (Duchesne), su Paolo Diacono e sugli Annales regni Francorum;
      restano citati a memoria Gregorio Magno (Omelie su Ezechiele), Beda, il Codex Carolinus;
-   - lo stato delle regioni è una semplificazione (una regione = un colore);
+   - lo stato delle regioni (`CAMBI`) e i popoli in movimento (`POPOLI`, in src/mappa/genera.mjs) sono stati riveduti il 21 novembre 2026 su Bury, History of the Later Roman Empire
+     (capitoli V, VI, VIII, X, XII, XIX), Zosimo VI, Eutropio IX, Eugippio (Vita Severini 20 e 44), Beda I 15 e I 25. Restano a memoria: Idazio (date del 409, 411, 418-420),
+     Agazia I 6 e Procopio V 13 (Alamannia), Costantino Porfirogenito (Dalmazia), Annales regni Francorum (Avari), Paolo Diacono II (Cividale, Pavia), le date di Taranto, Bari e della Galizia.
+     È una semplificazione: una regione, un colore;
    - le schede dei monumenti antichi sono state controllate il 21 novembre 2026 (Platner-Ashby, Procopio, Ammiano, Cassiodoro, Anonimo Valesiano, Cronografo del 354,
      Liber Pontificalis, Parco archeologico del Colosseo). Non verificati sulle pubblicazioni di scavo: i cunicoli e la calcara del Colosseo, il contesto del blocco di Geronzio,
      il rocchio di Decio, la calcara e le lastre del foro di Traiano, il lastricato del foro di Cesare, le misure delle case del foro di Nerva, le sepolture nelle terme di Traiano;
@@ -27,7 +30,13 @@ var ATTI=[
    È una semplificazione dichiarata: una regione, un colore. Scelte da sapere: l'impero delle Gallie e Palmira sono «usurpatore»; la Britannia di Carausio pure (286-296);
    la Gallia del nord di Egidio e Siagrio (461-486) è «usurpatore», perché resta romana ma non obbedisce più a Ravenna; la Dalmazia resta «roma» fino al 480, con Giulio Nepote;
    i regni franchi sono «regno» fino all'800, poi «carolingio»; dal 756 Lazio ed Emilia sono «chiesa». Gli stati dell'Oriente servono solo alla linea tratteggiata del cruscotto.
-   Scritti a memoria sui manuali correnti: DA VERIFICARE. */
+   Riveduti il 21 novembre 2026 (fonti in testa al file). Scelte da sapere, dopo la verifica: nel 409 la Gallia del sud è «usurpatore» (Costantino III ad Arles, riconosciuto da Onorio per pochi mesi);
+   le Mauretanie tornano «roma» nel 451 (trattato del 442) e si perdono dopo il 455; i Franchi sono «federati» nel 458 (Childerico combatte con i generali romani) e «regno» dal 476;
+   Rezia e Norico sono «conteso» nel 476: nel Norico Odoacre comanda ancora (lo sgombera nel 488), per la Rezia non ci sono prove; nella guerra gotica Ravenna è imperiale dal 540
+   e il sud torna «conteso» con Totila (542-552); l'Alamannia passa ai Franchi nel 536-537; la Britannia è «regno» dal 568 (Etelberto del Kent regna dal 560 circa);
+   la Dalmazia è «conteso» dal 663 (Salona cade fra il 614 e il 640, le città della costa restano all'impero); la Hispania è «conteso» nel 711 perché la conquista dura fino al 718 circa,
+   la Gallaecia è presa nel 713-714, lasciata dai presidi berberi verso il 741 e unita alle Asturie da Alfonso I; la Pannonia è «conteso» nell'800 (guerre avare, 791-803);
+   nell'846 Sannio e Puglia sono «conteso» (Taranto ai Saraceni dall'840, Bari dall'847). Lo sgombero della Dacia è messo al 271, ma gli studiosi oscillano fra il 271 e il 275. */
 var OVEST=['britannia','gallia','belgica','aquitania','provenza','burgundia','hispania','gallaecia','italia_nord','ravenna','spoleto','roma','benevento','calabria','sicilia','isole','rezia','pannonia','dalmazia','africa','mauretania','decumati'],
     EST=['dacia','balcani','anatolia','levante','egitto'];
 var CAMBI={
@@ -39,26 +48,27 @@ var CAMBI={
  301:{britannia:'roma'},
  395:{balcani:'oriente',anatolia:'oriente',levante:'oriente',egitto:'oriente'},
  406:{gallia:'conteso',belgica:'conteso',britannia:'usurpatore'},
- 409:{britannia:'perso',hispania:'conteso',gallaecia:'conteso'},
- 418:{aquitania:'federati',gallia:'roma',gallaecia:'regno'},
+ 409:{britannia:'perso',hispania:'conteso',gallaecia:'conteso',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore'},
+ 418:{aquitania:'federati',gallia:'roma',gallaecia:'regno',provenza:'roma',burgundia:'roma'},
  429:{mauretania:'conteso'},
  439:{africa:'regno',pannonia:'perso'},
- 451:{burgundia:'federati'},
+ 451:{burgundia:'federati',mauretania:'roma'},
  455:{isole:'regno',mauretania:'perso',sicilia:'conteso'},
- 458:{belgica:'regno'},
+ 458:{belgica:'federati'},
  468:{sicilia:'regno',gallia:'usurpatore'},
  472:{hispania:'regno',aquitania:'regno',burgundia:'regno',provenza:'conteso'},
- 476:{italia_nord:'regno',ravenna:'regno',spoleto:'regno',roma:'regno',benevento:'regno',calabria:'regno',provenza:'regno',rezia:'perso'},
+ 476:{italia_nord:'regno',ravenna:'regno',spoleto:'regno',roma:'regno',benevento:'regno',calabria:'regno',provenza:'regno',belgica:'regno',rezia:'conteso'},
  493:{gallia:'regno',rezia:'regno',dalmazia:'regno'},
- 537:{africa:'oriente',isole:'oriente',sicilia:'oriente',dalmazia:'oriente',calabria:'oriente',benevento:'oriente',roma:'conteso',spoleto:'conteso',ravenna:'conteso',italia_nord:'conteso'},
- 568:{italia_nord:'regno',ravenna:'oriente',spoleto:'oriente',roma:'oriente'},
+ 537:{africa:'oriente',isole:'oriente',sicilia:'oriente',dalmazia:'oriente',calabria:'oriente',benevento:'oriente',roma:'conteso',spoleto:'conteso',decumati:'regno'},
+ 542:{ravenna:'oriente',italia_nord:'conteso',benevento:'conteso',calabria:'conteso'},
+ 568:{italia_nord:'regno',spoleto:'oriente',roma:'oriente',benevento:'oriente',calabria:'oriente',britannia:'regno'},
  589:{spoleto:'regno',benevento:'regno',balcani:'conteso'},
- 663:{levante:'califfato',egitto:'califfato'},
- 711:{africa:'califfato',mauretania:'califfato',hispania:'califfato',gallaecia:'califfato'},
- 727:{gallaecia:'regno'},
- 756:{ravenna:'chiesa',roma:'chiesa'},
- 800:{gallia:'carolingio',belgica:'carolingio',aquitania:'carolingio',provenza:'carolingio',burgundia:'carolingio',rezia:'carolingio',decumati:'carolingio',italia_nord:'carolingio',spoleto:'carolingio'},
- 846:{sicilia:'conteso'}
+ 663:{levante:'califfato',egitto:'califfato',dalmazia:'conteso'},
+ 711:{africa:'califfato',mauretania:'califfato',hispania:'conteso'},
+ 727:{hispania:'califfato',gallaecia:'conteso'},
+ 756:{ravenna:'chiesa',roma:'chiesa',gallaecia:'regno'},
+ 800:{gallia:'carolingio',belgica:'carolingio',aquitania:'carolingio',provenza:'carolingio',burgundia:'carolingio',rezia:'carolingio',decumati:'carolingio',italia_nord:'carolingio',spoleto:'carolingio',pannonia:'conteso'},
+ 846:{sicilia:'conteso',benevento:'conteso',pannonia:'carolingio'}
 };
 var TAPPE=[
  {anno:235, titolo:"L'imperatore ucciso dai suoi soldati", testo:"A Magonza i soldati assassinano Severo Alessandro e acclamano Massimino. In cinquant'anni si conteranno oltre venti imperatori, senza contare gli usurpatori: quasi tutti uccisi dalle proprie truppe o in battaglia."},
