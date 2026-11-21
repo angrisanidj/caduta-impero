@@ -150,7 +150,7 @@ h2{margin:2px 0 8px;font-family:var(--cap);font-weight:600;font-size:clamp(22px,
   .schede button{flex:1;font-family:var(--cap);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--carta2)}
   .schede button[aria-selected="true"]{background:var(--ink);color:var(--carta);border-color:var(--ink)}
   .scene[data-vista="impero"] .riquadro.roma,.scene[data-vista="roma"] .riquadro.impero{display:none}
-  .riquadro.roma{aspect-ratio:1000/720}
+  .riquadro.roma{aspect-ratio:1000/720;min-height:66vw}      /* min-height: sui telefoni che non conoscono aspect-ratio il riquadro, che ha solo figli assoluti, resterebbe alto zero */
   .riquadro.impero{aspect-ratio:auto}
   #mappa{aspect-ratio:1000/640;height:auto}
   .legenda-mappa{position:static;font-size:12.5px;gap:2px 10px;background:none;padding:6px 10px 8px}

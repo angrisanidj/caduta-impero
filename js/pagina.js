@@ -152,6 +152,7 @@ window.addEventListener('keydown',function(ev){ if(ev.key==='Escape'){ if(scheda
 [].forEach.call(document.querySelectorAll('.schede button'),function(b){
   b.addEventListener('click',function(){
     $('scene').setAttribute('data-vista',b.getAttribute('data-vista'));
+    window.dispatchEvent(new Event('resize'));          // il riquadro appena mostrato va rimisurato, anche dove manca ResizeObserver
     [].forEach.call(document.querySelectorAll('.schede button'),function(o){ o.setAttribute('aria-selected',o===b?'true':'false'); });
   });
 });
