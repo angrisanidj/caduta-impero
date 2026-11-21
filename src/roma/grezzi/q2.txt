@@ -1,0 +1,5 @@
+[out:json][timeout:90];
+(
+  way["highway"]["name"~"^(Via del Corso|Via Flaminia|Ponte Milvio|Via di Porta San Sebastiano|Via Appia Antica|Via Ostiense|Via Marmorata|Via della Lungaretta|Via Aurelia Antica|Via della Madonna dei Monti|Via Leonina|Via in Selci|Via di San Vito|Via Tiburtina|Via Tiburtina Antica|Via Labicana|Via Prenestina|Via Casilina|Via del Quirinale|Via Venti Settembre|Via XX Settembre|Via Nomentana|Via dei Coronari|Via delle Coppelle|Via di Porta Latina|Via Latina|Via Portuense|Via della Lungara|Via Salaria|Via dei Santi Quattro|Via di San Giovanni in Laterano|Via Urbana|Viale delle Terme di Caracalla|Via delle Terme di Caracalla|Ponte Sant'Angelo|Via di Porta San Pancrazio|Via Ardeatina|Via di San Gregorio|Via dei Cerchi|Via del Banco di Santo Spirito|Via dei Banchi Nuovi|Via del Governo Vecchio|Via di San Paolo della Croce|Via di Santo Stefano Rotondo|Via Merulana)$"](41.8385,12.413,41.9465,12.558);
+);
+out tags geom;

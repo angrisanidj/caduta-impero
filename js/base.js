@@ -1,7 +1,7 @@
 /* Base della scena: renderer, luce radente con ombre, cielo, terreno con i colli, Tevere, strade.
    Unità: 1 = 10 metri. Origine = Foro Romano (41.8925 N, 12.4853 E). x cresce verso est, z verso sud.
    Tevere, mura e quote del terreno sono dati reali (js/roma-topo.js, generato da src/roma/genera.mjs);
-   le strade sono tracciate a mano fra punti noti (porte, ponti, piazze) e sono quindi approssimate. */
+   le strade seguono le vie moderne eredi di quelle antiche, con tratti a mano dove non ce n'è una. */
 (function(){
 'use strict';
 var RM = window.RM = { moduli:[], zone:[], frame:[] };
@@ -12,23 +12,10 @@ RM.ll=function(lat,lon){ return [(lon-12.4853)*8287, -(lat-41.8925)*11113.2]; };
 var TOPO=window.RM_TOPO;
 RM.FIUME = TOPO.fiume;
 RM.MURA = TOPO.mura;
-/* vie principali: tengono liberi gli isolati e disegnano la città */
-RM.STRADE = [
-  [[-22,-37],[-77,-211],[-110,-330],[-152,-478],[-165,-600]],                       // via Lata e Flaminia, da piazza Venezia a porta del Popolo e ponte Milvio
-  [[35,61],[43,96],[134,211],[304,417],[420,560]],                                   // Appia, per porta Capena e porta San Sebastiano
-  [[-36,42],[-42,62],[-58,84],[-70,106],[-55,150],[-32,176],[-42,280],[-48,320],[-58,376],[-100,560]],  // Ostiense, lungo il fiume ai piedi dell'Aventino, per porta San Paolo
-  [[-50,36],[-110,45],[-198,46],[-300,40],[-458,28]],                                // Aurelia, da ponte Emilio a porta San Pancrazio
-  [[39,-22],[132,-36],[210,-56],[282,-98],[619,-250]],                               // Tiburtina
-  [[72,22],[160,18],[249,12],[400,30],[619,50]],                                     // Labicana e Prenestina, per porta Maggiore
-  [[24,-78],[80,-128],[139,-179],[270,-326],[420,-500]],                             // Alta Semita e Nomentana
-  [[-44,-94],[-100,-98],[-150,-100],[-157,-104],[-157,-111],[-166,-112],[-185,-112],[-215,-110],[-247,-108]],// via Recta, ponte Elio, poi verso San Pietro
-  [[13,-20],[50,-60],[85,-88]],                                                      // Vicus Longus
-  [[43,96],[142,178],[370,361]],                                                     // Latina
-  [[-50,36],[-94,96],[-210,250],[-300,400]],                                         // Portuense
-  [[-110,45],[-147,3],[-185,-50],[-196,-87]],                                        // via Settimiana, verso il Vaticano
-  [[80,-128],[106,-203],[120,-330],[130,-500]],                                      // Salaria
-  [[66,34],[120,60],[194,76],[330,170]]                                              // verso il Laterano e porta Asinaria
-];
+/* vie principali: tengono liberi gli isolati e disegnano la città. Dove esiste, è il tracciato della via moderna che ricalca l'antica
+   (via del Corso per la via Lata, via dei Coronari per la via Recta, l'Appia Antica…); dove manca, un tratto a mano fra punti noti.
+   L'elenco, con le vie moderne usate, è in src/roma/genera.mjs. Le prime otto sono le più larghe. */
+RM.STRADE = TOPO.strade;
 /* giardini dei colli: verdi dal principio alla fine */
 RM.HORTI = [[80,-167,20],[-36,-194,19],[138,-22,12],[171,-28,11],[221,-11,12],[20,-170,13],[236,48,9],[-150,120,12]];   // Sallustiani, Pincio, Mecenate, Lamiani, Liciniani, Luculliani, Spes Vetus, Cesare
 /* dove la città resiste fino alla fine: ansa del Tevere, Trastevere, poli cristiani */
