@@ -80,8 +80,8 @@ body.roma-grande .scheda{top:96px;left:20px;max-height:calc(100% - 220px)}
 .m-nome-mare{font-family:var(--serif);font-style:italic;font-size:13px;letter-spacing:.34em;fill:#6E8F93;fill-opacity:.75;text-anchor:middle;pointer-events:none}
 .m-grana{mix-blend-mode:multiply;opacity:.2;pointer-events:none}
 .m-costa{fill:none;stroke:rgba(62,46,30,.55);stroke-width:.7;stroke-linejoin:round;pointer-events:none}
-.m-fiumi path{fill:none;stroke:#8FC0CF;stroke-opacity:.9;stroke-width:1.15;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-.m-fiumi path.forte{stroke:#9DD0DE;stroke-opacity:1;stroke-width:2.1}
+.m-fiumi path{fill:none;stroke:#8FC0CF;stroke-opacity:.9;stroke-width:.95;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.m-fiumi path.forte{stroke:#A6D6E3;stroke-opacity:1;stroke-width:1.9}
 .m-rilievo{mix-blend-mode:overlay;opacity:.92;pointer-events:none}
 .m-anno{position:absolute;left:14px;top:8px;margin:0;font-family:var(--cap);font-weight:600;font-size:clamp(26px,4.4vw,56px);line-height:1;letter-spacing:.02em;color:rgba(43,36,32,.8);text-shadow:0 1px 0 rgba(251,246,234,.7);pointer-events:none}
 .m-battito{fill:none;stroke:#FBF6EA;stroke-width:1.4;transform-box:fill-box;transform-origin:center;animation:battito 2.6s ease-out infinite;pointer-events:none}

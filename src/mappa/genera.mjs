@@ -70,7 +70,7 @@ const TAGLI = {
   carantania:[[14.48, 48.25], [14.45, 47.75], [13.7, 47.4], [13.3, 47.05], [12.3, 46.75], [12.9, 46.55], [14, 46.45], [16.1, 46.8], [16.5, 47.7], [16.9, 48.15]],  // a est dell'Enns: Avari e Slavi dal 568
   creta:     [[23, 34.6], [26.6, 34.6], [26.6, 35.9], [23, 35.9]]
 };
-const BURG = ['Lugdunensis', 'Germania Superior', 'Narbonensis', 'Alpes Graiae et Poeninae', 'Alpes Cottiae', 'Alpes Maritimae'];
+const BURG = ['Lugdunensis', 'Germania Superior', 'Belgica', 'Narbonensis', 'Alpes Graiae et Poeninae', 'Alpes Cottiae', 'Alpes Maritimae'];      // anche la punta sud della Belgica (Langres): altrimenti resta un buco
 const REGIONI = {
   britannia:  { nome: 'Britannia', prov: ['Britannia'], fuori: ['galles', 'cornovaglia'] },
   galles:     { nome: 'Galles e Cornovaglia', prov: ['Britannia'], dentro: 'galles', piu: [{ prov: ['Britannia'], dentro: 'cornovaglia' }] },
@@ -244,43 +244,13 @@ for (const [id, r] of Object.entries(REGIONI)) {
 for (const [id, c] of Object.entries(CITTA)) { const p = proj([c[0], c[1]]); out.citta[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
 
 out.verdun = { linee: VERDUN.linee.map(l => 'M' + l.map(c => { const p = proj(c); return f1(p[0]) + ' ' + f1(p[1]); }).join('L')), nomi: VERDUN.nomi.map(n => { const p = proj([n[0], n[1]]); return [f1(p[0]), f1(p[1]), n[2]]; }) };
-/* Fiumi e nomi dei mari, per dare alla carta il respiro di un atlante (i monti sono il rilievo vero: si veda rilievo.mjs). I fiumi passano per le città che stanno davvero sulle loro rive (coordinate delle città);
-   fra una città e l'altra il corso è una linea retta: è uno schema, non un rilievo. Reno e Danubio sono il confine dell'impero e hanno il tratto più forte. */
-const FIUMI = {
-  reno:    { forte: true, p: [[9.53, 46.85], [9.63, 47.5], [9.17, 47.66], [8.63, 47.7], [7.6, 47.56], [7.58, 48], [7.78, 48.57], [8.33, 49.03], [8.36, 49.63], [8.27, 50], [7.9, 49.97], [7.6, 50.36], [7.1, 50.73], [6.96, 50.94], [6.77, 51.22], [6.45, 51.66], [5.87, 51.85], [4.9, 51.88], [4.1, 51.98]] },
-  danubio: { forte: true, p: [[8.5, 47.95], [9.2, 48.05], [10, 48.4], [10.9, 48.72], [11.42, 48.76], [12.1, 49.02], [12.9, 48.83], [13.45, 48.57], [14.3, 48.3], [15.6, 48.4], [16.37, 48.21], [17.1, 48.14], [17.65, 47.75], [18.74, 47.8], [19.05, 47.5], [18.93, 46.9], [18.7, 45.99], [18.95, 45.55], [19.85, 45.25], [20.46, 44.82], [21.3, 44.67], [22, 44.6], [22.5, 44.7], [22.66, 44.62], [22.88, 43.99], [23.9, 43.75], [24.9, 43.7], [25.95, 43.85], [27.27, 44.12], [27.95, 44.4], [28.05, 45.43], [28.8, 45.33], [29.65, 45.15]] },
-  po:      { p: [[7.1, 44.7], [7.68, 45.07], [8.6, 45.15], [9.7, 45.05], [10.03, 45.13], [10.8, 45.05], [11.6, 44.9], [12.3, 44.95]] },
-  rodano:  { p: [[8.37, 46.57], [7.36, 46.23], [6.9, 46.4], [6.15, 46.2], [5.8, 45.9], [4.83, 45.76], [4.87, 44.93], [4.8, 43.95], [4.63, 43.68], [4.75, 43.35]] },
-  loira:   { p: [[4.22, 44.84], [4.07, 46.04], [3.16, 46.99], [1.9, 47.9], [0.69, 47.39], [-0.55, 47.42], [-1.55, 47.22], [-2.2, 47.27]] },
-  senna:   { p: [[4.7, 47.5], [4.08, 48.3], [2.35, 48.86], [1.1, 49.44], [0.1, 49.45]] },
-  ebro:    { p: [[-4, 43], [-2.45, 42.47], [-0.88, 41.65], [0.52, 40.81], [0.85, 40.72]] },
-  tago:    { p: [[-1.7, 40.3], [-4.02, 39.86], [-6.9, 39.7], [-9.14, 38.7]] },
-  tevere:  { p: [[12.08, 43.77], [12.4, 43.1], [12.52, 42.45], [12.48, 41.9], [12.24, 41.74]] },
-  arno:    { p: [[11.87, 43.47], [11.25, 43.77], [10.4, 43.72], [10.27, 43.68]] },
-  adige:   { p: [[11.35, 46.5], [11.12, 46.07], [10.99, 45.44], [11.6, 45.15], [12.3, 45.15]] },
-  tamigi:  { p: [[-1.95, 51.69], [-1.26, 51.75], [-0.97, 51.46], [-0.6, 51.48], [-0.12, 51.5], [0.37, 51.45], [0.75, 51.5]] },             // Oxford, Reading, Londra
-  severn:  { p: [[-3, 52.55], [-2.75, 52.71], [-2.22, 52.19], [-2.25, 51.87], [-2.7, 51.6]] },
-  garonna: { p: [[0.72, 42.85], [1.44, 43.6], [0.62, 44.2], [-0.57, 44.84], [-1.05, 45.55]] },
-  mosa:    { p: [[5.38, 49.16], [4.72, 49.77], [4.87, 50.47], [5.57, 50.63], [5.69, 50.85], [5.98, 51.2], [5, 51.75]] },
-  mosella: { p: [[6.18, 49.12], [6.64, 49.75], [7.6, 50.36]] },
-  meno:    { p: [[10.9, 49.9], [9.93, 49.79], [8.68, 50.11], [8.27, 50]] },
-  elba:    { p: [[14.2, 50.78], [13.74, 51.05], [12.65, 51.87], [11.63, 52.13], [11, 53], [10, 53.55], [8.7, 53.87]] },
-  oder:    { p: [[17.03, 51.11], [14.55, 52.35], [14.55, 53.43]] },
-  vistola: { p: [[19.94, 50.06], [21, 52.23], [18.6, 53.01], [18.8, 54.3]] },
-  duero:   { p: [[-2.9, 41.9], [-3.69, 41.67], [-5, 41.5], [-5.75, 41.5], [-6.9, 41.03], [-8.63, 41.14]] },
-  guadalquivir: { p: [[-3, 37.95], [-4.78, 37.88], [-5.99, 37.39], [-6.35, 36.78]] },
-  sava:    { p: [[14.5, 46.05], [15.97, 45.81], [16.37, 45.48], [18, 45.15], [19.61, 44.97], [20.46, 44.82]] },                            // Emona, Siscia, Sirmio
-  drava:   { p: [[13.85, 46.61], [15.65, 46.56], [16.84, 46.16], [18.69, 45.55], [18.93, 45.53]] },
-  tibisco: { p: [[21.4, 48.1], [20.2, 47.17], [20.15, 46.25], [20.25, 45.15]] },
-  dnestr:  { p: [[23, 49.3], [26.5, 48.5], [28.9, 47.5], [29.48, 46.83], [30.45, 46.1]] },
-  dnepr:   { p: [[30.5, 50.45], [32.05, 49.45], [35.05, 48.45], [35.15, 47.85], [33.4, 46.75], [32.6, 46.63]] },
-  nilo:    { p: [[31.18, 27.18], [31.24, 30.05], [30.4, 31.4]] }
-};
+/* Fiumi: i corsi veri di Natural Earth 1:10m, scelti e sfoltiti da fiumi.mjs (grezzi/fiumi-scelti.json). Reno e Danubio sono il confine dell'impero e hanno il tratto più forte.
+   Qui si proiettano e si sfoltiscono ancora: un punto ogni 0,6 unità della carta basta. */
+const FIUMI = JSON.parse(fs.readFileSync(new URL('./grezzi/fiumi-scelti.json', import.meta.url), 'utf8'));
+const corso = L => L.map(l => { let d = '', u = null; for (const c of l) { const p = proj(c); if (!p || p[0] < -20 || p[0] > W + 20 || p[1] < -20 || p[1] > H + 20) { u = null; continue; } if (u && Math.hypot(p[0] - u[0], p[1] - u[1]) < .6) continue; d += (u ? 'L' : 'M') + f1(p[0]) + ' ' + f1(p[1]); u = p; } return d; }).filter(d => d.includes('L')).join('');
 const MARI = [[5.6, 39.2, 'Mare Nostrum'], [-8.3, 46.6, 'Oceano'], [18.6, 35.2, 'Mare Interno'], [32.5, 43.4, 'Ponto Eusino']];
 const linea = l => 'M' + l.map(c => { const p = proj(c); return f1(p[0]) + ' ' + f1(p[1]); }).join('L');
-/* un fiume è una curva morbida che passa per i punti medi fra una città e l'altra e piega alle città */
-const curva = l => { const P = l.map(c => proj(c)), m = (a, b) => f1((a[0] + b[0]) / 2) + ' ' + f1((a[1] + b[1]) / 2); let d = 'M' + f1(P[0][0]) + ' ' + f1(P[0][1]) + 'L' + m(P[0], P[1]); for (let i = 1; i < P.length - 1; i++) d += 'Q' + f1(P[i][0]) + ' ' + f1(P[i][1]) + ' ' + m(P[i], P[i + 1]); return d + 'L' + f1(P[P.length - 1][0]) + ' ' + f1(P[P.length - 1][1]); };
-out.fiumi = Object.values(FIUMI).map(f => ({ d: curva(f.p), forte: !!f.forte }));
+out.fiumi = [{ d: corso(FIUMI.altri), forte: false }, { d: corso(FIUMI.forti), forte: true }];
 out.mari = MARI.map(m => { const p = proj([m[0], m[1]]); return [f1(p[0]), f1(p[1]), m[2]]; });
 const dest = new URL('../../js/mappa-dati.js', import.meta.url);
 fs.writeFileSync(dest, '/* Generato da src/mappa/genera.mjs: non modificare a mano. */\nwindow.RM_MAPPA=' + JSON.stringify(out) + ';\n');
