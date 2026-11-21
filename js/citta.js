@@ -43,7 +43,7 @@ QUARTIERI.forEach(function(Q,k){
     var x=Q[0]+(i*ca+j*sa)*PASSO, z=Q[1]+(-i*sa+j*ca)*PASSO;
     if(x<-330||x>330||z<-380||z>420 || quartiereDi(x,z)!==k) continue;
     var dentro=RM.dentroMura(x,z), bordo=RM.distLinea(x,z,RM.MURA,true), centro=Math.hypot(x-5,z-5);
-    var borgo=dentro?0:Math.exp(-((x+228)*(x+228)+(z+106)*(z+106))/(27*27));                  // attorno a San Pietro: case che nasceranno dal V secolo
+    var borgo=dentro?0:Math.exp(-((x+228)*(x+228)/(27*27)+(z+104)*(z+104)/(15*15)));               // il Borgo, fra San Pietro e il fiume: case che nasceranno dal V secolo, dentro quella che sarà la città leonina (a nord non oltre il Passetto)
     var dens=dentro ? .95-.28*RM.sfuma(150,290,centro) : Math.max(.36*Math.exp(-bordo/24),.8*borgo);
     var lib; if(bordo<3.5 || rnd()>dens || !(lib=libero(x,z,2.4)) || (lib>1&&borgo>.3)) continue;
     var e=1.9, y0=RM.h(x,z), y1=RM.h(x+e,z+e), y2=RM.h(x-e,z+e), y3=RM.h(x+e,z-e), y4=RM.h(x-e,z-e), yMin=Math.min(y0,y1,y2,y3,y4);

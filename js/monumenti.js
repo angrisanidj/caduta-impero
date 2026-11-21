@@ -79,8 +79,10 @@ function quota(x,z){ return Math.min(RM.h(x,z),RM.h(x+5,z),RM.h(x-5,z),RM.h(x,z+
 function suTerreno(X,Z,ry){ var q=quota(X,Z), c=Math.cos(ry||0), s=Math.sin(ry||0); return function(lx,lz){ return RM.h(X+lx*c+lz*s,Z-lx*s+lz*c)-q; }; }
 function casa(B,y,lx,lz,w,d,h,ry){ B.scatola(w,h+.3,d,lx,y-.3,lz,P.mattone,ry).falde(w+.2,.45,d+.2,lx,y+h,lz,P.coppi,ry,P.mattone); }
 
-/* tracciato delle mura leonine (848-852): dal mausoleo di Adriano attorno al colle Vaticano, fino al Tevere. Coordinate relative a (-215,-92). Tracciato a memoria. */
-var LEO=(function(){ var L=[[-162,-124],[-200,-128],[-235,-129],[-262,-130],[-284,-122],[-293,-108],[-284,-93],[-262,-85],[-235,-82],[-212,-83],[-196.5,-86.7],[-187,-84]], passi=[], zone=[];
+/* tracciato delle mura leonine (848-852): dal mausoleo di Adriano attorno al colle Vaticano, fino al Tevere. Coordinate relative a (-215,-92).
+   Punti reali (OpenStreetMap): il lato nord è il Passetto fino a porta San Pellegrino; in cima al colle i due tratti superstiti nei giardini vaticani e la torre di San Giovanni,
+   accanto a porta Pertusa; a sud porta Cavalleggeri e porta Santo Spirito. Fra un punto e l'altro il tracciato è interpolato. */
+var LEO=(function(){ var L=[[-163,-120],[-233.3,-121],[-250,-124],[-272,-127],[-294,-124.5],[-300,-119],[-307,-111],[-313,-100.5],[-304,-96.5],[-285,-89],[-262,-87],[-240.2,-87.7],[-212,-86.5],[-196.5,-86.7],[-187,-84]], passi=[], zone=[];
   for(var i=0;i<L.length-1;i++){ var a=L[i], b=L[i+1], len=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(len/3.2));
     for(var k=0;k<n;k++){ var x=a[0]+(b[0]-a[0])*(k+.5)/n+215, z=a[1]+(b[1]-a[1])*(k+.5)/n+92; passi.push({x:x,z:z,len:len/n,ang:Math.atan2(-(b[1]-a[1]),b[0]-a[0])}); if(k%2===0) zone.push([x,z,2.4]); } }
   return {passi:passi,zone:zone}; })();
