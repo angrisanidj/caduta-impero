@@ -306,6 +306,30 @@ RM.moduli.push(function(anno){
   });
 });
 
+/* ---------- travertini ai piedi del Colosseo ----------
+   Dal VI secolo il fronte sud è un cantiere di smontaggio: pochi blocchi a terra in attesa d'essere portati via.
+   Nell'847, se si segue il Parco del Colosseo, cade quel che ne restava: il cumulo che per secoli farà da cava (la «coxa Colisei» dei documenti medievali).
+   Forma e quantità dei blocchi sono di fantasia. */
+(function(){
+  var o=M.filter(function(m){ return m.id==='colosseo'; })[0]; if(!o) return;
+  var rnd=RM.casuale(847), N=90, sx=-Math.sin(o.ry), sz=Math.cos(o.ry), blocchi=[], d=new THREE.Object3D(), i;
+  for(i=0;i<N;i++){
+    var a=(rnd()-.5)*1.5, fuori=(i<14?1.03:.9)+.26*rnd()*rnd(), lx=Math.sin(a)*9.4*fuori, lz=Math.cos(a)*7.8*fuori;        // un arco attorno al punto più a sud, appena fuori dall'ellisse
+    blocchi.push({x:o.x+lx*sz+lz*sx, z:o.z-lx*sx+lz*sz, w:.25+.4*rnd(), h:.18+.28*rnd(), p:.22+.3*rnd(), ry:rnd()*3.14, rx:(rnd()-.5)*.5, su:i>=14&&fuori<1.02?rnd()*.6:0, quando:i<14?0:1});
+  }
+  var m=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1).translate(0,.5,0),new THREE.MeshStandardMaterial({color:RM.col(0xcbc1aa),roughness:.95}),N);
+  m.castShadow=m.receiveShadow=true; m.frustumCulled=false; RM.scene.add(m);
+  var ultimo=-1;
+  RM.moduli.push(function(anno){
+    var cava=RM.sfuma(523,560,anno), crollo=RM.sfuma(846.6,847.2,anno), chiave=cava+2*crollo; if(Math.abs(chiave-ultimo)<.004) return; ultimo=chiave;
+    blocchi.forEach(function(b,j){
+      var q=b.quando?crollo:Math.max(cava,crollo);
+      d.position.set(b.x,RM.h(b.x,b.z)-.05+b.su*q,b.z); d.rotation.set(b.rx,b.ry,0); d.scale.set(b.w*q,b.h*q,b.p*q); d.updateMatrix(); m.setMatrixAt(j,d.matrix);
+    });
+    m.instanceMatrix.needsUpdate=true; m.visible=chiave>.01;
+  });
+})();
+
 /* ---------- etichette proiettate ---------- */
 var v=new THREE.Vector3();
 RM.frame.push(function(){
