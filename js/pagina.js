@@ -58,6 +58,7 @@ function scriviSpie(){
 /* ---------- monumenti ---------- */
 var NOMI_CERTEZZA={A:'posizione e forma certe',B:'posizione certa, forma ricostruita',C:'ipotesi'};
 var NOMI_STATO={uso:'in uso',chiuso:'in disuso',spogliato:'spogliato',bruciato:'bruciato',crollato:'danneggiato da un terremoto',cava:'usato come cava',assente:'non ancora costruito'};
+function nomeStato(m,st){ var s=(D.MONUMENTI||{})[m.id]; return st==='assente'&&s&&s[0][1]!=='assente'?'scomparso':NOMI_STATO[st]; }      // «assente» dopo essere esistito vuol dire sparito, non «non ancora costruito»
 var voci=(RM.MONUMENTI||[]).map(function(m){
   var li=document.createElement('li'), s=document.createElement('span'); li.appendChild(s); $('elencoMonumenti').appendChild(li); return {m:m,li:li,s:s,st:''};
 });
@@ -71,7 +72,7 @@ function scriviScheda(){
   if(chiave===schedaChiave) return; schedaChiave=chiave;
   var righe=(sc.date||[]).map(function(r){ var futura=typeof r[0]==='number'&&r[0]>anno+.5; return '<li'+(futura?' class="futura"':'')+'><b>'+esc(r[0])+'</b><span>'+esc(r[1])+'</span></li>'; }).join('');
   $('scheda').innerHTML='<button type="button" class="chiudi" aria-label="Chiudi la scheda">✕</button><h3>'+esc(m.nome)+'</h3>'+
-    '<p class="stato"><span class="st '+st+'">'+NOMI_STATO[st]+'</span> nel '+Math.round(anno)+'</p>'+(sc.cosa?'<p class="cosa">'+esc(sc.cosa)+'</p>':'')+(ce?'<p class="certezza"><i class="c'+ce[0]+'"></i><span><b>Che cosa sappiamo:</b> '+NOMI_CERTEZZA[ce[0]]+(ce[1]?'. '+esc(ce[1]):'')+'</span></p>':'')+(righe?'<ul>'+righe+'</ul>':'');
+    '<p class="stato"><span class="st '+st+'">'+nomeStato(m,st)+'</span> nel '+Math.round(anno)+'</p>'+(sc.cosa?'<p class="cosa">'+esc(sc.cosa)+'</p>':'')+(ce?'<p class="certezza"><i class="c'+ce[0]+'"></i><span><b>Che cosa sappiamo:</b> '+NOMI_CERTEZZA[ce[0]]+(ce[1]?'. '+esc(ce[1]):'')+'</span></p>':'')+(righe?'<ul>'+righe+'</ul>':'');
 }
 /* la scena si sposta di metà di quanto è coperta: dal foglio in basso (telefono), dal riquadro a sinistra (schermi larghi), dalla linea del tempo (schermo intero) */
 function scostaScena(){
@@ -104,7 +105,7 @@ RM.apriScheda=function(id){ voci.forEach(function(v){ if(v.m.id===id) apriScheda
 function scriviMonumenti(){
   voci.forEach(function(v){
     var q=RM.statoMonumento(v.m.id,anno), st=q.t>.5?q.s1:q.s0; if(st===v.st) return;
-    v.st=st; v.li.className=st+(v.m===schedaDi?' scelto':''); v.li.title=NOMI_STATO[st];
+    v.st=st; v.li.className=st+(v.m===schedaDi?' scelto':''); v.li.title=nomeStato(v.m,st);
     v.s.textContent=v.m.nome+(v.m.note&&v.m.note[st]?' · '+v.m.note[st]:'');
   });
 }

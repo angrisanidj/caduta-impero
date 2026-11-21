@@ -35,7 +35,7 @@ var citta=el('g',{'class':'m-citta'},svg);
 
 /* I popoli: ciascuno è un punto dove stava il grosso del gruppo e un cartellino col nome; il colore dice il rapporto con Roma in quel momento
    (gli stessi colori delle regioni: verde per chi sta dentro per accordo, blu per chi ha un regno), la linea tratteggiata da dove veniva
-   (le ultime due tappe del cammino). Quando un gruppo ha un regno, il cartellino porta il nome del regno e la linea sparisce. */
+   (l'ultimo tratto del cammino, con i suoi punti di passaggio via terra). Quando un gruppo ha un regno, il cartellino porta il nome del regno e la linea sparisce. */
 var RAPPORTI=[['fuori','oltre il confine'],['accordo','dentro l\'impero, per accordo'],['armi','in armi dentro l\'impero'],['regno','con un regno proprio (colore in legenda)']];
 var CLASSE={fuori:'fuori',accolti:'accordo',federati:'accordo',armi:'armi',regno:'regno'};
 var REGNO={goti:'Regno dei Visigoti',ostrogoti:'Regno degli Ostrogoti',vandali:'Regno dei Vandali',svevi:'Regno degli Svevi',burgundi:'Regno dei Burgundi',franchi:'Regno dei Franchi',sassoni:'Regni anglosassoni',longobardi:'Regno dei Longobardi'};
@@ -58,8 +58,8 @@ function mostraPopoli(anno){
     if(cl==='regno' && REGNO[id]) nome=REGNO[id];
     p.g.setAttribute('class','m-popolo '+cl); p.g.style.transform='translate('+v[1]+'px,'+v[2]+'px)';
     if(p.nome!==nome){ p.nome=nome; p.t.textContent=nome; p.larga=0; }
-    var d='', da=Math.max(0,u-2), tratti=0;
-    if(!via && cl!=='regno' && anno-q.t[u][0]<=25) for(i=da;i<=u;i++){ if(i<u && q.t[u][0]-q.t[i][0]>40) continue; if(i>da && q.t[i][1]===q.t[i-1][1] && q.t[i][2]===q.t[i-1][2]) continue; if(d) tratti++; d+=(d?'L':'M')+q.t[i][1]+' '+q.t[i][2]; }
+    var d='', da=Math.max(0,u-1), tratti=0;      // solo l'ultimo tratto: il cammino che ha portato il gruppo dov'è ora
+    if(!via && cl!=='regno' && anno-q.t[u][0]<=25) for(i=da;i<=u;i++){ if(i<u && q.t[u][0]-q.t[i][0]>40) continue; if(i>da && q.t[i][1]===q.t[i-1][1] && q.t[i][2]===q.t[i-1][2]) continue; if(d){ tratti++; if(q.t[i][4]) for(var w=0;w<q.t[i][4].length;w++) d+='L'+q.t[i][4][w][0]+' '+q.t[i][4][w][1]; } d+=(d?'L':'M')+q.t[i][1]+' '+q.t[i][2]; }
     if(!tratti) d='';
     p.rotta.setAttribute('d',d||'M0 0'); p.sotto.setAttribute('d',d||'M0 0'); p.rotta.setAttribute('class','m-rotta '+(d?cl:'via')); p.sotto.setAttribute('class','m-rotta-f'+(d?'':' via'));
     if(via) continue;

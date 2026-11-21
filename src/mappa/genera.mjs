@@ -112,9 +112,11 @@ const CITTA = { roma: [12.48, 41.89, 'Roma'], ravenna: [12.2, 44.42, 'Ravenna'],
    Bury VIII (lo stretto nel maggio 429, Ippona nel 430: dove fossero i Vandali a fine 429 non si sa, il punto è a mezza strada), Beda I 15 (i Sassoni accolti e poi in armi).
    A memoria: la spartizione della Hispania nel 411 e i Vandali in Gallaecia fino al 420 (Idazio), i Franchi in Toxandria nel 358 (Ammiano XVII 8),
    i Longobardi a Cividale nel 568 e a Pavia nel 572 (Paolo Diacono II). Le date in cui un popolo esce dalla mappa (`fine`) sono state ricontrollate.
+   Una tappa può avere un quinto elemento: i punti di passaggio [lon, lat] del cammino fatto per arrivarci, perché la rotta disegnata segua la terra e non tagli il mare
+   (Alarico fra l'Epiro e l'Italia passa per l'Illirico, Emona e Aquileia: Zosimo V 26-37).
    Un «popolo» qui è il nucleo armato e la sua gente, non un'etnia compatta: i punti dicono dove stava il centro di gravità, non un confine. */
 const POPOLI = {
-  goti:      { nome: 'Goti', poi: [[418, 'Visigoti']], peso: 9, t: [[235, 28, 47, 'fuori'], [251, 26.5, 43.5, 'armi'], [271, 26, 46.3, 'fuori'], [376, 27, 43.8, 'accolti'], [378, 26.6, 41.7, 'armi'], [382, 25, 43.3, 'federati'], [395, 22.5, 39.8, 'armi'], [402, 8.2, 44.8, 'armi'], [406, 20.7, 39.7, 'federati'], [409, 12.5, 42.3, 'armi'], [410, 12.5, 41.9, 'armi'], [418, 0.4, 44.6, 'federati'], [472, 1.4, 43.6, 'regno'], [537, -3.6, 40.2, 'regno']], fine: 711 },
+  goti:      { nome: 'Goti', poi: [[418, 'Visigoti']], peso: 9, t: [[235, 28, 47, 'fuori'], [251, 26.5, 43.5, 'armi'], [271, 26, 46.3, 'fuori'], [376, 27, 43.8, 'accolti'], [378, 26.6, 41.7, 'armi'], [382, 25, 43.3, 'federati'], [395, 22.5, 39.8, 'armi'], [402, 8.2, 44.8, 'armi', [[20.7, 39.7], [19.8, 41.3], [18.5, 43.3], [16.4, 45.2], [14.5, 46.05], [13.37, 45.77], [11, 45.4], [9.19, 45.46]]], [406, 20.7, 39.7, 'federati', [[11, 45.4], [13.37, 45.77], [14.5, 46.05], [16.4, 45.2], [18.5, 43.3], [19.8, 41.3]]], [409, 12.5, 42.3, 'armi', [[19.8, 41.3], [18.5, 43.3], [16.4, 45.2], [14.5, 46.05], [13.37, 45.77], [11.34, 44.49], [12.57, 44.06]]], [410, 12.5, 41.9, 'armi'], [418, 0.4, 44.6, 'federati'], [472, 1.4, 43.6, 'regno'], [537, -3.6, 40.2, 'regno']], fine: 711 },
   ostrogoti: { nome: 'Ostrogoti', peso: 8, t: [[235, 33, 47.2, 'fuori'], [378, 30, 46.5, 'fuori'], [455, 18, 46.5, 'federati'], [476, 24.5, 43.4, 'federati'], [493, 11.8, 44.6, 'regno']], fine: 554 },
   vandali:   { nome: 'Vandali e Alani', peso: 7, t: [[235, 20, 49.6, 'fuori'], [402, 15.5, 48.9, 'fuori'], [406, 8.3, 50, 'armi'], [409, -1.6, 42.8, 'armi'], [418, -6.5, 42.5, 'armi'], [420, -5.5, 37.5, 'armi'], [429, 5.5, 36.4, 'armi'], [439, 10.2, 36.5, 'regno']], fine: 534 },
   svevi:     { nome: 'Svevi', peso: 4, t: [[235, 11.5, 50.3, 'fuori'], [406, 8, 49.6, 'armi'], [409, -3.6, 42.3, 'armi'], [411, -8, 42.4, 'armi'], [418, -8, 42.4, 'regno']], fine: 585 },
@@ -127,7 +129,7 @@ const POPOLI = {
   avari:     { nome: 'Avari', peso: 5, t: [[568, 19.5, 46.8, 'fuori']], fine: 796 }
 };
 const out = { w: W, h: H, terra: tracciato(TERRA), regioni: {}, citta: {}, popoli: {} };
-for (const [id, q] of Object.entries(POPOLI)) out.popoli[id] = { nome: q.nome, poi: q.poi || [], peso: q.peso, fine: q.fine, t: q.t.map(v => { const p = proj([v[1], v[2]]); return [v[0], f1(p[0]), f1(p[1]), v[3]]; }) };
+for (const [id, q] of Object.entries(POPOLI)) out.popoli[id] = { nome: q.nome, poi: q.poi || [], peso: q.peso, fine: q.fine, t: q.t.map(v => { const p = proj([v[1], v[2]]), o = [v[0], f1(p[0]), f1(p[1]), v[3]]; if (v[4]) o.push(v[4].map(c => { const w = proj(c); return [f1(w[0]), f1(w[1])]; })); return o; }) };
 for (const [id, r] of Object.entries(REGIONI)) {
   const m = forma(r);
   let area = 0, tot = 0, cx = 0, cy = 0;                // baricentro del pezzo più grande, per l'etichetta; la superficie pesa la quota di territorio
