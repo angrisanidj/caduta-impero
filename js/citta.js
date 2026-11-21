@@ -18,6 +18,14 @@ function tenuta(x,z){
   t-=.008*RM.h(x,z);                               // i colli si svuotano un po' prima
   return t+(rnd()-.5)*.08;
 }
+/* Tenuta nei secoli V-VII. Gli scavi mostrano un abitato sparso su tutta l'area dentro le mura, non ancora raccolto sul Tevere:
+   qui conta soprattutto il caso, con un piccolo vantaggio per chi sta vicino al fiume o a una chiesa e uno svantaggio per i colli e i margini. */
+function tenutaSparsa(x,z){
+  var t=0;
+  NUCLEI.forEach(function(n){ var d=Math.hypot(x-n[0],z-n[1]); t=Math.max(t,(n[3]>15?.22:.4)*n[2]*Math.exp(-(d*d)/(n[3]>15?70*70:13*13))); });
+  t+=.2*Math.exp(-RM.distFiume(x,z)/45)-.02*RM.h(x,z)-.22*RM.sfuma(140,300,Math.hypot(x-5,z-5));
+  return t+(rnd()-.5)*.8;
+}
 function libero(x,z,margine){
   if(RM.distFiume(x,z)<9.5 || RM.distStrade(x,z)<2.5) return false;
   var i, q;
@@ -40,17 +48,20 @@ QUARTIERI.forEach(function(Q,k){
     var fitto=1-RM.sfuma(30,240,centro), alt=dentro ? .9+1.7*fitto*(.5+.5*rnd())+.45*rnd() : .55+.5*rnd(), s=rnd();
     isolati.push({x:x,z:z,y:yMin,ry:Q[2]+(rnd()-.5)*.05,w:3.85+rnd()*.9,d:3.85+rnd()*.9,alt:alt,
       tipo:!dentro?(s<.6?2:0):(s<.5-.15*fitto?2:s<.92-.14*fitto?0:1),              // 0 a falde, 1 a corte, 2 a padiglione
-      k:tenuta(x,z)+(dentro?0:-.35), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0});
+      k:tenuta(x,z)+(dentro?0:-.35), k1:tenutaSparsa(x,z)+(dentro?0:-.6), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0});
   }
 });
-isolati.forEach(function(b){ if(b.nasce){ b.k=9; b.alt=.6+.5*b.tono; } });      // il Borgo non si svuota: è l'unico quartiere che cresce
-isolati.slice().sort(function(a,b){ return a.k-b.k; }).forEach(function(o,i,tutti){ o.p=i/(tutti.length-1); });   // rango: la quota di abitati è esatta
+isolati.forEach(function(b){ if(b.nasce){ b.k=9; b.k1=9; b.alt=.6+.5*b.tono; } });      // il Borgo non si svuota: è l'unico quartiere che cresce
+isolati.slice().sort(function(a,b){ return a.k-b.k; }).forEach(function(o,i,tutti){ o.p2=i/(tutti.length-1); });     // rango dall'VIII secolo: nuclei sul Tevere e isole attorno alle chiese
+isolati.slice().sort(function(a,b){ return a.k1-b.k1; }).forEach(function(o,i,tutti){ o.p1=i/(tutti.length-1); });   // rango fino al VII secolo: abitato sparso
+/* fra il 640 e il 790 si passa da un ordine all'altro: la gente si raccoglie nel Campo Marzio e attorno alle chiese, e lì si torna a costruire */
+function rango(b,anno){ return b.p1+(b.p2-b.p1)*RM.sfuma(640,790,anno); }
 var N=RM.N_ISOLATI=isolati.length; RM.isolati=isolati;
 /* anno in cui ciascun isolato viene lasciato, e che cosa ne resta alla fine */
 (function(){
   var soglie=[], y; for(y=200;y<=852;y++) soglie.push(1-D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,y)));
   isolati.forEach(function(b){
-    b.lasciato=9999; for(var k=0;k<soglie.length;k++) if(b.p<soglie[k]){ b.lasciato=200+k; break; }
+    b.lasciato=9999; for(var k=0;k<soglie.length;k++) if(rango(b,200+k)<soglie[k]){ b.lasciato=200+k; break; }
     b.fato=b.dentro?(b.sorte<.34?0:b.sorte<.8?1:2):(b.sorte<.3?1:2);          // 0 guscio alto, 1 rudere basso, 2 orto fra i monconi
     b.hFin=b.fato===0?.5+.38*b.tono:b.fato===1?b.rudere:.07+.1*b.tono;        // quanto resta in piedi, in quota dell'altezza
     b.giro=(b.sorte*977)|0;                                                   // quarti di giro: quattro profili di rovina diversi
@@ -220,7 +231,7 @@ function aggiorna(anno){
   var bassa=1-.42*RM.sfuma(470,720,anno), forza=Math.abs(bassa-ultimaBassa)>.01; if(forza) ultimaBassa=bassa;      // le case a più piani lasciano il posto a case basse, a uno o due piani
   for(i=0;i<N;i++){
     b=isolati[i];
-    a=RM.sfuma(-.02,.02,b.p-soglia);                       // 1 abitato, 0 abbandonato
+    a=RM.sfuma(-.02,.02,rango(b,anno)-soglia);             // 1 abitato, 0 abbandonato
     var arso=0, da0=b.lasciato+b.sfasa*12;
     if(b.fuoco!=null && anno>b.fuoco-.4){
       if(anno<b.fuocoFine){ arso=RM.sfuma(b.fuoco-.4,b.fuoco,anno)*(1-RM.sfuma(b.fuocoFine-Math.min(5,(b.fuocoFine-b.fuoco)*.5),b.fuocoFine,anno)); a*=1-arso; }   // poi, se il quartiere è ancora vivo, si ricostruisce
