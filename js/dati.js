@@ -12,7 +12,10 @@
      Liber Pontificalis, Parco archeologico del Colosseo). Non verificati sulle pubblicazioni di scavo: i cunicoli e la calcara del Colosseo, il contesto del blocco di Geronzio,
      il rocchio di Decio, la calcara e le lastre del foro di Traiano, il lastricato del foro di Cesare, le misure delle case del foro di Nerva, le sepolture nelle terme di Traiano;
      la Prammatica Sanzione e la lettera di Gregorio Magno sugli acquedotti sono citate a memoria;
-   - le curve sono punti orientativi, non serie pubblicate. */
+   - le curve sono punti orientativi, non serie pubblicate; forchette della popolazione, fino dell'argento e testi degli intermezzi sono stati riveduti il 21 novembre 2026
+     (ric.mom.fr per la moneta; Robinson e Wilson 2011 e Robinson, Rice e Schörle per i relitti; il comunicato di Oxford su McConnell e altri 2018 per il piombo; Procopio, Guerre III 5, V 19, VII 20-22;
+     Novella 4 di Maggioriano nella traduzione di Pharr). Letti solo in sunto: Lançon, Storey, Krautheimer p. 65, Goffart. A memoria: Vittore di Vita I 2, le categorie di federati, dediticii e laeti,
+     le sepolture dentro le mura (Meneghini e Santangeli Valenzani). */
 window.RM_DATI=(function(){
 'use strict';
 
@@ -82,7 +85,7 @@ var TAPPE=[
  {anno:260, titolo:"Valeriano prigioniero, l'Occidente si stacca", testo:"L'imperatore Valeriano è catturato dai Persiani. L'Occidente si stacca sotto Postumo: Gallie, Britannia e Hispania hanno un loro imperatore, loro consoli, una loro moneta."},
  {anno:271, titolo:'Roma torna a costruire mura', testo:"Aureliano cinge la città con diciannove chilometri di mura: non accadeva da secoli. In Oriente Zenobia di Palmira controlla dall'Egitto all'Anatolia."},
  {anno:274, titolo:"L'impero ricucito", testo:"In tre anni Aureliano riprende Palmira e le Gallie. L'impero è di nuovo uno; una riforma ferma il crollo della moneta, che però contiene ormai solo il cinque per cento d'argento."},
- {intermezzo:true, anno:284, titolo:'La moneta', testo:"Intermezzo: dal denario all'antoniniano, la svalutazione del III secolo e il ritorno all'oro con il solido."},
+ {intermezzo:true, anno:284, titolo:'La moneta', testo:"Nel 215 Caracalla conia l'antoniniano: vale due denari, ma contiene l'argento di uno e mezzo. È il primo trucco di una lunga serie. Fra il 238 e il 268 l'argento in una moneta scende da oltre due grammi a meno di un decimo: sotto Claudio II la moneta è quasi tutta rame. Aureliano, nel 274, garantisce almeno il 5%. Diocleziano conia di nuovo argento buono, ma nel 301 deve raddoppiare per legge il valore delle monete e fissare per editto più di mille prezzi massimi, pena la morte: l'oro a 72.000 denari la libbra. In pochi anni l'editto è lettera morta. Regge invece il solido di Costantino, 72 per libbra: resterà intatto per sette secoli."},
 
  {anno:293, titolo:'Quattro imperatori, nessuno a Roma', testo:"Diocleziano divide il comando fra due augusti e due cesari. Non ci sono più capitali ma residenze vicine agli eserciti, che cambiano con le campagne: Treviri, Milano, Sirmio, Nicomedia."},
  {anno:301, titolo:'I prezzi fissati per legge', testo:"Un editto stabilisce il prezzo massimo di oltre mille merci e servizi, pena la morte. Non funziona, ma racconta uno Stato che vuole contare e tassare tutto."},
@@ -91,7 +94,7 @@ var TAPPE=[
  {anno:378, titolo:'Adrianopoli', testo:"I Goti, accolti dentro l'impero due anni prima e ridotti alla fame, distruggono l'esercito dell'imperatore Valente: secondo Ammiano se ne salva appena un terzo. Muore lo stesso Valente.",
   storici:"Invasione o crisi di accoglienza? I Goti del 376 chiesero di entrare e furono ammessi. Per Heather a spingerli sul Danubio sono gli Unni; Halsall ridimensiona gli Unni e guarda alla politica romana oltre il fiume. Sulla rivolta concordano: nasce da come Roma gestì i profughi."},
  {anno:395, titolo:'Due corti', testo:"Alla morte di Teodosio l'impero passa ai due figli, uno a Costantinopoli e uno a Milano. Nessuno la considera una divisione definitiva; lo diventerà."},
- {intermezzo:true, anno:395, titolo:'I commerci', testo:"Intermezzo: relitti, anfore, piombo nei ghiacci. Che cosa misura davvero l'archeologia quando parla di crollo degli scambi."},
+ {intermezzo:true, anno:395, titolo:'I commerci', testo:"Quanto commerciava l'impero? Nessuno lo registrò: l'archeologia lo deduce. I relitti nel Mediterraneo toccano il massimo nel I secolo d.C. e poi calano; ma i relitti contano le anfore e le pietre, non le botti o le merci deperibili, e molti sono datati con margini di secoli. Il piombo nei ghiacci della Groenlandia, figlio delle miniere d'argento, crolla nel 165 con la peste e non si riprende per cinque secoli: misura le miniere, non i mercati. I piatti africani, invece, arrivano su tutte le coste fino al VII secolo. Il quadro è un declino lungo e irregolare, non un crollo improvviso: per questo la curva dei commerci, qui, è solo un'indicazione."},
 
  {anno:402, titolo:'La corte si chiude a Ravenna', testo:"Stilicone affronta Alarico a Pollenzo e a Verona e lo costringe a lasciare l'Italia. La corte lascia Milano per Ravenna, protetta dalle paludi; a Roma Onorio fa restaurare mura, porte e torri, e forse è allora che la cinta raddoppia in altezza."},
  {anno:406, titolo:'Il Reno attraversato', testo:"Nell'ultima notte dell'anno (del 405, secondo alcuni studiosi) Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito acclama un imperatore dopo l'altro; nel 407 il terzo, Costantino, porta le truppe in Gallia."},
@@ -110,7 +113,7 @@ var TAPPE=[
  {anno:418, titolo:'Un regno dentro l\'impero', testo:"I Visigoti si insediano in Aquitania per accordo (nel 418 o nel 419, secondo le cronache), come federati in cambio del servizio militare; se ricevano terre o una quota delle imposte è discusso. Non è il primo patto del genere, ma da questo nasce un regno."},
  {anno:429, titolo:'I Vandali passano in Africa', testo:"Genserico attraversa lo stretto con il suo popolo, forse ottantamila persone in tutto. Nel 430, durante l'assedio di Ippona, muore Agostino."},
  {anno:439, titolo:'Cartagine', testo:"I Vandali prendono Cartagine a sorpresa, in tempo di pace. Roma perde le province più ricche, il grano dell'annona e i porti da cui ora partono le flotte vandale: è il colpo da cui l'Occidente non si riprende."},
- {intermezzo:true, anno:439, titolo:'I barbari', testo:"Intermezzo: quanti erano, chi erano, che rapporto giuridico avevano con Roma. Nemici, federati, soldati regolari, re."},
+ {intermezzo:true, anno:439, titolo:'I barbari', testo:"Quanti erano i barbari? Meno di quanto dicano i cronisti. Vittore di Vita conta 80.000 Vandali passati in Africa nel 429, ma Procopio spiega da dove viene il numero: Genserico li aveva divisi in ottanta compagnie con capi «di mille», per sembrare più forte. Peter Heather pensa a un esercito di 15-20.000 uomini, con le famiglie al seguito; altri a gruppi ancora più piccoli. E non erano solo nemici: c'erano i federati, legati da un trattato, i laeti, stanziati con l'obbligo di servire, e intere schiere arruolate nell'esercito. Che cosa ricevessero è ancora discusso: terre, come i Vandali in Africa, o una parte delle tasse, come sostiene Walter Goffart."},
 
  {anno:451, titolo:'Ezio e Attila', testo:"Ai Campi Catalaunici l'esercito che ferma gli Unni è fatto soprattutto di Visigoti, con Alani, Franchi, Burgundi e altri alleati. Il generale romano Ezio comanda una coalizione."},
  {anno:455, titolo:'Il secondo sacco', testo:"Ucciso Valentiniano III, Genserico arriva dal mare e spoglia Roma per quattordici giorni. Porta via anche metà delle tegole dorate del tempio di Giove."},
@@ -119,7 +122,7 @@ var TAPPE=[
  {anno:472, titolo:'Roma assediata dal proprio generale', testo:"Ricimero, che dal 456 fa e disfa imperatori, assedia e prende la città. Gli imperatori ormai governano poco più dell'Italia."},
  {anno:476, titolo:'Odoacre', testo:"Un ufficiale dell'esercito d'Italia depone il giovane Romolo Augustolo e rimanda le insegne imperiali a Costantinopoli. A Roma il Senato continua a riunirsi.",
   storici:"Il 476 fu una data per i contemporanei? Registrarono la deposizione, non una fine: Giulio Nepote restò imperatore riconosciuto, in Dalmazia, fino al 480. Diventa «la fine» nelle cronache scritte a Costantinopoli nel secolo successivo (Marcellino Comes; lo ha mostrato Brian Croke nel 1983)."},
- {intermezzo:true, anno:476, titolo:'La città', testo:"Intermezzo: come si svuota una metropoli. Annona, acquedotti, spoliazioni, sepolture dentro le mura."},
+ {intermezzo:true, anno:476, titolo:'La città', testo:"Una metropoli si svuota a tappe. Sotto Augusto 200.000 romani ricevevano il grano gratis; nel 419 gli iscritti alle razioni sono forse 120.000, nel 452 lo Stato distribuisce ancora tre milioni e mezzo di libbre di maiale. Poi le distribuzioni si diradano, e nessuna legge ne registra la fine. Nel 458 Maggioriano minaccia multe in oro ai magistrati, e il taglio delle mani ai loro subalterni, se lasciano smontare i monumenti: segno che lo si faceva. Nel 537 i Goti tagliano i quattordici acquedotti, e Belisario fa macinare il grano con mulini galleggianti sul Tevere. Dalla fine del V secolo si seppelliscono i morti dentro le mura, nei quartieri ormai vuoti: una cosa impensabile per la città antica."},
 
  {anno:493, titolo:'Teodorico', testo:"Il re degli Ostrogoti governa l'Italia da Ravenna con funzionari romani. A Roma fa restaurare le mura e il teatro di Pompeo e vieta di deviare l'acqua degli acquedotti; al Colosseo si danno ancora cacce alle fiere (l'ultima notizia è del 523)."},
  {anno:537, titolo:'Gli acquedotti tagliati', testo:"Nel 535 Giustiniano ha mandato Belisario a riprendere l'Italia. Durante l'assedio di Roma i Goti tagliano tutti gli acquedotti: le grandi terme si fermano e non riapriranno, anche se dopo la guerra alcuni condotti verranno riparati."},
@@ -155,14 +158,20 @@ var CURVE={
      Durliat 1990 (600-800.000 nel IV secolo), Lançon (500.000 nel 419), Novella 36 di Valentiniano III (450-500.000 verso il 452), A.H.M. Jones (650.000),
      Delogu (15-30.000 a metà VI), Santangeli Valenzani (50-60.000 a metà VI; 20-30.000 in età carolingia), Wickham (20-25.000),
      Meneghini e Santangeli Valenzani 2023 (circa 60.000 stabili). Stime estreme per l'VIII-IX secolo: da 5.000 (Hodges) a 90.000.
+     Riviste il 21 novembre 2026: il minimo del III secolo scende a 450.000 (Storey 1997, letto in un sunto: è la scuola della «piccola Roma»); la forchetta del 452 viene
+     dalle 3.629.000 libbre di maiale distribuite in cinque mesi (Novella 36), cioè circa 145.000 razioni per 2,5-4 persone ciascuna. Nel 547, dopo Totila, Procopio (VII 22) dice
+     la città vuota: è retorica, non un conteggio, e la curva non scende a zero. Non letti: Lo Cascio, Durliat, Purcell, Meneghini e Santangeli Valenzani.
      Il 476 non ha stime puntuali: è un'interpolazione. Il 550 è il valore minimo (Krautheimer), non il centro della forchetta. */
   popolazione:{nome:'Abitanti di Roma', nota:'stima',
     punti:[[235,900000],[300,800000],[367,750000],[408,750000],[419,450000],[452,450000],[476,250000],[500,100000],[535,80000],[550,30000],[590,45000],[600,50000],[680,32000],[750,25000],[801,30000],[852,30000]],
-    banda:[[235,700000,1200000],[300,600000,1200000],[367,500000,1000000],[408,700000,1000000],[419,300000,500000],[452,400000,650000],[476,150000,400000],[500,60000,200000],[535,60000,200000],[550,15000,100000],[600,20000,90000],[700,20000,60000],[852,20000,60000]]},
+    banda:[[235,450000,1200000],[300,450000,1200000],[367,500000,1000000],[408,700000,1000000],[419,300000,500000],[452,350000,550000],[476,150000,400000],[500,60000,200000],[535,60000,200000],[550,15000,100000],[600,20000,90000],[700,20000,60000],[852,20000,60000]]},
   /* Fino della moneta d'argento: denario di Severo Alessandro 43-50%, Decio circa 40%, Gallieno 18% nel 260 e 2,5% a fine regno (dati Walker, in Katsari 2002);
      riforma di Aureliano 5% garantito (RIC online). Le analisi di Walker sono di superficie e sovrastimano il fino (Butcher e Ponting): valori indicativi. */
-  argento:{nome:'Argento nella moneta', nota:'% di fino, stime, fino alla riforma di Diocleziano', punti:[[235,45],[250,40],[260,18],[268,3],[274,5],[294,5]], fine:294, dopo:'dal 309-310 solido d\'oro, stabile'},
-  commerci:{nome:'Commerci', nota:'indice orientativo dai relitti (I secolo = 100)', punti:[[235,60],[300,45],[400,35],[439,25],[500,18],[568,12],[590,12],[700,6],[801,8],[852,8]]}
+  argento:{nome:'Argento nella moneta', nota:'% d\'argento, valori indicativi: denario, poi antoniniano; dal 294 nummo al 4%', punti:[[235,45],[250,40],[260,18],[268,3],[274,5],[294,4]], fine:294, dopo:'dal 309-312 solido d\'oro, stabile fino all\'XI secolo'},      // nummo al 4% e solido: ric.mom.fr (Burnett 1987, Estiot 2004) e voce Solidus (Porteous 1969), letti il 21 novembre 2026
+  /* Non è una serie pubblicata: è un indice qualitativo nostro. I relitti datati calano dal I secolo (Parker 1992, Wilson 2009), ma contano anfore e pietre, non botti né merci deperibili,
+     e per McCormick il calo tardoantico è molto meno ripido di come appare; il piombo nei ghiacci della Groenlandia (McConnell e altri 2018) crolla nel 165 e misura le miniere, non i mercati;
+     la sigillata africana circola fino alla seconda metà del VII secolo. Per questo la curva è piatta fra IV e V secolo e scende davvero nel VII. */
+  commerci:{nome:'Commerci', nota:'indice qualitativo nostro, non una serie pubblicata (I secolo = 100)', punti:[[235,45],[300,40],[400,40],[439,30],[500,25],[568,20],[590,18],[650,12],[700,5],[801,6],[852,6]]}
 };
 
 /* dalla popolazione alla quota di isolati abitati nel modello */
@@ -324,7 +333,7 @@ var SCHEDE={
    una tesi di York sulle scholae); per gli edifici in piedi il giudizio è quello corrente e non cita una fonte. Dove una voce mescola parti diverse vale la prevalente, e la nota lo dice.
    I ponti hanno la classe uno per uno in js/mura.js. */
 var CERTEZZA={
-  colosseo:['A',"In piedi per due terzi, con la pianta completa."],
+  colosseo:['A',"In piedi l'anello esterno sul lato nord (31 arcate su 80) e gran parte degli anelli interni; il lato sud è caduto in un terremoto, quale è discusso. La pianta è completa."],
   arcotito:['A',"In piedi; i fianchi sono un restauro dell'Ottocento."],
   colosso:['B',"Il basamento è stato visto e rilevato (oggi è segnato sul selciato); l'aspetto della statua viene dalle monete e dai testi, e qui è indicativo."],
   metasudans:['B',"Il rudere è rimasto in piedi fino al 1936 e le fondazioni sono state scavate; la forma viene dalle monete e dalle fotografie, la posizione qui vale entro una quindicina di metri."],
@@ -339,11 +348,11 @@ var CERTEZZA={
   caracalla:['A',"In piedi, con la pianta completa."],
   diocleziano:['A',"In buona parte in piedi (Santa Maria degli Angeli, l'aula ottagona, l'esedra della piazza)."],
   massenzio:['A',"In piedi la navata nord; la pianta è nota per intero."],
-  venere:['A',"In piedi il podio e le due celle; i colonnati sono ricostruiti."],
+  venere:['A',"In piedi il podio e parte delle due celle con le absidi, che però sono il rifacimento di Massenzio dopo l'incendio del 307: la forma del tempio di Adriano è ricostruita, come i colonnati."],
   adriano:['A',"Tamburo e basamento sono dentro Castel Sant'Angelo; il coronamento è ricostruito."],
   augusto:['B',"Restano gli anelli inferiori; la forma della parte alta è discussa."],
   pompeo:['B',"La curva della cavea sopravvive nelle strade e nelle cantine, il portico è nella pianta marmorea; gli alzati sono ricostruiti."],
-  marcello:['A',"In piedi."],
+  marcello:['A',"In piedi un tratto della facciata curva con due ordini di arcate, dentro il palazzo costruito sopra; il terzo ordine, la scena e le gradinate sono perduti e ricostruiti sulla pianta nota."],
   laterano:['B',"La pianta costantiniana è nota dagli scavi sotto la chiesa attuale; l'alzato è ricostruito."],
   pietro:['B',"Demolita fra il 1506 e il 1606, ma rilevata prima (pianta di Alfarano, disegni del Cinquecento) e ritrovata negli scavi sotto la basilica."],
   sole:['C',"Nessun resto sicuro: lo si colloca in questa zona per deduzione dalle fonti. Posizione e forma sono ipotesi."],
@@ -366,9 +375,9 @@ var CERTEZZA={
   casenerva:['B',"Scavate fra il 1995 e il 2000: il piano terra della maggiore è visibile, il resto è ricostruito."],
   balbo:['B',"Teatro dalla pianta marmorea e dalle cantine dei palazzi; portico ed esedra dagli scavi, e l'esedra si visita nel museo."],
   emporio:['B',"Muri in piedi e pianta marmorea per il grande edificio (la cui identificazione è discussa); magazzini e banchine da scavi parziali."],
-  testaccio:['A',"Esiste: il contorno è quello di oggi."],
+  testaccio:['A',"Esiste: il contorno è quello di oggi, raggiunto quando gli scarichi cessano, verso il 260; prima era più basso."],
   leonine:['B',"Misto: in piedi alcuni tratti e una torre nei giardini vaticani; il lato nord è ricalcato dal Passetto, più tardo; il lato sud è interpolato."],
-  mura:['A',"In piedi per quasi tutto il circuito."],
+  mura:['A',"In piedi per la maggior parte dei circa 19 chilometri del circuito; i tratti scomparsi, soprattutto lungo il Tevere, sono ricostruiti."],
   acquedotti:['B',"Misto: la Claudia e gli archi neroniani sono in buona parte in piedi; Marcia, Vergine e Traiana sono note per tratti, e il resto del percorso e tutte le quote sono ricostruiti."],
   antoniniano:['B',"Certi due punti: l'arco detto di Druso, in piedi, e i resti di piazza Galeria. Il tracciato fra l'uno e l'altro e fino alle terme è ricostruito."],
   chiese:['B',"Il sito è quello della chiesa attuale; la forma antica è quasi sempre perduta, e qui tutte hanno lo stesso modello."]
