@@ -54,6 +54,7 @@ function scriviSpie(){
 }
 
 /* ---------- monumenti ---------- */
+var NOMI_CERTEZZA={A:'posizione e forma certe',B:'posizione certa, forma ricostruita',C:'ipotesi'};
 var NOMI_STATO={uso:'in uso',chiuso:'in disuso',spogliato:'spogliato',bruciato:'bruciato',crollato:'danneggiato da un terremoto',cava:'usato come cava',assente:'non ancora costruito'};
 var voci=(RM.MONUMENTI||[]).map(function(m){
   var li=document.createElement('li'), s=document.createElement('span'); li.appendChild(s); $('elencoMonumenti').appendChild(li); return {m:m,li:li,s:s,st:''};
@@ -64,11 +65,11 @@ var schedaDi=null, schedaChiave='';
 function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function scriviScheda(){
   if(!schedaDi) return;
-  var m=schedaDi, q=RM.statoMonumento(m.id,anno), st=q.t>.5?q.s1:q.s0, sc=(D.SCHEDE||{})[m.id]||{}, chiave=m.id+st+Math.round(anno);
+  var m=schedaDi, q=RM.statoMonumento(m.id,anno), st=q.t>.5?q.s1:q.s0, sc=(D.SCHEDE||{})[m.id]||{}, ce=(D.CERTEZZA||{}).provvisorio?null:(D.CERTEZZA||{})[m.id], chiave=m.id+st+Math.round(anno);
   if(chiave===schedaChiave) return; schedaChiave=chiave;
   var righe=(sc.date||[]).map(function(r){ var futura=typeof r[0]==='number'&&r[0]>anno+.5; return '<li'+(futura?' class="futura"':'')+'><b>'+esc(r[0])+'</b><span>'+esc(r[1])+'</span></li>'; }).join('');
   $('scheda').innerHTML='<button type="button" class="chiudi" aria-label="Chiudi la scheda">✕</button><h3>'+esc(m.nome)+'</h3>'+
-    '<p class="stato"><span class="st '+st+'">'+NOMI_STATO[st]+'</span> nel '+Math.round(anno)+'</p>'+(sc.cosa?'<p class="cosa">'+esc(sc.cosa)+'</p>':'')+(righe?'<ul>'+righe+'</ul>':'');
+    '<p class="stato"><span class="st '+st+'">'+NOMI_STATO[st]+'</span> nel '+Math.round(anno)+'</p>'+(sc.cosa?'<p class="cosa">'+esc(sc.cosa)+'</p>':'')+(ce?'<p class="certezza"><i class="c'+ce[0]+'"></i><span><b>Che cosa sappiamo:</b> '+NOMI_CERTEZZA[ce[0]]+(ce[1]?'. '+esc(ce[1]):'')+'</span></p>':'')+(righe?'<ul>'+righe+'</ul>':'');
 }
 function apriScheda(m){
   schedaDi=m; schedaChiave=''; scriviScheda(); $('scheda').hidden=false;
@@ -142,6 +143,12 @@ window.addEventListener('keydown',function(ev){
   if(ev.altKey||ev.ctrlKey||ev.metaKey) return;
   if(ev.key==='ArrowRight'){ ferma(); vai(idx+1); } else if(ev.key==='ArrowLeft'){ ferma(); vai(idx-1); }
 });
+/* «Che cosa sappiamo davvero»: la scena prende i colori della certezza e compare la legenda */
+var sapere=0, metaSapere=0;
+if(!D.CERTEZZA || D.CERTEZZA.provvisorio) $('btnSapere').hidden=true;
+$('btnSapere').addEventListener('click',function(){
+  metaSapere=metaSapere?0:1; this.setAttribute('aria-pressed',metaSapere?'true':'false'); $('legendaSapere').hidden=!metaSapere;
+});
 $('btnNotte').addEventListener('click',function(){
   metaNotte=metaNotte?0:1; this.setAttribute('aria-pressed',metaNotte?'true':'false'); this.textContent=metaNotte?'Giorno':'Notte';
 });
@@ -166,6 +173,7 @@ var ultimo=performance.now();
   var dt=Math.min(((ora||performance.now())-ultimo)/1000,.25), mosso=false; ultimo=ora||performance.now();
   if(anno!==meta){ var p=vel*dt; anno=Math.abs(meta-anno)<=p?meta:anno+Math.sign(meta-anno)*p; mosso=true; }
   if(notte!==metaNotte){ var pn=dt/1.6; notte=Math.abs(metaNotte-notte)<=pn?metaNotte:notte+Math.sign(metaNotte-notte)*pn; if(RM.applicaLuce) RM.applicaLuce(notte); mosso=true; }
+  if(sapere!==metaSapere && RM.sapere){ var ps=dt/.5; sapere=Math.abs(metaSapere-sapere)<=ps?metaSapere:sapere+Math.sign(metaSapere-sapere)*ps; RM.sapere.q.value=sapere*sapere*(3-2*sapere); }
   if(mosso) applica();
 })();
 

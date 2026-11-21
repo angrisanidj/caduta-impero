@@ -1,4 +1,4 @@
-/* La vita della città: gente attorno agli isolati abitati e lungo le vie, fumo dai tetti e dalle terme, barche sul Tevere.
+/* La vita della città: gente lungo le vie (chi abita un isolato cammina sulla strada più vicina) e nelle piazze lastricate, fumo dai tetti e dalle terme, barche sul Tevere.
    Tutto dipende dagli stessi dati della scena: quando un isolato si svuota, la sua gente e il suo fumo scompaiono. */
 (function(){
 'use strict';
@@ -14,39 +14,64 @@ for(i=0;i<NP;i++){
   giro[i]=rnd()*4; passo[i]=(rnd()<.5?-1:1)*(.05+.09*rnd());
 }
 /* vie campionate a passo costante */
-var vie=RM.STRADE.map(function(s){
+var vie=RM.STRADE.map(function(s,i){
   var cv=new THREE.CatmullRomCurve3(s.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); }),false,'catmullrom',.35), L=cv.getLength();
-  return {p:cv.getSpacedPoints(Math.round(L/2)), L:L};
+  return {p:cv.getSpacedPoints(Math.max(2,Math.round(L/2))), L:L, larga:((window.RM_TOPO||{}).stradeLarghe||[])[i]||.6};
 });
+/* A ogni isolato la via più vicina (entro 120 metri): la sua gente cammina lì. Le vie disegnate sono solo le principali: dove le case abitate sono fitte
+   ci sono anche i vicoli fra l'una e l'altra, e lì si gira attorno a casa; attorno a una casa sola in mezzo agli orti non cammina nessuno. */
+(function(){
+  var CE=10, gr={};
+  vie.forEach(function(v,vi){ v.p.forEach(function(q,pi){ var c=Math.floor(q.x/CE)+','+Math.floor(q.z/CE); (gr[c]||(gr[c]=[])).push(vi,pi); }); });
+  isolati.forEach(function(b){
+    var cx=Math.floor(b.x/CE), cz=Math.floor(b.z/CE), m=144, a, c, k, q, pt, dd; b.vv=-1;
+    for(a=-1;a<=1;a++) for(c=-1;c<=1;c++){ q=gr[(cx+a)+','+(cz+c)]; if(!q) continue;
+      for(k=0;k<q.length;k+=2){ pt=vie[q[k]].p[q[k+1]]; dd=(pt.x-b.x)*(pt.x-b.x)+(pt.z-b.z)*(pt.z-b.z); if(dd<m){ m=dd; b.vv=q[k]; b.vi=q[k+1]; } } }
+  });
+  var gi={}; isolati.forEach(function(b,n){ var c=Math.floor(b.x/CE)+','+Math.floor(b.z/CE); (gi[c]||(gi[c]=[])).push(n); });
+  isolati.forEach(function(b,n){
+    var cx=Math.floor(b.x/CE), cz=Math.floor(b.z/CE), a, c, k, q, o; b.vicini=[];
+    for(a=-1;a<=1;a++) for(c=-1;c<=1;c++){ q=gi[(cx+a)+','+(cz+c)]; if(!q) continue; for(k=0;k<q.length;k++){ o=isolati[q[k]]; if(q[k]!==n && Math.hypot(o.x-b.x,o.z-b.z)<8.6) b.vicini.push(q[k]); } }
+  });
+})();
+function vicoli(){ isolati.forEach(function(b){ var n=0, k; for(k=0;k<b.vicini.length;k++) if(isolati[b.vicini[k]].a0>.5) n++; b.vicoli=n>=3; }); }      // tre vicini abitati: fra le case ci sono vicoli
 var lunghezza=vie.reduce(function(a,v){ return a+v.L; },0), viandanti=[];
 for(i=0;i<NV;i++){
   var r=rnd()*lunghezza, k=0; while(r>vie[k].L){ r-=vie[k].L; k++; }
   var dentro=rnd()<.8;                                  // quasi tutti in città, pochi sulle vie consolari
-  viandanti.push({v:k, s:dentro?rnd()*Math.min(1,230/vie[k].L):rnd(), vel:(rnd()<.5?-1:1)*(.9+rnd()*.9)/vie[k].L, lato:(rnd()-.5)*1.1});
+  viandanti.push({v:k, s:dentro?rnd()*Math.min(1,230/vie[k].L):rnd(), vel:(rnd()<.5?-1:1)*(.9+rnd()*.9)/vie[k].L, lato:(rnd()-.5)*1.5});      // lato: frazione della mezza larghezza della via
 }
-/* piazze e spianate dove la folla si vede: Foro, foro di Traiano, Colosseo, Pantheon, Campo Marzio, Trastevere */
-var PIAZZE=[[-1.2,1.6,5.5,2.2],[-1.3,-27.8,4.5,3.5],[57,26,13.5,12],[-70,-77,4,3],[-95,-55,5,5],[-125,38,4,4],[30,-2,5,3]], folla=[];
+/* piazze lastricate dove la folla si vede: Foro, foro di Traiano, la spianata attorno al Colosseo, la piazza davanti al Pantheon */
+var PIAZZE=[[-1.2,1.6,5.5,2.2],[-1.3,-27.8,4.5,3.5],[57,26,13.5,12],[-70,-77,4,3]], folla=[];
 for(i=0;i<NZ;i++){ var pz=PIAZZE[i%PIAZZE.length], an=rnd()*6.283, rr=(pz===PIAZZE[2]?.82+.18*rnd():Math.sqrt(rnd())); folla.push({p:pz,a:an,r:rr,vel:(rnd()-.5)*.12}); }
 /* pellegrini a San Pietro: metà nell'atrio e sul sagrato, metà in cammino lungo il portico da ponte Elio. Crescono mentre la città cala */
 var pellegrini=[]; for(i=0;i<NG;i++) pellegrini.push({s:rnd(), a:rnd()*6.283, r:Math.sqrt(rnd()), vel:(rnd()<.5?-1:1)*(.012+.02*rnd()), lato:(rnd()-.5)*1.6});
 var PELLEGRINI_NEL_TEMPO=[[320,0],[400,.22],[500,.42],[700,.75],[800,1],[852,1]];
-var texPunto=RM.tela(16,16,function(g){ g.fillStyle='#fff'; g.beginPath(); g.arc(8,8,6.5,0,6.3); g.fill(); },false);
+/* da lontano un punto, da vicino una figura: testa e mantello, con i piedi al centro del punto (che sta all'altezza del suolo) */
+var texPunto=RM.tela(32,32,function(g){ g.fillStyle='#fff'; g.beginPath(); g.arc(16,5,3.6,0,6.3); g.fill(); g.beginPath(); g.moveTo(12.4,9.5); g.lineTo(19.6,9.5); g.lineTo(21.5,20); g.lineTo(10.5,20); g.closePath(); g.fill(); },false);
 var gGente=new THREE.BufferGeometry();
 gGente.setAttribute('position',new THREE.BufferAttribute(pos,3)); gGente.setAttribute('color',new THREE.BufferAttribute(col,3));
-var matGente=new THREE.PointsMaterial({size:.6,vertexColors:true,sizeAttenuation:true,transparent:true,map:texPunto,alphaTest:.4});
+var matGente=new THREE.PointsMaterial({size:.95,vertexColors:true,sizeAttenuation:true,transparent:true,map:texPunto,alphaTest:.4});
 matGente.onBeforeCompile=function(sh){ sh.vertexShader=sh.vertexShader.replace('#include <fog_vertex>','#include <fog_vertex>'+String.fromCharCode(10)+'gl_PointSize=max(gl_PointSize,2.6);'); };
 var gente=new THREE.Points(gGente,matGente); gente.frustumCulled=false; RM.scene.add(gente);
 
 function muoviGente(dt){
-  var j=0, n, b, s, lato, f, hs, lx, lz, ca, sa, o;
+  var j=0, n, b, s, o, vp, tt, i0, pa, pb, fr, ex, ez, el, lat, lato, f, hs, lx, lz, ca, sa;
   for(n=0;n<N;n++){
-    b=isolati[n]; ca=Math.cos(b.ry); sa=Math.sin(b.ry);
+    b=isolati[n];
     for(var q=0;q<PER_ISOLATO;q++,j++){
       o=j*3;
-      if(b.a0<.5){ pos[o+1]=-60; continue; }
-      s=giro[j]=(giro[j]+passo[j]*dt+4)%4; lato=s|0; f=s-lato; hs=b.w/2+.5+.25*q;       // gira attorno all'isolato
-      if(lato===0){ lx=-hs+2*hs*f; lz=hs; } else if(lato===1){ lx=hs; lz=hs-2*hs*f; } else if(lato===2){ lx=hs-2*hs*f; lz=-hs; } else { lx=-hs; lz=-hs+2*hs*f; }
-      pos[o]=b.x+lx*ca+lz*sa; pos[o+1]=b.y+.16; pos[o+2]=b.z-lx*sa+lz*ca;
+      if(b.a0<.5 || (b.vv<0 && !b.vicoli)){ pos[o+1]=-60; continue; }
+      s=giro[j]=(giro[j]+passo[j]*dt+4)%4;
+      if(b.vv<0 || (q===1 && b.vicoli)){                                                 // nei vicoli, attorno all'isolato
+        ca=Math.cos(b.ry); sa=Math.sin(b.ry); lato=s|0; f=s-lato; hs=b.w/2+.45;
+        if(lato===0){ lx=-hs+2*hs*f; lz=hs; } else if(lato===1){ lx=hs; lz=hs-2*hs*f; } else if(lato===2){ lx=hs-2*hs*f; lz=-hs; } else { lx=-hs; lz=-hs+2*hs*f; }
+        pos[o]=b.x+lx*ca+lz*sa; pos[o+1]=b.y+.16; pos[o+2]=b.z-lx*sa+lz*ca; continue;
+      }
+      vp=vie[b.vv];
+      tt=Math.max(0,Math.min(vp.p.length-1.001,b.vi+(3+2*q)*(Math.abs(s-2)-1)));       // avanti e indietro lungo la via di casa, per una sessantina di metri
+      i0=tt|0; pa=vp.p[i0]; pb=vp.p[i0+1]; fr=tt-i0; ex=pb.x-pa.x; ez=pb.z-pa.z; el=Math.hypot(ex,ez)||1; lat=((j*.618034)%1-.5)*1.5*vp.larga;
+      pos[o]=pa.x+ex*fr-ez/el*lat; pos[o+2]=pa.z+ez*fr+ex/el*lat; pos[o+1]=RM.hRapida(pos[o],pos[o+2])+.2;
     }
   }
   var visibili=Math.round(NV*quotaGente);
@@ -55,7 +80,7 @@ function muoviGente(dt){
     if(n>=visibili){ pos[o+1]=-60; continue; }
     w.s+=w.vel*dt; if(w.s>1||w.s<0){ w.vel=-w.vel; w.s=Math.max(0,Math.min(1,w.s)); }
     var pp=vie[w.v].p, t=w.s*(pp.length-1), k0=Math.min(pp.length-2,t|0), a=pp[k0], bb=pp[k0+1], g=t-k0, dx=bb.x-a.x, dz=bb.z-a.z, L=Math.hypot(dx,dz)||1;
-    pos[o]=a.x+dx*g-dz/L*w.lato; pos[o+2]=a.z+dz*g+dx/L*w.lato; pos[o+1]=RM.hRapida(pos[o],pos[o+2])+.2;
+    var fuori=w.lato*vie[w.v].larga; pos[o]=a.x+dx*g-dz/L*fuori; pos[o+2]=a.z+dz*g+dx/L*fuori; pos[o+1]=RM.hRapida(pos[o],pos[o+2])+.2;
   }
   var inPiazza=Math.round(NZ*quotaGente);
   for(n=0;n<NZ;n++,j++){
@@ -114,18 +139,26 @@ function muoviFumo(){
   gFumo.attributes.position.needsUpdate=true; gFumo.attributes.alfa.needsUpdate=true;
 }
 
-/* ---------- barche ---------- */
+/* ---------- barche ----------
+   Seguono il filo della corrente a velocità costante, tenendo la destra, e passano sotto i ponti fra una pila e l'altra; in fondo al tratto virano.
+   Due tratti navigabili: a monte, da ponte Milvio a ponte Aurelio; a valle, da ponte Emilio verso l'Emporio e San Paolo. Fra i due ci sono l'isola e, dal 537, i mulini. */
 var NB=16, scafo=new RM.Costruttore().scatola(1.9,.22,.55,0,0,0,P.tronco).scatola(.5,.16,.4,.95,.06,0,P.tronco).cilindro(.035,1.1,-.1,.2,0,P.tronco,.03,5);
 scafo.quad([-.1,.45,-.55],[-.1,.45,.55],[-.1,1.2,.55],[-.1,1.2,-.55],P.marmo);
 var barche=new THREE.InstancedMesh(scafo.geometria(),RM.matPietra(),NB), dati=[], d=new THREE.Object3D(), quotaBarche=1;
 barche.instanceMatrix.setUsage(THREE.DynamicDrawUsage); barche.castShadow=true; barche.frustumCulled=false; RM.scene.add(barche);
-for(i=0;i<NB;i++) dati.push({t:.4+rnd()*.26, vel:(i%2?-1:1)*(.0016+rnd()*.0016), lato:(rnd()-.5)*5});
+var fiume=RM.curvaFiume; fiume.arcLengthDivisions=1200; fiume.updateArcLengths();
+var lungoFiume=fiume.getLength();
+function uVicino(x,z){ var m=1e9, um=0, k, q, dd; for(k=0;k<=1500;k++){ q=fiume.getPointAt(k/1500); dd=(q.x-x)*(q.x-x)+(q.z-z)*(q.z-z); if(dd<m){ m=dd; um=k/1500; } } return um; }
+var TRATTI=[[uVicino(-152,-479)+6/lungoFiume, uVicino(-120,1)-5/lungoFiume],[uVicino(-52,38)+6/lungoFiume, uVicino(-90,400)]];
+for(i=0;i<NB;i++){ var tr=i%3===0?0:1; dati.push({tr:tr, u:TRATTI[tr][0]+rnd()*(TRATTI[tr][1]-TRATTI[tr][0]), dir:i%2?-1:1, corsia:2.3+rnd()*.8, vel:.8+rnd()*.8, vira:0}); }
 function muoviBarche(dt){
   var visibili=Math.round(NB*quotaBarche);
   dati.forEach(function(b,k){
-    b.t+=b.vel*dt; if(b.t>.67||b.t<.39){ b.vel=-b.vel; b.t=Math.max(.39,Math.min(.67,b.t)); }
-    var p=RM.curvaFiume.getPoint(b.t), tg=RM.curvaFiume.getTangent(b.t), s=k<visibili?1:0;
-    d.position.set(p.x-tg.z*b.lato,-.52,p.z+tg.x*b.lato); d.rotation.set(0,Math.atan2(-tg.z,tg.x)+(b.vel<0?Math.PI:0),0); d.scale.setScalar(s); d.updateMatrix(); barche.setMatrixAt(k,d.matrix);
+    var T=TRATTI[b.tr], lato=b.dir*b.corsia, gira=0, e;
+    if(b.vira>0){ b.vira=Math.max(0,b.vira-dt/6); e=1-b.vira; e=e*e*(3-2*e); lato=-b.dir*b.corsia*Math.cos(Math.PI*e); gira=Math.PI*(1-e); }      // virata: attraversa la corrente e riparte dall'altra parte
+    else{ b.u+=b.dir*b.vel*dt/lungoFiume; if(b.u>T[1]||b.u<T[0]){ b.u=Math.max(T[0],Math.min(T[1],b.u)); b.dir=-b.dir; b.vira=1; lato=-b.dir*b.corsia; gira=Math.PI; } }
+    var p=fiume.getPointAt(b.u), tg=fiume.getTangentAt(b.u), s=k<visibili?1:0;
+    d.position.set(p.x-tg.z*lato,-.52,p.z+tg.x*lato); d.rotation.set(0,Math.atan2(-tg.z,tg.x)+(b.dir<0?Math.PI:0)-gira,0); d.scale.setScalar(s); d.updateMatrix(); barche.setMatrixAt(k,d.matrix);
   });
   barche.instanceMatrix.needsUpdate=true;
 }
@@ -136,7 +169,7 @@ RM.moduli.push(function(anno){
   quotaBarche=Math.max(Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60), RM.sfuma(845.5,846,anno)*(1-RM.sfuma(846.4,847.4,anno)));   // nell'846 il fiume si riempie delle navi saracene
   quotaPellegrini=D.interp(PELLEGRINI_NEL_TEMPO,anno);
   FONTI.forEach(function(f){ if(f.id){ var q=RM.statoMonumento(f.id,anno), s=f.stato||'uso'; f.vivo=(q.s0===s?1-q.t:0)+(q.s1===s?q.t:0); } });
-  mostraForni();
+  mostraForni(); vicoli();
   matGente.opacity=1-.8*RM.notte;
 });
 RM.frame.push(function(dt){

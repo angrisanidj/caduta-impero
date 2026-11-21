@@ -215,6 +215,26 @@ body.roma-grande .pellegrino{top:98px}
 /* prima e dopo: stessa inquadratura, cursore sugli anni */
 .confronta{top:74px}
 body.roma-grande .confronta{top:128px}
+/* che cosa sappiamo davvero */
+.sapere{top:104px}
+body.roma-grande .sapere{top:158px}
+.legenda-sapere{position:absolute;left:10px;top:80px;padding:6px 9px;background:rgba(251,246,234,.93);color:var(--ink);border:1px solid rgba(160,130,60,.5);border-radius:4px;font-size:11.5px;line-height:1.3;z-index:3}
+.legenda-sapere[hidden]{display:none}
+.legenda-sapere p,.scheda .certezza{display:grid;grid-template-columns:auto 1fr;gap:7px;margin:0 0 3px}
+.legenda-sapere p:nth-last-child(2){margin-bottom:0}
+.legenda-sapere em{display:none;font-style:normal}
+.legenda-sapere .nota{display:none;margin:6px 0 0;padding-top:6px;border-top:1px solid rgba(160,130,60,.35);color:var(--muted)}
+.legenda-sapere i,.scheda .certezza i{width:12px;height:12px;margin-top:2px;border-radius:2px;border:1px solid rgba(43,36,32,.35)}
+.cA{background:#9a3f2f}.cB{background:#e2b254}.cC{background:#d6d1c6}
+/* a tutto schermo, su schermi larghi, la legenda spiega le tre classi */
+@media (min-width:701px){
+  body.roma-grande .legenda-sapere{left:auto;right:10px;top:192px;width:250px;padding:9px 11px;font-size:12.5px}
+  body.roma-grande .legenda-sapere p{margin-bottom:5px}
+  body.roma-grande .legenda-sapere em{display:inline}
+  body.roma-grande .legenda-sapere .nota{display:block}
+}
+.scheda .certezza{margin:0 0 8px;font-size:13px}
+
 .confronto{position:absolute;left:12px;right:58px;bottom:10px;max-width:560px;z-index:3;display:flex;flex-direction:column;gap:4px;padding:6px 9px;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:8px}
 .confronto[hidden]{display:none}
 .confronto .viste{display:flex;gap:6px;flex-wrap:wrap;align-items:center}

@@ -182,6 +182,18 @@ sole.castShadow=true;
 var lato=piccolo?1536:4096; sole.shadow.mapSize.set(lato,lato);
 var oc=sole.shadow.camera; oc.left=-420; oc.right=420; oc.top=420; oc.bottom=-420; oc.near=150; oc.far=1500; oc.updateProjectionMatrix();
 sole.shadow.bias=-.0007; sole.shadow.normalBias=.5;
+/* Ombre da vicino. La mappa delle ombre copre tutta la città, e da vicino è sgranata: quando ci si avvicina il riquadro si stringe attorno a ciò che si guarda
+   e si ridisegna solo quando lo sguardo si è spostato abbastanza; da lontano torna a coprire tutto. */
+var ombra={x:10,z:0,s:420};
+RM.frame.push(function(){
+  if(!sole.castShadow) return;
+  var dist=camera.position.distanceTo(controlli.target), lato=Math.max(70,Math.min(420,dist*1.25)), x=lato>=420?10:controlli.target.x, z=lato>=420?0:controlli.target.z;
+  if(Math.abs(lato-ombra.s)<ombra.s*.2 && Math.hypot(x-ombra.x,z-ombra.z)<ombra.s*.22) return;
+  ombra.x=x; ombra.z=z; ombra.s=lato;
+  sole.target.position.set(x,0,z); sole.position.set(x-610,330,z-170); sole.target.updateMatrixWorld();
+  oc.left=-lato; oc.right=lato; oc.top=lato; oc.bottom=-lato; oc.updateProjectionMatrix(); sole.shadow.normalBias=Math.max(.14,.5*lato/420);
+  renderer.shadowMap.needsUpdate=true;
+});
 RM.moduli.push(function(){ renderer.shadowMap.needsUpdate=true; });
 
 /* ---- terreno: maglia fitta sulla città, larga in campagna. Si posa dopo che i monumenti hanno dichiarato le loro terrazze (RM.posa) ---- */
@@ -225,6 +237,10 @@ function posaSuolo(){
         'float gr=dot(diffuseColor.rgb,vec3(0.34))/0.42;',
         'diffuseColor.rgb=mix(diffuseColor.rgb,uVerde*(0.72+0.4*pe)*clamp(gr,0.7,1.25),vUrb.x*smoothstep(0.1,0.5,uErba-vUrb.y*0.95)*(0.6+0.4*pe));',
         'diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.27,0.25,0.15)*(0.8+0.4*pe),smoothstep(0.025,0.2,vPend)*0.8);',
+        /* da vicino il terreno prende una grana più fine (ciuffi, sassi), che sfuma quando ci si allontana e non sfarfalla */
+        'float fwS=max(fwidth(vXZ.x),fwidth(vXZ.y)); float vic=1.0-smoothstep(0.03,0.14,fwS);',
+        'if(vic>0.0){ float g1=texture2D(map,vUv*9.0).r; float g2=texture2D(map,vUv*31.0+0.37).r; float ch=sin(vXZ.x*3.1+sin(vXZ.y*2.3)*1.9)*sin(vXZ.y*2.7+sin(vXZ.x*1.9)*2.1);',
+        '  diffuseColor.rgb*=1.0+vic*((g1-0.9)*1.7+(g2-0.9)*1.1+0.06*ch); }',
         /* lontano dalla città il terreno diventa una carta antica: fondo color pergamena, tratteggio a inchiostro */
         'float lont=smoothstep(480.0,820.0,length(vXZ));',
         'vec3 carta=vec3(0.83,0.74,0.56)*(0.95+0.05*sin(vXZ.x*0.09)*sin(vXZ.y*0.09));',
@@ -262,6 +278,8 @@ RM.matFiume.onBeforeCompile=function(sh){                       // corrente che 
     'float bordo=abs(vRiva.x-0.5)*2.0;',
     'float onda=sin(vRiva.y*5.0-uTempo*1.2+sin(vRiva.x*7.0+uTempo*0.5)*1.3)*0.5+0.5;',
     'diffuseColor.rgb*=0.88+0.26*onda*(1.0-bordo);',
+    'float fwA=fwidth(vRiva.y); float vicA=1.0-smoothstep(0.02,0.12,fwA);',
+    'diffuseColor.rgb*=1.0+vicA*0.07*sin(vRiva.y*37.0-uTempo*2.1+sin(vRiva.x*23.0+uTempo*0.9)*2.0)*sin(vRiva.x*19.0+vRiva.y*11.0+uTempo*0.6);',
     'diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*2.2+0.08,smoothstep(0.8,0.97,bordo)*(0.35+0.4*onda));'].join(A));
 };
 RM.frame.push(function(dt){ RM.tempoAcqua.value+=dt; });
@@ -302,15 +320,15 @@ var post=null;
   tela.texture.encoding=THREE.sRGBEncoding; tela.texture.generateMipmaps=false;
   tela.depthTexture=new THREE.DepthTexture(4,4); tela.depthTexture.type=THREE.UnsignedIntType;
   var mat=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
-    uniforms:{ tCol:{value:tela.texture}, tProf:{value:tela.depthTexture}, px:{value:new THREE.Vector2(1,1)}, vicino:{value:camera.near}, lontano:{value:camera.far}, notte:{value:0} },
+    uniforms:{ tCol:{value:tela.texture}, tProf:{value:tela.depthTexture}, px:{value:new THREE.Vector2(1,1)}, vicino:{value:camera.near}, lontano:{value:camera.far}, notte:{value:0}, sfoca:{value:1} },
     vertexShader:'varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.0,1.0); }',
     fragmentShader:[
-      'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; varying vec2 vUv;',
+      'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; uniform float sfoca; varying vec2 vUv;',
       'float prof(vec2 uv){ float z=texture2D(tProf,uv).x*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',
       'float lum(vec3 c){ return dot(c,vec3(0.299,0.587,0.114)); }',
       'void main(){',
       '  vec3 c=texture2D(tCol,vUv).rgb;',
-      '  float fuoco=smoothstep(0.24,0.52,abs(vUv.y-0.46));',                                   // 0 al centro, 1 ai bordi alto e basso
+      '  float fuoco=smoothstep(0.24,0.52,abs(vUv.y-0.46))*sfoca;',                                   // 0 al centro, 1 ai bordi alto e basso
       '  vec3 n=texture2D(tCol,vUv+vec2(0.0,px.y)).rgb, s=texture2D(tCol,vUv-vec2(0.0,px.y)).rgb, e=texture2D(tCol,vUv+vec2(px.x,0.0)).rgb, o=texture2D(tCol,vUv-vec2(px.x,0.0)).rgb;',
       '  float l=lum(c), l0=min(l,min(min(lum(n),lum(s)),min(lum(e),lum(o)))), l1=max(l,max(max(lum(n),lum(s)),max(lum(e),lum(o))));',
       '  c=mix(c,(n+s+e+o)*0.25,0.42*smoothstep(0.06,0.2,l1-l0));',                               // antialias leggero sui bordi contrastati
@@ -358,6 +376,7 @@ var orologio=new THREE.Clock(), somma=0, quanti=0, scalda=40;
   controlli.update();
   if(post && post.attivo){
     post.mat.uniforms.notte.value=RM.notte||0;
+    post.mat.uniforms.sfoca.value=RM.sfuma(70,260,camera.position.distanceTo(controlli.target));      // l'effetto «plastico» sfoca i bordi solo da lontano: da vicino si vuole vedere nitido
     renderer.setRenderTarget(post.tela); renderer.render(scene,camera);
     renderer.setRenderTarget(null); renderer.render(post.scena,post.camera);
   } else renderer.render(scene,camera);

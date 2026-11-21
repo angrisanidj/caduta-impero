@@ -36,6 +36,20 @@ function libero(x,z,margine){
   for(i=0;i<RM.campateAcquedotti.length;i++){ q=RM.campateAcquedotti[i]; if(Math.abs(x-q.x)<6 && Math.hypot(x-q.x,z-q.z)<3.5+q.len*.25) return 0; }   // né sotto le arcate degli acquedotti
   return fino;
 }
+/* Le vie campionate ogni mezza unità, in una griglia: un isolato non deve toccare la strada. La prova sul solo centro (in libero) non basta,
+   perché l'angolo di una casa può finire su una via che passa di sbieco. */
+var CELLA=8, grigliaVie={};
+RM.STRADE.forEach(function(s,i){
+  var lw=((window.RM_TOPO||{}).stradeLarghe||[])[i]||.6;
+  for(var k=0;k<s.length-1;k++){ var a=s[k], b=s[k+1], n=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/.5));
+    for(var j=0;j<n;j++){ var px=a[0]+(b[0]-a[0])*j/n, pz=a[1]+(b[1]-a[1])*j/n, c=Math.floor(px/CELLA)+','+Math.floor(pz/CELLA); (grigliaVie[c]||(grigliaVie[c]=[])).push(px,pz,lw); } }
+});
+function sullaVia(b){
+  var ca=Math.cos(b.ry), sa=Math.sin(b.ry), cx=Math.floor(b.x/CELLA), cz=Math.floor(b.z/CELLA), i, j, k, q, dx, dz;
+  for(i=-1;i<=1;i++) for(j=-1;j<=1;j++){ q=grigliaVie[(cx+i)+','+(cz+j)]; if(!q) continue;
+    for(k=0;k<q.length;k+=3){ dx=q[k]-b.x; dz=q[k+1]-b.z; if(Math.abs(dx*ca-dz*sa)<b.w/2+q[k+2]+.3 && Math.abs(dx*sa+dz*ca)<b.d/2+q[k+2]+.3) return true; } }
+  return false;
+}
 function quartiereDi(x,z){ var m=1e9, k=0; for(var i=0;i<QUARTIERI.length;i++){ var d=Math.hypot(x-QUARTIERI[i][0],z-QUARTIERI[i][1]); if(d<m){ m=d; k=i; } } return k; }
 QUARTIERI.forEach(function(Q,k){
   var ca=Math.cos(Q[2]), sa=Math.sin(Q[2]), R=30;
@@ -49,9 +63,11 @@ QUARTIERI.forEach(function(Q,k){
     var e=1.9, y0=RM.h(x,z), y1=RM.h(x+e,z+e), y2=RM.h(x-e,z+e), y3=RM.h(x+e,z-e), y4=RM.h(x-e,z-e), yMin=Math.min(y0,y1,y2,y3,y4);
     if(Math.max(y0,y1,y2,y3,y4)-yMin>2.2) continue;        // rupi e scarpate restano nude
     var fitto=1-RM.sfuma(30,240,centro), alt=dentro ? .9+1.7*fitto*(.5+.5*rnd())+.45*rnd() : .55+.5*rnd(), s=rnd();
-    isolati.push({x:x,z:z,y:yMin,ry:Q[2]+(rnd()-.5)*.05,w:3.85+rnd()*.9,d:3.85+rnd()*.9,alt:alt,
+    var nuovo={x:x,z:z,y:yMin,ry:Q[2]+(rnd()-.5)*.05,w:3.85+rnd()*.9,d:3.85+rnd()*.9,alt:alt,
       tipo:!dentro?(s<.6?2:0):(s<.5-.15*fitto?2:s<.92-.14*fitto?0:1),              // 0 a falde, 1 a corte, 2 a padiglione
-      k:tenuta(x,z)+(dentro?0:-.35), k1:tenutaSparsa(x,z)+(dentro?0:-.6), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, via:lib>1?lib:0, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0});
+      k:tenuta(x,z)+(dentro?0:-.35), k1:tenutaSparsa(x,z)+(dentro?0:-.6), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, via:lib>1?lib:0, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0};
+    if(sullaVia(nuovo)){ nuovo.w=Math.max(3,nuovo.w*.78); nuovo.d=Math.max(3,nuovo.d*.78); if(sullaVia(nuovo)) continue; }      // sulla strada: l'isolato si stringe, e se non basta non c'è
+    isolati.push(nuovo);
   }
 });
 isolati.forEach(function(b){ if(b.nasce){ b.k=9; b.k1=9; b.alt=.6+.5*b.tono; } });      // il Borgo non si svuota: è l'unico quartiere che cresce
@@ -193,11 +209,12 @@ function pacco(geo,mat,quante){
       for(i=0;i<quante;i++) if(vivo[i]){ o=i*16; t=k*16; for(j=0;j<16;j++) a[t+j]=M[o+j]; ca[k*3]=C[i*3]; ca[k*3+1]=C[i*3+1]; ca[k*3+2]=C[i*3+2]; k++; }
       m.count=k; m.instanceMatrix.needsUpdate=true; m.instanceColor.needsUpdate=true; } };
 }
+[matMuri,matTetti].forEach(function(m){ RM.tingi(m,'C'); });      // «che cosa sappiamo davvero»: le case sono ipotesi
 var conta=[0,0,0]; isolati.forEach(function(b){ b.ti=conta[b.tipo]++; });
 var vivi=FORME.map(function(g,k){ return pacco(g,[matMuri,matTetti,matCorte],Math.max(1,conta[k])); });
-var ruderi=pacco(geoRudere,appoggio(new THREE.MeshStandardMaterial({map:texRudere,roughness:1,side:THREE.DoubleSide})),N);
-var tettiRotti=pacco(geoTettoRotto,new THREE.MeshStandardMaterial({map:texCoppi,roughness:1,side:THREE.DoubleSide}),N);
-var macerie=pacco(geoMacerie,new THREE.MeshStandardMaterial({roughness:1,side:THREE.DoubleSide,flatShading:true}),N);
+var ruderi=pacco(geoRudere,RM.tingi(appoggio(new THREE.MeshStandardMaterial({map:texRudere,roughness:1,side:THREE.DoubleSide})),'C'),N);
+var tettiRotti=pacco(geoTettoRotto,RM.tingi(new THREE.MeshStandardMaterial({map:texCoppi,roughness:1,side:THREE.DoubleSide}),'C'),N);
+var macerie=pacco(geoMacerie,RM.tingi(new THREE.MeshStandardMaterial({roughness:1,side:THREE.DoubleSide,flatShading:true}),'C'),N);
 var sterpi=pacco(geoSterpi,RM.matPietra(),N); sterpi.maglia.castShadow=false;
 var geoPiano=new THREE.PlaneGeometry(1,1); geoPiano.rotateX(-Math.PI/2);
 var incolti=pacco(geoPiano,new THREE.MeshStandardMaterial({map:texIncolto,roughness:1,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}),N); incolti.maglia.castShadow=false;

@@ -3,6 +3,7 @@
 'use strict';
 var RM=window.RM; if(!RM||RM.guasto) return;
 var D=window.RM_DATI, P=RM.P, PI=Math.PI, d=new THREE.Object3D();
+function classe(id){ return ((D.CERTEZZA||{})[id]||['B'])[0]; }
 function istanze(geo,mat,quante){ var m=new THREE.InstancedMesh(geo,mat,quante); m.castShadow=m.receiveShadow=true; m.frustumCulled=false; RM.scene.add(m); return m; }
 
 /* ---------- mura: 271-275, rialzate nel 401-403 ---------- */
@@ -16,7 +17,7 @@ var mura=(function(){
   for(k=0;k<4;k++) T.scatola(.13,.14,.14,-.375+k*.25,1,.2,P.mattone);
   var W=new RM.Costruttore().scatola(1.5,1.42,1.6,0,0,.25,P.mattone).scatola(1.5,.06,1.6,0,1.42,.25,P.tufo);   // torre quadrata, sporgente
   [[-.6,-.4],[0,-.4],[.6,-.4],[-.6,.95],[0,.95],[.6,.95]].forEach(function(p){ W.scatola(.3,.16,.2,p[0],1.48,p[1],P.mattone); });
-  var mat=RM.matPietra(), tratti=istanze(T.geometria(),mat,passi.length), torri=istanze(W.geometria(),mat,passi.length);
+  var mat=RM.matPietra(classe('mura')), tratti=istanze(T.geometria(),mat,passi.length), torri=istanze(W.geometria(),mat,passi.length);
 
   /* porte dove le vie attraversano la cinta */
   var G=new RM.Costruttore(), porte=0;
@@ -99,7 +100,7 @@ var acque=(function(){
   A.scatola(1,CIMA-c,1.1,0,c,0,P.travertino);
   var Pl=new RM.Costruttore(); [-1,1].forEach(function(s){ Pl.scatola(.2,1,1,s*.4,0,0,P.tufo); });
   var R=new RM.Costruttore().scatola(.42,.5,.95,0,0,0,P.tufo); R.quad([-.21,.5,.47],[.21,.5,.47],[.21,.5,-.47],[-.21,.95,-.47],P.tufo).tri([-.21,.5,.47],[-.21,.95,-.47],[-.21,.5,-.47],P.tufo);   // moncone
-  var mat=RM.matPietra(), N=el.length, arcate=istanze(A.geometria(),mat,N*2), pile=istanze(Pl.geometria(),mat,N), monconi=istanze(R.geometria(),mat,N), ultimo=-1, tinta=new THREE.Color(), MATTONE=RM.col(0xe4c6b2), BIANCO=new THREE.Color(1,1,1);
+  var mat=RM.matPietra(classe('acquedotti')), N=el.length, arcate=istanze(A.geometria(),mat,N*2), pile=istanze(Pl.geometria(),mat,N), monconi=istanze(R.geometria(),mat,N), ultimo=-1, tinta=new THREE.Color(), MATTONE=RM.col(0xe4c6b2), BIANCO=new THREE.Color(1,1,1);
   for(k=0;k<N;k++) monconi.setColorAt(k,BIANCO);                                 // le tre maglie condividono il materiale: tutte devono avere il colore per istanza
   function zero(maglia,j){ d.scale.set(0,0,0); d.updateMatrix(); maglia.setMatrixAt(j,d.matrix); }
   return function(anno){
@@ -141,7 +142,7 @@ var acque=(function(){
     B.striscia(is,0,su,.85,P.travertino).striscia(su,.85,ce,.85,P.selce);
     B.dentro(0,.85,0,0,function(B){ B.tempio(1.5,2.4,1.1,0,-2.6,0,{fronte:4,podio:.25}); B.scatola(2.2,1,2.4,0,0,1.8,P.intonaco).falde(2.4,.5,2.4,0,1,1.8,P.coppi); B.cilindro(.1,1.4,0,0,-.4,P.mattone,.05,4); });
   });
-  RM.scene.add(B.maglia(RM.matPietra()));
+  RM.scene.add(B.maglia(RM.matPietra(classe('ponti'))));
 })();
 
 RM.moduli.push(function(anno){

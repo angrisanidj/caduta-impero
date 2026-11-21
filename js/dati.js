@@ -277,6 +277,18 @@ var SCHEDE={
   testaccio:{cosa:"Collina artificiale fatta di cocci: le anfore dell'olio sbarcate al porto sul Tevere e rotte qui, disposte a terrazze. Alta 35 metri, con quasi un chilometro di giro e i resti stimati di 53 milioni di anfore; in antico era probabilmente più alta.", date:[["I sec. a.C.?","Non si sa quando comincia lo scarico: gli strati più bassi non sono stati scavati. Quelli datati vanno dal 140 al 250 circa."],["fine II sec.","Il momento di massimo: fino a 130.000 anfore l'anno, quasi tutte dalla Betica, nel sud della Spagna, per l'olio distribuito dallo Stato."],["dopo il 260","Lo scarico si ferma. L'olio viaggia ormai in contenitori diversi, e forse cambiano gli approdi: la ragione non è certa."],["poi","La zona attorno resta dentro le mura ma si svuota. Che sul monte crescesse l'erba già in questi secoli è una nostra supposizione; nel Medioevo vi si terranno i giochi del carnevale."]]},
   cosma:{cosa:"Chiesa ricavata in un'aula del tempio della Pace.", date:[[527,"Voluta da papa Felice IV (526-530) in edifici donati da Teodorico e Amalasunta: è il primo luogo di culto cristiano nell'area del Foro."]]}
 };
+/* «Che cosa sappiamo davvero»: per ogni cosa disegnata, quanto è sicuro che fosse lì e avesse quella forma generale. [classe, nota].
+   A: posizione e forma certe (sta ancora in piedi o è rilevato per intero); B: posizione certa, forma ricostruita (scavi, Forma Urbis, edificio poi rifatto, fonti scritte);
+   C: ipotesi (posizione, estensione o forma supposte o discusse). I modelli sono schematici: la classe non riguarda il dettaglio. PROVVISORIO: classi da verificare. */
+var CERTEZZA={
+  provvisorio:true,      // finché le classi non sono verificate, il pulsante e la riga nelle schede restano nascosti (js/pagina.js)
+  colosseo:['A',''], pantheon:['A',''], adriano:['A',''], arcocostantino:['A',''], marcello:['A',''], massenzio:['A',''], caracalla:['A',''], diocleziano:['A',''],
+  sabina:['A',''], mariamaggiore:['A',''], stefano:['A',''], cosma:['A',''], foca:['A',''], testaccio:['A',''], mura:['A',''], croce:['B',''],
+  circo:['B',''], fori:['B',''], emilia:['B',''], giove:['B',''], palatino:['B',''], domiziano:['B',''], traiano:['B',''], venere:['B',''], augusto:['B',''], pompeo:['B',''],
+  laterano:['B',''], pietro:['B',''], termecostantino:['B',''], lorenzo:['B',''], paolo:['B',''], monasteripietro:['B',''], leonine:['B',''], balbo:['B',''], emporio:['B',''],
+  casenerva:['B',''], acquedotti:['B',''], antoniniano:['B',''], ponti:['B',''], chiese:['B',''],
+  sole:['C',''], mulini:['C',''], scholae:['C',''], porticopietro:['C','']
+};
 var MURA_ALTE=[[0,0],[270,0],[276,1],[400,1],[404,1.5]];   // rialzate nel 401-403 (o già sotto Massenzio: discusso)
 
 function interp(punti,x){
@@ -290,5 +302,5 @@ TAPPE.forEach(function(t){ if(t.cambia) for(var k in t.cambia) st[k]=t.cambia[k]
 /* l'atto avanza dopo ogni intermezzo: l'intermezzo chiude l'atto che lo precede */
 var atto=0; TAPPE.forEach(function(t){ if(t.apre) atto++; t.atto=atto; if(t.intermezzo) atto++; });   // "apre": la tappa inizia un atto nuovo
 
-return {ATTI:ATTI,TAPPE:TAPPE,CURVE:CURVE,ABITATI:ABITATI,MONUMENTI:MONUMENTI,MURA_ALTE:MURA_ALTE,EVENTI:EVENTI,SCHEDE:SCHEDE,CHIESE:CHIESE,ITINERARIO:ITINERARIO,interp:interp};
+return {ATTI:ATTI,TAPPE:TAPPE,CURVE:CURVE,ABITATI:ABITATI,MONUMENTI:MONUMENTI,MURA_ALTE:MURA_ALTE,EVENTI:EVENTI,SCHEDE:SCHEDE,CERTEZZA:CERTEZZA,CHIESE:CHIESE,ITINERARIO:ITINERARIO,interp:interp};
 })();

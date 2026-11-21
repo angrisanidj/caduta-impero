@@ -107,7 +107,40 @@ C.prototype.geometria=function(){
 C.prototype.maglia=function(materiale){ var m=new THREE.Mesh(this.geometria(),materiale); m.castShadow=m.receiveShadow=true; return m; };
 
 RM.Costruttore=C;
-RM.matPietra=function(){ return new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide}); };
+/* «Che cosa sappiamo davvero»: i materiali possono prendere la tinta della loro classe di certezza
+   (A: posizione e forma certe; B: posizione certa, forma ricostruita; C: ipotesi). RM.sapere.q va da 0 (colori veri) a 1 (tinta piena);
+   resta la luminosità di ciò che c'è sotto, così si leggono ancora volumi, ombre e rovine. */
+RM.sapere={q:{value:0}, COL:{A:RM.col(0x9a3f2f), B:RM.col(0xe2b254), C:RM.col(0xd6d1c6)}};
+var SAP_DICH='uniform float uSapQ; uniform vec3 uSapCol;', SAP_TINTA='diffuseColor.rgb=mix(diffuseColor.rgb,uSapCol*(0.42+0.8*dot(diffuseColor.rgb,vec3(0.3,0.59,0.11))),uSapQ);';
+/* Da vicino la muratura mostra i conci: filari sfalsati e una lieve differenza di tono fra un blocco e l'altro. Sfuma con la distanza (fwidth), così da lontano non sfarfalla. */
+var CONCI=[
+  'if(vTipo<0.5){ vec3 anC=abs(vNor); vec2 qC=anC.y>0.7?vLoc.xz:vec2(anC.x>anC.z?vLoc.z:vLoc.x,vLoc.y);',
+  '  float fwC=max(fwidth(qC.x),fwidth(qC.y)); float vicC=1.0-smoothstep(0.012,0.05,fwC);',
+  '  if(vicC>0.0){ vec2 gC=qC/vec2(0.36,0.18); gC.x+=0.5*floor(gC.y); vec2 fC=abs(fract(gC)-0.5);',
+  '    float giunto=max(smoothstep(0.47,0.5,fC.x),smoothstep(0.44,0.5,fC.y));',
+  '    float tono=fract(sin(dot(floor(gC),vec2(127.1,311.7)))*43758.5453)-0.5;',
+  '    diffuseColor.rgb*=1.0+vicC*(0.09*tono-0.16*giunto); } }'].join(String.fromCharCode(10));
+function conConci(mat){
+  var A=String.fromCharCode(10);
+  mat.onBeforeCompile=function(sh){
+    sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute float tipo;','varying float vTipo;','varying vec3 vLoc;','varying vec3 vNor;'].join(A))
+      .replace('#include <begin_vertex>',['#include <begin_vertex>','vTipo=tipo; vLoc=position; vNor=normal;'].join(A));
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>',['#include <common>','varying float vTipo;','varying vec3 vLoc;','varying vec3 vNor;'].join(A))
+      .replace('#include <color_fragment>','#include <color_fragment>'+A+CONCI);
+  };
+  return mat;
+}
+RM.tingi=function(mat,classe){
+  var u={value:(RM.sapere.COL[classe]||RM.sapere.COL.C).clone()}, sua=mat.hasOwnProperty('onBeforeCompile'), prima=mat.onBeforeCompile, A=String.fromCharCode(10);
+  mat.onBeforeCompile=function(sh,r){
+    if(sua) prima.call(mat,sh,r);
+    sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u;
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+SAP_DICH).replace('#include <alphamap_fragment>',SAP_TINTA+A+'#include <alphamap_fragment>');
+  };
+  mat.customProgramCacheKey=function(){ return 'sapere|'+(sua?prima.toString():''); };      // three riconosce i programmi dal testo di onBeforeCompile: qui è uguale per tutti, quindi si distingue da ciò che avvolge
+  mat.userData.sapere=u; return mat;
+};
+RM.matPietra=function(classe){ var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide}); return classe?RM.tingi(conConci(m),classe):m; };      // gli edifici (quelli con una classe) mostrano i conci da vicino; barche, alberi e sterpi no
 /* Pietra che va in rovina. Lo shader lavora in coordinate locali del monumento:
    ogni "colonna" di muratura (cella in pianta) viene troncata a un'altezza casuale, più bassa quanto più alto è uRovina,
    così i crolli partono dall'alto e non restano pezzi sospesi; le coperture si bucano; la pietra si macchia di muschio. */
@@ -121,7 +154,7 @@ var TAGLIO=[
   '}',
   /* smontaggio da un lato solo (il fronte sud del Colosseo): sparisce l'anello esterno con l'attico e la parte alta della cavea, a partire dal punto più a sud e allargandosi; resta il secondo anello, più basso */
   'if(uSud>0.001){ vec2 qs=vLoc.xz/uSudR; float ro=length(qs); if(ro>0.94 || (ro>0.74 && vLoc.y>3.09)){ float an=acos(clamp(dot(qs/ro,uSudDir),-1.0,1.0)); if(an<3.1416*uSud*(0.9+0.2*rmH(vec3(floor(vLoc.xz*0.9),6.0)))) discard; } }'].join(NL);
-var DICHIARA=['uniform float uRovina; uniform float uSpoglio; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR;','varying float vTipo; varying vec3 vLoc; varying vec3 vNor;',
+var DICHIARA=[SAP_DICH,'uniform float uRovina; uniform float uSpoglio; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR;','varying float vTipo; varying vec3 vLoc; varying vec3 vNor;',
   'float rmH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
   'vec2 rmH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',
   'float rmN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f);',
@@ -151,15 +184,16 @@ var COLORA=[
   'if(vTipo>0.5 && vTipo<1.5){ diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio); }',
   'if(vTipo<1.5) diffuseColor.rgb*=mix(0.74,1.0,smoothstep(0.0,0.2,rq2));'].join(NL);      // ombra d'appoggio al piede
 function innesta(sh,u,colore){
+  sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol;
   sh.uniforms.uRovina=u.uRovina; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe; sh.uniforms.uSud=u.uSud; sh.uniforms.uSudDir=u.uSudDir; sh.uniforms.uSudR=u.uSudR;
   sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute float tipo;','varying float vTipo;','varying vec3 vLoc;','varying vec3 vNor;'].join(NL))
     .replace('#include <begin_vertex>',['#include <begin_vertex>','vTipo=tipo; vLoc=position; vNor=normal;'].join(NL));
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA);
-  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',TAGLIO,COLORA].join(NL));
+  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',TAGLIO,CONCI,COLORA,SAP_TINTA].join(NL));
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',TAGLIO+NL+'#include <clipping_planes_fragment>');
 }
 RM.matRovina=function(alt){
-  var u={uRovina:{value:0},uSpoglio:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)}};
+  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uSpoglio:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)}};
   var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
   m.onBeforeCompile=function(sh){ innesta(sh,u,true); };
   m.userData.u=u;
