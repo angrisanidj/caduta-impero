@@ -131,6 +131,7 @@ function vai(i,subito){
   $('tAtto').innerHTML=(t.intermezzo?'':'<b>'+t.anno+'</b>')+(t.intermezzo?'Intermezzo':t.epilogo?'Epilogo':'Atto '+a.n+' · '+a.nome);
   $('tTitolo').textContent=t.titolo; $('tTesto').textContent=t.testo;
   $('tStorici').hidden=!t.storici; $('tStoriciTesto').textContent=t.storici||'';
+  $('tLeggenda').hidden=!t.leggenda; $('tLeggendaTesto').textContent=t.leggenda||'';      // dove una leggenda nasce da questa tappa: che cosa dicono le fonti e che cosa viene dopo
   var chi=t.protagonisti||[], bc=$('tChiElenco'); $('tChi').hidden=!chi.length; bc.textContent='';      // chi c'è in questa tappa: [nome, date, una riga]
   chi.forEach(function(p){ var li=document.createElement('li'), b=document.createElement('b'); b.textContent=p[0]; li.appendChild(b); if(p[1]){ var d=document.createElement('span'); d.className='date'; d.textContent=p[1]; li.appendChild(d); } li.appendChild(document.createTextNode(p[2])); bc.appendChild(li); });
   var voci=t.voci||[], bv=$('tVoci'); $('tVoce').hidden=!voci.length; bv.textContent=''; $('tVoceTitolo').textContent=voci.length>1?'Voci di allora':'Una voce di allora';      // parole dei contemporanei, tradotte dalla fonte
@@ -179,6 +180,7 @@ function grande(si){
   $('btnGrande').setAttribute('aria-label',si?'Chiudi lo schermo intero':'Scena a tutto schermo'); $('btnGrande').title=si?'Chiudi':'Tutto schermo';
   if(si){ var tp=document.querySelector('.tempo'); document.body.style.setProperty('--tempo',(tp?tp.offsetHeight:92)+'px'); }      // i comandi stanno sopra la linea del tempo, quanto è alta
   if(tocco && RM.controlli) RM.controlli.enabled=si;
+  if(tocco && !si && !schedaDi && RM.vistaInsieme) RM.vistaInsieme();      // sul telefono, chiuso lo schermo intero, la scena non si può più muovere: torna alla vista d'insieme invece di restare ingrandita
   chiudiStrumenti();
   window.dispatchEvent(new Event('resize'));
   setTimeout(scostaScena,0);

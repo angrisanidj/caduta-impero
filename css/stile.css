@@ -125,6 +125,7 @@ h2{margin:2px 0 8px;font-family:var(--cap);font-weight:600;font-size:clamp(22px,
 .testo{margin:0;font-size:21px;max-width:34em}
 .storici{margin:18px 0 0;padding:12px 16px;border-left:3px solid var(--gold2);background:var(--carta2);border-radius:0 8px 8px 0;max-width:38em}
 .storici p:last-child{margin:4px 0 0}
+.storici.leggenda{border-left-color:#7F95A3}
 /* i protagonisti della tappa: un elenco leggero, senza riquadro, fra il testo e le voci */
 .protagonisti{margin:16px 0 0;max-width:38em}
 .protagonisti ul{list-style:none;margin:4px 0 0;padding:0}
@@ -384,3 +385,6 @@ body.impero-largo .legenda-popoli{top:auto;right:auto;bottom:calc(var(--tempo,92
 }
 /* a tutto schermo il riquadro della città è alto quanto la finestra: senza questo, su un telefono coricato l'altezza minima di 66vw lo fa uscire in basso, con i comandi */
 body.roma-grande .riquadro.roma{min-height:0}
+/* a tutto schermo le due dita ingrandiscono la carta, non la pagina: fuori dalla carta resta solo lo scorrimento verticale delle legende */
+body.impero-grande .riquadro.impero{touch-action:pan-y}
+body.impero-grande .tempo,body.roma-grande .tempo{touch-action:manipulation}

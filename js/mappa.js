@@ -151,6 +151,7 @@ var BASE=[95,55,810,518], vista={k:1,cx:500,cy:314,w:BASE[2],h:BASE[3]}, grandeS
 function larghezzaVista(){ return !grandeSi?BASE[2]:(vista.alto?BASE[2]:vista.w)/vista.k; }
 function applicaVista(){
   if(!grandeSi){ svg.setAttribute('viewBox',BASE.join(' ')); return; }
+  if(vista.k<=1.001){ vista.k=1; vista.cx=500; vista.cy=314; }      // tornati all'ingrandimento 1 si rivede la carta intera, centrata come sempre: non resta spostata verso il punto che si stava guardando
   var w=vista.w/vista.k, h=vista.h/vista.k;
   if(vista.alto){ w=BASE[2]/vista.k; h=Math.min(G.h,w*vista.alto/vista.aw); ospite.style.height=Math.round(vista.aw*h/w)+'px'; }      // schermo alto e stretto: ingrandendo, il riquadro cresce in altezza finché c'è posto
   vista.cx=Math.max(w/2,Math.min(G.w-w/2,vista.cx)); vista.cy=Math.max(h/2,Math.min(G.h-h/2,vista.cy));
@@ -181,6 +182,7 @@ ospite.appendChild(comandi);
 function grande(si){
   grandeSi=si; document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');
   bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Chiudi lo schermo intero':'Carta a tutto schermo');
+  dita={}; presa=null;
   if(si){ vista.k=1; vista.cx=500; vista.cy=314; adatta(); if(vista.alto){ vista.k=Math.max(1,BASE[2]*vista.alto/(G.h*vista.aw)); vista.cx=470; vista.cy=330; applicaVista(); } }      // in verticale si parte con la carta che riempie il riquadro, sull'Italia: il bottone − la mostra intera
   else { vista.alto=0; ospite.style.width=ospite.style.height=''; applicaVista(); }
   ingr=0; window.dispatchEvent(new Event('resize'));                    // il gestore qui sopra rifà misure, legende e cartellini
@@ -195,14 +197,15 @@ var dita={}, presa=null;
 function distanza(){ var id=Object.keys(dita), a=dita[id[0]], b=dita[id[1]]; return Math.hypot(a[0]-b[0],a[1]-b[1])||1; }
 function prendi(){ var id=Object.keys(dita); presa=id.length===1?{x:dita[id[0]][0],y:dita[id[0]][1],cx:vista.cx,cy:vista.cy}:id.length===2?{d:distanza(),k:vista.k}:null; }
 function lascia(e){ delete dita[e.pointerId]; prendi(); svg.style.cursor=''; }
-svg.addEventListener('pointerdown',function(e){ if(!grandeSi) return; dita[e.pointerId]=[e.clientX,e.clientY]; try{ svg.setPointerCapture(e.pointerId); }catch(x){} prendi(); svg.style.cursor='grabbing'; });
+svg.addEventListener('pointerdown',function(e){ if(!grandeSi) return; if(e.isPrimary) dita={};      // un tocco nuovo azzera i tocchi rimasti appesi: senza, un dito «fantasma» faceva leggere ogni trascinamento come un pizzico
+  dita[e.pointerId]=[e.clientX,e.clientY]; try{ svg.setPointerCapture(e.pointerId); }catch(x){} prendi(); svg.style.cursor='grabbing'; });
 svg.addEventListener('pointermove',function(e){
   if(!grandeSi||!dita[e.pointerId]||!presa) return; dita[e.pointerId]=[e.clientX,e.clientY];
   if(presa.d==null){ var u=unita(); vista.cx=presa.cx-(e.clientX-presa.x)*u; vista.cy=presa.cy-(e.clientY-presa.y)*u; }
   else vista.k=Math.max(1,Math.min(6,presa.k*distanza()/presa.d));
   applicaVista();
 });
-svg.addEventListener('pointerup',lascia); svg.addEventListener('pointercancel',lascia);
+svg.addEventListener('pointerup',lascia); svg.addEventListener('pointercancel',lascia); svg.addEventListener('lostpointercapture',lascia);
 svg.addEventListener('wheel',function(e){ if(!grandeSi) return; e.preventDefault(); zoomSu(Math.exp(-e.deltaY*.0015),e.clientX,e.clientY); },{passive:false});
 bPiu.addEventListener('click',function(){ zoomSu(1.5); }); bMeno.addEventListener('click',function(){ zoomSu(1/1.5); });
 bGrande.addEventListener('click',function(){ grande(!grandeSi); });
