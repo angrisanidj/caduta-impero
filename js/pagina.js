@@ -14,7 +14,7 @@ function aGradini(p){ var o=[]; p.forEach(function(q,i){ if(i) o.push([q[0],p[i-
 function arrotonda(n){ var p=n>=200000?10000:n>=20000?5000:1000; return Math.round(n/p)*p; }
 var SPIE=[
  {id:'territorio', nome:'Occidente governato da Roma', nota:'quota schematica, per regioni', stima:true, punti:aGradini(territorio), max:100,
-  val:function(){ return Math.round(territorio[idx][1])+'%'; }},
+  val:function(a){ var k=0; for(var i=0;i<territorio.length;i++) if(territorio[i][0]<=a+.001) k=i; return Math.round(territorio[k][1])+'%'; }},
  {id:'argento', nome:D.CURVE.argento.nome, punti:D.CURVE.argento.punti, max:50, fine:D.CURVE.argento.fine,
   val:function(a){ return a<=D.CURVE.argento.fine ? Math.round(D.interp(this.punti,a))+'%' : 'oro'; },
   notaA:function(a){ return a<=D.CURVE.argento.fine ? D.CURVE.argento.nota : D.CURVE.argento.dopo; }},
@@ -173,5 +173,5 @@ if(m){ vai(parseInt(m[1],10)-1,true); }
 else{                                   // apertura dalla fine: la città del 550, poi il riavvolgimento
   anno=550; vai(0); vel=(550-T[0].anno)/4.5; applica();
 }
-window.RM_pagina={vai:vai};
+window.RM_pagina={vai:vai, ferma:ferma, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
 })();

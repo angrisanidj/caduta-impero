@@ -145,6 +145,7 @@ RM.vola=function(x,z,dist,quota){
   var p1=t1.clone().add(dir.multiplyScalar(dist*.82)); p1.y=t1.y+dist*.56;
   volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:t1,p1:p1};
 };
+RM.volaA=function(t,c){ controlli.autoRotate=false; volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(t[0],RM.h(t[0],t[1])+1,t[1]),p1:new THREE.Vector3(c[0],c[1],c[2])}; };   // verso un'inquadratura fissa
 RM.vistaInsieme=function(){ controlli.autoRotate=false; volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(0,0,5),p1:new THREE.Vector3(-200,255,470)}; };
 renderer.domElement.addEventListener('pointerdown',function(){ volo=null; });
 renderer.domElement.addEventListener('wheel',function(){ volo=null; },{passive:true});

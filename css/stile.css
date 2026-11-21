@@ -207,3 +207,19 @@ body.roma-grande .pellegrino{top:98px}
 .conta,.notte,.grande,.pellegrino{z-index:3}
 
 .versione{margin:6px 0 0;font-size:12px;color:var(--muted);opacity:.8}
+
+/* prima e dopo: stessa inquadratura, cursore sugli anni */
+.confronta{top:74px}
+body.roma-grande .confronta{top:128px}
+.confronto{position:absolute;left:12px;right:58px;bottom:10px;max-width:560px;z-index:3;display:flex;flex-direction:column;gap:4px;padding:6px 9px;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:8px}
+.confronto[hidden]{display:none}
+.confronto .viste{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.confronto .viste button{font-family:var(--cap);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--carta);background:transparent;border:1px solid rgba(212,174,85,.45);border-radius:999px;padding:4px 9px;cursor:pointer}
+.confronto .viste button[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+.confronto .viste .chiudi{margin-left:auto;border-radius:50%;width:26px;height:26px;padding:0}
+.confronto .cursore{display:flex;align-items:center;gap:8px;font-size:12px;font-variant-numeric:tabular-nums}
+.confronto input[type=range]{flex:1;min-width:0;accent-color:var(--gold2)}
+.confronto output{font-family:var(--cap);font-weight:600;font-size:19px;min-width:2.6em;text-align:right}
+body.roma-grande .confronto{left:20px;bottom:104px}
+.riquadro.roma.confronto-attivo .evento{bottom:100px}
+body.roma-grande .riquadro.roma.confronto-attivo .evento{bottom:196px}

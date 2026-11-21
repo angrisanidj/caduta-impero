@@ -19,7 +19,7 @@ Pubblicata su https://angrisanidj.github.io/caduta-impero/ (repository `angrisan
 - `js/base.js`: renderer three.js r128 (script classici, niente moduli), terreno, colli (`COLLI`, rilievo accentuato 1,8 volte), strade, fiume, luce, effetti a tutto schermo, regolatore della qualità (`RM.livello`), `RM.h`, `RM.hRapida`, `RM.ll(lat,lon)`, `RM.vola`.
 - `js/costruttore.js`: `RM.Costruttore` (solidi fusi in una maglia) e `RM.matRovina` (shader del degrado: crepe, crolli, spoglio, lato sud).
 - `js/monumenti.js`: elenco `M` dei monumenti con posizione reale, terrazze, `RM.statoMonumento`, `RM.rovina`.
-- `js/nuclei.js` (chiese minori), `js/mura.js` (mura, acquedotti a quota costante con `RM.campateAcquedotti`, ponti), `js/citta.js` (isolati: abitati, rovine, orti; istanze compattate), `js/vita.js` (gente, fumo, barche, calcare), `js/eventi.js`, `js/mappa.js`, `js/pagina.js` (regia, cruscotto, schede), `js/itinerario.js`.
+- `js/nuclei.js` (chiese minori), `js/mura.js` (mura, acquedotti a quota costante con `RM.campateAcquedotti`, ponti), `js/citta.js` (isolati: abitati, rovine, orti; istanze compattate), `js/vita.js` (gente, fumo, barche, calcare), `js/eventi.js`, `js/mappa.js`, `js/pagina.js` (regia, cruscotto, schede; `RM_pagina.anno(y)` porta la scena a un anno qualsiasi), `js/itinerario.js`, `js/confronto.js` («Prima e dopo»: tre inquadrature fisse e cursore sugli anni).
 
 Convenzioni: 1 unità = 10 m; origine al Foro Romano (41.8925 N, 12.4853 E); x verso est, z verso sud. Ogni modulo registra `function(anno)` in `RM.moduli` e, se serve, `function(dt)` in `RM.frame`. Nomi e commenti in italiano.
 
