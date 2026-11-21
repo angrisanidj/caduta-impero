@@ -142,6 +142,11 @@ h2{margin:2px 0 8px;font-family:var(--cap);font-weight:600;font-size:clamp(22px,
 .legenda .st::before{width:7px;height:7px}
 .legenda .uso::before{background:#C29A32}.legenda .chiuso::before{background:#9C948A}.legenda .spogliato::before{background:#B0563F}.legenda .bruciato::before{background:#4A3F38}.legenda .assente::before{background:#D8CCB6}
 
+.cause{margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line);max-width:46em}
+.cause h2{margin:4px 0 10px}
+.cause h3{margin:26px 0 6px;font-family:var(--cap);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.cause p{margin:0 0 12px}
+.cause .elenco{font-size:15px;color:var(--muted)}
 .piede{padding-top:26px;padding-bottom:90px;font-size:14.5px;font-style:italic;color:var(--muted)}
 .piede p{margin:0;max-width:60em}
 
