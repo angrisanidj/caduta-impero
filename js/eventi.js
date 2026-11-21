@@ -1,4 +1,4 @@
-/* Sacchi e assedi: incendi con colonne di fumo scuro, accampamenti goti attorno alle mura, didascalia dell'evento in corso.
+/* Sacchi e assedi: incendi con colonne di fumo scuro, accampamenti goti attorno alle mura, piena del Tevere, cielo velato del 536, didascalia dell'evento in corso.
    I dati stanno in dati.js (EVENTI). Gli isolati bruciati li gestisce citta.js, le brecce nelle mura mura.js. */
 (function(){
 'use strict';
@@ -62,9 +62,36 @@ var texAlone=RM.tela(32,32,function(g){ var q=g.createRadialGradient(16,16,0,16,
 var bagliori=new THREE.Points(gBagl,new THREE.PointsMaterial({size:15,map:texAlone,vertexColors:true,blending:THREE.AdditiveBlending,transparent:true,depthWrite:false,sizeAttenuation:true,fog:false}));
 bagliori.frustumCulled=false; bagliori.visible=false; RM.scene.add(bagliori);
 
+/* ---------- piena del Tevere e cielo velato ----------
+   La piena è un velo d'acqua sulle zone più basse e più vicine al fiume: l'estensione è indicativa, non una ricostruzione idraulica
+   (il rilievo della scena è accentuato, quindi l'acqua ha uno spessore fisso e non la profondità vera).
+   La maglia si costruisce la prima volta che serve. */
+var piena=null, matPiena=new THREE.ShaderMaterial({
+  transparent:true, depthWrite:false, uniforms:{ livello:{value:-9}, colore:{value:RM.col(0x87a094)} },
+  vertexShader:['attribute float soglia; uniform float livello; varying float vF;','void main(){ vF=clamp((livello-soglia)*0.6,0.0,0.24); gl_Position=projectionMatrix*modelViewMatrix*vec4(position.x,position.y+vF,position.z,1.0); }'].join(NL),
+  fragmentShader:['uniform vec3 colore; varying float vF;','void main(){ if(vF<0.004) discard; gl_FragColor=vec4(colore,smoothstep(0.0,0.07,vF)*0.84);','#include <encodings_fragment>','}'].join(NL)
+});
+var coloreAcqua=RM.col(0x87a094);
+function posaPiena(){
+  var PS=5, X0=-340, Z0=-420, NX=137, NZ=173, pos=new Float32Array(NX*NZ*3), sg=new Float32Array(NX*NZ), ind=[], c, r, k=0;
+  for(r=0;r<NZ;r++) for(c=0;c<NX;c++,k++){
+    var x=X0+c*PS, z=Z0+r*PS, y=RM.h(x,z); pos[k*3]=x; pos[k*3+1]=y; pos[k*3+2]=z;
+    sg[k]=y+Math.max(0,RM.distFiume(x,z)-90)*.012;                               // lontano dal fiume l'acqua arriva meno in alto
+  }
+  for(r=0;r<NZ-1;r++) for(c=0;c<NX-1;c++){ k=r*NX+c; if(Math.min(sg[k],sg[k+1],sg[k+NX],sg[k+NX+1])>3.2) continue; ind.push(k,k+NX,k+1,k+1,k+NX,k+NX+1); }
+  var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setAttribute('soglia',new THREE.BufferAttribute(sg,1)); g.setIndex(ind);
+  piena=new THREE.Mesh(g,matPiena); piena.frustumCulled=false; piena.renderOrder=2; RM.scene.add(piena);
+}
+function pienaEVelo(){
+  var qp=0, qv=0; EV.forEach(function(ev){ if(ev.piena) qp=Math.max(qp,ev.q); if(ev.velo) qv=Math.max(qv,ev.q); });
+  if(qp>.01 && !piena) posaPiena();
+  if(piena){ piena.visible=qp>.01; matPiena.uniforms.livello.value=-1.4+qp*4.25; matPiena.uniforms.colore.value.copy(coloreAcqua).multiplyScalar(1-.75*RM.notte); }
+  if(RM.applicaVelo) RM.applicaVelo(qv);
+}
+
 var acceso=false;
 RM.moduli.push(function(anno){
-  scrivi(anno);
+  scrivi(anno); pienaEVelo();
   acceso=false; EV.forEach(function(ev){ if(ev.q>.01 && ((ev.fuochi&&ev.fuochi.length)||ev.campi)) acceso=true; });
   fumo.visible=bagliori.visible=acceso;
   var qc=0; EV.forEach(function(ev){ if(ev.campi) qc=Math.max(qc,ev.q); });

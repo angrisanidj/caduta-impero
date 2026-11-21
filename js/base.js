@@ -274,12 +274,16 @@ RM.posa=function(){
 /* ---- giorno / notte ---- */
 RM.notte=0;
 var fiumeG=RM.col(0x4f97a6), fiumeN=RM.col(0x0d1626);
+/* il velo del 536: sole pallido e azzurrognolo, cielo lattiginoso, ombre deboli (Cassiodoro, Variae XII 25; Procopio, Guerre IV 14) */
+RM.velo=0;
+var VELO={ alto:RM.col(0xa9b2ba), basso:RM.col(0xcfc9ba), sole:RM.col(0xc4d0e6) };
+RM.applicaVelo=function(v){ if(Math.abs(v-RM.velo)<.004) return; RM.velo=v; RM.applicaLuce(RM.notte); };
 RM.applicaLuce=function(n){
-  RM.notte=n;
-  cielo.material.uniforms.alto.value.copy(G.alto).lerp(N.alto,n); cielo.material.uniforms.basso.value.copy(G.basso).lerp(N.basso,n);
+  RM.notte=n; var v=RM.velo*(1-n);
+  cielo.material.uniforms.alto.value.copy(G.alto).lerp(N.alto,n).lerp(VELO.alto,v*.85); cielo.material.uniforms.basso.value.copy(G.basso).lerp(N.basso,n).lerp(VELO.basso,v*.85);
   scene.fog.color.copy(cielo.material.uniforms.basso.value);
-  emi.color.copy(G.emiSu).lerp(N.emiSu,n); emi.groundColor.copy(G.emiGiu).lerp(N.emiGiu,n); emi.intensity=G.iEmi+(N.iEmi-G.iEmi)*n;
-  sole.color.copy(G.sole).lerp(N.sole,n); sole.intensity=G.iSole+(N.iSole-G.iSole)*n;
+  emi.color.copy(G.emiSu).lerp(N.emiSu,n); emi.groundColor.copy(G.emiGiu).lerp(N.emiGiu,n); emi.intensity=(G.iEmi+(N.iEmi-G.iEmi)*n)*(1+.5*v);
+  sole.color.copy(G.sole).lerp(N.sole,n).lerp(VELO.sole,v); sole.intensity=(G.iSole+(N.iSole-G.iSole)*n)*(1-.62*v);
   RM.matFiume.color.copy(fiumeG).lerp(fiumeN,n); RM.stelle.material.opacity=n*.9;
 };
 RM.applicaLuce(0);

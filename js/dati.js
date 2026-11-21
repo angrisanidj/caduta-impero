@@ -76,6 +76,7 @@ var TAPPE=[
   storici:"Va preso alla lettera? Procopio scrive che Totila lasciò la città «del tutto deserta»; i quaranta giorni vengono da un'altra cronaca. Una metropoli senza nessuno è poco credibile, ma l'immagine dice quanto fosse sceso il numero degli abitanti."},
  {anno:568, titolo:'I Longobardi', testo:"Quattordici anni dopo la fine della guerra gotica, i Longobardi scendono in un'Italia spopolata. L'unità della penisola finisce qui, per tredici secoli.",
   cambia:{italia:'conteso'}},
+ {anno:589, titolo:'Il Tevere in città', testo:"Nel novembre 589 il Tevere rompe gli argini, allaga i quartieri bassi e rovina i granai della Chiesa. Pochi mesi dopo torna la peste: ne muore papa Pelagio II, e al suo posto viene eletto Gregorio. Le piene torneranno, gravi, nel 716 e nell'inverno 791-792."},
  {anno:593, titolo:"Dov'è il Senato, dov'è il popolo", testo:"Con i Longobardi di Agilulfo sotto le mura, papa Gregorio Magno predica: «Dov'è il Senato? Dov'è ormai il popolo?» (Omelie su Ezechiele, II, 6). È il vescovo, adesso, a distribuire il grano e a trattare con gli assedianti."},
 
  /* ---- atto VI: da Gregorio Magno a Carlo Magno ---- */
@@ -187,10 +188,14 @@ var EVENTI=[
   testo:"2-16 giugno 455 · I Vandali di Genserico restano quattordici giorni. Papa Leone ottiene che non ci siano stragi né incendi; il saccheggio è metodico: dal tempio di Giove portano via metà del tetto di bronzo dorato."},
  {id:'assedio472', da:472, a:472.4, bruciati:0, fuochi:[],      // le fonti parlano di combattimenti e saccheggio, non di incendi
   testo:"Luglio 472 · Dopo cinque mesi d'assedio Ricimero prende la città all'imperatore Antemio, asserragliato sul Palatino. Lo scontro decisivo è al ponte Elio, davanti al mausoleo di Adriano."},
+ {id:'velo536', da:536.2, a:537.3, bruciati:0, fuochi:[], velo:true,      // Procopio, Guerre IV 14; Cassiodoro, Variae XII 25. La didascalia è quella dell'assedio, che viene dopo nell'elenco
+  testo:"536 · Per più di un anno il sole resta velato e non scalda."},
  {id:'assedio537', da:537, a:538.2, bruciati:0, fuochi:[], campi:true,
-  testo:"Marzo 537 - marzo 538 · Vitige assedia Belisario per un anno e nove giorni. Sette accampamenti goti: sei davanti alle porte da nord a est, uno oltre il Tevere. Gli acquedotti vengono tagliati."},
+  testo:"Marzo 537 - marzo 538 · Vitige assedia Belisario per un anno e nove giorni. Sette accampamenti goti: sei davanti alle porte da nord a est, uno oltre il Tevere. Gli acquedotti vengono tagliati. Da un anno il sole è velato: Procopio scrive che dava luce senza splendore, come la luna; Cassiodoro, in Italia, che a mezzogiorno i corpi non facevano ombra. Oggi lo si attribuisce a grandi eruzioni vulcaniche."},
  {id:'totila546', da:546, a:546.5, bruciati:10, fuochi:[[-125,40,1],[-112,62,.8]], brecce:true,      // Procopio VIII 22: incendi soprattutto oltre il Tevere
   testo:"17 dicembre 546 · Totila entra di notte da Porta Asinaria. Fa abbattere tratti delle mura, brucia parte di Trastevere e porta via gli abitanti: per settimane Roma resta vuota."},
+ {id:'piena589', da:589, a:589.5, bruciati:0, fuochi:[], piena:true,      // Gregorio di Tours, Storie X 1
+  testo:"Novembre 589 · Il Tevere allaga la città bassa e rovina i granai della Chiesa (Gregorio di Tours). L'estensione dell'acqua qui disegnata è indicativa: le zone più basse e più vicine al fiume."},
  {id:'costante663', da:663, a:663.4, bruciati:0, fuochi:[],
   testo:"5-17 luglio 663 · Costante II è l'ultimo imperatore a visitare Roma finché l'impero la governa. In dodici giorni fa smontare il bronzo dei monumenti, comprese le tegole del Pantheon."},
  {id:'assedio756', da:756, a:756.4, bruciati:0, fuochi:[], campi:true,
