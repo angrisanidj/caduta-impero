@@ -37,7 +37,9 @@
      il rocchio di Decio, la calcara e le lastre del foro di Traiano, il lastricato del foro di Cesare, le misure delle case del foro di Nerva, le sepolture nelle terme di Traiano;
      la Prammatica Sanzione e la lettera di Gregorio Magno sugli acquedotti sono citate a memoria;
    - letti il 21 novembre 2026, sera: Gibbon (General Observations e cap. LXXI, su ccel.org), Res Gestae 15, Codex Theodosianus 14.4.10, Procopio V 19, 13 (i quattordici acquedotti). Per il paragrafo
-     «Perché cadde l'Occidente?» in index.html solo Gibbon è stato letto nel testo: Heather, Halsall, Goffart, Ward-Perkins, Wickham, Jones e Pirenne restano a memoria o da recensioni.
+     «Perché cadde l'Occidente?» in index.html solo Gibbon è stato letto nel testo: Jones letto (archive.org, vol. II pp. 1045-1048 e 1068: «the major cause of its fall was that it was more exposed to barbarian onslaughts»); Goffart («an imaginative experiment that got a little out of hand», p. 35),
+     Halsall («'barbarian migrations' were, therefore, the product of the 'end of the Roman Empire', and not vice versa»), Ward-Perkins (tegole, monete, «the rise and fall of the Roman cow») e Wickham («The land tax, and the fiscal system
+     as a whole, was the main single structure») verificati su brani del testo pieno di archive.org; Heather da Wikipedia e sunti; Pirenne a memoria; a memoria anche la data in cui per Wickham il fisco finisce in Occidente.
      Dell'editto dei prezzi restano a memoria l'oro a 72.000 denari la libbra e il raddoppio delle monete, che viene dall'editto monetario di Afrodisia (1 settembre 301);
    - le curve sono punti orientativi, non serie pubblicate; forchette della popolazione, fino dell'argento e testi degli intermezzi sono stati riveduti il 21 novembre 2026
      (ric.mom.fr per la moneta; Robinson e Wilson 2011 e Robinson, Rice e Schörle per i relitti; il comunicato di Oxford su McConnell e altri 2018 per il piombo; Procopio, Guerre III 5, V 19, VII 20-22;
@@ -139,7 +141,7 @@ var TAPPE=[
  {anno:260, titolo:"Valeriano prigioniero, l'Occidente si stacca", testo:"L'imperatore Valeriano è catturato dai Persiani. L'Occidente si stacca sotto Postumo: Gallie, Britannia e Hispania hanno un loro imperatore, loro consoli, una loro moneta."},
  {anno:271, titolo:'Roma torna a costruire mura', testo:"Aureliano cinge la città con diciannove chilometri di mura: non accadeva da secoli. In Oriente Zenobia di Palmira controlla dall'Egitto all'Anatolia."},
  {anno:274, titolo:"L'impero ricucito", testo:"In tre anni Aureliano riprende Palmira e le Gallie. L'impero è di nuovo uno; una riforma ferma il crollo della moneta, che però contiene ormai solo il cinque per cento d'argento."},
- {intermezzo:true, anno:284, titolo:'La moneta', testo:"Nel 215 Caracalla conia l'antoniniano: vale due denari, ma contiene l'argento di uno e mezzo. È il primo trucco di una lunga serie. Fra il 238 e il 268 l'argento in una moneta scende da oltre due grammi a meno di un decimo: sotto Claudio II la moneta è quasi tutta rame. Aureliano, nel 274, garantisce almeno il 5%. Diocleziano conia di nuovo argento buono, ma nel 301 deve raddoppiare per legge il valore delle monete e fissare per editto più di mille prezzi massimi, pena la morte: l'oro a 72.000 denari la libbra. In pochi anni l'editto è lettera morta. Regge invece il solido di Costantino, 72 per libbra: resterà intatto per sette secoli."},
+ {intermezzo:true, anno:284, titolo:'La moneta', testo:"Nel 215 Caracalla conia l'antoniniano: vale due denari, ma contiene l'argento di uno e mezzo. È il primo trucco di una lunga serie. Fra il 238 e il 268 l'argento in una moneta scende da oltre due grammi a meno di un decimo: sotto Claudio II la moneta è quasi tutta rame. Aureliano, nel 274, garantisce almeno il 5%. Diocleziano conia di nuovo argento buono, ma nel 301 deve raddoppiare per legge il valore delle monete e fissare per editto più di mille prezzi massimi, pena la morte: l'oro a 72.000 denari la libbra, secondo la lettura corrente. In pochi anni l'editto è lettera morta. Regge invece il solido di Costantino, 72 per libbra: resterà intatto per sette secoli."},
 
  {anno:293, titolo:'Quattro imperatori, nessuno a Roma', testo:"Diocleziano divide il comando fra due augusti e due cesari. Non ci sono più capitali ma residenze vicine agli eserciti, che cambiano con le campagne: Treviri, Milano, Sirmio, Nicomedia."},
  {anno:301, titolo:'I prezzi fissati per legge', testo:"Un editto stabilisce il prezzo massimo di oltre mille merci e servizi, pena la morte. Non funziona, ma racconta uno Stato che vuole contare e tassare tutto."},
@@ -216,10 +218,11 @@ var TAPPE=[
 /* curve: [anno, valore] */
 var CURVE={
   /* Abitanti di Roma. "punti" è la linea che muove la scena; "banda" è la forchetta delle stime pubblicate [anno, minimo, massimo].
-     Fonti delle forchette: Krautheimer 1980 (800.000 verso il 400; 30.000 a metà VI secolo; forse 90.000 verso il 600; 35.000 in età carolingia),
+     Fonti delle forchette: Krautheimer 1980 (forse un milione prima di Costantino, circa 800.000 sotto Costantino e nel 400, 500.000 nel 452, forse 100.000 nel 500, non più di 30.000 dopo l'assedio goto,
+     forse 90.000 con i profughi al tempo di Gregorio: brani letti nel testo pieno di archive.org; i 35.000 carolingi non ritrovati),
      Durliat 1990 (600-800.000 nel IV secolo), Lançon (500.000 nel 419), Novella 36 di Valentiniano III (450-500.000 verso il 452), A.H.M. Jones (650.000),
-     Delogu (15-30.000 a metà VI), Santangeli Valenzani (50-60.000 a metà VI; 20-30.000 in età carolingia), Wickham (20-25.000),
-     Santangeli Valenzani (a cura di), Roma altomedievale, 2023 (circa 60.000 stabili). Stime estreme per l'VIII-IX secolo: da 5.000 (Hodges) a 90.000.
+     Delogu (15-30.000 a metà VI), Santangeli Valenzani (50-60.000 a metà VI; 20-30.000 in età carolingia: a memoria, non ritrovato), Wickham (20-25.000),
+     Meneghini e Santangeli Valenzani, in Roma altomedievale, 2023, p. 208 (50-60.000 credibili con un modello statico: letto nella recensione di Plekos 26, 2024). Stime estreme per l'VIII-IX secolo: da 5.000 (Hodges) a 90.000.
      Riviste il 21 novembre 2026: il minimo del III secolo scende a 450.000 (Storey 1997, letto in un sunto: è la scuola della «piccola Roma»); la forchetta del 452 viene
      dalle 3.629.000 libbre di maiale distribuite in cinque mesi (Novella 36), cioè circa 145.000 razioni per 2,5-4 persone ciascuna (da 360.000 a 580.000 abitanti: ma le razioni vanno ai soli iscritti e il moltiplicatore è una scelta di chi calcola).
      Per il 419 la fonte è Codex Theodosianus 14.4.10 (Ravenna, 29 luglio 419), letta: fissa cinque libbre di carne per cinque mesi e quattromila razioni al giorno, non un numero di iscritti;
@@ -227,7 +230,7 @@ var CURVE={
      la città vuota: è retorica, non un conteggio, e la curva non scende a zero. Non letti: Lo Cascio, Durliat, Purcell, Meneghini e Santangeli Valenzani.
      Il 476 non ha stime puntuali: è un'interpolazione. Il 550 è il valore minimo (Krautheimer), non il centro della forchetta. */
   popolazione:{nome:'Abitanti di Roma', nota:'stima',
-    punti:[[235,900000],[300,800000],[367,750000],[408,750000],[419,450000],[452,450000],[476,250000],[500,100000],[535,80000],[550,30000],[590,45000],[600,50000],[680,32000],[750,25000],[801,30000],[852,30000]],
+    punti:[[235,900000],[300,800000],[367,750000],[408,750000],[419,500000],[452,500000],[476,250000],[500,100000],[535,80000],[550,30000],[590,45000],[600,50000],[680,32000],[750,25000],[801,30000],[852,30000]],
     banda:[[235,450000,1200000],[300,450000,1200000],[367,500000,1000000],[408,700000,1000000],[419,300000,500000],[452,360000,580000],[476,150000,400000],[500,60000,200000],[535,60000,200000],[550,15000,100000],[600,20000,90000],[700,20000,60000],[852,20000,60000]]},
   /* Fino della moneta d'argento: denario di Severo Alessandro 43-50%, Decio circa 40%, Gallieno 18% nel 260 e 2,5% a fine regno (dati Walker, in Katsari 2002);
      riforma di Aureliano 5% garantito (RIC online). Le analisi di Walker sono di superficie e sovrastimano il fino (Butcher e Ponting): valori indicativi. */
