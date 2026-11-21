@@ -124,13 +124,13 @@ window.RM_mappa={
   /* quota dell'Occidente governata da Roma, pesata per regione: federati e contesi valgono metà */
   territorio:function(stati){
     var tot=0, ok=0;
-    for(var id in G.regioni){ if(G.regioni[id].est) continue; var p=G.regioni[id].peso; tot+=p; ok+=p*(stati[id]==='roma'?1:(stati[id]==='federati'||stati[id]==='conteso')?.5:0); }
+    for(var id in G.regioni){ if(G.regioni[id].est||G.regioni[id].oltre) continue; var p=G.regioni[id].peso; tot+=p; ok+=p*(stati[id]==='roma'?1:(stati[id]==='federati'||stati[id]==='conteso')?.5:0); }
     return ok/tot*100;
   },
   /* territori governati dalla corte d'Oriente, fatto 100 l'Oriente del 395 (senza la Dacia, già perduta): con Giustiniano supera 100, perché riprende pezzi d'Occidente */
   territorioEst:function(stati){
     var base=0, ok=0, id, p, s;
-    for(id in G.regioni){ p=G.regioni[id].peso; s=stati[id]; if(G.regioni[id].est && id!=='dacia') base+=p; ok+=p*((s==='oriente'||(G.regioni[id].est&&s==='roma'))?1:(G.regioni[id].est&&s==='conteso')?.5:0); }
+    for(id in G.regioni){ if(G.regioni[id].oltre) continue; p=G.regioni[id].peso; s=stati[id]; if(G.regioni[id].est && id!=='dacia') base+=p; ok+=p*((s==='oriente'||(G.regioni[id].est&&s==='roma'))?1:(G.regioni[id].est&&s==='conteso')?.5:0); }
     return ok/base*100;
   }
 };

@@ -92,7 +92,15 @@ function piano(geo) {
   return out;
 }
 const taglio = id => [[TAGLI[id].concat([TAGLI[id][0]]).map(c => proj(c))]];
+/* terre che non sono mai state dell'impero (la Germania oltre il Reno, la pianura degli Unni e degli Avari…): un poligono a mano in lon/lat,
+   ritagliato sulla terraferma e privato di tutto ciò che è provincia romana. Servono perché l'impero di Carlo Magno non finisca al Reno. */
+let impero = null;
+function oltreImpero(poli) {
+  if (!impero) { impero = []; for (const n of Object.keys(PROV)) { const g = piano(PROV[n]); impero = impero.length ? pc.union(impero, g) : g; } }
+  return pc.difference(pc.intersection(TERRA, [[poli.concat([poli[0]]).map(c => proj(c))]]), impero);
+}
 function forma(r) {
+  if (r.terra) return oltreImpero(r.terra);
   let m = [];
   for (const n of r.prov) { if (!PROV[n]) throw new Error('provincia sconosciuta: ' + n); const g = piano(PROV[n]); m = m.length ? pc.union(m, g) : g; }
   if (r.dentro) m = pc.intersection(m, taglio(r.dentro));
@@ -139,7 +147,7 @@ for (const [id, r] of Object.entries(REGIONI)) {
     tot += Math.abs(A) / 2;
     if (Math.abs(A) > area) { area = Math.abs(A); cx = x / (3 * A); cy = y / (3 * A); }
   }
-  out.regioni[id] = { nome: r.nome, peso: Math.round(tot), est: !!r.est, d: tracciato(m), c: [f1(cx), f1(cy)] };
+  out.regioni[id] = { nome: r.nome, peso: Math.round(tot), est: !!r.est, oltre: !!r.terra, d: tracciato(m), c: [f1(cx), f1(cy)] };
 }
 for (const [id, c] of Object.entries(CITTA)) { const p = proj([c[0], c[1]]); out.citta[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
 

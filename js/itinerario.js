@@ -41,7 +41,7 @@ function accendi(si){
   if(si){
     var sch=$('scheda'); if(sch) sch.hidden=true;
     var T=D.TAPPE, k=-1; T.forEach(function(t,j){ if(k<0 && !t.intermezzo && t.anno>=IT.anno) k=j; });       // la città com'era quando la guida fu scritta
-    if(k>=0 && window.RM_pagina) window.RM_pagina.vai(k,true);
+    if(k>=0 && window.RM_pagina && window.RM_pagina.annoOra()<DAL) window.RM_pagina.vai(k,true);
     var r=riquadro.getBoundingClientRect(); if(r.top<0||r.bottom>window.innerHeight+40) riquadro.scrollIntoView({behavior:'smooth',block:'start'});
     vai(-1);
   } else if(RM.vistaInsieme) RM.vistaInsieme();
@@ -61,5 +61,9 @@ RM.frame.push(function(){
     if(vis) s.el.style.transform='translate(-50%,-50%) translate('+((v.x+1)*w/2).toFixed(1)+'px,'+((1-v.y)*h/2).toFixed(1)+'px)';
   });
 });
+/* Il percorso esiste solo da quando la guida fu scritta (fra il 757 e l'855): prima di allora il comando non c'è, e se la linea del tempo torna indietro il percorso si chiude. */
+var DAL=IT.dal||IT.anno;
+function epoca(anno){ var ok=anno>=DAL-.5; bottone.style.display=ok?'':'none'; if(!ok && attivo) accendi(false); }
+RM.moduli.push(epoca); if(window.RM_pagina) epoca(window.RM_pagina.annoOra());
 RM.itinerario={accendi:accendi,vai:vai};
 })();

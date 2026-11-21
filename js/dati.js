@@ -218,7 +218,7 @@ var CHIESE=[
    il lato è affidabile, la distanza no (sono citati anche edifici lontani mezzo chilometro). Il raggruppamento in stazioni è nostro.
    stazioni: [nome, latitudine, longitudine, a sinistra, a destra, nota]; via: punti del tracciato secondo Lanciani e Hülsen. */
 var ITINERARIO={
-  titolo:"Da porta San Pietro a porta Asinaria", fonte:"Itinerario di Einsiedeln · fra il 757 e l'855, forse verso l'800", anno:800,
+  titolo:"Da porta San Pietro a porta Asinaria", fonte:"Itinerario di Einsiedeln · fra il 757 e l'855, forse verso l'800", anno:800, dal:757,
   intro:"Un quaderno copiato nel IX secolo, oggi nell'abbazia di Einsiedeln, elenca i percorsi che attraversano Roma: su una pagina ciò che si vede a sinistra, su quella di fronte ciò che si vede a destra. Chi lo scrisse non si sa. Questo percorso taglia tutta la città, dal ponte davanti al mausoleo di Adriano fino alla cattedrale. Le parole fra virgolette sono quelle del manoscritto.",
   stazioni:[
    ["Il ponte e l'arco",41.9005,12.4668,"","","«Per arcum»: passato ponte Elio si entra in città sotto un arco, probabilmente quello degli imperatori Graziano, Valentiniano e Teodosio."],
