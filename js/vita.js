@@ -46,6 +46,13 @@ var PIAZZE=[[-1.2,1.6,5.5,2.2],[-1.3,-27.8,4.5,3.5],[57,26,13.5,12],[-70,-77,4,3
 for(i=0;i<NZ;i++){ var pz=PIAZZE[i%PIAZZE.length], an=rnd()*6.283, rr=(pz===PIAZZE[2]?.82+.18*rnd():Math.sqrt(rnd())); folla.push({p:pz,a:an,r:rr,vel:(rnd()-.5)*.12}); }
 /* pellegrini a San Pietro: metà nell'atrio e sul sagrato, metà in cammino lungo il portico da ponte Elio. Crescono mentre la città cala */
 var pellegrini=[]; for(i=0;i<NG;i++) pellegrini.push({s:rnd(), a:rnd()*6.283, r:Math.sqrt(rnd()), vel:(rnd()<.5?-1:1)*(.012+.02*rnd()), lato:(rnd()-.5)*1.6});
+/* la via che dal ponte Elio porta a San Pietro: i pellegrini in cammino la seguono, oppure stanno sotto il portico che le corre accanto */
+var viaPietro=(function(){
+  var meglio=-1, m=1e9; vie.forEach(function(v,k){ var a=1e9, b=1e9; v.p.forEach(function(q){ a=Math.min(a,Math.hypot(q.x+172,q.z+110)); b=Math.min(b,Math.hypot(q.x+236,q.z+108)); }); if(a+b<m){ m=a+b; meglio=k; } });
+  if(meglio<0 || m>14) return null;
+  var p=vie[meglio].p, ia=0, ib=0, da=1e9, db=1e9; p.forEach(function(q,k){ var d1=Math.hypot(q.x+160,q.z+107), d2=Math.hypot(q.x+243.5,q.z+108); if(d1<da){ da=d1; ia=k; } if(d2<db){ db=d2; ib=k; } });
+  return {v:meglio, ia:ia, ib:ib};
+})();
 var PELLEGRINI_NEL_TEMPO=[[320,0],[400,.22],[500,.42],[700,.75],[800,1],[852,1]];
 /* da lontano un punto, da vicino una figura: testa e mantello, con i piedi al centro del punto (che sta all'altezza del suolo) */
 var texPunto=RM.tela(32,32,function(g){ g.fillStyle='#fff'; g.beginPath(); g.arc(16,5,3.6,0,6.3); g.fill(); g.beginPath(); g.moveTo(12.4,9.5); g.lineTo(19.6,9.5); g.lineTo(21.5,20); g.lineTo(10.5,20); g.closePath(); g.fill(); },false);
@@ -92,8 +99,13 @@ function muoviGente(dt){
   for(n=0;n<NG;n++,j++){
     o=j*3; var pg=pellegrini[n];
     if(n>=arrivati){ pos[o+1]=-60; continue; }
-    if(n%2){ pg.a+=pg.vel*dt*3; pos[o]=-246+Math.cos(pg.a)*pg.r*5.5; pos[o+2]=-108+Math.sin(pg.a)*pg.r*4.2; }                       // sagrato e atrio
-    else{ pg.s+=pg.vel*dt; if(pg.s>1||pg.s<0){ pg.vel=-pg.vel; pg.s=Math.max(0,Math.min(1,pg.s)); } pos[o]=-158-89*pg.s; pos[o+2]=-111.5+3.5*pg.s+pg.lato; }   // dal ponte alla basilica
+    if(n%2){ pg.a+=pg.vel*dt*3; pos[o]=-246.6+Math.cos(pg.a)*pg.r*3.5; pos[o+2]=-108+Math.sin(pg.a)*pg.r*2.9; }                     // nel cortile dell'atrio e sul sagrato lastricato davanti
+    else{
+      pg.s+=pg.vel*dt; if(pg.s>1||pg.s<0){ pg.vel=-pg.vel; pg.s=Math.max(0,Math.min(1,pg.s)); }
+      if(n%4===0 || !viaPietro){ pos[o]=-180.1-66.8*pg.s; pos[o+2]=-109+4*pg.s+pg.lato*.55; }                                        // sotto il portico, lungo il suo asse
+      else{ var vq=vie[viaPietro.v], tq=viaPietro.ia+(viaPietro.ib-viaPietro.ia)*pg.s, kq=Math.max(0,Math.min(vq.p.length-2,tq|0)), qa=vq.p[kq], qb=vq.p[kq+1], gq=tq-kq, qx=qb.x-qa.x, qz=qb.z-qa.z, ql=Math.hypot(qx,qz)||1, qf=pg.lato*vq.larga;
+        pos[o]=qa.x+qx*gq-qz/ql*qf; pos[o+2]=qa.z+qz*gq+qx/ql*qf; }                                                                  // sulla via, dal ponte alla basilica
+    }
     pos[o+1]=RM.hRapida(pos[o],pos[o+2])+.3;
   }
   gGente.attributes.position.needsUpdate=true;

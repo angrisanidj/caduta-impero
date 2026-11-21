@@ -34,7 +34,8 @@ function circo(B,L,W,h,spina){                           // circo o stadio: grad
    .striscia(cima,h-.3,pista,.45,P.tufo).striscia(pista,.45,pista,.12,P.travertino).striscia(pista,.12,asse,.12,P.sabbia);
   B.fornici(est,.15,h*.36,.5,1,false).fornici(est,h*.56,h*.28,.4,1,false).aperture(-L/2,-W/2+1,-L/2,W/2-1,12,.15,h*.4);
   if(spina){
-    B.scatola(L*.56,.4,.8,-1,.12,0,P.travertino).cilindro(.17,2.7,-1,.52,0,P.mattone,.07,4);
+    B.scatola(L*.56,.4,.8,-1,.12,0,P.travertino).scatola(.5,.3,.5,-1,.52,0,P.marmo).cilindro(.17,2.4,-1,.82,0,P.sabbia,.1,4).cono(.1,.2,-1,3.22,0,P.oro,4);      // la spina con l'obelisco di Augusto (oggi in piazza del Popolo)
+    [-1,1].forEach(function(s2){ B.colonne(-1+s2*L*.12-.4,0,-1+s2*L*.12+.4,0,2,.9,.05,.52).scatola(1,.08,.2,-1+s2*L*.12,1.42,0,P.marmo); B.cilindro(.5,.12,-1+s2*L*.2,.52,0,P.acqua,null,10); });      // i contagiri (le uova e i delfini) e le vasche
     [-1,1].forEach(function(s){ for(var k=0;k<3;k++) B.cono(.16,.8,-1+s*(L*.28+.6),.12,(k-1)*.36,P.oro,8); });
     B.scatola(4,h+1,1.6,-4,0,-W/2+.2,P.marmo).falde(4,.7,1.8,-4,h+1,-W/2+.2,P.coppi);          // pulvinar, lato del Palatino
   }
@@ -44,6 +45,8 @@ function teatro(B,r,h){                                  // cavea a semicerchio 
   B.striscia(est,0,est,h,P.travertino,false).striscia(est,h,int,h,P.travertino,false).striscia(int,h,orc,.3,P.tufo,false).striscia(orc,.3,cen,.3,P.marmo,false);
   B.fornici(est,.15,h*.3,.5,1,false).fornici(est,h*.44,h*.26,.45,1,false);
   B.scatola(r*2,h*1.05,r*.24,0,0,-r*.12,P.travertino).aperture(-r*.9,0,r*.9,0,9,.4,h*.5).scatola(r*1.4,.35,r*.3,0,0,r*.15,P.marmo);
+  [0,1].forEach(function(l){ B.colonne(-r*.66,.07,r*.66,.07,10,h*.36,.05,.35+l*h*.4).scatola(r*1.36,.07,.16,0,.35+l*h*.4+h*.36,.07,P.marmo); });      // la fronte della scena: due ordini di colonne
+  B.aperture(r*.9,-r*.24,-r*.9,-r*.24,9,.2,h*.42);                                                                                                   // gli archi sul retro della scena
 }
 function terme(B,L,Pd){                                   // recinto con giardini, corpo centrale a volte, caldarium a sud (+z)
   var s=.7, a=1.5, zc=-Pd*.05;
@@ -199,16 +202,24 @@ var M=[
     arcato(B,27,1.5,18,0,-.4,0,P.mattone,2,22);                                                // sostruzioni
     B.dentro(0,1.1,0,0,function(B){
       portico(B,8.5,8,-7,0,-1,1.2,P.prato);                                                    // Domus Flavia: peristilio
-      B.scatola(4.6,3.4,5,-7,0,-7.6,P.mattone).falde(5,.9,4.8,-7,3.4,-7.6,P.coppi,PI/2,P.mattone);            // Aula Regia
-      B.scatola(2.4,2.4,5,-10.8,0,-7.6,P.mattone).scatola(2.4,2.4,5,-3.2,0,-7.6,P.mattone);
-      B.scatola(5.4,2.6,3.6,-7,0,5,P.mattone).falde(5.6,.7,3.8,-7,2.6,5,P.coppi,0,P.mattone);                 // triclinio
+      B.scatola(4.6,3.4,5,-7,0,-7.6,P.intonaco).falde(5,.9,4.8,-7,3.4,-7.6,P.coppi,PI/2,P.intonaco);          // Aula Regia: la sala delle udienze, altissima, con la facciata a colonne verso l'area Palatina
+      B.scatola(2.4,2.4,5,-10.8,0,-7.6,P.intonaco).scatola(2.4,2.4,5,-3.2,0,-7.6,P.intonaco);                 // basilica e larario, ai lati
+      B.colonne(-11.8,-10.4,-2.2,-10.4,12,1.9,.09,0).scatola(10.2,.14,.7,-7,1.9,-10.3,P.marmo).vano(-7,0,-10.12,1,0,.7,1.5);
+      B.aperture(-8.9,-10.12,-5.1,-10.12,3,2.2,.8,.5);
+      B.scatola(5.4,2.6,3.6,-7,0,5,P.intonaco).falde(5.6,.7,3.8,-7,2.6,5,P.coppi,0,P.intonaco);               // triclinio, con i due ninfei ovali ai fianchi
+      [-1,1].forEach(function(q){ B.cilindro(.9,.14,-7+q*3.6,0,5,P.marmo,null,14).cilindro(.75,.05,-7+q*3.6,.14,5,P.acqua,null,14); });
       arcato(B,9,2.7,13.5,2.6,0,-.5,P.mattone,2,7);                                            // Domus Augustana
       B.scatola(4,.12,4,2.6,2.7,-3.4,P.ombra).scatola(4,.12,4,2.6,2.7,2.6,P.ombra);
       var es=RM.ellisse(4.4,2.2,14,0,PI).map(function(p){ return [p[0]+2.6,p[1]+6.2]; }); B.striscia(es,-1.4,es,2.2,P.mattone,false).fornici(es,-1.1,.8,.5,1,false).fornici(es,.6,.8,.5,1,false);
-      B.scatola(4.6,1.6,.3,10.6,0,-7.2,P.mattone).scatola(4.6,1.6,.3,10.6,0,6.8,P.mattone).scatola(.3,1.6,14,8.4,0,-.2,P.mattone).scatola(.3,1.6,14,12.8,0,-.2,P.mattone).scatola(4,.1,13.6,10.6,0,-.2,P.prato);   // stadio palatino
+      B.scatola(4.6,1.6,.3,10.6,0,-7.2,P.mattone).scatola(.3,1.6,14,8.4,0,-.2,P.mattone).scatola(.3,1.6,14,12.8,0,-.2,P.mattone).scatola(4,.1,13.6,10.6,0,-.2,P.prato);   // stadio palatino: giardino a forma di circo, col lato sud curvo
+      var cs=RM.ellisse(2.2,1.4,8,0,PI).map(function(p){ return [p[0]+10.6,p[1]+6.8]; }); B.striscia(cs,0,cs,1.6,P.mattone,false);
+      B.colonne(9,-6.6,9,6.4,14,.9,.05,.1).colonne(12.2,-6.6,12.2,6.4,14,.9,.05,.1).scatola(.5,.08,13.4,8.75,1,-.1,P.coppi).scatola(.5,.08,13.4,12.45,1,-.1,P.coppi);      // il portico attorno
+      B.scatola(1.6,2.2,2.6,13.6,0,-.2,P.mattone).cupola(1.3,13.6,2.2,-.2,P.intonaco,.5);        // la tribuna imperiale, sul lato est
       B.tempio(2.4,3.6,1.8,-11.5,3.4,0,{fronte:6});                                            // tempio di Apollo
     });
-    arcato(B,9,2.9,1.3,10.5,-.4,9.6,P.marmo,3,8);                                              // Settizodio
+    /* Settizodio (203): facciata scenografica a tre ordini di colonne libere, con tre grandi nicchie, verso chi arriva dalla via Appia. Demolito nel 1588-89; forma dai disegni del Cinquecento */
+    B.scatola(9,2.9,.5,10.5,-.4,9.2,P.marmo);
+    [0,1,2].forEach(function(l){ var yy=-.4+l*.97; B.colonne(6.3,9.95,14.7,9.95,12,.82,.055,yy).scatola(9,.13,.95,10.5,yy+.82,9.62,P.marmo); if(l<2) [-3,0,3].forEach(function(x){ B.vano(10.5+x,yy+.02,9.47,1,0,1.5,.78); }); });
  }},
  {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6]], et:1, fa:function(B){
     /* La rotonda: tamburo di 56 m di diametro alto circa 31, diviso in tre fasce da cornici; sopra, i gradoni che contengono la spinta e la calotta bassa
@@ -228,8 +239,11 @@ var M=[
  {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36); }},
  {id:'massenzio', nome:'Basilica di Massenzio', x:25,z:7, ry:-.35, zone:[[0,0,7.5]], fa:function(B){
     B.scatola(8.2,3.5,2.6,0,0,0,P.mattone); for(var i=-1;i<=1;i++){ B.falde(2.7,.9,2.7,i*2.72,3.5,0,P.bronzo,PI/2,P.mattone);
-      [-1,1].forEach(function(k){ B.scatola(2.6,2.4,2,i*2.72,0,k*2.3,P.mattone).volta(2,1.3,i*2.72,2.4,k*2.3,P.intonaco,PI/2).scatola(1.5,1.7,.1,i*2.72,.3,k*3.32,P.ombra); }); }
+      [-1,1].forEach(function(k){ B.scatola(2.6,2.4,2,i*2.72,0,k*2.3,P.mattone).volta(2,1.3,i*2.72,2.4,k*2.3,P.intonaco,PI/2); B.vano(i*2.72,.25,k*3.31,1,0,.5,.9).vano(i*2.72-.75,.25,k*3.31,1,0,.5,.9).vano(i*2.72+.75,.25,k*3.31,1,0,.5,.9).vano(i*2.72,1.4,k*3.31,1,0,1.6,1.5); }); }      // ogni campata laterale: tre archi in basso e il grande finestrone sopra
     B.falde(8.2,.9,2.6,0,3.5,0,P.bronzo,0,P.mattone);
+    B.aperture(-3.9,1.31,3.9,1.31,3,2.75,.7,1.5).aperture(3.9,-1.31,-3.9,-1.31,3,2.75,.7,1.5);                    // i finestroni della navata, sopra le volte laterali
+    B.cilindro(1.25,3.2,-4.15,0,0,P.mattone,null,16).cupola(1.25,-4.15,3.2,0,P.intonaco,.6);                      // l'abside ovest, dove stava il colosso di Costantino
+    B.colonne(-1,-3.75,1,-3.75,4,1.5,.09,0).scatola(2.6,.14,.8,0,1.5,-3.7,P.marmo);                               // l'ingresso aggiunto sul fianco, verso la via Sacra
  }},
  {id:'venere', nome:'Tempio di Venere e Roma', x:36,z:18.6, ry:-.3, zone:[[0,0,9.5]], fa:function(B){                            // tempio di Venere e Roma
     B.scatola(15,.7,10,0,0,0,P.travertino).colonne(-7,4.6,7,4.6,22,1.3,.09,.7).colonne(-7,-4.6,7,-4.6,22,1.3,.09,.7);
@@ -254,6 +268,7 @@ var M=[
  {id:'laterano', nome:'San Giovanni in Laterano', x:169,z:73, ry:.1, zone:[[0,0,8],[8,0,6],[-11.3,-3.5,2.6]], fa:function(B){ chiesa(B,10,6); B.cilindro(1.2,1.6,-11.3,0,-3.5,P.mattone,null,8).cono(1.3,.7,-11.3,1.6,-3.5,P.coppi,8); }},      // il battistero ottagonale, dov'è oggi (OpenStreetMap): dietro l'abside, verso nord
  {id:'pietro', nome:'San Pietro', x:-259,z:-108, ry:0, zone:[[0,0,9],[10,0,7]], et:1, fa:function(B){
     chiesa(B,11.5,6.6,true);
+    B.scatola(5.4,.07,7.2,13.7,0,0,P.selce).scatola(5.4,.1,.5,13.7,0,3.4,P.travertino).scatola(5.4,.1,.5,13.7,0,-3.4,P.travertino);      // il sagrato lastricato davanti all'atrio, dove si raccolgono i pellegrini
     B.scatola(.5,.3,.5,3.6,0,6.6,P.travertino).cilindro(.2,2.4,3.6,.3,6.6,P.sabbia,.12,4).cono(.13,.25,3.6,2.7,6.6,P.sabbia,4);      // l'obelisco del circo di Nerone, sul fianco sud
  }},
  /* ---- costruiti durante la storia, in ordine di data ---- */
