@@ -1,0 +1,9 @@
+[out:json][timeout:60];
+(
+  way["waterway"="river"]["name"~"Tevere"](41.84,12.42,41.95,12.52);
+  way["name"~"[Mm]ura [Aa]ureliane"](41.84,12.42,41.95,12.56);
+  way["historic"="city_wall"](41.86,12.44,41.92,12.53);
+  way["barrier"="city_wall"](41.86,12.44,41.92,12.53);
+  nwr["historic"="city_gate"](41.86,12.44,41.92,12.53);
+);
+out tags geom;

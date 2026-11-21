@@ -1,0 +1,203 @@
+:root{
+  --cap:'Cinzel','Trajan Pro',Georgia,'Times New Roman',serif;
+  --serif:'EB Garamond','Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+  --gold:#A87B2A;--gold2:#D4AE55;--gold3:#F1D99A;
+  --ink:#2B2420;--carta:#F4ECDC;--carta2:#FBF6EA;--line:#D8CCB6;--muted:#6F6356;
+  --porpora:#8E2A2A;--vetro:rgba(33,25,18,.78);
+  /* stati delle regioni */
+  --st-roma:#9A2F2A;--st-usurpatore:#C98A2B;--st-federati:#6E8B5B;--st-regno:#4D6B7C;--st-oriente:#8A7399;--st-califfato:#3F8F86;--st-carolingio:#5A3F78;--st-perso:#DCD0B8;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--carta);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.etichetta{margin:0;font-family:var(--cap);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+
+.testata,main,.piede{max-width:1280px;margin:0 auto;padding:0 24px}
+.testata{padding-top:28px;padding-bottom:18px}
+.occhiello{margin:0;font-family:var(--cap);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+h1{margin:4px 0 6px;font-family:var(--cap);font-weight:600;font-size:clamp(28px,4.2vw,46px);line-height:1.05;letter-spacing:.02em}
+.sommario{margin:0;max-width:44em;font-size:20px;color:var(--muted)}
+
+/* ---- le due scene ---- */
+.scene{display:grid;grid-template-columns:1.32fr 1fr;gap:14px;align-items:stretch}
+.schede{display:none}
+.riquadro{position:relative;margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--carta2);min-height:0}
+.riquadro.impero{aspect-ratio:1000/640}
+#mappa,#mappa svg{display:block;width:100%;height:100%}
+#scena{position:absolute;inset:0}
+#scena canvas{display:block;width:100%;height:100%;touch-action:none}
+.riquadro.roma{background:#d8c9a8}
+
+.etichette3d{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.etichette3d span{position:absolute;left:0;top:0;opacity:0;white-space:nowrap;font-family:var(--cap);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;text-shadow:0 1px 4px rgba(20,14,8,.95),0 0 10px rgba(20,14,8,.7);transition:opacity .3s}
+.conta{position:absolute;left:12px;top:10px;margin:0;display:flex;flex-direction:column;color:#fff;text-shadow:0 1px 8px rgba(20,14,8,.9);pointer-events:none;font-size:14px;line-height:1.2}
+.conta .etichetta{color:var(--gold3)}
+.conta b{font-family:var(--cap);font-weight:600;font-size:28px;font-variant-numeric:tabular-nums}
+.notte{position:absolute;right:10px;top:10px;font-family:var(--cap);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:999px;padding:6px 14px}
+.notte[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+.grande{position:absolute;right:10px;bottom:10px;width:36px;height:36px;font-size:18px;line-height:1;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:50%;padding:0}
+.grande[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+/* scena a tutto schermo: la linea del tempo resta a portata di mano */
+body.roma-grande{overflow:hidden}
+body.roma-grande .riquadro.roma{display:block!important;position:fixed;inset:0;z-index:50;border:0;border-radius:0;aspect-ratio:auto}
+body.roma-grande .tempo{position:fixed;left:16px;right:16px;bottom:12px;z-index:60;margin:0;background:rgba(251,246,234,.92)}
+body.roma-grande .grande{bottom:auto;top:52px}
+body.roma-grande .etichette3d span{font-size:11px}
+/* didascalia dell'evento in corso (sacco, assedio) */
+.evento{position:absolute;left:12px;bottom:10px;right:58px;max-width:540px;margin:0;padding:8px 12px;font-size:14.5px;line-height:1.35;color:#fff;background:rgba(46,18,13,.82);border-left:3px solid #D0563A;border-radius:3px;opacity:0;transition:opacity .5s;pointer-events:none}
+.evento.vivo{opacity:1}
+body.roma-grande .evento{left:20px;bottom:104px;font-size:16px}
+/* scheda del monumento */
+.scheda{position:absolute;left:12px;top:84px;width:min(300px,calc(100% - 24px));max-height:calc(100% - 150px);overflow:auto;padding:12px 14px 10px;background:rgba(251,246,234,.96);color:var(--ink);border:1px solid rgba(160,130,60,.5);border-radius:4px;box-shadow:0 6px 24px rgba(20,14,8,.35);font-size:14.5px;line-height:1.35}
+.scheda[hidden]{display:none}
+.scheda h3{margin:0 26px 2px 0;font-family:var(--cap);font-size:17px;font-weight:600;line-height:1.2}
+.scheda .chiudi{position:absolute;right:6px;top:6px;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:15px;cursor:pointer}
+.scheda .chiudi:hover{background:rgba(0,0,0,.07)}
+.scheda .stato{margin:0 0 6px;font-size:13px;color:var(--muted)}
+.scheda .stato .st{font-weight:600}
+.scheda .cosa{margin:0 0 8px}
+.scheda ul{list-style:none;margin:0;padding:8px 0 0;border-top:1px solid rgba(160,130,60,.35)}
+.scheda li{display:grid;grid-template-columns:auto 1fr;gap:8px;padding:2px 0}
+.scheda li b{font-family:var(--cap);font-weight:600;font-size:12.5px;min-width:34px;font-variant-numeric:tabular-nums;padding-top:1px}
+.scheda li.futura{opacity:.42}
+body.roma-grande .scheda{top:96px;left:20px;max-height:calc(100% - 220px)}
+.etichette3d span{pointer-events:auto;cursor:pointer}
+.suggerimento{font-family:'EB Garamond',Georgia,serif;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12.5px}
+.monumenti li{cursor:pointer;border-radius:3px}
+.monumenti li:hover>span,.monumenti li.scelto>span{text-decoration:underline;text-decoration-color:var(--gold2);text-underline-offset:3px}
+.monumenti li:focus-visible{outline:2px solid var(--gold2);outline-offset:1px}
+.errore{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:20px;text-align:center;background:var(--carta2)}
+.errore[hidden]{display:none}
+
+/* ---- mappa ---- */
+.m-mare{fill:#C9D6D3}
+.m-terra{fill:var(--st-perso);stroke:#B9AB8E;stroke-width:.6}
+.m-regione{stroke:var(--carta2);stroke-width:1.1;stroke-linejoin:round;transition:fill .9s ease,fill-opacity .9s ease}
+.m-regione.roma{fill:var(--st-roma)} .m-regione.usurpatore{fill:var(--st-usurpatore)} .m-regione.federati{fill:var(--st-federati)}
+.m-regione.regno{fill:var(--st-regno)} .m-regione.oriente{fill:var(--st-oriente);fill-opacity:.55} .m-regione.perso{fill:var(--st-perso)}
+.m-regione.conteso{fill:url(#trama-conteso)} .m-regione.califfato{fill:var(--st-califfato)} .m-regione.carolingio{fill:var(--st-carolingio)}
+.m-nome{font-family:var(--cap);font-size:11px;letter-spacing:.12em;text-transform:uppercase;fill:#fff;text-anchor:middle;paint-order:stroke;stroke:rgba(43,36,32,.55);stroke-width:2.4px;pointer-events:none}
+.m-nome.chiaro{fill:var(--ink);stroke:rgba(251,246,234,.8)}
+.m-citta circle{fill:var(--carta2);stroke:var(--ink);stroke-width:1.2}
+.m-citta text{font-family:var(--serif);font-style:italic;font-size:12.5px;fill:var(--ink);paint-order:stroke;stroke:rgba(251,246,234,.85);stroke-width:2.6px}
+.legenda-mappa{position:absolute;left:10px;bottom:8px;display:flex;flex-wrap:wrap;gap:3px 12px;font-size:13px;background:rgba(251,246,234,.86);border-radius:6px;padding:4px 8px}
+.legenda-mappa span{display:inline-flex;align-items:center;gap:5px}
+.legenda-mappa i{width:11px;height:11px;border-radius:2px;border:1px solid rgba(43,36,32,.25)}
+
+/* ---- linea del tempo ---- */
+.tempo{display:flex;align-items:stretch;gap:14px;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--carta2);position:sticky;bottom:8px;z-index:5}
+.comandi{display:flex;gap:6px;align-items:center;flex:none}
+.comandi button{font-family:var(--cap);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:transparent;border:1px solid var(--line);border-radius:8px;padding:8px 12px;min-height:40px}
+.comandi button:hover{border-color:var(--gold)}
+#btnPrima,#btnDopo{font-size:20px;line-height:1;padding:6px 14px}
+.linea{flex:1;display:flex;gap:10px;min-width:0}
+.atto-gruppo{flex:var(--n) 1 0;min-width:0}
+.atto-gruppo p{margin:0 0 4px;font-family:var(--cap);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.atto-gruppo div{display:flex;gap:3px;border-top:2px solid var(--line);padding-top:6px}
+.atto-gruppo.attivo div{border-color:var(--porpora)} .atto-gruppo.attivo p{color:var(--porpora)}
+.linea button{flex:1;min-width:0;height:22px;padding:0;border:0;border-radius:3px;background:var(--line);position:relative}
+.linea button.intermezzo{background:repeating-linear-gradient(135deg,var(--line) 0 3px,transparent 3px 6px);border:1px solid var(--line)}
+.linea button:hover{background:var(--gold2)}
+.linea button[aria-current="true"]{background:var(--porpora)}
+.linea button.passata{background:#C4A9A0}
+
+/* ---- testo e cruscotto ---- */
+.colonne{display:grid;grid-template-columns:1.32fr 1fr;gap:28px;margin-top:22px;align-items:start}
+.atto{margin:0;font-family:var(--cap);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--porpora)}
+.atto b{font-weight:700;font-size:26px;letter-spacing:.02em;margin-right:10px;color:var(--ink)}
+h2{margin:2px 0 8px;font-family:var(--cap);font-weight:600;font-size:clamp(22px,2.6vw,30px);line-height:1.15}
+.testo{margin:0;font-size:21px;max-width:34em}
+.storici{margin:18px 0 0;padding:12px 16px;border-left:3px solid var(--gold2);background:var(--carta2);border-radius:0 8px 8px 0;max-width:38em}
+.storici p:last-child{margin:4px 0 0}
+.fonti{margin:16px 0 0;font-size:15px;font-style:italic;color:var(--muted)}
+
+.cruscotto{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.spia{border:1px solid var(--line);border-radius:8px;background:var(--carta2);padding:10px 12px 8px}
+.spia b{display:block;font-family:var(--cap);font-weight:600;font-size:24px;line-height:1.15;font-variant-numeric:tabular-nums}
+.spia small{display:block;font-size:13px;line-height:1.25;color:var(--muted);min-height:2.5em}
+.spia svg{display:block;width:100%;height:40px;margin-top:4px;overflow:visible}
+.spia path{fill:none;stroke:var(--porpora);stroke-width:1.6;vector-effect:non-scaling-stroke}
+.spia.stima path{stroke-dasharray:4 3}
+.spia line{stroke:var(--ink);stroke-width:1;vector-effect:non-scaling-stroke;opacity:.45}
+
+.stato-roma{margin-top:16px}
+.monumenti{list-style:none;margin:8px 0 0;padding:0;font-size:15.5px;columns:2;column-gap:18px}
+.monumenti li{display:flex;align-items:center;gap:8px;padding:2px 0;break-inside:avoid}
+.monumenti li::before,.st::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:currentColor}
+.monumenti li>span{color:var(--ink)}
+.uso{color:#C29A32}.chiuso{color:#9C948A}.spogliato{color:#B0563F}.bruciato{color:#4A3F38}.assente{color:#D8CCB6}
+.monumenti li.assente>span{color:#A99C86}
+.legenda{display:flex;flex-wrap:wrap;gap:4px 12px;margin:8px 0 0;font-size:13px}
+.st{display:inline-flex;align-items:center;gap:5px}
+.st>*,.st{color:inherit}
+.legenda .st{color:var(--muted)}
+.legenda .st::before{width:7px;height:7px}
+.legenda .uso::before{background:#C29A32}.legenda .chiuso::before{background:#9C948A}.legenda .spogliato::before{background:#B0563F}.legenda .bruciato::before{background:#4A3F38}.legenda .assente::before{background:#D8CCB6}
+
+.piede{padding-top:26px;padding-bottom:90px;font-size:14.5px;font-style:italic;color:var(--muted)}
+.piede p{margin:0;max-width:60em}
+
+@media (max-width:1000px){
+  body{font-size:17px}
+  .testata,main,.piede{padding-left:16px;padding-right:16px}
+  .sommario{font-size:17px}
+  .scene{grid-template-columns:1fr;gap:8px}
+  .schede{display:flex;gap:6px}
+  .schede button{flex:1;font-family:var(--cap);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--carta2)}
+  .schede button[aria-selected="true"]{background:var(--ink);color:var(--carta);border-color:var(--ink)}
+  .scene[data-vista="impero"] .riquadro.roma,.scene[data-vista="roma"] .riquadro.impero{display:none}
+  .riquadro.roma{aspect-ratio:1000/720}
+  .riquadro.impero{aspect-ratio:auto}
+  #mappa{aspect-ratio:1000/640;height:auto}
+  .legenda-mappa{position:static;font-size:12.5px;gap:2px 10px;background:none;padding:6px 10px 8px}
+  .colonne{grid-template-columns:1fr;gap:20px}
+  .testo{font-size:19px}
+  .tempo{flex-direction:column;gap:8px;padding:8px}
+  .comandi button{flex:1}
+  .atto-gruppo p{font-size:9px}
+  .linea{gap:5px}
+  .linea button{height:26px}
+}
+@media (max-width:520px){
+  .atto-gruppo p{display:none}
+  .linea{gap:3px}
+  .atto-gruppo div{gap:2px}
+  .monumenti{columns:1}
+}
+@media (prefers-reduced-motion:reduce){ .m-regione{transition:none} }
+
+/* pallino di stato sempre del suo colore, anche dove il testo è grigio */
+.st.uso::before{background:#C29A32}.st.chiuso::before{background:#9C948A}.st.spogliato::before{background:#B0563F}.st.bruciato::before{background:#4A3F38}.st.assente::before{background:#D8CCB6}
+/* su schermi stretti la scheda è un foglio in basso, non un riquadro dentro la scena */
+@media (max-width:700px){
+  .scheda,body.roma-grande .scheda{position:fixed;left:8px;right:8px;top:auto;bottom:8px;width:auto;max-height:46vh;z-index:70}
+  .evento{font-size:13px;padding:6px 9px;right:54px}
+}
+
+.crollato{color:#B0563F}.st.crollato::before{background:#B0563F}
+
+.cava{color:#7A5C3E}.st.cava::before{background:#7A5C3E}
+
+/* forchetta delle stime dietro la linea */
+.spia path.banda{fill:rgba(142,42,42,.14);stroke:none}
+
+/* percorso del pellegrino */
+.pellegrino{position:absolute;right:10px;top:44px;font-family:var(--cap);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:999px;padding:6px 11px;cursor:pointer}
+.pellegrino[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+body.roma-grande .pellegrino{top:98px}
+.stazioni3d{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.stazioni3d[hidden]{display:none}
+.stazioni3d button{position:absolute;left:0;top:0;width:24px;height:24px;padding:0;border-radius:50%;border:2px solid #3a2a10;background:#ffc94a;color:#2B2420;font-family:var(--cap);font-weight:700;font-size:12px;line-height:1;pointer-events:auto;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.45)}
+.stazioni3d button.qui{background:#fff;transform-origin:center;outline:3px solid #ffc94a}
+.scheda.itinerario .lato{margin:0 0 5px}
+.scheda.itinerario .lato b{display:block;font-family:var(--cap);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.scheda .passi{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:8px;border-top:1px solid rgba(160,130,60,.35);font-size:13px;color:var(--muted)}
+.scheda .passi button{font-family:var(--cap);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid rgba(160,130,60,.6);background:#fff;color:var(--ink);cursor:pointer}
+.scheda .passi button[disabled]{opacity:.35;cursor:default}
+@media (max-width:700px){ .pellegrino{font-size:9.5px;padding:5px 9px} }
+
+.scheda{z-index:4}.evento{z-index:2}.stazioni3d{z-index:1}

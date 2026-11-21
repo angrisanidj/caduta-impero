@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Come finisce un impero · L'Occidente romano dal 235 all'852</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/stile.css">
+</head>
+<body>
+<header class="testata">
+  <p class="occhiello">Scheletro di lavoro · testi e dati provvisori</p>
+  <h1>Come finisce un impero</h1>
+  <p class="sommario">L'Occidente romano dal 235 all'852: non un crollo, ma un sistema che perde pezzi per due secoli e mezzo. E una città che, fra le rovine, diventa un'altra cosa.</p>
+</header>
+
+<main>
+  <section class="scene" id="scene" data-vista="impero">
+    <div class="schede" role="tablist" aria-label="Scena">
+      <button type="button" role="tab" data-vista="impero" aria-selected="true">L'Impero</button>
+      <button type="button" role="tab" data-vista="roma" aria-selected="false">Roma</button>
+    </div>
+
+    <figure class="riquadro impero">
+      <div id="mappa"></div>
+      <figcaption class="legenda-mappa" id="legendaMappa"></figcaption>
+    </figure>
+
+    <figure class="riquadro roma">
+      <div id="scena" aria-label="Modello tridimensionale di Roma"></div>
+      <p class="conta"><span class="etichetta">Roma</span><b id="abitanti">—</b><span id="abitantiNota">abitanti, stima</span></p>
+      <button class="notte" id="btnNotte" type="button" aria-pressed="false">Notte</button>
+      <button class="grande" id="btnGrande" type="button" aria-pressed="false" aria-label="Scena a tutto schermo" title="Tutto schermo">⤢</button>
+      <button class="pellegrino" id="btnPellegrino" type="button" aria-pressed="false">Percorso del pellegrino</button>
+      <aside class="scheda itinerario" id="itinerario" hidden aria-live="polite"></aside>
+      <p class="evento" id="evento" aria-live="polite"></p>
+      <aside class="scheda" id="scheda" hidden></aside>
+      <p class="errore" id="errore" hidden>Il modello 3D non è disponibile su questo dispositivo.</p>
+    </figure>
+  </section>
+
+  <nav class="tempo" aria-label="Linea del tempo">
+    <div class="comandi">
+      <button type="button" id="btnPrima" aria-label="Tappa precedente">‹</button>
+      <button type="button" id="btnPlay">▶ Riproduci</button>
+      <button type="button" id="btnDopo" aria-label="Tappa successiva">›</button>
+    </div>
+    <div class="linea" id="linea"></div>
+  </nav>
+
+  <div class="colonne">
+    <article class="tappa" aria-live="polite">
+      <p class="atto" id="tAtto"></p>
+      <h2 id="tTitolo"></h2>
+      <p class="testo" id="tTesto"></p>
+      <aside class="storici" id="tStorici" hidden>
+        <p class="etichetta">Cosa dicono gli storici</p>
+        <p id="tStoriciTesto"></p>
+      </aside>
+      <p class="fonti">Protagonisti, illustrazione e fonti: da aggiungere.</p>
+    </article>
+
+    <div class="lato">
+      <section class="cruscotto" id="cruscotto" aria-label="Indicatori"></section>
+      <section class="stato-roma">
+        <p class="etichetta">I monumenti di Roma <span class="suggerimento">· tocca un nome per la scheda</span></p>
+        <ul class="monumenti" id="elencoMonumenti"></ul>
+        <p class="legenda">
+          <span class="st uso">in uso</span><span class="st chiuso">in disuso</span><span class="st spogliato">spogliato</span><span class="st cava">usato come cava</span><span class="st bruciato">bruciato</span><span class="st assente">non ancora costruito</span>
+        </p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="piede">
+  <p>Ricostruzioni schematiche. La mappa colora regioni intere, non province. A Roma il corso del Tevere e il tracciato delle mura sono reali (© OpenStreetMap contributors); i colli sono ridisegnati alle quote antiche sopra un rilievo misurato (SRTM), con l'altezza accentuata di quasi due volte; gli edifici sono al loro posto ma schematici, le strade approssimate, gli isolati generati, l'abbandono per quartiere ipotizzato. Linea continua: dato misurato. Linea tratteggiata: stima. Date, schede dei monumenti e didascalie degli eventi sono provvisorie, da verificare sulle fonti.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="js/dati.js"></script>
+<script src="js/mappa-dati.js"></script>
+<script src="js/roma-topo.js"></script>
+<script src="js/base.js"></script>
+<script src="js/costruttore.js"></script>
+<script src="js/monumenti.js"></script>
+<script src="js/nuclei.js"></script>
+<script src="js/mura.js"></script>
+<script src="js/citta.js"></script>
+<script src="js/vita.js"></script>
+<script src="js/eventi.js"></script>
+<script src="js/mappa.js"></script>
+<script src="js/pagina.js"></script>
+<script src="js/itinerario.js"></script>
+</body>
+</html>

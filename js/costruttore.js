@@ -1,0 +1,181 @@
+/* Costruttore: accumula solidi semplici in un'unica geometria colorata per vertice.
+   Un monumento intero diventa così una sola maglia, con colonne, arcate e tetti. */
+(function(){
+'use strict';
+var RM=window.RM; if(!RM||RM.guasto) return;
+
+/* tavolozza (colori lineari) */
+var P=RM.P={ travertino:RM.col(0xe8dcc2), marmo:RM.col(0xf3ede0), tufo:RM.col(0xc9b08a), mattone:RM.col(0xb39274), intonaco:RM.col(0xe3cfa8),
+  coppi:RM.col(0xb0603e), bronzo:RM.col(0x7d8a5f), oro:RM.col(0xd9b24a), ombra:RM.col(0x2c221b), sabbia:RM.col(0xd8c08f),
+  prato:RM.col(0x7c8f4a), chioma:RM.col(0x3f5a2e), chioma2:RM.col(0x56703a), tronco:RM.col(0x5a4633), selce:RM.col(0xb9ad98), acqua:RM.col(0x6d9aa0) };
+
+function C(){ this.pos=[]; this.nor=[]; this.col=[]; this.tip=[]; this.pila=[new THREE.Matrix4()]; }
+/* tipo del materiale: 0 muratura, 1 copertura (coppi, bronzo, oro), 2 verde. Serve al degrado. */
+function tipoDi(c){ return (c===P.coppi||c===P.oro||c===P.bronzo)?1:(c===P.prato||c===P.chioma||c===P.chioma2||c===P.acqua)?2:0; }
+var m4=new THREE.Matrix4(), a=new THREE.Vector3(), b=new THREE.Vector3(), c=new THREE.Vector3(), n=new THREE.Vector3(), ab=new THREE.Vector3(), ac=new THREE.Vector3();
+
+/* sistema di riferimento locale: tutto ciò che fn costruisce è spostato e ruotato */
+C.prototype.dentro=function(x,y,z,ry,fn){
+  var m=new THREE.Matrix4().makeRotationY(ry||0); m.setPosition(x,y,z);
+  this.pila.push(this.pila[this.pila.length-1].clone().multiply(m)); fn(this); this.pila.pop(); return this;
+};
+/* aggiunge una geometria di three, già posizionata in coordinate locali */
+C.prototype.geo=function(g,colore){
+  var q=g.index?g.toNonIndexed():g; q.applyMatrix4(this.pila[this.pila.length-1]);
+  var p=q.attributes.position.array, v=q.attributes.normal.array, i;
+  for(i=0;i<p.length;i++){ this.pos.push(p[i]); this.nor.push(v[i]); }
+  var tp=tipoDi(colore); for(i=0;i<p.length;i+=3){ this.col.push(colore.r,colore.g,colore.b); this.tip.push(tp); }
+  if(q!==g) q.dispose(); g.dispose(); return this;
+};
+/* triangolo in coordinate locali, normale dal verso dei vertici */
+C.prototype.tri=function(p0,p1,p2,colore){
+  var m=this.pila[this.pila.length-1];
+  a.set(p0[0],p0[1],p0[2]).applyMatrix4(m); b.set(p1[0],p1[1],p1[2]).applyMatrix4(m); c.set(p2[0],p2[1],p2[2]).applyMatrix4(m);
+  n.crossVectors(ab.subVectors(b,a),ac.subVectors(c,a)).normalize();
+  this.pos.push(a.x,a.y,a.z,b.x,b.y,b.z,c.x,c.y,c.z);
+  var tp=tipoDi(colore); for(var i=0;i<3;i++){ this.nor.push(n.x,n.y,n.z); this.col.push(colore.r,colore.g,colore.b); this.tip.push(tp); }
+  return this;
+};
+C.prototype.quad=function(p0,p1,p2,p3,colore){ return this.tri(p0,p1,p2,colore).tri(p0,p2,p3,colore); };
+
+C.prototype.scatola=function(w,h,d,x,y,z,colore,ry){
+  var g=new THREE.BoxGeometry(w,h,d); if(ry) g.rotateY(ry); g.translate(x||0,(y||0)+h/2,z||0); return this.geo(g,colore||P.travertino);
+};
+C.prototype.cilindro=function(r,h,x,y,z,colore,r2,lati){
+  var g=new THREE.CylinderGeometry(r2==null?r:r2,r,h,lati||28); g.translate(x||0,(y||0)+h/2,z||0); return this.geo(g,colore||P.travertino);
+};
+C.prototype.cupola=function(r,x,y,z,colore,schiaccia,oculo){
+  var t0=oculo?oculo:0, g=new THREE.SphereGeometry(r,28,10,0,Math.PI*2,t0,Math.PI/2-t0); g.scale(1,schiaccia||.7,1); g.translate(x||0,y||0,z||0); return this.geo(g,colore||P.travertino);
+};
+C.prototype.cono=function(r,h,x,y,z,colore,lati){
+  var g=new THREE.ConeGeometry(r,h,lati||4); if((lati||4)===4) g.rotateY(Math.PI/4); g.translate(x||0,(y||0)+h/2,z||0); return this.geo(g,colore||P.coppi);
+};
+/* tetto a due falde, colmo lungo x (ry lo ruota), con i due timpani */
+C.prototype.falde=function(w,h,d,x,y,z,colore,ry,timpano){
+  var col=colore||P.coppi, t=timpano||P.travertino, W=w/2, D=d/2;
+  return this.dentro(x||0,y||0,z||0,ry||0,function(B){
+    B.quad([-W,0,D],[W,0,D],[W,h,0],[-W,h,0],col).quad([W,0,-D],[-W,0,-D],[-W,h,0],[W,h,0],col);
+    B.tri([W,0,D],[W,0,-D],[W,h,0],t).tri([-W,0,-D],[-W,0,D],[-W,h,0],t);
+  });
+};
+/* volta a botte, asse lungo x */
+C.prototype.volta=function(lunga,r,x,y,z,colore,ry){
+  var g=new THREE.CylinderGeometry(r,r,lunga,14,1,false,0,Math.PI); g.rotateZ(Math.PI/2); if(ry) g.rotateY(ry); g.translate(x||0,y||0,z||0); return this.geo(g,colore||P.travertino);
+};
+/* fila di colonne fra due punti */
+C.prototype.colonne=function(x0,z0,x1,z1,quante,h,r,y,colore){
+  for(var i=0;i<quante;i++){ var t=quante>1?i/(quante-1):.5; this.cilindro(r,h,x0+(x1-x0)*t,y||0,z0+(z1-z0)*t,colore||P.marmo,r*.86,7); }
+  return this;
+};
+/* file di aperture scure su una parete dritta: leggono come arcate o finestre */
+C.prototype.aperture=function(x0,z0,x1,z1,quante,y,h,larga){
+  var dx=x1-x0, dz=z1-z0, L=Math.hypot(dx,dz), ang=Math.atan2(-dz,dx), w=larga||L/quante*.55, nx=-dz/L, nz=dx/L;
+  for(var i=0;i<quante;i++){ var t=(i+.5)/quante; this.scatola(w,h,.08,x0+dx*t+nx*.03,y,z0+dz*t+nz*.03,P.ombra,ang); }
+  return this;
+};
+/* tempio: podio, cella, colonnato sulla fronte (e sui lati), tetto. Fronte verso +z. */
+C.prototype.tempio=function(w,d,h,x,z,ry,opz){
+  opz=opz||{}; var tetto=opz.tetto||P.coppi, nf=opz.fronte||6, nl=opz.lati||0, hp=opz.podio==null?.5:opz.podio, r=opz.r||Math.min(.16,w/nf*.22);
+  return this.dentro(x,0,z,ry||0,function(B){
+    B.scatola(w+.5,hp,d+.5,0,0,0,P.travertino); B.scatola(w*.72,.14,.7,0,hp-.14,d/2+.45,P.travertino);        // podio e scalinata
+    B.scatola(w*.74,h,d*.66,0,hp,-d*.13,P.marmo);                                                              // cella
+    B.colonne(-w/2+r,d/2-r,w/2-r,d/2-r,nf,h,r,hp); if(nf>4) B.colonne(-w/2+r,d/2-r*5,w/2-r,d/2-r*5,nf,h,r,hp);
+    if(nl){ B.colonne(-w/2+r,d/2-r,-w/2+r,-d/2+r,nl,h,r,hp); B.colonne(w/2-r,d/2-r,w/2-r,-d/2+r,nl,h,r,hp); B.colonne(-w/2+r,-d/2+r,w/2-r,-d/2+r,nf,h,r,hp); }
+    B.scatola(w,.22,d,0,hp+h,0,P.marmo); B.falde(d+.2,w*.21,w+.2,0,hp+h+.22,0,tetto,Math.PI/2,P.marmo);       // trabeazione e tetto
+  });
+};
+/* striscia fra due profili (liste di punti [x,z]) a due quote: pareti curve, gradinate, corone */
+C.prototype.striscia=function(P0,y0,P1,y1,colore,chiusa){
+  var k=P0.length, fine=chiusa===false?k-1:k;
+  for(var i=0;i<fine;i++){ var j=(i+1)%k; this.quad([P0[i][0],y0,P0[i][1]],[P0[j][0],y0,P0[j][1]],[P1[j][0],y1,P1[j][1]],[P1[i][0],y1,P1[i][1]],colore); }
+  return this;
+};
+/* aperture lungo un profilo curvo, a una data quota */
+C.prototype.fornici=function(prof,y,h,quota,passo,chiusa){
+  var k=prof.length, fine=chiusa===false?k-1:k;
+  for(var i=0;i<fine;i+=(passo||1)){
+    var j=(i+1)%k, mx=(prof[i][0]+prof[j][0])/2, mz=(prof[i][1]+prof[j][1])/2, dx=prof[j][0]-prof[i][0], dz=prof[j][1]-prof[i][1], L=Math.hypot(dx,dz), m=Math.hypot(mx,mz)||1;
+    this.scatola(L*(quota||.55),h,.1,mx+mx/m*.03,y,mz+mz/m*.03,P.ombra,Math.atan2(-dz,dx));
+  }
+  return this;
+};
+C.prototype.geometria=function(){
+  var g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.Float32BufferAttribute(this.pos,3)); g.setAttribute('normal',new THREE.Float32BufferAttribute(this.nor,3)); g.setAttribute('color',new THREE.Float32BufferAttribute(this.col,3)); g.setAttribute('tipo',new THREE.Float32BufferAttribute(this.tip,1));
+  return g;
+};
+C.prototype.maglia=function(materiale){ var m=new THREE.Mesh(this.geometria(),materiale); m.castShadow=m.receiveShadow=true; return m; };
+
+RM.Costruttore=C;
+RM.matPietra=function(){ return new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide}); };
+/* Pietra che va in rovina. Lo shader lavora in coordinate locali del monumento:
+   ogni "colonna" di muratura (cella in pianta) viene troncata a un'altezza casuale, più bassa quanto più alto è uRovina,
+   così i crolli partono dall'alto e non restano pezzi sospesi; le coperture si bucano; la pietra si macchia di muschio. */
+var NL=String.fromCharCode(10);
+var TAGLIO=[
+  'if(vTipo<1.5){',
+  '  float rn=rmH(vec3(floor(vLoc.xz*1.6+0.37),1.0));',
+  '  float rq=clamp(vLoc.y/uAlt,0.0,1.0);',
+  '  if(rq>1.0-uRovina*(0.25+1.7*rn)) discard;',
+  '  if(vTipo>0.5 && 0.55*rmN(vec3(vLoc.xz*1.1,2.0))+0.45*rmH(vec3(floor(vLoc.xz*5.0+0.19),2.0))<uRovina*2.0+uCrepe*uCrepe*0.2) discard;',   // coppi caduti: chiazze irregolari
+  '}'].join(NL);
+var DICHIARA=['uniform float uRovina; uniform float uSpoglio; uniform float uAlt; uniform float uCrepe;','varying float vTipo; varying vec3 vLoc; varying vec3 vNor;',
+  'float rmH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
+  'vec2 rmH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',
+  'float rmN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f);',
+  '  return mix(mix(mix(rmH(i),rmH(i+vec3(1.0,0.0,0.0)),f.x),mix(rmH(i+vec3(0.0,1.0,0.0)),rmH(i+vec3(1.0,1.0,0.0)),f.x),f.y),',
+  '             mix(mix(rmH(i+vec3(0.0,0.0,1.0)),rmH(i+vec3(1.0,0.0,1.0)),f.x),mix(rmH(i+vec3(0.0,1.0,1.0)),rmH(i+vec3(1.0,1.0,1.0)),f.x),f.y),f.z); }',
+  /* distanza dal confine fra due celle: dove è quasi zero passa una crepa, che si dirama come quelle vere */
+  'float rmCrepa(vec2 p){ vec2 n=floor(p); vec2 f=fract(p); float d1=8.0; float d2=8.0;',
+  '  for(int j=-1;j<=1;j++){ for(int i=-1;i<=1;i++){ vec2 g=vec2(float(i),float(j)); float d=length(g+rmH2(n+g)-f); if(d<d1){ d2=d1; d1=d; } else if(d<d2){ d2=d; } } }',
+  '  return d2-d1; }'].join(NL);
+/* incuria (uCrepe): crepe nella muratura, colature sotto le creste, erba fra le lastre, coppi scoloriti e mancanti.
+   rovina (uRovina): muschio e crolli. Le due cose sono separate: un edificio si crepa molto prima di cadere. */
+var COLORA=[
+  'float rq2=clamp(vLoc.y/uAlt,0.0,1.0);',
+  'if(vTipo<0.5 && uCrepe>0.01){',
+  '  vec3 an=abs(vNor); bool piano=an.y>0.7;',
+  '  vec2 cp=piano?vLoc.xz:vec2(an.x>an.z?vLoc.z:vLoc.x,vLoc.y);',
+  '  float e=rmCrepa(cp*1.1+3.7); float fw=fwidth(e)+0.0001; float largo=max(0.03,fw*0.7);',
+  '  float zona=rmN(vec3(cp*0.45+1.3,5.0));',
+  '  float riga=(1.0-smoothstep(largo*0.5,largo,e))*clamp(0.4/fw,0.0,1.0)*smoothstep(0.0,0.1,0.12+uCrepe*0.48-zona)*smoothstep(0.3,0.5,rmN(vec3(cp*2.3,7.0)));',
+  '  diffuseColor.rgb*=1.0-0.52*riga;',
+  '  if(piano){',
+  '    if(rq2<0.4) diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.25,0.29,0.12),uCrepe*0.9*smoothstep(0.42,0.62,rmN(vec3(vLoc.xz*1.8,9.0))+0.3*riga));',      // erba fra le lastre
+  '    else diffuseColor.rgb*=1.0-0.55*clamp((uRovina*2.0+uCrepe*uCrepe*0.2)*3.0,0.0,1.0);',                                                           // sotto i tetti sfondati si vede il buio
+  '  } else diffuseColor.rgb*=1.0-0.34*uCrepe*smoothstep(0.5,0.8,rmN(vec3(cp.x*4.0,vLoc.y*0.45,3.0)));',                                              // colature
+  '}',
+  'if(vTipo<1.5){ float rm=smoothstep(0.35,0.72,rmN(vLoc*2.3+0.11)); diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.5,0.56,0.38),clamp((uRovina*2.4+uCrepe*0.5)*rm*(1.15-rq2),0.0,1.0)); }',
+  'if(vTipo>0.5 && vTipo<1.5){ diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio); }'].join(NL);
+function innesta(sh,u,colore){
+  sh.uniforms.uRovina=u.uRovina; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe;
+  sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute float tipo;','varying float vTipo;','varying vec3 vLoc;','varying vec3 vNor;'].join(NL))
+    .replace('#include <begin_vertex>',['#include <begin_vertex>','vTipo=tipo; vLoc=position; vNor=normal;'].join(NL));
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA);
+  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',TAGLIO,COLORA].join(NL));
+  else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',TAGLIO+NL+'#include <clipping_planes_fragment>');
+}
+RM.matRovina=function(alt){
+  var u={uRovina:{value:0},uSpoglio:{value:0},uAlt:{value:alt||1},uCrepe:{value:0}};
+  var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
+  m.onBeforeCompile=function(sh){ innesta(sh,u,true); };
+  m.userData.u=u;
+  m.userData.ombra=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking,side:THREE.DoubleSide});
+  m.userData.ombra.onBeforeCompile=function(sh){ innesta(sh,u,false); };
+  return m;
+};
+/* profili */
+RM.ellisse=function(rx,rz,quanti,a0,a1){
+  var o=[], da=(a1==null?Math.PI*2:a1-(a0||0)), pieni=a1==null?quanti:quanti+1;
+  for(var i=0;i<pieni;i++){ var t=(a0||0)+da*i/quanti; o.push([rx*Math.cos(t),rz*Math.sin(t)]); }
+  return o;
+};
+/* circo: due rettilinei, una curva a +x, testata piatta a -x */
+RM.stadio=function(L,W,lato,curva){
+  var o=[], i, t, R=W/2, x0=-L/2, x1=L/2-R;
+  for(i=0;i<=lato;i++) o.push([x0+(x1-x0)*i/lato,R]);
+  for(i=1;i<curva;i++){ t=Math.PI/2-Math.PI*i/curva; o.push([x1+R*Math.cos(t),R*Math.sin(t)]); }
+  for(i=0;i<=lato;i++) o.push([x1+(x0-x1)*i/lato,-R]);
+  return o;
+};
+})();
