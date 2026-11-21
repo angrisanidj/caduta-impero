@@ -64,21 +64,37 @@ C.prototype.volta=function(lunga,r,x,y,z,colore,ry){
 };
 /* fila di colonne fra due punti */
 C.prototype.colonne=function(x0,z0,x1,z1,quante,h,r,y,colore){
-  for(var i=0;i<quante;i++){ var t=quante>1?i/(quante-1):.5; this.cilindro(r,h,x0+(x1-x0)*t,y||0,z0+(z1-z0)*t,colore||P.marmo,r*.86,7); }
+  var c=colore||P.marmo, ang=Math.atan2(-(z1-z0),x1-x0), ha=Math.min(.09,r*.7), hb=r>=.1?Math.min(.07,r*.5):0;
+  for(var i=0;i<quante;i++){
+    var t=quante>1?i/(quante-1):.5, x=x0+(x1-x0)*t, z=z0+(z1-z0)*t, yy=y||0;
+    this.cilindro(r,h-ha-hb,x,yy+hb,z,c,r*.86,r>=.1?9:7).scatola(r*2.5,ha,r*2.5,x,yy+h-ha,z,c,ang);      // fusto e capitello
+    if(hb) this.scatola(r*2.5,hb,r*2.5,x,yy,z,c,ang);                                                      // base
+  }
   return this;
 };
 /* file di aperture scure su una parete dritta: leggono come arcate o finestre */
-C.prototype.aperture=function(x0,z0,x1,z1,quante,y,h,larga){
-  var dx=x1-x0, dz=z1-z0, L=Math.hypot(dx,dz), ang=Math.atan2(-dz,dx), w=larga||L/quante*.55, nx=-dz/L, nz=dx/L;
-  for(var i=0;i<quante;i++){ var t=(i+.5)/quante; this.scatola(w,h,.08,x0+dx*t+nx*.03,y,z0+dz*t+nz*.03,P.ombra,ang); }
+C.prototype.aperture=function(x0,z0,x1,z1,quante,y,h,larga,quadra){
+  var dx=x1-x0, dz=z1-z0, L=Math.hypot(dx,dz), w=larga||L/quante*.55, nx=-dz/L, nz=dx/L;
+  for(var i=0;i<quante;i++){ var t=(i+.5)/quante; this.vano(x0+dx*t+nx*.075,y,z0+dz*t+nz*.075,dx/L,dz/L,w,h,quadra); }
+  return this;
+};
+/* un vano scuro sulla parete: rettangolo con l'arco a tutto sesto in cima (se è abbastanza alto, e se non è chiesto quadro). (ux,uz) è la direzione della parete */
+C.prototype.vano=function(cx,y,cz,ux,uz,w,h,quadra){
+  var a=w/2, arco=!quadra&&h>w*.8, hr=arco?h-a:h, k, a0, a1, N=6;
+  function p(s,q){ return [cx+ux*s,y+q,cz+uz*s]; }
+  this.quad(p(-a,0),p(a,0),p(a,hr),p(-a,hr),P.ombra);
+  if(arco) for(k=0;k<N;k++){ a0=Math.PI*k/N; a1=Math.PI*(k+1)/N; this.tri(p(0,hr),p(a*Math.cos(a0),hr+a*Math.sin(a0)),p(a*Math.cos(a1),hr+a*Math.sin(a1)),P.ombra); }
   return this;
 };
 /* tempio: podio, cella, colonnato sulla fronte (e sui lati), tetto. Fronte verso +z. */
 C.prototype.tempio=function(w,d,h,x,z,ry,opz){
   opz=opz||{}; var tetto=opz.tetto||P.coppi, nf=opz.fronte||6, nl=opz.lati||0, hp=opz.podio==null?.5:opz.podio, r=opz.r||Math.min(.16,w/nf*.22);
   return this.dentro(x,0,z,ry||0,function(B){
-    B.scatola(w+.5,hp,d+.5,0,0,0,P.travertino); B.scatola(w*.72,.14,.7,0,hp-.14,d/2+.45,P.travertino);        // podio e scalinata
+    B.scatola(w+.5,hp,d+.5,0,0,0,P.travertino);                                                               // podio
+    for(var g=0;g<3;g++) B.scatola(w*.74,hp*(3-g)/3.6,.24,0,0,d/2+.25+.12+g*.24,P.travertino);                // gradinata sulla fronte
+    B.scatola(.12,hp*.9,.75,-w*.37-.06,0,d/2+.25+.37,P.travertino).scatola(.12,hp*.9,.75,w*.37+.06,0,d/2+.25+.37,P.travertino);   // guance della scala
     B.scatola(w*.74,h,d*.66,0,hp,-d*.13,P.marmo);                                                              // cella
+    B.vano(0,hp,-d*.13+d*.33+.02,1,0,Math.min(w*.2,.9),h*.72,true);                                            // la porta
     B.colonne(-w/2+r,d/2-r,w/2-r,d/2-r,nf,h,r,hp); if(nf>4) B.colonne(-w/2+r,d/2-r*5,w/2-r,d/2-r*5,nf,h,r,hp);
     if(nl){ B.colonne(-w/2+r,d/2-r,-w/2+r,-d/2+r,nl,h,r,hp); B.colonne(w/2-r,d/2-r,w/2-r,-d/2+r,nl,h,r,hp); B.colonne(-w/2+r,-d/2+r,w/2-r,-d/2+r,nf,h,r,hp); }
     B.scatola(w,.22,d,0,hp+h,0,P.marmo); B.falde(d+.2,w*.21,w+.2,0,hp+h+.22,0,tetto,Math.PI/2,P.marmo);       // trabeazione e tetto
@@ -91,11 +107,11 @@ C.prototype.striscia=function(P0,y0,P1,y1,colore,chiusa){
   return this;
 };
 /* aperture lungo un profilo curvo, a una data quota */
-C.prototype.fornici=function(prof,y,h,quota,passo,chiusa){
+C.prototype.fornici=function(prof,y,h,quota,passo,chiusa,quadra){
   var k=prof.length, fine=chiusa===false?k-1:k;
   for(var i=0;i<fine;i+=(passo||1)){
     var j=(i+1)%k, mx=(prof[i][0]+prof[j][0])/2, mz=(prof[i][1]+prof[j][1])/2, dx=prof[j][0]-prof[i][0], dz=prof[j][1]-prof[i][1], L=Math.hypot(dx,dz), m=Math.hypot(mx,mz)||1;
-    this.scatola(L*(quota||.55),h,.1,mx+mx/m*.03,y,mz+mz/m*.03,P.ombra,Math.atan2(-dz,dx));
+    this.vano(mx+mx/m*.085,y,mz+mz/m*.085,dx/L,dz/L,L*(quota||.55),h,quadra);
   }
   return this;
 };

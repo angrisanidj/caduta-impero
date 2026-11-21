@@ -99,7 +99,8 @@ var M=[
     B.striscia(e,0,e,4.85,P.travertino).striscia(e,4.85,i,4.85,P.travertino).striscia(i,4.85,i,4,P.travertino)
      .striscia(i,4,m1,3.1,P.tufo).striscia(m1,3.1,m1,2.8,P.travertino).striscia(m1,2.8,m2,1.9,P.tufo).striscia(m2,1.9,m2,1.6,P.travertino).striscia(m2,1.6,po,.9,P.tufo)
      .striscia(po,.9,po,.25,P.marmo).striscia(po,.25,ar,.25,P.marmo).striscia(ar,.25,ce,.25,P.sabbia);
-    B.fornici(e,.22,.9,.5).fornici(e,1.45,.88,.5).fornici(e,2.65,.88,.5).fornici(e,4.02,.34,.26,2);
+    B.fornici(e,.22,.9,.5).fornici(e,1.45,.88,.5).fornici(e,2.65,.88,.5).fornici(e,4.02,.34,.26,2,true,true);
+    e.forEach(function(p){ var q=1.008; [[.12,1.16],[1.4,1.08],[2.6,1.1],[3.82,1.03]].forEach(function(l,k){ B.scatola(k<3?.11:.09,l[1],k<3?.11:.07,p[0]*q,l[0],p[1]*q,P.travertino,Math.atan2(p[0],p[1])); }); });      // semicolonne dei tre ordini e lesene dell'attico, fra un fornice e l'altro
     [1.28,2.48,3.7].forEach(function(y){ var c=RM.ellisse(9.5,7.9,n); B.striscia(c,y,c,y+.12,P.marmo); });      // cornici
     /* secondo anello: il muro ad arcate che oggi fa da facciata sul lato sud, dove l'anello esterno è caduto. Arriva a due ordini, circa due terzi dell'altezza del muro esterno;
        dietro, al posto della parte alta della cavea, resta un ripiano di rovine. Finché l'esterno è in piedi tutto questo resta nascosto */
