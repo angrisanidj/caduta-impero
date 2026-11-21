@@ -67,7 +67,8 @@ var acque=(function(){
              /* Antoniniano (212-213), il ramo per le terme di Caracalla. Punti reali: i resti di piazza Galeria e l'arco detto di Druso (OpenStreetMap). Secondo Ashby correva interrato o su
                 sostruzioni lungo la via Latina e saliva su arcate solo presso le mura e sulla via Appia: qui si vede dove il terreno scende sotto il canale. La quota sull'arco di Druso
                 (fondo del canale a 41,4 m sul mare, circa otto metri sopra la strada) è misurata; il resto del profilo e l'arrivo alle cisterne delle terme sono ricostruiti. */
-             {passo:1.5, p:[[240,214,4.42],[175.4,200.9,4.28],[133.7,208.1,4.15],[68,175,4.02]]}];                                             // Traiana: lungo l'Aurelia (dove oggi corre l'acqua Paola, che ne riusa il percorso), poi giù dal Gianicolo fino ai mulini di Trastevere
+             {passo:1.5, p:[[240,214,4.42],[175.4,200.9,4.28],[133.7,208.1,4.15],[68,175,4.02]]}];
+  // la quarta linea, la Traiana: lungo l'Aurelia (dove oggi corre l'acqua Paola, che ne riusa il percorso), poi giù dal Gianicolo fino ai mulini di Trastevere
   var el=[], rnd=RM.casuale(537), CIMA=.48;                                     // altezza del pezzo d'arcata (arco e canale), in quota della luce
   LINEE.forEach(function(l,li){
     for(var i=0;i<l.p.length-1;i++){
@@ -127,8 +128,11 @@ var acque=(function(){
 
 /* ---------- ponti e Isola Tiberina ---------- */
 (function(){
-  var B=new RM.Costruttore(), curva=RM.curvaFiume;
-  [[-157,-104],[-120,1],[-66,28],[-52,38],[-84,97],[-152,-479]].forEach(function(p){     // Elio, Aurelio (ponte Sisto), isola Tiberina, Emilio, Probo, Milvio
+  /* Certezza, ponte per ponte: Elio, i due dell'isola, Emilio (ponte Rotto) e Milvio sono in piedi o lo sono le loro pile (A); dell'Aurelio si sono trovati i resti sotto ponte Sisto (B);
+     il ponte di Probo è noto solo dai cataloghi, e il sito è dedotto da quello del ponte di Teodosio, le cui ultime pile furono tolte nel 1878 (C). */
+  var PC={A:new RM.Costruttore(),B:new RM.Costruttore(),C:new RM.Costruttore()}, B, curva=RM.curvaFiume;
+  [[-157,-104,'A'],[-120,1,'B'],[-66,28,'A'],[-52,38,'A'],[-84,97,'C'],[-152,-479,'A']].forEach(function(p){     // Elio, Aurelio (ponte Sisto), isola Tiberina, Emilio, Probo, Milvio
+    B=PC[p[2]];
     var m=1e9, tm=0, i, q; for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); var dd=Math.hypot(q.x-p[0],q.z-p[1]); if(dd<m){ m=dd; tm=i/2400; } }
     q=curva.getPoint(tm); var tg=curva.getTangent(tm);
     B.dentro(q.x,-.5,q.z,Math.atan2(-tg.x,-tg.z),function(B){            // l'asse x locale attraversa il fiume
@@ -137,12 +141,13 @@ var acque=(function(){
       B.scatola(2,.9,1.3,-6.6,0,0,P.travertino).scatola(2,.9,1.3,6.6,0,0,P.travertino);
     });
   });
+  B=PC.A;                                                                  // l'isola c'è; il tempio e la casa sopra sono indicativi
   B.dentro(-66,-.5,28,1.2,function(B){
     var is=RM.ellisse(2.3,6.6,20), su=RM.ellisse(2.1,6.3,20), ce=su.map(function(){ return [0,0]; });
     B.striscia(is,0,su,.85,P.travertino).striscia(su,.85,ce,.85,P.selce);
     B.dentro(0,.85,0,0,function(B){ B.tempio(1.5,2.4,1.1,0,-2.6,0,{fronte:4,podio:.25}); B.scatola(2.2,1,2.4,0,0,1.8,P.intonaco).falde(2.4,.5,2.4,0,1,1.8,P.coppi); B.cilindro(.1,1.4,0,0,-.4,P.mattone,.05,4); });
   });
-  RM.scene.add(B.maglia(RM.matPietra(classe('ponti'))));
+  ['A','B','C'].forEach(function(k){ RM.scene.add(PC[k].maglia(RM.matPietra(k))); });
 })();
 
 RM.moduli.push(function(anno){

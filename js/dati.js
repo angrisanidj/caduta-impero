@@ -278,16 +278,56 @@ var SCHEDE={
   cosma:{cosa:"Chiesa ricavata in un'aula del tempio della Pace.", date:[[527,"Voluta da papa Felice IV (526-530) in edifici donati da Teodorico e Amalasunta: è il primo luogo di culto cristiano nell'area del Foro."]]}
 };
 /* «Che cosa sappiamo davvero»: per ogni cosa disegnata, quanto è sicuro che fosse lì e avesse quella forma generale. [classe, nota].
-   A: posizione e forma certe (sta ancora in piedi o è rilevato per intero); B: posizione certa, forma ricostruita (scavi, Forma Urbis, edificio poi rifatto, fonti scritte);
-   C: ipotesi (posizione, estensione o forma supposte o discusse). I modelli sono schematici: la classe non riguarda il dettaglio. PROVVISORIO: classi da verificare. */
+   A: posizione e forma certe (sta ancora in piedi in buona parte, o la pianta è rilevata per intero); B: posizione certa, forma ricostruita (resti parziali, scavi,
+   pianta marmorea severiana, edificio poi rifatto, disegni antichi); C: ipotesi (posizione, estensione o forma supposte o discusse). I modelli sono schematici: la classe non riguarda il dettaglio.
+   Classi assegnate il 21 novembre 2026 con una ricerca dedicata. Per i casi dubbi sono state lette le fonti (Platner-Ashby per ponti, terme di Costantino e magazzini di Galba;
+   una tesi di York sulle scholae); per gli edifici in piedi il giudizio è quello corrente e non cita una fonte. Dove una voce mescola parti diverse vale la prevalente, e la nota lo dice.
+   I ponti hanno la classe uno per uno in js/mura.js. */
 var CERTEZZA={
-  provvisorio:true,      // finché le classi non sono verificate, il pulsante e la riga nelle schede restano nascosti (js/pagina.js)
-  colosseo:['A',''], pantheon:['A',''], adriano:['A',''], arcocostantino:['A',''], marcello:['A',''], massenzio:['A',''], caracalla:['A',''], diocleziano:['A',''],
-  sabina:['A',''], mariamaggiore:['A',''], stefano:['A',''], cosma:['A',''], foca:['A',''], testaccio:['A',''], mura:['A',''], croce:['B',''],
-  circo:['B',''], fori:['B',''], emilia:['B',''], giove:['B',''], palatino:['B',''], domiziano:['B',''], traiano:['B',''], venere:['B',''], augusto:['B',''], pompeo:['B',''],
-  laterano:['B',''], pietro:['B',''], termecostantino:['B',''], lorenzo:['B',''], paolo:['B',''], monasteripietro:['B',''], leonine:['B',''], balbo:['B',''], emporio:['B',''],
-  casenerva:['B',''], acquedotti:['B',''], antoniniano:['B',''], ponti:['B',''], chiese:['B',''],
-  sole:['C',''], mulini:['C',''], scholae:['C',''], porticopietro:['C','']
+  colosseo:['A',"In piedi per due terzi, con la pianta completa."],
+  circo:['B',"La valle ne conserva la forma e la curva orientale è stata scavata; gradinate e spina sono ricostruite."],
+  fori:['B',"Misto. Sono in piedi la Curia, l'arco di Settimio Severo, la colonna e i mercati di Traiano, il tempio di Antonino e Faustina; piazze, basiliche e gli altri templi sono noti da scavi e dalla pianta marmorea severiana. Il tempio del Divo Traiano è un'ipotesi: non si sa nemmeno da che parte della colonna stesse."],
+  emilia:['B',"Restano fondazioni e pavimento; l'alzato è ricostruito."],
+  giove:['C',"Il sito è certo (fondazioni sotto i Musei Capitolini), ma misure e pianta sono discusse, e del tempio di età imperiale si sa pochissimo."],
+  palatino:['B',"Le piante della Domus Flavia e Augustana e dello stadio sono rilevate dagli scavi; gli alzati, il tempio di Apollo e il Settizodio (demolito nel 1588) sono ricostruiti."],
+  pantheon:['A',"Intero."],
+  domiziano:['A',"Piazza Navona ne conserva esattamente la pianta; resti delle arcate sotto il lato nord."],
+  traiano:['B',"In piedi alcune esedre e la cisterna delle Sette Sale; il corpo centrale è noto soprattutto dai disegni del Cinquecento."],
+  caracalla:['A',"In piedi, con la pianta completa."],
+  diocleziano:['A',"In buona parte in piedi (Santa Maria degli Angeli, l'aula ottagona, l'esedra della piazza)."],
+  massenzio:['A',"In piedi la navata nord; la pianta è nota per intero."],
+  venere:['A',"In piedi il podio e le due celle; i colonnati sono ricostruiti."],
+  adriano:['A',"Tamburo e basamento sono dentro Castel Sant'Angelo; il coronamento è ricostruito."],
+  augusto:['B',"Restano gli anelli inferiori; la forma della parte alta è discussa."],
+  pompeo:['B',"La curva della cavea sopravvive nelle strade e nelle cantine, il portico è nella pianta marmorea; gli alzati sono ricostruiti."],
+  marcello:['A',"In piedi."],
+  laterano:['B',"La pianta costantiniana è nota dagli scavi sotto la chiesa attuale; l'alzato è ricostruito."],
+  pietro:['B',"Demolita fra il 1506 e il 1606, ma rilevata prima (pianta di Alfarano, disegni del Cinquecento) e ritrovata negli scavi sotto la basilica."],
+  sole:['C',"Nessun resto sicuro: lo si colloca in questa zona per deduzione dalle fonti. Posizione e forma sono ipotesi."],
+  arcocostantino:['A',"Intero."],
+  termecostantino:['B',"Distrutte fra Seicento e Ottocento; la pianta è nota dai disegni di Palladio e di altri."],
+  croce:['B',"L'aula antica è in piedi dentro la chiesa attuale; era un'aula unica, mentre il modello qui è una basilica generica, più grande del vero."],
+  lorenzo:['C',"La basilica costantiniana, scavata nel 1950, aveva la forma di un circo e stava accanto, non qui; quella che si vede è sul sito della chiesa di Pelagio II (580), che sopravvive nella chiesa attuale."],
+  agnese:['B',"Il mausoleo di Costantina è in piedi (Santa Costanza); della grande basilica a forma di circo restano i muri perimetrali."],
+  paolo:['A',"Bruciata nel 1823 e ricostruita sulla stessa pianta, con le stesse misure."],
+  sabina:['A',"La basilica del V secolo è conservata."],
+  mariamaggiore:['A',"Le navate del V secolo sono conservate."],
+  stefano:['A',"Il nucleo è in piedi; l'anello esterno, demolito nel Quattrocento, è noto dagli scavi ed era più articolato di come appare qui."],
+  cosma:['A',"L'aula e la rotonda sono in piedi."],
+  foca:['A',"In piedi."],
+  monasteripietro:['C',"Le due rotonde sono note dai disegni e Santo Stefano Maggiore esiste ancora; degli altri monasteri si conosce il sito approssimativo, non la forma."],
+  porticopietro:['C',"Nessun resto in piedi; tracciato e data sono discussi."],
+  scholae:['C',"Sassoni e Frisoni hanno un sito certo (Santo Spirito in Sassia, Santi Michele e Magno), ma la forma è ignota; i siti di Franchi e Longobardi sono discussi."],
+  mulini:['C',"Li descrive Procopio; numero, posizione precisa e aspetto sono ipotesi."],
+  casenerva:['B',"Scavate fra il 1995 e il 2000: il piano terra della maggiore è visibile, il resto è ricostruito."],
+  balbo:['B',"Teatro dalla pianta marmorea e dalle cantine dei palazzi; portico ed esedra dagli scavi, e l'esedra si visita nel museo."],
+  emporio:['B',"Muri in piedi e pianta marmorea per il grande edificio (la cui identificazione è discussa); magazzini e banchine da scavi parziali."],
+  testaccio:['A',"Esiste: il contorno è quello di oggi."],
+  leonine:['B',"Misto: in piedi alcuni tratti e una torre nei giardini vaticani; il lato nord è ricalcato dal Passetto, più tardo; il lato sud è interpolato."],
+  mura:['A',"In piedi per quasi tutto il circuito."],
+  acquedotti:['B',"Misto: la Claudia e gli archi neroniani sono in buona parte in piedi; Marcia, Vergine e Traiana sono note per tratti, e il resto del percorso e tutte le quote sono ricostruiti."],
+  antoniniano:['B',"Certi due punti: l'arco detto di Druso, in piedi, e i resti di piazza Galeria. Il tracciato fra l'uno e l'altro e fino alle terme è ricostruito."],
+  chiese:['B',"Il sito è quello della chiesa attuale; la forma antica è quasi sempre perduta, e qui tutte hanno lo stesso modello."]
 };
 var MURA_ALTE=[[0,0],[270,0],[276,1],[400,1],[404,1.5]];   // rialzate nel 401-403 (o già sotto Massenzio: discusso)
 
