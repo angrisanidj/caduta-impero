@@ -28,7 +28,7 @@ Object.keys(G.regioni).forEach(function(id){
   regioni[id]=el('path',{'class':'m-regione perso',d:r.d},svg);
   el('title',{},regioni[id]).textContent=r.nome;
 });
-/* sopra i colori: la grana della carta, il filo delle coste, i fiumi e le catene montuose */
+/* sopra i colori: la grana della carta, il rilievo, il filo delle coste e i fiumi */
 (function(){
   try{                                                    // grana: un piccolo riquadro di rumore generato una volta sola e ripetuto
     var c=document.createElement('canvas'), n=96, x=c.getContext('2d'); c.width=c.height=n; var im=x.createImageData(n,n), s=7;
@@ -37,24 +37,11 @@ Object.keys(G.regioni).forEach(function(id){
     var pg=el('pattern',{id:'grana',width:n,height:n,patternUnits:'userSpaceOnUse'},defs); el('image',{href:c.toDataURL(),width:n,height:n},pg);
     el('rect',{'class':'m-grana',x:0,y:0,width:G.w,height:G.h,fill:'url(#grana)'},svg);
   }catch(e){}
+  /* il rilievo vero: l'ombreggiatura di Natural Earth riproiettata sulla carta (src/mappa/rilievo.mjs e rilievo.py); grigio medio = piano, quindi sul mare non fa nulla */
+  el('image',{'class':'m-rilievo',href:'img/rilievo.jpg',x:0,y:0,width:G.w,height:G.h,preserveAspectRatio:'none'},svg);
   el('path',{'class':'m-costa',d:G.terra},svg);
   var gf=el('g',{'class':'m-fiumi'},svg);
   (G.fiumi||[]).forEach(function(f){ el('path',{d:f.d,'class':f.forte?'forte':''},gf); });
-  /* i monti: file di piccole cime lungo la cresta, un fianco in luce e uno in ombra; due soli tracciati per tutta la carta */
-  var luce='', ombra='', seme=5;
-  function caso(){ seme=(seme*16807+3)%2147483647; return seme/2147483647; }
-  (G.monti||[]).forEach(function(m){
-    var P=m[0], file=m[1];
-    for(var i=0;i<P.length-1;i++){
-      var a=P[i], b=P[i+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), nx=-(b[1]-a[1])/L, ny=(b[0]-a[0])/L, quanti=Math.max(1,Math.round(L/6.5));
-      for(var k=0;k<quanti;k++) for(var f=0;f<file;f++){
-        var t=(k+caso()*.6)/quanti, o=(f-(file-1)/2)*6+(caso()-.5)*3, x=a[0]+(b[0]-a[0])*t+nx*o, y=a[1]+(b[1]-a[1])*t+ny*o, h=2.6+caso()*2.2;
-        luce+='M'+(x-h*1.05).toFixed(1)+' '+(y+h*.55).toFixed(1)+'L'+x.toFixed(1)+' '+(y-h*.75).toFixed(1)+'L'+(x+h*.1).toFixed(1)+' '+(y+h*.55).toFixed(1)+'Z';
-        ombra+='M'+x.toFixed(1)+' '+(y-h*.75).toFixed(1)+'L'+(x+h*1.15).toFixed(1)+' '+(y+h*.55).toFixed(1)+'L'+(x+h*.1).toFixed(1)+' '+(y+h*.55).toFixed(1)+'Z';
-      }
-    }
-  });
-  el('path',{'class':'m-monti-ombra',d:ombra||'M0 0'},svg); el('path',{'class':'m-monti-luce',d:luce||'M0 0'},svg);
 })();
 Object.keys(G.regioni).forEach(function(id){
   var r=G.regioni[id]; if(!NOMI[id]) return;                                    // solo le regioni abbastanza grandi hanno il nome scritto sopra
