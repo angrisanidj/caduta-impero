@@ -31,6 +31,7 @@ function libero(x,z,margine){
   var i, q;
   for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(Math.hypot(x-q.x,z-q.z)<q.r+margine) return false; }
   for(i=0;i<RM.HORTI.length;i++){ q=RM.HORTI[i]; if(Math.hypot(x-q[0],z-q[1])<q[2]+1) return false; }
+  for(i=0;i<RM.campateAcquedotti.length;i++){ q=RM.campateAcquedotti[i]; if(Math.abs(x-q.x)<6 && Math.hypot(x-q.x,z-q.z)<3.5+q.len*.25) return false; }   // né sotto le arcate degli acquedotti
   return true;
 }
 function quartiereDi(x,z){ var m=1e9, k=0; for(var i=0;i<QUARTIERI.length;i++){ var d=Math.hypot(x-QUARTIERI[i][0],z-QUARTIERI[i][1]); if(d<m){ m=d; k=i; } } return k; }
@@ -42,7 +43,7 @@ QUARTIERI.forEach(function(Q,k){
     var dentro=RM.dentroMura(x,z), bordo=RM.distLinea(x,z,RM.MURA,true), centro=Math.hypot(x-5,z-5);
     var borgo=dentro?0:Math.exp(-((x+228)*(x+228)+(z+106)*(z+106))/(27*27));                  // attorno a San Pietro: case che nasceranno dal V secolo
     var dens=dentro ? .95-.28*RM.sfuma(150,290,centro) : Math.max(.36*Math.exp(-bordo/24),.8*borgo);
-    if((dentro&&bordo<3.5) || rnd()>dens || !libero(x,z,2.4)) continue;
+    if(bordo<3.5 || rnd()>dens || !libero(x,z,2.4)) continue;
     var e=1.9, y0=RM.h(x,z), y1=RM.h(x+e,z+e), y2=RM.h(x-e,z+e), y3=RM.h(x+e,z-e), y4=RM.h(x-e,z-e), yMin=Math.min(y0,y1,y2,y3,y4);
     if(Math.max(y0,y1,y2,y3,y4)-yMin>2.2) continue;        // rupi e scarpate restano nude
     var fitto=1-RM.sfuma(30,240,centro), alt=dentro ? .9+1.7*fitto*(.5+.5*rnd())+.45*rnd() : .55+.5*rnd(), s=rnd();

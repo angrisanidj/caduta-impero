@@ -37,49 +37,68 @@ var mura=(function(){
   return function(alt,br){
     if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01) return; ultima=alt; ultimaBr=br;
     passi.forEach(function(p,j){
-      var y=RM.h(p.x,p.z)-.3, sy=Math.max(alt,.0001)*(p.rotto?1-.8*br:1);
-      d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,0); d.scale.set(p.len+.05,sy,1); d.updateMatrix(); tratti.setMatrixAt(j,d.matrix);
-      d.position.set(p.x-Math.cos(p.ang)*p.len/2,y,p.z+Math.sin(p.ang)*p.len/2); d.scale.set(1,j%2?sy:0,j%2?1:0); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);
+      if(p.y==null){ var cx=Math.cos(p.ang)*p.len/2, cz=-Math.sin(p.ang)*p.len/2, ya=RM.h(p.x-cx,p.z-cz), yb=RM.h(p.x+cx,p.z+cz); p.y=(ya+yb)/2-.3; p.yt=ya-.3; p.pend=Math.atan2(yb-ya,p.len); }   // sui pendii la cortina segue il terreno invece di salire a gradoni
+      var y=p.y, sy=Math.max(alt,.0001)*(p.rotto?1-.8*br:1);
+      d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix(); tratti.setMatrixAt(j,d.matrix);
+      d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.z=0; d.scale.set(1,j%2?sy:0,j%2?1:0); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);
     });
     tratti.instanceMatrix.needsUpdate=true; torri.instanceMatrix.needsUpdate=true;
     tratti.visible=torri.visible=magliaPorte.visible=alt>.01; magliaPorte.scale.y=Math.max(alt,.0001);
   };
 })();
 
-/* ---------- acquedotti ---------- */
+/* ---------- acquedotti ----------
+   Il canale scende con una pendenza minima: la sommità delle arcate è quasi orizzontale e sono le pile ad allungarsi o ad accorciarsi
+   col terreno. Dove il suolo sale fino al canale l'acquedotto corre interrato e non si vede (la Vergine sotto il Pincio, la Marcia
+   oltre porta Tiburtina). Le quote della sommità [x, z, quota] sono una ricostruzione, non un rilievo: rispettano l'ordine noto
+   (la Claudia più alta della Marcia a porta Maggiore, la Vergine bassa sul Campo Marzio) dentro un rilievo accentuato 1,8 volte.
+   La Traiana arrivava al Gianicolo quasi a livello del suolo e scendeva il pendio verso i mulini: qui è un muro basso che segue il terreno. */
 var acque=(function(){
-  var LINEE=[[[619,361],[420,170],[249,12],[163,62],[89,74],[39,58]],          // Claudia e Anio Novus fino a porta Maggiore, poi archi neroniani sul Celio fino al Palatino
-             [[600,330],[400,140],[255,5],[212,-54],[160,-84],[136,-92]],      // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina e alle terme di Diocleziano
-             [[-22,-175],[-19,-150],[-17,-93],[-44,-74]],                      // Vergine: dalle pendici del Pincio al Campo Marzio
-             [[-420,60],[-300,52],[-198,46],[-160,33]]];                       // Traiana, sul Gianicolo fino ai mulini di Trastevere
-  var el=[], rnd=RM.casuale(537);
+  var LINEE=[{passo:3.6, p:[[619,361,9],[420,170,8.8],[249,12,8.6],[163,62,8.45],[89,74,8.3],[40,54,8.2],[29,51,8.18]]},       // Claudia e Anio Novus fino a porta Maggiore, poi archi neroniani sul Celio fino al Palatino
+             {passo:3.2, p:[[600,330,8.5],[400,140,8.25],[255,5,8],[212,-54,7.9],[160,-84,7.8],[136,-92,7.75]]},              // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina, poi interrate verso le terme di Diocleziano
+             {passo:1.5, p:[[-22,-175,3.9],[-19,-150,3.85],[-17,-93,3.75],[-44,-74,3.7]]},                                    // Vergine: esce dalle pendici del Pincio e attraversa il Campo Marzio
+             {passo:1.6, suolo:.5, p:[[-420,60],[-300,52],[-198,46],[-160,33]]}];                                             // Traiana, sul Gianicolo fino ai mulini di Trastevere
+  var el=[], rnd=RM.casuale(537), CIMA=.48;                                     // altezza del pezzo d'arcata (arco e canale), in quota della luce
   LINEE.forEach(function(l,li){
-    for(var i=0;i<l.length-1;i++){
-      var a=l[i], b=l[i+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.round(L/3.6), ang=Math.atan2(-(b[1]-a[1]),b[0]-a[0]);
-      for(var k=0;k<n;k++){ var x=a[0]+(b[0]-a[0])*(k+.5)/n, z=a[1]+(b[1]-a[1])*(k+.5)/n; el.push({x:x,z:z,ang:ang,len:L/n,y:RM.h(x,z),rot:rnd(),blocco:li*1000+i*100+Math.floor(k/6)}); }
+    for(var i=0;i<l.p.length-1;i++){
+      var a=l.p[i], b=l.p[i+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(L/l.passo)), ang=Math.atan2(-(b[1]-a[1]),b[0]-a[0]), ux=(b[0]-a[0])/L, uz=(b[1]-a[1])/L;
+      for(var k=0;k<n;k++){
+        var t=(k+.5)/n, x=a[0]+(b[0]-a[0])*t, z=a[1]+(b[1]-a[1])*t, len=L/n, y=RM.h(x,z), ya=RM.h(x-ux*len/2,z-uz*len/2), yb=RM.h(x+ux*len/2,z+uz*len/2), giu=l.suolo?y:Math.min(y,ya,yb);
+        var cima=l.suolo?y+l.suolo:a[2]+(b[2]-a[2])*t;
+        el.push({x:x,z:z,ang:ang,len:len,y:giu-.2,cima:cima,suolo:!!l.suolo,pend:l.suolo?Math.atan2(yb-ya,len):0,vis:cima-y>.3,rot:rnd(),blocco:li*1000+i*100+Math.floor(k/6)});
+      }
     }
   });
   var sorte={}; el.forEach(function(e){ if(sorte[e.blocco]==null) sorte[e.blocco]=rnd(); e.taglio=sorte[e.blocco]<.4; });   // il taglio colpisce tratti contigui
-  /* una campata: due mezze pile, arco, speco */
-  var A=new RM.Costruttore(), r=.3, y0=.5, k, a0, a1;
-  [-1,1].forEach(function(s){ A.scatola(.2,.8,1,s*.4,0,0,P.tufo); });
+  el=el.filter(function(e){ return e.vis; }); RM.campateAcquedotti=el;          // sotto le arcate non si costruisce (js/citta.js)
+  /* arcata: due mezze pile, arco a tutto sesto, canale. Pila: le due mezze pile sotto l'imposta, allungate fino al suolo */
+  var A=new RM.Costruttore(), r=.3, c=.36, k, a0, a1;
+  [-1,1].forEach(function(s){ A.scatola(.2,c,1,s*.4,0,0,P.tufo); });
   for(k=0;k<8;k++){
-    a0=PI*k/8; a1=PI*(k+1)/8; var x0=r*Math.cos(a0), x1=r*Math.cos(a1), h0=y0+r*Math.sin(a0), h1=y0+r*Math.sin(a1);
-    A.quad([x0,h0,.5],[x1,h1,.5],[x1,.82,.5],[x0,.82,.5],P.tufo).quad([x0,h0,-.5],[x1,h1,-.5],[x1,.82,-.5],[x0,.82,-.5],P.tufo).quad([x0,h0,.5],[x1,h1,.5],[x1,h1,-.5],[x0,h0,-.5],P.ombra);
+    a0=PI*k/8; a1=PI*(k+1)/8; var x0=r*Math.cos(a0), x1=r*Math.cos(a1), h0=r*Math.sin(a0), h1=r*Math.sin(a1);
+    A.quad([x0,h0,.5],[x1,h1,.5],[x1,c,.5],[x0,c,.5],P.tufo).quad([x0,h0,-.5],[x1,h1,-.5],[x1,c,-.5],[x0,c,-.5],P.tufo).quad([x0,h0,.5],[x1,h1,.5],[x1,h1,-.5],[x0,h0,-.5],P.ombra);
   }
-  A.scatola(1,.2,1.1,0,.8,0,P.travertino);
+  A.scatola(1,CIMA-c,1.1,0,c,0,P.travertino);
+  var Pl=new RM.Costruttore(); [-1,1].forEach(function(s){ Pl.scatola(.2,1,1,s*.4,0,0,P.tufo); });
   var R=new RM.Costruttore().scatola(.42,.5,.95,0,0,0,P.tufo); R.quad([-.21,.5,.47],[.21,.5,.47],[.21,.5,-.47],[-.21,.95,-.47],P.tufo).tri([-.21,.5,.47],[-.21,.95,-.47],[-.21,.5,-.47],P.tufo);   // moncone
-  var mat=RM.matPietra(), campate=istanze(A.geometria(),mat,el.length), monconi=istanze(R.geometria(),mat,el.length), ultimo=-1;
+  var mat=RM.matPietra(), N=el.length, arcate=istanze(A.geometria(),mat,N*2), pile=istanze(Pl.geometria(),mat,N), monconi=istanze(R.geometria(),mat,N), ultimo=-1;
+  function zero(maglia,j){ d.scale.set(0,0,0); d.updateMatrix(); maglia.setMatrixAt(j,d.matrix); }
   return function(danno){
     if(Math.abs(danno-ultimo)<.002) return; ultimo=danno;
     el.forEach(function(e,j){
-      var H=2.7, q=e.taglio?danno:0;
-      d.rotation.set(0,e.ang,0); d.position.set(e.x,e.y-.2,e.z);
-      d.scale.set(q>.6?0:e.len,H*(1-q*.5),q>.6?0:.8); d.updateMatrix(); campate.setMatrixAt(j,d.matrix);
-      d.position.x=e.x-Math.cos(e.ang)*e.len/2; d.position.z=e.z+Math.sin(e.ang)*e.len/2;
-      d.scale.set(q>.6?e.len:0,q>.6?H*(.25+.6*e.rot):0,q>.6?.8:0); d.updateMatrix(); monconi.setMatrixAt(j,d.matrix);
+      var rotto=e.taglio&&danno>.6, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
+      d.rotation.set(0,e.ang,0);
+      if(rotto){ zero(arcate,j); zero(arcate,N+j); zero(pile,j); }
+      else if(e.suolo){ d.rotation.z=e.pend; d.position.set(e.x,e.y,e.z); d.scale.set(e.len/Math.cos(e.pend)+.05,H/CIMA,larga); d.updateMatrix(); arcate.setMatrixAt(j,d.matrix); d.rotation.z=0; zero(arcate,N+j); zero(pile,j); }   // arcatelle basse, schiacciate, inclinate col pendio
+      else{
+        d.position.set(e.x,e.cima-T,e.z); d.scale.set(e.len,e.len,larga); d.updateMatrix(); arcate.setMatrixAt(j,d.matrix);
+        if(Hp>.02){ d.position.y=e.y; d.scale.set(e.len,Hp,larga); d.updateMatrix(); pile.setMatrixAt(j,d.matrix); } else zero(pile,j);
+        if(Hp>T*1.7){ d.position.y=e.y+Hp*.5-T*.5; d.scale.set(e.len,e.len,larga); d.updateMatrix(); arcate.setMatrixAt(N+j,d.matrix); } else zero(arcate,N+j);   // le arcate più alte hanno un secondo ordine
+      }
+      if(rotto){ d.position.set(e.x-Math.cos(e.ang)*e.len/2,e.y,e.z+Math.sin(e.ang)*e.len/2); d.scale.set(e.len,H*(.25+.6*e.rot),larga); d.updateMatrix(); monconi.setMatrixAt(j,d.matrix); }
+      else zero(monconi,j);
     });
-    campate.instanceMatrix.needsUpdate=true; monconi.instanceMatrix.needsUpdate=true;
+    arcate.instanceMatrix.needsUpdate=true; pile.instanceMatrix.needsUpdate=true; monconi.instanceMatrix.needsUpdate=true;
   };
 })();
 
