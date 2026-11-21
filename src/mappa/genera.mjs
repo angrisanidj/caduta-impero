@@ -74,7 +74,8 @@ const TAGLI = {
   salento:   [[17.15, 40.55], [17.6, 40.6], [17.95, 40.7], [18.2, 40.7], [18.6, 40.1], [18.4, 39.7], [17.2, 40.2]],                                           // bizantino fino al 687 circa
   otranto:   [[17.95, 40.3], [18.5, 40.3], [18.6, 39.75], [17.95, 39.95]],                                                                                    // Otranto e Gallipoli, che restano all'impero
   carantania:[[14.48, 48.25], [14.45, 47.75], [13.7, 47.4], [13.3, 47.05], [12.3, 46.75], [12.9, 46.55], [14, 46.45], [16.1, 46.8], [16.5, 47.7], [16.9, 48.15]],  // a est dell'Enns: Avari e Slavi dal 568
-  creta:     [[23, 34.6], [26.6, 34.6], [26.6, 35.9], [23, 35.9]]
+  creta:     [[23, 34.6], [26.6, 34.6], [26.6, 35.9], [23, 35.9]],
+  corsica:   [[8.2, 41.32], [9.9, 41.32], [9.9, 43.2], [8.2, 43.2]]                                                                                                         // a nord delle Bocche di Bonifacio
 };
 const BURG = ['Lugdunensis', 'Germania Superior', 'Belgica', 'Narbonensis', 'Alpes Graiae et Poeninae', 'Alpes Cottiae', 'Alpes Maritimae'];      // anche la punta sud della Belgica (Langres): altrimenti resta un buco
 const REGIONI = {
@@ -111,7 +112,8 @@ const REGIONI = {
   calabria:   { nome: 'Lucania', prov: ['III'], fuori: ['bruzio'] },
   bruzio:     { nome: 'Bruzio', prov: ['III'], dentro: 'bruzio' },
   sicilia:    { nome: 'Sicilia', prov: ['Sicilia'] },
-  isole:      { nome: 'Sardegna e Corsica', prov: ['Sardinia et Corsica'] },
+  sardegna:   { nome: 'Sardegna', prov: ['Sardinia et Corsica'], fuori: ['corsica'] },
+  corsica:    { nome: 'Corsica', prov: ['Sardinia et Corsica'], dentro: 'corsica' },      // dall'VIII secolo le due isole hanno storie diverse
   rezia:      { nome: 'Rezia e Norico', prov: ['Raetia', 'Noricum'], fuori: ['decumati', 'carantania'] },
   carantania: { nome: 'Norico orientale', prov: ['Noricum', 'Pannonia Superior'], dentro: 'carantania' },
   pannonia:   { nome: 'Pannonia', prov: ['Pannonia Superior', 'Pannonia Inferior'], fuori: ['carantania'] },

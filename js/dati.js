@@ -1,4 +1,13 @@
 /* Dati. Stato delle verifiche:
+   - 21 novembre 2026, tarda sera, seconda ricerca. CORSICA: divisa dalla Sardegna. Che Liutprando l'abbia occupata verso il 725 è nei manuali (Tabacco 1989, p. 91, citato dalla voce «Medieval Corsica»), ma una fonte diretta
+     non è stata trovata (nel Liber Pontificalis la Corsica compare solo nella promessa del 774, «a Lunis cum insula Corsica», mai eseguita): è un'ipotesi, detta nel piè di pagina. Certi i Franchi: Annales regni Francorum,
+     806 («in Corsicam insulam contra Mauros, qui eam vastabant, classis de Italia a Pippino missa est»), 807, 809-810, e 828 («Bonefacius comes, cui tutela Corsicae insulae tunc erat commissa»). La Sardegna resta dell'impero d'Oriente,
+     dalla metà del IX secolo solo di nome. Le Baleari non sono sulla carta come regione a sé.
+     COMMERCI: la curva è ora il conteggio dei relitti datati della banca dati OxREP (Strauss, Wilson, Flohr 2017, versione 2.1: 1.751 relitti con date), ognuno distribuito in modo uniforme sul suo intervallo di date
+     (il metodo di Wilson), per anno, I secolo = 100. Conteggio rifatto qui sul file scaricato. Col metodo dei punti medi c'è un falso picco nell'800-849: non usarlo. A ovest dei 19° E il calo è molto più ripido (3-4 dopo il 500).
+     POSIZIONI: ponte di Probo, coerente con Platner e Ashby («a little south of the north corner of the Aventine»; resti tolti dal fiume nel 1878) e lasciato dov'è: la coordinata di Wikidata cade fuori dal fiume;
+     tempio del Sole, a circa 70 m dal punto dato dalle voci enciclopediche («its exact location is not certain»): lasciato dov'è. Superficie dell'impero (Taagepera 1979): non letto.
+     LICENZA dei poligoni: il deposito GitHub non la dichiara; il catalogo Open EpiHub del CNR dà per il Digital Atlas «CC BY-SA 4.0 International • CC BY-SA 3.0 Unported»; il sito dell'atlante non rispondeva;
    - letti il 21 novembre 2026, tarda sera (ultima ricerca sulle letture non riuscite):
      J. Durliat, De la ville antique à la ville byzantine, 1990, su Persée, pagina per pagina: p. 116, Roma nel IV secolo, «une population de citoyens originaires de Rome d'environ 650 000 personnes
      et une population totale de quelque 800 000 habitants» (margine 700-900.000; usa poi 600.000 cittadini e 800.000 abitanti, e il numero «n'a guère varié avant 400»); pp. 159-160, al tempo di Gregorio Magno:
@@ -127,7 +136,7 @@ var ATTI=[
    la Gallaecia è presa nel 713-714, lasciata dai presidi berberi verso il 741 e unita alle Asturie da Alfonso I; la Pannonia è «conteso» nell'800 (guerre avare, 791-803);
    nell'846 Sannio e Puglia sono «conteso» (Taranto ai Saraceni dal 839-840, Bari dall'841, o dall'842 per Amari: Vasiliev, Byzance et les Arabes I). Lo sgombero della Dacia è messo al 271, ma gli studiosi oscillano fra il 271 e il 275. */
 var OVEST=['britannia','galles','gallia','bretagna','belgica','soissons','aquitania','alvernia','provenza','settimania','burgundia','sapaudia','hispania','gallaecia','asturie','marca','spania',
-           'italia_nord','liguria','venezia','ravenna','bolognese','spoleto','pentapoli','roma','campania','napoli','benevento','salento','otranto','calabria','bruzio','sicilia','isole',
+           'italia_nord','liguria','venezia','ravenna','bolognese','spoleto','pentapoli','roma','campania','napoli','benevento','salento','otranto','calabria','bruzio','sicilia','sardegna','corsica',
            'rezia','carantania','pannonia','dalmazia','africa','numidia','mauri','mauretania','decumati'],
     EST=['dacia','balcani','tracia','mesia_inf','mesia_sup','anatolia','levante','egitto','creta'],
     OLTRE=['frisia','sassonia','turingia','moravia','alfold','valacchia','steppa'];         // terre mai romane: partono da «fuori» e non contano nella quota di territorio
@@ -135,7 +144,7 @@ var OVEST=['britannia','galles','gallia','bretagna','belgica','soissons','aquita
    la figlia prende lo stesso stato. Dove la figlia ha già una storia sua (la Settimania visigota, Napoli bizantina) va quindi ripetuta a ogni cambio della madre. */
 var FIGLIE={settimania:'provenza',alvernia:'aquitania',sapaudia:'burgundia',soissons:'gallia',bretagna:'gallia',spania:'hispania',asturie:'hispania',marca:'hispania',galles:'britannia',
   numidia:'africa',mauri:'africa',bolognese:'ravenna',liguria:'italia_nord',venezia:'italia_nord',pentapoli:'spoleto',napoli:'campania',salento:'benevento',otranto:'benevento',bruzio:'calabria',
-  tracia:'balcani',mesia_inf:'balcani',mesia_sup:'balcani',carantania:'rezia'};
+  tracia:'balcani',mesia_inf:'balcani',mesia_sup:'balcani',carantania:'rezia',corsica:'sardegna'};
 var CAMBI={
  235:{},
  260:{britannia:'usurpatore',gallia:'usurpatore',belgica:'usurpatore',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore',hispania:'usurpatore',gallaecia:'usurpatore',decumati:'perso'},
@@ -152,7 +161,7 @@ var CAMBI={
  429:{mauretania:'conteso',alfold:'regno:unni'},                                 // gli Unni nella pianura ungherese: di solito negli anni 420
  439:{africa:'regno:vandali',numidia:'conteso',pannonia:'regno:unni'},           // le Pannonie cedute agli Unni nel 433
  451:{sapaudia:'federati',mauretania:'roma',numidia:'roma',turingia:'regno:turingi'},
- 455:{isole:'regno:vandali',mauretania:'regno:vandali',numidia:'regno:vandali',sicilia:'conteso',pannonia:'federati',alfold:'regno:gepidi',valacchia:'fuori',steppa:'fuori'},      // dopo il Nedao (454): Ostrogoti in Pannonia, Gepidi sul Tibisco
+ 455:{sardegna:'regno:vandali',mauretania:'regno:vandali',numidia:'regno:vandali',sicilia:'conteso',pannonia:'federati',alfold:'regno:gepidi',valacchia:'fuori',steppa:'fuori'},      // dopo il Nedao (454): Ostrogoti in Pannonia, Gepidi sul Tibisco
  458:{belgica:'federati',burgundia:'federati'},
  468:{sicilia:'regno:vandali',gallia:'usurpatore',bretagna:'regno:britanni',settimania:'regno:visigoti'},
  472:{aquitania:'regno:visigoti',alvernia:'conteso',burgundia:'regno:burgundi',provenza:'conteso',settimania:'regno:visigoti',pannonia:'perso'},
@@ -160,7 +169,7 @@ var CAMBI={
       provenza:'regno:visigoti',hispania:'regno:visigoti',alvernia:'regno:visigoti',belgica:'regno:franchi',rezia:'conteso'},
  493:{gallia:'regno:franchi',bretagna:'regno:britanni',rezia:'regno:italia',dalmazia:'regno:italia',mauri:'perso',mauretania:'perso'},                 // l'interno dell'Africa ai regni mauri, dagli anni 480
  526:{aquitania:'regno:franchi',provenza:'regno:italia',settimania:'regno:visigoti',pannonia:'regno:italia'},      // dopo Vouillé (507): Aquitania ai Franchi, Provenza agli Ostrogoti (508), Sirmio e la Pannonia meridionale a Teodorico (504-536); la Hispania visigota è sotto la sua reggenza
- 537:{pannonia:'perso',africa:'oriente',mauri:'conteso',isole:'oriente',sicilia:'oriente',dalmazia:'oriente',calabria:'oriente',benevento:'oriente',campania:'oriente',roma:'conteso',spoleto:'conteso',
+ 537:{pannonia:'perso',africa:'oriente',mauri:'conteso',sardegna:'oriente',sicilia:'oriente',dalmazia:'oriente',calabria:'oriente',benevento:'oriente',campania:'oriente',roma:'conteso',spoleto:'conteso',
       decumati:'regno:franchi',aquitania:'regno:franchi',burgundia:'regno:franchi',provenza:'regno:franchi',settimania:'regno:visigoti',rezia:'regno:franchi',turingia:'regno:franchi'},
  542:{ravenna:'oriente',italia_nord:'conteso',benevento:'conteso',calabria:'conteso',campania:'conteso',mauri:'oriente'},
  546:{pannonia:'federati'},                                                      // i Longobardi, alleati di Giustiniano
@@ -170,12 +179,12 @@ var CAMBI={
       campania:'regno:longobardi',napoli:'oriente',calabria:'regno:longobardi',bruzio:'oriente',gallaecia:'regno:visigoti',balcani:'conteso'},
  663:{levante:'califfato',egitto:'califfato',dalmazia:'perso',liguria:'regno:longobardi',spania:'regno:visigoti',balcani:'oriente',mesia_inf:'perso',mesia_sup:'perso'},
  711:{africa:'califfato',mauretania:'califfato',hispania:'conteso',mesia_inf:'regno:bulgari',valacchia:'regno:bulgari',salento:'regno:longobardi'},
- 727:{hispania:'califfato',asturie:'regno:asturie',gallaecia:'califfato',settimania:'califfato'},
+ 727:{hispania:'califfato',asturie:'regno:asturie',gallaecia:'califfato',settimania:'califfato',corsica:'regno:longobardi'},      // Corsica: ipotesi dei manuali (Liutprando, verso il 725), senza fonte diretta
  756:{ravenna:'chiesa',bolognese:'regno:longobardi',roma:'chiesa',pentapoli:'chiesa',gallaecia:'regno:asturie',settimania:'conteso'},
- 780:{bolognese:'chiesa',italia_nord:'regno:franchi',venezia:'oriente',spoleto:'regno:franchi',pentapoli:'chiesa',settimania:'regno:franchi',sassonia:'conteso',carantania:'regno:franchi'},
+ 780:{corsica:'regno:franchi',bolognese:'chiesa',italia_nord:'regno:franchi',venezia:'oriente',spoleto:'regno:franchi',pentapoli:'chiesa',settimania:'regno:franchi',sassonia:'conteso',carantania:'regno:franchi'},
  791:{sassonia:'regno:franchi',frisia:'regno:franchi',pannonia:'conteso',alfold:'conteso'},
  800:{gallia:'carolingio',bretagna:'regno:britanni',belgica:'carolingio',aquitania:'carolingio',provenza:'carolingio',burgundia:'carolingio',rezia:'carolingio',decumati:'carolingio',
-      italia_nord:'carolingio',venezia:'oriente',spoleto:'carolingio',pentapoli:'chiesa',turingia:'carolingio',sassonia:'carolingio',frisia:'carolingio',alfold:'fuori'},
+      italia_nord:'carolingio',venezia:'oriente',spoleto:'carolingio',pentapoli:'chiesa',turingia:'carolingio',sassonia:'carolingio',frisia:'carolingio',alfold:'fuori',corsica:'carolingio'},
  801:{marca:'carolingio'},
  846:{sicilia:'conteso',benevento:'conteso',otranto:'oriente',dalmazia:'carolingio',pannonia:'carolingio',creta:'califfato',mesia_sup:'regno:bulgari',moravia:'regno:moravi'}
 };
@@ -195,7 +204,7 @@ var TAPPE=[
  {anno:378, titolo:'Adrianopoli', testo:"I Goti, accolti dentro l'impero due anni prima e ridotti alla fame, distruggono l'esercito dell'imperatore Valente: secondo Ammiano se ne salva appena un terzo. Muore lo stesso Valente.",
   storici:"Invasione o crisi di accoglienza? I Goti del 376 chiesero di entrare e furono ammessi. Per Heather a spingerli sul Danubio sono gli Unni; Halsall ridimensiona gli Unni e guarda alla politica romana oltre il fiume. Sulla rivolta concordano: nasce da come Roma gestì i profughi."},
  {anno:395, titolo:'Due corti', testo:"Alla morte di Teodosio l'impero passa ai due figli, uno a Costantinopoli e uno a Milano. Nessuno la considera una divisione definitiva; lo diventerà."},
- {intermezzo:true, anno:395, titolo:'I commerci', testo:"Quanto commerciava l'impero? Nessuno lo registrò: l'archeologia lo deduce. I relitti nel Mediterraneo toccano il massimo nel I secolo d.C. e poi calano; ma i relitti contano le anfore e le pietre, non le botti o le merci deperibili, e molti sono datati con margini di secoli. Il piombo nei ghiacci della Groenlandia, figlio delle miniere d'argento, crolla nel II secolo con la peste antonina e resta basso per più di cinque secoli: misura le miniere, non i mercati. I piatti africani, invece, arrivano su tutte le coste fino al VII secolo. Il quadro è un declino lungo e irregolare, non un crollo improvviso: per questo la curva dei commerci, qui, è solo un'indicazione."},
+ {intermezzo:true, anno:395, titolo:'I commerci', testo:"Quanto commerciava l'impero? Nessuno lo registrò: l'archeologia lo deduce. I relitti nel Mediterraneo toccano il massimo nel I secolo d.C. e poi calano; ma i relitti contano le anfore e le pietre, non le botti o le merci deperibili, e molti sono datati con margini di secoli. Il piombo nei ghiacci della Groenlandia, figlio delle miniere d'argento, crolla nel II secolo con la peste antonina e resta basso per più di cinque secoli: misura le miniere, non i mercati. I piatti africani, invece, arrivano su tutte le coste fino al VII secolo. Il quadro è un declino lungo e irregolare, non un crollo improvviso: La curva dei commerci, qui, conta i relitti datati (I secolo = 100): è la misura meno incerta che abbiamo, non il volume degli scambi."},
 
  {anno:402, titolo:'La corte si chiude a Ravenna', testo:"Stilicone affronta Alarico a Pollenzo e a Verona e lo costringe a lasciare l'Italia. La corte lascia Milano per Ravenna, protetta dalle paludi; a Roma Onorio fa restaurare mura, porte e torri, e forse è allora che la cinta raddoppia in altezza."},
  {anno:406, titolo:'Il Reno attraversato', testo:"Nell'ultima notte dell'anno (del 405, secondo alcuni studiosi) Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito acclama un imperatore dopo l'altro; nel 407 il terzo, Costantino, porta le truppe in Gallia.",
@@ -280,10 +289,12 @@ var CURVE={
   /* Fino della moneta d'argento: denario di Severo Alessandro 43-50%, Decio circa 40%, Gallieno 18% nel 260 e 2,5% a fine regno (dati Walker, in Katsari 2002);
      riforma di Aureliano 5% garantito (RIC online). Le analisi di Walker sono di superficie e sovrastimano il fino (Butcher e Ponting): valori indicativi. */
   argento:{nome:'Argento nella moneta', nota:'% d\'argento, valori indicativi: denario, poi antoniniano; dal 294 nummo al 4%', punti:[[235,45],[250,40],[260,18],[268,3],[274,5],[294,4]], fine:294, dopo:'dal 309-312 solido d\'oro, stabile fino all\'XI secolo'},      // nummo al 4% e solido: ric.mom.fr (Burnett 1987, Estiot 2004) e voce Solidus (Porteous 1969), letti il 21 novembre 2026
-  /* Non è una serie pubblicata: è un indice qualitativo nostro. I relitti datati calano dal I secolo (Parker 1992, Wilson 2009), ma contano anfore e pietre, non botti né merci deperibili,
+  /* Relitti datati nel Mediterraneo per anno, I secolo = 100, dalla banca dati OxREP (Strauss, Wilson, Flohr 2017): 200-249 = 42, 250-299 = 39, 300-349 = 35, 350-399 = 27, 400-449 = 20, 450-499 = 13,
+     500-549 = 14, 550-599 = 14, 600-649 = 12, 650-699 = 10, 700-749 = 4, 750-799 = 3, 800-899 = 3,5; i punti stanno a metà di ogni mezzo secolo. Fino al 21 novembre 2026 era un indice qualitativo nostro,
+     più alto fra il 400 e il 600. I relitti datati calano dal I secolo (Parker 1992, Wilson 2009), ma contano anfore e pietre, non botti né merci deperibili,
      e per McCormick il calo tardoantico è molto meno ripido di come appare; il piombo nei ghiacci della Groenlandia (McConnell e altri 2018) crolla nel 165 e misura le miniere, non i mercati;
-     la sigillata africana circola fino alla seconda metà del VII secolo. Per questo la curva è piatta fra IV e V secolo e scende davvero nel VII. */
-  commerci:{nome:'Commerci', nota:'indice qualitativo nostro, non una serie pubblicata (I secolo = 100)', punti:[[235,45],[300,40],[400,40],[439,30],[500,25],[568,20],[590,18],[650,12],[700,5],[801,6],[852,6]]}
+     la sigillata africana circola fino alla seconda metà del VII secolo. La curva dei relitti, quindi, con ogni probabilità esagera il calo del V e del VI secolo. */
+  commerci:{nome:'Commerci', nota:'relitti datati nel Mediterraneo, I secolo = 100 (banca dati di Oxford, 2017): contano le navi ritrovate, non tutte le merci', punti:[[235,41],[275,39],[325,35],[375,27],[425,20],[475,13],[525,14],[575,14],[625,12],[675,10],[725,4],[775,3],[825,4],[852,4]]}
 };
 
 /* dalla popolazione alla quota di isolati abitati nel modello */

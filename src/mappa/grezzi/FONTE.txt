@@ -4,5 +4,5 @@ Poligoni delle province romane verso il 200 d.C. e delle undici regioni augustee
 Fonte dei dati: Digital Atlas of the Roman Empire (DARE), di Johan Åhlfeldt, Università di Lund — https://dare.ht.lu.se
 Scaricato il 21 novembre 2026 da https://github.com/klokantech/roman-empire (data/provinces.geojson), senza modifiche.
 Licenza: Creative Commons con obbligo di attribuzione e condivisione allo stesso modo (CC BY-SA), secondo quanto dichiara la fonte;
-la variante esatta della licenza non è stata ricontrollata sul sito della fonte il giorno dello scarico.
+il deposito GitHub non la dichiara e il sito della fonte non rispondeva il 21 novembre 2026; il catalogo Open EpiHub del CNR (open-epihub.cnr.it/resources/135) indica «CC BY-SA 4.0 International • CC BY-SA 3.0 Unported».
 L'attribuzione è in fondo a index.html e va mantenuta. I confini usati dalla mappa (js/mappa-dati.js) derivano da questo file.
