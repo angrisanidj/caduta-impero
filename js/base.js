@@ -146,12 +146,20 @@ RM.vola=function(x,z,dist,quota){
   volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:t1,p1:p1};
 };
 RM.volaA=function(t,c){ controlli.autoRotate=false; volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(t[0],RM.h(t[0],t[1])+1,t[1]),p1:new THREE.Vector3(c[0],c[1],c[2])}; };   // verso un'inquadratura fissa
+/* zoom a passi: ci si avvicina o ci si allontana dal punto che si sta guardando */
+RM.zoom=function(f){
+  controlli.autoRotate=false;
+  var d=camera.position.clone().sub(controlli.target), L=Math.max(controlli.minDistance*1.3,Math.min(controlli.maxDistance,d.length()*f));
+  volo={t:0,dur:.45,t0:controlli.target.clone(),p0:camera.position.clone(),t1:controlli.target.clone(),p1:controlli.target.clone().add(d.setLength(L))};
+};
+RM.inVistaInsieme=function(){ return Math.abs(camera.position.distanceTo(controlli.target)-567)<50 && Math.abs(camera.position.y-255)<60 && controlli.target.length()<25; };      // la rotazione lenta dell'avvio non conta: conta distanza, quota e punto guardato
+var INSIEME=new THREE.Vector3(-200,255,470);
 RM.vistaInsieme=function(){ controlli.autoRotate=false; volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(0,0,5),p1:new THREE.Vector3(-200,255,470)}; };
 renderer.domElement.addEventListener('pointerdown',function(){ volo=null; });
 renderer.domElement.addEventListener('wheel',function(){ volo=null; },{passive:true});
 RM.frame.push(function(dt){
   if(!volo) return;
-  volo.t=Math.min(1,volo.t+dt/1.5); var k=volo.t*volo.t*(3-2*volo.t);
+  volo.t=Math.min(1,volo.t+dt/(volo.dur||1.5)); var k=volo.t*volo.t*(3-2*volo.t);
   controlli.target.lerpVectors(volo.t0,volo.t1,k); camera.position.lerpVectors(volo.p0,volo.p1,k);
   if(volo.t>=1) volo=null;
 });
@@ -365,8 +373,12 @@ function alleggerisci(){
   else if(RM.livello===4){ RM.leggero=true; }
 }
 var orologio=new THREE.Clock(), somma=0, quanti=0, scalda=40;
+/* Quando la scena non è sullo schermo (si è scesi a leggere, o sul telefono si guarda la mappa) non si disegna: la pagina scorre meglio e la batteria ringrazia. */
+RM.fuoriVista=false;
+if(window.IntersectionObserver) new IntersectionObserver(function(v){ RM.fuoriVista=!v[v.length-1].isIntersecting; },{rootMargin:'80px'}).observe(contenitore);
 (function ciclo(){
   requestAnimationFrame(ciclo);
+  if(RM.fuoriVista){ orologio.getDelta(); return; }
   var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1);
   if(!document.hidden && grezzo<.4){                       // le pause (scheda nascosta, caricamento) non contano
     if(scalda>0) scalda--; else { somma+=grezzo; quanti++; }

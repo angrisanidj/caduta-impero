@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/stile.css?v=20261121-1506">
+<link rel="stylesheet" href="css/stile.css?v=20261121-1514">
 </head>
 <body>
 <header class="testata">
@@ -31,11 +31,22 @@
     <figure class="riquadro roma">
       <div id="scena" aria-label="Modello tridimensionale di Roma"></div>
       <p class="conta"><span class="etichetta">Roma</span><b id="abitanti">—</b><span id="abitantiNota">abitanti, stima</span></p>
-      <button class="notte" id="btnNotte" type="button" aria-pressed="false">Notte</button>
-      <button class="grande" id="btnGrande" type="button" aria-pressed="false" aria-label="Scena a tutto schermo" title="Tutto schermo">⤢</button>
-      <button class="pellegrino" id="btnPellegrino" type="button" aria-pressed="false">Percorso del pellegrino</button>
-      <button class="pellegrino confronta" id="btnConfronto" type="button" aria-pressed="false">Prima e dopo</button>
-      <button class="pellegrino sapere" id="btnSapere" type="button" aria-pressed="false">Che cosa sappiamo</button>
+      <div class="strumenti" id="strumenti">
+        <button class="apri" id="btnStrumenti" type="button" aria-expanded="false" aria-controls="vociStrumenti">Strumenti</button>
+        <div class="voci" id="vociStrumenti">
+          <button class="notte" id="btnNotte" type="button" aria-pressed="false">Notte</button>
+          <button class="pellegrino" id="btnPellegrino" type="button" aria-pressed="false">Percorso del pellegrino</button>
+          <button class="pellegrino confronta" id="btnConfronto" type="button" aria-pressed="false">Prima e dopo</button>
+          <button class="pellegrino sapere" id="btnSapere" type="button" aria-pressed="false">Che cosa sappiamo</button>
+        </div>
+      </div>
+      <div class="comandi-scena">
+        <button id="btnInsieme" type="button" aria-label="Torna alla vista d'insieme" title="Vista d'insieme" hidden><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg></button>
+        <button id="btnMeno" type="button" aria-label="Allontana" title="Allontana">−</button>
+        <button id="btnPiu" type="button" aria-label="Avvicina" title="Avvicina">+</button>
+        <button class="grande" id="btnGrande" type="button" aria-pressed="false" aria-label="Scena a tutto schermo" title="Tutto schermo">⤢</button>
+      </div>
+      <button class="esplora" id="btnEsplora" type="button">Tocca per esplorare la città</button>
       <aside class="legenda-sapere" id="legendaSapere" hidden>
         <p><i class="cA"></i><span><b>Certo</b><em>: sta ancora in piedi, o posizione e pianta sono rilevate per intero.</em></span></p>
         <p><i class="cB"></i><span><b>Posizione certa</b><em>, forma ricostruita: resti parziali, scavi, piante antiche, edifici poi rifatti.</em></span></p>
@@ -90,25 +101,25 @@
 
 <footer class="piede">
   <p>Ricostruzioni schematiche. La mappa colora regioni intere, non province. A Roma il corso del Tevere e il tracciato delle mura sono reali (© OpenStreetMap contributors); i colli sono ridisegnati alle quote antiche sopra un rilievo misurato (SRTM), con l'altezza accentuata di quasi due volte; gli edifici sono al loro posto ma schematici; le strade seguono le vie moderne che ricalcano le antiche (via del Corso per la via Lata, l'Appia Antica, via dei Coronari…) e, nel Foro, i basolati antichi ancora visibili (via Sacra, Argileto, vico Tusco, clivo Capitolino), con tratti a mano dove non c'è né l'una né l'altro; gli edifici del Foro e dei fori imperiali stanno sui centri dei loro resti; gli acquedotti hanno il percorso e le quote ricostruiti, non rilevati; gli isolati sono generati, l'abbandono per quartiere ipotizzato. Linea continua: dato misurato. Linea tratteggiata: stima. Date, schede dei monumenti e didascalie degli eventi sono provvisorie, da verificare sulle fonti.</p>
-                                                    <p class="versione">Versione del 21/11/2026, ore 15:06</p>
+                                                      <p class="versione">Versione del 21/11/2026, ore 15:14</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-<script src="js/dati.js?v=20261121-1506"></script>
-<script src="js/mappa-dati.js?v=20261121-1506"></script>
-<script src="js/roma-topo.js?v=20261121-1506"></script>
-<script src="js/base.js?v=20261121-1506"></script>
-<script src="js/costruttore.js?v=20261121-1506"></script>
-<script src="js/monumenti.js?v=20261121-1506"></script>
-<script src="js/nuclei.js?v=20261121-1506"></script>
-<script src="js/mura.js?v=20261121-1506"></script>
-<script src="js/citta.js?v=20261121-1506"></script>
-<script src="js/vita.js?v=20261121-1506"></script>
-<script src="js/eventi.js?v=20261121-1506"></script>
-<script src="js/mappa.js?v=20261121-1506"></script>
-<script src="js/pagina.js?v=20261121-1506"></script>
-<script src="js/itinerario.js?v=20261121-1506"></script>
-<script src="js/confronto.js?v=20261121-1506"></script>
+<script src="js/dati.js?v=20261121-1514"></script>
+<script src="js/mappa-dati.js?v=20261121-1514"></script>
+<script src="js/roma-topo.js?v=20261121-1514"></script>
+<script src="js/base.js?v=20261121-1514"></script>
+<script src="js/costruttore.js?v=20261121-1514"></script>
+<script src="js/monumenti.js?v=20261121-1514"></script>
+<script src="js/nuclei.js?v=20261121-1514"></script>
+<script src="js/mura.js?v=20261121-1514"></script>
+<script src="js/citta.js?v=20261121-1514"></script>
+<script src="js/vita.js?v=20261121-1514"></script>
+<script src="js/eventi.js?v=20261121-1514"></script>
+<script src="js/mappa.js?v=20261121-1514"></script>
+<script src="js/pagina.js?v=20261121-1514"></script>
+<script src="js/itinerario.js?v=20261121-1514"></script>
+<script src="js/confronto.js?v=20261121-1514"></script>
 </body>
 </html>

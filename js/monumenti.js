@@ -401,7 +401,7 @@ M.forEach(function(o){
   o.g.position.set(o.x,o.quota!=null?o.quota-.05:quota(o.x,o.z),o.z); o.g.rotation.y=o.ry||0;
   if(o.come) o.g.position.y=perId[o.come].g.position.y;                       // poggia sullo stesso piano del complesso vicino
   RM.scene.add(o.g);
-  if(o.et){ o.div=document.createElement('span'); o.div.textContent=o.nome; etichette.appendChild(o.div); o.div.addEventListener('click',function(){ if(RM.apriScheda) RM.apriScheda(o.id); }); }
+  if(o.nome){ o.div=document.createElement('span'); o.div.textContent=o.nome; etichette.appendChild(o.div); o.div.addEventListener('click',function(){ if(RM.apriScheda) RM.apriScheda(o.id); }); }
 });
 RM.MONUMENTI=M.filter(function(o){ return o.nome; }).concat([{id:'mura', nome:'Mura Aureliane', x:106,z:-203, raggio:28, alto:2}, {id:'acquedotti', nome:'Acquedotti', note:{chiuso:'tagliati nel 537'}, x:249,z:12, raggio:30, alto:3},
   {id:'antoniniano', nome:'Acquedotto Antoniniano', note:{chiuso:'tagliato nel 537'}, x:120,z:200, raggio:26, alto:2}]);
@@ -471,6 +471,32 @@ RM.moduli.push(function(anno){
   });
 })();
 
+/* ---------- clic o tocco sulla scena: si apre la scheda del monumento colpito ----------
+   Vale per tutti i monumenti che hanno un nome, non solo per quelli con l'etichetta; mura e acquedotti si registrano in RM.cliccabili (js/mura.js). */
+(function(){
+  var tela=RM.renderer.domElement, giu=null, raggio=new THREE.Raycaster(), punto=new THREE.Vector2();
+  function colpito(ev){
+    var r=tela.getBoundingClientRect(); punto.set((ev.clientX-r.left)/r.width*2-1,-((ev.clientY-r.top)/r.height*2-1)); raggio.setFromCamera(punto,RM.camera);
+    var bersagli=[], di=[];
+    M.forEach(function(o){ if(o.nome && o.g.visible && o.presenza>.5){ bersagli.push(o.g); di.push(o.id); } });
+    (RM.cliccabili||[]).forEach(function(c){ if(c.maglia.visible){ bersagli.push(c.maglia); di.push(c.id); } });
+    var colpi=raggio.intersectObjects(bersagli,false); if(!colpi.length) return null;
+    var id=di[bersagli.indexOf(colpi[0].object)]; return typeof id==='function'?id(colpi[0]):id;
+  }
+  tela.addEventListener('pointerdown',function(ev){ giu={x:ev.clientX,y:ev.clientY,t:performance.now()}; });
+  tela.addEventListener('pointerup',function(ev){
+    var fermo=giu && Math.hypot(ev.clientX-giu.x,ev.clientY-giu.y)<8 && performance.now()-giu.t<600; giu=null;
+    if(!fermo) return;                                                       // era un trascinamento: si stava girando la scena
+    if(RM.toccoApre && RM.toccoApre()) return;                               // sui telefoni, fuori dallo schermo intero, il tocco apre la scena (js/pagina.js)
+    var id=colpito(ev); if(id && RM.apriScheda) RM.apriScheda(id);
+  });
+  var ultimoMov=0;
+  tela.addEventListener('pointermove',function(ev){                         // col mouse, il cursore dice dove si può cliccare
+    if(ev.pointerType!=='mouse' || ev.buttons || performance.now()-ultimoMov<120) return; ultimoMov=performance.now();
+    tela.style.cursor=colpito(ev)?'pointer':'';
+  });
+})();
+
 /* ---------- etichette proiettate ---------- */
 var v=new THREE.Vector3();
 RM.frame.push(function(){
@@ -479,7 +505,7 @@ RM.frame.push(function(){
     if(!o.div) return;
     v.set(o.x,o.g.position.y+7,o.z).applyMatrix4(RM.camera.matrixWorldInverse); var davanti=v.z<-2;      // dietro la camera non si proietta
     v.set(o.x,o.g.position.y+7,o.z).project(RM.camera);
-    var vis=o.presenza>.5 && davanti && v.z<1 && Math.abs(v.x)<.8 && v.y>-.9 && v.y<.88 && !(v.y>.3 && v.x<-.1);   // non sui bordi né sopra il contatore
+    var vis=o.presenza>.5 && davanti && v.z<1 && Math.abs(v.x)<.8 && v.y>-.9 && v.y<.88 && !(v.y>.3 && v.x<-.1) && (o.et || Math.hypot(RM.camera.position.x-o.x,RM.camera.position.y,RM.camera.position.z-o.z)<(o.raggio>6?150:95));   // non sui bordi né sopra il contatore; i monumenti minori hanno il nome solo da vicino
     o.div.style.opacity=vis?1:0; o.div.style.visibility=vis?'visible':'hidden';
     if(vis) o.div.style.transform='translate(-50%,-100%) translate('+((v.x+1)*w/2).toFixed(1)+'px,'+((1-v.y)*h/2).toFixed(1)+'px)';
   });

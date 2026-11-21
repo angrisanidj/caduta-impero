@@ -72,13 +72,13 @@ function scriviScheda(){
     '<p class="stato"><span class="st '+st+'">'+NOMI_STATO[st]+'</span> nel '+Math.round(anno)+'</p>'+(sc.cosa?'<p class="cosa">'+esc(sc.cosa)+'</p>':'')+(ce?'<p class="certezza"><i class="c'+ce[0]+'"></i><span><b>Che cosa sappiamo:</b> '+NOMI_CERTEZZA[ce[0]]+(ce[1]?'. '+esc(ce[1]):'')+'</span></p>':'')+(righe?'<ul>'+righe+'</ul>':'');
 }
 function apriScheda(m){
-  schedaDi=m; schedaChiave=''; scriviScheda(); $('scheda').hidden=false;
+  schedaDi=m; schedaChiave=''; scriviScheda(); $('scheda').hidden=false; document.querySelector('.riquadro.roma').classList.add('con-scheda');
   voci.forEach(function(v){ v.li.classList.toggle('scelto',v.m===m); });
   if($('scene').getAttribute('data-vista')!=='roma'){ var b=document.querySelector('.schede button[data-vista="roma"]'); if(b) b.click(); }
   var r=document.querySelector('.riquadro.roma').getBoundingClientRect(); if(r.top<0||r.bottom>window.innerHeight+40) document.querySelector('.riquadro.roma').scrollIntoView({behavior:'smooth',block:'start'});
   if(RM.vola&&m.x!=null) RM.vola(m.x,m.z,Math.max(46,(m.raggio||6)*6));
 }
-function chiudiScheda(){ if(!schedaDi) return; schedaDi=null; $('scheda').hidden=true; voci.forEach(function(v){ v.li.classList.remove('scelto'); }); if(RM.vistaInsieme) RM.vistaInsieme(); }
+function chiudiScheda(){ if(!schedaDi) return; schedaDi=null; $('scheda').hidden=true; document.querySelector('.riquadro.roma').classList.remove('con-scheda'); voci.forEach(function(v){ v.li.classList.remove('scelto'); }); if(RM.vistaInsieme) RM.vistaInsieme(); }
 $('scheda').addEventListener('click',function(ev){ if(ev.target.className==='chiudi') chiudiScheda(); });
 voci.forEach(function(v){
   v.li.tabIndex=0; v.li.setAttribute('role','button');
@@ -152,10 +152,29 @@ $('btnSapere').addEventListener('click',function(){
 $('btnNotte').addEventListener('click',function(){
   metaNotte=metaNotte?0:1; this.setAttribute('aria-pressed',metaNotte?'true':'false'); this.textContent=metaNotte?'Giorno':'Notte';
 });
+/* Dispositivi al tocco: fuori dallo schermo intero la scena non risponde al dito, così la pagina scorre; un tocco la apre a tutto schermo, dove si esplora. */
+var tocco=!!(window.matchMedia && window.matchMedia('(hover:none) and (pointer:coarse)').matches);
+if(tocco){ document.body.classList.add('tocco'); if(RM.controlli) RM.controlli.enabled=false; }
+RM.toccoApre=function(){ if(tocco && !document.body.classList.contains('roma-grande')){ grande(true); return true; } return false; };
 function grande(si){
   document.body.classList.toggle('roma-grande',si); $('btnGrande').setAttribute('aria-pressed',si?'true':'false'); $('btnGrande').textContent=si?'✕':'⤢';
+  $('btnGrande').setAttribute('aria-label',si?'Chiudi lo schermo intero':'Scena a tutto schermo'); $('btnGrande').title=si?'Chiudi':'Tutto schermo';
+  if(si){ var tp=document.querySelector('.tempo'); document.body.style.setProperty('--tempo',(tp?tp.offsetHeight:92)+'px'); }      // i comandi stanno sopra la linea del tempo, quanto è alta
+  if(tocco && RM.controlli) RM.controlli.enabled=si;
+  chiudiStrumenti();
   window.dispatchEvent(new Event('resize'));
 }
+/* menu degli strumenti: chiuso di norma, perché non copra la scena; dopo una scelta si richiude */
+function compatto(){ return window.getComputedStyle($('btnStrumenti')).display!=='none'; }
+function chiudiStrumenti(){ $('strumenti').classList.remove('aperto'); $('btnStrumenti').setAttribute('aria-expanded','false'); }
+function segnaStrumenti(){ var n=$('vociStrumenti').querySelectorAll('[aria-pressed="true"]').length; $('btnStrumenti').classList.toggle('attivo',n>0); $('btnStrumenti').textContent=n?'Strumenti · '+n:'Strumenti'; }
+$('btnStrumenti').addEventListener('click',function(){ var a=!$('strumenti').classList.contains('aperto'); $('strumenti').classList.toggle('aperto',a); this.setAttribute('aria-expanded',a?'true':'false'); });
+$('vociStrumenti').addEventListener('click',function(){ setTimeout(function(){ segnaStrumenti(); if(compatto()) chiudiStrumenti(); },0); });
+$('btnPiu').addEventListener('click',function(){ if(RM.zoom) RM.zoom(.62); });
+$('btnMeno').addEventListener('click',function(){ if(RM.zoom) RM.zoom(1.6); });
+$('btnInsieme').addEventListener('click',function(){ if(schedaDi) chiudiScheda(); else if(RM.vistaInsieme) RM.vistaInsieme(); });
+$('btnEsplora').addEventListener('click',function(){ grande(true); });
+window.addEventListener('resize',function(){ if(document.body.classList.contains('roma-grande')){ var tp=document.querySelector('.tempo'); if(tp) document.body.style.setProperty('--tempo',tp.offsetHeight+'px'); } });
 $('btnGrande').addEventListener('click',function(){ grande(!document.body.classList.contains('roma-grande')); });
 window.addEventListener('keydown',function(ev){ if(ev.key==='Escape'){ if(schedaDi) chiudiScheda(); else grande(false); } });
 [].forEach.call(document.querySelectorAll('.schede button'),function(b){
@@ -167,13 +186,14 @@ window.addEventListener('keydown',function(ev){ if(ev.key==='Escape'){ if(scheda
 });
 
 /* ---------- ciclo ---------- */
-var ultimo=performance.now();
+var ultimo=performance.now(), contaGiri=0;
 (function ciclo(ora){
   requestAnimationFrame(ciclo);
   var dt=Math.min(((ora||performance.now())-ultimo)/1000,.25), mosso=false; ultimo=ora||performance.now();
   if(anno!==meta){ var p=vel*dt; anno=Math.abs(meta-anno)<=p?meta:anno+Math.sign(meta-anno)*p; mosso=true; }
   if(notte!==metaNotte){ var pn=dt/1.6; notte=Math.abs(metaNotte-notte)<=pn?metaNotte:notte+Math.sign(metaNotte-notte)*pn; if(RM.applicaLuce) RM.applicaLuce(notte); mosso=true; }
   if(sapere!==metaSapere && RM.sapere){ var ps=dt/.5; sapere=Math.abs(metaSapere-sapere)<=ps?metaSapere:sapere+Math.sign(metaSapere-sapere)*ps; RM.sapere.q.value=sapere*sapere*(3-2*sapere); }
+  if(RM.inVistaInsieme && (contaGiri=(contaGiri+1)%12)===0){ var via=!RM.inVistaInsieme(); if($('btnInsieme').hidden===via) $('btnInsieme').hidden=!via; }      // il pulsante per tornare alla vista d'insieme c'è solo quando serve
   if(mosso) applica();
 })();
 

@@ -247,3 +247,52 @@ body.roma-grande .sapere{top:158px}
 body.roma-grande .confronto{left:20px;bottom:104px}
 .riquadro.roma.confronto-attivo .evento{bottom:100px}
 body.roma-grande .riquadro.roma.confronto-attivo .evento{bottom:196px}
+
+/* ---------- comandi della scena ----------
+   In alto a destra il menu «Strumenti» (aperto e fisso solo a tutto schermo su schermi larghi); in basso a destra zoom, vista d'insieme e schermo intero.
+   Didascalie e barre stanno sopra la riga dei comandi, mai sotto. A tutto schermo tutto si alza dell'altezza della linea del tempo (--tempo, misurata da js/pagina.js). */
+.strumenti{position:absolute;right:10px;top:10px;z-index:5;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.strumenti button{position:static;top:auto;right:auto;font-family:var(--cap);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:999px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+.strumenti button[aria-pressed="true"],.strumenti .apri[aria-expanded="true"],.strumenti .apri.attivo{background:var(--gold2);color:var(--ink)}
+.strumenti .voci{display:none;flex-direction:column;align-items:flex-end;gap:6px}
+.strumenti.aperto .voci{display:flex}
+body.roma-grande .strumenti button{top:auto}
+.comandi-scena{position:absolute;right:10px;bottom:10px;z-index:5;display:flex;gap:6px}
+.comandi-scena button,body.roma-grande .comandi-scena button{position:static;top:auto;bottom:auto;right:auto;width:38px;height:38px;padding:0;display:grid;place-items:center;font-size:21px;line-height:1;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:50%;cursor:pointer}
+.comandi-scena button[hidden]{display:none}
+.comandi-scena .grande[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+.esplora{display:none}
+.evento{bottom:58px;right:12px}
+.confronto{bottom:58px;right:12px}
+.riquadro.roma.confronto-attivo .evento{bottom:150px}
+body.roma-grande .tempo{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+body.roma-grande .strumenti{top:12px;right:12px}
+body.roma-grande .comandi-scena{right:16px;bottom:calc(var(--tempo,92px) + 28px + env(safe-area-inset-bottom,0px))}
+body.roma-grande .evento,body.roma-grande .confronto{bottom:calc(var(--tempo,92px) + 78px + env(safe-area-inset-bottom,0px))}
+body.roma-grande .riquadro.roma.confronto-attivo .evento{bottom:calc(var(--tempo,92px) + 172px + env(safe-area-inset-bottom,0px))}
+@media (min-width:701px){
+  body.roma-grande .strumenti .apri{display:none}
+  body.roma-grande .strumenti .voci{display:flex}
+  body.roma-grande .legenda-sapere{top:172px;right:12px}
+}
+/* telefoni e schermi stretti */
+@media (max-width:700px){
+  .conta{font-size:12px}.conta b{font-size:23px}
+  .etichette3d{display:none}
+  body.roma-grande .etichette3d{display:block}
+  body.roma-grande .etichette3d span{font-size:10px}
+  .strumenti button{font-size:11px;padding:9px 13px}
+  .comandi-scena button,body.roma-grande .comandi-scena button{width:44px;height:44px;font-size:23px}
+  .legenda-sapere{top:72px}
+  body.roma-grande .tempo{left:8px;right:8px}
+  body.roma-grande .comandi-scena{right:10px}
+  body.roma-grande .evento,body.roma-grande .confronto{left:10px;right:10px}
+  .scheda,body.roma-grande .scheda{bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  /* a tutto schermo la scheda sta sopra la linea del tempo e la riga dei comandi, non sotto; la didascalia dell'evento le cede il posto */
+  body.roma-grande .scheda{bottom:calc(var(--tempo,111px) + 84px + env(safe-area-inset-bottom,0px));max-height:36vh}
+  .riquadro.roma.con-scheda .evento{display:none}
+}
+/* dispositivi al tocco: fuori dallo schermo intero la scena non cattura il dito (la pagina deve poter scorrere); un tocco la apre */
+body.tocco:not(.roma-grande) #btnPiu,body.tocco:not(.roma-grande) #btnMeno,body.tocco:not(.roma-grande) #btnInsieme{display:none}
+body.tocco:not(.roma-grande) .esplora{display:block;position:absolute;left:10px;bottom:10px;z-index:5;font-family:var(--cap);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--gold2);border:0;border-radius:999px;padding:10px 14px;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bottom:62px}
