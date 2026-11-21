@@ -298,20 +298,61 @@ RM.applicaLuce=function(n){
 RM.applicaLuce(0);
 
 /* ---- ciclo ---- */
+/* ---- effetti a tutto schermo ----
+   La scena viene disegnata su una tela intermedia con la sua mappa di profondità; un solo passaggio finale aggiunge:
+   contorni scuri dove la profondità salta (sagome di edifici e colli), una sfocatura «da miniatura» verso l'alto e il basso
+   dello schermo, un antialias leggero e un filo di saturazione. Serve WebGL2; altrimenti si disegna direttamente come prima. */
+var post=null;
+(function(){
+  if(!renderer.capabilities.isWebGL2) return;
+  var NL=String.fromCharCode(10);
+  var tela=new THREE.WebGLRenderTarget(4,4,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat,depthBuffer:true,stencilBuffer:false});
+  tela.texture.encoding=THREE.sRGBEncoding; tela.texture.generateMipmaps=false;
+  tela.depthTexture=new THREE.DepthTexture(4,4); tela.depthTexture.type=THREE.UnsignedIntType;
+  var mat=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
+    uniforms:{ tCol:{value:tela.texture}, tProf:{value:tela.depthTexture}, px:{value:new THREE.Vector2(1,1)}, vicino:{value:camera.near}, lontano:{value:camera.far}, notte:{value:0} },
+    vertexShader:'varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.0,1.0); }',
+    fragmentShader:[
+      'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; varying vec2 vUv;',
+      'float prof(vec2 uv){ float z=texture2D(tProf,uv).x*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',
+      'float lum(vec3 c){ return dot(c,vec3(0.299,0.587,0.114)); }',
+      'void main(){',
+      '  vec3 c=texture2D(tCol,vUv).rgb;',
+      '  float fuoco=smoothstep(0.24,0.52,abs(vUv.y-0.46));',                                   // 0 al centro, 1 ai bordi alto e basso
+      '  vec3 n=texture2D(tCol,vUv+vec2(0.0,px.y)).rgb, s=texture2D(tCol,vUv-vec2(0.0,px.y)).rgb, e=texture2D(tCol,vUv+vec2(px.x,0.0)).rgb, o=texture2D(tCol,vUv-vec2(px.x,0.0)).rgb;',
+      '  float l=lum(c), l0=min(l,min(min(lum(n),lum(s)),min(lum(e),lum(o)))), l1=max(l,max(max(lum(n),lum(s)),max(lum(e),lum(o))));',
+      '  c=mix(c,(n+s+e+o)*0.25,0.42*smoothstep(0.06,0.2,l1-l0));',                               // antialias leggero sui bordi contrastati
+      '  if(fuoco>0.02){ vec2 r=px*fuoco*3.2;',
+      '    c=(c*2.0+texture2D(tCol,vUv+vec2(r.x,0.0)).rgb+texture2D(tCol,vUv-vec2(r.x,0.0)).rgb+texture2D(tCol,vUv+vec2(0.0,r.y)).rgb+texture2D(tCol,vUv-vec2(0.0,r.y)).rgb',
+      '      +texture2D(tCol,vUv+r*0.7).rgb+texture2D(tCol,vUv-r*0.7).rgb+texture2D(tCol,vUv+vec2(r.x,-r.y)*0.7).rgb+texture2D(tCol,vUv+vec2(-r.x,r.y)*0.7).rgb)/10.0; }',
+      '  float p=prof(vUv);',
+      '  float salto=abs(prof(vUv+vec2(px.x,0.0))+prof(vUv-vec2(px.x,0.0))+prof(vUv+vec2(0.0,px.y))+prof(vUv-vec2(0.0,px.y))-4.0*p)/p;',
+      '  float contorno=smoothstep(0.006,0.03,salto)*(1.0-fuoco)*(1.0-smoothstep(500.0,1400.0,p));',
+      '  c=mix(c,c*vec3(0.34,0.25,0.18),contorno*0.62*(1.0-0.6*notte));',
+      '  float g=lum(c); c=mix(vec3(g),c,1.1);',
+      '  gl_FragColor=vec4(c,1.0);',
+      '}'].join(NL) });
+  var quadro=new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat); quadro.frustumCulled=false;
+  var scena2=new THREE.Scene(); scena2.add(quadro);
+  post={ tela:tela, mat:mat, scena:scena2, camera:new THREE.OrthographicCamera(-1,1,1,-1,0,1), attivo:true };
+})();
+RM.post=post;
 function misura(){
   var w=contenitore.clientWidth||1, h=contenitore.clientHeight||1;
   renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
+  if(post){ var pr=renderer.getPixelRatio(), W=Math.max(2,Math.floor(w*pr)), H=Math.max(2,Math.floor(h*pr)); post.tela.setSize(W,H); post.mat.uniforms.px.value.set(1/W,1/H); }
 }
 window.addEventListener('resize',misura); misura();
 if(window.ResizeObserver) new ResizeObserver(misura).observe(contenitore);
 /* Regolatore: se i fotogrammi durano troppo, la scena rinuncia per gradi a ciò che costa di più.
-   1 = risoluzione a un pixel per pixel; 2 = niente ombre; 3 = niente passanti né fumo. Non risale: evita di oscillare. */
+   1 = niente effetti a tutto schermo; 2 = risoluzione a un pixel per pixel; 3 = niente ombre; 4 = niente passanti né fumo. Non risale: evita di oscillare. */
 RM.livello=0;
 function alleggerisci(){
   RM.livello++;
-  if(RM.livello===1){ renderer.setPixelRatio(1); misura(); }
-  else if(RM.livello===2){ sole.castShadow=false; }
-  else if(RM.livello===3){ RM.leggero=true; }
+  if(RM.livello===1){ if(post) post.attivo=false; else alleggerisci(); }
+  else if(RM.livello===2){ renderer.setPixelRatio(1); misura(); }
+  else if(RM.livello===3){ sole.castShadow=false; }
+  else if(RM.livello===4){ RM.leggero=true; }
 }
 var orologio=new THREE.Clock(), somma=0, quanti=0, scalda=40;
 (function ciclo(){
@@ -319,11 +360,15 @@ var orologio=new THREE.Clock(), somma=0, quanti=0, scalda=40;
   var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1);
   if(!document.hidden && grezzo<.4){                       // le pause (scheda nascosta, caricamento) non contano
     if(scalda>0) scalda--; else { somma+=grezzo; quanti++; }
-    if(quanti>=50){ if(somma/quanti>.036 && RM.livello<3){ alleggerisci(); scalda=20; } somma=0; quanti=0; }
+    if(quanti>=50){ if(somma/quanti>.036 && RM.livello<4){ alleggerisci(); scalda=20; } somma=0; quanti=0; }
   }
   for(var i=0;i<RM.frame.length;i++) RM.frame[i](dt);
   controlli.update();
-  renderer.render(scene,camera);
+  if(post && post.attivo){
+    post.mat.uniforms.notte.value=RM.notte||0;
+    renderer.setRenderTarget(post.tela); renderer.render(scene,camera);
+    renderer.setRenderTarget(null); renderer.render(post.scena,post.camera);
+  } else renderer.render(scene,camera);
 })();
 
 })();
