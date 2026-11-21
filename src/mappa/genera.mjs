@@ -64,6 +64,7 @@ const TAGLI = {
   venezia:   [[12.2, 45.1], [12.15, 45.45], [12.55, 45.62], [12.95, 45.72], [13.45, 45.75], [13.6, 45.6], [12.5, 45]],                                        // le lagune
   istria:    [[13.5, 45.6], [13.95, 45.6], [14.25, 45.35], [14.1, 44.8], [13.5, 44.8]],
   romagna:   [[10.85, 43.6], [10.85, 44], [11, 44.6], [11.4, 44.95], [11.4, 45.3], [13, 45.3], [13, 43.6]],                                                   // la Regio VIII a est del Panaro: l'Esarcato (Bologna, Ravenna, Rimini)
+  bolognese: [[10.85, 43.6], [10.85, 44], [11, 44.6], [11.4, 44.95], [11.4, 45.3], [11.95, 45.3], [11.95, 44.75], [12, 44.4], [12, 43.6]],                 // Bologna, Imola, Faenza, Ferrara: fuori dalla donazione del 756 (Faenza e Ferrara al papa nel 757, il resto nel 774)
   pentapoli: [[12.4, 44.05], [12.25, 43.75], [12.45, 43.35], [12.75, 43.25], [13.15, 43.35], [13.5, 43.4], [13.65, 43.55], [13.3, 44.05]],                    // da Pesaro ad Ancona
   corridoio: [[12.15, 43.5], [12.35, 43.5], [12.55, 43.3], [12.5, 43.2], [12.5, 42.75], [12.58, 42.5], [12.5, 42.38], [12.3, 42.42], [12.3, 42.75], [12.2, 43.1]],                                        // Perugia, Todi, Amelia: la striscia che tiene uniti Ravenna e Roma
   tuscia:    [[11.6, 41.6], [11.6, 42.2], [11.8, 42.2], [12.05, 42.3], [12.2, 42.33], [12.2, 42.52], [12.32, 42.52], [12.4, 42.45], [12.9, 42.45], [12.9, 41.6]],                           // l'Etruria a sud di Blera, Sutri e Orte: con Roma dal VI secolo
@@ -97,7 +98,8 @@ const REGIONI = {
   italia_nord:{ nome: 'Italia del nord', prov: ['IX', 'X', 'XI', 'VII'], fuori: ['tuscia', 'liguria', 'venezia', 'istria', 'corridoio'], piu: [{ prov: ['VIII'], fuori: ['romagna'] }] },
   liguria:    { nome: 'Liguria marittima', prov: ['IX', 'VII'], dentro: 'liguria' },
   venezia:    { nome: 'Lagune venete e Istria', prov: ['X'], dentro: 'venezia', piu: [{ prov: ['X'], dentro: 'istria' }] },
-  ravenna:    { nome: 'Romagna e Ravenna', prov: ['VIII'], dentro: 'romagna' },
+  ravenna:    { nome: 'Romagna e Ravenna', prov: ['VIII'], dentro: 'romagna', fuori: ['bolognese'] },
+  bolognese:  { nome: 'Bologna, Imola e Ferrara', prov: ['VIII'], dentro: ['romagna', 'bolognese'] },
   spoleto:    { nome: 'Umbria e Piceno', prov: ['VI', 'V'], fuori: ['pentapoli', 'corridoio'] },
   pentapoli:  { nome: 'Pentapoli e corridoio di Perugia', prov: ['VI', 'V'], dentro: 'pentapoli', piu: [{ prov: ['VI', 'VII'], dentro: 'corridoio' }] },
   roma:       { nome: 'Lazio', prov: ['I'], fuori: ['campania'], piu: [{ prov: ['VII'], dentro: 'tuscia', fuori: ['corridoio'] }] },
@@ -203,14 +205,14 @@ const POPOLI = {
     [403, 16.37, 45.48, 'federati', [[10.99, 45.44], [13.37, 45.77], [14.5, 46.05]]],                                               // dopo Verona, «fra Dalmazia e Pannonia»
     [406, 20.7, 39.4, 'federati', [[18.4, 43.85], [19.5, 42.1], [20.1, 41.1]]],
     [408, 14.37, 46.7, 'armi', [[20.1, 41.1], [19.5, 42.1], [18.4, 43.85], [16.37, 45.48], [14.5, 46.05]]],                         // Emona e il Norico (Zosimo V 29)
-    [409, 12.5, 42.3, 'armi', [[14.5, 46.05], [13.37, 45.77], [12.42, 45.54], [10.03, 45.13], [11.34, 44.49], [12.57, 44.06], [12.7, 42.95], [12.52, 42.52]]],   // Aquileia, Altino, Cremona, Bologna, Rimini (Zosimo V 37)
+    [409, 12.5, 42.3, 'armi', [[14.5, 46.05], [13.37, 45.77], [12.84, 45.76], [12.42, 45.54], [10.03, 45.13], [11.34, 44.49], [12.57, 44.06], [13.5, 43.6], [13, 42.4], [12.52, 42.52]]],   // autunno 408: Aquileia, Concordia, Altino, Cremona, Bologna, Rimini, il Piceno, Roma (Zosimo V 37, letto)
     [410, 12.5, 41.9, 'armi'],
     [412, 4.9, 44.93, 'armi', [[14.25, 40.85], [15.6, 40.1], [16.25, 39.3], [15.65, 38.11], [16.25, 39.3], [15.6, 40.1], [14.9, 40.9], [12.48, 41.9], [11.25, 43.77], [10.3, 44.8], [8.6, 44.9], [7.7, 45.07], [6.75, 44.9]]],   // fino a Reggio e ritorno, poi le Alpi (il valico è un'ipotesi)
     [415, 2.17, 41.38, 'armi', [[4.8, 43.95], [3, 43.18], [2.86, 42.46]]],
     [418, 0.4, 44.6, 'federati', [[2.86, 42.46], [3, 43.18], [1.44, 43.6]]],
     [472, 1.4, 43.6, 'regno'], [508, 3, 43.18, 'regno'], [537, -3.6, 40.2, 'regno']], fine: 711 },      // dopo Vouillé la corte lascia Tolosa: Narbona, poi la Hispania
   ostrogoti: { nome: 'Ostrogoti', peso: 8, t: [[235, 33, 47.2, 'fuori'], [378, 30, 46.5, 'fuori'], [455, 18, 46.5, 'federati', [[26, 46.5], [22, 47]]], [476, 25.4, 43.6, 'federati', [[20.46, 44.82], [22.88, 43.99]]],
-    [493, 12.2, 44.42, 'regno', [[22.88, 43.99], [21.2, 44.73], [20.46, 44.82], [19, 45.3], [16.37, 45.48], [14.5, 46.05], [13.6, 45.85], [10.99, 45.44], [9.19, 45.46], [9.5, 45.4]]]], fine: 554 },   // 488-493: Singidunum, Siscia, Isonzo, Verona, Adda, Ravenna
+    [493, 12.2, 44.42, 'regno', [[22.88, 43.99], [21.2, 44.73], [20.46, 44.82], [19.61, 44.97], [19, 45.3], [14.5, 46.05], [13.6, 45.85], [10.99, 45.44], [9.19, 45.46], [9.5, 45.4]]]], fine: 554 },   // 488-493: da Novae per Sirmio all'Isonzo, Verona, Milano, l'Adda (11 agosto 490), Ravenna: Giordane, Getica 292-293, e Anonimo Valesiano 49-54. Singidunum e Ulca vengono da Ennodio (a memoria); fra Sirmio ed Emona il tracciato è un'ipotesi
   vandali:   { nome: 'Vandali e Alani', peso: 7, t: [[235, 20, 49.6, 'fuori'], [402, 15.5, 48.9, 'fuori'],
     [406, 8.27, 50, 'armi', [[12.1, 49.02], [9.93, 49.79]]],                                                                        // lungo Danubio e Meno (ipotesi); Magonza è il passaggio più citato
     [409, -1.65, 42.8, 'armi', [[4.03, 49.25], [2.3, 49.9], [1.9, 47.9], [0.6, 44.2], [-1.32, 43.01]]],                             // Reims e Amiens (Girolamo, lettera 123), poi l'Aquitania e i Pirenei, autunno 409 (Idazio)

@@ -173,12 +173,12 @@ var M=[
         B.striscia(es,0,es,1.7,P.tufo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });
     });
     inForo(B,10.7,-8.9,IMP,function(B){ portico(B,12,4.2,0,0,0,1.2); B.tempio(1.8,2.4,1.5,4.6,0,-PI/2,{fronte:6}); });            // foro di Nerva, Minerva: lo attraversa l'Argileto
-    inForo(B,16.9,-2.6,IMP,function(B){                                                                                           // tempio della Pace: una piazza a giardino di circa 125 x 110 m (le misure pubblicate vanno da 135 x 100 a 110 x 135)
-      portico(B,12.6,9.2,0,0,-.9,1.2,P.prato);
-      B.scatola(4.4,1.7,1.8,4.1,0,4.6,P.mattone).scatola(4.5,.12,1.9,4.1,1.7,4.6,P.coppi);                                         // le aule sul lato di fondo (sud-est); quella all'angolo sud è Santi Cosma e Damiano
-      B.tempio(3.2,2.4,2.1,0,4.5,PI,{fronte:6,podio:.2});                                                                          // il tempio: un'aula dietro il portico, da cui sporge solo il pronao a sei colonne
-      [-1,1].forEach(function(q){ for(var k=0;k<3;k++) B.scatola(.42,.14,5,q*(1.4+k*1.2),.1,-1.5,P.mattone).scatola(.3,.04,4.86,q*(1.4+k*1.2),.24,-1.5,P.acqua); });      // le sei lunghe vasche fra le aiuole
-      B.scatola(.5,.3,.5,0,.1,1.5,P.marmo);                                                                                        // l'altare davanti al tempio
+    inForo(B,16.9,-2.6,IMP,function(B){                                                                                           // tempio della Pace: una piazza a giardino di circa 110 x 105 m (Fogagnolo e Rossi 2010); con le aule di fondo il complesso arriva a 125 m
+      portico(B,11,10.5,0,0,-.9,1.2,P.prato);
+      B.scatola(3.6,1.7,1.8,3.7,0,5.25,P.mattone).scatola(3.7,.12,1.9,3.7,1.7,5.25,P.coppi);                                         // le aule sul lato di fondo (sud-est); quella all'angolo sud è Santi Cosma e Damiano
+      B.tempio(3.2,2.4,2.1,0,5.15,PI,{fronte:6,podio:.2});                                                                          // il tempio: un'aula dietro il portico, da cui sporge solo il pronao a sei colonne
+      [-1,1].forEach(function(q){ for(var k=0;k<3;k++) B.scatola(.42,.14,6,q*(1.3+k*1.15),.1,-1.3,P.mattone).scatola(.3,.04,5.86,q*(1.3+k*1.15),.24,-1.3,P.acqua); });      // le sei lunghe vasche fra le aiuole
+      B.scatola(.5,.3,.5,0,.1,2.3,P.marmo);                                                                                        // l'altare davanti al tempio
     });
     inForo(B,-1.3,-27.8,IMP,function(B){
       portico(B,11.5,9,0,0,0,1.3);                                                             // foro di Traiano
@@ -217,7 +217,7 @@ var M=[
       arcato(B,9,2.7,13.5,2.6,0,-.5,P.mattone,2,7);                                            // Domus Augustana
       B.scatola(4,.12,4,2.6,2.7,-3.4,P.ombra).scatola(4,.12,4,2.6,2.7,2.6,P.ombra);
       var es=RM.ellisse(4.4,2.2,14,0,PI).map(function(p){ return [p[0]+2.6,p[1]+6.2]; }); B.striscia(es,-1.4,es,2.2,P.mattone,false).fornici(es,-1.1,.8,.5,1,false).fornici(es,.6,.8,.5,1,false);
-      B.scatola(4.6,1.6,.3,10.6,0,-7.2,P.mattone).scatola(.3,1.6,14,8.4,0,-.2,P.mattone).scatola(.3,1.6,14,12.8,0,-.2,P.mattone).scatola(4,.1,13.6,10.6,0,-.2,P.prato);   // stadio palatino: giardino a forma di circo, col lato sud curvo
+      B.scatola(4.6,1.6,.3,9.4,0,-4.6,P.mattone).scatola(.3,1.6,14,7.2,0,2.4,P.mattone).scatola(.3,1.6,14,11.6,0,2.4,P.mattone).scatola(4,.1,13.6,9.4,0,2.4,P.prato);   // stadio palatino: giardino a forma di circo, col lato sud curvo
       var cs=RM.ellisse(2.2,1.4,8,0,PI).map(function(p){ return [p[0]+10.6,p[1]+6.8]; }); B.striscia(cs,0,cs,1.6,P.mattone,false);
       B.colonne(9,-6.6,9,6.4,14,.9,.05,.1).colonne(12.2,-6.6,12.2,6.4,14,.9,.05,.1).scatola(.5,.08,13.4,8.75,1,-.1,P.coppi).scatola(.5,.08,13.4,12.45,1,-.1,P.coppi);      // il portico attorno
       B.scatola(1.6,2.2,2.6,13.6,0,-.2,P.mattone).cupola(1.3,13.6,2.2,-.2,P.intonaco,.5);        // la tribuna imperiale, sul lato est
@@ -269,7 +269,7 @@ var M=[
     B.vano(0,0,4.42,1,0,.5,.85);                                                                                 // l'ingresso, a sud
     [-.9,.9].forEach(function(x){ B.scatola(.22,.2,.22,x,0,5.1,P.marmo).cilindro(.09,1.4,x,.2,5.1,P.sabbia,.06,4).cono(.065,.14,x,1.6,5.1,P.sabbia,4); });      // i due obelischi ai lati dell'ingresso
  }},
- {id:'pompeo', x:-98,z:-30, ry:-PI/2, zone:[[0,0,10],[0,-14,10]], fa:function(B){ teatro(B,8,2.6); B.tempio(2,2.6,1.4,0,6.6,PI,{fronte:6}); portico(B,13,18,0,0,-11.5,1.1,P.prato); }},   // teatro e portici di Pompeo
+ {id:'pompeo', x:-94.3,z:-30.8, ry:-PI/2, zone:[[0,0,10],[0,-14,10]], fa:function(B){ teatro(B,8,2.6); B.tempio(2,2.6,1.4,0,6.6,PI,{fronte:6}); portico(B,13,18,0,0,-11.5,1.1,P.prato); }},   // teatro e portici di Pompeo
  {id:'marcello', nome:'Teatro di Marcello', x:-46,z:7, ry:PI*.8, zone:[[0,0,8]], fa:function(B){ teatro(B,6.5,2.9); }},
  {id:'laterano', nome:'San Giovanni in Laterano', x:169,z:73, ry:.1, zone:[[0,0,8],[8,0,6],[-11.3,-3.5,2.6]], fa:function(B){ chiesa(B,10,6); B.cilindro(1.2,1.6,-11.3,0,-3.5,P.mattone,null,8).cono(1.3,.7,-11.3,1.6,-3.5,P.coppi,8); }},      // il battistero ottagonale, dov'è oggi (OpenStreetMap): dietro l'abside, verso nord
  {id:'pietro', nome:'San Pietro', x:-259,z:-108, ry:0, zone:[[0,0,9],[10,0,7]], et:1, fa:function(B){
@@ -279,8 +279,8 @@ var M=[
  }},
  /* ---- costruiti durante la storia, in ordine di data ---- */
  {id:'sole', nome:'Tempio del Sole', x:-30,z:-106, ry:.16, zone:[[0,0,9]], fa:function(B){
-    portico(B,8,13,0,0,0,1.2); B.cilindro(1.9,.3,0,.1,-1.5,P.travertino,null,24).cilindro(1.5,1.7,0,.4,-1.5,P.marmo,null,24).cupola(1.5,0,2.1,-1.5,P.bronzo,.6);
-    for(var k=0;k<14;k++) B.cilindro(.08,1.5,1.8*Math.cos(k*.449),.4,-1.5+1.8*Math.sin(k*.449),P.marmo,.07,7);
+    portico(B,8,13,0,0,0,1.2); B.cilindro(1.25,.3,0,.1,-1.5,P.travertino,null,24).cilindro(.5,1.7,0,.4,-1.5,P.marmo,null,16).cilindro(1.2,.16,0,1.9,-1.5,P.marmo,null,24).cupola(1.2,0,2.06,-1.5,P.bronzo,.5);      // dai disegni di Palladio: una rotonda di 25 m circa con la cella di 10 e sedici colonne (l'attribuzione al tempio è di Hülsen, incerta)
+    for(var k=0;k<16;k++) B.cilindro(.07,1.5,1.12*Math.cos(k*.3927),.4,-1.5+1.12*Math.sin(k*.3927),P.marmo,.06,7);
  }},
  {id:'arcocostantino', nome:'Arco di Costantino', x:44.5,z:30.4, ry:-.3, zone:[[0,0,3]], fa:function(B){
     B.scatola(2.6,1.5,.75,0,0,0,P.marmo).scatola(2.72,.14,.87,0,1.5,0,P.marmo).scatola(2.6,.5,.75,0,1.64,0,P.marmo);          // fornici, cornice, attico
@@ -288,7 +288,7 @@ var M=[
     B.aperture(.33,-.38,-.33,-.38,1,0,1.15,.62).aperture(-.55,-.38,-1.05,-.38,1,0,.72,.34).aperture(1.05,-.38,.55,-.38,1,0,.72,.34);
     B.colonne(-1.2,.47,1.2,.47,4,1.3,.07,.1,P.sabbia).colonne(-1.2,-.47,1.2,-.47,4,1.3,.07,.1,P.sabbia);                    // colonne di giallo antico
  }},
- {id:'termecostantino', nome:'Terme di Costantino', x:13,z:-67, ry:-.2, sc:.45, zone:[[0,0,9]], fa:function(B){ terme(B,33,32); }},
+ {id:'termecostantino', nome:'Terme di Costantino', x:21.5,z:-65.9, ry:-.2, sc:.45, zone:[[0,0,9]], fa:function(B){ terme(B,33,32); }},
  {id:'croce', nome:'Santa Croce in Gerusalemme', x:253.3,z:47.6, ry:2.72, zone:[[0,0,4]], fa:function(B){
     var L=3.65, W=2.2, H=2.2;                                                                  // l'aula del palazzo Sessoriano: un vano solo di 36 x 22 m, alto quanto largo, non una basilica a navate
     B.scatola(L,H,W,0,0,0,P.mattone).falde(L,.42,W+.12,0,H,0,P.coppi,0,P.mattone);
@@ -326,8 +326,8 @@ var M=[
     B.striscia(e3,0,e3,.75,P.mattone).striscia(e3t,.75,e2,.98,P.coppi).striscia(e2,.98,e2,0,P.mattone);
     B.cilindro(2.1,1.2,0,0,0,P.mattone,null,32).cono(2.18,.45,0,1.2,0,P.coppi,32);
     for(k=0;k<4;k++){ a=PI/4+k*PI/2; B.scatola(1.35,1.25,1.1,2.66*Math.cos(a),0,2.66*Math.sin(a),P.mattone,-a).falde(1.4,.35,1.2,2.66*Math.cos(a),1.25,2.66*Math.sin(a),P.coppi,-a,P.mattone); }
-    B.cilindro(1.1,2.2,0,0,0,P.mattone,null,22).cono(1.18,.5,0,2.2,0,P.coppi,22);
-    for(k=0;k<22;k++) B.scatola(.12,.3,.06,1.12*Math.cos(k*.2856),1.75,1.12*Math.sin(k*.2856),P.ombra,-k*.2856+PI/2);
+    B.cilindro(1.125,2.2,0,0,0,P.mattone,null,22).cono(1.2,.5,0,2.2,0,P.coppi,22);
+    for(k=0;k<22;k++) B.scatola(.12,.3,.06,1.145*Math.cos(k*.2856),1.75,1.145*Math.sin(k*.2856),P.ombra,-k*.2856+PI/2);
  }},
  {id:'cosma', nome:'Santi Cosma e Damiano', x:16.5,z:4, ry:-.35, come:'fori', fa:function(B){
     B.scatola(2.2,2,3.6,0,0,0,P.mattone).falde(3.6,.6,2.4,0,2,0,P.coppi,PI/2,P.mattone).cilindro(.9,1.4,0,0,2.6,P.mattone,null,16).cupola(.9,0,1.4,2.6,P.bronzo,.6);
@@ -343,11 +343,11 @@ var M=[
     casa(B,y(-8,2.6),-8,2.6,2.6,3,1.4);                     // San Martino, addossato all'abside a sud-ovest
     casa(B,y(-15.5,4),-15.5,4,4,3,1.5);                     // Santo Stefano Maggiore, dietro l'abside
  }},
- {id:'porticopietro', nome:'Portico dei pellegrini', x:-213.5,z:-107, ry:.0597, lunga:[67,2.2], fa:function(B){          // dall'ansa del Tevere, passato il mausoleo, ai gradini dell'atrio
-    var y=suTerreno(-213.5,-107,.0597), q;
-    for(var k=0;k<9;k++){ var lx=(k-4)*7.46; q=y(lx,0);
-      B.scatola(7.56,.12,1.5,lx,q+1.05,0,P.coppi).colonne(lx-3.6,-.6,lx+3.6,-.6,8,1.35,.06,q-.3).colonne(lx-3.6,.6,lx+3.6,.6,8,1.35,.06,q-.3); }
-    [[-34.5,-10],[-34.5,3.5]].forEach(function(p){ casa(B,y(p[0],p[1]),p[0],p[1],2.6,3.4,1.3); });      // gli episcopia di papa Simmaco, a destra e a sinistra dell'atrio
+ {id:'porticopietro', nome:'Portico dei pellegrini', x:-201.75,z:-108.1, ry:.0685, lunga:[90.5,2.2], fa:function(B){          // dalla testata di ponte Sant'Angelo (posizione da OpenStreetMap), sotto il mausoleo, ai gradini dell'atrio: circa 900 m
+    var y=suTerreno(-201.75,-108.1,.0685), q;
+    for(var k=0;k<12;k++){ var lx=(k-5.5)*7.54; q=y(lx,0);
+      B.scatola(7.64,.12,1.5,lx,q+1.05,0,P.coppi).colonne(lx-3.65,-.6,lx+3.65,-.6,8,1.35,.06,q-.3).colonne(lx-3.65,.6,lx+3.65,.6,8,1.35,.06,q-.3); }
+    [[-46.25,-10],[-46.25,3.5]].forEach(function(p){ casa(B,y(p[0],p[1]),p[0],p[1],2.6,3.4,1.3); });      // gli episcopia di papa Simmaco, a destra e a sinistra dell'atrio
  }},
  {id:'scholae', nome:'Scholae dei pellegrini', x:-233,z:-108, ry:0, zone:[[33.5,12.5,5],[14,9,5],[-8,17,5],[-12,-11,5],[-32,12.5,4]], fa:function(B){
     var y=suTerreno(-233,-108,0), q;
