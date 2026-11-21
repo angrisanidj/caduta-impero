@@ -52,24 +52,28 @@ function terme(B,L,Pd){                                   // recinto con giardin
   B.scatola(s,a,Pd,-L/2,0,0,P.mattone).scatola(s,a,Pd,L/2,0,0,P.mattone);
   var es=RM.ellisse(L*.15,L*.12,16,0,PI).map(function(p){ return [p[0],p[1]+Pd/2]; });           // esedra del recinto
   B.striscia(es,0,es,a+.3,P.mattone,false).fornici(es,.2,.8,.5,1,false);
-  arcato(B,L*.64,2.3,Pd*.3,0,0,zc,P.mattone,2,Math.round(L*.5));                                  // corpo centrale
-  B.scatola(L*.2,3.7,Pd*.17,0,0,zc,P.mattone);                                                    // frigidarium, a tre crociere
-  for(var i=-1;i<=1;i++) B.falde(Pd*.19,.8,L*.066,i*L*.066,3.7,zc,P.coppi,PI/2,P.mattone);
-  B.falde(L*.2,.7,Pd*.17,0,3.7,zc,P.coppi,0,P.mattone);
+  arcato(B,L*.64,2.3,Pd*.3,0,0,zc,P.intonaco,2,Math.round(L*.5));                                 // corpo centrale: i muri di mattoni erano coperti di intonaco
+  B.scatola(L*.2,3.7,Pd*.17,0,0,zc,P.intonaco);                                                   // frigidarium, a tre crociere
+  for(var i=-1;i<=1;i++) B.falde(Pd*.19,.8,L*.066,i*L*.066,3.7,zc,P.coppi,PI/2,P.intonaco);
+  B.falde(L*.2,.7,Pd*.17,0,3.7,zc,P.coppi,0,P.intonaco);
+  B.aperture(-L*.1,zc+Pd*.085,L*.1,zc+Pd*.085,3,2.5,1.05,L*.05).aperture(L*.1,zc-Pd*.085,-L*.1,zc-Pd*.085,3,2.5,1.05,L*.05);      // i finestroni termali, uno per crociera, sopra i tetti delle aule vicine
   [-1,1].forEach(function(k){
-    B.scatola(L*.12,2.9,Pd*.26,k*L*.17,0,zc,P.mattone).volta(Pd*.26,L*.06,k*L*.17,2.9,zc,P.intonaco,PI/2);   // aule laterali
+    B.scatola(L*.12,2.9,Pd*.26,k*L*.17,0,zc,P.intonaco).volta(Pd*.26,L*.06,k*L*.17,2.9,zc,P.intonaco,PI/2);  // aule laterali
     B.scatola(L*.13,.12,Pd*.2,k*L*.255,2.3,zc-Pd*.02,P.ombra);                                              // palestre a cielo aperto
     B.scatola(L*.1,1.9,Pd*.1,k*L*.3,0,Pd*.3,P.mattone).falde(L*.1,.5,Pd*.1,k*L*.3,1.9,Pd*.3,P.coppi);       // biblioteche
   });
   B.scatola(L*.2,.14,Pd*.09,0,2.3,zc-Pd*.11,P.acqua);                                                       // natatio
-  B.cilindro(L*.085,3.3,0,0,zc+Pd*.2,P.mattone).cupola(L*.085,0,3.3,zc+Pd*.2,P.intonaco,.62);               // caldarium
-  B.scatola(L*.1,2.6,Pd*.08,0,0,zc+Pd*.12,P.mattone);
+  B.cilindro(L*.085,3.3,0,0,zc+Pd*.2,P.intonaco).cupola(L*.085,0,3.3,zc+Pd*.2,P.intonaco,.62);              // caldarium: rotonda a cupola, con le grandi finestre a sud per il sole del pomeriggio
+  var cal=RM.ellisse(L*.085,L*.085,12,0,PI).map(function(p){ return [p[0],p[1]+zc+Pd*.2]; });
+  B.fornici(cal,.5,1.1,.5,1,false).fornici(cal,2,.9,.5,1,false);
+  B.scatola(L*.1,2.6,Pd*.08,0,0,zc+Pd*.12,P.intonaco);
 }
 function chiesa(B,L,W,transetto){                         // basilica cristiana: navata lungo x, abside a -x, atrio a +x
   B.scatola(L,2.8,W*.36,0,0,0,P.mattone).falde(L,.9,W*.4,0,2.8,0,P.coppi,0,P.mattone);
   B.aperture(-L/2+.5,W*.18,L/2-.5,W*.18,Math.round(L/1.1),1.9,.55,.3).aperture(L/2-.5,-W*.18,-L/2+.5,-W*.18,Math.round(L/1.1),1.9,.55,.3);
   [-1,1].forEach(function(k){ B.scatola(L,1.5,W*.3,0,0,k*W*.33,P.mattone).scatola(L+.1,.14,W*.32,0,1.5,k*W*.33,P.coppi); });
   B.cilindro(W*.17,2.3,-L/2,0,0,P.mattone,null,14).cono(W*.18,.7,-L/2,2.3,0,P.coppi,14);
+  B.vano(L/2+.03,0,0,0,1,.55,1.1).vano(L/2+.03,0,W*.33,0,1,.36,.8).vano(L/2+.03,0,-W*.33,0,1,.36,.8).vano(L/2+.03,1.75,0,0,1,.5,.75);      // le tre porte e la finestra della facciata
   if(transetto) B.scatola(2.4,2.8,W*1.25,-L/2+1.6,0,0,P.mattone).falde(W*1.25,.8,2.6,-L/2+1.6,2.8,0,P.coppi,PI/2,P.mattone);
   portico(B,W*.8,W*.8,L/2+W*.4,0,0,1.1);
 }
@@ -232,12 +236,18 @@ var M=[
     B.dentro(0,.7,0,PI/2,function(B){ B.tempio(4.8,10.6,2.6,0,0,0,{fronte:8,lati:16,tetto:P.oro,podio:.4}); });
  }},
  {id:'adriano', nome:'Mausoleo di Adriano', x:-157,z:-118, ry:.1, zone:[[0,0,10]], et:1, fa:function(B){
-    B.scatola(8.9,1.5,8.9,0,0,0,P.marmo).cilindro(3.2,2.1,0,1.5,0,P.travertino,null,40).cilindro(3,.3,0,3.6,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.8,0,P.marmo).scatola(.6,.5,.3,0,5.5,0,P.bronzo);
-    for(var k=0;k<14;k++) B.cono(.22,1.2,2.5*Math.cos(k*.449),3.85,2.5*Math.sin(k*.449),P.chioma,6);
+    B.scatola(8.9,1.5,8.9,0,0,0,P.marmo).scatola(9.05,.12,9.05,0,1.5,0,P.marmo).cilindro(3.2,2.1,0,1.62,0,P.travertino,null,40).cilindro(3.27,.1,0,3.62,0,P.marmo,null,40).cilindro(3,.3,0,3.72,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.9,0,P.marmo).scatola(1.6,.1,1.6,0,5.6,0,P.marmo);
+    B.scatola(.7,.36,.3,0,5.7,0,P.statua).scatola(.12,.5,.12,0,5.9,-.05,P.statua);                               // la quadriga in cima (la ricordano le fonti tarde: forma indicativa)
+    B.vano(0,0,4.48,1,0,.7,1.1);                                                                                 // l'ingresso, verso il ponte
+    [-4.2,4.2].forEach(function(x){ [-4.2,4.2].forEach(function(z){ B.scatola(.3,.5,.3,x,1.62,z,P.statua); }); }); // gruppi di bronzo agli angoli del basamento
+    for(var st=0;st<20;st++) B.scatola(.11,.4,.11,3.05*Math.cos(st*PI/10),3.72,3.05*Math.sin(st*PI/10),P.marmo);  // le statue sull'orlo: nel 537 gli assediati le gettano sui Goti (Procopio)
+    for(var k=0;k<14;k++) B.cono(.22,1.2,2.5*Math.cos(k*.449),3.95,2.5*Math.sin(k*.449),P.chioma,6);
  }},
  {id:'augusto', x:-74,z:-151, ry:0, zone:[[0,0,7]], fa:function(B){                             // mausoleo di Augusto
     B.cilindro(4.4,1.2,0,0,0,P.travertino,null,40).cilindro(4,.3,0,1.2,0,P.prato,3.2,24).cilindro(2.6,1.1,0,1.4,0,P.travertino,null,30).cilindro(1,1.5,0,2.5,0,P.marmo,null,16).scatola(.3,.6,.3,0,4,0,P.bronzo);
     for(var k=0;k<18;k++) B.cono(.22,1.2,3.6*Math.cos(k*.349),1.45,3.6*Math.sin(k*.349),P.chioma,6);
+    B.vano(0,0,4.42,1,0,.5,.85);                                                                                 // l'ingresso, a sud
+    [-.9,.9].forEach(function(x){ B.scatola(.22,.2,.22,x,0,5.1,P.marmo).cilindro(.09,1.4,x,.2,5.1,P.sabbia,.06,4).cono(.065,.14,x,1.6,5.1,P.sabbia,4); });      // i due obelischi ai lati dell'ingresso
  }},
  {id:'pompeo', x:-98,z:-30, ry:-PI/2, zone:[[0,0,10],[0,-14,10]], fa:function(B){ teatro(B,8,2.6); B.tempio(2,2.6,1.4,0,6.6,PI,{fronte:6}); portico(B,13,18,0,0,-11.5,1.1,P.prato); }},   // teatro e portici di Pompeo
  {id:'marcello', nome:'Teatro di Marcello', x:-46,z:7, ry:PI*.8, zone:[[0,0,8]], fa:function(B){ teatro(B,6.5,2.9); }},
