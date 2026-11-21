@@ -83,7 +83,7 @@ function voceStato(s,anno){
   if(s.indexOf('regno:')===0){ var c=s.slice(6); return c==='italia'?(anno<493?'regno d\'Italia di Odoacre':'regno degli Ostrogoti'):c==='franchi'&&anno<511?'regno dei Franchi':REGNI[c][1]; }
   return s==='roma'?(anno<395?'impero romano':'impero d\'Occidente'):s==='usurpatore'?(anno<455?'impero separato, con un suo imperatore':'dominio romano che non obbedisce più a Ravenna'):s==='conteso'?'in guerra, contesa':
     s==='federati'?'barbari insediati per trattato':s==='regno'?'regno':s==='oriente'?'impero d\'Oriente':
-    s==='califfato'?(anno<750?'califfato':'califfato ed emirati arabi'):s==='carolingio'?'impero dei Franchi':s==='chiesa'?'terre della Chiesa':(anno<395?'lasciata dall\'impero':'uscita dall\'impero');
+    s==='califfato'?(anno<750?'califfato':'califfato ed emirati arabi'):s==='carolingio'?(anno<843?'impero dei Franchi':'regni dei Franchi, dopo la divisione dell\'843'):s==='chiesa'?'terre della Chiesa':(anno<395?'lasciata dall\'impero':'uscita dall\'impero');
 }
 var legenda=document.getElementById('legendaMappa'), legendaPopoli=document.getElementById('legendaPopoli'), vociStati={}, vociPopoli={};
 STATI.forEach(function(s){

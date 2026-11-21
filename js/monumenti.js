@@ -283,7 +283,13 @@ var M=[
     B.colonne(-1.2,.47,1.2,.47,4,1.3,.07,.1,P.sabbia).colonne(-1.2,-.47,1.2,-.47,4,1.3,.07,.1,P.sabbia);                    // colonne di giallo antico
  }},
  {id:'termecostantino', nome:'Terme di Costantino', x:13,z:-67, ry:-.2, sc:.45, zone:[[0,0,9]], fa:function(B){ terme(B,33,32); }},
- {id:'croce', nome:'Santa Croce in Gerusalemme', x:253.3,z:47.6, ry:2.72, sc:.7, zone:[[0,0,7]], fa:function(B){ chiesa(B,9,6); }},
+ {id:'croce', nome:'Santa Croce in Gerusalemme', x:253.3,z:47.6, ry:2.72, zone:[[0,0,4]], fa:function(B){
+    var L=3.65, W=2.2, H=2.2;                                                                  // l'aula del palazzo Sessoriano: un vano solo di 36 x 22 m, alto quanto largo, non una basilica a navate
+    B.scatola(L,H,W,0,0,0,P.mattone).falde(L,.42,W+.12,0,H,0,P.coppi,0,P.mattone);
+    [1,-1].forEach(function(q){ var a=-q*(L/2-.15), b=q*(L/2-.15); B.aperture(a,q*W/2,b,q*W/2,5,.3,.8,.42).aperture(a,q*W/2,b,q*W/2,5,1.35,.62,.4); });      // due ordini di cinque finestre per lato
+    B.cilindro(W*.34,1.75,-L/2,0,0,P.mattone,null,14).cono(W*.36,.45,-L/2,1.75,0,P.coppi,14);  // l'abside aggiunta quando l'aula diventa chiesa
+    B.vano(L/2+.03,0,0,0,1,.45,.9).vano(L/2+.03,1.25,0,0,1,.5,.6);
+ }},
  {id:'lorenzo', nome:'San Lorenzo fuori le mura', x:299.5,z:-111.6, ry:.35, sc:.7, zone:[[0,0,8]], fa:function(B){ chiesa(B,10,6); }},
  {id:'agnese', nome:"Sant'Agnese e Santa Costanza", x:278.3,z:-338.2, ry:-.8, sc:.7, zone:[[0,0,7],[-6.1,11.5,4.5]], fa:function(B){
     chiesa(B,10,6); B.cilindro(2.4,1,-8.75,0,16.4,P.mattone,null,24).cono(2.5,.4,-8.75,1,16.4,P.coppi,24).cilindro(1.5,2,-8.75,0,16.4,P.mattone,null,20).cupola(1.5,-8.75,2,16.4,P.coppi,.6);   // mausoleo rotondo di Costanza, 130 m a ovest della basilica (posizione reale)
@@ -292,9 +298,14 @@ var M=[
  {id:'sabina', nome:'Santa Sabina', x:-46,z:89, ry:.785, sc:.62, zone:[[0,0,6]], fa:function(B){ chiesa(B,10,6); }},
  {id:'mariamaggiore', nome:'Santa Maria Maggiore', x:109,z:-57, ry:-.5, sc:.82, zone:[[0,0,8]], fa:function(B){ chiesa(B,10,6); }},
  {id:'stefano', nome:'Santo Stefano Rotondo', x:94.5,z:88, ry:0, zone:[[0,0,5.5]], fa:function(B){
-    B.cilindro(3.2,.9,0,0,0,P.mattone,null,32).cono(3.3,.5,0,.9,0,P.coppi,32).cilindro(2.1,1.6,0,0,0,P.mattone,null,28).cono(2.2,.5,0,1.6,0,P.coppi,28)
-     .cilindro(1.1,2.6,0,0,0,P.mattone,null,22).cono(1.2,.6,0,2.6,0,P.coppi,22);
-    for(var k=0;k<22;k++) B.scatola(.12,.3,.06,1.12*Math.cos(k*.2856),2.1,1.12*Math.sin(k*.2856),P.ombra,-k*.2856+PI/2);
+    /* tre cerchi: tamburo (22 m di diametro e 22 di altezza), ambulacro (42 m), anello esterno (66 m). Nell'anello esterno quattro bracci più alti disegnano una croce:
+       stanno sulle diagonali (quello di nord-est sopravvive, è la cappella dei Santi Primo e Feliciano); fra un braccio e l'altro, un corridoio basso lungo il muro e un cortile. */
+    var e3=RM.ellisse(3.29,3.29,36), e3t=RM.ellisse(3.34,3.34,36), e2=RM.ellisse(2.78,2.78,36), k, a;
+    B.striscia(e3,0,e3,.75,P.mattone).striscia(e3t,.75,e2,.98,P.coppi).striscia(e2,.98,e2,0,P.mattone);
+    B.cilindro(2.1,1.2,0,0,0,P.mattone,null,32).cono(2.18,.45,0,1.2,0,P.coppi,32);
+    for(k=0;k<4;k++){ a=PI/4+k*PI/2; B.scatola(1.35,1.25,1.1,2.66*Math.cos(a),0,2.66*Math.sin(a),P.mattone,-a).falde(1.4,.35,1.2,2.66*Math.cos(a),1.25,2.66*Math.sin(a),P.coppi,-a,P.mattone); }
+    B.cilindro(1.1,2.2,0,0,0,P.mattone,null,22).cono(1.18,.5,0,2.2,0,P.coppi,22);
+    for(k=0;k<22;k++) B.scatola(.12,.3,.06,1.12*Math.cos(k*.2856),1.75,1.12*Math.sin(k*.2856),P.ombra,-k*.2856+PI/2);
  }},
  {id:'cosma', nome:'Santi Cosma e Damiano', x:16.5,z:4, ry:-.35, come:'fori', fa:function(B){
     B.scatola(2.2,2,3.6,0,0,0,P.mattone).falde(3.6,.6,2.4,0,2,0,P.coppi,PI/2,P.mattone).cilindro(.9,1.4,0,0,2.6,P.mattone,null,16).cupola(.9,0,1.4,2.6,P.bronzo,.6);
