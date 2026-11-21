@@ -64,10 +64,10 @@ C.prototype.volta=function(lunga,r,x,y,z,colore,ry){
 };
 /* fila di colonne fra due punti */
 C.prototype.colonne=function(x0,z0,x1,z1,quante,h,r,y,colore){
-  var c=colore||P.marmo, ang=Math.atan2(-(z1-z0),x1-x0), ha=Math.min(.09,r*.7), hb=r>=.1?Math.min(.07,r*.5):0;
+  var c=colore||P.marmo, ang=Math.atan2(-(z1-z0),x1-x0), ha=RM.piccolo&&r<.1?0:Math.min(.09,r*.7), hb=r>=.1?Math.min(.07,r*.5):0;      // sui telefoni le colonne piccole restano semplici fusti
   for(var i=0;i<quante;i++){
     var t=quante>1?i/(quante-1):.5, x=x0+(x1-x0)*t, z=z0+(z1-z0)*t, yy=y||0;
-    this.cilindro(r,h-ha-hb,x,yy+hb,z,c,r*.86,r>=.1?9:7).scatola(r*2.5,ha,r*2.5,x,yy+h-ha,z,c,ang);      // fusto e capitello
+    this.cilindro(r,h-ha-hb,x,yy+hb,z,c,r*.86,r>=.1?9:7); if(ha) this.scatola(r*2.5,ha,r*2.5,x,yy+h-ha,z,c,ang);      // fusto e capitello
     if(hb) this.scatola(r*2.5,hb,r*2.5,x,yy,z,c,ang);                                                      // base
   }
   return this;

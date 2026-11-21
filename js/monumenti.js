@@ -129,21 +129,36 @@ var M=[
     B.cilindro(.37,.36,0,.12,0,P.marmo,.34,14).cilindro(.31,1.2,0,.48,0,P.marmo,.07,14).geo(new THREE.SphereGeometry(.09,8,6).translate(0,1.74,0),P.marmo);
  }},
  {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], et:1, fa:function(B){ circo(B,62,14,2.5,true); }},
- {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
+ {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6],[11.2,13.1,3.8]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
     /* Posizioni reali: i centri dei resti rilevati in OpenStreetMap (src/roma/grezzi/osm-foro.json), scritti qui in coordinate di scena.
        Orientamenti: il Foro Romano lungo il suo asse, i fori imperiali sulla loro griglia comune, girata di circa 58° rispetto al Foro.
        Forme e misure restano schematiche; qualche edificio è accorciato di poco perché le vie vere gli passino accanto e non sopra. */
     var IMP=1.022;
     inForo(B,-1.2,1.6,0,function(B){ B.scatola(12.5,.1,5,0,0,0,P.selce); });                                                       // piazza del Foro
     inForo(B,-4.6,6,0,function(B){ basilica(B,9.6,4.9,1.9,0,0); });                                                               // Giulia (l'Emilia è un edificio a sé: brucia nel 410)
-    inForo(B,.8,-5.1,0,function(B){ B.scatola(1.9,2.4,2.7,0,0,0,P.mattone).falde(2.7,.6,2,0,2.4,0,P.bronzo,PI/2,P.mattone); });   // Curia
-    inForo(B,-10.1,1.1,0,function(B){ B.tempio(2.2,4,1.7,0,0,PI/2,{fronte:6}); });                                                // Saturno
+    inForo(B,.8,-5.1,0,function(B){                                                                                               // Curia: aula alta e stretta, intonacata, con la porta di bronzo e tre finestre in facciata
+      B.scatola(1.9,2.4,2.7,0,0,0,P.intonaco).falde(2.7,.6,2,0,2.4,0,P.bronzo,PI/2,P.intonaco);
+      B.vano(0,.25,1.37,1,0,.46,1.05,true).aperture(-.72,1.37,.72,1.37,3,1.55,.42,.2);
+      B.scatola(1.5,.25,.5,0,0,1.6,P.travertino).colonne(-.62,1.72,.62,1.72,4,.95,.055,.25).scatola(1.6,.07,.62,0,1.2,1.6,P.coppi);          // gradini e portichetto davanti alla porta
+    });
+    inForo(B,-5.5,-1,0,function(B){ B.scatola(1.3,.32,2.4,0,0,0,P.marmo).scatola(.12,.12,2.4,.6,.32,0,P.marmo).aperture(.66,1.1,.66,-1.1,6,.06,.2,.12,true); });   // i Rostri: la tribuna degli oratori, sul lato ovest della piazza
+    inForo(B,-9.1,-4.9,0,function(B){ B.scatola(2,1.7,4.4,-.6,.5,0,P.marmo).falde(4.4,.5,2.1,-.6,2.2,0,P.coppi,PI/2,P.marmo).scatola(2.2,.5,4.5,-.6,0,0,P.travertino); B.tempio(2.2,1.6,1.6,.9,0,PI/2,{fronte:6}); });   // Concordia: cella larga, messa di traverso, e pronao verso il Foro
+    inForo(B,-11.4,-2.6,0,function(B){ B.tempio(1.7,3,1.6,0,0,PI/2,{fronte:6,podio:.6}); });                                       // Vespasiano e Tito
+    inForo(B,11.2,13.1,0,function(B){ portico(B,6.8,3,0,0,0,1); B.scatola(6.8,1.1,.5,0,1.15,-1.5,P.mattone).scatola(.5,1.1,3,-3.4,1.15,0,P.mattone).scatola(.5,1.1,3,3.4,1.15,0,P.mattone); });   // casa delle Vestali: il lungo cortile porticato, a due piani
+    inForo(B,-10.1,1.1,0,function(B){ B.tempio(2.2,4,1.7,0,0,PI/2,{fronte:6,podio:.85}); });                                      // Saturno, sul suo podio alto
     inForo(B,3,9.3,0,function(B){ B.tempio(2.9,4.6,2,0,0,PI,{fronte:8,lati:9,podio:.8}); });                                      // Castori
-    inForo(B,7.4,9,0,function(B){ B.cilindro(.8,1.3,0,.3,0,P.marmo,null,16).cupola(.8,0,1.6,0,P.bronzo,.6); });                   // Vesta
+    inForo(B,7.4,9,0,function(B){                                                                                                 // Vesta: tempio rotondo, colonne tutt'attorno, tetto conico con il foro per il fumo
+      B.cilindro(1,.32,0,0,0,P.marmo,null,20).cilindro(.62,1.25,0,.32,0,P.marmo,null,16);
+      for(var k=0;k<16;k++){ var a=k*PI/8; B.cilindro(.06,1.25,.86*Math.cos(a),.32,.86*Math.sin(a),P.marmo,.052,7); }
+      B.cilindro(.98,.14,0,1.57,0,P.marmo,null,20).cilindro(.98,.5,0,1.71,0,P.bronzo,.16,20);
+    });
     inForo(B,5.6,5.6,0,function(B){ B.tempio(2.4,2.8,1.4,0,0,-PI/2,{fronte:6}); });                                               // Divo Giulio
     inForo(B,11.6,3.7,0,function(B){ B.tempio(2.1,3.4,1.7,0,0,0,{fronte:6}); });                                                  // Antonino e Faustina
-    inForo(B,-14.5,-5.2,PI/2,function(B){ arcato(B,7.2,1.7,2.2,0,0,0,P.tufo,2,9); });                                             // Tabularium
-    inForo(B,-4.6,-3.7,0,function(B){ B.scatola(2.3,2.1,1.1,0,0,0,P.marmo).aperture(-1.1,.55,1.1,.55,3,.1,1.3).aperture(1.1,-.55,-1.1,-.55,3,.1,1.3); });   // arco di Settimio Severo
+    inForo(B,-14.5,-5.2,PI/2,function(B){ B.scatola(7.4,1.1,2.4,0,0,0,P.tufo); arcato(B,7.2,1.9,2.2,0,1.1,0,P.tufo,2,11); });      // Tabularium: l'alto basamento di tufo e, sopra, la galleria ad arcate
+    inForo(B,-4.6,-3.7,0,function(B){                                                                                             // arco di Settimio Severo: tre fornici, colonne su piedistalli, attico
+      B.scatola(2.3,1.45,1.1,0,0,0,P.marmo).scatola(2.42,.13,1.22,0,1.45,0,P.marmo).scatola(2.3,.52,1.1,0,1.58,0,P.marmo);
+      [1,-1].forEach(function(q){ B.vano(0,0,q*.575,1,0,.68,1.2).vano(-.78,0,q*.575,1,0,.34,.76).vano(.78,0,q*.575,1,0,.34,.76); B.colonne(-1.06,q*.66,1.06,q*.66,4,1.2,.06,.25); [-1.06,-.353,.353,1.06].forEach(function(x){ B.scatola(.2,.25,.2,x,0,q*.66,P.marmo); }); });
+    });
     inForo(B,0,-13.2,IMP,function(B){ portico(B,7,15,0,0,0,1.1); B.tempio(2.6,3.6,1.7,0,-5.2,0,{fronte:8}); });                   // foro di Cesare, Venere Genitrice a nord-ovest
     inForo(B,11.2,-19.5,IMP,function(B){ portico(B,10.5,9.5,0,0,0,1.2); B.tempio(3.4,4.6,2.3,2.3,0,-PI/2,{fronte:8,lati:8,podio:.7}).scatola(.5,3.3,10.5,5.5,0,0,P.tufo); });   // foro di Augusto, Marte Ultore contro il muro verso la Suburra
     inForo(B,10.7,-8.9,IMP,function(B){ portico(B,12,4.2,0,0,0,1.2); B.tempio(1.8,2.4,1.5,4.6,0,-PI/2,{fronte:6}); });            // foro di Nerva, Minerva: lo attraversa l'Argileto
@@ -156,6 +171,10 @@ var M=[
       B.tempio(3.8,5.4,2.4,0,-16.4,PI,{fronte:8,lati:9,podio:.7});                              // tempio del Divo Traiano
       B.dentro(5.9,0,0,PI/2,function(B){ var em=RM.ellisse(5,5,16,0,PI); B.striscia(em,0,em,2.6,P.mattone,false).fornici(em,.15,.6,.5,1,false).fornici(em,.95,.5,.4,1,false).fornici(em,1.75,.5,.4,1,false); });   // mercati di Traiano
     });
+ }},
+ {id:'arcotito', nome:'Arco di Tito', x:27.2,z:20.3, ry:1.38, zone:[[0,0,1.7]], fa:function(B){                          // un solo fornice, a cavallo della via Sacra; posizione reale (OpenStreetMap)
+    B.scatola(1.35,1,.5,0,0,0,P.marmo).scatola(1.45,.1,.6,0,1,0,P.marmo).scatola(1.35,.44,.5,0,1.1,0,P.marmo);
+    [1,-1].forEach(function(q){ B.vano(0,0,q*.275,1,0,.54,.84).colonne(-.58,q*.3,.58,q*.3,2,.8,.05,.2).colonne(-.38,q*.3,.38,q*.3,2,.8,.05,.2); });
  }},
  {id:'emilia', nome:'Basilica Emilia', x:7.2,z:-1, ry:-.35, come:'fori', fa:function(B){ basilica(B,8,3.4,1.8,0,0); }},
  {id:'giove', nome:'Tempio di Giove Capitolino', x:-29,z:0, ry:.5, zone:[[0,0,7.5]], fa:function(B){      // basamento di circa 54 x 62 m, la misura più citata (le stime pubblicate vanno da 50 a 74 m di lato: pianta discussa)
@@ -357,7 +376,7 @@ RM.statoMonumento=function(id,anno){
    c = incuria: dal 390 circa la manutenzione pubblica si dirada per tutti, e accelera dopo la chiusura. Si vede come crepe, colature, erba, coppi mancanti.
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, testaccio:.5, colosso:0};
+var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
