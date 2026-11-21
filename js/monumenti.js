@@ -298,7 +298,7 @@ var M=[
  }},
  /* San Lorenzo: la basilica di Costantino è un'aula cimiteriale a forma di circo, 99 x 35 m, 98,60 x 35,50 m per Krautheimer, parallela alla basilica attuale e circa 28 m a sud del suo fianco; la facciata, a est, cade all'altezza dell'ingresso sud della chiesa di Pelagio e il corpo si allunga verso ovest (Corpus Basilicarum II, pp. 116-117);
     nel 580 Pelagio II costruisce sopra la tomba una chiesa più piccola, a gallerie, con l'abside a ovest: è il presbiterio della basilica attuale. */
- {id:'lorenzo', nome:'San Lorenzo, la basilica maggiore', x:296.3,z:-104.5, ry:.35+PI, zone:[[0,0,6]], fa:function(B){
+ {id:'lorenzo', nome:'San Lorenzo, la basilica maggiore', x:296,z:-104.4, ry:.35+PI, zone:[[0,0,6]], fa:function(B){
     var L=9.9, W=3.55, Ln=L-(W-1.9), pr=function(w){ return RM.stadio(L-(W-w),w,8,10); }, est=pr(W), nav=pr(1.9), x1=Ln/2-.95;
     B.striscia(est,0,est,1,P.mattone).striscia(est,1,nav,1.35,P.coppi).striscia(nav,1.35,nav,2.1,P.mattone);                  // navatella che gira attorno all'abside, come nelle altre basiliche a circo
     B.falde(x1+Ln/2,.5,2,(x1-Ln/2)/2,2.1,0,P.coppi,0,P.mattone).cono(1,.5,x1,2.1,0,P.coppi,14);
