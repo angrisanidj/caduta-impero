@@ -1,4 +1,7 @@
 /* Dati. Stato delle verifiche:
+   - BALEARI (22 novembre 2026): regione a sé, figlia della Sardegna. Vandale dal 455 e dell'impero d'Oriente dal 534 come Sardegna e Corsica: A MEMORIA (Vittore di Vita I 13; Procopio, Guerre IV 5), non riletti.
+     Dalla tappa del 711 «uscita dall'impero»: nel 707 si accordano con una flotta omayyade e restano autonome (voce «History of the Balearic Islands», nota non vista); Annales regni Francorum, 798 («Insulae Baleares a Mauris
+     et Sarracenis depraedatae sunt») e 799 (chiedono e ottengono l'aiuto dei Franchi: la sottomissione non è stata letta, quindi non sono colorate come carolingie); spedizione di Cordova nell'848, conquista nel 902-903 (non lette).
    - «Voci di allora», quarta serie (22 novembre 2026), tappe dal 235 al 451: ora ogni tappa ne ha una.
      235: Erodiano VI 9, 5-7, nell'inglese di E. C. Echols 1961, su livius.org («Clinging to his mother and, as they say, complaining and lamenting that she was to blame for his death, he awaited his executioner»); il greco non è stato letto;
      271: Aurelio Vittore, De Caesaribus 35, 7 («ac ne unquam, quae per Gallienum evenerant, acciderent, muris urbem quam validissimis laxiore ambitu circumsaepsit»); Cronografo del 354, Chron. min. I p. 148 («hic muro urbem cinxit, templum Solis et castra in campo Agrippae dedicavit»);
@@ -214,7 +217,7 @@ var ATTI=[
    la Gallaecia è presa nel 713-714, lasciata dai presidi berberi verso il 741 e unita alle Asturie da Alfonso I; la Pannonia è «conteso» nell'800 (guerre avare, 791-803);
    nell'846 Sannio e Puglia sono «conteso» (Taranto ai Saraceni dal 839-840, Bari dall'841, o dall'842 per Amari: Vasiliev, Byzance et les Arabes I). Lo sgombero della Dacia è messo al 271, ma gli studiosi oscillano fra il 271 e il 275. */
 var OVEST=['britannia','galles','gallia','bretagna','belgica','soissons','aquitania','alvernia','provenza','settimania','burgundia','sapaudia','hispania','gallaecia','asturie','marca','spania',
-           'italia_nord','liguria','venezia','ravenna','bolognese','spoleto','pentapoli','roma','campania','napoli','benevento','salento','otranto','calabria','bruzio','sicilia','sardegna','corsica',
+           'italia_nord','liguria','venezia','ravenna','bolognese','spoleto','pentapoli','roma','campania','napoli','benevento','salento','otranto','calabria','bruzio','sicilia','sardegna','corsica','baleari',
            'rezia','carantania','pannonia','dalmazia','africa','numidia','mauri','mauretania','decumati'],
     EST=['dacia','balcani','tracia','mesia_inf','mesia_sup','anatolia','levante','egitto','creta'],
     OLTRE=['frisia','sassonia','turingia','moravia','alfold','valacchia','steppa'];         // terre mai romane: partono da «fuori» e non contano nella quota di territorio
@@ -222,7 +225,7 @@ var OVEST=['britannia','galles','gallia','bretagna','belgica','soissons','aquita
    la figlia prende lo stesso stato. Dove la figlia ha già una storia sua (la Settimania visigota, Napoli bizantina) va quindi ripetuta a ogni cambio della madre. */
 var FIGLIE={settimania:'provenza',alvernia:'aquitania',sapaudia:'burgundia',soissons:'gallia',bretagna:'gallia',spania:'hispania',asturie:'hispania',marca:'hispania',galles:'britannia',
   numidia:'africa',mauri:'africa',bolognese:'ravenna',liguria:'italia_nord',venezia:'italia_nord',pentapoli:'spoleto',napoli:'campania',salento:'benevento',otranto:'benevento',bruzio:'calabria',
-  tracia:'balcani',mesia_inf:'balcani',mesia_sup:'balcani',carantania:'rezia',corsica:'sardegna'};
+  tracia:'balcani',mesia_inf:'balcani',mesia_sup:'balcani',carantania:'rezia',corsica:'sardegna',baleari:'sardegna'};
 var CAMBI={
  235:{},
  260:{britannia:'usurpatore',gallia:'usurpatore',belgica:'usurpatore',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore',hispania:'usurpatore',gallaecia:'usurpatore',decumati:'perso'},
@@ -256,7 +259,7 @@ var CAMBI={
  589:{italia_nord:'regno:longobardi',liguria:'oriente',venezia:'oriente',spoleto:'regno:longobardi',pentapoli:'oriente',benevento:'regno:longobardi',salento:'oriente',otranto:'oriente',
       campania:'regno:longobardi',napoli:'oriente',calabria:'regno:longobardi',bruzio:'oriente',gallaecia:'regno:visigoti',balcani:'conteso'},
  663:{levante:'califfato',egitto:'califfato',dalmazia:'perso',liguria:'regno:longobardi',spania:'regno:visigoti',balcani:'oriente',mesia_inf:'perso',mesia_sup:'perso'},
- 711:{africa:'califfato',mauretania:'califfato',hispania:'conteso',mesia_inf:'regno:bulgari',valacchia:'regno:bulgari',salento:'regno:longobardi'},
+ 711:{africa:'califfato',mauretania:'califfato',hispania:'conteso',mesia_inf:'regno:bulgari',valacchia:'regno:bulgari',salento:'regno:longobardi',baleari:'perso'},      // Baleari: dal patto con una flotta omayyade (707) si governano da sé, pagando tributo
  727:{hispania:'califfato',asturie:'regno:asturie',gallaecia:'califfato',settimania:'califfato',corsica:'regno:longobardi'},      // Corsica: ipotesi dei manuali (Liutprando, verso il 725), senza fonte diretta
  756:{ravenna:'chiesa',bolognese:'regno:longobardi',roma:'chiesa',pentapoli:'chiesa',gallaecia:'regno:asturie',settimania:'conteso'},
  780:{corsica:'regno:franchi',bolognese:'chiesa',italia_nord:'regno:franchi',venezia:'oriente',spoleto:'regno:franchi',pentapoli:'chiesa',settimania:'regno:franchi',sassonia:'conteso',carantania:'regno:franchi'},
@@ -432,7 +435,7 @@ var MONUMENTI={
   sabina:[[0,'assente'],[432,'uso']], mariamaggiore:[[0,'assente'],[434,'uso']], stefano:[[0,'assente'],[475,'uso']], cosma:[[0,'assente'],[527,'uso']],
   foca:[[0,'assente'],[608,'uso']],
   /* il quartiere che cresce attorno a San Pietro */
-  monasteripietro:[[0,'assente'],[450,'uso']], porticopietro:[[0,'assente'],[400,'uso']], scholae:[[0,'assente'],[727,'uso']], leonine:[[0,'assente'],[852,'uso']],
+  monasteripietro:[[0,'assente'],[450,'uso']], campanilepietro:[[0,'assente'],[757,'uso']], porticopietro:[[0,'assente'],[400,'uso']], scholae:[[0,'assente'],[727,'uso']], leonine:[[0,'assente'],[852,'uso']],
   /* riuso */
   mulini:[[0,'assente'],[537,'uso']], casenerva:[[0,'assente'],[850,'uso']],
   /* luoghi del lavoro e dei commerci */
@@ -549,6 +552,7 @@ var SCHEDE={
   stefano:{cosa:"Chiesa a pianta circolare sul Celio.", date:[[455,"Cantiere avviato sotto papa Leone I: le travi sono datate al 455 circa."],[475,"Consacrata da papa Simplicio (468-483)."]]},
   foca:{cosa:"Colonna onoraria nella piazza del Foro.", date:[[608,"Dedicata il 1° agosto dall'esarca Smaragdo all'imperatore d'Oriente Foca. È l'ultimo monumento eretto nel Foro; colonna e basamento sono presi da monumenti più antichi."]]},
   monasteripietro:{cosa:"Monasteri, mausolei e residenze cresciuti attorno alla basilica.", date:[[400,"Mausoleo della famiglia di Onorio all'estremità sud del transetto; accanto, una rotonda più antica che papa Simmaco dedica a sant'Andrea."],[450,"Primo monastero presso la basilica, fondato da papa Leone I (Liber Pontificalis); che sia quello dei Santi Giovanni e Paolo, a nord, è un'identificazione moderna."],[680,"Beda nomina il monastero di San Martino e il suo abate Giovanni, primo cantore di San Pietro, mandato in Inghilterra nel 679-680; che stesse addossato all'abside lo dicono fonti più tarde."],[732,"I monasteri sono tre; il quarto, Santo Stefano Minore, arriva nella seconda metà del secolo. I monaci cantano in basilica le vigilie e le ore di ogni giorno."],[757,"Il mausoleo di Onorio diventa la cappella di santa Petronilla, protettrice dei re franchi."]]},
+  campanilepietro:{cosa:"La torre delle campane all'ingresso dell'atrio di San Pietro: a Roma è la prima di cui parli una fonte.", date:[[757,"Papa Stefano II (752-757) fa costruire «sopra la basilica» una torre, in parte dorata e in parte rivestita d'argento, e vi mette tre campane, «per chiamare il clero e il popolo all'ufficio di Dio» (Liber Pontificalis; il passo manca in una parte dei manoscritti)."],["dopo il 757","La stessa fonte nomina poco dopo, all'ingresso dell'atrio, la torre di Santa Maria «ad Grada», cioè ai gradini."]]},
   porticopietro:{cosa:"Via coperta da ponte Elio alla basilica, per i pellegrini.", date:[["fine IV sec.","Costruita probabilmente allora (secondo altri verso il 500): circa novecento metri coperti."],[537,"Prima notizia sicura: la cita Procopio durante l'assedio."],[780,"Restaurata da papa Adriano I, che ne rifà le fondazioni lungo la riva del Tevere con oltre dodicimila blocchi di tufo."]]},
   scholae:{cosa:"Ospizi delle nazioni: alloggio, chiesa e cimitero per i pellegrini di uno stesso popolo.", date:[[727,"Schola dei Sassoni: una tradizione più tarda la attribuisce al re Ine del Wessex, venuto a Roma verso il 726."],[756,"Fra il 756 e il 757 papa Stefano II alza sulla basilica una torre con tre campane, forse all'ingresso dell'atrio."],[799,"Prima notizia certa delle quattro scholae: Sassoni, Franchi, Frisoni e Longobardi accolgono papa Leone III al suo ritorno. Il sito di quella dei Longobardi è discusso. Da qui il nome «Borgo», dal germanico burg, che compare nelle fonti sotto Pasquale I (817-824)."],[847,"Un incendio brucia le case di Sassoni e Longobardi e arriva al portico della basilica; un altro, sotto Pasquale I, aveva già distrutto il borgo dei Sassoni."]]},
   leonine:{cosa:"Cinta attorno a San Pietro e al Borgo: circa tre chilometri, con decine di torri, costruita in buona parte con blocchi tolti a edifici antichi.", date:[[846,"Il sacco saraceno mostra che le basiliche fuori le mura sono indifese."],[848,"Papa Leone IV avvia i lavori nel secondo anno di pontificato."],[852,"Cerimonia conclusiva il 27 giugno: nasce la «città leonina»."]]},
@@ -608,6 +612,7 @@ var CERTEZZA={
   cosma:['A',"L'aula e la rotonda sono in piedi."],
   foca:['A',"In piedi."],
   monasteripietro:['C',"Le due rotonde sono note dai disegni e Santo Stefano Maggiore esiste ancora; degli altri monasteri si conosce il sito approssimativo, non la forma."],
+  campanilepietro:['C',"La torre è attestata dal Liber Pontificalis; posto preciso, forma e altezza sono ipotetici."],
   porticopietro:['C',"Nessun resto in piedi; tracciato e data sono discussi."],
   scholae:['C',"Sassoni e Frisoni hanno un sito certo (Santo Spirito in Sassia, Santi Michele e Magno), ma la forma è ignota; i siti di Franchi e Longobardi sono discussi."],
   mulini:['C',"Li descrive Procopio; numero, posizione precisa e aspetto sono ipotesi."],

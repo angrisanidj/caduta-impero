@@ -75,7 +75,8 @@ const TAGLI = {
   otranto:   [[17.95, 40.3], [18.5, 40.3], [18.6, 39.75], [17.95, 39.95]],                                                                                    // Otranto e Gallipoli, che restano all'impero
   carantania:[[14.48, 48.25], [14.45, 47.75], [13.7, 47.4], [13.3, 47.05], [12.3, 46.75], [12.9, 46.55], [14, 46.45], [16.1, 46.8], [16.5, 47.7], [16.9, 48.15]],  // a est dell'Enns: Avari e Slavi dal 568
   creta:     [[23, 34.6], [26.6, 34.6], [26.6, 35.9], [23, 35.9]],
-  corsica:   [[8.2, 41.32], [9.9, 41.32], [9.9, 43.2], [8.2, 43.2]]                                                                                                         // a nord delle Bocche di Bonifacio
+  corsica:   [[8.2, 41.32], [9.9, 41.32], [9.9, 43.2], [8.2, 43.2]],
+  baleari:   [[1.0, 38.5], [4.6, 38.5], [4.6, 40.3], [1.0, 40.3]]                                                                                                         // a nord delle Bocche di Bonifacio
 };
 const BURG = ['Lugdunensis', 'Germania Superior', 'Belgica', 'Narbonensis', 'Alpes Graiae et Poeninae', 'Alpes Cottiae', 'Alpes Maritimae'];      // anche la punta sud della Belgica (Langres): altrimenti resta un buco
 const REGIONI = {
@@ -91,7 +92,8 @@ const REGIONI = {
   settimania: { nome: 'Settimania', prov: ['Narbonensis'], dentro: 'settimania', fuori: ['burgundia'] },
   burgundia:  { nome: 'Burgundia', prov: BURG, dentro: 'burgundia', fuori: ['sapaudia', 'settimania'] },
   sapaudia:   { nome: 'Sapaudia', prov: BURG, dentro: ['burgundia', 'sapaudia'] },
-  hispania:   { nome: 'Hispania', prov: ['Tarraconensis', 'Baetica', 'Lusitania'], fuori: ['gallaecia', 'asturie', 'marca', 'spania'] },
+  hispania:   { nome: 'Hispania', prov: ['Tarraconensis', 'Baetica', 'Lusitania'], fuori: ['gallaecia', 'asturie', 'marca', 'spania', 'baleari'] },
+  baleari:    { nome: 'Baleari', prov: ['Tarraconensis'], dentro: 'baleari' },      // seguono la Sardegna fino al VII secolo, poi restano a sé
   gallaecia:  { nome: 'Gallaecia', prov: ['Tarraconensis', 'Lusitania'], dentro: 'gallaecia' },
   asturie:    { nome: 'Asturie e Cantabria', prov: ['Tarraconensis'], dentro: 'asturie', fuori: ['gallaecia'] },
   marca:      { nome: 'Marca di Spagna', prov: ['Tarraconensis'], dentro: 'marca' },

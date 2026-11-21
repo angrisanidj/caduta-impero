@@ -411,6 +411,12 @@ var M=[
     casa(B,y(-8,2.6),-8,2.6,2.6,3,1.4);                     // San Martino, addossato all'abside a sud-ovest
     casa(B,y(-15.5,4),-15.5,4,4,3,1.5);                     // Santo Stefano Maggiore, dietro l'abside
  }},
+ /* Il campanile di San Pietro: «fecit super basilicam beati Petri apostoli turrem, quam ex parte inauravit et ex parte argento investivit, in quo tribus posuit campanis» (Liber Pontificalis, Stefano II, 752-757;
+    il passo è un'aggiunta di una parte dei manoscritti). Pochi anni dopo la stessa fonte nomina una «turrem sanctae Mariae ad Grada» all'ingresso dell'atrio: per questo sta lì, accanto ai tre fornici. Forma e misure sono ipotetiche. */
+ {id:'campanilepietro', nome:'Campanile di San Pietro', x:-247.65,z:-105.5, ry:0, quota:quota(-259,-108)+.05, zone:[[0,0,1.2]], fa:function(B){
+    B.scatola(.9,3.3,.9,0,0,0,P.mattone).scatola(1,.1,1,0,3.3,0,P.travertino).cono(.72,.55,0,3.4,0,P.oro);
+    [1.2,2,2.75].forEach(function(y){ B.aperture(-.45,.45,.45,.45,2,y,.4,.2).aperture(.45,-.45,-.45,-.45,2,y,.4,.2).aperture(.45,.45,.45,-.45,2,y,.4,.2).aperture(-.45,-.45,-.45,.45,2,y,.4,.2); });      // tre ordini di bifore: le campane stanno nell'ultimo
+ }},
  {id:'porticopietro', nome:'Portico dei pellegrini', x:-201.75,z:-108.1, ry:.0685, lunga:[90.5,2.2], fa:function(B){          // dalla testata di ponte Sant'Angelo (posizione da OpenStreetMap), sotto il mausoleo, ai gradini dell'atrio: circa 900 m
     var y=suTerreno(-201.75,-108.1,.0685), q;
     for(var k=0;k<12;k++){ var lx=(k-5.5)*7.54; q=y(lx,0);
@@ -484,7 +490,7 @@ var riquadro=document.getElementById('scena').parentNode;
 var etichette=document.createElement('div'); etichette.className='etichette3d'; riquadro.appendChild(etichette);
 function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return [o.x+lx*c+lz*s, o.z-lx*s+lz*c]; }
 /* prima le zone: sotto ogni monumento il terreno si spiana alla quota del suo centro; poi si posa il suolo */
-var PENDIO={monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1};        // complessi che seguono il pendio: niente terrazza
+var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1};        // complessi che seguono il pendio: niente terrazza
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
   var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?st[1][0]-8:0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)
@@ -520,7 +526,7 @@ RM.statoMonumento=function(id,anno){
    c = incuria: dal 390 circa la manutenzione pubblica si dirada per tutti, e accelera dopo la chiusura. Si vede come crepe, colature, erba, coppi mancanti.
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0};
+var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
