@@ -1,0 +1,252 @@
+## Severus Alexander [Alexander Severus] file 4
+  S: Severus Alexander in inscriptions ; Alexander Severus in art ; Arch of Alexander Severus (Dougga) ; Coins of Severus Alexander ; Temple of Diana (Baiae)
+  F: 
+## Julia Avita Mamaea [Julia Avita Mamea] file 498
+  S: Coins of Julia Avita Mamea ; Sculptures of Julia Mamaea
+  F: Buste van keizerin Julia Mamaea Julia Mammea (titel op object), RP-P-2016-591-59-2.jpg
+## Maximinus Thrax [Maximinus I] file 496
+  S: Maximinus I in art ; Maximinus I in inscriptions ; Borne milliaire de Bruère-Allichamps (Cher) ; Coins of Maximinus I
+  F: 
+## Decius [Decius] file 12
+  S: Decius in art ; Baths of Decius ; Cruzeiro de São João do Campo ; Decius - Epigraphic text ; Decius in Egypt
+  F: 
+## Cniva: nessuna categoria
+## Cyprian [Saint Cyprian] file 0
+  S: Saint Cyprian churches ; Cyprian and Justina ; Korneliushorn aus St. Severin ; Relics of Saint Cyprian ; Saint Cyprian in art ; Works by Cyprian of Carthage
+  F: 
+## Valerian (emperor) [Valerianus I] file 2
+  S: Valerianus I in art ; Valerianus I in Egypt ; Valerian Palace
+  F: 
+## Shapur I [Shapur I] file 15
+  S: Coins of Shapur I ; Dedications to Shapur I of Persia ; Shapur I of Persia in art
+  F: 
+## Postumus [Postumus] file 5
+  S: Postumus in art ; Postumus in inscriptions ; Coins of Postumus
+  F: Golden coin of Postumus.png
+## Aurelian [Aurelianus] file 17
+  S: Aurelianus in art ; Aurelian Walls ; Aureliani of Carinus ; Aureliani of Diocletianus ; Aureliani of Maximianus ; Borne milliaire de Launay (Châtillon-sur-Colmont) ; Coins of Aurelianus ; Dacia Aureliana ; Maps of the Roman Empire in 271 AD ; Temple of the Sun (Rome)
+  F: Pisanello - Codex Vallardi 2592 r.jpg
+## Zenobia [Zenobia] file 19
+  S: Zenobia in art
+  F: 
+## Tetricus I [Tetricus] file 3
+  S: Tetricus in art ; Musée Saint-Raymond, 2000 30 1
+  F: 
+## Diocletian [Diocletianus] file 27
+  S: Diocletianus by country ; Diocletian in art ; Diocletianus in inscriptions ; Arch of Diocletian (Sbeitla) ; Baths of Diocletian (Rome) ; Coins of Diocletianus ; Diocletian's camp in Palmyra ; Diocletianic Persecution ; Diocletian's Palace ; The Prophetess, or The History of Dioclesian
+  F: Moneta tetrarchia 285-305.png ; Complesso Termale Romano in Calabria Terme di Aque Annie Curinga 01.jpg ; Complesso Termale Romano in Calabria Terme di Aque Annie Curinga 02.jpg ; Seven Sages Codex Illustration 2.jpg
+## Maximian [Maximianus] file 14
+  S: Maximianus in art ; Maximianus in inscriptions ; Ancient Roman labrum in the Duomo (Milan) ; Ancient Roman racecourse (Milan) ; Coins of Maximianus ; Maximianus in Egypt ; Terme Erculee (Milan) ; Villa del Casale (Piazza Armerina)
+  F: Moneta tetrarchia 285-305.png
+## Constantius Chlorus [Constantius I] file 14
+  S: Constantius I in art ; Constantius I in inscriptions ; Coins of Constantius I ; Konstanz
+  F: Moneta tetrarchia 285-305.png
+## Galerius [Galerius] file 17
+  S: Galerius in art ; Arch of Galerius (Thessaloniki) ; Battle of Carrhae (296) ; Galerius Edict Plaque, Sofia ; Galerius in Egypt ; Galerius Palace in Thessaloniki ; Saint George Rotunda (Thessaloniki)
+  F: Moneta tetrarchia 285-305.png
+## Lactantius [Lucius Caecilius Firmianus Lactantius] file 12
+  S: Lactantius (given name) ; De mortibus persecutorum ; Lactantius Firmianus, Divinae Institutiones. - btv1b8446787c ; Opera (Lucius Caecilius Firmianus Lactantius) - editio princeps by Sweynheym and Pannartz in 1465
+  F: Lactantius, Divinarum institutionum ... liber primus, manuscript, Florence 1420-1430 ca.jpg
+## Constantine the Great [Constantinus I Magnus] file 60
+  S: Constantinus I Magnus in art ; Baptism of Constantinus I Magnus ; Coins of Constantinus I Magnus ; Constantinople ; Constantinus I Magnus in literature ; Donatio Constantini ; Dream of Constantinus I Magnus ; Edict of Milan ; Fifty Bibles of Constantine ; Constantine and Helena ; In hoc signo vinces ; Inscriptions about Constantinus I ; Structures associated with Constantinus I Magnus ; Things named after Constantinus I Magnus
+  F: Church of the Nativity mosaic floor 2010 6.jpg ; Sarcophagi Byzantine emperors Istanbul (11).JPG
+## Pope Sylvester I [Sylvester I] file 4
+  S: Sylvester I in art ; Donatio Constantini ; Illuminated manuscripts of Sylvester I from Gallica ; Things named after Sylvester I
+  F: 
+## Constantius II [Constantius II] file 43
+  S: Coins of Constantius II ; Constantius II in art ; CIL VI 001159a ; CIL VI 001160 ; CIL XI 004781 ; Faustina (wife of Constantius II) ; Römischer Meilenstein von Hoven-Zülpich
+  F: The triumph of Constantius II (head3to4).jpg
+## Ammianus Marcellinus [Ammianus Marcellinus] file 12
+  S: Ammiani Marcellini Rerum gestarum qui de XXXI supersunt, libri XVIII (1693)
+  F: The Roman history of Ammianus Marcellinus - during the reigns of the Emperors Constantius, Julian, Jovianus, Valentinian, and Valens (IA romanhistoryofam00ammiiala).pdf
+## Hormizd (son of Hormizd II): nessuna categoria
+## Valens [Valens] file 4
+  S: Valens in art ; Valens in inscriptions ; Domnica ; Valens Aqueduct
+  F: 
+## Fritigern: nessuna categoria
+## Gratian [Gratianus] file 4
+  S: Gratianus in art ; Gratianus in inscriptions ; Coins of Gratianus ; Flavia Maxima Constantia ; Gratianopolis ; Laeta (empress)
+  F: Gratian Siliqua.jpg ; Gratian Solidus.jpg
+## Theodosius I [Theodosius I] file 6
+  S: Theodosius I in art ; Aelia Flaccilla ; Battle of the Frigidus ; Column of Theodosius ; Forum of Theodosius (Constantinople) ; Histoire de Théodose le Grand ; Histoire de Théodose le Grand (1846) ; Histoire de Théodose le Grand (1856) ; Massacre of Thessalonica ; Obelisk of Theodosius ; Via Teodosio (Milan)
+  F: 
+## Arcadius [Arcadius] file 6
+  S: Coins of Arcadius ; Arcadius in art ; Aelia Eudoxia ; Column of Arcadius ; Honours from the sailors of the sacred ships to the general and trierarchs, rededicated to Arcadius and Honorius (IG II2 2987 & IG II2 5 13299) ; Inscriptiones Graecae II2 5205 = IG II2 5 13292 ; Placing of the Cincture of the Theotokos ; Porta Onoriana (Rome)
+  F: 
+## Honorius (emperor) [Honorius] file 3
+  S: Honorius in art ; CIL VI 001194 ; CIL VI 040803 ; Honours from the sailors of the sacred ships to the general and trierarchs, rededicated to Arcadius and Honorius (IG II2 2987 & IG II2 5 13299) ; Inscriptiones Graecae II2 5205 = IG II2 5 13292 ; Porta Onoriana (Rome)
+  F: 
+## Stilicho [Stilicho] file 7
+  S: Diptych of Stilicho ; Epitaph of Anspert of Milan ; Porta Onoriana (Rome) ; Sarcophagus of Stilicho in Sant'Ambrogio (Milan)
+  F: 
+## Alaric I [Alaric I] file 29
+  S: Alaric wearing lion fur skin ; Sack of Rome (410) ; Statua di Alarico (Cosenza)
+  F: Alaric entering Athens.jpg ; Giovanni Bonazza, busto di Alarico (Palazzo Roncale, Rovigo) 01.jpg ; Giovanni Bonazza, busto di Alarico (Palazzo Roncale, Rovigo) 02.jpg
+## Constantine III (Western Roman emperor) [Constantinus III] file 4
+  S: Coins of Constantinus III
+  F: 
+## Galla Placidia [Galla Placidia] file 19
+  S: Basilica of Saint Paul Outside the Walls - Triumphal arch mosaic ; Coins of Galla Placidia ; Gal·la Placídia (play) ; Gold glass wrongly thought to be Galla Placidia ; Head of a 5th-century empress (Galla Placidia?) in the Museo nazionale dell'Alto Medioevo ; Mausoleum of Galla Placidia (Ravenna) ; Mausoleum of Galla Placidia (Ravenna) - Sarcophagus of Galla Placidia ; Plaça de Gal·la Placídia ; Saint Barbatian
+  F: Catalogue of an important collection of late Roman and Byzantine coins, principally of gold, formed in Constantinople, (including) ... Jovian; Galla Placida; Eudocia, wife of Arcadius (IA catalogueofimpor00soth 21).pdf ; Galla Placidia coin.png ; Galla Placidia coin2.png ; Galla Placidia medallion of Velp - reverse - Pleyte 1887.svg
+## Wallia [Walia] file 5
+  S: 
+  F: 
+## Theodoric I [Teodorico I] file 7
+  S: Battle of Chalons ; Statues of Teodorico I in Spain
+  F: 
+## Constantius III [Constantius III] file 5
+  S: Consular diptych Halberstadt ; Mausoleum of Galla Placidia (Ravenna) - Sarcophagus of Constantius III
+  F: Solidus Constantius III-RIC 1325 (obverse).jpg ; Solidus Constantius III-RIC 1325.jpg ; Solidus of Constantius III.png
+## Genseric [Genseric] file 14
+  S: Coins of Genseric ; Genseric sacking Rome (Briullov) ; Maps of the Kingdom of the Vandals in Africa ; Sack of Rome (455)
+  F: 
+## Bonifacius [Bonifatius] file 4
+  S: Bonifatius-Denkmal (Fritzlar) ; Coins of Bonifatius
+  F: Deckengemälde Aufbruch des Hl. Bonifatius nach Germanien.jpg ; Georg Langemeyer, Der dialogische Personalismus in der evangelischen und katholischen Theologie der Gegenwart 1963.jpg
+## Augustine of Hippo [Augustinus] file 32
+  S: Augustinus family ; Augustinus in art ; Ad salutem humani ; Altars of Saint Augustine ; Andreas de Sancto Victore, Glose in Ezechielem. - Admonitiones, sermones et excerpta varia. - btv1b9080775n ; Augustinian hypothesis ; Augustinus , De civitate Dei. - btv1b85511203 ; Augustinus Hipponensis - btv1b8438615w ; Augustinus Hipponensis - btv1b8541012x ; Augustinus Hipponensis . - Isidorus Hispalensis . - Hieronymus - btv1b8541011h ; Augustinus Hipponensis, Ambrosius Mediolanensis, Isidorus Hispalensis, tractatus diversi - btv1b90666531 ; Augustinus Hipponensis, Confessiones. Latin 1911 - btv1b85303554 ; Augustinus Hipponensis. - Hugo de Sancto Victore - btv1b90680273 ; Augustinus Reliquary in the Philippines ; Augustinus, Epistolae. - btv1b90779987 ; Augustinus, Sermones et tractatus diversi. - btv1b8551121h ; Augustinus, Sermones. - btv1b9072569k ; Augustinus, Sermones. III - btv1b9072456m ; Augustinus. - Paschasius Radbertus . - Hildebertus Cenomanensis - btv1b100370737 ; Augustinus. - Ricardus de Sancto Victore - btv1b9068026p ; Books about Augustinus ; Dedication to Augustine of Hippo ; Grave of Saint Augustinus (Pavia) ; Hildebertus Cenomanensis - btv1b52515051w ; Homiliarium - legendarius. - btv1b90781536 ; Homiliarium de Tempore. - btv1b525256340 ; L.V.V.S. Augustinus ; Lectionarium ad usum Cisterciense, sanctorale. - btv1b100741943 ; Life of Augustinus ; Miscellanea. - btv1b100353583 ; Miscellanea. - btv1b9067644c ; Order of Discalced Augustinians ; Order of Saint Augustine ; Paschasius Radbertus . - Augustinus Hipponensis . - Sulpicius Severus . - Gregorius Turonensis . - Alcuinus . - Pseudo-Augustinus . - btv1b85409631 ; Petrus Venerabilis . - Homiliarium Sancti Martialis Lemovicensis . - btv1b85524102 ; Phrases by Augustinus ; Rule of Saint Augustine ; S. Augustinus - btv1b10032327c ; S. Augustinus - btv1b525103731 ; S. Augustinus - btv1b8492144p ; S. Augustinus - btv1b90678264 ; S. Augustinus - btv1b90765032 ; S. Hieronymus - btv1b52504546z ; S. Hildefonsus Toletanus - btv1b10720810n ; Sermones diversis ecclesiasticis scriptoribus adscripti (Iohannes Chrysostomus - Augustinus Hipponensis - Leo I, etc.) - Paulinus Mediolanensis, Vita Ambrosii episcopi Mediolanensis episcopi - btv1b105395575 ; Summa de casibus et interrogationibus peccatorum. - btv1b10037092m ; Symbols of Saint Augustinus ; Theodorus Cantuariensis. - btv1b525239330 ; Things named after Saint Augustinus ; Vision of Saint Augustine ; Vitae et passiones - btv1b10721296q ; Works by Augustinus ; Zentrum für Augustinus-Forschung
+  F: L'Algérie à travers les âges. 11, Tombeau de Saint-Augustin à Hippone (Bône) - (mission) Boutroue ; (photogr. prise par) ND phot. (reprod. par) Molteni (pour la conférence donnée par) Boutroue - btv1b532496653.jpg
+## Valentinian III [Valentinianus III] file 14
+  S: Battle of Chalons ; Coins of Valentinianus III ; Ezio (Metastasio) ; Louvre MR 581 ; Mausoleum of Galla Placidia (Ravenna) - Sarcophagus of Valentinian III
+  F: Bust of Valentinian III, Louvre (cropped).jpg ; Seconde partie dv promptvaire des medalles 1581 (31489725).jpg
+## Flavius Aetius: nessuna categoria
+## Attila [Attila the Hun] file 25
+  S: Sack of Aquileia (452) ; Attila (novel) ; Attila the Hun in art ; Battle of Chalons ; Bleda ; Museo provinciale di Torcello - Throne of Attila ; Siege of Paris (451)
+  F: 399 of 'La Belgique militaire, par quelques Officiers de l'Armée. (With plates, including portraits and maps.)' (11011361256).jpg ; Attila portrait (imaginary), by Giovio Paolo, 1483-1552, published 1575.jpg ; Seconde partie dv promptvaire des medalles 1581 (31489719).jpg
+## Pope Leo I [Leo I Magnus] file 2
+  S: Leo I Magnus churches ; Leo I Magnus in art ; Epistola Leonis Magni ad Flavianum ; Meeting between Leo the Great and Attila ; Works by Leo the Great
+  F: 
+## Leo I (emperor) [Leo I (imperator)] file 13
+  S: Coins of Leo I (imperator) ; Deposition of the Robe ; Léon Ier (Louvre, Ma 1012)
+  F: Portraits of the Roman Emperors (Icones imperatorum romanorum, ex priscis numismatibus ad vivum delineatae, & brevi narratione historica illustratae) - Vanderbilt Fine Arts Gallery - 1999.174a.med.jpg ; Seconde partie dv promptvaire des medalles 1581 (31489727).jpg
+## Majorian [Maiorianus] file 15
+  S: Maiorianus in art
+  F: 
+## Ricimer [Ricimer] file 5
+  S: Ricimer - bague à intaille - btv1b550099938 ; Ricimero Re de'Goti - Musica - Di Baldassare Galluppi, detto - il Buranello, Veneziano - 12 ap. 1753 - Nel R.T. di S.C. - btv1b8452555r
+  F: As Libius Severus-Ricimer MonogramRIC 2716.jpg ; Ricimer monogram.jpg ; Seal of Ricimer.jpg
+## Anthemius [Anthemius] file 5
+  S: Coins of Anthemius ; Medals of Anthemius
+  F: Catalogue of a very select collection of Roman and Greek coins, and some numismatic books, the property of a well-known collector, (including coins of) Anthemius, ... Libius Severus (IA catalogueofverys00soth 24).pdf ; Solidus of Anthemius (cropped).png ; Solidus of Anthemius.png
+## Basiliscus [Basiliscus] file 2
+  S: Coins of Basiliscus ; Empress Zenonis
+  F: 
+## Olybrius [Olybrius] file 2
+  S: Coins of Olybrius ; Sinfonie - btv1b52516960m
+  F: 
+## Odoacer [Odoacer] file 11
+  S: Battle of Chalons ; Coins of Odoacer ; Maps of the Kingdom of Odoacer ; Things named after Odoacer
+  F: 
+## Romulus Augustulus [Romulus Augustus] file 6
+  S: Coins of Romulus Augustus
+  F: Ritratto di giovane principe detto romolo augustolo, 140-150 dc ca. (busto antico non pertinente), dalla coll. giustiniani, MT 612.jpg
+## Julius Nepos [Iulius Nepos] file 12
+  S: Coins of Iulius Nepos
+  F: Solidus of Julius Nepos (cropped).png ; Solidus of Julius Nepos.png
+## Theodoric the Great [Theodoric the Great] file 35
+  S: Bronze statue of Theodoric the Great of the tomb of Maximilian I, Holy Roman Emperor ; Coins of Theodoric the Great ; Dietrich von Bern ; Edictum Theodorici ; Maps of the empire of Theodoric ; Mausoleum of Theodoric (Ravenna) ; Palace of Theodoric (Ravenna) ; Ponte Romano (Parma) ; Siege of Ravenna (490–493)
+  F: Hermann Knackfuß - Envoys from Estonia, Livonia and Scandinavia bringing gifts to the court of Theoderic in Ravenna.jpg ; Peringskiöld, Ättartal för Swea och Götha KonungaHus (1725) sida 115.jpg ; RA Theoderich-Monogramm.JPG ; Ravenna Theoderichs Monogramm 0709.JPG ; Ravenna, piazza del popolo, loggia nova, capitelli del tempo di teodorico 03 monogramma di teodorico.JPG ; Ravenna, piazza del popolo, loggia nova, capitelli del tempo di teodorico 04 monogramma.JPG ; Seconde partie dv promptvaire des medalles 1581 (31489745).jpg
+## Cassiodorus [Cassiodorus] file 7
+  S: Cassiodorus manuscripts
+  F: Tomba Cassiodoro - panoramio.jpg
+## Boethius [Anicius Manlius Torquatus Severinus Boethius] file 49
+  S: Boethius (lunar crater) ; De Boethius der letzte Römer (Suttner) ; Boethius in medieval miniatures ; Jean-Victor Schnetz - Les adieux du consul Boetius à sa famille ; Severinus Boethius sarcophagus ; Works by Boethius
+  F: 7784 - Museo civico di Pavia - Monogramma con scritta Senatore - Foto Giovanni Dall'Orto, 9 Dic 2025.jpg ; Lastra tombale del senatore e filosofo Severino Boezio (+ 524 o 526). Museo archeologico di Pavia - 2.jpg ; Lastra tombale del senatore e filosofo Severino Boezio (+ 524 o 526). Museo archeologico di Pavia.jpg
+## Amalasuntha [Amalasuntha] file 4
+  S: Type Ariadne-Amalasuntha busts
+  F: Detail of Consular diptych of Rufus Gennadius Probus Orestes.png
+## Justinian I [Iustinianus I] file 42
+  S: Justinianus I in art ; Basilica of Justinian (Sabratha) ; Battle of Anglon ; Byzantine–Moorish wars ; Coins of Iustinianus I ; Corpus Iuris Civilis ; Diptych Announcing the Consulship of Justinian, MET ; Flavius Petrus Sabbatius Justinianus diptych ; Gates of Justinianus ; Gothic War (535–553) ; Historia Arcana ; Institutiones Justiniani ; Iustinianus consular diptych ; Justiniana Prima ; Maps of the Byzantine Empire in 565 ; Nika riots ; Odos Ioustinianou (Kastoria) ; Plague of Justinian ; Saint Sampson the Hospitable ; Things named after Iustinianus I
+  F: 78 - Justinian I, 1st portrait (Mutinensis - color) (cropped).png ; 78 - Justinian I, 1st portrait (Mutinensis - color).png ; 79 - Justinian I, 2nd portrait (Mutinensis - color).png ; Detail, door lintel with a Greek inscription by the Roman Emperor Justinian. From the Byzantine Wall south of the Market Gate of Miletus. 538 CE. Marble. From Miletus, Turkey. Pergamon Museum, Berlin, Germany.jpg ; Justinian monogram in Hagia Sophia.jpg ; Justinian mosaic.jpg ; Monogramm Justinian.jpg ; NHMB-Chalice-with-donation-inscription-of-Emperor-JustinianI-and-Empress-Theodora--Nova-Nadezhda-6centuryAD--replica.jpg ; Seconde partie dv promptvaire des medalles 1581 (31489734).jpg ; Stele pediment with an inscription of emperor Justinian at Pergamon Museum - Museum Island, Berlin, Germany. The pediment-shaped top piece of a stele was fashioned separately. The front side, divided by moulding into dif - panoramio.jpg
+## Belisarius [Belisarius] file 49
+  S: Battle of Ad Decimum ; Battle of Callinicum ; Battle of Dara ; Belisario (Donizetti) ; Belisarius (Jean-Baptiste Stouf) ; Belisarius (ship, 1794) ; Belisarius and His Guide by Antoine-Denis Chaudet (MET 2004.113a, b) ; Belisarius Begging for Alms (Jacques-Louis David) ; Belisarius by François Gérard ; Musée Ingres-Bourdelle - Bélisaire - Jean-François-Pierre Peyron ; Nika riots ; San Vitale (Ravenna) - Mosaic of Iustinianus I ; San Vitale (Ravenna) - Mosaic of Iustinianus I - Belisarius ; Ships named Bellasarius ; Vandalic War ; Belisarius by François-André Vincent
+  F: Dresden, Gemäldegalerie Alte Meister, Christian Wilhelm Ernst Dietrich, Belisar als Bettler.jpg ; Marie-Guillemine Benoist - Self-portrait, 1786, detail 1.jpg ; Statuette 45068.jpg
+## Witiges [Witigis] file 1
+  S: Coins of Witigis
+  F: 
+## Procopius [Procopius] file 6
+  S: Books by Procopius
+  F: 
+## Totila [Totila] file 17
+  S: Totila and Benedict of Nurcia ; Coins of Totila
+  F: Francesco Salviati - Portrait of Totila, c. 1549.jpg ; Francesco Salviati - Portrait of Totila, c.1549 (full portrait).jpg ; Giovanni Bonazza, busto di Totila (Palazzo Roncale, Rovigo) 01.jpg ; Palazzo Roncale, piano terra, busto 01 (Rovigo) 01.jpg ; Place findings ostrogoths semisiliqua.png ; Ritratto di Totila Salviati, Francesco, Pinacoteca Civica di Palazzo Volpi a Como 08.jpg
+## Narses: nessuna categoria
+## Alboin [Alboin] file 19
+  S: Alboin's Kingdom of the Lombards ; Rosamund ; Rosmunda e Alboino
+  F: Hermann Knackfuß - Helmichis and Rosamund murdering Albion, c. 575.jpg
+## Justin II [Iustinus II] file 14
+  S: Coins of Iustinus II ; Cross of Justin II
+  F: Crocetta d'oro longobarda con moneta di giustino II, da novara, VI-VIII sec..JPG ; Justin II (Zonaras portrait).png ; Seconde partie dv promptvaire des medalles 1581 (31489736).jpg
+## Pope Pelagius II [Pelagius II] file 0
+  S: Portraits of Pelagius II
+  F: 
+## Pope Gregory I [Gregorius I Magnus] file 14
+  S: Altars of Gregorius I Magnus ; Gregorius I Magnus in art ; Augustine Gospels ; San Gregorio al Celio (Rome) - Cathedra ; Cross of Theodelinda ; St. Gregory's Day ; Order of Saint Gregory the Great ; Procession of Saint Gregory against plague in 590 ; Symbols of Gregorius I Magnus ; Things named after Gregorius I Magnus ; Works by Gregorius I Magnus
+  F: 
+## Agilulf [Agilulf] file 5
+  S: Agilulf helmet ; Agilulf's Kingdom of the Lombards ; Croce di Agilulfo
+  F: Lombards tremissis 77001074.jpg
+## Phocas [Phocas] file 13
+  S: Coins of Phocas ; Column of Phocas ; Steelyard-weight depicting Phocas, British Museum
+  F: Phocas (Zonaras portrait).png ; Seconde partie dv promptvaire des medalles 1581 (31489739).jpg
+## Pope Boniface IV [Bonifacius IV] file 0
+  S: Portraits of Bonifacius IV
+  F: 
+## Smaragdus (exarch): nessuna categoria
+## Constans II [Constans II] file 12
+  S: Battle of the Masts ; Coins of Constans II ; Terme di Dafne
+  F: Constans II solidus (cropped).png ; Constans II (Zonaras portrait).png
+## Pope Vitalian [Vitalianus] file 1
+  S: Bullae seals of Vitalianus ; Portraits of Vitalianus
+  F: 
+## Tariq ibn Ziyad [Tariq ibn Ziyad] file 8
+  S: Battle of Guadalete ; Tariq ibn Ziyad (neighborhood in Hebron)
+  F: 
+## Musa ibn Nusayr [Musa ibn Nusayr] file 1
+  S: 
+  F: 
+## Roderic [Rodrigo] file 19
+  S: Battle of Guadalete ; Florinda by Franz Xaver Winterhalter (MET 01.21) ; Florinda by Franz Xaver Winterhalter (Royal Collection of the United Kingdom)
+  F: 
+## Ine of Wessex [Ine of Wessex] file 3
+  S: 
+  F: 
+## Pope Gregory II [Gregorius II] file 0
+  S: Gregorius II in art ; Coats of arms of Gregorius II
+  F: 
+## Liutprand, King of the Lombards [Liutprand] file 16
+  S: Coins of Liutprand ; Liutprand's Kingdom of the Lombards ; Liutprando (Condorelli) ; Palazzo Reale (Corteolona)
+  F: 0492 - Pavia - S. Pietro - Tomba di Liutprando - Foto Giovanni Dall'Orto, Oct 17 2009.jpg ; 0494 - Pavia - S. Pietro - Tomba di Liutprando - Foto Giovanni Dall'Orto, Oct 17 2009.jpg ; 0495 - Pavia - S. Pietro - Tomba di Liutprando - Foto Giovanni Dall'Orto, Oct 17 2009.jpg
+## Aistulf [Aistulf] file 6
+  S: Aistulf's Kingdom of the Lombards ; Coins of Aistulf ; Piazzale Re Astolfo (Carpi) ; Via Astolfo (Milan)
+  F: Girolamo Siciolante da Sermoneta, Pipino III dei Franchi, vincitore di re Astolfo, dona Ravenna e la Pentapoli a papa stefano II, 1565-68, 02.jpg
+## Pope Stephen II [Stephanus II] file 0
+  S: Stephanus II in art
+  F: 
+## Pepin the Short [Pépin le Bref] file 53
+  S: Coins of Pépin le Bref ; Die Sage von Pippin und Bertha ; Statues of Pépin le Bref
+  F: Girolamo Siciolante da Sermoneta, Pipino III dei Franchi, vincitore di re Astolfo, dona Ravenna e la Pentapoli a papa stefano II, 1565-68, 00.jpg ; Girolamo Siciolante da Sermoneta, Pipino III dei Franchi, vincitore di re Astolfo, dona Ravenna e la Pentapoli a papa stefano II, 1565-68, 01.jpg ; Girolamo Siciolante da Sermoneta, Pipino III dei Franchi, vincitore di re Astolfo, dona Ravenna e la Pentapoli a papa stefano II, 1565-68, 02.jpg ; Pepin the Short miniature.jpg ; PippinImperialChronicleCorpusChristiCollegeMS373Fol14.jpg ; With one blow Pepin cut off the lion's head, and with a second the bull's.jpg
+## Pope Adrian I [Hadrianus I] file 1
+  S: Hadrianus I in art ; Coins of Hadrianus I (pope)
+  F: 
+## Charlemagne [Carolus Magnus] file 18
+  S: Carolus Magnus in art ; Attributed arms of Charlemagne ; Belongings of Carolus Magnus ; Books about Carolus Magnus ; Chancellery of Carolus Magnus ; Coins of Carolus Magnus ; Dedications to Carolus Magnus ; Desiderata of the Lombards ; Life of Carolus Magnus ; Maps of the Gothic March ; Patronage of Carolus Magnus ; Reliquaries of Carolus Magnus
+  F: Charlemagne statue at Versailles Aug 2026.jpg
+## Desiderius [Desiderius] file 6
+  S: Adalgis ; Coins of Desiderius ; Croce di Desiderio ; Desiderata of the Lombards ; Via Re Desiderio (Sirmione)
+  F: 
+## Pope Leo III [Leo III] file 0
+  S: 
+  F: 
+## Irene of Athens [Irene of Athens] file 13
+  S: Coins of Irene of Athens ; De mulieribus claris 102 - Yrene costantinopolitana ; Irene of Athens in engravings ; Irene of Athens in miniatures ; Places named after Saint Irene ; Second Council of Nicaea
+  F: 
+## Pope Sergius II [Sergius II] file 0
+  S: Cardinals created by Sergius II ; Portraits of Sergius II
+  F: 
+## Lothair I [Lothair I] file 35
+  S: Battle of Fontenay-en-Puisaye ; Coins of Lothair I ; Grabmal Kaiser Lothar I. Sankt-Salvator-Basilika (Prüm) ; Lothaire Psalter (9th C) - BL Add MS 37768 ; Statues of Lothar I. (Frankenreich) ; Treaty of Prüm (855) ; Évangéliaire de Lothaire - BNF Latin266
+  F: Medallion of Lothair, from the Lothaire Psalter.jpg
+## Pope Leo IV [Leo IV] file 3
+  S: Fire in the Borgo ; Portraits of Leo IV
+  F: 

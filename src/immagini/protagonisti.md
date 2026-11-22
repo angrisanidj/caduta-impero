@@ -1,0 +1,296 @@
+# Immagini dei protagonisti (Wikimedia Commons)
+
+Generato da `node cerca.mjs info` (scelte a mano in `scelte.mjs`; licenze e autori letti dai metadati dei file). Nessuna immagine è stata scaricata.
+
+## Conteggi
+
+Righe della tabella: 112 (persone distinte: 87).
+
+| | righe | persone |
+|---|---|---|
+| ritratto coevo | 66 | 48 |
+| ritratto posteriore | 10 | 8 |
+| di fantasia | 8 | 7 |
+| oggetto del tempo, senza volto | 13 | 10 |
+| nessuna immagine | 15 | 14 |
+
+## Da decidere
+
+Le identificazioni dubbie (il volto c'è, ma non è certo che sia lui):
+
+1. **Ezio (451)**: il dittico di Halberstadt è «possible diptych of Aetius» secondo la stessa pagina di Commons (tesi di Ian Hughes); altri lo danno a Costanzo III (417). Usarlo con la riserva scritta, o niente.
+2. **Belisario (537, 546)**: la figura accanto a Giustiniano in San Vitale è detta Belisario per tradizione, senza iscrizione.
+3. **Stilicone (395, 402, 406)**: il dittico di Monza non ha iscrizione; l'identificazione è accettata dai più, non certa.
+4. **Costanzo II (357)**: il missorio di Kerč è attribuito a lui di solito; in alternativa il busto del Penn Museum (dalla Siria), anch'esso un'attribuzione. Una moneta sarebbe sicura (non scelta).
+5. **Arcadio (395)**: la stessa descrizione del museo su Commons dice «Arcadius (?)».
+6. **Diocleziano e Massimiano (293, 301)**: teste senza iscrizione attribuite per confronto con le monete.
+7. **Amalasunta (526)**: i due medaglioni del dittico di Oreste sono letti come Atalarico e Amalasunta, senza nomi scritti.
+8. **Shapur I (260)**: quale imperatore sia quello in ginocchio è discusso.
+
+Le immagini con un problema di fonte o di licenza:
+
+9. **Onorio (402, 409, 410)**: la foto del dittico di Probo (406, con iscrizione: il ritratto è certo) è dichiarata di pubblico dominio ma è di un'agenzia (Dea Picture Library) e ritrae un oggetto a tre dimensioni: meglio un'altra foto dello stesso dittico.
+10. **Agilulfo (593)**: la foto è di una copia della lamina (l'originale è al Bargello).
+11. **Foca (609)**: foto di moneta senza autore indicato.
+12. **Smaragdo (609)**: foto della colonna di Foca presa a caso; ne serve una dove si legga l'iscrizione.
+13. **Vitaliano (663)**: è un'incisione del 1760 del suo sigillo, non una foto.
+14. **Leone III (800, 801)**: il mosaico del Triclinio è il rifacimento del 1743.
+
+Le scelte di principio:
+
+- **Le immagini di fantasia** (Vallia, Teodorico I, Attila, Leone I papa, Rodrigo, Ine, Leone IV): sono quadri e stampe dal Seicento al Novecento, o Raffaello. Il mio consiglio è di non metterle, o di metterle con la scritta «ritratto immaginario».
+- **Gli oggetti senza volto** (monete col nome o il monogramma, un sigillo, la colonna): sono del tempo e veri, ma non mostrano la persona. Da decidere se valgono come immagine.
+- **Le righe con due persone** (Costanzo Cloro e Galerio, Arcadio e Onorio): la seconda immagine è fra le «alternative».
+- **Gli omonimi corretti**: per Costantino III, Liutprando e Maggioriano l'immagine di Wikidata era sbagliata (un solido di Costanzo III, un tremisse del duca di Benevento, un ritratto del 1754). Tutte e tre sono state sostituite.
+
+## Per tappa
+
+### 235
+
+- **Severo Alessandro** ([Q1769](https://www.wikidata.org/wiki/Q1769)) — *ritratto coevo*: busto in marmo, 222-235, Louvre (MR 408). [0 Alexandre Sévère - MR 408 - Louvre (1b).JPG](https://commons.wikimedia.org/wiki/File:0_Alexandre_S%C3%A9v%C3%A8re_-_MR_408_-_Louvre_(1b).JPG) — 2592×3888, CC BY 4.0; «Foto: Jean-Pol GRANDMONT, CC BY 4.0, da Wikimedia Commons».
+- **Giulia Mamea** ([Q235090](https://www.wikidata.org/wiki/Q235090)) — *ritratto coevo*: denaro di Giulia Mamea (RIC 335), 222-235. [Denarius-Julia Mamea-RIC 0335.jpg](https://commons.wikimedia.org/wiki/File:Denarius-Julia_Mamea-RIC_0335.jpg) — 500×237, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons». L'immagine di Wikidata («Julia mammea01 pushkin») è un calco del Museo Puškin (Commons ha la categoria «Casting of Bust of Julia Mamea in the Pushkin Museum»): scartata.
+  - in alternativa: busto in marmo, Louvre (Ma 3552): identificazione da controllare sulla scheda del museo [Julia Avita Mamaea Louvre Ma3552.jpg](https://commons.wikimedia.org/wiki/File:Julia_Avita_Mamaea_Louvre_Ma3552.jpg) — CC BY 2.5, Marie-Lan Nguyen (User:Jastrow), 2009
+- **Massimino il Trace** ([Q1777](https://www.wikidata.org/wiki/Q1777)) — *ritratto coevo*: busto in marmo, 235-238, Musei Capitolini (MC 473). [Maximinus Thrax Musei Capitolini MC473.jpg](https://commons.wikimedia.org/wiki/File:Maximinus_Thrax_Musei_Capitolini_MC473.jpg) — 1800×2400, Public domain; «Immagine: Jastrow (Marie-Lan Nguyen), 2006, pubblico dominio, da Wikimedia Commons».
+
+### 251
+
+- **Decio** ([Q1830](https://www.wikidata.org/wiki/Q1830)) — *ritratto coevo*: busto in marmo attribuito a Decio, 249-251, Musei Capitolini. [Emperor Traianus Decius (Mary Harrsch).jpg](https://commons.wikimedia.org/wiki/File:Emperor_Traianus_Decius_(Mary_Harrsch).jpg) — 450×600, CC BY-SA 2.0; «Foto: Mary Harrsch, CC BY-SA 2.0, da Wikimedia Commons». L'identificazione del busto capitolino con Decio è quella corrente, fondata sul confronto con le monete.
+- **Cniva** ([Q558526](https://www.wikidata.org/wiki/Q558526)) — *nessuna immagine*. Nessun ritratto coevo noto, nessuna moneta. Su Commons solo una stampa moderna di fantasia («Gothic king Cniva and Emperor Decius at the battle of Abritus»): sconsigliata.
+- **Cipriano** ([Q190240](https://www.wikidata.org/wiki/Q190240)) — *nessuna immagine*. Nessun ritratto coevo noto; su Commons solo immagini medievali e moderne. Da decidere se metterne una (vedi «Saint Cyprian in art»).
+
+### 260
+
+- **Valeriano** ([Q46750](https://www.wikidata.org/wiki/Q46750)) — *ritratto coevo*: aureo di Valeriano (RIC 34), 253-260. [Aureus Valerian-RIC 0034-transparent.png](https://commons.wikimedia.org/wiki/File:Aureus_Valerian-RIC_0034-transparent.png) — 416×200, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+- **Shapur I** ([Q191455](https://www.wikidata.org/wiki/Q191455)) — *ritratto coevo*: rilievo rupestre del trionfo di Shapur I sugli imperatori romani, Naqsh-e Rostam (Iran), dopo il 260. [The triumph of Shapur I over the Roman emperors Valerian and Philip the Arab (detail), Naqsh-e Rostam, Iran (48098809022).jpg](https://commons.wikimedia.org/wiki/File:The_triumph_of_Shapur_I_over_the_Roman_emperors_Valerian_and_Philip_the_Arab_(detail),_Naqsh-e_Rostam,_Iran_(48098809022).jpg) — 4928×3264, CC BY-SA 2.0; «Foto: Carole Raddato from Frankfurt, Germany, CC BY-SA 2.0, da Wikimedia Commons». Quale imperatore sia la figura in ginocchio e quale quella tenuta per mano (Filippo l'Arabo, Valeriano, Gordiano III) è discusso.
+- **Postumo** ([Q312603](https://www.wikidata.org/wiki/Q312603)) — *ritratto coevo*: doppio sesterzio di Postumo, 260-269. [Postumus-2sest.jpg](https://commons.wikimedia.org/wiki/File:Postumus-2sest.jpg) — 247×247, CC BY-SA 3.0; «Foto: CharlesS (caricata su Wikipedia nel 2004), CC BY-SA 3.0, da Wikimedia Commons».
+
+### 271
+
+- **Aureliano** ([Q46780](https://www.wikidata.org/wiki/Q46780)) — *ritratto coevo*: aureo di Aureliano, 270-275, Ermitage (dritto). [INC-1859-a Ауреус Аврелиан ок. 270-275 гг. (аверс).png](https://commons.wikimedia.org/wiki/File:INC-1859-a_%D0%90%D1%83%D1%80%D0%B5%D1%83%D1%81_%D0%90%D0%B2%D1%80%D0%B5%D0%BB%D0%B8%D0%B0%D0%BD_%D0%BE%D0%BA._270-275_%D0%B3%D0%B3._(%D0%B0%D0%B2%D0%B5%D1%80%D1%81).png) — 511×480, CC BY-SA 4.0; «Foto: АНО «Международный нумизматический клуб», CC BY-SA 4.0, da Wikimedia Commons».
+- **Zenobia** ([Q189705](https://www.wikidata.org/wiki/Q189705)) — *ritratto coevo*: antoniniano di Zenobia augusta, zecca di Antiochia, 272. [Antoninianus of Zenobia.png](https://commons.wikimedia.org/wiki/File:Antoninianus_of_Zenobia.png) — 800×406, CC BY-SA 2.5; «Foto: CNG, CC BY-SA 2.5, da Wikimedia Commons». L'immagine di Wikidata è il quadro di Herbert Schmalz (1888): di fantasia, scartato.
+
+### 274
+
+- **Aureliano** ([Q46780](https://www.wikidata.org/wiki/Q46780)) — *ritratto coevo*: aureo di Aureliano, 270-275, Ermitage (dritto). [INC-1859-a Ауреус Аврелиан ок. 270-275 гг. (аверс).png](https://commons.wikimedia.org/wiki/File:INC-1859-a_%D0%90%D1%83%D1%80%D0%B5%D1%83%D1%81_%D0%90%D0%B2%D1%80%D0%B5%D0%BB%D0%B8%D0%B0%D0%BD_%D0%BE%D0%BA._270-275_%D0%B3%D0%B3._(%D0%B0%D0%B2%D0%B5%D1%80%D1%81).png) — 511×480, CC BY-SA 4.0; «Foto: АНО «Международный нумизматический клуб», CC BY-SA 4.0, da Wikimedia Commons».
+- **Tetrico** ([Q312672](https://www.wikidata.org/wiki/Q312672)) — *ritratto coevo*: moneta di Tetrico I, 271-274. [Coin of Tetricus I.jpg](https://commons.wikimedia.org/wiki/File:Coin_of_Tetricus_I.jpg) — 354×400, CC BY-SA 3.0; «Foto: Rasiel Suarez., CC BY-SA 3.0, da Wikimedia Commons».
+- **Zenobia** ([Q189705](https://www.wikidata.org/wiki/Q189705)) — *ritratto coevo*: antoniniano di Zenobia augusta, zecca di Antiochia, 272. [Antoninianus of Zenobia.png](https://commons.wikimedia.org/wiki/File:Antoninianus_of_Zenobia.png) — 800×406, CC BY-SA 2.5; «Foto: CNG, CC BY-SA 2.5, da Wikimedia Commons». L'immagine di Wikidata è il quadro di Herbert Schmalz (1888): di fantasia, scartato.
+
+### 293
+
+- **Diocleziano** ([Q43107](https://www.wikidata.org/wiki/Q43107)) — *ritratto coevo*: testa in marmo da Nicomedia, 284-305, Museo archeologico di Istanbul. [Istanbul - Museo archeol. - Diocleziano (284-305 d.C.) - Foto G. Dall'Orto 28-5-2006.jpg](https://commons.wikimedia.org/wiki/File:Istanbul_-_Museo_archeol._-_Diocleziano_(284-305_d.C.)_-_Foto_G._Dall%27Orto_28-5-2006.jpg) — 794×978, Attribution; «Foto: G.dallorto, licenza libera con attribuzione, da Wikimedia Commons». Ritratto attribuito a Diocleziano (non c'è iscrizione); in alternativa una moneta.
+- **Massimiano** ([Q46768](https://www.wikidata.org/wiki/Q46768)) — *ritratto coevo*: testa in marmo dalla villa di Chiragan, fine III secolo, Musée Saint-Raymond, Tolosa (Ra 34 b). [(Toulouse) Tête de Maximien Hercule - inv.Ra 34 b Musée Saint-Raymond.jpg](https://commons.wikimedia.org/wiki/File:(Toulouse)_T%C3%AAte_de_Maximien_Hercule_-_inv.Ra_34_b_Mus%C3%A9e_Saint-Raymond.jpg) — 9272×10856, CC BY-SA 4.0; «Foto: Didier Descouens, CC BY-SA 4.0, da Wikimedia Commons». Identificazione con Massimiano proposta dal museo, non certa.
+- **Costanzo Cloro e Galerio** ([Q131195](https://www.wikidata.org/wiki/Q131195) + [Q172168](https://www.wikidata.org/wiki/Q172168)) — *ritratto coevo*: aureo di Costanzo Cloro cesare, 293-305. [Aureus Constantius I as caesar.jpg](https://commons.wikimedia.org/wiki/File:Aureus_Constantius_I_as_caesar.jpg) — 1500×708, CC BY-SA 2.5; «Foto: CNG, CC BY-SA 2.5, da Wikimedia Commons». Riga con due persone: servono due immagini (Galerio in alternativa).
+  - in alternativa: testa in porfido di Galerio da Felix Romuliana (Gamzigrad, Serbia), inizio IV secolo [Romuliana Galerius head.jpg](https://commons.wikimedia.org/wiki/File:Romuliana_Galerius_head.jpg) — CC BY 3.0, Shinjirod
+
+### 301
+
+- **Diocleziano** ([Q43107](https://www.wikidata.org/wiki/Q43107)) — *ritratto coevo*: testa in marmo da Nicomedia, 284-305, Museo archeologico di Istanbul. [Istanbul - Museo archeol. - Diocleziano (284-305 d.C.) - Foto G. Dall'Orto 28-5-2006.jpg](https://commons.wikimedia.org/wiki/File:Istanbul_-_Museo_archeol._-_Diocleziano_(284-305_d.C.)_-_Foto_G._Dall%27Orto_28-5-2006.jpg) — 794×978, Attribution; «Foto: G.dallorto, licenza libera con attribuzione, da Wikimedia Commons». Ritratto attribuito a Diocleziano (non c'è iscrizione); in alternativa una moneta.
+- **Lattanzio** ([Q209102](https://www.wikidata.org/wiki/Q209102)) — *oggetto del tempo, senza volto*: manoscritto delle «Divinae institutiones», Firenze, 1420-1430 circa. [Lactantius, Divinarum institutionum ... liber primus, manuscript, Florence 1420-1430 ca.jpg](https://commons.wikimedia.org/wiki/File:Lactantius,_Divinarum_institutionum_..._liber_primus,_manuscript,_Florence_1420-1430_ca.jpg) — 798×1297, Public domain; «Immagine: Guglielmino Tanaglia (copista), pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: si propone un manoscritto della sua opera (tardo, del Quattrocento). L'immagine di Wikidata («Lactantius.jpg») non l'ho aperta: dal titolo, un ritratto moderno.
+
+### 330
+
+- **Costantino** ([Q8413](https://www.wikidata.org/wiki/Q8413)) — *ritratto coevo*: testa della statua colossale dalla basilica di Massenzio, 312-315 circa (forse rilavorata dopo il 325), Musei Capitolini (MC 1072). [Colossal head of Constantine (M.C. inv. 1072), August 24, 2021.jpg](https://commons.wikimedia.org/wiki/File:Colossal_head_of_Constantine_(M.C._inv._1072),_August_24,_2021.jpg) — 5449×8173, Public domain; «Immagine: D. Benjamin Miller, pubblico dominio, da Wikimedia Commons».
+- **Silvestro I** ([Q47149](https://www.wikidata.org/wiki/Q47149)) — *ritratto posteriore*: mosaico del presbiterio del Duomo di Cefalù, XII secolo. [Saint Sylvester Cefalu.jpg](https://commons.wikimedia.org/wiki/File:Saint_Sylvester_Cefalu.jpg) — 351×864, Public domain; «Immagine: autore sconosciuto, pubblico dominio, da Wikimedia Commons». Circa otto secoli dopo; nessun ritratto coevo. Più vicino a Roma: gli affreschi della cappella di San Silvestro ai Santi Quattro Coronati (1246).
+
+### 357
+
+- **Costanzo II** ([Q46418](https://www.wikidata.org/wiki/Q46418)) — *ritratto coevo*: missorio d'argento di Kerč, metà del IV secolo, Ermitage. [The triumph of Constantius II.jpg](https://commons.wikimedia.org/wiki/File:The_triumph_of_Constantius_II.jpg) — 2527×2516, CC BY-SA 4.0; «Foto: Hermitage Museum, CC BY-SA 4.0, da Wikimedia Commons». L'imperatore del missorio di Kerč è identificato di solito con Costanzo II, non per iscrizione certa del volto. Più sicura una moneta.
+  - in alternativa: busto attribuito a Costanzo II (immagine di Wikidata): museo e attribuzione da controllare [Bust of Constantius II (Mary Harrsch).jpg](https://commons.wikimedia.org/wiki/File:Bust_of_Constantius_II_(Mary_Harrsch).jpg) — CC BY-SA 2.0, Mary Harrsch
+- **Ammiano Marcellino** ([Q172198](https://www.wikidata.org/wiki/Q172198)) — *nessuna immagine*. Nessun ritratto coevo noto; non ho trovato su Commons il manoscritto di Fulda (Vat. lat. 1873, IX secolo). L'immagine di Wikidata («Ammianus Marcellinus.jpg») non l'ho aperta: dal titolo, un ritratto moderno.
+- **Ormisda** ([Q1226628](https://www.wikidata.org/wiki/Q1226628)) — *nessuna immagine*. Nessun ritratto noto e nessuna immagine su Commons.
+
+### 378
+
+- **Valente** ([Q172471](https://www.wikidata.org/wiki/Q172471)) — *ritratto coevo*: solido di Valente, 364-378, Metropolitan Museum of Art. [Solidus of Valens (364–378) MET sf67-265-22s1.jpg](https://commons.wikimedia.org/wiki/File:Solidus_of_Valens_(364%E2%80%93378)_MET_sf67-265-22s1.jpg) — 1739×1705, CC0; «Foto: Metropolitan Museum of Art, CC0, da Wikimedia Commons». L'immagine di Wikidata è il busto capitolino MC 494, attribuito a Valente oppure a Onorio: scartato per il dubbio.
+- **Fritigerno** ([Q159712](https://www.wikidata.org/wiki/Q159712)) — *nessuna immagine*. Nessun ritratto noto e nessuna immagine su Commons.
+- **Graziano** ([Q189108](https://www.wikidata.org/wiki/Q189108)) — *ritratto coevo*: solido di Graziano, 367-383. [Gratian Solidus.jpg](https://commons.wikimedia.org/wiki/File:Gratian_Solidus.jpg) — 599×588, CC BY-SA 3.0; «Foto: Rasiel Suarez, CC BY-SA 3.0, da Wikimedia Commons».
+
+### 395
+
+- **Teodosio I** ([Q46696](https://www.wikidata.org/wiki/Q46696)) — *ritratto coevo*: moneta di Teodosio I (dritto), 379-395. [Theodosius1cng11100822obverse.jpg](https://commons.wikimedia.org/wiki/File:Theodosius1cng11100822obverse.jpg) — 396×368, CC BY-SA 2.5; «Foto: Classical Numismatic Group, CC BY-SA 2.5, da Wikimedia Commons».
+  - in alternativa: missorio d'argento di Teodosio, 388, Real Academia de la Historia, Madrid (la figura centrale è di solito identificata con Teodosio) [Missorium of Theodosius I (detail).png](https://commons.wikimedia.org/wiki/File:Missorium_of_Theodosius_I_(detail).png) — Public domain, autore sconosciuto
+- **Arcadio e Onorio** ([Q159369](https://www.wikidata.org/wiki/Q159369) + [Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: testa in marmo di Arcadio, fine IV secolo, Museo archeologico di Istanbul. [Arcadius Istanbul Museum.PNG](https://commons.wikimedia.org/wiki/File:Arcadius_Istanbul_Museum.PNG) — 510×850, CC BY-SA 4.0; «Foto: Gryffindor, CC BY-SA 4.0, da Wikimedia Commons». Riga con due persone: Onorio in alternativa. L'attribuzione della testa di Istanbul ad Arcadio è corrente, non certa.
+  - in alternativa: Onorio nel dittico consolare di Probo, 406, Tesoro della cattedrale di Aosta (iscrizione col nome) [Diptych of Honorius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_of_Honorius.jpg) — Public domain, Dea Picture Library
+- **Stilicone** ([Q203636](https://www.wikidata.org/wiki/Q203636)) — *ritratto coevo*: dittico d'avorio detto di Stilicone, 395-400 circa, Tesoro del Duomo di Monza. [Stilicho - detail from diptych.jpg](https://commons.wikimedia.org/wiki/File:Stilicho_-_detail_from_diptych.jpg) — 248×250, Public domain; «Immagine: Marsyas, pubblico dominio, da Wikimedia Commons». Il dittico non ha iscrizione: l'identificazione con Stilicone, Serena ed Eucherio è tradizionale e accettata dai più, non certa.
+
+### 402
+
+- **Stilicone** ([Q203636](https://www.wikidata.org/wiki/Q203636)) — *ritratto coevo*: dittico d'avorio detto di Stilicone, 395-400 circa, Tesoro del Duomo di Monza. [Stilicho - detail from diptych.jpg](https://commons.wikimedia.org/wiki/File:Stilicho_-_detail_from_diptych.jpg) — 248×250, Public domain; «Immagine: Marsyas, pubblico dominio, da Wikimedia Commons». Il dittico non ha iscrizione: l'identificazione con Stilicone, Serena ed Eucherio è tradizionale e accettata dai più, non certa.
+- **Alarico** ([Q102371](https://www.wikidata.org/wiki/Q102371)) — *nessuna immagine*. Nessun ritratto coevo noto. Su Commons solo opere moderne (busto di Giovanni Bonazza a Rovigo, XVIII secolo; statua di Cosenza): di fantasia, sconsigliate.
+- **Onorio** ([Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: dittico consolare d'avorio di Probo, 406: Onorio in abito militare, con iscrizione, Tesoro della cattedrale di Aosta. [Diptych of Honorius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_of_Honorius.jpg) — 3075×3305, Public domain; «Immagine: Dea Picture Library, pubblico dominio, da Wikimedia Commons». L'immagine di Wikidata è un quadro di Jean-Paul Laurens (1880), di fantasia: scartato. LICENZA DA CONTROLLARE: la pagina dichiara di pubblico dominio una foto d'agenzia (Dea Picture Library) di un oggetto a tre dimensioni; nella categoria ci sono altre foto del dittico, per esempio «Consular diptych Probus 406.jpg», non controllate.
+
+### 406
+
+- **Costantino III** ([Q209793](https://www.wikidata.org/wiki/Q209793)) — *ritratto coevo*: siliqua di Costantino III (RIC 1355), 407-411. [Siliqua Constantine III-RIC 1355.jpg](https://commons.wikimedia.org/wiki/File:Siliqua_Constantine_III-RIC_1355.jpg) — 354×175, Public domain; «Immagine: Classical Numismatic Group, Inc. (cngcoins.com), tramite Wildwinds, pubblico dominio, da Wikimedia Commons». ATTENZIONE: l'immagine di Wikidata è un solido di Costanzo III, cioè un'altra persona.
+- **Stilicone** ([Q203636](https://www.wikidata.org/wiki/Q203636)) — *ritratto coevo*: dittico d'avorio detto di Stilicone, 395-400 circa, Tesoro del Duomo di Monza. [Stilicho - detail from diptych.jpg](https://commons.wikimedia.org/wiki/File:Stilicho_-_detail_from_diptych.jpg) — 248×250, Public domain; «Immagine: Marsyas, pubblico dominio, da Wikimedia Commons». Il dittico non ha iscrizione: l'identificazione con Stilicone, Serena ed Eucherio è tradizionale e accettata dai più, non certa.
+
+### 409
+
+- **Onorio** ([Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: dittico consolare d'avorio di Probo, 406: Onorio in abito militare, con iscrizione, Tesoro della cattedrale di Aosta. [Diptych of Honorius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_of_Honorius.jpg) — 3075×3305, Public domain; «Immagine: Dea Picture Library, pubblico dominio, da Wikimedia Commons». L'immagine di Wikidata è un quadro di Jean-Paul Laurens (1880), di fantasia: scartato. LICENZA DA CONTROLLARE: la pagina dichiara di pubblico dominio una foto d'agenzia (Dea Picture Library) di un oggetto a tre dimensioni; nella categoria ci sono altre foto del dittico, per esempio «Consular diptych Probus 406.jpg», non controllate.
+- **Costantino III** ([Q209793](https://www.wikidata.org/wiki/Q209793)) — *ritratto coevo*: siliqua di Costantino III (RIC 1355), 407-411. [Siliqua Constantine III-RIC 1355.jpg](https://commons.wikimedia.org/wiki/File:Siliqua_Constantine_III-RIC_1355.jpg) — 354×175, Public domain; «Immagine: Classical Numismatic Group, Inc. (cngcoins.com), tramite Wildwinds, pubblico dominio, da Wikimedia Commons». ATTENZIONE: l'immagine di Wikidata è un solido di Costanzo III, cioè un'altra persona.
+
+### 410
+
+- **Alarico** ([Q102371](https://www.wikidata.org/wiki/Q102371)) — *nessuna immagine*. Nessun ritratto coevo noto. Su Commons solo opere moderne (busto di Giovanni Bonazza a Rovigo, XVIII secolo; statua di Cosenza): di fantasia, sconsigliate.
+- **Onorio** ([Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: dittico consolare d'avorio di Probo, 406: Onorio in abito militare, con iscrizione, Tesoro della cattedrale di Aosta. [Diptych of Honorius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_of_Honorius.jpg) — 3075×3305, Public domain; «Immagine: Dea Picture Library, pubblico dominio, da Wikimedia Commons». L'immagine di Wikidata è un quadro di Jean-Paul Laurens (1880), di fantasia: scartato. LICENZA DA CONTROLLARE: la pagina dichiara di pubblico dominio una foto d'agenzia (Dea Picture Library) di un oggetto a tre dimensioni; nella categoria ci sono altre foto del dittico, per esempio «Consular diptych Probus 406.jpg», non controllate.
+- **Galla Placidia** ([Q237907](https://www.wikidata.org/wiki/Q237907)) — *ritratto coevo*: solido di Galla Placidia augusta, 425-426. [Solidus of Galla Placidia, AD 425-426.jpg](https://commons.wikimedia.org/wiki/File:Solidus_of_Galla_Placidia,_AD_425-426.jpg) — 800×378, CC BY-SA 2.5; «Foto: CNG Coins, CC BY-SA 2.5, da Wikimedia Commons». Il medaglione in vetro dorato della croce di Brescia, spesso detto «di Galla Placidia», non la ritrae (Commons lo segnala): da evitare.
+
+### 418
+
+- **Vallia** ([Q1463732](https://www.wikidata.org/wiki/Q1463732)) — *di fantasia*: ritratto immaginario della serie dei re di Spagna, Museo del Prado (XVII-XVIII secolo). [Walia, rey de los Visigodos (Museo del Prado).jpg](https://commons.wikimedia.org/wiki/File:Walia,_rey_de_los_Visigodos_(Museo_del_Prado).jpg) — 1776×2889, Public domain; «Immagine: Alejo Vera Estaca, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: questa è un'immagine di fantasia; meglio nessuna immagine.
+- **Teodorico I** ([Q110892](https://www.wikidata.org/wiki/Q110892)) — *di fantasia*: quadro di Félix Castello, 1635, Museo del Prado. [Félix Castello, "Teodorico, rey godo", 1635.jpg](https://commons.wikimedia.org/wiki/File:F%C3%A9lix_Castello,_%22Teodorico,_rey_godo%22,_1635.jpg) — 1708×2953, Public domain; «Immagine: Félix Castello, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: immagine di fantasia; meglio nessuna immagine.
+- **Flavio Costanzo** ([Q201905](https://www.wikidata.org/wiki/Q201905)) — *ritratto coevo*: solido di Costanzo III (RIC 1325), 421. [Solidus Constantius III-RIC 1325.jpg](https://commons.wikimedia.org/wiki/File:Solidus_Constantius_III-RIC_1325.jpg) — 430×201, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+
+### 429
+
+- **Genserico** ([Q152127](https://www.wikidata.org/wiki/Q152127)) — *oggetto del tempo, senza volto*: siliqua vandala del tempo di Genserico, 455-476 circa. [Siliqua of Gaiseric, ca. 455-476.jpg](https://commons.wikimedia.org/wiki/File:Siliqua_of_Gaiseric,_ca._455-476.jpg) — 800×374, CC BY-SA 2.5; «Foto: CNG Coins, CC BY-SA 2.5, da Wikimedia Commons». I Vandali coniano a nome e con il busto degli imperatori (qui forse Onorio immobilizzato): non è un ritratto di Genserico. Nessun ritratto coevo noto.
+- **Bonifacio** ([Q463954](https://www.wikidata.org/wiki/Q463954)) — *oggetto del tempo, senza volto*: piccolo bronzo della zecca di Cartagine, 423-425, che il catalogo d'asta (CNG) assegna a Bonifacio conte d'Africa. [Bonifatius Comes Africae 422-431CE.jpg](https://commons.wikimedia.org/wiki/File:Bonifatius_Comes_Africae_422-431CE.jpg) — 800×398, CC BY-SA 3.0; «Foto: CNG Coins, CC BY-SA 3.0, da Wikimedia Commons». Leggenda D(OMINI)S NOSTRIS e busto imperiale generico: non è un suo ritratto, e l'assegnazione a Bonifacio è del catalogo d'asta. Nessun ritratto coevo noto.
+- **Agostino** ([Q8018](https://www.wikidata.org/wiki/Q8018)) — *ritratto posteriore*: affresco sotto il Sancta Sanctorum del Laterano, VI secolo. [Rome, Lateran, Capella Sancta Sanctorum, Fresco of Augustine.jpg](https://commons.wikimedia.org/wiki/File:Rome,_Lateran,_Capella_Sancta_Sanctorum,_Fresco_of_Augustine.jpg) — 777×1143, Public domain; «Immagine: autore sconosciuto, pubblico dominio, da Wikimedia Commons». La più antica immagine nota, circa un secolo dopo la morte: un ritratto ideale, non dal vero. L'immagine di Wikidata è un quadro di Philippe de Champaigne (XVII secolo).
+
+### 439
+
+- **Genserico** ([Q152127](https://www.wikidata.org/wiki/Q152127)) — *oggetto del tempo, senza volto*: siliqua vandala del tempo di Genserico, 455-476 circa. [Siliqua of Gaiseric, ca. 455-476.jpg](https://commons.wikimedia.org/wiki/File:Siliqua_of_Gaiseric,_ca._455-476.jpg) — 800×374, CC BY-SA 2.5; «Foto: CNG Coins, CC BY-SA 2.5, da Wikimedia Commons». I Vandali coniano a nome e con il busto degli imperatori (qui forse Onorio immobilizzato): non è un ritratto di Genserico. Nessun ritratto coevo noto.
+- **Valentiniano III** ([Q170026](https://www.wikidata.org/wiki/Q170026)) — *ritratto coevo*: solido del 437 per le nozze di Valentiniano III con Licinia Eudossia (sul rovescio Teodosio II fra i due sposi). [Solidus ValentinianIII-wedding.jpg](https://commons.wikimedia.org/wiki/File:Solidus_ValentinianIII-wedding.jpg) — 425×212, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+
+### 451
+
+- **Ezio** ([Q185476](https://www.wikidata.org/wiki/Q185476)) — *ritratto coevo*: dittico consolare d'avorio di Halberstadt, prima metà del V secolo. [Diptych Aetius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_Aetius.jpg) — 900×900, CC BY-SA 4.0; «Foto: Tataryn, CC BY-SA 4.0, da Wikimedia Commons». DUBBIO FORTE: la descrizione su Commons dice «possible diptych of Aetius», secondo lo storico Ian Hughes. Il dittico di Halberstadt è attribuito da alcuni a Ezio (console nel 432, 437 o 446), da altri a Costanzo III (417). Nessun ritratto certo di Ezio.
+- **Attila** ([Q36724](https://www.wikidata.org/wiki/Q36724)) — *di fantasia*: ritratto immaginario dagli «Elogia» di Paolo Giovio, 1575. [Attila portrait (imaginary), by Giovio Paolo, 1483-1552, published 1575.jpg](https://commons.wikimedia.org/wiki/File:Attila_portrait_(imaginary),_by_Giovio_Paolo,_1483-1552,_published_1575.jpg) — 605×774, Public domain; «Immagine: Giovio, Paolo, 1483-1552, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: l'immagine è dichiaratamente immaginaria (lo dice il titolo del file).
+- **Teodorico I** ([Q110892](https://www.wikidata.org/wiki/Q110892)) — *di fantasia*: quadro di Félix Castello, 1635, Museo del Prado. [Félix Castello, "Teodorico, rey godo", 1635.jpg](https://commons.wikimedia.org/wiki/File:F%C3%A9lix_Castello,_%22Teodorico,_rey_godo%22,_1635.jpg) — 1708×2953, Public domain; «Immagine: Félix Castello, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: immagine di fantasia; meglio nessuna immagine.
+
+### 455
+
+- **Valentiniano III** ([Q170026](https://www.wikidata.org/wiki/Q170026)) — *ritratto coevo*: solido del 437 per le nozze di Valentiniano III con Licinia Eudossia (sul rovescio Teodosio II fra i due sposi). [Solidus ValentinianIII-wedding.jpg](https://commons.wikimedia.org/wiki/File:Solidus_ValentinianIII-wedding.jpg) — 425×212, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+- **Genserico** ([Q152127](https://www.wikidata.org/wiki/Q152127)) — *oggetto del tempo, senza volto*: siliqua vandala del tempo di Genserico, 455-476 circa. [Siliqua of Gaiseric, ca. 455-476.jpg](https://commons.wikimedia.org/wiki/File:Siliqua_of_Gaiseric,_ca._455-476.jpg) — 800×374, CC BY-SA 2.5; «Foto: CNG Coins, CC BY-SA 2.5, da Wikimedia Commons». I Vandali coniano a nome e con il busto degli imperatori (qui forse Onorio immobilizzato): non è un ritratto di Genserico. Nessun ritratto coevo noto.
+- **Leone I** ([Q43954](https://www.wikidata.org/wiki/Q43954)) — *di fantasia*: Raffaello, «Incontro di Leone Magno con Attila», 1514, Stanze vaticane. [Raphael - The Meeting of Leo the Great and Attila.jpg](https://commons.wikimedia.org/wiki/File:Raphael_-_The_Meeting_of_Leo_the_Great_and_Attila.jpg) — 4001×3003, Public domain; «Immagine: Raffaello Sanzio, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo; il papa ha il volto di Leone X, e la scena è quella del 452 con Attila, non quella del 455 con Genserico. Meglio nessuna immagine.
+
+### 458
+
+- **Maggioriano** ([Q191956](https://www.wikidata.org/wiki/Q191956)) — *ritratto coevo*: solido di Maggioriano, zecca di Arles, 457-461. [Solidus Majorian Arles.jpg](https://commons.wikimedia.org/wiki/File:Solidus_Majorian_Arles.jpg) — 700×333, CC BY-SA 3.0 de; «Foto: Numismatica Ars Classica NAC AG, CC BY-SA 3.0 de, da Wikimedia Commons». ATTENZIONE: l'immagine di Wikidata («Maiorianus Augustus.jpg») è un ritratto del 1754, di fantasia.
+- **Ricimero** ([Q309845](https://www.wikidata.org/wiki/Q309845)) — *oggetto del tempo, senza volto*: moneta di bronzo di Libio Severo col monogramma di Ricimero sul rovescio (RIC 2716), 461-465. [As Libius Severus-Ricimer MonogramRIC 2716.jpg](https://commons.wikimedia.org/wiki/File:As_Libius_Severus-Ricimer_MonogramRIC_2716.jpg) — 500×259, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons». Nessun ritratto noto: il busto è di Libio Severo, di Ricimero c'è il monogramma. Su Commons c'è anche un anello con sigillo detto di Ricimero (BnF): attribuzione da verificare.
+
+### 468
+
+- **Antemio** ([Q211772](https://www.wikidata.org/wiki/Q211772)) — *ritratto coevo*: tremisse di Antemio (RIC 2842), 467-472. [Tremissis Anthemius-RIC 2842.jpg](https://commons.wikimedia.org/wiki/File:Tremissis_Anthemius-RIC_2842.jpg) — 500×242, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+- **Leone I** ([Q183776](https://www.wikidata.org/wiki/Q183776)) — *ritratto coevo*: solido di Leone I, 457-474. [Solidus of Leo I.jpg](https://commons.wikimedia.org/wiki/File:Solidus_of_Leo_I.jpg) — 393×392, CC BY-SA 2.5; «Foto: CNG (cngcoins.com), CC BY-SA 2.5, da Wikimedia Commons». L'immagine di Wikidata è un busto del Louvre (Ma 1012) attribuito a Leone I, attribuzione non certa.
+- **Basilisco** ([Q193056](https://www.wikidata.org/wiki/Q193056)) — *ritratto coevo*: solido di Basilisco usurpatore (RIC 1003), 475-476. [Solidus Basiliscus-RIC 1003.jpg](https://commons.wikimedia.org/wiki/File:Solidus_Basiliscus-RIC_1003.jpg) — 500×231, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons». Moneta di quando si fece imperatore (475-476), sette anni dopo la spedizione.
+
+### 472
+
+- **Ricimero** ([Q309845](https://www.wikidata.org/wiki/Q309845)) — *oggetto del tempo, senza volto*: moneta di bronzo di Libio Severo col monogramma di Ricimero sul rovescio (RIC 2716), 461-465. [As Libius Severus-Ricimer MonogramRIC 2716.jpg](https://commons.wikimedia.org/wiki/File:As_Libius_Severus-Ricimer_MonogramRIC_2716.jpg) — 500×259, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons». Nessun ritratto noto: il busto è di Libio Severo, di Ricimero c'è il monogramma. Su Commons c'è anche un anello con sigillo detto di Ricimero (BnF): attribuzione da verificare.
+- **Antemio** ([Q211772](https://www.wikidata.org/wiki/Q211772)) — *ritratto coevo*: tremisse di Antemio (RIC 2842), 467-472. [Tremissis Anthemius-RIC 2842.jpg](https://commons.wikimedia.org/wiki/File:Tremissis_Anthemius-RIC_2842.jpg) — 500×242, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+- **Olibrio** ([Q193678](https://www.wikidata.org/wiki/Q193678)) — *ritratto coevo*: tremisse di Olibrio, zecca di Milano, 472. [Tremissis Olybrius.jpg](https://commons.wikimedia.org/wiki/File:Tremissis_Olybrius.jpg) — 827×404, CC BY-SA 3.0 de; «Foto: Numismatica Ars Classica NAC AG, CC BY-SA 3.0 de, da Wikimedia Commons». Su Commons ci sono anche tremissi falsi moderni di Olibrio (conio di Becker): questo viene da un'asta di Numismatica Ars Classica e non è segnato come falso.
+
+### 476
+
+- **Odoacre** ([Q103333](https://www.wikidata.org/wiki/Q103333)) — *ritratto coevo*: moneta d'argento di Odoacre col suo busto, Ravenna, 477 circa, British Museum. [Coin of Odoacer at the British Museum (obverse).jpg](https://commons.wikimedia.org/wiki/File:Coin_of_Odoacer_at_the_British_Museum_(obverse).jpg) — 1095×1192, CC BY-SA 4.0; «Foto: British Museum (photo), CC BY-SA 4.0, da Wikimedia Commons».
+- **Romolo Augustolo** ([Q130601](https://www.wikidata.org/wiki/Q130601)) — *ritratto coevo*: solido di Romolo Augusto (RIC 3406), 475-476. [Solidus Romulus Augustus-RIC 3406.jpg](https://commons.wikimedia.org/wiki/File:Solidus_Romulus_Augustus-RIC_3406.jpg) — 325×169, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons». Da evitare il busto Giustiniani detto «di Romolo Augustolo», che è del II secolo.
+- **Giulio Nepote** ([Q103860](https://www.wikidata.org/wiki/Q103860)) — *ritratto coevo*: tremisse di Giulio Nepote (RIC 3221), 474-480. [Tremissis Julius Nepos-RIC 3221.jpg](https://commons.wikimedia.org/wiki/File:Tremissis_Julius_Nepos-RIC_3221.jpg) — 500×255, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+
+### 493
+
+- **Teodorico** ([Q105105](https://www.wikidata.org/wiki/Q105105)) — *ritratto coevo*: medaglione d'oro da tre solidi col ritratto del re (pezzo unico, trovato a Senigallia), 493-526, Museo nazionale romano. [Regno dei goti, teodorico, pezzo da tre solidi con ritratto del re col palladio, 493-526, oro (pezzo unico).JPG](https://commons.wikimedia.org/wiki/File:Regno_dei_goti,_teodorico,_pezzo_da_tre_solidi_con_ritratto_del_re_col_palladio,_493-526,_oro_(pezzo_unico).JPG) — 639×614, CC BY-SA 3.0; «Foto: Sailko, CC BY-SA 3.0, da Wikimedia Commons». L'unico ritratto certo, con il nome; le sue monete correnti portano il volto dell'imperatore.
+- **Odoacre** ([Q103333](https://www.wikidata.org/wiki/Q103333)) — *ritratto coevo*: moneta d'argento di Odoacre col suo busto, Ravenna, 477 circa, British Museum. [Coin of Odoacer at the British Museum (obverse).jpg](https://commons.wikimedia.org/wiki/File:Coin_of_Odoacer_at_the_British_Museum_(obverse).jpg) — 1095×1192, CC BY-SA 4.0; «Foto: British Museum (photo), CC BY-SA 4.0, da Wikimedia Commons».
+- **Cassiodoro** ([Q192365](https://www.wikidata.org/wiki/Q192365)) — *ritratto posteriore*: frontespizio dei «Gesta Theodorici» (Leida, Biblioteca universitaria, ms. Vulc. 46, fol. 2r), Fulda, 1177: Cassiodoro seduto davanti a Teodorico. [Gesta Theodorici - Flavius Magnus Aurelius Cassiodorus (c 485 - c 580).jpg](https://commons.wikimedia.org/wiki/File:Gesta_Theodorici_-_Flavius_Magnus_Aurelius_Cassiodorus_(c_485_-_c_580).jpg) — 1098×1701, Public domain; «Immagine: Fulda workshop, pubblico dominio, da Wikimedia Commons». Quasi sette secoli dopo: non è un ritratto dal vero.
+
+### 526
+
+- **Teodorico** ([Q105105](https://www.wikidata.org/wiki/Q105105)) — *ritratto coevo*: medaglione d'oro da tre solidi col ritratto del re (pezzo unico, trovato a Senigallia), 493-526, Museo nazionale romano. [Regno dei goti, teodorico, pezzo da tre solidi con ritratto del re col palladio, 493-526, oro (pezzo unico).JPG](https://commons.wikimedia.org/wiki/File:Regno_dei_goti,_teodorico,_pezzo_da_tre_solidi_con_ritratto_del_re_col_palladio,_493-526,_oro_(pezzo_unico).JPG) — 639×614, CC BY-SA 3.0; «Foto: Sailko, CC BY-SA 3.0, da Wikimedia Commons». L'unico ritratto certo, con il nome; le sue monete correnti portano il volto dell'imperatore.
+- **Boezio** ([Q102851](https://www.wikidata.org/wiki/Q102851)) — *ritratto posteriore*: miniatura del Maestro del Boezio Lallemant in un manoscritto della «Consolazione» (BnF, Lat. 6643), 1498 circa. [Consolation de la philosophie - BNF Lat6643 f1 (Boèce au travail).jpg](https://commons.wikimedia.org/wiki/File:Consolation_de_la_philosophie_-_BNF_Lat6643_f1_(Bo%C3%A8ce_au_travail).jpg) — 448×661, Public domain; «Immagine: Master of the Lallemant Boethius, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo certo. Attenzione: il dittico di Brescia è del padre, Manlio Boezio console nel 487. La miniatura è di quasi mille anni dopo; su Commons ce ne sono di più antiche (categoria «Boethius in medieval miniatures»), non controllate.
+- **Amalasunta** ([Q371670](https://www.wikidata.org/wiki/Q371670)) — *ritratto coevo*: dittico consolare d'avorio di Oreste, 530, Victoria and Albert Museum: medaglioni con Atalarico e Amalasunta. [Detail of Consular diptych of Rufus Gennadius Probus Orestes.png](https://commons.wikimedia.org/wiki/File:Detail_of_Consular_diptych_of_Rufus_Gennadius_Probus_Orestes.png) — 1058×498, CC BY-SA 4.0; «Foto: Gabe the Pianist, CC BY-SA 4.0, da Wikimedia Commons». Identificazione dei due medaglioni con Atalarico e Amalasunta corrente, non scritta sull'avorio.
+  - in alternativa: il dittico intero [Diptych Rufus Gennadius Probus Orestes VandA 139-1866.jpg](https://commons.wikimedia.org/wiki/File:Diptych_Rufus_Gennadius_Probus_Orestes_VandA_139-1866.jpg) — CC BY 2.5, Marie-Lan Nguyen (2012)
+
+### 537
+
+- **Giustiniano** ([Q41866](https://www.wikidata.org/wiki/Q41866)) — *ritratto coevo*: mosaico del presbiterio di San Vitale, Ravenna, 547 circa. [Mosaic of Justinianus I - Basilica San Vitale (Ravenna).jpg](https://commons.wikimedia.org/wiki/File:Mosaic_of_Justinianus_I_-_Basilica_San_Vitale_(Ravenna).jpg) — 1500×1997, CC BY-SA 4.0; «Foto: Petar Milošević, CC BY-SA 4.0, da Wikimedia Commons».
+- **Belisario** ([Q174943](https://www.wikidata.org/wiki/Q174943)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa. [Meister von San Vitale in Ravenna 013.jpg](https://commons.wikimedia.org/wiki/File:Meister_von_San_Vitale_in_Ravenna_013.jpg) — 1576×1888, Public domain; «Immagine: Meister von San Vitale in Ravenna, pubblico dominio, da Wikimedia Commons». L'identificazione con Belisario della figura alla destra dell'imperatore è tradizionale ma discussa.
+- **Vitige** ([Q312607](https://www.wikidata.org/wiki/Q312607)) — *oggetto del tempo, senza volto*: quarto di siliqua di Vitige: busto di Giustiniano e nome del re, 536-540. [Quarter Siliqua of Witigis.jpg](https://commons.wikimedia.org/wiki/File:Quarter_Siliqua_of_Witigis.jpg) — 800×392, CC BY-SA 2.5; «Foto: CNG Coins, CC BY-SA 2.5, da Wikimedia Commons». Nessun ritratto noto: il volto sulla moneta è dell'imperatore.
+
+### 542
+
+- **Giustiniano** ([Q41866](https://www.wikidata.org/wiki/Q41866)) — *ritratto coevo*: mosaico del presbiterio di San Vitale, Ravenna, 547 circa. [Mosaic of Justinianus I - Basilica San Vitale (Ravenna).jpg](https://commons.wikimedia.org/wiki/File:Mosaic_of_Justinianus_I_-_Basilica_San_Vitale_(Ravenna).jpg) — 1500×1997, CC BY-SA 4.0; «Foto: Petar Milošević, CC BY-SA 4.0, da Wikimedia Commons».
+- **Procopio** ([Q186153](https://www.wikidata.org/wiki/Q186153)) — *nessuna immagine*. Nessun ritratto noto e nessun manoscritto antico trovato su Commons.
+
+### 546
+
+- **Totila** ([Q159707](https://www.wikidata.org/wiki/Q159707)) — *ritratto coevo*: moneta di bronzo di Baduila (Totila) col suo busto (BMC 44), 541-552. [Baduila BMC 044.jpg](https://commons.wikimedia.org/wiki/File:Baduila_BMC_044.jpg) — 700×319, CC BY-SA 3.0; «Foto: Courtesy of CNG Auctions, www.cngcoins.com, CC BY-SA 3.0, da Wikimedia Commons». Sulle monete di bronzo il re si fa ritrarre (busto stilizzato); le opere di Salviati e Bonazza sono di fantasia.
+- **Belisario** ([Q174943](https://www.wikidata.org/wiki/Q174943)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa. [Meister von San Vitale in Ravenna 013.jpg](https://commons.wikimedia.org/wiki/File:Meister_von_San_Vitale_in_Ravenna_013.jpg) — 1576×1888, Public domain; «Immagine: Meister von San Vitale in Ravenna, pubblico dominio, da Wikimedia Commons». L'identificazione con Belisario della figura alla destra dell'imperatore è tradizionale ma discussa.
+- **Narsete** ([Q294781](https://www.wikidata.org/wiki/Q294781)) — *nessuna immagine*. Nessun ritratto certo. In San Vitale una delle figure accanto a Giustiniano è stata identificata con Narsete da alcuni, ma senza fondamento sicuro; su Commons c'è «Narses.jpg» da controllare.
+
+### 568
+
+- **Alboino** ([Q152877](https://www.wikidata.org/wiki/Q152877)) — *nessuna immagine*. Nessun ritratto coevo noto; su Commons la xilografia della Cronaca di Norimberga (1493), di fantasia.
+- **Giustino II** ([Q183813](https://www.wikidata.org/wiki/Q183813)) — *ritratto coevo*: solido di Giustino II, 565-578. [Gold solidus, Byzantine, Justin II, 565-578.jpg](https://commons.wikimedia.org/wiki/File:Gold_solidus,_Byzantine,_Justin_II,_565-578.jpg) — 800×413, CC BY-SA 3.0; «Foto: CNG (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+
+### 589
+
+- **Pelagio II** ([Q151908](https://www.wikidata.org/wiki/Q151908)) — *ritratto coevo*: mosaico dell'arco di San Lorenzo fuori le mura, 579-590: Pelagio II offre il modello della chiesa. [San Lorenzo fuori le Mura - 54018508984 (detail Pelagius II).jpg](https://commons.wikimedia.org/wiki/File:San_Lorenzo_fuori_le_Mura_-_54018508984_(detail_Pelagius_II).jpg) — 1309×1737, CC BY-SA 2.0; «Foto: bradhostetler, CC BY-SA 2.0, da Wikimedia Commons».
+- **Gregorio Magno** ([Q42827](https://www.wikidata.org/wiki/Q42827)) — *ritratto posteriore*: miniatura del «Registrum Gregorii», Treviri, 983 circa. [Registrum gregorii, san gregorio magno ispirato dalla colomba, 983 miniatura, treviri stadtbiblithek, 19,8x27 cm.jpg](https://commons.wikimedia.org/wiki/File:Registrum_gregorii,_san_gregorio_magno_ispirato_dalla_colomba,_983_miniatura,_treviri_stadtbiblithek,_19,8x27_cm.jpg) — 951×1293, Public domain; «Immagine: Meister des Registrum Gregorii., pubblico dominio, da Wikimedia Commons». Circa quattro secoli dopo. Non è un ritratto dal vero (Giovanni Diacono, nel IX secolo, descrive un ritratto dipinto nel monastero, perduto).
+
+### 593
+
+- **Gregorio Magno** ([Q42827](https://www.wikidata.org/wiki/Q42827)) — *ritratto posteriore*: miniatura del «Registrum Gregorii», Treviri, 983 circa. [Registrum gregorii, san gregorio magno ispirato dalla colomba, 983 miniatura, treviri stadtbiblithek, 19,8x27 cm.jpg](https://commons.wikimedia.org/wiki/File:Registrum_gregorii,_san_gregorio_magno_ispirato_dalla_colomba,_983_miniatura,_treviri_stadtbiblithek,_19,8x27_cm.jpg) — 951×1293, Public domain; «Immagine: Meister des Registrum Gregorii., pubblico dominio, da Wikimedia Commons». Circa quattro secoli dopo. Non è un ritratto dal vero (Giovanni Diacono, nel IX secolo, descrive un ritratto dipinto nel monastero, perduto).
+- **Agilulfo** ([Q315276](https://www.wikidata.org/wiki/Q315276)) — *ritratto coevo*: lamina di Agilulfo, placca frontale d'elmo in rame dorato, 591-616, Museo del Bargello. [Agilulf, king of the Lombards, depicted on a helmet forehead plate.jpg](https://commons.wikimedia.org/wiki/File:Agilulf,_king_of_the_Lombards,_depicted_on_a_helmet_forehead_plate.jpg) — 1434×999, CC BY-SA 3.0; «Foto: James Steakley, CC BY-SA 3.0, da Wikimedia Commons». Coeva e con il nome del re (REGI AGILU[LFO]); il volto è schematico. ATTENZIONE: secondo la descrizione del file la foto è di una COPIA (l'originale è al Bargello).
+
+### 609
+
+- **Foca** ([Q31556](https://www.wikidata.org/wiki/Q31556)) — *ritratto coevo*: solido di Foca (FOCAS PERP AVG, al rovescio la Vittoria), 602-610. [Phocas cons.jpg](https://commons.wikimedia.org/wiki/File:Phocas_cons.jpg) — 774×324, CC BY-SA 3.0; «Foto: autore non indicato (caricata da Wikipedia), CC BY-SA 3.0, da Wikimedia Commons». Autore della foto non indicato sulla pagina: meglio un'altra moneta della categoria «Coins of Phocas» con autore dichiarato.
+- **Bonifacio IV** ([Q170505](https://www.wikidata.org/wiki/Q170505)) — *nessuna immagine*. Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (rifatto nell'Ottocento) e incisioni moderne.
+- **Smaragdo** ([Q1340553](https://www.wikidata.org/wiki/Q1340553)) — *oggetto del tempo, senza volto*: la colonna di Foca nel Foro Romano, con l'iscrizione dedicatoria di Smaragdo (608) sulla base. [Column of Phocas.jpg](https://commons.wikimedia.org/wiki/File:Column_of_Phocas.jpg) — 2448×3264, CC BY 3.0; «Foto: F l a n k e r, CC BY 3.0, da Wikimedia Commons». Nessun ritratto noto. Va scelta una foto in cui si legga l'iscrizione (questa è presa a caso dalla categoria).
+
+### 663
+
+- **Costante II** ([Q41613](https://www.wikidata.org/wiki/Q41613)) — *ritratto coevo*: esagramma d'argento di Costante II col figlio Costantino IV (SB 995), 654-668. [Hexagram-Constans II and Constantine IV-sb0995.jpg](https://commons.wikimedia.org/wiki/File:Hexagram-Constans_II_and_Constantine_IV-sb0995.jpg) — 600×299, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+- **Vitaliano** ([Q199612](https://www.wikidata.org/wiki/Q199612)) — *oggetto del tempo, senza volto*: bolla di piombo di papa Vitaliano, 657-672. [Bulle vitaliani 16976.jpg](https://commons.wikimedia.org/wiki/File:Bulle_vitaliani_16976.jpg) — 711×393, Public domain; «Immagine: incisione di Tassin e Toustain (1760), pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo; il sigillo è del tempo e porta il nome, ma l'immagine è un'incisione del 1760 (Tassin e Toustain, «Nouveau traité de diplomatique»), non una foto. L'immagine di Wikidata è il medaglione ottocentesco di San Paolo.
+
+### 711
+
+- **Tariq ibn Ziyad** ([Q230497](https://www.wikidata.org/wiki/Q230497)) — *nessuna immagine*. Nessun ritratto noto (l'Islam di quel tempo non ritrae); su Commons solo immagini moderne di fantasia.
+- **Musa ibn Nusayr** ([Q301261](https://www.wikidata.org/wiki/Q301261)) — *nessuna immagine*. Nessun ritratto noto; su Commons solo un'illustrazione moderna.
+- **Rodrigo** ([Q243573](https://www.wikidata.org/wiki/Q243573)) — *di fantasia*: ritratto immaginario della serie dei re di Spagna, Museo del Prado. [Don Rodrigo, rey de los visigodos (Museo del Prado).jpg](https://commons.wikimedia.org/wiki/File:Don_Rodrigo,_rey_de_los_visigodos_(Museo_del_Prado).jpg) — 1857×2952, Public domain; «Immagine: Mariano de la Roca y Delgado, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto. Esistono tremissi a suo nome (zecca di Egitania), ma non li ho trovati su Commons. Meglio nessuna immagine.
+
+### 727
+
+- **Ine** ([Q451580](https://www.wikidata.org/wiki/Q451580)) — *di fantasia*: vetrata della Trasfigurazione, cattedrale di Wells, 1925-1931. [King Ine in the Transfiguration Window of Wells Cathedral (crop).jpg](https://commons.wikimedia.org/wiki/File:King_Ine_in_the_Transfiguration_Window_of_Wells_Cathedral_(crop).jpg) — 558×680, CC0; «Foto: Greenshed, CC0, da Wikimedia Commons». Nessun ritratto coevo; vetrata di A. K. Nicholson, 1925-1931: di fantasia. Meglio nessuna immagine.
+- **Gregorio II** ([Q103321](https://www.wikidata.org/wiki/Q103321)) — *nessuna immagine*. Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (rifatto nell'Ottocento) e incisioni moderne.
+- **Liutprando** ([Q251836](https://www.wikidata.org/wiki/Q251836)) — *oggetto del tempo, senza volto*: tremisse d'oro di Liutprando re, zecca di Pavia, 712-744. [Regno longobardo, emissione aurea di liutprando, zecca di pavia, 712-744, 01.JPG](https://commons.wikimedia.org/wiki/File:Regno_longobardo,_emissione_aurea_di_liutprando,_zecca_di_pavia,_712-744,_01.JPG) — 432×408, CC BY 3.0; «Foto: Sailko, CC BY 3.0, da Wikimedia Commons». ATTENZIONE: l'immagine di Wikidata è un tremisse di Liutprando duca di Benevento (742-751), un omonimo. Il busto sulle monete regie è stilizzato, non un ritratto.
+
+### 756
+
+- **Astolfo** ([Q312504](https://www.wikidata.org/wiki/Q312504)) — *oggetto del tempo, senza volto*: tremisse d'oro di Astolfo, zecca di Pavia, 749-756. [Regno longobardo, emissione aurea di aistolfo, zecca di pavia, 749-756, 01.JPG](https://commons.wikimedia.org/wiki/File:Regno_longobardo,_emissione_aurea_di_aistolfo,_zecca_di_pavia,_749-756,_01.JPG) — 426×414, CC BY 3.0; «Foto: Sailko, CC BY 3.0, da Wikimedia Commons». Moneta coeva col nome del re; il busto è stilizzato, non un ritratto.
+- **Stefano II** ([Q211789](https://www.wikidata.org/wiki/Q211789)) — *ritratto posteriore*: formella del portale dell'abbazia di Nonantola (seguaci di Wiligelmo), inizio XII secolo: Stefano II benedice Anselmo. [Stephen II detail Nonantola Abbey.jpg](https://commons.wikimedia.org/wiki/File:Stephen_II_detail_Nonantola_Abbey.jpg) — 574×820, CC BY-SA 3.0; «Foto: sailko, CC BY-SA 3.0, da Wikimedia Commons». Circa tre secoli e mezzo dopo. Attenzione alla numerazione: è lo Stefano detto anche «III» nelle liste antiche.
+- **Pipino il Breve** ([Q81212](https://www.wikidata.org/wiki/Q81212)) — *ritratto posteriore*: miniatura della Cronaca imperiale anonima (Cambridge, Corpus Christi College, MS 373, fol. 14), 1112-1114 circa. [PippinImperialChronicleCorpusChristiCollegeMS373Fol14.jpg](https://commons.wikimedia.org/wiki/File:PippinImperialChronicleCorpusChristiCollegeMS373Fol14.jpg) — 1200×1970, Public domain; «Immagine: anonimo, XII secolo, pubblico dominio, da Wikimedia Commons». Tre secoli e mezzo dopo. I suoi denari, coevi, non hanno volto.
+  - in alternativa: denaro di Pipino, Troyes, 751-768 (solo monogramma) [Pepin le Bref denier Troyes 751 768.jpg](https://commons.wikimedia.org/wiki/File:Pepin_le_Bref_denier_Troyes_751_768.jpg) — CC BY-SA 3.0, PHGCOM
+
+### 780
+
+- **Adriano I** ([Q103292](https://www.wikidata.org/wiki/Q103292)) — *ritratto coevo*: denaro d'argento della zecca di Roma col busto di Adriano I, 772-795, Biblioteca Apostolica Vaticana. [Zecca di roma, denaro di adriano I, 772-795, in argento (bibl. apostolica vaticana).jpg](https://commons.wikimedia.org/wiki/File:Zecca_di_roma,_denaro_di_adriano_I,_772-795,_in_argento_(bibl._apostolica_vaticana).jpg) — 1108×1128, CC BY-SA 4.0; «Foto: Francesco Bini, CC BY-SA 4.0, da Wikimedia Commons».
+- **Carlo Magno** ([Q3044](https://www.wikidata.org/wiki/Q3044)) — *ritratto coevo*: denaro col busto laureato di Carlo, zecca di Magonza, 812-814. [Charlemagne denier Mayence 812 814.jpg](https://commons.wikimedia.org/wiki/File:Charlemagne_denier_Mayence_812_814.jpg) — 2070×2070, Public domain; «Immagine: Bibliothèque nationale de France, pubblico dominio, da Wikimedia Commons».
+- **Desiderio** ([Q297520](https://www.wikidata.org/wiki/Q297520)) — *oggetto del tempo, senza volto*: tremisse d'oro di Desiderio, zecca di Lucca, 757-774. [Regno longobardo, emissione aurea di desiderio, zecca di lucca, 757-774, 01.JPG](https://commons.wikimedia.org/wiki/File:Regno_longobardo,_emissione_aurea_di_desiderio,_zecca_di_lucca,_757-774,_01.JPG) — 318×297, CC BY 3.0; «Foto: Sailko, CC BY 3.0, da Wikimedia Commons». I tremissi di Desiderio portano una croce o una stella, non il volto. L'immagine di Wikidata è un ritratto di fantasia.
+
+### 791
+
+- **Adriano I** ([Q103292](https://www.wikidata.org/wiki/Q103292)) — *ritratto coevo*: denaro d'argento della zecca di Roma col busto di Adriano I, 772-795, Biblioteca Apostolica Vaticana. [Zecca di roma, denaro di adriano I, 772-795, in argento (bibl. apostolica vaticana).jpg](https://commons.wikimedia.org/wiki/File:Zecca_di_roma,_denaro_di_adriano_I,_772-795,_in_argento_(bibl._apostolica_vaticana).jpg) — 1108×1128, CC BY-SA 4.0; «Foto: Francesco Bini, CC BY-SA 4.0, da Wikimedia Commons».
+
+### 800
+
+- **Carlo Magno** ([Q3044](https://www.wikidata.org/wiki/Q3044)) — *ritratto coevo*: denaro col busto laureato di Carlo, zecca di Magonza, 812-814. [Charlemagne denier Mayence 812 814.jpg](https://commons.wikimedia.org/wiki/File:Charlemagne_denier_Mayence_812_814.jpg) — 2070×2070, Public domain; «Immagine: Bibliothèque nationale de France, pubblico dominio, da Wikimedia Commons».
+- **Leone III** ([Q132086](https://www.wikidata.org/wiki/Q132086)) — *ritratto posteriore*: mosaico del Triclinio Leoniano (Laterano): Pietro dà il pallio a Leone III. [Pope Leo III portrait – Triclinium Leoninum.jpg](https://commons.wikimedia.org/wiki/File:Pope_Leo_III_portrait_%E2%80%93_Triclinium_Leoninum.jpg) — 370×480, Public domain; «Immagine: autore sconosciuto; rifacimento di Ferdinando Fuga (1743), pubblico dominio, da Wikimedia Commons». Il mosaico originale (fine VIII secolo) è perduto: quello visibile è il rifacimento del 1743 sui disegni antichi. Leone III vi ha il nimbo quadrato dei vivi.
+- **Irene** ([Q206737](https://www.wikidata.org/wiki/Q206737)) — *ritratto coevo*: solido di Irene (SB 1599), 797-802. [Irene solidus sb 1599 (obverse).jpg](https://commons.wikimedia.org/wiki/File:Irene_solidus_sb_1599_(obverse).jpg) — 1169×1051, CC BY-SA 2.5; «Foto: CNG, CC BY-SA 2.5, da Wikimedia Commons».
+
+### 801
+
+- **Leone III** ([Q132086](https://www.wikidata.org/wiki/Q132086)) — *ritratto posteriore*: mosaico del Triclinio Leoniano (Laterano): Pietro dà il pallio a Leone III. [Pope Leo III portrait – Triclinium Leoninum.jpg](https://commons.wikimedia.org/wiki/File:Pope_Leo_III_portrait_%E2%80%93_Triclinium_Leoninum.jpg) — 370×480, Public domain; «Immagine: autore sconosciuto; rifacimento di Ferdinando Fuga (1743), pubblico dominio, da Wikimedia Commons». Il mosaico originale (fine VIII secolo) è perduto: quello visibile è il rifacimento del 1743 sui disegni antichi. Leone III vi ha il nimbo quadrato dei vivi.
+- **Carlo Magno** ([Q3044](https://www.wikidata.org/wiki/Q3044)) — *ritratto coevo*: denaro col busto laureato di Carlo, zecca di Magonza, 812-814. [Charlemagne denier Mayence 812 814.jpg](https://commons.wikimedia.org/wiki/File:Charlemagne_denier_Mayence_812_814.jpg) — 2070×2070, Public domain; «Immagine: Bibliothèque nationale de France, pubblico dominio, da Wikimedia Commons».
+
+### 846
+
+- **Sergio II** ([Q228644](https://www.wikidata.org/wiki/Q228644)) — *nessuna immagine*. Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (ottocentesco). I denari col nome del papa e di Lotario esistono, ma non li ho trovati su Commons.
+- **Lotario I** ([Q150735](https://www.wikidata.org/wiki/Q150735)) — *ritratto coevo*: miniatura dell'Evangeliario di Lotario (BnF, Lat. 266), Tours, 849-851. [Lothar I.jpg](https://commons.wikimedia.org/wiki/File:Lothar_I.jpg) — 1278×1975, Public domain; «Immagine: miniatore di Tours, pubblico dominio, da Wikimedia Commons».
+  - in alternativa: medaglione del Salterio di Lotario (British Library, Add MS 37768), metà IX secolo [Medallion of Lothair, from the Lothaire Psalter.jpg](https://commons.wikimedia.org/wiki/File:Medallion_of_Lothair,_from_the_Lothaire_Psalter.jpg) — CC0, British Library
+
+### 852
+
+- **Leone IV** ([Q228205](https://www.wikidata.org/wiki/Q228205)) — *di fantasia*: Raffaello e bottega, «Incendio di Borgo», 1514, Stanze vaticane: Leone IV benedice dalla loggia di San Pietro. [Raphael - Fire in the Borgo.jpg](https://commons.wikimedia.org/wiki/File:Raphael_-_Fire_in_the_Borgo.jpg) — 3995×3002, Public domain; «Immagine: Raffaello Sanzio, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo; il papa ha il volto di Leone X. Racconta un miracolo dell'847 (Liber pontificalis), non le mura.
+- **Lotario I** ([Q150735](https://www.wikidata.org/wiki/Q150735)) — *ritratto coevo*: miniatura dell'Evangeliario di Lotario (BnF, Lat. 266), Tours, 849-851. [Lothar I.jpg](https://commons.wikimedia.org/wiki/File:Lothar_I.jpg) — 1278×1975, Public domain; «Immagine: miniatore di Tours, pubblico dominio, da Wikimedia Commons».
+  - in alternativa: medaglione del Salterio di Lotario (British Library, Add MS 37768), metà IX secolo [Medallion of Lothair, from the Lothaire Psalter.jpg](https://commons.wikimedia.org/wiki/File:Medallion_of_Lothair,_from_the_Lothaire_Psalter.jpg) — CC0, British Library
