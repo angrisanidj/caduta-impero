@@ -12,7 +12,10 @@ var NOME_FAM={dentro:'da dentro',fuori:'da fuori',natura:'clima e malattie',caso
    l'originale sta nel commento accanto. «anni»: [anno, che cosa si vede nella tappa] oppure [da, '', a] per un periodo: è una scelta nostra.
    A MEMORIA, senza una pagina aperta: la seconda frase della tesi di Halsall; che per Ward-Perkins il crollo cominci con le invasioni; la tesi di Harper sulle tre epidemie e sul clima;
    Peter Brown (il libro non si è potuto aprire: nessuna citazione); l'emigrazione di Rostovtzeff dopo il 1917; Ferrill. Da Wikipedia: le date del programma europeo (1992-1997),
-   l'obiezione di Heather e Ward-Perkins a Bury, Nriagu e Scarborough (di cui si sono visti solo i dati bibliografici su PubMed). */
+   l'obiezione di Heather e Ward-Perkins a Bury, Nriagu e Scarborough (di cui si sono visti solo i dati bibliografici su PubMed).
+   Il 22 novembre 2026 è stato letto Heather 2005 (scansione su archive.org, lettura OCR rovinata): p. 435 conferma la parte di Heather nell'obiezione a Bury (i gruppi entrati
+   tolgono all'impero i contribuenti di intere province) e pp. 449-450 l'obiezione a Halsall (senza l'urto esterno degli Unni nel 376-380 e nel 405-408 l'Occidente non sarebbe caduto);
+   per Ward-Perkins, in quell'obiezione, resta la fonte di prima. Passi in src/testi/studi-e-scavi.md. */
 var TESI=[
  {id:'montesquieu', fam:'dentro', corto:'Montesquieu', chi:'Montesquieu', anno:'1734', titolo:'Perita della propria grandezza',
   tesi:"Roma è perita della sua stessa grandezza. Eserciti tenuti a lungo lontano smettono di sentirsi cittadini e obbediscono ai loro generali; dietro i singoli fatti agiscono cause generali, e gli accidenti vi sono sottomessi. Per l'Occidente aggiunge una ragione di geografia: gli invasori respinti da Costantinopoli rifluiscono verso ovest, e l'Occidente «fu il primo abbattuto».",
@@ -61,9 +64,9 @@ var TESI=[
   obiezione:"Halsall rovescia il rapporto: è la crisi interna a mettere in moto i barbari.",
   anni:[[378,"Adrianopoli"],[406,"il Reno"],[439,"Cartagine"]]},
  {id:'heather', fam:'fuori', corto:'Heather', chi:'Peter Heather', anno:'2005 e 2010', titolo:'La spinta degli Unni',
-  tesi:"Gli Unni mettono in moto tutto: nel 376 spingono i Goti oltre il Danubio, nel 405-408 altri popoli oltre il Reno, che preferirono tentare la sorte dentro l'impero piuttosto che avere a che fare con loro. I gruppi entrati ne smontano poi le province.",
+  tesi:"Gli Unni mettono in moto tutto: nel 376 spingono i Goti oltre il Danubio, nel 405-408 altri popoli oltre il Reno, che preferirono tentare la sorte dentro l'impero piuttosto che avere a che fare con loro. I gruppi entrati ne smontano poi le province, e con le province l'Occidente perde per sempre una parte grande dei suoi contribuenti.",      // 2005, p. 435: «the permanent alienation of a significant chunk of the western Empire's taxpayers»
   cit:"«Le crisi del 376-380 e del 405-408 videro entrambe gli Unni spingere altri gruppi oltre la frontiera dell'impero.»",      // «the crises of 376-80 and 405-8 both saw the Huns push other groups across the imperial frontier»
-  fonte:"Empires and Barbarians (2010), pp. 208-209; il libro del 2005 non è stato letto",
+  fonte:"Empires and Barbarians (2010), pp. 208-209; la stessa tesi in The Fall of the Roman Empire (2005), pp. 435 e 449-450",
   obiezione:"Halsall: le migrazioni sono il prodotto della fine dell'impero, non la causa.",
   anni:[[378,"i Goti dentro l'impero"],[406,"il Reno"],[439,"Cartagine"],[451,"Attila"]]},
  {id:'wardperkins', fam:'fuori', corto:'Ward-Perkins', chi:'Bryan Ward-Perkins', anno:'2005', titolo:'La fine di una civiltà',
