@@ -109,7 +109,7 @@ function rettoCitta(cp,v,w){ return [cp.x+v[0]*(v[2]+w/2),cp.y+v[1]-4.7,w,16]; }
 /* I popoli: ciascuno è un punto dove stava il grosso del gruppo e un cartellino col nome; il colore dice il rapporto con Roma in quel momento
    (gli stessi colori delle regioni: verde per chi sta dentro per accordo, blu per chi ha un regno), la linea tratteggiata da dove veniva
    (l'ultimo tratto del cammino, con i suoi punti di passaggio via terra). Quando un gruppo ha un regno, il cartellino porta il nome del regno e la linea sparisce. */
-var RAPPORTI=[['fuori','oltre il confine'],['accordo','dentro l\'impero, per accordo'],['armi','in armi dentro l\'impero'],['regno','con un regno proprio (colore in legenda)']];
+var RAPPORTI=[['fuori','oltre il confine'],['accordo','insediati nell\'impero per accordo'],['armi','in armi dentro l\'impero'],['regno','con un regno proprio (colore in legenda)']];
 var CLASSE={fuori:'fuori',accolti:'accordo',federati:'accordo',armi:'armi',regno:'regno'};
 var REGNO={goti:'Regno dei Visigoti',ostrogoti:'Regno degli Ostrogoti',vandali:'Regno dei Vandali',svevi:'Regno degli Svevi',burgundi:'Regno dei Burgundi',franchi:'Regno dei Franchi',sassoni:'Regni anglosassoni',longobardi:'Regno dei Longobardi',avari:'Khanato degli Avari',bulgari:'Khanato dei Bulgari'};
 var popoli={}, stratoRotte=el('g',{'class':'m-rotte'},svg), stratoPopoli=el('g',{'class':'m-popoli'},svg), ingr=0;
@@ -373,9 +373,9 @@ function mostraPopoli(anno){
    Lo spazio resta quello della legenda al completo, così la pagina non salta da una tappa all'altra. */
 function voceStato(s,anno){
   if(s.indexOf('regno:')===0){ var c=s.slice(6); return c==='italia'?(anno<493?'regno d\'Italia di Odoacre':'regno degli Ostrogoti'):c==='franchi'&&anno<511?'regno dei Franchi':REGNI[c][1]; }
-  return s==='roma'?(anno<395?'impero romano':'impero d\'Occidente'):s==='usurpatore'?(anno<455?'impero separato, con un suo imperatore':'dominio romano che non obbedisce più a Ravenna'):s==='conteso'?'in guerra, contesa':
+  return s==='roma'?(anno<395?'impero romano':'impero d\'Occidente'):s==='usurpatore'?(anno<455?'territorio con un imperatore rivale':'territorio romano che non obbedisce più a Ravenna'):s==='conteso'?'regione contesa in guerra':
     s==='federati'?'barbari insediati per trattato':s==='regno'?'regno':s==='oriente'?'impero d\'Oriente':
-    s==='califfato'?(anno<750?'califfato':'califfato ed emirati arabi'):s==='carolingio'?(anno<843?'impero dei Franchi':'regni dei Franchi, dopo la divisione dell\'843'):s==='chiesa'?'terre della Chiesa':(anno<395?'lasciata dall\'impero':'uscita dall\'impero');
+    s==='califfato'?(anno<750?'califfato':'califfato ed emirati arabi'):s==='carolingio'?(anno<843?'impero dei Franchi':'regni franchi dopo la divisione dell\'843'):s==='chiesa'?'terre della Chiesa':(anno<395?'lasciata dall\'impero':'uscita dall\'impero');
 }
 var legenda=document.getElementById('legendaMappa'), legendaPopoli=document.getElementById('legendaPopoli'), vociStati={}, vociPopoli={};
 /* La legenda risponde. Ogni voce è un bottone: toccata, lascia vive sulla carta le sole regioni di quel colore (o i soli popoli con quel rapporto) e attenua il resto;
@@ -500,7 +500,7 @@ ospite.appendChild(comandi);
 function grande(si){
   fermaRegia(); grandeSi=si; setTimeout(function(){ stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':'')); },60);      // a tutto schermo la scena dell'evento resta ferma sulla carta (la ridisegna mostraPopoli, con le nuove misure)
   document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');      // queste due istruzioni erano finite per sbaglio dentro il commento della riga sopra
-  bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Chiudi lo schermo intero':'Carta a tutto schermo');
+  bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Esci dallo schermo intero':'Carta a tutto schermo');
   dita={}; presa=null;
   if(si){ vista.k=1; vista.cx=500; vista.cy=314; adatta(); if(vista.alto){ vista.k=Math.max(1,BASE[2]*vista.alto/(G.h*vista.aw)); vista.cx=470; vista.cy=330; applicaVista(); } }      // in verticale si parte con la carta che riempie il riquadro, sull'Italia: il bottone − la mostra intera
   else { vista.alto=0; ospite.style.width=ospite.style.height=''; applicaVista();

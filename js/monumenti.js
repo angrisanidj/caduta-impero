@@ -587,7 +587,7 @@ var M=[
  {id:'cosma', nome:'Santi Cosma e Damiano', x:16.5,z:4, ry:-.35, come:'fori', fa:function(B){
     B.scatola(2.2,2,3.6,0,0,0,P.mattone).falde(3.6,.6,2.4,0,2,0,P.coppi,PI/2,P.mattone).cilindro(.9,1.4,0,0,2.6,P.mattone,null,16).cupola(.9,0,1.4,2.6,P.bronzo,.6);
  }},
- {id:'foca', nome:'Colonna di Foca', x:-3.7,z:.6, ry:-.35, come:'fori', fa:function(B){
+ {id:'foca', nome:'Colonna dell\'imperatore Foca', x:-3.7,z:.6, ry:-.35, come:'fori', fa:function(B){
     B.scatola(1.1,.22,1.1,0,0,0,P.mattone).scatola(.7,.28,.7,0,.22,0,P.marmo).cilindro(.07,1.36,0,.5,0,P.marmo,.065,10).scatola(.2,.1,.2,0,1.86,0,P.marmo).scatola(.12,.3,.12,0,1.96,0,P.oro);   // colonna «1.39 metres in diameter and 13.60 high», con «the statue of Phocas in gilt bronze» (Platner e Ashby, Columna Phocae)
  }},
  /* ---- il quartiere di San Pietro: cresce mentre la città antica si svuota ---- */

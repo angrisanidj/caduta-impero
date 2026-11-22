@@ -219,7 +219,7 @@ if(tocco){ document.body.classList.add('tocco'); if(RM.controlli) RM.controlli.e
 RM.toccoApre=function(){ if(tocco && !document.body.classList.contains('roma-grande')){ grande(true); return true; } return false; };
 function grande(si){
   document.body.classList.toggle('roma-grande',si); $('btnGrande').setAttribute('aria-pressed',si?'true':'false'); $('btnGrande').textContent=si?'✕':'⤢';
-  $('btnGrande').setAttribute('aria-label',si?'Chiudi lo schermo intero':'Scena a tutto schermo'); $('btnGrande').title=si?'Chiudi':'Tutto schermo';
+  $('btnGrande').setAttribute('aria-label',si?'Esci dallo schermo intero':'Scena a tutto schermo'); $('btnGrande').title=si?'Chiudi':'Tutto schermo';
   if(si){ var tp=document.querySelector('.tempo'); document.body.style.setProperty('--tempo',(tp?tp.offsetHeight:92)+'px'); }      // i comandi stanno sopra la linea del tempo, quanto è alta
   if(tocco && RM.controlli) RM.controlli.enabled=si;
   if(tocco && !si && !schedaDi && RM.vistaInsieme) RM.vistaInsieme();      // sul telefono, chiuso lo schermo intero, la scena non si può più muovere: torna alla vista d'insieme invece di restare ingrandita

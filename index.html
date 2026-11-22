@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Come finisce un impero · L'Occidente romano dal 235 all'852</title>
-<meta name="description" content="L'Occidente romano dal 235 all'852 in 47 tappe: la carta dell'Impero che si disfa e Roma ricostruita in 3D, con le voci di chi c'era.">
+<meta name="description" content="L'Occidente romano dal 235 all'852 in 47 tappe: la carta dei confini che cambiano e Roma ricostruita in 3D, con le voci di chi c'era.">
 <meta name="theme-color" content="#4A1119">
 <link rel="icon" type="image/svg+xml" href="img/icona.svg">
 <link rel="icon" type="image/png" href="img/icona-48.png">
@@ -12,21 +12,21 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
 <meta property="og:title" content="Come finisce un impero">
-<meta property="og:description" content="L'Occidente romano dal 235 all'852 in 47 tappe: la carta dell'Impero che si disfa e Roma ricostruita in 3D, con le voci di chi c'era.">
+<meta property="og:description" content="L'Occidente romano dal 235 all'852 in 47 tappe: la carta dei confini che cambiano e Roma ricostruita in 3D, con le voci di chi c'era.">
 <meta property="og:url" content="https://angrisanidj.github.io/caduta-impero/">
 <meta property="og:image" content="https://angrisanidj.github.io/caduta-impero/img/anteprima.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="L'apertura della pagina, con il titolo e tre numeri; sotto, la carta dei regni romano-barbarici del 476 e Roma vista dall'alto">
+<meta property="og:image:alt" content="Apertura della pagina con il titolo e tre dati di sintesi. Sotto, la carta dei regni romano-barbarici nel 476 e una veduta di Roma dall'alto.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/stile.css?v=20261122-1819">
-<link rel="stylesheet" href="css/carta.css?v=20261122-1819">
-<link rel="stylesheet" href="css/cause.css?v=20261122-1819">
-<link rel="stylesheet" href="css/atti.css?v=20261122-1819">
-<link rel="stylesheet" href="css/ritratti.css?v=20261122-1819">
+<link rel="stylesheet" href="css/stile.css?v=20261122-2023">
+<link rel="stylesheet" href="css/carta.css?v=20261122-2023">
+<link rel="stylesheet" href="css/cause.css?v=20261122-2023">
+<link rel="stylesheet" href="css/atti.css?v=20261122-2023">
+<link rel="stylesheet" href="css/ritratti.css?v=20261122-2023">
 </head>
 <body>
 <header class="testata">
@@ -35,11 +35,11 @@
     <div class="apertura-dentro">
       <p class="occhiello"><img class="stemma" src="img/icona.svg" width="36" height="36" alt=""><span>Infografica interattiva · 235-852</span></p>
       <h1>Come finisce un impero</h1>
-      <p class="sommario">L'Occidente romano dal 235 all'852: non un crollo, ma un sistema che perde pezzi per due secoli e mezzo. E una città che, fra le rovine, diventa un'altra cosa.</p>
+      <p class="sommario">Dal 235 al 476 l'Impero romano non crolla d'un colpo: perde il controllo dell'Occidente una provincia dopo l'altra. A Roma la storia continua. Fra le rovine, le mura antiche e le nuove basiliche prende forma la città dei papi.</p>
       <ul class="numeri">
         <li><b>47</b><span>tappe in sei atti</span></li>
         <li><b>617</b><span>anni, dal 235 all'852</span></li>
-        <li><b>900.000<i aria-hidden="true">→</i><span class="sr"> a </span>30.000</b><span>abitanti di Roma, stime</span></li>
+        <li><b>900.000<i aria-hidden="true">→</i><span class="sr"> a </span>30.000</b><span>abitanti a Roma, secondo le stime</span></li>
       </ul>
     </div>
   </div>
@@ -64,7 +64,7 @@
       <div id="mappa"></div>
       <figcaption class="legenda-mappa" id="legendaMappa"></figcaption>
       <p class="legenda-popoli" id="legendaPopoli"><b>I popoli</b></p>
-      <p class="legenda-popoli"><em>Ogni cartellino segna dove stava il grosso di un gruppo, con la sua gente (non un confine); la linea tratteggiata, da dove veniva, lungo le strade di terra note o probabili. Le legende mostrano solo ciò che c'è sulla carta in questa tappa. Le posizioni sono indicative; date e rapporti con Roma sono stati riveduti sulle fonti nel novembre 2026.</em></p>
+      <p class="legenda-popoli"><em>Ogni nome indica la zona in cui si trovava il grosso di un gruppo, con la sua gente: non è un confine. La linea tratteggiata mostra da dove proveniva e quale percorso terrestre seguì, per quanto è possibile ricostruirlo. Le posizioni sono indicative. La legenda cambia a ogni tappa e spiega i simboli visibili. Date e rapporti con Roma sono stati ricontrollati sulle fonti nel novembre 2026.</em></p>
     </figure>
 
     <figure class="riquadro roma">
@@ -85,12 +85,12 @@
         <button id="btnPiu" type="button" aria-label="Avvicina" title="Avvicina">+</button>
         <button class="grande" id="btnGrande" type="button" aria-pressed="false" aria-label="Scena a tutto schermo" title="Tutto schermo">⤢</button>
       </div>
-      <button class="esplora" id="btnEsplora" type="button">Tocca per esplorare la città</button>
+      <button class="esplora" id="btnEsplora" type="button">Tocca la città per esplorarla</button>
       <aside class="legenda-sapere" id="legendaSapere" hidden>
-        <p><i class="cA"></i><span><b>Certo</b><em>: sta ancora in piedi, o posizione e pianta sono rilevate per intero.</em></span></p>
-        <p><i class="cB"></i><span><b>Posizione certa</b><em>, forma ricostruita: resti parziali, scavi, piante antiche, edifici poi rifatti.</em></span></p>
-        <p><i class="cC"></i><span><b>Ipotesi</b><em>: case, rovine e ciò di cui posizione o forma sono supposte.</em></span></p>
-        <p class="nota">I modelli sono schematici: il colore non riguarda i dettagli. Quando e come ogni edificio decade è scritto nelle schede.</p>
+        <p><i class="cA"></i><span><b>Posizione e pianta certe.</b><em> L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.</em></span></p>
+        <p><i class="cB"></i><span><b>Posizione certa, forma ricostruita.</b><em> L'aspetto dell'edificio è ricostruito da resti parziali, scavi e piante antiche, oppure l'edificio fu rifatto in seguito.</em></span></p>
+        <p><i class="cC"></i><span><b>Posizione o forma ipotetiche.</b><em> È il caso delle case e delle rovine dei quartieri.</em></span></p>
+        <p class="nota">I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.</p>
       </aside>
       <div class="confronto" id="confronto" hidden></div>
       <aside class="scheda itinerario" id="itinerario" hidden aria-live="polite"></aside>
@@ -129,7 +129,7 @@
         <p id="tLeggendaTesto"></p>
       </aside>
       <aside class="storici" id="tStorici" hidden>
-        <p class="etichetta">Cosa dicono gli storici</p>
+        <p class="etichetta">Le interpretazioni degli storici</p>
         <p id="tStoriciTesto"></p>
       </aside>
     </article>
@@ -137,7 +137,7 @@
     <div class="lato">
       <section class="cruscotto" id="cruscotto" aria-label="Indicatori"></section>
       <section class="stato-roma">
-        <p class="etichetta">I monumenti di Roma <span class="suggerimento" id="monumentiNota">· tocca un nome per la scheda</span></p>
+        <p class="etichetta">I monumenti di Roma <span class="suggerimento" id="monumentiNota">· seleziona un nome per aprire la scheda</span></p>
         <p class="legenda">
           <span class="st uso">in uso</span><span class="st chiuso">in disuso</span><span class="st spogliato">spogliato</span><span class="st cava">usato come cava</span><span class="st bruciato">bruciato</span><span class="st crollato">danneggiato da un terremoto</span>
         </p>
@@ -148,15 +148,15 @@
   </div>
   <div class="cause-cornice">
   <section class="cause" id="cause">
-    <p class="etichetta">Cosa dicono gli storici</p>
+    <p class="etichetta">Le interpretazioni degli storici</p>
     <h2>Perché cadde l'Occidente?</h2>
-    <p>Gli storici non sono d'accordo, e non lo sono da tre secoli. C'è chi cerca la causa dentro l'impero (la sua stessa grandezza, l'esercito, le tasse, la religione) e chi fuori, negli Unni e nei popoli che spingono oltre il Reno e il Danubio; chi guarda al clima e alle epidemie, chi vede soltanto una catena di casi, e chi nega che ci sia stata una caduta. Qui sotto ogni spiegazione ha la sua riga: tocca un nome per leggere la tesi, una citazione, l'obiezione, e per andare alle tappe in cui si vede.</p>
+    <p>Da tre secoli gli storici discutono le cause della caduta dell'Impero romano d'Occidente, e non sono d'accordo. Alcuni cercano la causa dentro l'impero: l'estensione dei territori, l'esercito, le tasse o la religione. Altri fuori: l'avanzata degli Unni e i popoli che attraversarono il Reno e il Danubio. Altri ancora guardano al clima o alle epidemie. Per alcuni fu una catena di eventi, nessuno dei quali inevitabile. Altri negano che ci sia stata una caduta e descrivono quei secoli come una trasformazione del mondo romano. Seleziona un nome per leggere la tesi, una citazione, le obiezioni e le tappe in cui si vede.</p>
     <div id="tesi"></div>
-    <p>Questa pagina non sceglie una causa: mostra dove ciascuna spiegazione si vede. Gli Unni e il Danubio nel 376, il Reno nel 406, Cartagine nel 439 e la quota di territorio che crolla, il sole velato del 536 e la peste del 542 nella curva degli abitanti.</p>
+    <p>Questa pagina non sceglie una causa: ogni tesi rimanda agli episodi in cui si vede. Segui sulla carta gli Unni e i Goti al Danubio nel 376, i popoli che passano il Reno nel 406, la perdita di Cartagine nel 439 e la quota di territorio che crolla. Il grafico della popolazione di Roma aiuta a collocare nel tempo il sole velato del 536 e la peste del 542.</p>
     <h3 id="fonti">Fonti</h3>
-    <p class="elenco"><b>Testi antichi e medievali letti:</b> Erodiano (in traduzione); Aurelio Vittore; l'Origine di Costantino; Ambrogio; Claudiano; Ammiano Marcellino; Lattanzio; Eutropio; Orosio; Zosimo; Procopio, Guerre (traduzione di Dewing); Prospero d'Aquitania; Idazio; Vittore di Vita; Giordane; Eugippio; Cassiodoro, Variae; Anonimo Valesiano; Marcellino Comes; Gregorio Magno; Gregorio di Tours; Paolo Diacono; Beda; Liber Pontificalis (edizione Duchesne); Annales regni Francorum; Cronografo del 354; le Novelle di Valentiniano III e di Maggioriano; l'Itinerario di Einsiedeln; l'iscrizione di Shapur I (in traduzione); Cipriano; l'editto dei prezzi di Diocleziano; Girolamo; Possidio; Salviano; Teofane; Eginardo; il Codex Carolinus (nella ristampa di Migne); gli Annali di San Bertino; Erchemperto; Ennodio; la Vita di Fulgenzio di Ruspe; i Fasti di Vienna; la Cronaca del 754; Gildas; la Historia Brittonum; gli Annali del Galles; la legge dei Burgundi; il Constitutum Constantini; Giovanni Diacono; Liutprando di Cremona; Incmaro di Reims; Jacopo da Varazze, Legenda aurea; Martino Polono; la Cronaca universale di Metz.</p>
-    <p class="elenco"><b>Studi</b> (letti nel testo Gibbon e la conclusione di Jones; di Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer sono stati verificati brani del testo; di Pirenne è stato letto l'articolo del 1922; del <i>Companion to Rome</i> i brani su abitanti e scavi; di Heather le pagine del libro del 2010 in cui riassume la sua tesi; di Durliat le pagine sugli abitanti di Roma): E. Gibbon, <i>The History of the Decline and Fall of the Roman Empire</i> (1776-1789); J. B. Bury, <i>History of the Later Roman Empire</i> (1923); S. B. Platner e T. Ashby, <i>A Topographical Dictionary of Ancient Rome</i> (1929); H. Pirenne, «Mahomet et Charlemagne», <i>Revue belge de philologie et d'histoire</i> 1 (1922), e il libro del 1937; A. H. M. Jones, <i>The Later Roman Empire</i> (1964); R. Krautheimer, <i>Rome. Profile of a City</i> (1980); W. Goffart, <i>Barbarians and Romans</i> (1980); J. Durliat, <i>De la ville antique à la ville byzantine</i> (1990); P. Heather, <i>The Fall of the Roman Empire</i> (2005) e <i>Empires and Barbarians</i> (2010); B. Ward-Perkins, <i>The Fall of Rome and the End of Civilization</i> (2005); C. Wickham, <i>Framing the Early Middle Ages</i> (2005); G. Halsall, <i>Barbarian Migrations and the Roman West</i> (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», <i>Social Science History</i> 3 (1979), letta la tabella su Roma; K. Harper, <i>The Fate of Rome</i> (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); <i>A Companion to Rome c. 400-c. 1050</i>, Brill (2026).</p>
-    <p class="elenco">Ciò che non è stato riletto, o su cui le fonti divergono, è detto nelle schede, nei riquadri degli storici e nelle note «Che cosa sappiamo».</p>
+    <p class="elenco"><b>Testi antichi e medievali letti.</b> Autori: Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Opere: l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Cronache e annali: gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Leggi, documenti e luoghi: l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.</p>
+    <p class="elenco"><b>Studi.</b> Di Gibbon è stato letto il testo, di Jones la conclusione. Di Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer sono stati verificati alcuni passi del testo. Di Pirenne è stato letto l'articolo del 1922. Del <i>Companion to Rome</i> sono state lette le pagine sugli abitanti e sugli scavi, di Durliat quelle sulla popolazione di Roma e di Heather le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, <i>The History of the Decline and Fall of the Roman Empire</i> (1776-1789); J. B. Bury, <i>History of the Later Roman Empire</i> (1923); S. B. Platner e T. Ashby, <i>A Topographical Dictionary of Ancient Rome</i> (1929); H. Pirenne, «Mahomet et Charlemagne», <i>Revue belge de philologie et d'histoire</i> 1 (1922), e il libro del 1937; A. H. M. Jones, <i>The Later Roman Empire</i> (1964); R. Krautheimer, <i>Rome. Profile of a City</i> (1980); W. Goffart, <i>Barbarians and Romans</i> (1980); J. Durliat, <i>De la ville antique à la ville byzantine</i> (1990); P. Heather, <i>The Fall of the Roman Empire</i> (2005) e <i>Empires and Barbarians</i> (2010); B. Ward-Perkins, <i>The Fall of Rome and the End of Civilization</i> (2005); C. Wickham, <i>Framing the Early Middle Ages</i> (2005); G. Halsall, <i>Barbarian Migrations and the Roman West</i> (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», <i>Social Science History</i> 3 (1979), letta la tabella su Roma; K. Harper, <i>The Fate of Rome</i> (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); <i>A Companion to Rome c. 400-c. 1050</i>, Brill (2026).</p>
+    <p class="elenco">Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.</p>
   </section>
   <aside class="condividi-lato"><div class="condividi" data-condividi="lato"></div></aside>
   </div>
@@ -165,32 +165,32 @@
 <footer class="piede">
   <p class="piede-marchio"><img src="img/icona.svg" width="32" height="32" alt=""><span>Come finisce un impero</span></p>
   <p class="etichetta">Come è fatta questa pagina</p>
-  <p>Ricostruzioni schematiche. Sulla mappa le regioni partono dalle province romane del 200 d.C. circa e, in Italia, dalle regioni augustee (Digital Atlas of the Roman Empire, di Johan Åhlfeldt, università di Lund e di Göteborg, licenza Creative Commons Attribuzione - Condividi allo stesso modo, CC BY-SA; coste: Natural Earth); dove i confini dei regni se ne scostano sono ritagliate a mano lungo fiumi, crinali e città nominati dalle fonti: sono confini indicativi, non rilevati. Rilievo e fiumi sono quelli veri (ombreggiatura e corsi d'acqua di Natural Earth, dominio pubblico). Stati delle regioni, confini dei regni e cammini dei popoli sono stati riveduti nel novembre 2026 (Bury, Ammiano, Zosimo, Eugippio, Beda e, per i confini, le voci di Wikipedia sui singoli regni); una parte delle date resta citata a memoria. La Corsica longobarda dal 725 circa è un'ipotesi dei manuali, senza una fonte diretta; quella franca è attestata dall'806. A Roma il corso del Tevere e il tracciato delle mura sono reali (© OpenStreetMap contributors); i colli sono ridisegnati alle quote antiche sopra un rilievo misurato (SRTM), con l'altezza accentuata di quasi due volte; gli edifici sono al loro posto ma schematici; le strade seguono le vie moderne che ricalcano le antiche (via del Corso per la via Lata, l'Appia Antica, via dei Coronari…) e, nel Foro, i basolati antichi ancora visibili (via Sacra, Argileto, vico Tusco, clivo Capitolino), con tratti a mano dove non c'è né l'una né l'altro; gli edifici del Foro e dei fori imperiali stanno sui centri dei loro resti; gli acquedotti hanno il percorso e le quote ricostruiti, non rilevati; gli isolati sono generati, l'abbandono per quartiere ipotizzato. I chilometri quadrati della spia «Occidente governato da Roma» sono misurati su questa carta, dove l'Occidente intero ne occupa circa 2,7 milioni. Il confronto con le stime di Rein Taagepera (1979, misurate sull'atlante storico di Shepherd) torna sull'impero intero: le province dell'atlante di Åhlfeldt sommano 4,9 milioni di km² verso il 200, e 4,5 tolte Mesopotamia, Dacia e Agri Decumates; Taagepera dà 4,6 per il 138, 4,5 per il 275 e 4,4 per il 390. Non torna sulla spartizione del 395: Taagepera assegna 2,0 milioni all'Occidente e 2,1 (± 0,3) all'Oriente, che insieme fanno 4,1 e non 4,4; sui poligoni l'Occidente vale 2,7 e l'Oriente 1,9. Le sue due metà («due parti pressoché uguali», scrive) sono arrotondate: qui l'Occidente risulta più grande di un terzo. Linea continua: dato misurato. Linea tratteggiata: stima. Testi delle tappe, schede dei monumenti e didascalie degli eventi sono stati controllati sulle fonti nel novembre 2026; ciò che resta incerto o discusso è detto nelle schede.</p>
-  <p class="licenze" id="licenze">Licenze: il codice è libero (MIT); testi, schede, confini della carta e tabelle dei dati si possono riusare citando la fonte e con la stessa licenza (CC BY-SA 4.0); la topografia di Roma è © OpenStreetMap contributors (ODbL). Le immagini dei protagonisti vengono da Wikimedia Commons, ciascuna con il suo autore e la sua licenza indicati accanto all'immagine; le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli stanno in <a href="https://github.com/angrisanidj/caduta-impero/blob/main/LICENZA.md">LICENZA.md</a>.</p>
-                                          <p class="versione">Versione del 22/11/2026, ore 18:19</p>
+  <p>Ricostruzioni schematiche. La carta parte dalle province romane intorno al 200 d.C. e, per l'Italia, dalle regioni istituite da Augusto. La base è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Dove i regni successivi seguivano confini diversi, li abbiamo ridisegnati a mano usando i fiumi, i crinali e le città citati nelle fonti. Questi confini sono quindi indicativi, non rilevati. Nel novembre 2026 abbiamo rivisto il controllo delle regioni, i confini e gli spostamenti dei popoli sulla base di Bury, Ammiano, Zosimo, Eugippio e Beda e, per i confini dei singoli regni, delle relative voci di Wikipedia. Una parte delle date resta citata a memoria. Il dominio longobardo in Corsica dal 725 circa è, inoltre, un'ipotesi dei manuali priva di una testimonianza diretta; il dominio franco è documentato dall'806. Per Roma, il corso del Tevere e il tracciato delle mura provengono da OpenStreetMap (© OpenStreetMap contributors). Abbiamo ridisegnato i colli alle quote antiche sopra un rilievo misurato (SRTM) e nel modello ne abbiamo quasi raddoppiato l'altezza. Gli edifici sono al loro posto, ma schematici. Le strade seguono i tracciati antichi conservati nelle vie moderne, come via del Corso per la via Lata, l'Appia Antica e via dei Coronari. Nel Foro seguono anche le pavimentazioni antiche ancora visibili della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. I tratti mancanti sono disegnati a mano. Nel Foro romano e nei Fori imperiali gli edifici sono centrati sui resti archeologici. Per gli acquedotti abbiamo ricostruito percorsi e altezze, che non sono rilevati. Gli isolati sono generati dal modello e lo spopolamento dei singoli quartieri è ipotetico. L'indicatore «Occidente governato da Roma» usa le superfici misurate su questa carta. L'intero Occidente vi occupa circa 2,7 milioni di km². Per l'impero nel suo insieme, i risultati sono vicini alle stime pubblicate nel 1979 da Rein Taagepera usando l'atlante storico di Shepherd. Le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km² intorno al 200, oppure 4,5 milioni escludendo Mesopotamia, Dacia e Agri Decumates. Taagepera stima 4,6 milioni per il 138, 4,5 per il 275 e 4,4 per il 390. Per la divisione del 395, invece, il confronto non torna. Taagepera parla di «due parti pressoché uguali» e assegna 2 milioni all'Occidente e 2,1 milioni all'Oriente, con un margine di 0,3 milioni per quest'ultimo. La somma è 4,1 milioni, mentre la sua stima complessiva per il 390 è 4,4. Le sue due metà sono arrotondate: sulla nostra carta l'Occidente misura 2,7 milioni di km², circa un terzo in più, e l'Oriente 1,9 milioni. Nel grafico la linea continua indica un dato misurato e quella tratteggiata una stima. I testi delle tappe, le schede dei monumenti e le didascalie degli eventi sono stati controllati sulle fonti nel novembre 2026. Le schede segnalano ciò che resta incerto o discusso.</p>
+  <p class="licenze" id="licenze">Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file <a href="https://github.com/angrisanidj/caduta-impero/blob/main/LICENZA.md">LICENZA.md</a>.</p>
+                                            <p class="versione">Versione del 22/11/2026, ore 20:23</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-<script src="js/dati.js?v=20261122-1819"></script>
-<script src="js/mappa-dati.js?v=20261122-1819"></script>
-<script src="js/roma-topo.js?v=20261122-1819"></script>
-<script src="js/base.js?v=20261122-1819"></script>
-<script src="js/costruttore.js?v=20261122-1819"></script>
-<script src="js/monumenti.js?v=20261122-1819"></script>
-<script src="js/nuclei.js?v=20261122-1819"></script>
-<script src="js/mura.js?v=20261122-1819"></script>
-<script src="js/citta.js?v=20261122-1819"></script>
-<script src="js/vita.js?v=20261122-1819"></script>
-<script src="js/eventi.js?v=20261122-1819"></script>
-<script src="js/mappa.js?v=20261122-1819"></script>
-<script src="js/ritratti.js?v=20261122-1819"></script>
-<script src="js/protagonisti.js?v=20261122-1819"></script>
-<script src="js/pagina.js?v=20261122-1819"></script>
-<script src="js/atti.js?v=20261122-1819"></script>
-<script src="js/itinerario.js?v=20261122-1819"></script>
-<script src="js/confronto.js?v=20261122-1819"></script>
-<script src="js/cause.js?v=20261122-1819"></script>
-<script src="js/condividi.js?v=20261122-1819"></script>
+<script src="js/dati.js?v=20261122-2023"></script>
+<script src="js/mappa-dati.js?v=20261122-2023"></script>
+<script src="js/roma-topo.js?v=20261122-2023"></script>
+<script src="js/base.js?v=20261122-2023"></script>
+<script src="js/costruttore.js?v=20261122-2023"></script>
+<script src="js/monumenti.js?v=20261122-2023"></script>
+<script src="js/nuclei.js?v=20261122-2023"></script>
+<script src="js/mura.js?v=20261122-2023"></script>
+<script src="js/citta.js?v=20261122-2023"></script>
+<script src="js/vita.js?v=20261122-2023"></script>
+<script src="js/eventi.js?v=20261122-2023"></script>
+<script src="js/mappa.js?v=20261122-2023"></script>
+<script src="js/ritratti.js?v=20261122-2023"></script>
+<script src="js/protagonisti.js?v=20261122-2023"></script>
+<script src="js/pagina.js?v=20261122-2023"></script>
+<script src="js/atti.js?v=20261122-2023"></script>
+<script src="js/itinerario.js?v=20261122-2023"></script>
+<script src="js/confronto.js?v=20261122-2023"></script>
+<script src="js/cause.js?v=20261122-2023"></script>
+<script src="js/condividi.js?v=20261122-2023"></script>
 </body>
 </html>

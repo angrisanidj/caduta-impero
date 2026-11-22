@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 22/11/2026, 13:49:03.
+Generato da `src/testi.mjs` il 22/11/2026, 20:22:53.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -11,21 +11,21 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.titolo] Come finisce un impero · L'Occidente romano dal 235 all'852
 
-[pagina.descrizione] L'Occidente romano dal 235 all'852 in 47 tappe: la carta dell'Impero che si disfa e Roma ricostruita in 3D, con le voci di chi c'era.
+[pagina.descrizione] L'Occidente romano dal 235 all'852 in 47 tappe: la carta dei confini che cambiano e Roma ricostruita in 3D, con le voci di chi c'era.
 
-[pagina.immagine] L'apertura della pagina, con il titolo e tre numeri; sotto, la carta dei regni romano-barbarici del 476 e Roma vista dall'alto
+[pagina.immagine] Apertura della pagina con il titolo e tre dati di sintesi. Sotto, la carta dei regni romano-barbarici nel 476 e una veduta di Roma dall'alto.
 
 [pagina.01] Infografica interattiva · 235-852
 
 [pagina.02] Come finisce un impero
 
-[pagina.03] L'Occidente romano dal 235 all'852: non un crollo, ma un sistema che perde pezzi per due secoli e mezzo. E una città che, fra le rovine, diventa un'altra cosa.
+[pagina.03] Dal 235 al 476 l'Impero romano non crolla d'un colpo: perde il controllo dell'Occidente una provincia dopo l'altra. A Roma la storia continua. Fra le rovine, le mura antiche e le nuove basiliche prende forma la città dei papi.
 
 [pagina.04] 47 tappe in sei atti
 
 [pagina.05] 617 anni, dal 235 all'852
 
-[pagina.06] 900.000 → a 30.000 abitanti di Roma, stime
+[pagina.06] 900.000 → a 30.000 abitanti a Roma, secondo le stime
 
 [pagina.07] La storia Perché cadde Fonti Licenze
 
@@ -35,7 +35,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.10] I popoli
 
-[pagina.11] Ogni cartellino segna dove stava il grosso di un gruppo, con la sua gente (non un confine); la linea tratteggiata, da dove veniva, lungo le strade di terra note o probabili. Le legende mostrano solo ciò che c'è sulla carta in questa tappa. Le posizioni sono indicative; date e rapporti con Roma sono stati riveduti sulle fonti nel novembre 2026.
+[pagina.11] Ogni nome indica la zona in cui si trovava il grosso di un gruppo, con la sua gente: non è un confine. La linea tratteggiata mostra da dove proveniva e quale percorso terrestre seguì, per quanto è possibile ricostruirlo. Le posizioni sono indicative. La legenda cambia a ogni tappa e spiega i simboli visibili. Date e rapporti con Roma sono stati ricontrollati sulle fonti nel novembre 2026.
 
 [pagina.12] Roma — abitanti, stima
 
@@ -49,86 +49,86 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.17] Che cosa sappiamo
 
-[pagina.18] Tocca per esplorare la città
+[pagina.18] Tocca la città per esplorarla
 
-[pagina.19] Certo : sta ancora in piedi, o posizione e pianta sono rilevate per intero.
+[pagina.19] Posizione e pianta certe. L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.
 
-[pagina.20] Posizione certa , forma ricostruita: resti parziali, scavi, piante antiche, edifici poi rifatti.
+[pagina.20] Posizione certa, forma ricostruita. L'aspetto dell'edificio è ricostruito da resti parziali, scavi e piante antiche, oppure l'edificio fu rifatto in seguito.
 
-[pagina.21] Ipotesi : case, rovine e ciò di cui posizione o forma sono supposte.
+[pagina.21] Posizione o forma ipotetiche. È il caso delle case e delle rovine dei quartieri.
 
-[pagina.22] I modelli sono schematici: il colore non riguarda i dettagli. Quando e come ogni edificio decade è scritto nelle schede.
+[pagina.22] I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.
 
 [pagina.23] Il modello 3D non è disponibile su questo dispositivo.
 
 [pagina.24] ▶ Riproduci
 
-[pagina.25] Protagonisti
+[pagina.25] Protagonisti · tocca un’immagine per ingrandirla, con fonte e licenza
 
 [pagina.26] Una voce di allora
 
 [pagina.27] Fra storia e leggenda
 
-[pagina.28] Cosa dicono gli storici
+[pagina.28] Le interpretazioni degli storici
 
-[pagina.29] I monumenti di Roma · tocca un nome per la scheda
+[pagina.29] I monumenti di Roma · seleziona un nome per aprire la scheda
 
 [pagina.30] in uso in disuso spogliato usato come cava bruciato danneggiato da un terremoto
 
 [pagina.31] Mostra tutti
 
-[pagina.32] Cosa dicono gli storici
+[pagina.32] Le interpretazioni degli storici
 
 [pagina.33] Perché cadde l'Occidente?
 
-[pagina.34] Gli storici non sono d'accordo, e non lo sono da tre secoli. C'è chi cerca la causa dentro l'impero (la sua stessa grandezza, l'esercito, le tasse, la religione) e chi fuori, negli Unni e nei popoli che spingono oltre il Reno e il Danubio; chi guarda al clima e alle epidemie, chi vede soltanto una catena di casi, e chi nega che ci sia stata una caduta. Qui sotto ogni spiegazione ha la sua riga: tocca un nome per leggere la tesi, una citazione, l'obiezione, e per andare alle tappe in cui si vede.
+[pagina.34] Da tre secoli gli storici discutono le cause della caduta dell'Impero romano d'Occidente, e non sono d'accordo. Alcuni cercano la causa dentro l'impero: l'estensione dei territori, l'esercito, le tasse o la religione. Altri fuori: l'avanzata degli Unni e i popoli che attraversarono il Reno e il Danubio. Altri ancora guardano al clima o alle epidemie. Per alcuni fu una catena di eventi, nessuno dei quali inevitabile. Altri negano che ci sia stata una caduta e descrivono quei secoli come una trasformazione del mondo romano. Seleziona un nome per leggere la tesi, una citazione, le obiezioni e le tappe in cui si vede.
 
-[pagina.35] Questa pagina non sceglie una causa: mostra dove ciascuna spiegazione si vede. Gli Unni e il Danubio nel 376, il Reno nel 406, Cartagine nel 439 e la quota di territorio che crolla, il sole velato del 536 e la peste del 542 nella curva degli abitanti.
+[pagina.35] Questa pagina non sceglie una causa: ogni tesi rimanda agli episodi in cui si vede. Segui sulla carta gli Unni e i Goti al Danubio nel 376, i popoli che passano il Reno nel 406, la perdita di Cartagine nel 439 e la quota di territorio che crolla. Il grafico della popolazione di Roma aiuta a collocare nel tempo il sole velato del 536 e la peste del 542.
 
 [pagina.36] Fonti
 
-[pagina.37] Testi antichi e medievali letti: Erodiano (in traduzione); Aurelio Vittore; l'Origine di Costantino; Ambrogio; Claudiano; Ammiano Marcellino; Lattanzio; Eutropio; Orosio; Zosimo; Procopio, Guerre (traduzione di Dewing); Prospero d'Aquitania; Idazio; Vittore di Vita; Giordane; Eugippio; Cassiodoro, Variae; Anonimo Valesiano; Marcellino Comes; Gregorio Magno; Gregorio di Tours; Paolo Diacono; Beda; Liber Pontificalis (edizione Duchesne); Annales regni Francorum; Cronografo del 354; le Novelle di Valentiniano III e di Maggioriano; l'Itinerario di Einsiedeln; l'iscrizione di Shapur I (in traduzione); Cipriano; l'editto dei prezzi di Diocleziano; Girolamo; Possidio; Salviano; Teofane; Eginardo; il Codex Carolinus (nella ristampa di Migne); gli Annali di San Bertino; Erchemperto; Ennodio; la Vita di Fulgenzio di Ruspe; i Fasti di Vienna; la Cronaca del 754; Gildas; la Historia Brittonum; gli Annali del Galles; la legge dei Burgundi; il Constitutum Constantini; Giovanni Diacono; Liutprando di Cremona; Incmaro di Reims; Jacopo da Varazze, Legenda aurea; Martino Polono; la Cronaca universale di Metz.
+[pagina.37] Testi antichi e medievali letti. Autori: Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Opere: l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Cronache e annali: gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Leggi, documenti e luoghi: l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.
 
-[pagina.38] Studi (letti nel testo Gibbon e la conclusione di Jones; di Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer sono stati verificati brani del testo; di Pirenne è stato letto l'articolo del 1922; del Companion to Rome i brani su abitanti e scavi; di Heather le pagine del libro del 2010 in cui riassume la sua tesi; di Durliat le pagine sugli abitanti di Roma): E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), letta la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
+[pagina.38] Studi. Di Gibbon è stato letto il testo, di Jones la conclusione. Di Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer sono stati verificati alcuni passi del testo. Di Pirenne è stato letto l'articolo del 1922. Del Companion to Rome sono state lette le pagine sugli abitanti e sugli scavi, di Durliat quelle sulla popolazione di Roma e di Heather le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), letta la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
 
-[pagina.39] Ciò che non è stato riletto, o su cui le fonti divergono, è detto nelle schede, nei riquadri degli storici e nelle note «Che cosa sappiamo».
+[pagina.39] Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.
 
 [pagina.40] Come finisce un impero
 
 [pagina.41] Come è fatta questa pagina
 
-[pagina.42] Ricostruzioni schematiche. Sulla mappa le regioni partono dalle province romane del 200 d.C. circa e, in Italia, dalle regioni augustee (Digital Atlas of the Roman Empire, di Johan Åhlfeldt, università di Lund e di Göteborg, licenza Creative Commons Attribuzione - Condividi allo stesso modo, CC BY-SA; coste: Natural Earth); dove i confini dei regni se ne scostano sono ritagliate a mano lungo fiumi, crinali e città nominati dalle fonti: sono confini indicativi, non rilevati. Rilievo e fiumi sono quelli veri (ombreggiatura e corsi d'acqua di Natural Earth, dominio pubblico). Stati delle regioni, confini dei regni e cammini dei popoli sono stati riveduti nel novembre 2026 (Bury, Ammiano, Zosimo, Eugippio, Beda e, per i confini, le voci di Wikipedia sui singoli regni); una parte delle date resta citata a memoria. La Corsica longobarda dal 725 circa è un'ipotesi dei manuali, senza una fonte diretta; quella franca è attestata dall'806. A Roma il corso del Tevere e il tracciato delle mura sono reali (© OpenStreetMap contributors); i colli sono ridisegnati alle quote antiche sopra un rilievo misurato (SRTM), con l'altezza accentuata di quasi due volte; gli edifici sono al loro posto ma schematici; le strade seguono le vie moderne che ricalcano le antiche (via del Corso per la via Lata, l'Appia Antica, via dei Coronari…) e, nel Foro, i basolati antichi ancora visibili (via Sacra, Argileto, vico Tusco, clivo Capitolino), con tratti a mano dove non c'è né l'una né l'altro; gli edifici del Foro e dei fori imperiali stanno sui centri dei loro resti; gli acquedotti hanno il percorso e le quote ricostruiti, non rilevati; gli isolati sono generati, l'abbandono per quartiere ipotizzato. I chilometri quadrati della spia «Occidente governato da Roma» sono misurati su questa carta, dove l'Occidente intero ne occupa circa 2,7 milioni. Il confronto con le stime di Rein Taagepera (1979, misurate sull'atlante storico di Shepherd) torna sull'impero intero: le province dell'atlante di Åhlfeldt sommano 4,9 milioni di km² verso il 200, e 4,5 tolte Mesopotamia, Dacia e Agri Decumates; Taagepera dà 4,6 per il 138, 4,5 per il 275 e 4,4 per il 390. Non torna sulla spartizione del 395: Taagepera assegna 2,0 milioni all'Occidente e 2,1 (± 0,3) all'Oriente, che insieme fanno 4,1 e non 4,4; sui poligoni l'Occidente vale 2,7 e l'Oriente 1,9. Le sue due metà («due parti pressoché uguali», scrive) sono arrotondate: qui l'Occidente risulta più grande di un terzo. Linea continua: dato misurato. Linea tratteggiata: stima. Testi delle tappe, schede dei monumenti e didascalie degli eventi sono stati controllati sulle fonti nel novembre 2026; ciò che resta incerto o discusso è detto nelle schede.
+[pagina.42] Ricostruzioni schematiche. La carta parte dalle province romane intorno al 200 d.C. e, per l'Italia, dalle regioni istituite da Augusto. La base è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Dove i regni successivi seguivano confini diversi, li abbiamo ridisegnati a mano usando i fiumi, i crinali e le città citati nelle fonti. Questi confini sono quindi indicativi, non rilevati. Nel novembre 2026 abbiamo rivisto il controllo delle regioni, i confini e gli spostamenti dei popoli sulla base di Bury, Ammiano, Zosimo, Eugippio e Beda e, per i confini dei singoli regni, delle relative voci di Wikipedia. Una parte delle date resta citata a memoria. Il dominio longobardo in Corsica dal 725 circa è, inoltre, un'ipotesi dei manuali priva di una testimonianza diretta; il dominio franco è documentato dall'806. Per Roma, il corso del Tevere e il tracciato delle mura provengono da OpenStreetMap (© OpenStreetMap contributors). Abbiamo ridisegnato i colli alle quote antiche sopra un rilievo misurato (SRTM) e nel modello ne abbiamo quasi raddoppiato l'altezza. Gli edifici sono al loro posto, ma schematici. Le strade seguono i tracciati antichi conservati nelle vie moderne, come via del Corso per la via Lata, l'Appia Antica e via dei Coronari. Nel Foro seguono anche le pavimentazioni antiche ancora visibili della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. I tratti mancanti sono disegnati a mano. Nel Foro romano e nei Fori imperiali gli edifici sono centrati sui resti archeologici. Per gli acquedotti abbiamo ricostruito percorsi e altezze, che non sono rilevati. Gli isolati sono generati dal modello e lo spopolamento dei singoli quartieri è ipotetico. L'indicatore «Occidente governato da Roma» usa le superfici misurate su questa carta. L'intero Occidente vi occupa circa 2,7 milioni di km². Per l'impero nel suo insieme, i risultati sono vicini alle stime pubblicate nel 1979 da Rein Taagepera usando l'atlante storico di Shepherd. Le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km² intorno al 200, oppure 4,5 milioni escludendo Mesopotamia, Dacia e Agri Decumates. Taagepera stima 4,6 milioni per il 138, 4,5 per il 275 e 4,4 per il 390. Per la divisione del 395, invece, il confronto non torna. Taagepera parla di «due parti pressoché uguali» e assegna 2 milioni all'Occidente e 2,1 milioni all'Oriente, con un margine di 0,3 milioni per quest'ultimo. La somma è 4,1 milioni, mentre la sua stima complessiva per il 390 è 4,4. Le sue due metà sono arrotondate: sulla nostra carta l'Occidente misura 2,7 milioni di km², circa un terzo in più, e l'Oriente 1,9 milioni. Nel grafico la linea continua indica un dato misurato e quella tratteggiata una stima. I testi delle tappe, le schede dei monumenti e le didascalie degli eventi sono stati controllati sulle fonti nel novembre 2026. Le schede segnalano ciò che resta incerto o discusso.
 
-[pagina.43] Licenze: il codice è libero (MIT); testi, schede, confini della carta e tabelle dei dati si possono riusare citando la fonte e con la stessa licenza (CC BY-SA 4.0); la topografia di Roma è © OpenStreetMap contributors (ODbL). I dettagli stanno in LICENZA.md .
+[pagina.43] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.44] Versione del 22/11/2026, ore 13:09
+[pagina.44] Versione del 22/11/2026, ore 18:19
 
 
 ## 2. Gli atti
 
 [atto.I.nome] La crisi
 
-[atto.I.sommario] In cinquant'anni si contano oltre venti imperatori, quasi tutti uccisi dalle proprie truppe o in battaglia. Uno cade contro i Goti, uno finisce prigioniero dei Persiani; l'impero si spezza in tre e Aureliano lo ricuce. Roma, dopo secoli, torna a chiudersi dentro le mura, e nella moneta d'argento resta il cinque per cento d'argento.
+[atto.I.sommario] In cinquant'anni si succedono oltre venti imperatori. Quasi tutti muoiono in battaglia o per mano delle proprie truppe. Decio cade combattendo i Goti e Valeriano finisce prigioniero dei Persiani. L'impero si divide in tre, poi Aureliano lo riunifica. A Roma si costruiscono nuove mura dopo secoli. La moneta d'argento contiene ormai appena il 5% d'argento.
 
 [atto.II.nome] La ricostruzione
 
-[atto.II.sommario] Diocleziano divide il comando fra quattro imperatori e prova a contare e tassare tutto; Costantino fonda una nuova Roma sul Bosforo e una moneta d'oro che resterà stabile per secoli. Il governo sta dove stanno gli eserciti: Roma è un monumento, non più una sede. Nel 378, ad Adrianopoli, i Goti accolti dentro l'impero distruggono l'esercito di un imperatore.
+[atto.II.sommario] Diocleziano affida il governo a quattro imperatori e prova a contare e tassare tutto. Costantino fonda Costantinopoli sul Bosforo e introduce una moneta d'oro che resterà stabile per secoli. Il governo sta dove stanno gli eserciti: Roma resta un monumento, non più una sede. Nel 378, ad Adrianopoli, i Goti accolti nell'impero due anni prima distruggono l'esercito d'Oriente. In battaglia muore anche l'imperatore Valente.
 
 [atto.III.nome] I barbari dentro
 
-[atto.III.sommario] La corte si chiude a Ravenna. Vandali, Alani e Svevi passano il Reno, la Britannia resta a sé stessa, i Goti di Alarico saccheggiano Roma e pochi anni dopo si insediano in Aquitania per trattato: dentro l'impero nascono i regni. Con Cartagine, nel 439, l'Occidente perde le province più ricche e il grano che sfamava Roma.
+[atto.III.sommario] La corte d'Occidente si trasferisce a Ravenna. Vandali, Alani e Svevi attraversano il Reno. La Britannia è lasciata a sé stessa. I Goti di Alarico saccheggiano Roma e pochi anni dopo ottengono per trattato il diritto di stabilirsi in Aquitania. Nascono così i primi regni entro i confini dell'impero. Nel 439 i Vandali prendono Cartagine. L'Occidente perde alcune delle province più ricche e il grano africano che riforniva Roma.
 
 [atto.IV.nome] Lo svuotamento
 
-[atto.IV.sommario] Gli Unni vengono fermati da una coalizione di alleati barbari che un generale romano comanda. Roma è saccheggiata una seconda volta, l'ultima flotta mandata a riprendere l'Africa va perduta, un generale fa e disfa imperatori che governano ormai poco più dell'Italia. Nel 476 Odoacre depone l'ultimo e rimanda le insegne a Costantinopoli.
+[atto.IV.sommario] Il generale romano Ezio ferma gli Unni alla guida di una coalizione di alleati barbari. Roma è saccheggiata una seconda volta, dai Vandali. Fallisce anche l'ultima spedizione navale per riconquistare l'Africa. Il generale Ricimero decide chi sale sul trono d'Occidente, ma a quegli imperatori resta poco più dell'Italia. Nel 476 Odoacre depone Romolo Augustolo e fa inviare a Costantinopoli i simboli del potere imperiale.
 
 [atto.V.nome] Dopo la fine
 
-[atto.V.sommario] L'impero d'Occidente è finito, la città no: sotto Odoacre e Teodorico il Senato si riunisce, si restaurano mura e teatri, al Colosseo si danno ancora le cacce. Poi viene la riconquista voluta da Giustiniano: quasi vent'anni di guerra, gli acquedotti tagliati, la peste, Roma presa e ripresa. Infine i Longobardi, e l'unità dell'Italia finisce.
+[atto.V.sommario] L'impero d'Occidente è finito, la città no. Sotto Odoacre e Teodorico il Senato si riunisce ancora, si restaurano mura e teatri e al Colosseo si tengono spettacoli di caccia. Poi Giustiniano, imperatore d'Oriente, riconquista l'Italia. In quasi vent'anni di guerra Roma cambia più volte padrone, gli assedianti tagliano gli acquedotti e arriva la peste. Con l'arrivo dei Longobardi finisce l'unità dell'Italia.
 
 [atto.VI.nome] La città dei papi
 
-[atto.VI.sommario] Roma è una città di provincia dell'impero d'Oriente, ed è il vescovo a distribuire il grano, a riparare acquedotti e mura, a trattare con chi la assedia. Il Pantheon diventa una chiesa, San Pietro la meta dei pellegrini; i papi chiamano i Franchi, ne ricevono uno Stato e incoronano un imperatore. Nell'852 le mura nuove non chiudono la città antica: proteggono una tomba.
+[atto.VI.sommario] Roma dipende dall'impero d'Oriente. Il suo vescovo, il papa, distribuisce il grano, fa riparare acquedotti e mura e tratta con gli assedianti. Il Pantheon diventa una chiesa e i pellegrini raggiungono San Pietro. I papi chiedono aiuto ai Franchi, ricevono territori da governare e incoronano Carlo Magno imperatore. Nell'852 le nuove mura non chiudono la città antica: proteggono la basilica di San Pietro, sorta sulla tomba dell'apostolo.
 
 
 ## 3. Le tappe
@@ -138,60 +138,60 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T01-235.titolo] L'imperatore ucciso dai suoi soldati
 
-[T01-235.testo] A Magonza i soldati assassinano Severo Alessandro e acclamano Massimino. In cinquant'anni si conteranno oltre venti imperatori, senza contare gli usurpatori: quasi tutti uccisi dalle proprie truppe o in battaglia.
+[T01-235.testo] A Magonza i soldati uccidono l'imperatore Severo Alessandro e proclamano imperatore Massimino. Nei cinquant'anni successivi si alternano sul trono oltre venti uomini, esclusi i rivali che tentano di impadronirsene. Quasi tutti muoiono in battaglia o per mano dei propri soldati.
 
 [T01-235.chi1.nome] Severo Alessandro
 
 [T01-235.chi1.date] 208-235
 
-[T01-235.chi1.riga] Imperatore dal 222, a tredici anni; ucciso a Magonza dai soldati insieme alla madre.
+[T01-235.chi1.riga] Sale al trono nel 222, a tredici anni. I soldati lo uccidono a Magonza insieme alla madre.
 
 [T01-235.chi2.nome] Giulia Mamea
 
-[T01-235.chi2.date] m. 235
+[T01-235.chi2.date] morta nel 235
 
-[T01-235.chi2.riga] La madre, che di fatto governa con lui.
+[T01-235.chi2.riga] Madre di Severo Alessandro, partecipa di fatto al governo dell'impero.
 
 [T01-235.chi3.nome] Massimino il Trace
 
-[T01-235.chi3.date] c. 173-238
+[T01-235.chi3.date] circa 173-238
 
-[T01-235.chi3.riga] Ufficiale venuto dalla truppa: i soldati lo acclamano imperatore. Di solito è considerato il primo dei «soldati imperatori».
+[T01-235.chi3.riga] Ufficiale venuto dalla truppa, viene proclamato imperatore dai soldati. È generalmente considerato il primo degli «imperatori soldati».
 
 [T01-235.voce1.testo] «Quando l'esercito di Massimino fu in vista, le reclute, a gran voce, chiamavano i soldati di Alessandro ad abbandonare la donna avara e il ragazzo pauroso, dominato dalla madre […]. Tremante di paura, Alessandro riuscì a stento a ritirarsi nella sua tenda. Aggrappato alla madre e, a quanto dicono, lamentandosi che era lei la causa della sua morte, aspettò il carnefice.»
 
-[T01-235.voce1.chi] Erodiano, Storia dell'impero dopo Marco VI 9: un funzionario greco che scrive verso il 240 (tradotto dall'inglese di Echols). Non era presente, e riporta queste parole come una voce; alla madre dell'imperatore è ostile
+[T01-235.voce1.chi] Erodiano, Storia dell'impero dopo Marco, VI, 9. Funzionario greco, scrive verso il 240. Non era presente e riporta queste parole come una diceria. È ostile alla madre dell'imperatore. Traduzione dalla versione inglese di Echols.
 
 [T01-235.luogo1.magonza] i soldati uccidono Severo Alessandro
 
 
-### 251 · La peste e un imperatore caduto in battaglia
+### 251 · Un'epidemia nell'impero, Decio cade contro i Goti
 
-[T02-251.titolo] La peste e un imperatore caduto in battaglia
+[T02-251.titolo] Un'epidemia nell'impero, Decio cade contro i Goti
 
-[T02-251.testo] Un'epidemia attraversa l'impero per più di dieci anni. Ad Abritto Decio muore combattendo i Goti: per le fonti romane è il primo imperatore caduto contro un nemico esterno, ma i Persiani rivendicavano già la morte di Gordiano III, nel 244.
+[T02-251.testo] Un'epidemia si diffonde nell'impero e dura più di dieci anni. Ad Abritto l'imperatore Decio muore combattendo contro i Goti. Le fonti romane lo ricordano come il primo imperatore caduto contro un nemico straniero. I Persiani, però, sostenevano di avere già ucciso Gordiano III nel 244.
 
 [T02-251.chi1.nome] Decio
 
-[T02-251.chi1.date] c. 201-251
+[T02-251.chi1.date] circa 201-251
 
-[T02-251.chi1.riga] Imperatore dal 249. Muore ad Abritto; il figlio Erennio Etrusco cade nella stessa battaglia o poco prima.
+[T02-251.chi1.riga] È imperatore dal 249. Muore ad Abritto. Il figlio Erennio Etrusco cade nella stessa battaglia o poco prima.
 
 [T02-251.chi2.nome] Cniva
 
-[T02-251.chi2.riga] Re dei Goti, che attira l'esercito romano in una palude.
+[T02-251.chi2.riga] Il re goto attira l'esercito romano in una palude.
 
 [T02-251.chi3.nome] Cipriano
 
-[T02-251.chi3.date] c. 210-258
+[T02-251.chi3.date] circa 210-258
 
-[T02-251.chi3.riga] Vescovo di Cartagine: descrive l'epidemia in uno scritto per i suoi fedeli.
+[T02-251.chi3.riga] Vescovo di Cartagine, descrive l'epidemia in un testo rivolto ai fedeli.
 
 [T02-251.voce1.testo] «Che ora il ventre, sciolto in un flusso, svuoti le forze del corpo; che un fuoco nato nelle midolla divampi in piaghe nella gola; che il vomito continuo scuota le viscere; che gli occhi ardano per la forza del sangue; che ad alcuni i piedi o altre parti delle membra vengano amputati dal contagio di una putrefazione malsana […]: tutto questo giova a dare prova della fede.»
 
-[T02-251.voce1.chi] Cipriano, vescovo di Cartagine, La mortalità 14: uno scritto per i suoi fedeli durante l'epidemia, verso il 252. Vuole consolare, non fare una diagnosi: la malattia non è stata identificata
+[T02-251.voce1.chi] Cipriano, La mortalità, 14. Il vescovo di Cartagine scrive verso il 252 per confortare i fedeli durante l'epidemia. L'identità della malattia resta incerta.
 
-[T02-251.storici] Quanto pesò la peste di Cipriano? Per Kyle Harper è una delle cause della crisi; altri la considerano impossibile da misurare con le fonti che abbiamo.
+[T02-251.storici] Quanto contribuì alla crisi dell'impero la cosiddetta peste di Cipriano? Per Kyle Harper fu una delle cause. Secondo altri studiosi, le testimonianze disponibili non permettono di misurarne gli effetti.
 
 [T02-251.luogo1.abritto] Decio muore combattendo i Goti
 
@@ -200,11 +200,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T03-260.titolo] Valeriano prigioniero, l'Occidente si stacca
 
-[T03-260.testo] L'imperatore Valeriano è catturato dai Persiani. L'Occidente si stacca sotto Postumo: Gallie, Britannia e Hispania hanno un loro imperatore, loro consoli, una loro moneta.
+[T03-260.testo] I Persiani catturano l'imperatore Valeriano. In Occidente il generale Postumo assume il potere nelle Gallie, in Britannia e nelle province romane della penisola iberica. Questi territori hanno ora un proprio imperatore, propri consoli e una propria moneta.
 
 [T03-260.chi1.nome] Valeriano
 
-[T03-260.chi1.date] imperatore 253-260
+[T03-260.chi1.date] imperatore dal 253 al 260
 
 [T03-260.chi1.riga] Catturato presso Edessa, muore prigioniero in Persia.
 
@@ -212,17 +212,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T03-260.chi2.date] re dal 240 al 270 circa
 
-[T03-260.chi2.riga] Re dei Persiani: fa incidere la vittoria sulla roccia.
+[T03-260.chi2.riga] Il re persiano fa scolpire la vittoria nella roccia e ne fa incidere il racconto su una torre di pietra.
 
 [T03-260.chi3.nome] Postumo
 
-[T03-260.chi3.date] m. 269
+[T03-260.chi3.date] morto nel 269
 
-[T03-260.chi3.riga] Generale sul Reno, imperatore delle Gallie dal 260.
+[T03-260.chi3.riga] Generale delle truppe sul Reno, diventa imperatore delle Gallie nel 260.
 
 [T03-260.voce1.testo] «Nella terza guerra, quando attaccammo Carre ed Edessa e le stringevamo d'assedio, il Cesare Valeriano venne contro di noi […] con una forza di settantamila uomini. Al di là di Carre e di Edessa ci fu una grande battaglia con il Cesare Valeriano. E il Cesare Valeriano lo facemmo prigioniero noi, con le nostre mani; e gli altri, il prefetto del pretorio, i senatori, i generali e chiunque in quell'esercito avesse un comando, tutti li facemmo prigionieri e li portammo via, in Persia.»
 
-[T03-260.voce1.chi] Shapur I, re dei Persiani, nell'iscrizione fatta incidere a Naqsh-e Rostam verso il 262 (tradotta dall'inglese di Sprengling): è la voce del vincitore, e la cifra è sua
+[T03-260.voce1.chi] Shapur I, re dei Persiani, nell'iscrizione fatta incidere a Naqsh-e Rostam verso il 262. È la voce del vincitore: il numero dei soldati romani è il suo. Traduzione dalla versione inglese di Sprengling.
 
 [T03-260.luogo1.edessa] Valeriano è catturato dai Persiani di Shapur
 
@@ -233,52 +233,52 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T04-271.titolo] Roma torna a costruire mura
 
-[T04-271.testo] Aureliano cinge la città con diciannove chilometri di mura: non accadeva da secoli. In Oriente Zenobia di Palmira controlla dall'Egitto all'Anatolia.
+[T04-271.testo] Aureliano avvia la costruzione di una nuova cinta di mura lunga diciannove chilometri. A Roma non se ne costruiva una da secoli. In Oriente il potere di Zenobia, che governa Palmira, si estende dall'Egitto all'Anatolia, nell'attuale Turchia.
 
 [T04-271.chi1.nome] Aureliano
 
 [T04-271.chi1.date] 214-275
 
-[T04-271.chi1.riga] Imperatore dal 270: fa cingere Roma di mura.
+[T04-271.chi1.riga] Imperatore dal 270, ordina la costruzione delle nuove mura di Roma.
 
 [T04-271.chi2.nome] Zenobia
 
-[T04-271.chi2.riga] Regge Palmira per il figlio Vaballato dal 267.
+[T04-271.chi2.riga] Dal 267 governa Palmira in nome del figlio Vaballato.
 
 [T04-271.voce1.testo] «E perché non accadesse mai più ciò che era avvenuto sotto Gallieno, cinse la città di mura quanto più possibile robuste, con un giro più largo.»
 
-[T04-271.voce1.chi] Aurelio Vittore, I Cesari 35, 7: un alto funzionario che scrive verso il 360, novant'anni dopo. Di contemporanei non ne restano; il Cronografo del 354 dice soltanto: «cinse la città con un muro»
+[T04-271.voce1.chi] Aurelio Vittore, I Cesari, 35, 7. Alto funzionario romano, scrive verso il 360, circa novant'anni dopo i lavori. Non ci sono giunti racconti contemporanei. Il Cronografo del 354 dice soltanto «cinse la città con un muro».
 
-[T04-271.luogo1.roma] Aureliano comincia le mura
+[T04-271.luogo1.roma] Aureliano avvia la costruzione delle nuove mura
 
 
 ### 274 · L'impero ricucito
 
 [T05-274.titolo] L'impero ricucito
 
-[T05-274.testo] In tre anni Aureliano riprende Palmira e le Gallie. L'impero è di nuovo uno; una riforma ferma il crollo della moneta, che però contiene ormai solo il cinque per cento d'argento.
+[T05-274.testo] In tre anni Aureliano riconquista Palmira e le Gallie e riunisce i territori dell'impero. Con una riforma monetaria arresta la perdita di valore della moneta, che ormai contiene appena il 5% d'argento.
 
 [T05-274.chi1.nome] Aureliano
 
 [T05-274.chi1.date] 214-275
 
-[T05-274.chi1.riga] Riprende Palmira e le Gallie; ucciso l'anno dopo dai suoi ufficiali.
+[T05-274.chi1.riga] Riconquista Palmira e le Gallie. L'anno seguente i suoi ufficiali lo uccidono.
 
 [T05-274.chi2.nome] Tetrico
 
-[T05-274.chi2.date] imperatore delle Gallie 271-274
+[T05-274.chi2.date] imperatore delle Gallie dal 271 al 274
 
-[T05-274.chi2.riga] Sconfitto, o arresosi, a Châlons: ottiene da Aureliano un governo in Italia.
+[T05-274.chi2.riga] A Châlons viene sconfitto o si arrende, a seconda delle fonti. Aureliano gli affida poi un incarico di governo in Italia.
 
 [T05-274.chi3.nome] Zenobia
 
-[T05-274.chi3.riga] Portata a Roma: secondo quasi tutte le fonti sfila nel trionfo.
+[T05-274.chi3.riga] Secondo quasi tutte le fonti, viene condotta a Roma e sfila nel corteo con cui Aureliano celebra la vittoria.
 
 [T05-274.voce1.testo] «Vinse in Gallia Tetrico, presso Châlons, e fu Tetrico stesso a tradire il proprio esercito […]. Anzi, con lettere segrete aveva supplicato Aureliano, usando fra l'altro il verso di Virgilio: “Strappami, o invitto, a questi mali”. […] Entrato a Roma, celebrò uno splendido trionfo, come colui che aveva ripreso l'Oriente e l'Occidente: davanti al carro camminavano Tetrico e Zenobia.»
 
-[T05-274.voce1.chi] Eutropio, Breviario IX 13, scritto verso il 369, quasi un secolo dopo. Contemporanee sono le monete di Aureliano, con la scritta RESTITVTOR ORBIS: restauratore del mondo
+[T05-274.voce1.chi] Eutropio, Breviario, IX, 13. Scrive verso il 369, quasi un secolo dopo. Una testimonianza dell'epoca viene dalle monete di Aureliano. Portano la scritta RESTITVTOR ORBIS, «restauratore del mondo».
 
-[T05-274.luogo1.palmira] ripresa da Aureliano, con Zenobia
+[T05-274.luogo1.palmira] Aureliano riconquista Palmira e fa prigioniera Zenobia
 
 [T05-274.luogo2.chalons] Tetrico cede le Gallie
 
@@ -287,26 +287,26 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T06-284.titolo] La moneta
 
-[T06-284.testo] Nel 215 Caracalla conia l'antoniniano: vale due denari, ma contiene l'argento di uno e mezzo. È il primo trucco di una lunga serie. Fra il 238 e il 268 l'argento in una moneta scende da oltre due grammi a meno di un decimo: sotto Claudio II la moneta è quasi tutta rame. Aureliano, nel 274, garantisce almeno il 5%. Diocleziano conia di nuovo argento buono, ma nel 301 deve raddoppiare per legge il valore delle monete e fissare per editto più di milleduecento prezzi massimi, pena la morte: l'oro a 72.000 denari la libbra. In pochi anni l'editto è lettera morta. Regge invece il solido di Costantino, 72 per libbra: resterà intatto per sette secoli.
+[T06-284.testo] Nel 215 Caracalla introduce l'antoniniano. Vale due denari, ma contiene l'argento di un denaro e mezzo. È il primo trucco di una lunga serie. Fra il 238 e il 268 l'argento in ciascuna moneta scende da oltre due grammi a meno di un decimo di grammo. Sotto Claudio II l'antoniniano è ormai quasi tutto di rame. Nel 274 Aureliano garantisce un contenuto minimo d'argento del 5%. Diocleziano torna a coniare monete d'argento di buona qualità, ma nel 301 deve raddoppiare per legge il valore delle monete e fissare con un editto, pena la morte, oltre 1.200 prezzi massimi. Una libbra d'oro, per esempio, può costare al massimo 72.000 denari. Nel giro di pochi anni l'editto smette di essere applicato. Più duratura è la moneta d'oro di Costantino, il solido. Da una libbra d'oro si ricavano 72 solidi, che per sette secoli conservano peso e purezza.
 
 
 ### 293 · Quattro imperatori, nessuno a Roma
 
 [T07-293.titolo] Quattro imperatori, nessuno a Roma
 
-[T07-293.testo] Diocleziano divide il comando fra due augusti e due cesari. Non ci sono più capitali ma residenze vicine agli eserciti, che cambiano con le campagne: Treviri, Milano, Sirmio, Nicomedia.
+[T07-293.testo] Diocleziano divide il governo tra due imperatori con il titolo di «augusto» e due vice chiamati «cesari». Non c'è più una capitale fissa: i quattro risiedono vicino agli eserciti e si spostano secondo le campagne militari. Tra le loro residenze ci sono Treviri, Milano, Sirmio e Nicomedia.
 
 [T07-293.chi1.nome] Diocleziano
 
-[T07-293.chi1.date] imperatore 284-305
+[T07-293.chi1.date] imperatore dal 284 al 305
 
-[T07-293.chi1.riga] Divide il comando in quattro; nel 305 abdica di sua volontà, primo imperatore a farlo.
+[T07-293.chi1.riga] Divide il governo in quattro, con un altro augusto e due cesari. Nel 305 è il primo imperatore romano a rinunciare volontariamente al trono.
 
 [T07-293.chi2.nome] Massimiano
 
-[T07-293.chi2.date] augusto 286-305
+[T07-293.chi2.date] augusto dal 286 al 305
 
-[T07-293.chi2.riga] Il collega per l'Occidente, con residenza a Milano.
+[T07-293.chi2.riga] Collega di Diocleziano, governa l'Occidente e risiede a Milano.
 
 [T07-293.chi3.nome] Costanzo Cloro e Galerio
 
@@ -316,38 +316,38 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T07-293.voce1.testo] «Fece infatti partecipi del suo regno altri tre, diviso il mondo in quattro parti e moltiplicati gli eserciti, perché ciascuno di loro voleva avere molti più soldati di quanti ne avevano avuti i principi di prima, quando governavano da soli. Chi riceveva aveva cominciato a superare tanto chi dava che, esaurite dall'enormità delle imposte le forze dei coloni, i campi venivano abbandonati e le colture tornavano bosco.»
 
-[T07-293.voce1.chi] Lattanzio, La morte dei persecutori 7, verso il 315: un retore cristiano chiamato a Nicomedia da Diocleziano, e poi suo nemico. È un libello: i campi abbandonati sono retorica
+[T07-293.voce1.chi] Lattanzio, La morte dei persecutori, 7. Maestro di retorica cristiano, è chiamato a Nicomedia da Diocleziano e ne diventa poi avversario. Scrive verso il 315. Il libro è un attacco all'imperatore: il quadro dei campi abbandonati è un'esagerazione polemica.
 
-[T07-293.luogo1.nicomedia] la residenza di Diocleziano
+[T07-293.luogo1.nicomedia] Diocleziano, augusto
 
-[T07-293.luogo2.milano] Massimiano
+[T07-293.luogo2.milano] residenza di Massimiano, augusto
 
-[T07-293.luogo3.treviri] Costanzo
+[T07-293.luogo3.treviri] residenza di Costanzo, cesare
 
-[T07-293.luogo4.sirmio] Galerio
+[T07-293.luogo4.sirmio] residenza di Galerio, cesare (fino al 296 circa vi soggiorna più spesso Diocleziano)
 
 
 ### 301 · I prezzi fissati per legge
 
 [T08-301.titolo] I prezzi fissati per legge
 
-[T08-301.testo] Un editto stabilisce il prezzo massimo di oltre milleduecento merci e servizi, pena la morte. Non funziona, ma racconta uno Stato che vuole contare e tassare tutto.
+[T08-301.testo] Diocleziano e i suoi tre colleghi fissano per legge il prezzo massimo di oltre 1.200 merci e servizi. Chi lo supera rischia la morte. Il provvedimento non funziona e viene presto abbandonato, ma mostra uno Stato che vuole contare e tassare tutto.
 
 [T08-301.chi1.nome] Diocleziano
 
-[T08-301.chi1.date] imperatore 284-305
+[T08-301.chi1.date] imperatore dal 284 al 305
 
 [T08-301.chi1.riga] Firma l'editto con i tre colleghi.
 
 [T08-301.chi2.nome] Lattanzio
 
-[T08-301.chi2.date] c. 250-c. 325
+[T08-301.chi2.date] circa 250 - circa 325
 
-[T08-301.chi2.riga] Retore cristiano: racconta che l'editto fece sparire le merci e fu lasciato cadere.
+[T08-301.chi2.riga] Maestro di retorica cristiano. Secondo il suo racconto, dopo l'editto le merci spariscono dai mercati e il governo rinuncia ad applicarlo.
 
 [T08-301.voce1.testo] «[I venditori] estorcono per le merci prezzi non quattro o otto volte maggiori, ma tali che la lingua umana non ha parole per dirli; tanto che a volte, per l'acquisto di una sola cosa, il soldato è spogliato del donativo e della paga. […] Si stabilisce che chi avrà l'audacia di opporsi alla forma di questo decreto sia sottoposto alla pena capitale.»
 
-[T08-301.voce1.chi] Diocleziano e i suoi tre colleghi, proemio dell'editto sui prezzi, fine del 301. È la versione del governo, che dell'inflazione incolpa l'avidità dei venditori
+[T08-301.voce1.chi] Diocleziano e i suoi tre colleghi, introduzione all'editto sui prezzi, fine del 301. È la versione del governo, che attribuisce l'aumento dei prezzi all'avidità dei venditori.
 
 
 ### 330 · Una nuova Roma sul Bosforo
@@ -358,19 +358,19 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T09-330.chi1.nome] Costantino
 
-[T09-330.chi1.date] imperatore 306-337
+[T09-330.chi1.date] imperatore dal 306 al 337
 
-[T09-330.chi1.riga] Unico imperatore dal 324; l'11 maggio 330 dedica la nuova città.
+[T09-330.chi1.riga] Dal 324 governa da solo. L'11 maggio 330 inaugura Costantinopoli.
 
 [T09-330.chi2.nome] Silvestro I
 
-[T09-330.chi2.date] papa 314-335
+[T09-330.chi2.date] papa dal 314 al 335
 
 [T09-330.chi2.riga] Vescovo di Roma mentre sorgono il Laterano e San Pietro.
 
 [T09-330.voce1.testo] «Costantino chiamò Bisanzio, dal proprio nome, Costantinopoli […]; la adornò con grande magnificenza, come una patria, e volle che fosse pari a Roma. Poi, cercati per lei cittadini da ogni parte, le elargì molte ricchezze, tanto da esaurirvi quasi tutte le sostanze regie; vi istituì anche un Senato, di secondo rango.»
 
-[T09-330.voce1.chi] Origine di Costantino 30, di un anonimo del IV secolo. Girolamo, verso il 380, è più secco: «Si dedica Costantinopoli, spogliando quasi tutte le città»
+[T09-330.voce1.chi] Origine di Costantino, 30, opera di un autore anonimo del IV secolo. Girolamo, verso il 380, è più asciutto: «Si dedica Costantinopoli, spogliando quasi tutte le città».
 
 [T09-330.luogo1.costantinopoli] inaugurata da Costantino
 
@@ -379,7 +379,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T10-357.titolo] L'imperatore in visita
 
-[T10-357.testo] Costanzo II entra a Roma per la prima volta e la guarda come un forestiero, stupito dal Foro di Traiano. La città è un monumento, non più una sede di governo.
+[T10-357.testo] A trentanove anni Costanzo II visita Roma per la prima volta e la guarda come un forestiero. A stupirlo più di tutto è il Foro di Traiano. La città è ormai un monumento, non più una sede di governo.
 
 [T10-357.chi1.nome] Costanzo II
 
@@ -389,9 +389,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T10-357.chi2.nome] Ammiano Marcellino
 
-[T10-357.chi2.date] c. 330-c. 395
+[T10-357.chi2.date] circa 330 - circa 395
 
-[T10-357.chi2.riga] Ufficiale e storico: è lui a raccontare la visita.
+[T10-357.chi2.riga] Ufficiale dell'esercito e storico, racconta la visita di Costanzo II a Roma.
 
 [T10-357.chi3.nome] Ormisda
 
@@ -399,7 +399,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T10-357.voce1.testo] «Ma quando giunse al foro di Traiano, costruzione unica sotto il cielo, a nostro parere, e mirabile anche a giudizio degli dèi, restava attonito, volgendo la mente attorno a quelle strutture gigantesche, che non si possono dire a parole né i mortali potranno mai più tentare. […] [Il principe persiano Ormisda] diceva che una cosa sola gli era piaciuta: aver imparato che anche lì gli uomini muoiono.»
 
-[T10-357.voce1.chi] Ammiano Marcellino, Storie XVI 10, 15-16: scrive a Roma verso il 390; nel 357 non era al seguito dell'imperatore
+[T10-357.voce1.chi] Ammiano Marcellino, Storie, XVI, 10, 15-16. Scrive a Roma verso il 390. Nel 357 non accompagnava l'imperatore.
 
 [T10-357.luogo1.roma] la visita di Costanzo II
 
@@ -408,29 +408,29 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T11-378.titolo] Adrianopoli
 
-[T11-378.testo] I Goti, accolti dentro l'impero due anni prima e ridotti alla fame, distruggono l'esercito dell'imperatore Valente: secondo Ammiano se ne salva appena un terzo. Muore lo stesso Valente.
+[T11-378.testo] Due anni dopo aver ottenuto il permesso di entrare nell'impero, i Goti, ridotti alla fame, distruggono l'esercito romano ad Adrianopoli. L'imperatore d'Oriente Valente muore sul campo. Secondo lo storico Ammiano Marcellino sopravvive appena un soldato romano su tre.
 
 [T11-378.chi1.nome] Valente
 
-[T11-378.chi1.date] imperatore 364-378
+[T11-378.chi1.date] imperatore dal 364 al 378
 
-[T11-378.chi1.riga] Imperatore d'Oriente: attacca senza aspettare i rinforzi e muore sul campo.
+[T11-378.chi1.riga] Imperatore d'Oriente, attacca i Goti prima dell'arrivo dei rinforzi e muore in battaglia.
 
 [T11-378.chi2.nome] Fritigerno
 
-[T11-378.chi2.riga] Capo dei Goti accolti nel 376.
+[T11-378.chi2.riga] Guida i Goti a cui Roma permette di attraversare il Danubio nel 376.
 
 [T11-378.chi3.nome] Graziano
 
 [T11-378.chi3.date] 359-383
 
-[T11-378.chi3.riga] Nipote di Valente, imperatore d'Occidente: è in marcia, ma arriva tardi.
+[T11-378.chi3.riga] Nipote di Valente e imperatore d'Occidente, marcia in suo aiuto ma non arriva in tempo per la battaglia.
 
 [T11-378.voce1.testo] «I fanti rimasero scoperti, con i reparti così ammassati che a stento qualcuno poteva sguainare la spada o ritirare il braccio. Per la polvere non si riusciva più a vedere il cielo, che rimbombava di grida spaventose. […] Risulta che a stento si salvò un terzo dell'esercito. E negli annali non si legge di un'altra disfatta spinta così fino allo sterminio, tranne la battaglia di Canne.»
 
-[T11-378.voce1.chi] Ammiano Marcellino, Storie XXXI 13: ex ufficiale, scrive a Roma verso il 390; alla battaglia non c'era
+[T11-378.voce1.chi] Ammiano Marcellino, Storie, XXXI, 13. Ex ufficiale dell'esercito, scrive a Roma verso il 390. Non assistette alla battaglia.
 
-[T11-378.storici] Invasione o crisi di accoglienza? I Goti del 376 chiesero di entrare e furono ammessi. Per Heather a spingerli sul Danubio sono gli Unni; Halsall ridimensiona gli Unni e guarda alla politica romana oltre il fiume. Sulla rivolta concordano: nasce da come Roma gestì i profughi.
+[T11-378.storici] Invasione o crisi di accoglienza? Nel 376 i Goti chiedono e ottengono il permesso di attraversare il Danubio. Per Peter Heather cercano scampo dagli Unni. Guy Halsall attribuisce più peso alla politica che Roma conduceva oltre il fiume. I due storici concordano sull'origine della rivolta successiva. A provocarla fu il trattamento riservato ai profughi una volta entrati nell'impero.
 
 [T11-378.luogo1.adrianopoli] i Goti distruggono l'esercito d'Oriente; muore Valente
 
@@ -439,7 +439,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T12-395.titolo] Due corti
 
-[T12-395.testo] Alla morte di Teodosio l'impero passa ai due figli, uno a Costantinopoli e uno a Milano. Nessuno la considera una divisione definitiva; lo diventerà.
+[T12-395.testo] Alla morte di Teodosio, Arcadio governa l'Oriente da Costantinopoli e Onorio l'Occidente da Milano. All'epoca la divisione sembra provvisoria. Le due corti resteranno separate.
 
 [T12-395.chi1.nome] Teodosio I
 
@@ -449,19 +449,19 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T12-395.chi2.nome] Arcadio e Onorio
 
-[T12-395.chi2.date] c. 377-408 e 384-423
+[T12-395.chi2.date] circa 377-408 e 384-423
 
-[T12-395.chi2.riga] I figli: il maggiore a Costantinopoli, il minore in Occidente.
+[T12-395.chi2.riga] Arcadio, il figlio maggiore, governa a Costantinopoli. Il minore, Onorio, governa in Occidente.
 
 [T12-395.chi3.nome] Stilicone
 
-[T12-395.chi3.date] c. 359-408
+[T12-395.chi3.date] circa 359-408
 
-[T12-395.chi3.riga] Generale, figlio di un Vandalo: Teodosio gli affida Onorio.
+[T12-395.chi3.riga] Generale romano e figlio di un Vandalo. Teodosio gli affida il giovane Onorio.
 
 [T12-395.voce1.testo] «Piangi anche, augusto imperatore, perché non accompagni tu stesso fino a Costantinopoli le venerate spoglie. […] Qui stanno in mezzo molte regioni lontane, qui ci sono mari da attraversare. E nemmeno questo ti sarebbe gravoso, se non ti trattenesse lo Stato.»
 
-[T12-395.voce1.chi] Ambrogio, vescovo di Milano, al giovane Onorio: orazione funebre per Teodosio, pronunciata il 25 febbraio 395 davanti alla corte e all'esercito
+[T12-395.voce1.chi] Ambrogio, vescovo di Milano, al giovane Onorio: orazione funebre per Teodosio, pronunciata il 25 febbraio 395 davanti alla corte e all'esercito.
 
 [T12-395.luogo1.milano] muore Teodosio; l'impero passa ai due figli
 
@@ -470,24 +470,24 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T13-395.titolo] I commerci
 
-[T13-395.testo] Quanto commerciava l'impero? Nessuno lo registrò: l'archeologia lo deduce. I relitti nel Mediterraneo toccano il massimo nel I secolo d.C. e poi calano; ma i relitti contano le anfore e le pietre, non le botti o le merci deperibili, e molti sono datati con margini di secoli. Il piombo nei ghiacci della Groenlandia, figlio delle miniere d'argento, crolla nel II secolo con la peste antonina e resta basso per più di cinque secoli: misura le miniere, non i mercati. I piatti africani, invece, arrivano su tutte le coste fino al VII secolo. Il quadro è un declino lungo e irregolare, non un crollo improvviso: La curva dei commerci, qui, conta i relitti datati (I secolo = 100): è la misura meno incerta che abbiamo, non il volume degli scambi.
+[T13-395.testo] Nessuno registrò quanto commerciava l'impero. Per stimarlo gli archeologi contano i relitti delle navi nel Mediterraneo. Quelli databili sono più numerosi nel I secolo d.C., poi diminuiscono. Ma anfore e carichi di pietra si conservano meglio delle botti e delle merci deperibili. Per molte navi la data del naufragio è incerta anche di secoli. Il grafico assegna il valore 100 ai relitti del I secolo e confronta con quel riferimento i secoli successivi. È la misura meno incerta che abbiamo, ma non dice il volume degli scambi. Altre tracce aiutano solo in parte. Nei ghiacci della Groenlandia il piombo prodotto dalle miniere d'argento crolla nel II secolo, al tempo della peste antonina, e resta scarso per oltre cinque secoli. È un indizio dell'attività delle miniere, non dei mercati. Le ceramiche africane, invece, raggiungono le coste di tutto il Mediterraneo fino al VII secolo. Nel complesso emerge un declino lungo e disuguale, non un crollo improvviso.
 
 
 ### 402 · La corte si chiude a Ravenna
 
 [T14-402.titolo] La corte si chiude a Ravenna
 
-[T14-402.testo] Stilicone affronta Alarico a Pollenzo e a Verona e lo costringe a lasciare l'Italia. La corte lascia Milano per Ravenna, protetta dalle paludi; a Roma Onorio fa restaurare mura, porte e torri, e forse è allora che la cinta raddoppia in altezza.
+[T14-402.testo] Stilicone affronta Alarico a Pollenzo e poi a Verona, nel 402 o nel 403 (gli studiosi non concordano), e lo costringe a lasciare l'Italia. La corte si trasferisce da Milano a Ravenna, che le paludi rendono più facile da difendere. A Roma Onorio fa restaurare mura, porte e torri. Forse è in questa occasione che l'altezza delle mura raddoppia.
 
 [T14-402.chi1.nome] Stilicone
 
-[T14-402.chi1.date] c. 359-408
+[T14-402.chi1.date] circa 359-408
 
-[T14-402.chi1.riga] Comanda l'esercito d'Occidente; sarà giustiziato nel 408.
+[T14-402.chi1.riga] Comanda l'esercito d'Occidente fino al 408, quando viene giustiziato.
 
 [T14-402.chi2.nome] Alarico
 
-[T14-402.chi2.date] c. 370-410
+[T14-402.chi2.date] circa 370-410
 
 [T14-402.chi2.riga] Re dei Goti, già al servizio di Roma.
 
@@ -499,7 +499,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T14-402.voce1.testo] «Le mura nuove le aggiungevano un bel volto, appena compiute alla notizia dei Goti; la paura fu artefice di bellezza e, per una mirabile vicenda, la vecchiaia che la pace aveva portato, scossa via dalla guerra, innalzò torri improvvise e costrinse tutti e sette i colli a ringiovanire in un muro continuo.»
 
-[T14-402.voce1.chi] Claudiano, poeta di corte, panegirico per il sesto consolato di Onorio, recitato a Roma nel gennaio 404: ha davanti le mura di Aureliano appena rialzate
+[T14-402.voce1.chi] Claudiano, poeta di corte, recita a Roma nel gennaio 404 un poema in lode di Onorio per il suo sesto consolato. Ha davanti agli occhi le mura di Aureliano appena rialzate.
 
 [T14-402.luogo1.pollenzo] Stilicone affronta Alarico
 
@@ -510,25 +510,25 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T15-406.titolo] Il Reno attraversato
 
-[T15-406.testo] Nell'ultima notte dell'anno (del 405, secondo alcuni studiosi) Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito acclama un imperatore dopo l'altro; nel 407 il terzo, Costantino, porta le truppe in Gallia.
+[T15-406.testo] La notte del 31 dicembre 406 Vandali, Alani e Svevi attraversano il Reno. Alcuni studiosi collocano il passaggio un anno prima. In Britannia i soldati proclamano tre imperatori in rapida successione. Nel 407 il terzo, Costantino III, porta le truppe dell'isola in Gallia.
 
 [T15-406.chi1.nome] Costantino III
 
-[T15-406.chi1.date] usurpatore 407-411
+[T15-406.chi1.date] usurpatore dal 407 al 411
 
 [T15-406.chi1.riga] Soldato acclamato in Britannia: passa in Gallia con le truppe dell'isola.
 
 [T15-406.chi2.nome] Stilicone
 
-[T15-406.chi2.date] c. 359-408
+[T15-406.chi2.date] circa 359-408
 
 [T15-406.chi2.riga] Ha sguarnito il Reno per difendere l'Italia; sarà giustiziato nel 408.
 
 [T15-406.voce1.testo] «Popoli innumerevoli e ferocissimi hanno occupato tutte le Gallie. Tutto ciò che sta fra le Alpi e i Pirenei, chiuso dall'Oceano e dal Reno, l'hanno devastato Quadi, Vandali, Sarmati, Alani, Gepidi, Eruli, Sassoni, Burgundi, Alamanni e, povero Stato!, i nemici della Pannonia. […] Magonza, città un tempo illustre, è stata presa e distrutta, e nella chiesa sono state trucidate molte migliaia di persone. […] Che cosa si salva, se Roma perisce?»
 
-[T15-406.voce1.chi] Girolamo, lettera 123, scritta a Betlemme nel 409: è lontano dalle Gallie e scrive per sentito dire; l'elenco dei popoli è in parte retorico
+[T15-406.voce1.chi] Girolamo, lettera 123, scritta a Betlemme nel 409. Lontano dalla Gallia, riferisce racconti altrui. Il lungo elenco dei popoli serve anche a rendere più drammatica la descrizione.
 
-[T15-406.storici] Che cosa spinse Vandali, Alani e Svevi oltre il Reno? Per il 376 le fonti sono esplicite: Ammiano fa degli Unni «il seme e l'origine» della rovina. Per il 405-406 nessun contemporaneo li nomina. Heather pensa che la loro avanzata verso il Danubio medio abbia messo in moto Radagaiso e poi Vandali, Alani e Svevi; Halsall, Goffart e Kulikowski vedono piuttosto barbari attirati da un confine sguarnito, perché le truppe del Reno difendevano l'Italia. Sulla carta il dominio degli Unni è in grigio scuro: nel 406 è ancora lontano dal Reno.
+[T15-406.storici] Che cosa spinse Vandali, Alani e Svevi ad attraversare il Reno? Per il passaggio dei Goti sul Danubio nel 376 le fonti sono esplicite: Ammiano identifica negli Unni «il seme e l'origine» della rovina. Per il passaggio del Reno nel 405 o 406, invece, nessun contemporaneo menziona gli Unni. Peter Heather ipotizza che la loro avanzata verso il medio Danubio abbia spinto a muoversi prima il capo goto Radagaiso, poi Vandali, Alani e Svevi. Guy Halsall, Walter Goffart e Michael Kulikowski pensano invece a barbari attirati da un confine poco difeso, perché le truppe del Reno erano state richiamate in Italia. Il grigio scuro indica sulla carta i territori dominati dagli Unni, ancora lontani dal Reno nel 406.
 
 [T15-406.luogo1.magonza] Vandali, Alani e Svevi passano il Reno
 
@@ -537,25 +537,25 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T16-409.titolo] La Britannia lasciata a sé stessa
 
-[T16-409.testo] Rimaste senza truppe, le città britanniche cacciano i funzionari dell'usurpatore e provvedono da sole alla difesa; Roma non tornerà più. I gruppi entrati in Gallia passano i Pirenei.
+[T16-409.testo] Dopo la partenza delle truppe, le città della Britannia cacciano i funzionari di Costantino III e organizzano da sole la difesa. Il governo romano non riprenderà più il controllo dell'isola. Intanto Vandali, Alani e Svevi passano dalla Gallia alla penisola iberica attraverso i Pirenei.
 
 [T16-409.chi1.nome] Onorio
 
 [T16-409.chi1.date] 384-423
 
-[T16-409.chi1.riga] Nel 410, secondo Zosimo, scrive alle città della Britannia (del Bruzio, per alcuni studiosi) di difendersi da sole.
+[T16-409.chi1.riga] Secondo Zosimo, nel 410 Onorio invita le città della Britannia a difendersi da sole. Alcuni studiosi ritengono che la lettera fosse diretta alle città del Bruzio, nell'attuale Calabria.
 
 [T16-409.chi2.nome] Costantino III
 
-[T16-409.chi2.date] usurpatore 407-411
+[T16-409.chi2.date] usurpatore dal 407 al 411
 
-[T16-409.chi2.riga] Tiene le Gallie; in Hispania nel 409 gli si ribella il suo generale Geronzio. Nel 411 si arrende ad Arles e viene ucciso.
+[T16-409.chi2.riga] Governa le Gallie. Nel 409 il suo generale Geronzio gli si ribella nella penisola iberica. Nel 411 Costantino si arrende ad Arles e viene ucciso.
 
 [T16-409.voce1.testo] «I barbari d'oltre Reno fecero incursioni così sfrenate in ogni provincia da costringere i Britanni, e anche alcuni popoli della Gallia, a staccarsi dall'impero e a vivere non più sotto le leggi romane, ma a modo loro. I Britanni dunque presero le armi e, affrontando molti pericoli per difendersi, liberarono le loro città dai barbari che le assediavano. […] Onorio mandò lettere alle città della Britannia, esortandole a provvedere da sé alla propria sicurezza.»
 
-[T16-409.voce1.chi] Zosimo, Storia nuova VI 5 e 10, scritta a Costantinopoli verso il 500 riprendendo Olimpiodoro, che era contemporaneo (tradotto dall'inglese dell'edizione del 1814). Che la lettera di Onorio fosse per la Britannia, e non per il Bruzio, è discusso
+[T16-409.voce1.chi] Zosimo, Storia nuova, VI, 5 e 10. Scrive a Costantinopoli intorno al 500 usando il racconto di Olimpiodoro, contemporaneo degli avvenimenti. La traduzione segue l'edizione inglese del 1814. Gli studiosi discutono se la lettera di Onorio fosse indirizzata alle città della Britannia o a quelle del Bruzio, nell'Italia meridionale.
 
-[T16-409.leggenda] Re Artù appartiene a questo vuoto. Verso il 540 il monaco Gildas racconta che i Britanni, rimasti soli, tennero testa ai Sassoni sotto Ambrosio Aureliano, forse l'unico di stirpe romana sopravvissuto, fino all'assedio del monte Badon, che mette (il passo è oscuro) nell'anno della propria nascita, quarantaquattro anni prima. Artù non lo nomina. Il nome compare tre secoli dopo, nella Historia Brittonum: non un re ma un «dux bellorum», un capo di guerra che combatte accanto ai re dei Britanni e vince dodici battaglie, l'ultima proprio a Badon, dove avrebbe abbattuto da solo novecentosessanta nemici. Gli Annali del Galles, ancora più tardi, mettono Badon al 516 e al 537 la battaglia di Camlann, «in cui caddero Artù e Medraut». Un capo britanno-romano vissuto fra la fine del V secolo e i primi decenni del VI è dunque possibile; che si chiamasse Artù, nessuna fonte del suo tempo lo dice. Il re, la Tavola rotonda e Camelot arrivano nel XII secolo.
+[T16-409.leggenda] Re Artù, se è esistito, appartiene a questi anni senza Roma. Verso il 540 il monaco Gildas racconta che i Britanni, rimasti soli, tennero testa ai Sassoni sotto la guida di Ambrosio Aureliano, forse l'unico superstite di stirpe romana, fino all'assedio del monte Badon. Sembra collocare l'assedio nell'anno della propria nascita, quarantaquattro anni prima di scrivere. Il passo è di difficile interpretazione. Gildas non nomina Artù. Il nome appare tre secoli dopo nella Historia Brittonum. Qui Artù non è un re ma un «dux bellorum», un comandante che combatte al fianco dei re britanni. Gli vengono attribuite dodici vittorie, l'ultima proprio a Badon, dove avrebbe ucciso di sua mano 960 nemici. I successivi Annali del Galles datano Badon al 516 e la battaglia di Camlann, «in cui caddero Artù e Medraut», al 537. Un comandante di cultura romano-britannica potrebbe essere vissuto fra la fine del V secolo e i primi decenni del VI. Nessuna fonte contemporanea lo identifica con Artù. I racconti sul re, la Tavola rotonda e Camelot risalgono al XII secolo.
 
 [T16-409.luogo1.londra] le città britanne restano senza truppe
 
@@ -564,11 +564,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T17-410.titolo] Il sacco di Roma
 
-[T17-410.testo] Al terzo assedio in tre anni, fallite le trattative, i Goti di Alarico entrano in città e la saccheggiano per tre giorni (sei, secondo un altro cronista). Alarico era stato generale romano.
+[T17-410.testo] Al terzo assedio in tre anni, fallite le trattative, i Goti entrano a Roma. Il loro re, Alarico, aveva servito come generale romano. Il saccheggio dura tre giorni secondo Orosio, sei secondo il cronista Marcellino Comes.
 
 [T17-410.chi1.nome] Alarico
 
-[T17-410.chi1.date] c. 370-410
+[T17-410.chi1.date] circa 370-410
 
 [T17-410.chi1.riga] Re dei Goti: muore pochi mesi dopo il sacco, in Calabria.
 
@@ -576,11 +576,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T17-410.chi2.date] 384-423
 
-[T17-410.chi2.riga] Chiuso a Ravenna, rifiuta ogni accordo.
+[T17-410.chi2.riga] Chiuso a Ravenna, Onorio rifiuta ogni accordo con Alarico.
 
 [T17-410.chi3.nome] Galla Placidia
 
-[T17-410.chi3.date] c. 390-450
+[T17-410.chi3.date] circa 390-450
 
 [T17-410.chi3.riga] Sorella di Onorio: i Goti la portano via come ostaggio; nel 414 sposerà il re Ataulfo.
 
@@ -592,9 +592,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T17-410.voce2.chi] Agostino, vescovo di Ippona, Discorso 81, 9. Lo predica in Africa pochi mesi dopo il sacco, in risposta a chi diceva: «Ecco, è nei tempi cristiani che Roma perisce».
 
-[T17-410.leggenda] Dicono che a Ravenna l'imperatore Onorio abbia saputo del sacco da un eunuco, il custode del suo pollame: «Roma è perita». «Eppure ha appena mangiato dalle mie mani!», avrebbe gridato: aveva un gallo enorme, di nome Roma. L'eunuco capì e spiegò che a perire era stata la città, per mano di Alarico; e l'imperatore, sollevato: «E io, amico mio, credevo che fosse morto il mio pollo Roma». Lo racconta Procopio di Cesarea verso il 550, centoquarant'anni dopo i fatti, e apre e chiude con un «dicono»: «tanta, dicono, era la stoltezza di questo imperatore». Orosio, che scrive pochi anni dopo il sacco, non ne sa niente. Nei racconti moderni l'animale è quasi sempre una gallina; nel greco di Procopio è un gallo.
+[T17-410.leggenda] «Roma è perita», avrebbe annunciato a Ravenna un eunuco, il custode del pollame imperiale. Onorio, che aveva un gallo enorme di nome Roma, avrebbe risposto «Eppure ha appena mangiato dalle mie mani!». Quando l'eunuco gli spiegò che a perire era stata la città, per mano di Alarico, l'imperatore, sollevato, avrebbe detto «E io, amico mio, credevo che fosse morto il mio pollo Roma». L'aneddoto compare in Procopio di Cesarea, che scrive verso il 550, circa 140 anni dopo il sacco. Procopio apre e chiude il racconto con un «dicono», per segnalare che riferisce una storia tramandata, e ne trae una morale esplicita: «tanta, dicono, era la stoltezza di questo imperatore». Orosio, che scrive pochi anni dopo il sacco, non menziona l'episodio. Nelle versioni moderne l'animale è quasi sempre una gallina. Nel testo greco di Procopio è un gallo. Un'altra storia riguarda la tomba di Alarico. Dopo il sacco i Goti scendono con il bottino d'Italia fino al Bruzio, per passare in Africa attraverso la Sicilia. Una tempesta affonda parecchie navi e poco dopo il re muore all'improvviso. Giordane, a metà del VI secolo, racconta che presso Cosenza i Goti deviarono il Busento, fecero scavare ai prigionieri una fossa in mezzo al letto del fiume e vi seppellirono il re con molte ricchezze. Poi rimisero il fiume nel suo corso e, «perché nessuno mai conoscesse il luogo, uccisero tutti quelli che avevano scavato». Giordane scrive circa 140 anni dopo e non dice da chi abbia saputo la storia. La tomba non è mai stata trovata. Il re sepolto nel fiume con il suo tesoro è diventato celebre con una ballata romantica di August von Platen, del 1820.
 
-[T17-410.storici] Alarico è il caso di scuola: capo di un popolo o comandante di un esercito romano senza paga? Le due letture, invasione e guerra civile, partono dagli stessi fatti.
+[T17-410.storici] Come leggere il sacco di Roma? Alarico può essere visto come il capo di un popolo o come il comandante di un esercito romano rimasto senza paga. Le due letture, un'invasione o una guerra interna all'impero, partono dagli stessi fatti.
 
 [T17-410.luogo1.roma] il sacco dei Goti di Alarico
 
@@ -603,29 +603,29 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T18-418.titolo] Un regno dentro l'impero
 
-[T18-418.testo] I Visigoti si insediano in Aquitania per accordo (nel 418 o nel 419, secondo le cronache), come federati in cambio del servizio militare; se ricevano terre o una quota delle imposte è discusso. Non è il primo patto del genere, ma da questo nasce un regno.
+[T18-418.testo] Nel 418 o nel 419, secondo le diverse cronache, Roma consente ai Visigoti di stabilirsi in Aquitania, nella Gallia sudoccidentale. Diventano «federati», cioè alleati tenuti per trattato a prestare servizio militare. Gli storici discutono ancora se abbiano ricevuto terre o una parte delle imposte riscosse nella regione. Roma aveva già concluso accordi simili. Da questo nascerà un regno.
 
 [T18-418.chi1.nome] Vallia
 
-[T18-418.chi1.date] re dei Visigoti 415-418
+[T18-418.chi1.date] re dei Visigoti dal 415 al 418
 
-[T18-418.chi1.riga] Combatte per Roma in Hispania; il suo popolo ottiene l'Aquitania.
+[T18-418.chi1.riga] Combatte per Roma nella penisola iberica. I Visigoti ottengono poi di stabilirsi in Aquitania.
 
 [T18-418.chi2.nome] Teodorico I
 
-[T18-418.chi2.date] re 418-451
+[T18-418.chi2.date] re dal 418 al 451
 
-[T18-418.chi2.riga] Il successore: regna a Tolosa per trentatré anni.
+[T18-418.chi2.riga] Succede a Vallia e regna a Tolosa per trentatré anni.
 
 [T18-418.chi3.nome] Flavio Costanzo
 
-[T18-418.chi3.date] m. 421
+[T18-418.chi3.date] morto nel 421
 
-[T18-418.chi3.riga] Il generale che costringe i Goti all'accordo; nel 421 sarà imperatore per pochi mesi.
+[T18-418.chi3.riga] Generale romano, costringe i Goti a trattare. Nel 421 diventa imperatore per pochi mesi.
 
 [T18-418.voce1.testo] «[Ataulfo raccontava] di aver dapprima desiderato ardentemente che, cancellato il nome romano, tutto il suolo romano diventasse e si chiamasse impero dei Goti, e che fosse, per dirla alla buona, Gothia ciò che era stato Romania […] ma poi, avendo provato con lunga esperienza che i Goti non potevano in alcun modo obbedire alle leggi, per la loro sfrenata barbarie, e che allo Stato non si possono togliere le leggi, senza le quali uno Stato non è uno Stato, aveva scelto almeno di cercare la gloria restaurando e accrescendo il nome romano con le forze dei Goti.»
 
-[T18-418.voce1.chi] Orosio, Storie contro i pagani VII 43, scritte nel 417-418: riferisce ciò che un nobile di Narbona, amico del re goto Ataulfo, aveva raccontato a Girolamo a Betlemme. È una notizia di terza mano
+[T18-418.voce1.chi] Orosio, Storie contro i pagani, VII, 43, scritte nel 417-418. Un nobile di Narbona, amico del re goto Ataulfo, aveva raccontato l'episodio a Girolamo, a Betlemme. Orosio lo riprende quindi da un racconto di terza mano.
 
 [T18-418.luogo1.tolosa] i Visigoti insediati in Aquitania
 
@@ -634,19 +634,19 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T19-429.titolo] I Vandali passano in Africa
 
-[T19-429.testo] Genserico attraversa lo stretto con il suo popolo, forse ottantamila persone in tutto. Nel 430, durante l'assedio di Ippona, muore Agostino.
+[T19-429.testo] Genserico guida i Vandali attraverso lo stretto di Gibilterra, dalla penisola iberica all'Africa settentrionale. Con le famiglie al seguito sarebbero forse 80.000 persone. Nel 430 assediano la città di Ippona. Il suo vescovo, Agostino, muore durante l'assedio.
 
 [T19-429.chi1.nome] Genserico
 
-[T19-429.chi1.date] c. 389-477
+[T19-429.chi1.date] circa 389-477
 
 [T19-429.chi1.riga] Re dei Vandali dal 428.
 
 [T19-429.chi2.nome] Bonifacio
 
-[T19-429.chi2.date] m. 432
+[T19-429.chi2.date] morto nel 432
 
-[T19-429.chi2.riga] Comandante romano d'Africa: non riesce a fermarli.
+[T19-429.chi2.riga] Comanda le truppe romane in Africa, ma non riesce a fermare i Vandali.
 
 [T19-429.chi3.nome] Agostino
 
@@ -656,7 +656,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T19-429.voce1.testo] «Vedeva infatti le città distrutte e, con gli edifici delle campagne, i loro abitanti: alcuni uccisi dal nemico, altri messi in fuga e dispersi; le chiese rimaste senza sacerdoti e senza ministri […] E fra questi mali si consolava con la sentenza di un sapiente: “Non sarà grande chi ritiene gran cosa che cadano legni e pietre, e che muoiano i mortali”.»
 
-[T19-429.voce1.chi] Possidio, vescovo di Calama, Vita di Agostino 28: nel 430 era chiuso con lui in Ippona assediata, e scrive pochi anni dopo. Il sapiente è Plotino
+[T19-429.voce1.chi] Possidio, vescovo di Calama, Vita di Agostino, 28. Era con Agostino a Ippona durante l'assedio del 430 e scrive pochi anni dopo. Il sapiente ricordato nel passo è il filosofo Plotino.
 
 [T19-429.luogo1.gibilterra] i Vandali di Genserico passano in Africa
 
@@ -665,11 +665,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T20-439.titolo] Cartagine
 
-[T20-439.testo] I Vandali prendono Cartagine a sorpresa, in tempo di pace. Roma perde le province più ricche, il grano dell'annona e i porti da cui ora partono le flotte vandale: è il colpo da cui l'Occidente non si riprende.
+[T20-439.testo] I Vandali conquistano Cartagine con un attacco a sorpresa in tempo di pace. L'Occidente perde le sue province più ricche e il grano destinato alle distribuzioni pubbliche di Roma, la cosiddetta annona. I porti africani diventano basi della flotta vandala. L'impero d'Occidente non riuscirà più a recuperare quelle risorse.
 
 [T20-439.chi1.nome] Genserico
 
-[T20-439.chi1.date] c. 389-477
+[T20-439.chi1.date] circa 389-477
 
 [T20-439.chi1.riga] Entra a Cartagine il 19 ottobre 439 e ne fa la sua capitale.
 
@@ -681,7 +681,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T20-439.voce1.testo] «Chi può misurare questo male? Le armi dei popoli barbari risuonavano attorno alle mura di Cirta e di Cartagine, e la Chiesa di Cartagine impazziva nei circhi, si abbandonava ai piaceri nei teatri. Gli uni, fuori, venivano sgozzati; gli altri, dentro, fornicavano: una parte del popolo era fuori, prigioniera dei nemici, una parte dentro, prigioniera dei vizi.»
 
-[T20-439.voce1.chi] Salviano, prete a Marsiglia, Il governo di Dio VI 69, scritto negli anni 440: non c'era, ed è un predicatore che legge la caduta come castigo. Gli storici dubitano del racconto
+[T20-439.voce1.chi] Salviano, Il governo di Dio, VI, 69. Sacerdote a Marsiglia, scrive negli anni Quaranta del V secolo. Interpreta la caduta di Cartagine come un castigo divino. Non fu testimone dei fatti e gli storici dubitano del racconto.
 
 [T20-439.luogo1.cartagine] presa dai Vandali
 
@@ -690,38 +690,42 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T21-439.titolo] I barbari
 
-[T21-439.testo] Quanti erano i barbari? Meno di quanto dicano i cronisti. Vittore di Vita conta 80.000 Vandali passati in Africa nel 429, ma Procopio spiega da dove viene il numero: Genserico li aveva divisi in ottanta compagnie con capi «di mille», per sembrare più forte. Peter Heather pensa a un esercito di 15-20.000 uomini, con le famiglie al seguito; altri a gruppi ancora più piccoli. E non erano solo nemici: c'erano i federati, legati da un trattato, i laeti, stanziati con l'obbligo di servire, e intere schiere arruolate nell'esercito. Che cosa ricevessero è ancora discusso: terre, come i Vandali in Africa, o una parte delle tasse, come sostiene Walter Goffart.
+[T21-439.testo] I barbari erano meno numerosi di quanto dicano i cronisti. Vittore di Vita conta 80.000 Vandali passati in Africa nel 429, ma Procopio spiega da dove viene il numero. Genserico aveva diviso il suo popolo in ottanta compagnie, ciascuna con un capo detto «di mille», per far apparire più numerose le proprie forze. Peter Heather stima tra 15.000 e 20.000 combattenti, accompagnati dalle famiglie. Altri storici propongono cifre inferiori. I rapporti con Roma variavano. I «federati» erano alleati per trattato. I cosiddetti laeti potevano stabilirsi nell'impero con l'obbligo del servizio militare. Altri gruppi entravano direttamente nell'esercito romano. Resta discusso che cosa ricevessero in cambio. In Africa i Vandali ottennero terre. Per gli insediamenti dei federati Walter Goffart propone che agli alleati spettasse una quota delle imposte.
 
 
 ### 451 · Ezio e Attila
 
 [T22-451.titolo] Ezio e Attila
 
-[T22-451.testo] Ai Campi Catalaunici l'esercito che ferma gli Unni è fatto soprattutto di Visigoti, con Alani, Franchi, Burgundi e altri alleati. Il generale romano Ezio comanda una coalizione.
+[T22-451.testo] In Gallia, ai Campi Catalaunici, Attila viene fermato da una coalizione guidata dal generale romano Ezio. L'esercito è fatto soprattutto di Visigoti, con Alani, Franchi, Burgundi e altri alleati.
 
 [T22-451.chi1.nome] Ezio
 
-[T22-451.chi1.date] c. 390-454
+[T22-451.chi1.date] circa 390-454
 
 [T22-451.chi1.riga] Generale d'Occidente dal 433; da ragazzo era stato ostaggio dei Goti di Alarico e poi degli Unni.
 
 [T22-451.chi2.nome] Attila
 
-[T22-451.chi2.date] m. 453
+[T22-451.chi2.date] morto nel 453
 
-[T22-451.chi2.riga] Re degli Unni dal 434 circa, prima con il fratello Bleda.
+[T22-451.chi2.riga] Governa gli Unni dal 434 circa, inizialmente insieme al fratello Bleda. Non ci è giunta nessuna sua immagine dell'epoca: il suo aspetto lo descrive Giordane, qui sotto.
 
 [T22-451.chi3.nome] Teodorico I
 
-[T22-451.chi3.date] re 418-451
+[T22-451.chi3.date] re dal 418 al 451
 
 [T22-451.chi3.riga] Re dei Visigoti: muore nella battaglia.
 
 [T22-451.voce1.testo] «Passato il Reno, molte città della Gallia provarono i suoi assalti ferocissimi; allora i nostri e i Goti decisero in fretta di opporsi, unendo gli eserciti, al furore di quei nemici superbi. E tale fu la previdenza del patrizio Ezio che, radunati in fretta combattenti da ogni parte, affrontò alla pari la moltitudine avversaria. In quello scontro, benché nessuno cedesse, ci furono stragi incalcolabili; ma risulta che gli Unni furono vinti, perché i superstiti, perduta la fiducia di combattere, tornarono alle loro terre.»
 
-[T22-451.voce1.chi] Prospero d'Aquitania, Cronaca, anno 451: scrive a Roma, al servizio di papa Leone, e chiude l'opera nel 455
+[T22-451.voce1.chi] Prospero d'Aquitania, Cronaca, anno 451: scrive a Roma, al servizio di papa Leone, e chiude l'opera nel 455.
 
-[T22-451.leggenda] Il re Gunther dei Nibelunghi è esistito. Sotto l'anno 435 Prospero d'Aquitania annota che Ezio vinse in guerra Gundicario, re dei Burgundi stanziati in Gallia, e gli concesse la pace; ma il re non ne godette a lungo, perché gli Unni «lo annientarono con il suo popolo, fin dalla radice». Le fonti non concordano: la Cronaca gallica del 452 mette la strage al 436 e la attribuisce a Ezio, senza nominare gli Unni; Idazio conta ventimila Burgundi uccisi. I superstiti ricevono nel 443 la Sapaudia, e sono i Burgundi che in questa tappa combattono accanto a Ezio. La loro legge ricorderà fra i re antenati Gibica, Gundomar, Gislahar e Gundahar: nel poema due dei tre re fratelli si chiamano Gunther e Giselher. Quanto ad Attila, che lì si chiama Etzel, muore nel 453 la notte delle nozze con una ragazza di nome Ildico, soffocato dal proprio sangue e senza una ferita: così Giordane, che cita Prisco. Ma nel secolo seguente il cronista Marcellino scrive già che fu trafitto di notte «dalla mano e dal coltello di una donna», e aggiunge che secondo altri morì di un getto di sangue. Verso il 1200 il Nibelungenlied fonde le due storie: i Burgundi sterminati alla corte di Etzel, per la vendetta di una donna.
+[T22-451.voce2.testo] «Un uomo venuto al mondo per scuotere i popoli, terrore di tutte le terre […] Basso di statura, largo di petto, la testa piuttosto grande, gli occhi piccoli, la barba rada e spruzzata di bianco, il naso schiacciato, il colorito scuro: portava i segni della sua origine.»
+
+[T22-451.voce2.chi] Giordane, Storia dei Goti 182: è l'unico ritratto di Attila che abbiamo, ma Giordane scrive verso il 551, un secolo dopo. Da chi lo prenda qui non lo dice; poco prima e subito dopo cita Prisco, che fu ambasciatore alla corte di Attila
+
+[T22-451.leggenda] Il Gunther del poema dei Nibelunghi ricorda un re realmente esistito, Gundicario. Secondo Prospero d'Aquitania, nel 435 Ezio sconfisse in Gallia i Burgundi di Gundicario e gli concesse la pace. Poco dopo, scrive Prospero, gli Unni «lo annientarono con il suo popolo, fin dalla radice». Le fonti non concordano. La Cronaca gallica del 452 attribuisce la strage a Ezio, senza nominare gli Unni, e la data al 436. Idazio parla di 20.000 morti. Nel 443 i superstiti ottennero la regione della Sapaudia e nel 451 combatterono al fianco di Ezio. La legge dei Burgundi ricorda quattro re antenati, Gibica, Gundomar, Gislahar e Gundahar. Due nomi riecheggiano in quelli di Gunther e Giselher, due dei tre re fratelli del poema. Anche la morte di Attila ha versioni diverse. Giordane, che cita Prisco, racconta che nel 453, la notte delle nozze con Ildico, il re morì soffocato dal proprio sangue, senza ferite. Già nel VI secolo, prima di Giordane, il cronista Marcellino scrive che una donna lo avrebbe pugnalato, ma ricorda anche la versione dell'emorragia. Verso il 1200 il poema dei Nibelunghi unisce le due vicende. I Burgundi vi muoiono alla corte di Attila, chiamato Etzel, per la vendetta di una donna.
 
 [T22-451.luogo1.catalaunici] Ezio e i Visigoti fermano Attila (il luogo esatto è incerto)
 
@@ -730,50 +734,52 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T23-455.titolo] Il secondo sacco
 
-[T23-455.testo] Ucciso Valentiniano III, Genserico arriva dal mare e spoglia Roma per quattordici giorni. Porta via anche metà delle tegole dorate del tempio di Giove.
+[T23-455.testo] Dopo l'assassinio di Valentiniano III, Genserico raggiunge Roma dal mare. I Vandali saccheggiano la città per quattordici giorni e portano via anche metà delle tegole di bronzo dorato del tempio di Giove.
 
 [T23-455.chi1.nome] Valentiniano III
 
 [T23-455.chi1.date] 419-455
 
-[T23-455.chi1.riga] Nel 454 uccide Ezio di sua mano; l'anno dopo lo uccidono due uomini di Ezio.
+[T23-455.chi1.riga] Nel 454 uccide personalmente il generale Ezio. L'anno seguente due uomini che avevano servito Ezio uccidono l'imperatore.
 
 [T23-455.chi2.nome] Genserico
 
-[T23-455.chi2.date] c. 389-477
+[T23-455.chi2.date] circa 389-477
 
 [T23-455.chi2.riga] Porta a Cartagine il bottino, l'imperatrice Eudossia e le sue figlie.
 
 [T23-455.chi3.nome] Leone I
 
-[T23-455.chi3.date] papa 440-461
+[T23-455.chi3.date] papa dal 440 al 461
 
 [T23-455.chi3.riga] Secondo Prospero va incontro a Genserico e ottiene che la città non sia bruciata.
 
 [T23-455.voce1.testo] «Gli andò incontro fuori dalle porte il santo vescovo Leone […] così che ci si astenesse dal fuoco, dalle stragi e dalle torture. Per quattordici giorni, dunque, con una ricerca tranquilla e indisturbata, Roma fu svuotata di tutte le sue ricchezze.»
 
-[T23-455.voce1.chi] Prospero d'Aquitania, Cronaca, anno 455: sono le ultime righe dell'opera, scritte in quei mesi
+[T23-455.voce1.chi] Prospero d'Aquitania, Cronaca, anno 455: sono le ultime righe dell'opera, scritte in quei mesi.
+
+[T23-455.leggenda] La parola «vandalismo» è del 1794. Il 31 agosto l'abate Henri Grégoire presenta alla Convenzione un rapporto «sulle distruzioni operate dal vandalismo»: statue, libri e monumenti abbattuti durante la Rivoluzione. Nelle memorie scriverà: «Creai la parola per uccidere la cosa». Le fonti del 455 raccontano altro. Prospero, che scrive in quei mesi, dice che papa Leone ottenne da Genserico che ci si astenesse dal fuoco, dalle stragi e dalle torture, e che per quattordici giorni Roma fu svuotata delle sue ricchezze con una ricerca indisturbata; migliaia di prigionieri, scelti per età o per mestiere, furono portati a Cartagine. Procopio aggiunge il bronzo del palazzo e metà del tetto dorato del tempio di Giove. Fu un saccheggio metodico, non una furia distruttiva. Più tardi alcuni dotti tedeschi protestarono che i Vandali erano stati guerrieri, non distruttori; Grégoire lo ricorda e non cambia idea. Un'altra storia: tre anni prima lo stesso Leone era andato incontro ad Attila. Nel 452 gli Unni, distrutta Aquileia, saccheggiano le città del Nord; Prospero racconta che l'imperatore e il Senato decisero di chiedere la pace e che il papa partì con due alti dignitari, Avieno e Trigezio: il re, «lieto della presenza del sommo sacerdote», rinunciò alla guerra e tornò oltre il Danubio. Giordane mette l'incontro dove si passa il Mincio e scrive, citando lo storico Prisco, che i suoi già lo sconsigliavano di marciare su Roma, ricordandogli Alarico, morto subito dopo il sacco. Il miracolo arriva tre secoli più tardi, con Paolo Diacono: Attila avrebbe visto accanto al papa un vecchio venerando che lo minacciava di morte con la spada sguainata. Poi i vecchi diventeranno due, san Pietro e san Paolo, come li dipinse Raffaello. Neanche la nascita di Venezia dai profughi di Attila l'abbiamo trovata nei testi più antichi: Cassiodoro, verso il 537, descrive la gente della laguna che vive «come gli uccelli acquatici», di pesce e di sale, senza dire da dove venga; Giovanni Diacono, verso il 1000, lega ai Longobardi la fuga dei vescovi nelle isole.
 
 [T23-455.luogo1.roma] il sacco dei Vandali
 
 
-### 458 · Una legge contro chi smonta la città
+### 458 · Una legge per proteggere i monumenti di Roma
 
-[T24-458.titolo] Una legge contro chi smonta la città
+[T24-458.titolo] Una legge per proteggere i monumenti di Roma
 
-[T24-458.testo] Maggioriano vieta di demolire gli edifici pubblici per ricavarne materiali. Tenta riforme e la riconquista dell'Africa; nel 461 sarà deposto e ucciso da Ricimero, il suo generale.
+[T24-458.testo] L'imperatore Maggioriano vieta di demolire gli edifici pubblici per recuperarne i materiali. Avvia alcune riforme e tenta di riconquistare l'Africa. Nel 461 il suo generale Ricimero lo fa deporre e uccidere.
 
 [T24-458.chi1.nome] Maggioriano
 
-[T24-458.chi1.date] imperatore 457-461
+[T24-458.chi1.date] imperatore dal 457 al 461
 
 [T24-458.chi1.riga] Prepara in Hispania una flotta contro i Vandali: nel 460 la distruggono prima che salpi.
 
 [T24-458.chi2.nome] Ricimero
 
-[T24-458.chi2.date] m. 472
+[T24-458.chi2.date] morto nel 472
 
-[T24-458.chi2.riga] Generale di origine sveva e gota: non può essere imperatore, e li sceglie.
+[T24-458.chi2.riga] Generale di origine sveva e gota: non può diventare imperatore, e allora sceglie chi sale sul trono d'Occidente.
 
 [T24-458.voce1.testo] «Reggendo noi lo Stato, vogliamo che si ponga rimedio a ciò che da tempo detestavamo si lasciasse fare, a sfregio del volto della venerabile città. È noto infatti che gli edifici pubblici, nei quali consiste tutto l'ornamento della città di Roma, vengono demoliti qua e là […] si disperde la bella struttura degli edifici antichi e, per riparare qualcosa di piccolo, si distruggono cose grandi.»
 
@@ -784,27 +790,27 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T25-468.titolo] L'ultima flotta
 
-[T25-468.testo] Le due corti armano insieme una spedizione enorme contro i Vandali, pagata quasi tutta da Costantinopoli. Va perduta davanti a Capo Bon, e con essa l'ultima speranza dell'Occidente di riavere l'Africa.
+[T25-468.testo] Le corti d'Oriente e d'Occidente preparano una grande spedizione navale contro i Vandali. Costantinopoli sostiene quasi tutta la spesa. La sconfitta davanti a Capo Bon, nell'attuale Tunisia, priva l'Occidente dell'ultima possibilità di riconquistare le province africane.
 
 [T25-468.chi1.nome] Antemio
 
-[T25-468.chi1.date] imperatore 467-472
+[T25-468.chi1.date] imperatore dal 467 al 472
 
-[T25-468.chi1.riga] Mandato da Costantinopoli a regnare in Occidente.
+[T25-468.chi1.riga] La corte di Costantinopoli lo invia in Italia per governare l'Occidente.
 
 [T25-468.chi2.nome] Leone I
 
-[T25-468.chi2.date] imperatore d'Oriente 457-474
+[T25-468.chi2.date] imperatore d'Oriente dal 457 al 474
 
-[T25-468.chi2.riga] Paga la spedizione.
+[T25-468.chi2.riga] L'imperatore d'Oriente finanzia gran parte della spedizione contro i Vandali.
 
 [T25-468.chi3.nome] Basilisco
 
-[T25-468.chi3.riga] Cognato di Leone: comanda la flotta e la perde.
+[T25-468.chi3.riga] Cognato dell'imperatore Leone I, comanda la flotta sconfitta davanti a Capo Bon.
 
 [T25-468.voce1.testo] «Quando furono vicini, appiccarono il fuoco alle barche che rimorchiavano, con le vele gonfie di vento, e le lasciarono andare contro la flotta romana. […] E mentre il fuoco avanzava, la flotta romana si riempì di tumulto e di un grande frastuono, che gareggiava con il rumore del vento e il ruggito delle fiamme: soldati e marinai si gridavano ordini e respingevano con le pertiche i brulotti e le loro stesse navi, che si distruggevano l'una con l'altra nel disordine più completo.»
 
-[T25-468.voce1.chi] Procopio, Guerre III 6, scritto a Costantinopoli verso il 550, ottant'anni dopo (tradotto dall'inglese di Dewing). Nessun contemporaneo racconta la sconfitta: Idazio, in Galizia, registra solo la partenza della flotta
+[T25-468.voce1.chi] Procopio, Guerre, III, 6. Scrive a Costantinopoli verso il 550, circa ottant'anni dopo i fatti. Traduzione dalla versione inglese di Dewing. Non ci è giunto un racconto contemporaneo della sconfitta. Idazio, in Galizia, registra soltanto la partenza della flotta.
 
 [T25-468.luogo1.capobon] la flotta delle due corti è distrutta
 
@@ -813,33 +819,33 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T26-472.titolo] Roma assediata dal proprio generale
 
-[T26-472.testo] Ricimero, che dal 456 fa e disfa imperatori, assedia e prende la città. Gli imperatori ormai governano poco più dell'Italia.
+[T26-472.testo] Dal 456 il generale Ricimero decide chi sale sul trono d'Occidente. Ora assedia Roma e la strappa all'imperatore Antemio. Al governo imperiale resta poco più dell'Italia.
 
 [T26-472.chi1.nome] Ricimero
 
-[T26-472.chi1.date] m. 472
+[T26-472.chi1.date] morto nel 472
 
 [T26-472.chi1.riga] Assedia Roma per mesi; muore poche settimane dopo la vittoria.
 
 [T26-472.chi2.nome] Antemio
 
-[T26-472.chi2.date] imperatore 467-472
+[T26-472.chi2.date] imperatore dal 467 al 472
 
-[T26-472.chi2.riga] Suocero di Ricimero: catturato e ucciso l'11 luglio.
+[T26-472.chi2.riga] Suocero di Ricimero, viene catturato e ucciso l'11 luglio.
 
 [T26-472.chi3.nome] Olibrio
 
-[T26-472.chi3.date] imperatore 472
+[T26-472.chi3.date] imperatore nel 472
 
-[T26-472.chi3.riga] Messo sul trono da Ricimero: muore nello stesso anno.
+[T26-472.chi3.riga] Ricimero lo mette sul trono. Muore nello stesso anno.
 
 [T26-472.voce1.testo] «Sotto questi consoli si combatté a Roma una guerra civile fra l'imperatore Antemio e il patrizio Ricimero; a Roma fu fatto imperatore Olibrio, e l'imperatore Antemio fu ucciso l'11 luglio.»
 
-[T26-472.voce1.chi] Fasti di Vienna, annali contemporanei, asciutti come un registro
+[T26-472.voce1.chi] Fasti di Vienna: annali dell'epoca, che registrano i fatti anno per anno in poche parole.
 
 [T26-472.voce2.testo] «Quale dei principi antichi ha mai fatto questo: mettere la propria figlia, per la quiete di tutti, fra i doni che bisognava dare a un Goto vestito di pelli? […] Quante volte abbiamo colmato Ricimero di doni più grandi, tante volte si è mostrato un nemico più duro.»
 
-[T26-472.voce2.chi] Ennodio, Vita di Epifanio, verso il 503: sono le parole che fa dire all'imperatore Antemio nel 471, un anno prima dell'assedio. Il discorso lo compone lui
+[T26-472.voce2.chi] Ennodio, Vita di Epifanio, verso il 503. L'autore immagina le parole pronunciate da Antemio nel 471, un anno prima dell'assedio.
 
 [T26-472.luogo1.roma] assediata e presa da Ricimero
 
@@ -848,31 +854,33 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T27-476.titolo] Odoacre
 
-[T27-476.testo] Un ufficiale dell'esercito d'Italia depone il giovane Romolo Augustolo e rimanda le insegne imperiali a Costantinopoli. A Roma il Senato continua a riunirsi.
+[T27-476.testo] Odoacre, ufficiale dell'esercito in Italia, depone il giovane imperatore Romolo Augustolo. Le insegne imperiali, simboli del potere dell'imperatore, vengono inviate a Costantinopoli. A Roma il Senato continua a riunirsi.
 
 [T27-476.chi1.nome] Odoacre
 
-[T27-476.chi1.date] c. 433-493
+[T27-476.chi1.date] circa 433-493
 
 [T27-476.chi1.riga] Acclamato re dai suoi soldati: governerà l'Italia fino al 493.
 
 [T27-476.chi2.nome] Romolo Augustolo
 
-[T27-476.chi2.date] imperatore 475-476
+[T27-476.chi2.date] imperatore dal 475 al 476
 
-[T27-476.chi2.riga] Un ragazzo: Odoacre lo manda a vivere in Campania con una rendita.
+[T27-476.chi2.riga] Ancora ragazzo quando perde il trono, Romolo riceve da Odoacre una rendita e viene mandato a vivere in Campania.
 
 [T27-476.chi3.nome] Giulio Nepote
 
-[T27-476.chi3.date] imperatore 474-475
+[T27-476.chi3.date] imperatore dal 474 al 475
 
-[T27-476.chi3.riga] Deposto l'anno prima: resta in Dalmazia, riconosciuto da Costantinopoli, fino al 480.
+[T27-476.chi3.riga] Deposto l'anno prima, si rifugia in Dalmazia. Fino alla sua morte, nel 480, la corte di Costantinopoli continua a riconoscerlo come imperatore d'Occidente.
 
 [T27-476.voce1.testo] «Entrato a Ravenna, depose Augustolo dal regno; impietosito dalla sua giovane età gli risparmiò la vita e, poiché era bello, gli assegnò una rendita di seimila solidi e lo mandò in Campania, a vivere libero con i suoi parenti.»
 
-[T27-476.voce1.chi] Anonimo Valesiano, 38: una cronaca scritta in Italia qualche decennio dopo, forse verso la metà del VI secolo
+[T27-476.voce1.chi] Anonimo Valesiano, 38: una cronaca scritta in Italia qualche decennio dopo, forse verso la metà del VI secolo.
 
-[T27-476.storici] Il 476 fu una data per i contemporanei? Registrarono la deposizione, non una fine: Giulio Nepote restò imperatore riconosciuto, in Dalmazia, fino al 480. Diventa «la fine» nelle cronache scritte a Costantinopoli nel secolo successivo (Marcellino Comes; lo ha mostrato Brian Croke nel 1983).
+[T27-476.leggenda] Il ragazzo deposto nel 476 portava il nome del fondatore di Roma e quello del primo imperatore. L'Anonimo Valesiano scrive che «prima del regno i genitori lo chiamavano Romolo»; il padre Oreste, un pannonico che era stato segretario di Attila, lo aveva fatto imperatore a Ravenna. Augustolo, «piccolo Augusto», è un diminutivo: Procopio spiega che i Romani lo chiamavano così perché aveva preso l'impero da ragazzo. Che fosse anche uno scherno lo pensano i moderni; le fonti non lo dicono. La coincidenza dei nomi l'aveva già notata Giordane: l'impero d'Occidente, cominciato con Ottaviano Augusto, «finì con questo Augustolo». Per Costantinopoli, però, Romolo non era mai stato imperatore: il legittimo era Giulio Nepote, fuggito in Dalmazia nel 475. Secondo lo storico Malco, l'imperatore Zenone rispose agli inviati del Senato che dei due imperatori avuti dall'Oriente ne avevano ucciso uno e cacciato l'altro: si riprendessero Nepote. Nepote rimase a Salona cinque anni e fu ucciso dai suoi nel 480.
+
+[T27-476.storici] Chi visse nel 476 capì di assistere alla fine dell'impero d'Occidente? I contemporanei registrarono la deposizione di Romolo, non la fine di un impero. In Dalmazia, infatti, Giulio Nepote conservò fino al 480 il titolo di imperatore riconosciuto da Costantinopoli. Come ha mostrato Brian Croke nel 1983, furono le cronache scritte a Costantinopoli nel secolo successivo, come quella di Marcellino Comes, a fare del 476 la data della fine.
 
 [T27-476.luogo1.ravenna] Odoacre depone Romolo Augustolo
 
@@ -881,40 +889,40 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T28-476.titolo] La città
 
-[T28-476.testo] Una metropoli si svuota a tappe. Nel 2 a.C. poco più di 200.000 romani ricevevano il grano pubblico; nel 419 una legge fissa quattromila razioni di carne al giorno, e nel 452 lo Stato distribuisce ancora più di tre milioni e seicentomila libbre di maiale. Poi le distribuzioni si diradano, e nessuna legge ne registra la fine. Nel 458 Maggioriano minaccia multe in oro ai magistrati, e il taglio delle mani ai loro subalterni, se lasciano smontare i monumenti: segno che lo si faceva. Nel 537 i Goti tagliano i quattordici acquedotti, e Belisario fa macinare il grano con mulini galleggianti sul Tevere. Fra il V e il VI secolo si comincia a seppellire i morti dentro le mura, nei quartieri ormai vuoti: una cosa impensabile per la città antica.
+[T28-476.testo] Una metropoli si svuota a tappe. Nel 2 a.C. poco più di 200.000 romani ricevevano il grano pubblico. Nel 419 una legge prevede 4.000 razioni di carne al giorno. Nel 452 lo Stato distribuisce ancora oltre 3,6 milioni di libbre di carne di maiale. Poi le distribuzioni si fanno più rare. Nessuna legge ne registra la fine. Cambia anche il paesaggio. Nel 458 Maggioriano minaccia multe in oro per i magistrati che lasciano smontare i monumenti e il taglio delle mani per i loro subalterni: segno che lo si faceva. Nel 537 i Goti interrompono i quattordici acquedotti. Per continuare a macinare il grano, Belisario fa installare mulini galleggianti sul Tevere. Già nella prima metà del V secolo si comincia, dapprima di rado, a seppellire i morti dentro le mura. Forse è un ripiego negli anni degli assedi, come pensano gli archeologi che hanno censito le tombe. Nel VI e nel VII secolo diventa la regola, nei quartieri ormai vuoti e nelle terme abbandonate. La legge antica lo vietava.
 
 
 ### 493 · Teodorico
 
 [T29-493.titolo] Teodorico
 
-[T29-493.testo] Il re degli Ostrogoti governa l'Italia da Ravenna con funzionari romani. A Roma fa restaurare le mura e il teatro di Pompeo e vieta di deviare l'acqua degli acquedotti; al Colosseo si danno ancora cacce alle fiere (l'ultima notizia è del 523).
+[T29-493.testo] Il re ostrogoto Teodorico governa l'Italia da Ravenna con l'aiuto di funzionari romani. A Roma fa restaurare le mura e il teatro di Pompeo e vieta di deviare l'acqua degli acquedotti. Al Colosseo continuano gli spettacoli di caccia agli animali selvatici. L'ultima testimonianza risale al 523.
 
 [T29-493.chi1.nome] Teodorico
 
-[T29-493.chi1.date] c. 454-526
+[T29-493.chi1.date] circa 454-526
 
 [T29-493.chi1.riga] Re degli Ostrogoti, in Italia dal 489 per incarico dell'imperatore Zenone.
 
 [T29-493.chi2.nome] Odoacre
 
-[T29-493.chi2.date] c. 433-493
+[T29-493.chi2.date] circa 433-493
 
-[T29-493.chi2.riga] Assediato a Ravenna per due anni e mezzo: dopo la resa Teodorico lo uccide di sua mano.
+[T29-493.chi2.riga] Dopo due anni e mezzo di assedio, Odoacre si arrende a Ravenna. Teodorico lo uccide personalmente.
 
 [T29-493.chi3.nome] Cassiodoro
 
-[T29-493.chi3.date] c. 485-c. 585
+[T29-493.chi3.date] circa 485 - circa 585
 
 [T29-493.chi3.riga] Senatore romano: dal 507 scriverà le lettere del re.
 
 [T29-493.voce1.testo] «C'era allora in città una grandissima gioia: la presenza del re Teodorico rallegrava l'assemblea del Senato e del popolo romano. […] “Fratelli, quanto può essere bella la Gerusalemme celeste, se così risplende la Roma terrena!”»
 
-[T29-493.voce1.chi] Vita di Fulgenzio, vescovo di Ruspe, 27: il monaco africano è a Roma nel 500, mentre Teodorico parla al popolo. Scritta a Cartagine verso il 533 da un discepolo; è un'agiografia
+[T29-493.voce1.chi] Vita di Fulgenzio, vescovo di Ruspe, 27. Nel 500 il monaco africano Fulgenzio è a Roma e assiste al discorso di Teodorico al popolo. Un suo discepolo racconta l'episodio a Cartagine verso il 533. È un'agiografia, cioè un'opera che celebra la vita del santo.
 
 [T29-493.voce2.testo] «Entrato in città, venne in Senato e alla Palma parlò al popolo: promise di osservare inviolabilmente, con l'aiuto di Dio, tutto ciò che i principi romani avevano stabilito prima di lui. […] Donò al popolo romano e ai poveri centoventimila moggi di grano ogni anno, e ordinò che per il restauro del palazzo e per la riparazione delle mura della città si dessero ogni anno duecento libbre dalla cassa del vino.»
 
-[T29-493.voce2.chi] Anonimo Valesiano 66-67, sulla stessa visita del 500: una cronaca scritta in Italia verso la metà del VI secolo, per questi anni favorevole a Teodorico
+[T29-493.voce2.chi] Anonimo Valesiano, 66-67. La cronaca descrive la stessa visita del 500. Fu scritta in Italia verso la metà del VI secolo. Per questo periodo l'autore dà un giudizio favorevole su Teodorico.
 
 [T29-493.luogo1.ravenna] Teodorico elimina Odoacre e governa l'Italia
 
@@ -923,29 +931,29 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T30-526.titolo] Muore Teodorico
 
-[T30-526.testo] Il 30 agosto 526 Teodorico muore a Ravenna, dopo tre giorni di malattia. Negli ultimi anni ha fatto uccidere Boezio e poi suo suocero Simmaco, il primo dei senatori, e ha tenuto in disgrazia papa Giovanni, morto pochi giorni dopo il ritorno da un'ambasciata a Costantinopoli: l'intesa fra il re goto e l'aristocrazia di Roma è finita. Gli succede il nipote Atalarico. Il regno è al suo massimo: dopo la sconfitta dei Visigoti contro i Franchi, nel 507, Teodorico ha preso la Provenza e governa anche la Hispania. Nove anni dopo Giustiniano manderà Belisario.
+[T30-526.testo] Il 30 agosto 526 Teodorico muore a Ravenna dopo tre giorni di malattia. Gli succede il nipote Atalarico. Il regno è al culmine della sua espansione. Dopo la vittoria dei Franchi sui Visigoti nel 507, Teodorico aveva acquisito la Provenza e assunto il governo anche della Spagna visigota. Negli ultimi anni, però, si era rotta l'intesa con l'aristocrazia romana. Il re aveva fatto uccidere il filosofo Boezio e poi Simmaco, suocero di Boezio e primo fra i senatori. Anche papa Giovanni era caduto in disgrazia ed era morto pochi giorni dopo il ritorno da una missione a Costantinopoli. Nove anni dopo la morte di Teodorico, l'imperatore d'Oriente Giustiniano invierà in Italia il generale Belisario.
 
 [T30-526.chi1.nome] Teodorico
 
-[T30-526.chi1.date] c. 454-526
+[T30-526.chi1.date] circa 454-526
 
 [T30-526.chi1.riga] Muore a Ravenna dopo trentatré anni di regno in Italia.
 
 [T30-526.chi2.nome] Boezio
 
-[T30-526.chi2.date] c. 480-524 o 526
+[T30-526.chi2.date] circa 480-524 o 526
 
-[T30-526.chi2.riga] Senatore e filosofo: in carcere scrive «La consolazione della filosofia».
+[T30-526.chi2.riga] Senatore e filosofo. Durante la prigionia scrive La consolazione della filosofia.
 
 [T30-526.chi3.nome] Amalasunta
 
-[T30-526.chi3.date] m. 535
+[T30-526.chi3.date] morta nel 535
 
-[T30-526.chi3.riga] Figlia di Teodorico: regge il regno per il figlio Atalarico.
+[T30-526.chi3.riga] Figlia di Teodorico, governa in nome del giovane figlio Atalarico.
 
 [T30-526.voce1.testo] «Fu colto da un flusso di ventre e, consumato in tre giorni, perse insieme il regno e la vita proprio nel giorno in cui si rallegrava di prendersi le chiese. […] Da vivo si era fatto un monumento di pietra squadrata, opera di mirabile grandezza, e aveva cercato un masso enorme da mettergli sopra.»
 
-[T30-526.voce1.chi] Anonimo Valesiano, 95-96: un cronista cattolico, ostile al re ariano. Il monumento è il mausoleo di Ravenna
+[T30-526.voce1.chi] Anonimo Valesiano, 95-96. Il cronista cattolico è ostile a Teodorico, che segue la dottrina cristiana ariana. Il monumento menzionato è il mausoleo del re a Ravenna.
 
 [T30-526.luogo1.ravenna] muore Teodorico
 
@@ -954,29 +962,29 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T31-537.titolo] Gli acquedotti tagliati
 
-[T31-537.testo] Nel 535 Giustiniano ha mandato Belisario a riprendere l'Italia. Durante l'assedio di Roma i Goti tagliano tutti gli acquedotti: le grandi terme si fermano e non riapriranno, anche se dopo la guerra alcuni condotti verranno riparati.
+[T31-537.testo] Nel 535 Giustiniano, imperatore d'Oriente, ha inviato il generale Belisario a riconquistare l'Italia. Durante l'assedio di Roma i Goti interrompono tutti gli acquedotti per togliere l'acqua alla città. Le grandi terme si fermano. Dopo la guerra alcuni condotti verranno riparati, ma le terme non riapriranno.
 
 [T31-537.chi1.nome] Giustiniano
 
-[T31-537.chi1.date] imperatore 527-565
+[T31-537.chi1.date] imperatore dal 527 al 565
 
-[T31-537.chi1.riga] Vuole riprendere l'Occidente.
+[T31-537.chi1.riga] Vuole riportare i territori dell'antico impero d'Occidente sotto il governo di Costantinopoli.
 
 [T31-537.chi2.nome] Belisario
 
-[T31-537.chi2.date] c. 500-565
+[T31-537.chi2.date] circa 500-565
 
-[T31-537.chi2.riga] Il suo generale: entra a Roma nel dicembre 536 e regge l'assedio per un anno.
+[T31-537.chi2.riga] Generale di Giustiniano, entra a Roma nel dicembre 536 e difende la città per un anno.
 
 [T31-537.chi3.nome] Vitige
 
-[T31-537.chi3.date] re dei Goti 536-540
+[T31-537.chi3.date] re dei Goti dal 536 al 540
 
 [T31-537.chi3.riga] Assedia Roma e fa tagliare gli acquedotti.
 
 [T31-537.voce1.testo] «Tutti vediamo ancora il sole come azzurrognolo; ci stupiamo che a mezzogiorno i corpi non facciano ombra, e non per il venir meno momentaneo di un'eclissi, ma per quasi un anno intero. Abbiamo avuto un inverno senza tempeste, una primavera senza mitezza, un'estate senza calura.»
 
-[T31-537.voce1.chi] Cassiodoro, prefetto del pretorio dei re goti, Variae XII 25: una lettera di quegli anni sul sole velato del 536
+[T31-537.voce1.chi] Cassiodoro, Variae, XII, 25. Alto funzionario del regno goto con il titolo di prefetto del pretorio, descrive in una lettera di quegli anni il sole velato del 536.
 
 [T31-537.luogo1.roma] i Goti assediano Belisario e tagliano gli acquedotti
 
@@ -985,23 +993,23 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T32-542.titolo] La peste
 
-[T32-542.testo] La peste bubbonica parte dall'Egitto nel 541, l'anno dopo è a Costantinopoli, nel 543 raggiunge un'Italia in guerra da otto anni. Tornerà a ondate per due secoli.
+[T32-542.testo] La peste bubbonica si diffonde dall'Egitto nel 541. Raggiunge Costantinopoli nel 542 e l'Italia nel 543, quando la guerra nella penisola dura già da otto anni. L'epidemia si ripresenterà a ondate per due secoli.
 
 [T32-542.chi1.nome] Giustiniano
 
-[T32-542.chi1.date] imperatore 527-565
+[T32-542.chi1.date] imperatore dal 527 al 565
 
-[T32-542.chi1.riga] Si ammala anche lui, e guarisce.
+[T32-542.chi1.riga] Anche l'imperatore Giustiniano contrae la peste e guarisce.
 
 [T32-542.chi2.nome] Procopio
 
-[T32-542.chi2.date] c. 500-c. 565
+[T32-542.chi2.date] circa 500 - circa 565
 
 [T32-542.chi2.riga] Consigliere giuridico di Belisario: descrive l'epidemia a Costantinopoli.
 
 [T32-542.voce1.testo] «All'inizio i morti erano poco più del solito; poi la mortalità salì ancora, e in seguito il conto dei morti arrivò a cinquemila al giorno, e poi anche a diecimila e più. […] In quel tempo non era facile vedere qualcuno per le strade di Bisanzio: chi aveva la fortuna di essere sano stava in casa, a curare i malati o a piangere i morti. E se capitava di incontrare un uomo che usciva, portava un morto.»
 
-[T32-542.voce1.chi] Procopio, Guerre II 23: nel 542 era a Costantinopoli (tradotto dall'inglese di Dewing). Parla della capitale d'Oriente, e le sue cifre sono discusse
+[T32-542.voce1.chi] Procopio, Guerre, II, 23. L'autore si trovava a Costantinopoli durante l'epidemia del 542. Le sue cifre si riferiscono alla capitale d'Oriente e restano discusse. Traduzione dalla versione inglese di Dewing.
 
 [T32-542.luogo1.pelusio] di qui parte la peste, nel 541
 
@@ -1012,31 +1020,33 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T33-546.titolo] La città vuota
 
-[T33-546.testo] Totila prende Roma e porta via gli abitanti: secondo una cronaca la città resta deserta per quaranta giorni o più. Nel 550, ripresa Roma, vi assiste alle ultime corse di cavalli di cui si ha notizia.
+[T33-546.testo] Il re goto Totila conquista Roma e fa portar via gli abitanti. Secondo una cronaca, la città sarebbe rimasta deserta per almeno quaranta giorni. Nel 550 Totila la riconquista e assiste alle ultime corse di cavalli a Roma di cui ci sia giunta notizia.
 
 [T33-546.chi1.nome] Totila
 
-[T33-546.chi1.date] re dei Goti 541-552
+[T33-546.chi1.date] re dei Goti dal 541 al 552
 
 [T33-546.chi1.riga] Riprende quasi tutta l'Italia; muore nel 552 dopo la sconfitta di Tagina.
 
 [T33-546.chi2.nome] Belisario
 
-[T33-546.chi2.date] c. 500-565
+[T33-546.chi2.date] circa 500-565
 
 [T33-546.chi2.riga] Rimandato in Italia con poche truppe, non riesce a salvare Roma.
 
 [T33-546.chi3.nome] Narsete
 
-[T33-546.chi3.date] c. 480-c. 573
+[T33-546.chi3.date] circa 480 - circa 573
 
 [T33-546.chi3.riga] Il generale che chiuderà la guerra fra il 552 e il 554.
 
 [T33-546.voce1.testo] «Abbatté le fortificazioni in molti punti, così che ne andò distrutto circa un terzo. Stava anche per bruciare gli edifici più belli e più notevoli e per fare di Roma un pascolo per le pecore, ma Belisario lo seppe e gli mandò una lettera: “[…] L'hanno costruita a poco a poco, lasciando alle generazioni future il ricordo del valore di tutti: oltraggiare questi monumenti sarebbe un grande crimine contro gli uomini di ogni tempo”. […] Totila la lesse più volte, si convinse e non fece altro male a Roma. […] Non permise però che in città restasse anima viva, e la lasciò del tutto deserta.»
 
-[T33-546.voce1.chi] Procopio di Cesarea, Guerre VII 22. Era stato il consigliere di Belisario; la lettera, come i discorsi degli storici antichi, è scritta a modo suo, e il «terzo» delle mura è forse esagerato.
+[T33-546.voce1.chi] Procopio di Cesarea, Guerre, VII, 22. Era stato consigliere di Belisario. Come spesso accade nella storiografia antica, l'autore rielabora la lettera che riporta. Potrebbe aver esagerato indicando in un «terzo» la parte delle mura abbattuta.
 
-[T33-546.storici] Va preso alla lettera? Procopio scrive che Totila lasciò la città «del tutto deserta»; i «quaranta giorni o più», in cui a Roma sarebbero rimaste solo le bestie, vengono dal continuatore di Marcellino Comes. Una metropoli senza nessuno è poco credibile, ma l'immagine dice quanto fosse sceso il numero degli abitanti.
+[T33-546.leggenda] Gregorio Magno racconta che Totila, saputo che Benedetto aveva fama di profeta, volle metterlo alla prova. Fermatosi poco lontano dal monastero, mandò avanti il suo scudiero Riggo con le proprie scarpe, le vesti regali e tre conti di scorta, come se fosse il re; ma il santo gli gridò da lontano: «Togli, figlio, togli: quello che porti non è tuo». Allora venne Totila in persona e si gettò a terra; Benedetto lo rialzò, lo rimproverò e gli predisse: «Entrerai a Roma, passerai il mare, regnerai nove anni e al decimo morirai». Da allora, aggiunge Gregorio, fu meno crudele. I Dialoghi sono un libro di miracoli, scritti verso il 593, una cinquantina d'anni dopo i fatti: la profezia è messa per iscritto quando si era già avverata. Gregorio vi aggiunge un'altra predizione, che Roma non sarebbe stata distrutta dai barbari ma si sarebbe consumata da sé, per tempeste e terremoti, e dice di vederla avverarsi nelle mura sfasciate e nelle case crollate; ma ammette che il discepolo da cui l'aveva saputa non l'aveva udita dal santo.
+
+[T33-546.storici] Roma rimase davvero deserta? Procopio scrive che Totila la lasciò «del tutto deserta». L'autore che proseguì la cronaca di Marcellino Comes parla di «quaranta giorni o più» in cui vi sarebbero rimasti soltanto gli animali. È difficile che ogni abitante se ne fosse andato. Le due testimonianze rendono però l'idea di quanto la città si fosse spopolata.
 
 [T33-546.luogo1.roma] presa da Totila
 
@@ -1045,75 +1055,77 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T34-568.titolo] I Longobardi
 
-[T34-568.testo] Quattordici anni dopo la fine ufficiale della guerra gotica, i Longobardi scendono in un'Italia spopolata: nel 568 secondo Paolo Diacono, nel 569 secondo un cronista del tempo. L'unità della penisola finisce qui, per tredici secoli.
+[T34-568.testo] Quattordici anni dopo la fine ufficiale della guerra fra Goti e Bizantini, i Longobardi entrano in un'Italia spopolata. Paolo Diacono data il loro arrivo al 568, un cronista contemporaneo al 569. La penisola resterà divisa politicamente per circa tredici secoli.
 
 [T34-568.chi1.nome] Alboino
 
-[T34-568.chi1.date] m. 572 o 573
+[T34-568.chi1.date] morto nel 572 o 573
 
 [T34-568.chi1.riga] Re dei Longobardi: guida il suo popolo dalla Pannonia in Italia; ucciso a Verona.
 
 [T34-568.chi2.nome] Giustino II
 
-[T34-568.chi2.date] imperatore 565-578
+[T34-568.chi2.date] imperatore dal 565 al 578
 
-[T34-568.chi2.riga] Successore di Giustiniano: non ha truppe da mandare.
+[T34-568.chi2.riga] Succede a Giustiniano, ma non dispone di truppe da inviare in Italia.
 
 [T34-568.voce1.testo] «Subito la feroce gente dei Longobardi, tratta dal fodero della sua dimora, si è abbattuta sul nostro collo, e il genere umano, che in questa terra era cresciuto fitto come una messe, è stato falciato e si è seccato. Città spopolate, fortezze abbattute, chiese bruciate, monasteri di uomini e di donne distrutti; i campi, abbandonati dagli uomini e privi di chi li coltivi, sono una terra deserta […] le bestie hanno occupato i luoghi che prima teneva una moltitudine di uomini.»
 
-[T34-568.voce1.chi] Gregorio Magno, Dialoghi III 38, scritti a Roma nel 593-594, una generazione dopo l'invasione. Il tono è da fine del mondo
+[T34-568.voce1.chi] Gregorio Magno, Dialoghi, III, 38. Scrive a Roma nel 593-594, una generazione dopo l'arrivo dei Longobardi, e descrive le devastazioni con il tono di chi teme la fine del mondo.
 
 [T34-568.luogo1.cividale] i Longobardi entrano in Italia
 
 
-### 589 · Il Tevere in città
+### 589 · Il Tevere allaga Roma
 
-[T35-589.titolo] Il Tevere in città
+[T35-589.titolo] Il Tevere allaga Roma
 
-[T35-589.testo] Nell'autunno del 589, probabilmente a novembre, il Tevere esce dal letto, scavalca le mura, allaga i quartieri bassi e rovina i granai della Chiesa. Pochi mesi dopo torna la peste: ne muore papa Pelagio II, e al suo posto viene eletto Gregorio. Le piene torneranno: nel 716 o 717 l'acqua tiene la città per sette giorni, e in via Lata arriva a un'altezza d'uomo e mezza; poi nel dicembre 791.
+[T35-589.testo] Nell'autunno del 589, probabilmente a novembre, il Tevere supera le mura, inonda i quartieri più bassi e danneggia i granai della Chiesa. Pochi mesi dopo torna la peste. Tra le vittime c'è papa Pelagio II, a cui succede Gregorio Magno. Le fonti ricordano altre grandi piene. Nel 716 o 717 l'acqua rimane in città per sette giorni e sulla via Lata raggiunge una volta e mezzo l'altezza di un uomo. Il fiume straripa di nuovo nel dicembre 791.
 
 [T35-589.chi1.nome] Pelagio II
 
-[T35-589.chi1.date] papa 579-590
+[T35-589.chi1.date] papa dal 579 al 590
 
 [T35-589.chi1.riga] Muore di peste nel febbraio 590.
 
 [T35-589.chi2.nome] Gregorio Magno
 
-[T35-589.chi2.date] c. 540-604
+[T35-589.chi2.date] circa 540-604
 
-[T35-589.chi2.riga] Già prefetto di Roma, poi monaco: eletto papa nel 590.
+[T35-589.chi2.riga] Prima di diventare monaco aveva amministrato Roma come prefetto. Viene eletto papa nel 590.
 
 [T35-589.voce1.testo] «Il nostro diacono, tornando dalla città di Roma con le reliquie dei santi, riferì che l'anno prima, nel nono mese, il Tevere aveva coperto Roma con una piena tale che gli edifici antichi crollavano; furono abbattuti anche i granai della Chiesa, e vi andarono perdute alcune migliaia di moggi di grano. […] Seguì subito l'epidemia che chiamano inguinale.»
 
-[T35-589.voce1.chi] Gregorio, vescovo di Tours, Storie X 1, scritte nel 590-591: riferisce il racconto del suo diacono, che parla anche di serpenti e di un drago trascinati al mare
+[T35-589.voce1.chi] Gregorio di Tours, Storie, X, 1, scritte nel 590-591. Il vescovo riferisce il racconto di un suo diacono, secondo cui la corrente avrebbe trascinato al mare anche serpenti e un drago.
 
-[T35-589.leggenda] Nel 590 Gregorio, appena eletto, ordina contro la peste una processione in sette cortei. Gregorio di Tours ne ha il racconto da un suo diacono che era a Roma: i cortei partono da sette chiese e si riuniscono alla basilica di Santa Maria, e nel giro di un'ora ottanta persone cadono a terra morte. Né lui, né Paolo Diacono due secoli dopo, né Giovanni Diacono nella Vita di Gregorio, verso l'875, parlano di un angelo. L'angelo che sopra la mole di Adriano asciuga la spada insanguinata e la rimette nel fodero l'abbiamo trovato per la prima volta nella Legenda aurea di Jacopo da Varazze, verso il 1260, insieme a un'icona dipinta da san Luca e al canto del Regina coeli: da allora, dice, il castello si chiamò dell'angelo. Ma una chiesa dell'arcangelo Michele in cima alla mole c'era già: Liutprando di Cremona la nomina nel X secolo, «chiesa del santo Angelo fino ai cieli». Il nome è attestato tre secoli prima del racconto che lo spiega.
+[T35-589.leggenda] La leggenda che spiega il nome di Castel Sant'Angelo compare secoli dopo la peste del 590. In quell'anno Gregorio, appena eletto papa, organizza una processione contro la peste. Secondo Gregorio di Tours, informato da un diacono presente a Roma, sette cortei partono da altrettante chiese per riunirsi nella basilica di Santa Maria. Ottanta persone sarebbero morte in una sola ora. Nessun angelo compare nel racconto, né in quelli successivi di Paolo Diacono e di Giovanni Diacono, che scrive verso l'875. Tra le fonti consultate, la prima a raccontare l'apparizione è la Legenda aurea di Jacopo da Varazze, intorno al 1260. Vi si legge che in cima al mausoleo di Adriano un angelo asciuga la spada insanguinata e la ripone nel fodero. Compaiono anche un'icona attribuita a san Luca e il canto del Regina coeli. Da quel giorno, dice Jacopo, il castello prese il nome dell'angelo. Già nel X secolo, però, Liutprando di Cremona menziona in cima al mausoleo una chiesa dedicata all'arcangelo Michele, la «chiesa del santo Angelo fino ai cieli». Il legame del luogo con l'angelo è quindi documentato tre secoli prima del racconto.
 
 [T35-589.luogo1.roma] la piena del Tevere
 
 
-### 593 · Dov'è il Senato, dov'è il popolo
+### 593 · «Dov'è il Senato? Dov'è ormai il popolo?»
 
-[T36-593.titolo] Dov'è il Senato, dov'è il popolo
+[T36-593.titolo] «Dov'è il Senato? Dov'è ormai il popolo?»
 
-[T36-593.testo] Mentre i Longobardi di Agilulfo marciano su Roma, papa Gregorio Magno predica: «Dov'è il Senato? Dov'è ormai il popolo?» (Omelie su Ezechiele, II, 6, 22). È il vescovo, adesso, a distribuire il grano e a trattare con gli assedianti.
+[T36-593.testo] Mentre i Longobardi di re Agilulfo marciano su Roma, papa Gregorio Magno predica: «Dov'è il Senato? Dov'è ormai il popolo?» (Omelie su Ezechiele, II, 6, 22). È ormai il papa a organizzare la distribuzione del grano e a negoziare con gli assedianti.
 
 [T36-593.chi1.nome] Gregorio Magno
 
-[T36-593.chi1.date] c. 540-604
+[T36-593.chi1.date] circa 540-604
 
-[T36-593.chi1.riga] Papa dal 590: tratta con Agilulfo, che si ritira; secondo molti storici la Chiesa paga.
+[T36-593.chi1.riga] Papa dal 590, negozia con il re longobardo Agilulfo, che si ritira. Secondo molti storici la Chiesa ottiene il ritiro pagando una somma di denaro.
 
 [T36-593.chi2.nome] Agilulfo
 
-[T36-593.chi2.date] re dei Longobardi 590-616
+[T36-593.chi2.date] re dei Longobardi dal 590 al 616
 
 [T36-593.chi2.riga] Marcia su Roma, poi toglie l'assedio.
 
 [T36-593.voce1.testo] «Dov'è il Senato? Dov'è ormai il popolo? Le ossa si sono disfatte, le carni consumate. […] Manca il Senato, il popolo è perito, e Roma, ormai vuota, brucia. Ma perché parlare degli uomini, quando vediamo, mentre le rovine si moltiplicano, crollare anche gli edifici?»
 
-[T36-593.voce1.chi] Gregorio Magno, Omelie su Ezechiele, II, 6, 22. «Brucia» riprende l'immagine biblica della pentola vuota sul fuoco (Ezechiele 24): non è un incendio
+[T36-593.voce1.chi] Gregorio Magno, Omelie su Ezechiele, II, 6, 22. Il verbo «brucia» richiama la pentola vuota lasciata sul fuoco nel libro biblico di Ezechiele (capitolo 24). Il papa usa l'immagine per descrivere la condizione di Roma: non è un incendio reale.
+
+[T36-593.leggenda] Di questo papa gli Inglesi raccontano una storia. Beda, che scrive nel 731, avverte che è «giunta fino a noi per tradizione degli antichi», e la introduce con un «dicono». Un giorno, prima di diventare papa, Gregorio vide al mercato di Roma dei ragazzi in vendita, chiari di pelle, belli di viso e di capelli. Gli dissero che venivano dalla Britannia, che erano pagani e che il loro popolo si chiamava degli Angli. «Bene», rispose, «hanno un volto d'angelo, ed è giusto che uomini così siano coeredi degli angeli in cielo». La loro provincia era la Deira: «de ira», strappati all'ira e chiamati alla misericordia di Cristo; il re si chiamava Aelli: laggiù si dovrà cantare «alleluia». Il motto «non Angli, sed angeli» in Beda non c'è: è il riassunto che ne hanno fatto i secoli successivi. Documentata è invece la missione: nel quattordicesimo anno dell'imperatore Maurizio, il 596, Gregorio mandò il monaco Agostino con altri compagni a predicare agli Angli.
 
 [T36-593.luogo1.roma] Agilulfo sotto le mura
 
@@ -1122,52 +1134,52 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T37-609.titolo] Il Pantheon diventa una chiesa
 
-[T37-609.testo] Il 1° agosto 608 l'ultima colonna onoraria del Foro viene dedicata all'imperatore Foca; il 13 maggio 609 il Pantheon, donato da Foca a papa Bonifacio IV, è consacrato come chiesa. Dei templi antichi si salvano quelli che diventano chiese.
+[T37-609.testo] Il 1° agosto 608 viene dedicata all'imperatore d'Oriente Foca l'ultima colonna onoraria del Foro. Foca dona il Pantheon a papa Bonifacio IV. Il 13 maggio 609 il papa lo consacra come chiesa. Dei templi antichi si salvano quelli che diventano chiese.
 
 [T37-609.chi1.nome] Foca
 
-[T37-609.chi1.date] imperatore 602-610
+[T37-609.chi1.date] imperatore dal 602 al 610
 
 [T37-609.chi1.riga] Salito al trono con una rivolta: dona il Pantheon al papa.
 
 [T37-609.chi2.nome] Bonifacio IV
 
-[T37-609.chi2.date] papa 608-615
+[T37-609.chi2.date] papa dal 608 al 615
 
 [T37-609.chi2.riga] Consacra il tempio a Maria e a tutti i martiri.
 
 [T37-609.chi3.nome] Smaragdo
 
-[T37-609.chi3.riga] Esarca di Ravenna: dedica a Foca la colonna del Foro.
+[T37-609.chi3.riga] Governa da Ravenna l'Italia bizantina con il titolo di esarca. Fa dedicare a Foca la colonna nel Foro romano.
 
 [T37-609.voce1.testo] «In quel tempo ci furono carestie, pestilenze e gravissime inondazioni. Nello stesso tempo chiese all'imperatore Foca il tempio chiamato Pantheon, e ne fece la chiesa della beata Maria sempre vergine e di tutti i martiri; e a quella chiesa l'imperatore offrì molti doni.»
 
-[T37-609.voce1.chi] Liber Pontificalis, vita di papa Bonifacio IV: scritta nella curia romana, forse qualche decennio dopo
+[T37-609.voce1.chi] Liber Pontificalis, vita di papa Bonifacio IV. La biografia fu scritta negli uffici del papa a Roma, forse qualche decennio dopo i fatti.
 
 [T37-609.luogo1.roma] il Pantheon diventa una chiesa
 
 
-### 663 · L'ultimo imperatore a Roma
+### 663 · L'ultimo imperatore d'Oriente a Roma
 
-[T38-663.titolo] L'ultimo imperatore a Roma
+[T38-663.titolo] L'ultimo imperatore d'Oriente a Roma
 
-[T38-663.testo] Costante II arriva il 5 luglio, resta dodici giorni e manda a Costantinopoli il bronzo dei monumenti, tegole del Pantheon comprese; poi passa in Sicilia. Roma è una città di provincia dell'impero d'Oriente, governata di fatto dal papa.
+[T38-663.testo] Il 5 luglio Costante II arriva a Roma. Nei dodici giorni della visita fa rimuovere dai monumenti il bronzo da inviare a Costantinopoli, comprese le tegole del Pantheon. Prosegue poi per la Sicilia. Roma appartiene ancora all'impero d'Oriente, ma in città il governo è di fatto nelle mani del papa.
 
 [T38-663.chi1.nome] Costante II
 
 [T38-663.chi1.date] 630-668
 
-[T38-663.chi1.riga] Imperatore dal 641: il primo imperatore a Roma dal 476; ucciso a Siracusa nel 668.
+[T38-663.chi1.riga] Imperatore dal 641, è il primo a visitare Roma dopo la deposizione di Romolo Augustolo nel 476. Viene ucciso a Siracusa nel 668.
 
 [T38-663.chi2.nome] Vitaliano
 
-[T38-663.chi2.date] papa 657-672
+[T38-663.chi2.date] papa dal 657 al 672
 
-[T38-663.chi2.riga] Lo accoglie al sesto miglio.
+[T38-663.chi2.riga] Va incontro all'imperatore Costante II al sesto miglio da Roma.
 
 [T38-663.voce1.testo] «Poi venne a Roma, il 5 luglio, di mercoledì […] Il papa gli andò incontro con il suo clero al sesto miglio dalla città e lo accolse. […] Rimasto dodici giorni nella città di Roma, tolse tutto ciò che di bronzo ornava la città; scoperchiò anche la chiesa di Santa Maria ad Martyres, che aveva le tegole di bronzo, e le mandò alla città imperiale con le altre cose che aveva tolto.»
 
-[T38-663.voce1.chi] Liber Pontificalis, vita di papa Vitaliano: un chierico della curia, pochi anni dopo. L'imperatore è Costante II; Santa Maria ad Martyres è il Pantheon
+[T38-663.voce1.chi] Liber Pontificalis, vita di papa Vitaliano. Un membro del clero al servizio del papa scrive pochi anni dopo i fatti. L'imperatore è Costante II e Santa Maria ad Martyres è il nome cristiano del Pantheon.
 
 [T38-663.luogo1.roma] dodici giorni di Costante II
 
@@ -1176,15 +1188,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T39-711.titolo] Il Mediterraneo si divide
 
-[T39-711.testo] Cartagine cade nel 698, la Spagna dei Visigoti nel 711. La sponda sud del mare che era stato di Roma passa al califfato; l'Occidente guarda ormai a nord.
+[T39-711.testo] Nel 698 gli eserciti del califfato conquistano Cartagine. Nel 711 attraversano lo stretto di Gibilterra e sconfiggono i Visigoti nella penisola iberica. La sponda meridionale del Mediterraneo passa sotto il dominio del califfato, mentre in Occidente acquistano peso i territori a nord delle Alpi.
 
 [T39-711.chi1.nome] Tariq ibn Ziyad
 
-[T39-711.chi1.riga] Comandante berbero: passa lo stretto nel 711.
+[T39-711.chi1.riga] Comandante berbero, attraversa lo stretto di Gibilterra nel 711.
 
 [T39-711.chi2.nome] Musa ibn Nusayr
 
-[T39-711.chi2.riga] Governatore arabo dell'Africa: lo segue nel 712.
+[T39-711.chi2.riga] Governatore arabo dell'Africa settentrionale, raggiunge Tariq nella penisola iberica nel 712.
 
 [T39-711.chi3.nome] Rodrigo
 
@@ -1192,9 +1204,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T39-711.voce1.testo] «Dà alle fiamme e abbatte belle città, condanna alla croce gli anziani e i potenti, trucida a colpi di pugnale i giovani e i lattanti. […] Chi potrebbe raccontare pericoli così grandi? Chi contare naufragi così funesti? Se anche tutte le membra si mutassero in lingua, la natura umana non potrebbe mai dire le rovine della Spagna, né i suoi mali, tanti e tanto grandi.»
 
-[T39-711.voce1.chi] Cronaca del 754: un cristiano che scrive nella Spagna ormai araba, quarant'anni dopo. È un lamento, e riguarda la campagna di Musa del 712-714
+[T39-711.voce1.chi] Cronaca del 754. L'autore, un cristiano che vive nella Spagna sotto dominio arabo, scrive circa quarant'anni dopo gli avvenimenti. Il suo lamento riguarda la campagna militare di Musa del 712-714.
 
-[T39-711.storici] Henri Pirenne vide qui la vera fine del mondo antico: non le invasioni germaniche, ma la rottura dell'unità del Mediterraneo. L'archeologia mostra però che i commerci erano crollati già prima.
+[T39-711.storici] Secondo Henri Pirenne, il mondo antico non finisce con le invasioni germaniche, ma con la perdita dell'unità del Mediterraneo dopo le conquiste arabe. I ritrovamenti archeologici indicano però che i commerci erano crollati già prima.
 
 [T39-711.luogo1.guadalete] cade il regno dei Visigoti (il luogo esatto è incerto)
 
@@ -1203,81 +1215,81 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [T39-711.luogo3.poitiers] nel 732 Carlo Martello ferma una spedizione araba diretta a Tours (il luogo esatto è incerto)
 
 
-### 727 · San Pietro, meta dell'Occidente
+### 727 · I pellegrini raggiungono San Pietro
 
-[T40-727.titolo] San Pietro, meta dell'Occidente
+[T40-727.titolo] I pellegrini raggiungono San Pietro
 
-[T40-727.testo] Re e pellegrini anglosassoni, franchi, longobardi vengono a pregare sulla tomba dell'apostolo. Attorno alla basilica, fuori le mura, crescono monasteri, ospizi e le «scholae» delle nazioni: un quartiere nuovo, mentre la città antica si svuota.
+[T40-727.testo] Re e pellegrini anglosassoni, franchi e longobardi vengono a Roma a pregare sulla tomba di san Pietro. La basilica sorge fuori dalle mura. Intorno nascono monasteri, case di accoglienza e le «scholae», comunità di stranieri organizzate per nazione. Mentre la città antica si spopola, attorno a San Pietro cresce un nuovo quartiere.
 
 [T40-727.chi1.nome] Ine
 
 [T40-727.chi1.date] re del Wessex dal 688 circa al 726
 
-[T40-727.chi1.riga] Lascia il regno e va a morire a Roma.
+[T40-727.chi1.riga] Rinuncia al trono e parte per Roma, dove trascorre il resto della vita.
 
 [T40-727.chi2.nome] Gregorio II
 
-[T40-727.chi2.date] papa 715-731
+[T40-727.chi2.date] papa dal 715 al 731
 
 [T40-727.chi2.riga] Romano di nascita: si oppone alle tasse e agli editti dell'imperatore Leone III.
 
 [T40-727.chi3.nome] Liutprando
 
-[T40-727.chi3.date] re dei Longobardi 712-744
+[T40-727.chi3.date] re dei Longobardi dal 712 al 744
 
 [T40-727.chi3.riga] Nel 728 dona al papa il castello di Sutri.
 
 [T40-727.voce1.testo] «[Ine, re dei Sassoni occidentali], dopo aver tenuto il regno per trentasette anni, lo lasciò anche lui, affidandolo ai più giovani, e partì per le soglie dei beati apostoli […] desiderando farsi per un tempo pellegrino in terra, vicino ai luoghi santi, per meritare di essere accolto con più familiarità dai santi in cielo; cosa che in questi tempi molti del popolo degli Angli, nobili e non nobili, laici e chierici, uomini e donne, hanno preso a fare a gara.»
 
-[T40-727.voce1.chi] Beda, monaco a Jarrow, in Northumbria: Storia ecclesiastica V 7, finita nel 731. Ine parte verso il 726
+[T40-727.voce1.chi] Beda, Storia ecclesiastica, V, 7. Monaco a Jarrow, nel regno anglosassone di Northumbria, termina l'opera nel 731. Ine era partito per Roma intorno al 726.
 
 [T40-727.luogo1.roma] i pellegrini a San Pietro
 
 
-### 756 · I Longobardi alle porte
+### 756 · I Longobardi assediano Roma
 
-[T41-756.titolo] I Longobardi alle porte
+[T41-756.titolo] I Longobardi assediano Roma
 
-[T41-756.testo] Astolfo assedia Roma per tre mesi. Il papa chiama di nuovo i Franchi, non Costantinopoli: Pipino scende in Italia e consegna al papa le terre riprese ai Longobardi. Nasce uno Stato della Chiesa.
+[T41-756.testo] Il re longobardo Astolfo assedia Roma per tre mesi. Il papa chiede ancora una volta aiuto ai Franchi, e non a Costantinopoli. Il loro re, Pipino il Breve, interviene in Italia e consegna al papa i territori riconquistati ai Longobardi. Queste terre formano il primo nucleo dello Stato della Chiesa.
 
 [T41-756.chi1.nome] Astolfo
 
-[T41-756.chi1.date] re dei Longobardi 749-756
+[T41-756.chi1.date] re dei Longobardi dal 749 al 756
 
 [T41-756.chi1.riga] Ha preso Ravenna nel 751; muore nel 756.
 
 [T41-756.chi2.nome] Stefano II
 
-[T41-756.chi2.date] papa 752-757
+[T41-756.chi2.date] papa dal 752 al 757
 
 [T41-756.chi2.riga] Parte da Roma nell'ottobre 753 e il 6 gennaio 754 incontra Pipino a Ponthion.
 
 [T41-756.chi3.nome] Pipino il Breve
 
-[T41-756.chi3.date] re dei Franchi 751-768
+[T41-756.chi3.date] re dei Franchi dal 751 al 768
 
-[T41-756.chi3.riga] Scende due volte in Italia, nel 754 o 755 e nel 756.
+[T41-756.chi3.riga] Guida due spedizioni in Italia. La prima risale al 754 o al 755, la seconda al 756.
 
 [T41-756.voce1.testo] «Io, Pietro apostolo […] Correte, correte, per il Dio vivo e vero vi esorto e vi scongiuro: correte e soccorrete, prima che si secchi la fonte viva da cui siete stati saziati e siete rinati […] Se invece, cosa che non crediamo, frapporrete qualche indugio […] sappiate che, per l'autorità della santa e unica Trinità, per la grazia dell'apostolato che mi è stata data da Cristo Signore, sarete esclusi, per aver trasgredito la nostra esortazione, dal regno di Dio e dalla vita eterna.»
 
-[T41-756.voce1.chi] Papa Stefano II a Pipino e ai Franchi, da Roma assediata da Astolfo, all'inizio del 756: la lettera è scritta come se parlasse san Pietro (Codex Carolinus, letta nella ristampa di Migne, non nell'edizione critica)
+[T41-756.voce1.chi] Papa Stefano II scrive a Pipino e ai Franchi all'inizio del 756, durante l'assedio di Astolfo. Nella lettera è san Pietro a parlare in prima persona. Il testo proviene dal Codex Carolinus, consultato nella ristampa di Migne anziché nell'edizione critica.
 
-[T41-756.leggenda] Dall'XI secolo i papi invocheranno un altro documento: un atto con cui Costantino avrebbe ceduto a papa Silvestro il palazzo del Laterano, «la città di Roma e tutte le province, i luoghi e le città d'Italia e delle regioni occidentali», portando il proprio impero in Oriente, perché «non è giusto che l'imperatore terreno abbia potere là dove l'imperatore celeste ha posto il principato dei sacerdoti e il capo della religione cristiana». È un falso. La vita di Stefano II nel Liber Pontificalis, che racconta la donazione di Pipino, non lo cita mai: Pipino dona «per amore di san Pietro e per il perdono dei peccati», e fa deporre le chiavi delle città sulla tomba dell'apostolo. Quando e dove il falso sia stato scritto è discusso: la critica ha oscillato fra il VII e il IX secolo, fermandosi di preferenza sugli anni di Pipino e di Carlo Magno; uno studio del 2007 lo sposta nella Francia del IX secolo. Già Ottone III, nel 1001, lo respinse; Niccolò Cusano nel 1433 e Lorenzo Valla verso il 1440 lo smontarono sul testo.
+[T41-756.leggenda] Dall'XI secolo i papi richiameranno anche la cosiddetta «donazione di Costantino». Secondo questo documento l'imperatore avrebbe ceduto a papa Silvestro il palazzo del Laterano, «la città di Roma e tutte le province, i luoghi e le città d'Italia e delle regioni occidentali». Avrebbe poi trasferito la propria sede in Oriente, perché «non è giusto che l'imperatore terreno abbia potere là dove l'imperatore celeste ha posto il principato dei sacerdoti e il capo della religione cristiana». Il documento è un falso. La vita di Stefano II nel Liber Pontificalis racconta un'altra donazione, quella di Pipino, che agisce «per amore di san Pietro e per il perdono dei peccati» e fa deporre sulla tomba dell'apostolo le chiavi delle città. Il racconto non cita la donazione di Costantino. Data e luogo di composizione del falso restano discussi. Gli studiosi hanno proposto date dal VII al IX secolo, spesso negli anni di Pipino o di Carlo Magno. Uno studio del 2007 propone la Francia del IX secolo. Ottone III respinse il documento nel 1001. Niccolò Cusano nel 1433 e Lorenzo Valla intorno al 1440 ne mostrarono la falsità esaminando il testo.
 
 [T41-756.luogo1.roma] assediata da Astolfo
 
 [T41-756.luogo2.pavia] Pipino piega i Longobardi
 
 
-### 780 · Adriano I ripara la città
+### 780 · Papa Adriano I restaura Roma
 
-[T42-780.titolo] Adriano I ripara la città
+[T42-780.titolo] Papa Adriano I restaura Roma
 
-[T42-780.testo] Carlo Magno ha conquistato il regno longobardo nel 774. A Roma papa Adriano I fa riparare quattro acquedotti, le mura e i tetti delle basiliche, e amplia le domuscultae, le tenute agricole della Chiesa che sfamano la città.
+[T42-780.testo] Dopo la conquista del regno longobardo da parte di Carlo Magno nel 774, papa Adriano I fa riparare a Roma quattro acquedotti, le mura e i tetti delle basiliche. Amplia anche le grandi tenute agricole della Chiesa, chiamate domuscultae, che riforniscono di cibo la città.
 
 [T42-780.chi1.nome] Adriano I
 
-[T42-780.chi1.date] papa 772-795
+[T42-780.chi1.date] papa dal 772 al 795
 
 [T42-780.chi1.riga] Romano di famiglia nobile: sarà papa per ventitré anni.
 
@@ -1289,13 +1301,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T42-780.chi3.nome] Desiderio
 
-[T42-780.chi3.date] re dei Longobardi 757-774
+[T42-780.chi3.date] re dei Longobardi dal 757 al 774
 
-[T42-780.chi3.riga] L'ultimo: finisce i suoi giorni in un monastero franco.
+[T42-780.chi3.riga] Ultimo re dei Longobardi prima della conquista di Carlo Magno, trascorre gli ultimi anni in un monastero nel regno dei Franchi.
 
 [T42-780.voce1.testo] «Erano ormai passati vent'anni da quando il condotto detto Sabbatina, del tutto rotto, […] non portava più acqua né nell'atrio del beato Pietro né dentro la città […] e non sembrava esserci più alcuna speranza di ricostruirne gli archi. Il beatissimo e santissimo presule, radunata una moltitudine di popolo, si mise di persona a ricostruire e a restaurare quel condotto […] e con l'aiuto di Dio fece scorrere l'acqua in abbondanza, come in antico, nell'atrio del beato Pietro e anche dentro la città, cioè al Gianicolo, dove giravano le mole.»
 
-[T42-780.voce1.chi] Liber Pontificalis, vita di Adriano I, scritta a Roma durante il suo pontificato (772-795): contemporanea, ma ufficiale ed elogiativa
+[T42-780.voce1.chi] Liber Pontificalis, vita di Adriano I. Scritta a Roma durante il suo pontificato (772-795), è una biografia ufficiale che elogia l'opera del papa.
+
+[T42-780.leggenda] Due anni prima, nel 778, Carlo Magno tornava da una spedizione in Spagna. Il suo biografo Eginardo racconta che sulla cresta dei Pirenei i Baschi, appostati in cima al monte fra i boschi, piombarono sulla coda della colonna, gettarono nella valle i bagagli e la retroguardia, uccisero tutti fino all'ultimo e col buio si dispersero: caddero il siniscalco Eggihardo, il conte di palazzo Anselmo e «Rolando, prefetto del confine di Bretagna». Eginardo non dice in quale passo. Gli annali ufficiali del regno tacciono la sconfitta; solo la loro redazione rivista ammette che quella ferita offuscò nel cuore del re i successi di Spagna. La Chanson de Roland, scritta più di tre secoli dopo, ne fa un'altra guerra: Carlo è rimasto in Spagna «sette anni interi» e ha preso tutto fino al mare, tranne Saragozza, tenuta dal re Marsilio, «che non ama Dio». I nemici sono diventati i Saraceni.
 
 [T42-780.luogo1.pavia] presa da Carlo Magno nel 774
 
@@ -1306,17 +1320,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T43-791.titolo] Il Tevere porta via una porta
 
-[T43-791.testo] Nel dicembre 791 il Tevere divelle dalle fondamenta porta Flaminia e la trascina lungo la via Lata, dove l'acqua supera le due altezze d'uomo; presso il ponte che oggi è ponte Sisto abbatte un tratto di mura. Per tre giorni il fiume corre per la città come nel proprio letto. Papa Adriano fa portare il cibo in barca a chi è chiuso in casa (Liber Pontificalis).
+[T43-791.testo] Nel dicembre 791, racconta il Liber Pontificalis, il Tevere strappa porta Flaminia dalle fondamenta e la trascina lungo la via Lata. Qui l'acqua supera il doppio dell'altezza di un uomo. Nei pressi dell'attuale ponte Sisto crolla un tratto delle mura. Per tre giorni il fiume scorre nelle strade come nel proprio letto. Papa Adriano fa portare viveri in barca agli abitanti rimasti bloccati nelle case.
 
 [T43-791.chi1.nome] Adriano I
 
-[T43-791.chi1.date] papa 772-795
+[T43-791.chi1.date] papa dal 772 al 795
 
 [T43-791.chi1.riga] È papa da diciannove anni; morirà nel 795.
 
 [T43-791.voce1.testo] «Il Tevere, uscito gonfio dal suo letto, si sparse per le campagne. Per l'enorme piena entrò dalla porta detta Flaminia, la strappò dalle fondamenta e la trascinò fino all'arco chiamato Tres Falciclas. […] Per tre giorni il fiume corse per la città come nel proprio letto.»
 
-[T43-791.voce1.chi] Liber Pontificalis, vita di Adriano I, 94-95
+[T43-791.voce1.chi] Liber Pontificalis, vita di Adriano I, 94-95.
 
 [T43-791.luogo1.roma] la piena di dicembre
 
@@ -1325,60 +1339,60 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T44-800.titolo] Natale in San Pietro
 
-[T44-800.testo] Il 25 dicembre papa Leone III incorona Carlo Magno imperatore. In Occidente c'è di nuovo un impero, ma il suo centro è oltre le Alpi. Roma, poche decine di migliaia di abitanti fra le rovine, è la città dei papi e dei pellegrini.
+[T44-800.testo] Il 25 dicembre, nella basilica di San Pietro, papa Leone III incorona Carlo Magno imperatore. In Occidente nasce un nuovo impero, il cui centro politico si trova oltre le Alpi. A Roma, tra le rovine antiche, vivono ormai poche decine di migliaia di persone. La città è diventata la sede dei papi e la meta dei pellegrini.
 
 [T44-800.chi1.nome] Carlo Magno
 
-[T44-800.chi1.date] m. 814
+[T44-800.chi1.date] morto nell'814
 
 [T44-800.chi1.riga] Re dei Franchi dal 768, imperatore dal Natale dell'800.
 
 [T44-800.chi2.nome] Leone III
 
-[T44-800.chi2.date] papa 795-816
+[T44-800.chi2.date] papa dal 795 all'816
 
-[T44-800.chi2.riga] Aggredito a Roma nel 799, era fuggito da Carlo a Paderborn.
+[T44-800.chi2.riga] Nel 799, dopo un'aggressione a Roma, cerca rifugio presso Carlo Magno a Paderborn.
 
 [T44-800.chi3.nome] Irene
 
-[T44-800.chi3.date] imperatrice 797-802
+[T44-800.chi3.date] imperatrice dal 797 all'802
 
-[T44-800.chi3.riga] A Costantinopoli regna una donna: in Occidente il trono è detto vacante.
+[T44-800.chi3.riga] Irene governa l'impero d'Oriente da Costantinopoli. In Occidente, chi sostiene l'incoronazione di Carlo considera vacante il trono imperiale perché lo occupa una donna.
 
 [T44-800.voce1.testo] «Nel santissimo giorno della nascita del Signore, mentre il re, alla messa, si alzava dalla preghiera davanti alla confessione del beato Pietro apostolo, papa Leone gli pose una corona sul capo, e tutto il popolo dei Romani acclamò: “A Carlo augusto, coronato da Dio, grande e pacifico imperatore dei Romani, vita e vittoria!”»
 
-[T44-800.voce1.chi] Annali del regno dei Franchi, anno 801 (contano l'anno dal Natale): è la versione ufficiale della corte, scritta in quegli anni
+[T44-800.voce1.chi] Annali del regno dei Franchi. L'incoronazione è registrata sotto l'801 perché per il cronista l'anno comincia a Natale. Il testo, scritto in quegli anni, riflette la versione ufficiale della corte franca.
 
 [T44-800.voce2.testo] «In quell'occasione ricevette il nome di imperatore e augusto. E dapprima gli fu tanto sgradito da affermare che quel giorno, sebbene fosse una festa solenne, non sarebbe entrato in chiesa, se avesse potuto conoscere in anticipo l'intenzione del pontefice.»
 
-[T44-800.voce2.chi] Eginardo, Vita di Carlo 28: uomo di corte, scrive una generazione dopo, fra l'817 e l'830. Il rifiuto del potere è anche un luogo comune
+[T44-800.voce2.chi] Eginardo, Vita di Carlo, 28. Membro della corte, scrive tra l'817 e l'830, una generazione dopo i fatti. Il sovrano riluttante ad accettare il potere è anche un motivo ricorrente nella letteratura.
 
 [T44-800.luogo1.roma] Carlo Magno incoronato imperatore
 
-[T44-800.luogo2.aquisgrana] la sua corte
+[T44-800.luogo2.aquisgrana] sede della corte di Carlo Magno
 
 
 ### 801 · La terra trema
 
 [T45-801.titolo] La terra trema
 
-[T45-801.testo] Quattro mesi dopo l'incoronazione, la sera del 29 aprile 801 (il 30 nelle cronache), un terremoto fa crollare gran parte del tetto di San Paolo fuori le mura. È l'unico danno a Roma che le fonti ricordano. Papa Leone III lo fa ricostruire: le basiliche degli apostoli sono ormai gli edifici meglio curati della città.
+[T45-801.testo] La sera del 29 aprile 801, quattro mesi dopo l'incoronazione di Carlo Magno, un terremoto fa crollare gran parte del tetto di San Paolo fuori le mura. Le cronache datano la scossa al 30 aprile. Per Roma ricordano soltanto i danni alla basilica. Papa Leone III ne fa ricostruire il tetto. Le basiliche di San Pietro e San Paolo sono ormai gli edifici meglio curati della città.
 
 [T45-801.chi1.nome] Leone III
 
-[T45-801.chi1.date] papa 795-816
+[T45-801.chi1.date] papa dal 795 all'816
 
 [T45-801.chi1.riga] Ha incoronato Carlo quattro mesi prima.
 
 [T45-801.chi2.nome] Carlo Magno
 
-[T45-801.chi2.date] m. 814
+[T45-801.chi2.date] morto nell'814
 
 [T45-801.chi2.riga] È a Spoleto, sulla via del ritorno, quando la terra trema.
 
 [T45-801.voce1.testo] «Mentre [Carlo] era lì, il 30 aprile, alla seconda ora della notte, ci fu un grandissimo terremoto, che scosse gravemente tutta l'Italia. Per quella scossa il tetto della basilica del beato Paolo apostolo cadde in gran parte, con le sue travi.»
 
-[T45-801.voce1.chi] Annali del regno dei Franchi, anno 801, tenuti alla corte: Carlo era a Spoleto, di ritorno da Roma
+[T45-801.voce1.chi] Annali del regno dei Franchi, anno 801, tenuti alla corte: Carlo era a Spoleto, di ritorno da Roma.
 
 [T45-801.luogo1.roma] il terremoto del 29 aprile
 
@@ -1387,50 +1401,50 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T46-846.titolo] I Saraceni a San Pietro
 
-[T46-846.testo] Una flotta saracena, forse dalla Sicilia o dall'Africa, sbarca a Ostia e risale il Tevere. Le mura di Aureliano proteggono la città, ma le due basiliche più venerate dell'Occidente sono fuori dalla cinta: San Pietro viene saccheggiato e, secondo il Liber Pontificalis, anche San Paolo.
+[T46-846.testo] Una flotta saracena, forse proveniente dalla Sicilia o dall'Africa settentrionale, approda a Ostia e risale il Tevere. Le mura di Aureliano proteggono Roma, ma lasciano fuori le due basiliche più venerate dell'Occidente, San Pietro e San Paolo. Gli assalitori saccheggiano San Pietro e, secondo il Liber Pontificalis, anche San Paolo.
 
 [T46-846.chi1.nome] Sergio II
 
-[T46-846.chi1.date] papa 844-847
+[T46-846.chi1.date] papa dall'844 all'847
 
 [T46-846.chi1.riga] È papa quando San Pietro viene saccheggiato.
 
 [T46-846.chi2.nome] Lotario I
 
-[T46-846.chi2.date] imperatore 840-855
+[T46-846.chi2.date] imperatore dall'840 all'855
 
-[T46-846.chi2.riga] Un suo capitolare, dell'846 o dell'847, dispone di cingere di mura San Pietro.
+[T46-846.chi2.riga] Nell'846 o nell'847 emana un provvedimento, detto capitolare, che ordina di costruire mura intorno a San Pietro.
 
 [T46-846.voce1.testo] «Nel mese di agosto Saraceni e Mauri, giunti a Roma per il Tevere, devastano la basilica del beato Pietro, principe degli apostoli: portano via, insieme all'altare stesso, che era stato posto sopra la sua tomba, tutti gli ornamenti e i tesori.»
 
-[T46-846.voce1.chi] Prudenzio, Annali di San Bertino, anno 846: scrive alla corte di Carlo il Calvo, a pochi mesi dai fatti. Che fosse portato via anche l'altare è discusso
+[T46-846.voce1.chi] Prudenzio, Annali di San Bertino, anno 846. Scrive alla corte di Carlo il Calvo pochi mesi dopo i fatti. Gli studiosi discutono se gli assalitori abbiano davvero portato via anche l'altare.
 
 [T46-846.luogo1.roma] i Saraceni saccheggiano San Pietro
 
 
-### 852 · Le mura dall'altra parte del fiume
+### 852 · Le nuove mura proteggono San Pietro
 
-[T47-852.titolo] Le mura dall'altra parte del fiume
+[T47-852.titolo] Le nuove mura proteggono San Pietro
 
-[T47-852.testo] Dopo il sacco saraceno e dopo l'incendio che verso l'847 brucia parte del Borgo, papa Leone IV chiude San Pietro dentro una cinta nuova: il 27 giugno 852 nasce la «città leonina». Le mura di Aureliano chiudono ancora diciannove chilometri di rovine, orti e vigne; quelle nuove proteggono una tomba. L'impero è finito da tempo, e Roma ha trovato un altro centro. Le rovine che vediamo oggi, però, sono in gran parte opera dei secoli seguenti, e più dei cantieri che dei terremoti: il lato sud del Colosseo fu smontato come una cava per secoli, e quel che ne restava cadde con un terremoto: nell'847 secondo il Parco archeologico del Colosseo, nel 1349 secondo la tradizione; nessuna cronaca dell'epoca descrive il crollo.
+[T47-852.testo] Dopo il saccheggio dell'846 e l'incendio che devasta parte del Borgo intorno all'847, papa Leone IV fa costruire mura attorno a San Pietro. Il 27 giugno 852 nasce la «città leonina», così chiamata dal nome del papa. Le antiche mura di Aureliano chiudono ancora diciannove chilometri di rovine, orti e vigne. La nuova cinta protegge la basilica sorta sulla tomba dell'apostolo e il quartiere che la circonda. L'impero è finito da tempo, e Roma ha trovato un altro centro. Le rovine che vediamo oggi sono in gran parte opera dei secoli successivi, e più dei cantieri che dei terremoti. Il lato sud del Colosseo, per esempio, fu a lungo usato come cava. Il terremoto che ne fece cadere la parte rimasta risalirebbe all'847 secondo il Parco archeologico del Colosseo, al 1349 secondo la tradizione. Nessuna cronaca dell'epoca descrive il crollo.
 
 [T47-852.chi1.nome] Leone IV
 
-[T47-852.chi1.date] papa 847-855
+[T47-852.chi1.date] papa dall'847 all'855
 
 [T47-852.chi1.riga] Fa costruire le mura in quattro anni e le benedice a piedi nudi.
 
 [T47-852.chi2.nome] Lotario I
 
-[T47-852.chi2.date] imperatore 840-855
+[T47-852.chi2.date] imperatore dall'840 all'855
 
 [T47-852.chi2.riga] Contribuisce alla spesa.
 
 [T47-852.voce1.testo] «Ordinò […] che con lui tutti i vescovi e i sacerdoti, e anche i diaconi e tutti gli ordini dei chierici […], dopo le litanie e il canto del salterio, con inni e cantici spirituali, facessero il giro di tutte le mura a piedi nudi, con la cenere sul capo. […] “Questa città, che da poco, con il tuo aiuto, abbiamo fondato, fa' che resti per sempre al sicuro dalla tua ira, e che sui nemici, a causa dei quali è stata costruita, abbia nuovi e molti trionfi.”»
 
-[T47-852.voce1.chi] Liber Pontificalis, vita di Leone IV: un chierico della curia, contemporaneo. È la benedizione delle mura attorno a San Pietro, con la prima delle tre preghiere del papa; un testo celebrativo
+[T47-852.voce1.chi] Liber Pontificalis, vita di Leone IV. Un membro del clero al servizio del papa descrive la cerimonia di benedizione delle nuove mura e riporta la prima delle tre preghiere di Leone. Il testo è contemporaneo e ha un intento celebrativo.
 
-[T47-852.leggenda] Leone IV muore tre anni dopo, il 17 luglio 855. Fra lui e il successore, Benedetto III, una leggenda mette una donna: «Giovanni Anglico, nato a Magonza», papa per due anni, sette mesi e quattro giorni, scoperta quando partorisce per strada «fra il Colosseo e la chiesa di San Clemente». Il passo sta nella cronaca di Martino Polono, ma solo nell'ultima redazione, quella che arriva al 1277: più di quattro secoli dopo. La versione più antica, in una cronaca di Metz del Duecento, non le dà un nome e la colloca verso il 1099. Nessun testo del IX secolo ne parla, e il posto non c'è. Incmaro di Reims scrive che i suoi messi, in viaggio per Roma, seppero per strada della morte di Leone, e che il privilegio che andavano a chiedere glielo diede Benedetto. Benedetto, secondo le enciclopedie, fu consacrato il 29 settembre 855, dopo lo scontro con l'antipapa Anastasio; a suo favore si citano anche monete col suo nome e con quello dell'imperatore Lotario, morto in quegli stessi giorni.
+[T47-852.leggenda] Leone IV muore il 17 luglio 855. Secondo una leggenda, prima del suo successore Benedetto III sarebbe salita al soglio pontificio una donna: «Giovanni Anglico, nato a Magonza». Dopo due anni, sette mesi e quattro giorni di pontificato, avrebbe partorito per strada «fra il Colosseo e la chiesa di San Clemente». La storia compare in questa forma solo nell'ultima versione della cronaca di Martino Polono, che arriva al 1277: più di quattro secoli dopo. La versione più antica conosciuta, in una cronaca di Metz del Duecento, lascia la donna senza nome e colloca l'episodio intorno al 1099. Nessun testo del IX secolo ne parla, e fra i due papi non c'è posto. Incmaro di Reims racconta che i suoi inviati appresero della morte di Leone durante il viaggio verso Roma e ottennero da Benedetto il privilegio richiesto. Secondo le enciclopedie consultate, dopo lo scontro con l'antipapa Anastasio, Benedetto fu consacrato il 29 settembre 855. A suo favore si citano anche monete che portano il suo nome insieme a quello dell'imperatore Lotario, morto in quegli stessi giorni.
 
 [T47-852.luogo1.roma] le mura di Leone IV attorno a San Pietro
 
@@ -1454,21 +1468,41 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 ## 5. Eventi sulla scena di Roma (didascalie)
 
-[evento.sacco410] 24 agosto 410 · I Goti di Alarico entrano da Porta Salaria. Tre giorni di saccheggio secondo Orosio, sei secondo Marcellino Comes: bruciano le case presso la porta e la casa di Sallustio; nel Foro brucia, probabilmente allora, la basilica Emilia. San Pietro e San Paolo sono rispettate come luoghi d'asilo.
+[evento.basiliche330] Verso il 330 · Sorgono le grandi basiliche volute da Costantino: la cattedrale al Laterano e, fuori le mura, San Pietro sulla tomba dell'apostolo, ancora in cantiere.
 
-[evento.sacco455] 2-16 giugno 455 · I Vandali di Genserico restano quattordici giorni. Papa Leone, scrive Prospero d'Aquitania, ottiene che ci si astenga dal fuoco, dalle stragi e dalle torture; il saccheggio è metodico: dal tempio di Giove portano via metà del tetto di bronzo dorato.
+[evento.visita357] 357 · Costanzo II visita Roma per la prima volta. Sulla spina del Circo Massimo fa alzare un secondo obelisco.
 
-[evento.assedio472] Luglio 472 · Dopo mesi d'assedio Ricimero prende la città all'imperatore Antemio, asserragliato sul Palatino. Lo scontro decisivo è al ponte Elio, davanti al mausoleo di Adriano.
+[evento.onorio402] 401-403 · Sotto Onorio si restaurano mura, porte e torri. Forse è allora che la cinta viene rialzata; altri attribuiscono il lavoro a Massenzio.
 
-[evento.velo536] 536 · Per circa un anno il sole resta velato e non scalda.
+[evento.teodorico493] Sotto Teodorico si restaurano le mura e il teatro di Pompeo; al Colosseo si danno ancora le cacce.
 
-[evento.assedio537] Marzo 537 - marzo 538 · Vitige assedia Belisario per un anno e nove giorni. Sette accampamenti goti: sei davanti alle porte da nord a est, uno oltre il Tevere. Gli acquedotti vengono tagliati. Da un anno il sole è velato: Procopio scrive che dava luce senza splendore, come la luna; Cassiodoro, in Italia, che a mezzogiorno i corpi non facevano ombra. Oggi lo si attribuisce a grandi eruzioni vulcaniche.
+[evento.agilulfo593] 593 · I Longobardi di Agilulfo arrivano sotto le mura. È papa Gregorio a trattare con loro.
 
-[evento.totila546] 17 dicembre 546 · Totila entra di notte da Porta Asinaria. Fa abbattere tratti delle mura, brucia parte di Trastevere e porta via gli abitanti: per settimane Roma resta vuota.
+[evento.pantheon609] 13 maggio 609 · Il Pantheon, donato dall'imperatore Foca a papa Bonifacio IV, è consacrato come chiesa. L'anno prima, nel Foro, è stata dedicata a Foca l'ultima colonna onoraria.
 
-[evento.piena589] Autunno 589 · Il Tevere allaga la città bassa e rovina i granai della Chiesa (Gregorio di Tours, che scrive «nel nono mese»: probabilmente novembre). L'estensione dell'acqua qui disegnata è indicativa: le zone più basse e più vicine al fiume.
+[evento.pellegrini727] Attorno a San Pietro, fuori le mura, crescono monasteri, ospizi e le «scholae» dei pellegrini: un quartiere nuovo.
 
-[evento.piena791] Dicembre 791 · Il Tevere divelle porta Flaminia e la trascina fino all'arco detto Tres Falciclas, sulla via Lata; lì l'acqua supera le due altezze d'uomo (Liber Pontificalis). L'estensione qui disegnata è indicativa.
+[evento.adriano780] Papa Adriano I fa riparare quattro acquedotti, le mura e i tetti delle basiliche.
+
+[evento.leonina852] 27 giugno 852 · Leone IV chiude San Pietro dentro una cinta nuova: nasce la città leonina.
+
+[evento.cantieremura] 271 · Si apre il cantiere delle mura: lungo diciannove chilometri salgono i primi tratti, fra i ponteggi. Le finirà Probo, scrive Zosimo; in che ordine si costruì non si sa.
+
+[evento.sacco410] 24 agosto 410 · I Goti di Alarico entrano da porta Salaria. Il saccheggio dura tre giorni secondo Orosio, sei secondo Marcellino Comes. Bruciano la casa di Sallustio e altre abitazioni vicino alla porta. Probabilmente risale a quei giorni anche l'incendio della basilica Emilia, nel Foro. Chi cerca rifugio a San Pietro e a San Paolo è rispettato.
+
+[evento.sacco455] 2-16 giugno 455 · I Vandali di Genserico saccheggiano Roma per quattordici giorni. Secondo Prospero d'Aquitania, papa Leone ottiene che siano risparmiati agli abitanti incendi, stragi e torture. I Vandali portano via sistematicamente i beni della città, compresa metà del tetto di bronzo dorato del tempio di Giove.
+
+[evento.assedio472] Luglio 472 · L'imperatore Antemio si rifugia sul Palatino mentre Ricimero assedia Roma. Dopo mesi di assedio, lo scontro decisivo si combatte a ponte Elio, davanti al mausoleo di Adriano. Ricimero conquista la città.
+
+[evento.velo536] 536 · Per circa un anno il sole appare velato. I contemporanei raccontano che la sua luce scalda poco.
+
+[evento.assedio537] Marzo 537 – marzo 538 · Il re goto Vitige assedia Roma, difesa da Belisario, per un anno e nove giorni. I Goti interrompono gli acquedotti e allestiscono sette accampamenti, sei davanti alle porte tra il nord e l'est della città e uno oltre il Tevere. Già dall'anno precedente il sole appare velato. Procopio paragona la sua luce a quella della luna. Cassiodoro racconta che in Italia a mezzogiorno i corpi non proiettavano ombra. Oggi il fenomeno è attribuito a grandi eruzioni vulcaniche.
+
+[evento.totila546] 17 dicembre 546 · Totila entra di notte da porta Asinaria. Fa abbattere alcuni tratti delle mura, brucia una parte di Trastevere e porta via gli abitanti. Secondo una cronaca, Roma rimane deserta per settimane.
+
+[evento.piena589] Autunno 589 · Il Tevere allaga i quartieri bassi e danneggia i granai della Chiesa. Gregorio di Tours scrive «nel nono mese», probabilmente novembre. Nella scena l'estensione della piena è indicativa: le zone più basse e più vicine al fiume.
+
+[evento.piena791] Dicembre 791 · Secondo il Liber Pontificalis, il Tevere travolge porta Flaminia e la trascina lungo la via Lata fino all'arco chiamato Tres Falciclas. Qui l'acqua supera il doppio dell'altezza di un uomo. Nella scena l'area allagata è indicativa.
 
 [evento.costante663] 5-17 luglio 663 · Costante II è l'ultimo imperatore a visitare Roma finché l'impero la governa. In dodici giorni fa smontare il bronzo dei monumenti, comprese le tegole del Pantheon.
 
@@ -1478,9 +1512,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.terremoto801] 29 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi.
 
-[evento.saraceni846] Agosto 846 · Una flotta saracena sbarca a Ostia e risale il Tevere. San Pietro, fuori dalle mura, viene saccheggiato (anche San Paolo, per il Liber Pontificalis); le milizie delle scholae, mandate a Porto, vengono massacrate.
+[evento.saraceni846] Agosto 846 · Una flotta saracena approda a Ostia e risale il Tevere. Gli assalitori saccheggiano San Pietro, che sorge fuori dalle mura, e secondo il Liber Pontificalis anche San Paolo. A Porto vengono massacrate le milizie delle scholae, le comunità straniere di Roma, mandate a difenderlo.
 
-[evento.incendio847] 847 o 848 · Un incendio brucia le case di Sassoni e Longobardi nel Borgo e arriva al portico di San Pietro; il Liber Pontificalis racconta che Leone IV lo ferma con il segno della croce. Nello stesso anno una forte scossa di terremoto: il Liber Pontificalis non nomina danni. Il Parco archeologico del Colosseo le attribuisce la caduta di ciò che restava del fronte sud del Colosseo, già in gran parte smontato; nessuna fonte scritta lo conferma.
+[evento.incendio847] 847 o 848 · Un incendio nel Borgo distrugge le case di Sassoni e Longobardi e raggiunge il portico di San Pietro. Secondo il Liber Pontificalis, Leone IV ferma le fiamme con il segno della croce. La stessa fonte ricorda un forte terremoto in quell'anno, ma non nomina danni. Il Parco archeologico del Colosseo attribuisce alla scossa il crollo di ciò che rimaneva del lato sud dell'anfiteatro, già in gran parte smontato. Nessuna fonte scritta conferma il collegamento.
 
 
 ## 6. Schede dei monumenti
@@ -1490,15 +1524,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.colosseo.nome] Colosseo
 
-[scheda.colosseo.cosa] Anfiteatro Flavio: fra i cinquanta e i settantamila spettatori, secondo le stime moderne.
+[scheda.colosseo.cosa] Il Colosseo, chiamato anche Anfiteatro Flavio, poteva accogliere da 50.000 a 70.000 spettatori secondo le stime moderne.
 
 [scheda.colosseo.data1-80] Inaugurato da Tito.
 
 [scheda.colosseo.data2-217] Un fulmine lo incendia; i restauri durano più di vent'anni.
 
-[scheda.colosseo.data3.quando] inizio V sec.
+[scheda.colosseo.data3.quando] inizio del V secolo
 
-[scheda.colosseo.data3] Secondo Teodoreto, Onorio vieta i combattimenti fra gladiatori dopo il 404; alcuni studiosi li credono durati fino agli anni 430. Restano le cacce.
+[scheda.colosseo.data3] Secondo Teodoreto, dopo il 404 l'imperatore Onorio vieta i combattimenti fra gladiatori. Alcuni studiosi ritengono che siano proseguiti fino agli anni Trenta del V secolo. Continuano comunque gli spettacoli di caccia agli animali.
 
 [scheda.colosseo.data4-443] Un terremoto lo danneggia (nel 442, secondo Paolo Diacono); seguono restauri, e altri nel 470.
 
@@ -1506,40 +1540,40 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.colosseo.data5] Restaurato dopo un altro terremoto a spese del senatore Decio Mario Venanzio Basilio. Fra la fine del V e l'inizio del VI secolo i sotterranei dell'arena vengono riempiti, forse del tutto.
 
-[scheda.colosseo.data6.quando] c. 500
+[scheda.colosseo.data6.quando] circa 500
 
-[scheda.colosseo.data6] Su un blocco di travertino è inciso il nome di un Geronzio, di rango senatorio, datato fra la fine del IV e l'inizio del VI secolo: forse è l'iscrizione di un posto riservato; per alcuni è invece il segno di un cantiere di smontaggio aperto sul lato sud mentre si danno ancora spettacoli. La lettura è discussa.
+[scheda.colosseo.data6] Su un blocco di travertino compare il nome di un Geronzio, di rango senatorio. L'iscrizione risale al periodo tra la fine del IV e l'inizio del VI secolo. Forse indicava il posto a lui riservato. Altri studiosi vi leggono la traccia di un cantiere per recuperare la pietra sul lato sud, mentre nell'arena si tenevano ancora spettacoli. La lettura è discussa.
 
 [scheda.colosseo.data7-523] Ultime cacce con animali di cui si ha notizia, sotto Teodorico.
 
-[scheda.colosseo.data8.quando] fine VI sec.
+[scheda.colosseo.data8.quando] fine del VI secolo
 
-[scheda.colosseo.data8] Cunicoli scavati per estrarre travertino e metallo; una vasca per spegnere la calce al primo ordine (dati non ritrovati nelle pubblicazioni di scavo). Dalla seconda metà dell'VIII secolo lo spoglio diventa massiccio.
+[scheda.colosseo.data8] Alcuni cunicoli servivano a estrarre travertino e metallo. Al primo livello è segnalata una vasca in cui si aggiungeva acqua alla calce, ma nelle pubblicazioni di scavo consultate non ne abbiamo trovato riscontro. Dalla seconda metà dell'VIII secolo si recuperano materiali su larga scala.
 
-[scheda.colosseo.data9-847] Secondo il Parco archeologico del Colosseo, dopo il terremoto di quest'anno cade ciò che restava del fronte sud, già in gran parte smontato, e forma un cumulo di travertini. Il Liber Pontificalis registra la scossa, sentita forte in città, ma non parla di danni.
+[scheda.colosseo.data9-847] Il Parco archeologico del Colosseo attribuisce al terremoto di quest'anno il crollo di ciò che restava del lato sud, già in gran parte smontato. A terra si accumularono i blocchi di travertino. Il Liber Pontificalis riferisce che la scossa fu avvertita con forza in città, ma non descrive danni.
 
-[scheda.colosseo.data10-1349] La tradizione attribuiva il crollo al terremoto del 1349. Per chi ha scavato il monumento (R. Rea), dopo la fine degli spettacoli il filo comune dei suoi usi è la demolizione: più che crollare, il Colosseo viene smontato a più riprese.
+[scheda.colosseo.data10-1349] La tradizione attribuiva il crollo al terremoto del 1349. Per R. Rea, che ha scavato il monumento, dopo la fine degli spettacoli il Colosseo, più che crollare, fu smontato a più riprese per recuperarne i materiali.
 
-[scheda.colosseo.certezza-A] In piedi l'anello esterno sul lato nord (33 arcate su 80, secondo il Parco) e gran parte degli anelli interni; il lato sud è caduto in un terremoto, quale è discusso. La pianta è completa.
+[scheda.colosseo.certezza-A] Sul lato nord restano 33 delle 80 arcate dell'anello esterno, secondo il Parco archeologico. Si conserva anche gran parte degli anelli interni e conosciamo l'intera pianta. Il lato sud è crollato in un terremoto, ma quale sia è discusso.
 
 
 ### Colosso del Sole
 
 [scheda.colosso.nome] Colosso del Sole
 
-[scheda.colosso.cosa] Statua colossale di bronzo alta circa 35 metri (120 piedi, secondo Svetonio), opera del greco Zenodoro. Fatta per Nerone, trasformata da Vespasiano in statua del Sole. È da lei, non dall'anfiteatro, che viene il nome «Colosseo». La figura qui è indicativa.
+[scheda.colosso.cosa] Il nome «Colosseo» deriva da questa statua colossale di bronzo, opera dello scultore greco Zenodoro. Secondo Svetonio era alta 120 piedi, circa 35 metri. In origine raffigurava Nerone. Vespasiano la fece trasformare in un'immagine del dio Sole. Nel modello l'aspetto è indicativo.
 
 [scheda.colosso.data1-128] Verso il 128 Adriano la sposta qui, più vicino all'anfiteatro, per far posto al tempio di Venere e Roma: senza smontarla, dice la Historia Augusta.
 
 [scheda.colosso.data2-192] Commodo ne aveva fatto un Ercole con il proprio volto; alla sua morte torna a essere il Sole.
 
-[scheda.colosso.data3-354] Ultima notizia sicura: il calendario del Cronografo segna al 6 giugno «colossus coronatur», la festa delle ghirlande; i cataloghi regionari del IV secolo lo elencano ancora nella regione IV.
+[scheda.colosso.data3-354] L'ultima testimonianza sicura viene dal calendario del Cronografo del 354. Il 6 giugno si celebrava la festa delle ghirlande, indicata con «colossus coronatur», cioè «il Colosso viene incoronato». Anche gli elenchi dei monumenti di Roma del IV secolo collocano la statua nel quarto distretto della città.
 
-[scheda.colosso.data4-455] Scomparso, non si sa quando né come: nessuna fonte ne racconta la fine. Qui sparisce con il sacco dei Vandali, che portano via i bronzi: è una nostra scelta. Il basamento resta fino al 1936, quando viene demolito per la nuova via dei Trionfi.
+[scheda.colosso.data4-455] Nessuna fonte racconta quando o come scomparve la statua. Nel modello scompare nel 455, quando i Vandali saccheggiano Roma e portano via i bronzi. La data è una scelta della ricostruzione. Il basamento rimase visibile fino al 1936, quando fu demolito per aprire la nuova via dei Trionfi.
 
-[scheda.colosso.data5.quando] VIII sec.?
+[scheda.colosso.data5.quando] VIII secolo?
 
-[scheda.colosso.data5] «Finché starà il Colosso starà Roma…»: il detto viene da una raccolta attribuita a torto a Beda, nota solo da un'edizione del 1563. Per molti studiosi parla della statua, già caduta da tempo, e non dell'anfiteatro, che ne prende il nome verso il Mille; altri lo leggono come un detto sul Colosseo.
+[scheda.colosso.data5] «Finché starà il Colosso starà Roma…». Il detto compare in una raccolta attribuita erroneamente a Beda, nota solo attraverso un'edizione del 1563. Per molti studiosi parla della statua, anche se già caduta da tempo, e non dell'anfiteatro, che si chiamerà Colosseo solo verso il Mille. Altri vi riconoscono l'anfiteatro.
 
 [scheda.colosso.certezza-B] Il basamento è stato visto e rilevato (le fondazioni, riscavate nel 1986, si vedono accanto al Colosseo); l'aspetto della statua viene dalle monete e dai testi, e qui è indicativo.
 
@@ -1548,15 +1582,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.metasudans.nome] Meta Sudans
 
-[scheda.metasudans.cosa] Grande fontana a forma di cono, come la meta di un circo, da cui l'acqua trasudava: rivestita di marmo, al punto d'incontro di cinque regioni della città.
+[scheda.metasudans.cosa] Fontana monumentale rivestita di marmo, nel punto in cui si incontravano cinque distretti della città. L'acqua filtrava lungo un cono simile alle «mete», i pilastri conici attorno a cui giravano i carri nelle corse.
 
 [scheda.metasudans.data1-96] Costruita sotto Domiziano, secondo un cronografo antico; i mattoni concordano.
 
-[scheda.metasudans.data2.quando] IV sec.
+[scheda.metasudans.data2.quando] IV secolo
 
 [scheda.metasudans.data2] Attorno al cono una vasca di ventuno metri di diametro, probabilmente dell'età di Costantino.
 
-[scheda.metasudans.data3-537] Senza acquedotti non può più funzionare: qui la si considera spenta da allora. È una deduzione.
+[scheda.metasudans.data3-537] La fontana dipendeva dagli acquedotti. Nel modello smette di funzionare quando vengono interrotti. La data è dedotta, senza una testimonianza diretta.
 
 [scheda.metasudans.data4-800] L'Itinerario di Einsiedeln la nomina ancora come punto di riferimento: «Meta sudante».
 
@@ -1569,40 +1603,40 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.circo.nome] Circo Massimo
 
-[scheda.circo.cosa] Il più grande edificio per spettacoli di Roma: le corse dei carri.
+[scheda.circo.cosa] Il più grande edificio per spettacoli di Roma ospitava le corse dei carri.
 
-[scheda.circo.data1-81] Il Senato erige un arco a tre fornici in onore di Tito al centro della curva orientale. L'altezza, qui, è ipotetica.
+[scheda.circo.data1-81] Il Senato fa erigere in onore di Tito un arco con tre passaggi al centro della curva orientale del circo. Nel modello l'altezza è ipotetica.
 
-[scheda.circo.data2-357] Costanzo II, in visita, assiste ai giochi. Nello stesso anno sulla spina si innalza un secondo obelisco, alto più di 32 metri, venuto da Tebe (Ammiano). Quello di Augusto, alto 24, stava già nel mezzo della spina.
+[scheda.circo.data2-357] Durante la visita a Roma Costanzo II assiste ai giochi. Nello stesso anno, secondo Ammiano, sulla «spina», il divisorio centrale della pista, si innalza un secondo obelisco, venuto da Tebe, alto più di 32 metri. Lì sorge già l'obelisco di Augusto, alto 24 metri.
 
-[scheda.circo.data3.quando] inizio VI sec.
+[scheda.circo.data3.quando] inizio del VI secolo
 
-[scheda.circo.data3] Cassiodoro, per Teodorico, descrive ancora i due obelischi, il maggiore dedicato al Sole e il minore alla Luna, i delfini che versano acqua nel canale e le mete a tre coni.
+[scheda.circo.data3] Scrivendo per Teodorico, Cassiodoro descrive ancora i due obelischi, il maggiore dedicato al Sole e il minore alla Luna. Ricorda anche le sculture di delfini che versavano acqua nel canale e, alle estremità della pista, i gruppi di tre coni attorno ai quali giravano i carri.
 
-[scheda.circo.data4-550] Ultime corse di cavalli di cui si ha notizia: a Roma vi assiste Totila, che ha ripreso la città (Procopio). Che si corressero qui è probabile, non detto.
+[scheda.circo.data4-550] Procopio ricorda che Totila, dopo aver riconquistato Roma, assiste alle corse dei cavalli. Sono le ultime corse documentate in città. È probabile che si siano svolte al Circo Massimo, ma Procopio non indica il luogo.
 
 [scheda.circo.data5.quando] dopo il 550
 
-[scheda.circo.data5] La valle non è più drenata e la pista si copre di fango e pozze: comincia l'interramento. Quanto deposito ci fosse nell'852 non lo sappiamo, e qui il suolo non si alza. Oggi la pista sta circa sei metri sotto il terreno.
+[scheda.circo.data5] Quando viene meno il drenaggio, sulla pista si accumulano fango e acqua. Col tempo il terreno si alza. Oggi la pista antica è circa sei metri sotto il livello del suolo. Il modello la mantiene alla stessa altezza perché ignoriamo quanto fango si fosse già depositato nell'852.
 
 [scheda.circo.data6.quando] data ignota
 
-[scheda.circo.data6] Quando e come caddero gli obelischi non si sa. Michele Mercati, che nel 1587 li vide dissotterrare, scrisse che erano stati abbattuti a mano: fori per le leve e fuochi accesi alla base (lo riferisce Lanciani). Qui restano in piedi fino all'852.
+[scheda.circo.data6] Non sappiamo quando né come caddero i due obelischi. Nel 1587 Michele Mercati assistette al loro ritrovamento. Secondo il suo racconto, riferito da Lanciani, i fori per le leve e le tracce di fuoco alla base indicavano che erano stati abbattuti intenzionalmente. Nel modello entrambi restano in piedi fino all'852.
 
-[scheda.circo.data7-1587] Ritrovati rotti in tre pezzi e sepolti a circa sette metri. Sisto V li fa rialzare: il maggiore nel 1588 al Laterano, l'altro nel 1589 in piazza del Popolo.
+[scheda.circo.data7-1587] Entrambi gli obelischi sono ritrovati a circa sette metri di profondità, ciascuno spezzato in tre. Sisto V fa rialzare il maggiore al Laterano nel 1588 e l'altro in piazza del Popolo nel 1589.
 
-[scheda.circo.certezza-B] La valle ne conserva la forma e la curva orientale è stata scavata; gradinate e spina sono ricostruite. Dell'arco di Tito sulla curva si conoscono pianta e misure dagli scavi; l'alzato è ipotetico.
+[scheda.circo.certezza-B] La valle conserva il profilo del circo e gli scavi hanno riportato alla luce la curva orientale. Le gradinate e il divisorio centrale della pista sono ricostruiti. Per l'arco di Tito gli scavi documentano la pianta e le misure alla base. Le parti in elevazione sono ipotetiche.
 
 
 ### Obelisco di Costanzo II
 
 [scheda.obelisco357.nome] Obelisco di Costanzo II
 
-[scheda.obelisco357.cosa] Obelisco egizio di granito rosso, alto 32,50 metri: il più alto arrivato a Roma, e l'ultimo. Fatto innalzare da Tutmosi III davanti al tempio di Ammone a Tebe; Costantino lo fa scendere lungo il Nilo fino ad Alessandria, suo figlio Costanzo II lo porta a Roma.
+[scheda.obelisco357.cosa] Alto 32,50 metri, questo obelisco di granito rosso fu l'ultimo a giungere a Roma e il più alto. Il faraone Tutmosi III lo aveva fatto innalzare davanti al tempio di Ammone a Tebe. Costantino ne ordinò il trasporto lungo il Nilo fino ad Alessandria. Suo figlio Costanzo II lo fece portare a Roma.
 
-[scheda.obelisco357.data1-357] Innalzato al centro del Circo Massimo con macchine e funi tirate da migliaia di uomini (Ammiano). In cima una sfera di bronzo dorato; colpita da un fulmine, viene sostituita da una fiaccola di bronzo dorato. Il punto preciso sulla spina non è noto: qui sta 35 metri a est di quello di Augusto.
+[scheda.obelisco357.data1-357] Ammiano racconta che migliaia di uomini, con funi e macchine di sollevamento, innalzarono l'obelisco al centro del Circo Massimo. Sulla sommità c'era una sfera di bronzo dorato. Dopo che un fulmine la colpì, fu sostituita da una fiaccola dello stesso materiale. Non conosciamo il punto esatto sul divisorio della pista. Nel modello l'obelisco sorge 35 metri a est di quello di Augusto.
 
-[scheda.obelisco357.data2.quando] inizio VI sec.
+[scheda.obelisco357.data2.quando] inizio del VI secolo
 
 [scheda.obelisco357.data2] Cassiodoro lo descrive ancora in piedi, dedicato al Sole.
 
@@ -1612,7 +1646,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.obelisco357.data4-1587] Ritrovato rotto in tre pezzi, a circa sette metri di profondità. Sisto V lo fa rialzare nel 1588 davanti al Laterano, circa quattro metri più corto.
 
-[scheda.obelisco357.certezza-A] Esiste ancora, davanti al Laterano: misure e forma sono certe. Il punto sulla spina è una nostra scelta, la fiaccola in cima viene dal racconto di Ammiano.
+[scheda.obelisco357.certezza-A] L'obelisco si trova oggi davanti al Laterano. Forma e misure sono note. La posizione scelta nel circo è indicativa. Per la fiaccola sulla sommità abbiamo seguito il racconto di Ammiano.
 
 
 ### Fori
@@ -1621,7 +1655,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.fori.cosa] Foro Romano e Fori imperiali: il centro politico e monumentale.
 
-[scheda.fori.data1-283] Un incendio devasta il Foro; Diocleziano ricostruisce la Curia.
+[scheda.fori.data1-283] Un incendio devasta il Foro. Diocleziano fa ricostruire la Curia, la sede del Senato.
 
 [scheda.fori.data2-357] Costanzo II, in visita, resta ammirato dal foro di Traiano.
 
@@ -1631,9 +1665,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.fori.data4] Un terremoto, secondo alcuni studi, danneggia il tempio della Pace e quello di Marte Ultore (non verificato sulle pubblicazioni di scavo).
 
-[scheda.fori.data5.quando] c. 500
+[scheda.fori.data5.quando] circa 500
 
-[scheda.fori.data5] Nel foro di Augusto il tempio di Marte Ultore viene smontato in età gota, fra la fine del V e l'inizio del VI secolo, da maestranze che recuperano e lavorano i materiali. Sulla faccia superiore di un rocchio di colonna è inciso il nome di un Decio: è stato proposto che indichi, come il Geronzio del Colosseo, il senatore che aveva il diritto di recuperare i materiali del monumento. Per le fasi tardoantiche del foro mancano però dati stratigrafici.
+[scheda.fori.data5] Tra la fine del V e l'inizio del VI secolo, quando l'Italia è governata dai Goti, alcuni artigiani smontano il tempio di Marte Ultore nel foro di Augusto per riutilizzarne i materiali. Sulla faccia superiore di un blocco di colonna è inciso il nome di un Decio. Si è proposto che indicasse, come il nome di un Geronzio al Colosseo, il senatore autorizzato al recupero. Per le fasi tardoantiche del foro mancano però dati di scavo stratigrafici.
 
 [scheda.fori.data6-527] Prima chiesa nell'area: Santi Cosma e Damiano.
 
@@ -1643,36 +1677,36 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.fori.data9-630] Intorno al 630 papa Onorio I trasforma la Curia del Senato nella chiesa di Sant'Adriano.
 
-[scheda.fori.data10.quando] VII-VIII sec.
+[scheda.fori.data10.quando] VII-VIII secolo
 
 [scheda.fori.data10] La navata laterale ovest della basilica Giulia diventa una chiesa.
 
-[scheda.fori.data11.quando] fine VIII-inizio IX sec.
+[scheda.fori.data11.quando] tra la fine dell'VIII e l'inizio del IX secolo
 
-[scheda.fori.data11] Tolto il lastricato di travertino del foro di Cesare: al suo posto due capanne e orti, poi una vigna; fra la fine del IX e il X secolo vi sorgono case a un piano.
+[scheda.fori.data11] Vengono rimosse le lastre di travertino che pavimentavano il foro di Cesare. Nella piazza sorgono due capanne e alcuni orti, poi una vigna. Tra la fine del IX e il X secolo vi si costruiscono case a un piano.
 
-[scheda.fori.data12.quando] metà IX sec.
+[scheda.fori.data12.quando] metà del IX secolo
 
 [scheda.fori.data12] Nel foro di Nerva sorgono due case signorili a due piani, una con un portico di blocchi di peperino di recupero, e una casupola.
 
 [scheda.fori.data13-847] Il crollo della basilica Ulpia, nel IX secolo, è attribuito a un terremoto: quello dell'801 o quello dell'847 (Galadini e altri, 2018). Le cronache non lo dicono.
 
-[scheda.fori.data14-850] Verso la metà del secolo vengono asportate in modo sistematico le lastre della piazza del foro di Traiano, rimasto in gran parte integro fino all'età carolingia: forse per farne calce per le mura leonine (è un'ipotesi).
+[scheda.fori.data14-850] Intorno alla metà del secolo si rimuovono sistematicamente le lastre di marmo che pavimentano il foro di Traiano. Fino all'età di Carlo Magno e dei suoi successori la piazza era rimasta in gran parte intatta. Forse il marmo viene cotto per ottenere la calce necessaria alle mura di Leone IV: è un'ipotesi.
 
-[scheda.fori.data15.quando] XI sec.
+[scheda.fori.data15.quando] XI secolo
 
 [scheda.fori.data15] Dopo la fine di questa storia la zona si impaluda: il villaggio nato nel foro di Cesare viene abbandonato e l'area prende il nome di «i Pantani», fino alla bonifica di fine Cinquecento.
 
-[scheda.fori.certezza-B] Misto. Sono in piedi la Curia, l'arco di Settimio Severo, la colonna e i mercati di Traiano, il tempio di Antonino e Faustina; piazze, basiliche e gli altri templi sono noti da scavi e dalla pianta marmorea severiana. Il tempio del Divo Traiano è un'ipotesi: non si sa nemmeno da che parte della colonna stesse.
+[scheda.fori.certezza-B] Alcuni monumenti sono ancora in piedi, tra cui la Curia, l'arco di Settimio Severo, la colonna e i mercati di Traiano e il tempio di Antonino e Faustina. Per piazze, basiliche e altri templi ci siamo basati sugli scavi e sull'antica pianta di Roma incisa nel marmo sotto Settimio Severo. Nel modello il tempio dedicato a Traiano dopo la sua morte è un'ipotesi: non sappiamo nemmeno da che parte della colonna stesse.
 
 
 ### Basilica Emilia
 
 [scheda.emilia.nome] Basilica Emilia
 
-[scheda.emilia.cosa] Basilica civile sul lato nord del Foro.
+[scheda.emilia.cosa] Grande edificio pubblico sul lato nord del Foro, destinato ad attività civili.
 
-[scheda.emilia.data1.quando] inizio V sec.
+[scheda.emilia.data1.quando] inizio del V secolo
 
 [scheda.emilia.data1] Il tetto brucia, probabilmente nel sacco del 410: sul pavimento sono rimaste le monete, le più tarde del 409.
 
@@ -1680,7 +1714,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.emilia.data2] L'aula non viene ricostruita e serve da cava di materiali. Secondo alcuni studiosi fu rifatto il portico di facciata; altri lo negano.
 
-[scheda.emilia.certezza-B] Restano fondazioni e pavimento; l'alzato è ricostruito.
+[scheda.emilia.certezza-B] Si conservano le fondazioni e il pavimento. La forma dell'edificio sopra il livello del suolo è ricostruita.
 
 
 ### Tempio di Giove Capitolino
@@ -1695,28 +1729,28 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.giove.data3-455] I Vandali asportano metà del tetto di bronzo dorato (Procopio).
 
-[scheda.giove.data4.quando] VI sec.
+[scheda.giove.data4.quando] VI secolo
 
 [scheda.giove.data4] Cassiodoro lo cita ancora fra le meraviglie di Roma.
 
 [scheda.giove.data5-571] Narsete, a quanto pare, ne porta via le statue, o molte di esse (Platner e Ashby, da una cronaca). Poi le fonti tacciono.
 
-[scheda.giove.certezza-C] Il sito è certo (fondazioni sotto i Musei Capitolini), ma misure e pianta sono discusse (le stime vanno da 50 a 74 metri di lato; qui ha la misura più citata, circa 54 per 62), e del tempio di età imperiale si sa pochissimo.
+[scheda.giove.certezza-C] Le fondazioni sotto i Musei Capitolini confermano la posizione del tempio. La pianta e le dimensioni restano discusse. Le stime per i lati variano tra 50 e 74 metri. Nel modello si usano le misure più citate, circa 54 per 62 metri. Del tempio di età imperiale si sa molto poco.
 
 
 ### Palazzi del Palatino
 
 [scheda.palatino.nome] Palazzi del Palatino
 
-[scheda.palatino.cosa] I palazzi degli imperatori.
+[scheda.palatino.cosa] Residenze degli imperatori romani sul colle Palatino.
 
-[scheda.palatino.data1.quando] dal III sec.
+[scheda.palatino.data1.quando] dal III secolo
 
 [scheda.palatino.data1] Gli imperatori vi abitano sempre più di rado.
 
 [scheda.palatino.data2-455] I Vandali portano via bronzi e arredi.
 
-[scheda.palatino.data3-500] Teodorico, in visita, assegna duecento libbre l'anno al restauro del palazzo e delle mura.
+[scheda.palatino.data3-500] Durante la visita a Roma Teodorico destina duecento libbre all'anno ai lavori per il palazzo e le mura.
 
 [scheda.palatino.data4-663] Costante II, l'ultimo imperatore a venire a Roma, resta in città dodici giorni; dove alloggi le fonti non lo dicono.
 
@@ -1724,18 +1758,18 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.palatino.data6-713] Ultima menzione del palazzo: si combatte sulla via Sacra «davanti al palazzo» (Liber Pontificalis).
 
-[scheda.palatino.certezza-B] Le piante della Domus Flavia e Augustana e dello stadio sono rilevate dagli scavi; gli alzati, il tempio di Apollo e il Settizodio (demolito nel 1588) sono ricostruiti.
+[scheda.palatino.certezza-B] Gli scavi documentano la pianta delle residenze imperiali chiamate Domus Flavia e Domus Augustana e quella dello stadio. Le parti in elevazione, il tempio di Apollo e il Settizodio, demolito nel 1588, sono ricostruiti.
 
 
 ### Pantheon
 
 [scheda.pantheon.nome] Pantheon
 
-[scheda.pantheon.cosa] Il tempio di tutti gli dèi, ricostruito da Adriano. Guarda a nord: davanti alla rotonda c'è un pronao di sedici colonne di granito, otto grigie in facciata e otto rosa dietro, e più avanti una piazza porticata. A sud gli si addossa l'aula detta basilica di Nettuno.
+[scheda.pantheon.cosa] Ricostruito da Adriano e dedicato a tutti gli dèi, il Pantheon ha l'ingresso rivolto a nord. Davanti alla sala circolare si trova il portico d'ingresso con sedici colonne di granito, otto grigie in facciata e otto rosa alle loro spalle. In antico il portico si affacciava su una piazza circondata da colonnati. A sud, addossata al Pantheon, si trova l'aula chiamata basilica di Nettuno.
 
 [scheda.pantheon.data1-126] Completato sotto Adriano.
 
-[scheda.pantheon.data2-392] Quando cessi il culto non è scritto. Nel 368 o 370 vi si leggono ancora le leggi imperiali; poi le fonti tacciono fino al 609. La chiusura nel 392 è una nostra deduzione.
+[scheda.pantheon.data2-392] Nel 368 o 370 nel Pantheon si leggono ancora pubblicamente le leggi imperiali. Le fonti tornano a citarlo solo nel 609. Non sappiamo quando cessò il culto pagano. Nel modello abbiamo scelto il 392, sulla base dei divieti imperiali.
 
 [scheda.pantheon.data3-609] Donato al papa dall'imperatore Foca, il 13 maggio è consacrato come Santa Maria ad Martyres: per questo è arrivato intero fino a noi.
 
@@ -1745,7 +1779,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.pantheon.data5] Papa Gregorio III lo ricopre di lastre di piombo.
 
-[scheda.pantheon.certezza-A] Intero.
+[scheda.pantheon.certezza-A] L'edificio si conserva per intero.
 
 
 ### Stadio di Domiziano
@@ -1756,9 +1790,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.domiziano.data1-86] Costruito da Domiziano per i giochi capitolini, istituiti in quest'anno.
 
-[scheda.domiziano.data2.quando] V sec.
+[scheda.domiziano.data2.quando] V secolo
 
-[scheda.domiziano.data2] Nel 357 è ancora fra le meraviglie che stupiscono Costanzo II; quando cada in disuso non si sa, e qui lo si assume verso il 450. Nelle arcate si insedieranno case e botteghe.
+[scheda.domiziano.data2] Nel 357 lo stadio è ancora tra i monumenti che stupiscono Costanzo II. Non sappiamo quando cessarono le gare. Nel modello lo stadio cade in disuso verso il 450. Più tardi, sotto le arcate sorgeranno case e botteghe.
 
 [scheda.domiziano.certezza-A] Piazza Navona ne conserva esattamente la pianta; resti delle arcate sotto il lato nord. Il numero degli ordini di arcate e l'altezza della facciata sono ricostruiti.
 
@@ -1771,9 +1805,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.traiano.data1-109] Inaugurate.
 
-[scheda.traiano.data2-537] Nel V secolo un prefetto urbano le adorna ancora di statue; restano senz'acqua dopo il taglio degli acquedotti. Più tardi, come in altre terme abbandonate, vi si seppelliscono i morti: le tombe nell'esedra non sono state ritrovate nelle pubblicazioni di scavo.
+[scheda.traiano.data2-537] Nel V secolo un prefetto di Roma fa ancora collocare statue nelle terme. Il taglio degli acquedotti le lascia senz'acqua. Più tardi molte terme abbandonate diventano luoghi di sepoltura. Nelle pubblicazioni lette non abbiamo trovato tombe in queste terme, né nell'esedra, lo spazio semicircolare.
 
-[scheda.traiano.certezza-B] In piedi alcune esedre e la cisterna delle Sette Sale; il corpo centrale è noto soprattutto dai disegni del Cinquecento.
+[scheda.traiano.certezza-B] Restano in piedi alcune sale semicircolari e la grande cisterna delle Sette Sale. Per la parte centrale delle terme le principali testimonianze sono i disegni del Cinquecento.
 
 
 ### Terme di Caracalla
@@ -1784,9 +1818,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.caracalla.data1-216] Inaugurate.
 
-[scheda.caracalla.data2.quando] VI sec.
+[scheda.caracalla.data2.quando] VI secolo
 
-[scheda.caracalla.data2] Bolli di mattoni attestano ancora un restauro sotto Teoderico.
+[scheda.caracalla.data2] I marchi impressi sui mattoni documentano ancora un restauro sotto Teodorico.
 
 [scheda.caracalla.data3-537] Senz'acqua dopo il taglio degli acquedotti; non riapriranno.
 
@@ -1810,13 +1844,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.massenzio.nome] Basilica di Massenzio
 
-[scheda.massenzio.cosa] L'ultima grande basilica civile.
+[scheda.massenzio.cosa] L'ultima grande basilica civile di Roma.
 
 [scheda.massenzio.data1-312] Iniziata da Massenzio nel 308, finita da Costantino. Costantino aggiunge un secondo ingresso con portico in mezzo al fianco sud, sulla via Sacra, e di fronte una seconda abside nel muro nord.
 
-[scheda.massenzio.data2.quando] VI sec.
+[scheda.massenzio.data2.quando] VI secolo
 
-[scheda.massenzio.data2] Non si sa quando smette di funzionare: qui lo si assume verso il 600.
+[scheda.massenzio.data2] Non sappiamo quando l'edificio cessò di essere usato. Il modello colloca l'abbandono intorno al 600.
 
 [scheda.massenzio.data3-847] Con il terremoto di quest'anno crollano probabilmente la navata sud e la volta centrale (Platner e Ashby). Il Liber Pontificalis registra la scossa ma non nomina la basilica.
 
@@ -1837,14 +1871,14 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.venere.data4-850] Papa Leone IV costruisce Santa Maria Nova fra le sue rovine.
 
-[scheda.venere.certezza-A] In piedi il podio e parte delle due celle con le absidi, che però sono il rifacimento di Massenzio dopo l'incendio del 307: la forma del tempio di Adriano è ricostruita, come i colonnati. Le misure del podio (145 x 100 m) e le dieci colonne in fronte sono di Platner e Ashby; le colonne sui fianchi e le altezze sono indicative.
+[scheda.venere.certezza-A] Si conservano il basamento e parte delle due sale di culto, con le loro pareti di fondo curve. Le sale, però, risalgono alla ricostruzione di Massenzio dopo l'incendio del 307. La forma del tempio di Adriano e i colonnati sono ricostruiti. Per il basamento, di 145 per 100 metri, e le dieci colonne della facciata, il modello segue Platner e Ashby. Le colonne laterali e le altezze sono indicative.
 
 
 ### Arco di Tito
 
 [scheda.arcotito.nome] Arco di Tito
 
-[scheda.arcotito.cosa] Arco a un solo fornice a cavallo della via Sacra, nel punto più alto fra il Foro e la valle del Colosseo: eretto dopo la morte di Tito (81) per la sua vittoria in Giudea.
+[scheda.arcotito.cosa] Arco con un solo passaggio sulla via Sacra, nel punto più alto tra il Foro e la valle del Colosseo. Viene eretto dopo la morte di Tito, avvenuta nell'81, per celebrare la sua vittoria in Giudea.
 
 [scheda.arcotito.data1-800] L'Itinerario di Einsiedeln lo nomina come «Arcus Titi et Vespasiani»: è ancora un punto di riferimento per chi attraversa la città.
 
@@ -1859,17 +1893,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.adriano.nome] Mausoleo di Adriano
 
-[scheda.adriano.cosa] Tomba di Adriano e dei suoi successori: un basamento quadrato di circa 84 metri di lato e 10 di altezza, un tamburo di 64 metri e in cima un giardino. Procopio vi vede statue di marmo, uomini e cavalli. La quadriga in cima e la forma dei gruppi agli angoli sono indicative.
+[scheda.adriano.cosa] La tomba di Adriano e dei suoi successori aveva una base quadrata di circa 84 metri di lato e 10 di altezza. Sopra sorgeva un corpo cilindrico di 64 metri di diametro, coronato da un giardino. Procopio vi descrive, in alto, statue di marmo di uomini e cavalli. Il carro a quattro cavalli sulla sommità è ricordato solo da una fonte tarda, Giovanni di Antiochia, e c'è chi ne dubita. Nel modello è un'ipotesi, come l'aspetto dei gruppi scultorei agli angoli.
 
 [scheda.adriano.data1-139] Completato.
 
-[scheda.adriano.data2.quando] III-V sec.
+[scheda.adriano.data2.quando] III-V secolo
 
 [scheda.adriano.data2] Inglobato nelle difese della città (sotto Aureliano o sotto Onorio: le fonti divergono).
 
-[scheda.adriano.data3-537] Gli assediati lanciano le statue sui Goti.
+[scheda.adriano.data3-537] Assediati dai Goti, i difensori fanno a pezzi la maggior parte delle statue e ne gettano i blocchi sugli assalitori (Procopio). Quando sia sparita la quadriga non si sa: nella scena scompare con le statue.
 
-[scheda.adriano.certezza-A] Tamburo e basamento sono dentro Castel Sant'Angelo; il coronamento è ricostruito.
+[scheda.adriano.certezza-A] Il basamento e il corpo cilindrico della tomba sono conservati dentro Castel Sant'Angelo. La parte superiore è ricostruita.
 
 
 ### Teatro di Marcello
@@ -1878,15 +1912,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.marcello.cosa] Teatro voluto da Augusto, fra il Campidoglio e il Tevere.
 
-[scheda.marcello.data1-370] Alcuni suoi travertini finiscono nel restauro del ponte Cestio: lo spoglio è già cominciato, ma il teatro resta in uso.
+[scheda.marcello.data1-370] Alcuni blocchi di travertino del teatro vengono riutilizzati per restaurare ponte Cestio. Lo spoglio è dunque già cominciato, mentre il teatro è ancora in uso.
 
 [scheda.marcello.data2-421] Il prefetto urbano vi colloca ancora statue: il teatro è in piedi e frequentato.
 
-[scheda.marcello.data3.quando] VI sec.?
+[scheda.marcello.data3.quando] VI secolo?
 
 [scheda.marcello.data3] Non si sa quando cessano gli spettacoli e comincia lo smontaggio sistematico: qui lo si assume dopo la guerra gotica.
 
-[scheda.marcello.certezza-A] In piedi un tratto della facciata curva con due ordini di arcate, dentro il palazzo costruito sopra; il terzo ordine, la scena e le gradinate sono perduti e ricostruiti sulla pianta nota.
+[scheda.marcello.certezza-A] Nel palazzo costruito sopra il teatro si conserva parte della facciata curva, con due livelli di arcate. Il terzo livello, la scena e le gradinate sono andati perduti. Nel modello sono ricostruiti sulla base della pianta conosciuta.
 
 
 ### San Giovanni in Laterano
@@ -1897,7 +1931,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.laterano.data1-318] Dedicata il 9 novembre secondo la tradizione liturgica; l'anno non è attestato: si propongono il 318 e il 324.
 
-[scheda.laterano.data2-410] I «barbari», quasi certamente i Goti di Alarico, portano via il grande fastigio d'argento donato da Costantino; Valentiniano III lo farà rifare (Liber Pontificalis).
+[scheda.laterano.data2-410] Il Liber Pontificalis attribuisce ai «barbari», quasi certamente i Goti di Alarico, il furto del fastigio, la grande struttura ornamentale d'argento donata da Costantino. Valentiniano III lo farà rifare.
 
 [scheda.laterano.data3-455] I Vandali asportano gli arredi; papa Leone I fa rifare i vasi sacri.
 
@@ -1918,20 +1952,20 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.pietro.data4-630] Papa Onorio I (625-638) copre tutta la basilica con le tegole di bronzo tolte al tempio di Venere e Roma, col permesso dell'imperatore Eraclio (Liber Pontificalis).
 
-[scheda.pietro.data5-727] Secondo una tradizione tarda nasce ora la Schola Saxonum, primo ospizio di una nazione di pellegrini; le fonti dicono solo che le scholae sorgono nel corso dell'VIII secolo.
+[scheda.pietro.data5-727] Una tradizione tarda colloca in questi anni la nascita della Schola Saxonum, la casa di accoglienza dei pellegrini anglosassoni. Sarebbe la prima organizzata per popolo d'origine. Le fonti permettono solo di datare la nascita di queste comunità all'VIII secolo.
 
 [scheda.pietro.data6-800] Carlo Magno vi è incoronato imperatore.
 
 [scheda.pietro.data7-846] Saccheggiata dai Saraceni: pochi anni dopo sarà chiusa dentro le mura leonine.
 
-[scheda.pietro.certezza-B] Demolita fra il 1506 e il 1606, ma rilevata prima (pianta di Alfarano, disegni del Cinquecento) e ritrovata negli scavi sotto la basilica. Cinque navate, transetto e quadriportico sono certi; le altezze sono indicative, e la fontana dell'atrio è quella descritta alla fine del IV secolo.
+[scheda.pietro.certezza-B] La basilica antica fu demolita tra il 1506 e il 1606. Ne conosciamo la pianta grazie ai disegni cinquecenteschi, tra cui quello di Alfarano, e agli scavi sotto l'edificio attuale. Sono documentati le cinque navate, il corpo trasversale e il cortile circondato da portici sui quattro lati. Le altezze sono indicative. La fontana dell'atrio segue una descrizione della fine del IV secolo.
 
 
 ### Obelisco vaticano
 
 [scheda.obeliscovaticano.nome] Obelisco vaticano
 
-[scheda.obeliscovaticano.cosa] Obelisco egizio senza geroglifici, portato a Roma da Caligola e messo sulla spina del circo di Nerone.
+[scheda.obeliscovaticano.cosa] Obelisco egizio senza geroglifici. Caligola lo fece portare a Roma e sistemare sul divisorio centrale del suo circo, noto come circo di Nerone.
 
 [scheda.obeliscovaticano.data1-40] Caligola lo fa portare da Alessandria e lo colloca nel circo; in origine veniva da Eliopoli, secondo Plinio.
 
@@ -1950,9 +1984,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.sole.data2-392] Vietati i culti pagani.
 
-[scheda.sole.data3.quando] VI sec.?
+[scheda.sole.data3.quando] VI secolo?
 
-[scheda.sole.data3] Secondo un testo bizantino tardo sulle antichità di Costantinopoli, otto colonne di porfido del tempio finirono in Santa Sofia. È una tradizione, non un documento.
+[scheda.sole.data3] Un testo bizantino tardo sulle antichità di Costantinopoli racconta che otto colonne di porfido del tempio furono riutilizzate nella basilica di Santa Sofia. Non sono note testimonianze dirette di quel trasferimento.
 
 [scheda.sole.certezza-C] Nessun resto sicuro: lo si colloca in questa zona per deduzione dalle fonti. Posizione e forma sono ipotesi.
 
@@ -1963,24 +1997,24 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcocostantino.cosa] Arco trionfale accanto al Colosseo.
 
-[scheda.arcocostantino.data1-315] Dedicato dal Senato per la vittoria su Massenzio, probabilmente il 25 luglio 315, all'inizio delle feste per i dieci anni di regno. Molti rilievi vengono da monumenti di Traiano, Adriano e Marco Aurelio: da dove li si prese è discusso. Anche gli otto Daci di marmo sull'attico, uno sopra ogni colonna, vengono quasi certamente dal foro di Traiano.
+[scheda.arcocostantino.data1-315] Il Senato dedica l'arco a Costantino per la vittoria su Massenzio, probabilmente il 25 luglio 315, all'inizio delle feste per i dieci anni di regno. Molte sculture in rilievo vengono da monumenti di Traiano, Adriano e Marco Aurelio. La loro provenienza precisa è discussa. Anche le otto statue di Daci in marmo sull'attico, una sopra ciascuna colonna, provengono quasi certamente dal foro di Traiano.
 
-[scheda.arcocostantino.certezza-A] Intero.
+[scheda.arcocostantino.certezza-A] L'arco si conserva per intero.
 
 
 ### Terme di Costantino
 
 [scheda.termecostantino.nome] Terme di Costantino
 
-[scheda.termecostantino.cosa] Le ultime grandi terme di Roma, sul Quirinale. Più piccole delle altre e senza il grande recinto: il corpo occupava tutto lo spazio fra due strade, e davanti, a nord, si apriva un'area chiusa da una linea curva. Le misure qui sono schematiche.
+[scheda.termecostantino.cosa] Le ultime grandi terme costruite a Roma sorgevano sul Quirinale. Più piccole degli altri grandi stabilimenti, occupavano tutto lo spazio tra due strade. A nord si apriva uno spiazzo con un lato curvo. Mancava il grande recinto tipico delle altre terme. Le misure del modello sono indicative.
 
 [scheda.termecostantino.data1-315] Costruite sotto Costantino, probabilmente prima del 315.
 
 [scheda.termecostantino.data2-443] Restaurate dal prefetto urbano dopo gravi danni.
 
-[scheda.termecostantino.data3.quando] VI sec.
+[scheda.termecostantino.data3.quando] VI secolo
 
-[scheda.termecostantino.data3] Non si sa quando chiudono; qui si assume il 537, come per le altre grandi terme.
+[scheda.termecostantino.data3] Non sappiamo quando chiusero queste terme. Nel modello smettono di funzionare nel 537, al momento del taglio degli acquedotti, come gli altri grandi stabilimenti.
 
 [scheda.termecostantino.certezza-B] Distrutte fra Seicento e Ottocento; la pianta è nota dai disegni di Palladio e di altri.
 
@@ -2000,15 +2034,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.lorenzo.nome] San Lorenzo, la basilica maggiore
 
-[scheda.lorenzo.cosa] La basilica maggiore di San Lorenzo: una grande aula cimiteriale a forma di circo, sulla via Tiburtina, accanto alla tomba del martire.
+[scheda.lorenzo.cosa] La basilica maggiore di San Lorenzo era una grande aula per le sepolture lungo la via Tiburtina, vicino alla tomba del martire. La pianta allungata, con un'estremità curva, ricorda quella di un circo romano.
 
-[scheda.lorenzo.data1.quando] IV sec.
+[scheda.lorenzo.data1.quando] IV secolo
 
 [scheda.lorenzo.data1] Fondata da Costantino; la cronologia precisa non è nota.
 
 [scheda.lorenzo.data2-580] Papa Pelagio II costruisce una chiesa più piccola direttamente sopra la tomba, una trentina di metri più a nord.
 
-[scheda.lorenzo.certezza-B] Scavata sotto il cimitero del Verano: lunga 98,60 metri e larga 35,50, con l'abside a ovest e una navatella che le gira attorno (Krautheimer). Sta a sud della basilica attuale, parallela, a circa 28 metri dal suo fianco, e la sua facciata cade all'altezza dell'ingresso sud della chiesa di Pelagio. Alzato e tetti sono ricostruiti per analogia con le altre basiliche a circo di Roma.
+[scheda.lorenzo.certezza-B] Gli scavi sotto il cimitero del Verano hanno rivelato una basilica lunga 98,60 metri e larga 35,50, con l'abside a ovest e una navata laterale che le gira intorno (Krautheimer). Era parallela alla basilica attuale, circa 28 metri più a sud. La facciata era all'altezza dell'ingresso meridionale della chiesa di Pelagio II. Per ricostruire pareti e tetti il modello si basa sul confronto con basiliche romane di pianta simile.
 
 
 ### San Lorenzo, la chiesa di Pelagio II
@@ -2019,9 +2053,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.lorenzopelagio.data1-580] Voluta da papa Pelagio II (579-590): nel mosaico dell'arco, del VI secolo, il papa compare accanto a Cristo e ai santi.
 
-[scheda.lorenzopelagio.data2.quando] XIII sec.
+[scheda.lorenzopelagio.data2.quando] XIII secolo
 
-[scheda.lorenzopelagio.data2] Onorio III abbatte l'abside e aggiunge una nuova navata verso ovest: la chiesa di Pelagio diventa il presbiterio della basilica attuale.
+[scheda.lorenzopelagio.data2] Papa Onorio III fa demolire l'abside e aggiunge una navata verso ovest. La chiesa di Pelagio diventa il presbiterio, la parte della basilica attuale riservata al clero.
 
 [scheda.lorenzopelagio.certezza-A] È in piedi: è il presbiterio rialzato della basilica attuale. Manca l'abside, a ovest, demolita nel Duecento e ritrovata negli scavi; le proporzioni del modello sono indicative.
 
@@ -2038,7 +2072,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.agnese.data3-640] Abbandonata, probabilmente già nel VII secolo, quando Onorio I costruisce la chiesa nuova sopra la tomba. Restano i muri del perimetro.
 
-[scheda.agnese.certezza-B] Della grande basilica a forma di circo restano i muri del perimetro e l'abside: posto, larghezza e orientamento vengono da lì (OpenStreetMap). Il contorno conservato è lungo 79 metri, ma il mausoleo addossato al fianco sporge oltre: la lunghezza di 98 metri è un'ipotesi. L'alzato è ricostruito per analogia con San Lorenzo.
+[scheda.agnese.certezza-B] Della grande basilica a forma di circo restano i muri perimetrali e l'abside. Permettono di stabilire posizione, larghezza e orientamento, riportati nel modello da OpenStreetMap. I muri conservati si estendono per 79 metri, ma il mausoleo addossato al fianco sporge oltre quel limite. La lunghezza totale di 98 metri è quindi ipotetica. L'aspetto delle parti in elevazione è ricostruito per confronto con San Lorenzo.
 
 
 ### Mausoleo di Costantina (Santa Costanza)
@@ -2058,7 +2092,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.agneseonorio.nome] Sant'Agnese, la chiesa di Onorio I
 
-[scheda.agneseonorio.cosa] La chiesa costruita da papa Onorio I direttamente sopra la tomba di Agnese, semisotterranea: si entrava dall'alto, sulle gallerie.
+[scheda.agneseonorio.cosa] Papa Onorio I fece costruire la chiesa direttamente sopra la tomba di Agnese. L'edificio era in parte sotto il livello del terreno e vi si accedeva dall'alto, attraverso le gallerie.
 
 [scheda.agneseonorio.data1-630] Onorio I (625-638) la costruisce «dalle fondamenta» e la orna d'argento e di mosaico (Liber Pontificalis); nel mosaico dell'abside compare accanto alla santa. È la chiesa che c'è ancora oggi.
 
@@ -2081,7 +2115,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.paolo.data4-801] Il terremoto della notte fra il 29 e il 30 aprile fa crollare gran parte del tetto con le sue travi; papa Leone III lo ricostruisce. Il Liber Pontificalis scrive «pridie kalendas maias», cioè il 30.
 
-[scheda.paolo.data5-846] Saccheggiata dai Saraceni secondo il Liber Pontificalis; per gli Annali di San Bertino quelli diretti qui furono fermati e uccisi dalla gente della Campagna.
+[scheda.paolo.data5-846] Secondo il Liber Pontificalis i Saraceni saccheggiarono anche San Paolo. Gli Annali di San Bertino danno una versione diversa. Gli abitanti della campagna romana avrebbero fermato e ucciso gli assalitori diretti alla basilica.
 
 [scheda.paolo.certezza-A] Bruciata nel 1823 e ricostruita sulla stessa pianta, con le stesse misure. Nel modello le larghezze delle cinque navate sono indicative.
 
@@ -2092,9 +2126,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.paolocostantino.cosa] La prima chiesa sulla tomba di Paolo, voluta da Costantino: piccola, con l'abside verso ovest, sopra la tomba, e l'ingresso dalla via Ostiense.
 
-[scheda.paolocostantino.data1.quando] IV sec.
+[scheda.paolocostantino.data1.quando] IV secolo
 
-[scheda.paolocostantino.data1] Costruita sotto Costantino (Liber Pontificalis, vita di Silvestro): l'anno non è noto, qui è il 324. Forma e misure sono ipotetiche: era «probabilmente a tre navate».
+[scheda.paolocostantino.data1] Il Liber Pontificalis, nella vita di papa Silvestro, attribuisce la chiesa a Costantino. L'anno esatto è ignoto. Nel modello compare nel 324. Anche forma e dimensioni sono incerte. La chiesa era «probabilmente a tre navate».
 
 [scheda.paolocostantino.data2-386] Demolita per far posto alla basilica dei tre imperatori, rivolta al contrario.
 
@@ -2109,7 +2143,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.sabina.data1-432] Fondata da Pietro d'Illiria sotto Celestino I (422-432) e finita sotto Sisto III. Le ventiquattro colonne vengono tutte da uno stesso edificio antico, non identificato.
 
-[scheda.sabina.certezza-A] La basilica del V secolo è conservata. Nel modello le navatelle hanno la proporzione consueta, circa metà della navata: non è una misura rilevata.
+[scheda.sabina.certezza-A] La basilica del V secolo si conserva ancora. Nel modello ciascuna navata laterale è larga circa la metà di quella centrale: è la proporzione consueta, non una misura rilevata.
 
 
 ### Santa Maria Maggiore
@@ -2118,9 +2152,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.mariamaggiore.cosa] Basilica sull'Esquilino dedicata a Maria.
 
-[scheda.mariamaggiore.data1-434] Costruita sotto papa Sisto III (432-440), dopo il concilio di Efeso. Il 5 agosto è la festa della dedicazione; l'anno non è noto, e il 434 qui è nominale.
+[scheda.mariamaggiore.data1-434] La basilica viene costruita dopo il concilio di Efeso, durante il pontificato di Sisto III (432-440). La dedicazione si celebra il 5 agosto, ma l'anno è sconosciuto. Il 434 è una data convenzionale scelta per il modello.
 
-[scheda.mariamaggiore.certezza-A] Le navate del V secolo sono conservate. Nel modello le navatelle hanno la proporzione consueta, circa metà della navata: non è una misura rilevata.
+[scheda.mariamaggiore.certezza-A] Le navate del V secolo si conservano ancora. Nel modello ciascuna navata laterale è larga circa la metà di quella centrale: è la proporzione consueta, non una misura rilevata.
 
 
 ### Santo Stefano Rotondo
@@ -2133,7 +2167,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.stefano.data2-475] Consacrata da papa Simplicio (468-483).
 
-[scheda.stefano.certezza-A] Il nucleo è in piedi: tamburo di 22,5 metri, ambulacro di 42. L'anello esterno (66 metri), demolito nel Quattrocento, è noto dagli scavi: quattro bracci più alti vi disegnavano una croce e fra l'uno e l'altro c'erano un corridoio e un cortile. Ne resta il braccio di nord-est; le altezze dell'anello sono indicative.
+[scheda.stefano.certezza-A] Si conservano il corpo cilindrico centrale, di 22,5 metri di diametro, e il corridoio circolare che lo circonda, di 42 metri di diametro. Gli scavi documentano anche un anello esterno di 66 metri, demolito nel Quattrocento. Quattro bracci più alti formavano una croce. Tra un braccio e l'altro c'erano un corridoio e un cortile. Resta il braccio di nord-est. Le altezze dell'anello esterno sono indicative.
 
 
 ### Santi Cosma e Damiano
@@ -2147,9 +2181,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.cosma.certezza-A] L'aula e la rotonda sono in piedi.
 
 
-### Colonna di Foca
+### Colonna dell'imperatore Foca
 
-[scheda.foca.nome] Colonna di Foca
+[scheda.foca.nome] Colonna dell'imperatore Foca
 
 [scheda.foca.cosa] Colonna onoraria nella piazza del Foro.
 
@@ -2166,7 +2200,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.monasteripietro.data1-450] Fondato da papa Leone I (Liber Pontificalis); che sia quello dei Santi Giovanni e Paolo, a nord, è un'identificazione moderna.
 
-[scheda.monasteripietro.data2-732] I monasteri di San Pietro sono ormai tre; il quarto, Santo Stefano Minore, arriva nella seconda metà del secolo. I monaci cantano in basilica le vigilie e le ore di ogni giorno.
+[scheda.monasteripietro.data2-732] Accanto a San Pietro esistono ormai tre monasteri. Nella seconda metà del secolo se ne aggiunge un quarto, Santo Stefano Minore. I monaci si riuniscono in basilica per cantare le preghiere notturne e quelle che scandiscono le ore del giorno.
 
 [scheda.monasteripietro.certezza-C] Si conosce il sito approssimativo, non la forma.
 
@@ -2190,9 +2224,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.andreapietro.nome] Rotonda di Sant'Andrea
 
-[scheda.andreapietro.cosa] Mausoleo rotondo sul fianco sud di San Pietro, lungo la spina del circo di Nerone, più antico della basilica.
+[scheda.andreapietro.cosa] Tomba circolare più antica della basilica di San Pietro. Sorgeva sul suo fianco sud, lungo il divisorio centrale del circo di Nerone.
 
-[scheda.andreapietro.data1.quando] III sec.
+[scheda.andreapietro.data1.quando] III secolo
 
 [scheda.andreapietro.data1] Costruito, secondo la datazione corrente, all'epoca di Caracalla.
 
@@ -2205,7 +2239,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.petronilla.nome] Mausoleo di Onorio (Santa Petronilla)
 
-[scheda.petronilla.cosa] Mausoleo rotondo della famiglia di Onorio, attaccato alla testata sud del transetto di San Pietro.
+[scheda.petronilla.cosa] Tomba circolare della famiglia dell'imperatore Onorio, addossata all'estremità meridionale del braccio trasversale della basilica di San Pietro.
 
 [scheda.petronilla.data1-400] Costruito per la casa di Teodosio: vi sono sepolti Onorio (morto nel 423) e le due mogli, Maria e Termanzia, figlie di Stilicone. L'anno di costruzione non è noto con precisione.
 
@@ -2220,7 +2254,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.campanilepietro.cosa] La torre delle campane all'ingresso dell'atrio di San Pietro: a Roma è la prima di cui parli una fonte.
 
-[scheda.campanilepietro.data1-757] Papa Stefano II (752-757) fa costruire «sopra la basilica» una torre, in parte dorata e in parte rivestita d'argento, e vi mette tre campane, «per chiamare il clero e il popolo all'ufficio di Dio» (Liber Pontificalis; il passo manca in una parte dei manoscritti).
+[scheda.campanilepietro.data1-757] Il Liber Pontificalis attribuisce a papa Stefano II (752-757) la costruzione «sopra la basilica» di una torre in parte dorata e in parte rivestita d'argento. Vi colloca tre campane «per chiamare il clero e il popolo all'ufficio di Dio», cioè alla preghiera. Il passo manca in una parte dei manoscritti.
 
 [scheda.campanilepietro.data2.quando] dopo il 757
 
@@ -2233,9 +2267,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.porticopietro.nome] Portico dei pellegrini
 
-[scheda.porticopietro.cosa] Via coperta da ponte Elio alla basilica, per i pellegrini.
+[scheda.porticopietro.cosa] Strada coperta che accompagnava i pellegrini da ponte Elio, l'attuale ponte Sant'Angelo, fino alla basilica di San Pietro.
 
-[scheda.porticopietro.data1.quando] fine IV sec.
+[scheda.porticopietro.data1.quando] fine del IV secolo
 
 [scheda.porticopietro.data1] Costruita probabilmente allora (secondo altri verso il 500): circa novecento metri coperti.
 
@@ -2265,7 +2299,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.scholae.data1-727] Una tradizione più tarda la attribuisce al re Ine del Wessex, venuto a Roma verso il 726.
 
-[scheda.scholae.data2-799] Prima notizia certa: con Franchi, Frisoni e Longobardi accoglie papa Leone III al suo ritorno. Da qui il nome «Borgo», dal germanico burg, che compare nelle fonti sotto Pasquale I (817-824).
+[scheda.scholae.data2-799] La prima testimonianza sicura della schola riguarda il ritorno di Leone III a Roma. Ad accoglierlo ci sono le comunità dei Sassoni, dei Franchi, dei Frisoni e dei Longobardi. Dalle scholae viene il nome del quartiere, «Borgo», dal germanico burg, che compare nelle fonti durante il pontificato di Pasquale I (817-824).
 
 [scheda.scholae.data3-847] Un incendio brucia le case di Sassoni e Longobardi e arriva al portico della basilica; un altro, sotto Pasquale I, aveva già distrutto il borgo dei Sassoni.
 
@@ -2276,7 +2310,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.scholae2.nome] Scholae di Frisoni, Franchi e Longobardi
 
-[scheda.scholae2.cosa] Ospizi delle altre nazioni: alloggio, chiesa e cimitero per i pellegrini di uno stesso popolo.
+[scheda.scholae2.cosa] Ciascuna comunità, chiamata schola, offriva ai pellegrini dello stesso popolo un alloggio, una chiesa e un cimitero.
 
 [scheda.scholae2.data1-799] Prima notizia certa: Franchi, Frisoni e Longobardi, con i Sassoni, accolgono papa Leone III al suo ritorno. Quando siano nate non si sa. Il sito di quella dei Longobardi è discusso.
 
@@ -2291,11 +2325,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.mulini.cosa] Mulini montati su barche ancorate nella corrente del Tevere.
 
-[scheda.mulini.data1-537] Tagliati gli acquedotti, i mulini del Gianicolo si fermano: Belisario fa legare coppie di barche subito sotto un ponte, con la ruota sospesa in mezzo (Procopio). Il ponte è probabilmente quello dove oggi c'è ponte Sisto.
+[scheda.mulini.data1-537] Quando i Goti interrompono gli acquedotti, i mulini ad acqua del Gianicolo si fermano. Secondo Procopio, Belisario fa legare le barche a coppie subito a valle di un ponte. Tra le due barche una ruota immersa nella corrente aziona la macina. Probabilmente il ponte si trovava dove oggi sorge ponte Sisto.
 
-[scheda.mulini.data2.quando] VIII-IX sec.
+[scheda.mulini.data2.quando] VIII-IX secolo
 
-[scheda.mulini.data2] I mulini del Gianicolo tornano a macinare quando Adriano I ripara l'acquedotto che li muove, rotto da vent'anni (Liber Pontificalis). Che funzionassero già nel VII secolo lo dice un solo manoscritto, per papa Onorio I. Per i mulini sul fiume in questi secoli mancano documenti, ma resteranno sul Tevere fino al 1870.
+[scheda.mulini.data2] Secondo il Liber Pontificalis, i mulini del Gianicolo riprendono a macinare quando papa Adriano I ripara l'acquedotto che li alimenta, interrotto da vent'anni. Un solo manoscritto li ricorda già nel VII secolo, al tempo di Onorio I. Per i mulini galleggianti mancano testimonianze relative a questi secoli. Mulini di questo tipo resteranno sul Tevere fino al 1870.
 
 [scheda.mulini.certezza-C] Li descrive Procopio; numero, posizione precisa e aspetto sono ipotesi.
 
@@ -2310,9 +2344,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.casenerva.data1] Il foro è ridotto a una strada: sul pavimento spogliato restano i solchi dei carri.
 
-[scheda.casenerva.data2-850] Verso la metà del IX secolo sorgono due case a due piani e una casupola. Una delle due ha un ampio portico di grossi blocchi di peperino di recupero. Le misure della maggiore (circa dieci metri per diciannove), il piano superiore in mattoni e la scala esterna di marmo non sono stati ritrovati nelle pubblicazioni.
+[scheda.casenerva.data2-850] Verso la metà del IX secolo vengono costruite due case a due piani e una casupola. Una delle due case ha un ampio portico realizzato con grandi blocchi di peperino, una pietra vulcanica, recuperati da edifici precedenti. Nelle pubblicazioni consultate non abbiamo trovato conferma delle dimensioni attribuite alla casa maggiore (circa 10 per 19 metri), del piano superiore in mattoni e della scala esterna in marmo.
 
-[scheda.casenerva.data3.quando] XI-XII sec.
+[scheda.casenerva.data3.quando] XI-XII secolo
 
 [scheda.casenerva.data3] L'area viene trasformata e le case scompaiono.
 
@@ -2323,54 +2357,54 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.balbo.nome] Teatro e Crypta di Balbo
 
-[scheda.balbo.cosa] Il teatro di Balbo, del 13 a.C., con il grande cortile porticato dietro la scena, la crypta, chiuso a est da un'esedra. Gli scavi cominciati nel 1981 ne hanno seguito la vita, strato per strato, fino al Medioevo: è il luogo dove si vede meglio come la città antica diventa un'altra. Misure del portico e forma dell'esedra qui sono indicative.
+[scheda.balbo.cosa] Il teatro di Balbo, del 13 a.C., aveva alle spalle del palcoscenico un grande cortile porticato, la crypta. A est lo chiudeva un ambiente semicircolare, l'esedra. Dal 1981 gli archeologi hanno studiato gli strati che si sono accumulati fino al Medioevo. È il luogo dove si vede meglio come la città antica diventa un'altra: dagli spettacoli alle officine e alle sepolture, fino agli edifici medievali. Nel modello le dimensioni del portico e la forma dell'esedra sono indicative.
 
-[scheda.balbo.data1.quando] prima metà del V sec.
+[scheda.balbo.data1.quando] prima metà del V secolo
 
-[scheda.balbo.data1] Teatro e portico smettono di funzionare: fogne e pavimenti si riempiono di detriti, nell'esedra lavora un forno, forse da vetro. Qui l'abbandono è messo verso il 430.
+[scheda.balbo.data1] Il teatro e il portico cadono in disuso. I detriti coprono i pavimenti e ostruiscono le fogne. Nell'esedra entra in funzione un forno, forse per la lavorazione del vetro. Il modello colloca l'abbandono del teatro e del portico intorno al 430.
 
-[scheda.balbo.data2.quando] fine V-VI sec.
+[scheda.balbo.data2.quando] tra la fine del V e il VI secolo
 
 [scheda.balbo.data2] Nell'esedra, in piena città, si scavano alcune povere tombe.
 
-[scheda.balbo.data3.quando] fine VII sec.
+[scheda.balbo.data3.quando] fine del VII secolo
 
-[scheda.balbo.data3] L'esedra diventa lo scarico di un'officina di oggetti di lusso, forse del vicino monastero di San Lorenzo in Pallacinis: centomila cocci, e l'ottanta per cento dei materiali viene ancora da fuori, soprattutto dall'Africa e dall'Oriente.
+[scheda.balbo.data3] Nell'esedra si accumulano gli scarti di un'officina che produce oggetti di lusso, forse legata al vicino monastero di San Lorenzo in Pallacinis. Gli scavi restituiscono 100.000 frammenti. L'80% dei materiali proviene ancora da fuori Roma, soprattutto dall'Africa e dall'Oriente.
 
-[scheda.balbo.data4.quando] prima metà dell'VIII sec.
+[scheda.balbo.data4.quando] prima metà dell'VIII secolo
 
-[scheda.balbo.data4] Anfore e ceramiche d'oltremare spariscono dagli strati; le sostituiscono prodotti dell'Italia meridionale. È qui che si misura la fine dei commerci mediterranei di Roma.
+[scheda.balbo.data4] Negli strati di questo periodo le ceramiche e le anfore d'oltremare lasciano il posto a prodotti dell'Italia meridionale. È qui che si misura la fine dei commerci mediterranei di Roma.
 
-[scheda.balbo.data5-750] Nell'VIII secolo (fra VIII e IX secondo altri) una calcara brucia nell'esedra i marmi del complesso.
+[scheda.balbo.data5-750] Nell'esedra entra in funzione una fornace che cuoce il marmo degli edifici per ricavarne calce. La si data all'VIII secolo o, secondo altri, tra l'VIII e il IX.
 
-[scheda.balbo.data6.quando] IX sec.
+[scheda.balbo.data6.quando] IX secolo
 
 [scheda.balbo.data6] Al centro del vecchio portico sorge la chiesa di Santa Maria Domine Rose; sulle rovine del teatro, più tardi, il «castello d'oro», attestato nel 1192.
 
-[scheda.balbo.certezza-B] Teatro dalla pianta marmorea e dalle cantine dei palazzi; portico ed esedra dagli scavi, e l'esedra si visita nel museo.
+[scheda.balbo.certezza-B] La pianta del teatro si ricava dall'antica mappa di Roma incisa nel marmo e dai resti nelle cantine dei palazzi. Gli scavi documentano il portico e l'esedra, oggi visitabile nel museo.
 
 
 ### Emporio e Porticus Aemilia
 
 [scheda.emporio.nome] Emporio e Porticus Aemilia
 
-[scheda.emporio.cosa] Il porto fluviale di Roma sotto l'Aventino: le banchine dell'Emporio, il grande edificio a cinquanta navate detto Porticus Aemilia (487 metri per 60) e, dietro, i magazzini di Galba. Che l'edificio sia la Porticus Aemilia è discusso: per alcuni erano le darsene della flotta. Posizione dei magazzini ed estensione delle banchine qui sono indicative.
+[scheda.emporio.cosa] Ai piedi dell'Aventino si estendeva il porto fluviale di Roma. Dietro le banchine dell'Emporio sorgeva un edificio di cinquanta navate lungo 487 metri e largo 60, di solito identificato con la Porticus Aemilia, e alle sue spalle i magazzini di Galba. Per alcuni studiosi l'edificio serviva invece da ricovero per le navi della flotta. Nel modello la posizione dei magazzini e la lunghezza delle banchine sono indicative.
 
 [scheda.emporio.data1.quando] 193-174 a.C.
 
 [scheda.emporio.data1] Si costruiscono il porto e il portico (Livio).
 
-[scheda.emporio.data2.quando] fine I-inizio II sec.
+[scheda.emporio.data2.quando] tra la fine del I e l'inizio del II secolo
 
 [scheda.emporio.data2] Parte delle navate viene divisa in magazzini: in una si è trovato farro carbonizzato.
 
 [scheda.emporio.data3-271] Le mura di Aureliano corrono lungo la riva, sopra le banchine; i magazzini scavati restano in uso almeno fino al V secolo.
 
-[scheda.emporio.data4.quando] V-VI sec.
+[scheda.emporio.data4.quando] V-VI secolo
 
-[scheda.emporio.data4] Gli ambienti scavati si svuotano, probabilmente all'inizio del V secolo, e fra i muri si seppelliscono morti dentro anfore africane. Qui l'abbandono è messo verso il 430: una nostra scelta dentro quell'intervallo.
+[scheda.emporio.data4] Gli ambienti riportati alla luce si svuotano probabilmente all'inizio del V secolo. Fra i muri si comincia a seppellire i morti usando anfore africane come contenitori funerari. Per la ricostruzione abbiamo scelto il 430 circa come data indicativa dell'abbandono.
 
-[scheda.emporio.data5.quando] prima metà del VII sec.
+[scheda.emporio.data5.quando] prima metà del VII secolo
 
 [scheda.emporio.data5] Nella navata scavata crollano le volte; fra le macerie qualcuno alza un recinto di pietre a secco, forse per gli animali.
 
@@ -2385,21 +2419,21 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.testaccio.nome] Monte Testaccio
 
-[scheda.testaccio.cosa] Collina artificiale fatta di cocci: le anfore dell'olio sbarcate al porto sul Tevere e rotte qui, disposte a terrazze. Alta 35 metri, con quasi un chilometro di giro e i resti stimati di 53 milioni di anfore; in antico era probabilmente più alta.
+[scheda.testaccio.cosa] Il Monte Testaccio è una collina artificiale formata dai frammenti delle anfore che portavano l'olio al porto sul Tevere. Una volta svuotate, le anfore venivano rotte e i cocci disposti a terrazze. La collina è alta 35 metri e misura quasi un chilometro alla base, lungo il perimetro. Si stima che contenga i resti di 53 milioni di anfore. In antico era probabilmente più alta.
 
-[scheda.testaccio.data1.quando] I sec. a.C.?
+[scheda.testaccio.data1.quando] I secolo a.C.?
 
 [scheda.testaccio.data1] Non si sa quando comincia lo scarico: gli strati più bassi non sono stati scavati. Quelli datati vanno dal 140 al 250 circa.
 
-[scheda.testaccio.data2.quando] fine II sec.
+[scheda.testaccio.data2.quando] fine del II secolo
 
-[scheda.testaccio.data2] Il momento di massimo: fino a 130.000 anfore l'anno, quasi tutte dalla Betica, nel sud della Spagna, per l'olio distribuito dallo Stato.
+[scheda.testaccio.data2] Nel periodo di maggiore attività si scaricano qui fino a 130.000 anfore l'anno. Quasi tutte provenivano dalla Betica, nel sud dell'attuale Spagna, e portavano l'olio distribuito dallo Stato.
 
 [scheda.testaccio.data3.quando] dopo il 260
 
 [scheda.testaccio.data3] Lo scarico si ferma. L'olio viaggia ormai in contenitori diversi, e forse cambiano gli approdi: la ragione non è certa.
 
-[scheda.testaccio.data4.quando] poi
+[scheda.testaccio.data4.quando] dopo il 260 circa
 
 [scheda.testaccio.data4] La zona attorno resta dentro le mura ma si svuota. Che sul monte crescesse l'erba già in questi secoli è una nostra supposizione; nel Medioevo vi si terranno i giochi del carnevale.
 
@@ -2410,7 +2444,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.colonnamarco.nome] Colonna di Marco Aurelio
 
-[scheda.colonnamarco.cosa] Colonna coclide per le vittorie di Marco Aurelio sui Marcomanni e sui Sarmati: cento piedi romani, quasi 30 metri, con il fregio a spirale delle campagne e una scala interna di 200 gradini. Imita quella di Traiano.
+[scheda.colonnamarco.cosa] La colonna celebra le vittorie di Marco Aurelio sui Marcomanni e sui Sarmati. Come sulla colonna di Traiano, una fascia scolpita sale a spirale e racconta le campagne militari. La colonna è alta cento piedi romani, quasi 30 metri, e contiene una scala di 200 gradini.
 
 [scheda.colonnamarco.data1.quando] 176-193
 
@@ -2418,9 +2452,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.colonnamarco.data2-193] Un'iscrizione ricorda la casetta costruita per il custode della colonna.
 
-[scheda.colonnamarco.data3.quando] X sec.
+[scheda.colonnamarco.data3.quando] X secolo
 
-[scheda.colonnamarco.data3] Papi Agapito II e Giovanni XII la danno ai monaci di San Silvestro in Capite: per questo si conserva meglio di altri monumenti. Oggi è in piazza Colonna, con la statua di san Paolo messa da Sisto V nel 1589.
+[scheda.colonnamarco.data3] I papi Agapito II e Giovanni XII affidano la colonna ai monaci di San Silvestro in Capite. Questo ne favorisce la conservazione. Oggi si trova in piazza Colonna. Sulla sommità c'è la statua di san Paolo che Sisto V fece collocare nel 1589.
 
 [scheda.colonnamarco.certezza-A] In piedi al suo posto; il piedistallo antico è rifatto e in parte interrato, qui è indicativo.
 
@@ -2429,7 +2463,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.orologio.nome] Orologio di Augusto
 
-[scheda.orologio.cosa] Nel Campo Marzio settentrionale Augusto fa del suo obelisco, alto quasi 22 metri, l'ago di una grande meridiana: a mezzogiorno l'ombra cade su un pavimento di marmo con le linee di bronzo dorato. Accanto, l'Ara Pacis e, più tardi, la colonna di Antonino Pio.
+[scheda.orologio.cosa] Nel Campo Marzio settentrionale Augusto fa usare un obelisco alto quasi 22 metri come indicatore di una grande meridiana. A mezzogiorno l'ombra si proietta su un pavimento di marmo segnato da linee di bronzo dorato. Nelle vicinanze sorge l'Ara Pacis, l'altare della Pace. Più tardi si aggiunge la colonna di Antonino Pio.
 
 [scheda.orologio.data1.quando] 10 a.C.
 
@@ -2441,11 +2475,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.orologio.data3-161] Marco Aurelio e Lucio Vero innalzano la colonna di granito di Antonino Pio, alta 14,75 metri.
 
-[scheda.orologio.data4.quando] VIII sec.
+[scheda.orologio.data4.quando] VIII secolo
 
-[scheda.orologio.data4] L'Itinerario di Einsiedeln vede ancora l'obelisco in piedi. Cade, rotto, in un anno che non si conosce: i pezzi si trovano nel 1502 e nel 1748; dal 1792 è in piazza di Montecitorio. L'Ara Pacis è ricomposta nel 1938 sul Lungotevere.
+[scheda.orologio.data4] L'Itinerario di Einsiedeln ricorda l'obelisco ancora in piedi. Non sappiamo quando cadde e si spezzò. I frammenti furono ritrovati nel 1502 e nel 1748. Dal 1792 l'obelisco si trova in piazza di Montecitorio. L'Ara Pacis è stata ricomposta sul Lungotevere nel 1938.
 
-[scheda.orologio.certezza-B] Obelisco ritrovato sotto piazza del Parlamento e Ara Pacis sotto palazzo Fiano: luoghi certi entro qualche decina di metri. La meridiana è nota da scavi parziali, larghezza e forma del pavimento sono ipotetiche; la colonna di Antonino Pio è nella posizione di it.wikipedia.
+[scheda.orologio.certezza-B] L'obelisco fu ritrovato sotto piazza del Parlamento e l'Ara Pacis sotto palazzo Fiano. La loro posizione è nota con un margine di qualche decina di metri. Della meridiana sono stati scavati solo alcuni tratti, perciò la larghezza e la forma del pavimento restano ipotetiche. Per la posizione della colonna di Antonino Pio il modello segue la voce italiana di Wikipedia.
 
 
 ### Obelisco degli Horti Sallustiani
@@ -2454,24 +2488,24 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.obeliscosallustiano.cosa] Obelisco fatto a Roma, alto 13 metri, che copia i geroglifici di quello di Ramesse II al Circo Massimo. Ornava gli Horti Sallustiani, i giardini imperiali fra Pincio e Quirinale.
 
-[scheda.obeliscosallustiano.data1.quando] VIII sec.
+[scheda.obeliscosallustiano.data1.quando] VIII secolo
 
 [scheda.obeliscosallustiano.data1] È ancora in piedi per l'Itinerario di Einsiedeln.
 
-[scheda.obeliscosallustiano.data2.quando] XV sec.
+[scheda.obeliscosallustiano.data2.quando] XV secolo
 
 [scheda.obeliscosallustiano.data2] Giace a terra in due pezzi, accanto alla sua base.
 
 [scheda.obeliscosallustiano.data3-1789] Pio VI lo innalza davanti a Trinità dei Monti, dove sta oggi. La base, ritrovata nel 1843, è sul Campidoglio.
 
-[scheda.obeliscosallustiano.certezza-B] L'obelisco esiste; il punto è quello del ritrovamento della base (1843), fra quattro vie, ed è approssimato.
+[scheda.obeliscosallustiano.certezza-B] L'obelisco si conserva. Nel modello è collocato approssimativamente nell'area, fra quattro strade, in cui fu ritrovata la base nel 1843.
 
 
 ### Piramide Cestia
 
 [scheda.piramide.nome] Piramide Cestia
 
-[scheda.piramide.cosa] Tomba di Gaio Cestio a forma di piramide, alta 36 metri, di cementizio rivestito di marmo bianco, accanto alla via Ostiense.
+[scheda.piramide.cosa] Tomba a forma di piramide costruita per Gaio Cestio accanto alla via Ostiense. Alta 36 metri, ha una struttura in calcestruzzo romano rivestita di marmo bianco.
 
 [scheda.piramide.data1.quando] 18-12 a.C.
 
@@ -2481,7 +2515,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.piramide.data2] Diventa un tratto delle mura Aureliane, accanto alla porta Ostiense.
 
-[scheda.piramide.data3.quando] medioevo
+[scheda.piramide.data3.quando] Medioevo
 
 [scheda.piramide.data3] La si crede la tomba di Remo.
 
@@ -2492,7 +2526,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.castrapretorio.nome] Castra Praetoria
 
-[scheda.castrapretorio.cosa] La caserma della guardia pretoria: un rettangolo di 440 metri per 380, con mura merlate e porte a torri, sul punto più alto della città.
+[scheda.castrapretorio.cosa] Caserma dei pretoriani, la guardia dell'imperatore. Sorgeva sul punto più alto della città. Il recinto rettangolare, di 440 per 380 metri, aveva mura merlate e porte difese da torri.
 
 [scheda.castrapretorio.data1.quando] 21-23
 
@@ -2504,7 +2538,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.castrapretorio.data3-312] Costantino scioglie i pretoriani, che avevano combattuto per Massenzio, e abbatte i muri interni del campo.
 
-[scheda.castrapretorio.certezza-A] Tre lati sono ancora nelle mura Aureliane e danno spigoli e misure; dei muri interni e delle camere restano tratti scavati. Porta e spessori sono indicativi.
+[scheda.castrapretorio.certezza-A] Tre lati della caserma si conservano nelle mura Aureliane e permettono di misurare il recinto. Gli scavi hanno rivelato tratti dei muri interni e degli alloggi. Nel modello la forma della porta e gli spessori dei muri sono indicativi.
 
 
 ### Terme di Nerone e di Alessandro
@@ -2517,7 +2551,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.termenerone.data1] Costruite da Nerone.
 
-[scheda.termenerone.data2-227] Rifatte da Alessandro Severo: da allora si chiamano Alessandrine.
+[scheda.termenerone.data2-227] Severo Alessandro fa ricostruire le terme, che da allora prendono il nome di Terme Alessandrine.
 
 [scheda.termenerone.data3.quando] 998-1011
 
@@ -2530,15 +2564,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.termeagrippa.nome] Terme di Agrippa
 
-[scheda.termeagrippa.cosa] Le prime terme pubbliche di Roma, di Agrippa, a sud del Pantheon e sul suo stesso asse: circa 110 metri per 90. La sala rotonda di 25 metri è l'«arco della Ciambella».
+[scheda.termeagrippa.cosa] Agrippa fa costruire le prime terme pubbliche di Roma a sud del Pantheon, allineate con il tempio. Il complesso misura circa 110 per 90 metri. Un tratto della sala circolare, larga 25 metri, è ancora visibile ed è noto come «arco della Ciambella».
 
 [scheda.termeagrippa.data1.quando] 25-19 a.C.
 
 [scheda.termeagrippa.data1] Costruite da Agrippa; alla sua morte passano al popolo.
 
-[scheda.termeagrippa.data2.quando] III sec.
+[scheda.termeagrippa.data2.quando] III secolo
 
-[scheda.termeagrippa.data2] La sala rotonda appartiene a un rifacimento non anteriore ad Alessandro Severo.
+[scheda.termeagrippa.data2] La sala circolare risale a una ristrutturazione avvenuta al tempo di Severo Alessandro o più tardi.
 
 [scheda.termeagrippa.certezza-B] Estensione nota dagli scavi, la sala rotonda è in parte in piedi; l'alzato è ricostruito.
 
@@ -2547,7 +2581,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioadriano.nome] Tempio di Adriano
 
-[scheda.tempioadriano.cosa] Il tempio del Divo Adriano nel Campo Marzio: otto colonne sulla fronte e tredici sui fianchi, alte 15 metri, su un podio di 4, dentro un recinto porticato.
+[scheda.tempioadriano.cosa] Tempio del Campo Marzio dedicato ad Adriano dopo la sua morte e divinizzazione. Sorgeva su un basamento alto 4 metri, entro un recinto porticato. Aveva otto colonne sulla facciata e tredici su ciascun fianco, alte 15 metri.
 
 [scheda.tempioadriano.data1-145] Dedicato da Antonino Pio.
 
@@ -2555,22 +2589,22 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioadriano.data2] Restano undici colonne del fianco nord in piazza di Pietra, dentro la facciata della Borsa.
 
-[scheda.tempioadriano.certezza-A] In piedi undici colonne e la cella; larghezza e lunghezza sono ricavate dal colonnato, l'orientamento della fronte è a memoria.
+[scheda.tempioadriano.certezza-A] Si conservano undici colonne e la sala interna del tempio. Dal colonnato si ricavano larghezza e lunghezza dell'edificio. L'orientamento della facciata è indicato a memoria e resta da verificare.
 
 
 ### Tempio di Claudio
 
 [scheda.tempioclaudio.nome] Tempio di Claudio
 
-[scheda.tempioclaudio.cosa] Il tempio del Divo Claudio sul Celio, su una piattaforma di 180 metri per 200 retta da muri alti fino a 15. Il tempio, esastilo, guardava il Palatino; sul lato est una grande mostra d'acqua a nicchie.
+[scheda.tempioclaudio.cosa] Il tempio dedicato all'imperatore Claudio dopo la sua morte sorgeva sul Celio, su una piattaforma di 180 per 200 metri, sostenuta da muri alti fino a 15 metri. La facciata aveva sei colonne ed era rivolta verso il Palatino. Sul lato orientale c'era una grande fontana monumentale ornata di nicchie.
 
-[scheda.tempioclaudio.data1-54] Agrippina lo comincia per il marito divinizzato.
+[scheda.tempioclaudio.data1-54] Agrippina avvia la costruzione del tempio dedicato al marito Claudio, onorato come un dio dopo la morte.
 
 [scheda.tempioclaudio.data2.quando] dopo il 64
 
 [scheda.tempioclaudio.data2] Nerone lo smantella quasi del tutto per la Domus Aurea; Vespasiano lo ricostruisce.
 
-[scheda.tempioclaudio.data3.quando] IV sec.
+[scheda.tempioclaudio.data3.quando] IV secolo
 
 [scheda.tempioclaudio.data3] Ultima menzione del tempio.
 
@@ -2583,13 +2617,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.ludusmagnus.cosa] La più grande caserma dei gladiatori, accanto al Colosseo: celle su tre piani attorno a un'arena ellittica per gli allenamenti.
 
-[scheda.ludusmagnus.data1.quando] fine I sec.
+[scheda.ludusmagnus.data1.quando] fine del I secolo
 
 [scheda.ludusmagnus.data1] Costruito da Domiziano, rifatto sotto Traiano.
 
-[scheda.ludusmagnus.data2.quando] inizio V sec.
+[scheda.ludusmagnus.data2.quando] inizio del V secolo
 
-[scheda.ludusmagnus.data2] Finiscono i combattimenti fra gladiatori (vedi il Colosseo): la caserma perde la sua funzione. La data della chiusura, qui, è una scelta.
+[scheda.ludusmagnus.data2] Con la fine dei combattimenti tra gladiatori, la caserma perde la sua funzione. La scheda del Colosseo illustra il dibattito sulla data degli ultimi spettacoli. L'anno scelto nel modello per la chiusura della caserma è indicativo.
 
 [scheda.ludusmagnus.certezza-B] La metà nord è scavata e visibile; larghezza e arena sono ricostruite.
 
@@ -2609,15 +2643,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.foroboario.nome] Foro Boario
 
-[scheda.foroboario.cosa] Il mercato del bestiame, fra il Tevere e il Palatino: il tempio rotondo di Ercole Vincitore, quello di Portuno, dio del porto, l'arco di Giano a quattro fronti e la porta degli Argentari; sul fiume, lo sbocco della Cloaca Massima.
+[scheda.foroboario.cosa] Il mercato del bestiame si teneva tra il Palatino e il Tevere. Qui si trovano il tempio rotondo di Ercole Vincitore, il tempio di Portuno, dio del porto, l'arco di Giano con i suoi quattro passaggi e la porta degli Argentari. Sul fiume sbocca la Cloaca Massima, il grande canale di scolo di Roma.
 
-[scheda.foroboario.data1.quando] II sec. a.C.
+[scheda.foroboario.data1.quando] II secolo a.C.
 
 [scheda.foroboario.data1] Il tempio rotondo, il più antico edificio di marmo di Roma rimasto in piedi.
 
 [scheda.foroboario.data2-204] I banchieri e i mercanti di buoi dedicano la porta degli Argentari a Settimio Severo e alla sua famiglia; il nome di Geta è cancellato dopo il 212.
 
-[scheda.foroboario.data3.quando] IV sec.
+[scheda.foroboario.data3.quando] IV secolo
 
 [scheda.foroboario.data3] L'arco di Giano, forse l'«arco del divo Costantino» dei cataloghi regionari.
 
@@ -2634,39 +2668,39 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.ottavia.data1] Costruito al posto del portico di Metello.
 
-[scheda.ottavia.data2-80] Brucia nell'incendio di Tito.
+[scheda.ottavia.data2-80] Il portico brucia nel grande incendio scoppiato durante il regno di Tito.
 
-[scheda.ottavia.data3-203] Settimio Severo e Caracalla rifanno il propileo, che è quello che si vede oggi.
+[scheda.ottavia.data3-203] Settimio Severo e Caracalla fanno ricostruire l'ingresso monumentale del portico, chiamato propileo. È la struttura ancora visibile.
 
-[scheda.ottavia.data4-755] Nel propileo nasce la chiesa di Sant'Angelo in Pescheria (la data è a memoria).
+[scheda.ottavia.data4-755] Nell'ingresso monumentale sorge la chiesa di Sant'Angelo in Pescheria. La data è indicata a memoria e resta da verificare.
 
-[scheda.ottavia.certezza-B] Resta il propileo, che dà posto e orientamento; la piazza è nota dalla pianta marmorea, i due templi interni hanno qui misure indicative.
+[scheda.ottavia.certezza-B] L'ingresso monumentale si conserva e documenta la posizione e l'orientamento del portico. Conosciamo la piazza grazie all'antica pianta di Roma incisa nel marmo. Nel modello le dimensioni dei due templi interni sono indicative.
 
 
 ### Area sacra di largo Argentina
 
 [scheda.argentina.nome] Area sacra di largo Argentina
 
-[scheda.argentina.cosa] Quattro templi dell'età repubblicana, affiancati e rivolti a est, nel Campo Marzio; dietro, la curia di Pompeo dove fu ucciso Cesare. Non si sa con certezza a chi fossero dedicati: sono indicati con le lettere A, B, C e D.
+[scheda.argentina.cosa] Nel Campo Marzio sorgevano quattro templi di età repubblicana, uno accanto all'altro e tutti rivolti a est. Poiché le divinità a cui erano dedicati restano incerte, gli archeologi li indicano con le lettere A, B, C e D. Alle loro spalle si trovava la curia di Pompeo, dove fu ucciso Giulio Cesare.
 
-[scheda.argentina.data1.quando] III-II sec. a.C.
+[scheda.argentina.data1.quando] III-II secolo a.C.
 
 [scheda.argentina.data1] I templi più antichi; il B è rotondo.
 
-[scheda.argentina.data2.quando] IX sec.?
+[scheda.argentina.data2.quando] IX secolo?
 
 [scheda.argentina.data2] Il tempio A diventa la chiesa di San Nicola de Calcarario (data a memoria).
 
-[scheda.argentina.certezza-A] I quattro podi sono scavati e visibili, contorni da OpenStreetMap; gli alzati sono ricostruiti.
+[scheda.argentina.certezza-A] Gli scavi hanno portato alla luce i basamenti di tutti e quattro i templi, oggi visibili. I contorni provengono da OpenStreetMap. Le parti in elevazione sono ricostruite.
 
 
 ### Iseo Campense
 
 [scheda.iseo.nome] Iseo Campense
 
-[scheda.iseo.cosa] Il santuario di Iside e Serapide nel Campo Marzio, fra i Saepta e il tempio di Minerva, ornato di obelischi egizi a coppie. Il recinto qui è indicativo; gli obelischi stanno dove furono ritrovati.
+[scheda.iseo.cosa] Santuario degli dèi Iside e Serapide nel Campo Marzio, tra il complesso dei Saepta e il tempio di Minerva. Era ornato da coppie di obelischi egizi. Nel modello il perimetro del santuario è indicativo e gli obelischi compaiono dove sono stati ritrovati.
 
-[scheda.iseo.data1-80] Brucia nell'incendio di Tito; Domiziano lo ricostruisce.
+[scheda.iseo.data1-80] Il santuario brucia nel grande incendio dell'80, sotto Tito. Domiziano lo fa ricostruire.
 
 [scheda.iseo.data2-1373] Si trova l'obelisco detto Macuteo, in piazza di San Macuto: oggi è sulla fontana davanti al Pantheon.
 
@@ -2674,16 +2708,16 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.iseo.data4-1883] Sotto l'abside di Santa Maria sopra Minerva si trova l'obelisco poi dedicato ai caduti di Dogali, oggi presso le Terme di Diocleziano.
 
-[scheda.iseo.certezza-C] Il santuario è noto dalla pianta marmorea e da ritrovamenti sparsi: l'ingombro qui è un'ipotesi; gli obelischi esistono e stanno nei punti di ritrovamento, due dei quali stimati.
+[scheda.iseo.certezza-C] Il santuario compare nell'antica pianta marmorea di Roma ed è documentato da ritrovamenti sparsi. La sua estensione nel modello è ipotetica. Gli obelischi si conservano e sono rappresentati nei luoghi in cui furono ritrovati. Per due di essi la posizione è approssimativa.
 
 
 ### Arco di Gallieno e Trofei di Mario
 
 [scheda.esquilino.nome] Arco di Gallieno e Trofei di Mario
 
-[scheda.esquilino.cosa] Sull'Esquilino, l'arco della vecchia porta Esquilina dedicato a Gallieno, la mostra d'acqua detta Trofei di Mario per i trofei di marmo che la ornavano, e l'aula semisotterranea detta Auditorium di Mecenate.
+[scheda.esquilino.cosa] Sull'Esquilino si trovano tre monumenti. L'arco dell'antica porta Esquilina fu dedicato all'imperatore Gallieno. La fontana chiamata Trofei di Mario prende il nome dai trofei in marmo che la decoravano. L'aula in parte sotterranea è conosciuta come Auditorium di Mecenate.
 
-[scheda.esquilino.data1-226] La mostra d'acqua, il «nymphaeum Alexandri», è attribuita ad Alessandro Severo (data a memoria).
+[scheda.esquilino.data1-226] La fontana monumentale, chiamata in latino «nymphaeum Alexandri», è attribuita a Severo Alessandro. La data è indicata a memoria e resta da verificare.
 
 [scheda.esquilino.data2-262] Aurelio Vittore dedica l'arco a Gallieno e a Salonina.
 
@@ -2696,11 +2730,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.minervamedica.nome] Tempio di Minerva Medica
 
-[scheda.minervamedica.cosa] Grande aula decagona a cupola, larga 24 metri e alta 33, con nove nicchie e dieci finestre: una mostra d'acqua o una sala di giardino, non un tempio; spesso la si attribuisce agli Horti Liciniani, ma senza prove sufficienti (Platner e Ashby).
+[scheda.minervamedica.cosa] Il nome «tempio di Minerva Medica» indica una grande sala a dieci lati, larga 24 metri e alta 33, coperta da una cupola e illuminata da dieci finestre. Nelle pareti si aprivano nove nicchie. Nonostante il nome, non era un tempio: l'edificio ospitava forse una fontana monumentale o era una sala da giardino. Secondo Platner e Ashby, le prove sono insufficienti per attribuirlo agli Horti Liciniani, i giardini a cui viene spesso associato.
 
-[scheda.minervamedica.data1.quando] inizio IV sec.
+[scheda.minervamedica.data1.quando] inizio del IV secolo
 
-[scheda.minervamedica.data1] Costruita, presumibilmente: il 320 è una scelta.
+[scheda.minervamedica.data1] La costruzione risale probabilmente all'inizio del IV secolo. Il 320 è una data indicativa scelta per il modello.
 
 [scheda.minervamedica.data2-1828] Cade una parte della cupola.
 
@@ -2711,9 +2745,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.sessoriano.nome] Anfiteatro Castrense e circo Variano
 
-[scheda.sessoriano.cosa] Nel palazzo imperiale del Sessorio, dove abitò Elena madre di Costantino: l'anfiteatro di corte, ellittico, di 88 metri per 78, e il circo Variano, lungo più di mezzo chilometro, con l'obelisco di Antinoo sulla spina.
+[scheda.sessoriano.cosa] Nel complesso del palazzo imperiale del Sessorio, residenza di Elena, madre di Costantino, sorgevano due edifici per spettacoli. L'anfiteatro di corte aveva una pianta ellittica di 88 per 78 metri. Il circo Variano era lungo più di mezzo chilometro e aveva l'obelisco di Antinoo sul divisorio centrale della pista.
 
-[scheda.sessoriano.data1.quando] III sec.
+[scheda.sessoriano.data1.quando] III secolo
 
 [scheda.sessoriano.data1] Elagabalo porta nel circo l'obelisco che Adriano aveva fatto per Antinoo.
 
@@ -2723,20 +2757,20 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.sessoriano.data3-1570] L'obelisco, rotto in tre pezzi, viene trovato fuori porta Maggiore; dal 1822 sta sul Pincio.
 
-[scheda.sessoriano.certezza-B] L'anfiteatro è in piedi nelle mura e i carceres del circo sono scavati; la lunghezza del circo e il posto dell'obelisco sulla spina sono ipotesi.
+[scheda.sessoriano.certezza-B] L'anfiteatro si conserva nelle mura. Del circo sono stati scavati i vani da cui partivano i carri, chiamati carceres. La lunghezza della pista e la posizione dell'obelisco sul divisorio centrale restano ipotetiche.
 
 
 ### Archi della via Lata
 
 [scheda.archivialata.nome] Archi della via Lata
 
-[scheda.archivialata.cosa] Due archi sulla via Lata, oggi via del Corso: quello di Claudio per la conquista della Britannia, che portava l'acqua Vergine sopra la strada, e quello detto di Portogallo, vicino all'Ara Pacis.
+[scheda.archivialata.cosa] Due archi attraversavano la via Lata, oggi via del Corso. Il primo celebrava la conquista della Britannia da parte di Claudio e sosteneva il condotto dell'acquedotto Vergine sopra la strada. Il secondo, detto arco di Portogallo, sorgeva vicino all'Ara Pacis.
 
 [scheda.archivialata.data1.quando] 51-52
 
 [scheda.archivialata.data1] Claudio fa dell'arcata dell'acquedotto un arco trionfale.
 
-[scheda.archivialata.data2.quando] VIII sec.
+[scheda.archivialata.data2.quando] VIII secolo
 
 [scheda.archivialata.data2] L'arco di Claudio è già in rovina.
 
@@ -2755,7 +2789,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcusnovus.data2-1491] Demolito per ingrandire Santa Maria in Via Lata.
 
-[scheda.arcusnovus.certezza-B] Demolito nel 1491; posizione da it.wikipedia, forma e misure indicative.
+[scheda.arcusnovus.certezza-B] L'arco fu demolito nel 1491. Per la posizione il modello segue la voce italiana di Wikipedia. Forma e misure sono indicative.
 
 
 ### Mura leonine
@@ -2770,7 +2804,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.leonine.data3-852] Cerimonia conclusiva il 27 giugno: nasce la «città leonina».
 
-[scheda.leonine.certezza-B] Misto: in piedi alcuni tratti e una torre nei giardini vaticani; il lato nord è ricalcato dal Passetto, più tardo; il lato sud è interpolato.
+[scheda.leonine.certezza-B] Nei Giardini Vaticani si conservano alcuni tratti delle mura e una torre. A nord il Passetto, costruito più tardi, segue la linea delle mura di Leone IV. A sud il tracciato è ricostruito collegando i punti conosciuti.
 
 
 ### Mura Aureliane
@@ -2779,9 +2813,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.mura.cosa] Diciannove chilometri di cinta: Roma non aveva mura in uso da secoli.
 
-[scheda.mura.data1-271] Iniziate da Aureliano, finite sotto Probo.
+[scheda.mura.data1-271] Iniziate da Aureliano, finite sotto Probo (Zosimo). L'anno della fine non è scritto: nel modello il cantiere chiude nel 280, e l'ordine in cui salgono i tratti è un'ipotesi.
 
-[scheda.mura.data2-403] Sotto Onorio, fra il 401 e il 403, mura, porte e torri vengono restaurate (lo dicono le iscrizioni sulle porte). Il raddoppio dell'altezza è attribuito da alcuni a questi lavori, da altri a Massenzio: qui lo si mostra sotto Onorio.
+[scheda.mura.data2-403] Le iscrizioni sulle porte documentano i restauri di mura, porte e torri sotto Onorio, tra il 401 e il 403. Alcuni studiosi ritengono che allora l'altezza delle mura sia raddoppiata. Altri attribuiscono l'intervento a Massenzio, circa un secolo prima. Il modello segue la prima interpretazione.
 
 [scheda.mura.data3-546] Totila ne abbatte dei tratti (un terzo secondo Procopio, che forse esagera); nel 547 Belisario richiude le brecce in venticinque giorni.
 
@@ -2798,17 +2832,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.antoniniano.nome] Acquedotto Antoniniano
 
-[scheda.antoniniano.cosa] Il ramo d'acquedotto che Caracalla costruì per le sue terme. Correva in gran parte interrato lungo la via Latina, saliva su arcate presso le mura e scavalcava la via Appia sull'arco detto di Druso (il nome è un'invenzione del Cinquecento). Qui si vedono solo le arcate; il loro profilo, salvo la quota sull'arco, è ricostruito.
+[scheda.antoniniano.cosa] Caracalla fece costruire questo ramo dell'acquedotto per rifornire le sue terme. L'acqua correva per lo più sottoterra lungo la via Latina. Vicino alle mura il condotto proseguiva su arcate e superava la via Appia sopra l'arco detto di Druso, un nome inventato nel Cinquecento, senza rapporto con Druso. Il modello mostra soltanto le arcate. La loro altezza è nota sopra l'arco di Druso ed è ricostruita negli altri tratti.
 
-[scheda.antoniniano.data1-212] Fra il 212 e il 213 Caracalla restaura la Marcia, vi aggiunge una sorgente nuova (iscrizione di porta Tiburtina) e porta l'acqua alle terme. Che quest'acqua venisse dalla Marcia è discusso: le incrostazioni nel canale sopra l'arco indicano quella della Tepula e della Giulia.
+[scheda.antoniniano.data1-212] Tra il 212 e il 213, come ricorda l'iscrizione di porta Tiburtina, Caracalla fa restaurare l'acquedotto della Marcia e vi aggiunge una sorgente. Fa anche portare l'acqua alle sue terme. Si discute però da quale acquedotto provenisse quell'acqua. I depositi minerali nel canale sopra l'arco rimandano agli acquedotti della Tepula e della Giulia.
 
 [scheda.antoniniano.data2-537] I Goti tagliano tutti gli acquedotti e le terme di Caracalla non riapriranno. Se e quando questo ramo abbia ripreso a portare acqua non si sa: qui si assume di sì, come per la Marcia.
 
-[scheda.antoniniano.data3.quando] VIII-IX sec.
+[scheda.antoniniano.data3.quando] VIII-IX secolo
 
 [scheda.antoniniano.data3] L'Itinerario di Einsiedeln nomina alla porta Appia la «forma Iobia», che «viene dalla Marcia e corre fino alla riva».
 
-[scheda.antoniniano.data4-776] Verso il 776 Adriano I rifà «dalle fondamenta» la forma Iobia, rotta da vent'anni (Liber Pontificalis). Che sia questo ramo è l'ipotesi più diffusa (Lanciani, Duchesne); per Ashby è la Marcia in generale, perché ai papi le terme non servivano più. Qui si segue la prima.
+[scheda.antoniniano.data4-776] Verso il 776 Adriano I fa ricostruire «dalle fondamenta» un acquedotto chiamato forma Iobia, interrotto da vent'anni (Liber Pontificalis). L'ipotesi più diffusa (Lanciani, Duchesne) lo identifica con il ramo diretto alle terme di Caracalla. Ashby ritiene invece che il nome indichi la Marcia nel suo insieme, perché ai papi le terme non servivano più. Il modello segue l'ipotesi più diffusa.
 
 [scheda.antoniniano.data5.quando] 844-867
 
@@ -2821,20 +2855,20 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 ### acquedotti
 
-[scheda.acquedotti.cosa] Undici condotti che portavano l'acqua a terme, fontane e mulini.
+[scheda.acquedotti.cosa] Undici condotti rifornivano d'acqua le terme, le fontane e i mulini di Roma.
 
 [scheda.acquedotti.data1-537] Tagliati dai Goti durante l'assedio.
 
-[scheda.acquedotti.data2-554] La Prammatica Sanzione di Giustiniano (cap. 25) conferma a Roma i privilegi e le entrate destinati a riparare edifici pubblici, letto del Tevere, foro, porto e acquedotti: è una norma, non la prova di lavori fatti. Nel gennaio 602 papa Gregorio Magno scrive che sono trascurati al punto che, senza più cura, in poco tempo andranno del tutto in rovina (Registro XII 6).
+[scheda.acquedotti.data2-554] Con la legge chiamata Prammatica Sanzione, Giustiniano conferma per Roma privilegi ed entrate destinati alla manutenzione di edifici pubblici, Foro, porto, acquedotti e letto del Tevere (capitolo 25). La legge indica quali risorse si potevano usare. Da sola non documenta l'esecuzione dei lavori. Nel gennaio 602 Gregorio Magno scrive che gli acquedotti sono così trascurati da rischiare la rovina completa in breve tempo (Registro, XII, 6).
 
-[scheda.acquedotti.data3-780] Papa Adriano I (772-795) ne fa riparare quattro (Liber Pontificalis). La Sabbatina, l'antica Traiana, era rotta da vent'anni, con cento arcate a terra: torna a servire San Pietro e i mulini del Gianicolo. La Iovia, anch'essa ferma da vent'anni, è forse un ramo della Marcia. La Claudia riporta l'acqua al Laterano; della Vergine entrava pochissima acqua, e dopo i lavori disseta quasi tutta la città. Gli anni precisi non sono scritti: verso il 776 è una deduzione degli studiosi.
+[scheda.acquedotti.data3-780] Secondo il Liber Pontificalis, papa Adriano I (772-795) fa riparare quattro acquedotti. La Sabbatina, l'antica Traiana, era interrotta da vent'anni e aveva cento arcate crollate. Dopo i lavori rifornisce di nuovo San Pietro e i mulini del Gianicolo. Anche la Iovia, forse un ramo della Marcia, era ferma da vent'anni. La Claudia riporta l'acqua al Laterano. L'acquedotto Vergine, che prima ne portava pochissima, torna a dissetare quasi tutta la città. La fonte non precisa gli anni dei lavori. La data del 776 circa è una stima degli studiosi.
 
-[scheda.acquedotti.certezza-B] Misto: la Claudia e gli archi neroniani sono in buona parte in piedi; Marcia, Vergine e Traiana sono note per tratti, e il resto del percorso e tutte le quote sono ricostruiti.
+[scheda.acquedotti.certezza-B] Molte arcate della Claudia e del ramo di Nerone sono ancora in piedi. Della Marcia, della Vergine e della Traiana si conoscono singoli tratti. Gli altri percorsi e tutte le altezze mostrate nel modello sono ricostruiti.
 
 
 ### fangocirco
 
-[scheda.fangocirco.certezza-C] Che la pista si impaludasse e si interrasse è certo; com'era nell'852 non si sa.
+[scheda.fangocirco.certezza-C] Col tempo la pista divenne paludosa e fu ricoperta da sedimenti. Non sappiamo quale aspetto avesse già assunto nell'852.
 
 
 ### augusto
@@ -2844,7 +2878,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 ### pompeo
 
-[scheda.pompeo.certezza-B] La curva della cavea sopravvive nelle strade e nelle cantine, il portico è nella pianta marmorea; gli alzati sono ricostruiti.
+[scheda.pompeo.certezza-B] Il profilo curvo delle gradinate si riconosce ancora nelle strade e nelle cantine degli edifici moderni. Il portico compare nell'antica pianta marmorea di Roma. Le parti in elevazione sono ricostruite.
 
 
 ### tegolepietro
@@ -2864,12 +2898,12 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 ### campidoglio
 
-[scheda.campidoglio.certezza-B] Carcere, portico degli Dei Consenti, insula e sepolcro di Bibulo sono in piedi; qui sono masse semplici con misure indicative.
+[scheda.campidoglio.certezza-B] Si conservano il carcere, il portico degli Dei Consenti, il caseggiato romano chiamato insula e il sepolcro di Bibulo. Il modello ne riproduce solo i volumi principali, con misure indicative.
 
 
 ### chiese
 
-[scheda.chiese.certezza-B] Il sito è quello della chiesa attuale; la forma antica è quasi sempre perduta, e qui tutte hanno lo stesso modello.
+[scheda.chiese.certezza-B] Ogni chiesa compare nel luogo in cui sorge oggi. Poiché per quasi tutte si è perduta la pianta antica, nella ricostruzione si usa lo stesso edificio schematico.
 
 
 ### Chiese minori (solo i nomi)
@@ -2883,75 +2917,75 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [itinerario.fonte] Itinerario di Einsiedeln · fra il 757 e l'855, forse verso l'800
 
-[itinerario.intro] Un quaderno copiato nel IX secolo, oggi nell'abbazia di Einsiedeln, elenca i percorsi che attraversano Roma: su una pagina ciò che si vede a sinistra, su quella di fronte ciò che si vede a destra. Chi lo scrisse non si sa. Questo percorso taglia tutta la città, dal ponte davanti al mausoleo di Adriano fino alla cattedrale. Le parole fra virgolette sono quelle del manoscritto.
+[itinerario.intro] Un quaderno anonimo copiato nel IX secolo e conservato nell'abbazia di Einsiedeln descrive diversi percorsi per Roma. Sulla pagina di sinistra elenca ciò che si vede a sinistra, su quella di fronte ciò che si vede a destra. Questo itinerario attraversa tutta la città, dal ponte davanti al mausoleo di Adriano fino alla cattedrale del Laterano. Le parole tra virgolette riprendono il manoscritto.
 
 [itinerario.stazioni.1.1] Il ponte e l'arco
 
-[itinerario.stazioni.1.6] «Per arcum»: passato ponte Elio si entra in città sotto un arco, probabilmente quello degli imperatori Graziano, Valentiniano e Teodosio.
+[itinerario.stazioni.1.6] «Per arcum» significa «attraverso l'arco». Superato ponte Elio, il pellegrino entra in città sotto un arco, probabilmente quello dedicato agli imperatori Graziano, Valentiniano e Teodosio.
 
 [itinerario.stazioni.2.1] Verso il teatro di Pompeo
 
-[itinerario.stazioni.2.4] «Circus Flamineus, ibi sancta Agnes»: è lo stadio di Domiziano, chiamato con un nome sbagliato, con la chiesa di Sant'Agnese. «Thermae Alexandrinae»: le terme fra lo stadio e il Pantheon.
+[itinerario.stazioni.2.4] La guida scrive «Circus Flamineus, ibi sancta Agnes», cioè «circo Flaminio, dove si trova Sant'Agnese». Confonde il circo Flaminio con lo stadio di Domiziano, dove sorge la chiesa di Sant'Agnese. Le «Thermae Alexandrinae» sono le terme tra lo stadio e il Pantheon.
 
-[itinerario.stazioni.2.5] «Sancti Laurentii in Damaso» e «Theatrum Pompei».
+[itinerario.stazioni.2.5] «Sancti Laurentii in Damaso» indica San Lorenzo in Damaso. «Theatrum Pompei» indica il teatro di Pompeo.
 
 [itinerario.stazioni.2.6] La guida nomina ancora teatri e terme come punti di riferimento, senza dire in che stato sono.
 
 [itinerario.stazioni.3.1] Il Campo Marzio
 
-[itinerario.stazioni.3.4] «Sancti Eustachii. Rotunda»: il Pantheon, chiamato con il nome antico e non con quello della chiesa. «Thermae Commodianae»: probabilmente le terme di Agrippa. «Minervium, ibi sancta Maria».
+[itinerario.stazioni.3.4] «Sancti Eustachii» indica Sant'Eustachio. «Rotunda» è il Pantheon, che la guida chiama ancora con il nome antico anche se è diventato una chiesa. Le «Thermae Commodianae» sono probabilmente le terme di Agrippa. Segue «Minervium, ibi sancta Maria», un riferimento a Minerva e alla chiesa di Santa Maria.
 
-[itinerario.stazioni.3.5] «Cypresus»: non si sa che cosa fosse. «Sancti Laurentii in Minerva»: identificazione discussa.
+[itinerario.stazioni.3.5] Non sappiamo che cosa indicasse «Cypresus». Anche il luogo chiamato «Sancti Laurentii in Minerva», cioè San Lorenzo in Minerva, rimane di identificazione incerta.
 
 [itinerario.stazioni.4.1] Sotto il Campidoglio
 
-[itinerario.stazioni.4.4] «Ad sanctum Marcum». «Forum Traiani et columna eius».
+[itinerario.stazioni.4.4] «Ad sanctum Marcum» indica San Marco. «Forum Traiani et columna eius» significa «il foro di Traiano e la sua colonna».
 
-[itinerario.stazioni.4.5] «Capitolium».
+[itinerario.stazioni.4.5] «Capitolium» indica il Campidoglio.
 
 [itinerario.stazioni.4.6] Dopo San Marco la strada gira a destra ai piedi del colle: la via diretta verso i Fori, suppone Lanciani, era già ingombra di rovine.
 
 [itinerario.stazioni.5.1] L'arco di Severo
 
-[itinerario.stazioni.5.4] «Tiberis»: forse la statua di un dio fluviale, il futuro Marforio. «Sancti Hadriani»: la Curia del Senato diventata chiesa.
+[itinerario.stazioni.5.4] «Tiberis», cioè «Tevere», potrebbe indicare una statua raffigurante un dio fluviale, poi conosciuta come Marforio. «Sancti Hadriani» è la chiesa di Sant'Adriano, ricavata nella Curia, l'antica sede del Senato.
 
-[itinerario.stazioni.5.5] «Sancti Sergii, ibi umbilicum Romae»: una chiesa scomparsa, accanto al punto che segnava il centro della città. «Sancti Georgii», lontano, al Velabro.
+[itinerario.stazioni.5.5] «Sancti Sergii, ibi umbilicum Romae» indica la chiesa di San Sergio, oggi scomparsa, presso il punto che segnava il centro simbolico di Roma. «Sancti Georgii» è la chiesa di San Giorgio, più lontana, nel Velabro.
 
-[itinerario.stazioni.5.6] «Per arcum Severi»: si entra nel Foro passando sotto l'arco.
+[itinerario.stazioni.5.6] «Per arcum Severi» significa «attraverso l'arco di Severo». Il pellegrino entra nel Foro passando sotto l'arco di Settimio Severo.
 
 [itinerario.stazioni.6.1] Il Foro
 
-[itinerario.stazioni.6.4] «Sancti Cosmae et Damiani».
+[itinerario.stazioni.6.4] «Sancti Cosmae et Damiani» indica la chiesa dei Santi Cosma e Damiano.
 
-[itinerario.stazioni.6.5] «Sancta Maria antiqua». «Ad sanctum Theodorum».
+[itinerario.stazioni.6.5] «Sancta Maria antiqua» indica Santa Maria Antiqua. «Ad sanctum Theodorum» rimanda alla chiesa di San Teodoro.
 
-[itinerario.stazioni.6.6] «Forum Romanum» è scritto a cavallo delle due pagine: è la strada stessa.
+[itinerario.stazioni.6.6] Il nome «Forum Romanum», Foro romano, occupa entrambe le pagine del manoscritto. In questo punto il pellegrino sta attraversando il Foro.
 
 [itinerario.stazioni.7.1] La via Sacra
 
-[itinerario.stazioni.7.4] «Palatius Neronis»: per Lanciani la basilica di Massenzio, di cui si era perso il nome. «Aeclesia sancti Petri». «Ad vincula»: San Pietro in Vincoli, lontano. «Arcus Titi et Vespasiani».
+[itinerario.stazioni.7.4] Secondo Lanciani, dietro il nome «Palatius Neronis», cioè «palazzo di Nerone», si riconosce la basilica di Massenzio, di cui si era perso il nome. La guida cita poi «Aeclesia sancti Petri», una chiesa di San Pietro, e «Ad vincula», San Pietro in Vincoli, più lontana. «Arcus Titi et Vespasiani» è il nome che dà all'arco di Tito.
 
-[itinerario.stazioni.7.5] «Palatinus». «Testamentum»: ignoto.
+[itinerario.stazioni.7.5] «Palatinus» è il Palatino. Il luogo chiamato «Testamentum» rimane sconosciuto.
 
 [itinerario.stazioni.7.6] I nomi sbagliati mostrano che la memoria degli edifici antichi si stava già confondendo.
 
 [itinerario.stazioni.8.1] Il Colosseo
 
-[itinerario.stazioni.8.4] «Palatium Traiani»: forse il tempio di Venere e Roma, forse le terme di Traiano. «Amphitheatrum».
+[itinerario.stazioni.8.4] Il «Palatium Traiani», cioè «palazzo di Traiano», potrebbe indicare il tempio di Venere e Roma oppure le terme di Traiano. «Amphitheatrum», l'anfiteatro, è il Colosseo.
 
-[itinerario.stazioni.8.5] «Arcus Constantini». «Meta sudante».
+[itinerario.stazioni.8.5] «Arcus Constantini» è l'arco di Costantino. «Meta sudante» indica la fontana conica chiamata Meta Sudans.
 
 [itinerario.stazioni.9.1] Sul Celio
 
-[itinerario.stazioni.9.4] «Ad sanctum Clementem».
+[itinerario.stazioni.9.4] «Ad sanctum Clementem» indica la basilica di San Clemente.
 
-[itinerario.stazioni.9.5] «Caput Africae»: una contrada del Celio. «Quattuor Coronati».
+[itinerario.stazioni.9.5] «Caput Africae» era una zona del Celio. «Quattuor Coronati» indica la chiesa dei Santi Quattro Coronati.
 
 [itinerario.stazioni.10.1] Il Laterano
 
-[itinerario.stazioni.10.4] «Monasterium Honorii». «Forma Claudiana»: l'acquedotto. «Patriarchium Lateranense»: il palazzo del papa.
+[itinerario.stazioni.10.4] «Monasterium Honorii» significa «monastero di Onorio». «Forma Claudiana» è l'acquedotto Claudio. «Patriarchium Lateranense» indica il palazzo del papa in Laterano.
 
-[itinerario.stazioni.10.5] «Sancti Iohannis in Lateranis».
+[itinerario.stazioni.10.5] «Sancti Iohannis in Lateranis» è la basilica di San Giovanni in Laterano.
 
 [itinerario.stazioni.10.6] «Porta Asinaria»: il percorso finisce alla porta, subito oltre la cattedrale.
 
@@ -2969,13 +3003,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.montesquieu.titolo] Perita della propria grandezza
 
-[tesi.montesquieu.tesi] Roma è perita della sua stessa grandezza. Eserciti tenuti a lungo lontano smettono di sentirsi cittadini e obbediscono ai loro generali; dietro i singoli fatti agiscono cause generali, e gli accidenti vi sono sottomessi. Per l'Occidente aggiunge una ragione di geografia: gli invasori respinti da Costantinopoli rifluiscono verso ovest, e l'Occidente «fu il primo abbattuto».
+[tesi.montesquieu.tesi] Per Montesquieu l'espansione di Roma indebolì le istituzioni che l'avevano resa potente. I soldati, rimasti a lungo lontani dalla città, finirono per sentirsi più legati ai propri generali che allo Stato. Secondo il filosofo, cause generali come questa condizionano i singoli avvenimenti. A rendere più vulnerabile l'Occidente contribuì anche la geografia. Gli invasori respinti da Costantinopoli si diressero verso ovest e l'Occidente «fu il primo abbattuto».
 
 [tesi.montesquieu.cit] «Vi sono cause generali, morali o fisiche, che agiscono in ogni monarchia, la innalzano, la mantengono o la fanno precipitare; tutti gli accidenti sono sottomessi a queste cause.»
 
 [tesi.montesquieu.fonte] Considérations sur les causes de la grandeur des Romains et de leur décadence, cap. XVIII; il passo sull'Occidente è nel cap. XIX
 
-[tesi.montesquieu.obiezione] Le cause generali valevano anche per l'Oriente, che durò altri mille anni: è la risposta di Bury.
+[tesi.montesquieu.obiezione] Bury osserva che le stesse condizioni esistevano nell'impero d'Oriente, che sopravvisse per altri mille anni.
 
 [tesi.montesquieu.anni1-235] gli eserciti fanno e disfano gli imperatori
 
@@ -2992,13 +3026,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.gibbon.titolo] Troppo grande per durare
 
-[tesi.gibbon.tesi] La caduta fu «l'effetto naturale e inevitabile di una grandezza smisurata»: la prosperità fece maturare il principio della decadenza, e le cause di distruzione si moltiplicarono con l'estensione delle conquiste. La sua opera, dice lui stesso, racconta «il trionfo della barbarie e della religione».
+[tesi.gibbon.tesi] Gibbon considera la caduta «l'effetto naturale e inevitabile di una grandezza smisurata». Secondo lui, la prosperità fece maturare il principio della decadenza e le cause della rovina si moltiplicarono con l'estensione delle conquiste. Gibbon stesso descrive la sua opera come il racconto di quello che chiama «il trionfo della barbarie e della religione».
 
 [tesi.gibbon.cit] «La storia della sua rovina è semplice e ovvia; e invece di chiederci perché l'impero romano fu distrutto, dovremmo piuttosto stupirci che sia durato così a lungo.»
 
 [tesi.gibbon.fonte] The History of the Decline and Fall of the Roman Empire, «Osservazioni generali sulla caduta dell'impero romano in Occidente», alla fine del cap. XXXVIII
 
-[tesi.gibbon.obiezione] Come per Montesquieu: una causa generale non dice perché cadde l'Occidente e non l'Oriente, né perché proprio allora.
+[tesi.gibbon.obiezione] A Gibbon si può rivolgere la stessa obiezione mossa a Montesquieu. L'estensione dell'impero, da sola, lascia aperte due domande. Perché cadde soltanto la parte occidentale? E perché proprio in quel periodo?
 
 [tesi.gibbon.anni2-476] l'ultimo imperatore d'Occidente
 
@@ -3013,7 +3047,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.religione.titolo] La religione che disarma
 
-[tesi.religione.tesi] È l'accusa più famosa di Gibbon: il clero predica la pazienza, le virtù attive sono scoraggiate, e ciò che resta dello spirito militare finisce nei monasteri. Ma è lui stesso ad attenuarla, poche righe dopo: la religione dei vincitori «attutì la violenza della caduta».
+[tesi.religione.tesi] Secondo Gibbon, il clero incoraggiò la pazienza e la vita monastica a scapito dell'impegno civile e militare. Poche righe dopo, lo storico attenua il giudizio. Una volta adottato anche dai vincitori, il cristianesimo «attutì la violenza della caduta».
 
 [tesi.religione.cit] «Il clero predicò con successo le dottrine della pazienza e della pusillanimità; le virtù attive della società furono scoraggiate, e gli ultimi resti dello spirito militare furono sepolti nel chiostro.»
 
@@ -3036,7 +3070,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.rostovtzeff.titolo] L'esercito contro le città
 
-[tesi.rostovtzeff.tesi] Nel III secolo un esercito di contadini, sempre più estraneo alla cultura delle città, combatte le classi colte e privilegiate fino ad abbatterle. È una «barbarizzazione dell'impero dall'interno», soprattutto in Occidente, prima ancora che i barbari arrivino.
+[tesi.rostovtzeff.tesi] Per Rostovtzeff il conflitto nasce all'interno della società romana. Nel III secolo i soldati, reclutati in gran parte nelle campagne, sono sempre più lontani dalla cultura delle città. Finiscono per abbattere il potere delle classi colte e privilegiate. Lo storico parla di una «barbarizzazione dell'impero dall'interno», particolarmente forte in Occidente e già in corso prima delle invasioni.
 
 [tesi.rostovtzeff.cit] «L'esercito combatté le classi privilegiate, e non smise di combattere finché queste classi non ebbero perduto tutto il loro prestigio sociale.»
 
@@ -3049,17 +3083,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [tesi.rostovtzeff.anni3-260] l'impero in tre pezzi
 
 
-### Vegezio, e la spiegazione militare · I soldati senza corazza
+### Vegezio e la crisi dell'esercito · I soldati senza corazza
 
 [tesi.vegezio.corto] Vegezio
 
-[tesi.vegezio.chi] Vegezio, e la spiegazione militare
+[tesi.vegezio.chi] Vegezio e la crisi dell'esercito
 
 [tesi.vegezio.anno] fine del IV secolo
 
 [tesi.vegezio.titolo] I soldati senza corazza
 
-[tesi.vegezio.tesi] Un contemporaneo la vide così: dalla fondazione della città fino all'imperatore Graziano la fanteria portò corazze ed elmi; poi l'addestramento fu trascurato, le armi parvero pesanti, e furono lasciate. Nel Novecento Arther Ferrill ha ripreso l'idea: l'esercito perse la disciplina e si affidò ai barbari.
+[tesi.vegezio.tesi] Vegezio, vissuto nel tardo impero, sostiene che i fanti romani avessero portato corazza ed elmo dalla fondazione di Roma fino al regno di Graziano. Quando l'addestramento fu trascurato, quelle protezioni cominciarono a sembrare troppo pesanti e i soldati le abbandonarono. Nel Novecento Arther Ferrill ha ripreso l'idea del declino militare, insistendo sulla perdita di disciplina e sul crescente ricorso a truppe di origine barbarica.
 
 [tesi.vegezio.cit] «Così i nostri soldati, scontratisi con i Goti a petto e a capo scoperti, furono spesso annientati dalla moltitudine degli arcieri.»
 
@@ -3082,7 +3116,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.wickham.titolo] Quando lo Stato smette di tassare
 
-[tesi.wickham.tesi] L'impero era prima di tutto una macchina fiscale: l'imposta sulla terra, e il sistema delle tasse nel suo insieme, erano «la principale singola struttura» dello Stato, quella che manteneva esercito e corte. In Occidente quella macchina si spegne regno per regno, fra il V e il VII secolo. La perdita dell'Africa nel 439 pesa, per molti, più di ogni altra.
+[tesi.wickham.tesi] Secondo Wickham, l'impero era prima di tutto una macchina fiscale. Le imposte, soprattutto quella sulla terra, finanziavano l'esercito e la corte. Il sistema fiscale era, nelle sue parole, «la principale singola struttura» dello Stato. Tra il V e il VII secolo in Occidente quella macchina si spense, regno per regno, con tempi diversi. Per molti storici la perdita fiscale più grave fu quella delle ricche province africane nel 439.
 
 [tesi.wickham.fonte] Framing the Early Middle Ages (2005)
 
@@ -3103,13 +3137,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.halsall.titolo] I barbari trascinati dentro
 
-[tesi.halsall.tesi] L'ordine va rovesciato: è la crisi dell'impero a mettere in moto i barbari, non il contrario. Chi passa la frontiera non abbatte uno Stato sano: entra nelle sue lotte e vi cerca un posto.
+[tesi.halsall.tesi] Per Halsall è la crisi dell'impero a mettere in moto i popoli oltre la frontiera, non il contrario. Chi attraversa la frontiera non abbatte uno Stato sano: entra nelle sue lotte per il potere, combatte per una delle parti e vi cerca un posto.
 
 [tesi.halsall.cit] «Le "migrazioni barbariche" furono dunque il prodotto della "fine dell'impero romano", e non viceversa.»
 
 [tesi.halsall.fonte] Barbarian Migrations and the Roman West, 376-568 (2007)
 
-[tesi.halsall.obiezione] Heather: senza la spinta degli Unni non si spiegano né il 376 né il 405-408.
+[tesi.halsall.obiezione] Per Heather l'avanzata degli Unni è decisiva per spiegare sia il passaggio del Danubio nel 376 sia gli attraversamenti della frontiera negli anni 405-408.
 
 [tesi.halsall.anni1-395] due corti rivali
 
@@ -3128,13 +3162,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.jones.titolo] Più esposto ai barbari
 
-[tesi.jones.tesi] Jones elenca le debolezze interne senza sconti: «troppo pochi produttori mantenevano troppe bocche inutili», e il peso delle tasse contribuì all'apatia generale. Ma conclude che non furono decisive, perché l'Oriente aveva le stesse: l'Occidente cadde perché era più esposto.
+[tesi.jones.tesi] Jones elenca senza sconti le debolezze interne: nell'impero «troppo pochi produttori mantenevano troppe bocche inutili» e il peso delle imposte alimentava l'apatia. Conclude però che non furono decisive, perché esistevano anche in Oriente. L'Occidente cadde perché era più esposto agli attacchi esterni.
 
 [tesi.jones.cit] «La causa principale della sua caduta fu che era più esposto agli assalti dei barbari.»
 
 [tesi.jones.fonte] The Later Roman Empire 284-602, vol. II, p. 1068
 
-[tesi.jones.obiezione] Halsall rovescia il rapporto: è la crisi interna a mettere in moto i barbari.
+[tesi.jones.obiezione] Halsall rovescia il rapporto: è la crisi interna di Roma a mettere in moto i popoli vicini.
 
 [tesi.jones.anni1-378] Adrianopoli
 
@@ -3153,11 +3187,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.heather.titolo] La spinta degli Unni
 
-[tesi.heather.tesi] Gli Unni mettono in moto tutto: nel 376 spingono i Goti oltre il Danubio, nel 405-408 altri popoli oltre il Reno, che preferirono tentare la sorte dentro l'impero piuttosto che avere a che fare con loro. I gruppi entrati ne smontano poi le province.
+[tesi.heather.tesi] Secondo Heather, sono gli Unni a mettere in moto tutto. La loro avanzata spinse prima i Goti ad attraversare il Danubio nel 376, poi altri popoli a oltrepassare il Reno tra il 405 e il 408. Entrare nell'impero sembrava a questi gruppi meno rischioso che affrontare gli Unni. Una volta insediati, sottrassero progressivamente province al governo romano. Con le province, l'Occidente perse per sempre una grande parte dei suoi contribuenti.
 
 [tesi.heather.cit] «Le crisi del 376-380 e del 405-408 videro entrambe gli Unni spingere altri gruppi oltre la frontiera dell'impero.»
 
-[tesi.heather.fonte] Empires and Barbarians (2010), pp. 208-209; il libro del 2005 non è stato letto
+[tesi.heather.fonte] Empires and Barbarians (2010), pp. 208-209; la stessa tesi in The Fall of the Roman Empire (2005), pp. 435 e 449-450
 
 [tesi.heather.obiezione] Halsall: le migrazioni sono il prodotto della fine dell'impero, non la causa.
 
@@ -3180,7 +3214,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.wardperkins.titolo] La fine di una civiltà
 
-[tesi.wardperkins.tesi] L'archeologia risponde a chi parla di trasformazione: fra il V e il VII secolo, in Occidente, il tenore di vita crolla. Lo dicono le ceramiche, le tegole, le monete, e perfino la taglia dei bovini, cresciuta sotto Roma e tornata piccola: «l'ascesa e la caduta della mucca romana». E il crollo, per lui, comincia con le invasioni.
+[tesi.wardperkins.tesi] Ward-Perkins risponde con l'archeologia a chi parla di trasformazione: tra il V e il VII secolo in Occidente il tenore di vita crolla. Lo mostrano oggetti di uso quotidiano come ceramiche, tegole e monete. Persino i bovini, che in età romana erano diventati più grandi, tornarono a essere di taglia più piccola. Lo storico parla di quella che chiama «l'ascesa e la caduta della mucca romana» e fa cominciare il crollo con le invasioni.
 
 [tesi.wardperkins.fonte] The Fall of Rome and the End of Civilization (2005)
 
@@ -3193,7 +3227,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [tesi.wardperkins.anni4-593] dov'è il Senato, dov'è il popolo
 
 
-### Henri Pirenne · La rottura viene dopo, con l'islam
+### Henri Pirenne · Le conquiste arabe dividono il Mediterraneo
 
 [tesi.pirenne.corto] Pirenne
 
@@ -3201,15 +3235,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.pirenne.anno] 1922 e 1937
 
-[tesi.pirenne.titolo] La rottura viene dopo, con l'islam
+[tesi.pirenne.titolo] Le conquiste arabe dividono il Mediterraneo
 
-[tesi.pirenne.tesi] Le invasioni germaniche non spezzano il mondo antico: i regni dei barbari vivono ancora affacciati sul Mediterraneo. La vera rottura viene con l'espansione araba del VII e dell'VIII secolo, che divide il mare. L'Occidente si volge a nord, e lì nasce l'impero di Carlo Magno.
+[tesi.pirenne.tesi] Per Pirenne le invasioni germaniche non spezzano il mondo antico: i nuovi regni continuano a far parte del mondo mediterraneo. La vera rottura arriva con le conquiste arabe del VII e dell'VIII secolo, che dividono il mare. Il centro politico dell'Occidente si sposta allora verso nord, nelle terre dove sarebbe sorto l'impero di Carlo Magno.
 
 [tesi.pirenne.cit] «Il Mediterraneo era stato un lago romano: diventa un lago musulmano.» «Carlo Magno, senza Maometto, sarebbe inconcepibile.»
 
 [tesi.pirenne.fonte] «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), pp. 77-86
 
-[tesi.pirenne.obiezione] La curva dei relitti di questa pagina scende già dal III secolo: i commerci non aspettarono gli Arabi per calare.
+[tesi.pirenne.obiezione] Già dal III secolo diminuiscono i relitti databili ritrovati nel Mediterraneo. È un indizio di un calo dei traffici marittimi anteriore alle conquiste arabe.
 
 [tesi.pirenne.anni1-711] il Mediterraneo si divide
 
@@ -3226,15 +3260,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.harper.titolo] Il clima e i microbi
 
-[tesi.harper.tesi] Alla storia politica Harper aggiunge la natura: un clima che dopo il II secolo si fa meno favorevole, e tre grandi epidemie che svuotano città ed eserciti. In questa pagina si vedono la peste di metà III secolo, il sole velato del 536 e la peste del 542.
+[tesi.harper.tesi] Harper considera anche gli effetti di un clima meno favorevole dopo il II secolo e di tre grandi epidemie che colpirono gli abitanti delle città e i soldati. Nel percorso si incontrano l'epidemia della metà del III secolo, il sole velato del 536 e la peste che raggiunse Costantinopoli nel 542.
 
 [tesi.harper.fonte] The Fate of Rome (2017)
 
-[tesi.harper.obiezione] John Haldon e altri, 2018: le prove non bastano a fare di clima e malattie la causa; quanto pesò la peste di Cipriano, con le fonti che abbiamo, non si può misurare.
+[tesi.harper.obiezione] Nel 2018 John Haldon e altri studiosi hanno giudicato insufficienti le prove per attribuire a clima e malattie un ruolo decisivo. Per l'epidemia del III secolo, detta «peste di Cipriano», le fonti non permettono di stimare l'impatto.
 
 [tesi.harper.anni1-251] la peste di Cipriano
 
-[tesi.harper.anni2-537] il sole velato, l'anno prima
+[tesi.harper.anni2-537] il sole velato del 536
 
 [tesi.harper.anni3-542] la peste di Giustiniano
 
@@ -3249,11 +3283,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.piombo.titolo] Avvelenati dal piombo
 
-[tesi.piombo.tesi] L'aristocrazia romana si sarebbe avvelenata da sola: il mosto cotto con cui si dolcificava il vino bolliva in recipienti di piombo. Di qui, secondo Nriagu, la «gotta saturnina» dei ricchi, e un contributo alla caduta.
+[tesi.piombo.tesi] Secondo Nriagu, l'aristocrazia romana si sarebbe avvelenata da sola: il mosto cotto con cui si dolcificava il vino bolliva in recipienti di piombo. Lo studioso attribuisce a questa pratica la «gotta saturnina» dei ricchi, una forma di gotta associata all'esposizione al piombo. A suo giudizio il fenomeno avrebbe contribuito alla caduta di Roma.
 
 [tesi.piombo.fonte] «Saturnine gout among Roman aristocrats», New England Journal of Medicine 308 (1983): visti solo i dati bibliografici
 
-[tesi.piombo.obiezione] John Scarborough, 1984: «il mito dell'avvelenamento da piombo fra i Romani»; gli antichi conoscevano bene il male. Il piombo rimasto nei ghiacci della Groenlandia misura un'altra cosa, l'attività di miniere e fonderie: crolla con le crisi del II e del III secolo e resta basso per cinque secoli.
+[tesi.piombo.obiezione] Nel 1984 John Scarborough contestò quello che definiva «il mito dell'avvelenamento da piombo fra i Romani», osservando che gli antichi ne conoscevano bene gli effetti. Il piombo depositato nei ghiacci della Groenlandia misura un'altra cosa: l'attività delle miniere e delle fonderie. I depositi crollarono con le crisi del II e del III secolo e rimasero bassi per cinque secoli.
 
 
 ### J. B. Bury · Una catena di casi
@@ -3266,13 +3300,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.bury.titolo] Una catena di casi
 
-[tesi.bury.tesi] Spopolamento, cristianesimo e tasse valevano anche per l'Oriente, che sopravvisse: dunque non spiegano. Il crollo dell'Occidente fu una serie di eventi, nessuno dei quali inevitabile: l'arrivo degli Unni; la crisi dei Goti mal gestita e Adrianopoli, colpa di Valente; un popolo intero insediato come federato da Teodosio, e la morte dell'imperatore; il trono a Onorio, «un ragazzo debole di mente»; il comando a Stilicone, e la sua contesa con l'Oriente.
+[tesi.bury.tesi] Bury osserva che tasse, spopolamento e cristianesimo caratterizzavano anche l'Oriente, che sopravvisse. Per spiegare la fine dell'Occidente segue invece una successione di eventi, ciascuno dei quali avrebbe potuto avere un esito diverso. Arrivarono gli Unni. La cattiva gestione dei profughi goti sfociò nella crisi di Adrianopoli, dove Valente scelse di dare battaglia. Teodosio insediò un intero popolo nell'impero come alleato. Alla sua morte il trono passò al giovane Onorio, che Bury giudica «un ragazzo debole di mente». Il comando militare toccò a Stilicone, che entrò in conflitto con la corte d'Oriente.
 
 [tesi.bury.cit] «Il graduale crollo della potenza romana in questa parte dell'impero fu la conseguenza di una serie di eventi contingenti. Non si possono indicare cause generali che lo rendessero inevitabile.»
 
 [tesi.bury.fonte] History of the Later Roman Empire, cap. IX, § 7, p. 311
 
-[tesi.bury.obiezione] Per Heather e Ward-Perkins dietro i casi c'è un meccanismo: ogni provincia perduta toglie tasse, e meno tasse vogliono dire meno esercito.
+[tesi.bury.obiezione] Heather e Ward-Perkins sottolineano che perdere una provincia significava perdere anche le imposte dei suoi abitanti. Con meno entrate diventava più difficile pagare i soldati necessari a difendere le province rimaste.
 
 [tesi.bury.anni1-378] Adrianopoli
 
@@ -3280,7 +3314,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.bury.anni3-402] Stilicone e la corte a Ravenna
 
-[tesi.bury.anni4-410] il sacco
+[tesi.bury.anni4-410] il sacco di Roma
 
 
 ### Walter Goffart · Un esperimento sfuggito di mano
@@ -3293,13 +3327,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.goffart.titolo] Un esperimento sfuggito di mano
 
-[tesi.goffart.tesi] Più che una conquista, un accomodamento: i barbari furono insediati per accordo, con regole romane, dentro province che continuarono a funzionare.
+[tesi.goffart.tesi] Più che una conquista, per Goffart fu un accomodamento. Gruppi provenienti da oltre frontiera furono insediati per accordo nelle province, secondo regole fissate dalle autorità romane, mentre l'amministrazione provinciale continuava a funzionare.
 
 [tesi.goffart.cit] «Quella che chiamiamo caduta dell'impero d'Occidente fu un esperimento fantasioso un po' sfuggito di mano.»
 
 [tesi.goffart.fonte] Barbarians and Romans, A.D. 418-584 (1980), p. 35
 
-[tesi.goffart.obiezione] Ward-Perkins: l'archeologia mostra un crollo del tenore di vita, non un passaggio di consegne.
+[tesi.goffart.obiezione] Ward-Perkins osserva che gli scavi documentano un crollo del tenore di vita nel passaggio ai nuovi regni, non un passaggio di consegne.
 
 [tesi.goffart.anni1-418] i Visigoti insediati per trattato
 
@@ -3318,11 +3352,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.trasformazione.titolo] Non una fine: una trasformazione
 
-[tesi.trasformazione.tesi] Dagli anni Settanta molti studiosi smettono di parlare di decadenza: fra il III e l'VIII secolo il mondo antico non muore, cambia forma, e ne escono i regni romano-barbarici, Bisanzio, la Chiesa dei vescovi e dei monaci, l'islam. Negli anni Novanta un programma della European Science Foundation porta la parola nel titolo: «La trasformazione del mondo romano».
+[tesi.trasformazione.tesi] Dagli anni Settanta del Novecento, Peter Brown e altri studiosi smettono di parlare di decadenza: tra il III e l'VIII secolo il mondo antico non muore, cambia forma. Ne nascono i regni romano-barbarici, l'impero bizantino, la Chiesa dei vescovi e dei monaci e l'islam. Negli anni Novanta la European Science Foundation dedica a questa lettura il programma «La trasformazione del mondo romano».
 
 [tesi.trasformazione.fonte] P. Brown, The World of Late Antiquity (1971), non riletto; il programma europeo, 1992-1997, da una voce d'enciclopedia
 
-[tesi.trasformazione.obiezione] Ward-Perkins, 2005: parlare di trasformazione nasconde ciò che gli scavi misurano.
+[tesi.trasformazione.obiezione] Per Ward-Perkins (2005), concentrarsi sulle trasformazioni lascia in ombra il calo del tenore di vita documentato dagli scavi.
 
 [tesi.trasformazione.anni2-609] il Pantheon diventa una chiesa
 
@@ -3339,7 +3373,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.demandt.titolo] Duecentodieci ragioni
 
-[tesi.demandt.tesi] Nel 1984 lo storico tedesco Alexander Demandt mise in fila, in ordine alfabetico, le cause proposte in due secoli di studi: sono 210, e dentro c'è ogni cosa e il suo contrario. Eccone alcune.
+[tesi.demandt.tesi] Nel 1984 lo storico tedesco Alexander Demandt raccolse in ordine alfabetico 210 cause proposte nei due secoli precedenti per spiegare la caduta di Roma. L'elenco documenta la varietà delle interpretazioni, anche quando si contraddicono. Qui ne compare una selezione.
 
 [tesi.demandt.elenco1] assalto degli Unni
 
@@ -3373,7 +3407,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [tesi.demandt.elenco16] esaurimento del suolo
 
-[tesi.demandt.elenco17] pressione fiscale
+[tesi.demandt.elenco17] peso delle tasse
 
 [tesi.demandt.elenco18] volgarizzazione
 
@@ -3386,7 +3420,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [carta.citta] Roma · Ravenna · Milano · Treviri · Arles · Cartagine · Costantinopoli · Londinium · Sirmio · Antiochia · Alessandria · Tolosa · Adrianopoli
 
-[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana
+[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini
 
 [carta.mari] Mare Nostrum · Oceano · Mare Interno · Ponto Eusino
 
@@ -3424,15 +3458,15 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.11-r74] Mostra meno
 
-[ui.pagina.12-r177] Voci di allora
+[ui.pagina.12-r178] Voci di allora
 
-[ui.pagina.13-r177] Una voce di allora
+[ui.pagina.13-r178] Una voce di allora
 
-[ui.pagina.14-r221] Chiudi lo schermo intero
+[ui.pagina.14-r222] Esci dallo schermo intero
 
-[ui.pagina.15-r221] Scena a tutto schermo
+[ui.pagina.15-r222] Scena a tutto schermo
 
-[ui.pagina.16-r221] Tutto schermo
+[ui.pagina.16-r222] Tutto schermo
 
 
 ### js/mappa.js
@@ -3487,105 +3521,121 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.25-r25] Asia Minore
 
-[ui.mappa.26-r70] oltre il confine
+[ui.mappa.26-r77] : mostra la sua parte
 
-[ui.mappa.27-r70] dentro l'impero, per accordo
+[ui.mappa.27-r88] le Gallie al di là delle Alpi (Aurelio Vittore)
 
-[ui.mappa.28-r70] in armi dentro l'impero
+[ui.mappa.28-r89] tutto il resto, cioè l’Oriente (Aurelio Vittore)
 
-[ui.mappa.29-r70] con un regno proprio (colore in legenda)
+[ui.mappa.29-r94] Puntini: aree di comando, non Stati. L’impero resta uno e le leggi valgono per tutti. A trattini: attribuzione discussa (Hispania, Tracia). Tocca un nome per vedere la sua parte.
 
-[ui.mappa.30-r72] Regno dei Visigoti
+[ui.mappa.30-r112] oltre il confine
 
-[ui.mappa.31-r72] Regno degli Ostrogoti
+[ui.mappa.31-r112] insediati nell'impero per accordo
 
-[ui.mappa.32-r72] Regno dei Vandali
+[ui.mappa.32-r112] in armi dentro l'impero
 
-[ui.mappa.33-r72] Regno degli Svevi
+[ui.mappa.33-r112] con un regno proprio (colore in legenda)
 
-[ui.mappa.34-r72] Regno dei Burgundi
+[ui.mappa.34-r114] Regno dei Visigoti
 
-[ui.mappa.35-r72] Regno dei Franchi
+[ui.mappa.35-r114] Regno degli Ostrogoti
 
-[ui.mappa.36-r72] Regni anglosassoni
+[ui.mappa.36-r114] Regno dei Vandali
 
-[ui.mappa.37-r72] Regno dei Longobardi
+[ui.mappa.37-r114] Regno degli Svevi
 
-[ui.mappa.38-r72] Khanato degli Avari
+[ui.mappa.38-r114] Regno dei Burgundi
 
-[ui.mappa.39-r72] Khanato dei Bulgari
+[ui.mappa.39-r114] Regno dei Franchi
 
-[ui.mappa.40-r186] Regni dei Franchi
+[ui.mappa.40-r114] Regni anglosassoni
 
-[ui.mappa.41-r186] Impero dei Franchi
+[ui.mappa.41-r114] Regno dei Longobardi
 
-[ui.mappa.42-r212] regno d'Italia di Odoacre
+[ui.mappa.42-r114] Khanato degli Avari
 
-[ui.mappa.43-r212] regno degli Ostrogoti
+[ui.mappa.43-r114] Khanato dei Bulgari
 
-[ui.mappa.44-r212] regno dei Franchi
+[ui.mappa.44-r349] Regni dei Franchi
 
-[ui.mappa.45-r213] impero romano
+[ui.mappa.45-r349] Impero dei Franchi
 
-[ui.mappa.46-r213] impero d'Occidente
+[ui.mappa.46-r375] regno d'Italia di Odoacre
 
-[ui.mappa.47-r213] impero separato, con un suo imperatore
+[ui.mappa.47-r375] regno degli Ostrogoti
 
-[ui.mappa.48-r213] dominio romano che non obbedisce più a Ravenna
+[ui.mappa.48-r375] regno dei Franchi
 
-[ui.mappa.49-r213] in guerra, contesa
+[ui.mappa.49-r376] impero romano
 
-[ui.mappa.50-r214] barbari insediati per trattato
+[ui.mappa.50-r376] impero d'Occidente
 
-[ui.mappa.51-r214] impero d'Oriente
+[ui.mappa.51-r376] territorio con un imperatore rivale
 
-[ui.mappa.52-r215] califfato ed emirati arabi
+[ui.mappa.52-r376] territorio romano che non obbedisce più a Ravenna
 
-[ui.mappa.53-r215] regni dei Franchi, dopo la divisione dell'843
+[ui.mappa.53-r376] regione contesa in guerra
 
-[ui.mappa.54-r215] lasciata dall'impero
+[ui.mappa.54-r377] barbari insediati per trattato
 
-[ui.mappa.55-r215] uscita dall'impero
+[ui.mappa.55-r377] impero d'Oriente
 
-[ui.mappa.56-r275] Carta a tutto schermo
+[ui.mappa.56-r378] califfato ed emirati arabi
 
-[ui.mappa.57-r279] Tutto schermo
+[ui.mappa.57-r378] regni franchi dopo la divisione dell'843
 
-[ui.mappa.58-r279] Chiudi lo schermo intero
+[ui.mappa.58-r378] lasciata dall'impero
+
+[ui.mappa.59-r378] uscita dall'impero
+
+[ui.mappa.60-r409] Mostra meno voci della legenda
+
+[ui.mappa.61-r413] Mostra le altre
+
+[ui.mappa.62-r456] mai dentro l’impero
+
+[ui.mappa.63-r498] Carta a tutto schermo
+
+[ui.mappa.64-r503] Tutto schermo
+
+[ui.mappa.65-r503] Esci dallo schermo intero
 
 
 ### js/atti.js
 
-[ui.atti.01-r16] Chiudi la scheda dell'atto
+[ui.atti.01-r26] Chiudi la scheda dell'atto
 
-[ui.atti.02-r20] alla fine
+[ui.atti.02-r50] Fai scorrere la carta tappa per tappa
 
-[ui.atti.03-r32] quota di superficie, su questa carta
+[ui.atti.03-r51] Carta dell'Impero
 
-[ui.atti.04-r32] stime: la forchetta sta nel cruscotto
+[ui.atti.04-r63] Le tappe dell'atto
 
-[ui.atti.05-r48] dal 309-312 il solido d’oro, stabile per secoli
+[ui.atti.05-r93] quota di superficie, su questa carta
 
-[ui.atti.06-r48] percentuale d’argento, valori indicativi
+[ui.atti.06-r93] stime: la forchetta sta nel cruscotto
+
+[ui.atti.07-r119] punto fine
+
+[ui.atti.08-r122] dal 309-312 il solido d’oro, stabile per secoli
+
+[ui.atti.09-r122] percentuale d’argento, valori indicativi
 
 
 ### js/cause.js
 
 [ui.cause.01-r8] Clima e malattie
 
-[ui.cause.02-r8] «Non cadde»
+[ui.cause.02-r9] clima e malattie
 
-[ui.cause.03-r9] clima e malattie
+[ui.cause.03-r31] Tipi di spiegazione
 
-[ui.cause.04-r9] «non cadde»
+[ui.cause.04-r57] Ogni punto indica un anno importante per una spiegazione. Le fasce indicano periodi più lunghi. Anni e periodi sono una scelta di questa pagina, fatta sui testi citati, per orientarsi. Seleziona una riga per leggere la spiegazione.
 
-[ui.cause.05-r28] Famiglie di spiegazioni
+[ui.cause.05-r71] Chi non è d'accordo.
 
-[ui.cause.06-r54] Ogni punto è un anno che quella spiegazione mette al centro, ogni fascia un periodo: è una scelta di questa pagina, fatta sui testi, per orientarsi. Tocca una riga per aprire la spiegazione.
-
-[ui.cause.07-r68] Chi non è d'accordo.
-
-[ui.cause.08-r72] Dove si vede in questa pagina
+[ui.cause.06-r75] Le tappe legate a questa spiegazione
 
 
 ### js/confronto.js
@@ -3597,7 +3647,7 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/condividi.js
 
-[ui.condividi.01-r6] Come finisce un impero: l'Occidente romano dal 235 all'852 in 47 tappe, con la carta che si disfa e Roma ricostruita in 3D
+[ui.condividi.01-r6] Come finisce un impero · L'Occidente romano dal 235 all'852 in 47 tappe, con una carta che mostra i cambiamenti dei confini e una ricostruzione di Roma in 3D.
 
 [ui.condividi.02-r41] Link copiato
 
