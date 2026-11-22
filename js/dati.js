@@ -863,7 +863,11 @@ var LUOGHI_TAPPA={
  593:[['roma',"Agilulfo sotto le mura"]],
  609:[['roma',"il Pantheon diventa una chiesa"]],
  663:[['roma',"dodici giorni di Costante II"]],
- 711:[['guadalete',"cade il regno dei Visigoti (il luogo esatto è incerto)"],['cartagine',"presa dagli Arabi nel 698"]],
+ /* Poitiers: Cronaca del 754, Chron. min. II pp. 361-362: Abd al-Rahman passa i monti dei Vasconi («montana Vacceorum dissecans»), batte Oddone «ultra fluvio nomine Garonna vel Dornoniam»,
+    lo insegue e vuole saccheggiare la chiesa di Tours («Turonensem ecclesiam… depredare desiderat»); gli si para davanti Carlo, «consulem Francie interioris Austrie»; dopo quasi sette giorni
+    le «gentes septentrionales» reggono «ut paries immobiles», il capo arabo è ucciso e di notte gli altri se ne vanno; all'alba «prospiciunt Europenses Arabum tentoria» vuote.
+    La cronaca non nomina Poitiers; luogo (fra Tours e Poitiers) e anno (732, per alcuni 733) vengono dalla tradizione dei manuali, a memoria. */
+ 711:[['guadalete',"cade il regno dei Visigoti (il luogo esatto è incerto)"],['cartagine',"presa dagli Arabi nel 698"],['poitiers',"nel 732 Carlo Martello ferma una spedizione araba diretta a Tours (il luogo esatto è incerto)"]],
  727:[['roma',"i pellegrini a San Pietro"]],
  756:[['roma',"assediata da Astolfo"],['pavia',"Pipino piega i Longobardi"]],
  780:[['pavia',"presa da Carlo Magno nel 774"],['roma',"i cantieri di Adriano I"]],
@@ -897,7 +901,8 @@ var SCENE_CARTA={
  537:[['marcia','roma',['siracusa','napoli','roma']],['marcia','altri',['ravenna','roma']],['assedio','roma']],
  546:[['assedio','roma']],
  568:[['marcia','altri',['sirmio','cividale','verona','pavia']]],
- 711:[['mare','altri',['tangeri','guadalete']],['scontro','guadalete'],['marcia','altri',['guadalete','toledo']]],
+ 711:[['mare','altri',['tangeri','guadalete']],['scontro','guadalete'],['marcia','altri',['guadalete','toledo']],
+      ['marcia','altri',['toledo','pamplona','bordeaux','poitiers']],['marcia','franchi',['metz','orleans','poitiers']],['scontro','poitiers']],      // la spedizione del 732: per i Pirenei occidentali e Bordeaux; Carlo viene dall'Austrasia (partenza indicativa)
  756:[['marcia','altri',['pavia','roma']],['assedio','roma'],['marcia','franchi',['lione','susa','pavia']],['assedio','pavia']],
  780:[['marcia','franchi',['lione','susa','pavia']],['assedio','pavia']],
  846:[['mare','altri',['tirreno','roma']],['fuoco','roma']]

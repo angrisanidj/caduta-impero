@@ -197,7 +197,8 @@ const LUOGHI = { magonza: [8.27, 50.0, 'Magonza'], abritto: [26.52, 43.53, 'Abri
   /* punti di passaggio delle marce e delle rotte disegnate dalle scene (SCENE_CARTA in js/dati.js): non hanno un cartellino */
   nisibi: [41.22, 37.07, 'Nisibi'], emesa: [36.72, 34.73, 'Emesa'], metz: [6.18, 49.12, 'Metz'], orleans: [1.91, 47.9, 'Orléans'], piacenza: [9.7, 45.05, 'Piacenza'], verona: [10.99, 45.44, 'Verona'],
   napoli: [14.25, 40.85, 'Napoli'], siracusa: [15.29, 37.07, 'Siracusa'], tangeri: [-5.8, 35.78, 'Tangeri'], toledo: [-4.02, 39.86, 'Toledo'], susa: [7.05, 45.14, 'Susa'], lione: [4.83, 45.76, 'Lione'],
-  ippona: [7.75, 36.88, 'Ippona'], rimini: [12.57, 44.06, 'Rimini'], tibisco: [20.2, 46.6, 'pianura del Tibisco'], egeo: [25.6, 38.4, 'Egeo'], ionio: [18.6, 37.2, 'Ionio'], tirreno: [11.6, 39.6, 'Tirreno'], oltrereno: [9.6, 50.3, 'oltre il Reno'], pelusio: [32.55, 31.04, 'Pelusio'], cividale: [13.43, 46.09, 'Cividale'], guadalete: [-6.0, 36.6, 'Guadalete'], pavia: [9.16, 45.19, 'Pavia'], aquisgrana: [6.08, 50.78, 'Aquisgrana'] };
+  ippona: [7.75, 36.88, 'Ippona'], rimini: [12.57, 44.06, 'Rimini'], tibisco: [20.2, 46.6, 'pianura del Tibisco'], egeo: [25.6, 38.4, 'Egeo'], ionio: [18.6, 37.2, 'Ionio'], tirreno: [11.6, 39.6, 'Tirreno'], oltrereno: [9.6, 50.3, 'oltre il Reno'],
+  poitiers: [0.34, 46.58, 'Poitiers'], pamplona: [-1.64, 42.82, 'Pamplona'], bordeaux: [-0.58, 44.84, 'Bordeaux'], pelusio: [32.55, 31.04, 'Pelusio'], cividale: [13.43, 46.09, 'Cividale'], guadalete: [-6.0, 36.6, 'Guadalete'], pavia: [9.16, 45.19, 'Pavia'], aquisgrana: [6.08, 50.78, 'Aquisgrana'] };
 
 /* I popoli in movimento: dove sta il grosso di ciascun gruppo, anno per anno, e in che rapporto è con Roma. [anno, lon, lat, rapporto].
    Rapporti: fuori (oltre il confine, senza patto) | accolti (ammessi dentro l'impero) | federati (patto: terre o paghe in cambio di soldati) |
