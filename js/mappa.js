@@ -609,7 +609,9 @@ svg.addEventListener('click',function(e){
   var v=vociStati[st]; if(v && !v.v.hidden){ v.v.classList.add('indicata'); if(v.v.getBoundingClientRect().top>=legenda.getBoundingClientRect().bottom-2){ legenda.classList.add('aperta'); misuraLegende(); } }      // la voce era fra quelle nascoste: la legenda si apre
   clearTimeout(chiOra); chiOra=setTimeout(nascondiChi,5000);
 });
-var attesa=0; window.addEventListener('resize',function(){ adatta(); clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); },200); });
+/* Su Safari per iPhone, scorrendo, la barra degli indirizzi entra ed esce e la finestra cambia di continuo la sola altezza: in pagina le legende non dipendono
+   dall'altezza, quindi non si rimisurano (prima ogni volta si rifacevano tutte, una per tappa, e la pagina poteva dare scatti mentre si legge). A tutto schermo sì. */
+var attesa=0, largPrima=window.innerWidth; window.addEventListener('resize',function(){ var w=window.innerWidth, soloAltezza=w===largPrima; largPrima=w; adatta(); if(soloAltezza && !grandeSi) return; clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); },200); });
 spazioLegende();
 
 /* A tutto schermo la carta riempie la finestra e si può ingrandire e trascinare (rotella, due dita, i bottoni + e −). La finestra sulla carta (viewBox) prende
