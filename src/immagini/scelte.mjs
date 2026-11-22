@@ -44,7 +44,8 @@ export const SCELTE = {
   'Costanzo II': { file: 'The triumph of Constantius II.jpg', oggetto: 'missorio d\'argento di Kerč, metà del IV secolo, Ermitage', coevo: 'si',
     alt: [{ file: 'Bust of Constantius II (Mary Harrsch).jpg', oggetto: 'busto attribuito a Costanzo II (immagine di Wikidata): museo e attribuzione da controllare' }],
     nota: 'L\'imperatore del missorio di Kerč è identificato di solito con Costanzo II, non per iscrizione certa del volto. Più sicura una moneta.' },
-  'Ammiano Marcellino': { coevo: 'nessuno', nota: 'Nessun ritratto coevo noto; non ho trovato su Commons il manoscritto di Fulda (Vat. lat. 1873, IX secolo). L\'immagine di Wikidata («Ammianus Marcellinus.jpg») non l\'ho aperta: dal titolo, un ritratto moderno.' },
+  'Ammiano Marcellino': { file: 'Ammianus Marcellinus, Vaticanus lat. 1873.jpg', oggetto: 'pagina del manoscritto di Fulda delle «Res gestae» (Biblioteca Apostolica Vaticana, Vat. lat. 1873, IX secolo), libro 31, capitolo 2', coevo: 'nessuno', ritratto: false,
+    nota: 'Nessun ritratto noto. Scartato il 22 novembre 2026 il busto che l\'utente aveva indicato («Ammianus Marcellinus.jpg» su Commons): la pagina stessa dice che è un busto del V secolo di uno sconosciuto, al Museo archeologico di Salonicco, «thought to be» Ammiano secondo fonti trovate in rete, e la foto è presa da un\'altra pubblicazione (licenza dichiarata da chi l\'ha caricata, non dal fotografo). Al suo posto il manoscritto più antico dell\'opera, che su Commons c\'è.' },
   'Ormisda': { coevo: 'nessuno', nota: 'Nessun ritratto noto e nessuna immagine su Commons.' },
   // 378
   'Valente': { file: 'Solidus of Valens (364–378) MET sf67-265-22s1.jpg', autore: 'Metropolitan Museum of Art', oggetto: 'solido di Valente, 364-378, Metropolitan Museum of Art', coevo: 'si',
@@ -82,12 +83,12 @@ export const SCELTE = {
     nota: 'La più antica immagine nota, circa un secolo dopo la morte: un ritratto ideale, non dal vero. L\'immagine di Wikidata è un quadro di Philippe de Champaigne (XVII secolo).' },
   'Valentiniano III': { file: 'Solidus ValentinianIII-wedding.jpg', autore: 'Classical Numismatic Group, Inc. (cngcoins.com)', oggetto: 'solido del 437 per le nozze di Valentiniano III con Licinia Eudossia (sul rovescio Teodosio II fra i due sposi)', coevo: 'si' },
   // 451
-  'Ezio': { coevo: 'nessuno',
-    nota: 'Nessun ritratto certo. Scartato il 22 novembre 2026 il file «Diptych Aetius.jpg»: guardato, è un rilievo di marmo (un busto dentro una conchiglia, da un sarcofago), non il dittico d’avorio che il titolo promette; che sia Ezio è una proposta di un solo autore (Ian Hughes).' },
+  'Ezio': { file: 'Diptych Aetius.jpg', oggetto: 'ritratto in rilievo del sarcofago detto «di Stilicone», Milano, basilica di Sant\'Ambrogio', coevo: 'si',
+    nota: 'Rimessa il 22 novembre 2026 su richiesta dell\'utente, con riserva. Il titolo del file dice «dittico», ma è un rilievo di marmo: la pagina di Commons rimanda, come altra versione, al calco del «sarcofago di Stilicone» (foto Dall\'Orto), quindi è un particolare di quel sarcofago. Che sia Ezio è una proposta di Ian Hughes (Aetius: Attila\'s Nemesis), riferita dalla pagina; non letta nel libro. La data del sarcofago non è stata riscontrata.' },
   'Attila': { file: 'Attila portrait (imaginary), by Giovio Paolo, 1483-1552, published 1575.jpg', oggetto: 'ritratto immaginario dagli «Elogia» di Paolo Giovio, 1575', coevo: 'fantasia',
     nota: 'Nessun ritratto coevo noto: l\'immagine è dichiaratamente immaginaria (lo dice il titolo del file).' },
   // 455, 458, 468
-  'Leone I': { file: 'Raphael - The Meeting of Leo the Great and Attila.jpg', oggetto: 'Raffaello, «Incontro di Leone Magno con Attila», 1514, Stanze vaticane', coevo: 'fantasia',
+  'Leone I': { file: 'Raphael - The Meeting of Leo the Great and Attila.jpg', oggetto: 'Raffaello, «Incontro di Leone Magno con Attila», 1514, Stanze vaticane', coevo: 'posteriore',
     nota: 'Nessun ritratto coevo; il papa ha il volto di Leone X, e la scena è quella del 452 con Attila, non quella del 455 con Genserico. Meglio nessuna immagine.' },
   'Maggioriano': { file: 'Solidus Majorian Arles.jpg', oggetto: 'solido di Maggioriano, zecca di Arles, 457-461', coevo: 'si',
     nota: 'ATTENZIONE: l\'immagine di Wikidata («Maiorianus Augustus.jpg») è un ritratto del 1754, di fantasia.' },
@@ -117,12 +118,13 @@ export const SCELTE = {
   'Giustiniano': { file: 'Mosaic of Justinianus I - Basilica San Vitale (Ravenna).jpg', oggetto: 'mosaico del presbiterio di San Vitale, Ravenna, 547 circa', coevo: 'si' },
   'Belisario': { file: 'Meister von San Vitale in Ravenna 013.jpg', oggetto: 'figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa', coevo: 'si',
     nota: 'L\'identificazione con Belisario della figura alla destra dell\'imperatore è tradizionale ma discussa.' },
-  'Vitige': { coevo: 'nessuno',
-    nota: 'Nessun ritratto noto. Scartato il 22 novembre 2026 il file «Quarter Siliqua of Witigis.jpg»: guardato, sul rovescio ha un monogramma e non il nome del re in lettere, come ci si aspetta dalle monete di Vitige; l’attribuzione va controllata su un catalogo prima di usarla.' },
+  'Vitige': { file: 'Quarter Siliqua of Witigis.jpg', autore: 'Classical Numismatic Group, Inc. (cngcoins.com)', oggetto: 'quarto di siliqua d\'argento a nome di Giustiniano, zecca di Ravenna, attribuito al regno di Vitige (536-540)', coevo: 'nessuno', ritratto: false,
+    nota: 'Rimessa il 22 novembre 2026 su indicazione dell\'utente: la scheda della casa d\'aste (CNG, eAuction 175, letta) la dà a Vitige, «in the name of Byzantine emperor Justinian I», zecca di Ravenna. Il volto è dell\'imperatore; sul rovescio c\'è un monogramma. L\'attribuzione è del catalogo d\'asta: non l\'ho riscontrata su un repertorio.' },
   'Procopio': { coevo: 'nessuno', nota: 'Nessun ritratto noto e nessun manoscritto antico trovato su Commons.' },
   'Totila': { file: 'Baduila BMC 044.jpg', oggetto: 'moneta di bronzo di Baduila (Totila) col suo busto (BMC 44), 541-552', coevo: 'si',
     nota: 'Sulle monete di bronzo il re si fa ritrarre (busto stilizzato); le opere di Salviati e Bonazza sono di fantasia.' },
-  'Narsete': { coevo: 'nessuno', nota: 'Nessun ritratto certo. In San Vitale una delle figure accanto a Giustiniano è stata identificata con Narsete da alcuni, ma senza fondamento sicuro; su Commons c\'è «Narses.jpg» da controllare.' },
+  'Narsete': { file: 'Narses.jpg', oggetto: 'figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa, fra l\'imperatore e il vescovo Massimiano', coevo: 'si',
+    nota: 'Indicata dall\'utente il 22 novembre 2026. L\'identificazione con Narsete è una proposta senza conferme: nel mosaico il nome non c\'è, e la figura è stata letta anche in altri modi.' },
   // 568, 589, 593
   'Alboino': { coevo: 'nessuno', nota: 'Nessun ritratto coevo noto; su Commons la xilografia della Cronaca di Norimberga (1493), di fantasia.' },
   'Giustino II': { file: 'Gold solidus, Byzantine, Justin II, 565-578.jpg', autore: 'CNG (cngcoins.com)', oggetto: 'solido di Giustino II, 565-578', coevo: 'si' },
@@ -134,7 +136,8 @@ export const SCELTE = {
   // 609
   'Foca': { file: 'Impero romano d\'oriente, foca, emissione aurea, 602-610.JPG', oggetto: 'moneta d\'oro di Foca, 602-610, Museo nazionale romano (Palazzo Massimo alle Terme)', coevo: 'si',
     nota: 'Scelta del 22 novembre 2026 al posto di «Phocas cons.jpg», che non indica l\'autore della foto.' },
-  'Bonifacio IV': { coevo: 'nessuno', nota: 'Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (rifatto nell\'Ottocento) e incisioni moderne.' },
+  'Bonifacio IV': { file: 'Bonifacius IV. Bonifacio IV.jpg', autore: 'Giovanni Battista de\' Cavalieri', oggetto: 'incisione da G. B. Cavalieri, «Pontificum Romanorum effigies», Roma, 1580', coevo: 'posteriore',
+    nota: 'Messa il 22 novembre 2026 su decisione dell\'utente («mettile come immagine più tarda»). Nessun ritratto coevo: è un volto di fantasia inciso quasi mille anni dopo. Su Commons c\'è anche il medaglione di San Paolo fuori le mura, ottocentesco, con provenienza meno chiara.' },
   'Smaragdo': { file: 'Column of Phocas.jpg', oggetto: 'la colonna di Foca nel Foro Romano, che Smaragdo dedicò nel 608', coevo: 'nessuno', ritratto: false,
     nota: 'Nessun ritratto noto. Va scelta una foto in cui si legga l\'iscrizione (questa è presa a caso dalla categoria).', verificato: false },
   // 663
@@ -144,12 +147,13 @@ export const SCELTE = {
   // 711
   'Tariq ibn Ziyad': { coevo: 'nessuno', nota: 'Nessun ritratto noto (l\'Islam di quel tempo non ritrae); su Commons solo immagini moderne di fantasia.' },
   'Musa ibn Nusayr': { coevo: 'nessuno', nota: 'Nessun ritratto noto; su Commons solo un\'illustrazione moderna.' },
-  'Rodrigo': { file: 'Don Rodrigo, rey de los visigodos (Museo del Prado).jpg', oggetto: 'ritratto immaginario della serie dei re di Spagna, Museo del Prado', coevo: 'fantasia',
-    nota: 'Nessun ritratto coevo noto. Esistono tremissi a suo nome (zecca di Egitania), ma non li ho trovati su Commons. Meglio nessuna immagine.' },
+  'Rodrigo': { file: 'Roderic coin Egitania 1.PNG', autore: 'Aloïss Heiss, 1872', oggetto: 'disegno di un tremisse d\'oro a nome di Rodrigo, zecca di Egitania (oggi Idanha-a-Velha, in Portogallo), da A. Heiss, «Description générale des monnaies des rois wisigoths d\'Espagne», Parigi, 1872', coevo: 'nessuno', ritratto: false,
+    nota: 'Indicata dall\'utente il 22 novembre 2026 (è il file di Commons, di pubblico dominio). Sulla moneta si leggono il nome del re (RVDERICVS RX) e la zecca (EGITANIA PIVS); il busto è schematico. È un disegno dell\'Ottocento, non una foto della moneta.' },
   // 727
   'Ine': { file: 'King Ine in the Transfiguration Window of Wells Cathedral (crop).jpg', oggetto: 'vetrata della Trasfigurazione, cattedrale di Wells, 1925-1931', coevo: 'fantasia',
     nota: 'Nessun ritratto coevo; vetrata di A. K. Nicholson, 1925-1931: di fantasia. Meglio nessuna immagine.' },
-  'Gregorio II': { coevo: 'nessuno', nota: 'Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (rifatto nell\'Ottocento) e incisioni moderne.' },
+  'Gregorio II': { file: 'Gregorius II. Gregorio II.jpg', autore: 'Giovanni Battista de\' Cavalieri', oggetto: 'incisione da G. B. Cavalieri, «Pontificum Romanorum effigies», Roma, 1580', coevo: 'posteriore',
+    nota: 'Messa il 22 novembre 2026 su decisione dell\'utente («mettile come immagine più tarda»). Nessun ritratto coevo: è un volto di fantasia inciso otto secoli e mezzo dopo. Su Commons c\'è anche il medaglione di San Paolo fuori le mura, ottocentesco, con provenienza meno chiara.' },
   'Liutprando': { file: 'Regno longobardo, emissione aurea di liutprando, zecca di pavia, 712-744, 01.JPG', oggetto: 'tremisse d\'oro di Liutprando re, zecca di Pavia, 712-744', coevo: 'nessuno', ritratto: false,
     nota: 'ATTENZIONE: l\'immagine di Wikidata è un tremisse di Liutprando duca di Benevento (742-751), un omonimo. Il busto sulle monete regie è stilizzato, non un ritratto.' },
   // 756, 780
@@ -162,16 +166,17 @@ export const SCELTE = {
     nota: 'Tre secoli e mezzo dopo. I suoi denari, coevi, non hanno volto.' },
   'Adriano I': { file: 'Zecca di roma, denaro di adriano I, 772-795, in argento (bibl. apostolica vaticana).jpg', oggetto: 'denaro d\'argento della zecca di Roma col busto di Adriano I, 772-795, Biblioteca Apostolica Vaticana', coevo: 'si' },
   'Carlo Magno': { file: 'Charlemagne denier Mayence 812 814.jpg', autore: 'Bibliothèque nationale de France', oggetto: 'denaro col busto laureato di Carlo, zecca di Magonza, 812-814', coevo: 'si' },
-  'Desiderio': { file: 'Regno longobardo, emissione aurea di desiderio, zecca di lucca, 757-774, 01.JPG', oggetto: 'tremisse d\'oro di Desiderio, zecca di Lucca, 757-774', coevo: 'nessuno', ritratto: false,
-    nota: 'I tremissi di Desiderio portano una croce o una stella, non il volto. L\'immagine di Wikidata è un ritratto di fantasia.' },
+  'Desiderio': { file: 'Tremisse di Re Desiderio, Dominio Longobardo.jpg', autore: 'Classical Numismatic Group, Inc. (cngcoins.com)', oggetto: 'tremisse d\'oro di Desiderio, zecca di Lucca (DN DESIDER REX; FLAVIA LVCA), 757-774', coevo: 'nessuno', ritratto: false,
+    nota: 'Immagine indicata dall\'utente il 22 novembre 2026 (è il file di Commons, foto CNG). Croce da un lato, stella dall\'altro: nessun volto.' },
   // 800, 801
   'Leone III': { file: 'Pope Leo III portrait – Triclinium Leoninum.jpg', autore: 'autore sconosciuto; rifacimento di Ferdinando Fuga (1743)', oggetto: 'mosaico del Triclinio Leoniano (Laterano): Pietro dà il pallio a Leone III', coevo: 'posteriore',
     nota: 'Il mosaico originale (fine VIII secolo) è perduto: quello visibile è il rifacimento del 1743 sui disegni antichi. Leone III vi ha il nimbo quadrato dei vivi.' },
   'Irene': { file: 'Irene solidus sb 1599 (obverse).jpg', oggetto: 'solido di Irene (SB 1599), 797-802', coevo: 'si' },
   // 846, 852
-  'Sergio II': { coevo: 'nessuno', nota: 'Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (ottocentesco). I denari col nome del papa e di Lotario esistono, ma non li ho trovati su Commons.' },
+  'Sergio II': { file: 'Sergius II. Sergio II.jpg', autore: 'Giovanni Battista de\' Cavalieri', oggetto: 'incisione da G. B. Cavalieri, «Pontificum Romanorum effigies», Roma, 1580', coevo: 'posteriore',
+    nota: 'Messa il 22 novembre 2026 su decisione dell\'utente («mettile come immagine più tarda»). Nessun ritratto coevo: è un volto di fantasia inciso più di sette secoli dopo. Su Commons c\'è anche il medaglione di San Paolo fuori le mura, ottocentesco, con provenienza meno chiara.' },
   'Lotario I': { file: 'Lothar I.jpg', autore: 'miniatore di Tours', oggetto: 'miniatura dell\'Evangeliario di Lotario (BnF, Lat. 266), Tours, 849-851', coevo: 'si',
     alt: [{ file: 'Medallion of Lothair, from the Lothaire Psalter.jpg', oggetto: 'medaglione del Salterio di Lotario (British Library, Add MS 37768), metà IX secolo' }] },
-  'Leone IV': { file: 'Raphael - Fire in the Borgo.jpg', oggetto: 'Raffaello e bottega, «Incendio di Borgo», 1514, Stanze vaticane: Leone IV benedice dalla loggia di San Pietro', coevo: 'fantasia',
+  'Leone IV': { file: 'Raphael - Fire in the Borgo.jpg', oggetto: 'Raffaello e bottega, «Incendio di Borgo», 1514, Stanze vaticane: Leone IV benedice dalla loggia di San Pietro', coevo: 'posteriore',
     nota: 'Nessun ritratto coevo; il papa ha il volto di Leone X. Racconta un miracolo dell\'847 (Liber pontificalis), non le mura.' },
 };

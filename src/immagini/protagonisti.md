@@ -8,11 +8,11 @@ Righe della tabella: 112 (persone distinte: 87).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 65 | 47 |
-| ritratto posteriore | 10 | 8 |
-| di fantasia | 8 | 7 |
-| oggetto del tempo, senza volto | 12 | 9 |
-| nessuna immagine | 17 | 16 |
+| ritratto coevo | 67 | 49 |
+| ritratto posteriore | 15 | 13 |
+| di fantasia | 5 | 4 |
+| oggetto del tempo, senza volto | 15 | 12 |
+| nessuna immagine | 10 | 9 |
 
 ## Da decidere
 
@@ -96,7 +96,7 @@ Le scelte di principio:
 
 - **Costanzo II** ([Q46418](https://www.wikidata.org/wiki/Q46418)) — *ritratto coevo*: missorio d'argento di Kerč, metà del IV secolo, Ermitage. [The triumph of Constantius II.jpg](https://commons.wikimedia.org/wiki/File:The_triumph_of_Constantius_II.jpg) — 2527×2516, CC BY-SA 4.0; «Foto: Hermitage Museum, CC BY-SA 4.0, da Wikimedia Commons». L'imperatore del missorio di Kerč è identificato di solito con Costanzo II, non per iscrizione certa del volto. Più sicura una moneta.
   - in alternativa: busto attribuito a Costanzo II (immagine di Wikidata): museo e attribuzione da controllare [Bust of Constantius II (Mary Harrsch).jpg](https://commons.wikimedia.org/wiki/File:Bust_of_Constantius_II_(Mary_Harrsch).jpg) — CC BY-SA 2.0, Mary Harrsch
-- **Ammiano Marcellino** ([Q172198](https://www.wikidata.org/wiki/Q172198)) — *nessuna immagine*. Nessun ritratto coevo noto; non ho trovato su Commons il manoscritto di Fulda (Vat. lat. 1873, IX secolo). L'immagine di Wikidata («Ammianus Marcellinus.jpg») non l'ho aperta: dal titolo, un ritratto moderno.
+- **Ammiano Marcellino** ([Q172198](https://www.wikidata.org/wiki/Q172198)) — *oggetto del tempo, senza volto*: pagina del manoscritto di Fulda delle «Res gestae» (Biblioteca Apostolica Vaticana, Vat. lat. 1873, IX secolo), libro 31, capitolo 2. [Ammianus Marcellinus, Vaticanus lat. 1873.jpg](https://commons.wikimedia.org/wiki/File:Ammianus_Marcellinus,_Vaticanus_lat._1873.jpg) — 1858×2349, Public domain; «Immagine: Ammiano Marcellino, pubblico dominio, da Wikimedia Commons». Nessun ritratto noto. Scartato il 22 novembre 2026 il busto che l'utente aveva indicato («Ammianus Marcellinus.jpg» su Commons): la pagina stessa dice che è un busto del V secolo di uno sconosciuto, al Museo archeologico di Salonicco, «thought to be» Ammiano secondo fonti trovate in rete, e la foto è presa da un'altra pubblicazione (licenza dichiarata da chi l'ha caricata, non dal fotografo). Al suo posto il manoscritto più antico dell'opera, che su Commons c'è.
 - **Ormisda** ([Q1226628](https://www.wikidata.org/wiki/Q1226628)) — *nessuna immagine*. Nessun ritratto noto e nessuna immagine su Commons.
 
 ### 378
@@ -154,7 +154,7 @@ Le scelte di principio:
 
 ### 451
 
-- **Ezio** ([Q185476](https://www.wikidata.org/wiki/Q185476)) — *nessuna immagine*. Nessun ritratto certo. Scartato il 22 novembre 2026 il file «Diptych Aetius.jpg»: guardato, è un rilievo di marmo (un busto dentro una conchiglia, da un sarcofago), non il dittico d’avorio che il titolo promette; che sia Ezio è una proposta di un solo autore (Ian Hughes).
+- **Ezio** ([Q185476](https://www.wikidata.org/wiki/Q185476)) — *ritratto coevo*: ritratto in rilievo del sarcofago detto «di Stilicone», Milano, basilica di Sant'Ambrogio. [Diptych Aetius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_Aetius.jpg) — 900×900, CC BY-SA 4.0; «Foto: Tataryn, CC BY-SA 4.0, da Wikimedia Commons». Rimessa il 22 novembre 2026 su richiesta dell'utente, con riserva. Il titolo del file dice «dittico», ma è un rilievo di marmo: la pagina di Commons rimanda, come altra versione, al calco del «sarcofago di Stilicone» (foto Dall'Orto), quindi è un particolare di quel sarcofago. Che sia Ezio è una proposta di Ian Hughes (Aetius: Attila's Nemesis), riferita dalla pagina; non letta nel libro. La data del sarcofago non è stata riscontrata.
 - **Attila** ([Q36724](https://www.wikidata.org/wiki/Q36724)) — *di fantasia*: ritratto immaginario dagli «Elogia» di Paolo Giovio, 1575. [Attila portrait (imaginary), by Giovio Paolo, 1483-1552, published 1575.jpg](https://commons.wikimedia.org/wiki/File:Attila_portrait_(imaginary),_by_Giovio_Paolo,_1483-1552,_published_1575.jpg) — 605×774, Public domain; «Immagine: Giovio, Paolo, 1483-1552, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: l'immagine è dichiaratamente immaginaria (lo dice il titolo del file).
 - **Teodorico I** ([Q110892](https://www.wikidata.org/wiki/Q110892)) — *di fantasia*: quadro di Félix Castello, 1635, Museo del Prado. [Félix Castello, "Teodorico, rey godo", 1635.jpg](https://commons.wikimedia.org/wiki/File:F%C3%A9lix_Castello,_%22Teodorico,_rey_godo%22,_1635.jpg) — 1708×2953, Public domain; «Immagine: Félix Castello, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: immagine di fantasia; meglio nessuna immagine.
 
@@ -162,7 +162,7 @@ Le scelte di principio:
 
 - **Valentiniano III** ([Q170026](https://www.wikidata.org/wiki/Q170026)) — *ritratto coevo*: solido del 437 per le nozze di Valentiniano III con Licinia Eudossia (sul rovescio Teodosio II fra i due sposi). [Solidus ValentinianIII-wedding.jpg](https://commons.wikimedia.org/wiki/File:Solidus_ValentinianIII-wedding.jpg) — 425×212, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
 - **Genserico** ([Q152127](https://www.wikidata.org/wiki/Q152127)) — *oggetto del tempo, senza volto*: siliqua vandala del tempo di Genserico, 455-476 circa. [Siliqua of Gaiseric, ca. 455-476.jpg](https://commons.wikimedia.org/wiki/File:Siliqua_of_Gaiseric,_ca._455-476.jpg) — 800×374, CC BY-SA 2.5; «Foto: CNG Coins, CC BY-SA 2.5, da Wikimedia Commons». I Vandali coniano a nome e con il busto degli imperatori (qui forse Onorio immobilizzato): non è un ritratto di Genserico. Nessun ritratto coevo noto.
-- **Leone I** ([Q43954](https://www.wikidata.org/wiki/Q43954)) — *di fantasia*: Raffaello, «Incontro di Leone Magno con Attila», 1514, Stanze vaticane. [Raphael - The Meeting of Leo the Great and Attila.jpg](https://commons.wikimedia.org/wiki/File:Raphael_-_The_Meeting_of_Leo_the_Great_and_Attila.jpg) — 4001×3003, Public domain; «Immagine: Raffaello Sanzio, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo; il papa ha il volto di Leone X, e la scena è quella del 452 con Attila, non quella del 455 con Genserico. Meglio nessuna immagine.
+- **Leone I** ([Q43954](https://www.wikidata.org/wiki/Q43954)) — *ritratto posteriore*: Raffaello, «Incontro di Leone Magno con Attila», 1514, Stanze vaticane. [Raphael - The Meeting of Leo the Great and Attila.jpg](https://commons.wikimedia.org/wiki/File:Raphael_-_The_Meeting_of_Leo_the_Great_and_Attila.jpg) — 4001×3003, Public domain; «Immagine: Raffaello Sanzio, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo; il papa ha il volto di Leone X, e la scena è quella del 452 con Attila, non quella del 455 con Genserico. Meglio nessuna immagine.
 
 ### 458
 
@@ -204,7 +204,7 @@ Le scelte di principio:
 
 - **Giustiniano** ([Q41866](https://www.wikidata.org/wiki/Q41866)) — *ritratto coevo*: mosaico del presbiterio di San Vitale, Ravenna, 547 circa. [Mosaic of Justinianus I - Basilica San Vitale (Ravenna).jpg](https://commons.wikimedia.org/wiki/File:Mosaic_of_Justinianus_I_-_Basilica_San_Vitale_(Ravenna).jpg) — 1500×1997, CC BY-SA 4.0; «Foto: Petar Milošević, CC BY-SA 4.0, da Wikimedia Commons».
 - **Belisario** ([Q174943](https://www.wikidata.org/wiki/Q174943)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa. [Meister von San Vitale in Ravenna 013.jpg](https://commons.wikimedia.org/wiki/File:Meister_von_San_Vitale_in_Ravenna_013.jpg) — 1576×1888, Public domain; «Immagine: Meister von San Vitale in Ravenna, pubblico dominio, da Wikimedia Commons». L'identificazione con Belisario della figura alla destra dell'imperatore è tradizionale ma discussa.
-- **Vitige** ([Q312607](https://www.wikidata.org/wiki/Q312607)) — *nessuna immagine*. Nessun ritratto noto. Scartato il 22 novembre 2026 il file «Quarter Siliqua of Witigis.jpg»: guardato, sul rovescio ha un monogramma e non il nome del re in lettere, come ci si aspetta dalle monete di Vitige; l’attribuzione va controllata su un catalogo prima di usarla.
+- **Vitige** ([Q312607](https://www.wikidata.org/wiki/Q312607)) — *oggetto del tempo, senza volto*: quarto di siliqua d'argento a nome di Giustiniano, zecca di Ravenna, attribuito al regno di Vitige (536-540). [Quarter Siliqua of Witigis.jpg](https://commons.wikimedia.org/wiki/File:Quarter_Siliqua_of_Witigis.jpg) — 800×392, CC BY-SA 2.5; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 2.5, da Wikimedia Commons». Rimessa il 22 novembre 2026 su indicazione dell'utente: la scheda della casa d'aste (CNG, eAuction 175, letta) la dà a Vitige, «in the name of Byzantine emperor Justinian I», zecca di Ravenna. Il volto è dell'imperatore; sul rovescio c'è un monogramma. L'attribuzione è del catalogo d'asta: non l'ho riscontrata su un repertorio.
 
 ### 542
 
@@ -215,7 +215,7 @@ Le scelte di principio:
 
 - **Totila** ([Q159707](https://www.wikidata.org/wiki/Q159707)) — *ritratto coevo*: moneta di bronzo di Baduila (Totila) col suo busto (BMC 44), 541-552. [Baduila BMC 044.jpg](https://commons.wikimedia.org/wiki/File:Baduila_BMC_044.jpg) — 700×319, CC BY-SA 3.0; «Foto: Courtesy of CNG Auctions, www.cngcoins.com, CC BY-SA 3.0, da Wikimedia Commons». Sulle monete di bronzo il re si fa ritrarre (busto stilizzato); le opere di Salviati e Bonazza sono di fantasia.
 - **Belisario** ([Q174943](https://www.wikidata.org/wiki/Q174943)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa. [Meister von San Vitale in Ravenna 013.jpg](https://commons.wikimedia.org/wiki/File:Meister_von_San_Vitale_in_Ravenna_013.jpg) — 1576×1888, Public domain; «Immagine: Meister von San Vitale in Ravenna, pubblico dominio, da Wikimedia Commons». L'identificazione con Belisario della figura alla destra dell'imperatore è tradizionale ma discussa.
-- **Narsete** ([Q294781](https://www.wikidata.org/wiki/Q294781)) — *nessuna immagine*. Nessun ritratto certo. In San Vitale una delle figure accanto a Giustiniano è stata identificata con Narsete da alcuni, ma senza fondamento sicuro; su Commons c'è «Narses.jpg» da controllare.
+- **Narsete** ([Q294781](https://www.wikidata.org/wiki/Q294781)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa, fra l'imperatore e il vescovo Massimiano. [Narses.jpg](https://commons.wikimedia.org/wiki/File:Narses.jpg) — 509×700, Public domain; «Immagine: Vahan.hovh, pubblico dominio, da Wikimedia Commons». Indicata dall'utente il 22 novembre 2026. L'identificazione con Narsete è una proposta senza conferme: nel mosaico il nome non c'è, e la figura è stata letta anche in altri modi.
 
 ### 568
 
@@ -235,7 +235,7 @@ Le scelte di principio:
 ### 609
 
 - **Foca** ([Q31556](https://www.wikidata.org/wiki/Q31556)) — *ritratto coevo*: moneta d'oro di Foca, 602-610, Museo nazionale romano (Palazzo Massimo alle Terme). [Impero romano d'oriente, foca, emissione aurea, 602-610.JPG](https://commons.wikimedia.org/wiki/File:Impero_romano_d%27oriente,_foca,_emissione_aurea,_602-610.JPG) — 384×357, CC BY-SA 3.0; «Foto: Sailko, CC BY-SA 3.0, da Wikimedia Commons». Scelta del 22 novembre 2026 al posto di «Phocas cons.jpg», che non indica l'autore della foto.
-- **Bonifacio IV** ([Q170505](https://www.wikidata.org/wiki/Q170505)) — *nessuna immagine*. Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (rifatto nell'Ottocento) e incisioni moderne.
+- **Bonifacio IV** ([Q170505](https://www.wikidata.org/wiki/Q170505)) — *ritratto posteriore*: incisione da G. B. Cavalieri, «Pontificum Romanorum effigies», Roma, 1580. [Bonifacius IV. Bonifacio IV.jpg](https://commons.wikimedia.org/wiki/File:Bonifacius_IV._Bonifacio_IV.jpg) — 2851×3748, CC0; «Foto: Giovanni Battista de' Cavalieri, CC0, da Wikimedia Commons». Messa il 22 novembre 2026 su decisione dell'utente («mettile come immagine più tarda»). Nessun ritratto coevo: è un volto di fantasia inciso quasi mille anni dopo. Su Commons c'è anche il medaglione di San Paolo fuori le mura, ottocentesco, con provenienza meno chiara.
 - **Smaragdo** ([Q1340553](https://www.wikidata.org/wiki/Q1340553)) — *oggetto del tempo, senza volto*: la colonna di Foca nel Foro Romano, che Smaragdo dedicò nel 608. [Column of Phocas.jpg](https://commons.wikimedia.org/wiki/File:Column_of_Phocas.jpg) — 2448×3264, CC BY 3.0; «Foto: F l a n k e r, CC BY 3.0, da Wikimedia Commons». Nessun ritratto noto. Va scelta una foto in cui si legga l'iscrizione (questa è presa a caso dalla categoria).
 
 ### 663
@@ -247,12 +247,12 @@ Le scelte di principio:
 
 - **Tariq ibn Ziyad** ([Q230497](https://www.wikidata.org/wiki/Q230497)) — *nessuna immagine*. Nessun ritratto noto (l'Islam di quel tempo non ritrae); su Commons solo immagini moderne di fantasia.
 - **Musa ibn Nusayr** ([Q301261](https://www.wikidata.org/wiki/Q301261)) — *nessuna immagine*. Nessun ritratto noto; su Commons solo un'illustrazione moderna.
-- **Rodrigo** ([Q243573](https://www.wikidata.org/wiki/Q243573)) — *di fantasia*: ritratto immaginario della serie dei re di Spagna, Museo del Prado. [Don Rodrigo, rey de los visigodos (Museo del Prado).jpg](https://commons.wikimedia.org/wiki/File:Don_Rodrigo,_rey_de_los_visigodos_(Museo_del_Prado).jpg) — 1857×2952, Public domain; «Immagine: Mariano de la Roca y Delgado, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto. Esistono tremissi a suo nome (zecca di Egitania), ma non li ho trovati su Commons. Meglio nessuna immagine.
+- **Rodrigo** ([Q243573](https://www.wikidata.org/wiki/Q243573)) — *oggetto del tempo, senza volto*: disegno di un tremisse d'oro a nome di Rodrigo, zecca di Egitania (oggi Idanha-a-Velha, in Portogallo), da A. Heiss, «Description générale des monnaies des rois wisigoths d'Espagne», Parigi, 1872. [Roderic coin Egitania 1.PNG](https://commons.wikimedia.org/wiki/File:Roderic_coin_Egitania_1.PNG) — 744×337, Public domain; «Immagine: Aloïss Heiss, 1872, pubblico dominio, da Wikimedia Commons». Indicata dall'utente il 22 novembre 2026 (è il file di Commons, di pubblico dominio). Sulla moneta si leggono il nome del re (RVDERICVS RX) e la zecca (EGITANIA PIVS); il busto è schematico. È un disegno dell'Ottocento, non una foto della moneta.
 
 ### 727
 
 - **Ine** ([Q451580](https://www.wikidata.org/wiki/Q451580)) — *di fantasia*: vetrata della Trasfigurazione, cattedrale di Wells, 1925-1931. [King Ine in the Transfiguration Window of Wells Cathedral (crop).jpg](https://commons.wikimedia.org/wiki/File:King_Ine_in_the_Transfiguration_Window_of_Wells_Cathedral_(crop).jpg) — 558×680, CC0; «Foto: Greenshed, CC0, da Wikimedia Commons». Nessun ritratto coevo; vetrata di A. K. Nicholson, 1925-1931: di fantasia. Meglio nessuna immagine.
-- **Gregorio II** ([Q103321](https://www.wikidata.org/wiki/Q103321)) — *nessuna immagine*. Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (rifatto nell'Ottocento) e incisioni moderne.
+- **Gregorio II** ([Q103321](https://www.wikidata.org/wiki/Q103321)) — *ritratto posteriore*: incisione da G. B. Cavalieri, «Pontificum Romanorum effigies», Roma, 1580. [Gregorius II. Gregorio II.jpg](https://commons.wikimedia.org/wiki/File:Gregorius_II._Gregorio_II.jpg) — 2839×3691, CC0; «Foto: Giovanni Battista de' Cavalieri, CC0, da Wikimedia Commons». Messa il 22 novembre 2026 su decisione dell'utente («mettile come immagine più tarda»). Nessun ritratto coevo: è un volto di fantasia inciso otto secoli e mezzo dopo. Su Commons c'è anche il medaglione di San Paolo fuori le mura, ottocentesco, con provenienza meno chiara.
 - **Liutprando** ([Q251836](https://www.wikidata.org/wiki/Q251836)) — *oggetto del tempo, senza volto*: tremisse d'oro di Liutprando re, zecca di Pavia, 712-744. [Regno longobardo, emissione aurea di liutprando, zecca di pavia, 712-744, 01.JPG](https://commons.wikimedia.org/wiki/File:Regno_longobardo,_emissione_aurea_di_liutprando,_zecca_di_pavia,_712-744,_01.JPG) — 432×408, CC BY 3.0; «Foto: Sailko, CC BY 3.0, da Wikimedia Commons». ATTENZIONE: l'immagine di Wikidata è un tremisse di Liutprando duca di Benevento (742-751), un omonimo. Il busto sulle monete regie è stilizzato, non un ritratto.
 
 ### 756
@@ -266,7 +266,7 @@ Le scelte di principio:
 
 - **Adriano I** ([Q103292](https://www.wikidata.org/wiki/Q103292)) — *ritratto coevo*: denaro d'argento della zecca di Roma col busto di Adriano I, 772-795, Biblioteca Apostolica Vaticana. [Zecca di roma, denaro di adriano I, 772-795, in argento (bibl. apostolica vaticana).jpg](https://commons.wikimedia.org/wiki/File:Zecca_di_roma,_denaro_di_adriano_I,_772-795,_in_argento_(bibl._apostolica_vaticana).jpg) — 1108×1128, CC BY-SA 4.0; «Foto: Francesco Bini, CC BY-SA 4.0, da Wikimedia Commons».
 - **Carlo Magno** ([Q3044](https://www.wikidata.org/wiki/Q3044)) — *ritratto coevo*: denaro col busto laureato di Carlo, zecca di Magonza, 812-814. [Charlemagne denier Mayence 812 814.jpg](https://commons.wikimedia.org/wiki/File:Charlemagne_denier_Mayence_812_814.jpg) — 2070×2070, Public domain; «Immagine: Bibliothèque nationale de France, pubblico dominio, da Wikimedia Commons».
-- **Desiderio** ([Q297520](https://www.wikidata.org/wiki/Q297520)) — *oggetto del tempo, senza volto*: tremisse d'oro di Desiderio, zecca di Lucca, 757-774. [Regno longobardo, emissione aurea di desiderio, zecca di lucca, 757-774, 01.JPG](https://commons.wikimedia.org/wiki/File:Regno_longobardo,_emissione_aurea_di_desiderio,_zecca_di_lucca,_757-774,_01.JPG) — 318×297, CC BY 3.0; «Foto: Sailko, CC BY 3.0, da Wikimedia Commons». I tremissi di Desiderio portano una croce o una stella, non il volto. L'immagine di Wikidata è un ritratto di fantasia.
+- **Desiderio** ([Q297520](https://www.wikidata.org/wiki/Q297520)) — *oggetto del tempo, senza volto*: tremisse d'oro di Desiderio, zecca di Lucca (DN DESIDER REX; FLAVIA LVCA), 757-774. [Tremisse di Re Desiderio, Dominio Longobardo.jpg](https://commons.wikimedia.org/wiki/File:Tremisse_di_Re_Desiderio,_Dominio_Longobardo.jpg) — 500×241, CC BY-SA 2.5; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 2.5, da Wikimedia Commons». Immagine indicata dall'utente il 22 novembre 2026 (è il file di Commons, foto CNG). Croce da un lato, stella dall'altro: nessun volto.
 
 ### 791
 
@@ -285,12 +285,12 @@ Le scelte di principio:
 
 ### 846
 
-- **Sergio II** ([Q228644](https://www.wikidata.org/wiki/Q228644)) — *nessuna immagine*. Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (ottocentesco). I denari col nome del papa e di Lotario esistono, ma non li ho trovati su Commons.
+- **Sergio II** ([Q228644](https://www.wikidata.org/wiki/Q228644)) — *ritratto posteriore*: incisione da G. B. Cavalieri, «Pontificum Romanorum effigies», Roma, 1580. [Sergius II. Sergio II.jpg](https://commons.wikimedia.org/wiki/File:Sergius_II._Sergio_II.jpg) — 2816×3668, CC0; «Foto: Giovanni Battista de' Cavalieri, CC0, da Wikimedia Commons». Messa il 22 novembre 2026 su decisione dell'utente («mettile come immagine più tarda»). Nessun ritratto coevo: è un volto di fantasia inciso più di sette secoli dopo. Su Commons c'è anche il medaglione di San Paolo fuori le mura, ottocentesco, con provenienza meno chiara.
 - **Lotario I** ([Q150735](https://www.wikidata.org/wiki/Q150735)) — *ritratto coevo*: miniatura dell'Evangeliario di Lotario (BnF, Lat. 266), Tours, 849-851. [Lothar I.jpg](https://commons.wikimedia.org/wiki/File:Lothar_I.jpg) — 1278×1975, Public domain; «Immagine: miniatore di Tours, pubblico dominio, da Wikimedia Commons».
   - in alternativa: medaglione del Salterio di Lotario (British Library, Add MS 37768), metà IX secolo [Medallion of Lothair, from the Lothaire Psalter.jpg](https://commons.wikimedia.org/wiki/File:Medallion_of_Lothair,_from_the_Lothaire_Psalter.jpg) — CC0, British Library
 
 ### 852
 
-- **Leone IV** ([Q228205](https://www.wikidata.org/wiki/Q228205)) — *di fantasia*: Raffaello e bottega, «Incendio di Borgo», 1514, Stanze vaticane: Leone IV benedice dalla loggia di San Pietro. [Raphael - Fire in the Borgo.jpg](https://commons.wikimedia.org/wiki/File:Raphael_-_Fire_in_the_Borgo.jpg) — 3995×3002, Public domain; «Immagine: Raffaello Sanzio, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo; il papa ha il volto di Leone X. Racconta un miracolo dell'847 (Liber pontificalis), non le mura.
+- **Leone IV** ([Q228205](https://www.wikidata.org/wiki/Q228205)) — *ritratto posteriore*: Raffaello e bottega, «Incendio di Borgo», 1514, Stanze vaticane: Leone IV benedice dalla loggia di San Pietro. [Raphael - Fire in the Borgo.jpg](https://commons.wikimedia.org/wiki/File:Raphael_-_Fire_in_the_Borgo.jpg) — 3995×3002, Public domain; «Immagine: Raffaello Sanzio, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo; il papa ha il volto di Leone X. Racconta un miracolo dell'847 (Liber pontificalis), non le mura.
 - **Lotario I** ([Q150735](https://www.wikidata.org/wiki/Q150735)) — *ritratto coevo*: miniatura dell'Evangeliario di Lotario (BnF, Lat. 266), Tours, 849-851. [Lothar I.jpg](https://commons.wikimedia.org/wiki/File:Lothar_I.jpg) — 1278×1975, Public domain; «Immagine: miniatore di Tours, pubblico dominio, da Wikimedia Commons».
   - in alternativa: medaglione del Salterio di Lotario (British Library, Add MS 37768), metà IX secolo [Medallion of Lothair, from the Lothaire Psalter.jpg](https://commons.wikimedia.org/wiki/File:Medallion_of_Lothair,_from_the_Lothaire_Psalter.jpg) — CC0, British Library

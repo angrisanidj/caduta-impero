@@ -16,6 +16,7 @@ const QUI = path.dirname(fileURLToPath(import.meta.url)), RADICE = path.join(QUI
 const CARTELLA = path.join(RADICE, 'img', 'protagonisti'), LARGA = 330;
 const UA = { 'User-Agent': 'ricerca-immagini/1.0' };      // nome generico: nessun dato personale nelle richieste
 
+/* (Il 22 novembre 2026 l'utente ha deciso di mettere come «immagine più tarda» anche i papi di cui esistono solo volti di fantasia molto tardi: Raffaello per Leone I e Leone IV, le incisioni del Cavalieri del 1580 per Bonifacio IV, Gregorio II e Sergio II. La riserva lo dice.) */
 /* La riga che la pagina scrive sotto l'immagine quando l'identificazione, la data o l'oggetto chiedono una riserva. Chiave: il nome in PROTAGONISTI. */
 const RISERVE = {
   'Decio': 'L’identificazione si fonda sul confronto con le monete.',
@@ -31,12 +32,16 @@ const RISERVE = {
   'Genserico': 'I Vandali coniavano col busto dell’imperatore, non del loro re.',
   'Bonifacio': 'Il busto è dell’imperatore; l’attribuzione della moneta a Bonifacio è di un catalogo d’asta.',
   'Agostino': 'La più antica immagine nota, circa un secolo dopo la morte: un ritratto ideale.',
+  'Ezio': 'Che sia Ezio è la proposta di uno storico moderno, senza conferme: il sarcofago è detto «di Stilicone».',
   'Ricimero': 'Il busto è dell’imperatore Libio Severo; di Ricimero c’è il monogramma sul rovescio.',
   'Basilisco': 'Coniata quando si fece imperatore, sette anni dopo la spedizione.',
   'Cassiodoro': 'Quasi sette secoli dopo: non è un ritratto dal vero.',
   'Boezio': 'Quasi mille anni dopo: non è un ritratto dal vero.',
   'Amalasunta': 'I due medaglioni sono letti come Atalarico e Amalasunta; i nomi non sono scritti.',
   'Belisario': 'L’identificazione con Belisario è tradizionale: nel mosaico il nome non c’è.',
+  'Ammiano Marcellino': 'Nessun ritratto: una pagina del più antico manoscritto della sua opera, di quasi cinque secoli dopo.',
+  'Narsete': 'Che sia Narsete è una proposta senza conferme: nel mosaico il nome non c’è.',
+  'Vitige': 'Il volto è dell’imperatore Giustiniano; l’attribuzione al regno di Vitige è del catalogo d’asta.',
   'Totila': 'Il busto è stilizzato.',
   'Gregorio Magno': 'Circa quattro secoli dopo: non è un ritratto dal vero.',
   'Agilulfo': 'Porta il nome del re; la foto è di una copia (l’originale è al Bargello).',
@@ -47,6 +52,12 @@ const RISERVE = {
   'Desiderio': 'Senza volto: il nome del re attorno a una croce o a una stella.',
   'Stefano II': 'Circa tre secoli e mezzo dopo: non è un ritratto dal vero.',
   'Pipino il Breve': 'Tre secoli e mezzo dopo; i suoi denari, del tempo, non hanno volto.',
+  '455|Leone I': 'Dipinto da Raffaello nel 1514, più di mille anni dopo: non è un ritratto dal vero.',
+  'Rodrigo': 'Disegno ottocentesco di una moneta col suo nome; il busto è schematico, non un ritratto.',
+  'Leone IV': 'Dipinto da Raffaello e dalla sua bottega nel 1514, quasi sette secoli dopo: non è un ritratto dal vero.',
+  'Bonifacio IV': 'Incisione del 1580, quasi mille anni dopo: il volto è di fantasia.',
+  'Gregorio II': 'Incisione del 1580, otto secoli e mezzo dopo: il volto è di fantasia.',
+  'Sergio II': 'Incisione del 1580, più di sette secoli dopo: il volto è di fantasia.',
   'Leone III': 'Il mosaico che si vede è il rifacimento del 1743 dell’originale perduto.'
 };
 
@@ -79,12 +90,14 @@ async function prendi(file) {
 const elenco = JSON.parse(fs.readFileSync(path.join(QUI, 'protagonisti.json'), 'utf8'));
 fs.mkdirSync(CARTELLA, { recursive: true });
 const perFile = {}, indice = {}, falliti = [];
+/* due persone con lo stesso nome e immagini diverse (Leone I papa nel 455 e Leone I imperatore nel 468): il file prende anche l'anno, o il secondo userebbe l'immagine del primo */
+const fileDelNome = {}; for (const x of elenco) if (x.file && x.coevo !== 'fantasia') (fileDelNome[x.nome] ??= new Set()).add(x.file);
 for (const x of elenco) {
   if (!x.file || x.coevo === 'fantasia') continue;
   if (x.licenzaAccettabile === false) { falliti.push(x.nome + ': licenza non accettabile'); continue; }
   let q = perFile[x.file];
   if (!q) {
-    const base = sigla(x.nome), gia = ['jpg', 'png'].map(e => path.join(CARTELLA, base + '.' + e)).find(p => fs.existsSync(p));
+    const base = sigla(x.nome) + (fileDelNome[x.nome].size > 1 ? '-' + x.anno : ''), gia = ['jpg', 'png'].map(e => path.join(CARTELLA, base + '.' + e)).find(p => fs.existsSync(p));
     try {
       let dati, nome;
       if (gia) { dati = fs.readFileSync(gia); nome = path.basename(gia); }
@@ -96,7 +109,7 @@ for (const x of elenco) {
   }
   const v = { f: q.f, w: q.w, h: q.h, cosa: x.oggetto, tipo: x.ritratto === false ? 'oggetto' : x.coevo === 'si' ? 'coevo' : 'posteriore', credito: x.credito, pagina: x.pagina, licenza: x.licenza };
   if (x.licenzaUrl) v.licenzaUrl = x.licenzaUrl;
-  if (RISERVE[x.nome]) v.riserva = RISERVE[x.nome];
+  const ris = RISERVE[x.anno + '|' + x.nome] ?? RISERVE[x.nome]; if (ris) v.riserva = ris;      // «anno|nome» quando due persone hanno lo stesso nome (Leone I papa e Leone I imperatore)
   indice[x.anno + '|' + x.nome] = v;
 }
 for (const n of Object.keys(RISERVE)) if (!elenco.some(x => x.nome === n && x.file)) console.log('riserva senza immagine:', n);

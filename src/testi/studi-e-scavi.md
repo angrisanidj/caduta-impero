@@ -128,3 +128,59 @@ Fonte di base di oggi: A Companion to Rome (c. 400-c. 1050), a cura di C. Goodso
 - C: i due articoli di Meneghini e Santangeli Valenzani (1993, 1995): letti solo nel riassunto di Andrews.
 - D: Purcell 1999, Wickham 2015.
 - F: la divisione dell'849 nel Chronicon Salernitanum.
+
+---
+
+## Le quattro aggiunte della revisione delle scritte, 22 novembre 2026
+
+Quattro affermazioni aggiunte riscrivendo i testi e per ora tolte. Per ciascuna: che cosa è stato letto, il verdetto, la frase proposta.
+
+### 1. Portico di San Pietro, «circa novecento metri» (`SCHEDE.porticopietro`)
+
+**Letto nel testo:**
+- Procopio, *Guerra gotica* I 22, 21, trad. Dewing (LacusCurtius, https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/5C*.html): i Goti si avvicinano al mausoleo di Adriano «hidden under the colonnade which extends to the church of the Apostle Peter». Nessuna misura. La nota dell'editore dice solo che il portico partiva dal ponte Elio.
+- H. W. Dey, *The Afterlife of the Roman City*, Cambridge 2015, pp. 71-72 e nota 23 (archive.org, `HendrikW.DeyTheAfterlifeOfTheRomanCity2015`, testo intero): è una via coperta lungo la strada fra il mausoleo di Adriano e la chiesa. La prima notizia sicura è Procopio, ma secondo Dey fu costruita probabilmente prima, forse insieme ai *porticus maximae* di fine IV secolo, di cui continua il percorso. Liverani (2007, p. 93) la mette verso il 500, ma lo dice lui stesso: è una congettura. Nessuna misura.
+- *Companion to Rome c. 400-c. 1050*, Brill 2026 (archive.org, `companion-to-rome-c.-400-c.-1050.-volume-1-2-2026`, testo intero): un capitolo sulla città (testo vicino alla riga 37930 del `_djvu.txt`) dice che prima del 750 circa San Pietro era unito alla città solo dal ponte e dal portico che portava alla piazza davanti alla basilica, e che papa Adriano I lo restaurò. Il capitolo di Spera (p. 806) parla del «long porticus» di San Paolo. Per nessuno dei due dà una misura.
+- Platner e Ashby: non c'è una voce sul portico. Il dizionario tratta la città antica. Krautheimer, *Rome. Profile of a City*: su archive.org il libro c'è solo in prestito e il testo non si scarica, quindi non è stato letto. Il Liber Pontificalis con le note di Davis: il file trovato su archive.org non si apre.
+
+**Misura sulla carta di oggi:** fra la testata nord di ponte Sant'Angelo e i gradini dell'antico atrio di San Pietro ci sono circa 0,0108 gradi di longitudine a 41,9° nord, cioè circa 890-900 m in linea d'aria. Nel modello (`js/monumenti.js`, `porticopietro`, `lunga:[90.5,…]`) la stessa distanza misura 905 m, con la posizione del ponte presa da OpenStreetMap. Il percorso di allora era quasi rettilineo, ma la sua linea esatta non si conosce.
+
+**Verdetto:** non ritrovato. Nessuna fonte letta dà la lunghezza. Novecento metri è la distanza fra i due capi misurata sulla carta di oggi.
+
+**Frase proposta:** «Andava dal ponte alla scalinata della basilica: sulla carta di oggi sono poco meno di un chilometro. La sua lunghezza esatta non la conosciamo.» Nella data «fine del IV secolo» si può scrivere: «Costruita probabilmente allora (secondo altri verso il 500).» Il numero va tolto da lì e messo in questa riga, con la sua riserva.
+
+### 2. Le case «signorili» del foro di Nerva (`SCHEDE.casenerva`)
+
+**Letto nel testo:** R. Santangeli Valenzani, «Domestic Spaces in Early Medieval Rome», nel *Companion to Rome c. 400-c. 1050*, Brill 2026, pp. 737-741 (archive.org, stesso file `_djvu.txt`).
+- p. 738: le case dei ceti alti erano molto più complesse delle casupole. I documenti, non prima del X secolo, le chiamano *domus solarate*, cioè case a due piani.
+- pp. 739-740: le due case del foro di Nerva (Foro Transitorio) sono della metà del IX secolo e stanno quasi una di fronte all'altra lungo la strada. La maggiore misura 10,30 m per circa 19, ed è di blocchi di peperino recuperati e tagliati più piccoli. Il piano terra è alto 2,60 m e ha un pavimento di terra con un focolare. Il portico ha quattro archi di blocchi di tufo ed è stato aggiunto qualche anno dopo, negli ultimi decenni del IX secolo. Il piano superiore era in mattoni grossolani di recupero, la scala era di legno. Accanto c'erano un pozzo, un pozzo nero, una latrina al piano di sopra, forse stalle e magazzini. L'altra casa è più piccola: è lunga 17 m, probabilmente larga 9, senza portico, ed è stata scavata solo per metà. Anche lì il piano superiore è in mattoni. La scala esterna, di pezzi di marmo di recupero, sta in un piccolo cortile.
+- p. 741: «they belonged to the upper strata of the population, as shown by their architectural investment». Corrispondono alle *domus solarate* che i documenti attribuiscono all'aristocrazia, e il piano superiore separato è ciò che distingue queste case di rango più alto. Le note rimandano a Meneghini e Santangeli Valenzani, *Roma nell'altomedioevo*, 2004, pp. 36-37, e a Santangeli Valenzani, *Edilizia residenziale in Italia nell'altomedioevo*, 2011, pp. 80-86 (non letti qui).
+
+**Verdetto:** «signorili» è sostenuta da una fonte letta, ma come interpretazione dello scavatore. Santangeli Valenzani le attribuisce ai ceti alti per la cura della costruzione e perché somigliano alle *domus solarate* dei documenti, che però sono più tarde (dal X secolo). Nessuna iscrizione dice chi ci abitava.
+
+**In più:** la scheda dice che non avevamo trovato conferma di tre dettagli. Il capitolo li conferma tutti e tre: le misure di circa 10 per 19 m (10,30 per 19), il piano superiore in mattoni e la scala esterna in marmo. La scala di marmo però è della casa più piccola. Quella della casa maggiore era di legno. Il portico è di tufo e non di peperino, ed è stato aggiunto più tardi.
+
+**Frase proposta:** per `cosa`: «Due case a due piani ai lati della strada che attraversa il foro di Nerva. Per lo scavatore erano case di famiglie agiate: i documenti più tardi chiamano "domus solarate" le case dei nobili.» Per la data 850: «Verso la metà del IX secolo vengono costruite due case a due piani e una casupola. La maggiore, di circa 10 per 19 metri, ha il piano terra di blocchi di peperino recuperati e il piano di sopra in mattoni, con una scala di legno. Pochi anni dopo le si aggiunge davanti un portico di quattro archi in tufo. La casa di fronte, più piccola, ha una scala esterna di pezzi di marmo.»
+
+### 3. Basilica di Massenzio «destinata anche all'amministrazione della giustizia» (`SCHEDE.massenzio`)
+
+**Letto nel testo:**
+- S. Orlandi, «Urban Administration in Late Antique Rome», *Companion*, p. 210 e nota 54: Coarelli propone che il nuovo tribunale del prefetto urbano stesse nella grande basilica di Massenzio e Costantino. I disegni del Cinquecento mostrano sul retro una serie di stanze, oggi distrutte, che si potrebbero leggere come i *secretaria* della prefettura. Coarelli parte dall'iscrizione di Attius Insteius Tertullus (CIL VI 1696), trovata subito dietro la basilica: fra le sue cariche c'è un *praepositus fabri[cae …]*, e l'integrazione «basilicae novae» è degli editori. L'autrice avverte che le iscrizioni non sempre decidono fra le due ipotesi. Studi citati: Coarelli 2010, pp. 144-146; Coarelli, *Statio*, 2019, pp. 376-395; Machado, *Urban Space*, pp. 35-39.
+- J. Hillner, «Law and Justice in Late Antique Rome», *Companion*, p. 300 e nota 61: le fonti mettono il tribunale del prefetto presso il tempio della Terra (*in Tellure*), e non si sa con esattezza dove fosse. Quasi tutti gli studiosi lo pongono sull'Oppio, presso San Pietro in Vincoli. Coarelli lo sposta verso la Velia e riconosce nel tribunale del prefetto del V secolo l'abside nord della basilica, aggiunta verso il 400.
+- Platner e Ashby, voce «Basilica Constantini», p. 77 (LacusCurtius): l'abside era separata dalla sala da due colonne e da transenne di marmo e formava «a sort of tribunal». La voce non dice a che cosa servisse l'edificio. Aurelio Vittore 40, 26 è citato solo per la dedica a Costantino.
+
+**Verdetto:** è un'ipotesi degli studiosi (Coarelli), discussa. Nessuna fonte antica dice che nella basilica si giudicasse, e la sede della prefettura più accettata è sull'Oppio.
+
+**Frase proposta:** «Non sappiamo con certezza a che cosa servisse. Secondo un'ipotesi di Filippo Coarelli vi aveva sede il tribunale del prefetto di Roma, nell'abside aggiunta sul lato nord; per la maggior parte degli studiosi la prefettura stava invece sull'Oppio.»
+
+### 4. L'antoniniano «per legge vale due denari» (`TAPPE` del 284, `T06`)
+
+**Letto nel testo:**
+- H. Mattingly, *Roman Coins*, Londra 1928, pp. 125-126 (archive.org, `romancoins00matt`, testo intero): nel 215 Caracalla conia accanto al denario una moneta nuova, più larga, con la testa radiata dell'imperatore. È stata interpretata come equivalente di 2 denari, di 1¼ o di 1½. Mattingly scrive: «There can be little doubt that 2 is the right figure». La sua è una deduzione dal peso e dalla politica monetaria, non viene da un testo antico. Il nome «antoniniano» viene dalla *Historia Augusta*. A p. 191 ribadisce: un doppio denaro che pesava meno di due denari.
+- Letto solo in brani (estratti della ricerca a testo pieno di archive.org, il libro non si scarica): *Studies in Ancient Coinage in Honour of Andrew Burnett*, 2015 (`studiesinancient00blan`). Ricostruisce la storia dell'idea: il «doppio denaro» viene da Mommsen; Hultsch pensava a un altro valore; Haines difendeva la moneta da un denaro e mezzo, in rapporto al peso. All'inizio la tesi del doppio denaro sopravvalutato non era considerata un fatto chiave della storia monetaria. Anche *Numismatic Chronicle* 2014 (`numismaticchroni00unse_48`), letto in un brano: l'antoniniano era un «doppio denaro», segnato come «doppio» dalla corona radiata, e rimanda a Harl 1996, pp. 46-51. Harl non è stato letto.
+
+**Verdetto:** è un'ipotesi degli studiosi, oggi la più seguita. Nessuna fonte antica letta fissa per legge il valore di due denari. Lo si ricava dalla corona radiata, che su altre monete segnava il doppio, e dal peso di circa una volta e mezza il denaro. «Per legge» non è sostenuto.
+
+**Frase proposta (tappa del 284):** «Nel 215 Caracalla introduce una moneta nuova, l'antoniniano. Nessun testo antico ne dice il valore. Gli studiosi pensano che valesse due denari, perché porta la corona radiata che indicava il doppio, ma conteneva l'argento di un denaro e mezzo.»
+
+**Resta da leggere:** Harl, *Coinage in the Roman Economy*, 1996, pp. 46-51; Estiot; il saggio del volume per Burnett nel testo intero.

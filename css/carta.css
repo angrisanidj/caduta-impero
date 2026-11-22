@@ -28,6 +28,10 @@ body.impero-grande .m-didascalia{display:none}
 @media (prefers-reduced-motion:reduce){ .m-scena *{transition:none} }
 /* La legenda risponde (js/mappa.js): ogni voce è un bottone a pastiglia. Toccata, tiene vive sulla carta le sole regioni di quel colore, o i soli popoli con quel rapporto. */
 .legenda-mappa,.legenda-popoli{gap:5px 6px}
+/* «Legenda» davanti alle voci degli stati, come «I popoli» davanti a quelle dei popoli */
+.legenda-mappa{align-items:center}
+.legenda-mappa>b{font-family:var(--ui);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+@media (max-height:559px){ body.impero-largo .legenda-mappa>b{display:none} }      /* telefono coricato a tutto schermo: la legenda sta sulla carta e ogni riga conta */
 body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
 .legenda-mappa span,#legendaPopoli span{min-height:26px;padding:2px 10px 2px 7px;border:1px solid var(--line);border-radius:999px;background:var(--carta2);color:var(--ink);line-height:1.2;cursor:pointer;
   user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;transition:opacity .25s ease,border-color .2s ease,box-shadow .2s ease}
@@ -61,6 +65,8 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
   body:not(.impero-grande) .legenda-mappa,body:not(.impero-grande) #legendaPopoli{position:relative;min-height:0!important;max-height:67px;overflow:hidden;font-size:12px}
   body:not(.impero-grande) .legenda-mappa{max-height:98px}      /* tre righe per gli stati, due per i popoli */
   body:not(.impero-grande) .legenda-mappa span,body:not(.impero-grande) #legendaPopoli span{padding:2px 8px 2px 6px}
+  .legenda-mappa,#legendaPopoli{gap:5px 6px}
+  .legenda-mappa>b,#legendaPopoli>b{font-size:11px;letter-spacing:.05em;margin-right:2px}      /* «Legenda» e «I popoli» più stretti: le prime due voci stanno sulla stessa riga */
   body:not(.impero-grande) .legenda-mappa.tagliata,body:not(.impero-grande) #legendaPopoli.tagliata{padding-right:58px}
   body:not(.impero-grande) .legenda-mappa.aperta,body:not(.impero-grande) #legendaPopoli.aperta{max-height:none;padding-bottom:36px}
   body:not(.impero-grande) .legenda-nota{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;cursor:pointer}

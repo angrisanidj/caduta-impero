@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 22/11/2026, 20:22:53.
+Generato da `src/testi.mjs` il 22/11/2026, 23:17:33.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -33,75 +33,77 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.09] Roma
 
-[pagina.10] I popoli
+[pagina.10] Legenda
 
-[pagina.11] Ogni nome indica la zona in cui si trovava il grosso di un gruppo, con la sua gente: non è un confine. La linea tratteggiata mostra da dove proveniva e quale percorso terrestre seguì, per quanto è possibile ricostruirlo. Le posizioni sono indicative. La legenda cambia a ogni tappa e spiega i simboli visibili. Date e rapporti con Roma sono stati ricontrollati sulle fonti nel novembre 2026.
+[pagina.11] I popoli
 
-[pagina.12] Roma — abitanti, stima
+[pagina.12] Ogni nome indica la zona in cui si trovava il grosso di un gruppo, con la sua gente: non è un confine. La linea tratteggiata mostra da dove proveniva e quale percorso terrestre seguì, per quanto è possibile ricostruirlo. Le posizioni sono indicative. La legenda cambia a ogni tappa e spiega i simboli visibili. Date e rapporti con Roma sono stati ricontrollati sulle fonti nel novembre 2026.
 
-[pagina.13] Strumenti
+[pagina.13] Roma — abitanti, stima
 
-[pagina.14] Notte
+[pagina.14] Strumenti
 
-[pagina.15] Percorso del pellegrino
+[pagina.15] Notte
 
-[pagina.16] Prima e dopo
+[pagina.16] Percorso del pellegrino
 
-[pagina.17] Che cosa sappiamo
+[pagina.17] Prima e dopo
 
-[pagina.18] Tocca la città per esplorarla
+[pagina.18] Che cosa sappiamo
 
-[pagina.19] Posizione e pianta certe. L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.
+[pagina.19] Tocca la città per esplorarla
 
-[pagina.20] Posizione certa, forma ricostruita. L'aspetto dell'edificio è ricostruito da resti parziali, scavi e piante antiche, oppure l'edificio fu rifatto in seguito.
+[pagina.20] Posizione e pianta certe. L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.
 
-[pagina.21] Posizione o forma ipotetiche. È il caso delle case e delle rovine dei quartieri.
+[pagina.21] Posizione certa, forma ricostruita. L'aspetto dell'edificio è ricostruito da resti parziali, scavi e piante antiche, oppure l'edificio fu rifatto in seguito.
 
-[pagina.22] I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.
+[pagina.22] Posizione o forma ipotetiche. È il caso delle case e delle rovine dei quartieri.
 
-[pagina.23] Il modello 3D non è disponibile su questo dispositivo.
+[pagina.23] I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.
 
-[pagina.24] ▶ Riproduci
+[pagina.24] Il modello 3D non è disponibile su questo dispositivo.
 
-[pagina.25] Protagonisti · tocca un’immagine per ingrandirla, con fonte e licenza
+[pagina.25] ▶ Riproduci
 
-[pagina.26] Una voce di allora
+[pagina.26] Protagonisti · tocca un’immagine per ingrandirla, con fonte e licenza
 
-[pagina.27] Fra storia e leggenda
+[pagina.27] Una voce di allora
 
-[pagina.28] Le interpretazioni degli storici
+[pagina.28] Fra storia e leggenda
 
-[pagina.29] I monumenti di Roma · seleziona un nome per aprire la scheda
+[pagina.29] Le interpretazioni degli storici
 
-[pagina.30] in uso in disuso spogliato usato come cava bruciato danneggiato da un terremoto
+[pagina.30] I monumenti di Roma · seleziona un nome per aprire la scheda
 
-[pagina.31] Mostra tutti
+[pagina.31] in uso in disuso spogliato usato come cava bruciato danneggiato da un terremoto
 
-[pagina.32] Le interpretazioni degli storici
+[pagina.32] Mostra tutti
 
-[pagina.33] Perché cadde l'Occidente?
+[pagina.33] Le interpretazioni degli storici
 
-[pagina.34] Da tre secoli gli storici discutono le cause della caduta dell'Impero romano d'Occidente, e non sono d'accordo. Alcuni cercano la causa dentro l'impero: l'estensione dei territori, l'esercito, le tasse o la religione. Altri fuori: l'avanzata degli Unni e i popoli che attraversarono il Reno e il Danubio. Altri ancora guardano al clima o alle epidemie. Per alcuni fu una catena di eventi, nessuno dei quali inevitabile. Altri negano che ci sia stata una caduta e descrivono quei secoli come una trasformazione del mondo romano. Seleziona un nome per leggere la tesi, una citazione, le obiezioni e le tappe in cui si vede.
+[pagina.34] Perché cadde l'Occidente?
 
-[pagina.35] Questa pagina non sceglie una causa: ogni tesi rimanda agli episodi in cui si vede. Segui sulla carta gli Unni e i Goti al Danubio nel 376, i popoli che passano il Reno nel 406, la perdita di Cartagine nel 439 e la quota di territorio che crolla. Il grafico della popolazione di Roma aiuta a collocare nel tempo il sole velato del 536 e la peste del 542.
+[pagina.35] Da tre secoli gli storici discutono le cause della caduta dell'Impero romano d'Occidente, e non sono d'accordo. Alcuni cercano la causa dentro l'impero: l'estensione dei territori, l'esercito, le tasse o la religione. Altri fuori: l'avanzata degli Unni e i popoli che attraversarono il Reno e il Danubio. Altri ancora guardano al clima o alle epidemie. Per alcuni fu una catena di eventi, nessuno dei quali inevitabile. Altri negano che ci sia stata una caduta e descrivono quei secoli come una trasformazione del mondo romano. Seleziona un nome per leggere la tesi, una citazione, le obiezioni e le tappe in cui si vede.
 
-[pagina.36] Fonti
+[pagina.36] Questa pagina non sceglie una causa: ogni tesi rimanda agli episodi in cui si vede. Segui sulla carta gli Unni e i Goti al Danubio nel 376, i popoli che passano il Reno nel 406, la perdita di Cartagine nel 439 e la quota di territorio che crolla. Il grafico della popolazione di Roma aiuta a collocare nel tempo il sole velato del 536 e la peste del 542.
 
-[pagina.37] Testi antichi e medievali letti. Autori: Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Opere: l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Cronache e annali: gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Leggi, documenti e luoghi: l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.
+[pagina.37] Fonti
 
-[pagina.38] Studi. Di Gibbon è stato letto il testo, di Jones la conclusione. Di Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer sono stati verificati alcuni passi del testo. Di Pirenne è stato letto l'articolo del 1922. Del Companion to Rome sono state lette le pagine sugli abitanti e sugli scavi, di Durliat quelle sulla popolazione di Roma e di Heather le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), letta la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
+[pagina.38] Testi antichi e medievali letti. Autori: Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Opere: l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Cronache e annali: gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Leggi, documenti e luoghi: l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.
 
-[pagina.39] Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.
+[pagina.39] Studi. Di Gibbon è stato letto il testo, di Jones la conclusione. Di Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer sono stati verificati alcuni passi del testo. Di Pirenne è stato letto l'articolo del 1922. Del Companion to Rome sono state lette le pagine sugli abitanti e sugli scavi, di Durliat quelle sulla popolazione di Roma e di Heather le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), letta la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
 
-[pagina.40] Come finisce un impero
+[pagina.40] Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.
 
-[pagina.41] Come è fatta questa pagina
+[pagina.41] Come finisce un impero
 
-[pagina.42] Ricostruzioni schematiche. La carta parte dalle province romane intorno al 200 d.C. e, per l'Italia, dalle regioni istituite da Augusto. La base è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Dove i regni successivi seguivano confini diversi, li abbiamo ridisegnati a mano usando i fiumi, i crinali e le città citati nelle fonti. Questi confini sono quindi indicativi, non rilevati. Nel novembre 2026 abbiamo rivisto il controllo delle regioni, i confini e gli spostamenti dei popoli sulla base di Bury, Ammiano, Zosimo, Eugippio e Beda e, per i confini dei singoli regni, delle relative voci di Wikipedia. Una parte delle date resta citata a memoria. Il dominio longobardo in Corsica dal 725 circa è, inoltre, un'ipotesi dei manuali priva di una testimonianza diretta; il dominio franco è documentato dall'806. Per Roma, il corso del Tevere e il tracciato delle mura provengono da OpenStreetMap (© OpenStreetMap contributors). Abbiamo ridisegnato i colli alle quote antiche sopra un rilievo misurato (SRTM) e nel modello ne abbiamo quasi raddoppiato l'altezza. Gli edifici sono al loro posto, ma schematici. Le strade seguono i tracciati antichi conservati nelle vie moderne, come via del Corso per la via Lata, l'Appia Antica e via dei Coronari. Nel Foro seguono anche le pavimentazioni antiche ancora visibili della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. I tratti mancanti sono disegnati a mano. Nel Foro romano e nei Fori imperiali gli edifici sono centrati sui resti archeologici. Per gli acquedotti abbiamo ricostruito percorsi e altezze, che non sono rilevati. Gli isolati sono generati dal modello e lo spopolamento dei singoli quartieri è ipotetico. L'indicatore «Occidente governato da Roma» usa le superfici misurate su questa carta. L'intero Occidente vi occupa circa 2,7 milioni di km². Per l'impero nel suo insieme, i risultati sono vicini alle stime pubblicate nel 1979 da Rein Taagepera usando l'atlante storico di Shepherd. Le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km² intorno al 200, oppure 4,5 milioni escludendo Mesopotamia, Dacia e Agri Decumates. Taagepera stima 4,6 milioni per il 138, 4,5 per il 275 e 4,4 per il 390. Per la divisione del 395, invece, il confronto non torna. Taagepera parla di «due parti pressoché uguali» e assegna 2 milioni all'Occidente e 2,1 milioni all'Oriente, con un margine di 0,3 milioni per quest'ultimo. La somma è 4,1 milioni, mentre la sua stima complessiva per il 390 è 4,4. Le sue due metà sono arrotondate: sulla nostra carta l'Occidente misura 2,7 milioni di km², circa un terzo in più, e l'Oriente 1,9 milioni. Nel grafico la linea continua indica un dato misurato e quella tratteggiata una stima. I testi delle tappe, le schede dei monumenti e le didascalie degli eventi sono stati controllati sulle fonti nel novembre 2026. Le schede segnalano ciò che resta incerto o discusso.
+[pagina.42] Come è fatta questa pagina
 
-[pagina.43] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
+[pagina.43] Ricostruzioni schematiche. La carta parte dalle province romane intorno al 200 d.C. e, per l'Italia, dalle regioni istituite da Augusto. La base è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Dove i regni successivi seguivano confini diversi, li abbiamo ridisegnati a mano usando i fiumi, i crinali e le città citati nelle fonti. Questi confini sono quindi indicativi, non rilevati. Nel novembre 2026 abbiamo rivisto il controllo delle regioni, i confini e gli spostamenti dei popoli sulla base di Bury, Ammiano, Zosimo, Eugippio e Beda e, per i confini dei singoli regni, delle relative voci di Wikipedia. Una parte delle date resta citata a memoria. Il dominio longobardo in Corsica dal 725 circa è, inoltre, un'ipotesi dei manuali priva di una testimonianza diretta; il dominio franco è documentato dall'806. Per Roma, il corso del Tevere e il tracciato delle mura provengono da OpenStreetMap (© OpenStreetMap contributors). Abbiamo ridisegnato i colli alle quote antiche sopra un rilievo misurato (SRTM) e nel modello ne abbiamo quasi raddoppiato l'altezza. Gli edifici sono al loro posto, ma schematici. Le strade seguono i tracciati antichi conservati nelle vie moderne, come via del Corso per la via Lata, l'Appia Antica e via dei Coronari. Nel Foro seguono anche le pavimentazioni antiche ancora visibili della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. I tratti mancanti sono disegnati a mano. Nel Foro romano e nei Fori imperiali gli edifici sono centrati sui resti archeologici. Per gli acquedotti abbiamo ricostruito percorsi e altezze, che non sono rilevati. Gli isolati sono generati dal modello e lo spopolamento dei singoli quartieri è ipotetico. L'indicatore «Occidente governato da Roma» usa le superfici misurate su questa carta. L'intero Occidente vi occupa circa 2,7 milioni di km². Per l'impero nel suo insieme, i risultati sono vicini alle stime pubblicate nel 1979 da Rein Taagepera usando l'atlante storico di Shepherd. Le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km² intorno al 200, oppure 4,5 milioni escludendo Mesopotamia, Dacia e Agri Decumates. Taagepera stima 4,6 milioni per il 138, 4,5 per il 275 e 4,4 per il 390. Per la divisione del 395, invece, il confronto non torna. Taagepera parla di «due parti pressoché uguali» e assegna 2 milioni all'Occidente e 2,1 milioni all'Oriente, con un margine di 0,3 milioni per quest'ultimo. La somma è 4,1 milioni, mentre la sua stima complessiva per il 390 è 4,4. Le sue due metà sono arrotondate: sulla nostra carta l'Occidente misura 2,7 milioni di km², circa un terzo in più, e l'Oriente 1,9 milioni. Nel grafico la linea continua indica un dato misurato e quella tratteggiata una stima. I testi delle tappe, le schede dei monumenti e le didascalie degli eventi sono stati controllati sulle fonti nel novembre 2026. Le schede segnalano ciò che resta incerto o discusso.
 
-[pagina.44] Versione del 22/11/2026, ore 18:19
+[pagina.44] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
+
+[pagina.45] Versione del 22/11/2026, ore 20:23
 
 
 ## 2. Gli atti
@@ -287,7 +289,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T06-284.titolo] La moneta
 
-[T06-284.testo] Nel 215 Caracalla introduce l'antoniniano. Vale due denari, ma contiene l'argento di un denaro e mezzo. È il primo trucco di una lunga serie. Fra il 238 e il 268 l'argento in ciascuna moneta scende da oltre due grammi a meno di un decimo di grammo. Sotto Claudio II l'antoniniano è ormai quasi tutto di rame. Nel 274 Aureliano garantisce un contenuto minimo d'argento del 5%. Diocleziano torna a coniare monete d'argento di buona qualità, ma nel 301 deve raddoppiare per legge il valore delle monete e fissare con un editto, pena la morte, oltre 1.200 prezzi massimi. Una libbra d'oro, per esempio, può costare al massimo 72.000 denari. Nel giro di pochi anni l'editto smette di essere applicato. Più duratura è la moneta d'oro di Costantino, il solido. Da una libbra d'oro si ricavano 72 solidi, che per sette secoli conservano peso e purezza.
+[T06-284.testo] Nel 215 Caracalla introduce una moneta nuova, l'antoniniano. Nessun testo antico ne dice il valore: gli studiosi pensano che valesse due denari, ma conteneva l'argento di un denaro e mezzo. Sarebbe il primo trucco di una lunga serie. Fra il 238 e il 268 l'argento in ciascuna moneta scende da oltre due grammi a meno di un decimo di grammo. Sotto Claudio II l'antoniniano è ormai quasi tutto di rame. Nel 274 Aureliano garantisce un contenuto minimo d'argento del 5%. Diocleziano torna a coniare monete d'argento di buona qualità, ma nel 301 deve raddoppiare per legge il valore delle monete e fissare con un editto, pena la morte, oltre 1.200 prezzi massimi. Una libbra d'oro, per esempio, può costare al massimo 72.000 denari. Nel giro di pochi anni l'editto smette di essere applicato. Più duratura è la moneta d'oro di Costantino, il solido. Da una libbra d'oro si ricavano 72 solidi, che per sette secoli conservano peso e purezza.
 
 
 ### 293 · Quattro imperatori, nessuno a Roma
@@ -318,7 +320,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T07-293.voce1.chi] Lattanzio, La morte dei persecutori, 7. Maestro di retorica cristiano, è chiamato a Nicomedia da Diocleziano e ne diventa poi avversario. Scrive verso il 315. Il libro è un attacco all'imperatore: il quadro dei campi abbandonati è un'esagerazione polemica.
 
-[T07-293.luogo1.nicomedia] Diocleziano, augusto
+[T07-293.luogo1.nicomedia] residenza di Diocleziano, augusto
 
 [T07-293.luogo2.milano] residenza di Massimiano, augusto
 
@@ -1844,7 +1846,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.massenzio.nome] Basilica di Massenzio
 
-[scheda.massenzio.cosa] L'ultima grande basilica civile di Roma.
+[scheda.massenzio.cosa] L'ultima grande basilica civile di Roma. Non sappiamo con certezza a che cosa servisse. Secondo un'ipotesi di Filippo Coarelli vi aveva sede il tribunale del prefetto di Roma, nell'abside aggiunta sul lato nord; per la maggior parte degli studiosi la prefettura stava invece sull'Oppio.
 
 [scheda.massenzio.data1-312] Iniziata da Massenzio nel 308, finita da Costantino. Costantino aggiunge un secondo ingresso con portico in mezzo al fianco sud, sulla via Sacra, e di fronte una seconda abside nel muro nord.
 
@@ -2267,11 +2269,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.porticopietro.nome] Portico dei pellegrini
 
-[scheda.porticopietro.cosa] Strada coperta che accompagnava i pellegrini da ponte Elio, l'attuale ponte Sant'Angelo, fino alla basilica di San Pietro.
+[scheda.porticopietro.cosa] Strada coperta che accompagnava i pellegrini da ponte Elio, l'attuale ponte Sant'Angelo, fino alla basilica di San Pietro. Sulla carta di oggi fra il ponte e la scalinata della basilica c'è poco meno di un chilometro; la lunghezza esatta del portico non la conosciamo.
 
 [scheda.porticopietro.data1.quando] fine del IV secolo
 
-[scheda.porticopietro.data1] Costruita probabilmente allora (secondo altri verso il 500): circa novecento metri coperti.
+[scheda.porticopietro.data1] Costruita probabilmente allora (secondo altri verso il 500).
 
 [scheda.porticopietro.data2-537] Prima notizia sicura: la cita Procopio durante l'assedio.
 
@@ -2338,13 +2340,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.casenerva.nome] Case nel foro di Nerva
 
-[scheda.casenerva.cosa] Due case signorili ai lati della strada che attraversa il foro di Nerva.
+[scheda.casenerva.cosa] Due case a due piani ai lati della strada che attraversa il foro di Nerva. Per lo scavatore erano case di famiglie agiate: i documenti più tardi chiamano «domus solarate» le case dei nobili.
 
 [scheda.casenerva.data1.quando] prima
 
 [scheda.casenerva.data1] Il foro è ridotto a una strada: sul pavimento spogliato restano i solchi dei carri.
 
-[scheda.casenerva.data2-850] Verso la metà del IX secolo vengono costruite due case a due piani e una casupola. Una delle due case ha un ampio portico realizzato con grandi blocchi di peperino, una pietra vulcanica, recuperati da edifici precedenti. Nelle pubblicazioni consultate non abbiamo trovato conferma delle dimensioni attribuite alla casa maggiore (circa 10 per 19 metri), del piano superiore in mattoni e della scala esterna in marmo.
+[scheda.casenerva.data2-850] Verso la metà del IX secolo vengono costruite due case a due piani e una casupola. La maggiore, di circa 10 per 19 metri, ha il piano terra di blocchi di peperino, una pietra vulcanica, recuperati da edifici più antichi, e il piano di sopra in mattoni, con una scala di legno. Pochi anni dopo le si aggiunge davanti un portico di quattro archi in tufo. La casa di fronte, più piccola, ha una scala esterna fatta di pezzi di marmo.
 
 [scheda.casenerva.data3.quando] XI-XII secolo
 
@@ -3557,49 +3559,49 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.43-r114] Khanato dei Bulgari
 
-[ui.mappa.44-r349] Regni dei Franchi
+[ui.mappa.44-r392] Regni dei Franchi
 
-[ui.mappa.45-r349] Impero dei Franchi
+[ui.mappa.45-r392] Impero dei Franchi
 
-[ui.mappa.46-r375] regno d'Italia di Odoacre
+[ui.mappa.46-r512] regno d'Italia di Odoacre
 
-[ui.mappa.47-r375] regno degli Ostrogoti
+[ui.mappa.47-r512] regno degli Ostrogoti
 
-[ui.mappa.48-r375] regno dei Franchi
+[ui.mappa.48-r512] regno dei Franchi
 
-[ui.mappa.49-r376] impero romano
+[ui.mappa.49-r513] impero romano
 
-[ui.mappa.50-r376] impero d'Occidente
+[ui.mappa.50-r513] impero d'Occidente
 
-[ui.mappa.51-r376] territorio con un imperatore rivale
+[ui.mappa.51-r513] territorio con un imperatore rivale
 
-[ui.mappa.52-r376] territorio romano che non obbedisce più a Ravenna
+[ui.mappa.52-r513] territorio romano che non obbedisce più a Ravenna
 
-[ui.mappa.53-r376] regione contesa in guerra
+[ui.mappa.53-r513] regione contesa in guerra
 
-[ui.mappa.54-r377] barbari insediati per trattato
+[ui.mappa.54-r514] barbari insediati per trattato
 
-[ui.mappa.55-r377] impero d'Oriente
+[ui.mappa.55-r514] impero d'Oriente
 
-[ui.mappa.56-r378] califfato ed emirati arabi
+[ui.mappa.56-r515] califfato ed emirati arabi
 
-[ui.mappa.57-r378] regni franchi dopo la divisione dell'843
+[ui.mappa.57-r515] regni franchi dopo la divisione dell'843
 
-[ui.mappa.58-r378] lasciata dall'impero
+[ui.mappa.58-r515] lasciata dall'impero
 
-[ui.mappa.59-r378] uscita dall'impero
+[ui.mappa.59-r515] uscita dall'impero
 
-[ui.mappa.60-r409] Mostra meno voci della legenda
+[ui.mappa.60-r546] Mostra meno voci della legenda
 
-[ui.mappa.61-r413] Mostra le altre
+[ui.mappa.61-r550] Mostra le altre
 
-[ui.mappa.62-r456] mai dentro l’impero
+[ui.mappa.62-r600] mai dentro l’impero
 
-[ui.mappa.63-r498] Carta a tutto schermo
+[ui.mappa.63-r642] Carta a tutto schermo
 
-[ui.mappa.64-r503] Tutto schermo
+[ui.mappa.64-r647] Tutto schermo
 
-[ui.mappa.65-r503] Esci dallo schermo intero
+[ui.mappa.65-r647] Esci dallo schermo intero
 
 
 ### js/atti.js
