@@ -133,6 +133,12 @@ controlli.target.set(0,0,5);
 controlli.enableDamping=true; controlli.dampingFactor=.08;
 controlli.minDistance=16; controlli.maxDistance=900;
 controlli.maxPolarAngle=Math.PI*.475;
+/* Sulla città ci si muove come su una carta: trascinare sposta (un dito sul telefono), la rotella o due dita avvicinano e ruotano, il tasto destro (o Ctrl e trascina) ruota.
+   Lo spostamento resta sul piano del terreno e il punto guardato non esce dalla città. */
+controlli.screenSpacePanning=false; controlli.panSpeed=1.1;
+controlli.mouseButtons={LEFT:THREE.MOUSE.PAN, MIDDLE:THREE.MOUSE.DOLLY, RIGHT:THREE.MOUSE.ROTATE};
+controlli.touches={ONE:THREE.TOUCH.PAN, TWO:THREE.TOUCH.DOLLY_ROTATE};
+controlli.addEventListener('change',function(){ var t=controlli.target, x=Math.max(-330,Math.min(330,t.x)), z=Math.max(-520,Math.min(260,t.z)); if(x!==t.x||z!==t.z){ camera.position.x+=x-t.x; camera.position.z+=z-t.z; t.x=x; t.z=z; } });
 controlli.autoRotate=true; controlli.autoRotateSpeed=.22;
 renderer.domElement.addEventListener('pointerdown',function(){ controlli.autoRotate=false; });
 /* La rotazione lenta dell'avvio è un dondolio di pochi gradi attorno alla vista d'insieme, non un giro: lasciata girare per qualche minuto (su un PC, senza toccare la scena)

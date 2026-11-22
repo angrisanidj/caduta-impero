@@ -26,3 +26,14 @@ body.impero-grande .m-didascalia{display:none}
 .m-scena:not(.viva) *{transition-delay:0s;transition-duration:.35s}
 .m-scena.ferma *{transition:none}
 @media (prefers-reduced-motion:reduce){ .m-scena *{transition:none} }
+/* Telefoni, carta in linea: le legende non riservano più lo spazio della tappa con più voci (lasciava mezzo schermo bianco). Ciascuna è una riga sola che scorre di lato,
+   così l'altezza resta la stessa da una tappa all'altra; la nota in corsivo sta su due righe e si apre con un tocco. */
+@media (max-width:700px){
+  body:not(.impero-grande) .legenda-mappa,body:not(.impero-grande) #legendaPopoli{min-height:0!important;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent);padding-right:26px}
+  body:not(.impero-grande) .legenda-mappa::-webkit-scrollbar,body:not(.impero-grande) #legendaPopoli::-webkit-scrollbar{display:none}
+  body:not(.impero-grande) .legenda-mappa span,body:not(.impero-grande) #legendaPopoli span,body:not(.impero-grande) #legendaPopoli b{flex:none}
+  body:not(.impero-grande) .legenda-nota{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;cursor:pointer}
+  body:not(.impero-grande) .legenda-nota.aperta{-webkit-line-clamp:unset;display:block}
+  .legenda-luoghi{min-height:0}
+}

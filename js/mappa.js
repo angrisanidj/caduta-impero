@@ -306,6 +306,8 @@ bPiu.addEventListener('click',function(){ zoomSu(1.5); }); bMeno.addEventListene
 bGrande.addEventListener('click',function(){ grande(!grandeSi); });
 window.addEventListener('keydown',function(e){ if(e.key==='Escape'&&grandeSi) grande(false); });
 
+/* la nota in corsivo sotto le legende: sui telefoni sta su due righe e si apre con un tocco (css/carta.css) */
+(function(){ var n=document.querySelector('.riquadro.impero .legenda-popoli:last-of-type'); if(!n||n.id) return; n.classList.add('legenda-nota'); n.addEventListener('click',function(){ n.classList.toggle('aperta'); }); })();
 window.RM_mappa={
   grande:grande,
   mostra:function(stati,anno,luoghi,scena){
