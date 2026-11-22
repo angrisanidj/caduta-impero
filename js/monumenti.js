@@ -175,6 +175,46 @@ function LF(x,z){ var dx=x-3, dz=z+8, c=Math.cos(-.35), s=Math.sin(-.35); return
 function inForo(B,x,z,ry,fn){ var p=LF(x,z); return B.dentro(p[0],0,p[1],ry||0,fn); }
 /* Monte Testaccio: contorno reale (OpenStreetMap, way 23921018), in coordinate relative al centro (-84,184). */
 var TESTACCIO=[[-94.7,181.4],[-94.6,183.1],[-94.5,185],[-93.8,186.7],[-92.8,188.5],[-91.8,189.8],[-90.4,191.2],[-89.5,191.8],[-88.6,192],[-86,193.1],[-83.9,195.9],[-82.1,198.6],[-80.6,199.3],[-78.9,199.1],[-77.3,198.5],[-75.8,197.5],[-74.6,195.9],[-73,192.1],[-72.8,190.6],[-73.2,188],[-74,186.1],[-75.2,182.4],[-76.2,180.1],[-76.8,177.8],[-76.9,176.1],[-76.4,174.3],[-77,171.1],[-78,169.1],[-78.2,168.6],[-94.5,177.4],[-94.7,179.1]].map(function(p){ return [p[0]+84,p[1]-184]; });
+/* ---------- aiuti per i monumenti dell'inventario del 22 novembre 2026 (quelli che mancavano) ---------- */
+function piede(x,z,r){ r=r||.8; return Math.min(RM.h(x,z),RM.h(x+r,z),RM.h(x-r,z),RM.h(x,z+r),RM.h(x,z-r)); }
+/* un pezzo di un gruppo che segue il pendio (PENDIO): (X,Z) è l'origine della voce, (x,z) il punto reale in coordinate di scena, r il raggio dell'impronta */
+function luogo(B,X,Z,x,z,ry,r,fn){ return B.dentro(x-X,piede(x,z,r)-quota(X,Z)-.05,z-Z,ry||0,fn); }
+/* obelisco a sezione quadrata: alto h con la cuspide (un decimo dell'altezza), lato alla base l (se manca, un decimo di h), su un basamento alto hb e largo lb */
+function obelisco(B,h,l,hb,x,z,lb,cb){
+  l=l||h*.1; var r=l/Math.SQRT2, hc=h*.1;
+  if(hb>0) B.scatola(lb||l*1.5,hb,lb||l*1.5,x,0,z,cb||P.marmo);
+  B.dentro(x,hb||0,z,PI/4,function(B){ B.cilindro(r,h-hc,0,0,0,P.granito,r*.68,4).cilindro(r*.68,hc,0,h-hc,0,P.granito,0,4); });
+}
+/* tempio piccolo (B.tempio aggiunge 5 m di podio per lato): podio w x d alto hp, colonne alte hc, nf sulla fronte; lati: periptero; fronte verso +z */
+function tempietto(B,w,d,hp,hc,nf,x,z,ry,lati){
+  var r=Math.min(.075,w/nf*.2), e=r*1.6, sp=(w-2*e)/(nf-1), nl=Math.max(2,Math.round((d-2*e)/sp)+1);
+  return B.dentro(x,0,z,ry||0,function(B){
+    B.scatola(w,hp,d,0,0,0,P.travertino).scatola(w*.7,hp*.8,.3,0,0,d/2+.15,P.travertino);                         // podio e scala sulla fronte
+    B.scatola(w*(lati?.62:.86),hc,d*(lati?.62:.6),0,hp,-d*(lati?.06:.18),P.marmo);                                   // cella
+    B.vano(0,hp,-d*(lati?.06:.18)+d*(lati?.31:.3)+.01,1,0,w*.18,hc*.7,true);                                       // la porta
+    B.colonne(-w/2+e,d/2-e,w/2-e,d/2-e,nf,hc,r,hp);
+    if(lati) B.colonne(-w/2+e,d/2-e,-w/2+e,-d/2+e,nl,hc,r,hp).colonne(w/2-e,d/2-e,w/2-e,-d/2+e,nl,hc,r,hp).colonne(-w/2+e,-d/2+e,w/2-e,-d/2+e,nf,hc,r,hp);
+    else B.colonne(-w/2+e,d/2-e-sp,-w/2+e,d/2-e-sp,1,hc,r,hp).colonne(w/2-e,d/2-e-sp,w/2-e,d/2-e-sp,1,hc,r,hp);  // una colonna per lato nel pronao
+    B.scatola(w,.12,d,0,hp+hc,0,P.marmo).falde(d,w*.2,w+.06,0,hp+hc+.12,0,P.coppi,PI/2,P.marmo);                // trabeazione e tetto
+  });
+}
+/* arco a un fornice: largo w, profondo p, alto h; fornice largo f e alto hf (quadro: architrave piano); fronte verso +z */
+function arcoUno(B,w,p,h,f,hf,x,y,z,ry,col,quadro){
+  return B.dentro(x,y,z,ry||0,function(B){ B.scatola(w,h,p,0,0,0,col||P.marmo).vano(0,0,p/2+.01,1,0,f,hf,quadro).vano(0,0,-p/2-.01,-1,0,f,hf,quadro); });
+}
+/* Castra Praetoria: gli spigoli sono quelli delle mura del modello (js/roma-topo.js, da OpenStreetMap): nord-ovest, nord-est, sud-est; sud-ovest ricavato; SU è dove la cinta Aureliana
+   lascia il lato sud. muri = lato ovest e metà ovest del lato sud (quelli che Aureliano non usa); camere = la fila di camere lungo l'interno dei quattro lati */
+var CASTRA=(function(){ var C=[179,-156.5], NO=[153.6,-170.3], NE=[189.1,-183.2], SE=[204.4,-142.7], SO=[168.9,-129.8], SU=[181.1,-132.4], muri=[], camere=[], zone=[];
+  function passi(a,b,dentro,lista){ var len=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(len/3)), mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, ix=C[0]-mx, iz=C[1]-mz, m=Math.hypot(ix,iz);
+    for(var k=0;k<n;k++){ var t=(k+.5)/n, x=a[0]+(b[0]-a[0])*t+ix/m*dentro, z=a[1]+(b[1]-a[1])*t+iz/m*dentro;
+      lista.push({x:x,z:z,len:len/n,ang:Math.atan2(-(b[1]-a[1]),b[0]-a[0])}); if(k%2===0) zone.push([x-C[0],z-C[1],1.3]); } }
+  passi(NO,SO,0,muri); passi(SO,SU,0,muri);
+  [[NO,NE],[NE,SE],[SE,SO],[SO,NO]].forEach(function(l){ passi(l[0],l[1],.45,camere); });
+  var t=19/Math.hypot(SO[0]-NO[0],SO[1]-NO[1]);                                                    // la porta ovest, a 190 m dal lato nord
+  return {C:C, muri:muri, camere:camere, zone:zone, porta:[NO[0]+(SO[0]-NO[0])*t, NO[1]+(SO[1]-NO[1])*t], ang:Math.atan2(-(SO[1]-NO[1]),SO[0]-NO[0])}; })();
+/* circo Variano: asse dai carceres verso nord-nord-est (vedi la voce sessoriano); zone lungo l'asse, relative all'anfiteatro Castrense */
+var VARIANO={x:277.7, z:25.3, ry:1.065};
+
 /* ---------- elenco ---------- */
 var M=[
  {id:'colosseo', nome:'Colosseo', x:57,z:26, ry:-.3, zone:[[0,0,14.5]], et:1, fa:function(B){
@@ -640,6 +680,215 @@ var M=[
     for(k=0;k<giri.length-1;k++){ a=giri[k]; b=giri[k+1]; B.striscia(giro(a[0]),a[1],giro(b[0]),b[1],P.cocci); }
     B.striscia(giro(.45),H,TESTACCIO.map(function(){ return [0,0]; }),H+.12,P.cocci);
  }},
+ /* ======== Inventario del 22 novembre 2026: i monumenti che mancavano, al loro posto antico. Fonti lette: Platner e Ashby (LacusCurtius), it.wikipedia, OpenStreetMap (Overpass,
+    Nominatim, API), annotate voce per voce; ciò che è detto «indicativo» non viene da una fonte. Le misure in metri delle fonti stanno nei commenti; nel modello 1 unità = 10 m. ======== */
+ /* Colonna di Marco Aurelio (176-193): «100 Roman feet (29.77 metres)» fra plinto, fusto e capitello; fusto di 26,50 m con 3,90 di diametro; plinto e toro alti 1,385; capitello dorico di 1,5
+    (Platner e Ashby, Columna M. Aurelii Antonini). Posizione: OpenStreetMap, way 201735339. Il piedistallo antico, oggi in parte sotto il suolo e rifasciato da Sisto V, è indicativo (circa 10 m);
+    del recinto con il tempio del Divo Marco, che Platner crede a ovest della colonna, non si conosce la pianta. */
+ {id:'colonnamarco', nome:'Colonna di Marco Aurelio', x:-44,z:-92.8, ry:0, zone:[[0,0,2.2]], fa:function(B){
+    B.scatola(.8,.95,.8,0,-.1,0,P.marmo).scatola(.9,.1,.9,0,.85,0,P.marmo);                        // piedistallo e cornice (indicativi)
+    B.cilindro(.235,.1385,0,.95,0,P.marmo,.215,18);                                                  // plinto e toro
+    B.cilindro(.195,2.65,0,1.0885,0,P.marmo,.18,18);                                                 // il fusto: rastrema meno di quello di Traiano
+    B.scatola(.44,.15,.44,0,3.7385,0,P.marmo).cilindro(.14,.12,0,3.8885,0,P.marmo,.12,12);           // capitello dorico e tamburo in cima
+ }},
+ /* Orologio di Augusto. L'obelisco di Psammetico II, portato da Augusto nel 10 a.C., è alto 21,79 m e fa da gnomone a una meridiana: un pavimento di marmo a nord, con le linee di bronzo dorato
+    (Platner e Ashby, Obeliscus Augusti; Plinio NH XXXVI 72). In piedi nell'VIII secolo (Itinerario di Einsiedeln), caduto in data ignota. Stava sotto piazza del Parlamento, dove se ne trovarono i pezzi
+    nel 1502 e la meridiana nel 1748 (it.wikipedia «Obelisco di Montecitorio»; Nominatim, way 28157922). In cima, la sfera di cui parla Plinio. Lunghezza della meridiana (circa 50 m, l'ombra di
+    mezzogiorno d'inverno) dal calcolo di Thayer nella stessa pagina; larghezza del pavimento e altezza del basamento indicative.
+    Ara Pacis (13-9 a.C.): stava dove poi sorse palazzo Fiano (it.wikipedia «Ara Pacis»; Nominatim, way 80220845). Recinto di circa 11,6 x 10,6 m alto circa 4,6, ingresso a ovest: misure a memoria, indicative.
+    Colonna di Antonino Pio (161): monolite di granito rosso alto 14,75 m con 1,90 di diametro, su un piedistallo di marmo bianco, con la statua di Antonino in cima come sulle monete
+    (Platner e Ashby, Columna Antonini Pii). Posizione da it.wikipedia (41,90155 N, 12,47742 E); altezza del piedistallo indicativa. */
+ {id:'orologio', nome:'Orologio di Augusto', x:-56.68,z:-108.69, ry:0, zone:[[0,0,1.4],[0,-2.8,2.4],[6.13,-12,1.2],[-8.62,8.12,.7]], fa:function(B){
+    var X=-56.68, Z=-108.69;
+    luogo(B,X,Z,X,Z,0,.4,function(B){
+      obelisco(B,2.18,.24,.3,0,0); B.geo(new THREE.SphereGeometry(.09,10,8).translate(0,2.57,0),P.oro);           // basamento, fusto e sfera
+      B.scatola(1.6,.04,5.2,0,0,-2.85,P.marmo).scatola(.05,.045,5,0,0,-2.85,P.oro);                               // il pavimento della meridiana e la linea di bronzo dorato
+    });
+    luogo(B,X,Z,-50.55,-120.69,-PI/2,.7,function(B){                                                               // Ara Pacis: fronte (+z) verso ovest
+      B.scatola(1.3,.1,1.2,0,0,0,P.travertino).scatola(.4,.1,.3,0,0,.75,P.travertino);                             // podio e scala davanti alla porta ovest
+      B.scatola(1.165,.46,.06,0,.1,.531,P.marmo).scatola(1.165,.46,.06,0,.1,-.531,P.marmo).scatola(.06,.46,1.062,.5525,.1,0,P.marmo).scatola(.06,.46,1.062,-.5525,.1,0,P.marmo);
+      B.vano(0,.1,.565,1,0,.36,.36,true).vano(0,.1,-.565,-1,0,.36,.36,true);                                       // le due porte
+      B.scatola(.62,.2,.7,0,.1,-.05,P.marmo);                                                                       // l'altare
+    });
+    luogo(B,X,Z,-65.3,-100.57,0,.3,function(B){                                                                    // colonna di Antonino Pio
+      B.scatola(.36,.25,.36,0,0,0,P.marmo).cilindro(.095,1.475,0,.25,0,P.granito,.085,14).scatola(.22,.06,.22,0,1.725,0,P.marmo).cilindro(.04,.16,0,1.785,0,P.statua,.04,6);
+    });
+ }},
+ /* Obelisco degli Horti Sallustiani: copia romana, alta 13 m, dei geroglifici dell'obelisco di Ramesse II del Circo Massimo; in piedi nell'VIII secolo (Itinerario di Einsiedeln); nel XV secolo
+    a terra in due pezzi. La base di granito, di 2,50 x 2,55 m, fu ritrovata nel 1843 fra via Sicilia, via Sardegna, via Toscana e via Abruzzi (Platner e Ashby, Obeliscus Hortorum Sallustianorum).
+    Il punto è via Toscana (Nominatim, way 4951071): vale per il luogo del ritrovamento; dell'ippodromo degli horti, sulla cui spina it.wikipedia lo pone, non si conosce la pianta. Altezza della base indicativa. */
+ {id:'obeliscosallustiano', nome:'Obelisco degli Horti Sallustiani', x:51.38,z:-182.26, ry:0, zone:[[0,0,1]], fa:function(B){ obelisco(B,1.3,.135,.25,0,0,.255,P.granito); }},
+ /* Piramide di Gaio Cestio (18-12 a.C.): alta 36,40 m, base quadrata di 29,50 m (it.wikipedia «Piramide Cestia»; Platner e Ashby danno 27 e circa 22). Contorno e orientamento: OpenStreetMap,
+    way 432946457. Dal 271-275 è murata nella cinta Aureliana. */
+ {id:'piramide', nome:'Piramide Cestia', x:-36.84,z:178.38, ry:1.152, zone:[[0,0,2.4]], fa:function(B){ B.scatola(3.05,.08,3.05,0,-.03,0,P.travertino).cono(2.086,3.64,0,.05,0,P.marmo,4); }},
+ /* Castra Praetoria (21-23): rettangolo di 440 x 380 m; mura alte 4,73 m; dentro, lungo le mura, una fila di camere alte 3 m con un camminamento sopra; porta ovest a 190 m dal lato nord
+    (Platner e Ashby, Castra Praetoria). Aureliano fa entrare nella sua cinta il lato nord, quello est e metà del lato sud (in js/mura.js, da OpenStreetMap); qui c'è il resto, che Costantino
+    smantella nel 312 quando scioglie i pretoriani (Zosimo II 17, citato da Platner). Spessore dei muri, larghezza delle camere e torri della porta indicativi. */
+ {id:'castrapretorio', nome:'Castra Praetoria', x:179,z:-156.5, ry:0, zone:CASTRA.zone, fa:function(B){
+    var X=CASTRA.C[0], Z=CASTRA.C[1];
+    CASTRA.muri.forEach(function(p){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ B.scatola(p.len+.1,.52,.3,0,-.05,0,P.mattone).scatola(p.len+.1,.06,.36,0,.47,0,P.tufo); }); });
+    CASTRA.camere.forEach(function(p){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ B.scatola(p.len+.05,.33,.4,0,-.03,0,P.intonaco); }); });
+    luogo(B,X,Z,CASTRA.porta[0],CASTRA.porta[1],CASTRA.ang,.6,function(B){
+      [-1,1].forEach(function(s){ B.scatola(.5,.75,.6,s*.55,-.05,0,P.mattone); });
+      B.scatola(.6,.62,.36,0,-.05,0,P.mattone).vano(0,-.05,.19,1,0,.36,.45).vano(0,-.05,-.19,-1,0,.36,.45);
+    });
+ }},
+ /* Terme di Nerone (62 o 64), rifatte da Alessandro Severo nel 227 e da allora dette Alessandrine: «a rectangular area extending from the north-west corner of the Pantheon to the stadium
+    of Domitian, an area of about 190 by 120 metres, and fronted north», con il caldarium che sporge dal centro del lato sud (Platner e Ashby, Thermae Neronianae). Il riquadro sta fra lo stadio
+    del modello e il Pantheon, alla latitudine di palazzo Madama, dove ne restano muri (Nominatim, relazione 76432). La pianta interna è quella schematica delle altre terme. */
+ {id:'termenerone', nome:'Terme di Nerone e di Alessandro', x:-85.8,z:-72, ry:0, zone:[[-5,0,6.2],[5,0,6.2]], fa:function(B){ terme(B,19.4,12,{recinto:false,lc:18,pc:9,zc:-.6,rc:1.4}); }},
+ /* Terme di Agrippa (25-19 a.C.): orientate nord-sud sull'asse del Pantheon, circa 100-120 m da nord a sud e 80-100 da est a ovest; appena a nord del centro una sala rotonda di circa 25 m,
+    di un rifacimento non anteriore ad Alessandro Severo, l'«arco della Ciambella» (Platner e Ashby, Thermae Agrippae). Centro: OpenStreetMap, relazione 6596512. Altezze indicative. */
+ {id:'termeagrippa', nome:'Terme di Agrippa', x:-68.78,z:-49.23, ry:0, zone:[[0,-2.5,5],[0,2.5,5]], fa:function(B){
+    B.scatola(9,1.3,11,0,0,0,P.intonaco).falde(11,.4,9.2,0,1.3,0,P.coppi,PI/2,P.intonaco);
+    B.cilindro(1.25,1.9,0,0,-1,P.mattone,null,24).cupola(1.25,0,1.9,-1,P.intonaco,.55);
+    B.aperture(-4.5,5.5,4.5,5.5,9,.15,.7).aperture(4.5,-5.5,-4.5,-5.5,9,.15,.7);
+ }},
+ /* Tempio del Divo Adriano (145): periptero ottastilo, tredici colonne sui fianchi; restano undici colonne del lato nord, alte 15 m con 1,44 di diametro, su un podio di peperino alto 4 m
+    (Platner e Ashby, Hadrianeum; it.wikipedia «Tempio di Adriano»). Posizione e orientamento: l'edificio della Borsa che lo ingloba (Nominatim, way 130920782), con il fianco nord sul limite
+    di piazza di Pietra. Fronte a est, verso la via Lata: a memoria. Larghezza e lunghezza (circa 28 x 47 m) vengono dal numero e dal diametro delle colonne con un interasse indicativo. */
+ {id:'tempioadriano', nome:'Tempio di Adriano', x:-48.7,z:-80.9, ry:1.641, zone:[[0,0,3.2]], fa:function(B){ tempietto(B,2.8,4.7,.4,1.5,8,0,0,0,true); }},
+ /* Tempio del Divo Claudio sul Celio (iniziato nel 54, rifatto da Vespasiano): piattaforma di 180 x 200 m su muri alti fino a 15 m; tempio esastilo, con tre colonne di profondità nel pronao,
+    rivolto verso il Palatino (it.wikipedia «Tempio del Divo Claudio»). Centro da it.wikipedia; il lato est è parallelo a via Claudia (OpenStreetMap, way 129115593), dove resta la facciata a nicchie
+    della mostra d'acqua. Le misure del tempio sono indicative. */
+ {id:'tempioclaudio', nome:'Tempio di Claudio', x:64.72,z:50.57, ry:-1.21, zone:[[-6.5,-4.5,4.5],[0,-4.5,4.5],[6.5,-4.5,4.5],[-6.5,4.5,4.5],[0,4.5,4.5],[6.5,4.5,4.5]], fa:function(B){
+    B.scatola(20,2.6,18,0,-2.55,0,P.tufo).scatola(19.6,.06,17.6,0,.02,0,P.prato);                 // la piattaforma, a giardino
+    B.aperture(10,-9,-10,-9,14,-1.9,1.2,.7);                                                         // le nicchie sul lato di via Claudia
+    tempietto(B,2.2,3.8,.35,1.4,6,0,0,0,false);
+ }},
+ /* Arco di Dolabella e Silano (10 d.C.), in travertino, poi sotto gli archi neroniani dell'acqua Claudia (Platner e Ashby, arcus). Contorno e orientamento: OpenStreetMap, way 135618677.
+    Altezza e larghezza del fornice indicative. */
+ {id:'dolabella', x:81.86,z:76.56, ry:.89, zone:[[0,0,.7]], fa:function(B){ arcoUno(B,.81,.52,.65,.4,.5,0,0,0,0,P.travertino); }},
+ /* Ludus Magnus, la caserma dei gladiatori accanto al Colosseo (Domiziano, rifatta sotto Traiano): celle su tre piani attorno a un cortile con un'arena ellittica e piccole gradinate
+    (it.wikipedia «Ludus Magnus»). Orientamento e lunghezza (86 m) dalla parte scavata (OpenStreetMap, relazione 1894844), che è la metà nord; larghezza (circa 72 m) e arena (circa 62 x 45)
+    a memoria, indicative. */
+ {id:'ludusmagnus', nome:'Ludus Magnus', x:79.6,z:27.8, ry:-.296, zone:[[0,0,5]], fa:function(B){
+    [-3,3].forEach(function(z){ B.scatola(8.6,.95,1.2,0,0,z,P.mattone).falde(8.6,.3,1.3,0,.95,z,P.coppi,0,P.mattone); });
+    [-3.7,3.7].forEach(function(x){ B.scatola(1.2,.95,4.8,x,0,0,P.mattone).falde(4.8,.3,1.3,x,.95,0,P.coppi,PI/2,P.mattone); });
+    B.aperture(-4.2,3.6,4.2,3.6,12,.15,.3).aperture(4.2,-3.6,-4.2,-3.6,12,.15,.3);
+    var a=RM.ellisse(3.1,2.25,28), g=RM.ellisse(2.6,1.75,28), c=g.map(function(){ return [0,0]; });
+    B.striscia(a,0,a,.35,P.travertino).striscia(a,.35,g,.12,P.tufo).striscia(g,.12,c,.12,P.sabbia);
+ }},
+ /* Meta Romuli: piramide fra il mausoleo di Adriano e il Vaticano, «larger than the pyramid of Cestius»; copriva l'incrocio di Borgo Nuovo con via di Porta Castello e Alessandro VI
+    ne tolse la parte sud nel 1499 (Platner e Ashby, Meta Romuli). Il punto: via di Porta Castello prolungata (OpenStreetMap, way 202591024) fino a Borgo Nuovo, poco a nord del portico
+    dei pellegrini: un'ipotesi. Misure: un decimo più della piramide Cestia, indicative. */
+ {id:'metaromuli', nome:'Meta Romuli', x:-184,z:-111.9, ry:.0685, zone:[[0,0,2.3]], fa:function(B){ B.scatola(3.3,.08,3.3,0,-.03,0,P.travertino).cono(2.3,4,0,.05,0,P.marmo,4); }},
+ /* Foro Boario. Posizioni e orientamenti da OpenStreetMap: tempio rotondo (way 251342364), di Portuno (way 251331418), arco di Giano (way 52924046), degli Argentari (way 123971358);
+    lo sbocco della Cloaca da Nominatim (nodo 4754734734). Ercole Vincitore: venti colonne alte 10,6 m (it.wikipedia). Portuno: tetrastilo, pseudoperiptero, ionico (it.wikipedia), fronte
+    a nord verso il fiume; podio e colonne di altezza indicativa. Arco di Giano: 12 m di lato e 16 di altezza, fornici di 10,60 x 5,70, quarantotto nicchie (Platner e Ashby, Ianus Quadrifrons);
+    l'attico tolto nel 1827 non c'è. Arco degli Argentari (204): architrave su due piloni, alto 6,15 m, luce 3,30 (Platner e Ashby). Cloaca: arco di circa 4,5 m (a memoria). */
+ {id:'foroboario', nome:'Foro Boario', x:-29,z:37, ry:0, zone:[[-8.57,4.76,1.2],[-7.45,-.89,1.3],[8.02,-2.06,1],[9.96,-3.56,.5],[-12.93,3.79,.5]], fa:function(B){
+    var X=-29, Z=37;
+    luogo(B,X,Z,-37.57,41.76,0,.9,function(B){
+      B.cilindro(.92,.12,0,0,0,P.travertino,.88,24).cilindro(.42,1.06,0,.12,0,P.marmo,null,20);
+      for(var k=0;k<20;k++){ var a=k*PI/10; B.colonne(.72*Math.cos(a),.72*Math.sin(a),.72*Math.cos(a),.72*Math.sin(a),1,1.06,.045,.12); }
+      B.cilindro(.8,.08,0,1.18,0,P.marmo,null,24).cono(.82,.32,0,1.26,0,P.coppi,20);
+    });
+    luogo(B,X,Z,-36.45,36.11,-2.845,.9,function(B){ tempietto(B,1.06,1.95,.25,.88,4,0,0,0,false); });
+    luogo(B,X,Z,-20.98,34.94,.314,.7,function(B){
+      B.scatola(1.2,1.6,1.2,0,0,0,P.marmo);
+      [[0,.61,1,0],[.61,0,0,-1],[0,-.61,-1,0],[-.61,0,0,1]].forEach(function(f){
+        B.vano(f[0],0,f[1],f[2],f[3],.57,1.06);
+        [-1,1].forEach(function(s){ [.3,.68].forEach(function(y){ [-.09,0,.09].forEach(function(q){ var o=s*.45+q; B.vano(f[0]+f[2]*o,y,f[1]+f[3]*o,f[2],f[3],.055,.16); }); }); });   // tre nicchie per pilone, su due file
+      });
+    });
+    luogo(B,X,Z,-19.04,33.44,0,.4,function(B){ arcoUno(B,.63,.33,.615,.33,.45,0,0,0,0,P.marmo,true); });
+    luogo(B,X,Z,-41.93,40.79,0,.5,function(B){ B.scatola(.3,.7,1.2,0,-.55,0,P.tufo).vano(-.16,-.55,0,0,1,.45,.5); });
+ }},
+ /* Portico d'Ottavia (dopo il 27 a.C., rifatto da Settimio Severo): «a rectangular area, 118 metres in width and somewhat more in length», con una doppia fila di colonne di granito,
+    ventotto per fila sulla fronte (Platner e Ashby, Porticus Octaviae); la lunghezza (132 m) è indicativa. Il propileo, che resta come ingresso di Sant'Angelo in Pescheria (dal 755, a memoria),
+    è il centro della fronte sud (OpenStreetMap, way 123530471, che dà anche l'orientamento). Dentro, i templi di Giunone Regina e di Giove Statore: misure e posti indicativi. */
+ {id:'ottavia', nome:"Portico d'Ottavia", x:-52.9,z:-5.56, ry:-.488, zone:[[0,-3.3,5.2],[0,3.3,5.2],[0,6.3,1.4],[-4.6,-5.3,2.2],[4.6,-5.3,2.2],[-4.6,5.3,2.2],[4.6,5.3,2.2]], fa:function(B){
+    portico(B,11.8,13.2,0,0,0,.85,P.prato); B.colonne(-5.3,5.4,5.3,5.4,28,.85,.06,.1,P.granito);
+    tempietto(B,1.99,1.29,.12,.95,4,0,6,0,false);                                                     // il propileo
+    B.tempio(1.5,2.6,1.1,-2.6,-.6,0,{fronte:6,lati:9,podio:.35}).tempio(1.5,2.6,1.1,2.6,-.6,0,{fronte:6,lati:9,podio:.35});
+ }},
+ /* Area sacra di largo Argentina: quattro templi repubblicani (III-II secolo a.C.) rivolti a est. Contorni da OpenStreetMap: A (sotto San Nicola de Calcarario, way 125566963), B rotondo
+    (way 125566965), C (way 125566967), D (way 125566969); il podio di ciascuno ha la misura del contorno. Altezze di podi e colonne indicative. */
+ {id:'argentina', nome:'Area sacra di largo Argentina', x:-70.3,z:-31, ry:0, zone:[[0,-2.5,4],[0,2.5,4]], fa:function(B){
+    B.scatola(5,.04,10.4,-.3,0,0,P.selce);
+    B.tempio(1.25,2.3,.9,.01,-4.01,1.658,{fronte:6,lati:9,podio:.3});                                 // A
+    B.dentro(.37,0,-.97,1.658,function(B){                                                            // B, rotondo
+      B.cilindro(.85,.3,0,0,0,P.travertino,null,24).cilindro(.45,.9,0,.3,0,P.marmo,null,18);
+      for(var k=0;k<18;k++){ var a=k*PI/9; B.colonne(.72*Math.cos(a),.72*Math.sin(a),.72*Math.cos(a),.72*Math.sin(a),1,.9,.04,.3); }
+      B.cilindro(.8,.08,0,1.2,0,P.marmo,null,24).cono(.82,.3,0,1.28,0,P.coppi,18).scatola(.6,.25,.4,0,0,1,P.travertino);
+    });
+    B.tempio(1.07,1.74,.85,-.37,1.59,1.658,{fronte:4,podio:.4}).tempio(1.4,3.62,1,-.37,4.01,1.658,{fronte:6,podio:.35});   // C e D
+ }},
+ /* Iseo Campense, il santuario di Iside e Serapide (Domiziano, poi i Severi), «between the Saepta and the temple of Minerva» (Platner e Ashby, Isis): qui il recinto va da piazza di San Macuto
+    a Santo Stefano del Cacco (Nominatim) e ad est dell'abside della Minerva; l'ingombro, circa 95 x 210 m, è dato dai punti di ritrovamento ed è indicativo, come il muro. Gli obelischi stanno
+    dove furono trovati (Platner e Ashby, Obelisci Isei Campensis; it.wikipedia): il Macuteo in piazza di San Macuto (nel 1373), quello della Minerva nel giardino del convento (1665),
+    quello di Dogali sotto l'abside (1883); i punti presso la Minerva sono stimati. Altezze: 6 m, 5,47 m e 6,34 m. Quelli di Boboli e di Urbino, trovati davanti alla chiesa, non ci sono. */
+ {id:'iseo', nome:'Iseo Campense', x:-53.75,z:-62.5, ry:0, zone:[[0,-7.5,5.3],[0,0,5.3],[0,7.5,5.3]], fa:function(B){
+    var W=9.5, L=21;
+    B.scatola(W,.5,.2,0,0,-L/2,P.mattone).scatola(W,.5,.2,0,0,L/2,P.mattone).scatola(.2,.5,L,-W/2,0,0,P.mattone).scatola(.2,.5,L,W/2,0,0,P.mattone).scatola(W-.4,.04,L-.4,0,0,0,P.selce);
+    obelisco(B,.6,0,.12,4.36,-9.85); obelisco(B,.547,0,.12,-4.25,-1.5); obelisco(B,.634,0,.12,-4.25,1);
+ }},
+ /* Esquilino. Arco di Gallieno: la porta Esquilina rifatta e dedicata a Gallieno nel 262 (Platner e Ashby, Porta Esquilina; OpenStreetMap, way 81741050); misure a memoria, indicative
+    (alto circa 8,8 m). Trofei di Mario, la mostra d'acqua di piazza Vittorio (OpenStreetMap, way 345702226): i trofei di marmo vi restano fino al 1590 (Platner e Ashby, Tropaea Marii); massa
+    e altezza (circa 20 m) indicative. Auditorium di Mecenate (OpenStreetMap, relazione 5886457): aula absidata in parte sotto il suolo, misure indicative. */
+ {id:'esquilino', nome:'Arco di Gallieno e Trofei di Mario', x:140,z:-28, ry:0, zone:[[-6.93,-8.43,.8],[12.14,-2.42,1.9],[-7.21,11.14,1.5]], fa:function(B){
+    var X=140, Z=-28;
+    luogo(B,X,Z,133.07,-36.43,1.606,.6,function(B){ arcoUno(B,.73,.35,.88,.45,.66,0,0,0,0,P.travertino); });
+    luogo(B,X,Z,152.14,-30.42,.052,1.5,function(B){
+      B.scatola(2.4,.5,3.4,0,0,0,P.mattone).scatola(1.2,1.5,1.5,0,.5,0,P.mattone).vano(-.61,.5,0,0,1,.7,1.1);
+      [-.95,.95].forEach(function(z){ B.scatola(.3,.9,.5,0,.5,z,P.mattone).scatola(.22,.35,.3,0,1.4,z,P.statua); });   // i due trofei, ai lati
+    });
+    luogo(B,X,Z,132.79,-16.86,2.548,1.2,function(B){ B.scatola(2.2,.55,1.06,-.12,-.25,0,P.mattone).cilindro(.53,.55,1,-.25,0,P.mattone,null,16).falde(2.3,.18,1.1,-.1,.3,0,P.coppi,0,P.mattone); });
+ }},
+ /* Tempio di Minerva Medica: aula decagona di mattoni, larga circa 24 m e alta 33, con nove nicchie oltre all'ingresso e dieci finestre ad arco sopra; la cupola cade in parte nel 1828
+    (Platner e Ashby, Nymphaeum); «presumibilmente» dell'inizio del IV secolo (it.wikipedia): il 320 è una scelta. Le sale aggiunte attorno non ci sono. OpenStreetMap, relazione 13471829. */
+ {id:'minervamedica', nome:'Tempio di Minerva Medica', x:220.27,z:-16.27, ry:.873, zone:[[0,0,2.2]], fa:function(B){
+    B.cilindro(1.2,2.35,0,0,0,P.mattone,1.2,10).cupola(1.17,0,2.35,0,P.mattone,.8);
+    for(var k=0;k<10;k++){ var t=(k+.5)*PI/5, s=Math.sin(t), c=Math.cos(t), ap=1.2*Math.cos(PI/10)+.01;
+      B.vano(s*ap,1.45,c*ap,c,-s,.38,.6); if(k===0) B.vano(s*ap,0,c*ap,c,-s,.4,.9); }
+ }},
+ /* Sessoriano. Anfiteatro Castrense: ellisse di 88,5 x 78 m (Platner e Ashby, Amphitheatrum Castrense), murato nella cinta Aureliana; centro da OpenStreetMap (nodo 1791417716), asse lungo
+    est-ovest come il tratto di mura che lo chiude a sud; altezza e arena indicative. Circo Variano: i carceres stanno dentro le mura (OpenStreetMap, way 261041472, che dà l'orientamento) e la pista
+    corre verso nord-nord-est fuori dalla cinta, che la taglia; lunghezza (circa 565 m) a memoria, larghezza dai carceres (91 m), indicativa. L'obelisco di Antinoo vi fu portato da Elagabalo
+    (it.wikipedia «Obelisco del Pincio») e fu ritrovato in tre pezzi fuori porta Maggiore: il posto a metà della spina è un'ipotesi. Alto 9,24 m. */
+ {id:'sessoriano', nome:'Anfiteatro Castrense e circo Variano', x:246.79,z:53.9, ry:0, zone:[[0,0,4.8]].concat([-24,-16,-8,0,8,16,24].map(function(t){ return [VARIANO.x-246.79+.485*t, VARIANO.z-53.9-.875*t, 6.2]; })), fa:function(B){
+    var X=246.79, Z=53.9;
+    luogo(B,X,Z,X,Z,0,3,function(B){
+      var e=RM.ellisse(4.43,3.9,40), i=RM.ellisse(3.7,3.2,40), a=RM.ellisse(2.4,1.9,40), c=a.map(function(){ return [0,0]; });
+      B.striscia(e,-.3,e,1.6,P.mattone).striscia(e,1.6,i,1.6,P.mattone).striscia(i,1.6,a,.25,P.tufo).striscia(a,.25,c,.25,P.sabbia);
+      B.fornici(e,.1,.7,.55).fornici(e,.95,.5,.5);
+    });
+    luogo(B,X,Z,VARIANO.x,VARIANO.z,VARIANO.ry,4,function(B){
+      var L=56.5, o=RM.stadio(L,11.5,26,14), t=RM.stadio(L-2,9.5,26,14), asse=t.map(function(p){ return [Math.max(-L/2+4,Math.min(L/2-6,p[0])),0]; });
+      B.striscia(o,-1,o,.7,P.mattone).striscia(o,.7,t,.25,P.tufo).striscia(t,.25,asse,.25,P.sabbia);
+      B.scatola(30,.18,.5,-1,.2,0,P.travertino);                                                     // la spina
+      B.dentro(-1,.38,0,0,function(B){ obelisco(B,.924,0,.1,0,0); });
+    });
+ }},
+ /* Sepolcro di Eurisace, il fornaio (fine della repubblica): trapezio di 8,75, 6,85, 5,80 e 4,05 m, rivestito di travertino, nell'angolo fra Prenestina e Labicana; quando Onorio rifà le mura
+    una delle torri di porta Maggiore lo chiude dentro di sé (Platner e Ashby, Sepulchrum Eurysacis): sparisce alla vista nel 402. OpenStreetMap, way 585473524. Altezza (circa 10 m) a memoria. */
+ {id:'eurisace', x:248.73,z:11.94, ry:1.187, zone:[[0,0,.7]], fa:function(B){
+    B.scatola(.8,.95,.6,0,0,0,P.travertino).scatola(.84,.18,.64,0,.72,0,P.marmo);                    // il fregio con le scene della panificazione
+    [.2,.45].forEach(function(y){ B.aperture(-.4,.31,.4,.31,6,y,.14,.07).aperture(.4,-.31,-.4,-.31,6,y,.14,.07); });      // le file di bocche cilindriche
+ }},
+ /* Archi della via Lata. Arco di Claudio (51-52), sull'acqua Vergine dove passa la via Lata, «in ruins as early as the eighth century» (Platner e Ashby, Arcus Claudii); posizione da it.wikipedia
+    (41,89932 N, 12,48110 E): l'acquedotto del modello, interpolato, passa una quarantina di metri più a nord. Arco di Portogallo, «close to the Ara Pacis», di età incerta, con rilievi di Adriano;
+    demolito nel 1662 (Platner e Ashby, Arco di Portogallo); posizione da it.wikipedia (41,90310 N, 12,47960 E). Misure di entrambi indicative; i fornici guardano lungo la strada. */
+ {id:'archivialata', nome:'Archi della via Lata', x:-41,z:-96.8, ry:0, zone:[[6.19,21.01,.9],[-6.24,-21,.8]], fa:function(B){
+    var X=-41, Z=-96.8;
+    luogo(B,X,Z,-34.81,-75.79,.285,.7,function(B){ arcoUno(B,1.4,.55,1.3,.6,.85,0,0,0,0,P.travertino); });
+    luogo(B,X,Z,-47.24,-117.8,.285,.5,function(B){ arcoUno(B,1,.5,1.15,.45,.75,0,0,0,0,P.marmo); });
+ }},
+ /* Arcus Novus sulla via Lata, per Diocleziano e Massimiano: «fu eretto nel 293» per i decennali e demolito nel 1491 (it.wikipedia «Arcus Novus», dove sta anche la posizione:
+    41,89818 N, 12,48153 E). Misure indicative. */
+ {id:'arcusnovus', nome:'Arcus Novus', x:-31.24,z:-63.12, ry:.285, zone:[[0,0,.8]], fa:function(B){ arcoUno(B,1.2,.5,1.3,.5,.8,0,0,0,0,P.marmo); }},
+ /* Alle pendici del Campidoglio, posizioni da OpenStreetMap. Carcere Mamertino (relazione 1849827): ancora prigione nel 368 (Platner e Ashby, Carcer); il corpo fuori terra è indicativo.
+    Portico degli Dei Consenti (nodo 1448531164): piccolo colonnato rivolto al Foro, misure indicative. Insula dell'Aracoeli: caseggiato del II secolo addossato al colle, misure indicative.
+    Sepolcro di Bibulo (way 124808519): la fronte, larga 6,4 m, guarda la via Flaminia; profondità e altezza indicative. */
+ {id:'campidoglio', x:-15,z:-14, ry:0, zone:[[9.08,6.86,.6],[2.01,13.61,.6],[-9.86,-3.78,1],[-2.39,-16.39,.5]], fa:function(B){
+    var X=-15, Z=-14;
+    luogo(B,X,Z,-5.92,-7.14,1.484,.5,function(B){ B.scatola(1.1,.5,.9,0,-.1,0,P.tufo).vano(0,0,.46,1,0,.22,.3,true); });
+    luogo(B,X,Z,-12.99,-.39,1.22,.5,function(B){ B.scatola(1,.6,.35,0,0,-.2,P.tufo).colonne(-.42,.12,.42,.12,6,.5,.035,.05).scatola(1,.06,.3,0,.55,.05,P.marmo); });
+    luogo(B,X,Z,-24.86,-17.78,0,.8,function(B){ B.scatola(1.4,1.5,1.1,0,-.2,0,P.mattone).falde(1.5,.25,1.2,0,1.3,0,P.coppi,0,P.mattone);
+      [.2,.55,.9].forEach(function(y){ B.aperture(-.6,.56,.6,.56,5,y,.18,.12); }); });
+    luogo(B,X,Z,-17.39,-30.39,2.566,.4,function(B){ B.scatola(.64,.6,.5,0,0,0,P.travertino).vano(0,.1,.26,1,0,.16,.3,true); });
+ }},
  {id:'leonine', nome:'Mura leonine', x:-215,z:-92, ry:0, zone:LEO.zone, fa:function(B){
     var y=suTerreno(-215,-92,0);
     LEO.passi.forEach(function(p,j){ var q=y(p.x,p.z); B.scatola(p.len+.15,1.35,.45,p.x,q-.3,p.z,P.tufo,p.ang); if(j%4===0) B.scatola(1,2.1,1,p.x,q-.3,p.z,P.tufo,p.ang).scatola(1.15,.12,1.15,p.x,q+1.8,p.z,P.mattone,p.ang); });
@@ -652,6 +901,7 @@ var etichette=document.createElement('div'); etichette.className='etichette3d'; 
 function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return [o.x+lx*c+lz*s, o.z-lx*s+lz*c]; }
 /* prima le zone: sotto ogni monumento il terreno si spiana alla quota del suo centro; poi si posa il suolo */
 var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1};        // complessi che seguono il pendio: niente terrazza
+['orologio','castrapretorio','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
   var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?st[1][0]-8:0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)

@@ -11,7 +11,14 @@
      chiesa di Onorio I dal 630: LP); obelisco vaticano sulla targa del sito antico, presente da sempre; rotonde, episcopia di Simmaco, scholae e monasteri con le loro date; tegole di bronzo di San Pietro
      nel 630 (LP, Onorio I); Santa Maria Antiqua sparisce nell'848 (LP, Benedetto III). A MEMORIA o da fonte secondaria: le file interne del pronao del Pantheon, la larghezza delle torri, le navatelle
      di Santa Sabina e Santa Maria Maggiore, la lunghezza di Sant'Agnese (98 m), la forma della San Paolo di Costantino, l'altezza dell'arco del circo, la rotonda dei Santi Cosma e Damiano.
-     NON FATTO: Patriarchio lateranense, terme di Agrippa, terza fila di colonne di Giove Capitolino, mura leonine in cantiere, ponti (nessuna fonte letta);
+     NON FATTO: Patriarchio lateranense, terza fila di colonne di Giove Capitolino, mura leonine in cantiere, ponti (nessuna fonte letta);
+   - MONUMENTI AGGIUNTI il 22 novembre 2026 (23 voci, blocco «Inventario» in js/monumenti.js): colonna di Marco Aurelio, orologio di Augusto (obelisco di Montecitorio, meridiana, Ara Pacis, colonna
+     di Antonino Pio), obelisco degli Horti Sallustiani, piramide Cestia, Castra Praetoria (fino al 312), terme di Nerone e di Agrippa, tempio di Adriano, tempio di Claudio, Ludus Magnus,
+     Meta Romuli, Foro Boario, portico d'Ottavia, largo Argentina, Iseo Campense, Esquilino (arco di Gallieno, Trofei di Mario, auditorium), Minerva Medica (dal 320), Sessoriano, archi della via Lata,
+     Arcus Novus (dal 293). Posizioni da OpenStreetMap, Nominatim e it.wikipedia; misure e date da Platner e Ashby e da it.wikipedia, annotate voce per voce; ciò che non viene da una fonte è detto
+     «indicativo»; gli obelischi dell'Iseo stanno nei punti di ritrovamento. A SCELTA NOSTRA: la chiusura del Ludus Magnus nel 440. RESTANO FUORI: terme di Tito (urtano le terme di Traiano del modello,
+     che stanno circa 100 m più a ovest di OpenStreetMap: da rivedere), Apollo Sosiano e Bellona (urtano il teatro di Marcello), templi del Foro Olitorio, Saepta, Diribitorium, palazzo Sessoriano.
+     DIFETTI NOTI: dentro i Castra crescono case già prima del 312; l'acqua Vergine passa circa 40 m a nord dell'arco di Claudio;
    - «Perché cadde l'Occidente?» (js/cause.js, 22 novembre 2026): letti nel testo Montesquieu (Considérations, capp. IX, XVIII, XIX, fr.wikisource), Gibbon (Osservazioni generali, ccel.org),
      Bury (cap. IX § 7, LacusCurtius), Rostovtzeff (2ª edizione 1957, pp. 495 e 532, archive.org), Jones (vol. II, pp. 1045, 1067, 1068, archive.org), Vegezio I 20 (thelatinlibrary), l'elenco di Demandt
      in traduzione inglese (210 voci contate, courses.washington.edu). NON LETTI: Peter Brown 1971 (in prestito controllato), Nriagu e Scarborough (solo i dati bibliografici), Ferrill, Momigliano;
