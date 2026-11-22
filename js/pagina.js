@@ -72,7 +72,8 @@ if(!voci.length) document.querySelector('.stato-roma').hidden=true;
 var contaElenco=0, contaMonumenti=function(){};
 (function(){ var sr=document.querySelector('.stato-roma'), bm=$('btnMonumenti'); if(!bm) return;
   function scrivi(){ var c=sr.classList.contains('corto'); bm.setAttribute('aria-expanded',c?'false':'true'); bm.textContent=c?'Mostra tutti i '+contaElenco+' monumenti':'Mostra meno'; bm.hidden=contaElenco<=20; }      // venti stanno nelle due colonne dell'elenco corto
-  sr.classList.add('corto'); bm.addEventListener('click',function(){ sr.classList.toggle('corto'); scrivi(); });
+  sr.classList.add('corto'); bm.addEventListener('click',function(){ sr.classList.toggle('corto'); scrivi();
+    if(sr.classList.contains('corto') && sr.getBoundingClientRect().top<0) sr.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}); });      // chiudendo l'elenco lungo si torna al suo inizio, non in mezzo alla pagina
   contaMonumenti=function(n){ contaElenco=n; scrivi(); };
 })();
 /* scheda di un monumento: che cos'è, in che stato è nell'anno corrente, le date che contano */
