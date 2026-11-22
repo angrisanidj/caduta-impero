@@ -26,13 +26,43 @@ body.impero-grande .m-didascalia{display:none}
 .m-scena:not(.viva) *{transition-delay:0s;transition-duration:.35s}
 .m-scena.ferma *{transition:none}
 @media (prefers-reduced-motion:reduce){ .m-scena *{transition:none} }
-/* Telefoni, carta in linea: le legende non riservano più lo spazio della tappa con più voci (lasciava mezzo schermo bianco). Ciascuna è una riga sola che scorre di lato,
-   così l'altezza resta la stessa da una tappa all'altra; la nota in corsivo sta su due righe e si apre con un tocco. */
+/* La legenda risponde (js/mappa.js): ogni voce è un bottone a pastiglia. Toccata, tiene vive sulla carta le sole regioni di quel colore, o i soli popoli con quel rapporto. */
+.legenda-mappa,.legenda-popoli{gap:5px 6px}
+body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
+.legenda-mappa span,#legendaPopoli span{min-height:26px;padding:2px 10px 2px 7px;border:1px solid var(--line);border-radius:999px;background:var(--carta2);color:var(--ink);line-height:1.2;cursor:pointer;
+  user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;transition:opacity .25s ease,border-color .2s ease,box-shadow .2s ease}
+.legenda-mappa i{flex:none;width:13px;height:13px;border-radius:3px}
+#legendaPopoli i{flex:none;width:11px;height:11px}
+#legendaPopoli b{margin-right:4px}
+.legenda-mappa span:hover,#legendaPopoli span:hover{border-color:#B9AE9E}
+.legenda-mappa span:focus-visible,#legendaPopoli span:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.legenda-mappa span[aria-pressed="true"],#legendaPopoli span[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);font-weight:600}
+.legenda-mappa.con-fuoco span[aria-pressed="false"],#legendaPopoli.con-fuoco span[aria-pressed="false"]{opacity:.5}
+.legenda-mappa span.indicata{border-color:var(--porpora);box-shadow:0 0 0 2px rgba(122,31,43,.22)}
+.m-regione{transition:color .9s ease,opacity .35s ease}
+#mappa svg.m-fuoco .m-regione:not(.acceso){opacity:.16}
+#mappa svg.m-fuoco .m-popolo:not(.via),#mappa svg.m-fuoco .m-rotta:not(.via),#mappa svg.m-fuoco .m-rotta-f:not(.via){opacity:.3}
+#mappa svg[data-fuoco] .m-popolo:not(.via),#mappa svg[data-fuoco] .m-rotta:not(.via){opacity:.18}
+#mappa svg[data-fuoco="fuori"] .m-popolo.fuori,#mappa svg[data-fuoco="accordo"] .m-popolo.accordo,#mappa svg[data-fuoco="armi"] .m-popolo.armi,#mappa svg[data-fuoco="regno"] .m-popolo.regno,
+#mappa svg[data-fuoco="fuori"] .m-rotta.fuori,#mappa svg[data-fuoco="accordo"] .m-rotta.accordo,#mappa svg[data-fuoco="armi"] .m-rotta.armi{opacity:1}
+@media (prefers-reduced-motion:reduce){ .m-regione{transition:none} }
+/* il cartellino della regione toccata */
+.m-chi{position:absolute;z-index:3;margin:0;padding:5px 10px 6px;max-width:min(260px,80%);transform:translate(-50%,-100%);font-family:var(--ui,sans-serif);font-size:12.5px;line-height:1.3;color:#FBF6EA;background:rgba(36,30,26,.94);
+  border-radius:7px;box-shadow:0 4px 14px -4px rgba(0,0,0,.5);pointer-events:none;text-align:center}
+.m-chi.sotto{transform:translate(-50%,0)}
+.m-chi[hidden]{display:none}
+.m-chi b{display:block;font-weight:600;font-size:13.5px;color:var(--gold3,#F1D99A)}
+/* «+N»: le voci che non stanno nelle due righe del telefono */
+.leg-altre{position:absolute;right:8px;bottom:5px;min-width:40px;height:26px;padding:0 10px;font-family:var(--ui,sans-serif);font-size:12px;font-weight:700;color:#fff;background:var(--ink);border:0;border-radius:999px;box-shadow:-10px 0 10px 2px var(--carta2)}
+.leg-altre[hidden]{display:none}
+/* Telefoni, carta in linea: le legende non riservano più lo spazio della tappa con più voci (lasciava mezzo schermo bianco). Stanno su tre righe al massimo (due quella dei popoli), con le voci intere;
+   se ce ne sono altre, il bottone «+N» le apre. La nota in corsivo sta su due righe e si apre con un tocco. */
 @media (max-width:700px){
-  body:not(.impero-grande) .legenda-mappa,body:not(.impero-grande) #legendaPopoli{min-height:0!important;flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch;
-    -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent);padding-right:26px}
-  body:not(.impero-grande) .legenda-mappa::-webkit-scrollbar,body:not(.impero-grande) #legendaPopoli::-webkit-scrollbar{display:none}
-  body:not(.impero-grande) .legenda-mappa span,body:not(.impero-grande) #legendaPopoli span,body:not(.impero-grande) #legendaPopoli b{flex:none}
+  body:not(.impero-grande) .legenda-mappa,body:not(.impero-grande) #legendaPopoli{position:relative;min-height:0!important;max-height:67px;overflow:hidden;font-size:12px}
+  body:not(.impero-grande) .legenda-mappa{max-height:98px}      /* tre righe per gli stati, due per i popoli */
+  body:not(.impero-grande) .legenda-mappa span,body:not(.impero-grande) #legendaPopoli span{padding:2px 8px 2px 6px}
+  body:not(.impero-grande) .legenda-mappa.tagliata,body:not(.impero-grande) #legendaPopoli.tagliata{padding-right:58px}
+  body:not(.impero-grande) .legenda-mappa.aperta,body:not(.impero-grande) #legendaPopoli.aperta{max-height:none;padding-bottom:36px}
   body:not(.impero-grande) .legenda-nota{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;cursor:pointer}
   body:not(.impero-grande) .legenda-nota.aperta{-webkit-line-clamp:unset;display:block}
   .legenda-luoghi{min-height:0}

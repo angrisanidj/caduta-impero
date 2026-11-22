@@ -343,27 +343,82 @@ function voceStato(s,anno){
     s==='califfato'?(anno<750?'califfato':'califfato ed emirati arabi'):s==='carolingio'?(anno<843?'impero dei Franchi':'regni dei Franchi, dopo la divisione dell\'843'):s==='chiesa'?'terre della Chiesa':(anno<395?'lasciata dall\'impero':'uscita dall\'impero');
 }
 var legenda=document.getElementById('legendaMappa'), legendaPopoli=document.getElementById('legendaPopoli'), vociStati={}, vociPopoli={};
+/* La legenda risponde. Ogni voce è un bottone: toccata, lascia vive sulla carta le sole regioni di quel colore (o i soli popoli con quel rapporto) e attenua il resto;
+   un secondo tocco rilascia. Toccare una regione fa comparire un cartellino con il suo nome e il suo stato in quell'anno, e segna la voce in legenda.
+   Sui telefoni la legenda sta su due righe: se le voci sono di più, un bottone «+N» la apre per intero (css/carta.css). */
+var fuoco=null, fuocoP=null, statoOra={}, inMisura=false;
+function applicaFuoco(){
+  if(fuoco && (!vociStati[fuoco] || vociStati[fuoco].v.hidden)) fuoco=null;      // la voce accesa non c'è più in questa tappa
+  if(fuocoP && (!vociPopoli[fuocoP] || vociPopoli[fuocoP].hidden)) fuocoP=null;
+  svg.classList.toggle('m-fuoco',!!fuoco); if(fuocoP) svg.setAttribute('data-fuoco',fuocoP); else svg.removeAttribute('data-fuoco');
+  var k; for(k in regioni) regioni[k].classList.toggle('acceso',!!fuoco && (statoOra[k]||'perso')===fuoco);
+  for(k in vociStati) vociStati[k].v.setAttribute('aria-pressed',k===fuoco?'true':'false');
+  for(k in vociPopoli) vociPopoli[k].setAttribute('aria-pressed',k===fuocoP?'true':'false');
+  legenda.classList.toggle('con-fuoco',!!fuoco); if(legendaPopoli) legendaPopoli.classList.toggle('con-fuoco',!!fuocoP);
+}
+function voceCliccabile(v,fa){
+  v.setAttribute('role','button'); v.tabIndex=0; v.setAttribute('aria-pressed','false'); v.addEventListener('click',fa);
+  v.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); fa(); } });
+}
+function bottoneAltre(el){
+  var b=document.createElement('button'); b.type='button'; b.className='leg-altre'; b.hidden=true; el.appendChild(b); el._altre=b;
+  b.addEventListener('click',function(){ el.classList.toggle('aperta'); misuraLegende(); });
+}
+function misuraLegende(){
+  [legenda,legendaPopoli].forEach(function(el){
+    if(!el || !el._altre) return; var b=el._altre; el.classList.remove('tagliata');
+    if(el.classList.contains('aperta')){ b.hidden=false; b.textContent='meno'; b.setAttribute('aria-label','Mostra meno voci della legenda'); return; }
+    var sotto=function(){ var fondo=el.getBoundingClientRect().bottom-3, q=0; [].forEach.call(el.querySelectorAll('span'),function(v){ if(!v.hidden && v.getBoundingClientRect().top>=fondo) q++; }); return q; }, n=sotto();
+    if(!n){ b.hidden=true; return; }
+    el.classList.add('tagliata'); n=sotto();      // fa posto al bottone, poi riconta le voci rimaste sotto
+    b.hidden=!n; b.textContent='+'+n; b.setAttribute('aria-label','Mostra le altre '+n+' voci della legenda'); if(!n) el.classList.remove('tagliata');
+  });
+}
 STATI.forEach(function(s){
   var v=document.createElement('span'), i=document.createElement('i'), t=document.createTextNode(s[1]||voceStato(s[0],600));
   i.style.background=s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':s[0].indexOf('regno:')===0?REGNI[s[0].slice(6)][0]:'var(--st-'+s[0]+')';
   v.appendChild(i); v.appendChild(t); legenda.appendChild(v); vociStati[s[0]]={v:v,t:t};
+  voceCliccabile(v,function(){ fuoco=fuoco===s[0]?null:s[0]; fuocoP=null; applicaFuoco(); });
 });
-if(legendaPopoli && G.popoli) RAPPORTI.forEach(function(r){ var v=document.createElement('span'), i=document.createElement('i'); i.className='p-'+r[0]; v.appendChild(i); v.appendChild(document.createTextNode(r[1])); legendaPopoli.appendChild(v); vociPopoli[r[0]]=v; });
+bottoneAltre(legenda);
+if(legendaPopoli && G.popoli) RAPPORTI.forEach(function(r){ var v=document.createElement('span'), i=document.createElement('i'); i.className='p-'+r[0]; v.appendChild(i); v.appendChild(document.createTextNode(r[1])); legendaPopoli.appendChild(v); vociPopoli[r[0]]=v;
+  voceCliccabile(v,function(){ fuocoP=fuocoP===r[0]?null:r[0]; fuoco=null; applicaFuoco(); }); });
+if(legendaPopoli) bottoneAltre(legendaPopoli);
 var ultimo=null;
 function spazioLegende(){                                 // l'altezza minima è quella della tappa con più voci: la pagina non salta da una tappa all'altra
-  var prima=ultimo, T=(window.RM_DATI||{}).TAPPE||[], alta=0, r;
+  var prima=ultimo, T=(window.RM_DATI||{}).TAPPE||[], alta=0, r; inMisura=true;
   if(legendaPopoli){ legendaPopoli.style.minHeight=''; for(r in vociPopoli) vociPopoli[r].hidden=false; if(legendaPopoli.offsetHeight) legendaPopoli.style.minHeight=legendaPopoli.offsetHeight+'px'; }
   legenda.style.minHeight='';
   T.forEach(function(t){ if(t.intermezzo||!t.regioni) return; aggiornaLegende(t.regioni,t.anno,null); alta=Math.max(alta,legenda.offsetHeight); });
   if(alta) legenda.style.minHeight=alta+'px';
-  ultimo=prima; if(ultimo) aggiornaLegende(ultimo[0],ultimo[1],ultimo[2]);
+  inMisura=false; ultimo=prima; if(ultimo) aggiornaLegende(ultimo[0],ultimo[1],ultimo[2]); else misuraLegende();
 }
 function aggiornaLegende(stati,anno,visti){
   ultimo=[stati,anno,visti]; var ci={}, id, s;
   for(id in regioni) ci[stati[id]||'perso']=1;
   for(s in vociStati){ vociStati[s].v.hidden=!ci[s]; if(anno!=null){ var n=voceStato(s,anno); if(vociStati[s].t.nodeValue!==n) vociStati[s].t.nodeValue=n; } }
   if(visti) for(s in vociPopoli) vociPopoli[s].hidden=!visti[s];
+  if(!inMisura) misuraLegende();
 }
+/* il cartellino di una regione toccata: nome e stato in quell'anno */
+var chi=document.createElement('p'), chiOra=0, giu=null; chi.className='m-chi'; chi.hidden=true; chi.setAttribute('aria-live','polite'); ospite.appendChild(chi);
+function nascondiChi(){ clearTimeout(chiOra); if(!chi.hidden){ chi.hidden=true; for(var k in vociStati) vociStati[k].v.classList.remove('indicata'); } }
+function regioneA(cx,cy){
+  var m=svg.getScreenCTM(); if(!m) return null; var pt=svg.createSVGPoint(); pt.x=cx; pt.y=cy; pt=pt.matrixTransform(m.inverse());
+  var ids=Object.keys(regioni); for(var i=ids.length-1;i>=0;i--){ try{ if(regioni[ids[i]].isPointInFill(pt)) return ids[i]; }catch(e){ return null; } }      // dall'ultima disegnata: è quella che si vede
+  return null;
+}
+svg.addEventListener('pointerdown',function(e){ giu=[e.clientX,e.clientY]; nascondiChi(); });
+svg.addEventListener('click',function(e){
+  if(giu && Math.hypot(e.clientX-giu[0],e.clientY-giu[1])>6) return;      // era un trascinamento della carta
+  var id=regioneA(e.clientX,e.clientY); if(!id) return;
+  var st=statoOra[id]||'perso', r=ospite.getBoundingClientRect(), b=document.createElement('b'), x=e.clientX-r.left, y=e.clientY-r.top;
+  chi.textContent=''; b.textContent=G.regioni[id].nome; chi.appendChild(b); chi.appendChild(document.createTextNode(st==='fuori'?'mai dentro l’impero':voceStato(st,annoVisto!=null?annoVisto:600)));
+  chi.hidden=false; var w=chi.offsetWidth, sotto=y<chi.offsetHeight+18;
+  chi.style.left=Math.max(w/2+6,Math.min(r.width-w/2-6,x))+'px'; chi.style.top=(sotto?y+16:y-12)+'px'; chi.classList.toggle('sotto',sotto);
+  var v=vociStati[st]; if(v && !v.v.hidden){ v.v.classList.add('indicata'); if(v.v.getBoundingClientRect().top>=legenda.getBoundingClientRect().bottom-2){ legenda.classList.add('aperta'); misuraLegende(); } }      // la voce era fra quelle nascoste: la legenda si apre
+  clearTimeout(chiOra); chiOra=setTimeout(nascondiChi,5000);
+});
 var attesa=0; window.addEventListener('resize',function(){ adatta(); clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); },200); });
 spazioLegende();
 
@@ -466,11 +521,12 @@ window.RM_mappa={
     if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
     aggiornaLegende(stati,anno,visti);
     for(var id in regioni){
-      var s=stati[id]||'perso', chi=s.indexOf('regno:')===0?s.slice(6):'';
+      var s=stati[id]||'perso', chi=s.indexOf('regno:')===0?s.slice(6):''; statoOra[id]=s;
       if(chi) s='regno';
       regioni[id].setAttribute('class','m-regione '+s); regioni[id].style.color=chi&&REGNI[chi]?REGNI[chi][0]:'';
       if(nomi[id]) nomi[id].setAttribute('class','m-nome'+(s==='perso'||s==='conteso'?' chiaro':''));
     }
+    applicaFuoco(); nascondiChi();      // la voce accesa in legenda resta accesa da una tappa all'altra, finché c'è
   },
   /* quota dell'Occidente governata da Roma, pesata per regione: federati e contesi valgono metà, ma solo finché c'è un governo romano d'Occidente (fino al 480, quando muore Giulio Nepote
      in Dalmazia). Dopo, una regione contesa lo è fra altri (Goti e Costantinopoli, Visigoti e Arabi, Bizantini e Saraceni) e non conta: prima del 22 novembre 2026 la spia dava il 9% nel 711 */
