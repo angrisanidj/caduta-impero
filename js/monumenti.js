@@ -40,22 +40,26 @@ function circo(B,L,W,h,spina){                           // circo o stadio: grad
     B.scatola(4,h+1,1.6,-4,0,-W/2+.2,P.marmo).falde(4,.7,1.8,-4,h+1,-W/2+.2,P.coppi);          // pulvinar, lato del Palatino
   }
 }
-function teatro(B,r,h){                                  // cavea a semicerchio verso +z, scena a -z
+function teatro(B,r,h,tre){                              // cavea a semicerchio verso +z, scena a -z; tre: un terzo ordine di arcate in facciata
   var est=RM.ellisse(r,r,22,0,PI), int=RM.ellisse(r*.9,r*.9,22,0,PI), orc=RM.ellisse(r*.3,r*.3,22,0,PI), cen=orc.map(function(){ return [0,0]; });
   B.striscia(est,0,est,h,P.travertino,false).striscia(est,h,int,h,P.travertino,false).striscia(int,h,orc,.3,P.tufo,false).striscia(orc,.3,cen,.3,P.marmo,false);
   B.fornici(est,.15,h*.3,.5,1,false).fornici(est,h*.44,h*.26,.45,1,false);
+  if(tre) B.fornici(est,h*.76,h*.17,.4,1,false);
   B.scatola(r*2,h*1.05,r*.24,0,0,-r*.12,P.travertino).aperture(-r*.9,0,r*.9,0,9,.4,h*.5).scatola(r*1.4,.35,r*.3,0,0,r*.15,P.marmo);
   [0,1].forEach(function(l){ B.colonne(-r*.66,.07,r*.66,.07,10,h*.36,.05,.35+l*h*.4).scatola(r*1.36,.07,.16,0,.35+l*h*.4+h*.36,.07,P.marmo); });      // la fronte della scena: due ordini di colonne
   B.aperture(r*.9,-r*.24,-r*.9,-r*.24,9,.2,h*.42);                                                                                                   // gli archi sul retro della scena
 }
-function terme(B,L,Pd){                                   // recinto con giardini, corpo centrale a volte, caldarium a sud (+z)
-  var s=.7, a=1.5, zc=-Pd*.05;
+/* o (facoltativo): lc e pc, larghezza e profondità del corpo centrale; zc, dove sta il suo centro; rc, raggio del caldarium; recinto:false per le terme senza peribolo */
+function terme(B,L,Pd,o){                                 // recinto con giardini, corpo centrale a volte, caldarium a sud (+z)
+  o=o||{}; var s=.7, a=1.5, zc=o.zc==null?-Pd*.05:o.zc, lc=o.lc||L*.64, cd=o.pc||Pd*.3, rc=o.rc||L*.085, zk=zc+cd/2+Pd*.05;
+  if(o.recinto!==false){
   B.scatola(L-1,.08,Pd-1,0,0,0,P.prato);
   arcato(B,L,a,s,0,0,-Pd/2,P.mattone,1,Math.round(L/1.6)); arcato(B,L*.36,a,s,-L*.32,0,Pd/2,P.mattone,1,8); arcato(B,L*.36,a,s,L*.32,0,Pd/2,P.mattone,1,8);
   B.scatola(s,a,Pd,-L/2,0,0,P.mattone).scatola(s,a,Pd,L/2,0,0,P.mattone);
   var es=RM.ellisse(L*.15,L*.12,16,0,PI).map(function(p){ return [p[0],p[1]+Pd/2]; });           // esedra del recinto
   B.striscia(es,0,es,a+.3,P.mattone,false).fornici(es,.2,.8,.5,1,false);
-  arcato(B,L*.64,2.3,Pd*.3,0,0,zc,P.intonaco,2,Math.round(L*.5));                                 // corpo centrale: i muri di mattoni erano coperti di intonaco
+  }
+  arcato(B,lc,2.3,cd,0,0,zc,P.intonaco,2,Math.round(o.lc?lc*.78:L*.5));                                   // corpo centrale: i muri di mattoni erano coperti di intonaco
   B.scatola(L*.2,3.7,Pd*.17,0,0,zc,P.intonaco);                                                   // frigidarium, a tre crociere
   for(var i=-1;i<=1;i++) B.falde(Pd*.19,.8,L*.066,i*L*.066,3.7,zc,P.coppi,PI/2,P.intonaco);
   B.falde(L*.2,.7,Pd*.17,0,3.7,zc,P.coppi,0,P.intonaco);
@@ -63,22 +67,46 @@ function terme(B,L,Pd){                                   // recinto con giardin
   [-1,1].forEach(function(k){
     B.scatola(L*.12,2.9,Pd*.26,k*L*.17,0,zc,P.intonaco).volta(Pd*.26,L*.06,k*L*.17,2.9,zc,P.intonaco,PI/2);  // aule laterali
     B.scatola(L*.13,.12,Pd*.2,k*L*.255,2.3,zc-Pd*.02,P.ombra);                                              // palestre a cielo aperto
-    B.scatola(L*.1,1.9,Pd*.1,k*L*.3,0,Pd*.3,P.mattone).falde(L*.1,.5,Pd*.1,k*L*.3,1.9,Pd*.3,P.coppi);       // biblioteche
+    if(o.recinto!==false) B.scatola(L*.1,1.9,Pd*.1,k*L*.3,0,Pd*.3,P.mattone).falde(L*.1,.5,Pd*.1,k*L*.3,1.9,Pd*.3,P.coppi);       // biblioteche
   });
   B.scatola(L*.2,.14,Pd*.09,0,2.3,zc-Pd*.11,P.acqua);                                                       // natatio
-  B.cilindro(L*.085,3.3,0,0,zc+Pd*.2,P.intonaco).cupola(L*.085,0,3.3,zc+Pd*.2,P.intonaco,.62);              // caldarium: rotonda a cupola, con le grandi finestre a sud per il sole del pomeriggio
-  var cal=RM.ellisse(L*.085,L*.085,12,0,PI).map(function(p){ return [p[0],p[1]+zc+Pd*.2]; });
+  B.cilindro(rc,3.3,0,0,zk,P.intonaco).cupola(rc,0,3.3,zk,P.intonaco,.62);                                 // caldarium: rotonda a cupola, con le grandi finestre a sud per il sole del pomeriggio
+  var cal=RM.ellisse(rc,rc,12,0,PI).map(function(p){ return [p[0],p[1]+zk]; });
   B.fornici(cal,.5,1.1,.5,1,false).fornici(cal,2,.9,.5,1,false);
-  B.scatola(L*.1,2.6,Pd*.08,0,0,zc+Pd*.12,P.intonaco);
+  B.scatola(L*.1,2.6,Pd*.08,0,0,zk-Pd*.08,P.intonaco);
 }
-function chiesa(B,L,W,transetto){                         // basilica cristiana: navata lungo x, abside a -x, atrio a +x
+/* opz (facoltativo): strette = navatelle larghe circa metà della navata, il rapporto delle basiliche a tre navate di Roma (senza opz restano larghe come prima);
+   finestre = finestre per lato della navata; atrio:false = niente quadriportico */
+function chiesa(B,L,W,transetto,opz){                     // basilica cristiana: navata lungo x, abside a -x, atrio a +x
+  opz=opz||{}; var an=opz.strette?W*.2:W*.3, zn=opz.strette?W*.28:W*.33, nf=opz.finestre||Math.round(L/1.1);
   B.scatola(L,2.8,W*.36,0,0,0,P.mattone).falde(L,.9,W*.4,0,2.8,0,P.coppi,0,P.mattone);
-  B.aperture(-L/2+.5,W*.18,L/2-.5,W*.18,Math.round(L/1.1),1.9,.55,.3).aperture(L/2-.5,-W*.18,-L/2+.5,-W*.18,Math.round(L/1.1),1.9,.55,.3);
-  [-1,1].forEach(function(k){ B.scatola(L,1.5,W*.3,0,0,k*W*.33,P.mattone).scatola(L+.1,.14,W*.32,0,1.5,k*W*.33,P.coppi); });
+  B.aperture(-L/2+.5,W*.18,L/2-.5,W*.18,nf,1.9,.55,.3).aperture(L/2-.5,-W*.18,-L/2+.5,-W*.18,nf,1.9,.55,.3);
+  [-1,1].forEach(function(k){ B.scatola(L,1.5,an,0,0,k*zn,P.mattone).scatola(L+.1,.14,an+.02*W,0,1.5,k*zn,P.coppi); });
   B.cilindro(W*.17,2.3,-L/2,0,0,P.mattone,null,14).cono(W*.18,.7,-L/2,2.3,0,P.coppi,14);
-  B.vano(L/2+.03,0,0,0,1,.55,1.1).vano(L/2+.03,0,W*.33,0,1,.36,.8).vano(L/2+.03,0,-W*.33,0,1,.36,.8).vano(L/2+.03,1.75,0,0,1,.5,.75);      // le tre porte e la finestra della facciata
+  B.vano(L/2+.03,0,0,0,1,.55,1.1).vano(L/2+.03,0,zn,0,1,.36,.8).vano(L/2+.03,0,-zn,0,1,.36,.8).vano(L/2+.03,1.75,0,0,1,.5,.75);      // le tre porte e la finestra della facciata
   if(transetto) B.scatola(2.4,2.8,W*1.25,-L/2+1.6,0,0,P.mattone).falde(W*1.25,.8,2.6,-L/2+1.6,2.8,0,P.coppi,PI/2,P.mattone);
-  portico(B,W*.8,W*.8,L/2+W*.4,0,0,1.1);
+  if(opz.atrio!==false) portico(B,W*.8,W*.8,L/2+W*.4,0,0,1.1);
+}
+/* basilica a cinque navate (il Laterano, San Paolo): navata lungo x, abside a -x, atrio a +x; tetti a scalare come a San Pietro.
+   o: nave e nav = larghezza della navata e di ciascuna navatella; hn, hi, he = altezze di navata, navatelle interne ed esterne; ra = raggio dell'abside;
+   transetto = {prof, lung, alto} (navata trasversale continua, alta quanto la navata se alto è vero); ali = {prof, alto} (navatella trasversale bassa in fondo alle navate);
+   atrio = {lato, prof} (quadriportico); finestre per lato */
+function cinqueNavate(B,L,o){
+  var nv=o.nave, a=o.nav, hn=o.hn||2.9, hi=o.hi||2, he=o.he||1.4, nf=o.finestre||Math.round(L/.9), x0=-L/2, zi=nv/2+a/2, ze=nv/2+a*1.5, Wt=nv+4*a;
+  B.scatola(L,hn,nv,0,0,0,P.mattone).falde(L,.75,nv+.2,0,hn,0,P.coppi,0,P.mattone);
+  B.aperture(x0+.4,nv/2,L/2-.4,nv/2,nf,hi+.25,Math.min(.6,hn-hi-.4),.28).aperture(L/2-.4,-nv/2,x0+.4,-nv/2,nf,hi+.25,Math.min(.6,hn-hi-.4),.28);     // il cleristorio
+  [-1,1].forEach(function(k){
+    B.scatola(L,hi,a,0,0,k*zi,P.mattone).scatola(L+.06,.12,a+.04,0,hi,k*zi,P.coppi);                      // navatelle interne
+    B.scatola(L,he,a,0,0,k*ze,P.mattone).scatola(L+.06,.12,a+.06,0,he,k*ze,P.coppi);                      // navatelle esterne, più basse
+    B.aperture(x0+.4,k*Wt/2,L/2-.4,k*Wt/2,nf,.6,.55,.24);
+  });
+  if(o.transetto){ var t=o.transetto, ht=t.alto?hn:hn*.85;
+    B.scatola(t.prof,ht,t.lung,x0+t.prof/2,0,0,P.mattone).falde(t.lung,.7,t.prof+.2,x0+t.prof/2,ht,0,P.coppi,PI/2,P.mattone); }
+  if(o.ali) B.scatola(o.ali.prof,o.ali.alto,Wt+.6,x0+o.ali.prof/2,0,0,P.mattone).scatola(o.ali.prof+.06,.12,Wt+.66,x0+o.ali.prof/2,o.ali.alto,0,P.coppi);
+  B.cilindro(o.ra,hn*.8,x0,0,0,P.mattone,null,16).cono(o.ra+.05,.6,x0,hn*.8,0,P.coppi,16);
+  B.vano(L/2+.03,0,0,0,1,.55,1.1,true); [-1,1].forEach(function(k){ B.vano(L/2+.03,0,k*zi,0,1,.36,.85,true).vano(L/2+.03,0,k*ze,0,1,.34,.8,true); });      // le cinque porte
+  [hi+.2,hi+.8].forEach(function(y){ if(y+.5<hn) [-.6,0,.6].forEach(function(z){ B.vano(L/2+.03,y,z*nv/2.4,0,1,.36,.5); }); });                         // finestre in facciata
+  if(o.atrio) portico(B,o.atrio.lato,o.atrio.prof,L/2+o.atrio.prof/2,0,0,1.1);
 }
 
 /* vani lungo un profilo curvo, sul lato che guarda il punto (cx,cz): servono alle facciate concave, dove C.fornici li metterebbe dietro il muro */
@@ -120,6 +148,14 @@ function sanPietro(B){
   B.scatola(.7,1.7,3.4,11.35,0,0,P.mattone).scatola(.8,.12,3.5,11.35,1.7,0,P.coppi); [-1,0,1].forEach(function(z){ B.vano(11.73,0,z,0,1,.5,1); });      // l'ingresso a tre fornici
   for(var g=0;g<3;g++) B.scatola(.3,.3-.1*g,5.4,11.87+.3*g,0,0,P.travertino);                                            // la gradinata
 }
+/* Le tegole di bronzo di Onorio I (625-638): «cooperuit ecclesiam omnem ex tegulis aereis quas levavit de templo qui appellatur Romae» (Liber Pontificalis, Onorio I, Duchesne I p. 323).
+   Uno strato sottile sopra i tetti di sanPietro, con le stesse misure: compare dal 630 come monumento a parte (tegolepietro). */
+function tegolePietro(B){
+  var Ln=9.7, xn=.9, e=.025;
+  B.falde(Ln+.04,.75,2.6+.04,xn,3.3+e,0,P.bronzo,0,P.mattone);
+  [-1,1].forEach(function(k){ B.scatola(Ln+.08,.03,1.06,xn,2.17,k*1.7,P.bronzo).scatola(Ln+.08,.03,1.08,xn,1.52,k*2.7,P.bronzo); });
+  B.falde(9+.04,.7,2+.04,-4.85,3+e,0,P.bronzo,PI/2,P.mattone).cono(.97,.6,-5.75,2.4+e,0,P.bronzo,14);
+}
 
 /* complessi su terreno in pendenza: ogni corpo poggia alla quota del suo punto */
 function quota(x,z){ return Math.min(RM.h(x,z),RM.h(x+5,z),RM.h(x-5,z),RM.h(x,z+5),RM.h(x,z-5))-.1; }
@@ -156,7 +192,7 @@ var M=[
     [1.28,2.48].forEach(function(y){ B.striscia(wc,y,wc,y+.1,P.marmo); });
     /* i pali del velario: duecentoquaranta nella realtà, infilati nelle mensole dell'attico; qui uno ogni tre */
     e.forEach(function(p){ B.scatola(.05,.95,.05,p[0]*.997,4.45,p[1]*.997,P.tronco); });
-    B.scatola(1,.5,1,-11.7,0,-4.65,P.marmo);                                                                     // il basamento del Colosso (sette metri di lato, rivestito di marmo): resta fino al 1936
+    B.scatola(.7,.5,.7,-11.7,0,-4.65,P.marmo);                                                                   // il basamento del Colosso: «7 metres square, of brick-faced concrete, and was originally covered with marble» (Platner e Ashby, Colossus Neronis); resta fino al 1936
  }},
  /* Il Colosso: statua di bronzo di circa 35 m, sul basamento reale (OpenStreetMap, way 709011412). La figura è indicativa: stante, corona di raggi, timone nella destra e globo
     nella sinistra come sulle monete; da che parte guardasse non si sa. */
@@ -175,7 +211,31 @@ var M=[
     B.cilindro(1.05,.14,0,0,0,P.marmo,1.05,24).cilindro(.95,.03,0,.13,0,P.acqua,.95,24);
     B.cilindro(.37,.36,0,.12,0,P.marmo,.34,14).cilindro(.31,1.2,0,.48,0,P.marmo,.07,14).geo(new THREE.SphereGeometry(.09,8,6).translate(0,1.74,0),P.marmo);
  }},
- {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], et:1, fa:function(B){ circo(B,62,14,2.5,true); }},
+ {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], et:1, fa:function(B){
+    circo(B,62,14,2.5,true);
+    /* l'arco di Tito al centro della curva orientale (81): «replaced by a triple arch, erected by the senate in honour of Titus» (Platner e Ashby, Circus Maximus; CIL VI.944, pianta marmorea fr. 38).
+       Largo circa 17 m e profondo 15, tre fornici, colonne libere alte oltre 10 m, quadriga sull'attico (scavi del 2015, da it.wikipedia «Circo Massimo»). Le altezze qui sono ipotetiche. */
+    B.scatola(1.5,1.55,1.7,28.95,0,0,P.marmo).scatola(1.6,.1,1.8,28.95,1.55,0,P.marmo).scatola(1.5,.35,1.7,28.95,1.65,0,P.marmo);      // corpo, cornice, attico
+    B.vano(28.175,0,0,0,1,.55,1.15).vano(28.175,0,.55,0,1,.3,.75).vano(28.175,0,-.55,0,1,.3,.75);                                     // i tre fornici, sulla fronte verso l'arena
+    [-.8,-.27,.27,.8].forEach(function(z){ B.scatola(.16,.4,.16,28.12,0,z,P.marmo); }); B.colonne(28.12,-.8,28.12,.8,4,1.1,.06,.4);     // le quattro colonne libere sui loro piedistalli
+    B.scatola(.5,.25,.6,28.95,2,0,P.statua);                                                                                            // la quadriga
+ }},
+ /* Il secondo obelisco della spina, portato da Costanzo II: «obeliscus Romae in circo erectus est maximo» (Ammiano XVII 4.1), nel 357. Alto 32,50 m, di granito rosso
+    (Platner e Ashby, Obeliscus Constantii). In cima una sfera di bronzo dorato, colpita subito da un fulmine e sostituita da una fiaccola di bronzo dorato (Ammiano XVII 4.15).
+    Ammiano lo dice messo «in media», ma nel mezzo della spina stava già quello di Augusto: il punto, 35 m a est di quello, è una nostra scelta. Che fosse ancora in piedi nell'852 non si sa. */
+ {id:'obelisco357', nome:'Obelisco di Costanzo II', x:2.78,z:73.12, ry:-.651, come:'circo', fa:function(B){
+    B.scatola(.62,.36,.62,0,.52,0,P.marmo);                                                       // il basamento, con l'iscrizione di Costanzo sui quattro lati
+    B.cilindro(.2,3.25,0,.88,0,P.sabbia,.13,4).cono(.13,.25,0,4.13,0,P.sabbia,4);                   // fusto e cuspide
+    B.cilindro(.025,.2,0,4.38,0,P.oro,.05,6).cono(.06,.14,0,4.58,0,P.oro,6);                         // la fiaccola dorata
+ }},
+ /* Dopo le ultime corse (550) la valle non è più drenata: la pista diventa un velo di fango e pozze. Che il circo si interrasse è certo («gradually buried under waterlogged alluvial soil»,
+    en.wikipedia «Circus Maximus»: oggi la pista sta circa 6 m sotto il suolo; nel 1587 gli obelischi erano a circa 7 m, Platner e Ashby). Quanto deposito ci fosse nell'852 non lo sappiamo:
+    per questo il suolo non si alza, si bagna soltanto. Forma e posizione delle pozze sono di fantasia. */
+ {id:'fangocirco', x:0,z:71, ry:-.651, come:'circo', fa:function(B){
+    var FANGO=RM.col(0x8a7656), L=62, w=8.3, p=RM.stadio(L-(14-w),w,26,14), asse=p.map(function(q){ return [Math.max(-L/2+4,Math.min(L/2-7,q[0])),0]; }), rnd=RM.casuale(550), k;
+    B.striscia(p,.135,asse,.135,FANGO);
+    for(k=0;k<9;k++) B.cilindro(.5+.8*rnd(),.02,-25+48*rnd(),.14,(rnd()<.5?-1:1)*(1+1.8*rnd()),P.acqua,null,12);
+ }},
  {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6],[11.2,13.1,3.8]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
     /* Posizioni reali: i centri dei resti rilevati in OpenStreetMap (src/roma/grezzi/osm-foro.json), scritti qui in coordinate di scena.
        Orientamenti: il Foro Romano lungo il suo asse, i fori imperiali sulla loro griglia comune, girata di circa 58° rispetto al Foro.
@@ -193,10 +253,10 @@ var M=[
     inForo(B,-11.4,-2.6,0,function(B){ B.tempio(1.7,3,1.6,0,0,PI/2,{fronte:6,podio:.6}); });                                       // Vespasiano e Tito
     inForo(B,11.2,13.1,0,function(B){ portico(B,6.8,3,0,0,0,1); B.scatola(6.8,1.1,.5,0,1.15,-1.5,P.mattone).scatola(.5,1.1,3,-3.4,1.15,0,P.mattone).scatola(.5,1.1,3,3.4,1.15,0,P.mattone); });   // casa delle Vestali: il lungo cortile porticato, a due piani
     inForo(B,-10.1,1.1,0,function(B){ B.tempio(2.2,4,1.7,0,0,PI/2,{fronte:6,podio:.85}); });                                      // Saturno, sul suo podio alto
-    inForo(B,3,9.3,0,function(B){ B.tempio(2.9,4.6,2,0,0,PI,{fronte:8,lati:9,podio:.8}); });                                      // Castori
+    inForo(B,3,9.3,0,function(B){ B.tempio(2.9,4.6,2,0,0,PI,{fronte:8,lati:11,podio:.8}); });                                     // Castori: «octastyle and peripteral, with eleven columns on each side» (Platner e Ashby, Aedes Castoris)
     inForo(B,7.4,9,0,function(B){                                                                                                 // Vesta: tempio rotondo, colonne tutt'attorno, tetto conico con il foro per il fumo
       B.cilindro(1,.32,0,0,0,P.marmo,null,20).cilindro(.62,1.25,0,.32,0,P.marmo,null,16);
-      for(var k=0;k<16;k++){ var a=k*PI/8; B.cilindro(.06,1.25,.86*Math.cos(a),.32,.86*Math.sin(a),P.marmo,.052,7); }
+      for(var k=0;k<20;k++){ var a=k*PI/10; B.cilindro(.06,1.25,.86*Math.cos(a),.32,.86*Math.sin(a),P.marmo,.052,7); }      // «peripteral, with twenty columns» (Platner e Ashby, Vesta)
       B.cilindro(.98,.14,0,1.57,0,P.marmo,null,20).cilindro(.98,.5,0,1.71,0,P.bronzo,.16,20);
     });
     inForo(B,5.6,5.6,0,function(B){ B.tempio(2.4,2.8,1.4,0,0,-PI/2,{fronte:6}); });                                               // Divo Giulio
@@ -228,9 +288,10 @@ var M=[
         B.striscia(es,0,es,1.7,P.marmo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });        // le due grandi esedre ai lati della piazza
       basilica(B,17,5.6,2.4,0,-7.6,P.bronzo);                                                  // basilica Ulpia, con le absidi alle due testate
       [-1,1].forEach(function(q){ B.cilindro(2.5,2,q*8.5,0,-7.6,P.marmo,null,18).cilindro(2.5,.55,q*8.5,2,-7.6,P.bronzo,.3,18); });
-      B.scatola(.56,.55,.56,0,0,-11.6,P.marmo).cilindro(.26,.1,0,.55,-11.6,P.marmo,.23,14).cilindro(.21,3.5,0,.65,-11.6,P.marmo,.19,14);      // colonna Traiana: basamento, toro, fusto
-      for(var gk=1;gk<9;gk++) B.cilindro(.212,.025,0,.65+gk*.39,-11.6,P.travertino,.21,14);     // le spire del fregio, accennate
-      B.scatola(.5,.12,.5,0,4.15,-11.6,P.marmo).cilindro(.09,.5,0,4.27,-11.6,P.statua,.07,6);   // capitello e statua dell'imperatore
+      /* colonna Traiana: piedistallo «5.4 metres high»; base, fusto e capitello «3.70 metres in diameter … measure 100 Roman feet (29.77 metres)» (Platner e Ashby, Forum Traiani) */
+      B.scatola(.56,.55,.56,0,0,-11.6,P.marmo).cilindro(.23,.1,0,.55,-11.6,P.marmo,.2,14).cilindro(.185,2.73,0,.65,-11.6,P.marmo,.165,14);      // basamento, toro, fusto
+      for(var gk=1;gk<9;gk++) B.cilindro(.187,.022,0,.65+gk*.3,-11.6,P.travertino,.185,14);     // le spire del fregio, accennate
+      B.scatola(.45,.12,.45,0,3.38,-11.6,P.marmo).cilindro(.09,.5,0,3.5,-11.6,P.statua,.07,6);  // capitello e statua dell'imperatore
       B.scatola(2,1.8,2.6,-2.8,0,-11.6,P.mattone).scatola(2,1.8,2.6,2.8,0,-11.6,P.mattone);     // biblioteche
       B.tempio(3.8,5.4,2.4,0,-16.4,PI,{fronte:8,lati:9,podio:.7});                              // tempio del Divo Traiano
       B.dentro(5.75,0,0,0,function(B){
@@ -254,13 +315,9 @@ var M=[
       });
     });
  }},
- {id:'arcotito', nome:'Arco di Tito', x:27.2,z:20.3, ry:1.38, zone:[[0,0,1.7]], fa:function(B){                          // un solo fornice, a cavallo della via Sacra; posizione reale (OpenStreetMap)
-    B.scatola(1.35,1,.5,0,0,0,P.marmo).scatola(1.45,.1,.6,0,1,0,P.marmo).scatola(1.35,.44,.5,0,1.1,0,P.marmo);
-    [1,-1].forEach(function(q){ B.vano(0,0,q*.275,1,0,.54,.84).colonne(-.58,q*.3,.58,q*.3,2,.8,.05,.2).colonne(-.38,q*.3,.38,q*.3,2,.8,.05,.2); });
- }},
  {id:'emilia', nome:'Basilica Emilia', x:7.2,z:-1, ry:-.35, come:'fori', fa:function(B){ basilica(B,8,3.4,1.8,0,0); }},
  {id:'giove', nome:'Tempio di Giove Capitolino', x:-29,z:0, ry:.5, zone:[[0,0,7.5]], fa:function(B){      // basamento di circa 54 x 62 m, la misura più citata (le stime pubblicate vanno da 50 a 74 m di lato: pianta discussa)
-    B.scatola(5.4,.7,6.2,0,0,0,P.tufo).dentro(0,.7,0,0,function(B){ B.tempio(4.5,5.3,2.8,0,0,0,{fronte:6,lati:7,tetto:P.oro,podio:.5,r:.17}); });
+    B.scatola(5.4,.2,6.2,0,0,0,P.tufo).dentro(0,.2,0,0,function(B){ B.tempio(4.5,5.3,2.8,0,0,0,{fronte:6,lati:7,tetto:P.oro,podio:.3,r:.17}); });      // podio alto in tutto 5 m: «Its height was apparently from 4 to 5 metres» (Platner e Ashby, Aedes Iovis Capitolini)
  }},
  {id:'palatino', nome:'Palazzi del Palatino', x:13,z:47, ry:-.62, zone:[[-7,-1,13],[7,-1,13],[0,6,12]], fa:function(B){
     arcato(B,27,1.5,18,0,-.4,0,P.mattone,2,22);                                                // sostruzioni
@@ -285,29 +342,49 @@ var M=[
     B.scatola(9,2.9,.5,10.5,-.4,9.2,P.marmo);
     [0,1,2].forEach(function(l){ var yy=-.4+l*.97; B.colonne(6.3,9.95,14.7,9.95,12,.82,.055,yy).scatola(9,.13,.95,10.5,yy+.82,9.62,P.marmo); if(l<2) [-3,0,3].forEach(function(x){ B.vano(10.5+x,yy+.02,9.47,1,0,1.5,.78); }); });
  }},
- {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6]], et:1, fa:function(B){
-    /* La rotonda: tamburo di 56 m di diametro alto circa 31, diviso in tre fasce da cornici; sopra, i gradoni che contengono la spinta e la calotta bassa
-       con l'occhio aperto, coperta di tegole di bronzo dorato (fino al 663). Davanti, l'avancorpo e il pronao a otto colonne; a nord la piazza porticata. */
+ {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6],[0,11.5,5],[0,-3.7,3.5]], et:1, fa:function(B){
+    /* La rotonda: tamburo di 56 m di diametro (43,2 dentro e muri di 6,2: Platner), alto circa 31, diviso in tre fasce da cornici; sopra, sette gradoni, il primo
+       ancora rivestito di marmo, gli altri e la calotta coperti di tegole di bronzo (dorato secondo Cinti, ripreso da it.wikipedia; il Liber Pontificalis dice solo
+       «tegulis aereis»): le toglie Costante II nel 663, Gregorio III (731-741) rifà il tetto «chartis plumbeis» (LP XCII 12). Il cambio di copertura sta nel modulo in fondo. */
     B.cilindro(2.8,3.05,0,0,0,P.intonaco,null,44);
     [1.22,2.2,3.02].forEach(function(y){ B.cilindro(2.87,.09,0,y,0,P.marmo,null,44); });
-    [[2.74,3.11],[2.6,3.25],[2.46,3.39],[2.32,3.53]].forEach(function(g){ B.cilindro(g[0],.14,0,g[1],0,P.oro,null,40); });
-    B.cupola(2.2,0,3.67,0,P.oro,.42,.2);
-    B.scatola(3.5,3.05,1.25,0,0,3,P.intonaco).falde(1.3,.5,3.5,0,3.05,3,P.bronzo,PI/2,P.intonaco);                                  // avancorpo, più alto del pronao
-    B.tempio(3.4,2.2,1.45,0,4.6,0,{fronte:8,podio:.22,tetto:P.bronzo});                                                             // pronao
-    B.vano(0,.22,3.66,1,0,.62,1.15);                                                                                                // la grande porta di bronzo
-    B.dentro(0,0,9.2,PI,function(B){ portico(B,7,6.2,0,0,0,.9,P.selce); });                                                         // piazza porticata, chiusa sul lato nord
+    for(var gr=0;gr<7;gr++) B.cilindro(2.74-gr*.075,.09,0,3.05+gr*.08,0,gr?P.oro:P.marmo,null,40);                                // i sette gradoni
+    B.cupola(2.24,0,3.6,0,P.oro,.44,.2);                                                                                            // calotta con l'occhio di 9 m
+    /* Avancorpo: il blocco fra pronao e rotonda, col secondo frontone più alto di quello del pronao; la punta arriva poco sotto la cima del tamburo (forma dalle foto, a memoria). */
+    B.scatola(3.44,2.45,1.25,0,0,3,P.intonaco).scatola(3.5,.1,1.3,0,2.35,3,P.marmo).falde(1.3,.55,3.5,0,2.45,3,P.bronzo,PI/2,P.marmo);
+    /* Pronao, 34 x 13,6 m (Platner; 34,2 x 15,6 per Ziolkowski), rialzato di 1,3 m sulla piazza: otto colonne di granito grigio in fronte, quattro di granito rosa
+       in ciascuna delle due file dietro (Platner), colonne alte 14,15 m con basi e capitelli (Ziolkowski). Nessuna cella: dietro le colonne c'è la porta di bronzo.
+       Che le file interne stiano dietro la prima, la terza, la sesta e l'ottava colonna, formando tre navate, è detto a memoria. */
+    var ROSA=RM.col(0xa98272), zf=5.1;
+    B.scatola(3.42,.13,1.58,0,0,4.41,P.travertino);
+    for(var gd=1;gd<=5;gd++) B.scatola(2.6,.13*(6-gd)/6,.06,0,0,5.2+gd*.06,P.travertino);                                          // i cinque gradini
+    B.colonne(-1.64,zf,1.64,zf,8,1.415,.074,.13,P.granito);
+    [zf-.48,zf-.96].forEach(function(z){ [-1.64,-.7,.7,1.64].forEach(function(x){ B.colonne(x,z,x,z,1,1.415,.074,.13,ROSA); }); });
+    B.scatola(3.42,.2,1.6,0,1.545,4.4,P.marmo).scatola(1.7,.07,.02,0,1.6,5.205,P.ombra);                                         // trabeazione; sul fregio l'iscrizione di Agrippa
+    B.falde(1.64,.68,3.5,0,1.745,4.42,P.bronzo,PI/2,P.marmo);                                                                       // frontone e tetto, retto da capriate di bronzo
+    B.vano(0,.13,3.66,1,0,.62,1.15);                                                                                                // la grande porta di bronzo
+    [-1.17,1.17].forEach(function(x){ B.vano(x,.25,3.66,1,0,.4,.85); });                                                           // le due nicchie in fondo alle navate laterali
+ }},
+ /* La piazza e l'aula a sud stanno in una maglia a parte, perché il cambio di copertura del Pantheon (663, 735) non tocchi i loro tetti di coppi */
+ {id:'pantheonpiazza', x:-70,z:-68, ry:PI, come:'pantheon', fa:function(B){
+    B.dentro(0,0,9.2,PI,function(B){ portico(B,7,6.2,0,0,0,.9,P.selce); });                                                         // piazza porticata su tre lati, chiusa sul lato nord
+    /* A sud, addossata alla rotonda, l'aula detta basilica di Nettuno: 45 x 19 m, con un'abside di 9 m nel muro nord (Platner, Thermae Agrippae). Altezza e tetto sono ricostruiti. */
+    B.scatola(4.5,2,1.9,0,0,-3.7,P.mattone).falde(4.6,.5,2,0,2,-3.7,P.coppi,0,P.mattone);
  }},
  {id:'domiziano', nome:'Stadio di Domiziano', x:-101,z:-74, ry:PI/2, lunga:[28,7.5], fa:function(B){ stadio(B,27.5,10.6,1.9); }},      // circa 275 x 106 m, la curva a nord: è piazza Navona. Ordini di arcate e altezza della facciata sono ricostruiti
- {id:'traiano', nome:'Terme di Traiano', x:88,z:5, ry:-.62, zone:[[0,0,23]], fa:function(B){ terme(B,31,32); }},
- {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ terme(B,33.7,32.8); }},
- {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36); }},
+ {id:'traiano', nome:'Terme di Traiano', x:88,z:5, ry:-.62, zone:[[0,0,23]], fa:function(B){ terme(B,31,32,{pc:21,zc:-3.8}); }},      // corpo centrale di circa 190 x 212 m, verso il lato nord del recinto (it.wikipedia, da Caruso e Volpe); il caldarium tondo è schematico
+ {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ terme(B,33.7,32.8,{rc:1.75}); }},      // il caldarium rotondo, al centro del lato sud-ovest, ha una cupola di 35 m (Platner)
+ {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36,{lc:28,pc:16}); }},      // corpo centrale di 280 x 160 m (Platner); il caldarium tondo è schematico
  {id:'massenzio', nome:'Basilica di Massenzio', x:25,z:7, ry:-.35, zone:[[0,0,7.5]], fa:function(B){
     B.scatola(8.2,3.5,2.6,0,0,0,P.mattone); for(var i=-1;i<=1;i++){ B.falde(2.7,.9,2.7,i*2.72,3.5,0,P.bronzo,PI/2,P.mattone);
       [-1,1].forEach(function(k){ B.scatola(2.6,2.4,2,i*2.72,0,k*2.3,P.mattone).volta(2,1.3,i*2.72,2.4,k*2.3,P.intonaco,PI/2); B.vano(i*2.72,.25,k*3.31,1,0,.5,.9).vano(i*2.72-.75,.25,k*3.31,1,0,.5,.9).vano(i*2.72+.75,.25,k*3.31,1,0,.5,.9).vano(i*2.72,1.4,k*3.31,1,0,1.6,1.5); }); }      // ogni campata laterale: tre archi in basso e il grande finestrone sopra
     B.falde(8.2,.9,2.6,0,3.5,0,P.bronzo,0,P.mattone);
     B.aperture(-3.9,1.31,3.9,1.31,3,2.75,.7,1.5).aperture(3.9,-1.31,-3.9,-1.31,3,2.75,.7,1.5);                    // i finestroni della navata, sopra le volte laterali
     B.cilindro(1.25,3.2,-4.15,0,0,P.mattone,null,16).cupola(1.25,-4.15,3.2,0,P.intonaco,.6);                      // l'abside ovest, dove stava il colosso di Costantino
-    B.colonne(-1,-3.75,1,-3.75,4,1.5,.09,0).scatola(2.6,.14,.8,0,1.5,-3.7,P.marmo);                               // l'ingresso aggiunto sul fianco, verso la via Sacra
+    /* Costantino aggiunge «a second entrance from the Sacra via in the middle of the south side» e, di fronte, «a second semicircular apse in the north wall», grande come quella ovest
+       ma più bassa (Platner e Ashby, Basilica Constantini). Qui +z è il sud, verso la via Sacra. */
+    B.colonne(-1,3.75,1,3.75,4,1.5,.09,0).scatola(2.6,.14,.8,0,1.5,3.7,P.marmo);                                  // il portico d'ingresso sul fianco sud
+    B.cilindro(1,2.4,0,0,-3.3,P.mattone,null,16).cupola(1,0,2.4,-3.3,P.intonaco,.6);                               // l'abside nord, la sala del tribunale
  }},
  {id:'venere', nome:'Tempio di Venere e Roma', x:36,z:18.6, ry:-.3, zone:[[0,0,9.5]], fa:function(B){                            // tempio di Venere e Roma
     /* Podio di 145 x 100 m rivestito di travertino; tempio decastilo e pseudodiptero, con colonne di 1,8 m di diametro e due celle schiena contro schiena, ciascuna con quattro colonne fra le ante;
@@ -323,13 +400,25 @@ var M=[
     });
     B.scatola(10.9,.32,5.2,0,2.9,0,P.marmo).falde(10.9,.72,5.3,0,3.22,0,P.oro,0,P.marmo);
  }},
+ /* L'arco sta a nove metri dal centro del recinto di Venere e Roma, dentro la sua terrazza: con una terrazza propria, più bassa, restava sepolto. Ora poggia sullo stesso piano del tempio,
+    che è il colmo della via Sacra fra il Foro e la valle del Colosseo; per questo la voce sta dopo quella del tempio. */
+ {id:'arcotito', nome:'Arco di Tito', x:27.2,z:20.3, ry:1.38, come:'venere', fa:function(B){                                     // un solo fornice, a cavallo della via Sacra; posizione reale (OpenStreetMap)
+    B.scatola(1.35,1,.5,0,0,0,P.marmo).scatola(1.45,.1,.6,0,1,0,P.marmo).scatola(1.35,.44,.5,0,1.1,0,P.marmo);
+    [1,-1].forEach(function(q){ B.vano(0,0,q*.275,1,0,.54,.84).colonne(-.58,q*.3,.58,q*.3,2,.8,.05,.2).colonne(-.38,q*.3,.38,q*.3,2,.8,.05,.2); });
+ }},
  {id:'adriano', nome:'Mausoleo di Adriano', x:-157,z:-118, ry:.1, zone:[[0,0,10]], et:1, fa:function(B){
-    B.scatola(8.9,1.5,8.9,0,0,0,P.marmo).scatola(9.05,.12,9.05,0,1.5,0,P.marmo).cilindro(3.2,2.1,0,1.62,0,P.travertino,null,40).cilindro(3.27,.1,0,3.62,0,P.marmo,null,40).cilindro(3,.3,0,3.72,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.9,0,P.marmo).scatola(1.6,.1,1.6,0,5.6,0,P.marmo);
-    B.scatola(.7,.36,.3,0,5.7,0,P.statua).scatola(.12,.5,.12,0,5.9,-.05,P.statua);                               // la quadriga in cima (la ricordano le fonti tarde: forma indicativa)
-    B.vano(0,0,4.48,1,0,.7,1.1);                                                                                 // l'ingresso, verso il ponte
-    [-4.2,4.2].forEach(function(x){ [-4.2,4.2].forEach(function(z){ B.scatola(.3,.5,.3,x,1.62,z,P.statua); }); }); // gruppi di bronzo agli angoli del basamento
-    for(var st=0;st<20;st++) B.scatola(.11,.4,.11,3.05*Math.cos(st*PI/10),3.72,3.05*Math.sin(st*PI/10),P.marmo);  // le statue sull'orlo: nel 537 gli assediati le gettano sui Goti (Procopio)
-    for(var k=0;k<14;k++) B.cono(.22,1.2,2.5*Math.cos(k*.449),3.95,2.5*Math.sin(k*.449),P.chioma,6);
+    /* basamento quadrato di circa 84 m di lato e 10 di altezza, tamburo di 64 m di diametro e 21 di altezza, sopra un giardino (Platner) */
+    B.scatola(8.4,1,8.4,0,0,0,P.marmo).scatola(8.55,.12,8.55,0,1,0,P.marmo).cilindro(3.2,2.1,0,1.12,0,P.travertino,null,40).cilindro(3.27,.1,0,3.12,0,P.marmo,null,40).cilindro(3,.3,0,3.22,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.4,0,P.marmo).scatola(1.6,.1,1.6,0,5.1,0,P.marmo);
+    B.scatola(.7,.36,.3,0,5.2,0,P.statua).scatola(.12,.5,.12,0,5.4,-.05,P.statua);                               // la quadriga in cima (la ricordano le fonti tarde: forma indicativa)
+    B.vano(0,0,4.23,1,0,.7,.85);                                                                                 // l'ingresso, verso il ponte
+    [-3.95,3.95].forEach(function(x){ [-3.95,3.95].forEach(function(z){ B.scatola(.3,.5,.3,x,1.12,z,P.statua); }); }); // gruppi di uomini e cavalli agli angoli del basamento (Platner)
+    for(var st=0;st<20;st+=5) B.scatola(.11,.4,.11,3.05*Math.cos(st*PI/10),3.22,3.05*Math.sin(st*PI/10),P.marmo);  // le poche statue sull'orlo che restano dopo il 537: le altre stanno in 'adrianostatue'
+    for(var k=0;k<14;k++) B.cono(.22,1.2,2.5*Math.cos(k*.449),3.45,2.5*Math.sin(k*.449),P.chioma,6);
+ }},
+ /* Le statue sull'orlo del tamburo. Procopio (Guerra gotica I 22): «above there are statues of the same marble, representing men and horses»; nel 537 gli assediati
+    «broke in pieces the most of the statues» e ne gettarono i pezzi sui Goti. Qui ne spariscono sedici su venti; numero e forma sono indicativi. */
+ {id:'adrianostatue', x:-157,z:-118, ry:.1, come:'adriano', fa:function(B){
+    for(var st=0;st<20;st++) if(st%5) B.scatola(.11,.4,.11,3.05*Math.cos(st*PI/10),3.22,3.05*Math.sin(st*PI/10),P.marmo);
  }},
  {id:'augusto', x:-74,z:-151, ry:0, zone:[[0,0,7]], fa:function(B){                             // mausoleo di Augusto
     B.cilindro(4.4,1.2,0,0,0,P.travertino,null,40).cilindro(4,.3,0,1.2,0,P.prato,3.2,24).cilindro(2.6,1.1,0,1.4,0,P.travertino,null,30).cilindro(1,1.5,0,2.5,0,P.marmo,null,16).scatola(.3,.6,.3,0,4,0,P.bronzo);
@@ -338,25 +427,43 @@ var M=[
     [-.9,.9].forEach(function(x){ B.scatola(.22,.2,.22,x,0,5.1,P.marmo).cilindro(.09,1.4,x,.2,5.1,P.sabbia,.06,4).cono(.065,.14,x,1.6,5.1,P.sabbia,4); });      // i due obelischi ai lati dell'ingresso
  }},
  {id:'pompeo', x:-94.3,z:-30.8, ry:-PI/2, zone:[[0,0,10],[0,-14,10]], fa:function(B){ teatro(B,8,2.6); B.tempio(2,2.6,1.4,0,6.6,PI,{fronte:6}); portico(B,13,18,0,0,-11.5,1.1,P.prato); }},   // teatro e portici di Pompeo
- {id:'marcello', nome:'Teatro di Marcello', x:-46,z:7, ry:PI*.8, zone:[[0,0,8]], fa:function(B){ teatro(B,6.5,2.9); }},
- {id:'laterano', nome:'San Giovanni in Laterano', x:169,z:73, ry:.1, zone:[[0,0,8],[8,0,6],[-11.3,-3.5,2.6]], fa:function(B){ chiesa(B,10,6); B.cilindro(1.2,1.6,-11.3,0,-3.5,P.mattone,null,8).cono(1.3,.7,-11.3,1.6,-3.5,P.coppi,8); }},      // il battistero ottagonale, dov'è oggi (OpenStreetMap): dietro l'abside, verso nord
+ {id:'marcello', nome:'Teatro di Marcello', x:-46,z:7, ry:PI*.8, zone:[[0,0,8]], fa:function(B){ teatro(B,6.5,2.9,true); }},      // «built with three series of open arcades»: dorico, ionico e un terzo ordine a lesene corinzie, perduto (Platner)
+ {id:'laterano', nome:'San Giovanni in Laterano', x:169,z:73, ry:.1, zone:[[0,0,8],[8,0,6],[-11.3,-3.5,2.6]], fa:function(B){
+    /* cinque navate «fortemente digradanti in altezza» e in fondo «una navatella trasversale, il primitivo transetto» (it.wikipedia, Basilica di San Giovanni in Laterano); larghezze e altezze indicative */
+    cinqueNavate(B,10,{nave:1.9,nav:.85,hn:2.9,hi:2,he:1.4,ra:.95,ali:{prof:1.4,alto:1.9},atrio:{lato:4.8,prof:4.8}});
+    B.cilindro(1.2,1.6,-11.3,0,-3.5,P.mattone,null,8).cono(1.3,.7,-11.3,1.6,-3.5,P.coppi,8); }},      // il battistero ottagonale, dov'è oggi (OpenStreetMap): dietro l'abside, verso nord
  {id:'pietro', nome:'San Pietro', x:-259,z:-108, ry:0, zone:[[0,0,9],[10,0,7]], et:1, fa:function(B){
     sanPietro(B);
     B.scatola(5.4,.07,7.2,13.7,0,0,P.selce).scatola(5.4,.1,.5,13.7,0,3.4,P.travertino).scatola(5.4,.1,.5,13.7,0,-3.4,P.travertino);      // il sagrato lastricato davanti all'atrio, dove si raccolgono i pellegrini
-    B.scatola(.5,.3,.5,3.6,0,6.6,P.travertino).cilindro(.2,2.4,3.6,.3,6.6,P.sabbia,.12,4).cono(.13,.25,3.6,2.7,6.6,P.sabbia,4);      // l'obelisco del circo di Nerone, sul fianco sud
+ }},
+ {id:'tegolepietro', x:-259,z:-108, ry:0, come:'pietro', fa:function(B){ tegolePietro(B); }},      // dal 630: le tegole di bronzo di Onorio I sopra i tetti della basilica
+ /* L'obelisco del circo di Nerone (Caligola, anno 40) resta in piedi accanto alla rotonda di Sant'Andrea (it.wikipedia, Obelisco Vaticano): c'è da prima della basilica.
+    Posizione originale dalla targa in piazza dei Protomartiri Romani (OpenStreetMap, nodo 13308484173, «Original Obelisk Position»). */
+ {id:'obeliscovaticano', nome:'Obelisco vaticano', x:-258.3,z:-101.1, ry:0, come:'pietro', zone:[[0,0,.8]], fa:function(B){
+    B.scatola(.5,.3,.5,0,0,0,P.travertino).cilindro(.2,2.4,0,.3,0,P.sabbia,.12,4).cono(.13,.25,0,2.7,0,P.sabbia,4);
  }},
  /* ---- costruiti durante la storia, in ordine di data ---- */
- {id:'sole', nome:'Tempio del Sole', x:-30,z:-106, ry:.16, zone:[[0,0,9]], fa:function(B){
-    portico(B,8,13,0,0,0,1.2); B.cilindro(1.25,.3,0,.1,-1.5,P.travertino,null,24).cilindro(.5,1.7,0,.4,-1.5,P.marmo,null,16).cilindro(1.2,.16,0,1.9,-1.5,P.marmo,null,24).cupola(1.2,0,2.06,-1.5,P.bronzo,.5);      // dai disegni di Palladio: una rotonda di 25 m circa con la cella di 10 e sedici colonne (l'attribuzione al tempio è di Hülsen, incerta)
-    for(var k=0;k<16;k++) B.cilindro(.07,1.5,1.12*Math.cos(k*.3927),.4,-1.5+1.12*Math.sin(k*.3927),P.marmo,.06,7);
+ {id:'sole', nome:'Tempio del Sole', x:-30,z:-106, ry:.16, zone:[[0,0,9],[0,11.6,5]], fa:function(B){
+    /* Dai disegni di Palladio, attribuiti al tempio da Hülsen (incerto): un cortile grande di 130 x 90 m con al centro una rotonda di 25 m circa, la cella di 10 e sedici colonne;
+       sullo stesso asse una sala quadrata di 15 m e un primo cortile di 55 x 75 m con due emicicli (en.wikipedia, da Richardson). Che il cortile minore stia a sud è una nostra scelta; gli emicicli non sono disegnati. */
+    portico(B,8,13,0,0,0,1.2); B.cilindro(1.25,.3,0,.1,0,P.travertino,null,24).cilindro(.5,1.7,0,.4,0,P.marmo,null,16).cilindro(1.2,.16,0,1.9,0,P.marmo,null,24).cupola(1.2,0,2.06,0,P.bronzo,.5);
+    for(var k=0;k<16;k++) B.cilindro(.07,1.5,1.12*Math.cos(k*.3927),.4,1.12*Math.sin(k*.3927),P.marmo,.06,7);
+    B.scatola(1.5,1.6,1.5,0,0,7.25,P.mattone).falde(1.6,.4,1.6,0,1.6,7.25,P.coppi,0,P.mattone);
+    portico(B,5.5,7.5,0,0,11.75,1.2);
  }},
  {id:'arcocostantino', nome:'Arco di Costantino', x:44.5,z:30.4, ry:-.3, zone:[[0,0,3]], fa:function(B){
     B.scatola(2.6,1.5,.75,0,0,0,P.marmo).scatola(2.72,.14,.87,0,1.5,0,P.marmo).scatola(2.6,.5,.75,0,1.64,0,P.marmo);          // fornici, cornice, attico
     B.aperture(-.33,.38,.33,.38,1,0,1.15,.62).aperture(-1.05,.38,-.55,.38,1,0,.72,.34).aperture(.55,.38,1.05,.38,1,0,.72,.34);
     B.aperture(.33,-.38,-.33,-.38,1,0,1.15,.62).aperture(-.55,-.38,-1.05,-.38,1,0,.72,.34).aperture(1.05,-.38,.55,-.38,1,0,.72,.34);
     B.colonne(-1.2,.47,1.2,.47,4,1.3,.07,.1,P.sabbia).colonne(-1.2,-.47,1.2,-.47,4,1.3,.07,.1,P.sabbia);                    // colonne di giallo antico
+    /* «The eight statues of Dacians in pavonazzetto … standing on the cornice in front of the attic, each above one of the giallo antico columns» (Platner e Ashby, Arcus Constantini) */
+    [-1.2,-.4,.4,1.2].forEach(function(x){ [-1,1].forEach(function(q){ B.scatola(.2,.14,.14,x,1.5,q*.48,P.marmo).scatola(.12,.32,.1,x,1.64,q*.49,P.marmo); }); });
  }},
- {id:'termecostantino', nome:'Terme di Costantino', x:21.5,z:-65.9, ry:-.2, sc:.45, zone:[[0,0,9]], fa:function(B){ terme(B,33,32); }},
+ {id:'termecostantino', nome:'Terme di Costantino', x:21.5,z:-65.9, ry:-.2, sc:.45, zone:[[0,0,9]], fa:function(B){      // senza peribolo: il corpo occupa tutto lo spazio fra le strade, davanti si apre un'area chiusa a nord da una linea curva (Platner). Misure schematiche
+    terme(B,33,32,{recinto:false,pc:14,zc:2});
+    var cv=RM.ellisse(10,6,16,PI,2*PI).map(function(p){ return [p[0],p[1]-6]; });
+    B.scatola(20,.08,6,0,0,-8,P.selce).striscia(cv,0,cv,1.2,P.mattone,false);
+ }},
  {id:'croce', nome:'Santa Croce in Gerusalemme', x:253.3,z:47.6, ry:2.72, zone:[[0,0,4]], fa:function(B){
     var L=3.65, W=2.2, H=2.2;                                                                  // l'aula del palazzo Sessoriano: un vano solo di 36 x 22 m, alto quanto largo, non una basilica a navate
     B.scatola(L,H,W,0,0,0,P.mattone).falde(L,.42,W+.12,0,H,0,P.coppi,0,P.mattone);
@@ -381,12 +488,41 @@ var M=[
     B.cilindro(.45,1.5,-L/2,0,0,P.mattone,null,12).cono(.48,.4,-L/2,1.5,0,P.coppi,12);
     B.vano(-.3,0,1.08,1,0,.44,.8);                                                                                            // l'ingresso sul fianco sud
  }},
- {id:'agnese', nome:"Sant'Agnese e Santa Costanza", x:278.3,z:-338.2, ry:-.8, sc:.7, zone:[[0,0,7],[-6.1,11.5,4.5]], fa:function(B){
-    chiesa(B,10,6); B.cilindro(2.4,1,-8.75,0,16.4,P.mattone,null,24).cono(2.5,.4,-8.75,1,16.4,P.coppi,24).cilindro(1.5,2,-8.75,0,16.4,P.mattone,null,20).cupola(1.5,-8.75,2,16.4,P.coppi,.6);   // mausoleo rotondo di Costanza, 130 m a ovest della basilica (posizione reale)
+ /* Sant'Agnese. La basilica di Costantina è un'aula cimiteriale a forma di circo: OpenStreetMap (way 23944398, «Basilica costantiniana di S. Agnese») ne dà il fianco nord-est, larghezza 41 m,
+    asse a 40° e la curva dell'abside a nord-ovest; quel contorno si ferma dopo 79 m, ma il mausoleo, attaccato al fianco sud-ovest, sporge oltre, quindi l'aula era più lunga:
+    la si porta a 98 m, misura ricordata da Krautheimer e qui non riletta (ipotesi). Abbandonata probabilmente nel VII secolo (it.wikipedia, Complesso monumentale di Sant'Agnese). */
+ {id:'agnese', nome:"Sant'Agnese, la basilica di Costantina", x:265.6,z:-340.3, ry:2.449, zone:[[-3.2,0,2.4],[0,0,2.4],[3.2,0,2.4]], fa:function(B){
+    var L=9.8, W=4.1, wn=2.2, Ln=L-(W-wn), pr=function(w){ return RM.stadio(L-(W-w),w,8,10); }, est=pr(W), nav=pr(wn), x1=Ln/2-wn/2;
+    B.striscia(est,0,est,1,P.mattone).striscia(est,1,nav,1.35,P.coppi).striscia(nav,1.35,nav,2.1,P.mattone);                  // navatella che gira attorno all'abside, come a San Lorenzo
+    B.falde(x1+Ln/2,.5,wn+.1,(x1-Ln/2)/2,2.1,0,P.coppi,0,P.mattone).cono(wn/2+.05,.5,x1,2.1,0,P.coppi,14);
+    B.fornici(est,.35,.45,.4,1,false).fornici(nav,1.5,.42,.4,1,false);
+    B.vano(-L/2-.03,0,0,0,-1,.5,.95);
  }},
- {id:'paolo', nome:'San Paolo fuori le mura', x:-70.1,z:375.7, ry:2.98, zone:[[0,0,10],[8,0,7]], et:1, fa:function(B){ chiesa(B,12.5,6.6,true); }},
- {id:'sabina', nome:'Santa Sabina', x:-46,z:89, ry:.785, sc:.62, zone:[[0,0,6]], fa:function(B){ chiesa(B,10,6); }},
- {id:'mariamaggiore', nome:'Santa Maria Maggiore', x:109,z:-57, ry:-.5, sc:.82, zone:[[0,0,8]], fa:function(B){ chiesa(B,10,6); }},
+ /* il mausoleo di Costantina, oggi Santa Costanza: posizione e diametro da OpenStreetMap (way 35306502) */
+ {id:'costanza', nome:'Mausoleo di Costantina (Santa Costanza)', x:265.8,z:-334.9, ry:0, sc:.7, zone:[[0,0,2.2]], fa:function(B){
+    B.cilindro(2.4,1,0,0,0,P.mattone,null,24).cono(2.5,.4,0,1,0,P.coppi,24).cilindro(1.5,2,0,0,0,P.mattone,null,20).cupola(1.5,0,2,0,P.coppi,.6);
+ }},
+ /* La chiesa di Onorio I sopra la tomba: «fecit ecclesiam beatae Agne martyris, via Numentana… a solo, ubi requiescit» (Liber Pontificalis, Onorio I, Duchesne I p. 323).
+    Pianta da OpenStreetMap (way 205704488): circa 30 x 20 m, asse a 40°, abside a sud-est. Semisotterranea: si entrava dall'alto, sulle gallerie (it.wikipedia). Alzato indicativo. */
+ {id:'agneseonorio', nome:"Sant'Agnese, la chiesa di Onorio I", x:278.25,z:-338.5, ry:2.449, zone:[[0,0,2]], fa:function(B){
+    var L=3;
+    B.scatola(L,1.7,.9,0,0,0,P.mattone).falde(L,.35,1,0,1.7,0,P.coppi,0,P.mattone);
+    [-1,1].forEach(function(q){ B.scatola(L,1.2,.55,0,0,q*.72,P.mattone).scatola(L+.06,.1,.6,0,1.2,q*.72,P.coppi); });      // navatelle con le gallerie sopra
+    [1,-1].forEach(function(q){ var a=-q*(L/2-.2), b=q*(L/2-.2); B.aperture(a,q*1,b,q*1,6,.75,.34,.22).aperture(a,q*.45,b,q*.45,6,1.3,.3,.2); });
+    B.cilindro(.35,1.3,-L/2,0,0,P.mattone,null,12).cono(.38,.35,-L/2,1.3,0,P.coppi,12);
+    B.vano(L/2+.03,.85,0,0,1,.4,.7);                                                                                          // l'ingresso in alto, all'altezza delle gallerie
+ }},
+ /* San Paolo dei tre imperatori: «un edificio a cinque navate, con 80 colonne e un quadriportico» (it.wikipedia), lunga 131 m e larga 65, alta 29,70; transetto alto quanto la navata. Larghezze delle navate indicative. */
+ {id:'paolo', nome:'San Paolo fuori le mura', x:-70.1,z:375.7, ry:2.98, zone:[[0,0,10],[8,0,7]], et:1, fa:function(B){
+    cinqueNavate(B,12,{nave:2.4,nav:1,hn:2.8,hi:2,he:1.4,ra:1.2,transetto:{prof:2.4,lung:7.2,alto:true},atrio:{lato:5.3,prof:5.3}});
+ }},
+ /* la prima chiesa, di Costantino: «fecit Augustus Constantinus basilicam beato Paulo apostolo» (Liber Pontificalis, Silvestro); «un piccolo edificio probabilmente a tre navate» con la tomba presso l'abside (it.wikipedia).
+    Rivolta al contrario della basilica di Teodosio: abside a ovest, sulla tomba, ingresso dalla via Ostiense. Misure ipotetiche. */
+ {id:'paolocostantino', nome:'San Paolo di Costantino', x:-63.4,z:376.8, ry:-.162, zone:[[0,0,2.6]], fa:function(B){ chiesa(B,4,2.2,false,{strette:true,atrio:false}); }},
+ /* Santa Sabina: «tre navate, divise da dodici colonne doppie» e un nartece che era un braccio del quadriportico (it.wikipedia). Le navatelle larghe metà della navata sono il rapporto consueto, non una misura letta. */
+ {id:'sabina', nome:'Santa Sabina', x:-46,z:89, ry:.785, sc:.62, zone:[[0,0,6]], fa:function(B){ chiesa(B,10,6,false,{strette:true}); }},
+ /* Santa Maria Maggiore di Sisto III: «tre navate, divise da 21 colonne» per lato, con 21 finestre per lato nella navata (it.wikipedia). Navatelle: come a Santa Sabina, proporzione consueta. */
+ {id:'mariamaggiore', nome:'Santa Maria Maggiore', x:109,z:-57, ry:-.5, sc:.82, zone:[[0,0,8]], fa:function(B){ chiesa(B,10,6,false,{strette:true,finestre:21}); }},
  {id:'stefano', nome:'Santo Stefano Rotondo', x:94.5,z:88, ry:0, zone:[[0,0,5.5]], fa:function(B){
     /* tre cerchi: tamburo (22 m di diametro e 22 di altezza), ambulacro (42 m), anello esterno (66 m). Nell'anello esterno quattro bracci più alti disegnano una croce:
        stanno sulle diagonali (quello di nord-est sopravvive, è la cappella dei Santi Primo e Feliciano); fra un braccio e l'altro, un corridoio basso lungo il muro e un cortile. */
@@ -401,15 +537,26 @@ var M=[
     B.scatola(2.2,2,3.6,0,0,0,P.mattone).falde(3.6,.6,2.4,0,2,0,P.coppi,PI/2,P.mattone).cilindro(.9,1.4,0,0,2.6,P.mattone,null,16).cupola(.9,0,1.4,2.6,P.bronzo,.6);
  }},
  {id:'foca', nome:'Colonna di Foca', x:-3.7,z:.6, ry:-.35, come:'fori', fa:function(B){
-    B.scatola(1.1,.22,1.1,0,0,0,P.mattone).scatola(.7,.28,.7,0,.22,0,P.marmo).cilindro(.13,1.36,0,.5,0,P.marmo,.11,10).scatola(.3,.1,.3,0,1.86,0,P.marmo).scatola(.12,.3,.12,0,1.96,0,P.bronzo);
+    B.scatola(1.1,.22,1.1,0,0,0,P.mattone).scatola(.7,.28,.7,0,.22,0,P.marmo).cilindro(.07,1.36,0,.5,0,P.marmo,.065,10).scatola(.2,.1,.2,0,1.86,0,P.marmo).scatola(.12,.3,.12,0,1.96,0,P.oro);   // colonna «1.39 metres in diameter and 13.60 high», con «the statue of Phocas in gilt bronze» (Platner e Ashby, Columna Phocae)
  }},
  /* ---- il quartiere di San Pietro: cresce mentre la città antica si svuota ---- */
- {id:'monasteripietro', nome:'Monasteri di San Pietro', x:-261,z:-108, ry:0, zone:[[0,0,14],[-15,4,5]], fa:function(B){
+ {id:'monasteripietro', nome:'Monastero dei Santi Giovanni e Paolo', x:-261,z:-108, ry:0, zone:[[0,0,14],[-15,4,5]], fa:function(B){
     var y=suTerreno(-261,-108,0);
-    [[-2.2,6.6],[2.5,6.6]].forEach(function(p){ var q=y(p[0],p[1]); B.cilindro(1.3,1.9,p[0],q-.3,p[1],P.mattone,null,18).cono(1.4,.5,p[0],q+1.6,p[1],P.coppi,18); });   // da ovest: mausoleo di Onorio (poi Santa Petronilla) e rotonda di Sant'Andrea
     casa(B,y(-3,-9.5),-3,-9.5,4.6,2.8,1.5);                 // Santi Giovanni e Paolo, a nord del transetto (Leone I)
-    casa(B,y(-8,2.6),-8,2.6,2.6,3,1.4);                     // San Martino, addossato all'abside a sud-ovest
-    casa(B,y(-15.5,4),-15.5,4,4,3,1.5);                     // Santo Stefano Maggiore, dietro l'abside
+ }},
+ {id:'monasteripietro2', nome:'Monasteri di San Martino e Santo Stefano Maggiore', x:-261,z:-108, ry:0, fa:function(B){
+    var y=suTerreno(-261,-108,0);
+    casa(B,y(-8,2.6),-8,2.6,2.6,3,1.4);                     // San Martino, addossato all'abside a sud-ovest: c'è nel 679-680 (Beda)
+    casa(B,y(-15.5,4),-15.5,4,4,3,1.5);                     // Santo Stefano Maggiore, dietro l'abside: data di fondazione non letta, qui compare con San Martino
+ }},
+ /* Le due rotonde sul fianco sud, lungo la spina del circo di Nerone. Da ovest: il mausoleo di Onorio (poi Santa Petronilla), attaccato alla testata del transetto,
+    e un mausoleo dell'età di Caracalla, che Simmaco (498-514) fa chiesa di Sant'Andrea (it.wikipedia, Antica basilica di San Pietro; Liber Pontificalis, Simmaco).
+    Sant'Andrea sta subito a ovest del posto vero dell'obelisco; distanze fra le due rotonde e diametri sono indicativi (pianta di Alfarano, non riletta). */
+ {id:'andreapietro', nome:"Rotonda di Sant'Andrea", x:-260.6,z:-101.4, ry:0, zone:[[0,0,1.6]], fa:function(B){
+    var q=suTerreno(-260.6,-101.4,0)(0,0); B.cilindro(1.3,1.9,0,q-.3,0,P.mattone,null,18).cono(1.4,.5,0,q+1.6,0,P.coppi,18);
+ }},
+ {id:'petronilla', nome:'Mausoleo di Onorio (Santa Petronilla)', x:-263.2,z:-101.4, ry:0, zone:[[0,0,1.6]], fa:function(B){
+    var q=suTerreno(-263.2,-101.4,0)(0,0); B.cilindro(1.3,1.9,0,q-.3,0,P.mattone,null,18).cono(1.4,.5,0,q+1.6,0,P.coppi,18);
  }},
  /* Il campanile di San Pietro: «fecit super basilicam beati Petri apostoli turrem, quam ex parte inauravit et ex parte argento investivit, in quo tribus posuit campanis» (Liber Pontificalis, Stefano II, 752-757;
     il passo è un'aggiunta di una parte dei manoscritti). Pochi anni dopo la stessa fonte nomina una «turrem sanctae Mariae ad Grada» all'ingresso dell'atrio: per questo sta lì, accanto ai tre fornici. Forma e misure sono ipotetiche. */
@@ -421,22 +568,36 @@ var M=[
     var y=suTerreno(-201.75,-108.1,.0685), q;
     for(var k=0;k<12;k++){ var lx=(k-5.5)*7.54; q=y(lx,0);
       B.scatola(7.64,.12,1.5,lx,q+1.05,0,P.coppi).colonne(lx-3.65,-.6,lx+3.65,-.6,8,1.35,.06,q-.3).colonne(lx-3.65,.6,lx+3.65,.6,8,1.35,.06,q-.3); }
-    [[-46.25,-10],[-46.25,3.5]].forEach(function(p){ casa(B,y(p[0],p[1]),p[0],p[1],2.6,3.4,1.3); });      // gli episcopia di papa Simmaco, a destra e a sinistra dell'atrio
  }},
- {id:'scholae', nome:'Scholae dei pellegrini', x:-233,z:-108, ry:0, zone:[[33.5,12.5,5],[14,9,5],[-8,17,5],[-12,-11,5],[-32,12.5,4]], fa:function(B){
+ /* «Item episcopia in eodem loco dextra levaque fecit» (Liber Pontificalis, Simmaco, 498-514): le due case stanno dove erano prima nel portico, ora con un'origine davanti all'atrio */
+ {id:'episcopiapietro', nome:'Residenze di papa Simmaco', x:-248.11,z:-108.18, ry:.0685, fa:function(B){
+    var y=suTerreno(-248.11,-108.18,.0685);
+    [[0,-6.75],[0,6.75]].forEach(function(p){ casa(B,y(p[0],p[1]),p[0],p[1],2.6,3.4,1.3); });      // a destra e a sinistra dell'atrio
+ }},
+ /* Le scholae: quella dei Sassoni dal 727 (tradizione tarda su re Ine), le altre tre dal 799, quando le nomina per la prima volta il Liber Pontificalis (Leone III).
+    La torre campanaria di Stefano II non sta qui: è campanilepietro (prima ce n'era una seconda copia, che compariva nel 727). */
+ {id:'scholae', nome:'Schola dei Sassoni', x:-233,z:-108, ry:0, zone:[[33.5,12.5,5]], fa:function(B){
     var y=suTerreno(-233,-108,0), q;
-    [[33.5,12.5],[14,9],[-8,17],[-12,-11]].forEach(function(p){       // Sassoni e Frisoni sui siti di Santo Spirito in Sassia e dei Santi Michele e Magno (OpenStreetMap)                                  // Sassoni (verso il fiume), Frisoni, Franchi (a sud dell'atrio), Longobardi (a nord: posizione discussa)
+    [[33.5,12.5]].forEach(function(p){       // Sassoni, verso il fiume, sul sito di Santo Spirito in Sassia (OpenStreetMap)
+      q=y(p[0],p[1]); casa(B,q,p[0]-1.2,p[1],3.6,2.4,1.2); casa(B,q,p[0]+1.4,p[1]+2,1.6,3,1,PI/2);
+      B.scatola(1.3,1.8,2.6,p[0]+2.6,q-.3,p[1]-1.6,P.mattone).falde(2.6,.4,1.5,p[0]+2.6,q+1.5,p[1]-1.6,P.coppi,PI/2,P.mattone).cilindro(.5,1.4,p[0]+2.6,q-.3,p[1]-3,P.mattone,null,10);
+    });
+ }},
+ {id:'scholae2', nome:'Scholae di Frisoni, Franchi e Longobardi', x:-233,z:-108, ry:0, zone:[[14,9,5],[-8,17,5],[-12,-11,5],[-32,12.5,4]], fa:function(B){
+    var y=suTerreno(-233,-108,0), q;
+    [[14,9],[-8,17],[-12,-11]].forEach(function(p){       // Frisoni sul sito dei Santi Michele e Magno (OpenStreetMap), Franchi a sud dell'atrio, Longobardi a nord (posizione discussa)
       q=y(p[0],p[1]); casa(B,q,p[0]-1.2,p[1],3.6,2.4,1.2); casa(B,q,p[0]+1.4,p[1]+2,1.6,3,1,PI/2);
       B.scatola(1.3,1.8,2.6,p[0]+2.6,q-.3,p[1]-1.6,P.mattone).falde(2.6,.4,1.5,p[0]+2.6,q+1.5,p[1]-1.6,P.coppi,PI/2,P.mattone).cilindro(.5,1.4,p[0]+2.6,q-.3,p[1]-3,P.mattone,null,10);
     });
     casa(B,y(-32,12.5),-32,12.5,3.2,2.6,1.4);                                                 // Santo Stefano Minore, a sud presso le rotonde (seconda metà dell'VIII secolo)
-    q=y(-14.6,-2.6); B.scatola(.9,3.4,.9,-14.6,q-.3,-2.6,P.mattone).cono(.75,.6,-14.6,q+3.1,-2.6,P.coppi,4);     // torre campanaria di Stefano II, nel fronte dell'atrio a nord dell'ingresso
  }},
- {id:'mulini', nome:'Mulini sul Tevere', x:-92,z:18, ry:-.37, fa:function(B){                 // tre zattere ancorate nella corrente a valle di ponte Aurelio
-    [-7,0,7].forEach(function(lx){ var y=.72;
-      B.scatola(2,.26,.45,lx,y,-.62,P.tronco).scatola(2,.26,.45,lx,y,.62,P.tronco);
-      B.geo(new THREE.CylinderGeometry(.62,.62,.3,12).rotateX(PI/2).translate(lx-.2,y+.3,0),P.tronco);
-      B.scatola(.9,.6,.5,lx+.5,y+.26,-.62,P.intonaco).falde(1,.25,.6,lx+.5,y+.86,-.62,P.coppi,0,P.intonaco);
+ /* Procopio (Guerra gotica I 19): «Just below the bridge» legato alle mura, dove la corrente esce dall'arcata, due barche «side by side and two feet apart», con «two mills on either boat»
+    e la ruota appesa in mezzo; sotto, altre coppie in fila «for a great distance». Qui cinque coppie, subito a valle di ponte Aurelio; misure delle barche e della ruota indicative. */
+ {id:'mulini', nome:'Mulini sul Tevere', x:-111.7,z:4.6, ry:-.37, fa:function(B){
+    [-6,-3,0,3,6].forEach(function(lx){ var y=.72;
+      B.scatola(2,.26,.45,lx,y,-.26,P.tronco).scatola(2,.26,.45,lx,y,.26,P.tronco);
+      B.geo(new THREE.CylinderGeometry(.3,.3,.06,10).rotateX(PI/2).translate(lx-.2,y+.25,0),P.tronco);
+      [-.26,.26].forEach(function(z){ B.scatola(.8,.5,.4,lx+.5,y+.26,z,P.intonaco).falde(.9,.22,.48,lx+.5,y+.76,z,P.coppi,0,P.intonaco); });
     });
  }},
  {id:'casenerva', nome:'Case nel foro di Nerva', x:10.7,z:-8.9, ry:.672, come:'fori', fa:function(B){
@@ -490,7 +651,7 @@ var riquadro=document.getElementById('scena').parentNode;
 var etichette=document.createElement('div'); etichette.className='etichette3d'; riquadro.appendChild(etichette);
 function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return [o.x+lx*c+lz*s, o.z-lx*s+lz*c]; }
 /* prima le zone: sotto ogni monumento il terreno si spiana alla quota del suo centro; poi si posa il suolo */
-var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1};        // complessi che seguono il pendio: niente terrazza
+var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1};        // complessi che seguono il pendio: niente terrazza
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
   var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?st[1][0]-8:0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)
@@ -519,14 +680,14 @@ RM.statoMonumento=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, i=0, k;
   for(k=0;k<st.length;k++) if(anno>=st[k][0]) i=k;
   var s0=anno<st[0][0]?'assente':st[i][1], prossimo=st[i+1];
-  var brusco=prossimo&&(prossimo[1]==='bruciato'||prossimo[1]==='spogliato'||prossimo[1]==='crollato');
+  var brusco=prossimo&&(prossimo[1]==='bruciato'||prossimo[1]==='spogliato'||prossimo[1]==='crollato'||(prossimo[1]==='assente'&&id==='adrianostatue'));      // le statue del mausoleo cadono in un giorno (537)
   return {s0:s0, s1:prossimo?prossimo[1]:s0, t:prossimo?RM.sfuma(prossimo[0]-(brusco?.4:6),prossimo[0],anno):0};
 };
 /* Degrado in due tempi.
    c = incuria: dal 390 circa la manutenzione pubblica si dirada per tutti, e accelera dopo la chiusura. Si vede come crepe, colature, erba, coppi mancanti.
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0};
+var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
@@ -549,6 +710,7 @@ RM.moduli.push(function(anno){
     o.mat.color.copy(TINTA[q.s0]).lerp(TINTA[q.s1],q.t);
     o.presenza=p; o.g.visible=p>.01; o.g.scale.y=Math.max(p,.001);
     var rv=RM.rovina(o.id,anno); o.mat.userData.u.uRovina.value=rv.r; o.mat.userData.u.uSpoglio.value=rv.s; o.mat.userData.u.uCrepe.value=rv.c;
+    if(o.id==='pantheon'){ o.mat.userData.u.uSpoglio.value=RM.sfuma(662.6,663.3,anno)*(1-RM.sfuma(734,736,anno)); o.mat.userData.u.uPiombo.value=RM.sfuma(734,736,anno); }   // la chiesa resta in uso: cambia solo il tetto. Bronzo tolto da Costante II (LP LXXVIII 3), piombo di Gregorio III (LP XCII 12)
     if(o.id==='colosseo'){ var us=o.mat.userData.u; us.uSudDir.value.set(-Math.sin(o.ry),Math.cos(o.ry)); us.uSudR.value.set(9.4,7.8);
       us.uSud.value=.2*RM.sfuma(523,800,anno)+.3*RM.sfuma(846.6,847,anno); us.uRovina.value*=.4; }      // il fronte sud: cava dal VI secolo; nell'847, secondo il Parco del Colosseo, cade quel che ne resta
   });

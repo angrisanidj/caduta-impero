@@ -135,6 +135,15 @@ controlli.minDistance=16; controlli.maxDistance=900;
 controlli.maxPolarAngle=Math.PI*.475;
 controlli.autoRotate=true; controlli.autoRotateSpeed=.22;
 renderer.domElement.addEventListener('pointerdown',function(){ controlli.autoRotate=false; });
+/* La rotazione lenta dell'avvio è un dondolio di pochi gradi attorno alla vista d'insieme, non un giro: lasciata girare per qualche minuto (su un PC, senza toccare la scena)
+   portava la città di traverso e fuori centro. Quando l'angolo si allontana di più di nove gradi da quello della vista d'insieme, il verso si inverte. */
+var azPrima=0;
+RM.frame.push(function(){
+  if(!controlli.autoRotate) return;
+  var d=controlli.getAzimuthalAngle()-Math.atan2(-200,465); d=Math.atan2(Math.sin(d),Math.cos(d));
+  if(Math.abs(d)>.16 && Math.abs(d)>Math.abs(azPrima)) controlli.autoRotateSpeed*=-1;
+  azPrima=d;
+});
 RM.scene=scene; RM.camera=camera; RM.renderer=renderer; RM.controlli=controlli;
 /* apertura: la camera parte alta e lontana e scende sulla vista d'insieme in cinque secondi; un tocco o la rotella la fermano (si veda più sotto, dove «volo» si azzera) */
 RM.apertura=function(){ if(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) return; camera.position.set(-330,640,1010); volo={t:0,dur:5,t0:controlli.target.clone(),p0:camera.position.clone(),t1:controlli.target.clone(),p1:new THREE.Vector3(-200,255,470)}; };

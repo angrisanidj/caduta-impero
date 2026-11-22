@@ -10,39 +10,44 @@ function istanze(geo,mat,quante){ var m=new THREE.InstancedMesh(geo,mat,quante);
 var mura=(function(){
   var passi=[], M=RM.MURA, i, a, b, L, n, k;
   for(i=0;i<M.length;i++){
-    a=M[i]; b=M[(i+1)%M.length]; L=Math.hypot(b[0]-a[0],b[1]-a[1]); n=Math.max(1,Math.round(L/6));
+    a=M[i]; b=M[(i+1)%M.length]; L=Math.hypot(b[0]-a[0],b[1]-a[1]); n=Math.max(1,Math.round(L/3));      // un passo ogni 30 m circa: tante sono le torri («every 100 feet», Platner)
     for(k=0;k<n;k++) passi.push({x:a[0]+(b[0]-a[0])*(k+.5)/n, z:a[1]+(b[1]-a[1])*(k+.5)/n, ang:Math.atan2(-(b[1]-a[1]),b[0]-a[0]), len:L/n});
   }
-  var T=new RM.Costruttore().scatola(1,1,.55,0,0,0,P.mattone);                                  // tratto: cortina, cammino di ronda, merli
-  for(k=0;k<4;k++) T.scatola(.13,.14,.14,-.375+k*.25,1,.2,P.mattone);
-  var W=new RM.Costruttore().scatola(1.5,1.42,1.6,0,0,.25,P.mattone).scatola(1.5,.06,1.6,0,1.42,.25,P.tufo);   // torre quadrata, sporgente
-  [[-.6,-.4],[0,-.4],[.6,-.4],[-.6,.95],[0,.95],[.6,.95]].forEach(function(p){ W.scatola(.3,.16,.2,p[0],1.48,p[1],P.mattone); });
+  /* tratto: cortina, cammino di ronda, merli. Spessa circa 3,5 m («about 12 feet thick», Platner); alta 7 m sul terreno nella prima fase («not more than 25 feet»), poi rialzata */
+  var T=new RM.Costruttore().scatola(1,1,.34,0,0,0,P.mattone);
+  for(k=0;k<4;k++) T.scatola(.13,.14,.1,-.375+k*.25,1,.12,P.mattone);
+  /* torre quadrata, sporgente circa 3 m dalla cortina («project about 10 feet», Platner); la larghezza, 7,5 m, è indicativa */
+  var W=new RM.Costruttore().scatola(.75,1.42,.66,0,0,.18,P.mattone).scatola(.75,.06,.66,0,1.42,.18,P.tufo);
+  [[-.25,-.08],[.25,-.08],[-.25,.45],[.25,.45]].forEach(function(p){ W.scatola(.18,.16,.12,p[0],1.48,p[1],P.mattone); });
   var mat=RM.matPietra(classe('mura')), tratti=istanze(T.geometria(),mat,passi.length), torri=istanze(W.geometria(),mat,passi.length);
 
   /* porte dove le vie attraversano la cinta */
-  var G=new RM.Costruttore(), porte=0;
+  var G=new RM.Costruttore(), GF=new RM.Costruttore(), porte=0;      // GF: porta Flaminia, a parte perché la piena del 791 la porta via
   RM.STRADE.forEach(function(s){
     for(var i=0;i<s.length-1;i++) for(var j=0;j<M.length;j++){
       var p=s[i], r=[s[i+1][0]-p[0],s[i+1][1]-p[1]], q=M[j], w=M[(j+1)%M.length], sv=[w[0]-q[0],w[1]-q[1]], den=r[0]*sv[1]-r[1]*sv[0]; if(Math.abs(den)<1e-6) continue;
       var t=((q[0]-p[0])*sv[1]-(q[1]-p[1])*sv[0])/den, u=((q[0]-p[0])*r[1]-(q[1]-p[1])*r[0])/den; if(t<0||t>1||u<0||u>1) continue;
       var x=p[0]+r[0]*t, z=p[1]+r[1]*t; porte++;
-      G.dentro(x,RM.h(x,z)-.3,z,Math.atan2(-sv[1],sv[0]),function(B){
+      (Math.hypot(x+74,z+211)<15?GF:G).dentro(x,RM.h(x,z)-.3,z,Math.atan2(-sv[1],sv[0]),function(B){
         B.scatola(3,1.25,1.1,0,0,0,P.travertino).aperture(-.8,.56,.8,.56,1,0,.85,1).aperture(.8,-.56,-.8,-.56,1,0,.85,1);
         [-1,1].forEach(function(k){ B.cilindro(1,1.7,k*2,0,.3,P.mattone,null,14).cilindro(1.08,.12,k*2,1.7,.3,P.tufo,null,14); });
       });
     }
   });
-  var magliaPorte=G.maglia(mat); RM.scene.add(magliaPorte);
-  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'}]);
-  passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/5),7)<.3; });      // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi
+  var magliaPorte=G.maglia(mat), flaminia=GF.pos.length?GF.maglia(mat):null; RM.scene.add(magliaPorte); if(flaminia) RM.scene.add(flaminia);
+  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'}]).concat(flaminia?[{maglia:flaminia,id:'mura'}]:[]);
+  passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; });     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
+  /* Dicembre 791: il Tevere «portam quae dicitur Flamminea … a fundamenta evellens» (LP, Adriano I 94). Quando sia stata rifatta non è scritto: qui resta abbattuta. */
+  function vistaFlaminia(alt,anno){ if(flaminia){ flaminia.visible=alt>.01&&!(anno>=791.95); flaminia.scale.y=Math.max(alt,.0001); } }
   var ultima=-1, ultimaBr=-1;
-  return function(alt,br){
+  return function(alt,br,anno){
+    vistaFlaminia(alt,anno);
     if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01) return; ultima=alt; ultimaBr=br;
     passi.forEach(function(p,j){
       if(p.y==null){ var cx=Math.cos(p.ang)*p.len/2, cz=-Math.sin(p.ang)*p.len/2, ya=RM.h(p.x-cx,p.z-cz), yb=RM.h(p.x+cx,p.z+cz); p.y=(ya+yb)/2-.3; p.yt=ya-.3; p.pend=Math.atan2(yb-ya,p.len); }   // sui pendii la cortina segue il terreno invece di salire a gradoni
       var y=p.y, sy=Math.max(alt,.0001)*(p.rotto?1-.8*br:1);
       d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix(); tratti.setMatrixAt(j,d.matrix);
-      d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.z=0; d.scale.set(1,j%2?sy:0,j%2?1:0); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);
+      d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.z=0; d.scale.set(1,sy,1); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);      // una torre a ogni passo
     });
     tratti.instanceMatrix.needsUpdate=true; torri.instanceMatrix.needsUpdate=true;
     tratti.visible=torri.visible=magliaPorte.visible=alt>.01; magliaPorte.scale.y=Math.max(alt,.0001);
@@ -154,7 +159,7 @@ var acque=(function(){
 })();
 
 RM.moduli.push(function(anno){
-  mura(D.interp(D.MURA_ALTE,anno), RM.sfuma(545.2,546,anno)*(1-.7*RM.sfuma(546.8,549,anno))*(1-RM.sfuma(715,790,anno)));   // Belisario le richiude in fretta nel 547: resta la cicatrice
+  mura(D.interp(D.MURA_ALTE,anno), RM.sfuma(545.2,546,anno)*(1-.7*RM.sfuma(546.8,549,anno))*(1-RM.sfuma(715,790,anno)),anno);   // Belisario le richiude in fretta nel 547: resta la cicatrice
   acque(anno);
 });
 })();

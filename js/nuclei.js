@@ -1,10 +1,10 @@
-/* Chiese minori: titoli, diaconie, monasteri. Compaiono alla loro data e restano; attorno a ciascuna resiste un gruppo di case
+/* Chiese minori: titoli, diaconie, monasteri. Compaiono alla loro data e restano (salvo quelle con un anno di fine: Santa Maria Antiqua); attorno a ciascuna resiste un gruppo di case
    quando il resto della città si svuota (il peso è in RM.NUCLEI, base.js). I dati stanno in dati.js (CHIESE).
    Sono tutte la stessa chiesetta schematica: contano la posizione e la data, non l'architettura. */
 (function(){
 'use strict';
 var RM=window.RM; if(!RM||RM.guasto) return;
-var D=window.RM_DATI, P=RM.P, PI=Math.PI, elenco=(D.CHIESE||[]).map(function(c){ var p=RM.ll(c[1],c[2]); return {nome:c[0],x:p[0],z:p[1],anno:c[3],tipo:c[4],p0:-1}; });
+var D=window.RM_DATI, P=RM.P, PI=Math.PI, elenco=(D.CHIESE||[]).map(function(c){ var p=RM.ll(c[1],c[2]); return {nome:c[0],x:p[0],z:p[1],anno:c[3],tipo:c[4],fine:c[5]||1e4,p0:-1}; });
 if(!elenco.length) return;
 elenco.forEach(function(c){ RM.zone.push({x:c.x,z:c.z,r:2.8,dal:c.anno-2}); });       // niente isolati sopra la chiesa, da quando c'è: prima, una casa come le altre
 var B=new RM.Costruttore();
@@ -19,7 +19,7 @@ RM.CHIESE=elenco;
 RM.moduli.push(function(anno){
   var mosso=false;
   elenco.forEach(function(c,i){
-    var p=RM.sfuma(c.anno-6,c.anno,anno); if(Math.abs(p-c.p0)<.002) return; c.p0=p; mosso=true;
+    var p=RM.sfuma(c.anno-6,c.anno,anno)*(1-RM.sfuma(c.fine-2,c.fine,anno)); if(Math.abs(p-c.p0)<.002) return; c.p0=p; mosso=true;
     d.position.set(c.x,c.y,c.z); d.rotation.set(0,c.ry,0); d.scale.set(p>.01?1.25:0,Math.max(p*1.25,.001),p>.01?1.25:0); d.updateMatrix(); maglia.setMatrixAt(i,d.matrix);
   });
   if(mosso) maglia.instanceMatrix.needsUpdate=true;

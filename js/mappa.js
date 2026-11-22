@@ -89,7 +89,7 @@ function disegnaLuoghi(k,H,messi){
   while(stratoLuoghi.firstChild) stratoLuoghi.removeChild(stratoLuoghi.firstChild);
   luoghiOra.forEach(function(q){
     var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return;
-    var x=Math.max(103,Math.min(897,p.x)), y=Math.max(63,Math.min(565,p.y)), fuori=x!==p.x||y!==p.y, citta=!!G.citta[q[0]]&&!!scritte[q[0]], lato=3.9*k;
+    var x=Math.max(bordo[0],Math.min(bordo[1],p.x)), y=Math.max(bordo[2],Math.min(bordo[3],p.y)), fuori=x!==p.x||y!==p.y, citta=!!G.citta[q[0]]&&!!scritte[q[0]], lato=3.9*k;
     var g=el('g',{'class':'m-luogo',transform:'translate('+x+' '+y+')'},stratoLuoghi);
     el('circle',{'class':'m-battito',r:(4.5*k).toFixed(1),style:'stroke:#241E1A;stroke-width:'+(1.6*k).toFixed(1)},g);
     el('rect',{x:(-lato).toFixed(1),y:(-lato).toFixed(1),width:(2*lato).toFixed(1),height:(2*lato).toFixed(1),transform:'rotate(45)',fill:'#241E1A',stroke:'#FBF6EA','stroke-width':(1.5*k).toFixed(1)},g);
@@ -97,40 +97,76 @@ function disegnaLuoghi(k,H,messi){
     var testo=p.nome+(fuori?' →':''), c=el('g',{},g), fondo=el('rect',{rx:3,ry:3,fill:'rgba(36,30,26,.92)'},c), t=el('text',{'text-anchor':'middle',fill:'#FBF6EA','font-size':(11*k).toFixed(1),style:'font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-weight:600'},c);
     t.textContent=testo; var w=0; try{ w=t.getComputedTextLength(); }catch(e){} var W=(w>4?w:testo.length*6.2*k)+12*k;
     var dx=W/2+8*k, prove=[[dx,-H/2],[-dx,-H/2],[0,-H-8*k],[0,9*k]], meglio=0, minimo=1e9, j, n, cx, cy, tocca, ox, oy;
-    for(j=0;j<prove.length;j++){ cx=Math.max(97+W/2,Math.min(903-W/2,x+prove[j][0])); cy=y+prove[j][1]+H/2; tocca=Math.abs(cx-(x+prove[j][0]))>1?W*4:0;      // un posto che va spinto dentro il bordo vale meno
+    for(j=0;j<prove.length;j++){ cx=Math.max(bordo[0]-6+W/2,Math.min(bordo[1]+6-W/2,x+prove[j][0])); cy=y+prove[j][1]+H/2; tocca=Math.abs(cx-(x+prove[j][0]))>1?W*4:0;      // un posto che va spinto dentro il bordo vale meno
       for(n=0;n<messi.length;n++){ ox=(messi[n][2]+W)/2+2-Math.abs(messi[n][0]-cx); oy=H+1-Math.abs(messi[n][1]-cy); if(ox>0&&oy>0) tocca+=ox*oy; }
       if(tocca<minimo){ minimo=tocca; meglio=j; if(!tocca) break; } }
-    cx=Math.max(97+W/2,Math.min(903-W/2,x+prove[meglio][0])); var dy=prove[meglio][1];
+    cx=Math.max(bordo[0]-6+W/2,Math.min(bordo[1]+6-W/2,x+prove[meglio][0])); var dy=prove[meglio][1];
     fondo.setAttribute('x',(-W/2).toFixed(1)); fondo.setAttribute('width',W.toFixed(1)); fondo.setAttribute('height',H.toFixed(1)); t.setAttribute('y',(H*.72).toFixed(1));
     c.setAttribute('transform','translate('+(cx-x).toFixed(1)+' '+dy.toFixed(1)+')');
     messi.push([cx,y+dy+H/2,W]); messi.push([x,y,12*k]);
   });
 }
+/* La scena dell'evento: marce (frecce), rotte per mare (tratteggio), scontri (spade incrociate), assedi (anello) e sacchi (fiamma), disegnati sopra la carta mentre la regia la tiene vicina.
+   I dati stanno in SCENE_CARTA (js/dati.js): partenza e arrivo vengono dai testi, il tracciato fra i due è schematico. A tutto schermo, e per chi ha chiesto meno animazioni, la scena resta ferma sulla carta. */
+var bordo=[103,897,63,565];      // fuori dalla regia rombi e segni stanno dentro la vista normale; durante la regia la carta si può spingere fino al suo vero bordo (Edessa, Nisibi)
+var stratoScena=el('g',{'class':'m-scena'},svg), COLORI_SCENA={roma:['#F1D99A','#241E1A'],altri:['#241E1A','#FBF6EA'],franchi:['#A9CBE6','#1F3345']};
+function puntoDi(k){ var p=(G.luoghi||{})[k]||G.citta[k]; return p?[p.x,p.y]:null; }
+function disegnaScena(sc){
+  while(stratoScena.firstChild) stratoScena.removeChild(stratoScena.firstChild);
+  stratoScena.setAttribute('class','m-scena');
+  var k=ingr||1;
+  (sc||[]).forEach(function(e){
+    var tipo=e[0], g, p, col;
+    if(tipo==='marcia'||tipo==='mare'){
+      var pp=e[2].map(puntoDi).filter(Boolean); if(pp.length<2) return; col=COLORI_SCENA[e[1]]||COLORI_SCENA.altri;
+      var d='M'+pp[0][0]+' '+pp[0][1], i;
+      if(pp.length===2){ var mx=(pp[0][0]+pp[1][0])/2, my=(pp[0][1]+pp[1][1])/2, nx=-(pp[1][1]-pp[0][1])*.12, ny=(pp[1][0]-pp[0][0])*.12; d+='Q'+(mx+nx).toFixed(1)+' '+(my+ny).toFixed(1)+' '+pp[1][0]+' '+pp[1][1]; var da=[mx+nx,my+ny]; }
+      else { for(i=1;i<pp.length;i++) d+='L'+pp[i][0]+' '+pp[i][1]; var da=pp[pp.length-2]; }
+      var a=pp[pp.length-1], ang=Math.atan2(a[1]-da[1],a[0]-da[0])*180/Math.PI, cl=tipo==='mare'?'mare':'marcia';
+      el('path',{'class':cl+' sotto',d:d,pathLength:1,fill:'none',stroke:col[1],'stroke-width':(4.6*k).toFixed(1),'stroke-linecap':'round','stroke-linejoin':'round'},stratoScena);
+      el('path',{'class':cl,d:d,pathLength:1,fill:'none',stroke:col[0],'stroke-width':(2.4*k).toFixed(1),'stroke-linecap':'round','stroke-linejoin':'round'},stratoScena);
+      el('path',{'class':'punta',d:'M0 0L-9 -5L-9 5Z',transform:'translate('+a[0]+' '+a[1]+') rotate('+ang.toFixed(1)+') scale('+k+')',fill:col[0],stroke:col[1],'stroke-width':1.3,'stroke-linejoin':'round'},stratoScena);
+    } else if((p=puntoDi(e[1]))){
+      p=[Math.max(bordo[0],Math.min(bordo[1],p[0])),Math.max(bordo[2],Math.min(bordo[3],p[1]))];
+      g=el('g',{'class':tipo,transform:'translate('+p[0]+' '+p[1]+')'},stratoScena);
+      var gi=el('g',{transform:'scale('+k+')'},g);
+      if(tipo==='scontro'){ el('circle',{r:9.5,cy:-15,fill:'#FBF6EA',stroke:'#8E2A2A','stroke-width':1.6},gi); el('path',{d:'M-5.2 -20.2L5.2 -9.8M5.2 -20.2L-5.2 -9.8M-5.9 -12.9L-2.3 -9.3M5.9 -12.9L2.3 -9.3',fill:'none',stroke:'#8E2A2A','stroke-width':1.9,'stroke-linecap':'round'},gi); }
+      else if(tipo==='assedio'){ el('circle',{r:12,fill:'none',stroke:'#241E1A','stroke-width':2.2,'stroke-dasharray':'4 3'},gi); el('circle',{r:12,fill:'none',stroke:'#FBF6EA','stroke-width':.8,'stroke-dasharray':'4 3','stroke-dashoffset':3.5},gi); }
+      else if(tipo==='fuoco'){ el('path',{d:'M0 -24C5 -18 8 -14 6 -9C10 -11 9 -16 9 -16C13 -11 12 -4 6 -1C2 1 -3 1 -6 -1C-11 -4 -11 -11 -6 -15C-6 -11 -4 -10 -3 -11C-5 -16 -2 -20 0 -24Z',fill:'#E0672A',stroke:'#FBF6EA','stroke-width':1.1,'stroke-linejoin':'round'},gi); }
+    }
+  });
+}
 /* Regia: a ogni tappa la carta si avvicina ai luoghi dell'evento, li mostra per qualche secondo con una didascalia e torna alla vista intera.
    Non a tutto schermo (lì la carta la muove chi guarda) e non per chi ha chiesto meno animazioni. Se i luoghi sono troppo lontani fra loro la carta resta intera. */
-var regia=null, didascalia=document.createElement('p'); didascalia.className='m-didascalia'; didascalia.setAttribute('aria-hidden','true'); ospite.appendChild(didascalia);
+var regia=null, scenaOra=null, annoVisto=null, didascalia=document.createElement('p'); didascalia.className='m-didascalia'; didascalia.setAttribute('aria-hidden','true'); ospite.appendChild(didascalia);
 var pocoMoto=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);      // ?moto=1 forza l'animazione, per le prove
-function fermaRegia(){ if(regia){ cancelAnimationFrame(regia.rf); regia=null; } didascalia.classList.remove('viva'); if(!grandeSi) svg.setAttribute('viewBox',BASE.join(' ')); }
-function riquadroLuoghi(l){
-  var xs=[], ys=[]; l.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(p){ xs.push(Math.max(103,Math.min(897,p.x))); ys.push(Math.max(63,Math.min(565,p.y))); } });
+function fermaRegia(){ if(regia){ cancelAnimationFrame(regia.rf); regia=null; } if(bordo[0]!==103){ bordo=[103,897,63,565]; if(annoVisto!=null) mostraPopoli(annoVisto); } didascalia.classList.remove('viva'); if(!grandeSi && !pocoMoto) stratoScena.setAttribute('class','m-scena'); if(!grandeSi) svg.setAttribute('viewBox',BASE.join(' ')); }
+function riquadroLuoghi(l,massimo){
+  var xs=[], ys=[]; l.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(p){ xs.push(Math.max(8,Math.min(G.w-8,p.x))); ys.push(Math.max(8,Math.min(G.h-8,p.y))); } });
   if(!xs.length) return null;
   var x0=Math.min.apply(null,xs), x1=Math.max.apply(null,xs), y0=Math.min.apply(null,ys), y1=Math.max.apply(null,ys), rap=BASE[3]/BASE[2];
   var w=Math.max(BASE[2]/2.5,x1-x0+230), h=w*rap; if(h<y1-y0+170){ h=y1-y0+170; w=h/rap; }
-  if(w>BASE[2]*.8) return null;
-  return [Math.max(BASE[0],Math.min(BASE[0]+BASE[2]-w,(x0+x1)/2-w/2)), Math.max(BASE[1],Math.min(BASE[1]+BASE[3]-h,(y0+y1)/2-h/2)), w, h];
+  if(w>BASE[2]*(massimo||.8)) return null;
+  return [Math.max(0,Math.min(G.w-w,(x0+x1)/2-w/2)), Math.max(0,Math.min(G.h-h,(y0+y1)/2-h/2)), w, h];
 }
-function avviaRegia(l){
-  fermaRegia(); if(grandeSi || pocoMoto || !l || !l.length) return;
-  var a=riquadroLuoghi(l); if(!a){ l=l.slice(0,1); a=riquadroLuoghi(l); }      // luoghi troppo lontani fra loro: la carta si avvicina al primo, quello del titolo
+function avviaRegia(l,sc){
+  fermaRegia(); disegnaScena(sc); if(grandeSi || pocoMoto){ stratoScena.setAttribute('class','m-scena viva ferma'); return; }
+  if(!l || !l.length) return;
+  var a=null;
+  if(sc && sc.length){ var capi=[]; sc.forEach(function(e){ if(e[0]==='marcia'||e[0]==='mare') e[2].forEach(function(q){ capi.push([q]); }); else capi.push([e[1]]); }); a=riquadroLuoghi(capi,.92); }      // con una scena, lo zoom tiene dentro marce e rotte
+  if(!a) a=riquadroLuoghi(l); if(!a){ l=l.slice(0,1); a=riquadroLuoghi(l); }      // luoghi troppo lontani fra loro: la carta si avvicina al primo, quello del titolo
   if(!a) return;
-  didascalia.textContent=''; l.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); didascalia.appendChild(s); });
-  var r=regia={t0:0,a:a,rf:0}, ENTRA=1000, FERMA=3400, ESCE=1000;
+  didascalia.textContent=''; l.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var px=Math.max(8,Math.min(G.w-8,p.x)); if(px<a[0]-2||px>a[0]+a[2]+2||p.y<a[1]-2||p.y>a[1]+a[3]+2) return;      // nella didascalia solo i luoghi che lo zoom inquadra
+    var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); didascalia.appendChild(s); });
+  bordo=[8,G.w-8,8,G.h-8]; if(annoVisto!=null) mostraPopoli(annoVisto); disegnaScena(sc);
+  var r=regia={t0:0,a:a,rf:0}, ENTRA=900, FERMA=sc&&sc.length?4500:3200, ESCE=900, viva=false;
   function passo(ora){
     if(regia!==r) return; if(!r.t0){ r.t0=ora; didascalia.classList.add('viva'); }
     var t=ora-r.t0, k=t<ENTRA?t/ENTRA:t<ENTRA+FERMA?1:Math.max(0,1-(t-ENTRA-FERMA)/ESCE); k=k*k*(3-2*k);
     svg.setAttribute('viewBox',[0,1,2,3].map(function(i){ return (BASE[i]+(r.a[i]-BASE[i])*k).toFixed(1); }).join(' '));
-    if(t>ENTRA+FERMA) didascalia.classList.remove('viva');
-    if(t<ENTRA+FERMA+ESCE) r.rf=requestAnimationFrame(passo); else { regia=null; svg.setAttribute('viewBox',BASE.join(' ')); }
+    if(t>ENTRA*.7 && !viva){ viva=true; stratoScena.setAttribute('class','m-scena viva'); }
+    if(t>ENTRA+FERMA){ didascalia.classList.remove('viva'); stratoScena.setAttribute('class','m-scena'); }
+    if(t<ENTRA+FERMA+ESCE) r.rf=requestAnimationFrame(passo); else { fermaRegia(); }
   }
   r.rf=requestAnimationFrame(passo);
 }
@@ -239,7 +275,7 @@ function bottone(t,et,cl){ var b=document.createElement('button'); b.type='butto
 var bMeno=bottone('−','Allontana','zoom'), bPiu=bottone('+','Avvicina','zoom'), bGrande=bottone('⤢','Carta a tutto schermo','grande'); bGrande.setAttribute('aria-pressed','false');
 ospite.appendChild(comandi);
 function grande(si){
-  fermaRegia(); grandeSi=si; document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');
+  fermaRegia(); grandeSi=si; setTimeout(function(){ disegnaScena(scenaOra); stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':'')); },60);      // a tutto schermo la scena dell'evento resta ferma sulla carta document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');
   bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Chiudi lo schermo intero':'Carta a tutto schermo');
   dita={}; presa=null;
   if(si){ vista.k=1; vista.cx=500; vista.cy=314; adatta(); if(vista.alto){ vista.k=Math.max(1,BASE[2]*vista.alto/(G.h*vista.aw)); vista.cx=470; vista.cy=330; applicaVista(); } }      // in verticale si parte con la carta che riempie il riquadro, sull'Italia: il bottone − la mostra intera
@@ -272,10 +308,10 @@ window.addEventListener('keydown',function(e){ if(e.key==='Escape'&&grandeSi) gr
 
 window.RM_mappa={
   grande:grande,
-  mostra:function(stati,anno,luoghi){
-    if(anno!=null) scriviLuoghi(luoghi);
+  mostra:function(stati,anno,luoghi,scena){
+    if(anno!=null){ fermaRegia(); annoVisto=anno; scriviLuoghi(luoghi); }
     var visti=anno!=null?mostraPopoli(anno):null;
-    if(anno!=null) avviaRegia(luoghi);
+    if(anno!=null){ scenaOra=scena||null; avviaRegia(luoghi,scenaOra); }
     if(anno!=null && scritte.costantinopoli){ var nc=anno<330?'Bisanzio':G.citta.costantinopoli.nome; if(scritte.costantinopoli.textContent!==nc) scritte.costantinopoli.textContent=nc; }
     if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
     aggiornaLegende(stati,anno,visti);
