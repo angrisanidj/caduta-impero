@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 00:53:40.
+Generato da `src/testi.mjs` il 23/11/2026, 00:57:25.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -103,7 +103,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.44] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Quelle segnate «Ricostruzione» sono state generate per questa pagina a partire dalle fonti: il volto è immaginario. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.45] Versione del 23/11/2026, ore 00:47
+[pagina.45] Versione del 23/11/2026, ore 00:53
 
 
 ## 2. Gli atti
@@ -1415,7 +1415,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T44-727.chi1.nome] Ine
 
-[T44-727.chi1.date] re del Wessex dal 688 circa al 726
+[T44-727.chi1.date] re del Wessex dal 688 circa al 726 o al 728
 
 [T44-727.chi1.riga] Rinuncia al trono e parte per Roma, dove trascorre il resto della vita.
 
@@ -2513,7 +2513,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.scholae.cosa] Ospizio dei pellegrini anglosassoni: alloggio, chiesa e cimitero, verso il fiume, dove oggi è Santo Spirito in Sassia.
 
-[scheda.scholae.data1-727] Una tradizione più tarda la attribuisce al re Ine del Wessex, venuto a Roma verso il 726.
+[scheda.scholae.data1-727] Una tradizione più tarda la attribuisce al re Ine del Wessex, venuto a Roma fra il 726 e il 728: dai dati di Beda (trentasette anni di regno) viene il 725-726, la Cronaca anglosassone, nell'edizione di Ingram, dice 728.
 
 [scheda.scholae.data2-799] La prima testimonianza sicura della schola riguarda il ritorno di Leone III a Roma. Ad accoglierlo ci sono le comunità dei Sassoni, dei Franchi, dei Frisoni e dei Longobardi. Dalle scholae viene il nome del quartiere, «Borgo», dal germanico burg, che compare nelle fonti durante il pontificato di Pasquale I (817-824).
 

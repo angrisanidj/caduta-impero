@@ -288,3 +288,18 @@ Negative: le parole comuni, più `curved scimitar, Ottoman turban, Mamluk, henna
 Photorealistic half-length portrait of Ine, king of the West Saxons, in 727 AD as he gives up his throne to travel to Rome as a pilgrim, a grave, weathered man of about 60, grey-blond hair falling to the neck, a full grey beard, calm resolute eyes. He wears a loose long-sleeved tunic of off-white linen with broad tablet-woven bands of red, yellow and dark blue at the neck and cuffs, and a heavy travelling cloak of dark brown wool fastened on the right shoulder with a round gold brooch set with flat red garnets. No crown, no helmet, no weapons. Plain dark charcoal-brown studio backdrop, softly mottled, no objects. Natural side light from the left as from a window. Looks like a photograph of a real person in historically accurate early 8th-century Anglo-Saxon costume, shallow depth of field, 85mm lens.
 ```
 Negative: le parole comuni, più `crown, Sutton Hoo helmet, Viking, horns, fur, scallop shell, pilgrim staff, monk habit, friar`.
+
+## Controllo sulle immagini dei musei (23 novembre 2026, dopo la generazione)
+
+Le immagini degli oggetti citati «a memoria» sono state guardate su Wikimedia Commons e confrontate con i ritratti scelti:
+- Sarcofago Grande Ludovisi («Grande Ludovisi sarcophagus.jpg»): i barbari hanno barba e capelli folti, tuniche e brache. Cniva è coerente; i capelli scolpiti sono più ricci, convenzione dello scultore.
+- Missorio di Teodosio («Missorium van Theodosius I Detail, GD000327.jpg»): le guardie germaniche hanno capelli lunghi fino alla nuca, collare ritorto, nessuna barba. Il collare di Fritigerno e di Alarico torna; la barba è una scelta, come per i Goti di Sinesio e di Sidonio.
+- Dittico di Stilicone («Diptych of Stilicho.jpg»): tunica decorata, clamide con fibula a balestra, cintura con la spada, barba e capelli corti. Corrisponde ad Arbogaste e ad Alarico.
+- Mosaico di Giustiniano a San Vitale: clamide bianca fermata sulla spalla destra, tunica a strisce, capelli corti con la frangia. Corrisponde a Procopio, senza il riquadro di porpora (scelta della scheda: il suo rango nel 542 è incerto).
+- Lamina di Agilulfo: figure troppo piccole per aggiungere dettagli ad Alboino; vale Paolo Diacono.
+- Dinaro del «califfo in piedi» (695): veste lunga, copricapo di stoffa che scende, barba lunga, spada nel fodero. Corrisponde a Musa.
+- Monete di Hormizd II: corona col globo e barba a punta per il re; Ormisda, che re non era, ha il berretto senza corona (scelta della scheda).
+- Scrigno Franks: tuniche al ginocchio, mantelli, cappucci. Corrisponde a Ine.
+Nessun ritratto è stato rifatto per questo controllo. Fritigerno è stato rifatto per un'altra ragione: nella prima generazione aveva quasi lo stesso volto di Alarico.
+
+Ine: Beda (Storia ecclesiastica V 7, letto) non dà l'anno della partenza; dai suoi dati (trentasette anni di regno, cominciati quando Cedvalla parte per Roma nel 688; papa Gregorio II) viene il 725-726. La Cronaca anglosassone, nell'edizione composita di Ingram (avalon.law.yale.edu), lo mette nel 728. In pagina: «dal 688 circa al 726 o al 728».
