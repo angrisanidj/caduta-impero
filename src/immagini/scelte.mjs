@@ -88,7 +88,7 @@ export const SCELTE = {
   'Attila': { file: 'Attila portrait (imaginary), by Giovio Paolo, 1483-1552, published 1575.jpg', oggetto: 'ritratto immaginario dagli «Elogia» di Paolo Giovio, 1575', coevo: 'fantasia',
     nota: 'Nessun ritratto coevo noto: l\'immagine è dichiaratamente immaginaria (lo dice il titolo del file).' },
   // 455, 458, 468
-  'Leone I': { file: 'Raphael - The Meeting of Leo the Great and Attila.jpg', oggetto: 'Raffaello, «Incontro di Leone Magno con Attila», 1514, Stanze vaticane', coevo: 'posteriore',
+  'Leone I': { file: 'Raphael - The Meeting of Leo the Great and Attila.jpg', oggetto: 'particolare di Raffaello, «Incontro di Leone Magno con Attila», 1514, Stanze vaticane: il papa a cavallo', coevo: 'posteriore',
     nota: 'Nessun ritratto coevo; il papa ha il volto di Leone X, e la scena è quella del 452 con Attila, non quella del 455 con Genserico. Meglio nessuna immagine.' },
   'Maggioriano': { file: 'Solidus Majorian Arles.jpg', oggetto: 'solido di Maggioriano, zecca di Arles, 457-461', coevo: 'si',
     nota: 'ATTENZIONE: l\'immagine di Wikidata («Maiorianus Augustus.jpg») è un ritratto del 1754, di fantasia.' },
@@ -177,7 +177,7 @@ export const SCELTE = {
     nota: 'Messa il 22 novembre 2026 su decisione dell\'utente («mettile come immagine più tarda»). Nessun ritratto coevo: è un volto di fantasia inciso più di sette secoli dopo. Su Commons c\'è anche il medaglione di San Paolo fuori le mura, ottocentesco, con provenienza meno chiara.' },
   'Lotario I': { file: 'Lothar I.jpg', autore: 'miniatore di Tours', oggetto: 'miniatura dell\'Evangeliario di Lotario (BnF, Lat. 266), Tours, 849-851', coevo: 'si',
     alt: [{ file: 'Medallion of Lothair, from the Lothaire Psalter.jpg', oggetto: 'medaglione del Salterio di Lotario (British Library, Add MS 37768), metà IX secolo' }] },
-  'Leone IV': { file: 'Raphael - Fire in the Borgo.jpg', oggetto: 'Raffaello e bottega, «Incendio di Borgo», 1514, Stanze vaticane: Leone IV benedice dalla loggia di San Pietro', coevo: 'posteriore',
+  'Leone IV': { file: 'Raphael - Fire in the Borgo.jpg', oggetto: 'particolare di Raffaello e bottega, «Incendio di Borgo», 1514, Stanze vaticane: Leone IV benedice dalla loggia di San Pietro', coevo: 'posteriore',
     nota: 'Nessun ritratto coevo; il papa ha il volto di Leone X. Racconta un miracolo dell\'847 (Liber pontificalis), non le mura.' },
   // tappe della storia religiosa del IV secolo (22-23 novembre 2026): miniature GUARDATE una per una prima di sceglierle
   'Massenzio': { file: 'Portrait of Maxentius (SK Dresden Hm 406) 03.jpg', oggetto: 'testa in marmo, inizio del IV secolo, Dresda, Skulpturensammlung (Hm 406)', coevo: 'si',
