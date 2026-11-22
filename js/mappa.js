@@ -542,11 +542,17 @@ function bottoneAltre(el){
 }
 function misuraLegende(){
   [legenda,legendaPopoli].forEach(function(el){
-    if(!el || !el._altre) return; var b=el._altre; el.classList.remove('tagliata');
+    if(!el || !el._altre) return; var b=el._altre; el.classList.remove('tagliata'); el.style.maxHeight='';
     if(el.classList.contains('aperta')){ b.hidden=false; b.textContent='meno'; b.setAttribute('aria-label','Mostra meno voci della legenda'); return; }
+    /* sul telefono la legenda chiusa si taglia sopra la prima riga che non entra intera (una voce lunga va su due righe e sposta le altre): niente voci che affiorano a metà */
+    var lim=parseFloat(getComputedStyle(el).maxHeight);
+    function taglia(){ el.style.maxHeight=''; if(!isFinite(lim)) return; var cs=getComputedStyle(el), sotto0=parseFloat(cs.paddingBottom)+parseFloat(cs.borderBottomWidth), t0=el.getBoundingClientRect().top, taglio=null;
+      [].forEach.call(el.querySelectorAll('span'),function(v){ if(v.hidden) return; var r=v.getBoundingClientRect(); if(r.height && r.bottom-t0>lim-sotto0+.5 && (taglio===null||r.top<taglio)) taglio=r.top; });
+      if(taglio!==null && taglio-t0<lim) el.style.maxHeight=Math.max(0,Math.round(taglio-t0))+'px'; }
+    taglia();
     var sotto=function(){ var fondo=el.getBoundingClientRect().bottom-3, q=0; [].forEach.call(el.querySelectorAll('span'),function(v){ if(!v.hidden && v.getBoundingClientRect().top>=fondo) q++; }); return q; }, n=sotto();
     if(!n){ b.hidden=true; return; }
-    el.classList.add('tagliata'); n=sotto();      // fa posto al bottone, poi riconta le voci rimaste sotto
+    el.classList.add('tagliata'); taglia(); n=sotto();      // fa posto al bottone (le righe cambiano: si ritaglia), poi riconta le voci rimaste sotto
     b.hidden=!n; b.textContent='+'+n; b.setAttribute('aria-label','Mostra le altre '+n+' voci della legenda'); if(!n) el.classList.remove('tagliata');
   });
 }

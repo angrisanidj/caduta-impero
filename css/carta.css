@@ -62,8 +62,8 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
 /* Telefoni, carta in linea: le legende non riservano più lo spazio della tappa con più voci (lasciava mezzo schermo bianco). Stanno su tre righe al massimo (due quella dei popoli), con le voci intere;
    se ce ne sono altre, il bottone «+N» le apre. La nota in corsivo sta su due righe e si apre con un tocco. */
 @media (max-width:700px){
-  body:not(.impero-grande) .legenda-mappa,body:not(.impero-grande) #legendaPopoli{position:relative;min-height:0!important;max-height:67px;overflow:hidden;font-size:12px}
-  body:not(.impero-grande) .legenda-mappa{max-height:98px}      /* tre righe per gli stati, due per i popoli */
+  body:not(.impero-grande) .legenda-mappa,body:not(.impero-grande) #legendaPopoli{position:relative;inset:auto;height:auto;min-height:0!important;max-height:70px;overflow:hidden;font-size:12px;padding:7px 10px 5px;align-items:center;align-content:flex-start}
+  body:not(.impero-grande) .legenda-mappa{max-height:101px}      /* tre righe per gli stati, due per i popoli: il bordo di 1, 7 sopra, 26 per riga, 5 fra le righe e 5 sotto, così la riga nascosta non affiora (prima 67 tagliava la seconda riga dei popoli) */
   body:not(.impero-grande) .legenda-mappa span,body:not(.impero-grande) #legendaPopoli span{padding:2px 8px 2px 6px}
   .legenda-mappa,#legendaPopoli{gap:5px 6px}
   .legenda-mappa>b,#legendaPopoli>b{font-size:11px;letter-spacing:.05em;margin-right:2px}      /* «Legenda» e «I popoli» più stretti: le prime due voci stanno sulla stessa riga */
