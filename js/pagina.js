@@ -41,10 +41,11 @@ SPIE.forEach(function(s){
       s.banda.slice().reverse().map(function(p){ return 'L'+X(p[0]).toFixed(1)+' '+(38-p[1]/s.max*34).toFixed(1); }).join('')+'Z"/>':'')+
     (s.altra?'<path class="altra" d="'+s.altra.map(function(p,i){ return (i?'L':'M')+X(p[0]).toFixed(1)+' '+(38-p[1]/s.max*34).toFixed(1); }).join('')+'"/>':'')+
     '<path d="'+d+'"/><line y1="0" y2="40"/></svg>';
-  $('cruscotto').appendChild(box);
+  $('cruscotto').appendChild(box); s.box=box;
   s.b=box.querySelector('b'); s.small=box.querySelector('small'); s.linea=box.querySelector('line');
 });
 function scriviSpie(){
+  var via=anno>330.5, sm=SPIE[1]; if(sm.box.hidden!==via){ sm.box.hidden=via; $('cruscotto').classList.toggle('tre',via); }      // dopo Costantino la moneta è il solido d'oro e non cambia più: la spia esce, quella del territorio prende la riga
   SPIE.forEach(function(s){
     var v=s.val(anno); if(s.b.textContent!==v) s.b.textContent=v;
     var n=s.notaA?s.notaA(anno):s.nota; if(s.small.textContent!==n) s.small.textContent=n;
@@ -63,6 +64,11 @@ var voci=(RM.MONUMENTI||[]).map(function(m){
   var li=document.createElement('li'), s=document.createElement('span'); li.appendChild(s); $('elencoMonumenti').appendChild(li); return {m:m,li:li,s:s,st:''};
 });
 if(!voci.length) document.querySelector('.stato-roma').hidden=true;
+/* sui telefoni l'elenco è lungo: si apre per intero solo a richiesta (il bottone si vede solo lì, css/stile.css) */
+(function(){ var sr=document.querySelector('.stato-roma'), bm=$('btnMonumenti'); if(!bm) return;
+  function scrivi(){ var c=sr.classList.contains('corto'); bm.setAttribute('aria-expanded',c?'false':'true'); bm.textContent=c?'Mostra tutti i '+voci.length+' monumenti':'Mostra meno'; }
+  sr.classList.add('corto'); scrivi(); bm.addEventListener('click',function(){ sr.classList.toggle('corto'); scrivi(); });
+})();
 /* scheda di un monumento: che cos'è, in che stato è nell'anno corrente, le date che contano */
 var schedaDi=null, schedaChiave='';
 function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
@@ -111,17 +117,37 @@ function scriviMonumenti(){
 }
 
 /* ---------- linea del tempo ---------- */
-var bottoni=[], gruppi=D.ATTI.map(function(a){
+var bottoni=[], gruppi=D.ATTI.map(function(a,k){
   var g=document.createElement('div'), p=document.createElement('p'), riga=document.createElement('div');
-  g.className='atto-gruppo'; p.textContent=a.n+' · '+a.nome; g.appendChild(p); g.appendChild(riga); $('linea').appendChild(g); return {g:g,riga:riga,n:0};
+  g.className='atto-gruppo'; p.innerHTML='<b>'+a.da+'</b><span>'+a.nome+'</span>'+(k===D.ATTI.length-1?'<b class="fine">'+a.a+'</b>':''); g.appendChild(p); g.appendChild(riga); $('linea').appendChild(g); return {g:g,riga:riga,n:0};
 });
 T.forEach(function(t,i){
   var b=document.createElement('button'); b.type='button'; if(t.intermezzo) b.className='intermezzo';
-  b.title=(t.intermezzo?'Intermezzo: ':t.anno+' · ')+t.titolo; b.setAttribute('aria-label',b.title);
+  b.setAttribute('aria-label',(t.intermezzo?'Intermezzo: ':t.anno+' · ')+t.titolo);
   b.addEventListener('click',function(){ ferma(); vai(i); });
   var g=gruppi[Math.min(t.atto,gruppi.length-1)]; g.riga.appendChild(b); g.n++; bottoni.push(b);
 });
 gruppi.forEach(function(g){ g.g.style.setProperty('--n',g.n); });
+/* Il dito (o il mouse) scorre sulla linea: un fumetto dice anno e titolo della tappa che ha sotto, e al rilascio ci si va.
+   Sui telefoni le tappe sono larghe pochi punti e non si toccano una per una; i tasti di ogni tappa restano per la tastiera. */
+var fumetto=document.createElement('p'), barra=$('linea'), cassa=barra.parentNode, mira=-1, premuto=false, centri=null;
+fumetto.className='fumetto'; fumetto.hidden=true; fumetto.setAttribute('aria-hidden','true'); cassa.appendChild(fumetto);
+function punta(x){
+  if(!centri) centri=bottoni.map(function(b){ var r=b.getBoundingClientRect(); return r.left+r.width/2; });
+  var k=0, d=1e9; centri.forEach(function(c,i){ var e=Math.abs(c-x); if(e<d){ d=e; k=i; } });
+  if(k!==mira){
+    if(mira>=0) bottoni[mira].classList.remove('mira'); mira=k; bottoni[k].classList.add('mira');
+    var t=T[k], b=document.createElement('b'); b.textContent=t.intermezzo?'Intermezzo':t.anno; fumetto.textContent=''; fumetto.appendChild(b); fumetto.appendChild(document.createTextNode(t.titolo));
+  }
+  fumetto.hidden=false; var r=cassa.getBoundingClientRect(), m=fumetto.offsetWidth/2+4; fumetto.style.left=Math.max(m,Math.min(r.width-m,centri[k]-r.left))+'px';
+}
+function smetti(){ if(mira>=0) bottoni[mira].classList.remove('mira'); mira=-1; fumetto.hidden=true; premuto=false; centri=null; }
+barra.addEventListener('pointerdown',function(e){ if(e.button) return; centri=null; premuto=true; punta(e.clientX); });
+barra.addEventListener('pointermove',function(e){ if(!premuto && e.pointerType==='mouse') punta(e.clientX); });
+barra.addEventListener('pointerleave',function(){ if(!premuto) smetti(); });
+window.addEventListener('pointermove',function(e){ if(premuto) punta(e.clientX); });
+window.addEventListener('pointerup',function(){ if(!premuto) return; var k=mira; smetti(); if(k>=0 && k!==idx){ ferma(); vai(k); } });
+window.addEventListener('pointercancel',function(){ if(premuto) smetti(); });      // il dito è andato in verticale: la pagina scorre e non si cambia tappa
 
 /* ---------- tappa ---------- */
 function vai(i,subito){

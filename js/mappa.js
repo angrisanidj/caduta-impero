@@ -8,9 +8,9 @@ function el(tipo,attr,padre){ var e=document.createElementNS(NS,tipo); for(var k
 
 var STATI=[['roma','governo di Roma'],['usurpatore','impero separato'],['conteso','conteso'],['federati','federati, per trattato'],['regno:svevi',''],['regno:vandali',''],['regno:visigoti',''],['regno:burgundi',''],['regno:franchi',''],['regno:italia',''],['regno:longobardi',''],['regno:anglosassoni',''],['regno:asturie',''],['regno:britanni',''],['regno:turingi',''],['regno:gepidi',''],['regno:unni',''],['regno:avari',''],['regno:bulgari',''],['regno:moravi',''],['oriente','corte d\'Oriente'],['califfato','califfato'],['carolingio','impero dei Franchi'],['chiesa','terre della Chiesa'],['perso','fuori dall\'impero']];
 /* i regni: colore e nome. I colori si ripetono solo fra regni che non sono mai sulla carta insieme. */
-var REGNI={svevi:['#D08C60','regno degli Svevi'],vandali:['#7B5B3A','regno dei Vandali'],visigoti:['#6A4C93','regno dei Visigoti'],burgundi:['#C08A9E','regno dei Burgundi'],franchi:['#3E5F7A','regni dei Franchi'],
-  italia:['#3D7A4F','regno d\'Italia'],longobardi:['#8A8F3A','regno e ducati dei Longobardi'],anglosassoni:['#7F95A3','regni anglosassoni'],asturie:['#D08C60','regno delle Asturie'],
-  britanni:['#A99BD0','regni dei Britanni'],turingi:['#A7B37A','regno dei Turingi'],gepidi:['#A39B86','regno dei Gepidi'],unni:['#5B5348','dominio degli Unni'],avari:['#5B5348','khanato degli Avari'],
+var REGNI={svevi:['#D08C60','regno degli Svevi'],vandali:['#7B5B3A','regno dei Vandali'],visigoti:['#6A4C93','regno dei Visigoti'],burgundi:['#D684A4','regno dei Burgundi'],franchi:['#3E5F7A','regni dei Franchi'],
+  italia:['#3D7A4F','regno d\'Italia'],longobardi:['#8A8F3A','regno e ducati dei Longobardi'],anglosassoni:['#6E94B4','regni anglosassoni'],asturie:['#D08C60','regno delle Asturie'],
+  britanni:['#A99BD0','regni dei Britanni'],turingi:['#8B4F6B','regno dei Turingi'],gepidi:['#5A9096','regno dei Gepidi'],unni:['#5B5348','dominio degli Unni'],avari:['#5B5348','khanato degli Avari'],
   bulgari:['#8B4F6B','khanato dei Bulgari'],moravi:['#A7B37A','principato di Moravia']};
 var svg=el('svg',{viewBox:'95 55 810 518',   /* ritaglio sull'Occidente: stesso rapporto del riquadro */ role:'img','aria-label':'Mappa dell\'Impero romano','preserveAspectRatio':'xMidYMid slice'},ospite);
 var defs=el('defs',{},svg), trama=el('pattern',{id:'trama-conteso',width:7,height:7,patternUnits:'userSpaceOnUse',patternTransform:'rotate(40)'},defs);

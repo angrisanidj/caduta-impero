@@ -1,8 +1,8 @@
 :root{
   --cap:'Cinzel','Trajan Pro',Georgia,'Times New Roman',serif;
   --serif:'EB Garamond','Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
-  --gold:#A87B2A;--gold2:#D4AE55;--gold3:#F1D99A;
-  --ink:#2B2420;--carta:#F4ECDC;--carta2:#FBF6EA;--line:#D8CCB6;--muted:#6F6356;
+  --gold:#A87B2A;--gold2:#D4AE55;--gold3:#F1D99A;--oro-t:#7D591A;      /* --oro-t: l'oro delle scritte piccole, scurito perché si legga sul fondo (contrasto sopra 4,5 a 1) */
+  --ink:#2B2420;--carta:#EDE3CE;--carta2:#FBF6EA;--line:#D3C6AD;--muted:#675B4F;
   --porpora:#8E2A2A;--vetro:rgba(33,25,18,.78);
   /* stati delle regioni */
   --st-roma:#9A2F2A;--st-usurpatore:#C98A2B;--st-federati:#6E8B5B;--st-regno:#4D6B7C;--st-oriente:#AF9DA7;--st-califfato:#3F8F86;--st-carolingio:#5A3F78;--st-perso:#DCD0B8;--st-chiesa:#E6C55A;
@@ -12,11 +12,11 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--carta);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45}
 button{font:inherit;color:inherit;cursor:pointer}
 button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-.etichetta{margin:0;font-family:var(--cap);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.etichetta{margin:0;font-family:var(--cap);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--oro-t)}
 
 .testata,main,.piede{max-width:1280px;margin:0 auto;padding:0 24px}
 .testata{padding-top:28px;padding-bottom:18px}
-.occhiello{margin:0;font-family:var(--cap);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.occhiello{margin:0;font-family:var(--cap);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--oro-t)}
 h1{margin:4px 0 6px;font-family:var(--cap);font-weight:600;font-size:clamp(28px,4.2vw,46px);line-height:1.05;letter-spacing:.02em}
 .sommario{margin:0;max-width:44em;font-size:20px;color:var(--muted)}
 
@@ -165,7 +165,7 @@ h2{margin:2px 0 8px;font-family:var(--cap);font-weight:600;font-size:clamp(22px,
 
 .cause{margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line);max-width:46em}
 .cause h2{margin:4px 0 10px}
-.cause h3{margin:26px 0 6px;font-family:var(--cap);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.cause h3{margin:26px 0 6px;font-family:var(--cap);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--oro-t)}
 .cause p{margin:0 0 12px}
 .cause .elenco{font-size:15px;color:var(--muted)}
 .piede{padding-top:26px;padding-bottom:90px;font-size:14.5px;font-style:italic;color:var(--muted)}
@@ -224,7 +224,7 @@ body.roma-grande .pellegrino{top:98px}
 .stazioni3d button{position:absolute;left:0;top:0;width:24px;height:24px;padding:0;border-radius:50%;border:2px solid #3a2a10;background:#ffc94a;color:#2B2420;font-family:var(--cap);font-weight:700;font-size:12px;line-height:1;pointer-events:auto;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.45)}
 .stazioni3d button.qui{background:#fff;transform-origin:center;outline:3px solid #ffc94a}
 .scheda.itinerario .lato{margin:0 0 5px}
-.scheda.itinerario .lato b{display:block;font-family:var(--cap);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.scheda.itinerario .lato b{display:block;font-family:var(--cap);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--oro-t)}
 .scheda .passi{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:8px;border-top:1px solid rgba(160,130,60,.35);font-size:13px;color:var(--muted)}
 .scheda .passi button{font-family:var(--cap);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid rgba(160,130,60,.6);background:#fff;color:var(--ink);cursor:pointer}
 .scheda .passi button[disabled]{opacity:.35;cursor:default}
@@ -388,3 +388,45 @@ body.roma-grande .riquadro.roma{min-height:0}
 /* a tutto schermo le due dita ingrandiscono la carta, non la pagina: fuori dalla carta resta solo lo scorrimento verticale delle legende */
 body.impero-grande .riquadro.impero{touch-action:pan-y}
 body.impero-grande .tempo,body.roma-grande .tempo{touch-action:manipulation}
+
+/* ---------- rassegna dell'interfaccia (22 novembre 2026) ----------
+   Leggibilità: nessuna scritta sotto gli 11 punti in maiuscoletto e i 13 in tondo. */
+.suggerimento,.versione,.legenda-popoli em{font-size:13px}
+.legenda-mappa,.legenda-popoli{font-size:13px}
+.legenda-popoli b{font-size:11px}
+@media (max-width:1000px){ .etichetta,.occhiello{font-size:11.5px} }
+/* linea del tempo: sopra ogni atto l'anno in cui comincia (sull'ultimo anche quello in cui la storia finisce); sui telefoni restano solo gli anni */
+.atto-gruppo p{display:flex;gap:5px;font-size:10px;letter-spacing:.05em}
+.atto-gruppo p b{flex:none;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.atto-gruppo p span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.atto-gruppo p b.fine{margin-left:auto}
+.atto-gruppo.attivo p b{color:var(--porpora)}
+/* il dito o il mouse scorre sulla linea: un fumetto dice anno e titolo della tappa che ha sotto (js/pagina.js) */
+.linea{touch-action:pan-y}
+.linea button.mira{background:var(--gold2)}
+.fumetto{position:absolute;left:0;bottom:calc(100% + 8px);z-index:2;transform:translateX(-50%);margin:0;max-width:min(320px,calc(100vw - 24px));padding:6px 11px;border-radius:6px;background:rgba(33,25,18,.93);color:var(--carta2);
+  font-size:14.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.fumetto[hidden]{display:none}
+.fumetto b{margin-right:8px;font-family:var(--cap);font-weight:600;color:var(--gold3);font-variant-numeric:tabular-nums}
+@media (max-width:1000px){
+  .atto-gruppo p{font-size:10px}
+  .comandi button{min-height:36px;padding:6px 12px}
+  #btnPrima,#btnDopo{flex:0 0 64px}
+}
+@media (max-width:520px){ .atto-gruppo p{display:flex;gap:0;margin-bottom:3px} .atto-gruppo p span{display:none} }
+@media (max-height:559px) and (orientation:landscape){ body.impero-grande .atto-gruppo p span,body.roma-grande .atto-gruppo p span{display:none} }      /* telefono coricato a tutto schermo: solo gli anni */
+/* cruscotto: quando la spia della moneta non ha più niente da dire (dopo il 330) esce, e quella del territorio prende tutta la riga */
+.spia[hidden]{display:none}
+.cruscotto.tre .spia:first-child{grid-column:1/-1}
+/* elenco dei monumenti: la legenda dei pallini sta sopra; sui telefoni due colonne, e si apre per intero solo a richiesta */
+.stato-roma .legenda{margin:6px 0 2px}
+.tutti{display:none}
+@media (max-width:520px){
+  .monumenti{columns:2;column-gap:12px;font-size:14.5px}
+  .monumenti li{align-items:flex-start;line-height:1.25;padding:3px 0}
+  .monumenti li::before{margin-top:.3em}
+  .stato-roma.corto .monumenti{max-height:270px;overflow:hidden}
+  .tutti{display:block;width:100%;margin:10px 0 0;padding:9px;font-family:var(--cap);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:var(--carta2);border:1px solid var(--line);border-radius:8px}
+}
+.piede .licenze{margin-top:10px;font-style:normal}
+.piede a{color:inherit;text-decoration-color:var(--gold)}
