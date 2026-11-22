@@ -234,13 +234,20 @@
 window.RM_DATI=(function(){
 'use strict';
 
+/* "sommario": l'atto in tre frasi, per la scheda d'apertura (js/atti.js). Riassume le tappe dell'atto e non aggiunge fatti: ogni affermazione sta, con la sua fonte, nel testo di una tappa. */
 var ATTI=[
- {n:'I',  nome:'La crisi',          da:235, a:284},
- {n:'II', nome:'La ricostruzione',  da:284, a:395},
- {n:'III',nome:'I barbari dentro',  da:395, a:439},
- {n:'IV', nome:'Lo svuotamento',    da:439, a:476},
- {n:'V',  nome:'Dopo la fine',      da:476, a:590},
- {n:'VI', nome:'La città dei papi',  da:590, a:852}
+ {n:'I',  nome:'La crisi',          da:235, a:284,
+  sommario:"In cinquant'anni si contano oltre venti imperatori, quasi tutti uccisi dalle proprie truppe o in battaglia. Uno cade contro i Goti, uno finisce prigioniero dei Persiani; l'impero si spezza in tre e Aureliano lo ricuce. Roma, dopo secoli, torna a chiudersi dentro le mura, e nella moneta d'argento resta il cinque per cento d'argento."},
+ {n:'II', nome:'La ricostruzione',  da:284, a:395,
+  sommario:"Diocleziano divide il comando fra quattro imperatori e prova a contare e tassare tutto; Costantino fonda una nuova Roma sul Bosforo e una moneta d'oro che resterà stabile per secoli. Il governo sta dove stanno gli eserciti: Roma è un monumento, non più una sede. Nel 378, ad Adrianopoli, i Goti accolti dentro l'impero distruggono l'esercito di un imperatore."},
+ {n:'III',nome:'I barbari dentro',  da:395, a:439,
+  sommario:"La corte si chiude a Ravenna. Vandali, Alani e Svevi passano il Reno, la Britannia resta a sé stessa, i Goti di Alarico saccheggiano Roma e pochi anni dopo si insediano in Aquitania per trattato: dentro l'impero nascono i regni. Con Cartagine, nel 439, l'Occidente perde le province più ricche e il grano che sfamava Roma."},
+ {n:'IV', nome:'Lo svuotamento',    da:439, a:476,
+  sommario:"Gli Unni vengono fermati da una coalizione di alleati barbari che un generale romano comanda. Roma è saccheggiata una seconda volta, l'ultima flotta mandata a riprendere l'Africa va perduta, un generale fa e disfa imperatori che governano ormai poco più dell'Italia. Nel 476 Odoacre depone l'ultimo e rimanda le insegne a Costantinopoli."},
+ {n:'V',  nome:'Dopo la fine',      da:476, a:590,
+  sommario:"L'impero d'Occidente è finito, la città no: sotto Odoacre e Teodorico il Senato si riunisce, si restaurano mura e teatri, al Colosseo si danno ancora le cacce. Poi viene la riconquista voluta da Giustiniano: quasi vent'anni di guerra, gli acquedotti tagliati, la peste, Roma presa e ripresa. Infine i Longobardi, e l'unità dell'Italia finisce."},
+ {n:'VI', nome:'La città dei papi',  da:590, a:852,
+  sommario:"Roma è una città di provincia dell'impero d'Oriente, ed è il vescovo a distribuire il grano, a riparare acquedotti e mura, a trattare con chi la assedia. Il Pantheon diventa una chiesa, San Pietro la meta dei pellegrini; i papi chiamano i Franchi, ne ricevono uno Stato e incoronano un imperatore. Nell'852 le mura nuove non chiudono la città antica: proteggono una tomba."}
 ];
 
 /* REVISIONE DEI CONFINI, 21 novembre 2026 sera: le regioni sono 58, ritagliate dove il confine vero si scosta dalle province (elenco e fonti in src/mappa/genera.mjs),

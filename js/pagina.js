@@ -6,10 +6,10 @@ var D=window.RM_DATI, RM=window.RM||{moduli:[]}, MAPPA=window.RM_mappa;
 var T=D.TAPPE, A0=235, A1=852;
 var $=function(id){ return document.getElementById(id); };
 var nf=new Intl.NumberFormat('it-IT');
-var idx=0, anno=T[0].anno, meta=anno, vel=0, notte=0, metaNotte=0, coda=null;
+var idx=0, anno=T[0].anno, meta=anno, vel=0, notte=0, metaNotte=0, coda=null, ascolto=[];      // ascolto: chi vuole sapere quando cambia la tappa (js/atti.js)
 
 /* ---------- cruscotto ---------- */
-var territorio=T.map(function(t){ return [t.anno, MAPPA?MAPPA.territorio(t.regioni):100]; });
+var territorio=T.map(function(t){ return [t.anno, MAPPA?MAPPA.territorio(t.regioni,t.anno):100]; });
 var territorioEst=T.map(function(t){ return [t.anno, MAPPA&&MAPPA.territorioEst?MAPPA.territorioEst(t.regioni):100]; });
 function aGradini(p){ var o=[]; p.forEach(function(q,i){ if(i) o.push([q[0],p[i-1][1]]); o.push(q); }); o.push([A1,p[p.length-1][1]]); return o; }
 function arrotonda(n){ var p=n>=200000?10000:n>=20000?5000:1000; return Math.round(n/p)*p; }
@@ -155,7 +155,8 @@ function punta(x){
   fumetto.hidden=false; var r=cassa.getBoundingClientRect(), m=fumetto.offsetWidth/2+4; fumetto.style.left=Math.max(m,Math.min(r.width-m,centri[k]-r.left))+'px';
 }
 function smetti(){ if(mira>=0) bottoni[mira].classList.remove('mira'); mira=-1; fumetto.hidden=true; premuto=false; centri=null; }
-barra.addEventListener('pointerdown',function(e){ if(e.button) return; centri=null; premuto=true; punta(e.clientX); });
+barra.addEventListener('pointerdown',function(e){ if(e.button) return; if(e.target.closest && e.target.closest('.atto-gruppo>p')) return;      // il nome dell'atto apre la sua scheda (js/atti.js), non sposta la tappa
+  centri=null; premuto=true; punta(e.clientX); });
 barra.addEventListener('pointermove',function(e){ if(!premuto && e.pointerType==='mouse') punta(e.clientX); });
 barra.addEventListener('pointerleave',function(){ if(!premuto) smetti(); });
 window.addEventListener('pointermove',function(e){ if(premuto) punta(e.clientX); });
@@ -167,7 +168,7 @@ function vai(i,subito){
   idx=Math.max(0,Math.min(T.length-1,i));
   var t=T[idx], a=D.ATTI[Math.min(t.atto,D.ATTI.length-1)];
   meta=t.anno; vel=Math.max(8,Math.abs(meta-anno))/1.7; if(subito) anno=meta;
-  $('tAtto').innerHTML=(t.intermezzo?'':'<b>'+t.anno+'</b>')+(t.intermezzo?'Intermezzo':t.epilogo?'Epilogo':'Atto '+a.n+' · '+a.nome);
+  $('tAtto').innerHTML=(t.intermezzo?'':'<b>'+t.anno+'</b>')+(t.intermezzo?'Intermezzo':t.epilogo?'Epilogo':'Atto '+a.n+' · '+a.nome)+'<button type="button" class="as-apri" aria-controls="attoScheda">L’atto in breve</button>';
   $('tTitolo').textContent=t.titolo; $('tTesto').textContent=t.testo;
   $('tStorici').hidden=!t.storici; $('tStoriciTesto').textContent=t.storici||'';
   $('tLeggenda').hidden=!t.leggenda; $('tLeggendaTesto').textContent=t.leggenda||'';      // dove una leggenda nasce da questa tappa: che cosa dicono le fonti e che cosa viene dopo
@@ -180,6 +181,7 @@ function vai(i,subito){
   gruppi.forEach(function(g,k){ g.g.classList.toggle('attivo',k===Math.min(t.atto,gruppi.length-1)); });
   $('btnPrima').disabled=idx===0; $('btnDopo').disabled=idx===T.length-1;
   try{ history.replaceState(null,'','#tappa-'+(idx+1)); }catch(e){}
+  ascolto.forEach(function(f){ f(idx,t); });
   if(subito) applica();
 }
 function applica(){
@@ -274,5 +276,5 @@ else{                                   // apertura dalla fine: la città del 55
     var q=RM.h(x,z)+1; RM.controlli.target.set(x,q,z); RM.camera.position.set(x+dir[0]*d*.82,q+d*.56,z+dir[1]*d*.82); RM.controlli.update(); },400);
 })();
 [].forEach.call(document.querySelectorAll('.menu a'),function(a){ a.addEventListener('click',function(e){ var el=document.getElementById(a.getAttribute('href').slice(1)); if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); } }); });
-window.RM_pagina={vai:vai, ferma:ferma, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
+window.RM_pagina={vai:vai, ferma:ferma, spie:SPIE, quando:function(f){ ascolto.push(f); }, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
 })();

@@ -1,0 +1,78 @@
+/* Schede d'apertura degli atti (js/atti.js): tre frasi, due carte a confronto, i numeri prima e dopo, le tappe. */
+.atto-scheda{position:relative;display:grid;grid-template-columns:1.32fr 1fr;gap:16px 36px;align-items:start;margin:22px 0 0;padding:20px 22px 18px;background:var(--carta2);border:1px solid var(--line);border-top:3px solid var(--porpora);border-radius:4px 4px 12px 12px;box-shadow:var(--ombra)}
+.atto-scheda[hidden]{display:none}
+.atto-scheda .chiudi{position:absolute;top:8px;right:8px;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:none;font-family:var(--ui);font-size:15px;color:var(--muted)}
+.atto-scheda .chiudi:hover{background:var(--carta);color:var(--ink)}
+.as-testa{grid-column:1;min-width:0}
+.as-testa h2{margin:2px 0 2px;font-family:var(--cap);font-weight:600;font-size:clamp(24px,2.8vw,34px);line-height:1.1;letter-spacing:.02em}
+.as-anni{margin:0;font-family:var(--ui);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.as-sommario{margin:10px 0 0;max-width:38em;font-size:19px;line-height:1.42}
+/* le due carte */
+.as-carte{grid-column:2;grid-row:1;display:grid;grid-template-columns:1fr auto 1fr;gap:8px 8px;align-items:center;min-width:0;padding-right:26px}
+.as-carta{margin:0;min-width:0}
+.as-carta svg{display:block;width:100%;aspect-ratio:810/518;border:1px solid var(--line);border-radius:8px;background:#C7D6D3}
+.as-carta figcaption{margin-top:5px;font-family:var(--ui);font-size:12.5px;color:var(--muted);text-align:center}
+.as-carta figcaption b{font-family:var(--cap);font-weight:600;font-size:17px;color:var(--ink);font-variant-numeric:tabular-nums}
+.as-freccia{align-self:center;margin-top:-24px;font-family:var(--ui);font-size:18px;color:var(--oro-t)}
+.m-mini .m-regione{stroke-width:1.4}
+.m-mini .m-regione.conteso{fill:url(#trama-mini);stroke:url(#trama-mini)}
+.m-mini .m-costa{stroke-width:1.6}
+.m-mini-roma{fill:#FBF6EA;stroke:#241E1A;stroke-width:2.6}
+.as-legenda{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:3px 12px;margin:2px 0 0;font-family:var(--ui);font-size:12px;line-height:1.35;color:var(--muted)}
+.as-legenda span{display:inline-flex;align-items:center;gap:5px}
+.as-legenda i{flex:none;width:11px;height:11px;border-radius:2px;border:1px solid rgba(34,28,24,.18)}
+/* i numeri, prima e dopo */
+.as-numeri{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:0;padding:0;list-style:none}
+.as-numeri li{min-width:0;padding:10px 12px 8px;background:var(--carta);border-radius:8px}
+.as-numeri .etichetta{display:block;font-size:11px;letter-spacing:.07em}
+.as-numeri b{display:block;margin-top:2px;font-family:var(--cap);font-weight:600;font-size:19px;line-height:1.2;font-variant-numeric:tabular-nums}
+.as-numeri b .v{white-space:nowrap}
+.as-numeri b i{margin:0 5px;font-family:var(--ui);font-style:normal;font-weight:400;color:var(--oro-t)}
+.as-numeri svg{display:block;width:100%;height:30px;margin-top:4px;overflow:visible}
+.as-numeri rect{fill:rgba(122,31,43,.09)}
+.as-numeri path{fill:none;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.as-numeri path.tutta{stroke:#C9BFB0;stroke-width:1.2}
+.as-numeri path.atto{stroke:var(--porpora);stroke-width:2.2;stroke-linecap:round}
+.as-numeri small{display:block;margin-top:3px;font-family:var(--ui);font-size:11.5px;line-height:1.3;color:var(--muted)}
+.atto-scheda .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* le tappe dell'atto */
+.as-tappe{grid-column:1/-1;min-width:0}
+.as-tappe ol{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0;padding:0;list-style:none}
+.as-tappe button{min-height:36px;padding:5px 12px;font-family:var(--ui);font-size:12.5px;line-height:1.2;text-align:left;color:var(--ink);background:var(--carta);border:1px solid var(--line);border-radius:999px}
+.as-tappe button b{font-family:var(--cap);font-weight:600;margin-right:2px;font-variant-numeric:tabular-nums}
+.as-tappe button:hover{border-color:var(--porpora);color:var(--porpora)}
+.as-tappe button[aria-current="true"]{color:#fff;background:var(--porpora);border-color:var(--porpora)}
+/* i due modi di riaprirla */
+.as-apri{margin-left:12px;padding:3px 10px;font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.04em;text-transform:none;color:var(--oro-t);background:none;border:1px solid var(--line);border-radius:999px;vertical-align:3px;white-space:nowrap}
+.as-apri::after{content:" ▾"} .as-apri[aria-expanded="true"]::after{content:" ▴"}
+.as-apri:hover{border-color:var(--oro-t)}
+.atto-gruppo p.as-nome{cursor:pointer}
+.atto-gruppo p.as-nome:hover span{text-decoration:underline;text-underline-offset:2px}
+.atto-gruppo p.as-nome:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+@media (max-width:1000px){ .atto-scheda{grid-template-columns:1.1fr 1fr;gap:14px 24px;padding:18px 18px 16px} .as-carte{padding-right:22px} }
+@media (max-width:700px){
+  .atto-scheda{grid-template-columns:1fr;gap:14px;padding:16px 16px 14px}
+  .as-testa,.as-carte,.as-numeri,.as-tappe{grid-column:1;grid-row:auto}
+  .as-carte{padding-right:0}
+  .as-testa{padding-right:30px}
+}
+@media (max-width:520px){
+  .as-carte{gap:6px 5px}
+  .as-freccia{font-size:14px}
+  .as-sommario{font-size:16.5px;line-height:1.4}
+  .as-legenda{flex-wrap:nowrap;overflow-x:auto;gap:3px 14px;margin-right:-16px;padding:0 16px 3px 0;white-space:nowrap;scrollbar-width:none}
+  .as-legenda::-webkit-scrollbar{display:none}
+  .as-legenda span{flex:none}
+  /* un numero per riga: nome, valori e nota a sinistra, la curva a destra */
+  .as-numeri{grid-template-columns:1fr;gap:6px}
+  .as-numeri li{display:grid;grid-template-columns:1fr 104px;column-gap:12px;align-items:center;padding:7px 10px 6px}
+  .as-numeri .etichetta,.as-numeri b,.as-numeri small{grid-column:1}
+  .as-numeri svg{grid-column:2;grid-row:1/span 3;margin:0;height:36px}
+  .as-numeri b{font-size:17px}
+  .as-numeri small{margin-top:1px;font-size:11px}
+  .as-tappe ol{flex-wrap:nowrap;overflow-x:auto;margin-right:-16px;padding:0 16px 4px 0;scrollbar-width:none}
+  .as-tappe ol::-webkit-scrollbar{display:none}
+  .as-tappe li{flex:none}
+  .as-apri{margin-left:8px}
+}
+@media print{ .atto-scheda .chiudi,.as-apri{display:none} }

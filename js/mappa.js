@@ -308,8 +308,27 @@ window.addEventListener('keydown',function(e){ if(e.key==='Escape'&&grandeSi) gr
 
 /* la nota in corsivo sotto le legende: sui telefoni sta su due righe e si apre con un tocco (css/carta.css) */
 (function(){ var n=document.querySelector('.riquadro.impero .legenda-popoli:last-of-type'); if(!n||n.id) return; n.classList.add('legenda-nota'); n.addEventListener('click',function(){ n.classList.toggle('aperta'); }); })();
+/* Carta piccola per le schede d'atto (js/atti.js): mare, terra, regioni colorate e Roma; niente popoli, nomi, rilievo. mostra(stati) la ricolora.
+   La trama delle regioni contese è sua, perché quella della carta grande non si vede quando il suo riquadro è nascosto. */
+function miniatura(){
+  var s=document.createElementNS(NS,'svg'), pezzi={}, id;
+  s.setAttribute('viewBox',BASE.join(' ')); s.setAttribute('class','m-mini'); s.setAttribute('aria-hidden','true'); s.setAttribute('preserveAspectRatio','xMidYMid slice');
+  var pt=el('pattern',{id:'trama-mini',width:9,height:9,patternUnits:'userSpaceOnUse',patternTransform:'rotate(40)'},el('defs',{},s)); el('rect',{width:9,height:9,fill:'#DCD0B8'},pt); el('rect',{width:4.2,height:9,fill:'#9A2F2A'},pt);
+  el('rect',{x:0,y:0,width:G.w,height:G.h,fill:'#C7D6D3'},s); el('path',{'class':'m-terra',d:G.terra},s);
+  for(id in G.regioni) pezzi[id]=el('path',{'class':'m-regione perso',d:G.regioni[id].d},s);
+  el('path',{'class':'m-costa',d:G.terra},s);
+  if(G.citta.roma) el('circle',{'class':'m-mini-roma',cx:G.citta.roma.x,cy:G.citta.roma.y,r:6.5},s);
+  return {svg:s, mostra:function(stati){ for(var id in pezzi){ var st=stati[id]||'perso', chi=st.indexOf('regno:')===0?st.slice(6):''; if(chi) st='regno'; pezzi[id].setAttribute('class','m-regione '+st); pezzi[id].style.color=chi&&REGNI[chi]?REGNI[chi][0]:''; } }};
+}
 window.RM_mappa={
   grande:grande,
+  miniatura:miniatura,
+  /* le voci di legenda presenti in una o più carte, con i nomi che valgono nell'anno dato: [colore o fondo, nome] */
+  vociPresenti:function(elenco,anno){
+    var ci={}, out=[]; elenco.forEach(function(stati){ for(var id in regioni) ci[stati[id]||'perso']=1; });
+    STATI.forEach(function(s){ if(ci[s[0]]) out.push([s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':s[0].indexOf('regno:')===0?REGNI[s[0].slice(6)][0]:'var(--st-'+s[0]+')', voceStato(s[0],anno)]); });
+    return out;
+  },
   mostra:function(stati,anno,luoghi,scena){
     if(anno!=null){ fermaRegia(); annoVisto=anno; scriviLuoghi(luoghi); }
     var visti=anno!=null?mostraPopoli(anno):null;
@@ -324,10 +343,11 @@ window.RM_mappa={
       if(nomi[id]) nomi[id].setAttribute('class','m-nome'+(s==='perso'||s==='conteso'?' chiaro':''));
     }
   },
-  /* quota dell'Occidente governata da Roma, pesata per regione: federati e contesi valgono metà */
-  territorio:function(stati){
-    var tot=0, ok=0;
-    for(var id in G.regioni){ if(G.regioni[id].est||G.regioni[id].oltre) continue; var p=G.regioni[id].peso; tot+=p; ok+=p*(stati[id]==='roma'?1:(stati[id]==='federati'||stati[id]==='conteso')?.5:0); }
+  /* quota dell'Occidente governata da Roma, pesata per regione: federati e contesi valgono metà, ma solo finché c'è un governo romano d'Occidente (fino al 480, quando muore Giulio Nepote
+     in Dalmazia). Dopo, una regione contesa lo è fra altri (Goti e Costantinopoli, Visigoti e Arabi, Bizantini e Saraceni) e non conta: prima del 22 novembre 2026 la spia dava il 9% nel 711 */
+  territorio:function(stati,anno){
+    var tot=0, ok=0, meta=anno==null||anno<=480?.5:0;
+    for(var id in G.regioni){ if(G.regioni[id].est||G.regioni[id].oltre) continue; var p=G.regioni[id].peso; tot+=p; ok+=p*(stati[id]==='roma'?1:(stati[id]==='federati'||stati[id]==='conteso')?meta:0); }
     return ok/tot*100;
   },
   /* superficie dell'Occidente intero sulla carta, in km²: la proiezione è conforme e fra Roma, Milano, Ravenna, Cartagine e Costantinopoli un'unità del disegno vale 5,20 km (misurato il 22 novembre 2026 sulle distanze reali
