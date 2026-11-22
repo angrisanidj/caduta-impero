@@ -69,9 +69,11 @@ var voci=(RM.MONUMENTI||[]).map(function(m){
 });
 if(!voci.length) document.querySelector('.stato-roma').hidden=true;
 /* sui telefoni l'elenco è lungo: si apre per intero solo a richiesta (il bottone si vede solo lì, css/stile.css) */
+var contaElenco=0, contaMonumenti=function(){};
 (function(){ var sr=document.querySelector('.stato-roma'), bm=$('btnMonumenti'); if(!bm) return;
-  function scrivi(){ var c=sr.classList.contains('corto'); bm.setAttribute('aria-expanded',c?'false':'true'); bm.textContent=c?'Mostra tutti i '+voci.length+' monumenti':'Mostra meno'; }
-  sr.classList.add('corto'); scrivi(); bm.addEventListener('click',function(){ sr.classList.toggle('corto'); scrivi(); });
+  function scrivi(){ var c=sr.classList.contains('corto'); bm.setAttribute('aria-expanded',c?'false':'true'); bm.textContent=c?'Mostra tutti i '+contaElenco+' monumenti':'Mostra meno'; bm.hidden=contaElenco<=20; }      // venti stanno nelle due colonne dell'elenco corto
+  sr.classList.add('corto'); bm.addEventListener('click',function(){ sr.classList.toggle('corto'); scrivi(); });
+  contaMonumenti=function(n){ contaElenco=n; scrivi(); };
 })();
 /* scheda di un monumento: che cos'è, in che stato è nell'anno corrente, le date che contano */
 var schedaDi=null, schedaChiave='';
@@ -112,12 +114,19 @@ voci.forEach(function(v){
   v.li.addEventListener('keydown',function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); apriScheda(v.m); } });
 });
 RM.apriScheda=function(id){ voci.forEach(function(v){ if(v.m.id===id) apriScheda(v.m); }); };
+/* Nell'elenco stanno solo i monumenti che in quell'anno ci sono, anche in disuso o in rovina: quelli non ancora costruiti e quelli scomparsi non compaiono. La legenda mostra solo gli stati presenti. */
+var legendaStati=[].slice.call(document.querySelectorAll('.stato-roma .legenda .st'));
 function scriviMonumenti(){
+  var cambiato=false;
   voci.forEach(function(v){
     var q=RM.statoMonumento(v.m.id,anno), st=q.t>.5?q.s1:q.s0; if(st===v.st) return;
-    v.st=st; v.li.className=st+(v.m===schedaDi?' scelto':''); v.li.title=nomeStato(v.m,st);
+    v.st=st; v.li.className=st+(v.m===schedaDi?' scelto':''); v.li.title=nomeStato(v.m,st); v.li.hidden=st==='assente'; cambiato=true;
     v.s.textContent=v.m.nome+(v.m.note&&v.m.note[st]?' · '+v.m.note[st]:'');
   });
+  if(!cambiato) return;
+  var ci={}, n=0; voci.forEach(function(v){ if(v.st!=='assente'){ ci[v.st]=1; n++; } });
+  legendaStati.forEach(function(e){ var k=e.className.replace('st ',''); e.hidden=!ci[k]; });
+  contaMonumenti(n);
 }
 
 /* ---------- linea del tempo ---------- */
@@ -254,5 +263,6 @@ if(m){ vai(parseInt(m[1],10)-1,true); }
 else{                                   // apertura dalla fine: la città del 550, poi il riavvolgimento
   anno=550; vai(0); vel=(550-T[0].anno)/4.5; applica();
 }
+[].forEach.call(document.querySelectorAll('.menu a'),function(a){ a.addEventListener('click',function(e){ var el=document.getElementById(a.getAttribute('href').slice(1)); if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); } }); });
 window.RM_pagina={vai:vai, ferma:ferma, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
 })();

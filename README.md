@@ -21,4 +21,4 @@ poi `http://localhost:8766`.
 
 ## Licenze
 
-Codice: MIT. Confini della carta e tabelle dei dati: CC BY-SA 4.0 (i confini derivano dal Digital Atlas of the Roman Empire di Johan Åhlfeldt). Topografia di Roma: © OpenStreetMap contributors, ODbL. Testi e immagini: tutti i diritti riservati. I dettagli in [LICENZA.md](LICENZA.md).
+Codice: MIT. Confini della carta e tabelle dei dati: CC BY-SA 4.0 (i confini derivano dal Digital Atlas of the Roman Empire di Johan Åhlfeldt). Testi, schede e immagini: CC BY-SA 4.0. Topografia di Roma: © OpenStreetMap contributors, ODbL. I dettagli in [LICENZA.md](LICENZA.md).

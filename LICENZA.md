@@ -1,6 +1,6 @@
 # Licenze
 
-In questo progetto stanno insieme cose con licenze diverse. In breve: il codice e i dati si possono riusare, alle condizioni scritte qui sotto.
+In questo progetto stanno insieme cose con licenze diverse. In breve: codice, dati e testi si possono riusare, alle condizioni scritte qui sotto.
 
 ## Codice: licenza MIT
 
@@ -20,9 +20,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 - **Topografia di Roma** (`js/roma-topo.js`, generato da `src/roma/genera.mjs`): Tevere, mura, porte e strade sono © OpenStreetMap contributors, con licenza Open Database License 1.0 (https://opendatacommons.org/licenses/odbl/1-0/); le quote sono SRTM (NASA), di dominio pubblico.
 - **Tabelle di `js/dati.js`** (stati delle regioni per anno, curve, storie dei monumenti): CC BY-SA 4.0. La curva dei commerci è ricavata dalla banca dati dei relitti dell'Oxford Roman Economy Project (J. Strauss, A. Wilson, M. Flohr, 2017).
 
-## Testi e immagini
+## Testi e immagini: CC BY-SA 4.0
 
-I testi delle tappe, delle schede e dei riquadri, e l'immagine `img/anteprima.jpg`, sono di Daniele Angrisani: tutti i diritti riservati, salvo diversa indicazione. Le citazioni dei testi antichi sono traduzioni fatte per questa pagina dalle edizioni indicate nei commenti di `js/dati.js`.
+I testi delle tappe, delle schede dei monumenti e dei riquadri (in `js/dati.js` e in `index.html`), l'icona (`img/icona.svg`) e l'immagine `img/anteprima.jpg` sono di Daniele Angrisani e si possono riusare con la licenza Creative Commons Attribuzione - Condividi allo stesso modo 4.0 Internazionale (https://creativecommons.org/licenses/by-sa/4.0/deed.it): citando l'autore e la pagina («Come finisce un impero», https://angrisanidj.github.io/caduta-impero/) e distribuendo ciò che se ne ricava con la stessa licenza. Le citazioni dei testi antichi sono traduzioni fatte per questa pagina dalle edizioni indicate nei commenti di `js/dati.js`.
 
 ## Cose di altri usate dalla pagina
 
