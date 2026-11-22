@@ -149,6 +149,37 @@ const VERDUN = {
           [[6.1, 51.85], [6.47, 51.66], [6.73, 51.42], [6.75, 51.22], [6.96, 50.94], [7.12, 50.73], [7.62, 50.36], [7.9, 49.97], [7.6, 49.6], [8.2, 48.97], [7.6, 47.56], [8.2, 47.55], [7.9, 46.6], [8.4, 46.5]]],     // a Lotario Colonia, Bonn, Coblenza, Strasburgo; a Ludovico Magonza, Worms, Spira (Langres, Digione e Basilea: non nominate dalla fonte)
   nomi: [[0.3, 46.6, 'Carlo il Calvo'], [6.1, 46.9, 'Lotario'], [10.6, 50.3, 'Ludovico']]
 };
+/* La tetrarchia (293-305): le aree di comando dei quattro, disegnate come Verdun ma senza linee a mano: i tratti sono i bordi comuni dei gruppi di regioni qui sotto,
+   calcolati più giù (confiniFra). Non erano Stati né confini fissi: l'impero restava uno e le leggi uscivano a nome di tutti (l'editto dei prezzi del 301 porta i quattro nomi).
+   Fonti lette il 22 novembre 2026:
+   - Aurelio Vittore, Caesares 39, 30 (thelatinlibrary.com/victor.caes.html): «quadripartito imperio cuncta, quae trans Alpes Galliae sunt, Constantio commissa, Africa Italiaque Herculio,
+     Illyrici ora adusque Ponti fretum Galerio; cetera Valerius retentavit». Nel testo letto si legge «quadripartito», non «quasi partito».
+   - Lattanzio, De mortibus persecutorum 7, 2 («in quattuor partes orbe diviso») e 8, 3 (thelatinlibrary.com/lactantius/demort.shtml): Massimiano tiene l'Italia
+     «subiacerentque opulentissimae provinciae, vel Africa vel Hispania». È l'unico contemporaneo che nomina la Hispania.
+   - Eutropio IX 22 (thelatinlibrary.com/eutropius/eutropius9.shtml): Carausio, poi Alletto, tengono le Britannie; «Britanniae decimo anno receptae» (296). La Britannia quindi non entra
+     nell'area di Costanzo: nel 293 la carta la colora come usurpata (CAMBI in js/dati.js), e fra Gallia e Britannia c'è il mare.
+   Dove gli studiosi divergono (e la carta lo dice con un tratto a trattini, `discussa`):
+   - la Hispania: con Massimiano per Lattanzio; con Costanzo in altri quadri moderni (Encyclopaedia Britannica, voce Diocletian: Costanzo con Gallia, Spagna e Britannia). Qui sta con Massimiano
+     e il tratto dei Pirenei è a trattini.
+   - la Tracia: a Galerio se «fino allo stretto del Ponto» vale alla lettera (Vittore); a Diocleziano per la Britannica. Qui sta con Galerio e il tratto fra Tracia, Mesia e Macedonia è a trattini.
+   - lo schema di Vittore vale più per gli anni dopo il 299: fra il 293 e il 299 Diocleziano sta spesso a Sirmio e sul Danubio e Galerio combatte in Egitto e contro la Persia
+     (Barnes, Constantine and Eusebius, 1981, p. 17, come lo riassume la voce Diocletian di Wikipedia in inglese). Lo dice la riga sotto la carta (LUOGHI_TAPPA del 293).
+   Approssimazioni: la regione `rezia` unisce Rezia e Norico occidentale, che nei quadri successivi stanno in diocesi diverse (la Rezia con l'Italia, il Norico con la Pannonia):
+   sta tutta con Massimiano. La Mauretania Tingitana (nella regione `mauretania`) sta con l'Africa: in ogni ipotesi è di Massimiano. Dacia e Agri Decumates nel 293 sono perduti e non entrano. */
+const TETRARCHIA = {
+  gruppi: {
+    costanzo:    ['gallia', 'bretagna', 'belgica', 'soissons', 'aquitania', 'alvernia', 'provenza', 'settimania', 'burgundia', 'sapaudia'],
+    massimiano:  ['italia_nord', 'liguria', 'venezia', 'ravenna', 'bolognese', 'spoleto', 'pentapoli', 'roma', 'campania', 'napoli', 'benevento', 'salento', 'otranto', 'calabria', 'bruzio',
+                  'sicilia', 'sardegna', 'corsica', 'rezia', 'africa', 'numidia', 'mauri', 'mauretania'],
+    hispania:    ['hispania', 'baleari', 'gallaecia', 'asturie', 'marca', 'spania'],                    // con Massimiano, ma discussa
+    galerio:     ['carantania', 'pannonia', 'dalmazia', 'mesia_sup', 'mesia_inf', 'balcani'],
+    tracia:      ['tracia'],                                                                          // con Galerio, ma discussa
+    diocleziano: ['anatolia', 'levante', 'egitto', 'creta']
+  },
+  /* le coppie di aree di cui si traccia il bordo comune via terra (gli stretti non contano) */
+  linee: [['costanzo', 'massimiano'], ['massimiano', 'galerio'], ['massimiano', 'diocleziano'], ['costanzo', 'hispania', 'discussa'], ['galerio', 'tracia', 'discussa']],
+  nomi: [[2.2, 47.3, 'Costanzo', 'cesare'], [7.6, 35.25, 'Massimiano', 'augusto'], [22.2, 42.6, 'Galerio', 'cesare'], [33.6, 37.75, 'Diocleziano', 'augusto']]      // Massimiano sta in Numidia: l'Italia è già piena di nomi
+};
 /* una geometria GeoJSON diventa un multipoligono piano, sfoltito: punti a meno di 0,4 unità dal precedente si saltano */
 function piano(geo) {
   const pol = geo.type === 'Polygon' ? [geo.coordinates] : geo.coordinates, out = [];
@@ -270,8 +301,9 @@ const POPOLI = {
 };
 const out = { w: W, h: H, terra: tracciato(TERRA), regioni: {}, citta: {}, popoli: {} };
 for (const [id, q] of Object.entries(POPOLI)) out.popoli[id] = { nome: q.nome, poi: q.poi || [], peso: q.peso, fine: q.fine, t: q.t.map(v => { const p = proj([v[1], v[2]]), o = [v[0], f1(p[0]), f1(p[1]), v[3]]; if (v[4]) o.push(v[4].map(c => { const w = proj(c); return [f1(w[0]), f1(w[1])]; })); return o; }) };
+const FORME = {};
 for (const [id, r] of Object.entries(REGIONI)) {
-  const m = forma(r);
+  const m = forma(r); FORME[id] = m;
   let area = 0, tot = 0, cx = 0, cy = 0;                // baricentro del pezzo più grande, per l'etichetta; la superficie pesa la quota di territorio
   for (const pol of m) {
     const a = pol[0]; let A = 0, x = 0, y = 0;
@@ -286,6 +318,40 @@ for (const [id, c] of Object.entries(LUOGHI)) { const p = proj([c[0], c[1]]); ou
 for (const [id, c] of Object.entries(CITTA)) { const p = proj([c[0], c[1]]); out.citta[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
 
 out.verdun = { linee: VERDUN.linee.map(l => 'M' + l.map(c => { const p = proj(c); return f1(p[0]) + ' ' + f1(p[1]); }).join('L')), nomi: VERDUN.nomi.map(n => { const p = proj([n[0], n[1]]); return [f1(p[0]), f1(p[1]), n[2]]; }) };
+/* Il bordo comune di due aree della tetrarchia: si percorre il contorno dell'area A, lato per lato; un lato è «comune» se, a 2 o 3,5 unità dal suo punto medio,
+   da una parte si esce da A e si entra in B (le province dell'atlante, sfoltite una per una, non combaciano al decimo di unità). I lati comuni consecutivi fanno una linea;
+   le linee sotto le 8 unità (scogli, sbavature) si scartano. Gli stretti larghi più di 3,5 unità restano fuori da soli. */
+function dentroMulti(m, x, y) { let d = false; for (const pol of m) for (const a of pol) for (let i = 0, j = a.length - 1; i < a.length; j = i++) { const [xi, yi] = a[i], [xj, yj] = a[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) d = !d; } return d; }
+function confiniFra(A, B) {
+  const linee = [];
+  for (const pol of A) for (const a of pol) {
+    const n = a.length - 1, comune = [];
+    for (let i = 0; i < n; i++) {
+      const p = a[i], q = a[i + 1], mx = (p[0] + q[0]) / 2, my = (p[1] + q[1]) / 2, l = Math.hypot(q[0] - p[0], q[1] - p[1]) || 1, nx = -(q[1] - p[1]) / l, ny = (q[0] - p[0]) / l;
+      let si = false;
+      for (const d of [2, 3.5]) for (const s of [1, -1]) { const x = mx + s * nx * d, y = my + s * ny * d; if (!dentroMulti(A, x, y) && dentroMulti(B, x, y)) si = true; }
+      comune.push(si);
+    }
+    let i0 = comune.indexOf(false); if (i0 < 0) { linee.push(a); continue; }      // tutto il contorno è comune (un'enclave)
+    let corsa = null;
+    for (let k = 1; k <= n; k++) {
+      const i = (i0 + k) % n;
+      if (comune[i]) { if (!corsa) corsa = [a[i]]; corsa.push(a[i + 1]); }
+      else if (corsa) { linee.push(corsa); corsa = null; }
+    }
+    if (corsa) linee.push(corsa);
+  }
+  return linee.filter(l => { let s = 0; for (let i = 1; i < l.length; i++) s += Math.hypot(l[i][0] - l[i - 1][0], l[i][1] - l[i - 1][1]); return s >= 8; });
+}
+{
+  const unione = ids => ids.reduce((m, id) => { if (!FORME[id]) throw new Error('regione sconosciuta nella tetrarchia: ' + id); return m.length ? pc.union(m, FORME[id]) : FORME[id]; }, []);
+  const G = {}; for (const [k, ids] of Object.entries(TETRARCHIA.gruppi)) G[k] = unione(ids);
+  out.tetrarchia = {
+    linee: TETRARCHIA.linee.map(([a, b, discussa]) => ({ d: confiniFra(G[a], G[b]).map(l => 'M' + l.map(p => f1(p[0]) + ' ' + f1(p[1])).join('L')).join(''), discussa: !!discussa })),
+    nomi: TETRARCHIA.nomi.map(n => { const p = proj([n[0], n[1]]); return [f1(p[0]), f1(p[1]), n[2], n[3]]; })
+  };
+  for (const l of out.tetrarchia.linee) console.log('tetrarchia', l.discussa ? 'discussa' : 'linea', l.d.split('M').length - 1, 'tratti,', l.d.length, 'car.');
+}
 /* Fiumi: i corsi veri di Natural Earth 1:10m, scelti e sfoltiti da fiumi.mjs (grezzi/fiumi-scelti.json). Reno e Danubio sono il confine dell'impero e hanno il tratto più forte.
    Qui si proiettano e si sfoltiscono ancora: un punto ogni 0,6 unità della carta basta. */
 const FIUMI = JSON.parse(fs.readFileSync(new URL('./grezzi/fiumi-scelti.json', import.meta.url), 'utf8'));

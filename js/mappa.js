@@ -65,6 +65,13 @@ function rettoNome(np,o){ return [np.x+o[0],np.y+o[1]-3.2,np.w,16]; }      // la
 var annoCarta=document.createElement('p'); annoCarta.className='m-anno'; annoCarta.setAttribute('aria-hidden','true'); ospite.appendChild(annoCarta);
 var verdun=el('g',{'class':'m-verdun via'},svg);
 if(G.verdun){ G.verdun.linee.forEach(function(d){ el('path',{d:d},verdun); }); G.verdun.nomi.forEach(function(n){ el('text',{x:n[0],y:n[1]},verdun).textContent=n[2]; }); }      // 843: l'impero dei Franchi diviso fra i tre nipoti di Carlo Magno
+/* 293-305: le aree di comando della tetrarchia, come Verdun. Le linee sono i bordi comuni delle regioni (src/mappa/genera.mjs, TETRARCHIA, con le fonti); quelle discusse sono a trattini */
+var tetra=el('g',{'class':'m-tetra via'},svg);
+if(G.tetrarchia){
+  G.tetrarchia.linee.forEach(function(l){ if(l.d) el('path',{d:l.d,'class':l.discussa?'discussa':''},tetra); });
+  G.tetrarchia.nomi.forEach(function(n){ var t=el('text',{x:n[0],y:n[1]},tetra); t.textContent=n[2]; el('tspan',{x:n[0],dy:10,'class':'rango'},t).textContent=n[3]; });
+}
+function tetrarchia(anno){ return anno>=293 && anno<305; }      // la prima tetrarchia: dal 1° marzo 293 alle abdicazioni del 1° maggio 305
 var citta=el('g',{'class':'m-citta'},svg), scritte={}, cittaPos=[], larghe={};
 if(G.citta.roma) el('circle',{'class':'m-battito',cx:G.citta.roma.x,cy:G.citta.roma.y,r:4},citta);      // Roma pulsa piano: è lì che guarda l'altra scena
 ['roma','ravenna','milano','treviri','cartagine','costantinopoli'].forEach(function(id){
@@ -94,6 +101,13 @@ Object.keys(G.popoli||{}).forEach(function(id){
 var stratoLuoghi=el('g',{'class':'m-luoghi'},svg), luoghiOra=[], rigaLuoghi=document.createElement('p');
 rigaLuoghi.className='legenda-luoghi'; rigaLuoghi.hidden=true; if(legendaPrima()) ospite.parentNode.insertBefore(rigaLuoghi,legendaPrima());
 function legendaPrima(){ return document.getElementById('legendaMappa'); }
+/* negli anni della tetrarchia la riga sotto la carta dice anche che cosa sono le linee tratteggiate (dopo i luoghi, se ce ne sono) */
+function notaTetra(anno){
+  if(!G.tetrarchia || !tetrarchia(anno)) return;
+  var s=document.createElement('span'); s.className='tetra';
+  s.textContent='Puntini: aree di comando, non Stati. L’impero resta uno e le leggi valgono per tutti. A trattini: attribuzione discussa (Hispania, Tracia).';
+  rigaLuoghi.appendChild(s); rigaLuoghi.hidden=false;
+}
 function scriviLuoghi(l){
   luoghiOra=l||[]; rigaLuoghi.textContent=''; rigaLuoghi.hidden=!luoghiOra.length;
   luoghiOra.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); rigaLuoghi.appendChild(s); });
@@ -518,6 +532,7 @@ window.RM_mappa={
     if(anno!=null && scritte.costantinopoli){ var nc=anno<330?'Bisanzio':G.citta.costantinopoli.nome; if(scritte.costantinopoli.textContent!==nc) scritte.costantinopoli.textContent=nc; }      // prima di piazzare i nomi: Bisanzio è più corto
     var visti=anno!=null?mostraPopoli(anno):null;
     if(anno!=null) avviaRegia(luoghi,scenaOra);
+    if(anno!=null){ tetra.setAttribute('class','m-tetra'+(tetrarchia(anno)?'':' via')); notaTetra(anno); }
     if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
     aggiornaLegende(stati,anno,visti);
     for(var id in regioni){

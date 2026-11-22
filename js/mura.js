@@ -45,10 +45,10 @@ var mura=(function(){
   var S=new RM.Costruttore(); [-.42,-.14,.14,.42].forEach(function(x){ S.scatola(.014,1.14,.03,x,0,.3,P.tronco); }); [.3,.62,.94].forEach(function(y){ S.scatola(1,.02,.1,0,y,.27,P.tronco); });
   var ponteggi=istanze(S.geometria(),RM.matPietra(),passi.length); ponteggi.visible=false; ponteggi.receiveShadow=false;
   /* Dicembre 791: il Tevere «portam quae dicitur Flamminea … a fundamenta evellens» (LP, Adriano I 94). Quando sia stata rifatta non è scritto: qui resta abbattuta. */
-  function vistaFlaminia(alt,anno){ if(flaminia){ flaminia.visible=alt>.01&&!(anno>=791.95); flaminia.scale.y=Math.max(alt,.0001); } }
+  function vistaFlaminia(alt,anno){ if(flaminia){ flaminia.visible=alt>.01&&!(anno>=790.9);      /* alla tappa del 791 la porta è già a terra, come dicono testo e didascalia */ flaminia.scale.y=Math.max(alt,.0001); } }
   var ultima=-1, ultimaBr=-1, ultimoCant=-1;
   return function(alt,br,anno,cant){
-    var inCantiere=cant>0&&cant<1, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta
+    var rialzo=alt>1.004&&alt<1.496, inCantiere=(cant>0&&cant<1)||rialzo, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
     vistaFlaminia(porteSu,anno);
     if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01 && Math.abs(cant-ultimoCant)<.002) return; ultima=alt; ultimaBr=br; ultimoCant=cant;
     passi.forEach(function(p,j){
@@ -58,7 +58,7 @@ var mura=(function(){
       d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix(); tratti.setMatrixAt(j,d.matrix);
       d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.z=0; d.scale.set(1,sy,1); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);      // una torre a ogni passo
       if(inCantiere){      // ponteggio sui tratti che stanno salendo, un poco più alto del muro
-        if(c>.1&&c<1){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);
+        if(rialzo||(c>.1&&c<1)){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);
         d.updateMatrix(); ponteggi.setMatrixAt(j,d.matrix);
       }
     });
@@ -104,7 +104,7 @@ var acque=(function(){
   // RIPARA e INCURIA, per linea: quota dei tagli riparati dopo il 554; quota dei tratti che cedono per incuria fra VI e VIII secolo
   el.forEach(function(e){
     var b=sorte[e.blocco]||(sorte[e.blocco]=[rnd(),rnd(),rnd(),rnd()]), c=sorte['c'+e.blocchetto]||(sorte['c'+e.blocchetto]=[rnd(),rnd()]);
-    e.taglio=b[0]<.4?536.9+b[1]*.5:9999;                                           // il taglio del 537 colpisce tratti contigui
+    e.taglio=b[0]<.4?536.5+b[1]*.48:9999;                                           // il taglio del 537 colpisce tratti contigui
     e.ripara=e.taglio<9999&&!e.perso&&b[2]<RIPARA[e.li]?556+b[3]*50:9999;          // riparazioni dopo la Prammatica Sanzione
     e.cede=c[0]<(e.perso?.65:INCURIA[e.li])?570+c[1]*190:9999;                     // crolli per incuria
     e.rotto756=VENTI[e.li]&&b[1]<.45?756+b[3]*.4:9999;                    // Sabbatina e Iobia: di nuovo rotte, probabilmente nell'assedio di Astolfo

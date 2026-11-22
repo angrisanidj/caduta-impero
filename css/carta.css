@@ -67,3 +67,11 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
   body:not(.impero-grande) .legenda-nota.aperta{-webkit-line-clamp:unset;display:block}
   .legenda-luoghi{min-height:0}
 }
+/* La tetrarchia (293-305, js/mappa.js, strato m-tetra): le aree di comando dei quattro, nello stile delle linee di Verdun; a trattini, più sottili, dove l'attribuzione è discussa */
+.m-tetra{transition:opacity .9s ease;pointer-events:none} .m-tetra.via{opacity:0}
+.m-tetra path{fill:none;stroke:#FBF6EA;stroke-width:1.6;stroke-dasharray:1 3.2;stroke-linecap:round}
+.m-tetra path.discussa{stroke-width:1.2;stroke-dasharray:2.6 3;stroke-linecap:butt;opacity:.85}
+.m-tetra text{font-family:var(--serif);font-style:italic;font-size:10.5px;text-anchor:middle;fill:#FBF6EA;paint-order:stroke;stroke:rgba(60,20,20,.35);stroke-width:2.2px}
+.m-tetra .rango{font-size:8.5px;letter-spacing:.06em}
+.legenda-luoghi span.tetra{color:var(--ink2,var(--ink))}
+.legenda-luoghi span.tetra::before{width:16px;height:0;margin:0 7px 0 1px;background:none;border-top:2px dotted currentColor;transform:none;vertical-align:3px}

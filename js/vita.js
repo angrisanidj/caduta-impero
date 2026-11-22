@@ -177,7 +177,7 @@ function muoviBarche(dt){
 
 RM.moduli.push(function(anno){
   annoOra=anno;
-  quotaGente=Math.min(1,D.interp(D.CURVE.popolazione.punti,anno)/900000);
+  quotaGente=Math.min(1,D.interp(D.CURVE.popolazione.punti,anno)/900000)*(1-RM.sfuma(545.6,546,anno)*(1-RM.sfuma(546.3,547.5,anno)));      // 546: Totila porta via gli abitanti e la città resta deserta «quadraginta aut amplius dies» (Marcellino Comes): alla tappa le strade sono vuote
   quotaBarche=Math.max(Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60), RM.sfuma(845.5,846,anno)*(1-RM.sfuma(846.4,847.4,anno)));   // nell'846 il fiume si riempie delle navi saracene
   quotaPellegrini=D.interp(PELLEGRINI_NEL_TEMPO,anno);
   FONTI.forEach(function(f){ if(f.id){ var q=RM.statoMonumento(f.id,anno), s=f.stato||'uso'; f.vivo=(q.s0===s?1-q.t:0)+(q.s1===s?q.t:0); } });

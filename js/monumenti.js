@@ -930,7 +930,7 @@ RM.statoMonumento=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, i=0, k;
   for(k=0;k<st.length;k++) if(anno>=st[k][0]) i=k;
   var s0=anno<st[0][0]?'assente':st[i][1], prossimo=st[i+1];
-  var brusco=prossimo&&(prossimo[1]==='bruciato'||prossimo[1]==='spogliato'||prossimo[1]==='crollato'||(prossimo[1]==='assente'&&id==='adrianostatue'));      // le statue del mausoleo cadono in un giorno (537)
+  var brusco=prossimo&&(prossimo[1]==='bruciato'||prossimo[1]==='spogliato'||prossimo[1]==='crollato'||(prossimo[1]==='assente'&&(id==='adrianostatue'||id==='colosso')));      /* anche il Colosso sparisce di colpo: non si accorcia negli anni prima */      // le statue del mausoleo cadono in un giorno (537)
   return {s0:s0, s1:prossimo?prossimo[1]:s0, t:prossimo?RM.sfuma(prossimo[0]-(brusco?.4:6),prossimo[0],anno):0};
 };
 /* Degrado in due tempi.
