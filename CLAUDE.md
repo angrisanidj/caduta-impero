@@ -14,7 +14,7 @@ Pubblicata su https://angrisanidj.github.io/caduta-impero/ (repository `angrisan
 ## Struttura
 
 - `index.html`, `css/stile.css`
-- `js/dati.js`: tutti i contenuti. `TAPPE` (gli stati delle regioni della mappa stanno nella tabella `CAMBI`, per anno di tappa; `storici` per il riquadro degli storici e `voci:[{testo,chi}]` per le citazioni dei contemporanei, tradotte da una fonte letta e annotata nel commento accanto), `CURVE` (popolazione con `banda` delle stime), `MONUMENTI` (storie `[anno, stato]`; stati: uso, chiuso, spogliato, cava, bruciato, crollato, assente), `SCHEDE`, `EVENTI` (sacchi, assedi, incendi; `piena:true` allaga le zone basse, `velo:true` vela il sole), `CHIESE`, `ITINERARIO`.
+- `js/dati.js`: tutti i contenuti. `TAPPE` (gli stati delle regioni della mappa stanno nella tabella `CAMBI`, per anno di tappa; `storici` per il riquadro degli storici, `leggenda` per il riquadro «Fra storia e leggenda», `protagonisti` (dalla tabella `PROTAGONISTI`) e `voci:[{testo,chi}]` per le citazioni dei contemporanei, tradotte da una fonte letta e annotata nel commento accanto), `CURVE` (popolazione con `banda` delle stime), `MONUMENTI` (storie `[anno, stato]`; stati: uso, chiuso, spogliato, cava, bruciato, crollato, assente), `SCHEDE`, `EVENTI` (sacchi, assedi, incendi; `piena:true` allaga le zone basse, `velo:true` vela il sole), `CHIESE`, `ITINERARIO`.
 - `js/roma-topo.js`: generato da `src/roma/genera.mjs` (Tevere, mura, porte e strade da OpenStreetMap; quote SRTM). Non modificare a mano. Le strade (`VIE` nel generatore) uniscono uno scheletro a mano e le vie moderne eredi delle antiche, scaricate con `src/roma/grezzi/q2.txt`; le vie strette del centro antico (via Sacra, Argileto, vici e clivi) vengono da `q3.txt`. I centri reali dei resti del Foro stanno in `grezzi/osm-foro.json` (`q4.txt`).
 - `js/base.js`: renderer three.js r128 (script classici, niente moduli), terreno, colli (`COLLI`, rilievo accentuato 1,8 volte), strade, fiume, luce, effetti a tutto schermo, regolatore della qualità (`RM.livello`), `RM.h`, `RM.hRapida`, `RM.ll(lat,lon)`, `RM.vola`.
 - `js/costruttore.js`: `RM.Costruttore` (solidi fusi in una maglia) e `RM.matRovina` (shader del degrado: crepe, crolli, spoglio, lato sud).
@@ -31,6 +31,8 @@ Convenzioni: 1 unità = 10 m; origine al Foro Romano (41.8925 N, 12.4853 E); x v
 
 ## Lavorare
 
+- Linea del tempo (`js/pagina.js`): sopra ogni atto l'anno in cui comincia; il dito o il mouse scorre sulla barra e un fumetto dice anno e titolo, al rilascio si va alla tappa. Sui telefoni l'elenco dei monumenti è corto e si apre con un bottone; la spia della moneta esce dopo il 330. Le scritte dorate piccole usano `--oro-t` (contrasto sopra 4,5 a 1 sul fondo). I chilometri quadrati della spia del territorio sono misurati sulla carta (`RM_mappa.kmqOvest()`).
+- Licenze in `LICENZA.md` (codice MIT, dati CC BY-SA 4.0, topografia di Roma ODbL, testi riservati) e in una riga in fondo alla pagina.
 - Anteprima: `python -m http.server 8766` (configurazione `caduta` in `.claude/launch.json`). Il server non invalida la cache: prima di ricaricare, `fetch(src,{cache:'reload'})` con l'indirizzo esatto dei tag `<script>` e `<link>` (hanno `?v=…` in coda: senza, si rinfresca un'altra voce della cache).
 - Controllo sintassi: `node --check js/<file>.js`.
 - Fra due tappe il tempo scorre in meno di due secondi: un evento si vede solo se cade nell'anno di una tappa.

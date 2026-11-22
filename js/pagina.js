@@ -14,8 +14,12 @@ var territorioEst=T.map(function(t){ return [t.anno, MAPPA&&MAPPA.territorioEst?
 function aGradini(p){ var o=[]; p.forEach(function(q,i){ if(i) o.push([q[0],p[i-1][1]]); o.push(q); }); o.push([A1,p[p.length-1][1]]); return o; }
 function arrotonda(n){ var p=n>=200000?10000:n>=20000?5000:1000; return Math.round(n/p)*p; }
 var SPIE=[
- {id:'territorio', nome:'Occidente governato da Roma', nota:'quota di superficie, per regioni; tratteggio: i territori di Costantinopoli (395 = 100)', stima:true, punti:aGradini(territorio), altra:aGradini(territorioEst), max:125,
-  val:function(a){ var k=0; for(var i=0;i<territorio.length;i++) if(territorio[i][0]<=a+.001) k=i; return Math.round(territorio[k][1])+'%'; }},
+ {id:'territorio', nome:'Occidente governato da Roma', stima:true, punti:aGradini(territorio), altra:aGradini(territorioEst), max:125,
+  quota:function(a){ var k=0; for(var i=0;i<territorio.length;i++) if(territorio[i][0]<=a+.001) k=i; return territorio[k][1]; },
+  val:function(a){ return Math.round(this.quota(a))+'%'; },
+  /* la quota tradotta in chilometri quadrati, misurati su questa carta (js/mappa.js, kmqOvest): un ordine di grandezza, non un dato pubblicato */
+  notaA:function(a){ var q=MAPPA&&MAPPA.kmqOvest?this.quota(a)/100*MAPPA.kmqOvest():0, s=q>=950000?(q/1e6).toFixed(1).replace('.',',')+' milioni di km²':q>=10000?nf.format(Math.round(q/10000)*10000)+' km²':'';
+    return 'quota di superficie'+(s?': circa '+s+' su questa carta':', per regioni')+'; tratteggio: i territori di Costantinopoli (395 = 100)'; }},
  {id:'argento', nome:D.CURVE.argento.nome, punti:D.CURVE.argento.punti, max:50, fine:D.CURVE.argento.fine,
   val:function(a){ return a<=D.CURVE.argento.fine ? Math.round(D.interp(this.punti,a))+'%' : 'oro'; },
   notaA:function(a){ return a<=D.CURVE.argento.fine ? D.CURVE.argento.nota : D.CURVE.argento.dopo; }},

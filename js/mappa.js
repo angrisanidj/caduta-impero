@@ -231,6 +231,9 @@ window.RM_mappa={
     for(var id in G.regioni){ if(G.regioni[id].est||G.regioni[id].oltre) continue; var p=G.regioni[id].peso; tot+=p; ok+=p*(stati[id]==='roma'?1:(stati[id]==='federati'||stati[id]==='conteso')?.5:0); }
     return ok/tot*100;
   },
+  /* superficie dell'Occidente intero sulla carta, in km²: la proiezione è conforme e fra Roma, Milano, Ravenna, Cartagine e Costantinopoli un'unità del disegno vale 5,20 km (misurato il 22 novembre 2026 sulle distanze reali
+     fra le città: quattro coppie, da 5,199 a 5,203), cioè 27,06 km² per unità quadrata. Fa circa 2,75 milioni di km², Agri Decumates e Mauretanie interne compresi */
+  kmqOvest:function(){ var tot=0; for(var id in G.regioni){ if(!G.regioni[id].est && !G.regioni[id].oltre) tot+=G.regioni[id].peso; } return tot*27.06; },
   /* territori governati dalla corte d'Oriente, fatto 100 l'Oriente del 395 (senza la Dacia, già perduta): con Giustiniano supera 100, perché riprende pezzi d'Occidente */
   territorioEst:function(stati){
     var base=0, ok=0, id, p, s;
