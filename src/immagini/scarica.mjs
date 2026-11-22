@@ -117,6 +117,29 @@ for (const x of elenco) {
   const ris = RISERVE[x.anno + '|' + x.nome] ?? RISERVE[x.nome]; if (ris) v.riserva = ris;      // «anno|nome» quando due persone hanno lo stesso nome (Leone I papa e Leone I imperatore)
   indice[x.anno + '|' + x.nome] = v;
 }
+/* Ritratti ricostruiti (chiesti dall'utente il 23 novembre 2026 per chi non ha nessuna immagine): generati con un modello di immagini dalle schede delle fonti
+   di src/immagini/ricostruzioni.md, guardati uno per uno e messi a mano in img/protagonisti/ric-<nome>.jpg. In pagina: tipo «ricostruzione», il volto è dichiarato immaginario. */
+const RICOSTRUZIONI = {
+  'Cniva': 'capo goto della metà del III secolo: veste e mantello di lana secondo i Goti del sarcofago Grande Ludovisi',
+  'Cipriano': 'vescovo di Cartagine verso il 250: dalmatica, tunica di lino e mantello secondo la Vita di Ponzio e gli Atti del suo martirio',
+  'Ormisda': 'principe persiano in esilio: veste e berretto secondo le monete e i rilievi sasanidi del IV secolo; l\'abito persiano è una scelta, dopo anni a corte poteva vestire alla romana',
+  'Fritigerno': 'capo goto nel 378: capelli, mantello e fibula secondo le fonti sui Goti e i corredi del IV secolo',
+  'Arbogaste': 'generale franco dell\'esercito romano: tunica, cintura militare e mantello con fibula a balestra come nel missorio di Teodosio e nel dittico di Stilicone',
+  'Alarico': 're dei Goti e generale romano: abito da ufficiale romano del suo tempo, capelli alla gotica secondo Sinesio e Sidonio',
+  'Vallia': 're visigoto nel 418: abito sobrio secondo le fonti sui Goti del V secolo',
+  'Teodorico I': 're visigoto, anziano nel 451 (Giordane: «maturae senectutis»): abito e acconciatura secondo Sidonio, che descrive suo figlio',
+  'Procopio': 'storico e consigliere a Costantinopoli: abiti di corte come nei mosaici di San Vitale',
+  'Alboino': 're longobardo: acconciatura e vesti come le descrive Paolo Diacono (IV 22); «statura procerus» (II 28)',
+  'Tariq ibn Ziyad': 'comandante berbero nel 711: abiti dei Berberi del tempo; le fonti non lo descrivono',
+  'Musa ibn Nusayr': 'governatore arabo dell\'Africa, anziano nel 711: abiti arabi omayyadi; le fonti non lo descrivono',
+  'Ine': 're del Wessex in partenza per Roma: abito da viaggio secondo i corredi anglosassoni intorno al 700',
+};
+for (const x of elenco) {
+  const cosa = RICOSTRUZIONI[x.nome], chiave = x.anno + '|' + x.nome; if (!cosa || indice[chiave]) continue;
+  const nome = 'ric-' + sigla(x.nome) + '.jpg', p = path.join(CARTELLA, nome); if (!fs.existsSync(p)) { console.log('ricostruzione non ancora fatta:', x.nome); continue; }
+  const [w, h] = misure(fs.readFileSync(p));
+  indice[chiave] = { f: 'img/protagonisti/' + nome, w, h, cosa: 'ricostruzione: ' + cosa, tipo: 'ricostruzione', credito: 'Generata per questa pagina con il modello Seedream 5 Pro (ElevenLabs), 23 novembre 2026', pagina: 'https://github.com/angrisanidj/caduta-impero/blob/main/src/immagini/ricostruzioni.md', licenza: 'CC BY-SA 4.0' };
+}
 for (const n of Object.keys(RISERVE)) if (!elenco.some(x => x.nome === n && x.file)) console.log('riserva senza immagine:', n);
 fs.writeFileSync(path.join(RADICE, 'js', 'ritratti.js'),
   '/* Generato da src/immagini/scarica.mjs: non modificare a mano. Chiave: «anno della tappa|nome» come in PROTAGONISTI (js/dati.js).\n' +

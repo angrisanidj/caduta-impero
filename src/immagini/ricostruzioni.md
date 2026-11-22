@@ -10,7 +10,23 @@ Parole da evitare comuni a tutti (negative): `text, letters, inscription, waterm
 
 ## Tabella riassuntiva
 
-(in fondo al lavoro)
+| Persona (tappa) | Età nella tappa | Fonti sull'aspetto | Punti certi (o quasi) | Punti inventati | Quanto poggia sulle fonti |
+|---|---|---|---|---|---|
+| Cniva (251) | ignota; scelta 40 | nessuna su di lui; Giordane 72 (*capillati*); sarcofago Grande Ludovisi (250-260, Goti discussi) | capelli lunghi, barba, niente armatura | volto, età, colori, fibula | poco |
+| Cipriano (251) | circa 40 (nato verso il 210) | Ponzio, *Vita* 6 (volto grave e lieto, vesti misurate); *Acta proconsularia* 5 (mantello, dalmatica, lino, nel 258); Tertulliano, *De pallio* 6 | dalmatica, sottotunica di lino, mantello; nessuna insegna vescovile | volto, barba, colori | molto per l'abito, nulla per il volto |
+| Ormisda (357) | ignota; più di 50, scelta 60 | nessuna su di lui; Ammiano XVI 10, XXIV; Zosimo II; rilievo di Narseh a Naqsh-e Rostam; piatto di Shapur II | principe sasanide senza corona; ironico (Ammiano) | volto, età, scelta dell'abito persiano invece che romano, berretto | poco |
+| Fritigerno (378) | ignota; scelta 45 | nessuna su di lui; Sinesio, *Sul regno* (Goti biondi, capelli «come gli Eubei», pelli); missorio di Teodosio; Pietroasele; colonna di Arcadio (disegni) | capelli corti davanti e lunghi dietro (uso del popolo), torques e scudi delle guardie germaniche | volto, barba, età, colori | poco |
+| Arbogaste (394) | ignota; scelta 50 | nessuna fisica; Zosimo IV (valore, disprezzo delle ricchezze); missorio di Teodosio; dittico di Stilicone | abito da generale romano del 390 circa (clamide, fibula a balestra, cintura) | volto, età, capelli, colori | poco (abito discreto, volto nulla) |
+| Alarico (402, 410) | circa 40 (nato verso il 370, stima) | nessuna su di lui; Claudiano, *Contro Rufino* II 78-84 (pelli, «vestem Getarum»); Sinesio; missorio | generale romano e re goto: abito romano con capelli da Goto | volto, barba, torques, colori | poco |
+| Vallia (418) | ignota; scelta 42 | nessuna; Giordane 164 («destrictus et prudens»), Orosio VII 43; Sidonio sull'uso goto dei capelli | capelli che coprono le orecchie (uso del popolo, Sidonio) | quasi tutto | quasi nulla |
+| Teodorico I (418, 451) | vecchio nel 451 (Giordane, «maturae senectutis»); scelta 63 | nessuna su di lui; Sidonio, *Lettere* I 2 (il figlio Teodorico II), IV 20 (Franchi), *Carmi* VII 452-457 (anziani goti) | età avanzata; capelli sulle orecchie; corte goto-romana | volto, barba, colori; la somiglianza col figlio è ipotesi | poco |
+| Procopio (542) | circa 42 (nato verso il 500) | nessuna; *Guerre* II 22, 9 (era a Costantinopoli); mosaici di San Vitale (clamide bianca, fibula a balestra) | abito di corte bizantino degli anni 540 | volto, barba; *tablion* lasciato fuori perché il rango del 542 è incerto | poco (abito discreto, volto nulla) |
+| Alboino (568) | circa 35-40 (stima) | Paolo Diacono II 28 («statura procerus»), I 9 (barbe lunghe), IV 22 (acconciatura e vesti dei Longobardi negli affreschi di Monza); lamina di Agilulfo (iscrizione forse falsa) | alto e robusto; nuca rasata, capelli lunghi divisi in mezzo fino alla bocca; vesti larghe di lino a fasce colorate | volto, colori di capelli, occhi e fasce | molto |
+| Tariq ibn Ziyad (711) | circa 40 (nato verso il 670, stima) | al-Maqqari (XVII secolo, leggenda: fronte alta, neo peloso sulla spalla); Procopio IV 6 sui Mauri (mantello pesante, tunica ruvida); dinaro del califfo in piedi | berbero, comandante, liberto o cliente di Musa | volto, carnagione, copricapo, colori | quasi nulla |
+| Musa ibn Nusayr (711) | circa 71 (nato nel 640 secondo al-Bakri) o 60 (altra fonte non letta) | nessuna; dinaro del califfo in piedi (693-697); Qusayr Amra (723-743) | anziano governatore arabo | quasi tutto | quasi nulla |
+| Ine (727) | circa 60 (stima) | nessuna; Beda V 7, *Cronaca anglosassone* 728; Paolo Diacono IV 22 (vesti «qualia Anglisaxones habere solent»); scrigno Franks | lascia il trono per andare pellegrino a Roma | volto, età, barba, colori, abito da viaggio | poco |
+
+Due avvertenze valide per tutti. Gli oggetti di museo citati «a memoria dalle fotografie» vanno guardati prima di generare: il prompt descrive ciò che ricordo, non ciò che ho riletto. E dove la scheda dice «si sceglie», la scelta va scritta nella didascalia o nella riserva del ritratto, accanto a «Ricostruzione: il volto è immaginario».
 
 ---
 
@@ -52,7 +68,7 @@ Negative: le parole comuni, più `mitre, crozier, pectoral cross, halo, stole, c
 
 ## 3. Ormisda (tappa del 357)
 
-**Le fonti sull'aspetto.** Nessuna descrive il suo aspetto. Ammiano XVI 10, 16 (LacusCurtius, penelope.uchicago.edu/Thayer/L/Roman/Texts/Ammian/16*.html) lo mostra accanto a Costanzo davanti al cavallo di Traiano: «Cui prope adstans regalis Ormisda, cuius e Perside discessum supra monstravimus, respondit astu gentili», e la battuta: «Ante… imperator stabulum tale condi iubeto, si vales». Zosimo II 27 (traduzione inglese del 1814, tertullian.org/fathers/zosimus02_book2.htm) racconta che era «of the royal family», che i nobili alla morte del padre lo misero «in chains» su un colle, e che fuggì grazie alla moglie travestito con la veste di un eunuco, passando per l'Armenia fino a Costantino. Nel 363, con Giuliano, comanda la cavalleria dell'ala sinistra insieme ad Arinteo: «Cornu vero laevum cum equitum copiis Arintheo tradidit et Ormizdae ducendum» (Ammiano XXIV 1, 2), e fa da mediatore con le città persiane (XXIV 1, 8; 2, 11; 2, 20).
+**Le fonti sull'aspetto.** Nessuna descrive il suo aspetto. Ammiano XVI 10, 16 (LacusCurtius, penelope.uchicago.edu/Thayer/L/Roman/Texts/Ammian/16*.html) lo mostra accanto a Costanzo davanti al cavallo di Traiano: «Cui prope adstans regalis Ormisda, cuius e Perside discessum supra monstravimus, respondit astu gentili», e la battuta: «Ante… imperator stabulum tale condi iubeto, si vales». Zosimo II 27 (il numero del capitolo è a memoria: la pagina non li segna; traduzione inglese del 1814, tertullian.org/fathers/zosimus02_book2.htm) racconta che era «of the royal family», che i nobili alla morte del padre lo misero «in chains» su un colle, e che fuggì grazie alla moglie travestito con la veste di un eunuco, passando per l'Armenia fino a Costantino. Nel 363, con Giuliano, comanda la cavalleria dell'ala sinistra insieme ad Arinteo: «Cornu vero laevum cum equitum copiis Arintheo tradidit et Ormizdae ducendum» (Ammiano XXIV 1, 2), e fa da mediatore con le città persiane (XXIV 1, 8; 2, 11; 2, 20).
 
 **Dove le fonti divergono.** Zosimo dice che era il figlio maggiore scavalcato dal minore; la voce di Wikipedia su Hormizd II (letta) dà Adur Narseh come primogenito e Ormisda come terzo figlio, imprigionato, e data la fuga al 323 (voce «Hormizd (son of Hormizd II)», letta, senza data di nascita né di morte).
 
@@ -205,3 +221,70 @@ Sul suo popolo: il nome Longobardi viene «ab intactae ferro barbae longitudine�
 Photorealistic half-length portrait of Alboin, king of the Lombards, in 568 AD, a tall, powerfully built man of about 38, the back of his head shaved up to the occiput, the hair in front grown long, parted in the middle of the forehead and falling on both sides of the face down to the level of the mouth, a long untrimmed beard, fierce steady gaze. He wears a loose long-sleeved tunic of off-white linen with broad woven bands in red, ochre and dark blue at the neck and cuffs, a heavy brown wool cloak fastened on the right shoulder with a gilded silver bow brooch, and a leather belt with a bronze buckle. No crown, no helmet. Plain dark charcoal-brown studio backdrop, softly mottled, no objects. Natural side light from the left as from a window. Looks like a photograph of a real person in historically accurate 6th-century Lombard costume, shallow depth of field, 85mm lens.
 ```
 Negative: le parole comuni, più `iron crown, skull cup, horns, fur, Viking, gold foil cross, crusader`.
+
+---
+
+## Le fonti comuni sulla conquista del 711 (per Tariq e Musa)
+
+- Ibn Abd al-Hakam (morto nell'871), nella traduzione inglese di John Harris Jones (Gottinga 1858, pp. 18-22) sul Medieval Sourcebook di Fordham (sourcebooks.fordham.edu/source/conqspain.asp, letto): chiama Tariq «the Berber Tarik» e Musa «Tarik's lord, Musa ibn-Mosseyr». Nessuna descrizione fisica dell'uno né dell'altro.
+- Monete «del califfo in piedi» (693-696/697; Doha, Museo d'arte islamica; British Museum; Ashmolean; Metropolitan; Fitzwilliam; Harvard): la figura, che «may represent the Umayyad caliph ʿAbd al-Malik», è «dressed in traditional Arab robes and bearing a sword in a scabbard» (islamic-awareness.org, pagina sul dinaro del 695-696, letta). Il copricapo è descritto in modo diverso dalle schede (testa nuda oppure «traditional Arab head-dress», nei risultati di ricerca): va guardato sulla moneta. Che la figura abbia capelli lunghi e barba lunga lo ricordo dalle fotografie, non l'ho letto.
+- Qusayr Amra (Giordania): costruito «between 723 and 743» da al-Walid ibn Yazid, il futuro al-Walid II (voce di Wikipedia, letta); fra gli affreschi i «sei re», col visigoto Rodrigo. È di una generazione dopo il 711 e la voce non descrive gli abiti: un riferimento per la corte omayyade da guardare nelle fotografie, non una fonte per Musa o Tariq.
+- Sui Berberi (Mauri) del VI secolo, Procopio, *Guerre* IV 6, 10-12 (Dewing su LacusCurtius, letto): vivono «in stuffy huts both in winter and in summer», dormono per terra, i ricchi su un vello, e «they wear a thick cloak and a rough shirt at all times». È lo sguardo di un Bizantino ostile, due secoli prima, su Mauri non ancora musulmani. Corippo, *Iohannis* (verso il 550), descrive a lungo i guerrieri mauri: da leggere, non l'ho letto.
+
+## 11. Tariq ibn Ziyad (tappa del 711)
+
+**Le fonti sull'aspetto.** Una sola, tarda e leggendaria: al-Maqqari (scrive verso il 1630), nella traduzione inglese di Pascual de Gayangos (*The History of the Mohammedan Dynasties in Spain*, vol. I, 1840; volume e pagina non verificati: ho letto solo la citazione riportata su gibraltar-intro.blogspot.com, 2020). Una vecchia di Algeciras racconta che il marito, indovino, aveva descritto il futuro conquistatore come «a man of prominent forehead», con «a black mole covered with hair on his left shoulder»; Tariq si scopre la spalla e il neo c'è. È una storia di profezia scritta nove secoli dopo: la «fronte alta» si può tenere come cenno, dichiarandolo, non come fonte.
+
+**Origine e rango.** Le fonti arabe danno «contradictory accounts» delle sue origini; per molti studiosi moderni è un berbero *mawla* (liberto o cliente) di Musa (voce di Wikipedia, letta; nascita «c. 670», stima dell'infobox senza fonte antica). Comandante dell'avanguardia e governatore di Tangeri (Ibn Abd al-Hakam, secondo la stessa voce).
+
+**Età, abiti.** Se la stima del 670 regge, nel 711 ha una quarantina d'anni. Uomo d'armi berbero entrato nell'esercito arabo: tunica lunga e mantello pesante di lana (Procopio sui Mauri: «a thick cloak and a rough shirt»), spada nel fodero appesa a una cinghia (come sul dinaro del califfo in piedi). Copricapo: un panno di lana avvolto semplicemente sul capo è un'ipotesi; il turbante dell'età omayyade non l'ho trovato descritto in una fonte letta. Barba piena, scura. Da NON mettere: scimitarra ricurva (le spade del primo Islam erano dritte, a memoria), grande turbante ottomano o «moresco» da quadro orientalista, mezzaluna, elmo a punta, tatuaggi sul viso (non attestati per lui), navi in fiamme (leggenda di al-Idrisi, 1154).
+
+**Inventato.** Il volto (tranne la fronte alta della leggenda), la carnagione (berbero indica una lingua e un'origine, non un colore: si sceglie una carnagione bruno-olivastra mediterranea, senza forzature), gli occhi, i colori, il copricapo.
+
+**Prompt.**
+```
+Photorealistic half-length portrait of a Berber military commander of the early Umayyad army in 711 AD, a hardy man of about 40, high prominent forehead, olive-brown North African complexion, short full black beard, dark intense eyes, sun-weathered skin. He wears a long-sleeved tunic of coarse undyed wool, a heavy hooded cloak of dark brown wool with the hood down on his shoulders, a plain off-white wool cloth wrapped simply around his head, and a leather baldric across his chest carrying a straight sword in a plain leather scabbard (only the hilt partly visible). No jewellery. Plain dark charcoal-brown studio backdrop, softly mottled, no objects. Natural side light from the left as from a window. Looks like a photograph of a real person in historically accurate early medieval North African costume, shallow depth of field, 85mm lens.
+```
+Negative: le parole comuni, più `curved scimitar, Ottoman turban, orientalist painting, crescent, desert, ship, fire, face tattoos, turban jewel`.
+
+---
+
+## 12. Musa ibn Nusayr (tappa del 711)
+
+**Le fonti sull'aspetto.** Nessuna fra quelle lette. Ibn Abd al-Hakam non lo descrive; la *Cronaca mozarabica del 754*, la fonte più vicina, non l'ho letta per questa scheda.
+
+**Origine e rango.** Voce di Wikipedia (letta): nascita data al 640 da al-Bakri; il padre, cristiano arabo dei Banu Yashkur, preso prigioniero ad Ayn al-Tamr nel 633 secondo al-Tabari; altri lo dicono Lakhmide o dei Banu Bakr, al-Baladhuri dei Bali di Palestina. Governatore dell'Ifriqiya (dal 698 nel testo, dal 703 nell'infobox), nel 712 passa in Hispania; torna a Damasco col bottino, compresa la «tavola di Salomone»; Sulayman lo spoglia del rango; muore verso il 715-716 durante il pellegrinaggio.
+
+**Dove le fonti divergono.** Con la nascita nel 640, nel 711 ha circa 71 anni; una scheda biografica vista nei risultati di ricerca cita una fonte araba secondo cui aveva sessant'anni entrando in al-Andalus nel 712 (non letta). In ogni caso è un uomo anziano: si sceglie un uomo sui 65-70 anni, dichiarandolo.
+
+**Testimonianze figurate.** Le monete del califfo in piedi (693-697) e, una generazione dopo, gli affreschi di Qusayr Amra: vedi le fonti comuni.
+
+**Abiti.** Governatore arabo di una grande provincia sotto al-Walid I: veste lunga di lana fine chiara a maniche lunghe, mantello, spada dritta nel fodero (come la figura del dinaro), copricapo di stoffa avvolto. Barba lunga, bianca o grigia (l'età). L'uso di tingere la barba con l'henné era diffuso fra i primi musulmani (a memoria), ma per Musa non l'ho trovato: niente barba rossa. Da NON mettere: scimitarra, turbante gonfio di epoca ottomana o mamelucca, caffettano ricamato d'oro da miniatura persiana, la «tavola di Salomone».
+
+**Inventato.** Quasi tutto: volto, abiti, copricapo, colori. Poggia solo sull'età (stimata) e sull'abito arabo del dinaro del califfo, che non è lui.
+
+**Prompt.**
+```
+Photorealistic half-length portrait of an elderly Arab governor of North Africa under the Umayyad caliphate in 711 AD, a dignified man of about 70, long white beard, lined olive-tanned face, keen authoritative eyes. He wears a long-sleeved ankle-length robe of fine off-white wool, over it a cloak of plain dark brown wool, a simple white cloth wrapped around the head, and a leather sword belt over the shoulder with a straight sword in a plain scabbard (hilt barely visible). No gold, no jewellery. Plain dark charcoal-brown studio backdrop, softly mottled, no objects. Natural side light from the left as from a window. Looks like a photograph of a real person in historically accurate early Islamic Arab costume, shallow depth of field, 85mm lens.
+```
+Negative: le parole comuni, più `curved scimitar, Ottoman turban, Mamluk, henna red beard, orientalist painting, crescent, desert, camel`.
+
+---
+
+## 13. Ine del Wessex (tappa del 727)
+
+**Le fonti sull'aspetto.** Nessuna. Beda, *Historia ecclesiastica* V 7 (thelatinlibrary.com/bede/bede5.shtml, letto): «successit in regnum Ini de stirpe regia», «qui cum XXXVII annis imperium tenuisset gentis illius», «et ipse relicto regno ac iuuenioribus commendato», partì per le soglie degli apostoli sotto papa Gregorio (II), «cupiens in uicinia sanctorum locorum ad tempus peregrinari in terris». La *Cronaca anglosassone* (traduzione inglese su avalon.law.yale.edu/medieval/ang08.asp, letta): «A.D. 728. This year Ina went to Rome, and there gave up the ghost»; le battaglie degli anni 710-725 lo mostrano re guerriero fino all'ultimo.
+
+**Dove le fonti divergono.** Beda dà 37 anni di regno (dal 688, dunque fino al 725 circa); la *Cronaca*, in questa traduzione, mette la partenza per Roma al 728; `PROTAGONISTI` dice «dal 688 circa al 726». Per il ritratto conta poco: è un uomo che lascia il trono dopo quasi quarant'anni.
+
+**Testimonianze figurate e archeologiche.** Nessuna del Wessex del suo tempo. Le più vicine: lo scrigno Franks (Londra, British Museum; Northumbria, «first half of the 8th century»; voce di Wikipedia, letta): guerrieri con elmo, spade e lance, figure con cappuccio; l'elmo di Coppergate (York, Yorkshire Museum; seconda metà dell'VIII secolo, a memoria: più tardo di Ine); la nave di Sutton Hoo (Londra, British Museum; verso il 625, a memoria: un secolo prima e dell'Anglia orientale, non del Wessex). Il codice Amiatino (Firenze, Biblioteca Laurenziana; Wearmouth-Jarrow, prima del 716) e il Vangelo di Lindisfarne (verso il 715-720) hanno figure di evangelisti e di Esdra copiate da modelli italiani: vestono all'antica, non come un re anglosassone, e non vanno usati per l'abito. Una testimonianza scritta utile viene dall'Italia: Paolo Diacono IV 22 (vedi Alboino) dice che le vesti dei Longobardi erano «laxa et maxime linea, qualia Anglisaxones habere solent», ornate di larghe fasce tessute a più colori: alla fine dell'VIII secolo era dunque questo, per un Italiano, l'abito tipico degli Anglosassoni.
+
+**Età, rango, abiti.** Re dal 688, quando già comanda in guerra: nato verso il 665-670 (stima); nel 727 ha intorno ai 60 anni. Nella tappa del 727 è il re che rinuncia e va a Roma da pellegrino (Beda: «peregrinari»): si propone un uomo anziano in abito laico ricco ma sobrio, da viaggio. Tunica di lino larga con larghe fasce tessute colorate (Paolo Diacono), mantello di lana fermato da una fibula rotonda d'oro o di bronzo dorato con granati (stile anglosassone del VII secolo, a memoria), capelli lunghi fino al collo, barba. Da NON mettere: corona da re medievale (nessuna corona anglosassone di quest'epoca è nota, a memoria), l'elmo di Sutton Hoo in testa (è di un secolo prima e di un altro regno), corna, pellicce, croce pettorale vescovile, saio francescano, bastone e conchiglia del pellegrino di Santiago (simboli di secoli dopo).
+
+**Inventato.** Volto, età (stima), barba, colori; l'abito da pellegrino è una scelta per la tappa, non è descritto.
+
+**Prompt.**
+```
+Photorealistic half-length portrait of Ine, king of the West Saxons, in 727 AD as he gives up his throne to travel to Rome as a pilgrim, a grave, weathered man of about 60, grey-blond hair falling to the neck, a full grey beard, calm resolute eyes. He wears a loose long-sleeved tunic of off-white linen with broad tablet-woven bands of red, yellow and dark blue at the neck and cuffs, and a heavy travelling cloak of dark brown wool fastened on the right shoulder with a round gold brooch set with flat red garnets. No crown, no helmet, no weapons. Plain dark charcoal-brown studio backdrop, softly mottled, no objects. Natural side light from the left as from a window. Looks like a photograph of a real person in historically accurate early 8th-century Anglo-Saxon costume, shallow depth of field, 85mm lens.
+```
+Negative: le parole comuni, più `crown, Sutton Hoo helmet, Viking, horns, fur, scallop shell, pilgrim staff, monk habit, friar`.

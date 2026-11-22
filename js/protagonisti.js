@@ -8,6 +8,7 @@
   var TIPI={      // parole brevi accanto alla miniatura e spiegazione nella vista grande
     coevo:{breve:'Ritratto del tempo',lungo:'Immagine fatta al suo tempo.'},
     posteriore:{breve:'Immagine più tarda',lungo:'Immagine fatta dopo il suo tempo: non lo ritrae dal vero.'},
+    ricostruzione:{breve:'Ricostruzione',lungo:'Immagine generata oggi, a partire dalle fonti: abiti e oggetti seguono testimonianze del suo tempo, il volto è immaginario.'},
     oggetto:{breve:'Non è un ritratto',lungo:'Non ne mostra il volto: è un oggetto legato a lui (una moneta col suo nome, un sigillo, un’iscrizione, un’opera). Che cosa sia, e di quando, lo dice la didascalia.'}
   };
   var LARGA=84, ALTA=64;      // misure massime della miniatura sul PC; sul telefono le riduce css/ritratti.css
@@ -90,7 +91,7 @@
     else dove.appendChild(n);
     vista.querySelector('.rit-credito').textContent=r.credito||'';
     var l=vista.querySelector('.rit-link'); l.textContent='';
-    var a=el('a',null,'Il file su Wikimedia Commons'); a.href=r.pagina; a.target='_blank'; a.rel='noopener'; l.appendChild(a);
+    var a=el('a',null,r.tipo==='ricostruzione'?'Le fonti della ricostruzione':'Il file su Wikimedia Commons'); a.href=r.pagina; a.target='_blank'; a.rel='noopener'; l.appendChild(a);
     if(r.licenzaUrl){ l.appendChild(document.createTextNode(' · ')); var b=el('a',null,'Licenza '+r.licenza); b.href=r.licenzaUrl; b.target='_blank'; b.rel='noopener license'; l.appendChild(b); }
     vista.showModal(); vista.querySelector('.rit-chiudi').focus();
     try{ history.pushState({ritratto:1},''); inStoria=true; }catch(e){}      // il tasto indietro chiude la vista invece di lasciare la pagina

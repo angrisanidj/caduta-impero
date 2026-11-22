@@ -26,6 +26,8 @@
 .rit-coevo .rit-segno{border-radius:50%;background:var(--gold)}      /* pieno: del tempo */
 .rit-posteriore .rit-segno{border-radius:50%;border:1.5px solid var(--gold);background:linear-gradient(90deg,var(--gold) 50%,transparent 50%)}      /* mezzo: più tardo */
 .rit-oggetto .rit-segno{border:1.5px solid var(--muted);border-radius:1px;transform:rotate(45deg) scale(.85)}      /* rombo vuoto: non è un ritratto */
+.rit-ricostruzione .rit-segno{border-radius:50%;border:1.5px dashed var(--porpora)}      /* tratteggio: ricostruito oggi */
+.rit-ricostruzione{color:var(--porpora)}
 .rit-posteriore{color:#6B5A44}
 .rit-oggetto{color:var(--muted)}
 .rit-riserva{color:var(--ink)}
