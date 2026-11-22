@@ -696,8 +696,23 @@ function miniatura(){
   el('rect',{x:0,y:0,width:G.w,height:G.h,fill:'#C7D6D3'},s); el('path',{'class':'m-terra',d:G.terra},s);
   for(id in G.regioni) pezzi[id]=el('path',{'class':'m-regione perso',d:G.regioni[id].d},s);
   el('path',{'class':'m-costa',d:G.terra},s);
-  if(G.citta.roma) el('circle',{'class':'m-mini-roma',cx:G.citta.roma.x,cy:G.citta.roma.y,r:6.5},s);
-  return {svg:s, mostra:function(stati){ for(var id in pezzi){ var st=stati[id]||'perso', chi=st.indexOf('regno:')===0?st.slice(6):''; if(chi) st='regno'; pezzi[id].setAttribute('class','m-regione '+st); pezzi[id].style.color=chi&&REGNI[chi]?REGNI[chi][0]:''; } }};
+  /* i nomi, pochi e grandi (la carta è larga poco più di 300 punti): le regioni maggiori e tre città. Chiari sulle regioni colorate, scuri su quelle perse, come nella carta grande */
+  var nomiMini={}, MINI=['britannia','gallia','hispania','italia_nord','africa','balcani','anatolia','egitto'], citta={}, stato={}, fuoco=null;
+  MINI.forEach(function(id){ var r=G.regioni[id]; if(!r||!NOMI[id]) return; nomiMini[id]=el('text',{'class':'m-mini-nome',x:r.c[0],y:r.c[1]+(id==='italia_nord'?-14:0)},s); nomiMini[id].textContent=NOMI[id]; });
+  ['costantinopoli','cartagine','roma'].forEach(function(k){ var c=G.citta[k]; if(!c) return;
+    if(k!=='roma') el('circle',{'class':'m-mini-citta',cx:c.x,cy:c.y,r:4.5},s); else el('circle',{'class':'m-mini-roma',cx:c.x,cy:c.y,r:6.5},s);
+    var sx=k==='roma'?9:-9, sy=k==='cartagine'?22:k==='costantinopoli'?-11:5;      // Bisanzio sopra a sinistra, lontano da «Asia Minore»
+    citta[k]=el('text',{'class':'m-mini-citta-nome'+(k==='roma'?' roma':''),x:c.x+sx,y:c.y+sy,'text-anchor':k==='roma'?'start':'end'},s); citta[k].textContent=c.nome; });
+  function accendi(){ for(var id in pezzi) pezzi[id].classList.toggle('spento',!!fuoco&&stato[id]!==fuoco); s.classList.toggle('m-fuoco',!!fuoco); }
+  return {svg:s,
+    mostra:function(stati,anno){
+      for(var id in pezzi){ var st=stati[id]||'perso', chi=st.indexOf('regno:')===0?st.slice(6):''; stato[id]=st; if(chi) st='regno'; pezzi[id].setAttribute('class','m-regione '+st); pezzi[id].style.color=chi&&REGNI[chi]?REGNI[chi][0]:''; }
+      for(var n in nomiMini){ var sn=stato[n]; nomiMini[n].setAttribute('class','m-mini-nome'+(sn==='perso'||sn==='conteso'||sn==='fuori'?' chiaro':'')); }
+      if(citta.costantinopoli && anno!=null) citta.costantinopoli.textContent=anno<330?'Bisanzio':G.citta.costantinopoli.nome;
+      accendi();
+    },
+    /* la voce di legenda toccata lascia accese le sole regioni di quello stato; null le riaccende tutte */
+    fuoco:function(k){ fuoco=k||null; accendi(); }};
 }
 window.RM_mappa={
   grande:grande,
@@ -706,7 +721,7 @@ window.RM_mappa={
   /* le voci di legenda presenti in una o più carte, con i nomi che valgono nell'anno dato: [colore o fondo, nome] */
   vociPresenti:function(elenco,anno){
     var ci={}, out=[]; elenco.forEach(function(stati){ for(var id in regioni) ci[stati[id]||'perso']=1; });
-    STATI.forEach(function(s){ if(ci[s[0]]) out.push([s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':s[0].indexOf('regno:')===0?REGNI[s[0].slice(6)][0]:'var(--st-'+s[0]+')', voceStato(s[0],anno)]); });
+    STATI.forEach(function(s){ if(ci[s[0]]) out.push([s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':s[0].indexOf('regno:')===0?REGNI[s[0].slice(6)][0]:'var(--st-'+s[0]+')', voceStato(s[0],anno), s[0]]); });      // il terzo elemento è lo stato: serve alla legenda che risponde (js/atti.js)
     return out;
   },
   mostra:function(stati,anno,luoghi,scena){

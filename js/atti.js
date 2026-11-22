@@ -66,7 +66,7 @@ var eScorre=crea('div','as-scorre',null,eElenco), eTappe=crea('ol',null,null,eSc
 /* ---- la carta: passi (inizio, ogni tappa, fine), interruttore, scorrimento ---- */
 var passi=[], scelto=1, timer=0, attesa=0, vista=-1;
 function mostraPasso(p){
-  if(!carta||!passi[p]) return; vista=p; carta.mostra(passi[p].stati);
+  if(!carta||!passi[p]) return; vista=p; carta.mostra(passi[p].stati,passi[p].anno);
   eTargaAnno.textContent=passi[p].anno;
   bScelta.forEach(function(b,k){ b.setAttribute('aria-pressed', (k===0&&p===0)||(k===1&&p===passi.length-1) ? 'true':'false'); });
   var qui=null; bottoniTappe.forEach(function(q){ var si=passi[p].i===q[0]; q[1].classList.toggle('in-carta',si); if(si) qui=q[1].parentNode; });
@@ -138,7 +138,7 @@ function scrivi(k){
     b.setAttribute('aria-label',(t.intermezzo?'Intermezzo':t.anno)+': '+t.titolo); b.title=(t.intermezzo?'Intermezzo':t.anno)+' · '+t.titolo;
     b.addEventListener('click',function(){ tenuta=true; P.ferma(); P.vai(i); });      // chi sceglie una tappa dalla scheda la tiene aperta
     /* passando sopra una tappa (o arrivandoci con la tastiera) la carta mostra quella tappa; uscendo torna all'interruttore */
-    function anteprima(){ if(t.intermezzo||!carta) return; ferma(); var p=-1; passi.forEach(function(q,x){ if(q.i===i) p=x; }); if(p>=0) mostraPasso(p); else { vista=-1; carta.mostra(t.regioni||statiA(t.anno)); eTargaAnno.textContent=t.anno; } }
+    function anteprima(){ if(t.intermezzo||!carta) return; ferma(); var p=-1; passi.forEach(function(q,x){ if(q.i===i) p=x; }); if(p>=0) mostraPasso(p); else { vista=-1; carta.mostra(t.regioni||statiA(t.anno),t.anno); eTargaAnno.textContent=t.anno; } }
     function torna(){ if(!timer) scegli(scelto); }
     b.addEventListener('mouseenter',anteprima); b.addEventListener('focus',anteprima);
     b.addEventListener('mouseleave',torna); b.addEventListener('blur',torna);
@@ -148,7 +148,15 @@ function scrivi(k){
     preparaPassi(k);
     bScelta[0].firstChild.textContent=at.da; bScelta[1].firstChild.textContent=at.a;
     bGioca.hidden=passi.length<3;                                           // con le sole carte d'inizio e di fine non c'è niente da far scorrere
-    eLegenda.textContent=''; M.vociPresenti(passi.map(function(q){ return q.stati; }),at.a).forEach(function(v){ var sp=crea('span',null,null,eLegenda), i=crea('i',null,null,sp); i.style.background=v[0]; sp.appendChild(document.createTextNode(v[1])); });
+    eLegenda.textContent=''; eLegenda.classList.remove('con-fuoco'); if(carta.fuoco) carta.fuoco(null);
+    /* ogni voce è una pastiglia da toccare: lascia accese sulla carta le sole regioni di quel colore; un secondo tocco le riaccende tutte (come nella carta grande) */
+    var voci=[]; M.vociPresenti(passi.map(function(q){ return q.stati; }),at.a).forEach(function(v){
+      var sp=crea('button',null,null,eLegenda), i=crea('i',null,null,sp); sp.type='button'; sp.setAttribute('aria-pressed','false'); i.style.background=v[0]; sp.appendChild(document.createTextNode(v[1])); voci.push(sp);
+      sp.addEventListener('click',function(){ var su=sp.getAttribute('aria-pressed')!=='true'; voci.forEach(function(x){ x.setAttribute('aria-pressed',x===sp&&su?'true':'false'); }); eLegenda.classList.toggle('con-fuoco',su);
+        if(su){ var c=function(q){ for(var id in q.stati) if(q.stati[id]===v[2]) return true; return v[2]==='perso'; };      // se nella carta mostrata quel colore non c'è, si passa al primo anno dell'atto in cui c'è
+          if(!passi[vista]||!c(passi[vista])){ ferma(); for(var p=0;p<passi.length;p++) if(c(passi[p])){ mostraPasso(p); break; } } }
+        if(carta.fuoco) carta.fuoco(su?v[2]:null); });
+    });
     eLegenda.classList.toggle('due',eLegenda.children.length>10);
   }
   scriviNumeri(at);
