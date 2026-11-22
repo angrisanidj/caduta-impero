@@ -67,6 +67,9 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
   body:not(.impero-grande) .legenda-nota.aperta{-webkit-line-clamp:unset;display:block}
   .legenda-luoghi{min-height:0}
 }
+/* il disegno riempie il riquadro della carta senza poterlo allungare: l'altezza la decide il riquadro (rapporto 1000/640 in pagina, misure scritte da js/mappa.js a tutto schermo),
+   non il ritaglio del disegno. Su Safari un ritaglio alto e stretto rimasto dopo lo schermo intero faceva crescere il riquadro. */
+#mappa svg{position:absolute;left:0;top:0}
 /* La tetrarchia (293-305, js/mappa.js, strato m-tetra): le aree di comando dei quattro, nello stile delle linee di Verdun; a trattini, più sottili, dove l'attribuzione è discussa */
 .m-tetra{transition:opacity .9s ease;pointer-events:none} .m-tetra.via{opacity:0}
 .m-tetra path{fill:none;stroke:#FBF6EA;stroke-width:1.6;stroke-dasharray:1 3.2;stroke-linecap:round}

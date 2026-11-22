@@ -1,0 +1,109 @@
+// Scarica da Wikimedia Commons le immagini approvate dall'utente il 22 novembre 2026 e scrive js/ritratti.js.
+// Uso (dalla radice del progetto o da qui): node src/immagini/scarica.mjs
+// Che cosa entra (decisioni dell'utente sull'elenco di protagonisti.md):
+//  - i ritratti del tempo e quelli antichi ma posteriori; i casi dubbi entrano con la riserva scritta (RISERVE qui sotto);
+//  - gli oggetti del tempo che non mostrano il volto (monete col nome, sigilli, la colonna), dicendo che cosa sono;
+//  - le immagini moderne di fantasia NO.
+// Le immagini sono miniature larghe 330 punti (una delle misure che Commons serve senza ricalcolo), salvate in img/protagonisti/.
+// Chi è già stato scaricato non si riscarica: per rifarne una, cancellare il file. Con --senza-rete non scarica nulla e riscrive solo l'indice
+// (Commons limita le richieste: dopo qualche decina risponde 429 per minuti).
+// Le didascalie (campo «oggetto») e le riserve vengono dalle descrizioni dei file su Commons, non dalle schede dei musei: la pagina lo dichiara.
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const QUI = path.dirname(fileURLToPath(import.meta.url)), RADICE = path.join(QUI, '..', '..');
+const CARTELLA = path.join(RADICE, 'img', 'protagonisti'), LARGA = 330;
+const UA = { 'User-Agent': 'ricerca-immagini/1.0' };      // nome generico: nessun dato personale nelle richieste
+
+/* La riga che la pagina scrive sotto l'immagine quando l'identificazione, la data o l'oggetto chiedono una riserva. Chiave: il nome in PROTAGONISTI. */
+const RISERVE = {
+  'Decio': 'L’identificazione si fonda sul confronto con le monete.',
+  'Shapur I': 'Quale imperatore sia quello in ginocchio è discusso.',
+  'Diocleziano': 'Senza iscrizione: la testa gli è attribuita.',
+  'Massimiano': 'Identificazione proposta dal museo, non certa.',
+  'Costantino': 'Senza iscrizione: l’identificazione con Costantino è la più diffusa.',
+  'Lattanzio': 'Un manoscritto della sua opera, di undici secoli dopo.',
+  'Silvestro I': 'Circa otto secoli dopo: non è un ritratto dal vero.',
+  'Costanzo II': 'L’imperatore del piatto è di solito identificato con lui; il nome non c’è.',
+  'Arcadio e Onorio': 'La testa è attribuita ad Arcadio, senza iscrizione.',
+  'Stilicone': 'Il dittico non ha iscrizione: l’identificazione è accettata dai più, non certa.',
+  'Genserico': 'I Vandali coniavano col busto dell’imperatore, non del loro re.',
+  'Bonifacio': 'Il busto è dell’imperatore; l’attribuzione della moneta a Bonifacio è di un catalogo d’asta.',
+  'Agostino': 'La più antica immagine nota, circa un secolo dopo la morte: un ritratto ideale.',
+  'Ricimero': 'Il busto è dell’imperatore Libio Severo; di Ricimero c’è il monogramma sul rovescio.',
+  'Basilisco': 'Coniata quando si fece imperatore, sette anni dopo la spedizione.',
+  'Cassiodoro': 'Quasi sette secoli dopo: non è un ritratto dal vero.',
+  'Boezio': 'Quasi mille anni dopo: non è un ritratto dal vero.',
+  'Amalasunta': 'I due medaglioni sono letti come Atalarico e Amalasunta; i nomi non sono scritti.',
+  'Belisario': 'L’identificazione con Belisario è tradizionale: nel mosaico il nome non c’è.',
+  'Totila': 'Il busto è stilizzato.',
+  'Gregorio Magno': 'Circa quattro secoli dopo: non è un ritratto dal vero.',
+  'Agilulfo': 'Porta il nome del re; la foto è di una copia (l’originale è al Bargello).',
+  'Smaragdo': 'La sua dedica sta sulla base della colonna, che nella foto non si vede.',
+  'Vitaliano': 'Il sigillo è del tempo; l’immagine è un’incisione del 1760.',
+  'Liutprando': 'Il busto sulla moneta è stilizzato.',
+  'Astolfo': 'Il busto sulla moneta è stilizzato.',
+  'Desiderio': 'Senza volto: il nome del re attorno a una croce o a una stella.',
+  'Stefano II': 'Circa tre secoli e mezzo dopo: non è un ritratto dal vero.',
+  'Pipino il Breve': 'Tre secoli e mezzo dopo; i suoi denari, del tempo, non hanno volto.',
+  'Leone III': 'Il mosaico che si vede è il rifacimento del 1743 dell’originale perduto.'
+};
+
+const pausa = ms => new Promise(r => setTimeout(r, ms));
+const sigla = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+/* misure di un JPEG o di un PNG, lette dall'intestazione */
+function misure(b) {
+  if (b[0] === 0x89 && b[1] === 0x50) return [b.readUInt32BE(16), b.readUInt32BE(20)];
+  for (let i = 2; i < b.length - 9;) {
+    if (b[i] !== 0xFF) { i++; continue; }
+    const m = b[i + 1];
+    if (m >= 0xC0 && m <= 0xCF && m !== 0xC4 && m !== 0xC8 && m !== 0xCC) return [b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)];
+    i += 2 + b.readUInt16BE(i + 2);
+  }
+  return [0, 0];
+}
+async function prendi(file) {
+  const u = 'https://commons.wikimedia.org/wiki/Special:FilePath/' + encodeURIComponent(file.replace(/ /g, '_')) + '?width=' + LARGA;
+  for (let giro = 0; giro < 3; giro++) {
+    const r = await fetch(u, { headers: UA, redirect: 'follow' });
+    if (r.status === 429 || r.status >= 500) { const s = Math.min(90, +(r.headers.get('retry-after') || 0) || 10 * (giro + 1)); console.log('   ', r.status, 'aspetto', s, 's'); await pausa(s * 1000); continue; }
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const tipo = r.headers.get('content-type') || '', est = /png/.test(tipo) ? 'png' : /jpe?g/.test(tipo) ? 'jpg' : null;
+    if (!est) throw new Error('tipo inatteso: ' + tipo);
+    return { est, dati: Buffer.from(await r.arrayBuffer()) };
+  }
+  throw new Error('troppi tentativi');
+}
+
+const elenco = JSON.parse(fs.readFileSync(path.join(QUI, 'protagonisti.json'), 'utf8'));
+fs.mkdirSync(CARTELLA, { recursive: true });
+const perFile = {}, indice = {}, falliti = [];
+for (const x of elenco) {
+  if (!x.file || x.coevo === 'fantasia') continue;
+  if (x.licenzaAccettabile === false) { falliti.push(x.nome + ': licenza non accettabile'); continue; }
+  let q = perFile[x.file];
+  if (!q) {
+    const base = sigla(x.nome), gia = ['jpg', 'png'].map(e => path.join(CARTELLA, base + '.' + e)).find(p => fs.existsSync(p));
+    try {
+      let dati, nome;
+      if (gia) { dati = fs.readFileSync(gia); nome = path.basename(gia); }
+      else if (process.argv.includes('--senza-rete')) throw new Error('non scaricato (--senza-rete)');
+      else { const r = await prendi(x.file); dati = r.dati; nome = base + '.' + r.est; fs.writeFileSync(path.join(CARTELLA, nome), dati); console.log('scaricato', nome, Math.round(dati.length / 1024) + ' kB'); await pausa(1500); }
+      const [w, h] = misure(dati);
+      q = perFile[x.file] = { f: 'img/protagonisti/' + nome, w, h };
+    } catch (e) { falliti.push(x.nome + ': ' + e.message); console.log('NON scaricato', x.nome, e.message); continue; }
+  }
+  const v = { f: q.f, w: q.w, h: q.h, cosa: x.oggetto, tipo: x.ritratto === false ? 'oggetto' : x.coevo === 'si' ? 'coevo' : 'posteriore', credito: x.credito, pagina: x.pagina, licenza: x.licenza };
+  if (x.licenzaUrl) v.licenzaUrl = x.licenzaUrl;
+  if (RISERVE[x.nome]) v.riserva = RISERVE[x.nome];
+  indice[x.anno + '|' + x.nome] = v;
+}
+for (const n of Object.keys(RISERVE)) if (!elenco.some(x => x.nome === n && x.file)) console.log('riserva senza immagine:', n);
+fs.writeFileSync(path.join(RADICE, 'js', 'ritratti.js'),
+  '/* Generato da src/immagini/scarica.mjs: non modificare a mano. Chiave: «anno della tappa|nome» come in PROTAGONISTI (js/dati.js).\n' +
+  '   tipo: coevo (ritratto del tempo), posteriore (immagine antica ma più tarda), oggetto (del tempo, ma non mostra il volto). */\n' +
+  'window.RM_RITRATTI=' + JSON.stringify(indice) + ';\n');
+const pesi = fs.readdirSync(CARTELLA).reduce((s, f) => s + fs.statSync(path.join(CARTELLA, f)).size, 0);
+console.log(Object.keys(indice).length, 'voci,', Object.keys(perFile).length, 'file,', Math.round(pesi / 1024), 'kB in img/protagonisti');
+if (falliti.length) console.log('DA RIVEDERE:\n ' + falliti.join('\n '));

@@ -503,7 +503,12 @@ function grande(si){
   bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Chiudi lo schermo intero':'Carta a tutto schermo');
   dita={}; presa=null;
   if(si){ vista.k=1; vista.cx=500; vista.cy=314; adatta(); if(vista.alto){ vista.k=Math.max(1,BASE[2]*vista.alto/(G.h*vista.aw)); vista.cx=470; vista.cy=330; applicaVista(); } }      // in verticale si parte con la carta che riempie il riquadro, sull'Italia: il bottone − la mostra intera
-  else { vista.alto=0; ospite.style.width=ospite.style.height=''; applicaVista(); }
+  else { vista.alto=0; ospite.style.width=ospite.style.height=''; applicaVista();
+    /* Su un iPhone, appena usciti dallo schermo intero, la carta è rimasta ingrandita e più alta del riquadro (cattura dell'utente, 22 novembre 2026). In Chrome non si riproduce
+       e il codice qui sopra rimette già il ritaglio di sempre: per prudenza lo si riscrive da capo al fotogramma dopo e ancora dopo un terzo di secondo, e nei CSS (css/carta.css)
+       il disegno non può più allungare il riquadro. Da riprovare su un telefono vero. */
+    var rimetti=function(){ if(grandeSi || regia) return; svg.removeAttribute('viewBox'); svg.setAttribute('viewBox',BASE.join(' ')); };
+    requestAnimationFrame(rimetti); setTimeout(rimetti,320); }
   ingr=0; window.dispatchEvent(new Event('resize'));                    // il gestore qui sopra rifà misure, legende e cartellini
 }
 function unita(){ return larghezzaVista()/(svg.getBoundingClientRect().width||1); }      // unità della carta per pixel

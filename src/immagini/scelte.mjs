@@ -36,7 +36,8 @@ export const SCELTE = {
   'Lattanzio': { file: 'Lactantius, Divinarum institutionum ... liber primus, manuscript, Florence 1420-1430 ca.jpg', autore: 'Guglielmino Tanaglia (copista)', oggetto: 'manoscritto delle «Divinae institutiones», Firenze, 1420-1430 circa', coevo: 'nessuno', ritratto: false,
     nota: 'Nessun ritratto coevo noto: si propone un manoscritto della sua opera (tardo, del Quattrocento). L\'immagine di Wikidata («Lactantius.jpg») non l\'ho aperta: dal titolo, un ritratto moderno.' },
   // 330
-  'Costantino': { file: 'Colossal head of Constantine (M.C. inv. 1072), August 24, 2021.jpg', oggetto: 'testa della statua colossale dalla basilica di Massenzio, 312-315 circa (forse rilavorata dopo il 325), Musei Capitolini (MC 1072)', coevo: 'si' },
+  'Costantino': { file: 'Colossal head of Constantine (M.C. inv. 1072), August 24, 2021.jpg', oggetto: 'testa colossale in bronzo, IV secolo, Musei Capitolini (MC 1072)', coevo: 'si',
+    nota: 'Guardata il 22 novembre 2026: la foto è della testa di BRONZO (MC 1072), non di quella di marmo dalla basilica di Massenzio come diceva la didascalia di prima. L’identificazione con Costantino è la più diffusa; non c’è iscrizione.' },
   'Silvestro I': { file: 'Saint Sylvester Cefalu.jpg', oggetto: 'mosaico del presbiterio del Duomo di Cefalù, XII secolo', coevo: 'posteriore',
     nota: 'Circa otto secoli dopo; nessun ritratto coevo. Più vicino a Roma: gli affreschi della cappella di San Silvestro ai Santi Quattro Coronati (1246).' },
   // 357
@@ -56,8 +57,8 @@ export const SCELTE = {
   'Arcadio e Onorio': { file: 'Arcadius Istanbul Museum.PNG', oggetto: 'testa in marmo di Arcadio, fine IV secolo, Museo archeologico di Istanbul', coevo: 'si',
     alt: [{ file: 'Diptych of Honorius.jpg', autore: 'Dea Picture Library', oggetto: 'Onorio nel dittico consolare di Probo, 406, Tesoro della cattedrale di Aosta (iscrizione col nome)' }],
     nota: 'Riga con due persone: Onorio in alternativa. L\'attribuzione della testa di Istanbul ad Arcadio è corrente, non certa.' },
-  'Onorio': { file: 'Diptych of Honorius.jpg', autore: 'Dea Picture Library', oggetto: 'dittico consolare d\'avorio di Probo, 406: Onorio in abito militare, con iscrizione, Tesoro della cattedrale di Aosta', coevo: 'si',
-    nota: 'L\'immagine di Wikidata è un quadro di Jean-Paul Laurens (1880), di fantasia: scartato. LICENZA DA CONTROLLARE: la pagina dichiara di pubblico dominio una foto d\'agenzia (Dea Picture Library) di un oggetto a tre dimensioni; nella categoria ci sono altre foto del dittico, per esempio «Consular diptych Probus 406.jpg», non controllate.' },
+  'Onorio': { file: 'Honorius Siliqua 2380632.jpg', autore: 'Classical Numismatic Group, Inc. (cngcoins.com)', oggetto: 'siliqua d\'argento di Onorio (D N HONORIVS P F AVG), zecca di Milano, 402-423 circa', coevo: 'si',
+    nota: 'Scelta del 22 novembre 2026. Scartate: la foto del dittico di Probo (Dea Picture Library, licenza dubbia) e il tremisse del Cleveland Museum of Art (1968.51.a), che Commons intitola a Onorio ma porta la legenda D N ARCADIVS P F AVG.' },
   'Stilicone': { file: 'Stilicho - detail from diptych.jpg', oggetto: 'dittico d\'avorio detto di Stilicone, 395-400 circa, Tesoro del Duomo di Monza', coevo: 'si',
     nota: 'Il dittico non ha iscrizione: l\'identificazione con Stilicone, Serena ed Eucherio è tradizionale e accettata dai più, non certa.' },
   // 402, 406, 409, 410
@@ -81,8 +82,8 @@ export const SCELTE = {
     nota: 'La più antica immagine nota, circa un secolo dopo la morte: un ritratto ideale, non dal vero. L\'immagine di Wikidata è un quadro di Philippe de Champaigne (XVII secolo).' },
   'Valentiniano III': { file: 'Solidus ValentinianIII-wedding.jpg', autore: 'Classical Numismatic Group, Inc. (cngcoins.com)', oggetto: 'solido del 437 per le nozze di Valentiniano III con Licinia Eudossia (sul rovescio Teodosio II fra i due sposi)', coevo: 'si' },
   // 451
-  'Ezio': { file: 'Diptych Aetius.jpg', oggetto: 'dittico consolare d\'avorio di Halberstadt, prima metà del V secolo', coevo: 'si',
-    nota: 'DUBBIO FORTE: la descrizione su Commons dice «possible diptych of Aetius», secondo lo storico Ian Hughes. Il dittico di Halberstadt è attribuito da alcuni a Ezio (console nel 432, 437 o 446), da altri a Costanzo III (417). Nessun ritratto certo di Ezio.' },
+  'Ezio': { coevo: 'nessuno',
+    nota: 'Nessun ritratto certo. Scartato il 22 novembre 2026 il file «Diptych Aetius.jpg»: guardato, è un rilievo di marmo (un busto dentro una conchiglia, da un sarcofago), non il dittico d’avorio che il titolo promette; che sia Ezio è una proposta di un solo autore (Ian Hughes).' },
   'Attila': { file: 'Attila portrait (imaginary), by Giovio Paolo, 1483-1552, published 1575.jpg', oggetto: 'ritratto immaginario dagli «Elogia» di Paolo Giovio, 1575', coevo: 'fantasia',
     nota: 'Nessun ritratto coevo noto: l\'immagine è dichiaratamente immaginaria (lo dice il titolo del file).' },
   // 455, 458, 468
@@ -106,7 +107,7 @@ export const SCELTE = {
   // 493, 526
   'Teodorico': { file: "Regno dei goti, teodorico, pezzo da tre solidi con ritratto del re col palladio, 493-526, oro (pezzo unico).JPG", oggetto: 'medaglione d\'oro da tre solidi col ritratto del re (pezzo unico, trovato a Senigallia), 493-526, Museo nazionale romano', coevo: 'si',
     nota: 'L\'unico ritratto certo, con il nome; le sue monete correnti portano il volto dell\'imperatore.' },
-  'Cassiodoro': { file: 'Gesta Theodorici - Flavius Magnus Aurelius Cassiodorus (c 485 - c 580).jpg', oggetto: 'frontespizio dei «Gesta Theodorici» (Leida, Biblioteca universitaria, ms. Vulc. 46, fol. 2r), Fulda, 1177: Cassiodoro seduto davanti a Teodorico', coevo: 'posteriore',
+  'Cassiodoro': { file: 'Gesta Theodorici - Flavius Magnus Aurelius Cassiodorus (c 485 - c 580).jpg', oggetto: 'frontespizio dei «Gesta Theodorici» (Leida, Biblioteca universitaria, ms. Vulc. 46, fol. 2r), Fulda, 1177: Cassiodoro in trono con un libro', coevo: 'posteriore',
     nota: 'Quasi sette secoli dopo: non è un ritratto dal vero.' },
   'Boezio': { file: 'Consolation de la philosophie - BNF Lat6643 f1 (Boèce au travail).jpg', oggetto: 'miniatura del Maestro del Boezio Lallemant in un manoscritto della «Consolazione» (BnF, Lat. 6643), 1498 circa', coevo: 'posteriore',
     nota: 'Nessun ritratto coevo certo. Attenzione: il dittico di Brescia è del padre, Manlio Boezio console nel 487. La miniatura è di quasi mille anni dopo; su Commons ce ne sono di più antiche (categoria «Boethius in medieval miniatures»), non controllate.' },
@@ -116,8 +117,8 @@ export const SCELTE = {
   'Giustiniano': { file: 'Mosaic of Justinianus I - Basilica San Vitale (Ravenna).jpg', oggetto: 'mosaico del presbiterio di San Vitale, Ravenna, 547 circa', coevo: 'si' },
   'Belisario': { file: 'Meister von San Vitale in Ravenna 013.jpg', oggetto: 'figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa', coevo: 'si',
     nota: 'L\'identificazione con Belisario della figura alla destra dell\'imperatore è tradizionale ma discussa.' },
-  'Vitige': { file: 'Quarter Siliqua of Witigis.jpg', autore: 'CNG Coins', oggetto: 'quarto di siliqua di Vitige: busto di Giustiniano e nome del re, 536-540', coevo: 'nessuno', ritratto: false,
-    nota: 'Nessun ritratto noto: il volto sulla moneta è dell\'imperatore.' },
+  'Vitige': { coevo: 'nessuno',
+    nota: 'Nessun ritratto noto. Scartato il 22 novembre 2026 il file «Quarter Siliqua of Witigis.jpg»: guardato, sul rovescio ha un monogramma e non il nome del re in lettere, come ci si aspetta dalle monete di Vitige; l’attribuzione va controllata su un catalogo prima di usarla.' },
   'Procopio': { coevo: 'nessuno', nota: 'Nessun ritratto noto e nessun manoscritto antico trovato su Commons.' },
   'Totila': { file: 'Baduila BMC 044.jpg', oggetto: 'moneta di bronzo di Baduila (Totila) col suo busto (BMC 44), 541-552', coevo: 'si',
     nota: 'Sulle monete di bronzo il re si fa ritrarre (busto stilizzato); le opere di Salviati e Bonazza sono di fantasia.' },
@@ -131,10 +132,10 @@ export const SCELTE = {
   'Agilulfo': { file: 'Agilulf, king of the Lombards, depicted on a helmet forehead plate.jpg', oggetto: 'lamina di Agilulfo, placca frontale d\'elmo in rame dorato, 591-616, Museo del Bargello', coevo: 'si',
     nota: 'Coeva e con il nome del re (REGI AGILU[LFO]); il volto è schematico. ATTENZIONE: secondo la descrizione del file la foto è di una COPIA (l\'originale è al Bargello).' },
   // 609
-  'Foca': { file: 'Phocas cons.jpg', autore: 'autore non indicato (caricata da Wikipedia)', oggetto: 'solido di Foca (FOCAS PERP AVG, al rovescio la Vittoria), 602-610', coevo: 'si',
-    nota: 'Autore della foto non indicato sulla pagina: meglio un\'altra moneta della categoria «Coins of Phocas» con autore dichiarato.' },
+  'Foca': { file: 'Impero romano d\'oriente, foca, emissione aurea, 602-610.JPG', oggetto: 'moneta d\'oro di Foca, 602-610, Museo nazionale romano (Palazzo Massimo alle Terme)', coevo: 'si',
+    nota: 'Scelta del 22 novembre 2026 al posto di «Phocas cons.jpg», che non indica l\'autore della foto.' },
   'Bonifacio IV': { coevo: 'nessuno', nota: 'Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (rifatto nell\'Ottocento) e incisioni moderne.' },
-  'Smaragdo': { file: 'Column of Phocas.jpg', oggetto: 'la colonna di Foca nel Foro Romano, con l\'iscrizione dedicatoria di Smaragdo (608) sulla base', coevo: 'nessuno', ritratto: false,
+  'Smaragdo': { file: 'Column of Phocas.jpg', oggetto: 'la colonna di Foca nel Foro Romano, che Smaragdo dedicò nel 608', coevo: 'nessuno', ritratto: false,
     nota: 'Nessun ritratto noto. Va scelta una foto in cui si legga l\'iscrizione (questa è presa a caso dalla categoria).', verificato: false },
   // 663
   'Costante II': { file: 'Hexagram-Constans II and Constantine IV-sb0995.jpg', autore: 'Classical Numismatic Group, Inc. (cngcoins.com)', oggetto: 'esagramma d\'argento di Costante II col figlio Costantino IV (SB 995), 654-668', coevo: 'si' },

@@ -8,11 +8,11 @@ Righe della tabella: 112 (persone distinte: 87).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 66 | 48 |
+| ritratto coevo | 65 | 47 |
 | ritratto posteriore | 10 | 8 |
 | di fantasia | 8 | 7 |
-| oggetto del tempo, senza volto | 13 | 10 |
-| nessuna immagine | 15 | 14 |
+| oggetto del tempo, senza volto | 12 | 9 |
+| nessuna immagine | 17 | 16 |
 
 ## Da decidere
 
@@ -89,7 +89,7 @@ Le scelte di principio:
 
 ### 330
 
-- **Costantino** ([Q8413](https://www.wikidata.org/wiki/Q8413)) — *ritratto coevo*: testa della statua colossale dalla basilica di Massenzio, 312-315 circa (forse rilavorata dopo il 325), Musei Capitolini (MC 1072). [Colossal head of Constantine (M.C. inv. 1072), August 24, 2021.jpg](https://commons.wikimedia.org/wiki/File:Colossal_head_of_Constantine_(M.C._inv._1072),_August_24,_2021.jpg) — 5449×8173, Public domain; «Immagine: D. Benjamin Miller, pubblico dominio, da Wikimedia Commons».
+- **Costantino** ([Q8413](https://www.wikidata.org/wiki/Q8413)) — *ritratto coevo*: testa colossale in bronzo, IV secolo, Musei Capitolini (MC 1072). [Colossal head of Constantine (M.C. inv. 1072), August 24, 2021.jpg](https://commons.wikimedia.org/wiki/File:Colossal_head_of_Constantine_(M.C._inv._1072),_August_24,_2021.jpg) — 5449×8173, Public domain; «Immagine: D. Benjamin Miller, pubblico dominio, da Wikimedia Commons». Guardata il 22 novembre 2026: la foto è della testa di BRONZO (MC 1072), non di quella di marmo dalla basilica di Massenzio come diceva la didascalia di prima. L’identificazione con Costantino è la più diffusa; non c’è iscrizione.
 - **Silvestro I** ([Q47149](https://www.wikidata.org/wiki/Q47149)) — *ritratto posteriore*: mosaico del presbiterio del Duomo di Cefalù, XII secolo. [Saint Sylvester Cefalu.jpg](https://commons.wikimedia.org/wiki/File:Saint_Sylvester_Cefalu.jpg) — 351×864, Public domain; «Immagine: autore sconosciuto, pubblico dominio, da Wikimedia Commons». Circa otto secoli dopo; nessun ritratto coevo. Più vicino a Roma: gli affreschi della cappella di San Silvestro ai Santi Quattro Coronati (1246).
 
 ### 357
@@ -117,7 +117,7 @@ Le scelte di principio:
 
 - **Stilicone** ([Q203636](https://www.wikidata.org/wiki/Q203636)) — *ritratto coevo*: dittico d'avorio detto di Stilicone, 395-400 circa, Tesoro del Duomo di Monza. [Stilicho - detail from diptych.jpg](https://commons.wikimedia.org/wiki/File:Stilicho_-_detail_from_diptych.jpg) — 248×250, Public domain; «Immagine: Marsyas, pubblico dominio, da Wikimedia Commons». Il dittico non ha iscrizione: l'identificazione con Stilicone, Serena ed Eucherio è tradizionale e accettata dai più, non certa.
 - **Alarico** ([Q102371](https://www.wikidata.org/wiki/Q102371)) — *nessuna immagine*. Nessun ritratto coevo noto. Su Commons solo opere moderne (busto di Giovanni Bonazza a Rovigo, XVIII secolo; statua di Cosenza): di fantasia, sconsigliate.
-- **Onorio** ([Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: dittico consolare d'avorio di Probo, 406: Onorio in abito militare, con iscrizione, Tesoro della cattedrale di Aosta. [Diptych of Honorius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_of_Honorius.jpg) — 3075×3305, Public domain; «Immagine: Dea Picture Library, pubblico dominio, da Wikimedia Commons». L'immagine di Wikidata è un quadro di Jean-Paul Laurens (1880), di fantasia: scartato. LICENZA DA CONTROLLARE: la pagina dichiara di pubblico dominio una foto d'agenzia (Dea Picture Library) di un oggetto a tre dimensioni; nella categoria ci sono altre foto del dittico, per esempio «Consular diptych Probus 406.jpg», non controllate.
+- **Onorio** ([Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: siliqua d'argento di Onorio (D N HONORIVS P F AVG), zecca di Milano, 402-423 circa. [Honorius Siliqua 2380632.jpg](https://commons.wikimedia.org/wiki/File:Honorius_Siliqua_2380632.jpg) — 800×369, CC BY-SA 2.5; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 2.5, da Wikimedia Commons». Scelta del 22 novembre 2026. Scartate: la foto del dittico di Probo (Dea Picture Library, licenza dubbia) e il tremisse del Cleveland Museum of Art (1968.51.a), che Commons intitola a Onorio ma porta la legenda D N ARCADIVS P F AVG.
 
 ### 406
 
@@ -126,13 +126,13 @@ Le scelte di principio:
 
 ### 409
 
-- **Onorio** ([Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: dittico consolare d'avorio di Probo, 406: Onorio in abito militare, con iscrizione, Tesoro della cattedrale di Aosta. [Diptych of Honorius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_of_Honorius.jpg) — 3075×3305, Public domain; «Immagine: Dea Picture Library, pubblico dominio, da Wikimedia Commons». L'immagine di Wikidata è un quadro di Jean-Paul Laurens (1880), di fantasia: scartato. LICENZA DA CONTROLLARE: la pagina dichiara di pubblico dominio una foto d'agenzia (Dea Picture Library) di un oggetto a tre dimensioni; nella categoria ci sono altre foto del dittico, per esempio «Consular diptych Probus 406.jpg», non controllate.
+- **Onorio** ([Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: siliqua d'argento di Onorio (D N HONORIVS P F AVG), zecca di Milano, 402-423 circa. [Honorius Siliqua 2380632.jpg](https://commons.wikimedia.org/wiki/File:Honorius_Siliqua_2380632.jpg) — 800×369, CC BY-SA 2.5; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 2.5, da Wikimedia Commons». Scelta del 22 novembre 2026. Scartate: la foto del dittico di Probo (Dea Picture Library, licenza dubbia) e il tremisse del Cleveland Museum of Art (1968.51.a), che Commons intitola a Onorio ma porta la legenda D N ARCADIVS P F AVG.
 - **Costantino III** ([Q209793](https://www.wikidata.org/wiki/Q209793)) — *ritratto coevo*: siliqua di Costantino III (RIC 1355), 407-411. [Siliqua Constantine III-RIC 1355.jpg](https://commons.wikimedia.org/wiki/File:Siliqua_Constantine_III-RIC_1355.jpg) — 354×175, Public domain; «Immagine: Classical Numismatic Group, Inc. (cngcoins.com), tramite Wildwinds, pubblico dominio, da Wikimedia Commons». ATTENZIONE: l'immagine di Wikidata è un solido di Costanzo III, cioè un'altra persona.
 
 ### 410
 
 - **Alarico** ([Q102371](https://www.wikidata.org/wiki/Q102371)) — *nessuna immagine*. Nessun ritratto coevo noto. Su Commons solo opere moderne (busto di Giovanni Bonazza a Rovigo, XVIII secolo; statua di Cosenza): di fantasia, sconsigliate.
-- **Onorio** ([Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: dittico consolare d'avorio di Probo, 406: Onorio in abito militare, con iscrizione, Tesoro della cattedrale di Aosta. [Diptych of Honorius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_of_Honorius.jpg) — 3075×3305, Public domain; «Immagine: Dea Picture Library, pubblico dominio, da Wikimedia Commons». L'immagine di Wikidata è un quadro di Jean-Paul Laurens (1880), di fantasia: scartato. LICENZA DA CONTROLLARE: la pagina dichiara di pubblico dominio una foto d'agenzia (Dea Picture Library) di un oggetto a tre dimensioni; nella categoria ci sono altre foto del dittico, per esempio «Consular diptych Probus 406.jpg», non controllate.
+- **Onorio** ([Q159798](https://www.wikidata.org/wiki/Q159798)) — *ritratto coevo*: siliqua d'argento di Onorio (D N HONORIVS P F AVG), zecca di Milano, 402-423 circa. [Honorius Siliqua 2380632.jpg](https://commons.wikimedia.org/wiki/File:Honorius_Siliqua_2380632.jpg) — 800×369, CC BY-SA 2.5; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 2.5, da Wikimedia Commons». Scelta del 22 novembre 2026. Scartate: la foto del dittico di Probo (Dea Picture Library, licenza dubbia) e il tremisse del Cleveland Museum of Art (1968.51.a), che Commons intitola a Onorio ma porta la legenda D N ARCADIVS P F AVG.
 - **Galla Placidia** ([Q237907](https://www.wikidata.org/wiki/Q237907)) — *ritratto coevo*: solido di Galla Placidia augusta, 425-426. [Solidus of Galla Placidia, AD 425-426.jpg](https://commons.wikimedia.org/wiki/File:Solidus_of_Galla_Placidia,_AD_425-426.jpg) — 800×378, CC BY-SA 2.5; «Foto: CNG Coins, CC BY-SA 2.5, da Wikimedia Commons». Il medaglione in vetro dorato della croce di Brescia, spesso detto «di Galla Placidia», non la ritrae (Commons lo segnala): da evitare.
 
 ### 418
@@ -154,7 +154,7 @@ Le scelte di principio:
 
 ### 451
 
-- **Ezio** ([Q185476](https://www.wikidata.org/wiki/Q185476)) — *ritratto coevo*: dittico consolare d'avorio di Halberstadt, prima metà del V secolo. [Diptych Aetius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_Aetius.jpg) — 900×900, CC BY-SA 4.0; «Foto: Tataryn, CC BY-SA 4.0, da Wikimedia Commons». DUBBIO FORTE: la descrizione su Commons dice «possible diptych of Aetius», secondo lo storico Ian Hughes. Il dittico di Halberstadt è attribuito da alcuni a Ezio (console nel 432, 437 o 446), da altri a Costanzo III (417). Nessun ritratto certo di Ezio.
+- **Ezio** ([Q185476](https://www.wikidata.org/wiki/Q185476)) — *nessuna immagine*. Nessun ritratto certo. Scartato il 22 novembre 2026 il file «Diptych Aetius.jpg»: guardato, è un rilievo di marmo (un busto dentro una conchiglia, da un sarcofago), non il dittico d’avorio che il titolo promette; che sia Ezio è una proposta di un solo autore (Ian Hughes).
 - **Attila** ([Q36724](https://www.wikidata.org/wiki/Q36724)) — *di fantasia*: ritratto immaginario dagli «Elogia» di Paolo Giovio, 1575. [Attila portrait (imaginary), by Giovio Paolo, 1483-1552, published 1575.jpg](https://commons.wikimedia.org/wiki/File:Attila_portrait_(imaginary),_by_Giovio_Paolo,_1483-1552,_published_1575.jpg) — 605×774, Public domain; «Immagine: Giovio, Paolo, 1483-1552, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: l'immagine è dichiaratamente immaginaria (lo dice il titolo del file).
 - **Teodorico I** ([Q110892](https://www.wikidata.org/wiki/Q110892)) — *di fantasia*: quadro di Félix Castello, 1635, Museo del Prado. [Félix Castello, "Teodorico, rey godo", 1635.jpg](https://commons.wikimedia.org/wiki/File:F%C3%A9lix_Castello,_%22Teodorico,_rey_godo%22,_1635.jpg) — 1708×2953, Public domain; «Immagine: Félix Castello, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: immagine di fantasia; meglio nessuna immagine.
 
@@ -191,7 +191,7 @@ Le scelte di principio:
 
 - **Teodorico** ([Q105105](https://www.wikidata.org/wiki/Q105105)) — *ritratto coevo*: medaglione d'oro da tre solidi col ritratto del re (pezzo unico, trovato a Senigallia), 493-526, Museo nazionale romano. [Regno dei goti, teodorico, pezzo da tre solidi con ritratto del re col palladio, 493-526, oro (pezzo unico).JPG](https://commons.wikimedia.org/wiki/File:Regno_dei_goti,_teodorico,_pezzo_da_tre_solidi_con_ritratto_del_re_col_palladio,_493-526,_oro_(pezzo_unico).JPG) — 639×614, CC BY-SA 3.0; «Foto: Sailko, CC BY-SA 3.0, da Wikimedia Commons». L'unico ritratto certo, con il nome; le sue monete correnti portano il volto dell'imperatore.
 - **Odoacre** ([Q103333](https://www.wikidata.org/wiki/Q103333)) — *ritratto coevo*: moneta d'argento di Odoacre col suo busto, Ravenna, 477 circa, British Museum. [Coin of Odoacer at the British Museum (obverse).jpg](https://commons.wikimedia.org/wiki/File:Coin_of_Odoacer_at_the_British_Museum_(obverse).jpg) — 1095×1192, CC BY-SA 4.0; «Foto: British Museum (photo), CC BY-SA 4.0, da Wikimedia Commons».
-- **Cassiodoro** ([Q192365](https://www.wikidata.org/wiki/Q192365)) — *ritratto posteriore*: frontespizio dei «Gesta Theodorici» (Leida, Biblioteca universitaria, ms. Vulc. 46, fol. 2r), Fulda, 1177: Cassiodoro seduto davanti a Teodorico. [Gesta Theodorici - Flavius Magnus Aurelius Cassiodorus (c 485 - c 580).jpg](https://commons.wikimedia.org/wiki/File:Gesta_Theodorici_-_Flavius_Magnus_Aurelius_Cassiodorus_(c_485_-_c_580).jpg) — 1098×1701, Public domain; «Immagine: Fulda workshop, pubblico dominio, da Wikimedia Commons». Quasi sette secoli dopo: non è un ritratto dal vero.
+- **Cassiodoro** ([Q192365](https://www.wikidata.org/wiki/Q192365)) — *ritratto posteriore*: frontespizio dei «Gesta Theodorici» (Leida, Biblioteca universitaria, ms. Vulc. 46, fol. 2r), Fulda, 1177: Cassiodoro in trono con un libro. [Gesta Theodorici - Flavius Magnus Aurelius Cassiodorus (c 485 - c 580).jpg](https://commons.wikimedia.org/wiki/File:Gesta_Theodorici_-_Flavius_Magnus_Aurelius_Cassiodorus_(c_485_-_c_580).jpg) — 1098×1701, Public domain; «Immagine: Fulda workshop, pubblico dominio, da Wikimedia Commons». Quasi sette secoli dopo: non è un ritratto dal vero.
 
 ### 526
 
@@ -204,7 +204,7 @@ Le scelte di principio:
 
 - **Giustiniano** ([Q41866](https://www.wikidata.org/wiki/Q41866)) — *ritratto coevo*: mosaico del presbiterio di San Vitale, Ravenna, 547 circa. [Mosaic of Justinianus I - Basilica San Vitale (Ravenna).jpg](https://commons.wikimedia.org/wiki/File:Mosaic_of_Justinianus_I_-_Basilica_San_Vitale_(Ravenna).jpg) — 1500×1997, CC BY-SA 4.0; «Foto: Petar Milošević, CC BY-SA 4.0, da Wikimedia Commons».
 - **Belisario** ([Q174943](https://www.wikidata.org/wiki/Q174943)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa. [Meister von San Vitale in Ravenna 013.jpg](https://commons.wikimedia.org/wiki/File:Meister_von_San_Vitale_in_Ravenna_013.jpg) — 1576×1888, Public domain; «Immagine: Meister von San Vitale in Ravenna, pubblico dominio, da Wikimedia Commons». L'identificazione con Belisario della figura alla destra dell'imperatore è tradizionale ma discussa.
-- **Vitige** ([Q312607](https://www.wikidata.org/wiki/Q312607)) — *oggetto del tempo, senza volto*: quarto di siliqua di Vitige: busto di Giustiniano e nome del re, 536-540. [Quarter Siliqua of Witigis.jpg](https://commons.wikimedia.org/wiki/File:Quarter_Siliqua_of_Witigis.jpg) — 800×392, CC BY-SA 2.5; «Foto: CNG Coins, CC BY-SA 2.5, da Wikimedia Commons». Nessun ritratto noto: il volto sulla moneta è dell'imperatore.
+- **Vitige** ([Q312607](https://www.wikidata.org/wiki/Q312607)) — *nessuna immagine*. Nessun ritratto noto. Scartato il 22 novembre 2026 il file «Quarter Siliqua of Witigis.jpg»: guardato, sul rovescio ha un monogramma e non il nome del re in lettere, come ci si aspetta dalle monete di Vitige; l’attribuzione va controllata su un catalogo prima di usarla.
 
 ### 542
 
@@ -234,9 +234,9 @@ Le scelte di principio:
 
 ### 609
 
-- **Foca** ([Q31556](https://www.wikidata.org/wiki/Q31556)) — *ritratto coevo*: solido di Foca (FOCAS PERP AVG, al rovescio la Vittoria), 602-610. [Phocas cons.jpg](https://commons.wikimedia.org/wiki/File:Phocas_cons.jpg) — 774×324, CC BY-SA 3.0; «Foto: autore non indicato (caricata da Wikipedia), CC BY-SA 3.0, da Wikimedia Commons». Autore della foto non indicato sulla pagina: meglio un'altra moneta della categoria «Coins of Phocas» con autore dichiarato.
+- **Foca** ([Q31556](https://www.wikidata.org/wiki/Q31556)) — *ritratto coevo*: moneta d'oro di Foca, 602-610, Museo nazionale romano (Palazzo Massimo alle Terme). [Impero romano d'oriente, foca, emissione aurea, 602-610.JPG](https://commons.wikimedia.org/wiki/File:Impero_romano_d%27oriente,_foca,_emissione_aurea,_602-610.JPG) — 384×357, CC BY-SA 3.0; «Foto: Sailko, CC BY-SA 3.0, da Wikimedia Commons». Scelta del 22 novembre 2026 al posto di «Phocas cons.jpg», che non indica l'autore della foto.
 - **Bonifacio IV** ([Q170505](https://www.wikidata.org/wiki/Q170505)) — *nessuna immagine*. Nessun ritratto coevo; su Commons solo il medaglione di San Paolo fuori le mura (rifatto nell'Ottocento) e incisioni moderne.
-- **Smaragdo** ([Q1340553](https://www.wikidata.org/wiki/Q1340553)) — *oggetto del tempo, senza volto*: la colonna di Foca nel Foro Romano, con l'iscrizione dedicatoria di Smaragdo (608) sulla base. [Column of Phocas.jpg](https://commons.wikimedia.org/wiki/File:Column_of_Phocas.jpg) — 2448×3264, CC BY 3.0; «Foto: F l a n k e r, CC BY 3.0, da Wikimedia Commons». Nessun ritratto noto. Va scelta una foto in cui si legga l'iscrizione (questa è presa a caso dalla categoria).
+- **Smaragdo** ([Q1340553](https://www.wikidata.org/wiki/Q1340553)) — *oggetto del tempo, senza volto*: la colonna di Foca nel Foro Romano, che Smaragdo dedicò nel 608. [Column of Phocas.jpg](https://commons.wikimedia.org/wiki/File:Column_of_Phocas.jpg) — 2448×3264, CC BY 3.0; «Foto: F l a n k e r, CC BY 3.0, da Wikimedia Commons». Nessun ritratto noto. Va scelta una foto in cui si legga l'iscrizione (questa è presa a caso dalla categoria).
 
 ### 663
 

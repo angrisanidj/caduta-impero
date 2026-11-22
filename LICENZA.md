@@ -26,5 +26,6 @@ I testi delle tappe, delle schede dei monumenti e dei riquadri (in `js/dati.js` 
 
 ## Cose di altri usate dalla pagina
 
+- Immagini dei protagonisti (`img/protagonisti/`, indice in `js/ritratti.js`): vengono da Wikimedia Commons, ciascuna con il suo autore e la sua licenza (pubblico dominio, CC0, CC BY o CC BY-SA nelle varie versioni), indicati accanto all'immagine insieme al collegamento alla pagina del file; chi le riusa segue la licenza di ciascuna, non quella di questo progetto. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei.
 - three.js r128 e OrbitControls: licenza MIT.
 - Caratteri Cinzel ed EB Garamond: SIL Open Font License 1.1, serviti da Google Fonts.
