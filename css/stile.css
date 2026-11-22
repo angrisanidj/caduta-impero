@@ -579,6 +579,10 @@ body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.9
   .condividi-lato{position:fixed;z-index:40;top:50%;left:max(14px,calc(50% - 640px - 50px));transform:translateY(-50%);margin:0}
   .condividi-lato .condividi-ok{right:auto;left:calc(100% + 10px)}
   body.roma-grande .condividi-lato,body.impero-grande .condividi-lato{display:none}
+  /* la finestra di Roma non supera lo spazio sopra la linea del tempo, che sta incollata in fondo: i comandi in basso restano sempre scoperti.
+     Se la colonna della carta è più alta, la città resta ferma in vista mentre si scorre (110 = linea del tempo 76 + i suoi margini) */
+  .riquadro.roma{position:sticky;top:12px;max-height:calc(100vh - 110px)}
+  body.roma-grande .riquadro.roma{max-height:none}
 }
 
 /* =================== schermi medi e stretti =================== */
