@@ -37,20 +37,34 @@ var mura=(function(){
   var magliaPorte=G.maglia(mat), flaminia=GF.pos.length?GF.maglia(mat):null; RM.scene.add(magliaPorte); if(flaminia) RM.scene.add(flaminia);
   RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'}]).concat(flaminia?[{maglia:flaminia,id:'mura'}]:[]);
   passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; });     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
+  /* Il cantiere. «Rome, which before had no walls, was now surrounded with them. This work was begun in the reign of Aurelianus, and was finished by Probus» (Zosimo I 49,
+     letto il 22 novembre 2026 nella traduzione del 1814, tertullian.org). L'anno della fine non è scritto: nel modello il 280, a metà del regno di Probo (276-282); che il grosso
+     fosse in piedi alla morte di Aureliano (275) è l'opinione corrente, non un dato. In che ordine salissero i tratti non si sa: qui a blocchi di circa 240 m, in ordine casuale.
+     Dove il lavoro non è cominciato si vede il solo filare di fondazione lungo tutto il tracciato; dove è in corso, i ponteggi di legno. */
+  passi.forEach(function(p,j){ p.turno=RM.grana(Math.floor(j/8),13); });
+  var S=new RM.Costruttore(); [-.42,-.14,.14,.42].forEach(function(x){ S.scatola(.014,1.14,.03,x,0,.3,P.tronco); }); [.3,.62,.94].forEach(function(y){ S.scatola(1,.02,.1,0,y,.27,P.tronco); });
+  var ponteggi=istanze(S.geometria(),RM.matPietra(),passi.length); ponteggi.visible=false; ponteggi.receiveShadow=false;
   /* Dicembre 791: il Tevere «portam quae dicitur Flamminea … a fundamenta evellens» (LP, Adriano I 94). Quando sia stata rifatta non è scritto: qui resta abbattuta. */
   function vistaFlaminia(alt,anno){ if(flaminia){ flaminia.visible=alt>.01&&!(anno>=791.95); flaminia.scale.y=Math.max(alt,.0001); } }
-  var ultima=-1, ultimaBr=-1;
-  return function(alt,br,anno){
-    vistaFlaminia(alt,anno);
-    if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01) return; ultima=alt; ultimaBr=br;
+  var ultima=-1, ultimaBr=-1, ultimoCant=-1;
+  return function(alt,br,anno,cant){
+    var inCantiere=cant>0&&cant<1, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta
+    vistaFlaminia(porteSu,anno);
+    if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01 && Math.abs(cant-ultimoCant)<.002) return; ultima=alt; ultimaBr=br; ultimoCant=cant;
     passi.forEach(function(p,j){
       if(p.y==null){ var cx=Math.cos(p.ang)*p.len/2, cz=-Math.sin(p.ang)*p.len/2, ya=RM.h(p.x-cx,p.z-cz), yb=RM.h(p.x+cx,p.z+cz); p.y=(ya+yb)/2-.3; p.yt=ya-.3; p.pend=Math.atan2(yb-ya,p.len); }   // sui pendii la cortina segue il terreno invece di salire a gradoni
-      var y=p.y, sy=Math.max(alt,.0001)*(p.rotto?1-.8*br:1);
+      var c=cant>=1?1:cant<=0?0:Math.max(.1,Math.min(1,(cant-p.turno*.55)/.45));      // quanto è alto questo tratto: 0,1 sono i primi filari sopra la fondazione, lungo tutto il tracciato
+      var y=p.y, sy=Math.max(alt*c,.0001)*(p.rotto?1-.8*br:1);
       d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix(); tratti.setMatrixAt(j,d.matrix);
       d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.z=0; d.scale.set(1,sy,1); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);      // una torre a ogni passo
+      if(inCantiere){      // ponteggio sui tratti che stanno salendo, un poco più alto del muro
+        if(c>.1&&c<1){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);
+        d.updateMatrix(); ponteggi.setMatrixAt(j,d.matrix);
+      }
     });
     tratti.instanceMatrix.needsUpdate=true; torri.instanceMatrix.needsUpdate=true;
-    tratti.visible=torri.visible=magliaPorte.visible=alt>.01; magliaPorte.scale.y=Math.max(alt,.0001);
+    ponteggi.visible=inCantiere; if(inCantiere) ponteggi.instanceMatrix.needsUpdate=true;
+    tratti.visible=torri.visible=alt>.01&&cant>0; magliaPorte.visible=porteSu>.01; magliaPorte.scale.y=Math.max(porteSu,.0001);
   };
 })();
 
@@ -158,8 +172,10 @@ var acque=(function(){
   ['A','B','C'].forEach(function(k){ RM.scene.add(PC[k].maglia(RM.matPietra(k))); });
 })();
 
+/* avanzamento del cantiere delle mura (0-1): aperto nel 271, il grosso fatto alla morte di Aureliano, finito sotto Probo (vedi sopra); alla tappa del 271 è appena cominciato */
+var CANTIERE_MURA=[[270.6,0],[271,.3],[275,.85],[280,1]];
 RM.moduli.push(function(anno){
-  mura(D.interp(D.MURA_ALTE,anno), RM.sfuma(545.2,546,anno)*(1-.7*RM.sfuma(546.8,549,anno))*(1-RM.sfuma(715,790,anno)),anno);   // Belisario le richiude in fretta nel 547: resta la cicatrice
+  mura(Math.max(D.interp(D.MURA_ALTE,anno),anno>=270.6?1:0), RM.sfuma(545.2,546,anno)*(1-.7*RM.sfuma(546.8,549,anno))*(1-RM.sfuma(715,790,anno)),anno,D.interp(CANTIERE_MURA,anno));   // Belisario le richiude in fretta nel 547: resta la cicatrice
   acque(anno);
 });
 })();

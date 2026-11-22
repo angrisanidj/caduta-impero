@@ -43,26 +43,39 @@ Object.keys(G.regioni).forEach(function(id){
   var gf=el('g',{'class':'m-fiumi'},svg);
   (G.fiumi||[]).forEach(function(f){ el('path',{d:f.d,'class':f.forte?'forte':''},gf); });
 })();
-/* ciò che i cartellini dei popoli non devono coprire: i nomi delle regioni e delle città, come [x del centro, y del centro, larghezza] */
-var ostacoli=[];
+/* I nomi delle regioni e delle città, al loro posto di sempre. A ogni tappa un nome che finirebbe sotto un rombo, un segno della scena o una punta di freccia
+   si sposta di poco (piazzaCitta, piazzaNomi); i cartellini dei luoghi e dei popoli li evitano tutti. */
+var nomiPos=[];
 Object.keys(G.regioni).forEach(function(id){
   var r=G.regioni[id]; if(!NOMI[id]) return;                                    // solo le regioni abbastanza grandi hanno il nome scritto sopra
   var yn=r.c[1]+(id==='italia_nord'?-14:id==='belgica'?-6:0);
   nomi[id]=el('text',{'class':'m-nome',x:r.c[0],y:yn},svg); nomi[id].textContent=NOMI[id];
-  ostacoli.push([r.c[0],yn-4,NOMI[id].length*8.6+6]);
+  nomiPos.push({id:id,x:r.c[0],y:yn,w:NOMI[id].length*8.6+6,ox:0,oy:0});
 });
+/* Ingombri sulla carta, in unità del disegno: [x del centro, y del centro, larghezza, altezza], oppure un cerchio [x, y, diametro, diametro, 1].
+   copre() dice quanto due ingombri si sovrappongono: 0 se restano staccati di almeno un'unità e mezza */
+function copre(a,b){
+  var g=1.5, dx=Math.abs(a[0]-b[0]), dy=Math.abs(a[1]-b[1]);
+  if(!a[4]&&!b[4]){ var ox=(a[2]+b[2])/2+g-dx, oy=(a[3]+b[3])/2+g-dy; return ox>0&&oy>0?ox*oy:0; }
+  var c=a[4]?a:b, q=a[4]?b:a, r=c[2]/2+g, d=q[4]?Math.hypot(dx,dy)-q[2]/2:Math.hypot(Math.max(0,dx-q[2]/2),Math.max(0,dy-q[3]/2));
+  return d<r?(r-d)*Math.min(c[2],q[2],q[3]):0;
+}
+function ingombro(r,lista){ var s=0; for(var i=0;i<lista.length;i++) s+=copre(r,lista[i]); return s; }
+function rettoNome(np,o){ return [np.x+o[0],np.y+o[1]-3.2,np.w,16]; }      // la scatola del testo: dalla linea di base 11 unità in su e 5 in giù
 var annoCarta=document.createElement('p'); annoCarta.className='m-anno'; annoCarta.setAttribute('aria-hidden','true'); ospite.appendChild(annoCarta);
 var verdun=el('g',{'class':'m-verdun via'},svg);
 if(G.verdun){ G.verdun.linee.forEach(function(d){ el('path',{d:d},verdun); }); G.verdun.nomi.forEach(function(n){ el('text',{x:n[0],y:n[1]},verdun).textContent=n[2]; }); }      // 843: l'impero dei Franchi diviso fra i tre nipoti di Carlo Magno
-var citta=el('g',{'class':'m-citta'},svg), scritte={};
+var citta=el('g',{'class':'m-citta'},svg), scritte={}, cittaPos=[], larghe={};
 if(G.citta.roma) el('circle',{'class':'m-battito',cx:G.citta.roma.x,cy:G.citta.roma.y,r:4},citta);      // Roma pulsa piano: è lì che guarda l'altra scena
 ['roma','ravenna','milano','treviri','cartagine','costantinopoli'].forEach(function(id){
   var c=G.citta[id]; el('circle',{cx:c.x,cy:c.y,r:3.2},citta);
-  var sinistra=id==='ravenna'||id==='treviri';
-  var yc=c.y+(id==='milano'?-7:id==='roma'?14:4), larga=c.nome.length*6.3+4;
-  scritte[id]=el('text',{x:c.x+(sinistra?7:-7),y:yc,'text-anchor':sinistra?'start':'end'},citta); scritte[id].textContent=c.nome;
-  ostacoli.push([c.x+(sinistra?1:-1)*(7+larga/2),yc-4,larga]);
+  var destra=id==='ravenna'||id==='treviri', dy=id==='milano'?-7:id==='roma'?14:4;
+  scritte[id]=el('text',{x:c.x+(destra?7:-7),y:c.y+dy,'text-anchor':destra?'start':'end'},citta); scritte[id].textContent=c.nome;
+  cittaPos.push({id:id,x:c.x,y:c.y,lato:destra?1:-1,dy:dy,v:null});
 });
+/* il nome di una città come ingombro: v=[lato (1 a destra del punto, -1 a sinistra, 0 centrato), linea di base rispetto al punto, distanza dal punto] */
+function largaCitta(id){ var t=scritte[id], s=t.textContent, w=larghe[s]; if(!w){ try{ w=t.getComputedTextLength(); }catch(e){} if(w>4) larghe[s]=w; else w=s.length*6.3; } return w+4; }
+function rettoCitta(cp,v,w){ return [cp.x+v[0]*(v[2]+w/2),cp.y+v[1]-4.7,w,16]; }
 
 /* I popoli: ciascuno è un punto dove stava il grosso del gruppo e un cartellino col nome; il colore dice il rapporto con Roma in quel momento
    (gli stessi colori delle regioni: verde per chi sta dentro per accordo, blu per chi ha un regno), la linea tratteggiata da dove veniva
@@ -85,25 +98,71 @@ function scriviLuoghi(l){
   luoghiOra=l||[]; rigaLuoghi.textContent=''; rigaLuoghi.hidden=!luoghiOra.length;
   luoghiOra.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); rigaLuoghi.appendChild(s); });
 }
-function disegnaLuoghi(k,H,messi){
-  while(stratoLuoghi.firstChild) stratoLuoghi.removeChild(stratoLuoghi.firstChild);
+/* dove stanno i rombi dei luoghi in questa vista: chi cade fuori dal bordo ci resta sopra */
+function posLuoghi(){
+  var out=[];
   luoghiOra.forEach(function(q){
     var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return;
-    var x=Math.max(bordo[0],Math.min(bordo[1],p.x)), y=Math.max(bordo[2],Math.min(bordo[3],p.y)), fuori=x!==p.x||y!==p.y, citta=!!G.citta[q[0]]&&!!scritte[q[0]], lato=3.9*k;
+    var x=Math.max(bordo[0],Math.min(bordo[1],p.x)), y=Math.max(bordo[2],Math.min(bordo[3],p.y));
+    out.push({q:q,p:p,x:x,y:y,fuori:x!==p.x||y!==p.y,citta:!!G.citta[q[0]]&&!!scritte[q[0]]});
+  });
+  return out;
+}
+/* ciò che occupa un punto della carta (un rombo, l'anello di un assedio): mezzo lato del rombo, raggio dell'anello. Lo scrive disegnaScena */
+var nucleiOra={};
+function chiave(x,y){ return Math.round(x)+','+Math.round(y); }
+function nucleoDi(x,y){ var n=nucleiOra[chiave(x,y)]; return n?Math.max(n.c,n.r):0; }
+/* per un punto che cade dentro o accanto a un rombo o a un anello (il punto di un popolo sopra il luogo che assedia): quanto stargli lontano per uscirne */
+function nucleoIntorno(x,y){
+  var m=0, c, p, d, n;
+  for(c in nucleiOra){ n=nucleiOra[c]; p=c.split(','); d=Math.hypot(+p[0]-x,+p[1]-y); if(d<Math.max(n.c,n.r)+6) m=Math.max(m,Math.max(n.c,n.r)+d); }
+  return m;
+}
+/* i nomi delle città restano dove sono, se lì non c'è niente; altrimenti vanno dall'altra parte, sopra o sotto il punto */
+function piazzaCitta(k,fissi,messi){
+  var ost=fissi.concat(nomiPos.map(function(np){ return rettoNome(np,[0,0]); }));
+  cittaPos.forEach(function(cp){
+    var w=largaCitta(cp.id), nc=nucleoDi(cp.x,cp.y), gx=Math.max(7,nc+1.5*k), l=cp.lato, a=Math.max(nc,4);
+    var prove=[], meglio=0, minimo=1e9, j, t;
+    [0,10,20].forEach(function(e){ prove.push([l,cp.dy,gx+e],[l,4,gx+e],[-l,cp.dy,gx+e],[-l,4,gx+e],[0,-a-6-e,0],[0,a+15+e,0]); });      // prima vicino al punto, poi un po' più in là
+    for(j=0;j<prove.length;j++){ t=ingombro(rettoCitta(cp,prove[j],w),ost); if(t<minimo){ minimo=t; meglio=j; if(!t) break; } }
+    var v=prove[meglio], r=rettoCitta(cp,v,w), s=scritte[cp.id];
+    if(!cp.v||cp.v.join()!==v.join()){ cp.v=v; s.setAttribute('x',(cp.x+v[0]*v[2]).toFixed(1)); s.setAttribute('y',(cp.y+v[1]).toFixed(1)); s.setAttribute('text-anchor',v[0]>0?'start':v[0]<0?'end':'middle'); }
+    ost.push(r); messi.push(r);
+  });
+}
+/* i nomi delle regioni si scansano di poco, in su o in giù o di lato; se non trovano posto si fanno chiari */
+function piazzaNomi(messi){
+  var ost=messi.slice(), prove;
+  nomiPos.forEach(function(np){
+    var a=.3*np.w; prove=[[0,0],[0,-13],[0,13],[0,-25],[0,25],[-a,0],[a,0],[-a,-13],[a,-13],[-a,13],[a,13],[0,-37],[0,37]];
+    var meglio=0, minimo=1e9, j, t;
+    for(j=0;j<prove.length;j++){ t=ingombro(rettoNome(np,prove[j]),ost); if(t<minimo){ minimo=t; meglio=j; if(!t) break; } }
+    var o=prove[meglio], n=nomi[np.id];
+    if(o[0]!==np.ox||o[1]!==np.oy){ np.ox=o[0]; np.oy=o[1]; n.setAttribute('x',(np.x+o[0]).toFixed(1)); n.setAttribute('y',(np.y+o[1]).toFixed(1)); }
+    n.style.opacity=minimo>0?'.3':'';
+    messi.push(rettoNome(np,o));
+  });
+}
+function disegnaLuoghi(k,H,messi,pos){
+  while(stratoLuoghi.firstChild) stratoLuoghi.removeChild(stratoLuoghi.firstChild);
+  pos.forEach(function(l){
+    var q=l.q, p=l.p, x=l.x, y=l.y, fuori=l.fuori, citta=l.citta, lato=3.9*k, nc=Math.max(nucleoDi(x,y),6.3*k);
     var g=el('g',{'class':'m-luogo',transform:'translate('+x+' '+y+')'},stratoLuoghi);
     el('circle',{'class':'m-battito',r:(4.5*k).toFixed(1),style:'stroke:#241E1A;stroke-width:'+(1.6*k).toFixed(1)},g);
     el('rect',{x:(-lato).toFixed(1),y:(-lato).toFixed(1),width:(2*lato).toFixed(1),height:(2*lato).toFixed(1),transform:'rotate(45)',fill:'#241E1A',stroke:'#FBF6EA','stroke-width':(1.5*k).toFixed(1)},g);
     if(citta) return;                                                      // le città hanno già il nome scritto accanto
     var testo=p.nome+(fuori?' →':''), c=el('g',{},g), fondo=el('rect',{rx:3,ry:3,fill:'rgba(36,30,26,.92)'},c), t=el('text',{'text-anchor':'middle',fill:'#FBF6EA','font-size':(11*k).toFixed(1),style:'font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;font-weight:600'},c);
     t.textContent=testo; var w=0; try{ w=t.getComputedTextLength(); }catch(e){} var W=(w>4?w:testo.length*6.2*k)+12*k;
-    var dx=W/2+8*k, prove=[[dx,-H/2],[-dx,-H/2],[0,-H-8*k],[0,9*k]], meglio=0, minimo=1e9, j, n, cx, cy, tocca, ox, oy;
+    /* di fianco, sopra, sotto, poi negli angoli e più lontano: vince il primo posto libero, o quello che copre di meno. Le distanze tengono conto di ciò che occupa il punto (rombo o anello) */
+    var s=nc+1.7*k, dx=W/2+s, su=-H-s, dd=W/2+2*k, prove=[[dx,-H/2],[-dx,-H/2],[0,su],[0,s],[dd,su],[-dd,su],[dd,s],[-dd,s],[0,su-H-2*k],[0,s+H+2*k],[dd,su-H-2*k],[-dd,su-H-2*k],[dd,s+H+2*k],[-dd,s+H+2*k]], meglio=0, minimo=1e9, j, cx, cy, tocca;
     for(j=0;j<prove.length;j++){ cx=Math.max(bordo[0]-6+W/2,Math.min(bordo[1]+6-W/2,x+prove[j][0])); cy=y+prove[j][1]+H/2; tocca=Math.abs(cx-(x+prove[j][0]))>1?W*4:0;      // un posto che va spinto dentro il bordo vale meno
-      for(n=0;n<messi.length;n++){ ox=(messi[n][2]+W)/2+2-Math.abs(messi[n][0]-cx); oy=H+1-Math.abs(messi[n][1]-cy); if(ox>0&&oy>0) tocca+=ox*oy; }
+      tocca+=ingombro([cx,cy,W,H],messi);
       if(tocca<minimo){ minimo=tocca; meglio=j; if(!tocca) break; } }
     cx=Math.max(bordo[0]-6+W/2,Math.min(bordo[1]+6-W/2,x+prove[meglio][0])); var dy=prove[meglio][1];
     fondo.setAttribute('x',(-W/2).toFixed(1)); fondo.setAttribute('width',W.toFixed(1)); fondo.setAttribute('height',H.toFixed(1)); t.setAttribute('y',(H*.72).toFixed(1));
     c.setAttribute('transform','translate('+(cx-x).toFixed(1)+' '+dy.toFixed(1)+')');
-    messi.push([cx,y+dy+H/2,W]); messi.push([x,y,12*k]);
+    messi.push([cx,y+dy+H/2,W,H]);
   });
 }
 /* La scena dell'evento: marce (frecce), rotte per mare (tratteggio), scontri (spade incrociate), assedi (anello) e sacchi (fiamma), disegnati sopra la carta mentre la regia la tiene vicina.
@@ -111,30 +170,95 @@ function disegnaLuoghi(k,H,messi){
 var bordo=[103,897,63,565];      // fuori dalla regia rombi e segni stanno dentro la vista normale; durante la regia la carta si può spingere fino al suo vero bordo (Edessa, Nisibi)
 var stratoScena=el('g',{'class':'m-scena'},svg), COLORI_SCENA={roma:['#F1D99A','#241E1A'],altri:['#241E1A','#FBF6EA'],franchi:['#A9CBE6','#1F3345']};
 function puntoDi(k){ var p=(G.luoghi||{})[k]||G.citta[k]; return p?[p.x,p.y]:null; }
-function disegnaScena(sc){
+/* Si disegna prima dei cartellini e mette fra gli ingombri (fissi) i suoi segni e le punte delle frecce, così nomi e cartellini li evitano.
+   Ordine: gli anelli degli assedi attorno ai luoghi; le frecce, che si fermano sul bordo del rombo o dell'anello e, se arrivano in più d'una nello stesso posto,
+   si aprono a ventaglio; infine spade e fiamme, che si mettono accanto al luogo dalla parte libera (prima sopra, poi di lato, sotto, negli angoli).
+   Il disegno dipende solo da scena, luoghi, bordo e ingrandimento: se non cambiano (a tutto schermo, trascinando la carta) si riusa quello di prima. */
+var scenaFatta=null;
+function disegnaScena(sc,k,pos,fissi){
+  var ch=[k,bordo.join()].join('|'), quale=sc;
+  if(scenaFatta && scenaFatta.sc===quale && scenaFatta.l===luoghiOra && scenaFatta.ch===ch){ nucleiOra=scenaFatta.nuclei; Array.prototype.push.apply(fissi,scenaFatta.fissi); return; }
   while(stratoScena.firstChild) stratoScena.removeChild(stratoScena.firstChild);
-  stratoScena.setAttribute('class','m-scena');
-  var k=ingr||1;
-  (sc||[]).forEach(function(e){
-    var tipo=e[0], g, p, col;
-    if(tipo==='marcia'||tipo==='mare'){
-      var pp=e[2].map(puntoDi).filter(Boolean); if(pp.length<2) return; col=COLORI_SCENA[e[1]]||COLORI_SCENA.altri;
-      var d='M'+pp[0][0]+' '+pp[0][1], i;
-      if(pp.length===2){ var mx=(pp[0][0]+pp[1][0])/2, my=(pp[0][1]+pp[1][1])/2, nx=-(pp[1][1]-pp[0][1])*.12, ny=(pp[1][0]-pp[0][0])*.12; d+='Q'+(mx+nx).toFixed(1)+' '+(my+ny).toFixed(1)+' '+pp[1][0]+' '+pp[1][1]; var da=[mx+nx,my+ny]; }
-      else { for(i=1;i<pp.length;i++) d+='L'+pp[i][0]+' '+pp[i][1]; var da=pp[pp.length-2]; }
-      var a=pp[pp.length-1], ang=Math.atan2(a[1]-da[1],a[0]-da[0])*180/Math.PI, cl=tipo==='mare'?'mare':'marcia';
-      el('path',{'class':cl+' sotto',d:d,pathLength:1,fill:'none',stroke:col[1],'stroke-width':(4.6*k).toFixed(1),'stroke-linecap':'round','stroke-linejoin':'round'},stratoScena);
-      el('path',{'class':cl,d:d,pathLength:1,fill:'none',stroke:col[0],'stroke-width':(2.4*k).toFixed(1),'stroke-linecap':'round','stroke-linejoin':'round'},stratoScena);
-      el('path',{'class':'punta',d:'M0 0L-9 -5L-9 5Z',transform:'translate('+a[0]+' '+a[1]+') rotate('+ang.toFixed(1)+') scale('+k+')',fill:col[0],stroke:col[1],'stroke-width':1.3,'stroke-linejoin':'round'},stratoScena);
-    } else if((p=puntoDi(e[1]))){
-      p=[Math.max(bordo[0],Math.min(bordo[1],p[0])),Math.max(bordo[2],Math.min(bordo[3],p[1]))];
-      g=el('g',{'class':tipo,transform:'translate('+p[0]+' '+p[1]+')'},stratoScena);
-      var gi=el('g',{transform:'scale('+k+')'},g);
-      if(tipo==='scontro'){ el('circle',{r:9.5,cy:-15,fill:'#FBF6EA',stroke:'#8E2A2A','stroke-width':1.6},gi); el('path',{d:'M-5.2 -20.2L5.2 -9.8M5.2 -20.2L-5.2 -9.8M-5.9 -12.9L-2.3 -9.3M5.9 -12.9L2.3 -9.3',fill:'none',stroke:'#8E2A2A','stroke-width':1.9,'stroke-linecap':'round'},gi); }
-      else if(tipo==='assedio'){ el('circle',{r:12,fill:'none',stroke:'#241E1A','stroke-width':2.2,'stroke-dasharray':'4 3'},gi); el('circle',{r:12,fill:'none',stroke:'#FBF6EA','stroke-width':.8,'stroke-dasharray':'4 3','stroke-dashoffset':3.5},gi); }
-      else if(tipo==='fuoco'){ el('path',{d:'M0 -24C5 -18 8 -14 6 -9C10 -11 9 -16 9 -16C13 -11 12 -4 6 -1C2 1 -3 1 -6 -1C-11 -4 -11 -11 -6 -15C-6 -11 -4 -10 -3 -11C-5 -16 -2 -20 0 -24Z',fill:'#E0672A',stroke:'#FBF6EA','stroke-width':1.1,'stroke-linejoin':'round'},gi); }
-    }
+  var nuovi=[], nuclei={}, G5=.5*k;
+  pos.forEach(function(l){ nuclei[chiave(l.x,l.y)]={c:6.3*k,r:0}; });
+  nucleiOra=nuclei;
+  function dentro(p){ return [Math.max(bordo[0],Math.min(bordo[1],p[0])),Math.max(bordo[2],Math.min(bordo[3],p[1]))]; }
+  function metti(r){ fissi.push(r); nuovi.push(r); }
+  sc=sc||[];
+  sc.forEach(function(e){
+    if(e[0]!=='assedio') return; var p=puntoDi(e[1]); if(!p) return; p=dentro(p);
+    var g=el('g',{'class':'assedio',transform:'translate('+p[0]+' '+p[1]+')'},stratoScena), gi=el('g',{transform:'scale('+k+')'},g), n=chiave(p[0],p[1]);
+    el('circle',{r:12,fill:'none',stroke:'#241E1A','stroke-width':2.2,'stroke-dasharray':'4 3'},gi); el('circle',{r:12,fill:'none',stroke:'#FBF6EA','stroke-width':.8,'stroke-dasharray':'4 3','stroke-dashoffset':3.5},gi);
+    (nuclei[n]=nuclei[n]||{c:0,r:0}).r=13.1*k; metti([p[0],p[1],26.2*k,26.2*k,1]);
   });
+  var frecce=[], gruppi={};
+  sc.forEach(function(e){
+    if(e[0]!=='marcia'&&e[0]!=='mare') return;
+    var pp=e[2].map(puntoDi).filter(Boolean); if(pp.length<2) return;
+    var a=pp[pp.length-1], ctl=null, da;
+    if(pp.length===2){ var mx=(pp[0][0]+pp[1][0])/2, my=(pp[0][1]+pp[1][1])/2, nx=-(pp[1][1]-pp[0][1])*.12, ny=(pp[1][0]-pp[0][0])*.12; ctl=[mx+nx,my+ny]; da=ctl; } else da=pp[pp.length-2];
+    var f={e:e,pp:pp,a:a,ctl:ctl,f:Math.atan2(da[1]-a[1],da[0]-a[0]),n:nuclei[chiave(a[0],a[1])]}, c=chiave(a[0],a[1]);
+    frecce.push(f); (gruppi[c]=gruppi[c]||[]).push(f);
+  });
+  Object.keys(gruppi).forEach(function(c){      // frecce che arrivano nello stesso posto: almeno 60 gradi fra l'una e l'altra
+    var gr=gruppi[c], it, i, u, v, d; if(gr.length<2) return; gr.sort(function(u,v){ return u.f-v.f; });
+    for(it=0;it<12;it++) for(i=0;i<gr.length-1;i++){ u=gr[i]; v=gr[i+1]; d=v.f-u.f; if(d<Math.PI/3){ d=(Math.PI/3-d)/2; u.f-=d; v.f+=d; } }
+  });
+  /* il punto a distanza s dalla fine, camminando all'indietro lungo la spezzata: [x, y, indice dell'ultimo vertice che resta prima di lui] */
+  function aRitroso(pts,s){
+    for(var i=pts.length-1;i>0;i--){ var dx=pts[i][0]-pts[i-1][0], dy=pts[i][1]-pts[i-1][1], l=Math.hypot(dx,dy); if(s<=l){ var t=l?s/l:0; return [pts[i][0]-dx*t,pts[i][1]-dy*t,i-1]; } s-=l; }
+    return [pts[0][0],pts[0][1],0];
+  }
+  frecce.forEach(function(f){
+    var e=f.e, pp=f.pp, k9=9*k, ux=Math.cos(f.f), uy=Math.sin(f.f), n=f.n, s=0, i, col=COLORI_SCENA[e[1]]||COLORI_SCENA.altri, cl=e[0]==='mare'?'mare':'marcia';
+    var pts=pp, lungo=0, ventaglio=gruppi[chiave(f.a[0],f.a[1])].length>1;
+    if(f.ctl){ pts=[]; for(i=0;i<=16;i++){ var t=i/16, u1=1-t; pts.push([u1*u1*pp[0][0]+2*u1*t*f.ctl[0]+t*t*pp[1][0],u1*u1*pp[0][1]+2*u1*t*f.ctl[1]+t*t*pp[1][1]]); } }      // la curva, fatta a pezzetti
+    for(i=1;i<pts.length;i++) lungo+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);
+    if(lungo<12*k) return;      // un passaggio più corto della sua punta (lo stretto di Gibilterra) non si vede: lo dice già il rombo del luogo
+    if(n&&n.r) s=n.r+1.2*k; else if(n&&n.c) s=n.c/Math.max(Math.abs(ux),Math.abs(uy))+1.2*k; else if(ventaglio) s=4*k;      // la punta si ferma sul bordo di ciò che sta nel punto
+    /* la punta a distanza s dal luogo: lungo il cammino, oppure (frecce a ventaglio) di sbieco, con l'ultimo tratto dritto verso il luogo */
+    var b, q, j, ang, ingo;
+    function prova(){
+      if(ventaglio){ b=[f.a[0]+ux*s,f.a[1]+uy*s]; q=[f.a[0]+ux*(s+k9),f.a[1]+uy*(s+k9)]; j=aRitroso(pts,s+k9)[2]; }
+      else { b=aRitroso(pts,s); q=aRitroso(pts,s+k9); j=b[2]; }
+      ang=Math.atan2(b[1]-q[1],b[0]-q[0]);
+      var ca=Math.cos(ang), sa=Math.sin(ang), xs=[0], ys=[0];      // ingombro della punta: i tre vertici del triangolo, ruotati
+      [[-9,-5],[-9,5]].forEach(function(v){ xs.push((v[0]*ca-v[1]*sa)*k); ys.push((v[0]*sa+v[1]*ca)*k); });
+      var x0=Math.min.apply(null,xs), x1=Math.max.apply(null,xs), y0=Math.min.apply(null,ys), y1=Math.max.apply(null,ys);
+      ingo=[b[0]+(x0+x1)/2,b[1]+(y0+y1)/2,x1-x0+1.3*k,y1-y0+1.3*k];
+      return ingombro(ingo,fissi);
+    }
+    while(prova()>0 && s+k9+4*k<lungo) s+=1.5*k;      // se tocca ancora un rombo, un anello o un'altra punta vicini, si ferma un po' prima
+    /* anche la partenza non copre il rombo o l'anello del luogo da cui si muove: il tratto comincia sul loro bordo */
+    var via=pts.slice(0,j+1); if(ventaglio) via.push(q); via.push([b[0],b[1]]);
+    var n0=nuclei[chiave(pts[0][0],pts[0][1])];
+    if(n0){ var vx=via[1][0]-via[0][0], vy=via[1][1]-via[0][1], vl=Math.hypot(vx,vy)||1, resta=n0.r?n0.r+1.2*k:n0.c/Math.max(Math.abs(vx/vl),Math.abs(vy/vl))+1.2*k;
+      for(i=1;i<via.length-1||(i===via.length-1&&resta<Math.hypot(via[i][0]-via[i-1][0],via[i][1]-via[i-1][1])-3*k);i++){      // l'ultimo tratto deve restare lungo almeno un poco
+        var l=Math.hypot(via[i][0]-via[i-1][0],via[i][1]-via[i-1][1]);
+        if(resta<l){ via=[[via[i-1][0]+(via[i][0]-via[i-1][0])*resta/l,via[i-1][1]+(via[i][1]-via[i-1][1])*resta/l]].concat(via.slice(i)); break; }
+        resta-=l; } }      // se il cammino è troppo corto resta com'è
+    var d='M'+via.map(function(v){ return v[0].toFixed(1)+' '+v[1].toFixed(1); }).join('L');
+    el('path',{'class':cl+' sotto',d:d,pathLength:1,fill:'none',stroke:col[1],'stroke-width':(4.6*k).toFixed(1),'stroke-linecap':'round','stroke-linejoin':'round'},stratoScena);
+    el('path',{'class':cl,d:d,pathLength:1,fill:'none',stroke:col[0],'stroke-width':(2.4*k).toFixed(1),'stroke-linecap':'round','stroke-linejoin':'round'},stratoScena);
+    el('path',{'class':'punta',d:'M0 0L-9 -5L-9 5Z',transform:'translate('+b[0].toFixed(1)+' '+b[1].toFixed(1)+') rotate('+(ang*180/Math.PI).toFixed(1)+') scale('+k+')',fill:col[0],stroke:col[1],'stroke-width':1.3,'stroke-linejoin':'round'},stratoScena);
+    metti(ingo);
+  });
+  var ost=fissi.slice();      // spade e fiamme evitano anche i nomi, al loro posto di sempre
+  nomiPos.forEach(function(np){ ost.push(rettoNome(np,[0,0])); });
+  cittaPos.forEach(function(cp){ ost.push(rettoCitta(cp,[cp.lato,cp.dy,7],largaCitta(cp.id))); });
+  sc.forEach(function(e){
+    var tipo=e[0]; if(tipo!=='scontro'&&tipo!=='fuoco') return; var p=puntoDi(e[1]); if(!p) return; p=dentro(p);
+    var scontro=tipo==='scontro', sw=(scontro?10.3:12.6)*k, sh=(scontro?10.3:13.1)*k, lc=scontro?[0,-15]:[1,-11.5], c=Math.max(nucleoDi(p[0],p[1]),4*k)+G5, ox=c+sw, oy=c+sh;
+    var prove=[[0,-oy],[ox,0],[-ox,0],[0,oy],[ox,-oy],[-ox,-oy],[ox,oy],[-ox,oy]], meglio=0, minimo=1e9, j, r, t;
+    for(j=0;j<prove.length;j++){ r=[p[0]+prove[j][0],p[1]+prove[j][1],2*sw,2*sh,scontro?1:0];
+      t=ingombro(r,ost)+(r[0]-sw<bordo[0]-6||r[0]+sw>bordo[1]+6||r[1]-sh<bordo[2]-6||r[1]+sh>bordo[3]+6?500*k:0);      // fuori dal bordo vale meno
+      if(t<minimo){ minimo=t; meglio=j; if(!t) break; } }
+    r=[p[0]+prove[meglio][0],p[1]+prove[meglio][1],2*sw,2*sh,scontro?1:0]; metti(r); ost.push(r);
+    var g=el('g',{'class':tipo,transform:'translate('+(r[0]-lc[0]*k).toFixed(1)+' '+(r[1]-lc[1]*k).toFixed(1)+')'},stratoScena), gi=el('g',{transform:'scale('+k+')'},g);
+    if(scontro){ el('circle',{r:9.5,cy:-15,fill:'#FBF6EA',stroke:'#8E2A2A','stroke-width':1.6},gi); el('path',{d:'M-5.2 -20.2L5.2 -9.8M5.2 -20.2L-5.2 -9.8M-5.9 -12.9L-2.3 -9.3M5.9 -12.9L2.3 -9.3',fill:'none',stroke:'#8E2A2A','stroke-width':1.9,'stroke-linecap':'round'},gi); }
+    else el('path',{d:'M0 -24C5 -18 8 -14 6 -9C10 -11 9 -16 9 -16C13 -11 12 -4 6 -1C2 1 -3 1 -6 -1C-11 -4 -11 -11 -6 -15C-6 -11 -4 -10 -3 -11C-5 -16 -2 -20 0 -24Z',fill:'#E0672A',stroke:'#FBF6EA','stroke-width':1.1,'stroke-linejoin':'round'},gi);
+  });
+  scenaFatta={sc:quale,l:luoghiOra,ch:ch,fissi:nuovi,nuclei:nuclei};
 }
 /* Regia: a ogni tappa la carta si avvicina ai luoghi dell'evento, li mostra per qualche secondo con una didascalia e torna alla vista intera.
    Non a tutto schermo (lì la carta la muove chi guarda) e non per chi ha chiesto meno animazioni. Se i luoghi sono troppo lontani fra loro la carta resta intera. */
@@ -150,7 +274,7 @@ function riquadroLuoghi(l,massimo){
   return [Math.max(0,Math.min(G.w-w,(x0+x1)/2-w/2)), Math.max(0,Math.min(G.h-h,(y0+y1)/2-h/2)), w, h];
 }
 function avviaRegia(l,sc){
-  fermaRegia(); disegnaScena(sc); if(grandeSi || pocoMoto){ stratoScena.setAttribute('class','m-scena viva ferma'); return; }
+  fermaRegia(); stratoScena.setAttribute('class','m-scena'); if(grandeSi || pocoMoto){ stratoScena.setAttribute('class','m-scena viva ferma'); return; }      // la scena l'ha già disegnata mostraPopoli, prima dei cartellini
   if(!l || !l.length) return;
   var a=null;
   if(sc && sc.length){ var capi=[]; sc.forEach(function(e){ if(e[0]==='marcia'||e[0]==='mare') e[2].forEach(function(q){ capi.push([q]); }); else capi.push([e[1]]); }); a=riquadroLuoghi(capi,.92); }      // con una scena, lo zoom tiene dentro marce e rotte
@@ -158,7 +282,7 @@ function avviaRegia(l,sc){
   if(!a) return;
   didascalia.textContent=''; l.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var px=Math.max(8,Math.min(G.w-8,p.x)); if(px<a[0]-2||px>a[0]+a[2]+2||p.y<a[1]-2||p.y>a[1]+a[3]+2) return;      // nella didascalia solo i luoghi che lo zoom inquadra
     var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); didascalia.appendChild(s); });
-  bordo=[8,G.w-8,8,G.h-8]; if(annoVisto!=null) mostraPopoli(annoVisto); disegnaScena(sc);
+  bordo=[8,G.w-8,8,G.h-8]; if(annoVisto!=null) mostraPopoli(annoVisto);      // con il bordo vero della carta si rifanno scena, nomi e cartellini
   var r=regia={t0:0,a:a,rf:0}, ENTRA=900, FERMA=sc&&sc.length?4500:3200, ESCE=900, viva=false;
   function passo(ora){
     if(regia!==r) return; if(!r.t0){ r.t0=ora; didascalia.classList.add('viva'); }
@@ -171,14 +295,18 @@ function avviaRegia(l,sc){
   r.rf=requestAnimationFrame(passo);
 }
 function mostraPopoli(anno){
-  var messi=ostacoli.slice(), visti={}, id, i;
+  var visti={}, id, i;
   /* su uno schermo stretto la carta rimpicciolisce: cartellini e punti si ingrandiscono per restare leggibili */
   /* a tutto schermo restano della stessa misura sullo schermo anche quando si ingrandisce la carta */
   var lw=svg.getBoundingClientRect().width, ppu=lw>0?lw/larghezzaVista():1, k=lw<=0?1:grandeSi?Math.max(.4,Math.min(1.8,Math.max(10,Math.min(14,Math.min(window.innerWidth,window.innerHeight)/40))/11.5/ppu)):Math.max(1,Math.min(1.8,.7/ppu));      // a tutto schermo: scritte di 10-14 pixel
   k=Math.round(k*20)/20;
   if(k!==ingr){ ingr=k; svg.style.setProperty('--pf',(11.5*k).toFixed(1)+'px'); for(id in popoli){ popoli[id].larga=0; popoli[id].punto.setAttribute('r',(4*k).toFixed(1)); } }
-  var H=15*k;
-  disegnaLuoghi(k,H,messi);
+  /* l'ordine conta: prima ciò che non si sposta (rombi), poi la scena (anelli, frecce, spade, fiamme), poi i nomi di città e regioni, che si scansano,
+     infine i cartellini dei luoghi e dei popoli, che evitano tutto ciò che c'è già */
+  var H=15*k, pos=posLuoghi(), fissi=pos.map(function(l){ return [l.x,l.y,12.6*k,12.6*k]; });
+  disegnaScena(scenaOra,k,pos,fissi);
+  var messi=fissi.slice(); piazzaCitta(k,fissi,messi); piazzaNomi(messi);
+  disegnaLuoghi(k,H,messi,pos);
   for(id in popoli){
     var p=popoli[id], q=p.q, u=-1; for(i=0;i<q.t.length;i++) if(anno>=q.t[i][0]) u=i;
     var via=u<0||anno>q.fine, cl=via?'via':CLASSE[q.t[u][3]], v=q.t[Math.max(0,u)], nome=q.nome;
@@ -194,12 +322,12 @@ function mostraPopoli(anno){
     visti[cl]=1;
     if(!p.larga){ var w=0; try{ w=p.t.getComputedTextLength(); }catch(e){} p.larga=(w>4?w:nome.length*5.6*k)+12*k; }
     /* il cartellino sta sopra il punto; se lì copre un altro cartellino o un nome va sotto, di fianco, più in alto: vince il primo posto libero, o quello che copre di meno */
-    var W=p.larga, lato=W/2+9*k, prove=[[0,-H-7*k],[0,8*k],[lato,-H/2],[-lato,-H/2],[0,-2*H-9*k],[0,H+10*k],[0,-3*H-11*k]], meglio=0, minimo=1e9, j, n, cx, cy, tocca, ox, oy;
-    for(j=0;j<prove.length;j++){ cx=Math.max(97+W/2,Math.min(903-W/2,v[1]+prove[j][0])); cy=v[2]+prove[j][1]+H/2; tocca=0;
-      for(n=0;n<messi.length;n++){ ox=(messi[n][2]+W)/2+2-Math.abs(messi[n][0]-cx); oy=H+1-Math.abs(messi[n][1]-cy); if(ox>0&&oy>0) tocca+=ox*oy; }
+    var W=p.larga, nc=nucleoIntorno(v[1],v[2]), su=Math.max(7*k,nc+1.5*k), giu=Math.max(8*k,nc+1.5*k), lato=W/2+Math.max(9*k,nc+1.5*k), dd=W/2+3*k;      // se il punto sta su un rombo o dentro un anello, il cartellino ne esce
+    var prove=[[0,-H-su],[0,giu],[lato,-H/2],[-lato,-H/2],[dd,-H-su],[-dd,-H-su],[dd,giu],[-dd,giu],[0,-2*H-su-2*k],[0,H+giu+2*k],[dd,-2*H-su-2*k],[-dd,-2*H-su-2*k],[lato,-H-su],[-lato,-H-su],[lato,giu],[-lato,giu],[0,-3*H-su-4*k]], meglio=0, minimo=1e9, j, cx, cy, tocca;
+    for(j=0;j<prove.length;j++){ cx=Math.max(97+W/2,Math.min(903-W/2,v[1]+prove[j][0])); cy=v[2]+prove[j][1]+H/2; tocca=ingombro([cx,cy,W,H],messi);
       if(tocca<minimo){ minimo=tocca; meglio=j; if(!tocca) break; } }
     cx=Math.max(97+W/2,Math.min(903-W/2,v[1]+prove[meglio][0])); var dy=prove[meglio][1];
-    messi.push([cx,v[2]+dy+H/2,W]);
+    messi.push([cx,v[2]+dy+H/2,W,H]);
     p.fondo.setAttribute('x',(-W/2).toFixed(1)); p.fondo.setAttribute('width',W.toFixed(1)); p.fondo.setAttribute('height',H.toFixed(1)); p.t.setAttribute('y',(H*.72).toFixed(1));
     p.c.style.transform='translate('+(cx-v[1]).toFixed(1)+'px,'+dy.toFixed(1)+'px)';
   }
@@ -275,7 +403,8 @@ function bottone(t,et,cl){ var b=document.createElement('button'); b.type='butto
 var bMeno=bottone('−','Allontana','zoom'), bPiu=bottone('+','Avvicina','zoom'), bGrande=bottone('⤢','Carta a tutto schermo','grande'); bGrande.setAttribute('aria-pressed','false');
 ospite.appendChild(comandi);
 function grande(si){
-  fermaRegia(); grandeSi=si; setTimeout(function(){ disegnaScena(scenaOra); stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':'')); },60);      // a tutto schermo la scena dell'evento resta ferma sulla carta document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');
+  fermaRegia(); grandeSi=si; setTimeout(function(){ stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':'')); },60);      // a tutto schermo la scena dell'evento resta ferma sulla carta (la ridisegna mostraPopoli, con le nuove misure)
+  document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');      // queste due istruzioni erano finite per sbaglio dentro il commento della riga sopra
   bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Chiudi lo schermo intero':'Carta a tutto schermo');
   dita={}; presa=null;
   if(si){ vista.k=1; vista.cx=500; vista.cy=314; adatta(); if(vista.alto){ vista.k=Math.max(1,BASE[2]*vista.alto/(G.h*vista.aw)); vista.cx=470; vista.cy=330; applicaVista(); } }      // in verticale si parte con la carta che riempie il riquadro, sull'Italia: il bottone − la mostra intera
@@ -330,10 +459,10 @@ window.RM_mappa={
     return out;
   },
   mostra:function(stati,anno,luoghi,scena){
-    if(anno!=null){ fermaRegia(); annoVisto=anno; scriviLuoghi(luoghi); }
+    if(anno!=null){ fermaRegia(); annoVisto=anno; scriviLuoghi(luoghi); scenaOra=scena||null; }      // la scena va saputa prima dei cartellini: mostraPopoli la disegna e la fa evitare
+    if(anno!=null && scritte.costantinopoli){ var nc=anno<330?'Bisanzio':G.citta.costantinopoli.nome; if(scritte.costantinopoli.textContent!==nc) scritte.costantinopoli.textContent=nc; }      // prima di piazzare i nomi: Bisanzio è più corto
     var visti=anno!=null?mostraPopoli(anno):null;
-    if(anno!=null){ scenaOra=scena||null; avviaRegia(luoghi,scenaOra); }
-    if(anno!=null && scritte.costantinopoli){ var nc=anno<330?'Bisanzio':G.citta.costantinopoli.nome; if(scritte.costantinopoli.textContent!==nc) scritte.costantinopoli.textContent=nc; }
+    if(anno!=null) avviaRegia(luoghi,scenaOra);
     if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
     aggiornaLegende(stati,anno,visti);
     for(var id in regioni){

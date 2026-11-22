@@ -22,7 +22,13 @@
    - «Perché cadde l'Occidente?» (js/cause.js, 22 novembre 2026): letti nel testo Montesquieu (Considérations, capp. IX, XVIII, XIX, fr.wikisource), Gibbon (Osservazioni generali, ccel.org),
      Bury (cap. IX § 7, LacusCurtius), Rostovtzeff (2ª edizione 1957, pp. 495 e 532, archive.org), Jones (vol. II, pp. 1045, 1067, 1068, archive.org), Vegezio I 20 (thelatinlibrary), l'elenco di Demandt
      in traduzione inglese (210 voci contate, courses.washington.edu). NON LETTI: Peter Brown 1971 (in prestito controllato), Nriagu e Scarborough (solo i dati bibliografici), Ferrill, Momigliano;
-   - luoghi e scene sulla carta (LUOGHI_TAPPA, SCENE_CARTA): i luoghi ripetono fatti dei testi delle tappe; le marce e le rotte sono SCHEMI da manuale, non rilette sulle fonti: da verificare;
+   - luoghi e scene sulla carta (LUOGHI_TAPPA, SCENE_CARTA): i luoghi ripetono fatti dei testi delle tappe. Le marce e le rotte sono state VERIFICATE il 22 novembre 2026, scena per scena,
+     su Giordane (Getica, thelatinlibrary), Eutropio IX, Zosimo I (tertullian.org), Ammiano XXXI, Bury capp. V-VI, l'Anonimo Valesiano e Procopio III e V (LacusCurtius), Girolamo, Lettera 123
+     (newadvent), Gregorio di Tours II, Paolo Diacono II e gli Annales regni Francorum (thelatinlibrary e la.wikisource), l'iscrizione di Shapur (Frye, topostext); passo per passo nei commenti di
+     SCENE_CARTA. CORRETTE: i Persiani del 260 entrano dal Tigri, Aureliano viene dall'Anatolia, Goti di Cabile ad Adrianopoli, Alarico per Aquileia e Asti, i Vandali del 406 per Treviri e Reims,
+     Teodorico da Novae per l'Isonzo, i Longobardi fino a Milano con Pavia assediata, Tariq a Gibilterra e non a Tarifa, Carlo Magno da Ginevra per due valichi, Vitige per la Sabina. RESTANO SCHEMI
+     (lo dice il commento) i tratti fra i luoghi nominati dalle fonti; A MEMORIA, NON RILETTI: Ennodio per Pavia nel 476, la continuazione di Fredegario per Lione e Susa nel 755-756, la tradizione araba
+     per Gibilterra, il Liber Pontificalis per Astolfo, Procopio VII 20 per Totila;
    - «Fra storia e leggenda» (campo `leggenda` delle tappe, 22 novembre 2026). ARTÙ, tappa del 409: letti Gildas, De excidio Britanniae 25-26, nel testo di la.wikisource («duce Ambrosio Aureliano viro modesto (qui solus fuit comes fidelis, fortis,
      veraxque forte Romanae gentis, qui tantae tempestatis collisione, occisis in eadem parentibus purpura nimirum indutis, superfuerat […])»; «usque ad annum obsessionis Badonici montis […] quique quadragesimus quartus (ut novi) oritur annus,
      mense jam primo emenso, qui jam et meae nativitatis est»; il nome di Artù non compare in tutta l'opera); Historia Brittonum 56, su thelatinlibrary («tunc Arthur pugnabat contra illos in illis diebus cum regibus Brittonum, sed ipse erat dux bellorum […]
@@ -356,7 +362,7 @@ var TAPPE=[
   voci:[{testo:"«Piangi anche, augusto imperatore, perché non accompagni tu stesso fino a Costantinopoli le venerate spoglie. […] Qui stanno in mezzo molte regioni lontane, qui ci sono mari da attraversare. E nemmeno questo ti sarebbe gravoso, se non ti trattenesse lo Stato.»", chi:"Ambrogio, vescovo di Milano, al giovane Onorio: orazione funebre per Teodosio, pronunciata il 25 febbraio 395 davanti alla corte e all'esercito"}]},
  {intermezzo:true, anno:395, titolo:'I commerci', testo:"Quanto commerciava l'impero? Nessuno lo registrò: l'archeologia lo deduce. I relitti nel Mediterraneo toccano il massimo nel I secolo d.C. e poi calano; ma i relitti contano le anfore e le pietre, non le botti o le merci deperibili, e molti sono datati con margini di secoli. Il piombo nei ghiacci della Groenlandia, figlio delle miniere d'argento, crolla nel II secolo con la peste antonina e resta basso per più di cinque secoli: misura le miniere, non i mercati. I piatti africani, invece, arrivano su tutte le coste fino al VII secolo. Il quadro è un declino lungo e irregolare, non un crollo improvviso: La curva dei commerci, qui, conta i relitti datati (I secolo = 100): è la misura meno incerta che abbiamo, non il volume degli scambi."},
 
- {anno:402, titolo:'La corte si chiude a Ravenna', testo:"Stilicone affronta Alarico a Pollenzo e a Verona e lo costringe a lasciare l'Italia. La corte lascia Milano per Ravenna, protetta dalle paludi; a Roma Onorio fa restaurare mura, porte e torri, e forse è allora che la cinta raddoppia in altezza.",
+ {anno:402, titolo:'La corte si chiude a Ravenna', testo:"Stilicone affronta Alarico a Pollenzo e poi a Verona (nel 402 o nel 403: gli studiosi non concordano) e lo costringe a lasciare l'Italia. La corte lascia Milano per Ravenna, protetta dalle paludi; a Roma Onorio fa restaurare mura, porte e torri, e forse è allora che la cinta raddoppia in altezza.",
   voci:[{testo:"«Le mura nuove le aggiungevano un bel volto, appena compiute alla notizia dei Goti; la paura fu artefice di bellezza e, per una mirabile vicenda, la vecchiaia che la pace aveva portato, scossa via dalla guerra, innalzò torri improvvise e costrinse tutti e sette i colli a ringiovanire in un muro continuo.»", chi:"Claudiano, poeta di corte, panegirico per il sesto consolato di Onorio, recitato a Roma nel gennaio 404: ha davanti le mura di Aureliano appena rialzate"}]},
  {anno:406, titolo:'Il Reno attraversato', testo:"Nell'ultima notte dell'anno (del 405, secondo alcuni studiosi) Vandali, Alani e Svevi passano il Reno. In Britannia l'esercito acclama un imperatore dopo l'altro; nel 407 il terzo, Costantino, porta le truppe in Gallia.",
   voci:[{testo:"«Popoli innumerevoli e ferocissimi hanno occupato tutte le Gallie. Tutto ciò che sta fra le Alpi e i Pirenei, chiuso dall'Oceano e dal Reno, l'hanno devastato Quadi, Vandali, Sarmati, Alani, Gepidi, Eruli, Sassoni, Burgundi, Alamanni e, povero Stato!, i nemici della Pannonia. […] Magonza, città un tempo illustre, è stata presa e distrutta, e nella chiesa sono state trucidate molte migliaia di persone. […] Che cosa si salva, se Roma perisce?»", chi:"Girolamo, lettera 123, scritta a Betlemme nel 409: è lontano dalle Gallie e scrive per sentito dire; l'elenco dei popoli è in parte retorico"}],
@@ -563,6 +569,8 @@ var ITINERARIO={
    fuochi: [x, z, forza]; attorno a ogni fuoco gli isolati restano bruciati per qualche decennio (raggio "bruciati", in decine di metri).
    Testi fino al 589 e piena del 791 controllati sulle fonti; gli altri solo in parte. Posizione e forza dei fuochi sono una nostra resa. */
 var EVENTI=[
+ {id:'cantieremura', da:271, a:271.4, bruciati:0, fuochi:[],      // Zosimo I 49 (letto nella traduzione del 1814, tertullian.org); il cantiere è disegnato in js/mura.js
+  testo:"271 · Si apre il cantiere delle mura: lungo diciannove chilometri salgono i primi tratti, fra i ponteggi. Le finirà Probo, scrive Zosimo; in che ordine si costruì non si sa."},
  {id:'sacco410', da:410, a:410.4, bruciati:14, fuochi:[[100,-192,1.2],[78,-165,1],[7.2,-1,.9]],      // Procopio, Guerre III 2: case presso la porta e casa di Sallustio. Aventino e Celio: tracce d'incendio negli scavi (già in Bury), ma nessuna attribuibile al sacco con sicurezza
   testo:"24 agosto 410 · I Goti di Alarico entrano da Porta Salaria. Tre giorni di saccheggio secondo Orosio, sei secondo Marcellino Comes: bruciano le case presso la porta e la casa di Sallustio; nel Foro brucia, probabilmente allora, la basilica Emilia. San Pietro e San Paolo sono rispettate come luoghi d'asilo."},
  {id:'sacco455', da:455, a:455.4, bruciati:0, fuochi:[],
@@ -611,7 +619,7 @@ var SCHEDE={
   adriano:{cosa:"Tomba di Adriano e dei suoi successori: un basamento quadrato di circa 84 metri di lato e 10 di altezza, un tamburo di 64 metri e in cima un giardino. Procopio vi vede statue di marmo, uomini e cavalli. La quadriga in cima e la forma dei gruppi agli angoli sono indicative.", date:[[139,"Completato."],["III-V sec.","Inglobato nelle difese della città (sotto Aureliano o sotto Onorio: le fonti divergono)."],[537,"Gli assediati lanciano le statue sui Goti."]]},
   laterano:{cosa:"La cattedrale di Roma, voluta da Costantino.", date:[[318,"Dedicata il 9 novembre secondo la tradizione liturgica; l'anno non è attestato: si propongono il 318 e il 324."],[410,"I «barbari», quasi certamente i Goti di Alarico, portano via il grande fastigio d'argento donato da Costantino; Valentiniano III lo farà rifare (Liber Pontificalis)."],[455,"I Vandali asportano gli arredi; papa Leone I fa rifare i vasi sacri."]]},
   pietro:{cosa:"Basilica costantiniana sulla tomba dell'apostolo, fuori le mura.", date:[[320,"Inizio dei lavori verso il 319-322 secondo Krautheimer, dopo il 324 secondo altri; finita attorno alla metà del secolo."],[410,"Alarico la rispetta, con San Paolo, come luogo d'asilo."],[500,"Papa Simmaco (498-514) costruisce residenze ai due lati dell'atrio, fontane e ospizi per i poveri."],[630,"Papa Onorio I (625-638) copre tutta la basilica con le tegole di bronzo tolte al tempio di Venere e Roma, col permesso dell'imperatore Eraclio (Liber Pontificalis)."],[727,"Secondo una tradizione tarda nasce ora la Schola Saxonum, primo ospizio di una nazione di pellegrini; le fonti dicono solo che le scholae sorgono nel corso dell'VIII secolo."],[800,"Carlo Magno vi è incoronato imperatore."],[846,"Saccheggiata dai Saraceni: pochi anni dopo sarà chiusa dentro le mura leonine."]]},
-  mura:{cosa:"Diciannove chilometri di cinta: Roma non aveva mura in uso da secoli.", date:[[271,"Iniziate da Aureliano, finite sotto Probo."],[403,"Sotto Onorio, fra il 401 e il 403, mura, porte e torri vengono restaurate (lo dicono le iscrizioni sulle porte). Il raddoppio dell'altezza è attribuito da alcuni a questi lavori, da altri a Massenzio: qui lo si mostra sotto Onorio."],[546,"Totila ne abbatte dei tratti (un terzo secondo Procopio, che forse esagera); nel 547 Belisario richiude le brecce in venticinque giorni."],[715,"Dopo un tentativo di Sisinnio (708), papa Gregorio II avvia il restauro; Gregorio III ne rifà gran parte a sue spese, Adriano I lo completa tutt'intorno, con cento libbre d'oro."],[791,"A dicembre la piena del Tevere strappa porta Flaminia dalle fondamenta (Liber Pontificalis). Quando sia stata rifatta non è scritto: qui resta abbattuta."]]},
+  mura:{cosa:"Diciannove chilometri di cinta: Roma non aveva mura in uso da secoli.", date:[[271,"Iniziate da Aureliano, finite sotto Probo (Zosimo). L'anno della fine non è scritto: nel modello il cantiere chiude nel 280, e l'ordine in cui salgono i tratti è un'ipotesi."],[403,"Sotto Onorio, fra il 401 e il 403, mura, porte e torri vengono restaurate (lo dicono le iscrizioni sulle porte). Il raddoppio dell'altezza è attribuito da alcuni a questi lavori, da altri a Massenzio: qui lo si mostra sotto Onorio."],[546,"Totila ne abbatte dei tratti (un terzo secondo Procopio, che forse esagera); nel 547 Belisario richiude le brecce in venticinque giorni."],[715,"Dopo un tentativo di Sisinnio (708), papa Gregorio II avvia il restauro; Gregorio III ne rifà gran parte a sue spese, Adriano I lo completa tutt'intorno, con cento libbre d'oro."],[791,"A dicembre la piena del Tevere strappa porta Flaminia dalle fondamenta (Liber Pontificalis). Quando sia stata rifatta non è scritto: qui resta abbattuta."]]},
   acquedotti:{cosa:"Undici condotti che portavano l'acqua a terme, fontane e mulini.", date:[[537,"Tagliati dai Goti durante l'assedio."],[554,"La Prammatica Sanzione di Giustiniano (cap. 25) conferma a Roma i privilegi e le entrate destinati a riparare edifici pubblici, letto del Tevere, foro, porto e acquedotti: è una norma, non la prova di lavori fatti. Nel gennaio 602 papa Gregorio Magno scrive che sono trascurati al punto che, senza più cura, in poco tempo andranno del tutto in rovina (Registro XII 6)."],[780,"Papa Adriano I (772-795) ne fa riparare quattro (Liber Pontificalis). La Sabbatina, l'antica Traiana, era rotta da vent'anni, con cento arcate a terra: torna a servire San Pietro e i mulini del Gianicolo. La Iovia, anch'essa ferma da vent'anni, è forse un ramo della Marcia. La Claudia riporta l'acqua al Laterano; della Vergine entrava pochissima acqua, e dopo i lavori disseta quasi tutta la città. Gli anni precisi non sono scritti: verso il 776 è una deduzione degli studiosi."]]},
   sole:{cosa:"Tempio del Sole Invitto. La forma viene da disegni di Palladio che Hülsen attribuì al tempio: due cortili sullo stesso asse e, nel maggiore, una rotonda. L'attribuzione è incerta.", date:[[274,"Dedicato da Aureliano dopo la vittoria su Palmira; il giorno, forse il 25 dicembre, non è attestato."],[392,"Vietati i culti pagani."],["VI sec.?","Secondo un testo bizantino tardo sulle antichità di Costantinopoli, otto colonne di porfido del tempio finirono in Santa Sofia. È una tradizione, non un documento."]]},
   arcocostantino:{cosa:"Arco trionfale accanto al Colosseo.", date:[[315,"Dedicato dal Senato per la vittoria su Massenzio, probabilmente il 25 luglio 315, all'inizio delle feste per i dieci anni di regno. Molti rilievi vengono da monumenti di Traiano, Adriano e Marco Aurelio: da dove li si prese è discusso. Anche gli otto Daci di marmo sull'attico, uno sopra ogni colonna, vengono quasi certamente dal foro di Traiano."]]},
@@ -766,7 +774,7 @@ var CERTEZZA={
   antoniniano:['B',"Certi due punti: l'arco detto di Druso, in piedi, e i resti di piazza Galeria. Il tracciato fra l'uno e l'altro e fino alle terme è ricostruito."],
   chiese:['B',"Il sito è quello della chiesa attuale; la forma antica è quasi sempre perduta, e qui tutte hanno lo stesso modello."]
 };
-var MURA_ALTE=[[0,0],[270,0],[276,1],[400,1],[404,1.5]];   // rialzate nel 401-403 (o già sotto Massenzio: discusso). 1 vale 7 m fuori terra («not more than 25 feet», Platner), 1,5 vale 12 m (da 6-8 ad almeno 10,5-15 m, it.wikipedia)
+var MURA_ALTE=[[0,0],[270.6,0],[270.7,1],[400,1],[404,1.5]];   // l'altezza a lavori finiti: come sale il cantiere fra il 271 e il 280 sta in js/mura.js (CANTIERE_MURA). Rialzate nel 401-403 (o già sotto Massenzio: discusso). 1 vale 7 m fuori terra («not more than 25 feet», Platner), 1,5 vale 12 m (da 6-8 ad almeno 10,5-15 m, it.wikipedia)
 
 function interp(punti,x){
   if(x<=punti[0][0]) return punti[0][1];
@@ -944,32 +952,77 @@ var LUOGHI_TAPPA={
 TAPPE.forEach(function(t){ if(!t.intermezzo && LUOGHI_TAPPA[t.anno]) t.luoghi=LUOGHI_TAPPA[t.anno]; });
 /* Le scene sulla carta: che cosa si muove nell'evento della tappa. ['marcia'|'mare', chi, [luoghi…]] è un cammino per terra o una rotta (chi: 'roma' in oro, 'altri' in scuro, 'franchi' in azzurro);
    ['scontro'|'assedio'|'fuoco', luogo] è il segno sul posto. I luoghi sono chiavi di LUOGHI o CITTA in src/mappa/genera.mjs.
-   Ogni marcia è stata controllata contro la linea di costa (non passa sul mare) e ogni rotta contro la terra, con i punti di passaggio aggiunti in LUOGHI.
-   ATTENZIONE: sono SCHEMI. Chi si muove, da dove parte e dove arriva viene dai testi delle tappe e dai manuali (22 novembre 2026, a memoria: Bury, Heather, Wickham), il tracciato
-   fra partenza e arrivo è indicativo, e le tappe intermedie non sono state rilette una per una sulle fonti: da verificare. Fonti già lette per i casi principali: l'iscrizione di Shapur
-   per il 260 («attaccammo Carre ed Edessa… Valeriano venne contro di noi»), Ammiano XXXI per Adrianopoli, Procopio per il 455, il 468 e il 537. */
+   Ogni marcia è controllata contro la linea di costa (non passa sul mare) e ogni rotta contro la terra, con i punti di passaggio aggiunti in LUOGHI.
+   VERIFICATE SULLE FONTI il 22 novembre 2026, scena per scena (fonte e passo nel commento accanto): partenza, arrivo, luoghi toccati, terra o mare. Dove le fonti non dicono la strada,
+   il tracciato fra due luoghi nominati è uno schema (lo dice il commento). Regola: ogni marcia parte dal territorio di chi la compie; le eccezioni (chi era già dentro l'impero) sono spiegate. */
 var SCENE_CARTA={
+ /* Abritto: Giordane, Getica 103 («veniensque ad Abritto Moesiae civitatem circumseptus a Gothis», thelatinlibrary); Eutropio IX 4 dice solo «in Barbarico interfecti sunt»: le fonti divergono. */
  251:[['scontro','abritto']],
- 260:[['marcia','altri',['nisibi','edessa']],['marcia','roma',['antiochia','edessa']],['scontro','edessa']],
- 274:[['marcia','roma',['antiochia','emesa','palmira']],['assedio','palmira'],['scontro','chalons']],
- 378:[['marcia','roma',['costantinopoli','adrianopoli']],['scontro','adrianopoli']],
- 402:[['marcia','altri',['cividale','verona','milano','pollenzo']],['scontro','pollenzo']],
- 406:[['marcia','altri',['oltrereno','magonza','chalons']]],
+ /* Iscrizione di Shapur a Naqsh-e Rostam (ŠKZ), traduzione di Frye su topostext: «In the third campaign, when we attacked Carrhae and Edessa… beyond Carrhae and Edessa we had a great battle
+    with Valerian Caesar». I Persiani entrano dal Tigri (bordo della carta, fuori dalle regioni romane); il passaggio per Nisibi è uno schema: l'iscrizione non nomina Nisibi, né dice da dove venisse
+    Valeriano (Antiochia, base della guerra persiana, è un'ipotesi). */
+ 260:[['marcia','altri',['tigri','nisibi','carre','edessa']],['marcia','roma',['antiochia','edessa']],['scontro','edessa']],
+ /* Zosimo I 50-61 (traduzione del 1814, tertullian.org): Aureliano dall'Europa, «Ancyra submitted… and afterwards Tuana… and all the cities between that and Antioch»; battaglia davanti ad Antiochia
+    (Eutropio IX 13: «haud longe ab Antiochia»), poi davanti a Emesa, poi l'assedio di Palmira. Tetrico: Eutropio IX 13, «superavit in Gallia Tetricum apud Catalaunos» (thelatinlibrary).
+    I fatti sono del 272-274; il deserto fra Emesa e Palmira non è descritto. */
+ 274:[['marcia','roma',['ancira','tiana','mopsuestia','isso','portesirie','antiochia','emesa','palmira']],['assedio','palmira'],['scontro','chalons']],
+ /* Ammiano XXXI 11-12 (LacusCurtius): Valente da Antiochia a Costantinopoli, poi alla villa di Melanzia e ad Adrianopoli; i Goti, già dentro l'impero dal 376 (per questo partono dalla Tracia),
+    stanno attorno a Cabile (XXXI 11, 5) e marciano verso la stazione di Nice, a quindici miglia dalla città (XXXI 12, 3). */
+ 378:[['marcia','roma',['costantinopoli','adrianopoli']],['marcia','altri',['cabile','adrianopoli']],['scontro','adrianopoli']],
+ /* Bury, Later Roman Empire, cap. V § 3 (LacusCurtius, su Claudiano, Prospero, i Fasti Vindobonenses): Alarico viene dall'Illirico, passa le Alpi nel novembre 401, prende Aquileia, entra
+    nelle città venete, minaccia Milano, ripiega su Asti e combatte a Pollenzo il 6 aprile 402. Emona come porta delle Alpi Giulie e Verona come passaggio sono schemi: la battaglia di Verona
+    viene dopo (estate 403 per Bury, 402 per altri). */
+ 402:[['marcia','altri',['emona','aquileia','verona','milano','asti','pollenzo']],['scontro','pollenzo']],
+ /* Bury cap. VI § 1 (LacusCurtius, su Olimpiodoro, Zosimo, Sozomeno, Orosio) e Girolamo, Lettera 123, 15 (newadvent): passano il Reno presso Magonza l'ultimo giorno del 406; Magonza presa,
+    Treviri e Reims devastate, poi Amiens, Arras, Tournai (tutte in Girolamo tranne Treviri). Il seguito (Aquitania, Pirenei nel 409) non è disegnato. La partenza d'oltre Reno è schematica. */
+ 406:[['marcia','altri',['oltrereno','magonza','treviri','reims','amiens']]],
+ /* Bury cap. VI § 4 (su Olimpiodoro e Sozomeno IX 9): estate 410, Attalo deposto presso Rimini, dove Alarico aveva il grosso dell'esercito; dopo l'attacco di Saro presso Ravenna marcia su Roma
+    ed entra dalla porta Salaria il 24 agosto. Alarico era in Italia dal 408: è giusto che parta da dentro. La strada fra Rimini e Roma non è detta. */
  410:[['marcia','altri',['rimini','roma']],['assedio','roma'],['fuoco','roma']],
- 429:[['mare','altri',['tarifa','tangeri']],['marcia','altri',['tangeri','taza','tlemcen','cesarea','sitifi','cirta','ippona']],['assedio','ippona']],      // per mare solo lo stretto; poi per terra, lungo le Mauretanie e la Numidia (tracciato indicativo)
+ /* Procopio III 3, 26 (LacusCurtius): «the Vandals crossed the strait at Gadira and came into Libya»; poi l'assedio di Ippona (III 3, 31-34). Per mare solo lo stretto; il cammino per terra
+    lungo le Mauretanie e la Numidia è uno schema: nessuna fonte letta lo descrive, e c'è chi pensa a un viaggio in parte per mare. */
+ 429:[['mare','altri',['tarifa','tangeri']],['marcia','altri',['tangeri','taza','tlemcen','cesarea','sitifi','cirta','ippona']],['assedio','ippona']],
+ /* Da Ippona, la base dei Vandali dopo il 430 (Procopio III 3-4), a Cartagine, presa nel 439 (testo della tappa). Il cammino è una linea fra i due capi. */
  439:[['marcia','altri',['ippona','cartagine']]],
+ /* Gregorio di Tours II 6-7 (thelatinlibrary): gli Unni «a Pannoniis egressi, ut quidam ferunt», Metz bruciata «in ipsa sanctae paschae vigilia», l'assedio di Orléans, dove accorrono
+    «Aetius et Theudor Gothorum rex ac Thorismodus»; la battaglia al «Mauriacum campum». Giordane, Getica 192-195: «campos Catalaunicos, qui et Mauriaci nominantur», Orléans assediata.
+    Il passaggio del Reno a Magonza è uno schema (nessuna delle due fonti dice dove); le partenze di Ezio da Arles e dei Visigoti da Tolosa, alleati di Roma e dipinti in oro, sono indicative. */
  451:[['marcia','altri',['tibisco','magonza','metz','orleans','catalaunici']],['marcia','roma',['arles','orleans','catalaunici']],['marcia','roma',['tolosa','orleans']],['scontro','catalaunici']],
+ /* Procopio III 5, 1: Genserico «set sail for Italy with a great fleet» e sale a Roma; lo sbarco alla foce del Tevere è dei manuali (Procopio non nomina il porto). */
  455:[['mare','altri',['cartagine','tirreno','ostia']],['fuoco','roma']],
- 468:[['mare','roma',['costantinopoli','marmara','dardanelli','egeo','matapan','ionio','canale','capobon']],['fuoco','capobon']],
+ /* Procopio III 6 (LacusCurtius): Basilisco getta l'ancora a Mercurio, «no less than two hundred and eighty stades» da Cartagine, e lì i Vandali lanciano i brulotti (III 6, 18). Le altre due
+    colonne (Eraclio per terra da Tripoli, Marcellino in Sardegna) non sono disegnate. La rotta attorno alla Grecia è uno schema: Procopio non dice se la flotta toccò la Sicilia. */
+ 468:[['mare','roma',['costantinopoli','marmara','propontide','gallipoli','lampsaco','ellesponto','abido','dardanelli','egeo','cicladi','cicladisud','malea','matapan','ionio','canale','capobon']],['fuoco','capobon']],
+ /* Anonimo Valesiano 37-38 (LacusCurtius): Odoacre uccide Oreste «at Placentia», Paolo alla Pineta di Classe, entra a Ravenna e depone Augustolo. Pavia (Oreste vi si era chiuso, e fu saccheggiata)
+    viene da Ennodio, Vita di Epifanio, a memoria, non riletta. Le truppe di Odoacre erano federati in Italia: partono da dentro. */
  476:[['marcia','altri',['pavia','piacenza','ravenna']]],
- 493:[['marcia','altri',['sirmio','cividale','verona','ravenna']],['assedio','ravenna']],
- 537:[['marcia','roma',['siracusa','catania','messina','reggio','aspromonte','catanzaro','cosenza','lagonegro','eboli','napoli','cassino','roma']],['marcia','altri',['ravenna','roma']],['assedio','roma']],
+ /* Anonimo Valesiano 49-53: Teodorico parte «from the city of Nova with the Gothic people», Odoacre lo affronta all'Isonzo e poi a Verona, poi all'Adda (11 agosto 490), e resta chiuso
+    tre anni a Ravenna; Giordane, Getica 292-293: «per Sirmis ascendit vicina Pannoniae», il campo al «Pontem Sontii», i «campos Veronenses», la Pineta, «toto triennio». Fra Sirmio e l'Isonzo
+    la strada è uno schema. Gli Ostrogoti partono dalla Mesia, dove erano federati dell'Oriente. */
+ 493:[['marcia','altri',['novae','sirmio','isonzo','verona','ravenna']],['assedio','ravenna']],
+ /* Procopio V 8, 1-5 e V 14, 6-14 (LacusCurtius): da Messina a Reggio, poi «through Bruttium and Lucania», con la flotta lungo la costa, fino a Napoli; da Napoli «by the Latin Way»
+    (Cassino sta sulla Latina), dentro Roma il 9 dicembre 536 per la porta Asinaria. Le tappe in Calabria e Lucania (Cosenza, Lagonegro, Eboli: la via Popilia) sono uno schema: Procopio
+    nomina solo le regioni. Vitige, V 16-17: parte da Ravenna, lascia stare Perugia e Spoleto, non tenta Narni, va «through Sabine territory» fino al ponte Milvio; la strada non è nominata. */
+ 537:[['marcia','roma',['siracusa','lentini','catania','messina','reggio','aspromonte','catanzaro','cosenza','lagonegro','eboli','napoli','cassino','roma']],['marcia','altri',['ravenna','spoleto','narni','roma']],['assedio','roma']],
+ /* Roma presa da Totila il 17 dicembre 546 (testo della tappa; Procopio VII 20, non riletto ora). */
  546:[['assedio','roma']],
- 568:[['marcia','altri',['sirmio','cividale','verona','pavia']]],
- 711:[['mare','altri',['tangeri','tarifa']],['marcia','altri',['tarifa','guadalete','toledo']],['scontro','guadalete'],
-      ['marcia','altri',['toledo','pamplona','bordeaux','poitiers']],['marcia','franchi',['metz','orleans','poitiers']],['scontro','poitiers']],      // la spedizione del 732: per i Pirenei occidentali e Bordeaux; Carlo viene dall'Austrasia (partenza indicativa)
+ /* Paolo Diacono II 7-27 (la.wikisource): «relicta Pannonia» nell'aprile 568, prima i confini «castri Foroiulani», poi «Vicentiam Veronamque», Milano il 3 settembre 569, Pavia assediata
+    «post tres annos et aliquot menses» (cade nel 572). La Pannonia longobarda è dipinta come avara perché Alboino la lascia agli Avari: per questo la freccia parte da lì. Savaria (la Pannonia
+    occidentale) ed Emona sono schemi: Paolo non dice la strada. */
+ 568:[['marcia','altri',['savaria','emona','cividale','verona','milano']],['assedio','pavia']],
+ /* Il 711: lo sbarco a Gibilterra, il monte che porta il nome di Tariq (Gabal Tariq), viene dalla tradizione araba, a memoria; la Cronaca del 754 non è stata riletta per questo passo;
+    Tarifa, dove la mettevano le versioni precedenti, è lo sbarco di Tarif dell'anno prima. Toledo è presa dopo la battaglia (testo della tappa).
+    Il 732: Cronaca del 754, Chron. min. II pp. 361-362 (letta, vedi LUOGHI_TAPPA): passa «montana Vacceorum», i Pirenei occidentali, batte Oddone oltre la Garonna, punta su Tours. Il punto
+    da cui partì non è detto: la freccia comincia a Pamplona, sotto i monti. Carlo è «consulem Francie interioris Austrie»: Metz sta per l'Austrasia, Orléans è uno schema. */
+ 711:[['mare','altri',['tangeri','calpe']],['marcia','altri',['calpe','guadalete','toledo']],['scontro','guadalete'],
+      ['marcia','altri',['pamplona','bordeaux','poitiers']],['marcia','franchi',['metz','orleans','poitiers']],['scontro','poitiers']],
+ /* Annales regni Francorum 755 e 756 (la.wikisource): Pipino «iterum iter peragens in Italiam Papiam obsedit, Haistulfum inclusit». Lione e il Moncenisio (Susa) vengono dalla continuazione
+    di Fredegario, a memoria, non riletta. L'assedio di Roma di Astolfo è nel testo della tappa; la strada per Lucca (la Francigena) è uno schema. */
  756:[['marcia','altri',['pavia','lucca','roma']],['assedio','roma'],['marcia','franchi',['lione','susa','pavia']],['assedio','pavia']],
- 780:[['marcia','franchi',['lione','susa','pavia']],['assedio','pavia']],
+ /* Annales regni Francorum 773: Carlo raduna l'esercito a «Ienuam civitatem» (Ginevra per gli editori), passa «per montem Caenisium» e manda lo zio Bernardo «per montem Iovem», il Gran
+    San Bernardo; poi «Papiam… obsedit» (Pavia cade nel 774). Martigny, Aosta e Ivrea sono i passaggi obbligati della seconda strada. */
+ 780:[['marcia','franchi',['ginevra','susa','pavia']],['marcia','franchi',['ginevra','martigny','aosta','ivrea','pavia']],['assedio','pavia']],
+ /* Annali di San Bertino 846 (in testa al file): «Tiberi Romam adgressi». Da dove venisse la flotta (Sicilia o Africa) non si sa: la rotta parte in mare aperto. */
  846:[['mare','altri',['tirreno','ostia']],['fuoco','roma']]
 };
 TAPPE.forEach(function(t){ if(!t.intermezzo && SCENE_CARTA[t.anno]) t.scena=SCENE_CARTA[t.anno]; });

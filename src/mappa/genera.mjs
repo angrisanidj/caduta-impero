@@ -203,10 +203,21 @@ const LUOGHI = { magonza: [8.27, 50.0, 'Magonza'], abritto: [26.52, 43.53, 'Abri
   ostia: [12.2, 41.72, 'Ostia'], marmara: [27.9, 40.75, 'Marmara'], dardanelli: [26.05, 39.95, 'Dardanelli'], matapan: [22.6, 35.6, 'capo Matapan'], messina: [15.52, 38.2, 'Messina'], reggio: [15.68, 38.12, 'Reggio'],
   cosenza: [16.25, 39.3, 'Cosenza'], salerno: [14.8, 40.7, 'Salerno'], catania: [14.9, 37.5, 'Catania'], aspromonte: [16.05, 38.35, 'Aspromonte'], catanzaro: [16.5, 38.88, 'Catanzaro'],
   lagonegro: [15.78, 40.13, 'Lagonegro'], eboli: [15.08, 40.63, 'Eboli'], canale: [14.0, 36.2, 'canale di Sicilia'], cassino: [13.83, 41.49, 'Cassino'], lucca: [10.5, 43.84, 'Lucca'], mediterraneo: [8.5, 39.9, 'Mediterraneo'],
-  poitiers: [0.34, 46.58, 'Poitiers'], pamplona: [-1.64, 42.82, 'Pamplona'], bordeaux: [-0.58, 44.84, 'Bordeaux'], pelusio: [32.55, 31.04, 'Pelusio'], cividale: [13.43, 46.09, 'Cividale'], guadalete: [-6.0, 36.6, 'Guadalete'], pavia: [9.16, 45.19, 'Pavia'], aquisgrana: [6.08, 50.78, 'Aquisgrana'] };
+  poitiers: [0.34, 46.58, 'Poitiers'], pamplona: [-1.64, 42.82, 'Pamplona'], bordeaux: [-0.58, 44.84, 'Bordeaux'], pelusio: [32.55, 31.04, 'Pelusio'], cividale: [13.43, 46.09, 'Cividale'], guadalete: [-6.0, 36.6, 'Guadalete'], pavia: [9.16, 45.19, 'Pavia'], aquisgrana: [6.08, 50.78, 'Aquisgrana'],
+  /* punti aggiunti con la verifica delle scene sulle fonti (22 novembre 2026; perché ci sono lo dice il commento accanto a ogni scena in SCENE_CARTA). Il Tigri presso Ninive sta al bordo
+     orientale della carta, fuori dalle regioni romane: di lì entra la marcia persiana del 260. Ellesponto, Calpe e gli altri sono stati provati contro la linea di costa. */
+  tigri: [43.15, 36.35, 'Tigri'], carre: [39.03, 36.87, 'Carre'], ancira: [32.86, 39.93, 'Ancira'], tiana: [34.61, 37.83, 'Tiana'], cabile: [26.48, 42.65, 'Cabile'],
+  emona: [14.5, 46.05, 'Emona'], aquileia: [13.37, 45.8, 'Aquileia'], asti: [8.2, 44.9, 'Asti'], reims: [4.03, 49.26, 'Reims'], amiens: [2.3, 49.89, 'Amiens'],
+  novae: [25.39, 43.62, 'Novae'], isonzo: [13.5, 45.88, 'Isonzo'], savaria: [16.62, 47.23, 'Savaria'], spoleto: [12.74, 42.73, 'Spoleto'], narni: [12.52, 42.52, 'Narni'],
+  ginevra: [6.14, 46.2, 'Ginevra'], martigny: [7.07, 46.1, 'Martigny'], aosta: [7.32, 45.74, 'Aosta'], ivrea: [7.88, 45.47, 'Ivrea'], calpe: [-5.36, 36.16, 'Gibilterra'],
+  propontide: [26.92, 40.46, 'Propontide'], gallipoli: [26.76, 40.4, 'Gallipoli'], lampsaco: [26.66, 40.36, 'Lampsaco'], ellesponto: [26.55, 40.29, 'Ellesponto'], abido: [26.46, 40.2, 'Abido'],
+  cicladi: [25.8, 37.92, 'Cicladi'], cicladisud: [25.6, 36.58, 'Cicladi'], malea: [23.31, 36.12, 'capo Malea'], mopsuestia: [35.62, 36.96, 'Mopsuestia'], isso: [36.25, 36.95, 'Isso'], portesirie: [36.22, 36.49, 'Porte Sirie'], lentini: [15.0, 37.29, 'Lentini'] };
 
 /* Cammini e marce sono stati controllati contro la linea di costa il 22 novembre 2026 (prova nel browser: si campiona ogni tracciato e si chiede a `isPointInFill` della terra):
-   per mare restano solo lo stretto di Gibilterra dei Vandali, lo stretto di Messina e il viaggio di Angli e Sassoni, che sono veri. Chi aggiunge un punto rifaccia la prova. */
+   per mare restano solo lo stretto di Gibilterra dei Vandali, lo stretto di Messina e il viaggio di Angli e Sassoni, che sono veri. Chi aggiunge un punto rifaccia la prova.
+   Rifatta il 22 novembre 2026 dopo la verifica delle scene sulle fonti: la flotta del 468 ora passa per l'Ellesponto vero (Gallipoli, Lampsaco, Abido: la carta semplificata lo lascia aperto
+   per un filo) e gira a est delle Cicladi; Aureliano nel 272 gira attorno al golfo di Isso. Restano sulla riva, e vanno bene, i punti di partenza e d'arrivo sulla costa (Costantinopoli,
+   Cartagine, Siracusa, Capo Bon, lo sbarco a Gibilterra del 711) e lo stretto di Messina. */
 /* I popoli in movimento: dove sta il grosso di ciascun gruppo, anno per anno, e in che rapporto è con Roma. [anno, lon, lat, rapporto].
    Rapporti: fuori (oltre il confine, senza patto) | accolti (ammessi dentro l'impero) | federati (patto: terre o paghe in cambio di soldati) |
    armi (in guerra dentro l'impero) | regno (un regno proprio su terre che erano di Roma).
