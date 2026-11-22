@@ -904,7 +904,7 @@ var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonin
 ['orologio','castrapretorio','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
-  var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?st[1][0]-8:0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)
+  var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?(D.CANTIERI&&D.CANTIERI[o.id]?D.CANTIERI[o.id]-1:st[1][0]-8):0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)
   (o.zone||[]).forEach(function(q){ var p=globale(o,q[0],q[1]); RM.zone.push({x:p[0],z:p[1],r:q[2],h:h,dal:dal}); });
   if(o.lunga){ var n=Math.ceil(o.lunga[0]/o.lunga[1]); for(var i=0;i<n;i++){ var p=globale(o,((i+.5)/n-.5)*o.lunga[0],0); RM.zone.push({x:p[0],z:p[1],r:o.lunga[1],h:h}); } }
 });
@@ -931,7 +931,8 @@ RM.statoMonumento=function(id,anno){
   for(k=0;k<st.length;k++) if(anno>=st[k][0]) i=k;
   var s0=anno<st[0][0]?'assente':st[i][1], prossimo=st[i+1];
   var brusco=prossimo&&(prossimo[1]==='bruciato'||prossimo[1]==='spogliato'||prossimo[1]==='crollato'||(prossimo[1]==='assente'&&(id==='adrianostatue'||id==='colosso')));      /* anche il Colosso sparisce di colpo: non si accorcia negli anni prima */      // le statue del mausoleo cadono in un giorno (537)
-  return {s0:s0, s1:prossimo?prossimo[1]:s0, t:prossimo?RM.sfuma(prossimo[0]-(brusco?.4:6),prossimo[0],anno):0};
+  var inizio=prossimo&&s0==='assente'&&D.CANTIERI&&D.CANTIERI[id];      // inizio dei lavori, dove la scheda lo dice (CANTIERI in js/dati.js)
+  return {s0:s0, s1:prossimo?prossimo[1]:s0, t:prossimo?RM.sfuma(inizio||prossimo[0]-(brusco?.4:6),prossimo[0],anno):0};
 };
 /* Degrado in due tempi.
    c = incuria: dal 390 circa la manutenzione pubblica si dirada per tutti, e accelera dopo la chiusura. Si vede come crepe, colature, erba, coppi mancanti.
@@ -954,11 +955,26 @@ RM.rovina=function(id,anno){
           c:Math.min(1,Math.max(.9*crollo,cura*(rinato?.35:1)*(.62*RM.sfuma(390,570,anno)+.45*chiuso+.2*spoglio+.5*fuoco+.3*scavo)))};
 };
 RM.TINTA=TINTA;
+/* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
+   Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
+var SENZA_CANTIERE={obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
+function ponteggio(o,t){
+  if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
+  if(!o.pont){
+    var bb=o.g.geometry.boundingBox, x0=bb.min.x-.2, x1=bb.max.x+.2, z0=bb.min.z-.2, z1=bb.max.z+.2, H=bb.max.y+.3, dx=x1-x0, dz=z1-z0, passo=Math.max(1.1,(dx+dz)/22), B=new RM.Costruttore(), i, n;
+    n=Math.max(1,Math.round(dx/passo)); for(i=0;i<=n;i++){ B.scatola(.05,H,.05,x0+dx*i/n,0,z0,RM.P.tronco); B.scatola(.05,H,.05,x0+dx*i/n,0,z1,RM.P.tronco); }
+    n=Math.max(1,Math.round(dz/passo)); for(i=1;i<n;i++){ B.scatola(.05,H,.05,x0,0,z0+dz*i/n,RM.P.tronco); B.scatola(.05,H,.05,x1,0,z0+dz*i/n,RM.P.tronco); }
+    [.2,.4,.6,.8,1].forEach(function(f){ var y=H*f-.05; B.scatola(dx,.035,.1,(x0+x1)/2,y,z0,RM.P.tronco); B.scatola(dx,.035,.1,(x0+x1)/2,y,z1,RM.P.tronco); B.scatola(.1,.035,dz,x0,y,(z0+z1)/2,RM.P.tronco); B.scatola(.1,.035,dz,x1,y,(z0+z1)/2,RM.P.tronco); });
+    o.pont=B.maglia(RM.matPietra()); o.pont.position.copy(o.g.position); o.pont.rotation.y=o.g.rotation.y; o.pont.receiveShadow=false; RM.scene.add(o.pont);
+  }
+  o.pont.visible=true; o.pont.scale.y=Math.min(1,t*.95+.12);      // il ponteggio sta sempre un poco più su dei muri
+}
 RM.moduli.push(function(anno){
   M.forEach(function(o){
     var q=RM.statoMonumento(o.id,anno), p=(q.s0==='assente'?0:1)*(1-q.t)+(q.s1==='assente'?0:1)*q.t;
+    var cant=q.s0==='assente'&&q.s1!=='assente'&&q.t>0&&q.t<1&&!SENZA_CANTIERE[o.id];
     o.mat.color.copy(TINTA[q.s0]).lerp(TINTA[q.s1],q.t);
-    o.presenza=p; o.g.visible=p>.01; o.g.scale.y=Math.max(p,.001);
+    o.presenza=p; o.g.visible=p>.01; o.g.scale.y=cant?1:Math.max(p,.001); o.mat.userData.u.uCant.value=cant?q.t:1; ponteggio(o,cant?q.t:0);
     var rv=RM.rovina(o.id,anno); o.mat.userData.u.uRovina.value=rv.r; o.mat.userData.u.uSpoglio.value=rv.s; o.mat.userData.u.uCrepe.value=rv.c;
     if(o.id==='pantheon'){ o.mat.userData.u.uSpoglio.value=RM.sfuma(662.6,663.3,anno)*(1-RM.sfuma(734,736,anno)); o.mat.userData.u.uPiombo.value=RM.sfuma(734,736,anno); }   // la chiesa resta in uso: cambia solo il tetto. Bronzo tolto da Costante II (LP LXXVIII 3), piombo di Gregorio III (LP XCII 12)
     if(o.id==='colosseo'){ var us=o.mat.userData.u; us.uSudDir.value.set(-Math.sin(o.ry),Math.cos(o.ry)); us.uSudR.value.set(9.4,7.8);

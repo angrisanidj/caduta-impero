@@ -162,6 +162,8 @@ RM.matPietra=function(classe){ var m=new THREE.MeshStandardMaterial({vertexColor
    così i crolli partono dall'alto e non restano pezzi sospesi; le coperture si bucano; la pietra si macchia di muschio. */
 var NL=String.fromCharCode(10);
 var TAGLIO=[
+  /* cantiere (uCant da 0 a 1): la muratura c'è solo fino a una certa quota, diversa da un tratto all'altro (celle di venti metri in pianta); tetti e parti alte arrivano per ultimi */
+  'if(uCant<0.999){ float cn=rmH(vec3(floor(vLoc.xz*0.5+0.21),3.0)); if(vLoc.y>uAlt*uCant*(0.7+0.6*cn)+0.04) discard; }',
   'if(vTipo<1.5){',
   '  float rn=rmH(vec3(floor(vLoc.xz*1.6+0.37),1.0));',
   '  float rq=clamp(vLoc.y/uAlt,0.0,1.0);',
@@ -170,7 +172,7 @@ var TAGLIO=[
   '}',
   /* smontaggio da un lato solo (il fronte sud del Colosseo): sparisce l'anello esterno con l'attico e la parte alta della cavea, a partire dal punto più a sud e allargandosi; resta il secondo anello, più basso */
   'if(uSud>0.001){ vec2 qs=vLoc.xz/uSudR; float ro=length(qs); if(ro>0.94 || (ro>0.74 && vLoc.y>3.09)){ float an=acos(clamp(dot(qs/ro,uSudDir),-1.0,1.0)); if(an<3.1416*uSud*(0.9+0.2*rmH(vec3(floor(vLoc.xz*0.9),6.0)))) discard; } }'].join(NL);
-var DICHIARA=[SAP_DICH,'uniform float uRovina; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR;','varying float vTipo; varying vec3 vLoc; varying vec3 vNor;',
+var DICHIARA=[SAP_DICH,'uniform float uRovina; uniform float uCant; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR;','varying float vTipo; varying vec3 vLoc; varying vec3 vNor;',
   'float rmH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
   'vec2 rmH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',
   'float rmN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f);',
@@ -201,7 +203,7 @@ var COLORA=[
   'if(vTipo<1.5) diffuseColor.rgb*=mix(0.74,1.0,smoothstep(0.0,0.2,rq2));'].join(NL);      // ombra d'appoggio al piede
 function innesta(sh,u,colore){
   sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol;
-  sh.uniforms.uRovina=u.uRovina; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uPiombo=u.uPiombo; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe; sh.uniforms.uSud=u.uSud; sh.uniforms.uSudDir=u.uSudDir; sh.uniforms.uSudR=u.uSudR;
+  sh.uniforms.uRovina=u.uRovina; sh.uniforms.uCant=u.uCant; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uPiombo=u.uPiombo; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe; sh.uniforms.uSud=u.uSud; sh.uniforms.uSudDir=u.uSudDir; sh.uniforms.uSudR=u.uSudR;
   sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute float tipo;','varying float vTipo;','varying vec3 vLoc;','varying vec3 vNor;'].join(NL))
     .replace('#include <begin_vertex>',['#include <begin_vertex>','vTipo=tipo; vLoc=position; vNor=normal;'].join(NL));
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA);
@@ -209,7 +211,7 @@ function innesta(sh,u,colore){
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',TAGLIO+NL+'#include <clipping_planes_fragment>');
 }
 RM.matRovina=function(alt){
-  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)}};
+  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)}};
   var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
   m.onBeforeCompile=function(sh){ innesta(sh,u,true); };
   m.userData.u=u;

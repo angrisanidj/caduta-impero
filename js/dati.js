@@ -565,6 +565,10 @@ var MONUMENTI={
    quando la fonte dà solo un secolo o una prima attestazione, l'anno è una scelta nostra dentro quell'intervallo.
    Coordinate dell'edificio attuale, controllate su OpenStreetMap il 21 novembre 2026 (tutte entro 25 m dal centro dell'edificio; Santa Maria in Trastevere, Sant'Agata dei Goti e San Vito sono scostate di una ventina di metri per non cadere sulla strada che le costeggia).
    Santa Maria Domine Rose (IX secolo: l'anno è una scelta nostra) è al centro dell'isolato della Crypta Balbi, dove l'hanno trovata gli scavi. */
+/* Quando si apre il cantiere, per i monumenti di cui la scheda dà un inizio dei lavori (gli altri salgono nei sei anni prima della data in MONUMENTI).
+   pietro: 319-322 per Krautheimer; leonine: Leone IV avvia i lavori nell'848; stefano: travi datate al 455 circa; massenzio: iniziata nel 308; paolo: l'ordine dei tre imperatori è del 386;
+   sabina: fondata sotto Celestino I (422-432), qui dal primo anno, per ipotesi; sole: dedicato nel 274 dopo Palmira, qui dal 272, per ipotesi (prima era a metà già nel 271). */
+var CANTIERI={pietro:320, leonine:848, stefano:455, massenzio:308, paolo:386, sabina:422, sole:272};
 var CHIESE=[
  ['San Marco',41.8960,12.4816,336,'titolo'],['Santa Maria in Trastevere',41.88924,12.46974,340,'titolo'],['San Lorenzo in Lucina',41.9034,12.4787,370,'titolo'],
  ['Santi Nereo e Achilleo',41.88017,12.49476,377,'titolo'],["Sant'Anastasia",41.8882,12.4841,380,'titolo'],['San Lorenzo in Damaso',41.8969,12.4717,380,'titolo'],
@@ -1081,5 +1085,5 @@ TAPPE.forEach(function(t){ var c=!t.intermezzo&&CAMBI[t.anno], k; if(c){ for(k i
 /* l'atto avanza dopo ogni intermezzo: l'intermezzo chiude l'atto che lo precede */
 var atto=0; TAPPE.forEach(function(t){ if(t.apre) atto++; t.atto=atto; if(t.intermezzo) atto++; });   // "apre": la tappa inizia un atto nuovo
 
-return {ATTI:ATTI,TAPPE:TAPPE,CAMBI:CAMBI,CURVE:CURVE,ABITATI:ABITATI,MONUMENTI:MONUMENTI,MURA_ALTE:MURA_ALTE,EVENTI:EVENTI,SCHEDE:SCHEDE,CERTEZZA:CERTEZZA,CHIESE:CHIESE,ITINERARIO:ITINERARIO,interp:interp};
+return {ATTI:ATTI,TAPPE:TAPPE,CAMBI:CAMBI,CURVE:CURVE,ABITATI:ABITATI,MONUMENTI:MONUMENTI,CANTIERI:CANTIERI,MURA_ALTE:MURA_ALTE,EVENTI:EVENTI,SCHEDE:SCHEDE,CERTEZZA:CERTEZZA,CHIESE:CHIESE,ITINERARIO:ITINERARIO,interp:interp};
 })();
