@@ -20,6 +20,11 @@ const UA = { 'User-Agent': 'ricerca-immagini/1.0' };      // nome generico: ness
 /* La riga che la pagina scrive sotto l'immagine quando l'identificazione, la data o l'oggetto chiedono una riserva. Chiave: il nome in PROTAGONISTI. */
 const RISERVE = {
   'Decio': 'L’identificazione si fonda sul confronto con le monete.',
+  'Massenzio': 'Senza iscrizione: l’identificazione viene dal confronto con le monete.',
+  'Valentiniano II': 'La scritta è uguale per Valentiniano I e II: l’attribuzione è del catalogo.',
+  'Ambrogio': 'Qualche decennio dopo la morte: il più antico ritratto noto.',
+  'Simmaco': 'Un avorio fatto per la sua famiglia verso il 400: non è un ritratto.',
+  'Virio Nicomaco Flaviano': 'Un avorio fatto per la sua famiglia verso il 400: non è un ritratto.',
   'Shapur I': 'Quale imperatore sia quello in ginocchio è discusso.',
   'Diocleziano': 'Senza iscrizione: la testa gli è attribuita.',
   'Massimiano': 'Identificazione proposta dal museo, non certa.',

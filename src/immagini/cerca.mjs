@@ -72,6 +72,10 @@ export const PERSONE = {
   'Pipino il Breve': ['Pepin the Short'], 'Adriano I': ['Pope Adrian I'], 'Carlo Magno': ['Charlemagne'],
   'Desiderio': ['Desiderius'], 'Leone III': ['Pope Leo III'], 'Irene': ['Irene of Athens'], 'Sergio II': ['Pope Sergius II'],
   'Lotario I': ['Lothair I'], 'Leone IV': ['Pope Leo IV'],
+  // tappe della storia religiosa del IV secolo (22 novembre 2026)
+  'Massenzio': ['Maxentius'], 'Licinio': ['Licinius'], 'Giuliano': ['Julian (emperor)'], 'Gioviano': ['Jovian (emperor)'],
+  'Simmaco': ['Quintus Aurelius Symmachus'], 'Ambrogio': ['Ambrose'], 'Valentiniano II': ['Valentinian II'], 'Magno Massimo': ['Magnus Maximus'],
+  'Eugenio': ['Eugenius'], 'Arbogaste': ['Arbogast (general)'], 'Virio Nicomaco Flaviano': ['Virius Nicomachus Flavianus'],
 };
 export const chiave = p => OMONIMI[p.anno + '|' + p.nome] || p.nome;
 

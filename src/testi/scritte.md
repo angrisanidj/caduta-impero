@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 22/11/2026, 23:53:13.
+Generato da `src/testi.mjs` il 23/11/2026, 00:02:38.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -103,7 +103,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.44] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.45] Versione del 22/11/2026, ore 23:17
+[pagina.45] Versione del 22/11/2026, ore 23:53
 
 
 ## 2. Gli atti
@@ -114,7 +114,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [atto.II.nome] La ricostruzione
 
-[atto.II.sommario] Diocleziano affida il governo a quattro imperatori, prova a contare e tassare tutto e perseguita i cristiani. Costantino vince al ponte Milvio, concede la libertà di culto e fonda Costantinopoli. Il pagano Giuliano regna meno di due anni. A Roma, ormai un monumento più che una sede, il Senato chiede invano di riavere l'altare della Vittoria, e Teodosio vieta i sacrifici. Ad Adrianopoli i Goti distruggono l'esercito d'Oriente; al Frigido Teodosio vince l'ultima guerra civile del secolo.
+[atto.II.sommario] Diocleziano divide il governo fra quattro imperatori, riorganizza le tasse e avvia la persecuzione dei cristiani. Costantino conquista Roma a ponte Milvio, concorda con Licinio la libertà di culto e fonda Costantinopoli. Con Giuliano i culti tradizionali ritrovano per breve tempo il sostegno della corte. Nel 378 i Goti sconfiggono l'esercito d'Oriente ad Adrianopoli. A Roma si discute se lo Stato debba ancora finanziare i riti degli antichi dèi. Teodosio vieta i sacrifici e nel 394 sconfigge il rivale Eugenio sul fiume Frigido.
 
 [atto.III.nome] I barbari dentro
 
@@ -352,17 +352,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [T08-301.voce1.chi] Diocleziano e i suoi tre colleghi, introduzione all'editto sui prezzi, fine del 301. È la versione del governo, che attribuisce l'aumento dei prezzi all'avidità dei venditori.
 
 
-### 312 · Il ponte Milvio
+### 312 · La battaglia di ponte Milvio
 
-[T09-312.titolo] Il ponte Milvio
+[T09-312.titolo] La battaglia di ponte Milvio
 
-[T09-312.testo] Nel 303 Diocleziano ordina di distruggere le chiese e di bruciare i libri sacri dei cristiani. È l'ultima persecuzione, e la più dura. Nel 311 Galerio, prima di morire, la fa cessare. Il 28 ottobre 312, a nord di Roma, Costantino sconfigge Massenzio, che nella fuga annega nel Tevere presso il ponte Milvio. Lattanzio scrive che Costantino, avvertito in sogno, aveva fatto segnare sugli scudi il segno di Cristo. Eusebio, molti anni dopo, racconta di una croce di luce vista in cielo. Nel 313, a Milano, Costantino e Licinio concordano una lettera che dà la libertà di culto «ai cristiani e a tutti».
+[T09-312.testo] Nel 303, sotto Diocleziano, comincia la grande persecuzione dei cristiani. Le autorità ordinano di distruggere le chiese e bruciare i libri sacri. Nel 311 l'imperatore Galerio riconosce ai cristiani il diritto di praticare il loro culto. Il 28 ottobre 312, a nord di Roma, Costantino sconfigge il rivale Massenzio, che durante la fuga annega nel Tevere presso il ponte Milvio. Come si lega quella vittoria al cristianesimo? Lattanzio racconta che, dopo un sogno, Costantino fece tracciare sugli scudi il segno di Cristo. Molti anni dopo Eusebio riferisce anche di una croce luminosa apparsa in cielo. Nel 313, a Milano, Costantino e Licinio si accordano per garantire la libertà di culto «ai cristiani e a tutti» e per restituire alle comunità cristiane i beni confiscati.
 
 [T09-312.chi1.nome] Costantino
 
 [T09-312.chi1.date] imperatore dal 306 al 337
 
-[T09-312.chi1.riga] Acclamato dai soldati a York nel 306, nel 312 scende in Italia dalla Gallia e prende Roma.
+[T09-312.chi1.riga] Nel 306 i soldati lo proclamano imperatore a York, in Britannia. Nel 312 attraversa le Alpi dalla Gallia e conquista Roma.
 
 [T09-312.chi2.nome] Massenzio
 
@@ -374,23 +374,23 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T09-312.chi3.date] imperatore dal 308 al 324
 
-[T09-312.chi3.riga] Collega e cognato di Costantino. Nel 313 fa pubblicare in Oriente la lettera concordata a Milano.
+[T09-312.chi3.riga] Condivide il potere imperiale con Costantino, di cui diventa cognato. Nel 313 fa pubblicare in Oriente le disposizioni sulla libertà di culto concordate a Milano.
 
 [T09-312.chi4.nome] Lattanzio
 
 [T09-312.chi4.date] circa 250 - circa 325
 
-[T09-312.chi4.riga] Racconta la persecuzione e la battaglia pochi anni dopo i fatti.
+[T09-312.chi4.riga] Scrittore cristiano e maestro di retorica, racconta la persecuzione e la battaglia a pochi anni di distanza.
 
 [T09-312.voce1.testo] «Costantino fu avvertito in sogno di segnare sugli scudi il segno celeste di Dio e di attaccare così battaglia. Fa come gli è stato ordinato e, con la lettera X piegata in modo che la cima fosse ricurva, segna Cristo sugli scudi. […] Il ponte alle spalle [di Massenzio] viene tagliato. […] Messo in fuga, corre verso il ponte, che era interrotto, e spinto dalla folla dei fuggiaschi precipita nel Tevere.»
 
-[T09-312.voce1.chi] Lattanzio, La morte dei persecutori, 44. Maestro di retorica cristiano, scrive verso il 315, tre anni dopo, e non era presente. Il libro vuole mostrare che Dio punisce chi perseguita i cristiani.
+[T09-312.voce1.chi] Lattanzio, La morte dei persecutori, 44, 5 e 9. Scrive intorno al 315, circa tre anni dopo la battaglia, alla quale non assistette. Nel suo libro interpreta la morte dei persecutori dei cristiani come una punizione divina.
 
 [T09-312.voce2.testo] «Disse che verso mezzogiorno, quando il giorno già cominciava a declinare, vide con i propri occhi in cielo, sopra il sole, il trofeo di una croce di luce, con la scritta: Con questo vinci.»
 
-[T09-312.voce2.chi] Eusebio di Cesarea, Vita di Costantino, I, 28. Vescovo e ammiratore dell'imperatore, scrive dopo il 337, venticinque anni dopo. Dice di averlo sentito dallo stesso Costantino, sotto giuramento. Traduzione dalla versione inglese di Richardson.
+[T09-312.voce2.chi] Eusebio di Cesarea, Vita di Costantino, I, 28. Vescovo e ammiratore di Costantino, scrive dopo il 337, a oltre venticinque anni dalla battaglia. Dice che fu l'imperatore in persona a raccontargli l'episodio sotto giuramento. Traduzione dalla versione inglese di Richardson.
 
-[T09-312.storici] Che cosa vide Costantino? Le due fonti cristiane non concordano. Per Lattanzio fu un sogno, la notte prima della battaglia. Per Eusebio fu una croce nel cielo, vista da tutto l'esercito durante la marcia, e poi un sogno. Nella sua Storia della Chiesa, scritta prima, Eusebio non parla di visioni. L'iscrizione dell'arco che il Senato dedica nel 315 non nomina Cristo: dice che Costantino vinse «per ispirazione della divinità». È una formula che un pagano e un cristiano potevano leggere ciascuno a modo suo. Quando e quanto Costantino diventò cristiano resta discusso. Anche il ponte cambia da fonte a fonte: per Lattanzio il ponte di pietra fu tagliato, per Zosimo Massenzio ne aveva costruito uno di travi in due metà, per Eusebio era un ponte di barche. E l'«editto di Milano» non è un editto: è una lettera ai governatori, che Licinio fa pubblicare a Nicomedia il 13 giugno 313. Dà la libertà di culto a tutti e restituisce alle chiese i beni confiscati, ma non fa del cristianesimo la religione dello Stato.
+[T09-312.storici] Come interpretarono la vittoria i contemporanei? Lattanzio parla di un sogno nella notte prima dello scontro. Nel racconto più tardo di Eusebio, Costantino e l'esercito vedono una croce luminosa durante la marcia. Solo dopo l'imperatore riceve in sogno le istruzioni sul simbolo. Sull'arco dedicato dal Senato a Roma la vittoria è attribuita all'«ispirazione della divinità». L'iscrizione lascia aperta l'identità di quella divinità. È quindi difficile ricavare da questi racconti il momento preciso in cui Costantino aderì al cristianesimo. Anche il ponte cambia da una fonte all'altra: Lattanzio parla di un ponte tagliato, Eusebio di un passaggio di barche, Zosimo di travi in due parti unite da ferri. Quanto all'accordo di Milano, i cristiani ottenevano la libertà di culto, ma il cristianesimo non diventava religione di Stato.
 
 [T09-312.luogo1.nicomedia] 303: Diocleziano ordina di distruggere le chiese
 
@@ -428,7 +428,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T11-357.titolo] L'imperatore in visita
 
-[T11-357.testo] A trentanove anni Costanzo II visita Roma per la prima volta e la guarda come un forestiero. A stupirlo più di tutto è il Foro di Traiano. La città è ormai un monumento, non più una sede di governo. Dalla Curia, dove si riunisce il Senato, fa togliere l'altare della Vittoria, ma lascia ai sacerdoti e alle Vestali i loro privilegi.
+[T11-357.testo] A trentanove anni Costanzo II visita Roma per la prima volta e la guarda come un forestiero. A stupirlo più di tutto è il Foro di Traiano. La città è ormai un monumento, non più una sede di governo. Dalla Curia, la sede del Senato, fa togliere l'altare dedicato alla dea Vittoria. Secondo il senatore Simmaco, durante la visita rispetta però i privilegi dei sacerdoti e delle Vestali, le sacerdotesse di Vesta.
 
 [T11-357.chi1.nome] Costanzo II
 
@@ -450,7 +450,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T11-357.chi4.date] circa 340 - circa 402
 
-[T11-357.chi4.riga] Senatore pagano. Nel 384 ricorda la visita di Costanzo per difendere i culti della città.
+[T11-357.chi4.riga] Senatore pagano. Nel 384 ricorda la visita di Costanzo II per difendere i culti tradizionali di Roma.
 
 [T11-357.voce1.testo] «Ma quando giunse al foro di Traiano, costruzione unica sotto il cielo, a nostro parere, e mirabile anche a giudizio degli dèi, restava attonito, volgendo la mente attorno a quelle strutture gigantesche, che non si possono dire a parole né i mortali potranno mai più tentare. […] [Il principe persiano Ormisda] diceva che una cosa sola gli era piaciuta: aver imparato che anche lì gli uomini muoiono.»
 
@@ -458,44 +458,44 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T11-357.voce2.testo] «Non tolse nulla ai privilegi delle vergini sacre, diede i sacerdozi ai nobili, non negò le spese ai riti romani. Seguendo per tutte le vie della città eterna il Senato in festa, guardò con volto sereno i santuari, lesse i nomi degli dèi scritti sui frontoni, chiese dell'origine dei templi, ammirò chi li aveva costruiti. Pur seguendo un'altra religione, conservò questa all'impero.»
 
-[T11-357.voce2.chi] Simmaco, senatore pagano, in una relazione all'imperatore del 384, ventisette anni dopo la visita. La ricorda per chiedere che l'esempio di Costanzo valga anche per l'altare della Vittoria.
+[T11-357.voce2.chi] Simmaco, Relazione III, scritta nel 384 all'imperatore Valentiniano II. Simmaco, allora prefetto di Roma, rievoca una visita avvenuta ventisette anni prima. Per convincere il sovrano a finanziare i culti tradizionali, ricorda il rispetto mostrato da Costanzo II per sacerdoti, templi e riti.
 
 [T11-357.luogo1.roma] la visita di Costanzo II
 
 
-### 363 · L'ultimo imperatore pagano
+### 363 · Giuliano e il ritorno agli dèi
 
-[T12-363.titolo] L'ultimo imperatore pagano
+[T12-363.titolo] Giuliano e il ritorno agli dèi
 
-[T12-363.testo] Giuliano, nipote di Costantino, è cresciuto cristiano, ma da imperatore torna pubblicamente agli dèi. Fa riaprire i templi, riprendere i sacrifici e richiama i vescovi esiliati: secondo Ammiano, perché i cristiani litighino fra loro. Vieta ai maestri cristiani di insegnare. Il 26 giugno 363, durante la ritirata dalla Persia, muore per un colpo di lancia: Ammiano scrive che nessuno seppe da dove venisse. Il suo successore, Gioviano, è cristiano e cede ai Persiani Nisibi e Singara. A Roma non cambia nulla di visibile: i templi non erano mai stati chiusi.
+[T12-363.testo] Giuliano, nipote di Costantino, riceve un'educazione cristiana. Quando si trova a governare da solo, favorisce apertamente gli antichi culti. Fa riaprire i templi, ripristina i sacrifici e richiama dall'esilio i vescovi cristiani. Secondo lo storico Ammiano, spera così di riaccendere i contrasti fra i vescovi. La sua politica scolastica impedisce ai maestri cristiani di insegnare i classici. Il 26 giugno 363, durante la ritirata dell'esercito romano dalla Persia, Giuliano muore per una ferita di lancia. Ammiano, che partecipò alla spedizione, dice che nessuno seppe da dove fosse arrivato il colpo. Per riportare in salvo l'esercito, il nuovo imperatore Gioviano, cristiano, cede ai Persiani le città di Nisibi e Singara.
 
 [T12-363.chi1.nome] Giuliano
 
 [T12-363.chi1.date] 331-363
 
-[T12-363.chi1.riga] Imperatore dal 361. Torna pubblicamente agli dèi appena resta solo al potere.
+[T12-363.chi1.riga] Cresciuto cristiano, dal 361 governa da solo e sostiene pubblicamente il culto degli dèi tradizionali.
 
 [T12-363.chi2.nome] Ammiano Marcellino
 
 [T12-363.chi2.date] circa 330 - circa 395
 
-[T12-363.chi2.riga] Ufficiale pagano, lo segue nella guerra persiana. Lo ammira, ma critica la legge sulle scuole e i sacrifici senza misura.
+[T12-363.chi2.riga] Ufficiale e storico pagano, partecipa alla spedizione in Persia. Ammira Giuliano, ma ne critica la politica scolastica e il gran numero di animali sacrificati.
 
 [T12-363.chi3.nome] Gioviano
 
 [T12-363.chi3.date] 331-364
 
-[T12-363.chi3.riga] Ufficiale cristiano, acclamato dopo la morte di Giuliano. Per riportare indietro l'esercito cede Nisibi ai Persiani.
+[T12-363.chi3.riga] Ufficiale cristiano, viene proclamato imperatore alla morte di Giuliano. Cede Nisibi ai Persiani nelle trattative per il ritiro dell'esercito.
 
 [T12-363.voce1.testo] «Corresse anche alcune leggi, togliendo le ambiguità, perché dicessero con chiarezza che cosa ordinavano e che cosa vietavano. Ma era una cosa crudele, da seppellire in un silenzio eterno, quella che impediva di insegnare ai maestri di retorica e di grammatica che seguivano il culto cristiano.»
 
-[T12-363.voce1.chi] Ammiano Marcellino, Storie, XXII, 10, 7. Pagano e ammiratore di Giuliano, fu con lui in Persia. Scrive a Roma verso il 390.
+[T12-363.voce1.chi] Ammiano Marcellino, Storie, XXII, 10, 7. Pagano e ammiratore di Giuliano, partecipa con lui alla spedizione in Persia. Scrive a Roma intorno al 390.
 
-[T12-363.voce2.testo] «Persecutore eccessivo della religione cristiana, ma tanto da astenersi dal sangue.»
+[T12-363.voce2.testo] «Persecutore eccessivo della religione cristiana, ma senza versare sangue.»
 
-[T12-363.voce2.chi] Eutropio, Breviario, X, 16. Partecipò alla spedizione persiana e scrive pochi anni dopo, verso il 369.
+[T12-363.voce2.chi] Eutropio, Breviario, X, 16. Prese parte alla spedizione in Persia e scrive pochi anni dopo, verso il 369.
 
-[T12-363.storici] Giuliano perseguitò i cristiani? Non fece condannare a morte nessuno per la fede: Eutropio, che lo conobbe, lo dice «senza sangue». Ma le sue leggi toglievano ai cristiani posti e insegnamento, e alcune violenze locali contro di loro restarono impunite o quasi. Ammiano racconta del vescovo Giorgio, linciato ad Alessandria. Le fonti cristiane più tarde lo chiamano «l'Apostata» e ne fanno un persecutore. Ammiano, pagano, ne critica gli eccessi. Il suo regno durò meno di due anni: che cosa sarebbe successo se fosse vissuto più a lungo non si può sapere.
+[T12-363.storici] Perché Giuliano fu chiamato «l'Apostata»? Il soprannome, usato dagli autori cristiani, indica chi ha abbandonato la propria fede. Eutropio, che conobbe Giuliano, giudica eccessiva la sua ostilità verso i cristiani, ma gli attribuisce una politica «senza sangue». Questo giudizio riguarda la condotta dell'imperatore. Nelle città si verificarono anche violenze, come il linciaggio del vescovo Giorgio ad Alessandria, raccontato da Ammiano. Lo stesso Ammiano, pur ammirando Giuliano, giudica crudele l'esclusione dei maestri cristiani. Il governo di Giuliano come unico imperatore durò meno di due anni.
 
 [T12-363.luogo1.antiochia] Giuliano vi passa l'inverno e parte per la Persia
 
@@ -533,58 +533,58 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [T13-378.luogo1.adrianopoli] i Goti distruggono l'esercito d'Oriente; muore Valente
 
 
-### 384 · L'altare della Vittoria
+### 384 · L'altare della Vittoria divide il Senato
 
-[T14-384.titolo] L'altare della Vittoria
+[T14-384.titolo] L'altare della Vittoria divide il Senato
 
-[T14-384.testo] Verso il 382 Graziano aveva fatto togliere di nuovo dalla Curia l'altare della Vittoria e aveva tolto i fondi pubblici ai culti di Roma e alle Vestali. Nel 384 Simmaco, prefetto della città, chiede a nome del Senato di rimettere l'altare e di restituire le rendite. Il vescovo di Milano, Ambrogio, risponde che il Senato non è tutto pagano e che un imperatore cristiano non può pagare i sacrifici. Il giovane Valentiniano II gli dà ragione. Intanto in Occidente regna anche Magno Massimo: acclamato dai soldati in Britannia, nel 383 è passato in Gallia e ha fatto uccidere Graziano.
+[T14-384.testo] Verso il 382 l'imperatore Graziano fa rimuovere dalla sede del Senato l'altare della dea Vittoria e taglia i finanziamenti pubblici destinati ai culti di Roma e alle sacerdotesse di Vesta. Due anni dopo Simmaco, il prefetto che amministra la città, chiede a Valentiniano II di restituire l'altare e le rendite. Parla a nome del Senato, ma Ambrogio, vescovo di Milano, contesta che rappresenti anche i senatori cristiani. Per Ambrogio, un imperatore cristiano non può finanziare i sacrifici agli dèi. Valentiniano respinge la richiesta. In quegli anni governa soltanto una parte dell'Occidente. Un imperatore rivale, Magno Massimo, proclamato dalle truppe in Britannia nel 383, controlla anche la Gallia e le province romane della penisola iberica. Passato in Gallia, Massimo ha fatto uccidere Graziano.
 
 [T14-384.chi1.nome] Simmaco
 
 [T14-384.chi1.date] circa 340 - circa 402
 
-[T14-384.chi1.riga] Senatore e pontefice, prefetto di Roma nel 384. Il più famoso oratore del suo tempo.
+[T14-384.chi1.riga] Senatore e sacerdote dei culti tradizionali romani, noto per la sua eloquenza. Nel 384 amministra Roma come prefetto della città.
 
 [T14-384.chi2.nome] Ambrogio
 
 [T14-384.chi2.date] circa 339-397
 
-[T14-384.chi2.riga] Vescovo di Milano dal 374, dove sta la corte. Si fa mandare la relazione di Simmaco per rispondere punto per punto.
+[T14-384.chi2.riga] Vescovo di Milano dal 374, sede della corte imperiale. Chiede di leggere la relazione di Simmaco per rispondere alle sue argomentazioni.
 
 [T14-384.chi3.nome] Valentiniano II
 
 [T14-384.chi3.date] 371-392
 
-[T14-384.chi3.riga] Imperatore d'Occidente da bambino. Respinge la richiesta del Senato.
+[T14-384.chi3.riga] Ancora adolescente nel 384, governa una parte dell'Occidente. Respinge la richiesta di ripristinare l'altare e i finanziamenti pubblici.
 
 [T14-384.chi4.nome] Magno Massimo
 
 [T14-384.chi4.date] imperatore dal 383 al 388
 
-[T14-384.chi4.riga] Generale acclamato in Britannia. Teodosio lo riconosce per qualche anno, poi lo sconfigge e lo fa uccidere ad Aquileia.
+[T14-384.chi4.riga] Proclamato imperatore in Britannia, governa da Treviri. Teodosio ne riconosce il titolo per alcuni anni, poi lo sconfigge. Massimo viene ucciso ad Aquileia.
 
 [T14-384.voce1.testo] «Chiediamo dunque pace per gli dèi dei padri, per gli dèi della patria. È giusto pensare che sia uno solo ciò che tutti venerano. Guardiamo le stesse stelle, il cielo è di tutti, lo stesso mondo ci avvolge. Che importa con quale sapienza ciascuno cerchi la verità? Non si può arrivare per una sola strada a un mistero così grande.»
 
-[T14-384.voce1.chi] Simmaco, prefetto di Roma, in una relazione a Valentiniano II, estate del 384. Parla a nome della parte pagana del Senato. Ambrogio sostiene che i senatori cristiani erano «innumerevoli» e contrari.
+[T14-384.voce1.chi] Simmaco, Relazione III, 10, indirizzata a Valentiniano II nell'estate del 384. Il prefetto presenta la richiesta dei senatori favorevoli ai culti tradizionali. Ambrogio contesta che i senatori cristiani la condividano.
 
 [T14-384.voce2.testo] «“Non si può arrivare per una sola strada”, dice, “a un mistero così grande.” Ciò che voi ignorate, noi l'abbiamo conosciuto dalla voce di Dio.»
 
-[T14-384.voce2.chi] Ambrogio, vescovo di Milano, Lettera 18, 8. Risponde punto per punto alla relazione di Simmaco, che si era fatto mandare.
+[T14-384.voce2.chi] Ambrogio, vescovo di Milano, Lettera 18, 8. È la sua risposta alla relazione di Simmaco.
 
-[T14-384.storici] Quanti erano ancora i pagani? Simmaco parla per il Senato. Ambrogio risponde che in Curia i cristiani sono ormai la maggioranza e che solo pochi pagani usano il nome di tutti. Per una lunga tradizione di studi, la contesa è l'ultima battaglia di un'aristocrazia pagana compatta. Alan Cameron ha sostenuto invece che i pagani militanti fossero pochi e che molti senatori fossero già cristiani o indifferenti. Le due tesi concordano su un punto: da allora i culti pubblici di Roma vivono senza denaro dello Stato.
+[T14-384.storici] Quanti senatori condividevano la richiesta di Simmaco? Il prefetto parla a nome dell'intero Senato. Ambrogio sostiene invece che i cristiani siano già la maggioranza e che solo «pochi pagani» pretendano di parlare per tutti. Sono argomenti di due avversari e non permettono di contare i senatori delle due parti. A lungo gli storici hanno visto nello scontro l'ultima battaglia di un'aristocrazia pagana compatta. Alan Cameron, in The Last Pagans of Rome (2011), ridimensiona il numero dei senatori impegnati nella difesa dei culti. La conseguenza immediata della decisione di Valentiniano è più chiara: i finanziamenti richiesti da Simmaco non vengono ripristinati.
 
-[T14-384.luogo1.roma] Simmaco chiede di rimettere l'altare della Vittoria
+[T14-384.luogo1.roma] Simmaco chiede di riportare in Senato l'altare della Vittoria
 
 [T14-384.luogo2.milano] la corte di Valentiniano II e il vescovo Ambrogio
 
 [T14-384.luogo3.treviri] residenza di Magno Massimo
 
 
-### 394 · Il Frigido
+### 394 · La battaglia del fiume Frigido
 
-[T15-394.titolo] Il Frigido
+[T15-394.titolo] La battaglia del fiume Frigido
 
-[T15-394.testo] Nel IV secolo gli eserciti romani si combattono fra loro quasi quanto contro i nemici. Nel 351 a Mursa, in Pannonia, Costanzo II batte l'usurpatore Magnenzio in una delle battaglie più sanguinose del secolo. Nel 388 Teodosio cattura Magno Massimo ad Aquileia e lo fa uccidere. Fra il 391 e il 392 Teodosio vieta ogni sacrificio e anche di entrare nei templi, ma non ordina di abbatterli. Nel 392 il generale Arbogaste mette sul trono d'Occidente Eugenio, cristiano almeno di nome, che però fa doni ai senatori pagani. Sul fiume Frigido, alle porte dell'Italia, Teodosio vince il 6 settembre 394, dopo due giorni di battaglia. Le fonti cristiane parlano di un vento mandato da Dio.
+[T15-394.testo] Nel IV secolo più imperatori si contendono il trono con eserciti romani. Nel 351, a Mursa, in Pannonia, Costanzo II sconfigge Magnenzio in una battaglia che costa a Roma pesanti perdite. Nel 388 Teodosio batte Magno Massimo, catturato e ucciso ad Aquileia. Negli anni successivi lo scontro politico si intreccia con quello religioso. Nel 391 Teodosio vieta i sacrifici e l'ingresso nei templi per compiervi atti di culto. Nel 392 una legge rivolta all'Oriente colpisce anche i riti domestici. Intanto il generale Arbogaste sostiene l'ascesa di Eugenio al trono d'Occidente. Eugenio è cristiano, almeno di nome, ma concede doni ai senatori che difendono gli antichi culti. All'inizio di settembre del 394 i due eserciti si affrontano sul fiume Frigido, alle porte dell'Italia. Dopo due giorni Teodosio vince. Alcuni autori cristiani attribuiranno la vittoria a un vento mandato da Dio.
 
 [T15-394.chi1.nome] Teodosio I
 
@@ -596,7 +596,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T15-394.chi2.date] imperatore dal 392 al 394
 
-[T15-394.chi2.riga] Insegnante di grammatica e di retorica, scelto da Arbogaste. Catturato dopo la battaglia e ucciso.
+[T15-394.chi2.riga] Insegnante di grammatica e di retorica, sale al trono d'Occidente con l'appoggio di Arbogaste. Viene catturato e ucciso dopo la sconfitta.
 
 [T15-394.chi3.nome] Arbogaste
 
@@ -608,13 +608,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T15-394.chi4.date] circa 334-394
 
-[T15-394.chi4.riga] Senatore pagano e prefetto del pretorio di Eugenio. Muore dopo la sconfitta: si uccise, a quanto pare di capire da Rufino.
+[T15-394.chi4.riga] Senatore favorevole ai culti tradizionali. È prefetto del pretorio, uno dei più alti funzionari civili del governo di Eugenio. Muore dopo la sconfitta: secondo Rufino si diede la morte.
 
 [T15-394.voce1.testo] «Per te il vento del nord, con le bufere giù dal monte, travolse le schiere nemiche, rivoltò i dardi contro chi li aveva scagliati e respinse le aste col turbine. O troppo amato dal dio, per cui Eolo versa dalle sue grotte tempeste armate, per cui combatte il cielo e accorrono i venti, congiurati, al suono delle trombe! Si arrossarono le nevi delle Alpi, e il fiume Frigido fumò con le acque cambiate di colore.»
 
-[T15-394.voce1.chi] Claudiano, poeta di corte pagano, in un panegirico recitato a Milano nel gennaio 396. Parla al giovane Onorio, figlio di Teodosio. Agostino e Orosio citano gli stessi versi come se fossero detti di Teodosio, e come prova, data da un pagano, del favore di Dio.
+[T15-394.voce1.chi] Claudiano, Panegirico per il terzo consolato di Onorio, 93-101. Il poeta di corte pronuncia questo discorso a Milano nel gennaio 396. Il «te» dei versi è il giovane Onorio, figlio di Teodosio. Agostino e Orosio li riferiscono invece al padre e li citano come testimonianza di un poeta pagano a favore dell'intervento divino.
 
-[T15-394.storici] Fu l'ultima battaglia fra pagani e cristiani? Così la raccontano Agostino e Orosio: Eugenio e Arbogaste confidavano negli idoli, sulle Alpi c'erano statue di Giove con fulmini d'oro, Teodosio pregò tutta la notte. Alan Cameron ha contestato questa lettura. Per lui la «rinascita pagana» del 393-394 è stata gonfiata dagli storici della Chiesa, e la guerra fu prima di tutto una guerra fra due eserciti per il trono. Un indizio a suo favore sta nelle fonti stesse. Ambrogio scrive a Eugenio che non restituì nulla ai templi, ma fece doni ai senatori pagani che lo sostenevano. Zosimo, pagano, non dà alla battaglia nessun colore religioso. Quanto abbiano pesato sulla caduta dell'Occidente le guerre civili del secolo si discute ancora. Già Eutropio, verso il 369, scrive che a Mursa si consumarono forze ingenti, adatte a qualunque guerra esterna.
+[T15-394.voce2.testo] «Perderli fu un guadagno, ed essere vinti fu vincere.»
+
+[T15-394.voce2.chi] Orosio, Storie contro i pagani, VII, 35, 19. Il prete cristiano scrive verso il 417 dei diecimila Goti che Teodosio mandò avanti e che morirono in battaglia.
+
+[T15-394.storici] Fu una guerra di religione? Agostino e Orosio leggono la vittoria di Teodosio come un segno del favore divino. Nel racconto compaiono le preghiere dell'imperatore e le statue di Giove con fulmini d'oro poste sui passi alpini. Secondo Paolino di Milano, Arbogaste e Flaviano minacciarono di trasformare in stalla la basilica della città. Le testimonianze divergono anche su ciò che Eugenio concesse ai suoi sostenitori. Ambrogio gli scrive che fece doni ai senatori pagani. Paolino parla anche dell'altare della Vittoria e del denaro per i riti. Zosimo, autore pagano, racconta due giorni di combattimenti e un'eclissi, senza attribuire allo scontro un significato religioso. Alan Cameron interpreta il Frigido soprattutto come una guerra per il trono e mette in dubbio l'idea di una rinascita pagana sotto Eugenio, che era cristiano. Resta poi il costo delle guerre civili. Eutropio scrive intorno al 369 che a Mursa andarono perdute «forze ingenti dell'impero, adatte a qualunque guerra esterna». Quanto indebolirono le frontiere le guerre che i Romani combatterono tra loro?
 
 [T15-394.luogo1.frigido] Teodosio sconfigge Eugenio e Arbogaste
 
@@ -1658,15 +1662,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.basiliche330] Verso il 330 · Sorgono le grandi basiliche volute da Costantino: la cattedrale al Laterano e, fuori le mura, San Pietro sulla tomba dell'apostolo, ancora in cantiere.
 
-[evento.milvio312] 28 ottobre 312 · A nord della città Costantino sconfigge Massenzio, che nella fuga annega nel Tevere presso il ponte Milvio. Accanto al ponte Milvio Massenzio aveva fatto gettare un ponte provvisorio, di travi per Zosimo, di barche per Eusebio: nella scena è uno schema. Il vincitore scioglie la guardia pretoriana: il suo campo, i Castra Praetoria, sarà smantellato. Arco, terme e cattedrale del Laterano non sono ancora cominciati.
+[evento.milvio312] 28 ottobre 312 · A ponte Milvio Costantino sconfigge Massenzio, che annega nel Tevere. Dopo la vittoria scioglie i pretoriani, la guardia imperiale. Sul Celio viene demolita la caserma della guardia a cavallo: al suo posto sorgerà la basilica del Laterano. Accanto al ponte di pietra, un passaggio provvisorio: forma e posizione sono ipotetiche.
 
-[evento.visita357] 357 · Costanzo II visita Roma per la prima volta. Sulla spina del Circo Massimo fa alzare un secondo obelisco. Dalla Curia fa togliere l'altare della Vittoria.
+[evento.visita357] 357 · Costanzo II visita Roma per la prima volta. Sulla spina del Circo Massimo fa alzare un secondo obelisco. Dalla sede del Senato fa rimuovere l'altare della dea Vittoria.
 
-[evento.giuliano363] 363 · Sotto Giuliano a Roma non cambia nulla di visibile: i templi, mai chiusi, restano aperti.
+[evento.giuliano363] 363 · Giuliano promuove il culto degli dèi. A Roma il modello mostra ancora i templi in uso.
 
-[evento.altare384] 384 · Il prefetto Simmaco chiede di rimettere nella Curia l'altare della Vittoria. L'imperatore, consigliato da Ambrogio, dice di no. I templi sono ancora aperti, ma senza fondi pubblici. Le Vestali ci sono ancora: a stento sette, scrive Ambrogio.
+[evento.altare384] 384 · Simmaco chiede all'imperatore di riportare l'altare della Vittoria nella sede del Senato. Ambrogio si oppone e Valentiniano II respinge la richiesta.
 
-[evento.leggi394] 391-394 · Le leggi di Teodosio vietano i sacrifici e l'ingresso nei templi. I templi chiudono, ma restano in piedi: nessuna legge ordina di abbatterli.
+[evento.leggi394] 391-394 · Teodosio vieta i sacrifici e gli atti di culto nei templi. A Roma gli edifici restano in piedi. La data in cui ciascun tempio cessò di essere usato rimane incerta.
 
 [evento.onorio402] 401-403 · Sotto Onorio si restaurano mura, porte e torri. Forse è allora che la cinta viene rialzata; altri attribuiscono il lavoro a Massenzio.
 
@@ -1853,45 +1857,51 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.fori.data1-283] Un incendio devasta il Foro. Diocleziano fa ricostruire la Curia, la sede del Senato.
 
-[scheda.fori.data2-357] Costanzo II, in visita, resta ammirato dal foro di Traiano.
+[scheda.fori.data2-357] Costanzo II, in visita, resta ammirato dal foro di Traiano. Fa togliere dalla sede del Senato l'altare della dea Vittoria.
 
-[scheda.fori.data3-410] Brucia, probabilmente nel sacco, la basilica Emilia.
+[scheda.fori.data3.quando] verso il 382
 
-[scheda.fori.data4.quando] 484 o 508
+[scheda.fori.data3] Graziano ordina una seconda rimozione.
 
-[scheda.fori.data4] Un terremoto, secondo alcuni studi, danneggia il tempio della Pace e quello di Marte Ultore (non verificato sulle pubblicazioni di scavo).
+[scheda.fori.data4-384] Simmaco chiede che l'altare torni nella Curia. Valentiniano II respinge la proposta.
 
-[scheda.fori.data5.quando] circa 500
+[scheda.fori.data5-410] Brucia, probabilmente nel sacco, la basilica Emilia.
 
-[scheda.fori.data5] Tra la fine del V e l'inizio del VI secolo, quando l'Italia è governata dai Goti, alcuni artigiani smontano il tempio di Marte Ultore nel foro di Augusto per riutilizzarne i materiali. Sulla faccia superiore di un blocco di colonna è inciso il nome di un Decio. Si è proposto che indicasse, come il nome di un Geronzio al Colosseo, il senatore autorizzato al recupero. Per le fasi tardoantiche del foro mancano però dati di scavo stratigrafici.
+[scheda.fori.data6.quando] 484 o 508
 
-[scheda.fori.data6-527] Prima chiesa nell'area: Santi Cosma e Damiano.
+[scheda.fori.data6] Un terremoto, secondo alcuni studi, danneggia il tempio della Pace e quello di Marte Ultore (non verificato sulle pubblicazioni di scavo).
 
-[scheda.fori.data7-537] Dopo l'assedio la vita pubblica si riduce; il Senato è attestato fino al 603. Gli edifici restano in piedi.
+[scheda.fori.data7.quando] circa 500
 
-[scheda.fori.data8-608] Colonna di Foca: l'ultimo monumento eretto nel Foro.
+[scheda.fori.data7] Tra la fine del V e l'inizio del VI secolo, quando l'Italia è governata dai Goti, alcuni artigiani smontano il tempio di Marte Ultore nel foro di Augusto per riutilizzarne i materiali. Sulla faccia superiore di un blocco di colonna è inciso il nome di un Decio. Si è proposto che indicasse, come il nome di un Geronzio al Colosseo, il senatore autorizzato al recupero. Per le fasi tardoantiche del foro mancano però dati di scavo stratigrafici.
 
-[scheda.fori.data9-630] Intorno al 630 papa Onorio I trasforma la Curia del Senato nella chiesa di Sant'Adriano.
+[scheda.fori.data8-527] Prima chiesa nell'area: Santi Cosma e Damiano.
 
-[scheda.fori.data10.quando] VII-VIII secolo
+[scheda.fori.data9-537] Dopo l'assedio la vita pubblica si riduce; il Senato è attestato fino al 603. Gli edifici restano in piedi.
 
-[scheda.fori.data10] La navata laterale ovest della basilica Giulia diventa una chiesa.
+[scheda.fori.data10-608] Colonna di Foca: l'ultimo monumento eretto nel Foro.
 
-[scheda.fori.data11.quando] tra la fine dell'VIII e l'inizio del IX secolo
+[scheda.fori.data11-630] Intorno al 630 papa Onorio I trasforma la Curia del Senato nella chiesa di Sant'Adriano.
 
-[scheda.fori.data11] Vengono rimosse le lastre di travertino che pavimentavano il foro di Cesare. Nella piazza sorgono due capanne e alcuni orti, poi una vigna. Tra la fine del IX e il X secolo vi si costruiscono case a un piano.
+[scheda.fori.data12.quando] VII-VIII secolo
 
-[scheda.fori.data12.quando] metà del IX secolo
+[scheda.fori.data12] La navata laterale ovest della basilica Giulia diventa una chiesa.
 
-[scheda.fori.data12] Nel foro di Nerva sorgono due case signorili a due piani, una con un portico di blocchi di peperino di recupero, e una casupola.
+[scheda.fori.data13.quando] tra la fine dell'VIII e l'inizio del IX secolo
 
-[scheda.fori.data13-847] Il crollo della basilica Ulpia, nel IX secolo, è attribuito a un terremoto: quello dell'801 o quello dell'847 (Galadini e altri, 2018). Le cronache non lo dicono.
+[scheda.fori.data13] Vengono rimosse le lastre di travertino che pavimentavano il foro di Cesare. Nella piazza sorgono due capanne e alcuni orti, poi una vigna. Tra la fine del IX e il X secolo vi si costruiscono case a un piano.
 
-[scheda.fori.data14-850] Intorno alla metà del secolo si rimuovono sistematicamente le lastre di marmo che pavimentano il foro di Traiano. Fino all'età di Carlo Magno e dei suoi successori la piazza era rimasta in gran parte intatta. Forse il marmo viene cotto per ottenere la calce necessaria alle mura di Leone IV: è un'ipotesi.
+[scheda.fori.data14.quando] metà del IX secolo
 
-[scheda.fori.data15.quando] XI secolo
+[scheda.fori.data14] Nel foro di Nerva sorgono due case signorili a due piani, una con un portico di blocchi di peperino di recupero, e una casupola.
 
-[scheda.fori.data15] Dopo la fine di questa storia la zona si impaluda: il villaggio nato nel foro di Cesare viene abbandonato e l'area prende il nome di «i Pantani», fino alla bonifica di fine Cinquecento.
+[scheda.fori.data15-847] Il crollo della basilica Ulpia, nel IX secolo, è attribuito a un terremoto: quello dell'801 o quello dell'847 (Galadini e altri, 2018). Le cronache non lo dicono.
+
+[scheda.fori.data16-850] Intorno alla metà del secolo si rimuovono sistematicamente le lastre di marmo che pavimentano il foro di Traiano. Fino all'età di Carlo Magno e dei suoi successori la piazza era rimasta in gran parte intatta. Forse il marmo viene cotto per ottenere la calce necessaria alle mura di Leone IV: è un'ipotesi.
+
+[scheda.fori.data17.quando] XI secolo
+
+[scheda.fori.data17] Dopo la fine di questa storia la zona si impaluda: il villaggio nato nel foro di Cesare viene abbandonato e l'area prende il nome di «i Pantani», fino alla bonifica di fine Cinquecento.
 
 [scheda.fori.certezza-B] Alcuni monumenti sono ancora in piedi, tra cui la Curia, l'arco di Settimio Severo, la colonna e i mercati di Traiano e il tempio di Antonino e Faustina. Per piazze, basiliche e altri templi ci siamo basati sugli scavi e sull'antica pianta di Roma incisa nel marmo sotto Settimio Severo. Nel modello il tempio dedicato a Traiano dopo la sua morte è un'ipotesi: non sappiamo nemmeno da che parte della colonna stesse.
 
@@ -1919,7 +1929,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.giove.cosa] Tempio di Giove Ottimo Massimo, sul Campidoglio.
 
-[scheda.giove.data1-392] Vietati i culti pagani, con le leggi del 391 e del 392: il tempio chiude.
+[scheda.giove.data1-392] Nel 391 Teodosio vieta i sacrifici e gli atti di culto nei templi. Nel modello il tempio è chiuso dal 392. La data effettiva della chiusura è incerta.
 
 [scheda.giove.data2-408] Prima di quest'anno Stilicone fa togliere le lamine d'oro dalle porte.
 
@@ -2061,7 +2071,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.venere.data1-307] Ricostruito da Massenzio dopo un incendio.
 
-[scheda.venere.data2-392] Chiuso al culto.
+[scheda.venere.data2-392] Il modello rappresenta il tempio di Venere e Roma chiuso al culto dal 392. L'edificio resta in piedi.
 
 [scheda.venere.data3-630] Papa Onorio I (625-638), con il permesso dell'imperatore Eraclio, toglie le tegole di bronzo del «tempio di Roma» per coprire San Pietro. Per i più è questo tempio; secondo altri la vicina basilica di Massenzio.
 
@@ -2125,7 +2135,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.laterano.cosa] La cattedrale di Roma, voluta da Costantino.
 
-[scheda.laterano.data1-312] Dopo la vittoria su Massenzio Costantino rade al suolo la caserma dei cavalieri della guardia, sul Celio. Al suo posto sorge la basilica del vescovo di Roma: i resti della caserma stanno sotto la navata centrale. L'anno d'inizio dei lavori non è attestato.
+[scheda.laterano.data1-312] La basilica sorge sul Celio, sul terreno della caserma dei cavalieri della guardia imperiale, demolita dopo la vittoria di Costantino. Gli scavi ne hanno ritrovato i resti sotto la navata centrale. L'anno di apertura del cantiere rimane incerto.
 
 [scheda.laterano.data2-318] Dedicata il 9 novembre secondo la tradizione liturgica; l'anno non è attestato: si propongono il 318 e il 324.
 
@@ -2180,7 +2190,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.sole.data1-274] Dedicato da Aureliano dopo la vittoria su Palmira; il giorno, forse il 25 dicembre, non è attestato.
 
-[scheda.sole.data2-392] Vietati i culti pagani.
+[scheda.sole.data2-392] Il modello colloca in questi anni la fine del culto pubblico nel tempio del Sole. Le leggi vietano i sacrifici. La data di chiusura del singolo edificio resta incerta.
 
 [scheda.sole.data3.quando] VI secolo?
 
@@ -2195,7 +2205,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcocostantino.cosa] Arco trionfale accanto al Colosseo.
 
-[scheda.arcocostantino.data1-315] Il Senato dedica l'arco a Costantino per la vittoria su Massenzio, probabilmente il 25 luglio 315, all'inizio delle feste per i dieci anni di regno. Molte sculture in rilievo vengono da monumenti di Traiano, Adriano e Marco Aurelio. La loro provenienza precisa è discussa. Anche le otto statue di Daci in marmo sull'attico, una sopra ciascuna colonna, provengono quasi certamente dal foro di Traiano.
+[scheda.arcocostantino.data1-315] Il Senato dedica l'arco a Costantino per la vittoria su Massenzio, probabilmente il 25 luglio 315, all'inizio delle feste per i dieci anni di regno. L'iscrizione attribuisce la vittoria «all'ispirazione della divinità», senza dire quale. Molte sculture in rilievo vengono da monumenti di Traiano, Adriano e Marco Aurelio. La loro provenienza precisa è discussa. Anche le otto statue di Daci in marmo sull'attico, una sopra ciascuna colonna, provengono quasi certamente dal foro di Traiano.
 
 [scheda.arcocostantino.certezza-A] L'arco si conserva per intero.
 

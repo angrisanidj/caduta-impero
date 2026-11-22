@@ -4,15 +4,15 @@ Generato da `node cerca.mjs info` (scelte a mano in `scelte.mjs`; licenze e auto
 
 ## Conteggi
 
-Righe della tabella: 112 (persone distinte: 87).
+Righe della tabella: 128 (persone distinte: 98).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 67 | 49 |
-| ritratto posteriore | 15 | 13 |
+| ritratto coevo | 76 | 56 |
+| ritratto posteriore | 16 | 14 |
 | di fantasia | 5 | 4 |
-| oggetto del tempo, senza volto | 15 | 12 |
-| nessuna immagine | 10 | 9 |
+| oggetto del tempo, senza volto | 20 | 14 |
+| nessuna immagine | 11 | 10 |
 
 ## Da decidere
 
@@ -87,6 +87,13 @@ Le scelte di principio:
 - **Diocleziano** ([Q43107](https://www.wikidata.org/wiki/Q43107)) — *ritratto coevo*: testa in marmo da Nicomedia, 284-305, Museo archeologico di Istanbul. [Istanbul - Museo archeol. - Diocleziano (284-305 d.C.) - Foto G. Dall'Orto 28-5-2006.jpg](https://commons.wikimedia.org/wiki/File:Istanbul_-_Museo_archeol._-_Diocleziano_(284-305_d.C.)_-_Foto_G._Dall%27Orto_28-5-2006.jpg) — 794×978, Attribution; «Foto: G.dallorto, licenza libera con attribuzione, da Wikimedia Commons». Ritratto attribuito a Diocleziano (non c'è iscrizione); in alternativa una moneta.
 - **Lattanzio** ([Q209102](https://www.wikidata.org/wiki/Q209102)) — *oggetto del tempo, senza volto*: manoscritto delle «Divinae institutiones», Firenze, 1420-1430 circa. [Lactantius, Divinarum institutionum ... liber primus, manuscript, Florence 1420-1430 ca.jpg](https://commons.wikimedia.org/wiki/File:Lactantius,_Divinarum_institutionum_..._liber_primus,_manuscript,_Florence_1420-1430_ca.jpg) — 798×1297, Public domain; «Immagine: Guglielmino Tanaglia (copista), pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: si propone un manoscritto della sua opera (tardo, del Quattrocento). L'immagine di Wikidata («Lactantius.jpg») non l'ho aperta: dal titolo, un ritratto moderno.
 
+### 312
+
+- **Costantino** ([Q8413](https://www.wikidata.org/wiki/Q8413)) — *ritratto coevo*: testa colossale in bronzo, IV secolo, Musei Capitolini (MC 1072). [Colossal head of Constantine (M.C. inv. 1072), August 24, 2021.jpg](https://commons.wikimedia.org/wiki/File:Colossal_head_of_Constantine_(M.C._inv._1072),_August_24,_2021.jpg) — 5449×8173, Public domain; «Immagine: D. Benjamin Miller, pubblico dominio, da Wikimedia Commons». Guardata il 22 novembre 2026: la foto è della testa di BRONZO (MC 1072), non di quella di marmo dalla basilica di Massenzio come diceva la didascalia di prima. L’identificazione con Costantino è la più diffusa; non c’è iscrizione.
+- **Massenzio** (-) — *ritratto coevo*: testa in marmo, inizio del IV secolo, Dresda, Skulpturensammlung (Hm 406). [Portrait of Maxentius (SK Dresden Hm 406) 03.jpg](https://commons.wikimedia.org/wiki/File:Portrait_of_Maxentius_(SK_Dresden_Hm_406)_03.jpg) — 3216×4752, CC BY 4.0; «Foto: Mark Landon, CC BY 4.0, da Wikimedia Commons». Senza iscrizione: l'identificazione con Massenzio viene dal confronto con le monete.
+- **Licinio** (-) — *ritratto coevo*: aureo di Licinio, zecca di Alessandria, 314 (legenda LICINIVS P F AVG). [Gold Aureus of Licinius, Alexandria, AD 314.jpg](https://commons.wikimedia.org/wiki/File:Gold_Aureus_of_Licinius,_Alexandria,_AD_314.jpg) — 2401×2354, CC0; «Foto: ANS, CC0, da Wikimedia Commons».
+- **Lattanzio** ([Q209102](https://www.wikidata.org/wiki/Q209102)) — *oggetto del tempo, senza volto*: manoscritto delle «Divinae institutiones», Firenze, 1420-1430 circa. [Lactantius, Divinarum institutionum ... liber primus, manuscript, Florence 1420-1430 ca.jpg](https://commons.wikimedia.org/wiki/File:Lactantius,_Divinarum_institutionum_..._liber_primus,_manuscript,_Florence_1420-1430_ca.jpg) — 798×1297, Public domain; «Immagine: Guglielmino Tanaglia (copista), pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: si propone un manoscritto della sua opera (tardo, del Quattrocento). L'immagine di Wikidata («Lactantius.jpg») non l'ho aperta: dal titolo, un ritratto moderno.
+
 ### 330
 
 - **Costantino** ([Q8413](https://www.wikidata.org/wiki/Q8413)) — *ritratto coevo*: testa colossale in bronzo, IV secolo, Musei Capitolini (MC 1072). [Colossal head of Constantine (M.C. inv. 1072), August 24, 2021.jpg](https://commons.wikimedia.org/wiki/File:Colossal_head_of_Constantine_(M.C._inv._1072),_August_24,_2021.jpg) — 5449×8173, Public domain; «Immagine: D. Benjamin Miller, pubblico dominio, da Wikimedia Commons». Guardata il 22 novembre 2026: la foto è della testa di BRONZO (MC 1072), non di quella di marmo dalla basilica di Massenzio come diceva la didascalia di prima. L’identificazione con Costantino è la più diffusa; non c’è iscrizione.
@@ -98,12 +105,34 @@ Le scelte di principio:
   - in alternativa: busto attribuito a Costanzo II (immagine di Wikidata): museo e attribuzione da controllare [Bust of Constantius II (Mary Harrsch).jpg](https://commons.wikimedia.org/wiki/File:Bust_of_Constantius_II_(Mary_Harrsch).jpg) — CC BY-SA 2.0, Mary Harrsch
 - **Ammiano Marcellino** ([Q172198](https://www.wikidata.org/wiki/Q172198)) — *oggetto del tempo, senza volto*: pagina del manoscritto di Fulda delle «Res gestae» (Biblioteca Apostolica Vaticana, Vat. lat. 1873, IX secolo), libro 31, capitolo 2. [Ammianus Marcellinus, Vaticanus lat. 1873.jpg](https://commons.wikimedia.org/wiki/File:Ammianus_Marcellinus,_Vaticanus_lat._1873.jpg) — 1858×2349, Public domain; «Immagine: Ammiano Marcellino, pubblico dominio, da Wikimedia Commons». Nessun ritratto noto. Scartato il 22 novembre 2026 il busto che l'utente aveva indicato («Ammianus Marcellinus.jpg» su Commons): la pagina stessa dice che è un busto del V secolo di uno sconosciuto, al Museo archeologico di Salonicco, «thought to be» Ammiano secondo fonti trovate in rete, e la foto è presa da un'altra pubblicazione (licenza dichiarata da chi l'ha caricata, non dal fotografo). Al suo posto il manoscritto più antico dell'opera, che su Commons c'è.
 - **Ormisda** ([Q1226628](https://www.wikidata.org/wiki/Q1226628)) — *nessuna immagine*. Nessun ritratto noto e nessuna immagine su Commons.
+- **Simmaco** (-) — *oggetto del tempo, senza volto*: valva d'avorio con la scritta SYMMACHORVM, verso il 400, Londra, Victoria and Albert Museum: una sacerdotessa davanti a un altare. [Symmachi Diptych Panel.JPG](https://commons.wikimedia.org/wiki/File:Symmachi_Diptych_Panel.JPG) — 3000×4000, CC BY-SA 3.0; «Foto: Jononmac46, CC BY-SA 3.0, da Wikimedia Commons».
+
+### 363
+
+- **Giuliano** (-) — *ritratto coevo*: solido di Giuliano augusto, zecca di Costantinopoli, 361-363 (legenda FL CL IVLIANVS P F AVG). [Rare solidus of Julian.jpg](https://commons.wikimedia.org/wiki/File:Rare_solidus_of_Julian.jpg) — 1500×715, CC BY-SA 2.5; «Foto: CNG, CC BY-SA 2.5, da Wikimedia Commons».
+- **Ammiano Marcellino** ([Q172198](https://www.wikidata.org/wiki/Q172198)) — *oggetto del tempo, senza volto*: pagina del manoscritto di Fulda delle «Res gestae» (Biblioteca Apostolica Vaticana, Vat. lat. 1873, IX secolo), libro 31, capitolo 2. [Ammianus Marcellinus, Vaticanus lat. 1873.jpg](https://commons.wikimedia.org/wiki/File:Ammianus_Marcellinus,_Vaticanus_lat._1873.jpg) — 1858×2349, Public domain; «Immagine: Ammiano Marcellino, pubblico dominio, da Wikimedia Commons». Nessun ritratto noto. Scartato il 22 novembre 2026 il busto che l'utente aveva indicato («Ammianus Marcellinus.jpg» su Commons): la pagina stessa dice che è un busto del V secolo di uno sconosciuto, al Museo archeologico di Salonicco, «thought to be» Ammiano secondo fonti trovate in rete, e la foto è presa da un'altra pubblicazione (licenza dichiarata da chi l'ha caricata, non dal fotografo). Al suo posto il manoscritto più antico dell'opera, che su Commons c'è.
+- **Gioviano** (-) — *ritratto coevo*: solido di Gioviano, 363-364, Metropolitan Museum (67.265.24). [Solidus of Jovian (r. 363–364) MET sf67-265-24s1.jpg](https://commons.wikimedia.org/wiki/File:Solidus_of_Jovian_(r._363%E2%80%93364)_MET_sf67-265-24s1.jpg) — 1711×1722, CC0; «Foto: autore non indicato, CC0, da Wikimedia Commons».
 
 ### 378
 
 - **Valente** ([Q172471](https://www.wikidata.org/wiki/Q172471)) — *ritratto coevo*: solido di Valente, 364-378, Metropolitan Museum of Art. [Solidus of Valens (364–378) MET sf67-265-22s1.jpg](https://commons.wikimedia.org/wiki/File:Solidus_of_Valens_(364%E2%80%93378)_MET_sf67-265-22s1.jpg) — 1739×1705, CC0; «Foto: Metropolitan Museum of Art, CC0, da Wikimedia Commons». L'immagine di Wikidata è il busto capitolino MC 494, attribuito a Valente oppure a Onorio: scartato per il dubbio.
 - **Fritigerno** ([Q159712](https://www.wikidata.org/wiki/Q159712)) — *nessuna immagine*. Nessun ritratto noto e nessuna immagine su Commons.
 - **Graziano** ([Q189108](https://www.wikidata.org/wiki/Q189108)) — *ritratto coevo*: solido di Graziano, 367-383. [Gratian Solidus.jpg](https://commons.wikimedia.org/wiki/File:Gratian_Solidus.jpg) — 599×588, CC BY-SA 3.0; «Foto: Rasiel Suarez, CC BY-SA 3.0, da Wikimedia Commons».
+
+### 384
+
+- **Simmaco** (-) — *oggetto del tempo, senza volto*: valva d'avorio con la scritta SYMMACHORVM, verso il 400, Londra, Victoria and Albert Museum: una sacerdotessa davanti a un altare. [Symmachi Diptych Panel.JPG](https://commons.wikimedia.org/wiki/File:Symmachi_Diptych_Panel.JPG) — 3000×4000, CC BY-SA 3.0; «Foto: Jononmac46, CC BY-SA 3.0, da Wikimedia Commons».
+- **Ambrogio** (-) — *ritratto posteriore*: mosaico del sacello di San Vittore in Ciel d'Oro, basilica di Sant'Ambrogio, Milano, seconda metà del V secolo. [Sacello di san vittore in ciel d'oro, mosaici del 450-500 dc ca. 09 ambrogio 1.jpg](https://commons.wikimedia.org/wiki/File:Sacello_di_san_vittore_in_ciel_d%27oro,_mosaici_del_450-500_dc_ca._09_ambrogio_1.jpg) — 2250×4260, CC BY 3.0; «Foto: Sailko, CC BY 3.0, da Wikimedia Commons». Il più antico ritratto noto, qualche decennio dopo la morte; c'è chi pensa che conservi la memoria del volto.
+- **Valentiniano II** (-) — *ritratto coevo*: solido di Valentiniano II, zecca di Aquileia, 383-387, American Numismatic Society. [Gold Solidus of Valentinian II, 383-387.jpg](https://commons.wikimedia.org/wiki/File:Gold_Solidus_of_Valentinian_II,_383-387.jpg) — 2567×2620, CC0; «Foto: American Numismatic Society (1944.100.25440), CC0, da Wikimedia Commons». La legenda D N VALENTINIANVS P F AVG è uguale per Valentiniano I e II: l'attribuzione è del museo. Scartato «Solidus Valentinian II trier RIC 090a.jpg»: senza autore né fonte.
+- **Magno Massimo** (-) — *ritratto coevo*: solido di Magno Massimo, zecca di Treviri, 383-388 (RIC IX 77b; legenda D N MAG MAXIMVS P F AVG). [Solidus Magnus Maximus (obverse).jpg](https://commons.wikimedia.org/wiki/File:Solidus_Magnus_Maximus_(obverse).jpg) — 246×238, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+
+### 394
+
+- **Teodosio I** ([Q46696](https://www.wikidata.org/wiki/Q46696)) — *ritratto coevo*: moneta di Teodosio I (dritto), 379-395. [Theodosius1cng11100822obverse.jpg](https://commons.wikimedia.org/wiki/File:Theodosius1cng11100822obverse.jpg) — 396×368, CC BY-SA 2.5; «Foto: Classical Numismatic Group, CC BY-SA 2.5, da Wikimedia Commons».
+  - in alternativa: missorio d'argento di Teodosio, 388, Real Academia de la Historia, Madrid (la figura centrale è di solito identificata con Teodosio) [Missorium of Theodosius I (detail).png](https://commons.wikimedia.org/wiki/File:Missorium_of_Theodosius_I_(detail).png) — Public domain, autore sconosciuto
+- **Eugenio** (-) — *ritratto coevo*: solido di Eugenio, 392-394 (legenda D N EVGENIVS P F AVG). [Rare solidus of Eugenius (obverse).jpg](https://commons.wikimedia.org/wiki/File:Rare_solidus_of_Eugenius_(obverse).jpg) — 742×699, CC BY-SA 2.5; «Foto: CNG, CC BY-SA 2.5, da Wikimedia Commons».
+- **Arbogaste** (-) — *nessuna immagine*. Nessun ritratto e nessuna moneta: non coniava a suo nome.
+- **Virio Nicomaco Flaviano** (-) — *oggetto del tempo, senza volto*: valva d'avorio con la scritta NICOMACHORVM, verso il 400, Parigi, Musée de Cluny: una sacerdotessa con le fiaccole. [Cluny Nicómacos 01.JPG](https://commons.wikimedia.org/wiki/File:Cluny_Nic%C3%B3macos_01.JPG) — 3014×5179, CC BY-SA 4.0; «Foto: Miguel Hermoso Cuesta, CC BY-SA 4.0, da Wikimedia Commons».
 
 ### 395
 
