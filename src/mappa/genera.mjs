@@ -189,6 +189,12 @@ const CITTA = { roma: [12.48, 41.89, 'Roma'], ravenna: [12.2, 44.42, 'Ravenna'],
   cartagine: [10.32, 36.85, 'Cartagine'], costantinopoli: [28.98, 41.01, 'Costantinopoli'], londra: [-0.1, 51.51, 'Londinium'], sirmio: [19.61, 44.97, 'Sirmio'],
   antiochia: [36.16, 36.2, 'Antiochia'], alessandria: [29.92, 31.2, 'Alessandria'], tolosa: [1.44, 43.6, 'Tolosa'], adrianopoli: [26.56, 41.68, 'Adrianopoli'] };
 
+/* I luoghi degli eventi delle tappe (js/dati.js, LUOGHI_TAPPA): [longitudine, latitudine, nome]. Dove l'identificazione è discussa lo dice il testo della tappa, non la carta.
+   Abritto è Razgrad; i Campi Catalaunici e il Guadalete sono segnati dove li mette la tradizione; Edessa e Palmira cadono oltre il bordo orientale della carta e si disegnano sul bordo. */
+const LUOGHI = { magonza: [8.27, 50.0, 'Magonza'], abritto: [26.52, 43.53, 'Abritto'], edessa: [38.79, 37.15, 'Edessa'], colonia: [6.96, 50.94, 'Colonia'], palmira: [38.27, 34.55, 'Palmira'],
+  chalons: [4.37, 48.96, 'Châlons'], catalaunici: [4.2, 48.6, 'Campi Catalaunici'], nicomedia: [29.92, 40.77, 'Nicomedia'], pollenzo: [7.9, 44.68, 'Pollenzo'], gibilterra: [-5.6, 35.95, 'Stretto di Gibilterra'],
+  capobon: [11.0, 37.08, 'Capo Bon'], pelusio: [32.55, 31.04, 'Pelusio'], cividale: [13.43, 46.09, 'Cividale'], guadalete: [-6.0, 36.6, 'Guadalete'], pavia: [9.16, 45.19, 'Pavia'], aquisgrana: [6.08, 50.78, 'Aquisgrana'] };
+
 /* I popoli in movimento: dove sta il grosso di ciascun gruppo, anno per anno, e in che rapporto è con Roma. [anno, lon, lat, rapporto].
    Rapporti: fuori (oltre il confine, senza patto) | accolti (ammessi dentro l'impero) | federati (patto: terre o paghe in cambio di soldati) |
    armi (in guerra dentro l'impero) | regno (un regno proprio su terre che erano di Roma).
@@ -252,6 +258,8 @@ for (const [id, r] of Object.entries(REGIONI)) {
   }
   out.regioni[id] = { nome: r.nome, peso: Math.round(tot), est: !!r.est, oltre: !!r.terra, d: tracciato(m), c: [f1(cx), f1(cy)] };
 }
+out.luoghi = {};
+for (const [id, c] of Object.entries(LUOGHI)) { const p = proj([c[0], c[1]]); out.luoghi[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
 for (const [id, c] of Object.entries(CITTA)) { const p = proj([c[0], c[1]]); out.citta[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
 
 out.verdun = { linee: VERDUN.linee.map(l => 'M' + l.map(c => { const p = proj(c); return f1(p[0]) + ' ' + f1(p[1]); }).join('L')), nomi: VERDUN.nomi.map(n => { const p = proj([n[0], n[1]]); return [f1(p[0]), f1(p[1]), n[2]]; }) };

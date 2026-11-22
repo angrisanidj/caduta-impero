@@ -1,0 +1,19 @@
+<!doctype html>
+<meta charset="utf-8">
+<!-- Cornice per le catture: mostra la pagina in un riquadro largo w (per provare i telefoni con Edge senza finestra, che non scende sotto i 500 punti).
+     ?w=390&h=844&t=22  ;  &grande=1 apre la città a tutto schermo  ;  &pulita=1 toglie comandi e scritte dalla scena -->
+<style>html,body{margin:0;background:#888}iframe{display:block;border:0;background:#fff}</style>
+<iframe id="f"></iframe>
+<script>
+var q=new URLSearchParams(location.search), f=document.getElementById('f');
+f.style.width=(q.get('w')||390)+'px'; f.style.height=(q.get('h')||844)+'px';
+f.src='../index.html?p='+Math.random()+'#tappa-'+(q.get('t')||22);
+f.onload=function(){
+  var d=f.contentDocument;
+  if(q.get('pulita')){ var s=d.createElement('style'); s.textContent='.strumenti,.comandi-scena,.conta,.etichette3d,.evento,.tempo,.esplora,.comandi-mappa{display:none!important}.riquadro.roma::after{display:none}'; d.head.appendChild(s); }
+  if(q.get('anteprima')){ var s2=d.createElement('style'); s2.textContent='.fascia,.tempo,.strumenti,.comandi-scena,.comandi-mappa{display:none!important}main{margin-top:18px!important}'; d.head.appendChild(s2); }
+  if(q.get('grande')) setTimeout(function(){ d.getElementById('btnGrande').click(); },300);
+  if(q.get('carta')) setTimeout(function(){ d.querySelector('.comandi-mappa .grande').click(); },300);
+  if(q.get('scorri')) setTimeout(function(){ f.contentWindow.scrollTo(0,+q.get('scorri')); },500);
+};
+</script>

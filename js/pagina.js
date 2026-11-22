@@ -175,7 +175,7 @@ function vai(i,subito){
   chi.forEach(function(p){ var li=document.createElement('li'), b=document.createElement('b'); b.textContent=p[0]; li.appendChild(b); if(p[1]){ var d=document.createElement('span'); d.className='date'; d.textContent=p[1]; li.appendChild(d); } li.appendChild(document.createTextNode(p[2])); bc.appendChild(li); });
   var voci=t.voci||[], bv=$('tVoci'); $('tVoce').hidden=!voci.length; bv.textContent=''; $('tVoceTitolo').textContent=voci.length>1?'Voci di allora':'Una voce di allora';      // parole dei contemporanei, tradotte dalla fonte
   voci.forEach(function(v){ var q=document.createElement('blockquote'), c=document.createElement('p'); q.textContent=v.testo; c.className='chi'; c.textContent=v.chi; bv.appendChild(q); bv.appendChild(c); });
-  if(MAPPA) MAPPA.mostra(t.regioni,t.anno);
+  if(MAPPA) MAPPA.mostra(t.regioni,t.anno,t.luoghi);
   bottoni.forEach(function(b,k){ b.setAttribute('aria-current',k===idx?'true':'false'); b.classList.toggle('passata',k<idx); });
   gruppi.forEach(function(g,k){ g.g.classList.toggle('attivo',k===Math.min(t.atto,gruppi.length-1)); });
   $('btnPrima').disabled=idx===0; $('btnDopo').disabled=idx===T.length-1;
@@ -263,6 +263,16 @@ if(m){ vai(parseInt(m[1],10)-1,true); }
 else{                                   // apertura dalla fine: la città del 550, poi il riavvolgimento
   anno=550; vai(0); vel=(550-T[0].anno)/4.5; applica();
 }
+/* Prova: ?guarda=<id>&anno=<anno>&dist=<distanza>&da=<n|s|e|o|ne|no|se|so> apre la città a tutto schermo, già puntata su un monumento in un certo anno
+   (oppure ?guarda=punto&x=..&z=..). Serve alle catture di controllo fatte con il browser senza finestra; nella pagina normale non fa nulla. */
+(function(){
+  var cerca=function(k){ var r=new RegExp('[?&]'+k+'=([^&#]+)').exec(location.search); return r?decodeURIComponent(r[1]):null; }, id=cerca('guarda'); if(!id||!RM.volaA) return;
+  var mo=(RM.MONUMENTI||[]).filter(function(x){ return x.id===id; })[0], x=mo?mo.x:parseFloat(cerca('x')), z=mo?mo.z:parseFloat(cerca('z')); if(isNaN(x)||isNaN(z)) return;
+  var d=parseFloat(cerca('dist'))||40, dir={n:[0,-1],s:[0,1],e:[1,0],o:[-1,0],so:[-.6,.8],se:[.6,.8],no:[-.6,-.8],ne:[.6,-.8]}[cerca('da')||'so']||[-.6,.8], a=parseFloat(cerca('anno'));
+  setTimeout(function(){ grande(true); if(!isNaN(a)){ anno=meta=a; applica(); } var tp=document.querySelector('.tempo'); if(tp) tp.style.display='none';
+    RM.renderer.domElement.dispatchEvent(new Event('pointerdown'));      // ferma il volo d'apertura: qui la camera va messa subito al suo posto
+    var q=RM.h(x,z)+1; RM.controlli.target.set(x,q,z); RM.camera.position.set(x+dir[0]*d*.82,q+d*.56,z+dir[1]*d*.82); RM.controlli.update(); },400);
+})();
 [].forEach.call(document.querySelectorAll('.menu a'),function(a){ a.addEventListener('click',function(e){ var el=document.getElementById(a.getAttribute('href').slice(1)); if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); } }); });
 window.RM_pagina={vai:vai, ferma:ferma, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
 })();

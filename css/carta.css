@@ -1,0 +1,15 @@
+/* Aggiunte alla carta dell'Impero: la riga che dice che cosa accade nei luoghi segnati dal rombo (js/mappa.js, scriviLuoghi). */
+.legenda-luoghi{margin:0;padding:7px 10px;min-height:33px;border-top:1px solid var(--line);font-family:var(--ui,sans-serif);font-size:12.5px;line-height:1.4;display:flex;flex-wrap:wrap;gap:3px 16px;color:var(--ink)}
+.legenda-luoghi[hidden]{display:flex;visibility:hidden}
+.legenda-luoghi span::before{content:"";display:inline-block;width:7px;height:7px;margin:0 8px 0 2px;background:var(--ink);transform:rotate(45deg);vertical-align:1px}
+.legenda-luoghi b{font-weight:600}
+body.impero-grande .legenda-luoghi{align-self:stretch;flex:none}      /* non si lascia schiacciare: su due righe coprirebbe la legenda */
+body.impero-largo .legenda-luoghi{position:absolute;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top,0px));z-index:2;min-height:0;max-width:min(520px,52vw);padding:5px 10px;border:0;border-radius:6px;background:rgba(251,246,234,.92);font-size:12px}
+body.impero-largo .legenda-luoghi[hidden]{display:none}
+/* la didascalia che accompagna lo zoom della carta sui luoghi dell'evento (js/mappa.js, avviaRegia) */
+.m-didascalia{position:absolute;left:10px;right:58px;bottom:10px;max-width:520px;margin:0;padding:7px 11px;display:flex;flex-direction:column;gap:2px;font-family:var(--ui,sans-serif);font-size:13px;line-height:1.35;color:#FBF6EA;
+  background:rgba(36,30,26,.9);border-left:3px solid var(--gold2);border-radius:3px;opacity:0;transition:opacity .45s;pointer-events:none;z-index:2}
+.m-didascalia.viva{opacity:1}
+.m-didascalia b{font-weight:600;color:var(--gold3)}
+body.impero-grande .m-didascalia{display:none}
+@media (max-width:700px){ .m-didascalia{font-size:12px;padding:6px 9px;right:60px} }

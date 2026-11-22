@@ -1,11 +1,12 @@
 :root{
   --cap:'Cinzel','Trajan Pro',Georgia,'Times New Roman',serif;
   --serif:'EB Garamond','Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
-  --gold:#A87B2A;--gold2:#D4AE55;--gold3:#F1D99A;--oro-t:#7D591A;      /* --oro-t: l'oro delle scritte piccole, scurito perché si legga sul fondo (contrasto sopra 4,5 a 1) */
-  --ink:#241E1A;--carta:#F5F2EC;--carta2:#FFFFFF;--line:#E2DBCE;--muted:#655B51;
+  --gold:#A87B2A;--gold2:#D4AE55;--gold3:#F1D99A;--oro-t:#7A5617;      /* --oro-t: l'oro delle scritte piccole, scurito perché si legga sul fondo (contrasto 6 a 1) */
+  --ink:#221C18;--carta:#F6F4EF;--carta2:#FFFFFF;--line:#E3DDD2;--muted:#5F554B;      /* fondo «travertino»: chiaro e quasi neutro, perché i colori stiano tutti nelle due scene */
   --ui:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;      /* scritte di servizio: etichette, legende, bottoni, note */
-  --ombra:0 1px 2px rgba(36,30,26,.06),0 2px 8px rgba(36,30,26,.04);
-  --porpora:#8E2A2A;--vetro:rgba(33,25,18,.78);
+  --ombra:0 1px 2px rgba(34,28,24,.06),0 6px 18px -10px rgba(34,28,24,.22);
+  --porpora:#7A1F2B;--vetro:rgba(33,25,18,.8);
+  --vino:#4A1119;--vino-chiaro:#6E1A26;--vino-scuro:#22070B;--crema:#EBDCC8;      /* l'apertura e il piede, come nel Senato */
   /* stati delle regioni */
   --st-roma:#9A2F2A;--st-usurpatore:#C98A2B;--st-federati:#6E8B5B;--st-regno:#4D6B7C;--st-oriente:#AF9DA7;--st-califfato:#3F8F86;--st-carolingio:#5A3F78;--st-perso:#DCD0B8;--st-chiesa:#E6C55A;
 }
@@ -391,117 +392,259 @@ body.roma-grande .riquadro.roma{min-height:0}
 body.impero-grande .riquadro.impero{touch-action:pan-y}
 body.impero-grande .tempo,body.roma-grande .tempo{touch-action:manipulation}
 
-/* ---------- rassegna dell'interfaccia (22 novembre 2026) ----------
-   Leggibilità: nessuna scritta sotto gli 11 punti in maiuscoletto e i 13 in tondo. */
-.suggerimento,.versione,.legenda-popoli em{font-size:13px}
-.legenda-mappa,.legenda-popoli{font-size:13px}
-.legenda-popoli b{font-size:11px}
-@media (max-width:1000px){ .etichetta,.occhiello{font-size:11.5px} }
-/* linea del tempo: sopra ogni atto l'anno in cui comincia (sull'ultimo anche quello in cui la storia finisce); sui telefoni restano solo gli anni */
-.atto-gruppo p{display:flex;gap:5px;font-size:10px;letter-spacing:.05em}
-.atto-gruppo p b{flex:none;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* =====================================================================================================
+   VESTE (rifatta il 22 novembre 2026, sul modello del «Senato da Silla ad Augusto")
+   Sopra stanno struttura e comportamenti delle due scene; da qui in giù l'aspetto, che prevale.
+   Regole: prima il telefono; nessuna scritta sotto i 12 punti; scritte piccole con contrasto di almeno 4,5 a 1;
+   bersagli per il dito di almeno 40 punti. Cinzel per titoli e numeri, Garamond per il racconto,
+   il carattere del dispositivo (--ui) per etichette, legende e bottoni.
+   ===================================================================================================== */
+
+body{background:var(--carta);color:var(--ink);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(212,174,85,.35)}
+a{color:var(--porpora);text-decoration-color:rgba(122,31,43,.35);text-underline-offset:3px}
+a:hover{text-decoration-color:currentColor}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* scritte di servizio */
+.etichetta,.occhiello,.cause h3{font-family:var(--ui);font-weight:600;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--oro-t)}
+.atto{font-family:var(--ui);font-weight:600;font-size:12px;letter-spacing:.09em}
+.atto b{font-family:var(--cap)}
+.suggerimento{font-family:var(--ui);font-weight:400;font-size:12px;color:var(--muted)}
+.legenda-mappa,.legenda-popoli,.legenda,.spia small,.versione,.piede .licenze,.voce .chi,.protagonisti .date,.scheda .stato,.scheda .certezza,.legenda-sapere,.fumetto{font-family:var(--ui)}
+.comandi button,.schede button,.tutti,.atto-gruppo p,.strumenti button,.pellegrino,.confronto .viste button,.scheda .passi button,body.tocco:not(.roma-grande) .esplora{font-family:var(--ui);font-weight:600;letter-spacing:.05em}
+
+/* ---------- l'apertura ---------- */
+.testata{max-width:none;margin:0;padding:0;background:none;color:inherit}
+.apertura{position:relative;overflow:hidden;isolation:isolate;color:var(--crema);background:var(--vino-scuro);
+  background-image:radial-gradient(110% 150% at 10% 0%,#7E2230 0%,var(--vino) 46%,var(--vino-scuro) 100%);box-shadow:inset 0 -1px 0 rgba(212,174,85,.55)}
+.apertura::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(50% 80% at 82% 45%,rgba(212,174,85,.16),transparent 70%),radial-gradient(140% 80% at 50% 125%,rgba(0,0,0,.5),transparent 60%)}
+.apertura::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.18;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* la figura: Roma nel 476 vista dal modello 3D della pagina, virata in oro (img/apertura.webp); se manca, l'apertura regge da sola */
+.apertura-figura{position:absolute;top:0;right:0;bottom:0;width:64%;z-index:-1;pointer-events:none;
+  background:url(../img/apertura.webp) 50% 30%/cover no-repeat;mix-blend-mode:screen;opacity:.5;
+  -webkit-mask-image:radial-gradient(70% 100% at 76% 40%,#000 30%,rgba(0,0,0,.4) 60%,transparent 80%);mask-image:radial-gradient(70% 100% at 76% 40%,#000 30%,rgba(0,0,0,.4) 60%,transparent 80%)}
+.apertura-dentro{position:relative;max-width:1280px;margin:0 auto;padding:46px 24px 40px}
+.apertura .occhiello{display:flex;align-items:center;gap:12px;margin:0;font-family:var(--cap);font-weight:600;font-size:12.5px;letter-spacing:.22em;color:var(--gold2)}
+.apertura .stemma{flex:none;display:block;width:36px;height:36px;border-radius:8px;box-shadow:0 6px 14px rgba(0,0,0,.4)}
+.apertura h1{max-width:16em;margin:16px 0 14px;text-wrap:balance;font-family:var(--cap);font-weight:700;font-size:clamp(32px,5.2vw,60px);line-height:1.04;letter-spacing:.015em;color:var(--gold3);
+  background:linear-gradient(180deg,#FFF3CF 0%,#F0D38A 42%,#C9973E 80%,#A87B2A 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 0 rgba(30,6,10,.85))}
+.apertura .sommario{max-width:33em;margin:0;font-family:var(--serif);font-size:20px;line-height:1.45;color:var(--crema)}
+.numeri{display:flex;flex-wrap:wrap;gap:14px 0;margin:26px 0 0;padding:0;list-style:none}
+.numeri li{display:flex;flex-direction:column;padding:0 24px;border-left:1px solid rgba(212,174,85,.38)}
+.numeri li:first-child{padding-left:0;border-left:0}
+.numeri b{font-family:var(--cap);font-weight:700;font-size:28px;line-height:1.1;color:var(--gold3);font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
+.numeri b i{font-style:normal;font-size:.75em;margin:0 .2em;color:var(--gold2)}
+.numeri li>span{margin-top:5px;font-family:var(--ui);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#D2C0A8}
+
+/* la fascia chiara sotto l'apertura: le sezioni a sinistra, la condivisione a destra */
+.fascia{background:var(--carta2);border-bottom:1px solid var(--line);box-shadow:0 6px 16px -14px rgba(34,28,24,.4)}
+.fascia-dentro{max-width:1280px;margin:0 auto;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.menu{display:flex;gap:2px;margin-left:-12px;background:none;border:0}
+.menu a{display:flex;align-items:center;min-height:44px;padding:0 12px;font-family:var(--ui);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;border-radius:6px}
+.menu a:hover{color:var(--porpora);background:rgba(122,31,43,.06)}
+
+/* ---------- pulsanti per condividere (js/condividi.js) ---------- */
+.condividi{position:relative;display:flex;align-items:center;gap:12px}
+.condividi-titolo{margin:0;font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.condividi-tasti{display:flex;gap:8px;margin:0;padding:0;list-style:none}
+.condividi .tasto{box-sizing:border-box;width:40px;height:40px;display:flex;align-items:center;justify-content:center;padding:0;border-radius:50%;
+  border:1px solid #D8CCB6;background:#FBF8F2;color:#6B4A26;cursor:pointer;box-shadow:0 1px 2px rgba(60,40,15,.08);transition:color .2s,border-color .2s,background .2s,box-shadow .2s}
+.condividi .tasto svg{width:17px;height:17px;fill:currentColor}
+.condividi .tasto .tratto{fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.condividi .tasto:hover,.condividi .tasto:focus-visible{color:#F6E4B0;border-color:var(--porpora);background:var(--porpora);box-shadow:0 8px 16px -8px rgba(122,31,43,.7)}
+.condividi-ok{position:absolute;right:0;top:calc(100% + 6px);z-index:20;white-space:nowrap;font-family:var(--ui);font-size:13px;font-weight:600;color:#fff;background:var(--ink);
+  padding:6px 10px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s}
+.condividi-ok.su{opacity:1}
+
+/* ---------- le due scene ---------- */
+main{margin-top:22px}
+.scene{gap:16px}
+.riquadro{border:1px solid var(--line);border-radius:10px;box-shadow:var(--ombra)}
+.legenda-mappa,.legenda-popoli,.legenda{font-size:12.5px}
+.legenda-popoli b{font-family:var(--ui);font-size:12px;letter-spacing:.08em}
+.legenda-popoli em{font-family:var(--serif);font-size:14px;color:var(--muted)}
+/* comandi dentro la città: niente sotto i 12 punti */
+.etichette3d span{font-size:12px}
+body.roma-grande .etichette3d span{font-size:12.5px}
+.strumenti button{font-size:12px;min-height:34px}
+.confronto .viste button{font-size:12px;min-height:30px;padding:5px 11px}
+.legenda-sapere{font-size:12px}
+.scheda{border-radius:8px;border-color:rgba(160,130,60,.45);background:rgba(255,253,248,.97)}
+.scheda .chiudi{width:40px;height:40px;right:2px;top:2px;font-size:16px}
+.scheda h3{margin-right:38px}
+.scheda .passi button{font-size:12px;min-height:36px;padding:6px 12px}
+
+/* sui telefoni le due scene si scelgono con un selettore a due voci */
+@media (max-width:1000px){
+  .schede{display:flex;gap:4px;padding:4px;background:#E9E4DA;border-radius:10px}
+  .schede button{flex:1;min-height:40px;padding:8px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:transparent;border:0;border-radius:7px}
+  .schede button[aria-selected="true"]{color:var(--porpora);background:var(--carta2);box-shadow:0 1px 3px rgba(34,28,24,.18)}
+}
+
+/* ---------- linea del tempo ---------- */
+.tempo{gap:16px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.97);box-shadow:0 1px 2px rgba(34,28,24,.06),0 10px 24px -14px rgba(34,28,24,.35)}
+body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.95)}
+.comandi{gap:6px}
+.comandi button{min-height:40px;min-width:40px;padding:8px 14px;font-size:12.5px;color:var(--ink);background:var(--carta2);border:1px solid var(--line);border-radius:8px}
+.comandi button:hover{border-color:var(--porpora);color:var(--porpora)}
+#btnPlay{color:#F6E4B0;background:var(--porpora);border-color:var(--porpora)}
+#btnPlay:hover{color:#fff;background:#621822}
+#btnPrima,#btnDopo{font-size:22px;line-height:1;padding:4px 12px}
+.atto-gruppo p{display:flex;gap:6px;margin:0 0 5px;font-size:12px;font-weight:500;letter-spacing:.03em;color:var(--muted)}
+.atto-gruppo p b{flex:none;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
 .atto-gruppo p span{min-width:0;overflow:hidden;text-overflow:ellipsis}
 .atto-gruppo p b.fine{margin-left:auto}
-.atto-gruppo.attivo p b{color:var(--porpora)}
-/* il dito o il mouse scorre sulla linea: un fumetto dice anno e titolo della tappa che ha sotto (js/pagina.js) */
+.atto-gruppo div{border-top:2px solid var(--line)}
+.atto-gruppo.attivo div{border-color:var(--porpora)} .atto-gruppo.attivo p,.atto-gruppo.attivo p b{color:var(--porpora)}
 .linea{touch-action:pan-y}
-.linea button.mira{background:var(--gold2)}
-.fumetto{position:absolute;left:0;bottom:calc(100% + 8px);z-index:2;transform:translateX(-50%);margin:0;max-width:min(320px,calc(100vw - 24px));padding:6px 11px;border-radius:6px;background:rgba(33,25,18,.93);color:var(--carta2);
-  font-size:14.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.linea button{height:24px;border-radius:3px;background:#DDD6CA}
+.linea button.intermezzo{background:repeating-linear-gradient(135deg,#DDD6CA 0 3px,transparent 3px 6px);border:1px solid #DDD6CA}
+.linea button.passata{background:#CFAFA9}
+.linea button:hover,.linea button.mira{background:var(--gold2)}
+.linea button[aria-current="true"]{background:var(--porpora)}
+/* il dito o il mouse scorre sulla linea: un fumetto dice anno e titolo della tappa che ha sotto (js/pagina.js) */
+.fumetto{position:absolute;left:0;bottom:calc(100% + 8px);z-index:2;transform:translateX(-50%);margin:0;max-width:min(320px,calc(100vw - 24px));padding:6px 11px;border-radius:6px;background:rgba(33,25,18,.94);color:#fff;
+  font-size:13.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;box-shadow:0 2px 10px rgba(0,0,0,.3)}
 .fumetto[hidden]{display:none}
 .fumetto b{margin-right:8px;font-family:var(--cap);font-weight:600;color:var(--gold3);font-variant-numeric:tabular-nums}
-@media (max-width:1000px){
-  .atto-gruppo p{font-size:10px}
-  .comandi button{min-height:36px;padding:6px 12px}
-  #btnPrima,#btnDopo{flex:0 0 64px}
-}
-@media (max-width:520px){ .atto-gruppo p{display:flex;gap:0;margin-bottom:3px} .atto-gruppo p span{display:none} }
-@media (max-height:559px) and (orientation:landscape){ body.impero-grande .atto-gruppo p span,body.roma-grande .atto-gruppo p span{display:none} }      /* telefono coricato a tutto schermo: solo gli anni */
-/* cruscotto: quando la spia della moneta non ha più niente da dire (dopo il 330) esce, e quella del territorio prende tutta la riga */
+
+/* ---------- la tappa ---------- */
+.colonne{margin-top:30px;gap:36px}
+.atto{color:var(--porpora)}
+.atto b{font-size:28px;color:var(--ink)}
+.tappa h2{margin:4px 0 10px;font-size:clamp(25px,2.8vw,34px);line-height:1.12}
+.testo{font-size:21px;line-height:1.5}
+.protagonisti{margin-top:20px}
+.protagonisti .date{font-size:12.5px}
+.voce,.storici{margin-top:20px;padding:14px 18px;background:var(--carta2);border:1px solid var(--line);border-left:3px solid var(--porpora);border-radius:4px 10px 10px 4px;box-shadow:var(--ombra)}
+.storici{border-left-color:var(--gold2)}
+.storici.leggenda{border-left-color:#7F95A3}
+.voce .chi{font-size:12.5px;line-height:1.45;opacity:1;color:var(--muted)}
+
+/* ---------- cruscotto ---------- */
+.cruscotto{gap:12px}
+.spia{padding:12px 14px 10px;border:1px solid var(--line);border-radius:10px;background:var(--carta2);box-shadow:var(--ombra)}
+.spia b{font-size:26px}
+.spia small{font-size:12.5px;line-height:1.4;color:var(--muted)}
 .spia[hidden]{display:none}
 .cruscotto.tre .spia:first-child{grid-column:1/-1}
-/* elenco dei monumenti: la legenda dei pallini sta sopra; sui telefoni due colonne, e si apre per intero solo a richiesta */
-.stato-roma .legenda{margin:6px 0 2px}
+
+/* ---------- i monumenti ---------- */
+.stato-roma{margin-top:22px;padding:14px 16px 12px;background:var(--carta2);border:1px solid var(--line);border-radius:10px;box-shadow:var(--ombra)}
+.stato-roma .legenda{margin:8px 0 4px}
+.monumenti{font-family:var(--ui);font-size:13.5px}
+.monumenti li{padding:3px 0}
+.monumenti li.assente>span{color:#7B7064}
+.monumenti li[hidden],.st[hidden],.tutti[hidden]{display:none}
 .tutti{display:none}
+
+/* ---------- perché cadde, con la colonna per condividere ---------- */
+/* la colonna sta subito a destra del testo, quanto che sia largo (la larghezza della sezione la decide .cause) */
+.cause-cornice{display:flex;align-items:flex-start;gap:36px;margin:52px 0 0;padding-top:28px;border-top:1px solid var(--line)}
+.cause{flex:0 1 auto;min-width:0;margin:0;padding:0;border:0;max-width:46em}
+.cause h3{margin:28px 0 8px}
+.cause .elenco{font-size:15.5px;color:var(--muted)}
+.condividi-lato{flex:none;position:sticky;top:20px;margin-top:4px}
+.condividi-lato .condividi{flex-direction:column;gap:10px}
+.condividi-lato .condividi-titolo{writing-mode:vertical-rl;transform:rotate(180deg);margin-bottom:4px}
+.condividi-lato .condividi-tasti{flex-direction:column}
+.condividi-lato .condividi-ok{right:calc(100% + 10px);top:auto;bottom:0}
+
+/* ---------- piede: una fascia scura che chiude la pagina, come l'apertura la apre ---------- */
+.piede{max-width:1280px;margin:56px auto 0;padding:34px 24px calc(40px + env(safe-area-inset-bottom,0px));border:0;font-style:normal;font-size:14.5px;line-height:1.6;color:#D9C6AE;
+  background:var(--vino-scuro);box-shadow:0 0 0 100vmax var(--vino-scuro);clip-path:inset(0 -100vmax)}
+.piede p{max-width:62em;margin:0}
+.piede .piede-marchio{display:flex;align-items:center;gap:12px;margin:0 0 22px;font-family:var(--cap);font-weight:700;font-size:20px;letter-spacing:.03em;color:var(--gold3)}
+.piede .piede-marchio img{border-radius:7px}
+.piede .etichetta{margin:0 0 8px;color:var(--gold2)}
+.piede .licenze{margin-top:18px;padding-top:16px;border-top:1px solid rgba(212,174,85,.25);font-size:13px;color:#D9C6AE}
+.piede a{color:var(--gold3);text-decoration-color:rgba(241,217,154,.45)}
+.piede a:hover{text-decoration-color:var(--gold3)}
+.versione{margin:8px 0 0;font-size:12.5px;color:#BFA98E;opacity:1}
+
+/* =================== schermi medi e stretti =================== */
+@media (max-width:1000px){
+  body{font-size:17px}
+  .apertura-dentro{padding:34px 16px 30px}
+  .fascia-dentro{padding:6px 16px}
+  .testo{font-size:19px}
+  .tempo{flex-direction:column;gap:8px;padding:8px}
+  .comandi button{flex:1;min-height:44px}
+  #btnPrima,#btnDopo{flex:0 0 64px}
+  .atto-gruppo p{font-size:12px}
+  .linea{gap:5px}
+  .linea button{height:30px}
+  .colonne{gap:24px;margin-top:24px}
+  .cause-cornice{margin-top:40px}
+  .piede{padding:30px 16px calc(36px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:900px){ .fascia .condividi-titolo{display:none} .menu a{padding:0 9px} .menu{margin-left:-9px} }
+@media (max-width:760px){
+  /* l'apertura si stringe: sul telefono le scene devono comparire nella prima schermata */
+  .apertura-dentro{padding:20px 16px 18px}
+  .apertura-figura{width:100%;opacity:.4;background-position:60% 20%;
+    -webkit-mask-image:linear-gradient(200deg,#000 10%,rgba(0,0,0,.35) 45%,transparent 75%);mask-image:linear-gradient(200deg,#000 10%,rgba(0,0,0,.35) 45%,transparent 75%)}
+  .apertura .occhiello{gap:10px;font-size:12px;letter-spacing:.16em}
+  .apertura .stemma{width:30px;height:30px;border-radius:7px}
+  .apertura h1{margin:10px 0 8px;font-size:31px;line-height:1.06}
+  .apertura .sommario{font-size:16.5px;line-height:1.4}
+  .numeri{display:grid;grid-template-columns:auto auto 1fr;gap:0;margin-top:14px}
+  .numeri li{padding:0 12px}
+  .numeri b{font-size:20px}
+  .numeri li>span{font-size:12px;letter-spacing:.04em;text-transform:none;line-height:1.25}
+  /* nella fascia restano solo i pulsanti: le sezioni si raggiungono scorrendo */
+  .menu{display:none}
+  .fascia-dentro{justify-content:center;padding:8px 12px}
+  .condividi-titolo{display:none}
+  .condividi-tasti{gap:7px}
+  .condividi .tasto{width:42px;height:42px}
+  main{margin-top:14px}
+  /* accanto alle cause, sui telefoni: una riga in fondo alla sezione */
+  .cause-cornice{flex-direction:column;align-items:stretch;gap:0;margin-top:34px;padding-top:22px}
+  .condividi-lato{position:static;margin-top:18px;padding:14px 0 0;border-top:1px solid var(--line)}
+  .condividi-lato .condividi{flex-direction:column;align-items:flex-start;gap:10px}
+  .condividi-lato .condividi-titolo{display:block;writing-mode:horizontal-tb;transform:none;margin:0}
+  .condividi-lato .condividi-tasti{flex-direction:row;flex-wrap:wrap}
+  .condividi-lato .condividi-ok{left:0;right:auto;top:auto;bottom:calc(100% + 6px)}
+  .stato-roma{padding:12px 12px 10px}
+}
 @media (max-width:520px){
-  .monumenti{columns:2;column-gap:12px;font-size:14.5px}
+  .apertura h1{font-size:29px}
+  .numeri li{padding:0 10px}
+  .numeri b{font-size:18px}
+  .atto-gruppo p{display:flex;gap:0;margin-bottom:4px}
+  .atto-gruppo p span{display:none}
+  .linea{gap:3px}
+  .atto-gruppo div{gap:2px}
+  .monumenti{columns:2;column-gap:12px;font-size:13.5px}
   .monumenti li{align-items:flex-start;line-height:1.25;padding:3px 0}
   .monumenti li::before{margin-top:.3em}
   .stato-roma.corto .monumenti{max-height:270px;overflow:hidden}
-  .tutti{display:block;width:100%;margin:10px 0 0;padding:9px;font-family:var(--cap);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:var(--carta2);border:1px solid var(--line);border-radius:8px}
+  .tutti{display:block;width:100%;min-height:44px;margin:10px 0 0;padding:9px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--carta);border:1px solid var(--line);border-radius:8px}
+  .piede .piede-marchio{font-size:18px}
 }
-.piede .licenze{margin-top:10px;font-style:normal}
-.piede a{color:inherit;text-decoration-color:var(--gold)}
-
-/* ---------- veste del 22 novembre 2026 ----------
-   Fondo chiaro e neutro, riquadri bianchi con un filo d'ombra; il Cinzel resta ai titoli e ai numeri, il Garamond al racconto,
-   un carattere senza grazie (quello del dispositivo) alle scritte di servizio. In testa una fascia porpora con lo stemma e un menu. */
-body{background:var(--carta)}
-/* intestazione */
-.testata{max-width:none;margin:0;padding:0;background:var(--porpora);color:#FBF6EA}
-.testata-dentro{max-width:1280px;margin:0 auto;padding:18px 24px 16px;display:grid;grid-template-columns:auto 1fr;column-gap:16px;row-gap:8px;align-items:center}
-.stemma{display:block;width:52px;height:52px;border-radius:10px;box-shadow:0 0 0 1px rgba(241,217,154,.55)}
-.testata .occhiello{font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--gold3)}
-.testata h1{margin:2px 0 0;font-size:clamp(24px,3.4vw,40px);color:#fff}
-.testata .sommario{grid-column:1/-1;max-width:46em;font-size:18.5px;line-height:1.4;color:rgba(251,246,234,.9)}
-.menu{background:#6F1F1F;border-top:1px solid rgba(241,217,154,.28)}
-.menu-dentro{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
-.menu-dentro::-webkit-scrollbar{display:none}
-.menu a{flex:none;padding:10px 14px 9px;font-family:var(--ui);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#FBF6EA;text-decoration:none;border-bottom:2px solid transparent}
-.menu a:first-child{margin-left:-14px}
-.menu a:hover,.menu a:focus-visible{border-bottom-color:var(--gold2);outline:0}
-main{margin-top:18px}
-/* scritte di servizio */
-.etichetta,.occhiello,.cause h3{font-family:var(--ui);font-weight:600;letter-spacing:.09em}
-.atto{font-family:var(--ui);font-weight:600;font-size:11.5px;letter-spacing:.09em}
-.atto b{font-family:var(--cap)}
-.suggerimento{font-family:var(--ui);font-weight:400;font-size:12px}
-.legenda-mappa,.legenda-popoli,.legenda,.spia small,.versione,.piede .licenze,.voce .chi,.protagonisti .date,.scheda .stato,.scheda .certezza,.legenda-sapere,.fumetto{font-family:var(--ui)}
-.legenda-mappa,.legenda-popoli,.legenda{font-size:12.5px}
-.legenda-popoli b{font-family:var(--ui);font-size:11px;letter-spacing:.08em}
-.legenda-popoli em{font-family:var(--serif);font-size:14px}
-.spia small{font-size:12px;line-height:1.35}
-.voce .chi{font-size:12.5px;line-height:1.4;opacity:1;color:var(--muted)}
-.protagonisti .date{font-size:12px}
-.versione,.piede .licenze{font-size:12.5px}
-.fumetto{font-size:13.5px}
-.comandi button,.schede button,.tutti,.atto-gruppo p{font-family:var(--ui);font-weight:600;letter-spacing:.06em}
-.atto-gruppo p{font-weight:500;letter-spacing:.04em}
-.strumenti button,.pellegrino,.confronto .viste button,.scheda .passi button,body.tocco:not(.roma-grande) .esplora{font-family:var(--ui);font-weight:600;letter-spacing:.06em}
-.strumenti button{font-size:11px}
-/* riquadri */
-.riquadro,.tempo,.spia,.voce,.storici{box-shadow:var(--ombra)}
-.riquadro{border-radius:8px}
-.spia{border-radius:8px}
-.voce,.storici{border:1px solid var(--line);border-left:3px solid var(--porpora);border-radius:4px 8px 8px 4px}
-.storici{border-left-color:var(--gold2)}
-.storici.leggenda{border-left-color:#7F95A3}
-.tempo{border-radius:10px;background:rgba(255,255,255,.96)}
-body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.94)}
-.linea button{background:#DCD4C5}
-.linea button.intermezzo{background:repeating-linear-gradient(135deg,#DCD4C5 0 3px,transparent 3px 6px);border:1px solid #DCD4C5}
-.comandi button{background:var(--carta2)}
-.comandi button:hover{border-color:var(--porpora);color:var(--porpora)}
-.schede button{background:var(--carta2)}
-/* elenco dei monumenti */
-.monumenti{font-family:var(--ui);font-size:13.5px}
-.monumenti li{padding:3px 0}
-.monumenti li[hidden],.st[hidden],.tutti[hidden]{display:none}
-/* le ragioni, le fonti, il piede */
-.cause{border-top:1px solid var(--line)}
-.piede{margin-top:34px;padding-top:22px;border-top:1px solid var(--line);font-style:normal;font-size:14px;line-height:1.5}
-@media (max-width:1000px){
-  .testata-dentro{padding:14px 16px 12px;column-gap:12px;row-gap:6px}
-  .menu-dentro{padding:0 16px}
-  .testata .sommario{font-size:16px}
-  main{margin-top:12px}
+/* dita: i bottoni della scena e delle schede non scendono sotto i 40 punti */
+@media (pointer:coarse){
+  .strumenti button{min-height:40px;padding:9px 14px}
+  .confronto .viste button{min-height:40px}
+  .scheda .passi button{min-height:40px}
+  body.tocco:not(.roma-grande) .esplora{min-height:40px}
+  .monumenti li{min-height:32px}
 }
-@media (max-width:520px){
-  .stemma{width:44px;height:44px;border-radius:8px}
-  .testata .occhiello{display:none}
-  .testata h1{font-size:23px;line-height:1.12}
-  .testata .sommario{font-size:15.5px;line-height:1.38}
-  .menu a{padding:9px 10px 8px;font-size:11.5px}
-  .menu a:first-child{margin-left:-10px}
-  .monumenti{font-size:13px}
+@media (max-width:1000px) and (min-width:521px){ .tutti{display:none} }
+/* telefono coricato a tutto schermo (carta o città): la linea del tempo su una riga sola, solo gli anni */
+@media (max-height:559px) and (orientation:landscape){
+  body.impero-grande .tempo,body.roma-grande .tempo{flex-direction:row;align-items:center;gap:10px;padding:5px 8px}
+  body.impero-grande .tempo .comandi button,body.roma-grande .tempo .comandi button{flex:none;min-height:40px;padding:6px 10px}
+  body.impero-grande .tempo .linea button,body.roma-grande .tempo .linea button{height:22px}
+  body.impero-grande .atto-gruppo p span,body.roma-grande .atto-gruppo p span{display:none}
 }
+@media (prefers-reduced-motion:reduce){ .condividi .tasto{transition:none} }
+@media print{ .fascia,.condividi-lato,.tempo,.apertura-figura{display:none} }
