@@ -569,6 +569,18 @@ body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.9
 .piede a:hover{text-decoration-color:var(--gold3)}
 .versione{margin:8px 0 0;font-size:12.5px;color:#BFA98E;opacity:1}
 
+/* sul desktop, come in «Senato Roma»: la colonna per condividere sta sempre sul bordo sinistro della finestra, a metà altezza, e «Perché cadde» prende tutta la larghezza.
+   Dove il margine non basta (fino a circa 1390 punti) il contenuto si scosta di quanto serve: 76 punti dal bordo. La fascia sotto l'apertura non ripete i pulsanti. */
+@media (min-width:1001px){
+  main,.piede,.apertura-dentro,.fascia-dentro{padding-left:max(24px,calc(76px - (100vw - 1280px) / 2))}
+  .fascia .condividi{display:none}
+  .cause-cornice{display:block}
+  .cause{max-width:none}
+  .condividi-lato{position:fixed;z-index:40;top:50%;left:max(14px,calc(50% - 640px - 50px));transform:translateY(-50%);margin:0}
+  .condividi-lato .condividi-ok{right:auto;left:calc(100% + 10px)}
+  body.roma-grande .condividi-lato,body.impero-grande .condividi-lato{display:none}
+}
+
 /* =================== schermi medi e stretti =================== */
 @media (max-width:1000px){
   body{font-size:17px}

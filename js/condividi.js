@@ -1,5 +1,5 @@
 /* Pulsanti per condividere la pagina: collegamenti semplici ai moduli di condivisione dei social, senza tracciatori né script esterni.
-   Si montano in ogni elemento con l'attributo data-condividi (la fascia sotto l'apertura e la colonna accanto a «Perché cadde»).
+   Si montano in ogni elemento con l'attributo data-condividi (la fascia sotto l'apertura e la colonna che sul desktop sta fissa sul bordo sinistro).
    «Copia il link» copia l'indirizzo pubblico con la tappa corrente (#tappa-22), che js/pagina.js tiene aggiornata in location.hash. */
 (function(){
 var INDIRIZZO='https://angrisanidj.github.io/caduta-impero/';
