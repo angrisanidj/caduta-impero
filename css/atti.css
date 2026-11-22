@@ -103,7 +103,7 @@
 .as-tappe .intermezzo button i{border-style:dotted}
 .as-tappe button span{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;max-width:13em;font-family:var(--ui);font-size:11.5px;line-height:1.3;color:var(--muted);transition:color .2s}
 .as-tappe li.passata button i{border-color:var(--gold);background:#F6EACB}
-.as-tappe button:hover b,.as-tappe button:hover span,.as-tappe button.in-carta b{color:var(--porpora)}
+.as-tappe button:hover b,.as-tappe button:hover span,.as-tappe button.in-carta b,.as-tappe button.in-carta span{color:var(--porpora)}
 .as-tappe button:hover i,.as-tappe button.in-carta i{border-color:var(--gold);background:var(--gold3);transform:rotate(45deg) scale(1.2)}
 .as-tappe button[aria-current="true"] b,.as-tappe button[aria-current="true"] span{color:var(--porpora);font-weight:700}
 .as-tappe button[aria-current="true"] i{background:var(--porpora);border-color:var(--gold2);transform:rotate(45deg) scale(1.4)}

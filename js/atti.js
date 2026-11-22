@@ -69,8 +69,11 @@ function mostraPasso(p){
   if(!carta||!passi[p]) return; vista=p; carta.mostra(passi[p].stati);
   eTargaAnno.textContent=passi[p].anno;
   bScelta.forEach(function(b,k){ b.setAttribute('aria-pressed', (k===0&&p===0)||(k===1&&p===passi.length-1) ? 'true':'false'); });
-  bottoniTappe.forEach(function(q){ q[1].classList.toggle('in-carta', passi[p].i===q[0]); });
+  var qui=null; bottoniTappe.forEach(function(q){ var si=passi[p].i===q[0]; q[1].classList.toggle('in-carta',si); if(si) qui=q[1].parentNode; });
+  /* la fila delle tappe segue la carta: la tappa mostrata viene al centro (all'inizio e alla fine dell'atto, il capo o la coda della fila); si muove solo la fila, non la pagina */
+  if(eScorre.scrollWidth>eScorre.clientWidth+2) porta(qui?qui.offsetLeft-(eScorre.clientWidth-qui.offsetWidth)/2:p===0?0:eScorre.scrollWidth);
 }
+function porta(x){ x=Math.max(0,Math.min(eScorre.scrollWidth-eScorre.clientWidth,x)); if(eScorre.scrollTo && !ridotto) eScorre.scrollTo({left:x,behavior:'smooth'}); else eScorre.scrollLeft=x; }
 function scegli(k){ scelto=k; mostraPasso(k?passi.length-1:0); }
 function ferma(){ clearTimeout(timer); clearTimeout(attesa); timer=attesa=0; osp.classList.remove('gioca'); if(bGioca) bGioca.setAttribute('aria-pressed','false'); }
 function gioca(){
