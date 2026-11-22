@@ -676,49 +676,50 @@ var ITINERARIO={
    fuochi: [x, z, forza]; attorno a ogni fuoco gli isolati restano bruciati per qualche decennio (raggio "bruciati", in decine di metri).
    Testi fino al 589 e piena del 791 controllati sulle fonti; gli altri solo in parte. Posizione e forza dei fuochi sono una nostra resa. */
 var EVENTI=[
- /* Didascalie delle tappe in cui a Roma accade qualcosa che la scena mostra ma nessun evento raccontava (ricognizione del 22 novembre 2026): ripetono i testi delle tappe e delle schede, senza fatti nuovi */
- {id:'basiliche330', da:330, a:330.4, bruciati:0, fuochi:[], testo:"Verso il 330 · Sorgono le grandi basiliche volute da Costantino: la cattedrale al Laterano e, fuori le mura, San Pietro sulla tomba dell'apostolo, ancora in cantiere."},
- {id:'milvio312', da:312, a:312.4, bruciati:0, fuochi:[], testo:"28 ottobre 312 · A ponte Milvio Costantino sconfigge Massenzio, che annega nel Tevere. Dopo la vittoria scioglie i pretoriani, la guardia imperiale. Sul Celio viene demolita la caserma della guardia a cavallo: al suo posto sorgerà la basilica del Laterano. Accanto al ponte di pietra, un passaggio provvisorio: forma e posizione sono ipotetiche."},
- {id:'visita357', da:357, a:357.4, bruciati:0, fuochi:[], testo:"357 · Costanzo II visita Roma per la prima volta. Sulla spina del Circo Massimo fa alzare un secondo obelisco. Dalla sede del Senato fa rimuovere l'altare della dea Vittoria."},
+ /* vista: dove va la camera quando si arriva alla tappa (js/scene-tappe.js): l'id di un monumento, [x, z, distanza], o 'milvio' e 'corteo' per le messe in scena del 312 e del 357; senza, vista d'insieme.
+    Didascalie delle tappe in cui a Roma accade qualcosa che la scena mostra ma nessun evento raccontava (ricognizione del 22 novembre 2026): ripetono i testi delle tappe e delle schede, senza fatti nuovi */
+ {id:'basiliche330', vista:'laterano', da:330, a:330.4, bruciati:0, fuochi:[], testo:"Verso il 330 · Sorgono le grandi basiliche volute da Costantino: la cattedrale al Laterano e, fuori le mura, San Pietro sulla tomba dell'apostolo, ancora in cantiere."},
+ {id:'milvio312', vista:'milvio', da:312, a:312.4, bruciati:0, fuochi:[], testo:"28 ottobre 312 · A ponte Milvio Costantino sconfigge Massenzio, che annega nel Tevere. Dopo la vittoria scioglie i pretoriani, la guardia imperiale. Sul Celio viene demolita la caserma della guardia a cavallo: al suo posto sorgerà la basilica del Laterano. Accanto al ponte di pietra, un passaggio provvisorio: forma e posizione sono ipotetiche."},
+ {id:'visita357', vista:'corteo', da:357, a:357.4, bruciati:0, fuochi:[], testo:"357 · Costanzo II visita Roma per la prima volta. Sulla spina del Circo Massimo fa alzare un secondo obelisco. Dalla sede del Senato fa rimuovere l'altare della dea Vittoria."},
  {id:'giuliano363', da:363, a:363.4, bruciati:0, fuochi:[], testo:"363 · Giuliano promuove il culto degli dèi. A Roma il modello mostra ancora i templi in uso."},
- {id:'altare384', da:384, a:384.4, bruciati:0, fuochi:[], testo:"384 · Simmaco chiede all'imperatore di riportare l'altare della Vittoria nella sede del Senato. Ambrogio si oppone e Valentiniano II respinge la richiesta."},
- {id:'leggi394', da:394, a:394.4, bruciati:0, fuochi:[], testo:"391-394 · Teodosio vieta i sacrifici e gli atti di culto nei templi. A Roma gli edifici restano in piedi. La data in cui ciascun tempio cessò di essere usato rimane incerta."},
+ {id:'altare384', vista:[3,-8,26], da:384, a:384.4, bruciati:0, fuochi:[], testo:"384 · Simmaco chiede all'imperatore di riportare l'altare della Vittoria nella sede del Senato. Ambrogio si oppone e Valentiniano II respinge la richiesta."},
+ {id:'leggi394', vista:'giove', da:394, a:394.4, bruciati:0, fuochi:[], testo:"391-394 · Teodosio vieta i sacrifici e gli atti di culto nei templi. A Roma gli edifici restano in piedi. La data in cui ciascun tempio cessò di essere usato rimane incerta."},
  {id:'onorio402', da:402, a:402.4, bruciati:0, fuochi:[], testo:"401-403 · Sotto Onorio si restaurano mura, porte e torri. Forse è allora che la cinta viene rialzata; altri attribuiscono il lavoro a Massenzio."},
- {id:'teodorico493', da:493, a:493.4, bruciati:0, fuochi:[], testo:"Sotto Teodorico si restaurano le mura e il teatro di Pompeo; al Colosseo si danno ancora le cacce."},
+ {id:'teodorico493', vista:[-58,-21,40], da:493, a:493.4, bruciati:0, fuochi:[], testo:"Sotto Teodorico si restaurano le mura e il teatro di Pompeo; al Colosseo si danno ancora le cacce."},
  {id:'agilulfo593', da:593, a:593.4, bruciati:0, fuochi:[], testo:"593 · I Longobardi di Agilulfo arrivano sotto le mura. È papa Gregorio a trattare con loro."},
- {id:'pantheon609', da:609, a:609.4, bruciati:0, fuochi:[], testo:"13 maggio 609 · Il Pantheon, donato dall'imperatore Foca a papa Bonifacio IV, è consacrato come chiesa. L'anno prima, nel Foro, è stata dedicata a Foca l'ultima colonna onoraria."},
- {id:'pellegrini727', da:727, a:727.4, bruciati:0, fuochi:[], testo:"Attorno a San Pietro, fuori le mura, crescono monasteri, ospizi e le «scholae» dei pellegrini: un quartiere nuovo."},
+ {id:'pantheon609', vista:'pantheon', da:609, a:609.4, bruciati:0, fuochi:[], testo:"13 maggio 609 · Il Pantheon, donato dall'imperatore Foca a papa Bonifacio IV, è consacrato come chiesa. L'anno prima, nel Foro, è stata dedicata a Foca l'ultima colonna onoraria."},
+ {id:'pellegrini727', vista:'pietro', da:727, a:727.4, bruciati:0, fuochi:[], testo:"Attorno a San Pietro, fuori le mura, crescono monasteri, ospizi e le «scholae» dei pellegrini: un quartiere nuovo."},
  {id:'adriano780', da:780, a:780.4, bruciati:0, fuochi:[], testo:"Papa Adriano I fa riparare quattro acquedotti, le mura e i tetti delle basiliche."},
- {id:'leonina852', da:852, a:852.4, bruciati:0, fuochi:[], testo:"27 giugno 852 · Leone IV chiude San Pietro dentro una cinta nuova: nasce la città leonina."},
+ {id:'leonina852', vista:[-225,-95,60], da:852, a:852.4, bruciati:0, fuochi:[], testo:"27 giugno 852 · Leone IV chiude San Pietro dentro una cinta nuova: nasce la città leonina."},
  {id:'cantieremura', da:271, a:271.4, bruciati:0, fuochi:[],      // Zosimo I 49 (letto nella traduzione del 1814, tertullian.org); il cantiere è disegnato in js/mura.js
   testo:"271 · Si apre il cantiere delle mura: lungo diciannove chilometri salgono i primi tratti, fra i ponteggi. Le finirà Probo, scrive Zosimo; in che ordine si costruì non si sa."},
- {id:'sacco410', da:410, a:410.4, bruciati:14, fuochi:[[100,-192,1.2],[78,-165,1],[7.2,-1,.9]],      // Procopio, Guerre III 2: case presso la porta e casa di Sallustio. Aventino e Celio: tracce d'incendio negli scavi (già in Bury), ma nessuna attribuibile al sacco con sicurezza
+ {id:'sacco410', vista:[100,-192,45], da:410, a:410.4, bruciati:14, fuochi:[[100,-192,1.2],[78,-165,1],[7.2,-1,.9]],      // Procopio, Guerre III 2: case presso la porta e casa di Sallustio. Aventino e Celio: tracce d'incendio negli scavi (già in Bury), ma nessuna attribuibile al sacco con sicurezza
   testo:"24 agosto 410 · I Goti di Alarico entrano da porta Salaria. Il saccheggio dura tre giorni secondo Orosio, sei secondo Marcellino Comes. Bruciano la casa di Sallustio e altre abitazioni vicino alla porta. Probabilmente risale a quei giorni anche l'incendio della basilica Emilia, nel Foro. Chi cerca rifugio a San Pietro e a San Paolo è rispettato."},
- {id:'sacco455', da:455, a:455.4, bruciati:0, fuochi:[],
+ {id:'sacco455', vista:'giove', da:455, a:455.4, bruciati:0, fuochi:[],
   testo:"2-16 giugno 455 · I Vandali di Genserico saccheggiano Roma per quattordici giorni. Secondo Prospero d'Aquitania, papa Leone ottiene che siano risparmiati agli abitanti incendi, stragi e torture. I Vandali portano via sistematicamente i beni della città, compresa metà del tetto di bronzo dorato del tempio di Giove."},
- {id:'assedio472', da:472, a:472.4, bruciati:0, fuochi:[],      // le fonti parlano di combattimenti e saccheggio, non di incendi
+ {id:'assedio472', vista:'adriano', da:472, a:472.4, bruciati:0, fuochi:[],      // le fonti parlano di combattimenti e saccheggio, non di incendi
   testo:"Luglio 472 · L'imperatore Antemio si rifugia sul Palatino mentre Ricimero assedia Roma. Dopo mesi di assedio, lo scontro decisivo si combatte a ponte Elio, davanti al mausoleo di Adriano. Ricimero conquista la città."},
  {id:'velo536', da:536.2, a:537.3, bruciati:0, fuochi:[], velo:true,      // Procopio, Guerre IV 14; Cassiodoro, Variae XII 25. La didascalia è quella dell'assedio, che viene dopo nell'elenco
   testo:"536 · Per circa un anno il sole appare velato. I contemporanei raccontano che la sua luce scalda poco."},
  {id:'assedio537', da:537, a:538.2, bruciati:0, fuochi:[], campi:true,
   testo:"Marzo 537 – marzo 538 · Il re goto Vitige assedia Roma, difesa da Belisario, per un anno e nove giorni. I Goti interrompono gli acquedotti e allestiscono sette accampamenti, sei davanti alle porte tra il nord e l'est della città e uno oltre il Tevere. Già dall'anno precedente il sole appare velato. Procopio paragona la sua luce a quella della luna. Cassiodoro racconta che in Italia a mezzogiorno i corpi non proiettavano ombra. Oggi il fenomeno è attribuito a grandi eruzioni vulcaniche."},
- {id:'totila546', da:546, a:546.5, bruciati:10, fuochi:[[-125,40,1],[-112,62,.8]], brecce:true,      // Procopio VII 37.3 e VIII 22.3; continuatore di Marcellino Comes, a. 547: incendi, soprattutto oltre il Tevere
+ {id:'totila546', vista:[187,80,45], da:546, a:546.5, bruciati:10, fuochi:[[-125,40,1],[-112,62,.8]], brecce:true,      // Procopio VII 37.3 e VIII 22.3; continuatore di Marcellino Comes, a. 547: incendi, soprattutto oltre il Tevere
   testo:"17 dicembre 546 · Totila entra di notte da porta Asinaria. Fa abbattere alcuni tratti delle mura, brucia una parte di Trastevere e porta via gli abitanti. Secondo una cronaca, Roma rimane deserta per settimane."},
  {id:'piena589', da:589, a:589.5, bruciati:0, fuochi:[], piena:true,      // Gregorio di Tours, Storie X 1 («mense nono»: novembre per Duchesne); Gregorio Magno, Dialoghi III 19; Paolo Diacono III 23-24
   testo:"Autunno 589 · Il Tevere allaga i quartieri bassi e danneggia i granai della Chiesa. Gregorio di Tours scrive «nel nono mese», probabilmente novembre. Nella scena l'estensione della piena è indicativa: le zone più basse e più vicine al fiume."},
  {id:'piena791', da:791, a:791.5, bruciati:0, fuochi:[], piena:true,      // Liber Pontificalis, vita di Adriano I, cc. 94-95 (ed. Duchesne I, p. 513): «in vicesimo anno, mense decembrio, XV indictione»
   testo:"Dicembre 791 · Secondo il Liber Pontificalis, il Tevere travolge porta Flaminia e la trascina lungo la via Lata fino all'arco chiamato Tres Falciclas. Qui l'acqua supera il doppio dell'altezza di un uomo. Nella scena l'area allagata è indicativa."},
- {id:'costante663', da:663, a:663.4, bruciati:0, fuochi:[],
+ {id:'costante663', vista:'pantheon', da:663, a:663.4, bruciati:0, fuochi:[],
   testo:"5-17 luglio 663 · Costante II è l'ultimo imperatore a visitare Roma finché l'impero la governa. In dodici giorni fa smontare il bronzo dei monumenti, comprese le tegole del Pantheon."},
  {id:'assedio756', da:756, a:756.4, bruciati:0, fuochi:[], campi:true,
   testo:"Gennaio-marzo 756 · I Longobardi di Astolfo assediano Roma per tre mesi e devastano i dintorni. Il papa chiama i Franchi."},
- {id:'natale800', da:800, a:800.4, bruciati:0, fuochi:[],
+ {id:'natale800', vista:'pietro', da:800, a:800.4, bruciati:0, fuochi:[],
   testo:"25 dicembre 800 · In San Pietro papa Leone III incorona imperatore Carlo Magno, re dei Franchi."},
- {id:'terremoto801', da:801, a:802, bruciati:0, fuochi:[],
+ {id:'terremoto801', vista:'paolo', da:801, a:802, bruciati:0, fuochi:[],
   testo:"29 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi."},
- {id:'saraceni846', da:846, a:846.4, bruciati:5, ricostruzione:3, fuochi:[[-218,-100,.6],[-74,370,.5]],
+ {id:'saraceni846', vista:'pietro', da:846, a:846.4, bruciati:5, ricostruzione:3, fuochi:[[-218,-100,.6],[-74,370,.5]],
   testo:"Agosto 846 · Una flotta saracena approda a Ostia e risale il Tevere. Gli assalitori saccheggiano San Pietro, che sorge fuori dalle mura, e secondo il Liber Pontificalis anche San Paolo. A Porto vengono massacrate le milizie delle scholae, le comunità straniere di Roma, mandate a difenderlo."},
- {id:'incendio847', da:847, a:847.5, bruciati:9, ricostruzione:3, fuochi:[[-224,-100,.9]],
+ {id:'incendio847', vista:'pietro', da:847, a:847.5, bruciati:9, ricostruzione:3, fuochi:[[-224,-100,.9]],
   testo:"847 o 848 · Un incendio nel Borgo distrugge le case di Sassoni e Longobardi e raggiunge il portico di San Pietro. Secondo il Liber Pontificalis, Leone IV ferma le fiamme con il segno della croce. La stessa fonte ricorda un forte terremoto in quell'anno, ma non nomina danni. Il Parco archeologico del Colosseo attribuisce alla scossa il crollo di ciò che rimaneva del lato sud dell'anfiteatro, già in gran parte smontato. Nessuna fonte scritta conferma il collegamento."}
 ];
 
