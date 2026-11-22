@@ -124,7 +124,7 @@ function scriviMonumenti(){
     v.s.textContent=v.m.nome+(v.m.note&&v.m.note[st]?' · '+v.m.note[st]:'');
   });
   if(!cambiato) return;
-  var ci={}, n=0; voci.forEach(function(v){ if(v.st!=='assente'){ ci[v.st]=1; n++; } });
+  var ci={}, n=0; voci.forEach(function(v){ if(v.st!=='assente'){ ci[v.st]=1; n++; } if(n>20&&v.st!=='assente') v.li.setAttribute('data-oltre',''); else v.li.removeAttribute('data-oltre'); });      // oltre la ventesima: nascosta nell'elenco corto dei telefoni (css/stile.css)
   legendaStati.forEach(function(e){ var k=e.className.replace('st ',''); e.hidden=!ci[k]; });
   contaMonumenti(n);
 }

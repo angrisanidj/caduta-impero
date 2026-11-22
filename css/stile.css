@@ -626,7 +626,7 @@ body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.9
   .monumenti{columns:2;column-gap:12px;font-size:13.5px}
   .monumenti li{align-items:flex-start;line-height:1.25;padding:3px 0}
   .monumenti li::before{margin-top:.3em}
-  .stato-roma.corto .monumenti{max-height:270px;overflow:hidden}
+  .stato-roma.corto .monumenti li[data-oltre]{display:none}      /* niente altezza bloccata: con le colonne, le voci in più finirebbero in colonne nascoste a destra (Safari le mostrava aprendo l'elenco) */
   .tutti{display:block;width:100%;min-height:44px;margin:10px 0 0;padding:9px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--carta);border:1px solid var(--line);border-radius:8px}
   .piede .piede-marchio{font-size:18px}
 }

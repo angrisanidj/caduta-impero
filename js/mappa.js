@@ -204,7 +204,7 @@ function disegnaLuoghi(k,H,messi,pos){
 /* La scena dell'evento: marce (frecce), rotte per mare (tratteggio), scontri (spade incrociate), assedi (anello) e sacchi (fiamma), disegnati sopra la carta mentre la regia la tiene vicina.
    I dati stanno in SCENE_CARTA (js/dati.js): partenza e arrivo vengono dai testi, il tracciato fra i due è schematico. A tutto schermo, e per chi ha chiesto meno animazioni, la scena resta ferma sulla carta. */
 var bordo=[103,897,63,565];      // fuori dalla regia rombi e segni stanno dentro la vista normale; durante la regia la carta si può spingere fino al suo vero bordo (Edessa, Nisibi)
-var stratoScena=el('g',{'class':'m-scena'},svg), COLORI_SCENA={roma:['#F1D99A','#241E1A'],altri:['#241E1A','#FBF6EA'],franchi:['#A9CBE6','#1F3345']};
+var stratoScena=el('g',{'class':'m-scena'},svg), COLORI_SCENA={roma:['#F1D99A','#241E1A'],usurpatore:['#C98A2B','#241E1A'],altri:['#241E1A','#FBF6EA'],franchi:['#A9CBE6','#1F3345']};
 function puntoDi(k){ var p=(G.luoghi||{})[k]||G.citta[k]; return p?[p.x,p.y]:null; }
 /* Si disegna prima dei cartellini e mette fra gli ingombri (fissi) i suoi segni e le punte delle frecce, così nomi e cartellini li evitano.
    Ordine: gli anelli degli assedi attorno ai luoghi; le frecce, che si fermano sul bordo del rombo o dell'anello e, se arrivano in più d'una nello stesso posto,

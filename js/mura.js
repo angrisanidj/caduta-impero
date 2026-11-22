@@ -172,6 +172,23 @@ var acque=(function(){
   ['A','B','C'].forEach(function(k){ RM.scene.add(PC[k].maglia(RM.matPietra(k))); });
 })();
 
+/* 312: il ponte provvisorio di Massenzio accanto al ponte Milvio. Zosimo II 15-16 (traduzione del 1814): un ponte di travi in due metà, unite al centro da ferri da togliere, che cede
+   sotto i fuggiaschi; Eusebio, Storia ecclesiastica IX 9, 5-7: un ponte di barche; Lattanzio 44, 9: il ponte alle spalle di Massenzio «viene tagliato». Dove fosse esattamente non è scritto:
+   qui una passerella di travi su cavalletti, una trentina di metri a monte del ponte di pietra, visibile solo nella tappa del 312. È uno schema, detto nella didascalia (milvio312 in js/dati.js). */
+(function(){
+  var curva=RM.curvaFiume, p=[-152,-479], m=1e9, tm=0, i, q, dd;
+  for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); dd=Math.hypot(q.x-p[0],q.z-p[1]); if(dd<m){ m=dd; tm=i/2400; } }
+  var c0=curva.getPoint(tm), t=tm;
+  while(t>0.0005){ t-=0.0002; q=curva.getPoint(t); if(Math.hypot(q.x-c0.x,q.z-c0.z)>=3.2) break; }      // circa 30 m lungo il fiume
+  var tg=curva.getTangent(t), B=new RM.Costruttore();
+  B.dentro(q.x,-.5,q.z,Math.atan2(-tg.x,-tg.z),function(B){
+    B.scatola(15.6,.1,.8,0,.9,0,P.tronco).scatola(15.6,.22,.05,0,1,.38,P.tronco).scatola(15.6,.22,.05,0,1,-.38,P.tronco);      // impalcato e parapetti
+    for(var x=-7;x<=7.01;x+=1.4){ B.scatola(.14,.95,.14,x,0,.3,P.tronco).scatola(.14,.95,.14,x,0,-.3,P.tronco); }      // cavalletti nel fiume
+  });
+  var g=B.maglia(RM.matPietra()); g.visible=false; RM.scene.add(g);
+  RM.moduli.push(function(anno){ g.visible=anno>=311.6&&anno<313; });
+})();
+
 /* avanzamento del cantiere delle mura (0-1): aperto nel 271, il grosso fatto alla morte di Aureliano, finito sotto Probo (vedi sopra); alla tappa del 271 è appena cominciato */
 var CANTIERE_MURA=[[270.6,0],[271,.3],[275,.85],[280,1]];
 RM.moduli.push(function(anno){

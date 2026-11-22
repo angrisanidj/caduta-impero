@@ -242,7 +242,11 @@ const LUOGHI = { magonza: [8.27, 50.0, 'Magonza'], abritto: [26.52, 43.53, 'Abri
   novae: [25.39, 43.62, 'Novae'], isonzo: [13.5, 45.88, 'Isonzo'], savaria: [16.62, 47.23, 'Savaria'], spoleto: [12.74, 42.73, 'Spoleto'], narni: [12.52, 42.52, 'Narni'],
   ginevra: [6.14, 46.2, 'Ginevra'], martigny: [7.07, 46.1, 'Martigny'], aosta: [7.32, 45.74, 'Aosta'], ivrea: [7.88, 45.47, 'Ivrea'], calpe: [-5.36, 36.16, 'Gibilterra'],
   propontide: [26.92, 40.46, 'Propontide'], gallipoli: [26.76, 40.4, 'Gallipoli'], lampsaco: [26.66, 40.36, 'Lampsaco'], ellesponto: [26.55, 40.29, 'Ellesponto'], abido: [26.46, 40.2, 'Abido'],
-  cicladi: [25.8, 37.92, 'Cicladi'], cicladisud: [25.6, 36.58, 'Cicladi'], malea: [23.31, 36.12, 'capo Malea'], mopsuestia: [35.62, 36.96, 'Mopsuestia'], isso: [36.25, 36.95, 'Isso'], portesirie: [36.22, 36.49, 'Porte Sirie'], lentini: [15.0, 37.29, 'Lentini'] };
+  cicladi: [25.8, 37.92, 'Cicladi'], cicladisud: [25.6, 36.58, 'Cicladi'], malea: [23.31, 36.12, 'capo Malea'], mopsuestia: [35.62, 36.96, 'Mopsuestia'], isso: [36.25, 36.95, 'Isso'], portesirie: [36.22, 36.49, 'Porte Sirie'], lentini: [15.0, 37.29, 'Lentini'],
+  /* tappe della storia religiosa del IV secolo (src/testi/tappe-cristianesimo.md): il Frigido è il Vipacco presso Aidussina (identificazione corrente; il punto esatto della battaglia non si conosce); Mursa è Osijek */
+  frigido: [13.9, 45.88, 'Frigido'], mursa: [18.69, 45.55, 'Mursa'], torino: [7.68, 45.07, 'Torino'], brescia: [10.22, 45.54, 'Brescia'], modena: [10.93, 44.65, 'Modena'],
+  /* la marcia di Giuliano nel 363 (Ammiano XXIII 2-5): Batne è Suruç, Callinico è Raqqa, Circesio è alla foce del Khabur; a Dura la carta finisce, Ctesifonte sta oltre il bordo */
+  ierapoli: [37.95, 36.53, 'Ierapoli'], batne: [38.42, 36.98, 'Batne'], callinico: [39.02, 35.95, 'Callinico'], circesio: [40.45, 35.17, 'Circesio'], dura: [40.73, 34.75, 'Dura'] };
 
 /* Cammini e marce sono stati controllati contro la linea di costa il 22 novembre 2026 (prova nel browser: si campiona ogni tracciato e si chiede a `isPointInFill` della terra):
    per mare restano solo lo stretto di Gibilterra dei Vandali, lo stretto di Messina e il viaggio di Angli e Sassoni, che sono veri. Chi aggiunge un punto rifaccia la prova.
