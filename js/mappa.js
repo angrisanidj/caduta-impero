@@ -66,10 +66,32 @@ var annoCarta=document.createElement('p'); annoCarta.className='m-anno'; annoCar
 var verdun=el('g',{'class':'m-verdun via'},svg);
 if(G.verdun){ G.verdun.linee.forEach(function(d){ el('path',{d:d},verdun); }); G.verdun.nomi.forEach(function(n){ el('text',{x:n[0],y:n[1]},verdun).textContent=n[2]; }); }      // 843: l'impero dei Franchi diviso fra i tre nipoti di Carlo Magno
 /* 293-305: le aree di comando della tetrarchia, come Verdun. Le linee sono i bordi comuni delle regioni (src/mappa/genera.mjs, TETRARCHIA, con le fonti); quelle discusse sono a trattini */
-var tetra=el('g',{'class':'m-tetra via'},svg);
+var tetra=el('g',{'class':'m-tetra via'},svg), nomiTetra={}, areeTetra={}, fuocoT=null, notaT=null;
 if(G.tetrarchia){
   G.tetrarchia.linee.forEach(function(l){ if(l.d) el('path',{d:l.d,'class':l.discussa?'discussa':''},tetra); });
-  G.tetrarchia.nomi.forEach(function(n){ var t=el('text',{x:n[0],y:n[1]},tetra); t.textContent=n[2]; el('tspan',{x:n[0],dy:10,'class':'rango'},t).textContent=n[3]; });
+  /* ogni nome è un bottone: toccato, lascia vive le sole regioni della sua area (1) e, più chiare, quelle che gli sono attribuite senza accordo fra gli studiosi (2).
+     Il tocco lo riconosce il gestore dei clic della carta (nomeTetraA), perché a tutto schermo la carta cattura il puntatore per il trascinamento. */
+  G.tetrarchia.nomi.forEach(function(n){ var t=el('text',{x:n[0],y:n[1]},tetra); t.textContent=n[2]; el('tspan',{x:n[0],dy:'.95em','class':'rango'},t).textContent=n[3];
+    if(!n[4] || !G.tetrarchia.gruppi) return; var a={};
+    (G.tetrarchia.gruppi[n[4]]||[]).forEach(function(id){ a[id]=1; }); (G.tetrarchia.gruppi[n[5]]||[]).forEach(function(id){ a[id]=2; });
+    nomiTetra[n[4]]=t; areeTetra[n[4]]=a; t.setAttribute('role','button'); t.setAttribute('tabindex','0'); t.setAttribute('aria-pressed','false'); t.setAttribute('aria-label',n[2]+', '+n[3]+': mostra la sua parte');
+    t.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toccaTetra(n[4]); } });
+  });
+}
+function toccaTetra(k){ fuocoT=fuocoT===k?null:k; fuoco=fuocoP=null; applicaFuoco(); }
+function nomeTetraA(x,y){      // il nome di un tetrarca sotto il dito, con un margine: sul telefono le scritte sono piccole
+  if(annoVisto==null || !tetrarchia(annoVisto)) return null;
+  for(var k in nomiTetra){ var r=nomiTetra[k].getBoundingClientRect(); if(x>=r.left-10 && x<=r.right+10 && y>=r.top-8 && y<=r.bottom+8) return k; }
+  return null;
+}
+/* la parte di ciascuno con le parole delle fonti lette (src/mappa/genera.mjs, TETRARCHIA): Aurelio Vittore 39, 30; la Hispania solo in Lattanzio 8, 3; la Britannia ripresa nel 296 (Eutropio IX 22) */
+var PARTE={costanzo:'le Gallie al di là delle Alpi (Aurelio Vittore)', massimiano:'Italia e Africa (Aurelio Vittore); la Hispania, più chiara, gliela dà Lattanzio ma è discussa',
+  galerio:'l’Illirico fino allo stretto del Ponto (Aurelio Vittore); la Tracia, più chiara, è discussa', diocleziano:'tutto il resto, cioè l’Oriente (Aurelio Vittore)'};
+function britanniaDiCostanzo(){ return fuocoT==='costanzo' && annoVisto>=296; }
+function scriviNotaTetra(){
+  if(!notaT) return; var n=fuocoT && G.tetrarchia.nomi.filter(function(q){ return q[4]===fuocoT; })[0];
+  notaT.textContent=n ? n[2]+', '+n[3]+': '+PARTE[fuocoT]+(fuocoT==='costanzo'?(britanniaDiCostanzo()?'; dal 296 anche la Britannia, ripresa agli usurpatori':'; la Britannia è in mano a un usurpatore'):'')+'. Tocca di nuovo il nome per rivedere tutta la carta.'
+    : 'Puntini: aree di comando, non Stati. L’impero resta uno e le leggi valgono per tutti. A trattini: attribuzione discussa (Hispania, Tracia). Tocca un nome per vedere la sua parte.';
 }
 function tetrarchia(anno){ return anno>=293 && anno<305; }      // la prima tetrarchia: dal 1° marzo 293 alle abdicazioni del 1° maggio 305
 var citta=el('g',{'class':'m-citta'},svg), scritte={}, cittaPos=[], larghe={};
@@ -103,9 +125,8 @@ rigaLuoghi.className='legenda-luoghi'; rigaLuoghi.hidden=true; if(legendaPrima()
 function legendaPrima(){ return document.getElementById('legendaMappa'); }
 /* negli anni della tetrarchia la riga sotto la carta dice anche che cosa sono le linee tratteggiate (dopo i luoghi, se ce ne sono) */
 function notaTetra(anno){
-  if(!G.tetrarchia || !tetrarchia(anno)) return;
-  var s=document.createElement('span'); s.className='tetra';
-  s.textContent='Puntini: aree di comando, non Stati. L’impero resta uno e le leggi valgono per tutti. A trattini: attribuzione discussa (Hispania, Tracia).';
+  notaT=null; if(!G.tetrarchia || !tetrarchia(anno)) return;
+  var s=document.createElement('span'); s.className='tetra'; notaT=s; scriviNotaTetra();
   rigaLuoghi.appendChild(s); rigaLuoghi.hidden=false;
 }
 function scriviLuoghi(l){
@@ -364,8 +385,12 @@ var fuoco=null, fuocoP=null, statoOra={}, inMisura=false;
 function applicaFuoco(){
   if(fuoco && (!vociStati[fuoco] || vociStati[fuoco].v.hidden)) fuoco=null;      // la voce accesa non c'è più in questa tappa
   if(fuocoP && (!vociPopoli[fuocoP] || vociPopoli[fuocoP].hidden)) fuocoP=null;
-  svg.classList.toggle('m-fuoco',!!fuoco); if(fuocoP) svg.setAttribute('data-fuoco',fuocoP); else svg.removeAttribute('data-fuoco');
-  var k; for(k in regioni) regioni[k].classList.toggle('acceso',!!fuoco && (statoOra[k]||'perso')===fuoco);
+  if(fuocoT && (!areeTetra[fuocoT] || annoVisto==null || !tetrarchia(annoVisto))) fuocoT=null;      // fuori dagli anni della tetrarchia il nome acceso si spegne
+  var at=fuocoT?areeTetra[fuocoT]:null, k, q;
+  svg.classList.toggle('m-fuoco',!!fuoco||!!at); if(fuocoP) svg.setAttribute('data-fuoco',fuocoP); else svg.removeAttribute('data-fuoco');
+  for(k in regioni){ q=at?(at[k]||(k==='britannia'&&britanniaDiCostanzo()?1:0)):0; regioni[k].classList.toggle('acceso',at?!!q:(!!fuoco && (statoOra[k]||'perso')===fuoco)); regioni[k].classList.toggle('incerto',q===2); }
+  for(k in nomiTetra) nomiTetra[k].setAttribute('aria-pressed',k===fuocoT?'true':'false');
+  tetra.classList.toggle('con-fuoco',!!fuocoT); scriviNotaTetra();
   for(k in vociStati) vociStati[k].v.setAttribute('aria-pressed',k===fuoco?'true':'false');
   for(k in vociPopoli) vociPopoli[k].setAttribute('aria-pressed',k===fuocoP?'true':'false');
   legenda.classList.toggle('con-fuoco',!!fuoco); if(legendaPopoli) legendaPopoli.classList.toggle('con-fuoco',!!fuocoP);
@@ -392,11 +417,11 @@ STATI.forEach(function(s){
   var v=document.createElement('span'), i=document.createElement('i'), t=document.createTextNode(s[1]||voceStato(s[0],600));
   i.style.background=s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':s[0].indexOf('regno:')===0?REGNI[s[0].slice(6)][0]:'var(--st-'+s[0]+')';
   v.appendChild(i); v.appendChild(t); legenda.appendChild(v); vociStati[s[0]]={v:v,t:t};
-  voceCliccabile(v,function(){ fuoco=fuoco===s[0]?null:s[0]; fuocoP=null; applicaFuoco(); });
+  voceCliccabile(v,function(){ fuoco=fuoco===s[0]?null:s[0]; fuocoP=fuocoT=null; applicaFuoco(); });
 });
 bottoneAltre(legenda);
 if(legendaPopoli && G.popoli) RAPPORTI.forEach(function(r){ var v=document.createElement('span'), i=document.createElement('i'); i.className='p-'+r[0]; v.appendChild(i); v.appendChild(document.createTextNode(r[1])); legendaPopoli.appendChild(v); vociPopoli[r[0]]=v;
-  voceCliccabile(v,function(){ fuocoP=fuocoP===r[0]?null:r[0]; fuoco=null; applicaFuoco(); }); });
+  voceCliccabile(v,function(){ fuocoP=fuocoP===r[0]?null:r[0]; fuoco=fuocoT=null; applicaFuoco(); }); });
 if(legendaPopoli) bottoneAltre(legendaPopoli);
 var ultimo=null;
 function spazioLegende(){                                 // l'altezza minima è quella della tappa con più voci: la pagina non salta da una tappa all'altra
@@ -425,6 +450,7 @@ function regioneA(cx,cy){
 svg.addEventListener('pointerdown',function(e){ giu=[e.clientX,e.clientY]; nascondiChi(); });
 svg.addEventListener('click',function(e){
   if(giu && Math.hypot(e.clientX-giu[0],e.clientY-giu[1])>6) return;      // era un trascinamento della carta
+  var kt=nomeTetraA(e.clientX,e.clientY); if(kt){ toccaTetra(kt); return; }      // un nome della tetrarchia: accende la sua parte
   var id=regioneA(e.clientX,e.clientY); if(!id) return;
   var st=statoOra[id]||'perso', r=ospite.getBoundingClientRect(), b=document.createElement('b'), x=e.clientX-r.left, y=e.clientY-r.top;
   chi.textContent=''; b.textContent=G.regioni[id].nome; chi.appendChild(b); chi.appendChild(document.createTextNode(st==='fuori'?'mai dentro l’impero':voceStato(st,annoVisto!=null?annoVisto:600)));

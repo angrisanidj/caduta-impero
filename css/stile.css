@@ -90,7 +90,7 @@ body.roma-grande .scheda{top:96px;left:20px;max-height:calc(100% - 220px)}
 .m-battito{fill:none;stroke:#FBF6EA;stroke-width:1.4;transform-box:fill-box;transform-origin:center;animation:battito 2.6s ease-out infinite;pointer-events:none}
 @keyframes battito{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.4);opacity:0}}
 @keyframes scorre{to{stroke-dashoffset:-17}}
-.riquadro.impero::after{content:"";position:absolute;left:0;right:0;top:0;aspect-ratio:1000/640;pointer-events:none;box-shadow:inset 0 0 60px rgba(70,45,20,.28)}
+#mappa::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 60px rgba(70,45,20,.28)}      /* l'ombra ai bordi sta sulla carta, non sul riquadro: così finisce sempre dove finisce la carta, qualunque altezza abbia */
 .m-regione{color:var(--st-perso);fill:currentColor;stroke:currentColor;stroke-width:1.1;stroke-linejoin:round;transition:color .9s ease}
 .m-regione.roma{color:var(--st-roma)} .m-regione.usurpatore{color:var(--st-usurpatore)} .m-regione.federati{color:var(--st-federati)}
 .m-regione.regno{color:var(--st-regno)} .m-regione.oriente{color:var(--st-oriente)} .m-regione.perso{color:var(--st-perso)}
@@ -367,7 +367,7 @@ body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bot
 body.impero-grande{overflow:hidden}
 body.impero-grande .riquadro.impero{display:flex!important;position:fixed;inset:0;z-index:50;border:0;border-radius:0;align-items:center;justify-content:flex-start;overflow-y:auto;
   padding-bottom:calc(var(--tempo,92px) + 24px + env(safe-area-inset-bottom,0px))}
-body.impero-grande .riquadro.impero::after{display:none}
+body.impero-grande #mappa::after{display:none}
 body.impero-grande #mappa{aspect-ratio:auto;flex:none;max-width:100%}
 body.impero-grande #mappa svg{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
 body.impero-grande .comandi-mappa{position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top,0px));bottom:auto;z-index:65}

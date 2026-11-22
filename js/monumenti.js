@@ -160,6 +160,11 @@ function tegolePietro(B){
 /* complessi su terreno in pendenza: ogni corpo poggia alla quota del suo punto */
 function quota(x,z){ return Math.min(RM.h(x,z),RM.h(x+5,z),RM.h(x-5,z),RM.h(x,z+5),RM.h(x,z-5))-.1; }
 function suTerreno(X,Z,ry){ var q=quota(X,Z), c=Math.cos(ry||0), s=Math.sin(ry||0); return function(lx,lz){ return RM.h(X+lx*c+lz*s,Z-lx*s+lz*c)-q; }; }
+/* statue a blocchi, quanto basta per leggerle da vicino: un cavallo col muso verso +z e un uomo in piedi; s=1 è la grandezza naturale (cavallo lungo 2,2 m, uomo alto 1,85) */
+function cavallo(B,x,y,z,ry,s,col){ return B.dentro(x,y,z,ry,function(){
+  B.scatola(.055*s,.085*s,.025*s,0,0,.08*s,col).scatola(.055*s,.085*s,.025*s,0,0,-.08*s,col).scatola(.06*s,.07*s,.22*s,0,.08*s,0,col)      // zampe a coppie, corpo
+   .scatola(.04*s,.1*s,.05*s,0,.13*s,.095*s,col).scatola(.035*s,.04*s,.09*s,0,.2*s,.135*s,col); }); }                                  // collo, testa
+function uomo(B,x,y,z,s,col){ return B.scatola(.05*s,.15*s,.035*s,x,y,z,col).scatola(.03*s,.035*s,.03*s,x,y+.15*s,z,col); }
 function casa(B,y,lx,lz,w,d,h,ry){ B.scatola(w,h+.3,d,lx,y-.3,lz,P.mattone,ry).falde(w+.2,.45,d+.2,lx,y+h,lz,P.coppi,ry,P.mattone); }
 
 /* tracciato delle mura leonine (848-852): dal mausoleo di Adriano attorno al colle Vaticano, fino al Tevere. Coordinate relative a (-215,-92).
@@ -449,16 +454,22 @@ var M=[
  {id:'adriano', nome:'Mausoleo di Adriano', x:-157,z:-118, ry:.1, zone:[[0,0,10]], et:1, fa:function(B){
     /* basamento quadrato di circa 84 m di lato e 10 di altezza, tamburo di 64 m di diametro e 21 di altezza, sopra un giardino (Platner) */
     B.scatola(8.4,1,8.4,0,0,0,P.marmo).scatola(8.55,.12,8.55,0,1,0,P.marmo).cilindro(3.2,2.1,0,1.12,0,P.travertino,null,40).cilindro(3.27,.1,0,3.12,0,P.marmo,null,40).cilindro(3,.3,0,3.22,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.4,0,P.marmo).scatola(1.6,.1,1.6,0,5.1,0,P.marmo);
-    B.scatola(.7,.36,.3,0,5.2,0,P.statua).scatola(.12,.5,.12,0,5.4,-.05,P.statua);                               // la quadriga in cima (la ricordano le fonti tarde: forma indicativa)
     B.vano(0,0,4.23,1,0,.7,.85);                                                                                 // l'ingresso, verso il ponte
-    [-3.95,3.95].forEach(function(x){ [-3.95,3.95].forEach(function(z){ B.scatola(.3,.5,.3,x,1.12,z,P.statua); }); }); // gruppi di uomini e cavalli agli angoli del basamento (Platner)
-    for(var st=0;st<20;st+=5) B.scatola(.11,.4,.11,3.05*Math.cos(st*PI/10),3.22,3.05*Math.sin(st*PI/10),P.marmo);  // le poche statue sull'orlo che restano dopo il 537: le altre stanno in 'adrianostatue'
+    for(var st=0;st<20;st+=5) uomo(B,3.05*Math.cos(st*PI/10),3.22,3.05*Math.sin(st*PI/10),2.2,P.marmo);            // le poche statue sull'orlo che restano dopo il 537: le altre stanno in 'adrianostatue'
     for(var k=0;k<14;k++) B.cono(.22,1.2,2.5*Math.cos(k*.449),3.45,2.5*Math.sin(k*.449),P.chioma,6);
  }},
- /* Le statue sull'orlo del tamburo. Procopio (Guerra gotica I 22): «above there are statues of the same marble, representing men and horses»; nel 537 gli assediati
-    «broke in pieces the most of the statues» e ne gettarono i pezzi sui Goti. Qui ne spariscono sedici su venti; numero e forma sono indicativi. */
+ /* Le statue del mausoleo, che nel 537 spariscono. Procopio (Guerre V 22, 13-14 e 22, nella traduzione di Dewing, riletto il 22 novembre 2026): la tomba è di marmo pario e in alto
+    ci sono statue dello stesso marmo, «representing men and horses»; gli assediati fanno a pezzi la maggior parte delle statue, che erano molto grandi, e ne gettano le pietre sui Goti.
+    Qui: sedici statue su venti sull'orlo del tamburo e i quattro gruppi di uomini e cavalli agli angoli del basamento (Platner e Ashby, «Mausoleum Hadriani»: agli angoli il muro
+    si ispessisce per reggerli). Numero, misure e forma sono indicativi.
+    La quadriga in cima: Platner e Ashby la riferiscono a Giovanni di Antiochia (una «colossal quadriga on the summit») e riportano il dubbio di Hülsen; è un'ipotesi, dichiarata nella scheda.
+    Quando sia sparita non lo dice nessuna fonte letta: qui scompare con le statue, e anche questo è un'ipotesi. */
  {id:'adrianostatue', x:-157,z:-118, ry:.1, come:'adriano', fa:function(B){
-    for(var st=0;st<20;st++) if(st%5) B.scatola(.11,.4,.11,3.05*Math.cos(st*PI/10),3.22,3.05*Math.sin(st*PI/10),P.marmo);
+    for(var st=0;st<20;st++) if(st%5) uomo(B,3.05*Math.cos(st*PI/10),3.22,3.05*Math.sin(st*PI/10),2.2,P.marmo);
+    [-3.95,3.95].forEach(function(x){ [-3.95,3.95].forEach(function(z){ var ry=Math.atan2(x,z);      // ogni gruppo guarda in fuori, lungo la diagonale
+      B.scatola(.62,.08,.62,x,1.12,z,P.marmo); cavallo(B,x,1.2,z,ry,2.2,P.marmo); uomo(B,x+.2*Math.cos(ry),1.2,z-.2*Math.sin(ry),2.2,P.marmo); }); });
+    [-.33,-.11,.11,.33].forEach(function(x){ cavallo(B,x,5.2,.2,0,2.2,P.statua); });                               // i quattro cavalli, verso il ponte
+    B.scatola(.5,.16,.26,0,5.2,-.36,P.statua).scatola(.5,.12,.04,0,5.36,-.25,P.statua); uomo(B,0,5.36,-.38,2.2,P.statua);      // il carro e chi lo guida
  }},
  {id:'augusto', x:-74,z:-151, ry:0, zone:[[0,0,7]], fa:function(B){                             // mausoleo di Augusto
     B.cilindro(4.4,1.2,0,0,0,P.travertino,null,40).cilindro(4,.3,0,1.2,0,P.prato,3.2,24).cilindro(2.6,1.1,0,1.4,0,P.travertino,null,30).cilindro(1,1.5,0,2.5,0,P.marmo,null,16).scatola(.3,.6,.3,0,4,0,P.bronzo);

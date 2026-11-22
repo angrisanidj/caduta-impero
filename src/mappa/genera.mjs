@@ -178,7 +178,7 @@ const TETRARCHIA = {
   },
   /* le coppie di aree di cui si traccia il bordo comune via terra (gli stretti non contano) */
   linee: [['costanzo', 'massimiano'], ['massimiano', 'galerio'], ['massimiano', 'diocleziano'], ['costanzo', 'hispania', 'discussa'], ['galerio', 'tracia', 'discussa']],
-  nomi: [[2.2, 47.3, 'Costanzo', 'cesare'], [7.6, 35.25, 'Massimiano', 'augusto'], [22.2, 42.6, 'Galerio', 'cesare'], [33.6, 37.75, 'Diocleziano', 'augusto']]      // Massimiano sta in Numidia: l'Italia è già piena di nomi
+  nomi: [[2.2, 47.3, 'Costanzo', 'cesare', 'costanzo'], [7.6, 35.25, 'Massimiano', 'augusto', 'massimiano', 'hispania'], [22.2, 42.6, 'Galerio', 'cesare', 'galerio', 'tracia'], [33.6, 37.75, 'Diocleziano', 'augusto', 'diocleziano']]      // Massimiano sta in Numidia: l'Italia è già piena di nomi
 };
 /* una geometria GeoJSON diventa un multipoligono piano, sfoltito: punti a meno di 0,4 unità dal precedente si saltano */
 function piano(geo) {
@@ -348,7 +348,8 @@ function confiniFra(A, B) {
   const G = {}; for (const [k, ids] of Object.entries(TETRARCHIA.gruppi)) G[k] = unione(ids);
   out.tetrarchia = {
     linee: TETRARCHIA.linee.map(([a, b, discussa]) => ({ d: confiniFra(G[a], G[b]).map(l => 'M' + l.map(p => f1(p[0]) + ' ' + f1(p[1])).join('L')).join(''), discussa: !!discussa })),
-    nomi: TETRARCHIA.nomi.map(n => { const p = proj([n[0], n[1]]); return [f1(p[0]), f1(p[1]), n[2], n[3]]; })
+    nomi: TETRARCHIA.nomi.map(n => { const p = proj([n[0], n[1]]); return [f1(p[0]), f1(p[1]), n[2], n[3], n[4], n[5] || '']; }),      // quinto e sesto: l'area del nome e quella discussa, per accenderle al tocco (js/mappa.js)
+    gruppi: TETRARCHIA.gruppi
   };
   for (const l of out.tetrarchia.linee) console.log('tetrarchia', l.discussa ? 'discussa' : 'linea', l.d.split('M').length - 1, 'tratti,', l.d.length, 'car.');
 }

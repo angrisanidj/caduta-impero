@@ -73,5 +73,12 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
 .m-tetra path.discussa{stroke-width:1.2;stroke-dasharray:2.6 3;stroke-linecap:butt;opacity:.85}
 .m-tetra text{font-family:var(--serif);font-style:italic;font-size:10.5px;text-anchor:middle;fill:#FBF6EA;paint-order:stroke;stroke:rgba(60,20,20,.35);stroke-width:2.2px}
 .m-tetra .rango{font-size:8.5px;letter-spacing:.06em}
+/* i nomi dei quattro si toccano: il nome acceso diventa oro, gli altri si attenuano; le regioni di attribuzione discussa restano più chiare */
+/* sui telefoni crescono come i cartellini dei popoli (--pf, js/mappa.js), per restare leggibili e toccabili */
+.m-tetra text{pointer-events:auto;cursor:pointer;transition:opacity .3s,fill .3s;font-size:max(10.5px,calc(var(--pf,11.5px)*.86))} .m-tetra .rango{font-size:.8em} .m-tetra.via text{pointer-events:none}
+.m-tetra text[aria-pressed="true"]{fill:#F1D99A;stroke:rgba(40,14,14,.6)}
+.m-tetra.con-fuoco text[aria-pressed="false"]{opacity:.6}
+.m-tetra text:focus{outline:none} .m-tetra text:focus-visible{outline:1.5px solid #F1D99A;outline-offset:2px}
+#mappa svg.m-fuoco .m-regione.acceso.incerto{opacity:.5}
 .legenda-luoghi span.tetra{color:var(--ink2,var(--ink))}
 .legenda-luoghi span.tetra::before{width:16px;height:0;margin:0 7px 0 1px;background:none;border-top:2px dotted currentColor;transform:none;vertical-align:3px}
