@@ -565,7 +565,7 @@ var ultimo=null, legendeMax=0;
    da una tappa all'altra, sul PC (carta in pagina, più larga di 700 punti) l'altezza della tappa con più voci la tiene il riquadro della carta,
    e lo spazio che avanza resta in fondo, sotto la nota. A tutto schermo la misura (legendeMax) serve ad adatta() per lasciare posto alle legende. */
 function spazioLegende(){
-  var prima=ultimo, T=(window.RM_DATI||{}).TAPPE||[], alta=0, r, riq=legenda.parentNode, largo=document.body.classList.contains('impero-largo'), fisso=!grandeSi && window.innerWidth>700; inMisura=true;
+  var prima=ultimo, T=(window.RM_DATI||{}).TAPPE||[], alta=0, r, riq=legenda.parentNode, largo=document.body.classList.contains('impero-largo'), fisso=false; inMisura=true;      // 23 novembre 2026: l'utente non vuole lo spazio vuoto sotto la nota; il riquadro finisce con le sue legende (la linea del tempo resta ferma in fondo)
   legenda.style.minHeight=''; riq.style.minHeight='';
   if(legendaPopoli){ legendaPopoli.style.minHeight=''; for(r in vociPopoli) vociPopoli[r].hidden=false; }
   if(largo) document.body.classList.remove('impero-largo');      // si misura con le legende sotto la carta
