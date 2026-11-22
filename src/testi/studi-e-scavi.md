@@ -184,3 +184,63 @@ Quattro affermazioni aggiunte riscrivendo i testi e per ora tolte. Per ciascuna:
 **Frase proposta (tappa del 284):** «Nel 215 Caracalla introduce una moneta nuova, l'antoniniano. Nessun testo antico ne dice il valore. Gli studiosi pensano che valesse due denari, perché porta la corona radiata che indicava il doppio, ma conteneva l'argento di un denaro e mezzo.»
 
 **Resta da leggere:** Harl, *Coinage in the Roman Economy*, 1996, pp. 46-51; Estiot; il saggio del volume per Burnett nel testo intero.
+
+---
+
+## Ultima ricerca (23 novembre 2026), anche su fonti inglesi
+
+Strumenti usati: ricerca a testo pieno di archive.org (servizio `services/search/beta/page_production/?service_backend=fts`, con `identifier:<id> AND <parole>` per cercare dentro un libro in prestito), file `_djvu.txt` scaricati con curl e cercati in locale, `pdftotext` per i PDF. Libri interi trovati oggi su archive.org: P. MacGeorge, *Late Roman Warlords* (`late-roman-warlords`); R. C. Blockley, *The Fragmentary Classicising Historians* (`the-fragmentary-classicising-historians-of-the-later-roman-empire-eunapius-olymp`); Duchesne, *Liber Pontificalis* I (`duchesne01`); Paolo Diacono, *Historia Romana* (`paulihistoriaromana`); Migne, PL 76 (`patrologiaecursu76mign`, omelie su Ezechiele); *Auctarium Prosperi Havniense*, ed. Hille (`prosperiaqvitan00prosgoog`). Questi servono soprattutto alla parte B (`src/testi/scene-roma-fonti.md`).
+
+### A1. Colosseo nel VI-IX secolo (cunicoli, perni, calcara, case e stalle)
+
+**Letto:**
+- Parco archeologico del Colosseo, comunicato stampa del 17 marzo 2026 sugli ambulacri meridionali (https://colosseo.it/sito/wp-content/uploads/2026/03/Comunicato-Stampa_ambulacri-Colosseo.pdf, convertito con `pdftotext`): «A partire dal VI-VII sec. d.C., infatti, il fronte meridionale del Colosseo [...] era in parte crollato a seguito di cedimenti naturali e terremoti, riusi e spoliazioni». Poi «il riuso dei materiali della pavimentazione dei due ambulacri, costituita da blocchi giustapposti dello spessore di 90 cm l'uno, quindi la rifunzionalizzazione degli spazi - privati della pavimentazione - in ricoveri, stalle, recinti realizzati riutilizzando il materiale di spolio». La stratigrafia va «tra il VII e il XX secolo» ed è stata scavata fra il 2021 e il 2024. Il comunicato non data le singole fasi: le stalle e i recinti possono essere di qualunque secolo dal VII in poi.
+- Archaeology Wiki, 2 luglio 2014 (https://www.archaeology.wiki/blog/2014/07/02/the-colosseum-was-a-huge-condominium-in-the-middle-ages/, che riprende archaeology.org e Discovery News del 30 giugno-1 luglio 2014): uno scavo di tre settimane sotto le arcate d'ingresso, di Roma Tre e dell'American University of Rome, mostra che gente comune abitò nel Colosseo «from the 9th century until at least 1349»; Rossella Rea: «an entire housing lot from the late medieval period». Le case trovate sono del basso Medioevo (muro del XII secolo, tubi di terracotta); il IX secolo è solo l'inizio dell'abitato. Fonte giornalistica, non pubblicazione di scavo.
+- M. Beard, K. Hopkins, *The Colosseum*, 2005 (archive.org `colosseum00hopk`, solo brani della ricerca a testo pieno, senza pagine): un capitolo «Robbers and re-users» comincia «By the sixth century»; altrove gente che si arrampicava «to remove and make off with the iron clamps which held the blocks together» e i buchi spiegati come opera di «enterprising medieval hucksters». I brani non danno date.
+- *Companion* 2026: Spera (vol. II, p. 832 e nota 133) cita i capitoli di Rea in *Rota Colisei* (pp. 85-107, 108-112, 121-125) solo per le tombe della valle; nessun capitolo parla di cunicoli, perni o calcara dentro l'anfiteatro (cercati «Colosseum», «Flavian Amphitheater», «lime», «kiln», «clamps»).
+
+**Non trovati:** R. Rea 1993; *Rota Colisei* 2002; Facchin, Rea, Santangeli Valenzani 2018 (nessun testo in rete, nessuna recensione con i dati). Nessuna fonte letta parla di una vasca o calcara al primo ordine. Provati: archive.org (testo pieno: «Rota Colisei», «Colosseum lime kiln», «Colosseum clamps»), colosseo.it, ricerca web in italiano e in inglese.
+
+**Che cosa cambia nella pagina (`SCHEDE.colosseo`, «fine VI sec.»):** la frase sui cunicoli e sulla vasca resta dichiarata «non ritrovata». Si può aggiungere una frase sostenuta: «Dal VI-VII secolo il lato sud comincia a crollare, per terremoti e cedimenti; le lastre di travertino del pavimento esterno, spesse 90 centimetri, vengono portate via, e negli spazi rimasti si fanno ricoveri, stalle e recinti con il materiale di spoglio (scavi del Parco, 2021-2024; le fasi non sono datate una per una). Gente comune ci abita almeno dal IX secolo.»
+
+### A2. Tombe nelle terme di Traiano (e nell'esedra)
+
+**Letto:**
+- *Companion* 2026, Spera, vol. II, pp. 832-833 e note 132, 136-138: l'elenco dei monumenti pubblici con tombe, preso dal catalogo di Meneghini e Santangeli Valenzani (2004, pp. 103-125): Domus Tiberiana (4), tempio della Magna Mater (1), Tabulario (5), casa delle Vestali (2), basilica di Massenzio (2), foro di Nerva (1), Ludus Magnus (1), Serapeo del Campo Marzio (1), Porticus Minucia (più di 2), terme Alessandrine (2), terme Eleniane al Sessorio (3), Porticus Aemilia (3); gli auditori presso il foro di Traiano (7-8). Grandi concentrazioni: terme di Caracalla, area del tempio di Elagabalo sul Palatino, Castra Praetoria (nn. 16 e 44 del catalogo). Nota 132: terme Deciane all'Aventino, cosiddette terme di Elagabalo presso Santa Maria in Aquiro. **Le terme di Traiano non ci sono.**
+- Andrews, vol. II, p. 675 e nota 89: tombe nella *Porticus Liviae* sull'Oppio (Pergola 1987; Panella, «Colle Oppio, "Porticus Liviae"»), cioè a circa 200 m a ovest delle terme di Traiano, non dentro. Nota 90: i siti termali del catalogo sono i nn. 14, 17, 43, 44, 47, 64, 67, 69, 70, 83, 85; i nomi non sono dati.
+- Sovrintendenza capitolina, scheda «Colle Oppio. Terme di Traiano: criptoportico ed esedra» (PDF in https://www.sovraintendenzaroma.it/, convertito con `pdftotext`): scavi «negli ultimi venti anni [...] nell'angolo sudoccidentale delle Terme», nessuna sepoltura.
+
+**Non trovati:** Meneghini e Santangeli Valenzani 1993 e 1995; la versione inglese in Pearce e altri (Oxbow 2000); Costambeys, PBSR 2001 (a pagamento su Cambridge Core); il catalogo 2004.
+
+**Verdetto:** nessuna fonte letta dà tombe nelle terme di Traiano. Le liste di Spera e Andrews, tratte dal catalogo, nominano molte terme ma non queste; la più vicina è la *Porticus Liviae*. Non si può escludere che sia uno dei numeri senza nome di Andrews.
+
+**Che cosa cambia nella pagina (`SCHEDE.traiano`, 537):** la frase di oggi va bene. Più precisa: «Più tardi molte terme abbandonate diventano luoghi di sepoltura (Caracalla, Diocleziano, le terme Alessandrine). Nelle terme di Traiano non ne conosciamo; tombe sono state trovate poco lontano, nel portico di Livia sull'Oppio.»
+
+### A3. Popolazione di Roma
+
+**Letto:**
+- *Companion* 2026, M. Vitiello, «Late Antique Romans», vol. I, pp. 141-142 e note 34-39: chi riceveva le distribuzioni di carne di maiale passa da 300.000 sotto Valentiniano I a 120.000 nel 419 e nel 452 (o forse 141.120): può voler dire una popolazione scesa «from about 800,000 to 400,000»; all'inizio della guerra gotica «perhaps 60,000 or 50,000 inhabitants»; i 500 civili di Procopio nel 546 sono poco credibili, ma alla fine della guerra la città è quasi vuota; «Not until the years of Gregory I did the population again grow to over 50,000 people». Nota 36: Purcell 1999, p. 142, citato solo contro i 40.000 schiavi di Zosimo.
+- *Companion*, Verardi, vol. I, p. 166 e note 4-5: fra il 90.000 di Krautheimer (p. 62) e i 5.000 religiosi di una «ritual city», l'ipotesi più plausibile, sui dati di scavo, è una popolazione stabile «up to the year 1000 of around 20,000 to 30,000 inhabitants» (Meneghini e Santangeli Valenzani, «L'assetto demografico», in *Roma altomedievale*, pp. 205-208; Hodges 1993). Già usato dalla pagina.
+- *Companion*, Liverani, «From Ancient to Medieval Rome», vol. II, p. 876 circa: dalla seconda metà del VI secolo «only [...] a few tens of thousands of people».
+
+**Non trovati:** Purcell 1999, nessun numero ritrovato in citazioni (cercato su archive.org, Google, recensioni); Wickham, *Medieval Rome* (non è su archive.org; nessuna citazione con la cifra di 20-25.000 per l'VIII-IX secolo).
+
+**Che cosa cambia nella pagina (`CURVE.popolazione`):** una correzione da valutare. Il valore al tempo di Gregorio (forse 90.000, da Krautheimer con i profughi) va messo accanto a quello di Vitiello: «poco più di 50.000». Proposta per il commento e per la banda: tenere la forchetta 50.000-90.000 per gli anni di Gregorio (Vitiello, Krautheimer), dicendo che i numeri sono discussi. Per l'VIII-IX secolo restano i 20-30.000 di Verardi (non Wickham).
+
+### A4. La lunghezza del portico di San Pietro
+
+**Letto:**
+- *Liber Pontificalis*, vita di Adriano I, c. 72, ed. Duchesne I, p. 507 (archive.org `duchesne01`, testo intero): il papa, vedendo che la gente arrivava a San Pietro per una via «artam et angustam» lungo la riva del fiume, «plus quam XII milia tufos a litore alvei fluminis in fundamentis ponens, a solo usque ad summum tegnum mire magnitudinis porticum reparavit; quae porticum usque ad gradas beati Petri noviter restauravit». Duchesne (nota 89) non aggiunge misure. È un dato nuovo per la pagina: le fondamenta verso il fiume, più di 12.000 blocchi di tufo, il restauro fino ai gradini. Non dà la lunghezza.
+- Krautheimer, *Rome. Profile of a City* (archive.org, ricerca a testo pieno: «portico», «colonnade», «bridge»): nessun brano con una misura.
+
+**Non trovato:** nessuna misura in una fonte. Resta la distanza misurata sulla carta (circa 900 m).
+
+**Che cosa cambia nella pagina (`SCHEDE.porticopietro`):** la frase proposta il 22 novembre resta valida. Si può aggiungere una data: «Adriano I (772-795) lo rifà fino ai gradini della basilica e ne rafforza le fondamenta lungo il fiume con più di dodicimila blocchi di tufo (Liber Pontificalis).» L'anno esatto non è nel testo.
+
+### Correzioni nate dalla ricerca di oggi (anche dalla parte B)
+
+- `EVENTI.assedio472`, commento «le fonti parlano di combattimenti e saccheggio, non di incendi»: c'è un incendio presso la Curia durante il «tumultus civilis», CIL VI 526 = 1664 (statua di Minerva restaurata da Anicio Acilio Aginazio Fausto), riferito al 472 da Sessa e Orlandi nel *Companion* (I, pp. 94 e 195). Vedi `scene-roma-fonti.md`, sezione 1.
+- Paolo Diacono, *Historia Romana*: il campo di Ricimero «apud Anicionis pontem» è in XV 3 (ed. Droysen, p. 119), lo scontro a ponte Elio in XV 4.
+- 593: i Romani «more canum in collis funibus ligati» non sono nelle Omelie su Ezechiele ma in *Registrum* V 36 (giugno 595). Nelle Omelie (II 10, 24) ci sono i mutilati, i prigionieri e gli uccisi.
+- 791: «Nei pressi dell'attuale ponte Sisto crolla un tratto delle mura» è sostenuto dal *Liber Pontificalis* (c. 94, «usque ad pontem Antonini, ipsum evertens murum»; ponte Sisto secondo Duchesne, nota 129).
+- Non trovati in inglese: R. Rea, J. Beste, L. Lancaster sul Colosseo medievale (nessun testo aperto); Meneghini e Santangeli Valenzani in Pearce e altri, Oxbow 2000; Costambeys 2001 (a pagamento); Purcell 1999; Wickham 2015.

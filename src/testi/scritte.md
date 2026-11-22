@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 00:02:38.
+Generato da `src/testi.mjs` il 23/11/2026, 00:38:29.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -103,7 +103,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.44] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.45] Versione del 22/11/2026, ore 23:53
+[pagina.45] Versione del 23/11/2026, ore 00:37
 
 
 ## 2. Gli atti
@@ -1692,7 +1692,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.sacco455] 2-16 giugno 455 · I Vandali di Genserico saccheggiano Roma per quattordici giorni. Secondo Prospero d'Aquitania, papa Leone ottiene che siano risparmiati agli abitanti incendi, stragi e torture. I Vandali portano via sistematicamente i beni della città, compresa metà del tetto di bronzo dorato del tempio di Giove.
 
-[evento.assedio472] Luglio 472 · L'imperatore Antemio si rifugia sul Palatino mentre Ricimero assedia Roma. Dopo mesi di assedio, lo scontro decisivo si combatte a ponte Elio, davanti al mausoleo di Adriano. Ricimero conquista la città.
+[evento.assedio472] Luglio 472 · L'imperatore Antemio si rifugia sul Palatino mentre Ricimero assedia Roma. Dopo mesi di assedio, lo scontro decisivo si combatte a ponte Elio, davanti al mausoleo di Adriano. Ricimero conquista la città. Un'iscrizione ricorda un incendio presso la Curia durante la guerra civile: alcuni studiosi lo riferiscono a questi giorni.
 
 [evento.velo536] 536 · Per circa un anno il sole appare velato. I contemporanei raccontano che la sua luce scalda poco.
 
@@ -1750,9 +1750,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.colosseo.data8] Alcuni cunicoli servivano a estrarre travertino e metallo. Al primo livello è segnalata una vasca in cui si aggiungeva acqua alla calce, ma nelle pubblicazioni di scavo consultate non ne abbiamo trovato riscontro. Dalla seconda metà dell'VIII secolo si recuperano materiali su larga scala.
 
-[scheda.colosseo.data9-847] Il Parco archeologico del Colosseo attribuisce al terremoto di quest'anno il crollo di ciò che restava del lato sud, già in gran parte smontato. A terra si accumularono i blocchi di travertino. Il Liber Pontificalis riferisce che la scossa fu avvertita con forza in città, ma non descrive danni.
+[scheda.colosseo.data9.quando] VI-IX secolo
 
-[scheda.colosseo.data10-1349] La tradizione attribuiva il crollo al terremoto del 1349. Per R. Rea, che ha scavato il monumento, dopo la fine degli spettacoli il Colosseo, più che crollare, fu smontato a più riprese per recuperarne i materiali.
+[scheda.colosseo.data9] Dal VI-VII secolo il lato sud comincia a crollare, per terremoti e cedimenti. Le lastre di travertino del pavimento esterno, spesse 90 centimetri, vengono portate via, e negli spazi rimasti si fanno ricoveri, stalle e recinti con il materiale di spoglio: gli scavi del Parco archeologico (2021-2024) non datano le fasi una per una. Gente comune ci abita almeno dal IX secolo.
+
+[scheda.colosseo.data10-847] Il Parco archeologico del Colosseo attribuisce al terremoto di quest'anno il crollo di ciò che restava del lato sud, già in gran parte smontato. A terra si accumularono i blocchi di travertino. Il Liber Pontificalis riferisce che la scossa fu avvertita con forza in città, ma non descrive danni.
+
+[scheda.colosseo.data11-1349] La tradizione attribuiva il crollo al terremoto del 1349. Per R. Rea, che ha scavato il monumento, dopo la fine degli spettacoli il Colosseo, più che crollare, fu smontato a più riprese per recuperarne i materiali.
 
 [scheda.colosseo.certezza-A] Sul lato nord restano 33 delle 80 arcate dell'anello esterno, secondo il Parco archeologico. Si conserva anche gran parte degli anelli interni e conosciamo l'intera pianta. Il lato sud è crollato in un terremoto, ma quale sia è discusso.
 
@@ -2011,7 +2015,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.traiano.data1-109] Inaugurate.
 
-[scheda.traiano.data2-537] Nel V secolo un prefetto di Roma fa ancora collocare statue nelle terme. Il taglio degli acquedotti le lascia senz'acqua. Più tardi molte terme abbandonate diventano luoghi di sepoltura. Nelle pubblicazioni lette non abbiamo trovato tombe in queste terme, né nell'esedra, lo spazio semicircolare.
+[scheda.traiano.data2-537] Nel V secolo un prefetto di Roma fa ancora collocare statue nelle terme. Il taglio degli acquedotti le lascia senz'acqua. Più tardi molte terme abbandonate diventano luoghi di sepoltura, come quelle di Caracalla, di Diocleziano e le Alessandrine. Nelle terme di Traiano non ne conosciamo; tombe sono state trovate poco lontano, nel portico di Livia sull'Oppio.
 
 [scheda.traiano.certezza-B] Restano in piedi alcune sale semicircolari e la grande cisterna delle Sette Sale. Per la parte centrale delle terme le principali testimonianze sono i disegni del Cinquecento.
 
@@ -3666,15 +3670,15 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.11-r74] Mostra meno
 
-[ui.pagina.12-r178] Voci di allora
+[ui.pagina.12-r179] Voci di allora
 
-[ui.pagina.13-r178] Una voce di allora
+[ui.pagina.13-r179] Una voce di allora
 
-[ui.pagina.14-r222] Esci dallo schermo intero
+[ui.pagina.14-r223] Esci dallo schermo intero
 
-[ui.pagina.15-r222] Scena a tutto schermo
+[ui.pagina.15-r223] Scena a tutto schermo
 
-[ui.pagina.16-r222] Tutto schermo
+[ui.pagina.16-r223] Tutto schermo
 
 
 ### js/mappa.js
@@ -3799,15 +3803,15 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.60-r546] Mostra meno voci della legenda
 
-[ui.mappa.61-r550] Mostra le altre
+[ui.mappa.61-r556] Mostra le altre
 
-[ui.mappa.62-r600] mai dentro l’impero
+[ui.mappa.62-r606] mai dentro l’impero
 
-[ui.mappa.63-r642] Carta a tutto schermo
+[ui.mappa.63-r648] Carta a tutto schermo
 
-[ui.mappa.64-r647] Tutto schermo
+[ui.mappa.64-r653] Tutto schermo
 
-[ui.mappa.65-r647] Esci dallo schermo intero
+[ui.mappa.65-r653] Esci dallo schermo intero
 
 
 ### js/atti.js
