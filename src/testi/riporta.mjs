@@ -16,7 +16,7 @@ const leggiMd = p => { const m = new Map(); for (const l of fs.readFileSync(p, '
 const prima = leggiMd(fPrima), dopo = leggiMd(fDopo), ora = leggiMd(fOra);
 const forma = s => s.replace(/[’‘]/g, "'").replace(/(\d)\s?[–—]\s?(\d)/g, '$1-$2').replace(/\s+/g, ' ').trim();
 const finali = {};
-for (const f of fs.readdirSync(path.join(RADICE, 'src/testi/verifica')).filter(f => /^finali-\d+\.json$/.test(f))) Object.assign(finali, JSON.parse(fs.readFileSync(path.join(RADICE, 'src/testi/verifica', f), 'utf8')));
+if (!process.argv.includes('--senza-finali')) for (const f of fs.readdirSync(path.join(RADICE, 'src/testi/verifica')).filter(f => /^finali-\d+\.json$/.test(f))) Object.assign(finali, JSON.parse(fs.readFileSync(path.join(RADICE, 'src/testi/verifica', f), 'utf8')));
 const CORTA = /^(ui\.|atto\.[IVX]+\.nome$|tesi\.[^.]+\.(titolo|elenco\d+)$|T\d+-\d+\.titolo$|pagina\.07$|curva\.)/;
 
 /* ---- che cosa va scritto ---- */

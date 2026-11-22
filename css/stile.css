@@ -664,3 +664,10 @@ body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.9
 }
 @media (prefers-reduced-motion:reduce){ .condividi .tasto{transition:none} }
 @media print{ .fascia,.condividi-lato,.tempo,.apertura-figura{display:none} }
+
+/* telefono: il bottone che porta dalla scena al racconto della tappa e ritorno (js/pagina.js) */
+.salta-giu{position:fixed;right:12px;bottom:14px;z-index:30;min-height:40px;padding:0 16px;border:1px solid rgba(212,174,85,.6);border-radius:999px;background:rgba(36,30,26,.92);color:#F6E4B0;
+  font-family:var(--ui);font-size:13px;font-weight:600;letter-spacing:.02em;box-shadow:0 6px 16px -6px rgba(0,0,0,.5);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.salta-giu[hidden]{display:none}
+@media (min-width:1001px){ .salta-giu{display:none} }
+@media print{ .salta-giu{display:none} }

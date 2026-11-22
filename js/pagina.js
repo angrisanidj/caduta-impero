@@ -278,5 +278,24 @@ else{                                   // apertura dalla fine: la città del 55
     var q=RM.h(x,z)+1; RM.controlli.target.set(x,q,z); RM.camera.position.set(x+dir[0]*d*.82,q+d*.56,z+dir[1]*d*.82); RM.controlli.update(); },400);
 })();
 [].forEach.call(document.querySelectorAll('.menu a'),function(a){ a.addEventListener('click',function(e){ var el=document.getElementById(a.getAttribute('href').slice(1)); if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); } }); });
+/* Telefono (richiesta dell'utente, 23 novembre 2026): un bottone che porta dalla scena al racconto della tappa e ritorno.
+   Finché si guarda la scena e il titolo della tappa sta sotto lo schermo dice «Leggi la tappa»; quando la scena è uscita di sopra dice «Carta e città».
+   Sta sopra la linea del tempo quando questa è incollata in fondo. Sul PC e a tutto schermo non c'è. */
+(function(){
+  var b=document.createElement('button'), tit=$('tAtto')||$('tTitolo'), sc=$('scene'), tp=document.querySelector('.tempo'), raf=0; if(!tit||!sc) return;
+  b.type='button'; b.className='salta-giu'; b.hidden=true; document.body.appendChild(b);
+  function aggiorna(){
+    var B=document.body.classList, H=window.innerHeight;
+    if(window.innerWidth>1000 || B.contains('roma-grande') || B.contains('impero-grande')){ b.hidden=true; return; }
+    var r=tit.getBoundingClientRect(), s=sc.getBoundingClientRect(), dove=r.top>H*.85 && s.bottom>0 ? 'giu' : s.bottom<0 && r.top<H*.6 ? 'su' : '';
+    b.hidden=!dove; if(!dove) return;
+    if(b.dataset.dove!==dove){ b.dataset.dove=dove; b.textContent=dove==='giu'?'Leggi la tappa ↓':'↑ Carta e città'; }
+    var t=tp?tp.getBoundingClientRect():null; b.style.bottom=Math.max(14,t&&t.top<H&&t.bottom>H-4?H-t.top+10:14)+'px';
+  }
+  function presto(){ if(!raf) raf=requestAnimationFrame(function(){ raf=0; aggiorna(); }); }
+  window.addEventListener('scroll',presto,{passive:true}); window.addEventListener('resize',presto); ascolto.push(presto); aggiorna();
+  b.addEventListener('click',function(){ var ridotto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+    (b.dataset.dove==='giu'?tit:sc).scrollIntoView({behavior:ridotto?'auto':'smooth',block:'start'}); });
+})();
 window.RM_pagina={vai:vai, ferma:ferma, spie:SPIE, quando:function(f){ ascolto.push(f); }, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
 })();
