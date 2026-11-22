@@ -485,6 +485,11 @@ var MONUMENTI={
   paolocostantino:[[0,'assente'],[324,'uso'],[386,'assente']], paolo:[[0,'assente'],[390,'uso'],[801,'crollato'],[806,'uso']],
   sabina:[[0,'assente'],[432,'uso']], mariamaggiore:[[0,'assente'],[434,'uso']], stefano:[[0,'assente'],[475,'uso']], cosma:[[0,'assente'],[527,'uso']],
   foca:[[0,'assente'],[608,'uso']],
+  /* inventario del 22 novembre 2026 (js/monumenti.js): le date sono quelle lette, annotate là; le terme chiudono nel 537 come le altre, quando si tagliano gli acquedotti */
+  colonnamarco:[[0,'uso']], orologio:[[0,'uso']], obeliscosallustiano:[[0,'uso']], piramide:[[0,'uso']], castrapretorio:[[0,'uso'],[312,'assente']],
+  termenerone:[[0,'uso'],[537,'chiuso']], termeagrippa:[[0,'uso'],[537,'chiuso']], tempioadriano:[[0,'uso']], tempioclaudio:[[0,'uso']], dolabella:[[0,'uso']],
+  ludusmagnus:[[0,'uso'],[440,'chiuso']], metaromuli:[[0,'uso']], foroboario:[[0,'uso']], ottavia:[[0,'uso']], argentina:[[0,'uso']], iseo:[[0,'uso']], esquilino:[[0,'uso']],
+  minervamedica:[[0,'assente'],[320,'uso']], sessoriano:[[0,'uso'],[275,'chiuso']], eurisace:[[0,'uso'],[402,'assente']], archivialata:[[0,'uso']], arcusnovus:[[0,'assente'],[293,'uso']], campidoglio:[[0,'uso']],
   /* il quartiere che cresce attorno a San Pietro */
   monasteripietro:[[0,'assente'],[450,'uso']], campanilepietro:[[0,'assente'],[757,'uso']], porticopietro:[[0,'assente'],[400,'uso']], scholae:[[0,'assente'],[727,'uso']], leonine:[[0,'assente'],[852,'uso']],
   andreapietro:[[0,'uso']], petronilla:[[0,'assente'],[400,'uso']], monasteripietro2:[[0,'assente'],[680,'uso']], episcopiapietro:[[0,'assente'],[500,'uso']], scholae2:[[0,'assente'],[799,'uso']],
@@ -609,6 +614,27 @@ var SCHEDE={
   mariamaggiore:{cosa:"Basilica sull'Esquilino dedicata a Maria.", date:[[434,"Costruita sotto papa Sisto III (432-440), dopo il concilio di Efeso. Il 5 agosto è la festa della dedicazione; l'anno non è noto, e il 434 qui è nominale."]]},
   stefano:{cosa:"Chiesa a pianta circolare sul Celio.", date:[[455,"Cantiere avviato sotto papa Leone I: le travi sono datate al 455 circa."],[475,"Consacrata da papa Simplicio (468-483)."]]},
   foca:{cosa:"Colonna onoraria nella piazza del Foro.", date:[[608,"Dedicata il 1° agosto dall'esarca Smaragdo all'imperatore d'Oriente Foca. È l'ultimo monumento eretto nel Foro; colonna e basamento sono presi da monumenti più antichi."]]},
+  /* inventario del 22 novembre 2026: fonti nei commenti di js/monumenti.js */
+  colonnamarco:{cosa:"Colonna coclide per le vittorie di Marco Aurelio sui Marcomanni e sui Sarmati: cento piedi romani, quasi 30 metri, con il fregio a spirale delle campagne e una scala interna di 200 gradini. Imita quella di Traiano.", date:[["176-193","Costruita dopo la morte di Marco Aurelio."],[193,"Un'iscrizione ricorda la casetta costruita per il custode della colonna."],["X sec.","Papi Agapito II e Giovanni XII la danno ai monaci di San Silvestro in Capite: per questo si conserva meglio di altri monumenti. Oggi è in piazza Colonna, con la statua di san Paolo messa da Sisto V nel 1589."]]},
+  orologio:{cosa:"Nel Campo Marzio settentrionale Augusto fa del suo obelisco, alto quasi 22 metri, l'ago di una grande meridiana: a mezzogiorno l'ombra cade su un pavimento di marmo con le linee di bronzo dorato. Accanto, l'Ara Pacis e, più tardi, la colonna di Antonino Pio.", date:[["10 a.C.","L'obelisco di Psammetico II arriva da Eliopoli e viene dedicato al Sole."],["9 a.C.","Dedicata l'Ara Pacis, voluta dal Senato nel 13 per il ritorno di Augusto dalla Spagna e dalla Gallia."],[161,"Marco Aurelio e Lucio Vero innalzano la colonna di granito di Antonino Pio, alta 14,75 metri."],["VIII sec.","L'Itinerario di Einsiedeln vede ancora l'obelisco in piedi. Cade, rotto, in un anno che non si conosce: i pezzi si trovano nel 1502 e nel 1748; dal 1792 è in piazza di Montecitorio. L'Ara Pacis è ricomposta nel 1938 sul Lungotevere."]]},
+  obeliscosallustiano:{cosa:"Obelisco fatto a Roma, alto 13 metri, che copia i geroglifici di quello di Ramesse II al Circo Massimo. Ornava gli Horti Sallustiani, i giardini imperiali fra Pincio e Quirinale.", date:[["VIII sec.","È ancora in piedi per l'Itinerario di Einsiedeln."],["XV sec.","Giace a terra in due pezzi, accanto alla sua base."],[1789,"Pio VI lo innalza davanti a Trinità dei Monti, dove sta oggi. La base, ritrovata nel 1843, è sul Campidoglio."]]},
+  piramide:{cosa:"Tomba di Gaio Cestio a forma di piramide, alta 36 metri, di cementizio rivestito di marmo bianco, accanto alla via Ostiense.", date:[["18-12 a.C.","Costruita in meno di 330 giorni, come dice l'iscrizione."],["271-275","Diventa un tratto delle mura Aureliane, accanto alla porta Ostiense."],["medioevo","La si crede la tomba di Remo."]]},
+  castrapretorio:{cosa:"La caserma della guardia pretoria: un rettangolo di 440 metri per 380, con mura merlate e porte a torri, sul punto più alto della città.", date:[["21-23","Costruita da Tiberio, su consiglio di Seiano."],["271-275","Aureliano usa i lati nord ed est e metà del lato sud come mura della città, e li alza."],[312,"Costantino scioglie i pretoriani, che avevano combattuto per Massenzio, e abbatte i muri interni del campo."]]},
+  termenerone:{cosa:"Le seconde terme pubbliche di Roma, fra il Pantheon e lo stadio di Domiziano: circa 190 metri per 120, con l'ingresso a nord.", date:[["62 o 64","Costruite da Nerone."],[227,"Rifatte da Alessandro Severo: da allora si chiamano Alessandrine."],["998-1011","Il nome è ancora vivo nei documenti. Oggi ne restano muri dentro palazzo Madama."]]},
+  termeagrippa:{cosa:"Le prime terme pubbliche di Roma, di Agrippa, a sud del Pantheon e sul suo stesso asse: circa 110 metri per 90. La sala rotonda di 25 metri è l'«arco della Ciambella».", date:[["25-19 a.C.","Costruite da Agrippa; alla sua morte passano al popolo."],["III sec.","La sala rotonda appartiene a un rifacimento non anteriore ad Alessandro Severo."]]},
+  tempioadriano:{cosa:"Il tempio del Divo Adriano nel Campo Marzio: otto colonne sulla fronte e tredici sui fianchi, alte 15 metri, su un podio di 4, dentro un recinto porticato.", date:[[145,"Dedicato da Antonino Pio."],["oggi","Restano undici colonne del fianco nord in piazza di Pietra, dentro la facciata della Borsa."]]},
+  tempioclaudio:{cosa:"Il tempio del Divo Claudio sul Celio, su una piattaforma di 180 metri per 200 retta da muri alti fino a 15. Il tempio, esastilo, guardava il Palatino; sul lato est una grande mostra d'acqua a nicchie.", date:[[54,"Agrippina lo comincia per il marito divinizzato."],["dopo il 64","Nerone lo smantella quasi del tutto per la Domus Aurea; Vespasiano lo ricostruisce."],["IV sec.","Ultima menzione del tempio."]]},
+  ludusmagnus:{cosa:"La più grande caserma dei gladiatori, accanto al Colosseo: celle su tre piani attorno a un'arena ellittica per gli allenamenti.", date:[["fine I sec.","Costruito da Domiziano, rifatto sotto Traiano."],["inizio V sec.","Finiscono i combattimenti fra gladiatori (vedi il Colosseo): la caserma perde la sua funzione. La data della chiusura, qui, è una scelta."]]},
+  metaromuli:{cosa:"Grande tomba a piramide nel Vaticano, fra il mausoleo di Adriano e San Pietro, più grande della piramide Cestia. Nel medioevo la si credeva la tomba di Romolo, mentre quella di Cestio era di Remo.", date:[[1499,"Alessandro VI ne toglie la parte sud per aprire Borgo Nuovo; i resti spariscono poco dopo."]]},
+  foroboario:{cosa:"Il mercato del bestiame, fra il Tevere e il Palatino: il tempio rotondo di Ercole Vincitore, quello di Portuno, dio del porto, l'arco di Giano a quattro fronti e la porta degli Argentari; sul fiume, lo sbocco della Cloaca Massima.", date:[["II sec. a.C.","Il tempio rotondo, il più antico edificio di marmo di Roma rimasto in piedi."],[204,"I banchieri e i mercanti di buoi dedicano la porta degli Argentari a Settimio Severo e alla sua famiglia; il nome di Geta è cancellato dopo il 212."],["IV sec.","L'arco di Giano, forse l'«arco del divo Costantino» dei cataloghi regionari."]]},
+  ottavia:{cosa:"Grande piazza porticata voluta da Augusto e intitolata alla sorella Ottavia, attorno ai templi di Giunone Regina e di Giove Statore, con una biblioteca e una curia. Era piena di opere d'arte.", date:[["dopo il 27 a.C.","Costruito al posto del portico di Metello."],[80,"Brucia nell'incendio di Tito."],[203,"Settimio Severo e Caracalla rifanno il propileo, che è quello che si vede oggi."],[755,"Nel propileo nasce la chiesa di Sant'Angelo in Pescheria (la data è a memoria)."]]},
+  argentina:{cosa:"Quattro templi dell'età repubblicana, affiancati e rivolti a est, nel Campo Marzio; dietro, la curia di Pompeo dove fu ucciso Cesare. Non si sa con certezza a chi fossero dedicati: sono indicati con le lettere A, B, C e D.", date:[["III-II sec. a.C.","I templi più antichi; il B è rotondo."],["IX sec.?","Il tempio A diventa la chiesa di San Nicola de Calcarario (data a memoria)."]]},
+  iseo:{cosa:"Il santuario di Iside e Serapide nel Campo Marzio, fra i Saepta e il tempio di Minerva, ornato di obelischi egizi a coppie. Il recinto qui è indicativo; gli obelischi stanno dove furono ritrovati.", date:[[80,"Brucia nell'incendio di Tito; Domiziano lo ricostruisce."],[1373,"Si trova l'obelisco detto Macuteo, in piazza di San Macuto: oggi è sulla fontana davanti al Pantheon."],[1665,"Si trova l'obelisco della Minerva, che Bernini mette sull'elefante in piazza della Minerva nel 1667."],[1883,"Sotto l'abside di Santa Maria sopra Minerva si trova l'obelisco poi dedicato ai caduti di Dogali, oggi presso le Terme di Diocleziano."]]},
+  esquilino:{cosa:"Sull'Esquilino, l'arco della vecchia porta Esquilina dedicato a Gallieno, la mostra d'acqua detta Trofei di Mario per i trofei di marmo che la ornavano, e l'aula semisotterranea detta Auditorium di Mecenate.", date:[[226,"La mostra d'acqua, il «nymphaeum Alexandri», è attribuita ad Alessandro Severo (data a memoria)."],[262,"Aurelio Vittore dedica l'arco a Gallieno e a Salonina."],[1590,"I trofei vengono portati sulla balaustra del Campidoglio, dove stanno oggi."]]},
+  minervamedica:{cosa:"Grande aula decagona a cupola, larga 24 metri e alta 33, con nove nicchie e dieci finestre: una mostra d'acqua o una sala di giardino, non un tempio; spesso la si attribuisce agli Horti Liciniani, ma senza prove sufficienti (Platner e Ashby).", date:[["inizio IV sec.","Costruita, presumibilmente: il 320 è una scelta."],[1828,"Cade una parte della cupola."]]},
+  sessoriano:{cosa:"Nel palazzo imperiale del Sessorio, dove abitò Elena madre di Costantino: l'anfiteatro di corte, ellittico, di 88 metri per 78, e il circo Variano, lungo più di mezzo chilometro, con l'obelisco di Antinoo sulla spina.", date:[["III sec.","Elagabalo porta nel circo l'obelisco che Adriano aveva fatto per Antinoo."],["271-275","Le mura Aureliane chiudono le arcate dell'anfiteatro e tagliano il circo."],[1570,"L'obelisco, rotto in tre pezzi, viene trovato fuori porta Maggiore; dal 1822 sta sul Pincio."]]},
+  archivialata:{cosa:"Due archi sulla via Lata, oggi via del Corso: quello di Claudio per la conquista della Britannia, che portava l'acqua Vergine sopra la strada, e quello detto di Portogallo, vicino all'Ara Pacis.", date:[["51-52","Claudio fa dell'arcata dell'acquedotto un arco trionfale."],["VIII sec.","L'arco di Claudio è già in rovina."],[1662,"Alessandro VII demolisce l'arco di Portogallo per allargare il Corso; due rilievi sono ai Musei Capitolini."]]},
+  arcusnovus:{cosa:"Arco sulla via Lata per Diocleziano e Massimiano, ornato di rilievi presi da un altare dell'età giulio-claudia.", date:[[293,"Eretto per i primi dieci anni di regno (per altri nel 303-304)."],[1491,"Demolito per ingrandire Santa Maria in Via Lata."]]},
   monasteripietro:{cosa:"Il primo monastero accanto alla basilica.", date:[[450,"Fondato da papa Leone I (Liber Pontificalis); che sia quello dei Santi Giovanni e Paolo, a nord, è un'identificazione moderna."],[732,"I monasteri di San Pietro sono ormai tre; il quarto, Santo Stefano Minore, arriva nella seconda metà del secolo. I monaci cantano in basilica le vigilie e le ore di ogni giorno."]]},
   monasteripietro2:{cosa:"Due monasteri addossati all'abside della basilica, a sud-ovest e a ovest.", date:[[680,"Beda nomina il monastero di San Martino e il suo abate Giovanni, primo cantore di San Pietro, mandato in Inghilterra nel 679-680; che stesse addossato all'abside lo dicono fonti più tarde."],["prima del 732","Santo Stefano Maggiore: la data di fondazione non la conosciamo; qui compare insieme a San Martino."]]},
   andreapietro:{cosa:"Mausoleo rotondo sul fianco sud di San Pietro, lungo la spina del circo di Nerone, più antico della basilica.", date:[["III sec.","Costruito, secondo la datazione corrente, all'epoca di Caracalla."],[500,"Papa Simmaco (498-514) ne fa la chiesa di Sant'Andrea e vi costruisce una scala e una fontana per chi sale (Liber Pontificalis)."]]},
@@ -685,6 +711,30 @@ var CERTEZZA={
   stefano:['A',"Il nucleo è in piedi: tamburo di 22,5 metri, ambulacro di 42. L'anello esterno (66 metri), demolito nel Quattrocento, è noto dagli scavi: quattro bracci più alti vi disegnavano una croce e fra l'uno e l'altro c'erano un corridoio e un cortile. Ne resta il braccio di nord-est; le altezze dell'anello sono indicative."],
   cosma:['A',"L'aula e la rotonda sono in piedi."],
   foca:['A',"In piedi."],
+  /* inventario del 22 novembre 2026 */
+  colonnamarco:['A',"In piedi al suo posto; il piedistallo antico è rifatto e in parte interrato, qui è indicativo."],
+  orologio:['B',"Obelisco ritrovato sotto piazza del Parlamento e Ara Pacis sotto palazzo Fiano: luoghi certi entro qualche decina di metri. La meridiana è nota da scavi parziali, larghezza e forma del pavimento sono ipotetiche; la colonna di Antonino Pio è nella posizione di it.wikipedia."],
+  obeliscosallustiano:['B',"L'obelisco esiste; il punto è quello del ritrovamento della base (1843), fra quattro vie, ed è approssimato."],
+  piramide:['A',"In piedi; contorno da OpenStreetMap."],
+  castrapretorio:['A',"Tre lati sono ancora nelle mura Aureliane e danno spigoli e misure; dei muri interni e delle camere restano tratti scavati. Porta e spessori sono indicativi."],
+  termenerone:['B',"Estensione nota dagli scavi e dai disegni del Cinquecento, posizione certa fra Pantheon e stadio; la pianta interna è ricostruita."],
+  termeagrippa:['B',"Estensione nota dagli scavi, la sala rotonda è in parte in piedi; l'alzato è ricostruito."],
+  tempioadriano:['A',"In piedi undici colonne e la cella; larghezza e lunghezza sono ricavate dal colonnato, l'orientamento della fronte è a memoria."],
+  tempioclaudio:['B',"La piattaforma è in gran parte in piedi e il lato su via Claudia si vede; il tempio è perduto e qui ha misure indicative."],
+  dolabella:['A',"In piedi."],
+  ludusmagnus:['B',"La metà nord è scavata e visibile; larghezza e arena sono ricostruite."],
+  metaromuli:['C',"Demolita nel Cinquecento: il punto è un'ipotesi ricavata dall'incrocio di strade indicato da Platner, le misure sono indicative."],
+  foroboario:['A',"I due templi e i due archi sono in piedi, contorni da OpenStreetMap; l'altezza del podio di Portuno e lo sbocco della Cloaca sono indicativi."],
+  ottavia:['B',"Resta il propileo, che dà posto e orientamento; la piazza è nota dalla pianta marmorea, i due templi interni hanno qui misure indicative."],
+  argentina:['A',"I quattro podi sono scavati e visibili, contorni da OpenStreetMap; gli alzati sono ricostruiti."],
+  iseo:['C',"Il santuario è noto dalla pianta marmorea e da ritrovamenti sparsi: l'ingombro qui è un'ipotesi; gli obelischi esistono e stanno nei punti di ritrovamento, due dei quali stimati."],
+  esquilino:['B',"Arco e rudere della mostra d'acqua in piedi; l'aspetto antico della mostra e dell'aula di Mecenate è ricostruito."],
+  minervamedica:['A',"In piedi, senza la cupola caduta nel 1828; la data di costruzione è approssimata."],
+  sessoriano:['B',"L'anfiteatro è in piedi nelle mura e i carceres del circo sono scavati; la lunghezza del circo e il posto dell'obelisco sulla spina sono ipotesi."],
+  eurisace:['A',"In piedi, liberato dalla torre nel 1838."],
+  archivialata:['B',"Demoliti; le posizioni vengono dai ritrovamenti sotto via del Corso, le forme e le misure sono indicative."],
+  arcusnovus:['B',"Demolito nel 1491; posizione da it.wikipedia, forma e misure indicative."],
+  campidoglio:['B',"Carcere, portico degli Dei Consenti, insula e sepolcro di Bibulo sono in piedi; qui sono masse semplici con misure indicative."],
   monasteripietro:['C',"Si conosce il sito approssimativo, non la forma."],
   monasteripietro2:['C',"Santo Stefano Maggiore esiste ancora, ma rifatto; di San Martino si conosce il sito approssimativo, non la forma."],
   campanilepietro:['C',"La torre è attestata dal Liber Pontificalis; posto preciso, forma e altezza sono ipotetici."],
@@ -880,6 +930,7 @@ var LUOGHI_TAPPA={
 TAPPE.forEach(function(t){ if(!t.intermezzo && LUOGHI_TAPPA[t.anno]) t.luoghi=LUOGHI_TAPPA[t.anno]; });
 /* Le scene sulla carta: che cosa si muove nell'evento della tappa. ['marcia'|'mare', chi, [luoghi…]] è un cammino per terra o una rotta (chi: 'roma' in oro, 'altri' in scuro, 'franchi' in azzurro);
    ['scontro'|'assedio'|'fuoco', luogo] è il segno sul posto. I luoghi sono chiavi di LUOGHI o CITTA in src/mappa/genera.mjs.
+   Ogni marcia è stata controllata contro la linea di costa (non passa sul mare) e ogni rotta contro la terra, con i punti di passaggio aggiunti in LUOGHI.
    ATTENZIONE: sono SCHEMI. Chi si muove, da dove parte e dove arriva viene dai testi delle tappe e dai manuali (22 novembre 2026, a memoria: Bury, Heather, Wickham), il tracciato
    fra partenza e arrivo è indicativo, e le tappe intermedie non sono state rilette una per una sulle fonti: da verificare. Fonti già lette per i casi principali: l'iscrizione di Shapur
    per il 260 («attaccammo Carre ed Edessa… Valeriano venne contro di noi»), Ammiano XXXI per Adrianopoli, Procopio per il 455, il 468 e il 537. */
@@ -891,21 +942,21 @@ var SCENE_CARTA={
  402:[['marcia','altri',['cividale','verona','milano','pollenzo']],['scontro','pollenzo']],
  406:[['marcia','altri',['oltrereno','magonza','chalons']]],
  410:[['marcia','altri',['rimini','roma']],['assedio','roma'],['fuoco','roma']],
- 429:[['mare','altri',['guadalete','tangeri']],['marcia','altri',['tangeri','ippona']],['assedio','ippona']],
+ 429:[['mare','altri',['tarifa','tangeri']],['marcia','altri',['tangeri','taza','tlemcen','cesarea','sitifi','cirta','ippona']],['assedio','ippona']],      // per mare solo lo stretto; poi per terra, lungo le Mauretanie e la Numidia (tracciato indicativo)
  439:[['marcia','altri',['ippona','cartagine']]],
  451:[['marcia','altri',['tibisco','magonza','metz','orleans','catalaunici']],['marcia','roma',['arles','orleans','catalaunici']],['marcia','roma',['tolosa','orleans']],['scontro','catalaunici']],
- 455:[['mare','altri',['cartagine','tirreno','roma']],['fuoco','roma']],
- 468:[['mare','roma',['costantinopoli','egeo','ionio','siracusa','capobon']],['fuoco','capobon']],
+ 455:[['mare','altri',['cartagine','tirreno','ostia']],['fuoco','roma']],
+ 468:[['mare','roma',['costantinopoli','marmara','dardanelli','egeo','matapan','ionio','canale','capobon']],['fuoco','capobon']],
  476:[['marcia','altri',['pavia','piacenza','ravenna']]],
  493:[['marcia','altri',['sirmio','cividale','verona','ravenna']],['assedio','ravenna']],
- 537:[['marcia','roma',['siracusa','napoli','roma']],['marcia','altri',['ravenna','roma']],['assedio','roma']],
+ 537:[['marcia','roma',['siracusa','catania','messina','reggio','aspromonte','catanzaro','cosenza','lagonegro','eboli','napoli','cassino','roma']],['marcia','altri',['ravenna','roma']],['assedio','roma']],
  546:[['assedio','roma']],
  568:[['marcia','altri',['sirmio','cividale','verona','pavia']]],
- 711:[['mare','altri',['tangeri','guadalete']],['scontro','guadalete'],['marcia','altri',['guadalete','toledo']],
+ 711:[['mare','altri',['tangeri','tarifa']],['marcia','altri',['tarifa','guadalete','toledo']],['scontro','guadalete'],
       ['marcia','altri',['toledo','pamplona','bordeaux','poitiers']],['marcia','franchi',['metz','orleans','poitiers']],['scontro','poitiers']],      // la spedizione del 732: per i Pirenei occidentali e Bordeaux; Carlo viene dall'Austrasia (partenza indicativa)
- 756:[['marcia','altri',['pavia','roma']],['assedio','roma'],['marcia','franchi',['lione','susa','pavia']],['assedio','pavia']],
+ 756:[['marcia','altri',['pavia','lucca','roma']],['assedio','roma'],['marcia','franchi',['lione','susa','pavia']],['assedio','pavia']],
  780:[['marcia','franchi',['lione','susa','pavia']],['assedio','pavia']],
- 846:[['mare','altri',['tirreno','roma']],['fuoco','roma']]
+ 846:[['mare','altri',['tirreno','ostia']],['fuoco','roma']]
 };
 TAPPE.forEach(function(t){ if(!t.intermezzo && SCENE_CARTA[t.anno]) t.scena=SCENE_CARTA[t.anno]; });
 /* stato cumulato delle regioni a ogni tappa */

@@ -196,10 +196,17 @@ const LUOGHI = { magonza: [8.27, 50.0, 'Magonza'], abritto: [26.52, 43.53, 'Abri
   capobon: [11.0, 37.08, 'Capo Bon'],
   /* punti di passaggio delle marce e delle rotte disegnate dalle scene (SCENE_CARTA in js/dati.js): non hanno un cartellino */
   nisibi: [41.22, 37.07, 'Nisibi'], emesa: [36.72, 34.73, 'Emesa'], metz: [6.18, 49.12, 'Metz'], orleans: [1.91, 47.9, 'Orléans'], piacenza: [9.7, 45.05, 'Piacenza'], verona: [10.99, 45.44, 'Verona'],
-  napoli: [14.25, 40.85, 'Napoli'], siracusa: [15.29, 37.07, 'Siracusa'], tangeri: [-5.8, 35.78, 'Tangeri'], toledo: [-4.02, 39.86, 'Toledo'], susa: [7.05, 45.14, 'Susa'], lione: [4.83, 45.76, 'Lione'],
+  napoli: [14.25, 40.85, 'Napoli'], siracusa: [15.29, 37.07, 'Siracusa'], tangeri: [-5.75, 35.9, 'Tangeri'], toledo: [-4.02, 39.86, 'Toledo'], susa: [7.05, 45.14, 'Susa'], lione: [4.83, 45.76, 'Lione'],
   ippona: [7.75, 36.88, 'Ippona'], rimini: [12.57, 44.06, 'Rimini'], tibisco: [20.2, 46.6, 'pianura del Tibisco'], egeo: [25.6, 38.4, 'Egeo'], ionio: [18.6, 37.2, 'Ionio'], tirreno: [11.6, 39.6, 'Tirreno'], oltrereno: [9.6, 50.3, 'oltre il Reno'],
+  /* punti che tengono le marce sulla terra e le rotte sul mare (controllati con la linea di costa, 22 novembre 2026) */
+  tarifa: [-5.6, 36.0, 'Tarifa'], taza: [-4.0, 34.25, 'Taza'], tlemcen: [-1.32, 34.88, 'Tlemcen'], cesarea: [2.19, 36.4, 'Cesarea'], sitifi: [5.41, 36.19, 'Sitifi'], cirta: [6.61, 36.36, 'Cirta'],
+  ostia: [12.2, 41.72, 'Ostia'], marmara: [27.9, 40.75, 'Marmara'], dardanelli: [26.05, 39.95, 'Dardanelli'], matapan: [22.6, 35.6, 'capo Matapan'], messina: [15.52, 38.2, 'Messina'], reggio: [15.68, 38.12, 'Reggio'],
+  cosenza: [16.25, 39.3, 'Cosenza'], salerno: [14.8, 40.7, 'Salerno'], catania: [14.9, 37.5, 'Catania'], aspromonte: [16.05, 38.35, 'Aspromonte'], catanzaro: [16.5, 38.88, 'Catanzaro'],
+  lagonegro: [15.78, 40.13, 'Lagonegro'], eboli: [15.08, 40.63, 'Eboli'], canale: [14.0, 36.2, 'canale di Sicilia'], cassino: [13.83, 41.49, 'Cassino'], lucca: [10.5, 43.84, 'Lucca'], mediterraneo: [8.5, 39.9, 'Mediterraneo'],
   poitiers: [0.34, 46.58, 'Poitiers'], pamplona: [-1.64, 42.82, 'Pamplona'], bordeaux: [-0.58, 44.84, 'Bordeaux'], pelusio: [32.55, 31.04, 'Pelusio'], cividale: [13.43, 46.09, 'Cividale'], guadalete: [-6.0, 36.6, 'Guadalete'], pavia: [9.16, 45.19, 'Pavia'], aquisgrana: [6.08, 50.78, 'Aquisgrana'] };
 
+/* Cammini e marce sono stati controllati contro la linea di costa il 22 novembre 2026 (prova nel browser: si campiona ogni tracciato e si chiede a `isPointInFill` della terra):
+   per mare restano solo lo stretto di Gibilterra dei Vandali, lo stretto di Messina e il viaggio di Angli e Sassoni, che sono veri. Chi aggiunge un punto rifaccia la prova. */
 /* I popoli in movimento: dove sta il grosso di ciascun gruppo, anno per anno, e in che rapporto è con Roma. [anno, lon, lat, rapporto].
    Rapporti: fuori (oltre il confine, senza patto) | accolti (ammessi dentro l'impero) | federati (patto: terre o paghe in cambio di soldati) |
    armi (in guerra dentro l'impero) | regno (un regno proprio su terre che erano di Roma).
@@ -214,15 +221,15 @@ const POPOLI = {
   goti:      { nome: 'Goti', poi: [[418, 'Visigoti']], peso: 9, t: [[235, 28, 47, 'fuori'], [251, 26.5, 43.5, 'armi'], [271, 26, 46.3, 'fuori'], [376, 27.27, 44.12, 'accolti'],
     [378, 26.56, 41.68, 'armi', [[27.6, 43.3]]],                                                                                    // per Marcianopoli ad Adrianopoli
     [382, 25, 43.3, 'federati'],
-    [395, 22.4, 39.6, 'armi', [[26.5, 42.1], [28.3, 41.2], [26.4, 40.95], [25.4, 41.12], [23.85, 40.82], [22.94, 40.64], [22.6, 39.9]]],   // sotto Costantinopoli, poi la via Egnazia e Tempe
+    [395, 22.4, 39.6, 'armi', [[26.5, 42.1], [28.3, 41.2], [26.4, 40.95], [25.4, 41.12], [23.85, 40.82], [22.94, 40.64], [22.55, 40.6], [22.4, 40.2], [22.55, 39.9]]],   // sotto Costantinopoli, poi la via Egnazia e Tempe
     [397, 20.1, 41.1, 'federati', [[21.8, 39.6], [20.9, 39.7]]],                                                                    // Epiro (Bury, cap. V)
     [402, 7.9, 44.7, 'armi', [[19.5, 42.1], [18.4, 43.85], [16.37, 45.48], [14.5, 46.05], [13.37, 45.77], [9.19, 45.46], [8.2, 44.9]]],     // Aquileia, Milano, Asti, Pollenzo: Bury; il tratto dall'Epiro a Siscia non è attestato
     [403, 16.37, 45.48, 'federati', [[10.99, 45.44], [13.37, 45.77], [14.5, 46.05]]],                                               // dopo Verona, «fra Dalmazia e Pannonia»
     [406, 20.7, 39.4, 'federati', [[18.4, 43.85], [19.5, 42.1], [20.1, 41.1]]],
     [408, 14.37, 46.7, 'armi', [[20.1, 41.1], [19.5, 42.1], [18.4, 43.85], [16.37, 45.48], [14.5, 46.05]]],                         // Emona e il Norico (Zosimo V 29)
-    [409, 12.5, 42.3, 'armi', [[14.5, 46.05], [13.37, 45.77], [12.84, 45.76], [12.42, 45.54], [10.03, 45.13], [11.34, 44.49], [12.57, 44.06], [13.5, 43.6], [13, 42.4], [12.52, 42.52]]],   // autunno 408: Aquileia, Concordia, Altino, Cremona, Bologna, Rimini, il Piceno, Roma (Zosimo V 37, letto)
+    [409, 12.5, 42.3, 'armi', [[14.5, 46.05], [13.37, 45.77], [12.84, 45.76], [12.42, 45.54], [10.03, 45.13], [11.34, 44.49], [12.57, 44.06], [13.15, 43.5], [13, 42.4], [12.52, 42.52]]],   // autunno 408: Aquileia, Concordia, Altino, Cremona, Bologna, Rimini, il Piceno, Roma (Zosimo V 37, letto)
     [410, 12.5, 41.9, 'armi'],
-    [412, 4.9, 44.93, 'armi', [[14.25, 40.85], [15.6, 40.1], [16.25, 39.3], [15.65, 38.11], [16.25, 39.3], [15.6, 40.1], [14.9, 40.9], [12.48, 41.9], [11.25, 43.77], [10.3, 44.8], [8.6, 44.9], [7.7, 45.07], [6.75, 44.9]]],   // fino a Reggio e ritorno, poi le Alpi (il valico è un'ipotesi)
+    [412, 4.9, 44.93, 'armi', [[14.3, 40.95], [14.8, 40.78], [15.1, 40.62], [15.6, 40.1], [16.25, 39.3], [16.5, 38.88], [16.05, 38.35], [15.68, 38.12], [16.05, 38.35], [16.5, 38.88], [16.25, 39.3], [15.6, 40.1], [15.1, 40.62], [14.9, 40.95], [12.48, 41.9], [11.25, 43.77], [10.3, 44.8], [8.6, 44.9], [7.7, 45.07], [6.75, 44.9]]],   // fino a Reggio e ritorno, poi le Alpi (il valico è un'ipotesi)
     [415, 2.17, 41.38, 'armi', [[4.8, 43.95], [3, 43.18], [2.86, 42.46]]],
     [418, 0.4, 44.6, 'federati', [[2.86, 42.46], [3, 43.18], [1.44, 43.6]]],
     [472, 1.4, 43.6, 'regno'], [508, 3, 43.18, 'regno'], [537, -3.6, 40.2, 'regno']], fine: 711 },      // dopo Vouillé la corte lascia Tolosa: Narbona, poi la Hispania
@@ -232,7 +239,7 @@ const POPOLI = {
     [406, 8.27, 50, 'armi', [[12.1, 49.02], [9.93, 49.79]]],                                                                        // lungo Danubio e Meno (ipotesi); Magonza è il passaggio più citato
     [409, -1.65, 42.8, 'armi', [[4.03, 49.25], [2.3, 49.9], [1.9, 47.9], [0.6, 44.2], [-1.32, 43.01]]],                             // Reims e Amiens (Girolamo, lettera 123), poi l'Aquitania e i Pirenei, autunno 409 (Idazio)
     [418, -6.5, 42.5, 'armi', [[-3.7, 42.35], [-5.57, 42.6]]], [420, -5.5, 37.5, 'armi', [[-6.3, 40], [-6.34, 38.92]]],
-    [429, 5.4, 36.19, 'armi', [[-5.6, 36.02], [-5.8, 35.78], [-3.9, 35], [-1.32, 34.88], [0.6, 35.5], [2.23, 36.3]]],               // lo stretto è l'unico tratto per mare
+    [429, 5.4, 36.19, 'armi', [[-5.6, 36.02], [-5.75, 35.9], [-5.6, 35.2], [-4.0, 34.25], [-1.32, 34.88], [0.6, 35.5], [2.23, 36.3]]],               // lo stretto è l'unico tratto per mare
     [439, 10.2, 36.5, 'regno', [[7.75, 36.88], [9, 36.5]]]], fine: 534 },
   svevi:     { nome: 'Svevi', peso: 4, t: [[235, 11.5, 50.3, 'fuori'], [406, 8, 49.6, 'armi'], [409, -3.6, 42.3, 'armi', [[4.03, 49.25], [1.9, 47.9], [0.6, 44.2], [-1.32, 43.01]]], [411, -8, 42.4, 'armi', [[-5.57, 42.6]]], [418, -8, 42.4, 'regno']], fine: 585 },
   burgundi:  { nome: 'Burgundi', peso: 4, t: [[235, 14.5, 51.5, 'fuori'], [357, 10, 50, 'fuori'], [418, 8.4, 49.6, 'federati'], [451, 6.1, 46.2, 'federati'], [472, 4.9, 45.8, 'regno']], fine: 534 },
@@ -248,7 +255,7 @@ const POPOLI = {
   sassoni:   { nome: 'Angli e Sassoni', peso: 4, t: [[235, 9.2, 54, 'fuori'], [409, 8.5, 53.8, 'fuori'], [451, 0.6, 52.4, 'armi'], [568, 0.6, 52.4, 'regno']], fine: 852 },      // il tratto verso la Britannia è davvero per mare
   longobardi:{ nome: 'Longobardi', peso: 7, t: [[235, 10.6, 53.3, 'fuori'], [493, 16.2, 48.4, 'fuori'], [546, 18, 46.9, 'federati'], [568, 13.4, 46.1, 'armi', [[15.87, 46.42], [14.5, 46.05], [14.07, 45.9]]], [572, 9.2, 45.2, 'regno']], fine: 774 },
   avari:     { nome: 'Avari', peso: 5, t: [[562, 28.5, 45.3, 'fuori'], [568, 19.5, 46.8, 'regno', [[26, 45.7], [23.6, 46.77], [21.3, 46.2]]]], fine: 796 },
-  bulgari:   { nome: 'Bulgari', peso: 5, t: [[663, 38.4, 46.8, 'fuori'], [680, 29.3, 45.4, 'fuori', [[34, 46.8], [31, 46.7]]], [681, 27.12, 43.38, 'regno', [[28.2, 45.2], [27.9, 44.2]]]], fine: 852 }
+  bulgari:   { nome: 'Bulgari', peso: 5, t: [[663, 38.4, 47.7, 'fuori'], [680, 29.3, 45.4, 'fuori', [[36.5, 47.5], [34, 47.3], [31.5, 47.1], [30.1, 46.4]]], [681, 27.12, 43.38, 'regno', [[28.2, 45.2], [27.9, 44.2]]]], fine: 852 }
 };
 const out = { w: W, h: H, terra: tracciato(TERRA), regioni: {}, citta: {}, popoli: {} };
 for (const [id, q] of Object.entries(POPOLI)) out.popoli[id] = { nome: q.nome, poi: q.poi || [], peso: q.peso, fine: q.fine, t: q.t.map(v => { const p = proj([v[1], v[2]]), o = [v[0], f1(p[0]), f1(p[1]), v[3]]; if (v[4]) o.push(v[4].map(c => { const w = proj(c); return [f1(w[0]), f1(w[1])]; })); return o; }) };
