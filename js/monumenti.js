@@ -529,6 +529,11 @@ var M=[
  {id:'pantheonchiesa', x:-70,z:-68, ry:PI, come:'pantheon', zone:[], fa:function(B){
     B.scatola(.07,.5,.07,0,2.4,5.18,P.oro).scatola(.28,.07,.07,0,2.72,5.18,P.oro);
  }},
+ /* La Curia prima dell'incendio del 283, al tempo di Carino (voce «Curia Julia» della Wikipedia inglese): la sua forma non è nota, qui è la stessa aula con un portichetto. Brucia nel 283 e,
+    ancora bruciata, si vede nel 284; dal 285 al suo posto sale la Curia di Diocleziano (23 novembre 2026, l'utente: «se la Curia è bruciata e viene ricostruita da Diocleziano fallo vedere») */
+ {id:'curiaantica', x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
+    curiaAula(B,P.bronzo); B.scatola(1.5,.25,.5,0,0,1.6,P.travertino);
+ }},
  {id:'curia', x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
     curiaAula(B,P.bronzo);
     B.scatola(1.96,.85,.04,0,0,1.36,P.marmo).scatola(2.0,.1,2.76,0,2.32,0,P.marmo);                                                  // zoccolo di marmo in facciata e cornice tutt'attorno
@@ -1013,7 +1018,7 @@ RM.statoMonumento=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, i=0, k;
   for(k=0;k<st.length;k++) if(anno>=st[k][0]) i=k;
   var s0=anno<st[0][0]?'assente':st[i][1], prossimo=st[i+1];
-  var brusco=prossimo&&(prossimo[1]==='bruciato'||prossimo[1]==='spogliato'||prossimo[1]==='crollato'||(prossimo[1]==='assente'&&(id==='adrianostatue'||id==='colosso'||id==='castrapretorio')));      /* anche il Colosso sparisce di colpo: non si accorcia negli anni prima; i Castra Praetoria, smantellati dopo il 312, nel 312 sono ancora interi */      // le statue del mausoleo cadono in un giorno (537)
+  var brusco=prossimo&&(prossimo[1]==='bruciato'||prossimo[1]==='spogliato'||prossimo[1]==='crollato'||(prossimo[1]==='assente'&&(id==='adrianostatue'||id==='colosso'||id==='castrapretorio'||id==='curiaantica')));      /* anche il Colosso sparisce di colpo: non si accorcia negli anni prima; i Castra Praetoria, smantellati dopo il 312, nel 312 sono ancora interi */      // le statue del mausoleo cadono in un giorno (537)
   var inizio=prossimo&&s0==='assente'&&D.CANTIERI&&D.CANTIERI[id];      // inizio dei lavori, dove la scheda lo dice (CANTIERI in js/dati.js)
   return {s0:s0, s1:prossimo?prossimo[1]:s0, t:prossimo?RM.sfuma(inizio||prossimo[0]-(brusco?.4:6),prossimo[0],anno):0};
 };
@@ -1022,7 +1027,7 @@ RM.statoMonumento=function(id,anno){
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Fino al 23 novembre 2026 alla chiusura toglieva subito un poco di cima a ogni tratto: sul tetto di Giove Capitolino il colmo si spezzava a blocchi e il tempio sembrava spaccato (l'utente: «fai delle crepe, non che si spacchi a metà»).
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, santadriano:0, curia:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
+var CURA={laterano:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
@@ -1041,7 +1046,7 @@ RM.rovina=function(id,anno){
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
-var SENZA_CANTIERE={santadriano:1, curia:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
+var SENZA_CANTIERE={santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
 function ponteggio(o,t){
   if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
   if(!o.pont){
