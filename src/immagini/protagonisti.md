@@ -8,11 +8,11 @@ Righe della tabella: 138 (persone distinte: 105).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 78 | 56 |
-| ritratto posteriore | 17 | 14 |
+| ritratto coevo | 79 | 57 |
+| ritratto posteriore | 20 | 17 |
 | di fantasia | 5 | 4 |
-| oggetto del tempo, senza volto | 20 | 14 |
-| nessuna immagine | 18 | 17 |
+| oggetto del tempo, senza volto | 22 | 16 |
+| nessuna immagine | 12 | 11 |
 
 ## Da decidere
 
@@ -224,10 +224,10 @@ Le scelte di principio:
 
 ### 507
 
-- **Clodoveo** (-) — *nessuna immagine*. 
-- **Alarico II** (-) — *nessuna immagine*. 
-- **Siagrio** (-) — *nessuna immagine*. 
-- **Remigio** (-) — *nessuna immagine*. 
+- **Clodoveo** (-) — *oggetto del tempo, senza volto*: soldo d’oro coniato in Gallia sotto Clodoveo (491-507 per il catalogo), a nome dell’imperatore Anastasio. [Solidus à la victoire sous frappé sous Clovis.jpg](https://commons.wikimedia.org/wiki/File:Solidus_%C3%A0_la_victoire_sous_frapp%C3%A9_sous_Clovis.jpg) — 3967×1851, CC BY-SA 3.0; «Foto: cgb.fr, CC BY-SA 3.0, da Wikimedia Commons». I Franchi coniano a nome e con il busto dell’imperatore: il volto è di Anastasio. L’attribuzione al regno di Clodoveo è del catalogo d’asta (cgb.fr). Nessun ritratto coevo noto; su Commons ci sono busti moderni di fantasia.
+- **Alarico II** (-) — *ritratto coevo*: anello con la pietra da sigillo con un busto e la scritta ALARICVS REX GOTHORVM (a rovescio, per l’impronta), Kunsthistorisches Museum, Vienna. [Sceau-Alaric.jpg](https://commons.wikimedia.org/wiki/File:Sceau-Alaric.jpg) — 1331×1651, CC BY-SA 4.0; «Foto: Christelle Molinié, CC BY-SA 4.0, da Wikimedia Commons». Il museo viene dalla scheda del file «Anneau sigillaire Alaric II». Scelta la foto da vicino; c’è anche «Siegelstein König Alarichs II», con la vetrina intera. È un’immagine ufficiale del re, non per forza somigliante.
+- **Siagrio** (-) — *nessuna immagine*. Nessuna immagine antica; su Commons solo illustrazioni moderne di fantasia («Syagrius brought before Clovis», Waterhouse 1903).
+- **Remigio** (-) — *ritratto posteriore*: placca d’avorio di legatura, Reims, ultimo quarto del IX secolo, Musée de Picardie, Amiens: Remigio battezza Clodoveo (con il miracolo della Santa Ampolla). [Saint Remy baptise Clovis.jpg](https://commons.wikimedia.org/wiki/File:Saint_Remy_baptise_Clovis.jpg) — 1195×655, Public domain; «Immagine: Pethrus (talk), pubblico dominio, da Wikimedia Commons».
 
 ### 526
 
@@ -257,7 +257,7 @@ Le scelte di principio:
 
 - **Narsete** ([Q294781](https://www.wikidata.org/wiki/Q294781)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa, fra l'imperatore e il vescovo Massimiano. [Narses.jpg](https://commons.wikimedia.org/wiki/File:Narses.jpg) — 509×700, Public domain; «Immagine: Vahan.hovh, pubblico dominio, da Wikimedia Commons». Indicata dall'utente il 22 novembre 2026. L'identificazione con Narsete è una proposta senza conferme: nel mosaico il nome non c'è, e la figura è stata letta anche in altri modi.
 - **Totila** ([Q159707](https://www.wikidata.org/wiki/Q159707)) — *ritratto coevo*: moneta di bronzo di Baduila (Totila) col suo busto (BMC 44), 541-552. [Baduila BMC 044.jpg](https://commons.wikimedia.org/wiki/File:Baduila_BMC_044.jpg) — 700×319, CC BY-SA 3.0; «Foto: Courtesy of CNG Auctions, www.cngcoins.com, CC BY-SA 3.0, da Wikimedia Commons». Sulle monete di bronzo il re si fa ritrarre (busto stilizzato); le opere di Salviati e Bonazza sono di fantasia.
-- **Teia** (-) — *nessuna immagine*. 
+- **Teia** (-) — *oggetto del tempo, senza volto*: quarto di siliqua d’argento del re Teia, 552. [Quarter Siliqua of Theia, 552 AD.jpg](https://commons.wikimedia.org/wiki/File:Quarter_Siliqua_of_Theia,_552_AD.jpg) — 800×372, CC BY-SA 2.5; «Foto: autore sconosciuto, CC BY-SA 2.5, da Wikimedia Commons». L’argento ostrogoto porta il busto di un imperatore e il nome del re sul rovescio: il volto non è di Teia. La scheda del file dice solo «1/4 de Síliqua do rei ostrogótico Teia».
 
 ### 568
 
@@ -277,8 +277,8 @@ Le scelte di principio:
 ### 597
 
 - **Gregorio Magno** ([Q42827](https://www.wikidata.org/wiki/Q42827)) — *ritratto posteriore*: miniatura del «Registrum Gregorii», Treviri, 983 circa. [Registrum gregorii, san gregorio magno ispirato dalla colomba, 983 miniatura, treviri stadtbiblithek, 19,8x27 cm.jpg](https://commons.wikimedia.org/wiki/File:Registrum_gregorii,_san_gregorio_magno_ispirato_dalla_colomba,_983_miniatura,_treviri_stadtbiblithek,_19,8x27_cm.jpg) — 951×1293, Public domain; «Immagine: Meister des Registrum Gregorii., pubblico dominio, da Wikimedia Commons». Circa quattro secoli dopo. Non è un ritratto dal vero (Giovanni Diacono, nel IX secolo, descrive un ritratto dipinto nel monastero, perduto).
-- **Agostino di Canterbury** (-) — *nessuna immagine*. 
-- **Etelberto** (-) — *nessuna immagine*. 
+- **Agostino di Canterbury** (-) — *ritratto posteriore*: miniatura del «Roman de Brut», Inghilterra, 1325-1350 circa, British Library (Egerton 3028, f. 55r). [Roman de Brut - BL Egerton3028 f55r (St. Augustine) (cropped).jpg](https://commons.wikimedia.org/wiki/File:Roman_de_Brut_-_BL_Egerton3028_f55r_(St._Augustine)_(cropped).jpg) — 1100×3000, Public domain; «Immagine: autore sconosciuto, pubblico dominio, da Wikimedia Commons». Ritagliata a mano sulla figura del santo (img/protagonisti/agostino-di-canterbury.jpg): non riscaricarla.
+- **Etelberto** (-) — *ritratto posteriore*: vetrata della cappella di All Souls College, Oxford, metà del XV secolo, molto restaurata. [Ethelbert, King of Kent from All Souls College Chapel detail.jpg](https://commons.wikimedia.org/wiki/File:Ethelbert,_King_of_Kent_from_All_Souls_College_Chapel_detail.jpg) — 380×456, Public domain; «Immagine: See description, pubblico dominio, da Wikimedia Commons».
 
 ### 609
 

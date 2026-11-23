@@ -194,4 +194,15 @@ export const SCELTE = {
   'Simmaco': { file: 'Symmachi Diptych Panel.JPG', oggetto: 'valva d\'avorio con la scritta SYMMACHORVM, verso il 400, Londra, Victoria and Albert Museum: una sacerdotessa davanti a un altare', coevo: 'nessuno', ritratto: false },
   'Virio Nicomaco Flaviano': { file: 'Cluny Nicómacos 01.JPG', oggetto: 'valva d\'avorio con la scritta NICOMACHORVM, verso il 400, Parigi, Musée de Cluny: una sacerdotessa con le fiaccole', coevo: 'nessuno', ritratto: false },
   'Arbogaste': { coevo: 'nessuno', nota: 'Nessun ritratto e nessuna moneta: non coniava a suo nome.' },
+  // 507, 552, 597 (tappe aggiunte il 23 novembre 2026; schede dei file lette su Commons lo stesso giorno)
+  'Clodoveo': { file: 'Solidus à la victoire sous frappé sous Clovis.jpg', autore: 'cgb.fr', oggetto: 'soldo d’oro coniato in Gallia sotto Clodoveo (491-507 per il catalogo), a nome dell’imperatore Anastasio', coevo: 'nessuno', ritratto: false,
+    nota: 'I Franchi coniano a nome e con il busto dell’imperatore: il volto è di Anastasio. L’attribuzione al regno di Clodoveo è del catalogo d’asta (cgb.fr). Nessun ritratto coevo noto; su Commons ci sono busti moderni di fantasia.' },
+  'Alarico II': { file: 'Sceau-Alaric.jpg', autore: 'Christelle Molinié', oggetto: 'anello con la pietra da sigillo con un busto e la scritta ALARICVS REX GOTHORVM (a rovescio, per l’impronta), Kunsthistorisches Museum, Vienna', coevo: 'si',
+    nota: 'Il museo viene dalla scheda del file «Anneau sigillaire Alaric II». Scelta la foto da vicino, ritagliata a mano sulla pietra (img/protagonisti/alarico-ii.jpg: non riscaricarla); c’è anche «Siegelstein König Alarichs II», con la vetrina intera. È un’immagine ufficiale del re, non per forza somigliante.' },
+  'Siagrio': { coevo: 'nessuno', nota: 'Nessuna immagine antica; su Commons solo illustrazioni moderne di fantasia («Syagrius brought before Clovis», Waterhouse 1903).' },
+  'Remigio': { file: 'Saint Remy baptise Clovis.jpg', oggetto: 'placca d’avorio di legatura, Reims, ultimo quarto del IX secolo, Musée de Picardie, Amiens: Remigio battezza Clodoveo (con il miracolo della Santa Ampolla)', coevo: 'posteriore' },
+  'Teia': { file: 'Quarter Siliqua of Theia, 552 AD.jpg', oggetto: 'quarto di siliqua d’argento del re Teia, 552', coevo: 'nessuno', ritratto: false,
+    nota: 'L’argento ostrogoto porta il busto di un imperatore e il nome del re sul rovescio: il volto non è di Teia. La scheda del file dice solo «1/4 de Síliqua do rei ostrogótico Teia».' },
+  'Agostino di Canterbury': { file: 'Roman de Brut - BL Egerton3028 f55r (St. Augustine) (cropped).jpg', oggetto: 'miniatura del «Roman de Brut», Inghilterra, 1325-1350 circa, British Library (Egerton 3028, f. 55r)', coevo: 'posteriore', nota: 'Ritagliata a mano sulla figura del santo (img/protagonisti/agostino-di-canterbury.jpg): non riscaricarla.' },
+  'Etelberto': { file: 'Ethelbert, King of Kent from All Souls College Chapel detail.jpg', oggetto: 'vetrata della cappella di All Souls College, Oxford, metà del XV secolo, molto restaurata', coevo: 'posteriore' },
 };

@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 09:20:39.
+Generato da `src/testi.mjs` il 23/11/2026, 09:29:11.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -111,7 +111,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.48] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Quelle segnate «Ricostruzione» sono state generate per questa pagina a partire dalle fonti: il volto è immaginario. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.49] Versione del 23/11/2026, ore 09:16
+[pagina.49] Versione del 23/11/2026, ore 09:20
 
 
 ## 2. Gli atti
