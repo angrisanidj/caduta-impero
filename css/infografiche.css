@@ -1,0 +1,36 @@
+/* Infografiche animate (js/infografiche.js, 23 novembre 2026). L'invito sotto il testo della tappa e la finestra con il grafico. */
+.ig-inviti{margin:14px 0 4px;max-width:44em;display:flex;flex-wrap:wrap;gap:8px}
+.ig-inviti[hidden]{display:none}
+.ig-invito{display:flex;align-items:center;gap:11px;min-height:48px;padding:8px 16px 8px 9px;font:inherit;font-family:var(--ui);color:var(--ink);text-align:left;cursor:pointer;
+  background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold2);border-radius:4px 10px 10px 4px;box-shadow:var(--ombra)}
+.ig-invito:hover{border-color:var(--gold2)}
+.ig-invito:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.ig-play{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;color:#fff;background:var(--porpora)}
+.ig-testi{display:flex;flex-direction:column;gap:1px}
+.ig-testi b{font-size:14.5px;font-weight:600}
+.ig-testi span{font-size:12.5px;color:var(--muted)}
+.ig-finestra{width:min(760px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:18px 20px 14px;border:0;border-radius:12px;background:var(--carta,#F6F4EF);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.4);overflow:auto}
+.ig-finestra::backdrop{background:rgba(20,14,10,.62)}
+.ig-testa{position:relative;padding-right:44px}
+.ig-titolo{margin:0;font-family:var(--cap);font-size:22px;color:var(--porpora)}
+.ig-sotto{margin:2px 0 8px;font-family:var(--ui);font-size:13px;color:var(--muted)}
+.ig-chiudi{position:absolute;top:-6px;right:-8px;width:44px;height:44px;font-size:26px;line-height:1;border:0;background:transparent;color:var(--ink);cursor:pointer;border-radius:50%}
+.ig-chiudi:hover{background:rgba(0,0,0,.06)}
+.ig-grafico{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:8px}
+.ig-griglia{stroke:#E3DDD2;stroke-width:1}
+.ig-asse{font-family:var(--ui);font-size:11px;fill:#5F554B}
+.ig-fascia{fill:rgba(122,31,43,.14)}
+.ig-linea{fill:none;stroke:var(--porpora,#7A1F2B);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.ig-momento{opacity:.18;transition:opacity .4s}
+.ig-momento.acceso{opacity:1}
+.ig-momento circle{fill:#D4AE55;stroke:#5a3f12;stroke-width:1}
+.ig-asta{stroke:#D4AE55;stroke-width:1;stroke-dasharray:2 3}
+.ig-valore{font-family:var(--ui);font-size:12px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:4px}
+.ig-frase{min-height:3.2em;margin:10px 2px 6px;font-family:var(--serif);font-size:18px;line-height:1.4}
+.ig-comandi{display:flex;gap:8px}
+.ig-comandi button{min-height:40px;padding:6px 14px;font-family:var(--ui);font-size:13.5px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;cursor:pointer}
+.ig-comandi button:disabled{opacity:.45;cursor:default}
+.ig-elenco{margin:8px 0;padding-left:18px;font-size:14px;line-height:1.45}
+.ig-fonte{margin:10px 2px 0;font-family:var(--ui);font-size:12px;line-height:1.45;color:var(--muted)}
+@media (max-width:520px){ .ig-finestra{padding:14px 12px 12px} .ig-titolo{font-size:19px} .ig-frase{font-size:16px;min-height:4.2em} .ig-asse{font-size:13px} }
+@media (prefers-reduced-motion:reduce){ .ig-momento{transition:none} }
