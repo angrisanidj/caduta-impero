@@ -23,9 +23,9 @@ C.prototype.dentro=function(x,y,z,ry,fn){
 /* aggiunge una geometria di three, già posizionata in coordinate locali */
 C.prototype.geo=function(g,colore){
   var q=g.index?g.toNonIndexed():g; q.applyMatrix4(this.pila[this.pila.length-1]);
-  var p=q.attributes.position.array, v=q.attributes.normal.array, i;
+  var p=q.attributes.position.array, v=q.attributes.normal.array, i, cc=q.attributes.color?q.attributes.color.array:null;      // una geometria può portare i suoi colori, vertice per vertice (la patina delle statue)
   for(i=0;i<p.length;i++){ this.pos.push(p[i]); this.nor.push(v[i]); }
-  var tp=tipoDi(colore); for(i=0;i<p.length;i+=3){ this.col.push(colore.r,colore.g,colore.b); this.tip.push(tp); }
+  var tp=tipoDi(colore); for(i=0;i<p.length;i+=3){ if(cc) this.col.push(cc[i],cc[i+1],cc[i+2]); else this.col.push(colore.r,colore.g,colore.b); this.tip.push(tp); }
   if(q!==g) q.dispose(); g.dispose(); return this;
 };
 /* triangolo in coordinate locali, normale dal verso dei vertici */

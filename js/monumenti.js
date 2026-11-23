@@ -196,16 +196,32 @@ function arto(B,a,b,r0,r1,col,lati,giunto){
   return B;
 }
 /* Una pelle liscia tesa su una fila di anelli ovali [x, y, z, raggio di lato, raggio in profondità]: ogni anello sta di traverso alla linea che unisce i centri, così la stessa
-   funzione fa un torso, una gamba o un braccio piegato. Le normali sono quelle dei vertici, quindi la superficie non mostra spigoli: serve per le statue grandi (il Colosso). */
-function pelle(B,anelli,col,lati){
-  var n=lati||12, m=anelli.length, pos=[], idx=[], i, j, T=new THREE.Vector3(), U=new THREE.Vector3(), V=new THREE.Vector3(), X=new THREE.Vector3(1,0,0);
-  for(i=0;i<m;i++){ var p=anelli[i], q0=anelli[Math.max(0,i-1)], q1=anelli[Math.min(m-1,i+1)], rz=p[4]==null?p[3]:p[4];
+   funzione fa un torso, una gamba o un braccio piegato. Le normali sono quelle dei vertici, quindi la superficie non mostra spigoli: serve per le statue grandi (il Colosso).
+   opz.sudd: fra un anello e l'altro se ne mettono altri, su una curva morbida (Catmull-Rom); opz.muscoli: rigonfiamenti (o solchi, con h negativo) sulla pelle, ciascuno
+   {t: dove lungo la fila, in numero d'anello (2.5 = a metà fra il terzo e il quarto); wt: quanto è lungo, in anelli; dir: verso che parte guarda, nel mondo; wa: quanto è largo, in
+   radianti; h: di quanto alza la pelle, in frazione del raggio}; opz.forza moltiplica tutti i rilievi; opz.patina scurisce gli incavi e schiarisce le sporgenze, come il bronzo
+   vecchio, lucido dove sporge e scuro nelle pieghe: senza, su una superficie di un colore solo, in ombra i muscoli non si leggono. */
+function pelle(B,anelli,col,lati,opz){
+  opz=opz||{}; var n=lati||12, sudd=opz.sudd||1, mus=(opz.muscoli||[]).map(function(q){ var d=new THREE.Vector3(q.dir[0],q.dir[1],q.dir[2]).normalize(); return {t:q.t,wt:q.wt,d:d,wa:q.wa,h:q.h*(opz.forza||1)}; }), pat=opz.patina||0, tin=[];
+  var fini=[], i, j, k, m0=anelli.length;
+  function cr(a,b,c,d,u){ return .5*((2*b)+(-a+c)*u+(2*a-5*b+4*c-d)*u*u+(-a+3*b-3*c+d)*u*u*u); }
+  for(i=0;i<m0-1;i++) for(k=0;k<sudd;k++){ var u=k/sudd, A=anelli[Math.max(0,i-1)], Bq=anelli[i], Cq=anelli[i+1], D=anelli[Math.min(m0-1,i+2)], r=[];
+    for(j=0;j<5;j++){ var f=function(q){ return q[j]==null?q[3]:q[j]; }; r.push(cr(f(A),f(Bq),f(Cq),f(D),u)); } r[3]=Math.max(.0005,r[3]); r[4]=Math.max(.0005,r[4]); r.push(i+u); fini.push(r); }
+  var ult=anelli[m0-1]; fini.push([ult[0],ult[1],ult[2],ult[3],ult[4]==null?ult[3]:ult[4],m0-1]);
+  var m=fini.length, pos=[], idx=[], T=new THREE.Vector3(), U=new THREE.Vector3(), V=new THREE.Vector3(), X=new THREE.Vector3(1,0,0), W=new THREE.Vector3();
+  for(i=0;i<m;i++){ var p=fini[i], q0=fini[Math.max(0,i-1)], q1=fini[Math.min(m-1,i+1)];
     T.set(q1[0]-q0[0],q1[1]-q0[1],q1[2]-q0[2]).normalize(); U.copy(X).addScaledVector(T,-X.dot(T)).normalize(); V.crossVectors(T,U);
-    for(j=0;j<n;j++){ var an=2*Math.PI*j/n, c=Math.cos(an)*p[3], d=Math.sin(an)*rz; pos.push(p[0]+U.x*c+V.x*d,p[1]+U.y*c+V.y*d,p[2]+U.z*c+V.z*d); } }
+    for(j=0;j<n;j++){ var an=2*Math.PI*j/n, c=Math.cos(an), d=Math.sin(an), g=1;
+      if(mus.length){ W.copy(U).multiplyScalar(c).addScaledVector(V,d);
+        for(k=0;k<mus.length;k++){ var mq=mus[k], dt=(p[5]-mq.t)/mq.wt; if(dt>2.6||dt<-2.6) continue; var da=Math.acos(Math.max(-1,Math.min(1,W.dot(mq.d))))/mq.wa; if(da>2.6) continue; g+=mq.h*Math.exp(-dt*dt-da*da); } }
+      if(pat){ var lu=Math.max(.42,Math.min(1.2,g>1?1+pat*.45*(g-1):1+pat*2.2*(g-1))); tin.push(col.r*lu,col.g*lu,col.b*lu); }      // gli incavi scuriscono molto più di quanto le sporgenze schiariscano
+      c*=p[3]*g; d*=p[4]*g; pos.push(p[0]+U.x*c+V.x*d,p[1]+U.y*c+V.y*d,p[2]+U.z*c+V.z*d); } }
   for(i=0;i<m-1;i++) for(j=0;j<n;j++){ var a0=i*n+j, a1=i*n+(j+1)%n; idx.push(a0,a1,a0+n,a1,a1+n,a0+n); }
-  [0,m-1].forEach(function(k,fine){ var ce=pos.length/3; pos.push(anelli[k][0],anelli[k][1],anelli[k][2]);      // i due capi, chiusi
-    for(j=0;j<n;j++){ var x=k*n+j, y=k*n+(j+1)%n; if(fine) idx.push(x,y,ce); else idx.push(y,x,ce); } });
-  var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setIndex(idx); g.computeVertexNormals(); return B.geo(g,col);
+  [0,m-1].forEach(function(kk,fine){ var ce=pos.length/3; pos.push(fini[kk][0],fini[kk][1],fini[kk][2]);      // i due capi, chiusi
+    if(pat) tin.push(col.r,col.g,col.b);
+    for(j=0;j<n;j++){ var x=kk*n+j, y=kk*n+(j+1)%n; if(fine) idx.push(x,y,ce); else idx.push(y,x,ce); } });
+  var geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); if(pat) geo.setAttribute('color',new THREE.Float32BufferAttribute(tin,3));
+  geo.setIndex(idx); geo.computeVertexNormals(); return B.geo(geo,col);
 }
 function palla(B,r,x,y,z,col,sx,sy,sz,lati){ return B.geo(new THREE.SphereGeometry(r,lati||8,6).scale(sx||1,sy||1,sz||1).translate(x,y,z),col); }
 function cavallo(B,x,y,z,ry,s,col){ return B.dentro(x,y,z,ry,function(){
@@ -310,37 +326,68 @@ var M=[
  /* Il Colosso: statua di bronzo di circa 35 m, sul basamento reale (OpenStreetMap, way 709011412). La figura è indicativa: stante, corona di raggi, timone nella destra e globo
     nella sinistra come sulle monete; da che parte guardasse non si sa. */
  {id:'colosso', nome:'Colosso del Sole', x:47.2,z:18.1, ry:-.3, come:'colosseo', fa:function(B){
-    /* Rifatto il 23 novembre 2026 (l'utente: «Rifai il colosso?»): prima a blocchi, poi a pezzi tondi incastrati che sembravano un manichino. Ora è una figura sola dalla pelle liscia:
-       nudo stante, il peso sulla gamba destra e la sinistra flessa e arretrata, le spalle inclinate al contrario del bacino, come nelle statue classiche. Guardando la statua di fronte
-       la sua destra è a -x: lì sta il timone, a terra, e nella sinistra il globo (prima erano scambiati). La statua è alta 35 m (Svetonio, nella scheda) sopra il basamento.
-       Posa, anatomia e volto sono indicativi: delle fonti restano l'altezza, i raggi, il timone e il globo. */
-    var S=P.statua, k, F=3.5/3.2, Y0=.5;
-    function R(x,y,z,rx,rz){ return [x*F,y*F+Y0,z*F,rx*F,(rz==null?rx:rz)*F]; }
-    function fila(l){ return l.map(function(q){ return R(q[0],q[1],q[2],q[3],q[4]); }); }
-    /* gamba destra, portante */
-    pelle(B,fila([[-.15,.03,.0,.05],[-.15,.16,-.01,.058,.07],[-.15,.4,-.02,.08,.088],[-.155,.62,-.03,.1,.108],[-.16,.8,-.01,.085,.09],[-.16,.92,.01,.092,.098],[-.165,1.1,.015,.112,.12],[-.17,1.35,.01,.145,.155],[-.16,1.56,0,.16,.17],[-.12,1.7,0,.15,.16]]),S,14);
-    pelle(B,fila([[-.15,.02,-.07,.05,.035],[-.15,.045,.0,.062,.05],[-.15,.04,.1,.066,.04],[-.15,.03,.18,.05,.028]]),S,10);                                    // piede destro
-    /* gamba sinistra, scarica: ginocchio in avanti, piede indietro e di lato, il tallone alzato */
-    pelle(B,fila([[.27,.07,-.17,.05],[.265,.2,-.15,.058,.07],[.25,.44,-.09,.08,.088],[.235,.64,-.03,.098,.106],[.215,.82,.06,.085,.09],[.205,.93,.105,.092,.098],[.19,1.12,.09,.112,.12],[.17,1.36,.045,.145,.155],[.15,1.56,.01,.16,.17],[.11,1.7,0,.15,.16]]),S,14);
-    pelle(B,fila([[.28,.1,-.24,.045,.035],[.275,.07,-.17,.06,.05],[.265,.04,-.08,.064,.04],[.26,.03,-.01,.05,.028]]),S,10);                                    // piede sinistro
-    /* tronco: bacino spostato sulla gamba portante, vita, costato, petto, spalle */
-    pelle(B,fila([[-.02,1.46,0,.12,.1],[-.025,1.56,0,.25,.175],[-.03,1.72,-.01,.272,.195],[-.03,1.87,-.005,.258,.185],[-.015,2.02,.005,.24,.17],[-.005,2.2,.012,.285,.192],[0,2.36,.022,.335,.218],[.002,2.48,.02,.365,.215],[.005,2.57,.005,.37,.185],[.005,2.64,-.005,.33,.155],[.005,2.71,-.01,.16,.12],[.005,2.83,0,.085,.088]]),S,20);
-    /* testa: mento, guance, tempie, calotta */
-    pelle(B,fila([[.005,2.8,.01,.06,.07],[.005,2.86,.025,.095,.105],[.005,2.95,.03,.122,.14],[.005,3.05,.02,.132,.155],[.005,3.14,.01,.11,.132],[.005,3.2,0,.045,.06]]),S,16);
-    function pezzo(r,x,y,z,sx,sy,sz,col){ return palla(B,r*F,x*F,y*F+Y0,z*F,col||S,sx,sy,sz,10); }
-    pezzo(.026,.005,2.975,.168,.75,1.9,1); pezzo(.07,.005,3.045,.118,1.55,.42,.8); pezzo(.05,.005,2.875,.105,1.05,.7,.8);            // naso, arcata delle sopracciglia, mento
-    pezzo(.034,.005,2.915,.145,1.25,.42,.6); [-1,1].forEach(function(q){ pezzo(.03,.005+q*.132,2.985,.02,.45,1.2,.8); });               // labbra, orecchie
-    pezzo(.15,.005,3.085,-.03,1,.92,1.12,P.tronco); [-1,1].forEach(function(q){ pezzo(.06,.005+q*.105,3.0,-.04,.8,1.5,1.5,P.tronco); });  // i capelli: una calotta più scura, che scende sulla nuca e dietro le orecchie
-    [-1,1].forEach(function(q){ pezzo(.15,-.03+q*.125,1.66,-.12,.95,1,.55); });                                                          // glutei. Il petto lo dà il tronco: due pettorali a parte, provati, sembravano un seno
-    /* braccio destro (a -x): scende lungo il fianco, la mano sul timone */
-    pelle(B,fila([[-.31,2.6,0,.1,.12],[-.4,2.54,0,.115,.128],[-.44,2.36,0,.104,.114],[-.46,2.13,-.01,.088,.094],[-.47,1.98,.03,.094,.098],[-.475,1.8,.09,.078,.082],[-.475,1.67,.14,.056,.062],[-.475,1.58,.17,.062,.07],[-.475,1.5,.19,.035]]),S,12);
-    arto(B,[-.5*F,Y0,.26*F],[-.468*F,1.86*F+Y0,.15*F],.022*F,.022*F,S,8,false);                                                                               // il timone: l'asta
-    B.dentro(-.5*F,Y0,.26*F,.25,function(B){ B.scatola(.2*F,.62*F,.035*F,0,0,0,S); });                                                                        // e la pala, poggiata a terra
-    /* braccio sinistro (a +x): gomito al fianco, avambraccio in avanti, il globo sul palmo */
-    pelle(B,fila([[.32,2.6,0,.1,.12],[.41,2.54,0,.115,.128],[.45,2.36,.01,.104,.114],[.462,2.13,.03,.088,.094],[.45,2.07,.17,.094,.09],[.43,2.1,.33,.076,.074],[.418,2.13,.44,.056,.06],[.412,2.14,.51,.068,.045],[.41,2.14,.58,.035,.022]]),S,12);
-    palla(B,.125*F,.41*F,2.3*F+Y0,.5*F,S,1,1,1,14);                                                                                                           // il globo
-    /* la corona: sette raggi a ventaglio attorno al capo */
-    for(k=-3;k<=3;k++) B.geo(new THREE.ConeGeometry(.026*F,.4*F,6).translate(0,.2*F,0).rotateZ(-k*.4).translate(.005*F+Math.sin(k*.4)*.13*F,3.06*F+Y0+Math.cos(k*.4)*.13*F,0),P.oro);
+    /* Rifatto il 23 novembre 2026 (l'utente: «Rifai il colosso?», e poi «Ancora di più»): prima a blocchi, poi a pezzi tondi incastrati che sembravano un manichino. Ora è una figura
+       sola dalla pelle liscia, scolpita: nudo stante, il peso sulla gamba destra e la sinistra flessa e arretrata, come nelle statue classiche; muscoli, mani con le dita, un volto,
+       i capelli a riccioli. Guardando la statua di fronte la sua destra è a -x: lì sta il timone, a terra, e nella sinistra il globo. Alta 35 m (Svetonio, nella scheda) sopra il
+       basamento. Posa, anatomia e volto sono di fantasia, sul tipo delle statue di Elio: delle fonti restano l'altezza, i raggi, il timone e il globo. Tutto dello stesso bronzo. */
+    var S=P.statua, k, F=3.5/3.2, Y0=.5, FR=[0,0,1], DI=[0,0,-1];
+    function fila(l){ return l.map(function(q){ return [q[0]*F,q[1]*F+Y0,q[2]*F,q[3]*F,(q[4]==null?q[3]:q[4])*F]; }); }
+    function pt(x,y,z){ return [x*F,y*F+Y0,z*F]; }
+    function pezzo(r,x,y,z,sx,sy,sz,lati){ return palla(B,r*F,x*F,y*F+Y0,z*F,S,sx,sy,sz,lati||10); }
+    function largo(l,k,kz){ return l.map(function(q,i){ return i>0&&i<l.length-1?[q[0],q[1],q[2],q[3]*k,(q[4]==null?q[3]:q[4])*(kz||1)]:q; }); }
+    function dito(l,r){ for(var q=0;q<l.length-1;q++) arto(B,pt(l[q][0],l[q][1],l[q][2]),pt(l[q+1][0],l[q+1][1],l[q+1][2]),r*F*(1-.12*q),r*F*(1-.12*(q+1)),S,6); }
+    /* gambe: lato = -1 la destra (portante), +1 la sinistra (scarica, ginocchio in avanti, tallone alzato) */
+    function gamba(anelli,lato){ pelle(B,fila(anelli),S,16,{sudd:3,muscoli:[
+      {t:1,wt:.35,dir:[lato,0,0],wa:.5,h:.2},{t:1,wt:.35,dir:[-lato,0,.1],wa:.5,h:.16},                               // i malleoli
+      {t:2.9,wt:.85,dir:[lato*.25,0,-1],wa:.75,h:.2},{t:2.6,wt:.9,dir:FR,wa:.45,h:-.07},                              // polpaccio, e la tibia, piatta
+      {t:5,wt:.38,dir:[0,0,1],wa:.5,h:.1},{t:5.9,wt:.55,dir:[-lato*.75,0,.65],wa:.42,h:.12},                           // rotula, vasto mediale (la goccia sopra il ginocchio)
+      {t:6.9,wt:1.1,dir:[lato*.7,0,.7],wa:.5,h:.09},{t:7.3,wt:1,dir:FR,wa:.4,h:.07},{t:6.9,wt:1.1,dir:DI,wa:.6,h:.08},  // vasto laterale, retto, bicipite femorale
+      {t:6.6,wt:1.2,dir:[lato*.35,0,.93],wa:.1,h:-.04}],forza:1.5,patina:2.2}); }
+    gamba([[-.15,.03,.0,.05],[-.15,.16,-.01,.056,.068],[-.15,.4,-.02,.076,.084],[-.155,.62,-.03,.095,.102],[-.16,.8,-.01,.083,.088],[-.16,.92,.01,.09,.096],[-.165,1.1,.015,.11,.118],[-.17,1.35,.01,.142,.152],[-.16,1.56,0,.158,.168],[-.12,1.7,0,.15,.16]],-1);
+    gamba([[.27,.07,-.17,.05],[.265,.2,-.15,.056,.068],[.25,.44,-.09,.076,.084],[.235,.64,-.03,.094,.101],[.215,.82,.06,.083,.088],[.205,.93,.105,.09,.096],[.19,1.12,.09,.11,.118],[.17,1.36,.045,.142,.152],[.15,1.56,.01,.158,.168],[.11,1.7,0,.15,.16]],1);
+    pelle(B,fila([[-.15,.02,-.075,.045,.032],[-.15,.048,-.01,.06,.05],[-.152,.042,.09,.066,.04],[-.155,.03,.165,.058,.03],[-.156,.024,.2,.04,.02]]),S,10,{sudd:2});      // piede destro
+    pelle(B,fila([[.28,.1,-.245,.042,.032],[.275,.075,-.175,.058,.05],[.265,.042,-.085,.064,.04],[.26,.03,-.02,.056,.03],[.258,.024,.015,.04,.02]]),S,10,{sudd:2});      // piede sinistro
+    /* tronco: bacino spostato sulla gamba portante, vita, costato, petto, spalle. I muscoli sono rigonfiamenti bassi sulla stessa pelle: non pezzi aggiunti */
+    var MT=[{t:6.9,wt:.3,dir:FR,wa:.09,h:-.05},{t:5,wt:1.3,dir:FR,wa:.06,h:-.045},{t:5,wt:2.6,dir:DI,wa:.09,h:-.07},{t:3.25,wt:.7,dir:FR,wa:.5,h:.03},{t:10,wt:.5,dir:FR,wa:.3,h:-.06}];      // lo sterno, la linea alba, il solco della schiena, il basso ventre, la fossetta del collo
+    [-1,1].forEach(function(q){ MT.push(
+      {t:6.85,wt:.75,dir:[q*.52,0,.86],wa:.46,h:.115},{t:5.95,wt:.28,dir:[q*.5,0,.87],wa:.5,h:-.035},                 // pettorale, e il suo margine di sotto
+      {t:5.55,wt:.2,dir:[q*.2,0,.98],wa:.16,h:.05},{t:5.05,wt:.2,dir:[q*.2,0,.98],wa:.16,h:.055},{t:4.5,wt:.22,dir:[q*.2,0,.98],wa:.16,h:.055},      // gli addominali, tre fasce
+      {t:3.55,wt:.5,dir:[q*.82,0,.57],wa:.42,h:.07},{t:2.5,wt:.45,dir:[q*.6,0,.8],wa:.25,h:-.06},                      // la cresta del fianco e il solco dell'inguine
+      {t:6,wt:1.1,dir:[q,0,-.25],wa:.45,h:.07},{t:7.3,wt:.7,dir:[q*.55,0,-.84],wa:.45,h:.07},{t:4,wt:1,dir:[q*.27,0,-.96],wa:.2,h:.05},      // gran dorsale, scapola, lombari
+      {t:1.75,wt:.75,dir:[q*.5,0,-.87],wa:.5,h:.26},{t:9.3,wt:.5,dir:[q*.75,0,-.4],wa:.7,h:.16},                       // gluteo, trapezio
+      {t:7.7,wt:.75,dir:[q*.9,0,.44],wa:.1,h:-.05},{t:8.75,wt:.16,dir:[q*.45,0,.9],wa:.5,h:-.035},{t:8.95,wt:.14,dir:[q*.45,0,.9],wa:.45,h:.04},      // il solco fra petto e spalla, la clavicola
+      {t:5.3,wt:.07,dir:[q*.2,0,.98],wa:.2,h:-.03},{t:4.78,wt:.07,dir:[q*.2,0,.98],wa:.2,h:-.03},{t:5.4,wt:.9,dir:[q*.42,0,.9],wa:.07,h:-.03},      // le pieghe fra gli addominali e il loro margine di lato
+      {t:1.2,wt:.25,dir:[q*.5,0,-.87],wa:.6,h:-.05}); });                                                                 // la piega sotto il gluteo
+    pelle(B,fila(largo([[-.02,1.46,0,.12,.1],[-.025,1.56,0,.25,.175],[-.03,1.72,-.01,.272,.195],[-.03,1.87,-.005,.258,.185],[-.015,2.02,.005,.24,.17],[-.005,2.2,.012,.285,.192],[0,2.36,.022,.335,.218],[.002,2.48,.02,.365,.215],[.005,2.57,.005,.37,.185],[.005,2.64,-.005,.33,.155],[.005,2.71,-.01,.16,.125],[.005,2.83,0,.098,.1]],1.09,1.04)),S,28,{sudd:3,muscoli:MT,forza:1.7,patina:2.2});
+    pezzo(.034,-.02,1.5,.158,.9,1.15,.9);                                                                                                                      // il sesso, appena accennato
+    /* testa: mento, mascella, zigomi, fronte, calotta */
+    var MF=[{t:3.95,wt:.28,dir:FR,wa:.75,h:.07},{t:.75,wt:.5,dir:FR,wa:.4,h:.16},{t:2.3,wt:.4,dir:FR,wa:.28,h:-.04}];                                         // arcata delle sopracciglia, mento, il solco sotto il naso
+    [-1,1].forEach(function(q){ MF.push({t:3.45,wt:.25,dir:[q*.36,0,.93],wa:.2,h:-.1},{t:2.8,wt:.35,dir:[q*.62,0,.78],wa:.28,h:.07},{t:1.5,wt:.5,dir:[q*.92,0,.3],wa:.4,h:.07}); });      // orbite, zigomi, angoli della mascella
+    pelle(B,fila([[.005,2.812,.045,.03,.035],[.005,2.85,.035,.082,.098],[.005,2.9,.025,.106,.126],[.005,2.96,.015,.122,.146],[.005,3.04,0,.132,.16],[.005,3.12,-.01,.118,.146],[.005,3.18,-.01,.076,.096],[.005,3.205,-.01,.02,.03]]),S,22,{sudd:3,muscoli:MF,forza:1.25,patina:2});
+    pelle(B,fila([[.005,3.035,.128,.013,.012],[.005,2.99,.158,.017,.015],[.005,2.958,.178,.024,.02],[.005,2.942,.158,.02,.012]]),S,8,{sudd:2});                  // il naso
+    pezzo(.03,.005,2.917,.146,1.3,.3,.5); pezzo(.027,.005,2.9,.144,1.15,.34,.5);                                                                               // le labbra
+    [-1,1].forEach(function(q){ pezzo(.02,.005+q*.05,3.0,.116,1.25,.62,.6,8); pezzo(.03,.005+q*.134,2.985,.01,.4,1.2,.8,8); });                                // occhi, orecchie
+    (function(){ var rn=RM.casuale(35), C0=[.005,3.045,-.005], RR=[.142,.172,.168];                                                                             // i riccioli: file di ciocche tonde sulla calotta, sopra la fronte, sulla nuca
+      [[16,4],[38,9],[58,13],[78,15],[98,14],[116,11]].forEach(function(f,ri){ for(var q=0;q<f[1];q++){ var az=(q+(ri%2)*.5)/f[1]*6.2832, fi=f[0]*.01745, davanti=Math.cos(az);
+        if(f[0]>50 && davanti>.42) continue; if(f[0]>100 && davanti>-.35) continue;                                                                             // il volto resta libero; sulla nuca solo dietro
+        pezzo(.036+.012*rn(),C0[0]+Math.sin(fi)*Math.sin(az)*RR[0],C0[1]+Math.cos(fi)*RR[1],C0[2]+Math.sin(fi)*Math.cos(az)*RR[2],1,.8,1,6); } }); })();
+    /* braccio destro (a -x): scende lungo il fianco, la mano stringe l'asta del timone */
+    pelle(B,fila([[-.33,2.6,0,.1,.12],[-.425,2.54,0,.125,.138],[-.46,2.36,0,.112,.122],[-.47,2.13,-.01,.09,.096],[-.475,1.98,.03,.096,.1],[-.475,1.8,.09,.076,.08],[-.475,1.67,.14,.052,.058],[-.478,1.63,.155,.045,.05]]),S,14,{sudd:3,forza:1.5,patina:2.2,muscoli:[
+      {t:1,wt:.75,dir:[-1,.2,0],wa:.95,h:.17},{t:2.2,wt:.6,dir:FR,wa:.6,h:.13},{t:2.3,wt:.7,dir:DI,wa:.6,h:.1},{t:4.1,wt:.6,dir:[-.6,0,.6],wa:.7,h:.13}]});      // deltoide, bicipite, tricipite, avambraccio
+    pezzo(.05,-.508,1.585,.165,.5,1.15,.95); for(k=0;k<4;k++) dito([[-.522,1.632-k*.034,.185],[-.5,1.63-k*.034,.218],[-.462,1.628-k*.034,.214],[-.442,1.63-k*.034,.185]],.019);      // il dorso della mano e le quattro dita chiuse sull'asta
+    dito([[-.5,1.655,.14],[-.47,1.668,.125],[-.445,1.662,.145]],.02);                                                                                           // il pollice
+    arto(B,pt(-.5,0,.26),pt(-.466,1.9,.148),.022*F,.02*F,S,8,false); pezzo(.03,-.4655,1.91,.147,1,1,1,8);                                                       // il timone: l'asta e il pomo
+    B.dentro(-.5*F,Y0,.26*F,.25,function(B){ B.scatola(.17*F,.5*F,.035*F,0,.06*F,0,S).scatola(.21*F,.07*F,.04*F,0,0,0,S).geo(new THREE.CylinderGeometry(.085*F,.085*F,.035*F,12,1,false,0,Math.PI).rotateX(Math.PI/2).translate(0,.56*F,0),S); });      // la pala, poggiata a terra
+    /* braccio sinistro (a +x): gomito al fianco, avambraccio in avanti, il globo sul palmo aperto */
+    pelle(B,fila([[.34,2.6,0,.1,.12],[.435,2.54,0,.125,.138],[.47,2.36,.01,.112,.122],[.475,2.13,.03,.09,.096],[.458,2.07,.17,.098,.092],[.432,2.1,.33,.078,.076],[.418,2.13,.44,.054,.056],[.415,2.135,.47,.05,.04]]),S,14,{sudd:3,forza:1.5,patina:2.2,muscoli:[
+      {t:1,wt:.75,dir:[1,.2,0],wa:.95,h:.17},{t:2.15,wt:.55,dir:[0,.2,1],wa:.6,h:.19},{t:2.3,wt:.7,dir:DI,wa:.6,h:.1},{t:4.3,wt:.6,dir:[.6,.6,0],wa:.7,h:.13}]});
+    var GC=[.41,2.31,.52], GR=.125;
+    pezzo(.062,.412,2.152,.5,1.05,.36,1.2);                                                                                                                     // il palmo
+    for(k=0;k<4;k++){ var lx=(k-1.5)*.03; dito([20,45,72,98].map(function(be){ var bq=be*.01745, e=GR+.014; return [GC[0]+lx,GC[1]-Math.cos(bq)*e,GC[2]+Math.sin(bq)*e]; }),.018); }      // le dita salgono sul davanti del globo
+    dito([35,62,90].map(function(be){ var bq=be*.01745, e=GR+.014; return [GC[0]+Math.sin(bq)*e,GC[1]-Math.cos(bq)*e,GC[2]-.02]; }),.02);                         // il pollice, di lato
+    pezzo(GR,GC[0],GC[1],GC[2],1,1,1,18);                                                                                                                       // il globo
+    /* la corona: sette raggi a ventaglio attorno al capo, fra i riccioli */
+    for(k=-3;k<=3;k++) B.geo(new THREE.ConeGeometry(.024*F,.42*F,6).translate(0,.21*F,0).rotateZ(-k*.4).translate(.005*F+Math.sin(k*.4)*.15*F,3.05*F+Y0+Math.cos(k*.4)*.15*F,-.01*F),P.oro);
  }},
  /* Meta Sudans: fontana conica flavia, con la vasca di 21 m rifatta nel IV secolo. Demolita nel 1936; la posizione è quella delle coordinate correnti (41°53'24" N, 12°29'27" E),
     a nord dell'arco di Costantino: vale entro una quindicina di metri. Altezza del cono (circa 17 m) dalle ricostruzioni correnti. */
