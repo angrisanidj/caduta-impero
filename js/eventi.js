@@ -79,25 +79,43 @@ bagliori.frustumCulled=false; bagliori.visible=false; RM.scene.add(bagliori);
    (il rilievo della scena è accentuato, quindi l'acqua ha uno spessore fisso e non la profondità vera).
    La maglia si costruisce la prima volta che serve. */
 var piena=null, matPiena=new THREE.ShaderMaterial({
-  transparent:true, depthWrite:false, uniforms:{ livello:{value:-9}, colore:{value:RM.col(0x87a094)} },
-  vertexShader:['attribute float soglia; uniform float livello; varying float vF;','void main(){ vF=clamp((livello-soglia)*0.6,0.0,0.24); gl_Position=projectionMatrix*modelViewMatrix*vec4(position.x,position.y+vF,position.z,1.0); }'].join(NL),
-  fragmentShader:['uniform vec3 colore; varying float vF;','void main(){ if(vF<0.004) discard; gl_FragColor=vec4(colore,smoothstep(0.0,0.07,vF)*0.84);','#include <encodings_fragment>','}'].join(NL)
+  transparent:true, depthWrite:false, uniforms:{ livello:{value:-9}, colore:{value:RM.col(0x87a094)}, onda:{value:2} },
+  /* onda: dove è arrivata l'ondata, lungo il fiume (lungo: 0 a monte, 1 a valle); a monte del fronte l'acqua è salita, a valle no; sul fronte una fascia chiara di schiuma */
+  vertexShader:['attribute float soglia; attribute float lungo; uniform float livello; uniform float onda; varying float vF; varying float vS;',
+    'void main(){ float k=clamp((onda-lungo)/0.045,0.0,1.0); float lv=mix(-1.4,livello,k); vF=clamp((lv-soglia)*0.6,0.0,0.24);',
+    ' vS=(1.0-smoothstep(0.0,0.02,abs(onda-lungo-0.012)))*step(onda,1.5); gl_Position=projectionMatrix*modelViewMatrix*vec4(position.x,position.y+vF+vS*0.05,position.z,1.0); }'].join(NL),
+  fragmentShader:['uniform vec3 colore; varying float vF; varying float vS;','void main(){ if(vF<0.004) discard; vec3 c=mix(colore,vec3(0.93,0.9,0.82),vS*0.75); gl_FragColor=vec4(c,smoothstep(0.0,0.07,vF)*(0.84+0.12*vS));','#include <encodings_fragment>','}'].join(NL)
 });
 var coloreAcqua=RM.col(0x87a094);
 function posaPiena(){
-  var PS=5, X0=-340, Z0=-420, NX=137, NZ=173, pos=new Float32Array(NX*NZ*3), sg=new Float32Array(NX*NZ), ind=[], c, r, k=0;
+  var PS=5, X0=-340, Z0=-420, NX=137, NZ=173, pos=new Float32Array(NX*NZ*3), sg=new Float32Array(NX*NZ), lu=new Float32Array(NX*NZ), ind=[], c, r, k=0;
+  var cf=RM.curvaFiume, N=400, cp=[], j; for(j=0;j<=N;j++){ var q=cf.getPoint(j/N); cp.push([q.x,q.z]); }      // per l'ondata: a che punto del fiume corrisponde ogni vertice
   for(r=0;r<NZ;r++) for(c=0;c<NX;c++,k++){
     var x=X0+c*PS, z=Z0+r*PS, y=RM.h(x,z); pos[k*3]=x; pos[k*3+1]=y; pos[k*3+2]=z;
     sg[k]=y+Math.max(0,RM.distFiume(x,z)-90)*.012;                               // lontano dal fiume l'acqua arriva meno in alto
+    var m=1e12, mj=0; for(j=0;j<=N;j+=2){ var dx=cp[j][0]-x, dz=cp[j][1]-z, dd=dx*dx+dz*dz; if(dd<m){ m=dd; mj=j; } } lu[k]=mj/N;
   }
   for(r=0;r<NZ-1;r++) for(c=0;c<NX-1;c++){ k=r*NX+c; if(Math.min(sg[k],sg[k+1],sg[k+NX],sg[k+NX+1])>3.2) continue; ind.push(k,k+NX,k+1,k+1,k+NX,k+NX+1); }
-  var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setAttribute('soglia',new THREE.BufferAttribute(sg,1)); g.setIndex(ind);
+  var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setAttribute('soglia',new THREE.BufferAttribute(sg,1)); g.setAttribute('lungo',new THREE.BufferAttribute(lu,1)); g.setIndex(ind);
   piena=new THREE.Mesh(g,matPiena); piena.frustumCulled=false; piena.renderOrder=2; RM.scene.add(piena);
 }
+/* L'ondata (23 novembre 2026, l'utente: «per l'alluvione mostra l'ondata di piena e l'alluvione»): arrivati sulla tappa di una piena il fiume è ancora nel suo letto; poi l'ondata scende
+   da ponte Milvio verso valle in sette secondi e dietro di lei l'acqua sale. Il fronte e la sua velocità sono una resa, non un calcolo idraulico (nel 791 l'acqua entra da porta Flaminia,
+   a nord: il verso è quello giusto). Con meno animazioni la piena c'è subito, ferma. */
+var ondaAnim=null, MENO_ONDA=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);
+var ONDA=(function(){ var cf=RM.curvaFiume, a=0, b=1, ma=1e9, mb=1e9, i, q, d; for(i=0;i<=600;i++){ q=cf.getPoint(i/600); d=Math.hypot(q.x+152,q.z+479); if(d<ma){ ma=d; a=i/600; } d=Math.hypot(q.x+125,q.z-480); if(d<mb){ mb=d; b=i/600; } } return [a-.02,b+.06]; })();      // da ponte Milvio a valle di San Paolo
+RM.ondaPiena=function(ritardo){ if(MENO_ONDA) return; ondaAnim={t0:performance.now()+(ritardo||0)}; };
+var ondaFissa=/[?&]onda=([0-9.]+)/.exec(location.search);      // per le prove senza finestra: ?onda=0.45 ferma il fronte in quel punto del fiume
+function ondaOra(){
+  if(ondaFissa) return +ondaFissa[1];
+  if(!ondaAnim) return 2; var t=(performance.now()-ondaAnim.t0)/1000; if(t<0) return ONDA[0];
+  if(t>7.5){ ondaAnim=null; return 2; } var k=Math.min(1,t/7); k=k*k*(3-2*k); return ONDA[0]+(ONDA[1]-ONDA[0])*k;
+}
+RM.frame.push(function(){ if(ondaAnim && piena) matPiena.uniforms.onda.value=ondaOra(); });
 function pienaEVelo(){
   var qp=0, qv=0; EV.forEach(function(ev){ if(ev.piena) qp=Math.max(qp,ev.q); if(ev.velo) qv=Math.max(qv,ev.q); });
   if(qp>.01 && !piena) posaPiena();
-  if(piena){ piena.visible=qp>.01; matPiena.uniforms.livello.value=-1.4+qp*4.25; matPiena.uniforms.colore.value.copy(coloreAcqua).multiplyScalar(1-.75*RM.notte); }
+  if(piena){ piena.visible=qp>.01; matPiena.uniforms.livello.value=-1.4+qp*4.25; matPiena.uniforms.onda.value=ondaOra(); matPiena.uniforms.colore.value.copy(coloreAcqua).multiplyScalar(1-.75*RM.notte); }
   if(RM.applicaVelo) RM.applicaVelo(qv);
 }
 

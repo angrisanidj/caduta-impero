@@ -304,6 +304,22 @@ var terremoto801=(function(){
   return {o:o, detriti:detriti, polvere:polvere, mp:mp, seq:null};
 })();
 var MENO_SCOSSE=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);
+/* La scossa, uguale per tutti i terremoti (23 novembre 2026, l'utente: «verifica che tremi anche per gli altri terremoti»): si muove il mondo, non la camera, per dur secondi,
+   sempre più piano. Le scosse delle tappe: 801 (San Paolo, qui sotto) e 847, che si attraversa passando dalla tappa dell'846 a quella dell'852: è la scossa a cui il Parco del Colosseo
+   attribuisce il crollo del lato sud dell'anfiteatro, e nel modello fa crollare la basilica di Massenzio (Liber Pontificalis, vita di Leone IV: un forte terremoto in quell'anno). */
+var scossa=null;
+function scuoti(ritardo,dur,amp){ if(MENO_SCOSSE) return; scossa={t0:performance.now()+ritardo,dur:dur,amp:amp}; }
+RM.frame.push(function(){
+  if(!scossa) return; var t=(performance.now()-scossa.t0)/1000; if(t<0) return;
+  if(t>scossa.dur){ scossa=null; RM.scene.position.set(0,0,0); return; }
+  var a=scossa.amp*(1-t/scossa.dur); RM.scene.position.set(a*Math.sin(t*47),a*.5*Math.sin(t*31+1),a*Math.cos(t*53));
+});
+if(window.RM_pagina) RM_pagina.quando(function(i,t){ if(!t.intermezzo && (t.anno===589||t.anno===791) && RM.ondaPiena) RM.ondaPiena(2300); });      // le due piene: l'ondata parte quando la vista è arrivata
+var annoPrima=null;
+RM.moduli.push(function(anno){      // 847: la scossa quando il tempo, andando avanti fra due tappe vicine, passa l'anno del terremoto
+  if(annoPrima!=null && annoPrima>840 && annoPrima<847 && anno>=847 && anno-annoPrima<2) scuoti(0,2.8,.2);
+  annoPrima=anno;
+});
 function valoriPaolo(anno){ var r=RM.rovina('paolo',anno); return {r:r.r, s:r.s, c:r.c}; }
 function applicaScossa(){      // durante la sequenza: il tetto va dallo stato dell'800 a quello dell'801, la polvere sale e svanisce, la terra trema
   var T=terremoto801, q=T&&T.seq; if(!q) return;
@@ -314,15 +330,15 @@ function applicaScossa(){      // durante la sequenza: il tetto va dallo stato d
   T.detriti.visible=k>.35;
   var pv=t>.6&&t<6.5; T.mp.opacity=pv?.55*RM.sfuma(.6,1.4,t)*(1-RM.sfuma(3.5,6.5,t)):0;
   T.polvere.forEach(function(m,j){ m.visible=pv; var g=1+2.2*RM.sfuma(.6,4,t)+(j%3)*.3; m.scale.set(g,g*.7,g); m.position.y=T.o.g.position.y+2.2+1.6*RM.sfuma(.6,5,t); });
-  var a=t>0&&t<3.2?.22*(1-t/3.2):0; RM.scene.position.set(a*Math.sin(t*47),a*.5*Math.sin(t*31+1),a*Math.cos(t*53));      // la terra trema: si muove il mondo, non la camera
-  if(t>6.5){ T.seq=null; RM.scene.position.set(0,0,0); T.mp.opacity=0; T.polvere.forEach(function(m){ m.visible=false; }); }
+  if(t>6.5){ T.seq=null; T.mp.opacity=0; T.polvere.forEach(function(m){ m.visible=false; }); }
 }
 if(terremoto801){
   RM.frame.push(applicaScossa);
   if(window.RM_pagina) RM_pagina.quando(function(i,t){
-    var T=terremoto801; T.seq=null; RM.scene.position.set(0,0,0);
+    var T=terremoto801; T.seq=null;
     if(t.anno!==801 || t.intermezzo || MENO_SCOSSE) return;
     T.seq={t0:performance.now()+2300, pre:valoriPaolo(800.5), post:valoriPaolo(801), col:RM.TINTA.crollato.clone()};      // la scossa parte quando la vista è arrivata sulla basilica
+    scuoti(2300,3.2,.22);
   });
 }
 
