@@ -48,7 +48,7 @@ if(M && M.miniatura){
   var com=crea('div','as-comandi',null,fig);
   bGioca=crea('button','as-gioca',null,com); bGioca.type='button';
   bGioca.innerHTML='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.2v9.6L12.6 8z"/></svg><span>Tappa per tappa</span>';
-  bGioca.setAttribute('aria-label','Fai scorrere la carta tappa per tappa');
+  bGioca.setAttribute('aria-label','Segui sulla carta le tappe di questo atto');
   var scelta=crea('div','as-scelta',null,com); scelta.setAttribute('role','group'); scelta.setAttribute('aria-label','Carta dell\'Impero');
   ['inizio','fine'].forEach(function(q,k){
     var b=crea('button',null,null,scelta); b.type='button'; crea('b',null,null,b); crea('span',null,q,b);
@@ -91,7 +91,7 @@ function preparaPassi(k){
 
 /* ---- i numeri: quelli del cruscotto, all'anno in cui l'atto comincia e a quello in cui finisce ---- */
 /* note corte: quelle complete (fonti, forchette, limiti) stanno nel cruscotto, subito sotto */
-var NOTE={territorio:'quota di superficie, su questa carta', popolazione:'stime: la forchetta sta nel cruscotto', commerci:'relitti datati, I secolo = 100: contano le navi ritrovate, non le merci'};
+var NOTE={territorio:'percentuale del territorio misurata sulla carta', popolazione:'Popolazione stimata. Il cruscotto indica il minimo e il massimo.', commerci:'relitti datati, I secolo = 100: contano le navi ritrovate, non le merci'};
 var X=function(a){ return (Math.max(A0,Math.min(A1,a))-A0)/(A1-A0)*200; };
 function Y(v,max){ return (38-v/max*34).toFixed(1); }
 function traccia(punti,max){ return punti.map(function(p,i){ return (i?'L':'M')+X(p[0]).toFixed(1)+' '+Y(p[1],max); }).join(''); }
@@ -117,10 +117,10 @@ function scriviNumeri(at){
       var tr=tratto(s.punti,at.da,fine), u=tr[tr.length-1];
       svg('path',{'class':'atto',d:traccia(tr,s.max)},g);
       svg('path',{'class':'punto',d:'M'+X(tr[0][0]).toFixed(1)+' '+Y(tr[0][1],s.max)+'h0'},g);           // un tratto lungo zero con la punta tonda: un punto che non si deforma
-      svg('path',{'class':'punto fine',d:'M'+X(u[0]).toFixed(1)+' '+Y(u[1],s.max)+'h0'},g);
+      svg('path',{'class':'Valore finale',d:'M'+X(u[0]).toFixed(1)+' '+Y(u[1],s.max)+'h0'},g);
     }
     li.appendChild(g);
-    crea('small',null,s.id==='argento'?(v1==='oro'?'dal 309-312 il solido d’oro, stabile per secoli':'percentuale d’argento, valori indicativi'):NOTE[s.id]||s.nota||'',li);
+    crea('small',null,s.id==='argento'?(v1==='oro'?'Tra il 309 e il 312 compare il solido, una moneta d\'oro che resterà stabile per secoli.':'Percentuale stimata di argento nella moneta'):NOTE[s.id]||s.nota||'',li);
   });
 }
 
@@ -188,7 +188,7 @@ function invito(k,i){
   var tx=crea('p','ai-testo',null,eInvito); crea('span','ai-num','Comincia l’atto '+a.n,tx); crea('b','ai-nome',a.nome,tx); crea('span','ai-anni',a.da+'-'+a.a,tx);
   var b=crea('button','ai-apri',null,eInvito); b.type='button'; b.innerHTML='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.2v9.6L12.6 8z"/></svg><span>Guarda l’atto in breve</span>';
   b.setAttribute('aria-controls','attoScheda'); b.addEventListener('click',function(){ tenuta=true; apri(k); mostraAVista(); });
-  crea('span','ai-cosa','La carta dall’inizio alla fine, i numeri prima e dopo, le tappe',eInvito);
+  crea('span','ai-cosa','Esplora la carta e confronta i dati all\'inizio e alla fine dell\'atto.',eInvito);
 }
 function aggiorna(i,t){
   var k=attoDi(t);

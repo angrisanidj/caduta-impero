@@ -12,6 +12,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const RADICE = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const [fPrima, fDopo, fOra] = process.argv.slice(2), SCRIVI = process.argv.includes('--scrivi');
+const LUNGHE = process.argv.includes('--lunghe');      // le scritte corte allungate passano comunque: la scelta l'ha già fatta chi ha preparato dopo.md (23 novembre 2026)
 const leggiMd = p => { const m = new Map(); for (const l of fs.readFileSync(p, 'utf8').split(/\r?\n/)) { const q = /^\[([^\]]+)\] ?(.*)$/.exec(l); if (q) m.set(q[1], q[2]); } return m; };
 const prima = leggiMd(fPrima), dopo = leggiMd(fDopo), ora = leggiMd(fOra);
 const forma = s => s.replace(/[’‘]/g, "'").replace(/(\d)\s?[–—]\s?(\d)/g, '$1-$2').replace(/\s+/g, ' ').trim();
@@ -26,7 +27,7 @@ for (const [k, a] of prima) {
   if (/^carta\./.test(k)) { saltate.push(k + ' (etichetta della carta)'); continue; }
   let nuovo;
   if (finali[k] != null) nuovo = forma(finali[k]);
-  else { nuovo = forma(b); if (CORTA.test(k) && nuovo.length > a.length * 1.3 && nuovo.length > a.length + 8) { saltate.push(k + ' (troppo lunga: resta com\'era)'); continue; } }
+  else { nuovo = forma(b); if (!LUNGHE && CORTA.test(k) && nuovo.length > a.length * 1.3 && nuovo.length > a.length + 8) { saltate.push(k + ' (troppo lunga: resta com\'era)'); continue; } }
   const eDato = /^(T\d|atto|curva|evento|itinerario|scheda|tesi)/.test(k);
   const vecchio = eDato ? (ora.has(k) ? ora.get(k) : a) : a;      // per i dati vale la sigla; per pagina e interfaccia le sigle contano le righe e sono slittate: si cerca il testo di prima
   if (forma(nuovo) === forma(vecchio)) continue;

@@ -17,14 +17,14 @@ var NOME_FAM={dentro:'da dentro',fuori:'da fuori',natura:'clima e malattie',caso
    tolgono all'impero i contribuenti di intere province) e pp. 449-450 l'obiezione a Halsall (senza l'urto esterno degli Unni nel 376-380 e nel 405-408 l'Occidente non sarebbe caduto);
    per Ward-Perkins, in quell'obiezione, resta la fonte di prima. Passi in src/testi/studi-e-scavi.md. */
 var TESI=[
- {id:'montesquieu', fam:'dentro', corto:'Montesquieu', chi:'Montesquieu', anno:'1734', titolo:'Perita della propria grandezza',
-  tesi:"Per Montesquieu l'espansione di Roma indebolì le istituzioni che l'avevano resa potente. I soldati, rimasti a lungo lontani dalla città, finirono per sentirsi più legati ai propri generali che allo Stato. Secondo il filosofo, cause generali come questa condizionano i singoli avvenimenti. A rendere più vulnerabile l'Occidente contribuì anche la geografia. Gli invasori respinti da Costantinopoli si diressero verso ovest e l'Occidente «fu il primo abbattuto».",
+ {id:'montesquieu', fam:'dentro', corto:'Montesquieu', chi:'Montesquieu', anno:'1734', titolo:'Un impero indebolito dalla sua stessa grandezza',
+  tesi:"Per Montesquieu l'espansione di Roma indebolì le istituzioni che l'avevano resa potente. I soldati, rimasti per anni lontani dalla città, finirono per sentirsi più legati ai loro generali che allo Stato. Secondo il filosofo, cambiamenti profondi come questo influenzano il corso degli eventi. Contò anche la geografia. Gli eserciti che non riuscirono a prendere Costantinopoli si diressero verso ovest e l'Occidente «fu il primo abbattuto».",
   cit:"«Vi sono cause generali, morali o fisiche, che agiscono in ogni monarchia, la innalzano, la mantengono o la fanno precipitare; tutti gli accidenti sono sottomessi a queste cause.»",      // «Il y a des causes générales, soit morales, soit physiques, qui agissent dans chaque monarchie, l'élèvent, la maintiennent, ou la précipitent ; tous les accidents sont soumis à ces causes» (fr.wikisource)
   fonte:"Considérations sur les causes de la grandeur des Romains et de leur décadence, cap. XVIII; il passo sull'Occidente è nel cap. XIX",
   obiezione:"Bury osserva che le stesse condizioni esistevano nell'impero d'Oriente, che sopravvisse per altri mille anni.",
   anni:[[235,"gli eserciti fanno e disfano gli imperatori"],[395,"l'impero diviso fra due corti"]]},
  {id:'gibbon', fam:'dentro', corto:'Gibbon', chi:'Edward Gibbon', anno:'1776-1789', titolo:'Troppo grande per durare',
-  tesi:"Gibbon considera la caduta «l'effetto naturale e inevitabile di una grandezza smisurata». Secondo lui, la prosperità fece maturare il principio della decadenza e le cause della rovina si moltiplicarono con l'estensione delle conquiste. Gibbon stesso descrive la sua opera come il racconto di quello che chiama «il trionfo della barbarie e della religione».",
+  tesi:"Gibbon definisce la caduta di Roma «l'effetto naturale e inevitabile di una grandezza smisurata». A suo giudizio, la prosperità dell'impero contribuì a indebolirlo. Ogni nuova conquista estendeva i territori da governare e moltiplicava le ragioni della crisi. Gibbon presenta la sua opera come il racconto di quello che chiama «il trionfo della barbarie e della religione».",
   cit:"«La storia della sua rovina è semplice e ovvia; e invece di chiederci perché l'impero romano fu distrutto, dovremmo piuttosto stupirci che sia durato così a lungo.»",      // «The story of its ruin is simple and obvious; and instead of inquiring why the Roman empire was destroyed, we should rather be surprised that it had subsisted so long» (ccel.org)
   fonte:"The History of the Decline and Fall of the Roman Empire, «Osservazioni generali sulla caduta dell'impero romano in Occidente», alla fine del cap. XXXVIII",
   obiezione:"A Gibbon si può rivolgere la stessa obiezione mossa a Montesquieu. L'estensione dell'impero, da sola, lascia aperte due domande. Perché cadde soltanto la parte occidentale? E perché proprio in quel periodo?",
@@ -48,68 +48,68 @@ var TESI=[
   obiezione:"Bury: dopo Adrianopoli i Germani non vinsero più nessuna grande battaglia contro un esercito romano.",
   anni:[[378,"Adrianopoli"],[451,"un esercito fatto di alleati"]]},
  {id:'wickham', fam:'dentro', corto:'Wickham', chi:'Chris Wickham', anno:'2005', titolo:'Quando lo Stato smette di tassare',
-  tesi:"Secondo Wickham, l'impero era prima di tutto una macchina fiscale. Le imposte, soprattutto quella sulla terra, finanziavano l'esercito e la corte. Il sistema fiscale era, nelle sue parole, «la principale singola struttura» dello Stato. Tra il V e il VII secolo in Occidente quella macchina si spense, regno per regno, con tempi diversi. Per molti storici la perdita fiscale più grave fu quella delle ricche province africane nel 439.",      // «The land tax, and the fiscal system as a whole, was the main single structure» (Framing the Early Middle Ages)
+  tesi:"Come pagava Roma i soldati e la corte? Soprattutto con le imposte sulle terre. Per Wickham la capacità di riscuoterle era «la principale singola struttura» dello Stato. Fra il V e il VII secolo questo sistema smise progressivamente di funzionare in Occidente, in tempi diversi da un regno all'altro. Per molti storici la perdita di entrate più grave risale al 439, quando i Vandali conquistarono Cartagine e sottrassero al governo romano le ricche province africane.",      // «The land tax, and the fiscal system as a whole, was the main single structure» (Framing the Early Middle Ages)
   fonte:"Framing the Early Middle Ages (2005)",
   anni:[[439,"l'Africa, il suo grano e le sue tasse"],[468,"l'ultima flotta"],[476,"un re al posto dell'imperatore"]]},
- {id:'halsall', fam:'dentro', corto:'Halsall', chi:'Guy Halsall', anno:'2007', titolo:"I barbari trascinati dentro",
-  tesi:"Per Halsall è la crisi dell'impero a mettere in moto i popoli oltre la frontiera, non il contrario. Chi attraversa la frontiera non abbatte uno Stato sano: entra nelle sue lotte per il potere, combatte per una delle parti e vi cerca un posto.",
+ {id:'halsall', fam:'dentro', corto:'Halsall', chi:'Guy Halsall', anno:'2007', titolo:"Le lotte di Roma coinvolgono i popoli vicini",
+  tesi:"Secondo Halsall, per capire perché i popoli oltre la frontiera entrarono nell'impero occorre partire dalle lotte per il potere a Roma. Le fazioni romane avevano bisogno di soldati. Per chi attraversava la frontiera, schierarsi con una di esse era un modo per trovare un posto nell'impero.",
   cit:"«Le \"migrazioni barbariche\" furono dunque il prodotto della \"fine dell'impero romano\", e non viceversa.»",      // «'barbarian migrations' were, therefore, the product of the 'end of the Roman Empire', and not vice versa»
   fonte:"Barbarian Migrations and the Roman West, 376-568 (2007)",
   obiezione:"Per Heather l'avanzata degli Unni è decisiva per spiegare sia il passaggio del Danubio nel 376 sia gli attraversamenti della frontiera negli anni 405-408.",
   anni:[[395,"due corti rivali"],[406,"il Reno"],[418,"un regno dentro l'impero"]]},
- {id:'jones', fam:'fuori', corto:'Jones', chi:'A. H. M. Jones', anno:'1964', titolo:'Più esposto ai barbari',
-  tesi:"Jones elenca senza sconti le debolezze interne: nell'impero «troppo pochi produttori mantenevano troppe bocche inutili» e il peso delle imposte alimentava l'apatia. Conclude però che non furono decisive, perché esistevano anche in Oriente. L'Occidente cadde perché era più esposto agli attacchi esterni.",      // vol. II p. 1045: «too few producers supported too many idle mouths»; p. 1067: «The oppressive weight of the taxation contributed to the general apathy»; p. 1068: «The internal weaknesses of the empire cannot have been a major factor in its decline»
+ {id:'jones', fam:'fuori', corto:'Jones', chi:'A. H. M. Jones', anno:'1964', titolo:'Un Occidente più esposto agli attacchi',
+  tesi:"Secondo Jones, nell'impero «troppo pochi produttori mantenevano troppe bocche inutili» e il peso delle imposte scoraggiava la popolazione. Gli stessi problemi, osserva però lo storico, esistevano nell'Impero d'Oriente, che sopravvisse. A suo giudizio la differenza decisiva fu che l'Occidente era più esposto agli attacchi dall'esterno.",      // vol. II p. 1045: «too few producers supported too many idle mouths»; p. 1067: «The oppressive weight of the taxation contributed to the general apathy»; p. 1068: «The internal weaknesses of the empire cannot have been a major factor in its decline»
   cit:"«La causa principale della sua caduta fu che era più esposto agli assalti dei barbari.»",      // «the major cause of its fall was that it was more exposed to barbarian onslaughts»
   fonte:"The Later Roman Empire 284-602, vol. II, p. 1068",
-  obiezione:"Halsall rovescia il rapporto: è la crisi interna di Roma a mettere in moto i popoli vicini.",
+  obiezione:"Per Halsall la successione degli eventi va letta partendo da Roma. Furono le lotte interne all'impero a spingere i popoli vicini a intervenire.",
   anni:[[378,"Adrianopoli"],[406,"il Reno"],[439,"Cartagine"]]},
  {id:'heather', fam:'fuori', corto:'Heather', chi:'Peter Heather', anno:'2005 e 2010', titolo:'La spinta degli Unni',
-  tesi:"Secondo Heather, sono gli Unni a mettere in moto tutto. La loro avanzata spinse prima i Goti ad attraversare il Danubio nel 376, poi altri popoli a oltrepassare il Reno tra il 405 e il 408. Entrare nell'impero sembrava a questi gruppi meno rischioso che affrontare gli Unni. Una volta insediati, sottrassero progressivamente province al governo romano. Con le province, l'Occidente perse per sempre una grande parte dei suoi contribuenti.",      // 2005, p. 435: «the permanent alienation of a significant chunk of the western Empire's taxpayers»
+  tesi:"Secondo Heather, l'avanzata degli Unni spinse prima i Goti ad attraversare il Danubio nel 376, poi altri popoli a oltrepassare il Reno tra il 405 e il 408. Per questi gruppi entrare nell'impero sembrava meno rischioso che affrontare gli Unni. Una volta insediati, presero progressivamente il controllo di diverse province. Il governo d'Occidente perse così anche le tasse che gli abitanti di quelle terre gli avevano pagato fino ad allora.",      // 2005, p. 435: «the permanent alienation of a significant chunk of the western Empire's taxpayers»
   cit:"«Le crisi del 376-380 e del 405-408 videro entrambe gli Unni spingere altri gruppi oltre la frontiera dell'impero.»",      // «the crises of 376-80 and 405-8 both saw the Huns push other groups across the imperial frontier»
   fonte:"Empires and Barbarians (2010), pp. 208-209; la stessa tesi in The Fall of the Roman Empire (2005), pp. 435 e 449-450",
   obiezione:"Halsall: le migrazioni sono il prodotto della fine dell'impero, non la causa.",
   anni:[[378,"i Goti dentro l'impero"],[406,"il Reno"],[439,"Cartagine"],[451,"Attila"]]},
  {id:'wardperkins', fam:'fuori', corto:'Ward-Perkins', chi:'Bryan Ward-Perkins', anno:'2005', titolo:'La fine di una civiltà',
-  tesi:"Ward-Perkins risponde con l'archeologia a chi parla di trasformazione: tra il V e il VII secolo in Occidente il tenore di vita crolla. Lo mostrano oggetti di uso quotidiano come ceramiche, tegole e monete. Persino i bovini, che in età romana erano diventati più grandi, tornarono a essere di taglia più piccola. Lo storico parla di quella che chiama «l'ascesa e la caduta della mucca romana» e fa cominciare il crollo con le invasioni.",      // «the rise and fall of the Roman cow»
+  tesi:"Secondo Ward-Perkins, tra il V e il VII secolo le condizioni di vita in Occidente peggiorarono bruscamente. Per mostrarlo lo storico guarda a ciò che gli archeologi ritrovano nelle case e negli insediamenti, dalle stoviglie di ceramica alle tegole e alle monete. Persino i bovini, che in età romana erano diventati più grandi, tornarono a essere di taglia più piccola. Ward-Perkins parla di «l'ascesa e la caduta della mucca romana» e colloca l'inizio del declino al tempo delle invasioni.",      // «the rise and fall of the Roman cow»
   fonte:"The Fall of Rome and the End of Civilization (2005)",
   obiezione:"Goffart e la scuola della trasformazione leggono gli stessi secoli come un adattamento.",
   anni:[[400,'',700],[439,"Cartagine"],[546,"Roma vuota"],[593,"dov'è il Senato, dov'è il popolo"]]},
  {id:'pirenne', fam:'fuori', corto:'Pirenne', chi:'Henri Pirenne', anno:'1922 e 1937', titolo:"Le conquiste arabe dividono il Mediterraneo",
-  tesi:"Per Pirenne le invasioni germaniche non spezzano il mondo antico: i nuovi regni continuano a far parte del mondo mediterraneo. La vera rottura arriva con le conquiste arabe del VII e dell'VIII secolo, che dividono il mare. Il centro politico dell'Occidente si sposta allora verso nord, nelle terre dove sarebbe sorto l'impero di Carlo Magno.",
+  tesi:"Per Pirenne, dopo le invasioni germaniche i nuovi regni continuarono a far parte di un unico mondo mediterraneo. La svolta arrivò con le conquiste arabe del VII e dell'VIII secolo, che secondo lo storico spezzarono i legami fra le sponde del mare. Il centro politico dell'Occidente si spostò allora verso nord, nelle terre in cui sarebbe sorto l'impero di Carlo Magno.",
   cit:"«Il Mediterraneo era stato un lago romano: diventa un lago musulmano.» «Carlo Magno, senza Maometto, sarebbe inconcepibile.»",      // «La Méditerranée avait été un lac romain : elle devient un lac musulman»; «Charlemagne, sans Mahomet, serait inconcevable»
   fonte:"«Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), pp. 77-86",
   obiezione:"Già dal III secolo diminuiscono i relitti databili ritrovati nel Mediterraneo. È un indizio di un calo dei traffici marittimi anteriore alle conquiste arabe.",
   anni:[[711,"il Mediterraneo si divide"],[800,"Carlo Magno imperatore"]]},
- {id:'harper', fam:'natura', corto:'Harper', chi:'Kyle Harper', anno:'2017', titolo:'Il clima e i microbi',
+ {id:'harper', fam:'natura', corto:'Harper', chi:'Kyle Harper', anno:'2017', titolo:'Il ruolo del clima e delle epidemie',
   tesi:"Harper considera anche gli effetti di un clima meno favorevole dopo il II secolo e di tre grandi epidemie che colpirono gli abitanti delle città e i soldati. Nel percorso si incontrano l'epidemia della metà del III secolo, il sole velato del 536 e la peste che raggiunse Costantinopoli nel 542.",
   fonte:"The Fate of Rome (2017)",
   obiezione:"Nel 2018 John Haldon e altri studiosi hanno giudicato insufficienti le prove per attribuire a clima e malattie un ruolo decisivo. Per l'epidemia del III secolo, detta «peste di Cipriano», le fonti non permettono di stimare l'impatto.",
   anni:[[251,"la peste di Cipriano"],[537,"il sole velato del 536"],[542,"la peste di Giustiniano"]]},
  {id:'piombo', fam:'natura', corto:'Il piombo', chi:'Jerome Nriagu', anno:'1983', titolo:'Avvelenati dal piombo',
-  tesi:"Secondo Nriagu, l'aristocrazia romana si sarebbe avvelenata da sola: il mosto cotto con cui si dolcificava il vino bolliva in recipienti di piombo. Lo studioso attribuisce a questa pratica la «gotta saturnina» dei ricchi, una forma di gotta associata all'esposizione al piombo. A suo giudizio il fenomeno avrebbe contribuito alla caduta di Roma.",
+  tesi:"Secondo Nriagu, i Romani benestanti rischiavano di avvelenarsi bevendo vino. Per addolcirlo si aggiungeva mosto fatto bollire in recipienti di piombo. Lo studioso ipotizza che così i ricchi assorbissero il metallo e si ammalassero di «gotta saturnina», una forma di gotta legata all'esposizione al piombo. A suo giudizio, il fenomeno avrebbe contribuito alla caduta di Roma.",
   fonte:"«Saturnine gout among Roman aristocrats», New England Journal of Medicine 308 (1983): visti solo i dati bibliografici",
-  obiezione:"Nel 1984 John Scarborough contestò quello che definiva «il mito dell'avvelenamento da piombo fra i Romani», osservando che gli antichi ne conoscevano bene gli effetti. Il piombo depositato nei ghiacci della Groenlandia misura un'altra cosa: l'attività delle miniere e delle fonderie. I depositi crollarono con le crisi del II e del III secolo e rimasero bassi per cinque secoli.",
+  obiezione:"Nel 1984 John Scarborough contestò quello che definiva «il mito dell'avvelenamento da piombo fra i Romani». Osservò che gli antichi conoscevano bene gli effetti del metallo. Le tracce di piombo ritrovate nei ghiacci della Groenlandia ci informano su quanto ne disperdessero nell'aria le miniere e le fonderie. Durante le crisi del II e del III secolo la quantità depositata nei ghiacci diminuì bruscamente e restò bassa per cinque secoli.",
   anni:[]},
- {id:'bury', fam:'caso', corto:'Bury', chi:'J. B. Bury', anno:'1923', titolo:'Una catena di casi',
+ {id:'bury', fam:'caso', corto:'Bury', chi:'J. B. Bury', anno:'1923', titolo:'Una successione di eventi dall\'esito incerto',
   tesi:"Bury osserva che tasse, spopolamento e cristianesimo caratterizzavano anche l'Oriente, che sopravvisse. Per spiegare la fine dell'Occidente segue invece una successione di eventi, ciascuno dei quali avrebbe potuto avere un esito diverso. Arrivarono gli Unni. La cattiva gestione dei profughi goti sfociò nella crisi di Adrianopoli, dove Valente scelse di dare battaglia. Teodosio insediò un intero popolo nell'impero come alleato. Alla sua morte il trono passò al giovane Onorio, che Bury giudica «un ragazzo debole di mente». Il comando militare toccò a Stilicone, che entrò in conflitto con la corte d'Oriente.",
   cit:"«Il graduale crollo della potenza romana in questa parte dell'impero fu la conseguenza di una serie di eventi contingenti. Non si possono indicare cause generali che lo rendessero inevitabile.»",      // «The gradual collapse of the Roman power in this section of the Empire was the consequence of a series of contingent events. No general causes can be assigned that made it inevitable» (LacusCurtius)
   fonte:"History of the Later Roman Empire, cap. IX, § 7, p. 311",
   obiezione:"Heather e Ward-Perkins sottolineano che perdere una provincia significava perdere anche le imposte dei suoi abitanti. Con meno entrate diventava più difficile pagare i soldati necessari a difendere le province rimaste.",
   anni:[[378,"Adrianopoli"],[395,"muore Teodosio"],[402,"Stilicone e la corte a Ravenna"],[410,"il sacco di Roma"]]},
  {id:'goffart', fam:'mai', corto:'Goffart', chi:'Walter Goffart', anno:'1980', titolo:'Un esperimento sfuggito di mano',
-  tesi:"Più che una conquista, per Goffart fu un accomodamento. Gruppi provenienti da oltre frontiera furono insediati per accordo nelle province, secondo regole fissate dalle autorità romane, mentre l'amministrazione provinciale continuava a funzionare.",
+  tesi:"Secondo Goffart, le autorità romane negoziarono con i gruppi provenienti da oltre frontiera le condizioni per stabilirsi nelle province. Roma fissò le regole degli insediamenti e l'amministrazione provinciale continuò a funzionare anche dopo l'arrivo dei nuovi abitanti.",
   cit:"«Quella che chiamiamo caduta dell'impero d'Occidente fu un esperimento fantasioso un po' sfuggito di mano.»",      // «an imaginative experiment that got a little out of hand» (p. 35)
   fonte:"Barbarians and Romans, A.D. 418-584 (1980), p. 35",
-  obiezione:"Ward-Perkins osserva che gli scavi documentano un crollo del tenore di vita nel passaggio ai nuovi regni, non un passaggio di consegne.",
+  obiezione:"Ward-Perkins richiama l'attenzione sulle condizioni degli abitanti. A suo giudizio, gli scavi mostrano che nel passaggio ai nuovi regni il tenore di vita peggiorò bruscamente.",
   anni:[[418,"i Visigoti insediati per trattato"],[476,"Odoacre"],[493,"Teodorico governa con i Romani"]]},
- {id:'trasformazione', fam:'mai', corto:'La trasformazione', chi:'Peter Brown e la scuola della trasformazione', anno:'dal 1971', titolo:'Non una fine: una trasformazione',
-  tesi:"Dagli anni Settanta del Novecento, Peter Brown e altri studiosi smettono di parlare di decadenza: tra il III e l'VIII secolo il mondo antico non muore, cambia forma. Ne nascono i regni romano-barbarici, l'impero bizantino, la Chiesa dei vescovi e dei monaci e l'islam. Negli anni Novanta la European Science Foundation dedica a questa lettura il programma «La trasformazione del mondo romano».",
+ {id:'trasformazione', fam:'mai', corto:'La trasformazione', chi:'Peter Brown e la scuola della trasformazione', anno:'dal 1971', titolo:'Come si trasformò il mondo romano',
+  tesi:"Dagli anni Settanta del Novecento Peter Brown e altri studiosi smettono di parlare di decadenza e descrivono i secoli dal III all'VIII come un periodo di trasformazione. Studiano come, nel mondo che era stato romano, presero forma i regni romano-barbarici, l'impero bizantino e la Chiesa dei vescovi e dei monaci, e come vi si diffuse l'islam. Negli anni Novanta la European Science Foundation dedicò a questo tema il programma «La trasformazione del mondo romano».",
   fonte:"P. Brown, The World of Late Antiquity (1971), non riletto; il programma europeo, 1992-1997, da una voce d'enciclopedia",
   obiezione:"Per Ward-Perkins (2005), concentrarsi sulle trasformazioni lascia in ombra il calo del tenore di vita documentato dagli scavi.",
   anni:[[235,'',800],[609,"il Pantheon diventa una chiesa"],[800,"un impero nuovo"]]},
  {id:'demandt', fam:'elenco', corto:'Le 210 cause', chi:'Alexander Demandt', anno:'1984', titolo:'Duecentodieci ragioni',
   tesi:"Nel 1984 lo storico tedesco Alexander Demandt raccolse in ordine alfabetico 210 cause proposte nei due secoli precedenti per spiegare la caduta di Roma. L'elenco documenta la varietà delle interpretazioni, anche quando si contraddicono. Qui ne compare una selezione.",
-  elenco:[["assalto degli Unni"],["pane e giochi"],["bolscevizzazione"],["cristianesimo"],["peggioramento del clima"],["concatenazione di disgrazie"],["eccessi della tavola"],["divisione dell'impero"],["epidemie"],["gotta"],["edonismo"],["grandezza smisurata"],["avvelenamento da piombo"],["malaria"],["terme"],["esaurimento del suolo"],["peso delle tasse"],["volgarizzazione"]],
+  elenco:[["assalto degli Unni"],["pane e giochi"],["bolscevizzazione"],["cristianesimo"],["peggioramento del clima"],["concatenazione di disgrazie"],["eccessi della tavola"],["divisione dell'impero"],["epidemie"],["gotta"],["edonismo"],["grandezza smisurata"],["avvelenamento da piombo"],["malaria"],["terme"],["perdita di fertilità dei terreni"],["peso delle tasse"],["volgarizzazione"]],
   fonte:"Der Fall Roms (1984), p. 695: l'elenco è stato letto in una traduzione inglese",
   anni:[]}
 ];
@@ -149,7 +149,7 @@ TESI.forEach(function(t){
   quadro.appendChild(r); righe[t.id]=r;
 });
 radice.appendChild(quadro);
-radice.appendChild(el('p','tesi-nota','Ogni punto indica un anno importante per una spiegazione. Le fasce indicano periodi più lunghi. Anni e periodi sono una scelta di questa pagina, fatta sui testi citati, per orientarsi. Seleziona una riga per leggere la spiegazione.'));
+radice.appendChild(el('p','tesi-nota','Ogni riga presenta una spiegazione della caduta dell\'Occidente. I punti indicano singoli anni, le fasce periodi più lunghi. Abbiamo scelto le date sulla base dei testi citati. Seleziona una riga per leggere l\'interpretazione corrispondente.'));
 
 /* ---- le schede ---- */
 var elenco=el('div','tesi-elenco');
@@ -163,7 +163,7 @@ TESI.forEach(function(t){
   corpo.appendChild(el('p','tesi-testo',t.tesi));
   if(t.cit) corpo.appendChild(el('blockquote',null,t.cit));
   if(t.fonte) corpo.appendChild(el('p','fonte',t.fonte));
-  if(t.obiezione){ var o=el('p','obiezione'); o.appendChild(el('b',null,'Chi non è d\'accordo. ')); o.appendChild(document.createTextNode(t.obiezione)); corpo.appendChild(o); }
+  if(t.obiezione){ var o=el('p','obiezione'); o.appendChild(el('b',null,'Le obiezioni degli altri studiosi. ')); o.appendChild(document.createTextNode(t.obiezione)); corpo.appendChild(o); }
   if(t.elenco){ var ul=el('ul','tesi-voci'); t.elenco.forEach(function(v){ var li=el('li'); li.appendChild(el('b',null,v[0])); if(v[1]) li.appendChild(document.createTextNode(' '+v[1])); ul.appendChild(li); }); corpo.appendChild(ul); }
   var punti=(t.anni||[]).filter(function(q){ return !(q.length>2 && q[2]); });
   if(punti.length){

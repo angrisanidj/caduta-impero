@@ -19,7 +19,7 @@ var SPIE=[
   val:function(a){ return Math.round(this.quota(a))+'%'; },
   /* la quota tradotta in chilometri quadrati, misurati su questa carta (js/mappa.js, kmqOvest): un ordine di grandezza, non un dato pubblicato */
   notaA:function(a){ var q=MAPPA&&MAPPA.kmqOvest?this.quota(a)/100*MAPPA.kmqOvest():0, s=q>=950000?(q/1e6).toFixed(1).replace('.',',')+' milioni di km²':q>=10000?nf.format(Math.round(q/10000)*10000)+' km²':'';
-    return 'quota di superficie'+(s?': circa '+s+' su questa carta':', per regioni')+'; tratteggio: i territori di Costantinopoli (395 = 100)'; }},
+    return 'percentuale del territorio'+(s?': circa '+s+' su questa carta':', per regioni')+'; tratteggio: i territori di Costantinopoli (395 = 100)'; }},
  {id:'argento', nome:D.CURVE.argento.nome, punti:D.CURVE.argento.punti, max:50, fine:D.CURVE.argento.fine,
   val:function(a){ return a<=D.CURVE.argento.fine ? Math.round(D.interp(this.punti,a))+'%' : 'oro'; },
   notaA:function(a){ return a<=D.CURVE.argento.fine ? D.CURVE.argento.nota : D.CURVE.argento.dopo; }},
@@ -304,7 +304,7 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
     if(B.contains('tempo-attesa')){ b.hidden=true; return; }      // in cima alla pagina, prima di scorrere, non c'è (come la linea del tempo)
     var r=tit.getBoundingClientRect(), s=sc.getBoundingClientRect(), dove=r.top>H*.85 && s.bottom>0 ? 'giu' : s.bottom<0 && r.top<H*.6 ? 'su' : '';
     b.hidden=!dove; if(!dove) return;
-    if(b.dataset.dove!==dove){ b.dataset.dove=dove; b.textContent=dove==='giu'?'Leggi la tappa ↓':'↑ Carta e città'; }
+    if(b.dataset.dove!==dove){ b.dataset.dove=dove; b.textContent=dove==='giu'?'Leggi la tappa ↓':'↑ Torna alla carta e alla città'; }
     var t=tp?tp.getBoundingClientRect():null; b.style.bottom=Math.max(14,t&&t.top<H&&t.bottom>H-4?H-t.top+10:14)+'px';
   }
   function presto(){ if(!raf) raf=requestAnimationFrame(function(){ raf=0; aggiorna(); }); }
@@ -336,7 +336,7 @@ function daLeggere(t){
   if(t.leggenda) inviti.push({id:'tLeggenda', cl:'leggenda', segno:'✦', titolo:'Fra storia e leggenda', sotto:breve(t.leggenda,70)});
   if(t.storici) inviti.push({id:'tStorici', cl:'storici', segno:'?', titolo:'Gli storici discutono', sotto:breve(t.storici,70)});
   nav.hidden=!inviti.length; if(!inviti.length) return;
-  var et=document.createElement('p'); et.className='dl-etichetta'; et.textContent='Da leggere in questa tappa'; nav.appendChild(et);
+  var et=document.createElement('p'); et.className='dl-etichetta'; et.textContent='Letture di questa tappa'; nav.appendChild(et);
   var ul=document.createElement('ul'); nav.appendChild(ul);
   inviti.forEach(function(x){
     var li=document.createElement('li'), b=document.createElement('button'), s=document.createElement('span'), tt=document.createElement('b'), so=document.createElement('span');

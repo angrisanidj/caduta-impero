@@ -627,14 +627,14 @@ var M=[
  }},
  /* Le scholae: quella dei Sassoni dal 727 (tradizione tarda su re Ine), le altre tre dal 799, quando le nomina per la prima volta il Liber Pontificalis (Leone III).
     La torre campanaria di Stefano II non sta qui: è campanilepietro (prima ce n'era una seconda copia, che compariva nel 727). */
- {id:'scholae', nome:'Schola dei Sassoni', x:-233,z:-108, ry:0, zone:[[33.5,12.5,5]], fa:function(B){
+ {id:'scholae', nome:'La comunità dei Sassoni (Schola dei Sassoni)', x:-233,z:-108, ry:0, zone:[[33.5,12.5,5]], fa:function(B){
     var y=suTerreno(-233,-108,0), q;
     [[33.5,12.5]].forEach(function(p){       // Sassoni, verso il fiume, sul sito di Santo Spirito in Sassia (OpenStreetMap)
       q=y(p[0],p[1]); casa(B,q,p[0]-1.2,p[1],3.6,2.4,1.2); casa(B,q,p[0]+1.4,p[1]+2,1.6,3,1,PI/2);
       B.scatola(1.3,1.8,2.6,p[0]+2.6,q-.3,p[1]-1.6,P.mattone).falde(2.6,.4,1.5,p[0]+2.6,q+1.5,p[1]-1.6,P.coppi,PI/2,P.mattone).cilindro(.5,1.4,p[0]+2.6,q-.3,p[1]-3,P.mattone,null,10);
     });
  }},
- {id:'scholae2', nome:'Scholae di Frisoni, Franchi e Longobardi', x:-233,z:-108, ry:0, zone:[[14,9,5],[-8,17,5],[-12,-11,5],[-32,12.5,4]], fa:function(B){
+ {id:'scholae2', nome:'Le comunità dei Frisoni, dei Franchi e dei Longobardi (scholae)', x:-233,z:-108, ry:0, zone:[[14,9,5],[-8,17,5],[-12,-11,5],[-32,12.5,4]], fa:function(B){
     var y=suTerreno(-233,-108,0), q;
     [[14,9],[-8,17],[-12,-11]].forEach(function(p){       // Frisoni sul sito dei Santi Michele e Magno (OpenStreetMap), Franchi a sud dell'atrio, Longobardi a nord (posizione discussa)
       q=y(p[0],p[1]); casa(B,q,p[0]-1.2,p[1],3.6,2.4,1.2); casa(B,q,p[0]+1.4,p[1]+2,1.6,3,1,PI/2);

@@ -6,12 +6,12 @@ var G=window.RM_MAPPA, ospite=document.getElementById('mappa'); if(!G||!ospite) 
 var NS='http://www.w3.org/2000/svg';
 function el(tipo,attr,padre){ var e=document.createElementNS(NS,tipo); for(var k in attr) e.setAttribute(k,attr[k]); if(padre) padre.appendChild(e); return e; }
 
-var STATI=[['roma','governo di Roma'],['usurpatore','impero separato'],['conteso','conteso'],['federati','federati, per trattato'],['regno:svevi',''],['regno:vandali',''],['regno:visigoti',''],['regno:burgundi',''],['regno:franchi',''],['regno:italia',''],['regno:longobardi',''],['regno:anglosassoni',''],['regno:asturie',''],['regno:britanni',''],['regno:turingi',''],['regno:gepidi',''],['regno:unni',''],['regno:avari',''],['regno:bulgari',''],['regno:moravi',''],['oriente','corte d\'Oriente'],['califfato','califfato'],['carolingio','impero dei Franchi'],['chiesa','terre della Chiesa'],['perso','fuori dall\'impero']];
+var STATI=[['roma','governo di Roma'],['usurpatore','imperatore rivale'],['conteso','conteso'],['federati','alleati per trattato'],['regno:svevi',''],['regno:vandali',''],['regno:visigoti',''],['regno:burgundi',''],['regno:franchi',''],['regno:italia',''],['regno:longobardi',''],['regno:anglosassoni',''],['regno:asturie',''],['regno:britanni',''],['regno:turingi',''],['regno:gepidi',''],['regno:unni',''],['regno:avari',''],['regno:bulgari',''],['regno:moravi',''],['oriente','corte d\'Oriente'],['califfato','califfato'],['carolingio','impero dei Franchi'],['chiesa','terre della Chiesa'],['perso','fuori dall\'impero']];
 /* i regni: colore e nome. I colori si ripetono solo fra regni che non sono mai sulla carta insieme. */
 var REGNI={svevi:['#D08C60','regno degli Svevi'],vandali:['#7B5B3A','regno dei Vandali'],visigoti:['#6A4C93','regno dei Visigoti'],burgundi:['#D684A4','regno dei Burgundi'],franchi:['#3E5F7A','regni dei Franchi'],
   italia:['#3D7A4F','regno d\'Italia'],longobardi:['#8A8F3A','regno e ducati dei Longobardi'],anglosassoni:['#6E94B4','regni anglosassoni'],asturie:['#D08C60','regno delle Asturie'],
-  britanni:['#A99BD0','regni dei Britanni'],turingi:['#8B4F6B','regno dei Turingi'],gepidi:['#5A9096','regno dei Gepidi'],unni:['#5B5348','dominio degli Unni'],avari:['#5B5348','khanato degli Avari'],
-  bulgari:['#8B4F6B','khanato dei Bulgari'],moravi:['#A7B37A','principato di Moravia']};
+  britanni:['#A99BD0','regni dei Britanni'],turingi:['#8B4F6B','regno dei Turingi'],gepidi:['#5A9096','regno dei Gepidi'],unni:['#5B5348','dominio degli Unni'],avari:['#5B5348','regno degli Avari'],
+  bulgari:['#8B4F6B','regno dei Bulgari'],moravi:['#A7B37A','principato di Moravia']};
 var svg=el('svg',{viewBox:'95 55 810 518',   /* ritaglio sull'Occidente: stesso rapporto del riquadro */ role:'img','aria-label':'Mappa dell\'Impero romano','preserveAspectRatio':'xMidYMid slice'},ospite);
 var defs=el('defs',{},svg), trama=el('pattern',{id:'trama-conteso',width:7,height:7,patternUnits:'userSpaceOnUse',patternTransform:'rotate(40)'},defs);
 el('rect',{width:7,height:7,fill:'#DCD0B8'},trama); el('rect',{width:3.2,height:7,fill:'#9A2F2A'},trama);
@@ -74,7 +74,7 @@ if(G.tetrarchia){
   G.tetrarchia.nomi.forEach(function(n){ var t=el('text',{x:n[0],y:n[1]},tetra); t.textContent=n[2]; el('tspan',{x:n[0],dy:'.95em','class':'rango'},t).textContent=n[3];
     if(!n[4] || !G.tetrarchia.gruppi) return; var a={};
     (G.tetrarchia.gruppi[n[4]]||[]).forEach(function(id){ a[id]=1; }); (G.tetrarchia.gruppi[n[5]]||[]).forEach(function(id){ a[id]=2; });
-    nomiTetra[n[4]]=t; areeTetra[n[4]]=a; t.setAttribute('role','button'); t.setAttribute('tabindex','0'); t.setAttribute('aria-pressed','false'); t.setAttribute('aria-label',n[2]+', '+n[3]+': mostra la sua parte');
+    nomiTetra[n[4]]=t; areeTetra[n[4]]=a; t.setAttribute('role','button'); t.setAttribute('tabindex','0'); t.setAttribute('aria-pressed','false'); t.setAttribute('aria-label',n[2]+', '+n[3]+': mostra i territori che governa');
     t.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toccaTetra(n[4]); } });
   });
 }
@@ -91,7 +91,7 @@ function britanniaDiCostanzo(){ return fuocoT==='costanzo' && annoVisto>=296; }
 function scriviNotaTetra(){
   if(!notaT) return; var n=fuocoT && G.tetrarchia.nomi.filter(function(q){ return q[4]===fuocoT; })[0];
   notaT.textContent=n ? n[2]+', '+n[3]+': '+PARTE[fuocoT]+(fuocoT==='costanzo'?(britanniaDiCostanzo()?'; dal 296 anche la Britannia, ripresa agli usurpatori':'; la Britannia è in mano a un usurpatore'):'')+'. Tocca di nuovo il nome per rivedere tutta la carta.'
-    : 'Puntini: aree di comando, non Stati. L’impero resta uno e le leggi valgono per tutti. A trattini: attribuzione discussa (Hispania, Tracia). Tocca un nome per vedere la sua parte.';
+    : 'I puntini delimitano le zone affidate ai quattro imperatori. L\'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore per vedere la sua zona.';
 }
 function tetrarchia(anno){ return anno>=293 && anno<305; }      // la prima tetrarchia: dal 1° marzo 293 alle abdicazioni del 1° maggio 305
 var citta=el('g',{'class':'m-citta'},svg), scritte={}, cittaPos=[], larghe={};
@@ -109,9 +109,9 @@ function rettoCitta(cp,v,w){ return [cp.x+v[0]*(v[2]+w/2),cp.y+v[1]-4.7,w,16]; }
 /* I popoli: ciascuno è un punto dove stava il grosso del gruppo e un cartellino col nome; il colore dice il rapporto con Roma in quel momento
    (gli stessi colori delle regioni: verde per chi sta dentro per accordo, blu per chi ha un regno), la linea tratteggiata da dove veniva
    (l'ultimo tratto del cammino, con i suoi punti di passaggio via terra). Quando un gruppo ha un regno, il cartellino porta il nome del regno e la linea sparisce. */
-var RAPPORTI=[['fuori','oltre il confine'],['accordo','insediati nell\'impero per accordo'],['armi','in armi dentro l\'impero'],['regno','con un regno proprio (colore in legenda)']];
+var RAPPORTI=[['fuori','oltre il confine'],['accordo','insediati nell\'impero per accordo'],['armi','in armi dentro l\'impero'],['regno','con un proprio regno (vedi il colore nella legenda)']];
 var CLASSE={fuori:'fuori',accolti:'accordo',federati:'accordo',armi:'armi',regno:'regno'};
-var REGNO={goti:'Regno dei Visigoti',ostrogoti:'Regno degli Ostrogoti',vandali:'Regno dei Vandali',svevi:'Regno degli Svevi',burgundi:'Regno dei Burgundi',franchi:'Regno dei Franchi',sassoni:'Regni anglosassoni',longobardi:'Regno dei Longobardi',avari:'Khanato degli Avari',bulgari:'Khanato dei Bulgari'};
+var REGNO={goti:'Regno dei Visigoti',ostrogoti:'Regno degli Ostrogoti',vandali:'Regno dei Vandali',svevi:'Regno degli Svevi',burgundi:'Regno dei Burgundi',franchi:'Regno dei Franchi',sassoni:'Regni anglosassoni',longobardi:'Regno dei Longobardi',avari:'Regno degli Avari',bulgari:'Regno dei Bulgari'};
 var popoli={}, stratoRotte=el('g',{'class':'m-rotte'},svg), stratoPopoli=el('g',{'class':'m-popoli'},svg), ingr=0;
 Object.keys(G.popoli||{}).forEach(function(id){
   var q=G.popoli[id], sotto=el('path',{'class':'m-rotta-f via'},stratoRotte), rotta=el('path',{'class':'m-rotta via'},stratoRotte), g=el('g',{'class':'m-popolo via'},stratoPopoli);
@@ -653,9 +653,9 @@ function mostraPopoli(anno){
    Sul PC il riquadro della carta tiene l'altezza della tappa con più voci, così la pagina non salta da una tappa all'altra (spazioLegende). */
 function voceStato(s,anno){
   if(s.indexOf('regno:')===0){ var c=s.slice(6); return c==='italia'?(anno<493?'regno d\'Italia di Odoacre':'regno degli Ostrogoti'):c==='franchi'&&anno<511?'regno dei Franchi':REGNI[c][1]; }
-  return s==='roma'?(anno<395?'impero romano':'impero d\'Occidente'):s==='usurpatore'?(anno<455?'territorio con un imperatore rivale':'territorio romano che non obbedisce più a Ravenna'):s==='conteso'?'regione contesa in guerra':
-    s==='federati'?'barbari insediati per trattato':s==='regno'?'regno':s==='oriente'?'impero d\'Oriente':
-    s==='califfato'?(anno<750?'califfato':'califfato ed emirati arabi'):s==='carolingio'?(anno<843?'impero dei Franchi':'regni franchi dopo la divisione dell\'843'):s==='chiesa'?'terre della Chiesa':(anno<395?'lasciata dall\'impero':'uscita dall\'impero');
+  return s==='roma'?(anno<395?'impero romano':'impero d\'Occidente'):s==='usurpatore'?(anno<455?'territorio con un imperatore rivale':'territorio romano che il governo di Ravenna non controlla più'):s==='conteso'?'regione contesa in guerra':
+    s==='federati'?'popoli insediati per trattato':s==='regno'?'regno':s==='oriente'?'impero d\'Oriente':
+    s==='califfato'?(anno<750?'califfato':'califfato ed emirati arabi'):s==='carolingio'?(anno<843?'impero dei Franchi':'regni franchi dopo la divisione dell\'843'):s==='chiesa'?'terre della Chiesa':(anno<395?'abbandonata da Roma':'fuori dal controllo romano');
 }
 var legenda=document.getElementById('legendaMappa'), legendaPopoli=document.getElementById('legendaPopoli'), vociStati={}, vociPopoli={};
 /* La legenda risponde. Ogni voce è un bottone: toccata, lascia vive sulla carta le sole regioni di quel colore (o i soli popoli con quel rapporto) e attenua il resto;
@@ -746,7 +746,7 @@ svg.addEventListener('click',function(e){
   var kt=nomeTetraA(e.clientX,e.clientY); if(kt){ toccaTetra(kt); return; }      // un nome della tetrarchia: accende la sua parte
   var id=regioneA(e.clientX,e.clientY); if(!id) return;
   var st=statoOra[id]||'perso', r=ospite.getBoundingClientRect(), b=document.createElement('b'), x=e.clientX-r.left, y=e.clientY-r.top;
-  chi.textContent=''; b.textContent=G.regioni[id].nome; chi.appendChild(b); chi.appendChild(document.createTextNode(st==='fuori'?'mai dentro l’impero':voceStato(st,annoVisto!=null?annoVisto:600)));
+  chi.textContent=''; b.textContent=G.regioni[id].nome; chi.appendChild(b); chi.appendChild(document.createTextNode(st==='fuori'?'mai appartenuta all\'impero':voceStato(st,annoVisto!=null?annoVisto:600)));
   chi.hidden=false; var w=chi.offsetWidth, sotto=y<chi.offsetHeight+18;
   chi.style.left=Math.max(w/2+6,Math.min(r.width-w/2-6,x))+'px'; chi.style.top=(sotto?y+16:y-12)+'px'; chi.classList.toggle('sotto',sotto);
   var v=vociStati[st]; if(v && !v.v.hidden){ v.v.classList.add('indicata'); if(v.v.getBoundingClientRect().top>=legenda.getBoundingClientRect().bottom-2){ legenda.classList.add('aperta'); misuraLegende(); } }      // la voce era fra quelle nascoste: la legenda si apre

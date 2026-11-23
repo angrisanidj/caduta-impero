@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 const QUI = path.dirname(fileURLToPath(import.meta.url));
 const leggi = f => { try { return fs.readFileSync(path.join(QUI, f), 'utf8'); } catch (e) { return ''; } };
 const norma = s => String(s).replace(/<<nota:[^>]*>>/g, '').replace(/[’‘`]/g, "'").replace(/[“”]/g, '"').replace(/[–—]/g, '-').replace(/\s+/g, ' ').trim().toLowerCase();
-const giaLetti = norma([leggi('verifica/scritte-corrette-dall-utente.md'), leggi('da-rileggere-corretto.md'), leggi('tappe-cristianesimo.md')].join('\n').replace(/^\[[^\]]+\] ?/gm, ''));
+const giaLetti = norma([leggi('verifica/scritte-corrette-dall-utente.md'), leggi('da-rileggere-corretto.md'), leggi('tappe-cristianesimo.md'), leggi('verifica/da-rivedere-corretto-dall-utente-23-novembre.md')].join('\n').replace(/^\[[^\]]+\] ?/gm, ''));
 const nuova = t => t.length > 3 && !giaLetti.includes(norma(t));
 
 /* l'etichetta di una sigla, dalla sua coda */

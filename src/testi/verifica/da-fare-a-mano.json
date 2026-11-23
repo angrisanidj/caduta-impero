@@ -1,0 +1,122 @@
+{
+ "aMano": [
+  {
+   "k": "pagina.descrizione",
+   "vecchio": "La storia dell'Occidente romano dal 235 all'852 in 56 tappe. Una carta mostra come cambiano i confini. Una ricostruzione in 3D permette di esplorare Roma. Le testimonianze dell'epoca raccontano come furono vissuti questi cambiamenti.",
+   "nuovo": "Dal 235 all'852, la storia dell'Occidente romano in 56 tappe. Segui sulla carta i confini che cambiano, esplora Roma in 3D e leggi come i testimoni dell'epoca raccontarono quegli eventi.",
+   "file": "index.html",
+   "motivo": "compare 2 volte nel suo blocco"
+  },
+  {
+   "k": "pagina.06",
+   "vecchio": "900.000 → a 30.000 abitanti a Roma, secondo le stime",
+   "nuovo": "Roma passa da circa 900.000 a circa 30.000 abitanti, secondo le stime",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.13",
+   "vecchio": "Roma — abitanti, stima",
+   "nuovo": "Popolazione stimata di Roma",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.21",
+   "vecchio": "Posizione certa, forma ricostruita. L'aspetto dell'edificio è ricostruito da resti parziali, scavi e piante antiche, oppure l'edificio fu rifatto in seguito.",
+   "nuovo": "Sappiamo dove sorgeva l'edificio. Per ricostruirne l'aspetto ci basiamo sugli scavi, sulle piante antiche o sui resti sopravvissuti alle trasformazioni successive.",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.22",
+   "vecchio": "Posizione o forma ipotetiche. È il caso delle case e delle rovine dei quartieri.",
+   "nuovo": "La posizione o la forma sono ipotetiche. È il caso, per esempio, delle singole case che il modello mostra nei quartieri abitati o in rovina.",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.26",
+   "vecchio": "Protagonisti · tocca un’immagine per ingrandirla, con fonte e licenza",
+   "nuovo": "Protagonisti · Tocca un'immagine per ingrandirla e consultarne la fonte e la licenza.",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.31",
+   "vecchio": "in uso in disuso spogliato usato come cava bruciato danneggiato da un terremoto",
+   "nuovo": "in uso · in disuso · spogliato di materiali · usato come cava · bruciato · danneggiato da un terremoto",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.38",
+   "vecchio": "Fonti I testi antichi letti e gli studi consultati",
+   "nuovo": "Fonti · Testi antichi e medievali e studi moderni consultati",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.39",
+   "vecchio": "Testi antichi e medievali letti. Autori: Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Opere: l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Cronache e annali: gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Leggi, documenti e luoghi: l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.",
+   "nuovo": "Tra gli autori antichi e medievali consultati figurano Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Tra le opere consultate ci sono anche l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Per le cronache e gli annali abbiamo consultato gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Tra le altre fonti figurano l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.40",
+   "vecchio": "Studi. Di Gibbon è stato letto il testo, di Jones la conclusione. Di Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer sono stati verificati alcuni passi del testo. Di Pirenne è stato letto l'articolo del 1922. Del Companion to Rome sono state lette le pagine sugli abitanti e sugli scavi, di Durliat quelle sulla popolazione di Roma e di Heather le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), letta la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).",
+   "nuovo": "Per Gibbon abbiamo consultato il testo e per Jones la conclusione. Per Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer abbiamo verificato singoli passi. Di Pirenne abbiamo letto l'articolo del 1922. Per la popolazione e gli scavi di Roma abbiamo consultato le pagine dedicate a questi temi nel Companion to Rome e, per la popolazione, anche lo studio di Durliat. Per Heather abbiamo letto le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), di cui abbiamo consultato la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050, Brill (2026).",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.42",
+   "vecchio": "Come è fatta questa pagina La carta, la città, i confini, che cosa è misurato e che cosa no",
+   "nuovo": "Come abbiamo ricostruito la carta e la città · Dati misurati e stime",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.47",
+   "vecchio": "Licenze Che cosa si può riutilizzare, e come",
+   "nuovo": "Licenze · Come riutilizzare i materiali",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "pagina.48",
+   "vecchio": "Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Quelle segnate «Ricostruzione» sono state generate per questa pagina a partire dalle fonti: il volto è immaginario. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .",
+   "nuovo": "Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md.",
+   "file": "index.html",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "T35-507.titolo",
+   "vecchio": "Clodoveo",
+   "nuovo": "Clodoveo estende il regno dei Franchi",
+   "file": "js/dati.js",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "ui.mappa.64-r699",
+   "vecchio": "Mostra le altre",
+   "nuovo": "Mostra le altre voci",
+   "file": "js/mappa.js",
+   "motivo": "non trovata"
+  },
+  {
+   "k": "ui.cause.05-r71",
+   "vecchio": "Chi non è d'accordo.",
+   "nuovo": "Le obiezioni degli altri studiosi",
+   "file": "js/cause.js",
+   "motivo": "non trovata"
+  }
+ ],
+ "saltate": [
+  "carta.regioni (etichetta della carta)",
+  "carta.citta (etichetta della carta)",
+  "carta.mari (etichetta della carta)",
+  "carta.verdun (etichetta della carta)"
+ ]
+}
