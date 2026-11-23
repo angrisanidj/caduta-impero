@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 11:30:47.
+Generato da `src/testi.mjs` il 23/11/2026, 11:33:37.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 11:28
+[pagina.52] Versione del 23/11/2026, ore 11:30
 
 
 ## 2. Gli atti
@@ -2087,7 +2087,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.assedio756] Gennaio-marzo 756 · I Longobardi di Astolfo assediano Roma per tre mesi e devastano i dintorni. Il papa chiama i Franchi.
 
-[evento.natale800] 25 dicembre 800 · In San Pietro papa Leone III incorona imperatore Carlo Magno, re dei Franchi.
+[evento.natale800] 25 dicembre 800 · In San Pietro papa Leone III incorona imperatore Carlo Magno, re dei Franchi. Un mese prima, il 24 novembre, il papa lo aveva accolto sui gradini della basilica. Secondo gli Annali dei Franchi, le bandiere della città gli erano state mandate incontro e lungo la strada gruppi di pellegrini e di cittadini cantavano le sue lodi.
 
 [evento.terremoto801] 29 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi.
 

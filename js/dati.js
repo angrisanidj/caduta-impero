@@ -778,8 +778,8 @@ var EVENTI=[
   testo:"5-17 luglio 663 · Costante II è l'ultimo imperatore a visitare Roma finché l'impero la governa. In dodici giorni fa smontare il bronzo dei monumenti, comprese le tegole del Pantheon."},
  {id:'assedio756', da:756, a:756.4, bruciati:0, fuochi:[], campi:true,
   testo:"Gennaio-marzo 756 · I Longobardi di Astolfo assediano Roma per tre mesi e devastano i dintorni. Il papa chiama i Franchi."},
- {id:'natale800', vista:'pietro', da:800, a:800.4, bruciati:0, fuochi:[],
-  testo:"25 dicembre 800 · In San Pietro papa Leone III incorona imperatore Carlo Magno, re dei Franchi."},
+ {id:'natale800', vista:'carlo800', da:800, a:800.4, bruciati:0, fuochi:[],
+  testo:"25 dicembre 800 · In San Pietro papa Leone III incorona imperatore Carlo Magno, re dei Franchi. Un mese prima, il 24 novembre, il papa lo aveva accolto sui gradini della basilica. Secondo gli Annali dei Franchi, le bandiere della città gli erano state mandate incontro e lungo la strada gruppi di pellegrini e di cittadini cantavano le sue lodi."},      // Annales regni Francorum, anno 800 (thelatinlibrary, letto il 23 novembre 2026): «in gradibus basilicae beati Petri apostoli stans, missis obviam Romanae urbis vexillis, ordinatis … tam peregrinorum quam civium turmis, qui venienti laudes dicerent», «sub die VIII. Kal. Decembris»
  {id:'terremoto801', vista:'paolo', da:801, a:802, bruciati:0, fuochi:[],
   testo:"29 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi."},
  {id:'saraceni846', vista:'pietro', da:846, a:846.4, bruciati:5, ricostruzione:3, fuochi:[[-218,-100,.6],[-74,370,.5]],

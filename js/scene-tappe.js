@@ -241,6 +241,28 @@ var leone852=(function(){
   return {g:maglia(B), da:851.6, a:853};
 })();
 
+/* ---------- 800: Carlo arriva a San Pietro ----------
+   Annali del regno dei Franchi, anno 800 (thelatinlibrary, letto il 23 novembre 2026): il papa gli va incontro a Mentana, «duodecimo ab urbe lapide»; il giorno dopo, 24 novembre,
+   «in gradibus basilicae beati Petri apostoli stans, missis obviam Romanae urbis vexillis, ordinatis etiam atque dispositis per congrua loca tam peregrinorum quam civium turmis, qui venienti
+   laudes dicerent, ipse cum clero et episcopis equo descendentem gradusque ascendentem suscepit». Qui: il papa col clero sui gradini dell'atrio, Carlo appena sceso da cavallo,
+   il seguito dei Franchi, le bandiere della città e i gruppi di pellegrini e di cittadini lungo il portico che arriva dal ponte. Da dove venisse il corteo non è detto: lo schema
+   lo fa arrivare dal ponte di Sant'Angelo; numeri, colori e posti dei gruppi sono nostri. */
+var carlo800=(function(){
+  var B=new RM.Costruttore(), i, x, z, e=Math.PI/2, o=-Math.PI/2, Z=-108.1, franco=RM.col(0x3e5f7a);      // e: rivolti a est, verso chi arriva; o: verso la basilica
+  for(i=0;i<36;i++){ x=-247.9+(i%4)*.22; z=Z-1.9+(i>>2)*.42+(rnd()-.5)*.1; uomo(B,x,z,RM.h(x,z)+.07,i<8?C.oro:C.bianco,null,e); }      // vescovi e clero
+  uomo(B,-247.1,Z,RM.h(-247.1,Z)+.07,C.oro,null,e); insegna(B,-247.1,Z-.22,RM.h(-247.1,Z)+.07,C.oro,.45);                              // il papa e la croce
+  B.dentro(-245.6,RM.h(-245.6,Z)+.07,Z+.35,o,function(B){ B.scatola(.055,.085,.025,0,0,.08,C.bianco).scatola(.055,.085,.025,0,0,-.08,C.bianco).scatola(.06,.07,.22,0,.08,0,C.bianco).scatola(.04,.1,.05,0,.13,.095,C.bianco).scatola(.035,.04,.09,0,.2,.135,C.bianco); });      // il cavallo, senza cavaliere
+  uomo(B,-246.2,Z,RM.h(-246.2,Z)+.07,franco,null,o);                                                                                     // Carlo, sceso da cavallo, verso i gradini
+  function strada(x){ return -112+(x+185)*(-4/62); }      // la strada del Borgo (js/roma-topo.js, da -185,-112 a -247,-108), a nord del portico dei pellegrini
+  for(i=0;i<70;i++){ x=-244.4+(i>>1)*.42; z=strada(x)+(i&1?.22:-.22); cavaliere(B,x,z,RM.h(x,z),o,rnd()<.5?C.cavalloB:C.cavalloC,i%9?C.ferro:franco); }      // il seguito, a cavallo, sulla strada
+  for(i=0;i<12;i++){ x=-242+i*3.6; z=strada(x)-(i%2?.85:1.05); insegna(B,x,z,RM.h(x,z),i%3?C.rosso:C.oro,.45); }                       // le bandiere della città
+  [-239,-231,-223,-214,-205,-196,-187].forEach(function(cx,k){                                                                            // i gruppi di pellegrini e di cittadini, ai due lati
+    var cz=strada(cx)+(k%2?-2.4:1.35), col=k%2?C.folla:[C.tunica,C.bianco,C.folla[2],C.folla[5]];
+    for(var j=0;j<45;j++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*1.3, xx=cx+Math.cos(a)*r*1.6, zz=cz+Math.sin(a)*r*.6; if(RM.distFiume(xx,zz)<6.3) continue;
+      uomo(B,xx,zz,RM.h(xx,zz),col[(rnd()*col.length)|0],null,Math.atan2(cx-xx,strada(cx)-zz)); } });
+  return {g:maglia(B), da:799.6, a:801};
+})();
+
 /* ---------- 552: Narsete e il forte dei Goti al mausoleo di Adriano ----------
    Procopio VIII 33, 14-27 (Dewing, LacusCurtius): i Goti, troppo pochi per tutta la cinta, «enclosed a small part of the city with a short wall around the Tomb of Hadrian and, by connecting this
    with the earlier wall, he made a kind of fortress»; poi si arrendono a Narsete, che avanza «against the fortress with his whole army». Qui: un muro basso attorno al mausoleo, interrotto
@@ -280,7 +302,7 @@ var tombe=TOMBE.map(function(t){
 });
 
 RM.moduli.push(function(anno){
-  [milvio,corteo,assedio472,prigionieri593,trionfo274,salaria410,vandali455,costante663,leone852].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
+  [milvio,corteo,assedio472,prigionieri593,trionfo274,salaria410,vandali455,costante663,leone852,carlo800].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
   tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
   fortino552.g.visible=anno>=fortino552.da&&anno<fortino552.a; fortino552.g2.visible=anno>=fortino552.da2&&anno<fortino552.a2;
 });
@@ -290,7 +312,7 @@ var perId={}; (RM.MONUMENTI||[]).forEach(function(m){ perId[m.id]=m; });
 /* le due messe in scena hanno un'inquadratura fissa (punto guardato, posizione della camera): al ponte Milvio da sud, oltre il fiume, verso la riva dove fuggono;
    per il corteo da sud-est, sopra le case della via Lata */
 var VISTE={ milvio:{t:[-152,-486],c:[-140,10,-466]}, fortino552:{t:[-163,-126],c:[-131,30,-90]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
-  assedio472:{t:[-182,-110],c:[-143,47,-58]}, prigionieri593:{t:[-84,-232],c:[-57,33,-196]}, trionfo274:{t:[8,8],c:[44,26,44]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
+  assedio472:{t:[-182,-110],c:[-143,47,-58]}, prigionieri593:{t:[-84,-232],c:[-57,33,-196]}, trionfo274:{t:[8,8],c:[44,26,44]}, carlo800:{t:[-236,-108],c:[-212,24,-84]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
 var portata=false;                                                                      // la vista ce l'ha portata la regia
 function scena(){ var s=document.getElementById('scene'); return s?s.getAttribute('data-vista'):null; }
 function vista(v){
