@@ -90,8 +90,8 @@ var PARTE={costanzo:'le Gallie al di là delle Alpi (Aurelio Vittore)', massimia
 function britanniaDiCostanzo(){ return fuocoT==='costanzo' && annoVisto>=296; }
 function scriviNotaTetra(){
   if(!notaT) return; var n=fuocoT && G.tetrarchia.nomi.filter(function(q){ return q[4]===fuocoT; })[0];
-  notaT.textContent=n ? n[2]+', '+n[3]+': '+PARTE[fuocoT]+(fuocoT==='costanzo'?(britanniaDiCostanzo()?'; dal 296 anche la Britannia, ripresa agli usurpatori':'; la Britannia è in mano a un usurpatore'):'')+'. Tocca di nuovo il nome per rivedere tutta la carta.'
-    : 'I puntini delimitano le zone affidate ai quattro imperatori. L\'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore per vedere la sua zona.';
+  notaT.textContent=n ? n[2]+', '+n[3]+': '+PARTE[fuocoT]+(fuocoT==='costanzo'?(britanniaDiCostanzo()?'; dal 296 anche la Britannia, ripresa agli usurpatori':'; la Britannia è in mano a un usurpatore'):'')+'. Tocca di nuovo il nome, o la residenza, per rivedere tutta la carta.'
+    : 'I puntini delimitano le zone affidate ai quattro imperatori. L\'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.';
 }
 function tetrarchia(anno){ return anno>=293 && anno<305; }      // la prima tetrarchia: dal 1° marzo 293 alle abdicazioni del 1° maggio 305
 var citta=el('g',{'class':'m-citta'},svg), scritte={}, cittaPos=[], larghe={};
@@ -131,8 +131,16 @@ function notaTetra(anno){
 }
 function scriviLuoghi(l){
   luoghiOra=l||[]; rigaLuoghi.textContent=''; rigaLuoghi.hidden=!luoghiOra.length;
-  luoghiOra.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); rigaLuoghi.appendChild(s); });
+  luoghiOra.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); rigaLuoghi.appendChild(s);
+    var k=annoVisto!=null && tetrarchia(annoVisto) && SEDI[q[0]]; if(!k || !areeTetra[k]) return;
+    /* negli anni della tetrarchia la riga di una residenza è un bottone come il nome del tetrarca sulla carta (23 novembre 2026, l'utente: «questi devono essere clickabili
+       ed interattivi per far vedere come si erano divisi l'impero») */
+    s.className='sede'; s.setAttribute('data-t',k); s.setAttribute('role','button'); s.setAttribute('tabindex','0'); s.setAttribute('aria-pressed','false');
+    s.addEventListener('click',function(){ toccaTetra(k); });
+    s.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toccaTetra(k); } });
+  });
 }
+var SEDI={nicomedia:'diocleziano',milano:'massimiano',treviri:'costanzo',sirmio:'galerio'};      // le residenze della tappa del 293 (Aurelio Vittore 39, 30)
 /* dove stanno i rombi dei luoghi in questa vista: chi cade fuori dal bordo ci resta sopra */
 function posLuoghi(){
   var out=[];
@@ -702,6 +710,7 @@ function applicaFuoco(){
   svg.classList.toggle('m-fuoco',!!fuoco||!!at); if(fuocoP) svg.setAttribute('data-fuoco',fuocoP); else svg.removeAttribute('data-fuoco');
   for(k in regioni){ q=at?(at[k]||(k==='britannia'&&britanniaDiCostanzo()?1:0)):0; regioni[k].classList.toggle('acceso',at?!!q:(!!fuoco && (statoOra[k]||'perso')===fuoco)); regioni[k].classList.toggle('incerto',q===2); }
   for(k in nomiTetra) nomiTetra[k].setAttribute('aria-pressed',k===fuocoT?'true':'false');
+  [].forEach.call(rigaLuoghi.querySelectorAll('.sede'),function(r){ r.setAttribute('aria-pressed',r.getAttribute('data-t')===fuocoT?'true':'false'); });      // le residenze sotto la carta
   tetra.classList.toggle('con-fuoco',!!fuocoT); scriviNotaTetra();
   for(k in vociStati) vociStati[k].v.setAttribute('aria-pressed',k===fuoco?'true':'false');
   for(k in vociPopoli) vociPopoli[k].setAttribute('aria-pressed',k===fuocoP?'true':'false');

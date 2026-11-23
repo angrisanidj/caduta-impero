@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 14:41:29.
+Generato da `src/testi.mjs` il 23/11/2026, 14:42:25.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 14:30
+[pagina.52] Versione del 23/11/2026, ore 14:41
 
 
 ## 2. Gli atti
@@ -4322,7 +4322,7 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.28-r89] tutto il resto, cioè l’Oriente (Aurelio Vittore)
 
-[ui.mappa.29-r94] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore per vedere la sua zona.
+[ui.mappa.29-r94] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
 
 [ui.mappa.30-r112] oltre il confine
 
@@ -4352,69 +4352,69 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.43-r114] Regno dei Bulgari
 
-[ui.mappa.44-r428] La scena passo per passo
+[ui.mappa.44-r436] La scena passo per passo
 
-[ui.mappa.45-r431] Passo per passo
+[ui.mappa.45-r439] Passo per passo
 
-[ui.mappa.46-r432] Rivedi la scena dall'inizio
+[ui.mappa.46-r440] Rivedi la scena dall'inizio
 
-[ui.mappa.47-r457] Chiudi la didascalia
+[ui.mappa.47-r465] Chiudi la didascalia
 
-[ui.mappa.48-r458] Mostra la didascalia
+[ui.mappa.48-r466] Mostra la didascalia
 
-[ui.mappa.49-r467] ▶ Guarda la scena
+[ui.mappa.49-r475] ▶ Guarda la scena
 
-[ui.mappa.50-r467] Guarda la scena di questa tappa sulla carta
+[ui.mappa.50-r475] Guarda la scena di questa tappa sulla carta
 
-[ui.mappa.51-r560] Regni dei Franchi
+[ui.mappa.51-r568] Regni dei Franchi
 
-[ui.mappa.52-r560] Impero dei Franchi
+[ui.mappa.52-r568] Impero dei Franchi
 
-[ui.mappa.53-r687] regno d'Italia di Odoacre
+[ui.mappa.53-r695] regno d'Italia di Odoacre
 
-[ui.mappa.54-r687] regno degli Ostrogoti
+[ui.mappa.54-r695] regno degli Ostrogoti
 
-[ui.mappa.55-r687] regno dei Franchi
+[ui.mappa.55-r695] regno dei Franchi
 
-[ui.mappa.56-r688] impero romano
+[ui.mappa.56-r696] impero romano
 
-[ui.mappa.57-r688] impero d'Occidente
+[ui.mappa.57-r696] impero d'Occidente
 
-[ui.mappa.58-r688] territorio con un imperatore rivale
+[ui.mappa.58-r696] territorio con un imperatore rivale
 
-[ui.mappa.59-r688] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.59-r696] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.60-r688] regione contesa in guerra
+[ui.mappa.60-r696] regione contesa in guerra
 
-[ui.mappa.61-r689] popoli insediati per trattato
+[ui.mappa.61-r697] popoli insediati per trattato
 
-[ui.mappa.62-r689] impero d'Oriente
+[ui.mappa.62-r697] impero d'Oriente
 
-[ui.mappa.63-r690] califfato ed emirati arabi
+[ui.mappa.63-r698] califfato ed emirati arabi
 
-[ui.mappa.64-r690] regni franchi dopo la divisione dell'843
+[ui.mappa.64-r698] regni franchi dopo la divisione dell'843
 
-[ui.mappa.65-r690] abbandonata da Roma
+[ui.mappa.65-r698] abbandonata da Roma
 
-[ui.mappa.66-r690] fuori dal controllo romano
+[ui.mappa.66-r698] fuori dal controllo romano
 
-[ui.mappa.67-r721] Mostra meno voci della legenda
+[ui.mappa.67-r730] Mostra meno voci della legenda
 
-[ui.mappa.68-r731] Mostra le altre
+[ui.mappa.68-r740] Mostra le altre
 
-[ui.mappa.69-r781] mai appartenuta all'impero
+[ui.mappa.69-r790] mai appartenuta all'impero
 
-[ui.mappa.70-r825] Carta a tutto schermo
+[ui.mappa.70-r834] Carta a tutto schermo
 
-[ui.mappa.71-r830] Tutto schermo
+[ui.mappa.71-r839] Tutto schermo
 
-[ui.mappa.72-r830] Esci dallo schermo intero
+[ui.mappa.72-r839] Esci dallo schermo intero
 
-[ui.mappa.73-r921] Torna alla carta intera
+[ui.mappa.73-r930] Torna alla carta intera
 
-[ui.mappa.74-r923] La scena continua fuori dalla carta, verso
+[ui.mappa.74-r932] La scena continua fuori dalla carta, verso
 
-[ui.mappa.75-r923] : guardala tutta
+[ui.mappa.75-r932] : guardala tutta
 
 
 ### js/atti.js

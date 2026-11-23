@@ -125,6 +125,11 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
 .m-tetra text:focus{outline:none} .m-tetra text:focus-visible{outline:1.5px solid #F1D99A;outline-offset:2px}
 #mappa svg.m-fuoco .m-regione.acceso.incerto{opacity:.5}
 .legenda-luoghi span.tetra{color:var(--ink2,var(--ink))}
+/* le residenze dei tetrarchi si toccano (js/mappa.js, SEDI): pastiglia come le voci della legenda */
+.legenda-luoghi span.sede{cursor:pointer;padding:2px 9px 2px 2px;margin-left:-2px;border:1px solid var(--line);border-radius:999px;background:#fff;transition:background .15s,border-color .15s}
+.legenda-luoghi span.sede:hover{border-color:var(--gold2)}
+.legenda-luoghi span.sede[aria-pressed="true"]{background:#F4E6C8;border-color:var(--gold2)}
+.legenda-luoghi span.sede:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 .legenda-luoghi span.tetra::before{width:16px;height:0;margin:0 7px 0 1px;background:none;border-top:2px dotted currentColor;transform:none;vertical-align:3px}
 
 /* La didascalia della regia si chiude (js/mappa.js, 23 novembre 2026): × in alto a destra, poi una «i» rotonda che la riporta */
