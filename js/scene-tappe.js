@@ -272,20 +272,41 @@ var carlo800=(function(){
 var saraceni846=(function(){
   var B=new RM.Costruttore(), curva=RM.curvaFiume, i, k, q, tg, n, x, z, scuro=RM.col(0x3b3632), vela=RM.col(0xd9d0bd);
   var t0=0, m=1e9; for(k=0;k<=2400;k++){ q=curva.getPoint(k/2400); var d0=Math.hypot(q.x+176,q.z+86); if(d0<m){ m=d0; t0=k/2400; } }
-  for(i=0;i<20;i++){
-    q=curva.getPoint(t0+(i-10)*.0026); tg=curva.getTangent(t0+(i-10)*.0026); n=[-tg.z,tg.x]; if(n[0]>0) n=[-n[0],-n[1]];      // n verso ovest: la riva del Vaticano
-    var off=1.1+(i%2)*1.1; x=q.x+n[0]*off; z=q.z+n[1]*off;
+  /* le navi: ognuna una maglia a sé, perché all'arrivo della tappa risalgono il Tevere da valle fino all'ormeggio (23 novembre 2026, l'utente: «fai vedere prima la flotta saracena che
+     arriva»; LP: «iter assumentes navigio»). Il punto da cui partono, una settantina di metri più a valle, e la durata sono uno schema */
+  var NB=new RM.Costruttore(); NB.dentro(0,0,0,0,function(B){ B.scatola(.42,.2,2.6,0,0,0,scuro).scatola(.36,.06,2.2,0,.2,0,P.tronco).scatola(.04,1.3,.04,0,.2,.25,P.tronco).scatola(.02,.75,.9,0,.62,.25,vela); });
+  var geoNave=NB.geometria(), matNave=RM.matPietra(), navi=[];
+  for(i=0;i<20;i++){ var nv=new THREE.Mesh(geoNave,matNave); nv.castShadow=true; navi.push({m:nv, t:t0+(i-10)*.0026, off:1.1+(i%2)*1.1, gira:(rnd()-.5)*.25}); }
+  function posa(nv,t){ var q=curva.getPoint(Math.max(0,Math.min(1,t))), tg=curva.getTangent(Math.max(0,Math.min(1,t))), n=[-tg.z,tg.x]; if(n[0]>0) n=[-n[0],-n[1]];      // n verso ovest: la riva del Vaticano
+    var off=nv.off, x=q.x+n[0]*off, z=q.z+n[1]*off;
     while(off>.5 && RM.distFiume(x,z)>2.1){ off-=.3; x=q.x+n[0]*off; z=q.z+n[1]*off; }      // sempre in acqua, anche dove il fiume si stringe
-    B.dentro(x,-.55,z,Math.atan2(tg.x,tg.z)+(rnd()-.5)*.25,function(B){ B.scatola(.42,.2,2.6,0,0,0,scuro).scatola(.36,.06,2.2,0,.2,0,P.tronco).scatola(.04,1.3,.04,0,.2,.25,P.tronco).scatola(.02,.75,.9,0,.62,.25,vela); });
-  }
+    nv.m.position.set(x,-.55,z); nv.m.rotation.y=Math.atan2(tg.x,tg.z)+nv.gira; }
+  navi.forEach(function(nv){ posa(nv,nv.t); });
   var SP=[-247,-108];      // i gradini dell'atrio di San Pietro
   for(i=0;i<70;i++){ var f=rnd(), a=curva.getPoint(t0), xx=a.x-9+(SP[0]-a.x+9)*f+(rnd()-.5)*5, zz=a.z+(SP[1]-a.z)*f+(rnd()-.5)*5; if(RM.distFiume(xx,zz)<6.4) continue;
     cavaliere(B,xx,zz,RM.h(xx,zz),Math.atan2(SP[0]-xx,SP[1]-zz),rnd()<.5?C.cavalloB:C.cavalloC,C.bianco); }                 // dalle navi verso la basilica
   for(i=0;i<50;i++){ var an=rnd()*6.283, r=3+rnd()*3; x=SP[0]+3+Math.cos(an)*r*1.3; z=SP[1]+Math.sin(an)*r; cavaliere(B,x,z,RM.h(x,z),rnd()*6.28,rnd()<.5?C.cavalloB:C.cavalloC,C.bianco); }      // attorno all'atrio
   for(var fila=0;fila<5;fila++) for(i=0;i<34;i++){ x=-246+i*.5+(rnd()-.5)*.15; z=-133+fila*.55; uomo(B,x,z,RM.h(x,z),fila<2?C.ferro:C.tunica,fila<3?C.rosso:null,Math.PI); }      // la milizia romana nel campo di Nerone, rivolta a sud
   for(i=0;i<5;i++) insegna(B,-243+i*3.5,-130.6,RM.h(-243+i*3.5,-130.6),C.rosso,.42);
-  return {g:maglia(B), da:845.6, a:847};
+  var g=maglia(B); navi.forEach(function(nv){ g.add(nv.m); });      // le navi seguono la scena: visibili solo nell'anno della tappa
+  return {g:g, da:845.6, a:847, navi:navi, posa:posa};
 })();
+/* l'arrivo: la vista vola sul Borgo (circa due secondi), poi le navi risalgono il fiume in nove secondi; la scena (cavalieri, milizia) compare quando sono ormeggiate.
+   Con meno animazioni niente viaggio: le navi sono già all'ormeggio */
+var arrivo846=null;
+if(window.RM_pagina) RM_pagina.quando(function(i,t){
+  if(!t.intermezzo && t.anno===846 && !MENO_SCOSSE_846()){ arrivo846=performance.now()+1800; return; }
+  arrivo846=null; saraceni846.g.material.visible=true; saraceni846.navi.forEach(function(nv){ saraceni846.posa(nv,nv.t); });      // altrove, o con meno animazioni: tutto al suo posto
+});
+function MENO_SCOSSE_846(){ return window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search); }
+var VIAGGIO=.05;      // quanto più a valle partono, in frazione del fiume (circa 70 m)
+RM.frame.push(function(){
+  if(arrivo846==null || !saraceni846.g.visible) return;
+  var k=Math.max(0,Math.min(1,(performance.now()-arrivo846)/9000)), e=1-Math.pow(1-k,3);
+  saraceni846.navi.forEach(function(nv,j){ saraceni846.posa(nv,nv.t+VIAGGIO*(1-e)*(1+.15*(j%4))); });
+  saraceni846.g.material.visible=k>=1;      // cavalieri e milizia quando le navi sono arrivate
+  if(k>=1){ arrivo846=null; }
+});
 
 /* ---------- 801: il terremoto e il tetto di San Paolo ----------
    23 novembre 2026, l'utente: «quando ci sia un terremoto si muove la terra inizialmente e crolla qualcosa». Annali del regno dei Franchi, 801: la sera del 30 aprile («II. Kal. Mai.») un terremoto
