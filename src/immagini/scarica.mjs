@@ -19,6 +19,7 @@ const UA = { 'User-Agent': 'ricerca-immagini/1.0' };      // nome generico: ness
 /* (Il 22 novembre 2026 l'utente ha deciso di mettere come «immagine più tarda» anche i papi di cui esistono solo volti di fantasia molto tardi: Raffaello per Leone I e Leone IV, le incisioni del Cavalieri del 1580 per Bonifacio IV, Gregorio II e Sergio II. La riserva lo dice.) */
 /* La riga che la pagina scrive sotto l'immagine quando l'identificazione, la data o l'oggetto chiedono una riserva. Chiave: il nome in PROTAGONISTI. */
 const RISERVE = {
+  'Eraclio': 'Eraclio è il barbuto a sinistra; accanto a lui il figlio Eraclio Costantino.',
   'Ludovico il Germanico': 'Il sigillo è del suo tempo, ma la testa al centro è all’antica: probabilmente una gemma romana riusata, non il suo volto.',
   'Decio': 'L’identificazione si fonda sul confronto con le monete.',
   'Massenzio': 'Senza iscrizione: l’identificazione viene dal confronto con le monete.',

@@ -8,11 +8,11 @@ Righe della tabella: 146 (persone distinte: 110).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 83 | 59 |
+| ritratto coevo | 84 | 60 |
 | ritratto posteriore | 21 | 18 |
 | di fantasia | 5 | 4 |
 | oggetto del tempo, senza volto | 23 | 17 |
-| nessuna immagine | 14 | 12 |
+| nessuna immagine | 13 | 11 |
 
 ## Da decidere
 
@@ -295,7 +295,7 @@ Le scelte di principio:
 ### 630
 
 - **Onorio I** (-) — *nessuna immagine*. 
-- **Eraclio** (-) — *nessuna immagine*. 
+- **Eraclio** (-) — *ritratto coevo*: solido di Eraclio con il figlio Eraclio Costantino, Metropolitan Museum. [Solidus of Heraclius and Heraclius Constantine MET sf04-2-821s1.jpg](https://commons.wikimedia.org/wiki/File:Solidus_of_Heraclius_and_Heraclius_Constantine_MET_sf04-2-821s1.jpg) — 1661×1606, CC0; «Foto: autore non indicato, CC0, da Wikimedia Commons». Immagine mandata dall’utente il 23 novembre 2026: non riscaricare.
 
 ### 663
 
