@@ -19,6 +19,8 @@ var P=RM.P, rnd=RM.casuale(312);
 var C={ rosso:RM.col(0x9a2f2a), grigio:RM.col(0x7b7f86), ferro:RM.col(0xa9adb3), tunica:RM.col(0xd9cfbf), pelle:RM.col(0xb98a6a), oro:RM.col(0xd4ae55), porpora:RM.col(0x6b2a5a),
         bianco:RM.col(0xeee8dc), cavalloB:RM.col(0x6b4a33), cavalloC:RM.col(0x9c8a74), folla:[RM.col(0xb5543e),RM.col(0x8c7a5b),RM.col(0xc9b48a),RM.col(0x6f7f6a),RM.col(0x9c6a48),RM.col(0xd8cdb6)] };
 
+/* quota su cui posano figure e oggetti delle scene: la più alta fra quella esatta e quella del terreno come è disegnato, così le figure (alte 1,85 m) non finiscono dentro il terreno */
+function H(x,z){ var a=RM.h(x,z); return RM.hSuolo?Math.max(a,RM.hSuolo(x,z)):a; }
 /* figure a blocchi, come le statue di js/monumenti.js (s=1: uomo alto 1,85 m, cavallo lungo 2,2 m) */
 function uomo(B,x,z,y,col,scudo,ry){
   B.dentro(x,y,z,ry||0,function(B){
@@ -47,15 +49,15 @@ var milvio=(function(){
   for(i=0;i<1700;i++){
     var b=6.6+Math.pow(rnd(),2)*16, imbuto=2.5+b*1.2, a=(rnd()-.5)*2*imbuto+(rnd()<.5?0:3.2), xz=punto(a,b);
     if(!terra(xz[0],xz[1])) continue;
-    uomo(B,xz[0],xz[1],RM.h(xz[0],xz[1]),rnd()<.75?C.tunica:C.grigio,C.grigio,rot+(rnd()-.5)*.8);
+    uomo(B,xz[0],xz[1],H(xz[0],xz[1]),rnd()<.75?C.tunica:C.grigio,C.grigio,rot+(rnd()-.5)*.8);
   }
   // la cavalleria di Costantino incalza da nord, in tre schiere
   for(i=0;i<260;i++){
     var sc=(i%3), xz2=punto((rnd()-.5)*34+(sc-1)*12, 24+sc*3+rnd()*7);
     if(!terra(xz2[0],xz2[1])) continue;
-    cavaliere(B,xz2[0],xz2[1],RM.h(xz2[0],xz2[1]),rot+Math.PI+(rnd()-.5)*.3,rnd()<.5?C.cavalloB:C.cavalloC,C.rosso);
+    cavaliere(B,xz2[0],xz2[1],H(xz2[0],xz2[1]),rot+Math.PI+(rnd()-.5)*.3,rnd()<.5?C.cavalloB:C.cavalloC,C.rosso);
   }
-  for(i=0;i<9;i++){ var xi=punto((i-4)*4.2,27+rnd()*4); insegna(B,xi[0],xi[1],RM.h(xi[0],xi[1]),C.rosso,.42); }
+  for(i=0;i<9;i++){ var xi=punto((i-4)*4.2,27+rnd()*4); insegna(B,xi[0],xi[1],H(xi[0],xi[1]),C.rosso,.42); }
   // la calca sul ponte provvisorio (a monte, come in js/mura.js) e gli uomini in acqua
   var t=tm, q0=c; while(t>0.0005){ t-=0.0002; q=curva.getPoint(t); if(Math.hypot(q.x-q0.x,q.z-q0.z)>=3.2) break; }
   var tg2=curva.getTangent(t), nn=[-tg2.z,tg2.x];
@@ -71,7 +73,7 @@ var corteo=(function(){
   var A=RM.ll(41.9110,12.4763), Z=RM.ll(41.8960,12.4823), R=[-4,-2];                     // porta Flaminia, piazza Venezia, i Rostri
   var L=Math.hypot(Z[0]-A[0],Z[1]-A[1]), d=[(Z[0]-A[0])/L,(Z[1]-A[1])/L], nx=[-d[1],d[0]], rot=Math.atan2(d[0],d[1]);
   var B=new RM.Costruttore(), i, k;
-  function lungo(t,lat){ var x=A[0]+d[0]*t*L+nx[0]*lat, z=A[1]+d[1]*t*L+nx[1]*lat; return [x,z,RM.h(x,z)]; }
+  function lungo(t,lat){ var x=A[0]+d[0]*t*L+nx[0]*lat, z=A[1]+d[1]*t*L+nx[1]*lat; return [x,z,H(x,z)]; }
   // la doppia fila di armati con scudi e cimieri, da una parte e dall'altra, per tutto il tratto
   for(k=0;k<2;k++) for(i=0;i<300;i++){ var t=.45+i/300*.55, p=lungo(t,(k?1:-1)*(.62+.12*(i%2))); uomo(B,p[0],p[1],p[2],C.ferro,C.rosso,rot+(k?-1:1)*Math.PI/2); }
   // davanti, i reparti che lo precedono, quattro per fila
@@ -89,7 +91,7 @@ var corteo=(function(){
   // la folla della plebe, ai due lati, dietro gli armati
   for(i=0;i<1400;i++){ var lat=(rnd()<.5?-1:1)*(.95+rnd()*.5), pf=lungo(.45+rnd()*.55,lat); uomo(B,pf[0],pf[1],pf[2],C.folla[(rnd()*C.folla.length)|0],null,rot+(lat>0?-1:1)*Math.PI/2+(rnd()-.5)); }
   // ai Rostri, nel Foro: chi lo aspetta
-  for(i=0;i<160;i++){ var a=rnd()*6.283, r=1.5+rnd()*3, x=R[0]+Math.cos(a)*r, z=R[1]+Math.sin(a)*r; uomo(B,x,z,RM.h(x,z),i<40?C.bianco:C.folla[(rnd()*C.folla.length)|0],null,Math.atan2(R[0]-x,R[1]-z)); }
+  for(i=0;i<160;i++){ var a=rnd()*6.283, r=1.5+rnd()*3, x=R[0]+Math.cos(a)*r, z=R[1]+Math.sin(a)*r; uomo(B,x,z,H(x,z),i<40?C.bianco:C.folla[(rnd()*C.folla.length)|0],null,Math.atan2(R[0]-x,R[1]-z)); }
   var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
   return {g:g, da:356.6, a:358, carro:[pc[0],pc[1]]};
 })();
@@ -101,8 +103,8 @@ var corteo=(function(){
    un campo piccolo all'imbocco nord di ponte Milvio, uno sbarramento di barche sul Tevere sotto l'Aventino (la forma è nostra) e la mischia su ponte Elio. */
 function campo(B,cx,cz,ry,nx,nz){
   var ca=Math.cos(ry), sa=Math.sin(ry), tela=[RM.col(0xd8c9a8),RM.col(0xc4b08a),RM.col(0xb99f7c)], W=nx*1.6+1, L=nz*1.6+1;
-  B.dentro(cx,RM.h(cx,cz),cz,ry,function(B){ B.scatola(W,.4,.12,0,0,-L/2,P.tronco).scatola(W,.4,.12,0,0,L/2,P.tronco).scatola(.12,.4,L,-W/2,0,0,P.tronco).scatola(.12,.4,L,W/2,0,0,P.tronco); });
-  for(var i=0;i<nx;i++) for(var j=0;j<nz;j++){ if(rnd()<.2) continue; var lx=(i-(nx-1)/2)*1.6, lz=(j-(nz-1)/2)*1.6, x=cx+lx*ca+lz*sa, z=cz-lx*sa+lz*ca; B.cono(.4+.18*rnd(),.48+.2*rnd(),x,RM.h(x,z),z,tela[(rnd()*3)|0],4); }
+  B.dentro(cx,H(cx,cz),cz,ry,function(B){ B.scatola(W,.4,.12,0,0,-L/2,P.tronco).scatola(W,.4,.12,0,0,L/2,P.tronco).scatola(.12,.4,L,-W/2,0,0,P.tronco).scatola(.12,.4,L,W/2,0,0,P.tronco); });
+  for(var i=0;i<nx;i++) for(var j=0;j<nz;j++){ if(rnd()<.2) continue; var lx=(i-(nx-1)/2)*1.6, lz=(j-(nz-1)/2)*1.6, x=cx+lx*ca+lz*sa, z=cz-lx*sa+lz*ca; B.cono(.4+.18*rnd(),.48+.2*rnd(),x,H(x,z),z,tela[(rnd()*3)|0],4); }
 }
 var assedio472=(function(){
   var B=new RM.Costruttore(), i;
@@ -120,7 +122,7 @@ var assedio472=(function(){
       var s=(rnd()-.4)*15, w=(rnd()-.5)*(Math.abs(s)>7.4?6:1.1), x=c2.x+ax[0]*s+lat[0]*w, z=c2.z+ax[1]*s+lat[1]*w, sul=Math.abs(s)<=7.4;
       if(!sul && RM.distFiume(x,z)<6.2) continue;
       var dife=s>.3, ry=Math.atan2(ax[0],ax[1])+(dife?Math.PI:0);      // dalla parte del mausoleo gli uomini di Ricimero, rivolti alla città; dall'altra quelli di Antemio (colori di comodo)
-      uomo(B,x,z,sul?.66:RM.h(x,z),dife?C.tunica:C.grigio,dife?C.rosso:C.grigio,ry);
+      uomo(B,x,z,sul?.66:H(x,z),dife?C.tunica:C.grigio,dife?C.rosso:C.grigio,ry);
     }
   })();
   var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
@@ -133,9 +135,14 @@ var assedio472=(function(){
    qui una fila di prigionieri legati, con uomini a cavallo, sulla Flaminia verso nord (la strada è una scelta nostra), e casali che bruciano (i fuochi stanno in EVENTI). */
 var prigionieri593=(function(){
   var B=new RM.Costruttore(), A=[-75.6,-206], i, t, x, z, dx=-.29, dz=-.957;      // la Flaminia fuori porta: il primo tratto di RM_TOPO.strade[0], da porta Flaminia verso nord-ovest
-  for(i=0;i<46;i++){ t=8+i*.55; x=A[0]+dx*t+(i%2?.12:-.12); z=A[1]+dz*t; uomo(B,x,z,RM.h(x,z),C.folla[i%C.folla.length],null,Math.PI); }
-  for(i=0;i<46;i+=2){ t=8+i*.55; x=A[0]+dx*t; z=A[1]+dz*t; B.scatola(.012,.012,.55,x,RM.h(x,z)+.17,z,P.tronco); }      // la corda che li lega, al collo
-  for(i=0;i<9;i++){ t=7+i*3.2; x=A[0]+dx*t+(i%2?.7:-.7); z=A[1]+dz*t; cavaliere(B,x,z,RM.h(x,z),Math.PI,C.cavalloB,C.ferro); }
+  /* 23 novembre 2026, l'utente: «mostra di più i prigionieri catturati come descritto». Ora sono molti di più, in due file, a gruppi di dieci legati alla stessa corda al collo
+     , uomini, donne e ragazzi; ai lati le guardie longobarde a cavallo e a piedi. Quanti fossero non è scritto: è uno schema */
+  var ry=Math.atan2(dx,dz), px=-dz, pz=dx, fila, k, y;
+  for(fila=-1;fila<=1;fila+=2) for(i=0;i<90;i++){ t=6+i*.32; x=A[0]+dx*t+px*fila*.16; z=A[1]+dz*t+pz*fila*.16; y=H(x,z);
+    var bimbo=i%7===3; B.dentro(x,y,z,ry,function(B){ var h=bimbo?.7:1; B.scatola(.05,.15*h,.035,0,0,0,C.folla[(i*3+fila+5)%C.folla.length]).scatola(.03,.035,.03,0,.15*h,0,C.pelle); });
+    if(i%10!==9){ var x2=A[0]+dx*(t+.32)+px*fila*.16, z2=A[1]+dz*(t+.32)+pz*fila*.16; B.scatola(.012,.012,.32,(x+x2)/2,(y+H(x2,z2))/2+.142,(z+z2)/2,RM.col(0x4a3a28),ry); } }      // la corda al collo, da un prigioniero al seguente
+  for(i=0;i<16;i++){ t=4+i*2; k=i%2?1:-1; x=A[0]+dx*t+px*k*.9; z=A[1]+dz*t+pz*k*.9; cavaliere(B,x,z,H(x,z),ry+Math.PI,C.cavalloB,C.ferro); }      // guardie a cavallo
+  for(i=0;i<14;i++){ t=5+i*2.2; k=i%2?-1:1; x=A[0]+dx*t+px*k*.5; z=A[1]+dz*t+pz*k*.5; y=H(x,z); uomo(B,x,z,y,C.ferro,C.cavalloB,ry+Math.PI); B.scatola(.008,.3,.008,x+.03,y,z,P.tronco); }      // guardie a piedi con la lancia
   var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
   return {g:g, da:592.6, a:594};
 })();
@@ -145,7 +152,7 @@ function spezzata(L){      // un punto lungo una linea spezzata: t da 0 a 1, lat
   var seg=[], tot=0, i; for(i=0;i<L.length-1;i++){ var l=Math.hypot(L[i+1][0]-L[i][0],L[i+1][1]-L[i][1]); seg.push(l); tot+=l; }
   return function(t,lat){ var d=Math.max(0,Math.min(1,t))*tot, k=0; while(k<seg.length-1 && d>seg[k]){ d-=seg[k]; k++; }
     var a=L[k], b=L[k+1], dx=(b[0]-a[0])/seg[k], dz=(b[1]-a[1])/seg[k], x=a[0]+dx*d-dz*(lat||0), z=a[1]+dz*d+dx*(lat||0);
-    return {x:x, z:z, y:RM.h(x,z), ry:Math.atan2(dx,dz), lung:tot}; };
+    return {x:x, z:z, y:H(x,z), ry:Math.atan2(dx,dz), lung:tot}; };
 }
 function elefante(B,x,z,y,ry){ var c=RM.col(0x8c8781); B.dentro(x,y,z,ry,function(B){
   [[-.055,-.1],[.055,-.1],[-.055,.1],[.055,.1]].forEach(function(p){ B.scatola(.05,.13,.05,p[0],0,p[1],c); });
@@ -187,8 +194,8 @@ var salaria410=(function(){
   campo(B,G[0]+fuori[0]*17+5,G[1]+fuori[1]*17,Math.atan2(fuori[0],fuori[1]),9,5);
   for(i=0;i<520;i++){ s=-15+rnd()*29; o=s>=0?fuori:[-verso[0],-verso[1]]; la=[-o[1],o[0]]; dentro=Math.atan2(-o[0],-o[1]);
     w=(rnd()-.5)*(s>-1&&s<1.5?.5:Math.min(3.4,.6+Math.abs(s)*.22)); x=G[0]+o[0]*s+la[0]*w; z=G[1]+o[1]*s+la[1]*w;      // s col segno: fuori porta lungo «fuori», dentro lungo «verso»
-    if(s>-1&&s<1.5){ uomo(B,x,z,RM.h(x,z),C.grigio,C.cavalloB,dentro); continue; }
-    if(rnd()<.1) cavaliere(B,x,z,RM.h(x,z),dentro,C.cavalloB,C.grigio); else uomo(B,x,z,RM.h(x,z),rnd()<.6?C.grigio:C.tunica,C.cavalloB,dentro+(rnd()-.5)*.6); }
+    if(s>-1&&s<1.5){ uomo(B,x,z,H(x,z),C.grigio,C.cavalloB,dentro); continue; }
+    if(rnd()<.1) cavaliere(B,x,z,H(x,z),dentro,C.cavalloB,C.grigio); else uomo(B,x,z,H(x,z),rnd()<.6?C.grigio:C.tunica,C.cavalloB,dentro+(rnd()-.5)*.6); }
   return {g:maglia(B), da:409.6, a:411};
 })();
 
@@ -198,15 +205,15 @@ var salaria410=(function(){
    Qui: uomini sul tetto del tempio di Giove che ne smontano metà, le tegole dorate ammucchiate a terra, e una fila di carri e di prigionieri che esce da porta Portese verso Porto
    (Procopio dice solo che salpò con le navi: la strada e la fila sono uno schema). */
 var vandali455=(function(){
-  var B=new RM.Costruttore(), cx=-29, cz=0, ry=.5, c=Math.cos(ry), sn=Math.sin(ry), y0=RM.h(cx,cz)+.2, i, lx, lz, x, z;
+  var B=new RM.Costruttore(), cx=-29, cz=0, ry=.5, c=Math.cos(ry), sn=Math.sin(ry), y0=H(cx,cz)+.2, i, lx, lz, x, z;
   function mondo(lx,lz){ return [cx+lx*c+lz*sn, cz-lx*sn+lz*c]; }
   for(i=0;i<34;i++){ lx=.3+rnd()*1.9; lz=(rnd()-.5)*5; var q=mondo(lx,lz); uomo(B,q[0],q[1],y0+.3+2.8+.22+.945*(1-lx/2.35)-.02,C.tunica,null,ry+(rnd()-.5)*2); }      // sul tetto, metà verso est
-  for(i=0;i<14;i++){ var q2=mondo(3.3+rnd()*.7,(rnd()-.5)*4.6); B.scatola(.22,.05+rnd()*.12,.3,q2[0],RM.h(q2[0],q2[1]),q2[1],C.oro,ry+(rnd()-.5)*.4); }      // le tegole dorate a terra
-  for(i=0;i<22;i++){ var q3=mondo(3.1+rnd()*1.4,(rnd()-.5)*5); uomo(B,q3[0],q3[1],RM.h(q3[0],q3[1]),C.tunica,null,rnd()*6.28); }
+  for(i=0;i<14;i++){ var q2=mondo(3.3+rnd()*.7,(rnd()-.5)*4.6); B.scatola(.22,.05+rnd()*.12,.3,q2[0],H(q2[0],q2[1]),q2[1],C.oro,ry+(rnd()-.5)*.4); }      // le tegole dorate a terra
+  for(i=0;i<22;i++){ var q3=mondo(3.1+rnd()*1.4,(rnd()-.5)*5); uomo(B,q3[0],q3[1],H(q3[0],q3[1]),C.tunica,null,rnd()*6.28); }
   var G=RM_TOPO.porte['Porta Portese'], d=[-.838,.546], la=[-d[1],d[0]], rv=Math.atan2(d[0],d[1]);      // verso Porto (41,78 N, 12,26 E)
   for(i=0;i<70;i++){ var s=2+i*.62, w=(i%3-1)*.2; x=G[0]+d[0]*s+la[0]*w; z=G[1]+d[1]*s+la[1]*w; if(RM.distFiume(x,z)<6.3) continue;
-    if(i%5===0) carro(B,x,z,RM.h(x,z),rv,i%10?C.oro:P.bronzo); else uomo(B,x,z,RM.h(x,z),i%7?C.folla[i%C.folla.length]:C.bianco,null,rv); }
-  for(i=0;i<16;i++){ var s2=1+i*2.7; x=G[0]+d[0]*s2+la[0]*(i%2?.7:-.7); z=G[1]+d[1]*s2+la[1]*(i%2?.7:-.7); if(RM.distFiume(x,z)<6.3) continue; cavaliere(B,x,z,RM.h(x,z),rv,C.cavalloB,C.grigio); }
+    if(i%5===0) carro(B,x,z,H(x,z),rv,i%10?C.oro:P.bronzo); else uomo(B,x,z,H(x,z),i%7?C.folla[i%C.folla.length]:C.bianco,null,rv); }
+  for(i=0;i<16;i++){ var s2=1+i*2.7; x=G[0]+d[0]*s2+la[0]*(i%2?.7:-.7); z=G[1]+d[1]*s2+la[1]*(i%2?.7:-.7); if(RM.distFiume(x,z)<6.3) continue; cavaliere(B,x,z,H(x,z),rv,C.cavalloB,C.grigio); }
   return {g:maglia(B), da:454.6, a:456};
 })();
 
@@ -215,14 +222,14 @@ var vandali455=(function(){
    ad Martyres, quae de tegulis aereis erat, discooperuit et in regia urbe cum alia diversa quas deposuerat direxit». Qui: uomini sulla cupola del Pantheon che tolgono le tegole,
    le tegole a terra davanti al portico e i carri verso il Tevere, dove le aspetta una barca (la strada e la barca sono uno schema: la fonte dice solo che le mandò a Costantinopoli). */
 var costante663=(function(){
-  var B=new RM.Costruttore(), cx=-70, cz=-68, y0=RM.h(cx,cz), i, a, r, x, z;
+  var B=new RM.Costruttore(), cx=-70, cz=-68, y0=H(cx,cz), i, a, r, x, z;
   for(i=0;i<40;i++){ a=rnd()*6.283; r=.7+rnd()*1.45; x=cx+Math.cos(a)*r; z=cz+Math.sin(a)*r; uomo(B,x,z,y0+3.6+2.24*.44*Math.sqrt(1-r*r/(2.24*2.24))-.03,C.tunica,null,a); }
   for(i=0;i<12;i++){ a=rnd()*6.283; x=cx+Math.cos(a)*2.55; z=cz+Math.sin(a)*2.55; uomo(B,x,z,y0+3.12+(2.74-2.55)*.6,C.tunica,null,a); }
-  for(i=0;i<16;i++){ x=cx+(rnd()-.5)*4; z=cz-5.4-rnd()*2.2; B.scatola(.24,.05+rnd()*.1,.3,x,RM.h(x,z),z,P.bronzo,rnd()); }      // davanti al portico, che guarda a nord
+  for(i=0;i<16;i++){ x=cx+(rnd()-.5)*4; z=cz-5.4-rnd()*2.2; B.scatola(.24,.05+rnd()*.1,.3,x,H(x,z),z,P.bronzo,rnd()); }      // davanti al portico, che guarda a nord
   var F=vicinoAlFiume(cx,cz-6), A=[cx,cz-7], v=[F.x-A[0],F.z-A[1]], L=Math.hypot(v[0],v[1]), d=[v[0]/L,v[1]/L], rv=Math.atan2(d[0],d[1]);
-  for(i=0;i<9;i++){ var s=1+i*(L-9)/9; x=A[0]+d[0]*s; z=A[1]+d[1]*s; if(RM.distFiume(x,z)<6.3) continue; carro(B,x,z,RM.h(x,z),rv,P.bronzo); uomo(B,x-d[1]*.2,z+d[0]*.2,RM.h(x,z),C.tunica,null,rv); }
+  for(i=0;i<9;i++){ var s=1+i*(L-9)/9; x=A[0]+d[0]*s; z=A[1]+d[1]*s; if(RM.distFiume(x,z)<6.3) continue; carro(B,x,z,H(x,z),rv,P.bronzo); uomo(B,x-d[1]*.2,z+d[0]*.2,H(x,z),C.tunica,null,rv); }
   var bx=F.x-d[0]*4.6, bz=F.z-d[1]*4.6; B.dentro(bx,-.55,bz,rv+Math.PI/2,function(B){ B.scatola(.5,.18,2.2,0,0,0,P.tronco).scatola(.04,1.1,.04,0,.18,0,P.tronco).scatola(.4,.08,.6,0,.18,.3,P.bronzo); });
-  for(i=0;i<6;i++) uomo(B,F.x-d[0]*(6.6+rnd()*.6)+(rnd()-.5)*1.4,F.z-d[1]*(6.6+rnd()*.6)+(rnd()-.5)*1.4,RM.h(F.x-d[0]*6.8,F.z-d[1]*6.8),C.tunica,null,rv);
+  for(i=0;i<6;i++) uomo(B,F.x-d[0]*(6.6+rnd()*.6)+(rnd()-.5)*1.4,F.z-d[1]*(6.6+rnd()*.6)+(rnd()-.5)*1.4,H(F.x-d[0]*6.8,F.z-d[1]*6.8),C.tunica,null,rv);
   return {g:maglia(B), da:662.6, a:664};
 })();
 
@@ -235,8 +242,8 @@ var leone852=(function(){
   var B=new RM.Costruttore(), L=[[-163,-120],[-233.3,-121],[-250,-124],[-272,-127],[-294,-124.5],[-300,-119],[-307,-111],[-313,-100.5],[-304,-96.5],[-285,-89],[-262,-87],[-240.2,-87.7],[-212,-86.5],[-196.5,-86.7],[-187,-84]],
       via=spezzata(L), lung=via(0).lung, n=Math.round(lung/.42), i, p, PP=RM_TOPO.porte['Porta San Pellegrino'];
   for(i=0;i<n;i++){ p=via(i/n,0); if(Math.hypot(p.x-PP[0],p.z-PP[1])<1.4) continue; uomo(B,p.x,p.z,p.y+1.05,i%9?C.bianco:C.tunica,null,p.ry); }
-  for(i=0;i<14;i++){ var a=i/14*6.283, x=PP[0]+Math.cos(a)*.5, z=PP[1]+Math.sin(a)*.5; uomo(B,x,z,RM.h(PP[0],PP[1])+1.05,C.bianco,null,Math.atan2(PP[0]-x,PP[1]-z)); }
-  uomo(B,PP[0],PP[1],RM.h(PP[0],PP[1])+1.05,C.oro,null,0); insegna(B,PP[0]+.25,PP[1],RM.h(PP[0],PP[1])+1.05,C.oro,.4);      // il papa e la croce
+  for(i=0;i<14;i++){ var a=i/14*6.283, x=PP[0]+Math.cos(a)*.5, z=PP[1]+Math.sin(a)*.5; uomo(B,x,z,H(PP[0],PP[1])+1.05,C.bianco,null,Math.atan2(PP[0]-x,PP[1]-z)); }
+  uomo(B,PP[0],PP[1],H(PP[0],PP[1])+1.05,C.oro,null,0); insegna(B,PP[0]+.25,PP[1],H(PP[0],PP[1])+1.05,C.oro,.4);      // il papa e la croce
   for(i=0;i<300;i++){ var t=rnd(), q=via(t,(rnd()<.5?-1:1)*(1.2+rnd()*1.6)); if(RM.distFiume(q.x,q.z)<6.3) continue; uomo(B,q.x,q.z,q.y,C.folla[(rnd()*C.folla.length)|0],null,q.ry+(rnd()-.5)*2); }      // il popolo sotto le mura
   return {g:maglia(B), da:851.6, a:853};
 })();
@@ -249,17 +256,17 @@ var leone852=(function(){
    lo fa arrivare dal ponte di Sant'Angelo; numeri, colori e posti dei gruppi sono nostri. */
 var carlo800=(function(){
   var B=new RM.Costruttore(), i, x, z, e=Math.PI/2, o=-Math.PI/2, Z=-108.1, franco=RM.col(0x3e5f7a);      // e: rivolti a est, verso chi arriva; o: verso la basilica
-  for(i=0;i<36;i++){ x=-247.9+(i%4)*.22; z=Z-1.9+(i>>2)*.42+(rnd()-.5)*.1; uomo(B,x,z,RM.h(x,z)+.07,i<8?C.oro:C.bianco,null,e); }      // vescovi e clero
-  uomo(B,-247.1,Z,RM.h(-247.1,Z)+.07,C.oro,null,e); insegna(B,-247.1,Z-.22,RM.h(-247.1,Z)+.07,C.oro,.45);                              // il papa e la croce
-  B.dentro(-245.6,RM.h(-245.6,Z)+.07,Z+.35,o,function(B){ B.scatola(.055,.085,.025,0,0,.08,C.bianco).scatola(.055,.085,.025,0,0,-.08,C.bianco).scatola(.06,.07,.22,0,.08,0,C.bianco).scatola(.04,.1,.05,0,.13,.095,C.bianco).scatola(.035,.04,.09,0,.2,.135,C.bianco); });      // il cavallo, senza cavaliere
-  uomo(B,-246.2,Z,RM.h(-246.2,Z)+.07,franco,null,o);                                                                                     // Carlo, sceso da cavallo, verso i gradini
+  for(i=0;i<36;i++){ x=-247.9+(i%4)*.22; z=Z-1.9+(i>>2)*.42+(rnd()-.5)*.1; uomo(B,x,z,H(x,z)+.07,i<8?C.oro:C.bianco,null,e); }      // vescovi e clero
+  uomo(B,-247.1,Z,H(-247.1,Z)+.07,C.oro,null,e); insegna(B,-247.1,Z-.22,H(-247.1,Z)+.07,C.oro,.45);                              // il papa e la croce
+  B.dentro(-245.6,H(-245.6,Z)+.07,Z+.35,o,function(B){ B.scatola(.055,.085,.025,0,0,.08,C.bianco).scatola(.055,.085,.025,0,0,-.08,C.bianco).scatola(.06,.07,.22,0,.08,0,C.bianco).scatola(.04,.1,.05,0,.13,.095,C.bianco).scatola(.035,.04,.09,0,.2,.135,C.bianco); });      // il cavallo, senza cavaliere
+  uomo(B,-246.2,Z,H(-246.2,Z)+.07,franco,null,o);                                                                                     // Carlo, sceso da cavallo, verso i gradini
   function strada(x){ return -112+(x+185)*(-4/62); }      // la strada del Borgo (js/roma-topo.js, da -185,-112 a -247,-108), a nord del portico dei pellegrini
-  for(i=0;i<70;i++){ x=-244.4+(i>>1)*.42; z=strada(x)+(i&1?.22:-.22); cavaliere(B,x,z,RM.h(x,z),o,rnd()<.5?C.cavalloB:C.cavalloC,i%9?C.ferro:franco); }      // il seguito, a cavallo, sulla strada
-  for(i=0;i<12;i++){ x=-242+i*3.6; z=strada(x)-(i%2?.85:1.05); insegna(B,x,z,RM.h(x,z),i%3?C.rosso:C.oro,.45); }                       // le bandiere della città
+  for(i=0;i<70;i++){ x=-244.4+(i>>1)*.42; z=strada(x)+(i&1?.22:-.22); cavaliere(B,x,z,H(x,z),o,rnd()<.5?C.cavalloB:C.cavalloC,i%9?C.ferro:franco); }      // il seguito, a cavallo, sulla strada
+  for(i=0;i<12;i++){ x=-242+i*3.6; z=strada(x)-(i%2?.85:1.05); insegna(B,x,z,H(x,z),i%3?C.rosso:C.oro,.45); }                       // le bandiere della città
   [-239,-231,-223,-214,-205,-196,-187].forEach(function(cx,k){                                                                            // i gruppi di pellegrini e di cittadini, ai due lati
     var cz=strada(cx)+(k%2?-2.4:1.35), col=k%2?C.folla:[C.tunica,C.bianco,C.folla[2],C.folla[5]];
     for(var j=0;j<45;j++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*1.3, xx=cx+Math.cos(a)*r*1.6, zz=cz+Math.sin(a)*r*.6; if(RM.distFiume(xx,zz)<6.3) continue;
-      uomo(B,xx,zz,RM.h(xx,zz),col[(rnd()*col.length)|0],null,Math.atan2(cx-xx,strada(cx)-zz)); } });
+      uomo(B,xx,zz,H(xx,zz),col[(rnd()*col.length)|0],null,Math.atan2(cx-xx,strada(cx)-zz)); } });
   return {g:maglia(B), da:799.6, a:801};
 })();
 
@@ -284,10 +291,10 @@ var saraceni846=(function(){
   navi.forEach(function(nv){ posa(nv,nv.t); });
   var SP=[-247,-108];      // i gradini dell'atrio di San Pietro
   for(i=0;i<70;i++){ var f=rnd(), a=curva.getPoint(t0), xx=a.x-9+(SP[0]-a.x+9)*f+(rnd()-.5)*5, zz=a.z+(SP[1]-a.z)*f+(rnd()-.5)*5; if(RM.distFiume(xx,zz)<6.4) continue;
-    cavaliere(B,xx,zz,RM.h(xx,zz),Math.atan2(SP[0]-xx,SP[1]-zz),rnd()<.5?C.cavalloB:C.cavalloC,C.bianco); }                 // dalle navi verso la basilica
-  for(i=0;i<50;i++){ var an=rnd()*6.283, r=3+rnd()*3; x=SP[0]+3+Math.cos(an)*r*1.3; z=SP[1]+Math.sin(an)*r; cavaliere(B,x,z,RM.h(x,z),rnd()*6.28,rnd()<.5?C.cavalloB:C.cavalloC,C.bianco); }      // attorno all'atrio
-  for(var fila=0;fila<5;fila++) for(i=0;i<34;i++){ x=-246+i*.5+(rnd()-.5)*.15; z=-133+fila*.55; uomo(B,x,z,RM.h(x,z),fila<2?C.ferro:C.tunica,fila<3?C.rosso:null,Math.PI); }      // la milizia romana nel campo di Nerone, rivolta a sud
-  for(i=0;i<5;i++) insegna(B,-243+i*3.5,-130.6,RM.h(-243+i*3.5,-130.6),C.rosso,.42);
+    cavaliere(B,xx,zz,H(xx,zz),Math.atan2(SP[0]-xx,SP[1]-zz),rnd()<.5?C.cavalloB:C.cavalloC,C.bianco); }                 // dalle navi verso la basilica
+  for(i=0;i<50;i++){ var an=rnd()*6.283, r=3+rnd()*3; x=SP[0]+3+Math.cos(an)*r*1.3; z=SP[1]+Math.sin(an)*r; cavaliere(B,x,z,H(x,z),rnd()*6.28,rnd()<.5?C.cavalloB:C.cavalloC,C.bianco); }      // attorno all'atrio
+  for(var fila=0;fila<5;fila++) for(i=0;i<34;i++){ x=-246+i*.5+(rnd()-.5)*.15; z=-133+fila*.55; uomo(B,x,z,H(x,z),fila<2?C.ferro:C.tunica,fila<3?C.rosso:null,Math.PI); }      // la milizia romana nel campo di Nerone, rivolta a sud
+  for(i=0;i<5;i++) insegna(B,-243+i*3.5,-130.6,H(-243+i*3.5,-130.6),C.rosso,.42);
   var g=maglia(B); navi.forEach(function(nv){ g.add(nv.m); });      // le navi seguono la scena: visibili solo nell'anno della tappa
   return {g:g, da:845.6, a:847, navi:navi, posa:posa};
 })();
@@ -316,10 +323,10 @@ var totila546=(function(){
   var B=new RM.Costruttore(), G=[193.8,75.8], d=[.93,.36], n=[-.36,.93], i, f, x, z, fiamma=RM.col(0xffa040);
   for(i=0;i<320;i++){ f=rnd(); var lat=(rnd()-.5)*.9, lung=16-f*30;       // da 16 unità fuori a 14 dentro
     x=G[0]+d[0]*lung+n[0]*lat; z=G[1]+d[1]*lung+n[1]*lat;
-    var y=RM.h(x,z); uomo(B,x,z,y,rnd()<.5?C.ferro:C.grigio,rnd()<.6?C.cavalloB:null,Math.atan2(-d[0],-d[1]));
+    var y=H(x,z); uomo(B,x,z,y,rnd()<.5?C.ferro:C.grigio,rnd()<.6?C.cavalloB:null,Math.atan2(-d[0],-d[1]));
     if(i%9===0) B.scatola(.012,.12,.012,x+.03,y+.12,z,P.tronco).scatola(.03,.04,.03,x+.03,y+.25,z,fiamma);      // fiaccole
   }
-  for(i=0;i<4;i++){ x=G[0]-d[0]*1.2+n[0]*(i-1.5)*.4; z=G[1]-d[1]*1.2+n[1]*(i-1.5)*.4; uomo(B,x,z,RM.h(x,z),C.tunica,null,Math.atan2(d[0],d[1])); }      // i quattro Isauri che hanno aperto
+  for(i=0;i<4;i++){ x=G[0]-d[0]*1.2+n[0]*(i-1.5)*.4; z=G[1]-d[1]*1.2+n[1]*(i-1.5)*.4; uomo(B,x,z,H(x,z),C.tunica,null,Math.atan2(d[0],d[1])); }      // i quattro Isauri che hanno aperto
   return {g:maglia(B), da:545.6, a:547};
 })();
 var dopoTotila=0;
@@ -392,12 +399,12 @@ if(terremoto801){
 var fortino552=(function(){
   var B=new RM.Costruttore(), cx=-157, cz=-118, R=7.2, n=44, i;
   for(i=0;i<n;i++){ var a=i/n*6.283, x=cx+Math.cos(a)*R, z=cz+Math.sin(a)*R; if(RM.distFiume(x,z)<6.4) continue;
-    B.scatola(1.1,.72,.24,x,RM.h(x,z)-.1,z,P.tufo,-a+Math.PI/2); if(i%6===0) B.scatola(.5,.96,.5,x,RM.h(x,z)-.1,z,P.tufo,-a); }
+    B.scatola(1.1,.72,.24,x,H(x,z)-.1,z,P.tufo,-a+Math.PI/2); if(i%6===0) B.scatola(.5,.96,.5,x,H(x,z)-.1,z,P.tufo,-a); }
   var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
   var B2=new RM.Costruttore(), k=0;      // lo schieramento: file di fanti con le insegne, rivolte al forte, a nord-ovest, sul lato di terra
   for(var fila=0;fila<6;fila++) for(var j=-14;j<=14;j++){ var ang=-2.25+j*.028, r=R+3.2+fila*.6, x2=cx+Math.cos(ang)*r, z2=cz+Math.sin(ang)*r; if(RM.distFiume(x2,z2)<6.5) continue;
-    uomo(B2,x2+(rnd()-.5)*.25,z2+(rnd()-.5)*.25,RM.h(x2,z2),fila<2?C.ferro:C.grigio,fila<3?C.rosso:null,Math.atan2(cx-x2,cz-z2)); k++;
-    if(fila===5 && j%7===0) insegna(B2,x2,z2,RM.h(x2,z2),C.porpora,.42); }
+    uomo(B2,x2+(rnd()-.5)*.25,z2+(rnd()-.5)*.25,H(x2,z2),fila<2?C.ferro:C.grigio,fila<3?C.rosso:null,Math.atan2(cx-x2,cz-z2)); k++;
+    if(fila===5 && j%7===0) insegna(B2,x2,z2,H(x2,z2),C.porpora,.42); }
   var g2=B2.maglia(RM.matPietra()); g2.visible=false; g2.castShadow=true; RM.scene.add(g2);
   return {g:g, g2:g2, da:550, a:556, da2:551.6, a2:553};
 })();
@@ -438,7 +445,7 @@ var perId={}; (RM.MONUMENTI||[]).forEach(function(m){ perId[m.id]=m; });
    per il corteo da sud-est, sopra le case della via Lata */
 var VISTE={ milvio:{t:[-152,-486],c:[-140,10,-466]}, fortino552:{t:[-163,-126],c:[-131,30,-90]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
   assedio472:{t:[-158,-109],c:[-122,44,-62]},      /* centrata sul mausoleo di Adriano e su ponte Elio, dove avviene lo scontro (23 novembre 2026, richiesta dell'utente); il campo resta a sinistra */
-  prigionieri593:{t:[-84,-232],c:[-57,33,-196]}, trionfo274:{t:[8,8],c:[44,26,44]}, carlo800:{t:[-236,-108],c:[-212,24,-84]}, saraceni846:{t:[-214,-104],c:[-182,34,-66]}, totila546:{t:[190,74],c:[218,16,96]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
+  prigionieri593:{t:[-80,-219],c:[-74.5,3.2,-212]}, trionfo274:{t:[8,8],c:[44,26,44]}, carlo800:{t:[-236,-108],c:[-212,24,-84]}, saraceni846:{t:[-214,-104],c:[-182,34,-66]}, totila546:{t:[190,74],c:[218,16,96]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
 var portata=false;                                                                      // la vista ce l'ha portata la regia
 function scena(){ var s=document.getElementById('scene'); return s?s.getAttribute('data-vista'):null; }
 function vista(v){
