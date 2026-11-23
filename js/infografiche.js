@@ -66,7 +66,34 @@ function disegnaTerre(svg,stato){
 }
 function valoreGradini(P,a){ var v=P[0][1]; for(var i=0;i<P.length;i++) if(P[i][0]<=a) v=P[i][1]; return v; }
 
+/* ---------- 3. La moneta perde l'argento ----------
+   La curva dell'argento nella moneta (CURVE.argento, fonti nel commento in js/dati.js: Walker in Katsari 2002, RIC online, Burnett, Estiot; valori indicativi) e una moneta che passa dal colore
+   dell'argento a quello del rame. I momenti vengono dai testi del 274 e dell'intermezzo della moneta (284). */
+var MONETA={ titolo:"La moneta perde l'argento", sotto:"Quanto argento c'era nella moneta d'argento, dal 235 al 308",
+  momenti:[[235,"Il denario contiene ancora quasi metà d'argento."],[260,"Sotto Gallieno l'argento scende a meno di un quinto."],[268,"Sotto Claudio II la moneta è ormai quasi tutta di rame: meno del 3%."],
+    [274,"Aureliano stabilisce che la moneta contenga almeno il 5% d'argento."],[294,"Diocleziano introduce una moneta nuova, il nummo, con circa il 4%."],[301,"Diocleziano raddoppia per legge il valore delle monete e fissa più di 1.200 prezzi massimi."]],
+  fonte:"Percentuali indicative: le analisi della superficie delle monete sovrastimano l'argento (Butcher e Ponting). Dati di Walker (in Katsari 2002), RIC online, Burnett ed Estiot; l'editto dei prezzi del 301 nell'edizione di Kropff (2016). Tra il 309 e il 312 compare il solido d'oro, stabile per secoli." };
+function disegnaMoneta(svg,stato){
+  var C=(D.CURVE||{}).argento; if(!C) return; var P=C.punti.concat([[308,4]]);
+  var W=640, H=300, L=50, Rr=150, Tp=14, B=34, x=function(a){ return L+(a-235)/(308-235)*(W-L-Rr); }, y=function(v){ return Tp+(1-v/50)*(H-Tp-B); };
+  [0,10,20,30,40,50].forEach(function(v){ el('line',{x1:L,x2:W-Rr,y1:y(v),y2:y(v),class:'ig-griglia'},svg); var t=el('text',{x:L-6,y:y(v)+4,class:'ig-asse','text-anchor':'end'},svg); t.textContent=v+'%'; });
+  [235,250,268,284,301].forEach(function(a){ var t=el('text',{x:x(a),y:H-14,class:'ig-asse','text-anchor':'middle'},svg); t.textContent=a; });
+  var d=P.map(function(p,i){ return (i?'L':'M')+x(p[0]).toFixed(1)+' '+y(p[1]).toFixed(1); }).join(' ');
+  var linea=el('path',{d:d,class:'ig-linea'},svg), lung=linea.getTotalLength?linea.getTotalLength():1500;
+  var segni=MONETA.momenti.map(function(m){ var v=valore(P,m[0]), g=el('g',{class:'ig-momento'},svg); el('circle',{cx:x(m[0]),cy:y(v),r:4.5},g); return {a:m[0],g:g,t:m[1]}; });
+  var cx=W-75, cy=130, moneta=el('circle',{cx:cx,cy:cy,r:52,class:'ig-moneta'},svg); el('circle',{cx:cx,cy:cy,r:44,fill:'none',stroke:'rgba(0,0,0,.18)','stroke-width':1.5},svg);
+  var perc=el('text',{x:cx,y:cy+8,class:'ig-moneta-num','text-anchor':'middle'},svg), sotto=el('text',{x:cx,y:cy+78,class:'ig-asse','text-anchor':'middle'},svg); sotto.textContent="d'argento";
+  var cur=el('g',{class:'ig-cursore'},svg), lab=el('text',{x:0,y:0,class:'ig-valore','text-anchor':'middle'},cur);
+  function colore(v){ var k=Math.max(0,Math.min(1,v/45)), a=[176,106,59], b=[205,208,213]; return 'rgb('+a.map(function(c,i){ return Math.round(c+(b[i]-c)*k); }).join(',')+')'; }      // dal rame all'argento
+  stato.passo=function(k){ var anno=235+k*73, v=valore(P,anno); linea.style.strokeDasharray=lung; linea.style.strokeDashoffset=lung*(1-k);
+    moneta.setAttribute('fill',colore(v)); perc.textContent=(v<10?v.toFixed(1).replace('.',','):Math.round(v))+'%';
+    cur.setAttribute('transform','translate('+x(anno).toFixed(1)+','+(y(v)-12).toFixed(1)+')'); lab.textContent=Math.round(anno);
+    var ultimo=null; segni.forEach(function(s){ var on=s.a<=anno; s.g.classList.toggle('acceso',on); if(on) ultimo=s; }); return ultimo?ultimo.a+' · '+ultimo.t:MONETA.sotto; };
+  stato.tutti=segni.map(function(s){ return [s.a,s.t]; });
+}
+
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, dura:26000, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
+  moneta:{d:MONETA, disegna:disegnaMoneta, dura:20000, tappe:function(t){ return t.anno===284&&t.intermezzo || t.anno===274&&!t.intermezzo; }},
   terre:{d:TERRE, disegna:disegnaTerre, dura:22000, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo) || t.anno===439&&!t.intermezzo; }} };
 
 /* ---------- la finestra ---------- */

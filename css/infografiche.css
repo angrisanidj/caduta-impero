@@ -34,3 +34,5 @@
 .ig-fonte{margin:10px 2px 0;font-family:var(--ui);font-size:12px;line-height:1.45;color:var(--muted)}
 @media (max-width:520px){ .ig-finestra{padding:14px 12px 12px} .ig-titolo{font-size:19px} .ig-frase{font-size:16px;min-height:4.2em} .ig-asse{font-size:13px} }
 @media (prefers-reduced-motion:reduce){ .ig-momento{transition:none} }
+.ig-moneta{stroke:#6d5a3a;stroke-width:2}
+.ig-moneta-num{font-family:var(--cap);font-size:24px;font-weight:700;fill:#221C18}
