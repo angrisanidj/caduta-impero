@@ -266,7 +266,7 @@ var ultimo=performance.now(), contaGiri=0;
 /* Indirizzi delle tappe (23 novembre 2026): l'anno, e per i quattro intermezzi l'anno col nome (#284-moneta, #395-commerci, #439-barbari, #476-citta).
    I vecchi #tappa-N contavano le tappe: con le tre tappe del 23 novembre dalla 34 in poi portavano alla tappa sbagliata. Si traducono secondo la numerazione
    rimasta in rete dalla notte del 22 alla mattina del 23 novembre (51 tappe; VECCHIE); i link ancora più vecchi, di quando le tappe erano 47, non si possono distinguere. */
-function chiaveTappa(t){ return t.intermezzo?t.anno+'-'+String(t.titolo).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/^(la|il|lo|le|i|gli)\s+/,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''):String(t.anno); }
+function chiaveTappa(t){ return t.intermezzo?t.anno+'-'+String(t.titolo).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/^(la|il|lo|le|i|gli)\s+|^l['’]/,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''):String(t.anno); }
 var VECCHIE='235 251 260 271 274 284i 293 301 312 330 357 363 378 384 394 395 395i 402 406 409 410 418 429 439 439i 451 455 458 468 472 476 476i 493 526 537 542 546 568 589 593 609 663 711 727 756 780 791 800 801 846 852'.split(' ');
 function tappaDaIndirizzo(h){
   var m=/^#tappa-(\d+)$/.exec(h), i, v;

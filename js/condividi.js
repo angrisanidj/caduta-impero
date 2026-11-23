@@ -3,7 +3,7 @@
    «Copia il link» copia l'indirizzo pubblico con la tappa corrente (#410, o #476-citta per un intermezzo), che js/pagina.js tiene aggiornata in location.hash. */
 (function(){
 var INDIRIZZO='https://angrisanidj.github.io/caduta-impero/';
-var TESTO='Come finisce un impero · La storia dell\'Occidente romano dal 235 all\'852 in 54 tappe. Una carta mostra come cambiano i confini e una ricostruzione in 3D permette di esplorare Roma.';
+var TESTO='Come finisce un impero · La storia dell\'Occidente romano dal 235 all\'852 in 56 tappe. Una carta mostra come cambiano i confini e una ricostruzione in 3D permette di esplorare Roma.';
 var u=encodeURIComponent(INDIRIZZO), t=encodeURIComponent(TESTO);
 // icone: i segni dei marchi (Simple Icons, CC0) e, per il link, due anelli disegnati a tratto
 var RETI=[
