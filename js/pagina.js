@@ -288,13 +288,14 @@ else{                                   // apertura dalla fine: la città del 55
   function aggiorna(){
     var B=document.body.classList, H=window.innerHeight;
     if(window.innerWidth>1000 || B.contains('roma-grande') || B.contains('impero-grande')){ b.hidden=true; return; }
+    if(B.contains('tempo-attesa')){ b.hidden=true; return; }      // in cima alla pagina, prima di scorrere, non c'è (come la linea del tempo)
     var r=tit.getBoundingClientRect(), s=sc.getBoundingClientRect(), dove=r.top>H*.85 && s.bottom>0 ? 'giu' : s.bottom<0 && r.top<H*.6 ? 'su' : '';
     b.hidden=!dove; if(!dove) return;
     if(b.dataset.dove!==dove){ b.dataset.dove=dove; b.textContent=dove==='giu'?'Leggi la tappa ↓':'↑ Carta e città'; }
     var t=tp?tp.getBoundingClientRect():null; b.style.bottom=Math.max(14,t&&t.top<H&&t.bottom>H-4?H-t.top+10:14)+'px';
   }
   function presto(){ if(!raf) raf=requestAnimationFrame(function(){ raf=0; aggiorna(); }); }
-  window.addEventListener('scroll',presto,{passive:true}); window.addEventListener('resize',presto); ascolto.push(presto); aggiorna();
+  window.addEventListener('scroll',presto,{passive:true}); window.addEventListener('resize',presto); window.addEventListener('scroll-tempo',presto); ascolto.push(presto); aggiorna();
   b.addEventListener('click',function(){ var ridotto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
     (b.dataset.dove==='giu'?tit:sc).scrollIntoView({behavior:ridotto?'auto':'smooth',block:'start'}); });
 })();
@@ -332,3 +333,15 @@ function daLeggere(t){
       r.classList.remove('risalta'); void r.offsetWidth; r.classList.add('risalta'); });
   });
 }
+
+/* La linea del tempo all'apertura (23 novembre 2026, l'utente: «È brutto che parta così il Riproduci all'inizio. Io lo terrei nascosto finché non scendi»): finché la pagina è in cima
+   (meno di 40 punti di scorrimento) la linea del tempo incollata in fondo e il bottone «Leggi la tappa» non si vedono; al primo scorrimento la linea entra dal basso.
+   Non vale a tutto schermo, dove la linea del tempo è sempre lì, né se la linea sta già al suo posto nella pagina (finestra molto alta). */
+(function(){
+  var tp=document.querySelector('.tempo'), raf=0; if(!tp) return;
+  function aggiorna(){ raf=0; var B=document.body.classList, H=window.innerHeight;
+    var cima=(window.scrollY||document.documentElement.scrollTop||0)<40 && !B.contains('roma-grande') && !B.contains('impero-grande') && tp.parentNode.getBoundingClientRect().bottom>H+tp.offsetHeight;      // si nasconde solo se è davvero incollata sopra il contenuto (il suo posto nella pagina è più in basso)
+    var prima=B.contains('tempo-attesa'); B.toggle('tempo-attesa',cima); if(prima!==cima) window.dispatchEvent(new Event('scroll-tempo')); }
+  function presto(){ if(!raf) raf=requestAnimationFrame(aggiorna); }
+  window.addEventListener('scroll',presto,{passive:true}); window.addEventListener('resize',presto); aggiorna(); setTimeout(aggiorna,400);
+})();

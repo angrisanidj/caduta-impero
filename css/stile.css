@@ -717,3 +717,8 @@ body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.9
 @keyframes dl-risalta{0%{box-shadow:0 0 0 0 rgba(212,174,85,.0)}20%{box-shadow:0 0 0 6px rgba(212,174,85,.55)}100%{box-shadow:var(--ombra)}}
 @media (prefers-reduced-motion:reduce){ .voce.risalta,.storici.risalta{animation:none;outline:2px solid var(--gold2)} .dl-invito{transition:none} }
 @media print{ .da-leggere{display:none} }
+
+/* la linea del tempo aspetta il primo scorrimento (js/pagina.js, tempo-attesa): scivola giù fuori dallo schermo e torna su quando si scende */
+.tempo{transition:transform .35s ease,opacity .3s ease,visibility 0s}
+body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visibility:hidden;transition:transform .35s ease,opacity .3s ease,visibility 0s .35s}
+@media (prefers-reduced-motion:reduce){ .tempo,body.tempo-attesa .tempo{transition:none} }
