@@ -178,6 +178,7 @@ function vai(i,subito){
   else chi.forEach(function(p){ var li=document.createElement('li'), b=document.createElement('b'); b.textContent=p[0]; li.appendChild(b); var d=document.createElement('span'); d.className='date'; d.textContent=p[1]||''; li.appendChild(d);      /* anche senza date: lo span porta lo stacco e il punto fra nome e riga (prima «Cniva» restava attaccato al testo) */ li.appendChild(document.createTextNode(p[2])); bc.appendChild(li); });
   var voci=t.voci||[], bv=$('tVoci'); $('tVoce').hidden=!voci.length; bv.textContent=''; $('tVoceTitolo').textContent=voci.length>1?'Voci di allora':'Una voce di allora';      // parole dei contemporanei, tradotte dalla fonte
   voci.forEach(function(v){ var q=document.createElement('blockquote'), c=document.createElement('p'); q.textContent=v.testo; c.className='chi'; c.textContent=v.chi; bv.appendChild(q); bv.appendChild(c); });
+  daLeggere(t);
   if(MAPPA) MAPPA.mostra(t.regioni,t.anno,t.luoghi,t.scena,t.passi);
   bottoni.forEach(function(b,k){ b.setAttribute('aria-current',k===idx?'true':'false'); b.classList.toggle('passata',k<idx); });
   gruppi.forEach(function(g,k){ g.g.classList.toggle('attivo',k===Math.min(t.atto,gruppi.length-1)); });
@@ -308,3 +309,26 @@ window.RM_pagina={vai:vai, ferma:ferma, spie:SPIE, quando:function(f){ ascolto.p
 })();
 /* il numero delle tappe nella testata si conta dai dati: non va più corretto a mano quando se ne aggiunge una (intermezzi compresi, come si è sempre contato) */
 (function(){ var n=document.getElementById('numTappe'), T=(window.RM_DATI||{}).TAPPE; if(n&&T) n.textContent=T.length; })();
+
+/* «Da leggere in questa tappa» (23 novembre 2026, l'utente: «quando per ogni tappa ci sono citazioni o aneddoti indicamelo chiaramente così da invogliarmi a leggerle»):
+   sotto il testo della tappa, un invito per ogni riquadro che c'è: le voci di allora (con l'autore), la storia fra storia e leggenda, la domanda degli storici.
+   Toccato, porta al riquadro e lo fa risaltare per un momento. Gli inviti si scrivono dai dati: nessuna parola nuova sui fatti. */
+function daLeggere(t){
+  var $=function(id){ return document.getElementById(id); }, nav=$('tDaLeggere'); if(!nav) return; nav.textContent='';      // fuori dalla funzione principale del file: $ va ridefinito
+  function breve(s,n){ s=String(s||'').replace(/\s+/g,' ').trim(); var f=s.match(/^[^.?!]*[?]/); if(f && f[0].length<=n+30) return f[0]; var w=s.split(' '), o=''; for(var i=0;i<w.length && (o+' '+w[i]).length<=n;i++) o+=(o?' ':'')+w[i]; return o.length>=s.length?s:o.replace(/[,;:.]$/,'')+'…'; }
+  function autore(c){ return String(c||'').split(/[,.]/)[0]; }
+  var voci=t.voci||[], inviti=[];
+  if(voci.length) inviti.push({id:'tVoce', cl:'voce', segno:'«»', titolo:voci.length>1?voci.length+' voci di allora':'Una voce di allora', sotto:voci.map(function(v){ return autore(v.chi); }).filter(function(x,i,a){ return a.indexOf(x)===i; }).join(' · ')});
+  if(t.leggenda) inviti.push({id:'tLeggenda', cl:'leggenda', segno:'✦', titolo:'Fra storia e leggenda', sotto:breve(t.leggenda,70)});
+  if(t.storici) inviti.push({id:'tStorici', cl:'storici', segno:'?', titolo:'Gli storici discutono', sotto:breve(t.storici,70)});
+  nav.hidden=!inviti.length; if(!inviti.length) return;
+  var et=document.createElement('p'); et.className='dl-etichetta'; et.textContent='Da leggere in questa tappa'; nav.appendChild(et);
+  var ul=document.createElement('ul'); nav.appendChild(ul);
+  inviti.forEach(function(x){
+    var li=document.createElement('li'), b=document.createElement('button'), s=document.createElement('span'), tt=document.createElement('b'), so=document.createElement('span');
+    b.type='button'; b.className='dl-invito dl-'+x.cl; s.className='dl-segno'; s.setAttribute('aria-hidden','true'); s.textContent=x.segno; tt.textContent=x.titolo; so.className='dl-sotto'; so.textContent=x.sotto;
+    b.appendChild(s); var c=document.createElement('span'); c.className='dl-testi'; c.appendChild(tt); c.appendChild(so); b.appendChild(c); li.appendChild(b); ul.appendChild(li);
+    b.addEventListener('click',function(){ var r=$(x.id); if(!r) return; var basso=matchMedia('(prefers-reduced-motion: reduce)').matches; r.scrollIntoView({behavior:basso?'auto':'smooth',block:'center'});
+      r.classList.remove('risalta'); void r.offsetWidth; r.classList.add('risalta'); });
+  });
+}

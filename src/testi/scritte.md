@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 09:16:35.
+Generato da `src/testi.mjs` il 23/11/2026, 09:20:39.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -111,7 +111,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.48] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Quelle segnate «Ricostruzione» sono state generate per questa pagina a partire dalle fonti: il volto è immaginario. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.49] Versione del 23/11/2026, ore 08:54
+[pagina.49] Versione del 23/11/2026, ore 09:16
 
 
 ## 2. Gli atti
@@ -3997,15 +3997,23 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.13-r179] Una voce di allora
 
-[ui.pagina.14-r223] Esci dallo schermo intero
+[ui.pagina.14-r224] Esci dallo schermo intero
 
-[ui.pagina.15-r223] Scena a tutto schermo
+[ui.pagina.15-r224] Scena a tutto schermo
 
-[ui.pagina.16-r223] Tutto schermo
+[ui.pagina.16-r224] Tutto schermo
 
-[ui.pagina.17-r292] Leggi la tappa ↓
+[ui.pagina.17-r293] Leggi la tappa ↓
 
-[ui.pagina.18-r292] ↑ Carta e città
+[ui.pagina.18-r293] ↑ Carta e città
+
+[ui.pagina.19-r321] voci di allora
+
+[ui.pagina.20-r322] Fra storia e leggenda
+
+[ui.pagina.21-r323] Gli storici discutono
+
+[ui.pagina.22-r325] Da leggere in questa tappa
 
 
 ### js/mappa.js
@@ -4149,23 +4157,27 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/atti.js
 
-[ui.atti.01-r26] Chiudi la scheda dell'atto
+[ui.atti.01-r27] Chiudi la scheda dell'atto
 
-[ui.atti.02-r50] Fai scorrere la carta tappa per tappa
+[ui.atti.02-r51] Fai scorrere la carta tappa per tappa
 
-[ui.atti.03-r51] Carta dell'Impero
+[ui.atti.03-r52] Carta dell'Impero
 
-[ui.atti.04-r63] Le tappe dell'atto
+[ui.atti.04-r64] Le tappe dell'atto
 
-[ui.atti.05-r93] quota di superficie, su questa carta
+[ui.atti.05-r94] quota di superficie, su questa carta
 
-[ui.atti.06-r93] stime: la forchetta sta nel cruscotto
+[ui.atti.06-r94] stime: la forchetta sta nel cruscotto
 
-[ui.atti.07-r119] punto fine
+[ui.atti.07-r120] punto fine
 
-[ui.atti.08-r122] dal 309-312 il solido d’oro, stabile per secoli
+[ui.atti.08-r123] dal 309-312 il solido d’oro, stabile per secoli
 
-[ui.atti.09-r122] percentuale d’argento, valori indicativi
+[ui.atti.09-r123] percentuale d’argento, valori indicativi
+
+[ui.atti.10-r188] Comincia l’atto
+
+[ui.atti.11-r191] La carta dall’inizio alla fine, i numeri prima e dopo, le tappe
 
 
 ### js/cause.js

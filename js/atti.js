@@ -3,8 +3,9 @@
    i numeri del cruscotto prima e dopo, e le tappe dell'atto come una piccola linea del tempo, da toccare per andarci.
    Niente dati nuovi: carte e numeri sono quelli delle tappe (stati delle regioni, curve di js/dati.js, quota di territorio di js/mappa.js), letti agli anni dell'atto;
    la freccia accanto a ogni numero dice soltanto se il secondo valore è più alto o più basso del primo.
-   La scheda si apre da sola alla prima tappa dell'atto e si richiude quando si va avanti; aperta a mano (dal nome dell'atto sulla linea del tempo o da «L'atto in breve»
-   accanto al titolo della tappa) resta aperta e segue l'atto, finché non la si chiude. */
+   Dal 23 novembre 2026 la scheda non si apre più da sola (l'utente: «non deve partire in automatico»): alla prima tappa di ogni atto compare al suo posto un invito ben visibile,
+   «Comincia l'atto…» con il bottone per aprirla. Aperta (dall'invito, dal nome dell'atto sulla linea del tempo o da «L'atto in breve» accanto al titolo della tappa)
+   resta aperta e segue l'atto, finché non la si chiude. */
 (function(){
 'use strict';
 var D=window.RM_DATI, P=window.RM_pagina, M=window.RM_mappa, osp=document.getElementById('attoScheda'); if(!D||!P||!P.quando||!osp) return;
@@ -176,13 +177,23 @@ function entra(){
   if(!carta) return; ferma(); scegli(0);
   if(!ridotto) attesa=setTimeout(function(){ attesa=0; if(!osp.hidden) gioca(); },900);
 }
-function apri(k){ var nuovo=k!==aperto, chiusa=osp.hidden; if(nuovo){ scrivi(k); aperto=k; } osp.hidden=false; segna(); if(nuovo||chiusa) entra(); }
+function apri(k){ var nuovo=k!==aperto, chiusa=osp.hidden; if(nuovo){ scrivi(k); aperto=k; } osp.hidden=false; eInvito.hidden=true; segna(); if(nuovo||chiusa) entra(); }
 function nascondi(){ ferma(); osp.hidden=true; osp.classList.remove('entra'); }
-function chiudiScheda(){ aperto=-1; tenuta=false; nascondi(); segna(); }
+function chiudiScheda(){ aperto=-1; tenuta=false; nascondi(); segna(); invito(attoDi(T[P.tappa()]),P.tappa()); }
+/* l'invito all'inizio di ogni atto: una fascia color vino, come il frontespizio della scheda, con il numero e il nome dell'atto, gli anni e il bottone che apre la scheda */
+var eInvito=document.createElement('div'); eInvito.className='atto-invito'; eInvito.hidden=true; osp.parentNode.insertBefore(eInvito,osp);
+function invito(k,i){
+  var si=i===tappe[k][0] && osp.hidden; eInvito.hidden=!si; if(!si) return;
+  var a=D.ATTI[k]; eInvito.innerHTML='';
+  var tx=crea('p','ai-testo',null,eInvito); crea('span','ai-num','Comincia l’atto '+a.n,tx); crea('b','ai-nome',a.nome,tx); crea('span','ai-anni',a.da+'-'+a.a,tx);
+  var b=crea('button','ai-apri',null,eInvito); b.type='button'; b.innerHTML='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.2v9.6L12.6 8z"/></svg><span>Guarda l’atto in breve</span>';
+  b.setAttribute('aria-controls','attoScheda'); b.addEventListener('click',function(){ tenuta=true; apri(k); mostraAVista(); });
+  crea('span','ai-cosa','La carta dall’inizio alla fine, i numeri prima e dopo, le tappe',eInvito);
+}
 function aggiorna(i,t){
   var k=attoDi(t);
-  if(i===tappe[k][0] || tenuta) apri(k); else if(aperto>=0) { aperto=-1; nascondi(); }
-  segna();
+  if(tenuta) apri(k); else if(aperto>=0) { aperto=-1; nascondi(); }
+  invito(k,i); segna();
 }
 P.quando(aggiorna);
 chiudi.addEventListener('click',chiudiScheda);

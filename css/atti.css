@@ -207,3 +207,25 @@
   .as-apri{margin-left:8px}
 }
 @media print{ .atto-scheda .chiudi,.as-apri,.as-comandi{display:none} .as-testa{color:var(--ink);background:none;border-bottom-color:var(--line)} .as-romano{-webkit-text-fill-color:var(--ink);filter:none} }
+
+/* l'invito all'inizio di ogni atto (js/atti.js, invito): la scheda non si apre più da sola; una fascia vino come il frontespizio dice che qui comincia un atto e offre il bottone */
+.atto-invito{margin:22px 0 0;padding:14px 18px 14px 22px;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"testo bottone" "cosa bottone";column-gap:18px;row-gap:4px;align-items:center;
+  border-radius:12px;color:var(--crema);background:var(--vino-scuro);background-image:radial-gradient(90% 180% at 8% 0%,#7E2230 0%,var(--vino) 50%,var(--vino-scuro) 100%);
+  border-bottom:2px solid #C99A3A;box-shadow:0 14px 30px -18px rgba(58,38,20,.55);animation:ai-entra .45s ease}
+.atto-invito[hidden]{display:none}
+.ai-testo{grid-area:testo;margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.ai-num{font-family:var(--cap);font-weight:600;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold2)}
+.ai-nome{font-family:var(--cap);font-weight:600;font-size:clamp(20px,2.2vw,25px);line-height:1.1;color:var(--gold3)}
+.ai-anni{font-family:var(--cap);font-weight:600;font-size:15px;color:#D9C6AE;font-variant-numeric:lining-nums tabular-nums}
+.ai-cosa{grid-area:cosa;font-family:var(--ui);font-size:13px;color:#D9C6AE}
+.ai-apri{grid-area:bottone;display:inline-flex;align-items:center;gap:8px;padding:11px 18px;min-height:44px;border:1px solid var(--gold2);border-radius:999px;cursor:pointer;
+  font-family:var(--ui);font-size:14.5px;font-weight:600;color:var(--vino-scuro);background:linear-gradient(180deg,#FFF3CF 0%,#F0D38A 55%,#D9AE55 100%);box-shadow:0 2px 0 rgba(30,6,10,.5);
+  animation:ai-chiama 2.4s ease-in-out 1s 3}
+.ai-apri svg{width:14px;height:14px;fill:currentColor}
+.ai-apri:hover{filter:brightness(1.06)}
+.ai-apri:focus-visible{outline:2px solid var(--gold3);outline-offset:3px}
+@keyframes ai-entra{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@keyframes ai-chiama{0%,100%{box-shadow:0 2px 0 rgba(30,6,10,.5),0 0 0 0 rgba(240,211,138,.55)}50%{box-shadow:0 2px 0 rgba(30,6,10,.5),0 0 0 9px rgba(240,211,138,0)}}
+@media (prefers-reduced-motion:reduce){ .atto-invito,.ai-apri{animation:none} }
+@media (max-width:700px){ .atto-invito{grid-template-columns:1fr;grid-template-areas:"testo" "cosa" "bottone";padding:13px 16px;row-gap:8px} .ai-apri{justify-self:start} }
+@media print{ .atto-invito{display:none} }
