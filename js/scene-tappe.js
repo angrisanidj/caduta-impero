@@ -308,6 +308,27 @@ RM.frame.push(function(){
   if(k>=1){ arrivo846=null; }
 });
 
+/* ---------- 546: Totila entra da porta Asinaria ----------
+   Procopio VII 20: di notte quattro Isauri della guardia aprono la porta Asinaria e i Goti entrano; VII 22 e il continuatore di Marcellino Comes (a. 547): la città svuotata, incendi soprattutto
+   oltre il Tevere (i fuochi stanno in EVENTI). Qui una colonna di Goti, alcuni con le fiaccole, che passa la porta e scende verso il Laterano; dopo qualche secondo la vista va su Trastevere
+   che brucia (23 novembre 2026, l'utente: «fai vedere che entra da qui e l'incendio in Trastevere»). Numero e ordine della colonna sono uno schema. */
+var totila546=(function(){
+  var B=new RM.Costruttore(), G=[193.8,75.8], d=[.93,.36], n=[-.36,.93], i, f, x, z, fiamma=RM.col(0xffa040);
+  for(i=0;i<320;i++){ f=rnd(); var lat=(rnd()-.5)*.9, lung=16-f*30;       // da 16 unità fuori a 14 dentro
+    x=G[0]+d[0]*lung+n[0]*lat; z=G[1]+d[1]*lung+n[1]*lat;
+    var y=RM.h(x,z); uomo(B,x,z,y,rnd()<.5?C.ferro:C.grigio,rnd()<.6?C.cavalloB:null,Math.atan2(-d[0],-d[1]));
+    if(i%9===0) B.scatola(.012,.12,.012,x+.03,y+.12,z,P.tronco).scatola(.03,.04,.03,x+.03,y+.25,z,fiamma);      // fiaccole
+  }
+  for(i=0;i<4;i++){ x=G[0]-d[0]*1.2+n[0]*(i-1.5)*.4; z=G[1]-d[1]*1.2+n[1]*(i-1.5)*.4; uomo(B,x,z,RM.h(x,z),C.tunica,null,Math.atan2(d[0],d[1])); }      // i quattro Isauri che hanno aperto
+  return {g:maglia(B), da:545.6, a:547};
+})();
+var dopoTotila=0;
+if(window.RM_pagina) RM_pagina.quando(function(i,t){
+  clearTimeout(dopoTotila);
+  if(t.intermezzo || t.anno!==546) return;
+  dopoTotila=setTimeout(function(){ if(document.body.classList.contains('roma-grande') && !RM.regiaCitta) return; if(RM.volaA) RM.volaA([-118,50],[-84,34,90]); },7000);      // da porta Asinaria a Trastevere, che brucia
+});
+
 /* ---------- 801: il terremoto e il tetto di San Paolo ----------
    23 novembre 2026, l'utente: «quando ci sia un terremoto si muove la terra inizialmente e crolla qualcosa». Annali del regno dei Franchi, 801: la sera del 30 aprile («II. Kal. Mai.») un terremoto
    e il tetto di San Paolo crollato con le sue travi («cum ipsis trabibus», riassunto nella didascalia). Arrivati sulla basilica: la scena trema per tre secondi, il tetto cede
@@ -405,7 +426,7 @@ var tombe=TOMBE.map(function(t){
 });
 
 RM.moduli.push(function(anno){
-  [milvio,corteo,assedio472,prigionieri593,trionfo274,salaria410,vandali455,costante663,leone852,carlo800,saraceni846].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
+  [milvio,corteo,assedio472,prigionieri593,trionfo274,salaria410,vandali455,costante663,leone852,carlo800,saraceni846,totila546].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
   tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
   if(terremoto801){ terremoto801.detriti.visible=anno>=801&&anno<806; applicaScossa(); }      // le travi restano a terra fino ai restauri; durante la sequenza la scossa comanda
   fortino552.g.visible=anno>=fortino552.da&&anno<fortino552.a; fortino552.g2.visible=anno>=fortino552.da2&&anno<fortino552.a2;
@@ -417,7 +438,7 @@ var perId={}; (RM.MONUMENTI||[]).forEach(function(m){ perId[m.id]=m; });
    per il corteo da sud-est, sopra le case della via Lata */
 var VISTE={ milvio:{t:[-152,-486],c:[-140,10,-466]}, fortino552:{t:[-163,-126],c:[-131,30,-90]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
   assedio472:{t:[-158,-109],c:[-122,44,-62]},      /* centrata sul mausoleo di Adriano e su ponte Elio, dove avviene lo scontro (23 novembre 2026, richiesta dell'utente); il campo resta a sinistra */
-  prigionieri593:{t:[-84,-232],c:[-57,33,-196]}, trionfo274:{t:[8,8],c:[44,26,44]}, carlo800:{t:[-236,-108],c:[-212,24,-84]}, saraceni846:{t:[-214,-104],c:[-182,34,-66]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
+  prigionieri593:{t:[-84,-232],c:[-57,33,-196]}, trionfo274:{t:[8,8],c:[44,26,44]}, carlo800:{t:[-236,-108],c:[-212,24,-84]}, saraceni846:{t:[-214,-104],c:[-182,34,-66]}, totila546:{t:[190,74],c:[218,16,96]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
 var portata=false;                                                                      // la vista ce l'ha portata la regia
 function scena(){ var s=document.getElementById('scene'); return s?s.getAttribute('data-vista'):null; }
 function vista(v){
