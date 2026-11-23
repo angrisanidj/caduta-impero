@@ -14,7 +14,8 @@ export const SCELTE = {
   'Decio': { file: 'Emperor Traianus Decius (Mary Harrsch).jpg', oggetto: 'busto in marmo attribuito a Decio, 249-251, Musei Capitolini', coevo: 'si',
     nota: 'L\'identificazione del busto capitolino con Decio è quella corrente, fondata sul confronto con le monete.' },
   'Cniva': { coevo: 'nessuno', nota: 'Nessun ritratto coevo noto, nessuna moneta. Su Commons solo una stampa moderna di fantasia («Gothic king Cniva and Emperor Decius at the battle of Abritus»): sconsigliata.' },
-  'Cipriano': { coevo: 'nessuno', nota: 'Nessun ritratto coevo noto; su Commons solo immagini medievali e moderne. Da decidere se metterne una (vedi «Saint Cyprian in art»).' },
+  'Cipriano': { file: "Mosaic of Saint Cyprian of Carthage from Sant'Apollinare Nuovo in Ravenna.jpg", autore: 'Sailko', oggetto: "mosaico del corteo dei martiri in Sant'Apollinare Nuovo a Ravenna, al tempo del vescovo Agnello (metà del VI secolo)", coevo: 'posteriore',
+    nota: "Scelto il 23 novembre 2026 al posto della ricostruzione: è la sua immagine più antica trovata, tre secoli dopo la morte. La descrizione su Commons dice «4th century», ma il file da cui è ritagliato è datato all'epoca del vescovo Agnello («epoca del vescovo agnello»): si scrive questa. Ritaglio del volto fatto a mano: non riscaricare." },
   // 260
   'Valeriano': { file: 'Aureus Valerian-RIC 0034-transparent.png', autore: 'Classical Numismatic Group, Inc. (cngcoins.com)', oggetto: 'aureo di Valeriano (RIC 34), 253-260', coevo: 'si' },
   'Shapur I': { file: 'The triumph of Shapur I over the Roman emperors Valerian and Philip the Arab (detail), Naqsh-e Rostam, Iran (48098809022).jpg', oggetto: 'rilievo rupestre del trionfo di Shapur I sugli imperatori romani, Naqsh-e Rostam (Iran), dopo il 260', coevo: 'si',

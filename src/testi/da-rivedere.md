@@ -1,6 +1,6 @@
 # Come finisce un impero · tutti i testi da rivedere
 
-Generato da `src/testi/rivedere.mjs` il 23/11/2026, 11:37:08, dalla pagina pubblicata.
+Generato da `src/testi/rivedere.mjs` il 23/11/2026, 12:20:51, dalla pagina pubblicata.
 
 **Come si legge.** Le tappe stanno nell'ordine della linea del tempo. Davanti a ogni testo c'è un'etichetta in corsivo che dice che cos'è (il testo della tappa, una voce di allora, la leggenda, un passo della carta…).
 Il segno 🆕 indica un testo **nuovo o cambiato dopo le tue revisioni** del 22 e 23 novembre: sono quelli da leggere per primi. Gli altri li hai già corretti tu.
@@ -8,14 +8,15 @@ Il segno 🆕 indica un testo **nuovo o cambiato dopo le tue revisioni** del 22 
 **Come si corregge.** Ogni testo sta su una riga che comincia con la sua sigla fra parentesi quadre: cambia il testo dopo la sigla, ma non toccare la sigla e non unire due righe.
 Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiungi in fondo alla riga `<<nota: …>>`. Le citazioni sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano.
 
-**In tutto:** 1872 testi, di cui **43 nuovi o cambiati** (🆕).
+**In tutto:** 1900 testi, di cui **72 nuovi o cambiati** (🆕).
 
 ## Indice
 
 - [1. Testata, riquadri fissi e piè di pagina (index.html)](#1-testata-riquadri-fissi-e-piè-di-pagina-indexhtml) · 🆕 14
 - [2. Gli atti](#2-gli-atti) · 🆕 2
-- [3. Le tappe](#3-le-tappe) · 🆕 7
+- [3. Le tappe](#3-le-tappe) · 🆕 8
   - [260 · Valeriano catturato, in Occidente un imperatore rivale](#260--valeriano-catturato-in-occidente-un-imperatore-rivale) · 🆕 1
+  - [418 · Un regno dentro l'impero](#418--un-regno-dentro-limpero) · 🆕 1
   - [476 · Odoacre](#476--odoacre) · 🆕 1
   - [552 · La fine del regno dei Goti in Italia](#552--la-fine-del-regno-dei-goti-in-italia) · 🆕 1
   - [597 · Da Roma al Kent per predicare agli Angli](#597--da-roma-al-kent-per-predicare-agli-angli) · 🆕 1
@@ -24,11 +25,11 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
   - [800 · Carlo Magno incoronato imperatore a San Pietro](#800--carlo-magno-incoronato-imperatore-a-san-pietro) · 🆕 1
 - [4. Cruscotto](#4-cruscotto)
 - [5. Eventi sulla scena di Roma (didascalie)](#5-eventi-sulla-scena-di-roma-didascalie) · 🆕 3
-- [6. Schede dei monumenti](#6-schede-dei-monumenti)
+- [6. Schede dei monumenti](#6-schede-dei-monumenti) · 🆕 23
 - [7. Il percorso del pellegrino](#7-il-percorso-del-pellegrino)
 - [8. «Perché cadde l'Occidente?» (js/cause.js)](#8-perché-cadde-loccidente-jscausejs) · 🆕 1
 - [9. Nomi sulla carta dell'Impero (js/mappa-dati.js, da src/mappa/genera.mjs)](#9-nomi-sulla-carta-dellimpero-jsmappa-datijs-da-srcmappageneramjs) · 🆕 3
-- [10. Scritte dell'interfaccia, estratte in automatico dal codice](#10-scritte-dellinterfaccia-estratte-in-automatico-dal-codice) · 🆕 13
+- [10. Scritte dell'interfaccia, estratte in automatico dal codice](#10-scritte-dellinterfaccia-estratte-in-automatico-dal-codice) · 🆕 18
 
 ---
 
@@ -156,7 +157,7 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
 *Testo* · 🆕
-[pagina.52] Versione del 23/11/2026, ore 11:33
+[pagina.52] Versione del 23/11/2026, ore 12:18
 
 ---
 
@@ -1265,6 +1266,8 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 
 ### 418 · Un regno dentro l'impero
 
+**🆕 1 testo nuovo o cambiato**
+
 *Titolo*
 [T22-418.titolo] Un regno dentro l'impero
 
@@ -1301,8 +1304,8 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 *Una voce di allora (1)*
 [T22-418.voce1.testo] «[Ataulfo raccontava] di aver dapprima desiderato ardentemente che, cancellato il nome romano, tutto il suolo romano diventasse e si chiamasse impero dei Goti, e che fosse, per dirla alla buona, Gothia ciò che era stato Romania […] ma poi, avendo provato con lunga esperienza che i Goti non potevano in alcun modo obbedire alle leggi, per la loro sfrenata barbarie, e che allo Stato non si possono togliere le leggi, senza le quali uno Stato non è uno Stato, aveva scelto almeno di cercare la gloria restaurando e accrescendo il nome romano con le forze dei Goti.»
 
-*Chi la scrive (1)*
-[T22-418.voce1.chi] Orosio, Storie contro i pagani, VII, 43, scritte nel 417-418. Un nobile di Narbona, amico del re goto Ataulfo, aveva raccontato l'episodio a Girolamo, a Betlemme. Orosio lo riprende quindi da un racconto di terza mano.
+*Chi la scrive (1)* · 🆕
+[T22-418.voce1.chi] Orosio, Storie contro i pagani, VII, 43, scritte nel 417-418. Un nobile di Narbona, amico del re goto Ataulfo, raccontò l'episodio a Girolamo, a Betlemme. Orosio era presente e lo sentì lui stesso: le parole di Ataulfo gli arrivano quindi attraverso una sola persona.
 
 *Sulla carta, accanto al rombo di «tolosa»*
 [T22-418.luogo1.tolosa] i Visigoti insediati in Aquitania
@@ -3411,6 +3414,28 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 *Scheda del monumento: certezza-B*
 [scheda.traiano.certezza-B] Restano in piedi alcune sale semicircolari e la grande cisterna delle Sette Sale. Per la parte centrale delle terme le principali testimonianze sono i disegni del Cinquecento.
 
+### Terme di Tito
+
+**🆕 6 testi nuovi o cambiati**
+
+*Scheda del monumento: nome* · 🆕
+[scheda.tito.nome] Terme di Tito
+
+*Scheda del monumento: cosa* · 🆕
+[scheda.tito.cosa] Le prime grandi terme imperiali, costruite in fretta da Tito per l'inaugurazione del Colosseo, sul bordo del colle Oppio sopra l'anfiteatro.
+
+*Scheda del monumento: data1-80* · 🆕
+[scheda.tito.data1-80] Inaugurate con giochi magnifici, secondo Svetonio.
+
+*Scheda del monumento: data2-238* · 🆕
+[scheda.tito.data2-238] Si pensa a un restauro, secondo la Storia Augusta.
+
+*Scheda del monumento: data3-537* · 🆕
+[scheda.tito.data3-537] Nel modello chiudono con il taglio degli acquedotti, come le altre terme. Una data precisa non è nota.
+
+*Scheda del monumento: certezza-C* · 🆕
+[scheda.tito.certezza-C] Oggi non ne resta quasi nulla. Si conoscono la pianta disegnata da Palladio nel Cinquecento e le misure, circa 105 per 120 metri. Nel modello centro e orientamento sono stimati.
+
 ### Terme di Caracalla
 
 *Scheda del monumento: nome*
@@ -3563,6 +3588,38 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 *Scheda del monumento: certezza-A*
 [scheda.marcello.certezza-A] Nel palazzo costruito sopra il teatro si conserva parte della facciata curva, con due livelli di arcate. Il terzo livello, la scena e le gradinate sono andati perduti. Nel modello sono ricostruiti sulla base della pianta conosciuta.
 
+### Tempio di Apollo Sosiano
+
+**🆕 4 testi nuovi o cambiati**
+
+*Scheda del monumento: nome* · 🆕
+[scheda.apollo.nome] Tempio di Apollo Sosiano
+
+*Scheda del monumento: cosa* · 🆕
+[scheda.apollo.cosa] Tempio di Apollo «in circo», rifatto da Gaio Sosio dopo il 34 a.C., accanto al teatro di Marcello.
+
+*Scheda del monumento: data1-392* · 🆕
+[scheda.apollo.data1-392] Nel modello è chiuso dopo le leggi di Teodosio, come gli altri templi. La data effettiva è incerta.
+
+*Scheda del monumento: certezza-B* · 🆕
+[scheda.apollo.certezza-B] Restano il podio e tre colonne rialzate nel Novecento. Posizione e contorno vengono da OpenStreetMap. Le altezze sono indicative.
+
+### Tempio di Bellona
+
+**🆕 4 testi nuovi o cambiati**
+
+*Scheda del monumento: nome* · 🆕
+[scheda.bellona.nome] Tempio di Bellona
+
+*Scheda del monumento: cosa* · 🆕
+[scheda.bellona.cosa] Tempio di Bellona, la dea della guerra, promesso in voto nel 296 a.C. da Appio Claudio Cieco.
+
+*Scheda del monumento: data1-392* · 🆕
+[scheda.bellona.data1-392] Nel modello è chiuso dopo le leggi di Teodosio, come gli altri templi. La data effettiva è incerta.
+
+*Scheda del monumento: certezza-B* · 🆕
+[scheda.bellona.certezza-B] Resta il podio. L'identificazione con Bellona è degli studi successivi al 1929. Prima il sito del tempio non era noto con certezza. Le altezze sono indicative.
+
 ### San Giovanni in Laterano
 
 *Scheda del monumento: nome*
@@ -3585,6 +3642,41 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 
 *Scheda del monumento: certezza-B*
 [scheda.laterano.certezza-B] La pianta costantiniana è nota dagli scavi sotto la chiesa attuale: cinque navate, digradanti in altezza, e in fondo una navatella trasversale bassa. Larghezze e alzato sono ricostruiti.
+
+### Patriarchio lateranense
+
+**🆕 5 testi nuovi o cambiati**
+
+*Scheda del monumento: nome* · 🆕
+[scheda.patriarchio.nome] Patriarchio lateranense
+
+*Scheda del monumento: cosa* · 🆕
+[scheda.patriarchio.cosa] Il palazzo del vescovo di Roma, accanto alla basilica del Laterano. Fu la residenza dei papi per tutto l'alto Medioevo.
+
+*Scheda del monumento: data1-324* · 🆕
+[scheda.patriarchio.data1-324] Dal IV secolo è la residenza del vescovo accanto alla sua chiesa.
+
+*Scheda del monumento: data2-745* · 🆕
+[scheda.patriarchio.data2-745] Verso la metà dell'VIII secolo papa Zaccaria vi costruisce una grande sala da banchetto, decorata con marmi, mosaici e affreschi, secondo il Liber Pontificalis.
+
+*Scheda del monumento: certezza-C* · 🆕
+[scheda.patriarchio.certezza-C] Il palazzo fu demolito alla fine del Cinquecento. Sappiamo che stava a nord della basilica, dove oggi sono il palazzo del Laterano e la Scala Santa. Nel modello forma e misure sono uno schema.
+
+### Triclinio di Leone III
+
+**🆕 4 testi nuovi o cambiati**
+
+*Scheda del monumento: nome* · 🆕
+[scheda.triclinioleone.nome] Triclinio di Leone III
+
+*Scheda del monumento: cosa* · 🆕
+[scheda.triclinioleone.cosa] La grande sala da banchetto costruita da papa Leone III nel palazzo del Laterano.
+
+*Scheda del monumento: data1-800* · 🆕
+[scheda.triclinioleone.data1-800] Il Liber Pontificalis la descrive molto ampia, con un'abside a mosaico e altre dieci absidi dipinte con gli apostoli. Leone III è papa dal 795 all'816: nel modello la sala compare verso l'800, ma la data precisa non è nota.
+
+*Scheda del monumento: certezza-C* · 🆕
+[scheda.triclinioleone.certezza-C] La sala è scomparsa con il palazzo. La conosciamo dalla descrizione del Liber Pontificalis. Nel modello posizione e forma sono indicative.
 
 ### San Pietro
 
@@ -5636,7 +5728,7 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 
 ### js/mappa.js
 
-**🆕 7 testi nuovi o cambiati**
+**🆕 12 testi nuovi o cambiati**
 
 [ui.mappa.01-r9] governo di Roma
 
@@ -5735,51 +5827,66 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 
 [ui.mappa.46-r432] Rivedi la scena dall'inizio
 
-[ui.mappa.47-r534] Regni dei Franchi
-
-[ui.mappa.48-r534] Impero dei Franchi
-
-[ui.mappa.49-r655] regno d'Italia di Odoacre
-
-[ui.mappa.50-r655] regno degli Ostrogoti
-
-[ui.mappa.51-r655] regno dei Franchi
-
-[ui.mappa.52-r656] impero romano
-
-[ui.mappa.53-r656] impero d'Occidente
-
-[ui.mappa.54-r656] territorio con un imperatore rivale
-
-[ui.mappa.55-r656] territorio romano che il governo di Ravenna non controlla più
-
-[ui.mappa.56-r656] regione contesa in guerra
+*Testo* · 🆕
+[ui.mappa.47-r457] Chiudi la didascalia
 
 *Testo* · 🆕
-[ui.mappa.57-r657] popoli insediati per trattato
+[ui.mappa.48-r458] Mostra la didascalia
 
-[ui.mappa.58-r657] impero d'Oriente
+[ui.mappa.49-r550] Regni dei Franchi
 
-[ui.mappa.59-r658] califfato ed emirati arabi
+[ui.mappa.50-r550] Impero dei Franchi
 
-[ui.mappa.60-r658] regni franchi dopo la divisione dell'843
+[ui.mappa.51-r677] regno d'Italia di Odoacre
+
+[ui.mappa.52-r677] regno degli Ostrogoti
+
+[ui.mappa.53-r677] regno dei Franchi
+
+[ui.mappa.54-r678] impero romano
+
+[ui.mappa.55-r678] impero d'Occidente
+
+[ui.mappa.56-r678] territorio con un imperatore rivale
+
+[ui.mappa.57-r678] territorio romano che il governo di Ravenna non controlla più
+
+[ui.mappa.58-r678] regione contesa in guerra
 
 *Testo* · 🆕
-[ui.mappa.61-r658] abbandonata da Roma
+[ui.mappa.59-r679] popoli insediati per trattato
 
-[ui.mappa.62-r658] fuori dal controllo romano
+[ui.mappa.60-r679] impero d'Oriente
 
-[ui.mappa.63-r689] Mostra meno voci della legenda
+[ui.mappa.61-r680] califfato ed emirati arabi
 
-[ui.mappa.64-r699] Mostra le altre
+[ui.mappa.62-r680] regni franchi dopo la divisione dell'843
 
-[ui.mappa.65-r749] mai appartenuta all'impero
+*Testo* · 🆕
+[ui.mappa.63-r680] abbandonata da Roma
 
-[ui.mappa.66-r793] Carta a tutto schermo
+[ui.mappa.64-r680] fuori dal controllo romano
 
-[ui.mappa.67-r798] Tutto schermo
+[ui.mappa.65-r711] Mostra meno voci della legenda
 
-[ui.mappa.68-r798] Esci dallo schermo intero
+[ui.mappa.66-r721] Mostra le altre
+
+[ui.mappa.67-r771] mai appartenuta all'impero
+
+[ui.mappa.68-r815] Carta a tutto schermo
+
+[ui.mappa.69-r820] Tutto schermo
+
+[ui.mappa.70-r820] Esci dallo schermo intero
+
+*Testo* · 🆕
+[ui.mappa.71-r911] Torna alla carta intera
+
+*Testo* · 🆕
+[ui.mappa.72-r913] La scena continua fuori dalla carta, verso
+
+*Testo* · 🆕
+[ui.mappa.73-r913] : guardala tutta
 
 ### js/atti.js
 

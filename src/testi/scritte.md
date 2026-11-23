@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 12:18:16.
+Generato da `src/testi.mjs` il 23/11/2026, 12:20:51.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 12:04
+[pagina.52] Versione del 23/11/2026, ore 12:18
 
 
 ## 2. Gli atti
@@ -917,7 +917,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T22-418.voce1.testo] «[Ataulfo raccontava] di aver dapprima desiderato ardentemente che, cancellato il nome romano, tutto il suolo romano diventasse e si chiamasse impero dei Goti, e che fosse, per dirla alla buona, Gothia ciò che era stato Romania […] ma poi, avendo provato con lunga esperienza che i Goti non potevano in alcun modo obbedire alle leggi, per la loro sfrenata barbarie, e che allo Stato non si possono togliere le leggi, senza le quali uno Stato non è uno Stato, aveva scelto almeno di cercare la gloria restaurando e accrescendo il nome romano con le forze dei Goti.»
 
-[T22-418.voce1.chi] Orosio, Storie contro i pagani, VII, 43, scritte nel 417-418. Un nobile di Narbona, amico del re goto Ataulfo, aveva raccontato l'episodio a Girolamo, a Betlemme. Orosio lo riprende quindi da un racconto di terza mano.
+[T22-418.voce1.chi] Orosio, Storie contro i pagani, VII, 43, scritte nel 417-418. Un nobile di Narbona, amico del re goto Ataulfo, raccontò l'episodio a Girolamo, a Betlemme. Orosio era presente e lo sentì lui stesso: le parole di Ataulfo gli arrivano quindi attraverso una sola persona.
 
 [T22-418.luogo1.tolosa] i Visigoti insediati in Aquitania
 
