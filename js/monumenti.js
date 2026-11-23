@@ -177,6 +177,11 @@ var LEO=(function(){ var L=[[-163,-120],[-233.3,-121],[-250,-124],[-272,-127],[-
 
 /* dal mondo al riferimento locale del gruppo dei Fori (origine 3,-8; rotazione -.35): così gli edifici si scrivono con le loro coordinate di scena reali */
 function LF(x,z){ var dx=x-3, dz=z+8, c=Math.cos(-.35), s=Math.sin(-.35); return [dx*c-dz*s, dx*s+dz*c]; }
+function curiaAula(B,tetto){      // l'aula della Curia: corpo intonacato, frontone, tre finestre, porta con i battenti di bronzo
+  B.scatola(1.9,2.4,2.7,0,0,0,P.intonaco).falde(2.7,.6,2,0,2.4,0,tetto,PI/2,P.intonaco);
+  B.vano(0,.25,1.37,1,0,.46,1.05,true).aperture(-.72,1.37,.72,1.37,3,1.55,.42,.2);
+  B.scatola(.2,1.02,.03,-.11,.25,1.355,P.bronzo).scatola(.2,1.02,.03,.11,.25,1.355,P.bronzo);      // i due battenti, appena dentro il vano
+}
 function inForo(B,x,z,ry,fn){ var p=LF(x,z); return B.dentro(p[0],0,p[1],ry||0,fn); }
 /* Monte Testaccio: contorno reale (OpenStreetMap, way 23921018), in coordinate relative al centro (-84,184). */
 var TESTACCIO=[[-94.7,181.4],[-94.6,183.1],[-94.5,185],[-93.8,186.7],[-92.8,188.5],[-91.8,189.8],[-90.4,191.2],[-89.5,191.8],[-88.6,192],[-86,193.1],[-83.9,195.9],[-82.1,198.6],[-80.6,199.3],[-78.9,199.1],[-77.3,198.5],[-75.8,197.5],[-74.6,195.9],[-73,192.1],[-72.8,190.6],[-73.2,188],[-74,186.1],[-75.2,182.4],[-76.2,180.1],[-76.8,177.8],[-76.9,176.1],[-76.4,174.3],[-77,171.1],[-78,169.1],[-78.2,168.6],[-94.5,177.4],[-94.7,179.1]].map(function(p){ return [p[0]+84,p[1]-184]; });
@@ -288,11 +293,7 @@ var M=[
     var IMP=1.022;
     inForo(B,-1.2,1.6,0,function(B){ B.scatola(12.5,.1,5,0,0,0,P.selce); });                                                       // piazza del Foro
     inForo(B,-4.6,6,0,function(B){ basilica(B,9.6,4.9,1.9,0,0); });                                                               // Giulia (l'Emilia è un edificio a sé: brucia nel 410)
-    inForo(B,.8,-5.1,0,function(B){                                                                                               // Curia: aula alta e stretta, intonacata, con la porta di bronzo e tre finestre in facciata
-      B.scatola(1.9,2.4,2.7,0,0,0,P.intonaco).falde(2.7,.6,2,0,2.4,0,P.bronzo,PI/2,P.intonaco);
-      B.vano(0,.25,1.37,1,0,.46,1.05,true).aperture(-.72,1.37,.72,1.37,3,1.55,.42,.2);
-      B.scatola(1.5,.25,.5,0,0,1.6,P.travertino).colonne(-.62,1.72,.62,1.72,4,.95,.055,.25).scatola(1.6,.07,.62,0,1.2,1.6,P.coppi);          // gradini e portichetto davanti alla porta
-    });
+    /* la Curia è un edificio a sé (id 'curia', più sotto): fino al 630 aula del Senato, poi la chiesa di Sant'Adriano */
     inForo(B,-5.5,-1,0,function(B){ B.scatola(1.3,.32,2.4,0,0,0,P.marmo).scatola(.12,.12,2.4,.6,.32,0,P.marmo).aperture(.66,1.1,.66,-1.1,6,.06,.2,.12,true); });   // i Rostri: la tribuna degli oratori, sul lato ovest della piazza
     inForo(B,-9.1,-4.9,0,function(B){ B.scatola(2,1.7,4.4,-.6,.5,0,P.marmo).falde(4.4,.5,2.1,-.6,2.2,0,P.coppi,PI/2,P.marmo).scatola(2.2,.5,4.5,-.6,0,0,P.travertino); B.tempio(2.2,1.6,1.6,.9,0,PI/2,{fronte:6}); });   // Concordia: cella larga, messa di traverso, e pronao verso il Foro
     inForo(B,-11.4,-2.6,0,function(B){ B.tempio(1.7,3,1.6,0,0,PI/2,{fronte:6,podio:.6}); });                                       // Vespasiano e Tito
@@ -506,9 +507,27 @@ var M=[
     B.scatola(3.4,1.8,1.5,0,0,0,P.intonaco).falde(3.5,.45,1.6,0,1.8,0,P.coppi,0,P.intonaco);
     B.cilindro(.62,1.5,1.7,0,0,P.intonaco,null,12).cono(.66,.35,1.7,1.5,0,P.coppi,12);                       // l'abside principale; le dieci absidi laterali non si disegnano
  }},
- /* Sant'Adriano (verso il 630): la Curia diventa chiesa (Liber Pontificalis, vita di Onorio I). Si aggiunge una croce sul frontone, sopra la Curia dei Fori (stessa posizione e orientamento di inForo). */
+ /* La Curia (aula alta e stretta, 27 x 18 m, rifatta da Diocleziano dopo l'incendio del 283) e, dal 630 circa, la stessa aula come chiesa di Sant'Adriano (Liber Pontificalis, vita di Onorio I).
+    Stessa posizione e orientamento che aveva dentro i Fori (inForo). Separate il 23 novembre 2026 perché si vedesse il cambio (l'utente: «la Curia falla più carina… non c'erano dei bronzi?»
+    e, per la chiesa, «ricostruiscila più spoglia»). Della Curia: la facciata di mattoni rivestita di stucco a finti blocchi, con lo zoccolo di lastre di marmo, la cornice e il frontone,
+    tre finestre e la porta con i battenti di bronzo, che dal 1660 stanno in San Giovanni in Laterano: quindi c'erano ancora nella chiesa. Il portichetto davanti è discusso; le statue
+    di bronzo sul frontone sono come le mostrano le monete con la Curia di Augusto (un'immagine più antica: qui indicativa). La chiesa: le stesse mura, tetto di coppi, niente portico né statue. */
+ /* Il Pantheon chiesa di Santa Maria ad Martyres (13 maggio 609): una croce in cima al frontone del pronao (23 novembre 2026, richiesta dell'utente). La croce è indicativa: che ci fosse
+    e come fosse non è scritto nelle fonti lette. Stessa posizione e orientamento del Pantheon. */
+ {id:'pantheonchiesa', x:-70,z:-68, ry:PI, come:'pantheon', zone:[], fa:function(B){
+    B.scatola(.07,.5,.07,0,2.4,5.18,P.oro).scatola(.28,.07,.07,0,2.72,5.18,P.oro);
+ }},
+ {id:'curia', x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
+    curiaAula(B,P.bronzo);
+    B.scatola(1.96,.85,.04,0,0,1.36,P.marmo).scatola(2.0,.1,2.76,0,2.32,0,P.marmo);                                                  // zoccolo di marmo in facciata e cornice tutt'attorno
+    B.scatola(.5,.12,.05,0,1.32,1.37,P.marmo);                                                                                       // architrave della porta
+    B.scatola(1.5,.25,.5,0,0,1.6,P.travertino).colonne(-.62,1.72,.62,1.72,4,.95,.055,.25).scatola(1.6,.07,.62,0,1.2,1.6,P.coppi);          // gradini e portichetto davanti alla porta
+    B.scatola(.12,.34,.12,0,3.0,1.25,P.bronzo).scatola(.1,.26,.1,-.88,2.4,1.25,P.bronzo).scatola(.1,.26,.1,.88,2.4,1.25,P.bronzo);      // statue di bronzo sul frontone
+ }},
  {id:'santadriano', nome:"Sant'Adriano (la Curia)", etichetta:"Sant'Adriano", x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
-    B.scatola(.07,.5,.07,0,2.95,1.3,P.oro).scatola(.28,.07,.07,0,3.27,1.3,P.oro);
+    curiaAula(B,P.coppi);
+    B.scatola(1.0,.18,.4,0,0,1.55,P.travertino);                                                                                    // i gradini davanti alla porta
+    B.scatola(.07,.5,.07,0,2.95,1.3,P.oro).scatola(.28,.07,.07,0,3.27,1.3,P.oro);                                                    // la croce sul frontone
  }},
  {id:'pietro', nome:'San Pietro', x:-259,z:-108, ry:0, zone:[[0,0,9],[10,0,7]], et:1, fa:function(B){
     sanPietro(B);
@@ -991,7 +1010,7 @@ RM.statoMonumento=function(id,anno){
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Fino al 23 novembre 2026 alla chiusura toglieva subito un poco di cima a ogni tratto: sul tetto di Giove Capitolino il colmo si spezzava a blocchi e il tempio sembrava spaccato (l'utente: «fai delle crepe, non che si spacchi a metà»).
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, santadriano:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
+var CURA={laterano:0, santadriano:0, curia:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
@@ -1010,7 +1029,7 @@ RM.rovina=function(id,anno){
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
-var SENZA_CANTIERE={santadriano:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
+var SENZA_CANTIERE={santadriano:1, curia:1, pantheonchiesa:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
 function ponteggio(o,t){
   if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
   if(!o.pont){
