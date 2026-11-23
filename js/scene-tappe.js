@@ -262,7 +262,11 @@ var carlo800=(function(){
   uomo(B,-246.2,Z,H(-246.2,Z)+.07,franco,null,o);                                                                                     // Carlo, sceso da cavallo, verso i gradini
   function strada(x){ return -112+(x+185)*(-4/62); }      // la strada del Borgo (js/roma-topo.js, da -185,-112 a -247,-108), a nord del portico dei pellegrini
   for(i=0;i<70;i++){ x=-244.4+(i>>1)*.42; z=strada(x)+(i&1?.22:-.22); cavaliere(B,x,z,H(x,z),o,rnd()<.5?C.cavalloB:C.cavalloC,i%9?C.ferro:franco); }      // il seguito, a cavallo, sulla strada
-  for(i=0;i<12;i++){ x=-242+i*3.6; z=strada(x)-(i%2?.85:1.05); insegna(B,x,z,H(x,z),i%3?C.rosso:C.oro,.45); }                       // le bandiere della città
+  /* le bandiere della città mandate incontro a Carlo («vexilla», Annali dei Franchi, 800): più grandi e più numerose (23 novembre 2026, l'utente: «metti delle bandiere»), lungo i due lati
+     della strada; colori e forma sono uno schema. In testa al seguito qualche insegna dei Franchi */
+  function bandiera(x,z,col,alta){ var y=H(x,z); B.scatola(.016,alta,.016,x,y,z,P.tronco).scatola(.17,.12,.01,x+.085,y+alta-.13,z,col).scatola(.06,.05,.01,x+.03,y+alta-.18,z,col); }
+  for(i=0;i<26;i++){ x=-242+i*1.75; var lato=i%2?-1:1; z=strada(x)+lato*(lato>0?.75:.95); bandiera(x,z,[C.rosso,C.oro,C.bianco,C.porpora][i%4],.55); }
+  for(i=0;i<6;i++){ x=-243.6+i*2.8; z=strada(x)+(i%2?.4:-.4); bandiera(x,z,franco,.5); }
   [-239,-231,-223,-214,-205,-196,-187].forEach(function(cx,k){                                                                            // i gruppi di pellegrini e di cittadini, ai due lati
     var cz=strada(cx)+(k%2?-2.4:1.35), col=k%2?C.folla:[C.tunica,C.bianco,C.folla[2],C.folla[5]];
     for(var j=0;j<45;j++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*1.3, xx=cx+Math.cos(a)*r*1.6, zz=cz+Math.sin(a)*r*.6; if(RM.distFiume(xx,zz)<6.3) continue;
