@@ -76,6 +76,7 @@ const TAGLI = {
   carantania:[[14.48, 48.25], [14.45, 47.75], [13.7, 47.4], [13.3, 47.05], [12.3, 46.75], [12.9, 46.55], [14, 46.45], [16.1, 46.8], [16.5, 47.7], [16.9, 48.15]],  // a est dell'Enns: Avari e Slavi dal 568
   creta:     [[23, 34.6], [26.6, 34.6], [26.6, 35.9], [23, 35.9]],
   corsica:   [[8.2, 41.32], [9.9, 41.32], [9.9, 43.2], [8.2, 43.2]],
+  nisibi:    [[40.95, 38.4], [46, 38.4], [46, 33.5], [41.0, 33.5], [41.0, 36.6], [40.92, 37.1]],      // a est di Dara: Nisibi e Singara, cedute da Gioviano nel 363 (Ammiano XXV 7, 9); Dara e il Khabur restano romani. Confine indicativo
   baleari:   [[1.0, 38.5], [4.6, 38.5], [4.6, 40.3], [1.0, 40.3]]                                                                                                         // a nord delle Bocche di Bonifacio
 };
 const BURG = ['Lugdunensis', 'Germania Superior', 'Belgica', 'Narbonensis', 'Alpes Graiae et Poeninae', 'Alpes Cottiae', 'Alpes Maritimae'];      // anche la punta sud della Belgica (Langres): altrimenti resta un buco
@@ -131,7 +132,8 @@ const REGIONI = {
   mesia_inf:  { nome: 'Mesia inferiore', prov: ['Moesia Inferior'], est: true },
   mesia_sup:  { nome: 'Mesia superiore', prov: ['Moesia Superior'], est: true },
   anatolia:   { nome: 'Asia Minore', prov: ['Asia', 'Bithynia et Pontus', 'Galatia et Cappadocia', 'Lycia et Pamphylia', 'Cilicia', 'Cyprus'], est: true },
-  levante:    { nome: 'Siria e Palestina', prov: ['Syria', 'Iudaea', 'Arabia', 'Armenia Mesopotamia'], est: true },
+  levante:    { nome: 'Siria e Palestina', prov: ['Syria', 'Iudaea', 'Arabia', 'Armenia Mesopotamia'], fuori: ['nisibi'], est: true },
+  nisibi:     { nome: 'Nisibi e Singara', prov: ['Armenia Mesopotamia', 'Syria'], dentro: 'nisibi', est: true },
   egitto:     { nome: 'Egitto e Cirenaica', prov: ['Aegyptus', 'Creta et Cyrene'], fuori: ['creta'], est: true },
   creta:      { nome: 'Creta', prov: ['Creta et Cyrene'], dentro: 'creta', est: true },
   /* terre che non sono mai state dell'impero: servono per gli Unni, gli Avari, i Bulgari e perché l'impero di Carlo Magno non finisca al Reno */

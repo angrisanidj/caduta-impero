@@ -357,13 +357,13 @@ var ATTI=[
 var OVEST=['britannia','galles','gallia','bretagna','belgica','soissons','aquitania','alvernia','provenza','settimania','burgundia','sapaudia','hispania','gallaecia','asturie','marca','spania',
            'italia_nord','liguria','venezia','ravenna','bolognese','spoleto','pentapoli','roma','campania','napoli','benevento','salento','otranto','calabria','bruzio','sicilia','sardegna','corsica','baleari',
            'rezia','carantania','pannonia','dalmazia','africa','numidia','mauri','mauretania','decumati'],
-    EST=['dacia','balcani','tracia','mesia_inf','mesia_sup','anatolia','levante','egitto','creta'],
+    EST=['dacia','balcani','tracia','mesia_inf','mesia_sup','anatolia','levante','nisibi','egitto','creta'],
     OLTRE=['frisia','sassonia','turingia','moravia','alfold','valacchia','steppa'];         // terre mai romane: partono da «fuori» e non contano nella quota di territorio
 /* Una regione ritagliata dentro un'altra ne segue le sorti finché la tabella non dice altro: se in una tappa cambia la regione madre e la figlia non è nominata,
    la figlia prende lo stesso stato. Dove la figlia ha già una storia sua (la Settimania visigota, Napoli bizantina) va quindi ripetuta a ogni cambio della madre. */
 var FIGLIE={settimania:'provenza',alvernia:'aquitania',sapaudia:'burgundia',soissons:'gallia',bretagna:'gallia',spania:'hispania',asturie:'hispania',marca:'hispania',galles:'britannia',
   numidia:'africa',mauri:'africa',bolognese:'ravenna',liguria:'italia_nord',venezia:'italia_nord',pentapoli:'spoleto',napoli:'campania',salento:'benevento',otranto:'benevento',bruzio:'calabria',
-  tracia:'balcani',mesia_inf:'balcani',mesia_sup:'balcani',carantania:'rezia',corsica:'sardegna',baleari:'sardegna'};
+  tracia:'balcani',mesia_inf:'balcani',mesia_sup:'balcani',carantania:'rezia',corsica:'sardegna',baleari:'sardegna',nisibi:'levante'};
 var CAMBI={
  235:{},
  260:{britannia:'usurpatore',gallia:'usurpatore',belgica:'usurpatore',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore',hispania:'usurpatore',gallaecia:'usurpatore',decumati:'perso'},
@@ -371,10 +371,11 @@ var CAMBI={
  274:{britannia:'roma',gallia:'roma',belgica:'roma',aquitania:'roma',burgundia:'roma',levante:'roma',egitto:'roma',anatolia:'roma'},
  293:{britannia:'usurpatore'},
  301:{britannia:'roma'},
+ 363:{nisibi:'regno:persia'},                                                    // Gioviano cede ai Persiani Nisibi, Singara e il castello dei Mauri (Ammiano XXV 7, 9); Dara e il Khabur restano romani
  378:{steppa:'regno:unni'},                                                      // gli Unni hanno travolto Alani e Goti fra il Don e il Dnestr (Ammiano XXXI 2-3)
  384:{britannia:'usurpatore',gallia:'usurpatore',belgica:'usurpatore',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore',hispania:'usurpatore',gallaecia:'usurpatore'},      // Magno Massimo: Treviri e la Hispania in Sulpicio Severo, Cronache II 49, 6-7 («ad praefectum Galliarum atque ad vicarium Hispaniarum»); l'Africa (Pacato 38, 2) non si sa da quando: resta fuori
  394:{britannia:'roma',gallia:'roma',belgica:'roma',aquitania:'roma',provenza:'roma',burgundia:'roma',hispania:'roma',gallaecia:'roma'},      // Massimo ucciso nel 388; Eugenio (392-394) non si colora: alla fine del 394 l'Occidente è di nuovo di Teodosio
- 395:{balcani:'oriente',anatolia:'oriente',levante:'oriente',egitto:'oriente',creta:'oriente'},
+ 395:{balcani:'oriente',anatolia:'oriente',levante:'oriente',nisibi:'regno:persia',egitto:'oriente',creta:'oriente'},
  402:{valacchia:'regno:unni'},                                                   // Uldino a nord del basso Danubio, verso il 400
  406:{gallia:'conteso',belgica:'conteso',britannia:'usurpatore'},
  409:{britannia:'perso',hispania:'conteso',gallaecia:'conteso',aquitania:'usurpatore',provenza:'usurpatore',burgundia:'usurpatore'},

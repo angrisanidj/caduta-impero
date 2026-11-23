@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 14:42:25.
+Generato da `src/testi.mjs` il 23/11/2026, 15:00:40.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 14:41
+[pagina.52] Versione del 23/11/2026, ore 14:57
 
 
 ## 2. Gli atti
@@ -4195,7 +4195,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 ## 9. Nomi sulla carta dell'Impero (js/mappa-dati.js, da src/mappa/genera.mjs)
 
-[carta.regioni] Britannia · Galles e Cornovaglia · Gallia del nord · Bretagna · Belgica e Germanie · Soissons e Reims · Aquitania · Alvernia e Berry · Provenza · Settimania · Burgundia · Sapaudia · Hispania · Baleari · Gallaecia · Asturie e Cantabria · Marca di Spagna · Spania · Italia del nord · Liguria marittima · Lagune venete e Istria · Romagna e Ravenna · Bologna, Imola e Ferrara · Umbria e Piceno · Pentapoli e corridoio di Perugia · Lazio · Campania · Ducato di Napoli · Sannio e Puglia · Salento · Terra d'Otranto · Lucania · Bruzio · Sicilia · Sardegna · Corsica · Rezia e Norico · Norico orientale · Pannonia · Dalmazia · Africa · Numidia · Interno dell'Africa · Mauretanie · Agri Decumates · Dacia · Macedonia e Grecia · Tracia · Mesia inferiore · Mesia superiore · Asia Minore · Siria e Palestina · Egitto e Cirenaica · Creta · Frisia · Sassonia · Assia, Turingia e Franconia · Moravia · Pianura pannonica · Oltre il basso Danubio · Steppa del mar Nero
+[carta.regioni] Britannia · Galles e Cornovaglia · Gallia del nord · Bretagna · Belgica e Germanie · Soissons e Reims · Aquitania · Alvernia e Berry · Provenza · Settimania · Burgundia · Sapaudia · Hispania · Baleari · Gallaecia · Asturie e Cantabria · Marca di Spagna · Spania · Italia del nord · Liguria marittima · Lagune venete e Istria · Romagna e Ravenna · Bologna, Imola e Ferrara · Umbria e Piceno · Pentapoli e corridoio di Perugia · Lazio · Campania · Ducato di Napoli · Sannio e Puglia · Salento · Terra d'Otranto · Lucania · Bruzio · Sicilia · Sardegna · Corsica · Rezia e Norico · Norico orientale · Pannonia · Dalmazia · Africa · Numidia · Interno dell'Africa · Mauretanie · Agri Decumates · Dacia · Macedonia e Grecia · Tracia · Mesia inferiore · Mesia superiore · Asia Minore · Siria e Palestina · Nisibi e Singara · Egitto e Cirenaica · Creta · Frisia · Sassonia · Assia, Turingia e Franconia · Moravia · Pianura pannonica · Oltre il basso Danubio · Steppa del mar Nero
 
 [carta.citta] Roma · Ravenna · Milano · Treviri · Arles · Cartagine · Costantinopoli · Londinium · Sirmio · Antiochia · Alessandria · Tolosa · Adrianopoli
 
@@ -4280,141 +4280,143 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.07-r9] fuori dall'impero
 
-[ui.mappa.08-r11] regno degli Svevi
+[ui.mappa.08-r11] impero persiano
 
-[ui.mappa.09-r11] regno dei Vandali
+[ui.mappa.09-r11] regno degli Svevi
 
-[ui.mappa.10-r11] regno dei Visigoti
+[ui.mappa.10-r11] regno dei Vandali
 
-[ui.mappa.11-r11] regno dei Burgundi
+[ui.mappa.11-r11] regno dei Visigoti
 
-[ui.mappa.12-r11] regni dei Franchi
+[ui.mappa.12-r11] regno dei Burgundi
 
-[ui.mappa.13-r12] regno d'Italia
+[ui.mappa.13-r11] regni dei Franchi
 
-[ui.mappa.14-r12] regno e ducati dei Longobardi
+[ui.mappa.14-r12] regno d'Italia
 
-[ui.mappa.15-r12] regni anglosassoni
+[ui.mappa.15-r12] regno e ducati dei Longobardi
 
-[ui.mappa.16-r12] regno delle Asturie
+[ui.mappa.16-r12] regni anglosassoni
 
-[ui.mappa.17-r13] regni dei Britanni
+[ui.mappa.17-r12] regno delle Asturie
 
-[ui.mappa.18-r13] regno dei Turingi
+[ui.mappa.18-r13] regni dei Britanni
 
-[ui.mappa.19-r13] regno dei Gepidi
+[ui.mappa.19-r13] regno dei Turingi
 
-[ui.mappa.20-r13] dominio degli Unni
+[ui.mappa.20-r13] regno dei Gepidi
 
-[ui.mappa.21-r13] regno degli Avari
+[ui.mappa.21-r13] dominio degli Unni
 
-[ui.mappa.22-r14] regno dei Bulgari
+[ui.mappa.22-r13] regno degli Avari
 
-[ui.mappa.23-r14] principato di Moravia
+[ui.mappa.23-r14] regno dei Bulgari
 
-[ui.mappa.24-r15] Mappa dell'Impero romano
+[ui.mappa.24-r14] principato di Moravia
 
-[ui.mappa.25-r25] Asia Minore
+[ui.mappa.25-r15] Mappa dell'Impero romano
 
-[ui.mappa.26-r77] : mostra i territori che governa
+[ui.mappa.26-r25] Asia Minore
 
-[ui.mappa.27-r88] le Gallie al di là delle Alpi (Aurelio Vittore)
+[ui.mappa.27-r77] : mostra i territori che governa
 
-[ui.mappa.28-r89] tutto il resto, cioè l’Oriente (Aurelio Vittore)
+[ui.mappa.28-r88] le Gallie al di là delle Alpi (Aurelio Vittore)
 
-[ui.mappa.29-r94] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
+[ui.mappa.29-r89] tutto il resto, cioè l’Oriente (Aurelio Vittore)
 
-[ui.mappa.30-r112] oltre il confine
+[ui.mappa.30-r94] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
 
-[ui.mappa.31-r112] insediati nell'impero per accordo
+[ui.mappa.31-r112] oltre il confine
 
-[ui.mappa.32-r112] in armi dentro l'impero
+[ui.mappa.32-r112] insediati nell'impero per accordo
 
-[ui.mappa.33-r112] con un proprio regno (vedi il colore nella legenda)
+[ui.mappa.33-r112] in armi dentro l'impero
 
-[ui.mappa.34-r114] Regno dei Visigoti
+[ui.mappa.34-r112] con un proprio regno (vedi il colore nella legenda)
 
-[ui.mappa.35-r114] Regno degli Ostrogoti
+[ui.mappa.35-r114] Regno dei Visigoti
 
-[ui.mappa.36-r114] Regno dei Vandali
+[ui.mappa.36-r114] Regno degli Ostrogoti
 
-[ui.mappa.37-r114] Regno degli Svevi
+[ui.mappa.37-r114] Regno dei Vandali
 
-[ui.mappa.38-r114] Regno dei Burgundi
+[ui.mappa.38-r114] Regno degli Svevi
 
-[ui.mappa.39-r114] Regno dei Franchi
+[ui.mappa.39-r114] Regno dei Burgundi
 
-[ui.mappa.40-r114] Regni anglosassoni
+[ui.mappa.40-r114] Regno dei Franchi
 
-[ui.mappa.41-r114] Regno dei Longobardi
+[ui.mappa.41-r114] Regni anglosassoni
 
-[ui.mappa.42-r114] Regno degli Avari
+[ui.mappa.42-r114] Regno dei Longobardi
 
-[ui.mappa.43-r114] Regno dei Bulgari
+[ui.mappa.43-r114] Regno degli Avari
 
-[ui.mappa.44-r436] La scena passo per passo
+[ui.mappa.44-r114] Regno dei Bulgari
 
-[ui.mappa.45-r439] Passo per passo
+[ui.mappa.45-r436] La scena passo per passo
 
-[ui.mappa.46-r440] Rivedi la scena dall'inizio
+[ui.mappa.46-r439] Passo per passo
 
-[ui.mappa.47-r465] Chiudi la didascalia
+[ui.mappa.47-r440] Rivedi la scena dall'inizio
 
-[ui.mappa.48-r466] Mostra la didascalia
+[ui.mappa.48-r465] Chiudi la didascalia
 
-[ui.mappa.49-r475] ▶ Guarda la scena
+[ui.mappa.49-r466] Mostra la didascalia
 
-[ui.mappa.50-r475] Guarda la scena di questa tappa sulla carta
+[ui.mappa.50-r475] ▶ Guarda la scena
 
-[ui.mappa.51-r568] Regni dei Franchi
+[ui.mappa.51-r475] Guarda la scena di questa tappa sulla carta
 
-[ui.mappa.52-r568] Impero dei Franchi
+[ui.mappa.52-r568] Regni dei Franchi
 
-[ui.mappa.53-r695] regno d'Italia di Odoacre
+[ui.mappa.53-r568] Impero dei Franchi
 
-[ui.mappa.54-r695] regno degli Ostrogoti
+[ui.mappa.54-r695] regno d'Italia di Odoacre
 
-[ui.mappa.55-r695] regno dei Franchi
+[ui.mappa.55-r695] regno degli Ostrogoti
 
-[ui.mappa.56-r696] impero romano
+[ui.mappa.56-r695] regno dei Franchi
 
-[ui.mappa.57-r696] impero d'Occidente
+[ui.mappa.57-r696] impero romano
 
-[ui.mappa.58-r696] territorio con un imperatore rivale
+[ui.mappa.58-r696] impero d'Occidente
 
-[ui.mappa.59-r696] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.59-r696] territorio con un imperatore rivale
 
-[ui.mappa.60-r696] regione contesa in guerra
+[ui.mappa.60-r696] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.61-r697] popoli insediati per trattato
+[ui.mappa.61-r696] regione contesa in guerra
 
-[ui.mappa.62-r697] impero d'Oriente
+[ui.mappa.62-r697] popoli insediati per trattato
 
-[ui.mappa.63-r698] califfato ed emirati arabi
+[ui.mappa.63-r697] impero d'Oriente
 
-[ui.mappa.64-r698] regni franchi dopo la divisione dell'843
+[ui.mappa.64-r698] califfato ed emirati arabi
 
-[ui.mappa.65-r698] abbandonata da Roma
+[ui.mappa.65-r698] regni franchi dopo la divisione dell'843
 
-[ui.mappa.66-r698] fuori dal controllo romano
+[ui.mappa.66-r698] abbandonata da Roma
 
-[ui.mappa.67-r730] Mostra meno voci della legenda
+[ui.mappa.67-r698] fuori dal controllo romano
 
-[ui.mappa.68-r740] Mostra le altre
+[ui.mappa.68-r730] Mostra meno voci della legenda
 
-[ui.mappa.69-r790] mai appartenuta all'impero
+[ui.mappa.69-r740] Mostra le altre
 
-[ui.mappa.70-r834] Carta a tutto schermo
+[ui.mappa.70-r790] mai appartenuta all'impero
 
-[ui.mappa.71-r839] Tutto schermo
+[ui.mappa.71-r834] Carta a tutto schermo
 
-[ui.mappa.72-r839] Esci dallo schermo intero
+[ui.mappa.72-r839] Tutto schermo
 
-[ui.mappa.73-r930] Torna alla carta intera
+[ui.mappa.73-r839] Esci dallo schermo intero
 
-[ui.mappa.74-r932] La scena continua fuori dalla carta, verso
+[ui.mappa.74-r930] Torna alla carta intera
 
-[ui.mappa.75-r932] : guardala tutta
+[ui.mappa.75-r932] La scena continua fuori dalla carta, verso
+
+[ui.mappa.76-r932] : guardala tutta
 
 
 ### js/atti.js
