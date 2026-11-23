@@ -41,3 +41,13 @@
 .ig-nave.spenta{opacity:.12}
 .ig-barra{fill:var(--porpora,#7A1F2B)}
 @media (prefers-reduced-motion:reduce){ .ig-nave path{transition:none} }
+.ig-fiume{fill:none;stroke:#8fb7c9;stroke-width:7;stroke-linejoin:round;stroke-linecap:round}
+.ig-mura{fill:rgba(205,190,160,.25);stroke:#8a7356;stroke-width:2}
+.ig-luogo{opacity:.15;transition:opacity .5s}
+.ig-luogo.acceso{opacity:1}
+.ig-luogo.fuoco circle{fill:#D0563A}
+.ig-luogo.rifugio circle{fill:#D4AE55;stroke:#5a3f12}
+.ig-luogo.goti circle{fill:#241E1A}
+.ig-freccia{stroke:#241E1A;stroke-width:3}
+.ig-giorni{font-family:var(--cap);font-size:22px;font-weight:700;fill:var(--porpora,#7A1F2B)}
+@media (prefers-reduced-motion:reduce){ .ig-luogo{transition:none} }

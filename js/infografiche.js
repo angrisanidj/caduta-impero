@@ -113,9 +113,36 @@ function disegnaNavi(svg,stato){
   stato.tutti=segni.map(function(s){ return [s.a,s.t]; });
 }
 
+/* ---------- 4. Il sacco del 410, in pochi giorni ----------
+   Pianta schematica con le mura e il Tevere del modello (RM_TOPO, da OpenStreetMap). Le fasi e i luoghi sono quelli della didascalia della città (EVENTI sacco410: Procopio III 2,
+   Orosio VII 39, Marcellino Comes); la basilica Emilia è detta «probabilmente» come lì. Dove i Goti siano passati dopo la porta non è scritto: nessuna freccia dentro la città. */
+var SACCO={ titolo:"Il sacco del 410", sotto:"Che cosa dicono le fonti, giorno per giorno", vb:'0 0 640 420',
+  fasi:[[.02,"24 agosto 410: i Goti di Alarico entrano da porta Salaria, dove erano accampati dall'inizio dell'assedio."],[.2,"Bruciano le case vicino alla porta e la casa di Sallustio, lo storico."],
+    [.38,"Probabilmente risale a quei giorni anche l'incendio della basilica Emilia, nel Foro."],[.55,"Chi cerca rifugio nelle basiliche di San Pietro e di San Paolo è rispettato."],
+    [.72,"Il saccheggio dura tre giorni, secondo Orosio."],[.86,"Sei giorni, secondo Marcellino Comes: le fonti non concordano."]],
+  fonte:"Procopio, Guerre III 2 (porta Salaria, il campo di Alarico, la casa di Sallustio); Orosio VII 39 (tre giorni, il rispetto delle basiliche); Marcellino Comes (sei giorni). La pianta usa le mura e il Tevere del modello; i luoghi degli incendi sono quelli della scena della città." };
+function disegnaSacco(svg,stato){
+  var TP=window.RM_TOPO; if(!TP) return; var X0=-330, Z0=-245, S=.64, ox=(640-610*S)/2, P=function(x,z){ return [(ox+(x-X0)*S).toFixed(1),(12+(z-Z0)*S).toFixed(1)]; };
+  var riva=TP.fiume.filter(function(p){ return p[1]>-260&&p[1]<400; }).map(function(p){ return P(p[0],p[1]).join(','); }).join(' ');
+  el('polyline',{points:riva,class:'ig-fiume'},svg);
+  el('polygon',{points:TP.mura.map(function(p){ return P(p[0],p[1]).join(','); }).join(' '),class:'ig-mura'},svg);
+  function punto(x,z,cl,nome,dx,dy){ var q=P(x,z), g=el('g',{class:'ig-luogo '+cl},svg); el('circle',{cx:q[0],cy:q[1],r:6},g); var t=el('text',{x:+q[0]+(dx||9),y:+q[1]+4+(dy||0),class:'ig-asse','text-anchor':dx<0?'end':'start'},g); t.textContent=nome; return g; }
+  var G=TP.porte['Porta Salaria'], qg=P(G[0],G[1]), qf=P(G[0]+10,G[1]-40);
+  var entra=el('g',{class:'ig-luogo goti'},svg); el('line',{x1:qf[0],y1:qf[1],x2:qg[0],y2:qg[1],class:'ig-freccia'},entra); el('circle',{cx:qg[0],cy:qg[1],r:7},entra); var tg=el('text',{x:+qg[0]+10,y:+qg[1]-4,class:'ig-asse'},entra); tg.textContent='porta Salaria';
+  var fuochi=[punto(100,-192,'fuoco','case presso la porta',10,16),punto(78,-165,'fuoco','casa di Sallustio',-10)], emilia=punto(7.2,-1,'fuoco','basilica Emilia',10);
+  var rifugi=[punto(-259,-108,'rifugio','San Pietro',-10),punto(-70,376,'rifugio','San Paolo',10)];
+  var gq=el('text',{x:620,y:400,class:'ig-giorni','text-anchor':'end'},svg);
+  var passi=[entra].concat([fuochi,emilia,rifugi]);
+  stato.passo=function(k){ var f=null; SACCO.fasi.forEach(function(x){ if(k>=x[0]) f=x; });
+    entra.classList.toggle('acceso',k>=.02); fuochi.forEach(function(g){ g.classList.toggle('acceso',k>=.2); }); emilia.classList.toggle('acceso',k>=.38); rifugi.forEach(function(g){ g.classList.toggle('acceso',k>=.55); });
+    gq.textContent=k<.72?'':k<.86?'3 giorni (Orosio)':'6 giorni (Marcellino Comes)'; return f?f[1]:SACCO.sotto; };
+  stato.tutti=SACCO.fasi.map(function(x){ return ['410',x[1]]; });
+}
+
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, dura:26000, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
   moneta:{d:MONETA, disegna:disegnaMoneta, dura:20000, tappe:function(t){ return t.anno===284&&t.intermezzo || t.anno===274&&!t.intermezzo; }},
   navi:{d:NAVI, disegna:disegnaNavi, dura:22000, tappe:function(t){ return t.anno===395&&t.intermezzo || t.anno===711&&!t.intermezzo; }},
+  sacco:{d:SACCO, disegna:disegnaSacco, dura:24000, tappe:function(t){ return t.anno===410&&!t.intermezzo; }},
   terre:{d:TERRE, disegna:disegnaTerre, dura:22000, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo) || t.anno===439&&!t.intermezzo; }} };
 
 /* ---------- la finestra ---------- */
@@ -125,7 +152,7 @@ function apri(chi){
   dlg=h('dialog','ig-finestra',null,document.body); dlg.setAttribute('aria-label',I.d.titolo);
   var testa=h('div','ig-testa',null,dlg); h('h2','ig-titolo',I.d.titolo,testa); h('p','ig-sotto',I.d.sotto,testa);
   var x=h('button','ig-chiudi','×',testa); x.type='button'; x.setAttribute('aria-label','Chiudi');
-  var svg=el('svg',{viewBox:'0 0 640 300',class:'ig-grafico',role:'img','aria-label':I.d.titolo},dlg); dlg.appendChild(svg);
+  var svg=el('svg',{viewBox:I.d.vb||'0 0 640 300',class:'ig-grafico',role:'img','aria-label':I.d.titolo},dlg); dlg.appendChild(svg);
   var frase=h('p','ig-frase','',dlg); frase.setAttribute('aria-live','polite');
   var comandi=h('div','ig-comandi',null,dlg), bp=h('button','ig-pausa','❚❚ Pausa',comandi), br=h('button','ig-rivedi','↺ Rivedi',comandi); bp.type=br.type='button';
   var fonte=h('p','ig-fonte',I.d.fonte,dlg);
