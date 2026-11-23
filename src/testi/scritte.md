@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 12:47:02.
+Generato da `src/testi.mjs` il 23/11/2026, 13:51:12.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 12:20
+[pagina.52] Versione del 23/11/2026, ore 12:53
 
 
 ## 2. Gli atti
@@ -3361,6 +3361,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.iseo.data4-1883] Sotto l'abside di Santa Maria sopra Minerva si trova l'obelisco poi dedicato ai caduti di Dogali, oggi presso le Terme di Diocleziano.
 
 [scheda.iseo.certezza-C] Il santuario compare nell'antica pianta marmorea di Roma ed è documentato da ritrovamenti sparsi. La sua estensione nel modello è ipotetica. Gli obelischi si conservano e sono rappresentati nei luoghi in cui furono ritrovati. Per due di essi la posizione è approssimativa.
+
+
+### Saepta Iulia
+
+[scheda.saepta.nome] Saepta Iulia
+
+[scheda.saepta.cosa] Il recinto dove il popolo votava, nel Campo Marzio, finito da Agrippa nel 26 a.C. Era un grande cortile chiuso da portici. Quando le elezioni passarono al Senato, divenne un luogo di passeggio, di spettacoli e di commerci.
+
+[scheda.saepta.data1-450] Lo si nomina ancora nel III secolo e su un collare di schiavo dell'età di Costantino o poco dopo. Nel Medioevo nessuna fonte ne parla. Nel modello chiude verso il 450: è un'ipotesi.
+
+[scheda.saepta.certezza-C] Le fonti non concordano su dove fosse. Gli studi di Guglielmo Gatti lo pongono fra il Pantheon e l'Iseo, ed è la posizione del modello. Platner e Ashby, nel 1929, lo collocavano invece lungo la via Lata. Misure e alzati sono indicativi.
 
 
 ### Arco di Gallieno e Trofei di Mario

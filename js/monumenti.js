@@ -851,10 +851,24 @@ var M=[
     a Santo Stefano del Cacco (Nominatim) e ad est dell'abside della Minerva; l'ingombro, circa 95 x 210 m, è dato dai punti di ritrovamento ed è indicativo, come il muro. Gli obelischi stanno
     dove furono trovati (Platner e Ashby, Obelisci Isei Campensis; it.wikipedia): il Macuteo in piazza di San Macuto (nel 1373), quello della Minerva nel giardino del convento (1665),
     quello di Dogali sotto l'abside (1883); i punti presso la Minerva sono stimati. Altezze: 6 m, 5,47 m e 6,34 m. Quelli di Boboli e di Urbino, trovati davanti alla chiesa, non ci sono. */
- {id:'iseo', nome:'Iseo Campense', x:-53.75,z:-62.5, ry:0, zone:[[0,-7.5,5.3],[0,0,5.3],[0,7.5,5.3]], fa:function(B){
-    var W=9.5, L=21;
+ /* Corretto il 23 novembre 2026: l'Iseo stava 40 m troppo a ovest e copriva i Saepta, che gli studi di Gatti mettono fra il Pantheon e il santuario (it.wikipedia, «Saepta Iulia»:
+    fra via del Seminario, via di Sant'Ignazio, via del Plebiscito, via dei Cestari e via della Minerva; «Iseo Campense»: lungo 240 m e largo 60, l'esedra sotto Santo Stefano del Cacco).
+    Ora il recinto va dal confine dei Saepta (x -55) a via di Sant'Ignazio, largo 80 m; i punti degli obelischi della Minerva e di Dogali, presso l'abside della chiesa, restano stimati. */
+ {id:'iseo', nome:'Iseo Campense', x:-51,z:-62.5, ry:0, zone:[[0,-7.5,4.6],[0,0,4.6],[0,7.5,4.6]], fa:function(B){
+    var W=8, L=21;
     B.scatola(W,.5,.2,0,0,-L/2,P.mattone).scatola(W,.5,.2,0,0,L/2,P.mattone).scatola(.2,.5,L,-W/2,0,0,P.mattone).scatola(.2,.5,L,W/2,0,0,P.mattone).scatola(W-.4,.04,L-.4,0,0,0,P.selce);
-    obelisco(B,.6,0,.12,4.36,-9.85); obelisco(B,.547,0,.12,-4.25,-1.5); obelisco(B,.634,0,.12,-4.25,1);
+    obelisco(B,.6,0,.12,1.61,-9.85); obelisco(B,.547,0,.12,-2.8,-1.5); obelisco(B,.634,0,.12,-1.6,1);      // il Macuteo resta in piazza di San Macuto (-49,4, -72,35)
+ }},
+ /* Saepta Iulia: il recinto delle votazioni finito da Agrippa nel 26 a.C., poi passeggio e mercato; un quadriportico con due grandi portici lunghi (it.wikipedia «Saepta Iulia», da Gatti).
+    Posizione secondo Gatti: fra il Pantheon e le terme di Agrippa a ovest e l'Iseo a est, da via del Seminario verso sud (via del Plebiscito chiude l'isolato; lì, lungo il portico sud, il Diribitorium,
+    che non si disegna). Platner e Ashby (1929) lo mettevano invece lungo la via Lata: la scheda lo dice. «No reference has been found to it in the Middle Ages»: dopo il V secolo non lo
+    nominano più; qui chiude nel 450 (ipotesi). Misure dalle vie di oggi, alzati indicativi. */
+ {id:'saepta', nome:'Saepta Iulia', x:-59.25,z:-58.5, ry:0, zone:[[0,-9,4.6],[0,0,4.6],[0,9,4.6]], fa:function(B){
+    var W=9.5, L=29;
+    B.scatola(W-.4,.04,L-.4,0,0,0,P.selce);                                                             // la grande piazza
+    [-1,1].forEach(function(q){ var x=q*(W/2-.7);                                                      // i due portici lunghi, a ovest e a est
+      B.scatola(.2,1.3,L,q*(W/2-.1),0,0,P.intonaco).colonne(x-q*.6,-L/2+.6,x-q*.6,L/2-.6,24,1.15,.07,0).falde(L,.32,1.4,x,1.15,0,P.coppi,PI/2,P.intonaco); });
+    [-1,1].forEach(function(q){ B.scatola(W,1.3,.25,0,0,q*(L/2-.12),P.intonaco); });                  // i lati corti
  }},
  /* Esquilino. Arco di Gallieno: la porta Esquilina rifatta e dedicata a Gallieno nel 262 (Platner e Ashby, Porta Esquilina; OpenStreetMap, way 81741050); misure a memoria, indicative
     (alto circa 8,8 m). Trofei di Mario, la mostra d'acqua di piazza Vittorio (OpenStreetMap, way 345702226): i trofei di marmo vi restano fino al 1590 (Platner e Ashby, Tropaea Marii); massa
