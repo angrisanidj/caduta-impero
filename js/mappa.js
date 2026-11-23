@@ -460,13 +460,22 @@ function chiudiDid(si){ didChiusa=si; didascalia.classList.toggle('chiusa',si); 
 didX.addEventListener('click',function(e){ e.stopPropagation(); chiudiDid(true); });
 didI.addEventListener('click',function(e){ e.stopPropagation(); chiudiDid(false); });
 var pocoMoto=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);      // ?moto=1 forza l'animazione, per le prove
+/* All'apertura la regia aspetta il via (23 novembre 2026, l'utente: «quando apri per la prima volta la pagina non farmi subito lo zoom su Magonza. Aspetta che io dia il via»):
+   la scena della tappa d'arrivo resta ferma sulla carta intera, con il bottone «▶ Guarda la scena». Dal primo gesto di chi guarda (tocco, clic, tasto, rotella) le tappe seguenti
+   partono come sempre. ?moto=1 (le prove) non aspetta, se non c'è anche ?attendi=1 */
+var aspetta=!pocoMoto && (!/[?&]moto=1/.test(location.search) || /[?&]attendi=1/.test(location.search));      // ?moto=1&attendi=1: per provare l'attesa
+var bVia=document.createElement('button'); bVia.type='button'; bVia.className='m-fuori m-via'; bVia.hidden=true; bVia.textContent='▶ Guarda la scena'; bVia.setAttribute('aria-label','Guarda la scena di questa tappa sulla carta'); ospite.appendChild(bVia);
+bVia.addEventListener('click',function(e){ e.stopPropagation(); aspetta=false; avviaRegia(luoghiRegia,scenaOra,0,true); });
+function via(){ aspetta=false; ['pointerdown','keydown','wheel'].forEach(function(n){ document.removeEventListener(n,via,true); }); }
+if(aspetta) ['pointerdown','keydown','wheel'].forEach(function(n){ document.addEventListener(n,via,{capture:true,passive:true}); });
 function fermaRegia(){
+  bVia.hidden=true;
   var r=regia; if(r){ cancelAnimationFrame(r.rf); regia=null; }
   clearTimeout(giro); giro=0;      // anche il giro dei passi fermi
   passoOra=null; svg.classList.remove('in-passi'); classiPassi(passoInVista()); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
   if(bordo[0]!==103){ bordo=[103,897,63,565]; scalaScena=1; testoMin=0; if(annoVisto!=null) mostraPopoli(annoVisto); }
   didascalia.classList.remove('viva'); document.body.classList.remove('carta-in-regia');
-  stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':''));
+  stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto||aspetta?' viva ferma':''));
   if(!grandeSi) svg.setAttribute('viewBox',BASE.join(' ')); else if(r) applicaVista();      // a tutto schermo si torna alla vista di chi guarda
 }
 function riquadroLuoghi(l,massimo,minimo){      // minimo: di quante volte al più si avvicina; con minimo (i passi) anche i margini sono più stretti
@@ -498,6 +507,7 @@ function scriviDidascalia(f){
 function avviaRegia(l,sc,da,forza){
   fermaRegia(); luoghiRegia=l;
   if(pocoMoto) return;
+  if(aspetta && !forza){ if((l&&l.length)||passiOra) bVia.hidden=false; return; }      // si aspetta il via: la scena resta ferma (fermaRegia l'ha già accesa)
   if(grandeSi && (!forza && !vista.libera || Object.keys(dita).length)) return;
   var passi=passiOra, foto=[], i, a;
   if(passi){ for(i=da||0;i<passi.length;i++){ var cp=capiDi(passi[i].sc).concat((passi[i].vista||[]).map(function(k){ return [k]; })); foto.push({a:riquadroLuoghi(cp,.92,3.4)||BASE.slice(),i:i,y1:fondoDi(cp)}); } }      // vista: luoghi da tenere nell'inquadratura anche senza segni (un passo che racconta soltanto)      // un passo può stare stretto: la carta si avvicina fino a 3,4 volte
