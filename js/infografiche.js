@@ -42,7 +42,32 @@ function disegnaRoma(svg,stato){
 }
 function valore(P,a){ for(var i=1;i<P.length;i++) if(a<=P[i][0]){ var f=(a-P[i-1][0])/(P[i][0]-P[i-1][0]); return P[i-1][1]+(P[i][1]-P[i-1][1])*f; } return P[P.length-1][1]; }
 
-var INFO={ roma:{d:ROMA, disegna:disegnaRoma, dura:26000, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }} };
+/* ---------- 2. Senza soldi non c'è esercito ----------
+   La parte dell'Occidente governata da Roma, misurata sulla carta di questa pagina tappa per tappa (RM_mappa.territorio: federati e contesi a metà fino al 480).
+   La tesi delle entrate perdute con le province è quella di «Perché cadde» (Wickham, Heather): qui non si aggiungono numeri sulle tasse. */
+var TERRE={ titolo:"Senza soldi non c'è esercito", sotto:"La parte dell'Occidente governata da Roma, dal 395 al 476, misurata sulla carta",
+  momenti:[[406,"Vandali, Alani e Svevi passano il Reno: la Gallia sfugge di mano."],[409,"La Britannia si difende da sola; i barbari entrano in Spagna."],[418,"I Visigoti si stabiliscono in Aquitania come alleati."],
+    [429,"I Vandali passano in Africa."],[439,"Cartagine cade: per molti storici è la perdita di entrate più grave."],[455,"I Vandali saccheggiano Roma."],[468,"Fallisce l'ultima spedizione per riprendere l'Africa."],[476,"Odoacre depone Romolo Augustolo."]],
+  fonte:"Percentuale misurata sulla carta di questa pagina: le regioni dei federati e quelle contese contano per metà. Meno terre voleva dire meno tasse per pagare l'esercito: è la tesi di Wickham e di Heather, che trovi in «Perché cadde l'Occidente?»." };
+function disegnaTerre(svg,stato){
+  var T=(D.TAPPE||[]).filter(function(t){ return t.regioni && !t.intermezzo && t.anno>=395 && t.anno<=476; }), M=window.RM_mappa; if(!M||!M.territorio) return;
+  var P=T.map(function(t){ return [t.anno,M.territorio(t.regioni,t.anno)]; });
+  var W=640, H=300, L=50, Rr=14, Tp=14, B=34, x=function(a){ return L+(a-395)/(476-395)*(W-L-Rr); }, y=function(v){ return Tp+(1-v/100)*(H-Tp-B); };
+  [0,25,50,75,100].forEach(function(v){ el('line',{x1:L,x2:W-Rr,y1:y(v),y2:y(v),class:'ig-griglia'},svg); var t=el('text',{x:L-6,y:y(v)+4,class:'ig-asse','text-anchor':'end'},svg); t.textContent=v+'%'; });
+  [395,410,425,439,455,476].forEach(function(a){ var t=el('text',{x:x(a),y:H-14,class:'ig-asse','text-anchor':'middle'},svg); t.textContent=a; });
+  var d='M'+x(P[0][0])+' '+y(P[0][1]); for(var i=1;i<P.length;i++) d+=' H'+x(P[i][0]).toFixed(1)+' V'+y(P[i][1]).toFixed(1);      // a gradini: il territorio cambia di colpo, a ogni tappa
+  var area=el('path',{d:d+' V'+y(0)+' H'+x(P[0][0])+' Z',class:'ig-fascia'},svg), linea=el('path',{d:d,class:'ig-linea'},svg), lung=linea.getTotalLength?linea.getTotalLength():1500;
+  var segni=TERRE.momenti.map(function(m){ var v=valoreGradini(P,m[0]), g=el('g',{class:'ig-momento'},svg); el('line',{x1:x(m[0]),x2:x(m[0]),y1:y(v)-4,y2:H-B,class:'ig-asta'},g); el('circle',{cx:x(m[0]),cy:y(v),r:4.5},g); return {a:m[0],g:g,t:m[1]}; });
+  var cur=el('g',{class:'ig-cursore'},svg), lab=el('text',{x:0,y:0,class:'ig-valore','text-anchor':'middle'},cur);
+  stato.passo=function(k){ var anno=395+k*81, v=valoreGradini(P,anno); linea.style.strokeDasharray=lung; linea.style.strokeDashoffset=lung*(1-k); area.style.clipPath='inset(0 '+((1-k)*100).toFixed(1)+'% 0 0)';
+    cur.setAttribute('transform','translate('+x(anno).toFixed(1)+','+(y(v)-12).toFixed(1)+')'); lab.textContent=Math.round(anno)+': '+Math.round(v)+'%';
+    var ultimo=null; segni.forEach(function(s){ var on=s.a<=anno; s.g.classList.toggle('acceso',on); if(on) ultimo=s; }); return ultimo?ultimo.a+' · '+ultimo.t:TERRE.sotto; };
+  stato.tutti=segni.map(function(s){ return [s.a,s.t]; });
+}
+function valoreGradini(P,a){ var v=P[0][1]; for(var i=0;i<P.length;i++) if(P[i][0]<=a) v=P[i][1]; return v; }
+
+var INFO={ roma:{d:ROMA, disegna:disegnaRoma, dura:26000, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
+  terre:{d:TERRE, disegna:disegnaTerre, dura:22000, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo) || t.anno===439&&!t.intermezzo; }} };
 
 /* ---------- la finestra ---------- */
 var dlg=null, raf=0;
