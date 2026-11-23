@@ -609,11 +609,13 @@ function migliorePop(v,prove,W,H,ost,segni){      // il primo posto libero, o qu
 var piante={}, piantaDopo=0, piantaFatta=0, BORDO=[103,897,63,565];
 function tappeCarta(){ return ((window.RM_DATI||{}).TAPPE||[]).filter(function(t){ return t.regioni; }); }      // anche gli intermezzi (284, 395, 439, 476): la carta li mostra
 function chiaveTappa(anno,l,sc){ return anno+'|'+(l||[]).map(function(q){ return q[0]; }).join()+'|'+(sc?sc.length:0); }      // l'intermezzo del 395 e la tappa del 395 hanno lo stesso anno
+/* i nomi dei tetrarchi (293-305) come ingombri: i cartellini dei popoli e i nomi delle città li evitano (23 novembre 2026: «Costanzo» finiva sotto il cartellino degli Alamanni) */
+function tetraIngombri(anno,k){ if(!G.tetrarchia || anno==null || !tetrarchia(anno)) return []; return G.tetrarchia.nomi.filter(function(n){ return n[4]; }).map(function(n){ return [n[0], n[1]+3*k, Math.max(n[2].length,n[3].length)*6*k+8, 26*k]; }); }
 function ingombriTappa(t,k,H){
   var salva=[luoghiOra,scenaFatta,stratoScena,stratoLuoghi,bordo,nucleiOra], bz=scritte.costantinopoli, nb=bz?bz.textContent:'';
   luoghiOra=t.luoghi||[]; scenaFatta=null; bordo=BORDO; stratoScena=el('g',{}); stratoLuoghi=el('g',{style:'visibility:hidden'},svg);
   if(bz) bz.textContent=t.anno<330?'Bisanzio':G.citta.costantinopoli.nome;
-  var pos=posLuoghi(), fissi=pos.map(function(l){ return [l.x,l.y,12.6*k,12.6*k]; });
+  var pos=posLuoghi(), fissi=pos.map(function(l){ return [l.x,l.y,12.6*k,12.6*k]; }).concat(tetraIngombri(t.anno,k));
   disegnaScena(t.scena||null,k,pos,fissi);
   var messi=fissi.slice(); piazzaCitta(k,fissi,messi); piazzaNomi(messi); disegnaLuoghi(k,H,messi,pos);
   var out={fissi:fissi,messi:messi,nuclei:nucleiOra};
@@ -664,7 +666,7 @@ function mostraPopoli(anno){
   var pianta=piantaPer(k), sc=pianta?k/pianta.k:1;
   /* l'ordine conta: prima ciò che non si sposta (rombi), poi la scena (anelli, frecce, spade, fiamme), poi i cartellini dei popoli che hanno il posto della loro sosta,
      poi i nomi di città e regioni e i cartellini dei luoghi, che si scansano e li evitano; infine i cartellini dei popoli che il posto della sosta qui non l'hanno */
-  var H=15*k, pos=posLuoghi(), fissi=pos.map(function(l){ return [l.x,l.y,12.6*k,12.6*k]; });
+  var H=15*k, pos=posLuoghi(), fissi=pos.map(function(l){ return [l.x,l.y,12.6*k,12.6*k]; }).concat(tetraIngombri(anno,k));
   disegnaScena(scenaOra,k,pos,fissi,k*scalaScena);
   var posti=[], qui={};
   for(id in popoli){
