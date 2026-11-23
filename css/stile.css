@@ -771,3 +771,5 @@ body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visib
 .ev-chiudi:focus-visible,.ev-riapri:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 @media (max-width:1000px){ body:not(.roma-grande) .evento.chiusa{display:block;border-bottom:0} }
 .evento:not(.vivo) .ev-chiudi,.evento:not(.vivo) .ev-riapri{pointer-events:none;visibility:hidden}      /* didascalia spenta: niente bottoni invisibili da toccare */
+/* telefono coricato, carta a tutto schermo: la legenda lunga (il 451) finiva sotto la linea del tempo; ora si ferma sopra e il resto scorre (23 novembre 2026) */
+@media (max-height:559px){ body.impero-largo .legenda-mappa{max-height:calc(100vh - 44px - var(--tempo,92px) - 22px - env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin} }

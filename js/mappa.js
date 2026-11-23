@@ -563,6 +563,12 @@ function postiPop(W,nc,k,H){
   var su=Math.max(7*k,nc+1.5*k), giu=Math.max(8*k,nc+1.5*k), lato=W/2+Math.max(9*k,nc+1.5*k), dd=W/2+3*k;
   return [[0,-H-su],[0,giu],[lato,-H/2],[-lato,-H/2],[dd,-H-su],[-dd,-H-su],[dd,giu],[-dd,giu],[0,-2*H-su-2*k],[0,H+giu+2*k],[dd,-2*H-su-2*k],[-dd,-2*H-su-2*k],[lato,-H-su],[-lato,-H-su],[lato,giu],[-lato,giu],[0,-3*H-su-4*k]];
 }
+/* per la pianta delle soste, dopo i posti vicini, qualche posto più lontano: meglio un cartellino un po' discosto ma fermo che uno che salta in una tappa
+   (i Burgundi del 406 a tutto schermo sul telefono: lì la marcia e il rombo di Magonza occupano tutti i posti vicini). Si usano solo se i vicini costano eccezioni. */
+function postiLontani(W,nc,k,H){
+  var su=Math.max(7*k,nc+1.5*k), giu=Math.max(8*k,nc+1.5*k), lato=W/2+Math.max(9*k,nc+1.5*k)+W*.55, dd=W/2+3*k+W*.5;
+  return [[0,-4*H-su-6*k],[0,2*H+giu+4*k],[lato,-H/2],[-lato,-H/2],[lato,-H-su],[-lato,-H-su],[lato,giu],[-lato,giu],[dd,-3*H-su-4*k],[-dd,-3*H-su-4*k],[dd,2*H+giu+4*k],[-dd,2*H+giu+4*k]];
+}
 function rettoPop(v,o,W,H){ return [Math.max(97+W/2,Math.min(903-W/2,v[1]+o[0])),v[2]+o[1]+H/2,W,H]; }
 function migliorePop(v,prove,W,H,ost,segni){      // il primo posto libero, o quello che copre di meno; coprire un segno della scena (segni) costa venti volte tanto: battaglie e assedi non stanno sopra i nomi
   var meglio=0, minimo=1e9, j, t;
@@ -603,7 +609,7 @@ function faiPianta(k){
   soste.sort(function(a,b){ return (b.f-b.i)-(a.f-a.i) || a.n-b.n; });      // scelgono prima le soste più lunghe: è lì che un cartellino che salta si nota di più
   soste.forEach(function(so){
     var v=so.v, a, j, W=larghezzaPop(so.nome,k), nc=0; for(a=so.i;a<=so.f;a++) nc=Math.max(nc,nucleoIntorno(v[1],v[2],ob[a].nuclei));
-    var prove=postiPop(W,nc,k,H), meglio=0, minimo=1e9, r, tot;
+    var prove=postiPop(W,nc,k,H).concat(postiLontani(W,nc,k,H)), meglio=0, minimo=1e9, r, tot;
     for(j=0;j<prove.length;j++){ r=rettoPop(v,prove[j],W,H); tot=0;
       for(a=so.i;a<=so.f;a++) tot+=ingombro(r,ob[a].fissi)+ingombro(r,posti[a])>0?1e5:ingombro(r,ob[a].messi);      // ogni tappa in cui il posto copre qualcosa che non si sposta costa un'eccezione: prima le meno eccezioni, poi il meno ingombro
       if(tot<minimo){ minimo=tot; meglio=j; if(!tot) break; } }
@@ -770,7 +776,7 @@ svg.addEventListener('click',function(e){
 });
 /* Su Safari per iPhone, scorrendo, la barra degli indirizzi entra ed esce e la finestra cambia di continuo la sola altezza: in pagina le legende non dipendono
    dall'altezza, quindi non si rimisurano (prima ogni volta si rifacevano tutte, una per tappa, e la pagina poteva dare scatti mentre si legge). A tutto schermo sì. */
-var attesa=0, largPrima=window.innerWidth; window.addEventListener('resize',function(){ var w=window.innerWidth, soloAltezza=w===largPrima; largPrima=w; if(grandeSi && regia) fermaRegia(); adatta(); if(soloAltezza && !grandeSi) return; clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); },200); });
+var attesa=0, largPrima=window.innerWidth; window.addEventListener('resize',function(){ var w=window.innerWidth, soloAltezza=w===largPrima; largPrima=w; if(grandeSi && regia) fermaRegia(); adatta(); if(soloAltezza && !grandeSi) return; clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); segnaFuori(); },200); });
 spazioLegende();
 
 /* A tutto schermo la carta riempie la finestra e si può ingrandire e trascinare (rotella, due dita, i bottoni + e −). La finestra sulla carta (viewBox) prende
@@ -812,7 +818,7 @@ function grande(si){
   fermaRegia(); grandeSi=si; legenda.parentNode.style.minHeight=''; setTimeout(function(){ stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':'')); },60);      // a tutto schermo la scena dell'evento resta ferma sulla carta (la ridisegna mostraPopoli, con le nuove misure)
   document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');      // queste due istruzioni erano finite per sbaglio dentro il commento della riga sopra
   bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Esci dallo schermo intero':'Carta a tutto schermo');
-  dita={}; presa=null; vista.libera=si;
+  dita={}; presa=null; vista.libera=si; setTimeout(segnaFuori,120);      // il bottone «Continua a…»: via a tutto schermo, di nuovo all'uscita (con le misure nuove)
   if(si) ospite.appendChild(barraPassi); else ospite.parentNode.insertBefore(barraPassi,rigaLuoghi);      // a tutto schermo la barra dei passi sta sulla carta, in basso al centro
   if(si){ vista.k=1; vista.cx=500; vista.cy=314; adatta(); if(vista.alto){ vista.k=Math.max(1,BASE[2]*vista.alto/(G.h*vista.aw)); vista.cx=470; vista.cy=330; applicaVista(); } }      // in verticale si parte con la carta che riempie il riquadro, sull'Italia: il bottone − la mostra intera
   else { vista.alto=0; ospite.style.width=ospite.style.height=''; applicaVista();
@@ -879,6 +885,40 @@ function miniatura(){
     /* la voce di legenda toccata lascia accese le sole regioni di quello stato; null le riaccende tutte */
     fuoco:function(k){ fuoco=k||null; accendi(); }};
 }
+/* La scena che esce dalla carta (23 novembre 2026: la marcia di Giuliano del 363 si vedeva solo durante lo zoom; la carta d'insieme finisce ad Antiochia).
+   Allargare la vista d'insieme per una sola tappa farebbe saltare i cartellini: sul bordo da cui la scena esce compare invece un bottone «Continua a est ▸»
+   che fa partire lo zoom sulla scena intera; con meno animazioni la carta si avvicina ferma, e un secondo tocco la riporta alla vista intera. Non a tutto schermo, dove la carta si muove a mano. */
+var bFuori=document.createElement('button'); bFuori.type='button'; bFuori.className='m-fuori'; bFuori.hidden=true; ospite.appendChild(bFuori);
+var fuoriFermo=false, fuoriLato='est';
+function visibile(){      // la parte del disegno che si vede davvero: sul telefono il riquadro è più alto e la carta si taglia ai lati (preserveAspectRatio slice)
+  var rc=svg.getBoundingClientRect(), q=rc.width/(rc.height||1), b=BASE.slice(); if(!(q>0)) return b;
+  if(q<b[2]/b[3]){ var w=b[3]*q; b[0]+=(b[2]-w)/2; b[2]=w; } else { var h=b[2]/q; b[1]+=(b[3]-h)/2; b[3]=h; }
+  return b;
+}
+function segnaFuori(){
+  bFuori.hidden=true; fuoriFermo=false; if(!scenaOra || !scenaOra.length || grandeSi) return;
+  var v=visibile(), m=6, x0=v[0]+m, x1=v[0]+v[2]-m, y0=v[1]+m, y1=v[1]+v[3]-m, fuori=[];
+  capiDi(scenaOra).forEach(function(c){ var p=puntoDi(c[0]); if(p && (p[0]<x0||p[0]>x1||p[1]<y0||p[1]>y1)) fuori.push(p); });
+  if(!fuori.length) return;
+  var mx=0, my=0; fuori.forEach(function(p){ mx+=p[0]/fuori.length; my+=p[1]/fuori.length; });
+  fuoriLato=mx>x1?'est':mx<x0?'ovest':my<y0?'nord':'sud';
+  bFuori.setAttribute('data-lato',fuoriLato); bFuori.style.top=bFuori.style.left='';
+  if(fuoriLato==='est'||fuoriLato==='ovest') bFuori.style.top=Math.max(14,Math.min(80,(Math.max(y0,Math.min(y1,my))-v[1])/v[3]*100))+'%';
+  else bFuori.style.left=Math.max(20,Math.min(80,(Math.max(x0,Math.min(x1,mx))-v[0])/v[2]*100))+'%';
+  scriviFuori(); bFuori.hidden=false;
+}
+function scriviFuori(){
+  var t=fuoriFermo?'Torna alla carta intera':'Continua a '+fuoriLato;
+  var fr={est:' ▸',ovest:' ◂',nord:' ▴',sud:' ▾'}[fuoriLato]; bFuori.textContent=t+(fuoriFermo?'':fr);
+  bFuori.setAttribute('aria-label',fuoriFermo?'Torna alla carta intera':'La scena continua fuori dalla carta, verso '+fuoriLato+': guardala tutta');
+}
+bFuori.addEventListener('click',function(){
+  if(!pocoMoto){ avviaRegia(luoghiRegia,scenaOra,0,true); return; }
+  if(fuoriFermo){ fermaRegia(); fuoriFermo=false; scriviFuori(); return; }
+  var a=riquadroLuoghi(capiDi(scenaOra),.92); if(!a) return;
+  bordo=[8,G.w-8,8,G.h-8]; scalaScena=scalaDi(a); testoMin=testoDi(a); if(annoVisto!=null) mostraPopoli(annoVisto);
+  svg.setAttribute('viewBox',a.map(function(x){ return x.toFixed(1); }).join(' ')); fuoriFermo=true; scriviFuori();
+});
 window.RM_mappa={
   grande:grande,
   miniatura:miniatura,
@@ -900,6 +940,7 @@ window.RM_mappa={
     for(var id in regioni) statoOra[id]=stati[id]||'perso';
     if(!ricolorata) coloraRegioni(stati);      // durante un passo che ricolora (Arabi del 711) i colori restano quelli del passo
     applicaFuoco(); nascondiChi();      // la voce accesa in legenda resta accesa da una tappa all'altra, finché c'è
+    if(anno!=null) segnaFuori();
   },
   /* quota dell'Occidente governata da Roma, pesata per regione: federati e contesi valgono metà, ma solo finché c'è un governo romano d'Occidente (fino al 480, quando muore Giulio Nepote
      in Dalmazia). Dopo, una regione contesa lo è fra altri (Goti e Costantinopoli, Visigoti e Arabi, Bizantini e Saraceni) e non conta: prima del 22 novembre 2026 la spia dava il 9% nel 711 */

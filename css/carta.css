@@ -142,3 +142,16 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
 .m-did-chiudi:focus-visible,.m-did-riapri:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 @media (max-width:700px){ .m-didascalia{padding-right:36px} }
 .m-didascalia.in-alto.chiusa{right:10px}
+
+/* «Continua a est ▸»: la scena esce dalla carta d'insieme (js/mappa.js, segnaFuori; 23 novembre 2026) */
+.m-fuori{position:absolute;z-index:2;display:inline-flex;align-items:center;min-height:32px;padding:5px 11px;font-family:var(--ui,sans-serif);font-size:12.5px;font-weight:600;color:#221C18;
+  background:rgba(251,246,234,.95);border:1px solid var(--gold2);border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer;white-space:nowrap}
+.m-fuori[hidden]{display:none}
+.m-fuori[data-lato="est"]{right:10px;transform:translateY(-50%)}
+.m-fuori[data-lato="ovest"]{left:10px;transform:translateY(-50%)}
+.m-fuori[data-lato="nord"]{top:52px!important;transform:translateX(-50%)}
+.m-fuori[data-lato="sud"]{bottom:10px;transform:translateX(-50%)}
+.m-fuori:hover{background:#fff}
+.m-fuori:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+body.carta-in-regia .m-fuori{display:none}
+@media (max-width:700px){ .m-fuori{font-size:12px;min-height:30px;padding:4px 9px} }
