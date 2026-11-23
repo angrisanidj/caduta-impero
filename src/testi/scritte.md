@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 14:10:53.
+Generato da `src/testi.mjs` il 23/11/2026, 14:14:20.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -11,7 +11,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.titolo] Come finisce un impero · L'Occidente romano dal 235 all'852
 
-[pagina.descrizione] Dal 235 all'852, la storia dell'Occidente romano in 56 tappe. Segui sulla carta i confini che cambiano, esplora Roma in 3D e leggi come i testimoni dell'epoca raccontarono quegli eventi.
+[pagina.descrizione] Dal 235 all'852, la storia dell'Occidente romano in 57 tappe. Segui sulla carta i confini che cambiano, esplora Roma in 3D e leggi come i testimoni dell'epoca raccontarono quegli eventi.
 
 [pagina.immagine] Apertura della pagina con il titolo e tre dati di sintesi. Sotto, la carta dei regni romano-barbarici nel 476 e una veduta di Roma dall'alto.
 
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 14:05
+[pagina.52] Versione del 23/11/2026, ore 14:10
 
 
 ## 2. Gli atti
@@ -1357,657 +1357,694 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [T35-526.luogo1.ravenna] muore Teodorico
 
 
+### 534 · Belisario riconquista l'Africa
+
+[T36-534.titolo] Belisario riconquista l'Africa
+
+[T36-534.testo] Nel 533, il settimo anno del suo regno, l'imperatore d'Oriente Giustiniano manda in Africa il generale Belisario contro i Vandali. Il loro re, Gelimero, aveva preso il trono a Ilderico, amico di Costantinopoli. La flotta parte in primavera e sbarca a Caputvada, a cinque giorni di cammino da Cartagine. A Decimum, a una dozzina di chilometri dalla città, i Vandali sono sconfitti e il fratello del re muore in battaglia. Belisario entra a Cartagine. Alla fine dell'anno una seconda vittoria, a Tricamarum, chiude la guerra. Nel 534 Gelimero, rifugiato sul monte Papua in Numidia, si arrende. Dopo un secolo l'Africa e le isole dei Vandali tornano all'impero, governate da Costantinopoli.
+
+[T36-534.chi1.nome] Belisario
+
+[T36-534.chi1.date] circa 500-565
+
+[T36-534.chi1.riga] Generale di Giustiniano: in un anno abbatte il regno dei Vandali e porta Gelimero prigioniero a Costantinopoli.
+
+[T36-534.chi2.nome] Gelimero
+
+[T36-534.chi2.date] re dei Vandali fino al 534
+
+[T36-534.chi2.riga] L'ultimo re dei Vandali: si arrende sul monte Papua e sfila nel trionfo di Belisario.
+
+[T36-534.chi3.nome] Procopio
+
+[T36-534.chi3.date] nato verso il 500, morto verso il 565
+
+[T36-534.chi3.riga] Consigliere di Belisario: è con lui in Africa e racconta la guerra.
+
+[T36-534.voce1.testo] «Quando Gelimero arrivò all'ippodromo e vide l'imperatore seduto in alto e il popolo in piedi ai due lati, e si rese conto di quanto fosse misera la sua sorte, non pianse né gridò. Continuava a ripetere le parole della Scrittura ebraica: “Vanità delle vanità, tutto è vanità”.»
+
+[T36-534.voce1.chi] Procopio di Cesarea, Guerre, IV, 9, 11. Procopio era il consigliere di Belisario e seguì la spedizione in Africa: racconta da testimone. Traduzione dalla versione inglese di Dewing.
+
+[T36-534.luogo1.capovada] Nel 533 la flotta di Belisario sbarca a Caputvada
+
+[T36-534.luogo2.decimo] A Decimum i Vandali sono sconfitti
+
+[T36-534.luogo3.cartagine] Belisario entra a Cartagine
+
+[T36-534.luogo4.costantinopoli] Nel 534 il trionfo, con Gelimero prigioniero
+
+
 ### 537 · I Goti interrompono gli acquedotti di Roma
 
-[T36-537.titolo] I Goti interrompono gli acquedotti di Roma
+[T37-537.titolo] I Goti interrompono gli acquedotti di Roma
 
-[T36-537.testo] Nel 535 Giustiniano, imperatore d'Oriente, invia in Italia il generale Belisario per riconquistare la penisola. Due anni dopo i Goti assediano Roma, difesa da Belisario, e tagliano tutti gli acquedotti che la riforniscono. Senz'acqua, le grandi terme non possono più funzionare. Dopo la guerra alcuni acquedotti torneranno in funzione, ma le grandi terme resteranno chiuse.
+[T37-537.testo] Nel 535 Giustiniano, imperatore d'Oriente, invia in Italia il generale Belisario per riconquistare la penisola. Due anni dopo i Goti assediano Roma, difesa da Belisario, e tagliano tutti gli acquedotti che la riforniscono. Senz'acqua, le grandi terme non possono più funzionare. Dopo la guerra alcuni acquedotti torneranno in funzione, ma le grandi terme resteranno chiuse.
 
-[T36-537.chi1.nome] Giustiniano
+[T37-537.chi1.nome] Giustiniano
 
-[T36-537.chi1.date] imperatore dal 527 al 565
+[T37-537.chi1.date] imperatore dal 527 al 565
 
-[T36-537.chi1.riga] Vuole riportare i territori dell'antico impero d'Occidente sotto il governo di Costantinopoli.
+[T37-537.chi1.riga] Vuole riportare i territori dell'antico impero d'Occidente sotto il governo di Costantinopoli.
 
-[T36-537.chi2.nome] Belisario
+[T37-537.chi2.nome] Belisario
 
-[T36-537.chi2.date] circa 500-565
+[T37-537.chi2.date] circa 500-565
 
-[T36-537.chi2.riga] Generale di Giustiniano, entra a Roma nel dicembre 536 e difende la città per un anno.
+[T37-537.chi2.riga] Generale di Giustiniano, entra a Roma nel dicembre 536 e difende la città per un anno.
 
-[T36-537.chi3.nome] Vitige
+[T37-537.chi3.nome] Vitige
 
-[T36-537.chi3.date] re dei Goti dal 536 al 540
+[T37-537.chi3.date] re dei Goti dal 536 al 540
 
-[T36-537.chi3.riga] Assedia Roma e fa tagliare gli acquedotti.
+[T37-537.chi3.riga] Assedia Roma e fa tagliare gli acquedotti.
 
-[T36-537.voce1.testo] «Tutti vediamo ancora il sole come azzurrognolo; ci stupiamo che a mezzogiorno i corpi non facciano ombra, e non per il venir meno momentaneo di un'eclissi, ma per quasi un anno intero. Abbiamo avuto un inverno senza tempeste, una primavera senza mitezza, un'estate senza calura.»
+[T37-537.voce1.testo] «Tutti vediamo ancora il sole come azzurrognolo; ci stupiamo che a mezzogiorno i corpi non facciano ombra, e non per il venir meno momentaneo di un'eclissi, ma per quasi un anno intero. Abbiamo avuto un inverno senza tempeste, una primavera senza mitezza, un'estate senza calura.»
 
-[T36-537.voce1.chi] Cassiodoro, Variae, XII, 25. Alto funzionario del regno goto con il titolo di prefetto del pretorio, descrive in una lettera di quegli anni il sole velato del 536.
+[T37-537.voce1.chi] Cassiodoro, Variae, XII, 25. Alto funzionario del regno goto con il titolo di prefetto del pretorio, descrive in una lettera di quegli anni il sole velato del 536.
 
-[T36-537.luogo1.roma] i Goti assediano Belisario e tagliano gli acquedotti
+[T37-537.luogo1.roma] i Goti assediano Belisario e tagliano gli acquedotti
 
 
 ### 542 · La peste
 
-[T37-542.titolo] La peste
+[T38-542.titolo] La peste
 
-[T37-542.testo] La peste bubbonica si diffonde dall'Egitto nel 541. Raggiunge Costantinopoli nel 542 e l'Italia nel 543, quando la guerra nella penisola dura già da otto anni. L'epidemia si ripresenterà a ondate per due secoli.
+[T38-542.testo] La peste bubbonica si diffonde dall'Egitto nel 541. Raggiunge Costantinopoli nel 542 e l'Italia nel 543, quando la guerra nella penisola dura già da otto anni. L'epidemia si ripresenterà a ondate per due secoli.
 
-[T37-542.chi1.nome] Giustiniano
+[T38-542.chi1.nome] Giustiniano
 
-[T37-542.chi1.date] imperatore dal 527 al 565
+[T38-542.chi1.date] imperatore dal 527 al 565
 
-[T37-542.chi1.riga] Anche l'imperatore Giustiniano contrae la peste e guarisce.
+[T38-542.chi1.riga] Anche l'imperatore Giustiniano contrae la peste e guarisce.
 
-[T37-542.chi2.nome] Procopio
+[T38-542.chi2.nome] Procopio
 
-[T37-542.chi2.date] nato verso il 500, morto verso il 565
+[T38-542.chi2.date] nato verso il 500, morto verso il 565
 
-[T37-542.chi2.riga] Consigliere giuridico di Belisario: descrive l'epidemia a Costantinopoli.
+[T38-542.chi2.riga] Consigliere giuridico di Belisario: descrive l'epidemia a Costantinopoli.
 
-[T37-542.voce1.testo] «All'inizio i morti erano poco più del solito; poi la mortalità salì ancora, e in seguito il conto dei morti arrivò a cinquemila al giorno, e poi anche a diecimila e più. […] In quel tempo non era facile vedere qualcuno per le strade di Bisanzio: chi aveva la fortuna di essere sano stava in casa, a curare i malati o a piangere i morti. E se capitava di incontrare un uomo che usciva, portava un morto.»
+[T38-542.voce1.testo] «All'inizio i morti erano poco più del solito; poi la mortalità salì ancora, e in seguito il conto dei morti arrivò a cinquemila al giorno, e poi anche a diecimila e più. […] In quel tempo non era facile vedere qualcuno per le strade di Bisanzio: chi aveva la fortuna di essere sano stava in casa, a curare i malati o a piangere i morti. E se capitava di incontrare un uomo che usciva, portava un morto.»
 
-[T37-542.voce1.chi] Procopio, Guerre, II, 23. L'autore si trovava a Costantinopoli durante l'epidemia del 542. Le sue cifre si riferiscono alla capitale d'Oriente e restano discusse. Traduzione dalla versione inglese di Dewing.
+[T38-542.voce1.chi] Procopio, Guerre, II, 23. L'autore si trovava a Costantinopoli durante l'epidemia del 542. Le sue cifre si riferiscono alla capitale d'Oriente e restano discusse. Traduzione dalla versione inglese di Dewing.
 
-[T37-542.luogo1.pelusio] di qui parte la peste, nel 541
+[T38-542.luogo1.pelusio] di qui parte la peste, nel 541
 
-[T37-542.luogo2.costantinopoli] la peste arriva nel 542
+[T38-542.luogo2.costantinopoli] la peste arriva nel 542
 
 
 ### 546 · Totila conquista Roma e fa evacuare la città
 
-[T38-546.titolo] Totila conquista Roma e fa evacuare la città
+[T39-546.titolo] Totila conquista Roma e fa evacuare la città
 
-[T38-546.testo] Il re goto Totila conquista Roma e fa portar via gli abitanti. Secondo una cronaca, la città sarebbe rimasta deserta per almeno quaranta giorni. Nel 550 Totila la riconquista e assiste alle ultime corse di cavalli a Roma di cui ci sia giunta notizia.
+[T39-546.testo] Il re goto Totila conquista Roma e fa portar via gli abitanti. Secondo una cronaca, la città sarebbe rimasta deserta per almeno quaranta giorni. Nel 550 Totila la riconquista e assiste alle ultime corse di cavalli a Roma di cui ci sia giunta notizia.
 
-[T38-546.chi1.nome] Totila
+[T39-546.chi1.nome] Totila
 
-[T38-546.chi1.date] re dei Goti dal 541 al 552
+[T39-546.chi1.date] re dei Goti dal 541 al 552
 
-[T38-546.chi1.riga] Riprende quasi tutta l'Italia; muore nel 552 dopo la sconfitta di Tagina.
+[T39-546.chi1.riga] Riprende quasi tutta l'Italia; muore nel 552 dopo la sconfitta di Tagina.
 
-[T38-546.chi2.nome] Belisario
+[T39-546.chi2.nome] Belisario
 
-[T38-546.chi2.date] circa 500-565
+[T39-546.chi2.date] circa 500-565
 
-[T38-546.chi2.riga] Rimandato in Italia con poche truppe, non riesce a salvare Roma.
+[T39-546.chi2.riga] Rimandato in Italia con poche truppe, non riesce a salvare Roma.
 
-[T38-546.chi3.nome] Narsete
+[T39-546.chi3.nome] Narsete
 
-[T38-546.chi3.date] nato verso il 480, morto verso il 573
+[T39-546.chi3.date] nato verso il 480, morto verso il 573
 
-[T38-546.chi3.riga] Il generale che chiuderà la guerra fra il 552 e il 554.
+[T39-546.chi3.riga] Il generale che chiuderà la guerra fra il 552 e il 554.
 
-[T38-546.voce1.testo] «Abbatté le fortificazioni in molti punti, così che ne andò distrutto circa un terzo. Stava anche per bruciare gli edifici più belli e più notevoli e per fare di Roma un pascolo per le pecore, ma Belisario lo seppe e gli mandò una lettera: “[…] L'hanno costruita a poco a poco, lasciando alle generazioni future il ricordo del valore di tutti: oltraggiare questi monumenti sarebbe un grande crimine contro gli uomini di ogni tempo”. […] Totila la lesse più volte, si convinse e non fece altro male a Roma. […] Non permise però che in città restasse anima viva, e la lasciò del tutto deserta.»
+[T39-546.voce1.testo] «Abbatté le fortificazioni in molti punti, così che ne andò distrutto circa un terzo. Stava anche per bruciare gli edifici più belli e più notevoli e per fare di Roma un pascolo per le pecore, ma Belisario lo seppe e gli mandò una lettera: “[…] L'hanno costruita a poco a poco, lasciando alle generazioni future il ricordo del valore di tutti: oltraggiare questi monumenti sarebbe un grande crimine contro gli uomini di ogni tempo”. […] Totila la lesse più volte, si convinse e non fece altro male a Roma. […] Non permise però che in città restasse anima viva, e la lasciò del tutto deserta.»
 
-[T38-546.voce1.chi] Procopio di Cesarea, Guerre, VII, 22. Era stato consigliere di Belisario. Come spesso accade nella storiografia antica, l'autore rielabora la lettera che riporta. Potrebbe aver esagerato indicando in un «terzo» la parte delle mura abbattuta.
+[T39-546.voce1.chi] Procopio di Cesarea, Guerre, VII, 22. Era stato consigliere di Belisario. Come spesso accade nella storiografia antica, l'autore rielabora la lettera che riporta. Potrebbe aver esagerato indicando in un «terzo» la parte delle mura abbattuta.
 
-[T38-546.leggenda] Papa Gregorio Magno racconta che il re goto Totila volle mettere alla prova Benedetto, un monaco che aveva fama di saper predire il futuro. Poco prima di raggiungere il monastero, il re mandò avanti il suo scudiero Riggo con le scarpe e gli abiti del sovrano e con tre conti al seguito. Benedetto riconobbe l'inganno e gridò da lontano «Togli, figlio, togli: quello che porti non è tuo». Allora Totila si presentò di persona e si gettò a terra. Benedetto lo rialzò, lo rimproverò e gli predisse «Entrerai a Roma, passerai il mare, regnerai nove anni e al decimo morirai». Secondo Gregorio, da quel giorno il re divenne meno crudele. Il papa raccoglie la storia nei Dialoghi, un libro di miracoli composto verso il 593, circa cinquant'anni dopo i fatti. Quando scrive, conosce già la sorte di Totila. Gregorio attribuisce a Benedetto anche una profezia su Roma. La città si sarebbe consumata lentamente per tempeste e terremoti, senza che i barbari dovessero distruggerla. Il papa vede nelle mura e nelle case crollate i segni della profezia, ma precisa che il discepolo che gliel'ha riferita non l'aveva udita da Benedetto.
+[T39-546.leggenda] Papa Gregorio Magno racconta che il re goto Totila volle mettere alla prova Benedetto, un monaco che aveva fama di saper predire il futuro. Poco prima di raggiungere il monastero, il re mandò avanti il suo scudiero Riggo con le scarpe e gli abiti del sovrano e con tre conti al seguito. Benedetto riconobbe l'inganno e gridò da lontano «Togli, figlio, togli: quello che porti non è tuo». Allora Totila si presentò di persona e si gettò a terra. Benedetto lo rialzò, lo rimproverò e gli predisse «Entrerai a Roma, passerai il mare, regnerai nove anni e al decimo morirai». Secondo Gregorio, da quel giorno il re divenne meno crudele. Il papa raccoglie la storia nei Dialoghi, un libro di miracoli composto verso il 593, circa cinquant'anni dopo i fatti. Quando scrive, conosce già la sorte di Totila. Gregorio attribuisce a Benedetto anche una profezia su Roma. La città si sarebbe consumata lentamente per tempeste e terremoti, senza che i barbari dovessero distruggerla. Il papa vede nelle mura e nelle case crollate i segni della profezia, ma precisa che il discepolo che gliel'ha riferita non l'aveva udita da Benedetto.
 
-[T38-546.storici] Roma rimase davvero deserta? Procopio scrive che Totila la lasciò «del tutto deserta». L'autore che proseguì la cronaca di Marcellino Comes parla di «quaranta giorni o più» in cui vi sarebbero rimasti soltanto gli animali. È difficile che ogni abitante se ne fosse andato. Le due testimonianze rendono però l'idea di quanto la città si fosse spopolata.
+[T39-546.storici] Roma rimase davvero deserta? Procopio scrive che Totila la lasciò «del tutto deserta». L'autore che proseguì la cronaca di Marcellino Comes parla di «quaranta giorni o più» in cui vi sarebbero rimasti soltanto gli animali. È difficile che ogni abitante se ne fosse andato. Le due testimonianze rendono però l'idea di quanto la città si fosse spopolata.
 
-[T38-546.luogo1.roma] presa da Totila
+[T39-546.luogo1.roma] presa da Totila
 
 
 ### 552 · La fine del regno dei Goti in Italia
 
-[T39-552.titolo] La fine del regno dei Goti in Italia
+[T40-552.titolo] La fine del regno dei Goti in Italia
 
-[T39-552.testo] Nel 552 il generale Narsete, inviato in Italia dall'imperatore d'Oriente Giustiniano, sconfigge il re goto Totila a Tagina, sull'Appennino. Totila muore durante la fuga. Narsete riconquista Roma e manda a Giustiniano le chiavi delle porte. Secondo lo storico Procopio, è la quinta volta che la città passa di mano dall'inizio del regno di Giustiniano. Durante la ritirata i Goti uccidono alcuni senatori che dalla Campania stavano tornando a Roma. Il loro ultimo re, Teia, muore in battaglia ai piedi del Vesuvio. Dopo diciotto anni di guerra l'Italia torna sotto il governo imperiale. Il 13 agosto 554 Giustiniano emana la Prammatica Sanzione, un provvedimento che annulla le decisioni di Totila. Conferma i fondi per rifornire Roma di grano e per la manutenzione degli edifici pubblici, del letto del Tevere, del porto e degli acquedotti.
+[T40-552.testo] Nel 552 il generale Narsete, inviato in Italia dall'imperatore d'Oriente Giustiniano, sconfigge il re goto Totila a Tagina, sull'Appennino. Totila muore durante la fuga. Narsete riconquista Roma e manda a Giustiniano le chiavi delle porte. Secondo lo storico Procopio, è la quinta volta che la città passa di mano dall'inizio del regno di Giustiniano. Durante la ritirata i Goti uccidono alcuni senatori che dalla Campania stavano tornando a Roma. Il loro ultimo re, Teia, muore in battaglia ai piedi del Vesuvio. Dopo diciotto anni di guerra l'Italia torna sotto il governo imperiale. Il 13 agosto 554 Giustiniano emana la Prammatica Sanzione, un provvedimento che annulla le decisioni di Totila. Conferma i fondi per rifornire Roma di grano e per la manutenzione degli edifici pubblici, del letto del Tevere, del porto e degli acquedotti.
 
-[T39-552.chi1.nome] Narsete
+[T40-552.chi1.nome] Narsete
 
-[T39-552.chi1.date] nato verso il 480, morto verso il 573
+[T40-552.chi1.date] nato verso il 480, morto verso il 573
 
-[T39-552.chi1.riga] Narsete, eunuco e alto funzionario alla corte di Giustiniano, comanda le truppe imperiali che sconfiggono i Goti a Tagina e al monte Lattaro.
+[T40-552.chi1.riga] Narsete, eunuco e alto funzionario alla corte di Giustiniano, comanda le truppe imperiali che sconfiggono i Goti a Tagina e al monte Lattaro.
 
-[T39-552.chi2.nome] Totila
+[T40-552.chi2.nome] Totila
 
-[T39-552.chi2.date] re dei Goti dal 541 al 552
+[T40-552.chi2.date] re dei Goti dal 541 al 552
 
-[T39-552.chi2.riga] Ferito a Tagina, muore nella fuga.
+[T40-552.chi2.riga] Ferito a Tagina, muore nella fuga.
 
-[T39-552.chi3.nome] Teia
+[T40-552.chi3.nome] Teia
 
-[T39-552.chi3.date] re dei Goti nel 552
+[T40-552.chi3.date] re dei Goti nel 552
 
-[T39-552.chi3.riga] Ultimo re dei Goti in Italia, muore combattendo ai piedi del Vesuvio.
+[T40-552.chi3.riga] Ultimo re dei Goti in Italia, muore combattendo ai piedi del Vesuvio.
 
-[T39-552.voce1.testo] «I barbari, atterriti, ricevuta la promessa di aver salva la vita, consegnarono sé stessi e la fortezza. […] Così Roma fu presa per la quinta volta durante il suo regno, e Narsete mandò subito all'imperatore le chiavi delle sue porte. […] Ma questa vittoria si rivelò per il Senato e il popolo romano causa di una rovina ben maggiore.»
+[T40-552.voce1.testo] «I barbari, atterriti, ricevuta la promessa di aver salva la vita, consegnarono sé stessi e la fortezza. […] Così Roma fu presa per la quinta volta durante il suo regno, e Narsete mandò subito all'imperatore le chiavi delle sue porte. […] Ma questa vittoria si rivelò per il Senato e il popolo romano causa di una rovina ben maggiore.»
 
-[T39-552.voce1.chi] Procopio di Cesarea, Guerre, VIII, 33-34. La fortezza di cui parla è il mausoleo di Adriano, circondato dai Goti con un muro difensivo. Traduzione dalla versione inglese di Dewing.
+[T40-552.voce1.chi] Procopio di Cesarea, Guerre, VIII, 33-34. La fortezza di cui parla è il mausoleo di Adriano, circondato dai Goti con un muro difensivo. Traduzione dalla versione inglese di Dewing.
 
-[T39-552.voce2.testo] «Ordiniamo che si conservino le consuetudini e i privilegi della città di Roma, e i fondi concessi per riparare gli edifici pubblici, il letto del Tevere, il foro e il porto di Roma, e per riparare gli acquedotti.»
+[T40-552.voce2.testo] «Ordiniamo che si conservino le consuetudini e i privilegi della città di Roma, e i fondi concessi per riparare gli edifici pubblici, il letto del Tevere, il foro e il porto di Roma, e per riparare gli acquedotti.»
 
-[T39-552.voce2.chi] Prammatica Sanzione, paragrafo 25. È la legge con cui Giustiniano riorganizza il governo dell'Italia. La emana a Costantinopoli il 13 agosto 554 su richiesta di papa Vigilio. Traduzione nostra dal latino.
+[T40-552.voce2.chi] Prammatica Sanzione, paragrafo 25. È la legge con cui Giustiniano riorganizza il governo dell'Italia. La emana a Costantinopoli il 13 agosto 554 su richiesta di papa Vigilio. Traduzione nostra dal latino.
 
-[T39-552.leggenda] Nel racconto di Procopio, l'ultimo re dei Goti combatte come un eroe dei poemi antichi. Per un terzo del giorno Teia resta in prima fila, a piedi. Ogni volta che le lance conficcate nello scudo lo rendono troppo pesante, chiama uno scudiero e si fa dare un altro scudo senza voltare le spalle. Quando le lance sono dodici, Teia chiede il cambio. Per un istante ha il petto scoperto e un giavellotto lo uccide. I Romani mostrano la sua testa ai due eserciti, su un palo. Procopio ne paragona il coraggio a quello degli eroi della leggenda. Scrive da Costantinopoli sulla base di racconti altrui, secondo il gusto degli storici antichi per le scene eroiche.
+[T40-552.leggenda] Nel racconto di Procopio, l'ultimo re dei Goti combatte come un eroe dei poemi antichi. Per un terzo del giorno Teia resta in prima fila, a piedi. Ogni volta che le lance conficcate nello scudo lo rendono troppo pesante, chiama uno scudiero e si fa dare un altro scudo senza voltare le spalle. Quando le lance sono dodici, Teia chiede il cambio. Per un istante ha il petto scoperto e un giavellotto lo uccide. I Romani mostrano la sua testa ai due eserciti, su un palo. Procopio ne paragona il coraggio a quello degli eroi della leggenda. Scrive da Costantinopoli sulla base di racconti altrui, secondo il gusto degli storici antichi per le scene eroiche.
 
-[T39-552.luogo1.tagina] Nel 552 Narsete sconfigge Totila
+[T40-552.luogo1.tagina] Nel 552 Narsete sconfigge Totila
 
-[T39-552.luogo2.roma] Narsete riconquista Roma
+[T40-552.luogo2.roma] Narsete riconquista Roma
 
-[T39-552.luogo3.lattaro] Nel 552 o nel 553 muore Teia, ultimo re dei Goti in Italia. Il luogo esatto è discusso.
+[T40-552.luogo3.lattaro] Nel 552 o nel 553 muore Teia, ultimo re dei Goti in Italia. Il luogo esatto è discusso.
 
-[T39-552.passo1.anno] 552 · Tagina
+[T40-552.passo1.anno] 552 · Tagina
 
-[T39-552.passo1.testo] Da Ravenna Narsete avanza lungo la costa adriatica e imbocca la via Flaminia. Totila gli va incontro attraversando l'Etruria. I due eserciti si scontrano a Tagina, sull'Appennino. I Goti vengono sconfitti e Totila muore durante la ritirata.
+[T40-552.passo1.testo] Da Ravenna Narsete avanza lungo la costa adriatica e imbocca la via Flaminia. Totila gli va incontro attraversando l'Etruria. I due eserciti si scontrano a Tagina, sull'Appennino. I Goti vengono sconfitti e Totila muore durante la ritirata.
 
-[T39-552.passo1.freccia1] Narsete
+[T40-552.passo1.freccia1] Narsete
 
-[T39-552.passo1.freccia2] Totila
+[T40-552.passo1.freccia2] Totila
 
-[T39-552.passo2.anno] 552 · Roma
+[T40-552.passo2.anno] 552 · Roma
 
-[T39-552.passo2.testo] Narsete riconquista Roma. I Goti, troppo pochi per difendere l'intera cinta di mura, si sono ritirati in un forte attorno al mausoleo di Adriano. Mentre il grosso dell'esercito attacca, Dagisteo e i suoi uomini usano le scale per superare un tratto di mura senza guardie. I difensori del forte si arrendono.
+[T40-552.passo2.testo] Narsete riconquista Roma. I Goti, troppo pochi per difendere l'intera cinta di mura, si sono ritirati in un forte attorno al mausoleo di Adriano. Mentre il grosso dell'esercito attacca, Dagisteo e i suoi uomini usano le scale per superare un tratto di mura senza guardie. I difensori del forte si arrendono.
 
-[T39-552.passo2.freccia1] Narsete
+[T40-552.passo2.freccia1] Narsete
 
-[T39-552.passo3.anno] Monte Lattaro
+[T40-552.passo3.anno] Monte Lattaro
 
-[T39-552.passo3.testo] A Pavia i Goti superstiti eleggono re Teia. Per evitare Narsete, il nuovo re raggiunge la Campania seguendo il versante adriatico. Muore combattendo al monte Lattaro, ai piedi del Vesuvio. Con la sua morte i Goti perdono il loro ultimo re in Italia.
+[T40-552.passo3.testo] A Pavia i Goti superstiti eleggono re Teia. Per evitare Narsete, il nuovo re raggiunge la Campania seguendo il versante adriatico. Muore combattendo al monte Lattaro, ai piedi del Vesuvio. Con la sua morte i Goti perdono il loro ultimo re in Italia.
 
-[T39-552.passo3.freccia1] Teia
+[T40-552.passo3.freccia1] Teia
 
-[T39-552.passo3.freccia2] Narsete
+[T40-552.passo3.freccia2] Narsete
 
 
 ### 568 · I Longobardi
 
-[T40-568.titolo] I Longobardi
+[T41-568.titolo] I Longobardi
 
-[T40-568.testo] Quattordici anni dopo la fine ufficiale della guerra fra Goti e Bizantini, i Longobardi entrano in un'Italia provata da diciotto anni di guerra e dalla peste. Paolo Diacono data il loro arrivo al 568, un cronista contemporaneo al 569. La penisola resterà divisa politicamente per circa tredici secoli.
+[T41-568.testo] Quattordici anni dopo la fine ufficiale della guerra fra Goti e Bizantini, i Longobardi entrano in un'Italia provata da diciotto anni di guerra e dalla peste. Paolo Diacono data il loro arrivo al 568, un cronista contemporaneo al 569. La penisola resterà divisa politicamente per circa tredici secoli.
 
-[T40-568.chi1.nome] Alboino
+[T41-568.chi1.nome] Alboino
 
-[T40-568.chi1.date] morto nel 572 o 573
+[T41-568.chi1.date] morto nel 572 o 573
 
-[T40-568.chi1.riga] Re dei Longobardi: guida il suo popolo dalla Pannonia in Italia; ucciso a Verona.
+[T41-568.chi1.riga] Re dei Longobardi: guida il suo popolo dalla Pannonia in Italia; ucciso a Verona.
 
-[T40-568.chi2.nome] Giustino II
+[T41-568.chi2.nome] Giustino II
 
-[T40-568.chi2.date] imperatore dal 565 al 578
+[T41-568.chi2.date] imperatore dal 565 al 578
 
-[T40-568.chi2.riga] Succede a Giustiniano, ma non dispone di truppe da inviare in Italia.
+[T41-568.chi2.riga] Succede a Giustiniano, ma non dispone di truppe da inviare in Italia.
 
-[T40-568.voce1.testo] «Subito la feroce gente dei Longobardi, tratta dal fodero della sua dimora, si è abbattuta sul nostro collo, e il genere umano, che in questa terra era cresciuto fitto come una messe, è stato falciato e si è seccato. Città spopolate, fortezze abbattute, chiese bruciate, monasteri di uomini e di donne distrutti; i campi, abbandonati dagli uomini e privi di chi li coltivi, sono una terra deserta […] le bestie hanno occupato i luoghi che prima teneva una moltitudine di uomini.»
+[T41-568.voce1.testo] «Subito la feroce gente dei Longobardi, tratta dal fodero della sua dimora, si è abbattuta sul nostro collo, e il genere umano, che in questa terra era cresciuto fitto come una messe, è stato falciato e si è seccato. Città spopolate, fortezze abbattute, chiese bruciate, monasteri di uomini e di donne distrutti; i campi, abbandonati dagli uomini e privi di chi li coltivi, sono una terra deserta […] le bestie hanno occupato i luoghi che prima teneva una moltitudine di uomini.»
 
-[T40-568.voce1.chi] Gregorio Magno, Dialoghi, III, 38. Scrive a Roma nel 593-594, una generazione dopo l'arrivo dei Longobardi, e descrive le devastazioni con il tono di chi teme la fine del mondo.
+[T41-568.voce1.chi] Gregorio Magno, Dialoghi, III, 38. Scrive a Roma nel 593-594, una generazione dopo l'arrivo dei Longobardi, e descrive le devastazioni con il tono di chi teme la fine del mondo.
 
-[T40-568.luogo1.cividale] i Longobardi entrano in Italia
+[T41-568.luogo1.cividale] i Longobardi entrano in Italia
 
 
 ### 589 · Il Tevere allaga Roma
 
-[T41-589.titolo] Il Tevere allaga Roma
+[T42-589.titolo] Il Tevere allaga Roma
 
-[T41-589.testo] Nell'autunno del 589, probabilmente a novembre, il Tevere supera le mura, inonda i quartieri più bassi e danneggia i granai della Chiesa. Pochi mesi dopo torna la peste. Tra le vittime c'è papa Pelagio II, a cui succede Gregorio Magno. Le fonti ricordano altre grandi piene. Nel 716 o 717 l'acqua rimane in città per sette giorni e sulla via Lata raggiunge una volta e mezzo l'altezza di un uomo. Il fiume straripa di nuovo nel dicembre 791.
+[T42-589.testo] Nell'autunno del 589, probabilmente a novembre, il Tevere supera le mura, inonda i quartieri più bassi e danneggia i granai della Chiesa. Pochi mesi dopo torna la peste. Tra le vittime c'è papa Pelagio II, a cui succede Gregorio Magno. Le fonti ricordano altre grandi piene. Nel 716 o 717 l'acqua rimane in città per sette giorni e sulla via Lata raggiunge una volta e mezzo l'altezza di un uomo. Il fiume straripa di nuovo nel dicembre 791.
 
-[T41-589.chi1.nome] Pelagio II
+[T42-589.chi1.nome] Pelagio II
 
-[T41-589.chi1.date] papa dal 579 al 590
+[T42-589.chi1.date] papa dal 579 al 590
 
-[T41-589.chi1.riga] Muore di peste nel febbraio 590.
+[T42-589.chi1.riga] Muore di peste nel febbraio 590.
 
-[T41-589.chi2.nome] Gregorio Magno
+[T42-589.chi2.nome] Gregorio Magno
 
-[T41-589.chi2.date] circa 540-604
+[T42-589.chi2.date] circa 540-604
 
-[T41-589.chi2.riga] Prima di diventare monaco aveva amministrato Roma come prefetto. Viene eletto papa nel 590.
+[T42-589.chi2.riga] Prima di diventare monaco aveva amministrato Roma come prefetto. Viene eletto papa nel 590.
 
-[T41-589.voce1.testo] «Il nostro diacono, tornando dalla città di Roma con le reliquie dei santi, riferì che l'anno prima, nel nono mese, il Tevere aveva coperto Roma con una piena tale che gli edifici antichi crollavano; furono abbattuti anche i granai della Chiesa, e vi andarono perdute alcune migliaia di moggi di grano. […] Seguì subito l'epidemia che chiamano inguinale.»
+[T42-589.voce1.testo] «Il nostro diacono, tornando dalla città di Roma con le reliquie dei santi, riferì che l'anno prima, nel nono mese, il Tevere aveva coperto Roma con una piena tale che gli edifici antichi crollavano; furono abbattuti anche i granai della Chiesa, e vi andarono perdute alcune migliaia di moggi di grano. […] Seguì subito l'epidemia che chiamano inguinale.»
 
-[T41-589.voce1.chi] Gregorio di Tours, Storie, X, 1, scritte nel 590-591. Il vescovo riferisce il racconto di un suo diacono, secondo cui la corrente avrebbe trascinato al mare anche serpenti e un drago.
+[T42-589.voce1.chi] Gregorio di Tours, Storie, X, 1, scritte nel 590-591. Il vescovo riferisce il racconto di un suo diacono, secondo cui la corrente avrebbe trascinato al mare anche serpenti e un drago.
 
-[T41-589.leggenda] Da dove viene il nome di Castel Sant'Angelo? La leggenda lo fa risalire alla peste del 590. In quell'anno Gregorio, appena eletto papa, organizza una processione. Gregorio di Tours, informato da un diacono presente a Roma, racconta che sette cortei partirono da altrettante chiese per raggiungere la basilica di Santa Maria. In una sola ora sarebbero morte ottanta persone. Nessun angelo compare nel suo racconto, né in quelli successivi di Paolo Diacono e di Giovanni Diacono, che scrive verso l'875. Fra le fonti consultate, la prima a raccontare l'apparizione è la Legenda aurea di Jacopo da Varazze, intorno al 1260. In cima al mausoleo di Adriano appare un angelo che asciuga una spada insanguinata e la ripone nel fodero. Jacopo ricorda anche un'immagine sacra attribuita a san Luca e il canto del Regina coeli. Da quel giorno, dice, il castello prese il nome dell'angelo. Il legame del luogo con l'arcangelo Michele è però documentato già nel X secolo, tre secoli prima del racconto di Jacopo. Liutprando di Cremona menziona infatti sulla sommità del mausoleo la «chiesa del santo Angelo fino ai cieli».
+[T42-589.leggenda] Da dove viene il nome di Castel Sant'Angelo? La leggenda lo fa risalire alla peste del 590. In quell'anno Gregorio, appena eletto papa, organizza una processione. Gregorio di Tours, informato da un diacono presente a Roma, racconta che sette cortei partirono da altrettante chiese per raggiungere la basilica di Santa Maria. In una sola ora sarebbero morte ottanta persone. Nessun angelo compare nel suo racconto, né in quelli successivi di Paolo Diacono e di Giovanni Diacono, che scrive verso l'875. Fra le fonti consultate, la prima a raccontare l'apparizione è la Legenda aurea di Jacopo da Varazze, intorno al 1260. In cima al mausoleo di Adriano appare un angelo che asciuga una spada insanguinata e la ripone nel fodero. Jacopo ricorda anche un'immagine sacra attribuita a san Luca e il canto del Regina coeli. Da quel giorno, dice, il castello prese il nome dell'angelo. Il legame del luogo con l'arcangelo Michele è però documentato già nel X secolo, tre secoli prima del racconto di Jacopo. Liutprando di Cremona menziona infatti sulla sommità del mausoleo la «chiesa del santo Angelo fino ai cieli».
 
-[T41-589.luogo1.roma] la piena del Tevere
+[T42-589.luogo1.roma] la piena del Tevere
 
 
 ### Intermezzo · La città
 
-[T42-590.titolo] La città
+[T43-590.titolo] La città
 
-[T42-590.testo] Come si segue lo spopolamento di Roma in assenza di censimenti regolari? Un indizio viene dai registri dei viveri. Nel 2 a.C. poco più di 200.000 abitanti ricevono grano dallo Stato. Nel 419 una legge prevede 4.000 razioni di carne al giorno. Nel 452 lo Stato distribuisce ancora oltre 3,6 milioni di libbre di carne di maiale. In seguito le distribuzioni si fanno più rare. Nessuna legge dice quando cessino. Cambia anche il paesaggio. Nel 458 l'imperatore Maggioriano minaccia di multare i magistrati che permettono di smontare i monumenti e di far tagliare le mani ai loro subalterni. La severità della legge mostra quanto il recupero dei materiali preoccupi le autorità. Nel 537 i Goti interrompono i quattordici acquedotti. Per continuare a macinare il grano, il generale Belisario fa installare mulini galleggianti sul Tevere. Un altro indizio viene dalle tombe. Già nella prima metà del V secolo compaiono, ancora rare, sepolture dentro le mura, dove la legge antica le vietava. Gli archeologi che le hanno censite ipotizzano che durante gli assedi fosse difficile portare fuori i morti. Nel VI e nel VII secolo seppellire i morti nei quartieri ormai vuoti e nelle terme abbandonate diventa abituale.
+[T43-590.testo] Come si segue lo spopolamento di Roma in assenza di censimenti regolari? Un indizio viene dai registri dei viveri. Nel 2 a.C. poco più di 200.000 abitanti ricevono grano dallo Stato. Nel 419 una legge prevede 4.000 razioni di carne al giorno. Nel 452 lo Stato distribuisce ancora oltre 3,6 milioni di libbre di carne di maiale. In seguito le distribuzioni si fanno più rare. Nessuna legge dice quando cessino. Cambia anche il paesaggio. Nel 458 l'imperatore Maggioriano minaccia di multare i magistrati che permettono di smontare i monumenti e di far tagliare le mani ai loro subalterni. La severità della legge mostra quanto il recupero dei materiali preoccupi le autorità. Nel 537 i Goti interrompono i quattordici acquedotti. Per continuare a macinare il grano, il generale Belisario fa installare mulini galleggianti sul Tevere. Un altro indizio viene dalle tombe. Già nella prima metà del V secolo compaiono, ancora rare, sepolture dentro le mura, dove la legge antica le vietava. Gli archeologi che le hanno censite ipotizzano che durante gli assedi fosse difficile portare fuori i morti. Nel VI e nel VII secolo seppellire i morti nei quartieri ormai vuoti e nelle terme abbandonate diventa abituale.
 
 
 ### 593 · «Dov'è il Senato? Dov'è ormai il popolo?»
 
-[T43-593.titolo] «Dov'è il Senato? Dov'è ormai il popolo?»
+[T44-593.titolo] «Dov'è il Senato? Dov'è ormai il popolo?»
 
-[T43-593.testo] Nel 593 i Longobardi di re Agilulfo marciano su Roma. In una predica papa Gregorio Magno chiede «Dov'è il Senato? Dov'è ormai il popolo?» (Omelie su Ezechiele, II, 6, 22). È Gregorio stesso a organizzare la distribuzione del grano e a trattare con gli assedianti.
+[T44-593.testo] Nel 593 i Longobardi di re Agilulfo marciano su Roma. In una predica papa Gregorio Magno chiede «Dov'è il Senato? Dov'è ormai il popolo?» (Omelie su Ezechiele, II, 6, 22). È Gregorio stesso a organizzare la distribuzione del grano e a trattare con gli assedianti.
 
-[T43-593.chi1.nome] Gregorio Magno
+[T44-593.chi1.nome] Gregorio Magno
 
-[T43-593.chi1.date] circa 540-604
+[T44-593.chi1.date] circa 540-604
 
-[T43-593.chi1.riga] Papa dal 590, negozia con il re longobardo Agilulfo, che si ritira. Secondo molti storici la Chiesa ottiene il ritiro pagando una somma di denaro.
+[T44-593.chi1.riga] Papa dal 590, negozia con il re longobardo Agilulfo, che si ritira. Secondo molti storici la Chiesa ottiene il ritiro pagando una somma di denaro.
 
-[T43-593.chi2.nome] Agilulfo
+[T44-593.chi2.nome] Agilulfo
 
-[T43-593.chi2.date] re dei Longobardi dal 590 al 616
+[T44-593.chi2.date] re dei Longobardi dal 590 al 616
 
-[T43-593.chi2.riga] Marcia su Roma, poi toglie l'assedio.
+[T44-593.chi2.riga] Marcia su Roma, poi toglie l'assedio.
 
-[T43-593.voce1.testo] «Dov'è il Senato? Dov'è ormai il popolo? Le ossa si sono disfatte, le carni consumate. […] Manca il Senato, il popolo è perito, e Roma, ormai vuota, brucia. Ma perché parlare degli uomini, quando vediamo, mentre le rovine si moltiplicano, crollare anche gli edifici?»
+[T44-593.voce1.testo] «Dov'è il Senato? Dov'è ormai il popolo? Le ossa si sono disfatte, le carni consumate. […] Manca il Senato, il popolo è perito, e Roma, ormai vuota, brucia. Ma perché parlare degli uomini, quando vediamo, mentre le rovine si moltiplicano, crollare anche gli edifici?»
 
-[T43-593.voce1.chi] Gregorio Magno, Omelie su Ezechiele, II, 6, 22. Per descrivere Roma, il papa riprende un'immagine del libro biblico di Ezechiele (capitolo 24). Come una pentola vuota lasciata sul fuoco, la città «brucia» perché si sta consumando.
+[T44-593.voce1.chi] Gregorio Magno, Omelie su Ezechiele, II, 6, 22. Per descrivere Roma, il papa riprende un'immagine del libro biblico di Ezechiele (capitolo 24). Come una pentola vuota lasciata sul fuoco, la città «brucia» perché si sta consumando.
 
-[T43-593.leggenda] Nell'Inghilterra di Beda circolava una storia sul motivo per cui Gregorio si fosse interessato agli Angli. Beda scrive nel 731 e avverte che la storia è «giunta fino a noi per tradizione degli antichi». Prima di diventare papa, Gregorio avrebbe visto al mercato di Roma alcuni ragazzi messi in vendita come schiavi. Colpito dalla loro carnagione chiara, dai volti e dai capelli, chiese chi fossero. Gli risposero che erano Angli, pagani, venuti dalla Britannia. «Bene», avrebbe detto, «hanno un volto d'angelo, ed è giusto che uomini così siano coeredi degli angeli in cielo». Il racconto prosegue con altri giochi di parole. Il nome della loro regione, Deira, ricordava a Gregorio il latino «de ira», come se quei giovani fossero stati sottratti all'ira e chiamati alla misericordia di Cristo. Il nome del re, Aelli, gli suggeriva il canto dell'«alleluia». La celebre formula «non Angli, sed angeli», cioè «non Angli, ma angeli», è un riassunto nato nei secoli successivi. La missione è invece documentata. Nel 596, quattordicesimo anno del regno dell'imperatore Maurizio, Gregorio inviò il monaco Agostino e i suoi compagni a predicare agli Angli.
+[T44-593.leggenda] Nell'Inghilterra di Beda circolava una storia sul motivo per cui Gregorio si fosse interessato agli Angli. Beda scrive nel 731 e avverte che la storia è «giunta fino a noi per tradizione degli antichi». Prima di diventare papa, Gregorio avrebbe visto al mercato di Roma alcuni ragazzi messi in vendita come schiavi. Colpito dalla loro carnagione chiara, dai volti e dai capelli, chiese chi fossero. Gli risposero che erano Angli, pagani, venuti dalla Britannia. «Bene», avrebbe detto, «hanno un volto d'angelo, ed è giusto che uomini così siano coeredi degli angeli in cielo». Il racconto prosegue con altri giochi di parole. Il nome della loro regione, Deira, ricordava a Gregorio il latino «de ira», come se quei giovani fossero stati sottratti all'ira e chiamati alla misericordia di Cristo. Il nome del re, Aelli, gli suggeriva il canto dell'«alleluia». La celebre formula «non Angli, sed angeli», cioè «non Angli, ma angeli», è un riassunto nato nei secoli successivi. La missione è invece documentata. Nel 596, quattordicesimo anno del regno dell'imperatore Maurizio, Gregorio inviò il monaco Agostino e i suoi compagni a predicare agli Angli.
 
-[T43-593.luogo1.roma] Agilulfo sotto le mura
+[T44-593.luogo1.roma] Agilulfo sotto le mura
 
 
 ### 597 · Da Roma al Kent per predicare agli Angli
 
-[T44-597.titolo] Da Roma al Kent per predicare agli Angli
+[T45-597.titolo] Da Roma al Kent per predicare agli Angli
 
-[T44-597.testo] Nel 596 papa Gregorio Magno invia il monaco Agostino e una quarantina di compagni in Britannia a predicare il cristianesimo agli Angli. Durante il viaggio i monaci, impauriti, vorrebbero tornare indietro. Una lettera di Gregorio li incoraggia a proseguire. Nel 597 sbarcano sull'isola di Thanet, nel Kent. Il re Etelberto, marito di una principessa franca cristiana, li riceve all'aperto. In seguito si fa battezzare. Agostino viene consacrato ad Arles vescovo degli Angli e sceglie Canterbury come sede. Sono passati quasi due secoli da quando le ultime truppe romane hanno lasciato la Britannia. Ora Roma vi torna con i suoi monaci.
+[T45-597.testo] Nel 596 papa Gregorio Magno invia il monaco Agostino e una quarantina di compagni in Britannia a predicare il cristianesimo agli Angli. Durante il viaggio i monaci, impauriti, vorrebbero tornare indietro. Una lettera di Gregorio li incoraggia a proseguire. Nel 597 sbarcano sull'isola di Thanet, nel Kent. Il re Etelberto, marito di una principessa franca cristiana, li riceve all'aperto. In seguito si fa battezzare. Agostino viene consacrato ad Arles vescovo degli Angli e sceglie Canterbury come sede. Sono passati quasi due secoli da quando le ultime truppe romane hanno lasciato la Britannia. Ora Roma vi torna con i suoi monaci.
 
-[T44-597.chi1.nome] Gregorio Magno
+[T45-597.chi1.nome] Gregorio Magno
 
-[T44-597.chi1.date] circa 540-604
+[T45-597.chi1.date] circa 540-604
 
-[T44-597.chi1.riga] Papa dal 590, invia i monaci in Britannia e mantiene i contatti con loro per lettera.
+[T45-597.chi1.riga] Papa dal 590, invia i monaci in Britannia e mantiene i contatti con loro per lettera.
 
-[T44-597.chi2.nome] Agostino di Canterbury
+[T45-597.chi2.nome] Agostino di Canterbury
 
-[T44-597.chi2.date] morto il 26 maggio, forse nel 604
+[T45-597.chi2.date] morto il 26 maggio, forse nel 604
 
-[T44-597.chi2.riga] Monaco romano, diventa il primo vescovo di Canterbury. Beda riporta l'iscrizione della sua tomba nel libro II, capitolo 3.
+[T45-597.chi2.riga] Monaco romano, diventa il primo vescovo di Canterbury. Beda riporta l'iscrizione della sua tomba nel libro II, capitolo 3.
 
-[T44-597.chi3.nome] Etelberto
+[T45-597.chi3.nome] Etelberto
 
-[T44-597.chi3.date] re del Kent, morto nel 616
+[T45-597.chi3.date] re del Kent, morto nel 616
 
-[T44-597.chi3.riga] Secondo Beda è il re più potente fra gli Angli a sud del fiume Humber. Accoglie i monaci inviati da Roma e in seguito si fa battezzare.
+[T45-597.chi3.riga] Secondo Beda è il re più potente fra gli Angli a sud del fiume Humber. Accoglie i monaci inviati da Roma e in seguito si fa battezzare.
 
-[T44-597.voce1.testo] «Dopo alcuni giorni il re venne sull'isola. Si sedette all'aperto e ordinò ad Agostino e ai suoi compagni di raggiungerlo per parlargli. Per un'antica superstizione aveva evitato di riceverli in una casa. Temeva che, se avessero conosciuto qualche arte magica, una volta entrati avrebbero potuto sopraffarlo con l'inganno.»
+[T45-597.voce1.testo] «Dopo alcuni giorni il re venne sull'isola. Si sedette all'aperto e ordinò ad Agostino e ai suoi compagni di raggiungerlo per parlargli. Per un'antica superstizione aveva evitato di riceverli in una casa. Temeva che, se avessero conosciuto qualche arte magica, una volta entrati avrebbero potuto sopraffarlo con l'inganno.»
 
-[T44-597.voce1.chi] Beda, Storia ecclesiastica del popolo degli Angli, I, 25. Il monaco inglese scrive nel 731, più di un secolo dopo, e riporta le lettere di Gregorio. Traduzione nostra dal latino.
+[T45-597.voce1.chi] Beda, Storia ecclesiastica del popolo degli Angli, I, 25. Il monaco inglese scrive nel 731, più di un secolo dopo, e riporta le lettere di Gregorio. Traduzione nostra dal latino.
 
-[T44-597.storici] Quando arrivò Agostino, in Britannia vivevano già dei cristiani. Tra loro c'erano la regina Berta, il vescovo franco che l'accompagnava e i Britanni delle regioni occidentali, con i quali Agostino non riuscì a collaborare. Per Beda la missione segna l'inizio della Chiesa inglese. La conversione dei regni anglosassoni richiese però quasi un secolo e alcuni tornarono per un periodo al paganesimo. Il legame con Roma durò nel tempo. Un secolo dopo, anche i re inglesi andavano in pellegrinaggio a San Pietro.
+[T45-597.storici] Quando arrivò Agostino, in Britannia vivevano già dei cristiani. Tra loro c'erano la regina Berta, il vescovo franco che l'accompagnava e i Britanni delle regioni occidentali, con i quali Agostino non riuscì a collaborare. Per Beda la missione segna l'inizio della Chiesa inglese. La conversione dei regni anglosassoni richiese però quasi un secolo e alcuni tornarono per un periodo al paganesimo. Il legame con Roma durò nel tempo. Un secolo dopo, anche i re inglesi andavano in pellegrinaggio a San Pietro.
 
-[T44-597.luogo1.thanet] 597: sbarcano Agostino e i monaci
+[T45-597.luogo1.thanet] 597: sbarcano Agostino e i monaci
 
-[T44-597.luogo2.canterbury] Canterbury, sede del vescovo Agostino
+[T45-597.luogo2.canterbury] Canterbury, sede del vescovo Agostino
 
-[T44-597.luogo3.roma] Da Roma partono Agostino e gli altri monaci inviati dal papa
+[T45-597.luogo3.roma] Da Roma partono Agostino e gli altri monaci inviati dal papa
 
 
 ### 609 · Il Pantheon diventa una chiesa
 
-[T45-609.titolo] Il Pantheon diventa una chiesa
+[T46-609.titolo] Il Pantheon diventa una chiesa
 
-[T45-609.testo] Il 1° agosto 608 viene dedicata all'imperatore d'Oriente Foca l'ultima colonna eretta nel Foro in onore di un sovrano. Foca dona a papa Bonifacio IV il Pantheon, un antico tempio romano. Il 13 maggio 609 Bonifacio lo consacra come chiesa. Il nuovo uso contribuisce a preservare l'edificio nei secoli successivi.
+[T46-609.testo] Il 1° agosto 608 viene dedicata all'imperatore d'Oriente Foca l'ultima colonna eretta nel Foro in onore di un sovrano. Foca dona a papa Bonifacio IV il Pantheon, un antico tempio romano. Il 13 maggio 609 Bonifacio lo consacra come chiesa. Il nuovo uso contribuisce a preservare l'edificio nei secoli successivi.
 
-[T45-609.chi1.nome] Foca
+[T46-609.chi1.nome] Foca
 
-[T45-609.chi1.date] imperatore dal 602 al 610
+[T46-609.chi1.date] imperatore dal 602 al 610
 
-[T45-609.chi1.riga] Salito al trono con una rivolta: dona il Pantheon al papa.
+[T46-609.chi1.riga] Salito al trono con una rivolta: dona il Pantheon al papa.
 
-[T45-609.chi2.nome] Bonifacio IV
+[T46-609.chi2.nome] Bonifacio IV
 
-[T45-609.chi2.date] papa dal 608 al 615
+[T46-609.chi2.date] papa dal 608 al 615
 
-[T45-609.chi2.riga] Consacra il tempio a Maria e a tutti i martiri.
+[T46-609.chi2.riga] Consacra il tempio a Maria e a tutti i martiri.
 
-[T45-609.chi3.nome] Smaragdo
+[T46-609.chi3.nome] Smaragdo
 
-[T45-609.chi3.riga] Governa da Ravenna l'Italia bizantina con il titolo di esarca. Fa dedicare a Foca la colonna nel Foro romano.
+[T46-609.chi3.riga] Governa da Ravenna l'Italia bizantina con il titolo di esarca. Fa dedicare a Foca la colonna nel Foro romano.
 
-[T45-609.voce1.testo] «In quel tempo ci furono carestie, pestilenze e gravissime inondazioni. Nello stesso tempo chiese all'imperatore Foca il tempio chiamato Pantheon, e ne fece la chiesa della beata Maria sempre vergine e di tutti i martiri; e a quella chiesa l'imperatore offrì molti doni.»
+[T46-609.voce1.testo] «In quel tempo ci furono carestie, pestilenze e gravissime inondazioni. Nello stesso tempo chiese all'imperatore Foca il tempio chiamato Pantheon, e ne fece la chiesa della beata Maria sempre vergine e di tutti i martiri; e a quella chiesa l'imperatore offrì molti doni.»
 
-[T45-609.voce1.chi] Liber Pontificalis, vita di papa Bonifacio IV. La biografia fu scritta negli uffici del papa a Roma, forse qualche decennio dopo i fatti.
+[T46-609.voce1.chi] Liber Pontificalis, vita di papa Bonifacio IV. La biografia fu scritta negli uffici del papa a Roma, forse qualche decennio dopo i fatti.
 
-[T45-609.luogo1.roma] il Pantheon diventa una chiesa
+[T46-609.luogo1.roma] il Pantheon diventa una chiesa
 
 
 ### 663 · L'imperatore d'Oriente Costante II visita Roma
 
-[T46-663.titolo] L'imperatore d'Oriente Costante II visita Roma
+[T47-663.titolo] L'imperatore d'Oriente Costante II visita Roma
 
-[T46-663.testo] Il 5 luglio Costante II arriva a Roma. Nei dodici giorni della visita fa rimuovere dai monumenti il bronzo da inviare a Costantinopoli, comprese le tegole del Pantheon. Prosegue poi per la Sicilia. Roma appartiene ancora all'impero d'Oriente. In città il papa conta sempre di più, ma l'imperatore comanda ancora: pochi anni prima, secondo il Liber Pontificalis, l'esarca ha portato via papa Martino I dalla basilica del Laterano e lo ha mandato a Costantinopoli.
+[T47-663.testo] Il 5 luglio Costante II arriva a Roma. Nei dodici giorni della visita fa rimuovere dai monumenti il bronzo da inviare a Costantinopoli, comprese le tegole del Pantheon. Prosegue poi per la Sicilia. Roma appartiene ancora all'impero d'Oriente. In città il papa conta sempre di più, ma l'imperatore comanda ancora: pochi anni prima, secondo il Liber Pontificalis, l'esarca ha portato via papa Martino I dalla basilica del Laterano e lo ha mandato a Costantinopoli.
 
-[T46-663.chi1.nome] Costante II
+[T47-663.chi1.nome] Costante II
 
-[T46-663.chi1.date] 630-668
+[T47-663.chi1.date] 630-668
 
-[T46-663.chi1.riga] Imperatore dal 641, è il primo a visitare Roma dopo la deposizione di Romolo Augustolo nel 476. Viene ucciso a Siracusa nel 668.
+[T47-663.chi1.riga] Imperatore dal 641, è il primo a visitare Roma dopo la deposizione di Romolo Augustolo nel 476. Viene ucciso a Siracusa nel 668.
 
-[T46-663.chi2.nome] Vitaliano
+[T47-663.chi2.nome] Vitaliano
 
-[T46-663.chi2.date] papa dal 657 al 672
+[T47-663.chi2.date] papa dal 657 al 672
 
-[T46-663.chi2.riga] Va incontro all'imperatore Costante II al sesto miglio da Roma.
+[T47-663.chi2.riga] Va incontro all'imperatore Costante II al sesto miglio da Roma.
 
-[T46-663.voce1.testo] «Poi venne a Roma, il 5 luglio, di mercoledì […] Il papa gli andò incontro con il suo clero al sesto miglio dalla città e lo accolse. […] Rimasto dodici giorni nella città di Roma, tolse tutto ciò che di bronzo ornava la città; scoperchiò anche la chiesa di Santa Maria ad Martyres, che aveva le tegole di bronzo, e le mandò alla città imperiale con le altre cose che aveva tolto.»
+[T47-663.voce1.testo] «Poi venne a Roma, il 5 luglio, di mercoledì […] Il papa gli andò incontro con il suo clero al sesto miglio dalla città e lo accolse. […] Rimasto dodici giorni nella città di Roma, tolse tutto ciò che di bronzo ornava la città; scoperchiò anche la chiesa di Santa Maria ad Martyres, che aveva le tegole di bronzo, e le mandò alla città imperiale con le altre cose che aveva tolto.»
 
-[T46-663.voce1.chi] Liber Pontificalis, vita di papa Vitaliano. Un membro del clero al servizio del papa scrive pochi anni dopo i fatti. L'imperatore è Costante II e Santa Maria ad Martyres è il nome cristiano del Pantheon.
+[T47-663.voce1.chi] Liber Pontificalis, vita di papa Vitaliano. Un membro del clero al servizio del papa scrive pochi anni dopo i fatti. L'imperatore è Costante II e Santa Maria ad Martyres è il nome cristiano del Pantheon.
 
-[T46-663.luogo1.roma] dodici giorni di Costante II
+[T47-663.luogo1.roma] dodici giorni di Costante II
 
 
 ### 711 · Il Mediterraneo si divide
 
-[T47-711.titolo] Il Mediterraneo si divide
+[T48-711.titolo] Il Mediterraneo si divide
 
-[T47-711.testo] Nel 698 gli eserciti del califfato conquistano Cartagine. Nel 711 attraversano lo stretto di Gibilterra e sconfiggono i Visigoti nella penisola iberica. La sponda meridionale del Mediterraneo passa sotto il dominio del califfato, mentre in Occidente acquistano peso i territori a nord delle Alpi.
+[T48-711.testo] Nel 698 gli eserciti del califfato conquistano Cartagine. Nel 711 attraversano lo stretto di Gibilterra e sconfiggono i Visigoti nella penisola iberica. La sponda meridionale del Mediterraneo passa sotto il dominio del califfato, mentre in Occidente acquistano peso i territori a nord delle Alpi.
 
-[T47-711.chi1.nome] Tariq ibn Ziyad
+[T48-711.chi1.nome] Tariq ibn Ziyad
 
-[T47-711.chi1.riga] Comandante berbero, attraversa lo stretto di Gibilterra nel 711.
+[T48-711.chi1.riga] Comandante berbero, attraversa lo stretto di Gibilterra nel 711.
 
-[T47-711.chi2.nome] Musa ibn Nusayr
+[T48-711.chi2.nome] Musa ibn Nusayr
 
-[T47-711.chi2.riga] Governatore arabo dell'Africa settentrionale, raggiunge Tariq nella penisola iberica nel 712.
+[T48-711.chi2.riga] Governatore arabo dell'Africa settentrionale, raggiunge Tariq nella penisola iberica nel 712.
 
-[T47-711.chi3.nome] Rodrigo
+[T48-711.chi3.nome] Rodrigo
 
-[T47-711.chi3.riga] L'ultimo re visigoto a regnare da Toledo: scompare nella battaglia.
+[T48-711.chi3.riga] L'ultimo re visigoto a regnare da Toledo: scompare nella battaglia.
 
-[T47-711.voce1.testo] «Dà alle fiamme e abbatte belle città, condanna alla croce gli anziani e i potenti, trucida a colpi di pugnale i giovani e i lattanti. […] Chi potrebbe raccontare pericoli così grandi? Chi contare naufragi così funesti? Se anche tutte le membra si mutassero in lingua, la natura umana non potrebbe mai dire le rovine della Spagna, né i suoi mali, tanti e tanto grandi.»
+[T48-711.voce1.testo] «Dà alle fiamme e abbatte belle città, condanna alla croce gli anziani e i potenti, trucida a colpi di pugnale i giovani e i lattanti. […] Chi potrebbe raccontare pericoli così grandi? Chi contare naufragi così funesti? Se anche tutte le membra si mutassero in lingua, la natura umana non potrebbe mai dire le rovine della Spagna, né i suoi mali, tanti e tanto grandi.»
 
-[T47-711.voce1.chi] Cronaca del 754. L'autore, un cristiano che vive nella Spagna sotto dominio arabo, scrive circa quarant'anni dopo gli avvenimenti. Il suo lamento riguarda la campagna militare di Musa del 712-714.
+[T48-711.voce1.chi] Cronaca del 754. L'autore, un cristiano che vive nella Spagna sotto dominio arabo, scrive circa quarant'anni dopo gli avvenimenti. Il suo lamento riguarda la campagna militare di Musa del 712-714.
 
-[T47-711.storici] Per Henri Pirenne il momento decisivo per la fine del mondo antico arriva dopo le invasioni germaniche. Sono le conquiste arabe, secondo lo storico, a spezzare l'unità economica del Mediterraneo. I reperti archeologici indicano però che gli scambi erano già molto diminuiti prima di quelle conquiste.
+[T48-711.storici] Per Henri Pirenne il momento decisivo per la fine del mondo antico arriva dopo le invasioni germaniche. Sono le conquiste arabe, secondo lo storico, a spezzare l'unità economica del Mediterraneo. I reperti archeologici indicano però che gli scambi erano già molto diminuiti prima di quelle conquiste.
 
-[T47-711.luogo1.guadalete] cade il regno dei Visigoti (il luogo esatto è incerto)
+[T48-711.luogo1.guadalete] cade il regno dei Visigoti (il luogo esatto è incerto)
 
-[T47-711.luogo2.cartagine] presa dagli Arabi nel 698
+[T48-711.luogo2.cartagine] presa dagli Arabi nel 698
 
-[T47-711.luogo3.poitiers] nel 732 Carlo Martello ferma una spedizione araba diretta a Tours (il luogo esatto è incerto)
+[T48-711.luogo3.poitiers] nel 732 Carlo Martello ferma una spedizione araba diretta a Tours (il luogo esatto è incerto)
 
-[T47-711.passo1.anno] 602-628
+[T48-711.passo1.anno] 602-628
 
-[T47-711.passo1.testo] Prima delle conquiste arabe, l'Impero romano d'Oriente e la Persia si combattono per ventisei anni. I Persiani conquistano la Siria, Gerusalemme e l'Egitto. Nel 626 arrivano davanti a Costantinopoli. L'imperatore d'Oriente Eraclio ottiene una vittoria decisiva nel 627. Entrambi gli imperi escono dalla guerra indeboliti.
+[T48-711.passo1.testo] Prima delle conquiste arabe, l'Impero romano d'Oriente e la Persia si combattono per ventisei anni. I Persiani conquistano la Siria, Gerusalemme e l'Egitto. Nel 626 arrivano davanti a Costantinopoli. L'imperatore d'Oriente Eraclio ottiene una vittoria decisiva nel 627. Entrambi gli imperi escono dalla guerra indeboliti.
 
-[T47-711.passo1.freccia1] Persiani
+[T48-711.passo1.freccia1] Persiani
 
-[T47-711.passo1.freccia4] Eraclio
+[T48-711.passo1.freccia4] Eraclio
 
-[T47-711.passo2.anno] 636
+[T48-711.passo2.anno] 636
 
-[T47-711.passo2.testo] Pochi anni dopo gli eserciti del califfato, lo Stato guidato dai successori di Maometto, muovono dall'Arabia. Nell'agosto del 636, vicino al fiume Yarmuk, sconfiggono l'esercito di Eraclio. L'Impero d'Oriente perde la Siria.
+[T48-711.passo2.testo] Pochi anni dopo gli eserciti del califfato, lo Stato guidato dai successori di Maometto, muovono dall'Arabia. Nell'agosto del 636, vicino al fiume Yarmuk, sconfiggono l'esercito di Eraclio. L'Impero d'Oriente perde la Siria.
 
-[T47-711.passo2.freccia1] Arabi
+[T48-711.passo2.freccia1] Arabi
 
-[T47-711.passo3.anno] 639-642
+[T48-711.passo3.anno] 639-642
 
-[T47-711.passo3.testo] Alla fine del 639 il comandante arabo Amr ibn al-As entra in Egitto passando per Pelusio. Alessandria si arrende nel 641. Nel settembre del 642 le ultime truppe dell'Impero d'Oriente lasciano la città via mare.
+[T48-711.passo3.testo] Alla fine del 639 il comandante arabo Amr ibn al-As entra in Egitto passando per Pelusio. Alessandria si arrende nel 641. Nel settembre del 642 le ultime truppe dell'Impero d'Oriente lasciano la città via mare.
 
-[T47-711.passo3.freccia1] Amr
+[T48-711.passo3.freccia1] Amr
 
-[T47-711.passo4.anno] 698
+[T48-711.passo4.anno] 698
 
-[T47-711.passo4.testo] Per conquistare l'Africa settentrionale gli eserciti arabi impiegano mezzo secolo. Nel 670 fondano Qayrawan, nell'attuale Tunisia. Nel 698 conquistano Cartagine.
+[T48-711.passo4.testo] Per conquistare l'Africa settentrionale gli eserciti arabi impiegano mezzo secolo. Nel 670 fondano Qayrawan, nell'attuale Tunisia. Nel 698 conquistano Cartagine.
 
-[T47-711.passo4.freccia1] Arabi
+[T48-711.passo4.freccia1] Arabi
 
-[T47-711.passo5.anno] 711
+[T48-711.passo5.anno] 711
 
-[T47-711.passo5.testo] Nel 711 il comandante Tariq attraversa lo stretto di Gibilterra con un esercito di Berberi e Arabi. Sconfigge i Visigoti nei pressi del fiume Guadalete. Cade anche Toledo, capitale del regno visigoto.
+[T48-711.passo5.testo] Nel 711 il comandante Tariq attraversa lo stretto di Gibilterra con un esercito di Berberi e Arabi. Sconfigge i Visigoti nei pressi del fiume Guadalete. Cade anche Toledo, capitale del regno visigoto.
 
-[T47-711.passo5.freccia2] Tariq
+[T48-711.passo5.freccia2] Tariq
 
-[T47-711.passo6.anno] 732
+[T48-711.passo6.anno] 732
 
-[T47-711.passo6.testo] Nel 732 o nel 733 il governatore Abd al-Rahman attraversa i Pirenei e avanza verso Tours. Carlo Martello, alla guida dei Franchi, lo ferma tra Tours e Poitiers.
+[T48-711.passo6.testo] Nel 732 o nel 733 il governatore Abd al-Rahman attraversa i Pirenei e avanza verso Tours. Carlo Martello, alla guida dei Franchi, lo ferma tra Tours e Poitiers.
 
-[T47-711.passo6.freccia1] Abd al-Rahman
+[T48-711.passo6.freccia1] Abd al-Rahman
 
-[T47-711.passo6.freccia2] Carlo Martello
+[T48-711.passo6.freccia2] Carlo Martello
 
 
 ### 727 · I pellegrini raggiungono San Pietro
 
-[T48-727.titolo] I pellegrini raggiungono San Pietro
+[T49-727.titolo] I pellegrini raggiungono San Pietro
 
-[T48-727.testo] Re e pellegrini anglosassoni, franchi e longobardi vengono a Roma a pregare sulla tomba di san Pietro. La basilica dedicata all'apostolo si trova fuori dalle mura. Attorno sorgono monasteri, case per i pellegrini e comunità di stranieri della stessa provenienza, chiamate «scholae». Mentre la città antica perde abitanti, vicino a San Pietro cresce un nuovo quartiere. In quegli anni papa Gregorio II si oppone all'imperatore d'Oriente Leone III sulle nuove tasse in Italia e sul divieto delle immagini sacre. Truppe di stanza in Italia si schierano con il papa.
+[T49-727.testo] Re e pellegrini anglosassoni, franchi e longobardi vengono a Roma a pregare sulla tomba di san Pietro. La basilica dedicata all'apostolo si trova fuori dalle mura. Attorno sorgono monasteri, case per i pellegrini e comunità di stranieri della stessa provenienza, chiamate «scholae». Mentre la città antica perde abitanti, vicino a San Pietro cresce un nuovo quartiere. In quegli anni papa Gregorio II si oppone all'imperatore d'Oriente Leone III sulle nuove tasse in Italia e sul divieto delle immagini sacre. Truppe di stanza in Italia si schierano con il papa.
 
-[T48-727.chi1.nome] Ine
+[T49-727.chi1.nome] Ine
 
-[T48-727.chi1.date] re del Wessex dal 688 circa. Lascia il trono nel 726 o nel 728, secondo le diverse datazioni.
+[T49-727.chi1.date] re del Wessex dal 688 circa. Lascia il trono nel 726 o nel 728, secondo le diverse datazioni.
 
-[T48-727.chi1.riga] Rinuncia al trono e parte per Roma, dove trascorre il resto della vita.
+[T49-727.chi1.riga] Rinuncia al trono e parte per Roma, dove trascorre il resto della vita.
 
-[T48-727.chi2.nome] Gregorio II
+[T49-727.chi2.nome] Gregorio II
 
-[T48-727.chi2.date] papa dal 715 al 731
+[T49-727.chi2.date] papa dal 715 al 731
 
-[T48-727.chi2.riga] Nato a Roma, Gregorio II si oppone alle nuove tasse e al divieto delle immagini sacre voluti dall'imperatore Leone III.
+[T49-727.chi2.riga] Nato a Roma, Gregorio II si oppone alle nuove tasse e al divieto delle immagini sacre voluti dall'imperatore Leone III.
 
-[T48-727.chi3.nome] Liutprando
+[T49-727.chi3.nome] Liutprando
 
-[T48-727.chi3.date] re dei Longobardi dal 712 al 744
+[T49-727.chi3.date] re dei Longobardi dal 712 al 744
 
-[T48-727.chi3.riga] Nel 728 dona al papa il castello di Sutri.
+[T49-727.chi3.riga] Nel 728 dona al papa il castello di Sutri.
 
-[T48-727.voce1.testo] «Con nuovi ordini l'imperatore aveva stabilito che non si tenesse più nessuna immagine di santo, di martire o di angelo: le diceva tutte maledette. Se il papa avesse acconsentito, avrebbe avuto il favore dell'imperatore; se lo avesse impedito, avrebbe perso la sua sede. Disprezzando l'ordine sacrilego del sovrano, il pio uomo si armò contro l'imperatore come contro un nemico […]. Allora gli eserciti della Pentapoli e delle Venezie si opposero agli ordini dell'imperatore.»
+[T49-727.voce1.testo] «Con nuovi ordini l'imperatore aveva stabilito che non si tenesse più nessuna immagine di santo, di martire o di angelo: le diceva tutte maledette. Se il papa avesse acconsentito, avrebbe avuto il favore dell'imperatore; se lo avesse impedito, avrebbe perso la sua sede. Disprezzando l'ordine sacrilego del sovrano, il pio uomo si armò contro l'imperatore come contro un nemico […]. Allora gli eserciti della Pentapoli e delle Venezie si opposero agli ordini dell'imperatore.»
 
-[T48-727.voce1.chi] Liber Pontificalis, vita di Gregorio II, paragrafo 17 (edizione Duchesne). La biografia fu scritta negli uffici del papa poco dopo gli avvenimenti e ne esprime il punto di vista. Traduzione nostra dal latino.
+[T49-727.voce1.chi] Liber Pontificalis, vita di Gregorio II, paragrafo 17 (edizione Duchesne). La biografia fu scritta negli uffici del papa poco dopo gli avvenimenti e ne esprime il punto di vista. Traduzione nostra dal latino.
 
-[T48-727.voce2.testo] «[Ine, re dei Sassoni occidentali], dopo aver tenuto il regno per trentasette anni, lo lasciò anche lui, affidandolo ai più giovani, e partì per le soglie dei beati apostoli […] desiderando farsi per un tempo pellegrino in terra, vicino ai luoghi santi, per meritare di essere accolto con più familiarità dai santi in cielo; cosa che in questi tempi molti del popolo degli Angli, nobili e non nobili, laici e chierici, uomini e donne, hanno preso a fare a gara.»
+[T49-727.voce2.testo] «[Ine, re dei Sassoni occidentali], dopo aver tenuto il regno per trentasette anni, lo lasciò anche lui, affidandolo ai più giovani, e partì per le soglie dei beati apostoli […] desiderando farsi per un tempo pellegrino in terra, vicino ai luoghi santi, per meritare di essere accolto con più familiarità dai santi in cielo; cosa che in questi tempi molti del popolo degli Angli, nobili e non nobili, laici e chierici, uomini e donne, hanno preso a fare a gara.»
 
-[T48-727.voce2.chi] Beda, Storia ecclesiastica, V, 7. Monaco a Jarrow, nel regno anglosassone di Northumbria, termina l'opera nel 731. Ine era partito per Roma intorno al 726.
+[T49-727.voce2.chi] Beda, Storia ecclesiastica, V, 7. Monaco a Jarrow, nel regno anglosassone di Northumbria, termina l'opera nel 731. Ine era partito per Roma intorno al 726.
 
-[T48-727.luogo1.roma] i pellegrini a San Pietro
+[T49-727.luogo1.roma] i pellegrini a San Pietro
 
 
 ### 756 · I Longobardi assediano Roma
 
-[T49-756.titolo] I Longobardi assediano Roma
+[T50-756.titolo] I Longobardi assediano Roma
 
-[T49-756.testo] Il re longobardo Astolfo assedia Roma per tre mesi. Il papa chiede di nuovo aiuto ai Franchi. Da circa trent'anni i rapporti con Costantinopoli sono tesi anche per il divieto imperiale delle immagini sacre, che i papi difendono. Pipino il Breve, re dei Franchi, interviene in Italia e consegna al papa i territori sottratti ai Longobardi. Nasce così il primo nucleo dello Stato della Chiesa, il territorio su cui i papi esercitano anche il potere politico.
+[T50-756.testo] Il re longobardo Astolfo assedia Roma per tre mesi. Il papa chiede di nuovo aiuto ai Franchi. Da circa trent'anni i rapporti con Costantinopoli sono tesi anche per il divieto imperiale delle immagini sacre, che i papi difendono. Pipino il Breve, re dei Franchi, interviene in Italia e consegna al papa i territori sottratti ai Longobardi. Nasce così il primo nucleo dello Stato della Chiesa, il territorio su cui i papi esercitano anche il potere politico.
 
-[T49-756.chi1.nome] Astolfo
+[T50-756.chi1.nome] Astolfo
 
-[T49-756.chi1.date] re dei Longobardi dal 749 al 756
+[T50-756.chi1.date] re dei Longobardi dal 749 al 756
 
-[T49-756.chi1.riga] Ha preso Ravenna nel 751; muore nel 756.
+[T50-756.chi1.riga] Ha preso Ravenna nel 751; muore nel 756.
 
-[T49-756.chi2.nome] Stefano II
+[T50-756.chi2.nome] Stefano II
 
-[T49-756.chi2.date] papa dal 752 al 757
+[T50-756.chi2.date] papa dal 752 al 757
 
-[T49-756.chi2.riga] Parte da Roma nell'ottobre 753 e il 6 gennaio 754 incontra Pipino a Ponthion.
+[T50-756.chi2.riga] Parte da Roma nell'ottobre 753 e il 6 gennaio 754 incontra Pipino a Ponthion.
 
-[T49-756.chi3.nome] Pipino il Breve
+[T50-756.chi3.nome] Pipino il Breve
 
-[T49-756.chi3.date] re dei Franchi dal 751 al 768
+[T50-756.chi3.date] re dei Franchi dal 751 al 768
 
-[T49-756.chi3.riga] Guida due spedizioni in Italia. La prima risale al 754 o al 755, la seconda al 756.
+[T50-756.chi3.riga] Guida due spedizioni in Italia. La prima risale al 754 o al 755, la seconda al 756.
 
-[T49-756.voce1.testo] «Io, Pietro apostolo […] Correte, correte, per il Dio vivo e vero vi esorto e vi scongiuro: correte e soccorrete, prima che si secchi la fonte viva da cui siete stati saziati e siete rinati […] Se invece, cosa che non crediamo, frapporrete qualche indugio […] sappiate che, per l'autorità della santa e unica Trinità, per la grazia dell'apostolato che mi è stata data da Cristo Signore, sarete esclusi, per aver trasgredito la nostra esortazione, dal regno di Dio e dalla vita eterna.»
+[T50-756.voce1.testo] «Io, Pietro apostolo […] Correte, correte, per il Dio vivo e vero vi esorto e vi scongiuro: correte e soccorrete, prima che si secchi la fonte viva da cui siete stati saziati e siete rinati […] Se invece, cosa che non crediamo, frapporrete qualche indugio […] sappiate che, per l'autorità della santa e unica Trinità, per la grazia dell'apostolato che mi è stata data da Cristo Signore, sarete esclusi, per aver trasgredito la nostra esortazione, dal regno di Dio e dalla vita eterna.»
 
-[T49-756.voce1.chi] Papa Stefano II scrive a Pipino e ai Franchi all'inizio del 756, durante l'assedio di Astolfo. Nella lettera è san Pietro a parlare in prima persona. Il testo proviene dal Codex Carolinus, consultato nella ristampa di Migne anziché nell'edizione critica.
+[T50-756.voce1.chi] Papa Stefano II scrive a Pipino e ai Franchi all'inizio del 756, durante l'assedio di Astolfo. Nella lettera è san Pietro a parlare in prima persona. Il testo proviene dal Codex Carolinus, consultato nella ristampa di Migne anziché nell'edizione critica.
 
-[T49-756.leggenda] Dall'XI secolo i papi richiameranno anche la cosiddetta «donazione di Costantino». Secondo questo documento l'imperatore avrebbe ceduto a papa Silvestro il palazzo del Laterano, «la città di Roma e tutte le province, i luoghi e le città d'Italia e delle regioni occidentali». Avrebbe poi trasferito la propria sede in Oriente, perché «non è giusto che l'imperatore terreno abbia potere là dove l'imperatore celeste ha posto il principato dei sacerdoti e il capo della religione cristiana». Il documento è un falso. La vita di Stefano II nel Liber Pontificalis racconta un'altra donazione, quella di Pipino, che agisce «per amore di san Pietro e per il perdono dei peccati» e fa deporre sulla tomba dell'apostolo le chiavi delle città. Il racconto non cita la donazione di Costantino. Data e luogo di composizione del falso restano discussi. Gli studiosi hanno proposto date dal VII al IX secolo, spesso negli anni di Pipino o di Carlo Magno. Uno studio del 2007 propone la Francia del IX secolo. Ottone III respinse il documento nel 1001. Niccolò Cusano nel 1433 e Lorenzo Valla intorno al 1440 ne mostrarono la falsità esaminando il testo.
+[T50-756.leggenda] Dall'XI secolo i papi richiameranno anche la cosiddetta «donazione di Costantino». Secondo questo documento l'imperatore avrebbe ceduto a papa Silvestro il palazzo del Laterano, «la città di Roma e tutte le province, i luoghi e le città d'Italia e delle regioni occidentali». Avrebbe poi trasferito la propria sede in Oriente, perché «non è giusto che l'imperatore terreno abbia potere là dove l'imperatore celeste ha posto il principato dei sacerdoti e il capo della religione cristiana». Il documento è un falso. La vita di Stefano II nel Liber Pontificalis racconta un'altra donazione, quella di Pipino, che agisce «per amore di san Pietro e per il perdono dei peccati» e fa deporre sulla tomba dell'apostolo le chiavi delle città. Il racconto non cita la donazione di Costantino. Data e luogo di composizione del falso restano discussi. Gli studiosi hanno proposto date dal VII al IX secolo, spesso negli anni di Pipino o di Carlo Magno. Uno studio del 2007 propone la Francia del IX secolo. Ottone III respinse il documento nel 1001. Niccolò Cusano nel 1433 e Lorenzo Valla intorno al 1440 ne mostrarono la falsità esaminando il testo.
 
-[T49-756.luogo1.roma] assediata da Astolfo
+[T50-756.luogo1.roma] assediata da Astolfo
 
-[T49-756.luogo2.pavia] Pipino piega i Longobardi
+[T50-756.luogo2.pavia] Pipino piega i Longobardi
 
 
 ### 780 · Papa Adriano I restaura Roma
 
-[T50-780.titolo] Papa Adriano I restaura Roma
+[T51-780.titolo] Papa Adriano I restaura Roma
 
-[T50-780.testo] Dopo la conquista del regno longobardo da parte di Carlo Magno nel 774, papa Adriano I fa riparare a Roma quattro acquedotti, le mura e i tetti delle basiliche. Amplia anche le grandi tenute agricole della Chiesa, chiamate domuscultae, che riforniscono di cibo la città.
+[T51-780.testo] Dopo la conquista del regno longobardo da parte di Carlo Magno nel 774, papa Adriano I fa riparare a Roma quattro acquedotti, le mura e i tetti delle basiliche. Amplia anche le grandi tenute agricole della Chiesa, chiamate domuscultae, che riforniscono di cibo la città.
 
-[T50-780.chi1.nome] Adriano I
+[T51-780.chi1.nome] Adriano I
 
-[T50-780.chi1.date] papa dal 772 al 795
+[T51-780.chi1.date] papa dal 772 al 795
 
-[T50-780.chi1.riga] Romano di famiglia nobile: sarà papa per ventitré anni.
+[T51-780.chi1.riga] Romano di famiglia nobile: sarà papa per ventitré anni.
 
-[T50-780.chi2.nome] Carlo Magno
+[T51-780.chi2.nome] Carlo Magno
 
-[T50-780.chi2.date] re dei Franchi dal 768
+[T51-780.chi2.date] re dei Franchi dal 768
 
-[T50-780.chi2.riga] Prende Pavia nel 774 e si fa re dei Longobardi.
+[T51-780.chi2.riga] Prende Pavia nel 774 e si fa re dei Longobardi.
 
-[T50-780.chi3.nome] Desiderio
+[T51-780.chi3.nome] Desiderio
 
-[T50-780.chi3.date] re dei Longobardi dal 757 al 774
+[T51-780.chi3.date] re dei Longobardi dal 757 al 774
 
-[T50-780.chi3.riga] Ultimo re dei Longobardi prima della conquista di Carlo Magno, trascorre gli ultimi anni in un monastero nel regno dei Franchi.
+[T51-780.chi3.riga] Ultimo re dei Longobardi prima della conquista di Carlo Magno, trascorre gli ultimi anni in un monastero nel regno dei Franchi.
 
-[T50-780.voce1.testo] «Erano ormai passati vent'anni da quando il condotto detto Sabbatina, del tutto rotto, […] non portava più acqua né nell'atrio del beato Pietro né dentro la città […] e non sembrava esserci più alcuna speranza di ricostruirne gli archi. Il beatissimo e santissimo presule, radunata una moltitudine di popolo, si mise di persona a ricostruire e a restaurare quel condotto […] e con l'aiuto di Dio fece scorrere l'acqua in abbondanza, come in antico, nell'atrio del beato Pietro e anche dentro la città, cioè al Gianicolo, dove giravano le mole.»
+[T51-780.voce1.testo] «Erano ormai passati vent'anni da quando il condotto detto Sabbatina, del tutto rotto, […] non portava più acqua né nell'atrio del beato Pietro né dentro la città […] e non sembrava esserci più alcuna speranza di ricostruirne gli archi. Il beatissimo e santissimo presule, radunata una moltitudine di popolo, si mise di persona a ricostruire e a restaurare quel condotto […] e con l'aiuto di Dio fece scorrere l'acqua in abbondanza, come in antico, nell'atrio del beato Pietro e anche dentro la città, cioè al Gianicolo, dove giravano le mole.»
 
-[T50-780.voce1.chi] Liber Pontificalis, vita di Adriano I. Scritta a Roma durante il suo pontificato (772-795), è una biografia ufficiale che elogia l'opera del papa.
+[T51-780.voce1.chi] Liber Pontificalis, vita di Adriano I. Scritta a Roma durante il suo pontificato (772-795), è una biografia ufficiale che elogia l'opera del papa.
 
-[T50-780.leggenda] Nel 778 Carlo Magno tornava da una spedizione in Spagna. Il suo biografo Eginardo racconta che, mentre l'esercito attraversava i Pirenei, i Baschi nascosti nei boschi assalirono gli ultimi uomini della colonna. Spinsero nella valle gli ultimi carri dei bagagli e la retroguardia che li proteggeva, uccisero tutti fino all'ultimo e si dispersero al buio. Tra i morti Eginardo ricorda due alti funzionari, il siniscalco Eggihardo e il conte di palazzo Anselmo, e «Rolando, prefetto del confine di Bretagna». Non indica il passo montano in cui avvenne l'attacco. La prima versione degli annali ufficiali franchi tace la sconfitta. Una versione successiva ammette che il ricordo di quell'episodio offuscò per il re i successi della spedizione. Più di tre secoli dopo, il poema francese Chanson de Roland trasforma l'imboscata in un episodio di una lunga guerra. Nel poema Carlo ha combattuto in Spagna per «sette anni interi» e conquistato tutto il territorio fino al mare tranne Saragozza, dove regna Marsilio, «che non ama Dio». Al posto dei Baschi compaiono i Saraceni.
+[T51-780.leggenda] Nel 778 Carlo Magno tornava da una spedizione in Spagna. Il suo biografo Eginardo racconta che, mentre l'esercito attraversava i Pirenei, i Baschi nascosti nei boschi assalirono gli ultimi uomini della colonna. Spinsero nella valle gli ultimi carri dei bagagli e la retroguardia che li proteggeva, uccisero tutti fino all'ultimo e si dispersero al buio. Tra i morti Eginardo ricorda due alti funzionari, il siniscalco Eggihardo e il conte di palazzo Anselmo, e «Rolando, prefetto del confine di Bretagna». Non indica il passo montano in cui avvenne l'attacco. La prima versione degli annali ufficiali franchi tace la sconfitta. Una versione successiva ammette che il ricordo di quell'episodio offuscò per il re i successi della spedizione. Più di tre secoli dopo, il poema francese Chanson de Roland trasforma l'imboscata in un episodio di una lunga guerra. Nel poema Carlo ha combattuto in Spagna per «sette anni interi» e conquistato tutto il territorio fino al mare tranne Saragozza, dove regna Marsilio, «che non ama Dio». Al posto dei Baschi compaiono i Saraceni.
 
-[T50-780.luogo1.pavia] presa da Carlo Magno nel 774
+[T51-780.luogo1.pavia] presa da Carlo Magno nel 774
 
-[T50-780.luogo2.roma] i cantieri di Adriano I
+[T51-780.luogo2.roma] i cantieri di Adriano I
 
 
 ### 791 · La piena del Tevere travolge porta Flaminia
 
-[T51-791.titolo] La piena del Tevere travolge porta Flaminia
+[T52-791.titolo] La piena del Tevere travolge porta Flaminia
 
-[T51-791.testo] Nel dicembre 791, racconta il Liber Pontificalis, il Tevere strappa porta Flaminia dalle fondamenta e la trascina lungo la via Lata. Qui l'acqua supera il doppio dell'altezza di un uomo. Nei pressi dell'attuale ponte Sisto crolla un tratto delle mura. Per tre giorni il fiume scorre nelle strade come nel proprio letto. Papa Adriano fa portare viveri in barca agli abitanti rimasti bloccati nelle case.
+[T52-791.testo] Nel dicembre 791, racconta il Liber Pontificalis, il Tevere strappa porta Flaminia dalle fondamenta e la trascina lungo la via Lata. Qui l'acqua supera il doppio dell'altezza di un uomo. Nei pressi dell'attuale ponte Sisto crolla un tratto delle mura. Per tre giorni il fiume scorre nelle strade come nel proprio letto. Papa Adriano fa portare viveri in barca agli abitanti rimasti bloccati nelle case.
 
-[T51-791.chi1.nome] Adriano I
+[T52-791.chi1.nome] Adriano I
 
-[T51-791.chi1.date] papa dal 772 al 795
+[T52-791.chi1.date] papa dal 772 al 795
 
-[T51-791.chi1.riga] È papa da diciannove anni; morirà nel 795.
+[T52-791.chi1.riga] È papa da diciannove anni; morirà nel 795.
 
-[T51-791.voce1.testo] «Il Tevere, uscito gonfio dal suo letto, si sparse per le campagne. Per l'enorme piena entrò dalla porta detta Flaminia, la strappò dalle fondamenta e la trascinò fino all'arco chiamato Tres Falciclas. […] Per tre giorni il fiume corse per la città come nel proprio letto.»
+[T52-791.voce1.testo] «Il Tevere, uscito gonfio dal suo letto, si sparse per le campagne. Per l'enorme piena entrò dalla porta detta Flaminia, la strappò dalle fondamenta e la trascinò fino all'arco chiamato Tres Falciclas. […] Per tre giorni il fiume corse per la città come nel proprio letto.»
 
-[T51-791.voce1.chi] Liber Pontificalis, vita di Adriano I, 94-95.
+[T52-791.voce1.chi] Liber Pontificalis, vita di Adriano I, 94-95.
 
-[T51-791.luogo1.roma] la piena di dicembre
+[T52-791.luogo1.roma] la piena di dicembre
 
 
 ### 800 · Carlo Magno incoronato imperatore a San Pietro
 
-[T52-800.titolo] Carlo Magno incoronato imperatore a San Pietro
+[T53-800.titolo] Carlo Magno incoronato imperatore a San Pietro
 
-[T52-800.testo] Il 25 dicembre, nella basilica di San Pietro, papa Leone III incorona Carlo Magno imperatore. In Occidente nasce un nuovo impero, il cui centro politico si trova oltre le Alpi. A Roma, tra le rovine antiche, vivono ormai poche decine di migliaia di persone. La città è diventata la sede dei papi e la meta dei pellegrini.
+[T53-800.testo] Il 25 dicembre, nella basilica di San Pietro, papa Leone III incorona Carlo Magno imperatore. In Occidente nasce un nuovo impero, il cui centro politico si trova oltre le Alpi. A Roma, tra le rovine antiche, vivono ormai poche decine di migliaia di persone. La città è diventata la sede dei papi e la meta dei pellegrini.
 
-[T52-800.chi1.nome] Carlo Magno
+[T53-800.chi1.nome] Carlo Magno
 
-[T52-800.chi1.date] morto nell'814
+[T53-800.chi1.date] morto nell'814
 
-[T52-800.chi1.riga] Re dei Franchi dal 768, imperatore dal Natale dell'800.
+[T53-800.chi1.riga] Re dei Franchi dal 768, imperatore dal Natale dell'800.
 
-[T52-800.chi2.nome] Leone III
+[T53-800.chi2.nome] Leone III
 
-[T52-800.chi2.date] papa dal 795 all'816
+[T53-800.chi2.date] papa dal 795 all'816
 
-[T52-800.chi2.riga] Nel 799, dopo un'aggressione a Roma, cerca rifugio presso Carlo Magno a Paderborn.
+[T53-800.chi2.riga] Nel 799, dopo un'aggressione a Roma, cerca rifugio presso Carlo Magno a Paderborn.
 
-[T52-800.chi3.nome] Irene
+[T53-800.chi3.nome] Irene
 
-[T52-800.chi3.date] imperatrice dal 797 all'802
+[T53-800.chi3.date] imperatrice dal 797 all'802
 
-[T52-800.chi3.riga] Irene governa l'impero d'Oriente da Costantinopoli. In Occidente, chi sostiene l'incoronazione di Carlo considera vacante il trono imperiale perché lo occupa una donna.
+[T53-800.chi3.riga] Irene governa l'impero d'Oriente da Costantinopoli. In Occidente, chi sostiene l'incoronazione di Carlo considera vacante il trono imperiale perché lo occupa una donna.
 
-[T52-800.voce1.testo] «Nel santissimo giorno della nascita del Signore, mentre il re, alla messa, si alzava dalla preghiera davanti alla confessione del beato Pietro apostolo, papa Leone gli pose una corona sul capo, e tutto il popolo dei Romani acclamò: “A Carlo augusto, coronato da Dio, grande e pacifico imperatore dei Romani, vita e vittoria!”»
+[T53-800.voce1.testo] «Nel santissimo giorno della nascita del Signore, mentre il re, alla messa, si alzava dalla preghiera davanti alla confessione del beato Pietro apostolo, papa Leone gli pose una corona sul capo, e tutto il popolo dei Romani acclamò: “A Carlo augusto, coronato da Dio, grande e pacifico imperatore dei Romani, vita e vittoria!”»
 
-[T52-800.voce1.chi] Annali del regno dei Franchi. L'incoronazione è registrata sotto l'801 perché per il cronista l'anno comincia a Natale. Il testo, scritto in quegli anni, riflette la versione ufficiale della corte franca.
+[T53-800.voce1.chi] Annali del regno dei Franchi. L'incoronazione è registrata sotto l'801 perché per il cronista l'anno comincia a Natale. Il testo, scritto in quegli anni, riflette la versione ufficiale della corte franca.
 
-[T52-800.voce2.testo] «In quell'occasione ricevette il nome di imperatore e augusto. E dapprima gli fu tanto sgradito da affermare che quel giorno, sebbene fosse una festa solenne, non sarebbe entrato in chiesa, se avesse potuto conoscere in anticipo l'intenzione del pontefice.»
+[T53-800.voce2.testo] «In quell'occasione ricevette il nome di imperatore e augusto. E dapprima gli fu tanto sgradito da affermare che quel giorno, sebbene fosse una festa solenne, non sarebbe entrato in chiesa, se avesse potuto conoscere in anticipo l'intenzione del pontefice.»
 
-[T52-800.voce2.chi] Eginardo, Vita di Carlo, 28. Membro della corte, scrive tra l'817 e l'830, una generazione dopo i fatti. Il sovrano riluttante ad accettare il potere è anche un motivo ricorrente nella letteratura.
+[T53-800.voce2.chi] Eginardo, Vita di Carlo, 28. Membro della corte, scrive tra l'817 e l'830, una generazione dopo i fatti. Il sovrano riluttante ad accettare il potere è anche un motivo ricorrente nella letteratura.
 
-[T52-800.luogo1.roma] Carlo Magno incoronato imperatore
+[T53-800.luogo1.roma] Carlo Magno incoronato imperatore
 
-[T52-800.luogo2.aquisgrana] sede della corte di Carlo Magno
+[T53-800.luogo2.aquisgrana] sede della corte di Carlo Magno
 
 
 ### 801 · La terra trema
 
-[T53-801.titolo] La terra trema
+[T54-801.titolo] La terra trema
 
-[T53-801.testo] La sera del 30 aprile 801, quattro mesi dopo l'incoronazione di Carlo Magno, un terremoto fa crollare gran parte del tetto di San Paolo fuori le mura. Per Roma, le cronache ricordano soltanto i danni alla basilica. Papa Leone III fa ricostruire il tetto. San Paolo e San Pietro sono ormai fra gli edifici più curati della città.
+[T54-801.testo] La sera del 30 aprile 801, quattro mesi dopo l'incoronazione di Carlo Magno, un terremoto fa crollare gran parte del tetto di San Paolo fuori le mura. Per Roma, le cronache ricordano soltanto i danni alla basilica. Papa Leone III fa ricostruire il tetto. San Paolo e San Pietro sono ormai fra gli edifici più curati della città.
 
-[T53-801.chi1.nome] Leone III
+[T54-801.chi1.nome] Leone III
 
-[T53-801.chi1.date] papa dal 795 all'816
+[T54-801.chi1.date] papa dal 795 all'816
 
-[T53-801.chi1.riga] Ha incoronato Carlo quattro mesi prima.
+[T54-801.chi1.riga] Ha incoronato Carlo quattro mesi prima.
 
-[T53-801.chi2.nome] Carlo Magno
+[T54-801.chi2.nome] Carlo Magno
 
-[T53-801.chi2.date] morto nell'814
+[T54-801.chi2.date] morto nell'814
 
-[T53-801.chi2.riga] È a Spoleto, sulla via del ritorno, quando la terra trema.
+[T54-801.chi2.riga] È a Spoleto, sulla via del ritorno, quando la terra trema.
 
-[T53-801.voce1.testo] «Mentre [Carlo] era lì, il 30 aprile, alla seconda ora della notte, ci fu un grandissimo terremoto, che scosse gravemente tutta l'Italia. Per quella scossa il tetto della basilica del beato Paolo apostolo cadde in gran parte, con le sue travi.»
+[T54-801.voce1.testo] «Mentre [Carlo] era lì, il 30 aprile, alla seconda ora della notte, ci fu un grandissimo terremoto, che scosse gravemente tutta l'Italia. Per quella scossa il tetto della basilica del beato Paolo apostolo cadde in gran parte, con le sue travi.»
 
-[T53-801.voce1.chi] Annali del regno dei Franchi, anno 801, tenuti alla corte: Carlo era a Spoleto, di ritorno da Roma.
+[T54-801.voce1.chi] Annali del regno dei Franchi, anno 801, tenuti alla corte: Carlo era a Spoleto, di ritorno da Roma.
 
-[T53-801.luogo1.roma] il terremoto del 30 aprile
+[T54-801.luogo1.roma] il terremoto del 30 aprile
 
 
 ### 846 · I Saraceni a San Pietro
 
-[T54-846.titolo] I Saraceni a San Pietro
+[T55-846.titolo] I Saraceni a San Pietro
 
-[T54-846.testo] Una flotta saracena, forse partita dalla Sicilia o dall'Africa settentrionale, approda a Ostia e risale il Tevere. Le mura di Aureliano proteggono Roma, ma due delle basiliche più venerate dell'Occidente sorgono fuori dalla cinta. Gli assalitori saccheggiano San Pietro e, secondo il Liber Pontificalis, anche San Paolo.
+[T55-846.testo] Una flotta saracena, forse partita dalla Sicilia o dall'Africa settentrionale, approda a Ostia e risale il Tevere. Le mura di Aureliano proteggono Roma, ma due delle basiliche più venerate dell'Occidente sorgono fuori dalla cinta. Gli assalitori saccheggiano San Pietro e, secondo il Liber Pontificalis, anche San Paolo.
 
-[T54-846.chi1.nome] Sergio II
+[T55-846.chi1.nome] Sergio II
 
-[T54-846.chi1.date] papa dall'844 all'847
+[T55-846.chi1.date] papa dall'844 all'847
 
-[T54-846.chi1.riga] È papa quando San Pietro viene saccheggiato.
+[T55-846.chi1.riga] È papa quando San Pietro viene saccheggiato.
 
-[T54-846.chi2.nome] Lotario I
+[T55-846.chi2.nome] Lotario I
 
-[T54-846.chi2.date] imperatore dall'840 all'855
+[T55-846.chi2.date] imperatore dall'840 all'855
 
-[T54-846.chi2.riga] Nell'846 o nell'847 emana un provvedimento, detto capitolare, che ordina di costruire mura intorno a San Pietro.
+[T55-846.chi2.riga] Nell'846 o nell'847 emana un provvedimento, detto capitolare, che ordina di costruire mura intorno a San Pietro.
 
-[T54-846.voce1.testo] «Nel mese di agosto Saraceni e Mauri, giunti a Roma per il Tevere, devastano la basilica del beato Pietro, principe degli apostoli: portano via, insieme all'altare stesso, che era stato posto sopra la sua tomba, tutti gli ornamenti e i tesori.»
+[T55-846.voce1.testo] «Nel mese di agosto Saraceni e Mauri, giunti a Roma per il Tevere, devastano la basilica del beato Pietro, principe degli apostoli: portano via, insieme all'altare stesso, che era stato posto sopra la sua tomba, tutti gli ornamenti e i tesori.»
 
-[T54-846.voce1.chi] Prudenzio, Annali di San Bertino, anno 846. Scrive alla corte di Carlo il Calvo pochi mesi dopo i fatti. Gli studiosi discutono se gli assalitori abbiano davvero portato via anche l'altare.
+[T55-846.voce1.chi] Prudenzio, Annali di San Bertino, anno 846. Scrive alla corte di Carlo il Calvo pochi mesi dopo i fatti. Gli studiosi discutono se gli assalitori abbiano davvero portato via anche l'altare.
 
-[T54-846.luogo1.roma] i Saraceni saccheggiano San Pietro
+[T55-846.luogo1.roma] i Saraceni saccheggiano San Pietro
 
 
 ### 852 · Le nuove mura proteggono San Pietro
 
-[T55-852.titolo] Le nuove mura proteggono San Pietro
+[T56-852.titolo] Le nuove mura proteggono San Pietro
 
-[T55-852.testo] Dopo il saccheggio dell'846 e l'incendio che devasta parte del quartiere del Borgo intorno all'847, papa Leone IV fa costruire nuove mura attorno a San Pietro. Il 27 giugno 852 nasce la «città leonina», che prende il nome dal papa. Le mura di Aureliano, lunghe diciannove chilometri, racchiudono ancora i quartieri della città antica, dove tra le rovine si coltivano orti e vigne. La nuova cinta protegge la basilica e il quartiere sorto attorno alla tomba dell'apostolo. È qui che Roma ha trovato un nuovo centro. Molti monumenti antichi assunsero l'aspetto attuale nei secoli successivi, soprattutto perché furono smontati per riutilizzarne i materiali. Il lato sud del Colosseo, per esempio, era già in parte smontato quando, secondo il Parco archeologico del Colosseo, il terremoto dell'847 ne fece crollare il resto. La data tradizionale è invece il 1349. Nessuna cronaca dell'epoca descrive il crollo.
+[T56-852.testo] Dopo il saccheggio dell'846 e l'incendio che devasta parte del quartiere del Borgo intorno all'847, papa Leone IV fa costruire nuove mura attorno a San Pietro. Il 27 giugno 852 nasce la «città leonina», che prende il nome dal papa. Le mura di Aureliano, lunghe diciannove chilometri, racchiudono ancora i quartieri della città antica, dove tra le rovine si coltivano orti e vigne. La nuova cinta protegge la basilica e il quartiere sorto attorno alla tomba dell'apostolo. È qui che Roma ha trovato un nuovo centro. Molti monumenti antichi assunsero l'aspetto attuale nei secoli successivi, soprattutto perché furono smontati per riutilizzarne i materiali. Il lato sud del Colosseo, per esempio, era già in parte smontato quando, secondo il Parco archeologico del Colosseo, il terremoto dell'847 ne fece crollare il resto. La data tradizionale è invece il 1349. Nessuna cronaca dell'epoca descrive il crollo.
 
-[T55-852.chi1.nome] Leone IV
+[T56-852.chi1.nome] Leone IV
 
-[T55-852.chi1.date] papa dall'847 all'855
+[T56-852.chi1.date] papa dall'847 all'855
 
-[T55-852.chi1.riga] Fa costruire le mura in quattro anni e le benedice a piedi nudi.
+[T56-852.chi1.riga] Fa costruire le mura in quattro anni e le benedice a piedi nudi.
 
-[T55-852.chi2.nome] Lotario I
+[T56-852.chi2.nome] Lotario I
 
-[T55-852.chi2.date] imperatore dall'840 all'855
+[T56-852.chi2.date] imperatore dall'840 all'855
 
-[T55-852.chi2.riga] Contribuisce alla spesa.
+[T56-852.chi2.riga] Contribuisce alla spesa.
 
-[T55-852.voce1.testo] «Ordinò […] che con lui tutti i vescovi e i sacerdoti, e anche i diaconi e tutti gli ordini dei chierici […], dopo le litanie e il canto del salterio, con inni e cantici spirituali, facessero il giro di tutte le mura a piedi nudi, con la cenere sul capo. […] “Questa città, che da poco, con il tuo aiuto, abbiamo fondato, fa' che resti per sempre al sicuro dalla tua ira, e che sui nemici, a causa dei quali è stata costruita, abbia nuovi e molti trionfi.”»
+[T56-852.voce1.testo] «Ordinò […] che con lui tutti i vescovi e i sacerdoti, e anche i diaconi e tutti gli ordini dei chierici […], dopo le litanie e il canto del salterio, con inni e cantici spirituali, facessero il giro di tutte le mura a piedi nudi, con la cenere sul capo. […] “Questa città, che da poco, con il tuo aiuto, abbiamo fondato, fa' che resti per sempre al sicuro dalla tua ira, e che sui nemici, a causa dei quali è stata costruita, abbia nuovi e molti trionfi.”»
 
-[T55-852.voce1.chi] Liber Pontificalis, vita di Leone IV. Un membro del clero al servizio del papa descrive la cerimonia di benedizione delle nuove mura e riporta la prima delle tre preghiere di Leone. Il testo è contemporaneo e ha un intento celebrativo.
+[T56-852.voce1.chi] Liber Pontificalis, vita di Leone IV. Un membro del clero al servizio del papa descrive la cerimonia di benedizione delle nuove mura e riporta la prima delle tre preghiere di Leone. Il testo è contemporaneo e ha un intento celebrativo.
 
-[T55-852.leggenda] Papa Leone IV muore il 17 luglio 855. Secondo una leggenda, prima del suo successore Benedetto III sarebbe diventata papa una donna conosciuta come «Giovanni Anglico, nato a Magonza». Dopo due anni, sette mesi e quattro giorni di pontificato, avrebbe partorito per strada «fra il Colosseo e la chiesa di San Clemente». Questa versione compare nell'ultima redazione della cronaca di Martino Polono, che arriva al 1277, oltre quattro secoli dopo i fatti. Una versione più antica, in una cronaca di Metz del Duecento, lascia la donna senza nome e colloca l'episodio intorno al 1099. Che cosa dicono invece i testi del IX secolo? Nessuno ricorda una donna papa e le testimonianze sulla successione di Leone IV non lasciano spazio a un altro pontificato. Incmaro di Reims racconta che i suoi inviati appresero della morte di Leone mentre andavano a Roma e ottennero da Benedetto il privilegio richiesto. Secondo le enciclopedie consultate, Benedetto fu consacrato già il 29 settembre 855, dopo uno scontro con Anastasio, che rivendicava a sua volta il papato. Si citano anche monete su cui il nome di Benedetto compare accanto a quello dell'imperatore Lotario, morto in quegli stessi giorni.
+[T56-852.leggenda] Papa Leone IV muore il 17 luglio 855. Secondo una leggenda, prima del suo successore Benedetto III sarebbe diventata papa una donna conosciuta come «Giovanni Anglico, nato a Magonza». Dopo due anni, sette mesi e quattro giorni di pontificato, avrebbe partorito per strada «fra il Colosseo e la chiesa di San Clemente». Questa versione compare nell'ultima redazione della cronaca di Martino Polono, che arriva al 1277, oltre quattro secoli dopo i fatti. Una versione più antica, in una cronaca di Metz del Duecento, lascia la donna senza nome e colloca l'episodio intorno al 1099. Che cosa dicono invece i testi del IX secolo? Nessuno ricorda una donna papa e le testimonianze sulla successione di Leone IV non lasciano spazio a un altro pontificato. Incmaro di Reims racconta che i suoi inviati appresero della morte di Leone mentre andavano a Roma e ottennero da Benedetto il privilegio richiesto. Secondo le enciclopedie consultate, Benedetto fu consacrato già il 29 settembre 855, dopo uno scontro con Anastasio, che rivendicava a sua volta il papato. Si citano anche monete su cui il nome di Benedetto compare accanto a quello dell'imperatore Lotario, morto in quegli stessi giorni.
 
-[T55-852.luogo1.roma] le mura di Leone IV attorno a San Pietro
+[T56-852.luogo1.roma] le mura di Leone IV attorno a San Pietro
 
 
 ### Intermezzo · Che cosa resta
 
-[T56-852.titolo] Che cosa resta
+[T57-852.titolo] Che cosa resta
 
-[T56-852.testo] Nell'852, quasi quattro secoli dopo la fine dell'Impero romano d'Occidente, che cosa rimane del mondo romano? Il latino sopravvive nei libri, mentre la lingua parlata è cambiata. Nell'813 a Tours un'assemblea di vescovi chiede ai sacerdoti di predicare «nella lingua romana rustica o in quella tedesca», così che tutti possano capire. La prima espressione indica la parlata locale derivata dal latino. Nell'842, a Strasburgo, due nipoti di Carlo Magno pronunciano un giuramento davanti ai loro eserciti, uno in lingua romanza e l'altro in tedesco. Lo storico Nitardo ne trascrive le parole. Anche il diritto romano sopravvive, accanto a quello degli altri popoli. Verso l'820 il vescovo Agobardo di Lione osserva che persino cinque uomini seduti insieme possono seguire leggi diverse a seconda delle loro origini, per esempio quella franca, burgunda o romana. Rimangono la Chiesa di Roma, protetta dai re franchi, e l'idea di impero. Nell'800 il papa ha incoronato Carlo Magno a Roma. La storia del titolo imperiale in Occidente proseguirà, con interruzioni, fino al 1806.
+[T57-852.testo] Nell'852, quasi quattro secoli dopo la fine dell'Impero romano d'Occidente, che cosa rimane del mondo romano? Il latino sopravvive nei libri, mentre la lingua parlata è cambiata. Nell'813 a Tours un'assemblea di vescovi chiede ai sacerdoti di predicare «nella lingua romana rustica o in quella tedesca», così che tutti possano capire. La prima espressione indica la parlata locale derivata dal latino. Nell'842, a Strasburgo, due nipoti di Carlo Magno pronunciano un giuramento davanti ai loro eserciti, uno in lingua romanza e l'altro in tedesco. Lo storico Nitardo ne trascrive le parole. Anche il diritto romano sopravvive, accanto a quello degli altri popoli. Verso l'820 il vescovo Agobardo di Lione osserva che persino cinque uomini seduti insieme possono seguire leggi diverse a seconda delle loro origini, per esempio quella franca, burgunda o romana. Rimangono la Chiesa di Roma, protetta dai re franchi, e l'idea di impero. Nell'800 il papa ha incoronato Carlo Magno a Roma. La storia del titolo imperiale in Occidente proseguirà, con interruzioni, fino al 1806.
 
-[T56-852.voce1.testo] «Per l'amore di Dio e per il popolo cristiano e la salvezza di noi due, da questo giorno in avanti, per quanto Dio mi darà di sapere e di potere, io salverò questo mio fratello Carlo, con il mio aiuto e in ogni cosa, come per diritto si deve salvare il proprio fratello, purché egli faccia altrettanto con me. E con Lotario non farò mai nessun accordo che, per mia volontà, sia di danno a questo mio fratello Carlo.»
+[T57-852.voce1.testo] «Per l'amore di Dio e per il popolo cristiano e la salvezza di noi due, da questo giorno in avanti, per quanto Dio mi darà di sapere e di potere, io salverò questo mio fratello Carlo, con il mio aiuto e in ogni cosa, come per diritto si deve salvare il proprio fratello, purché egli faccia altrettanto con me. E con Lotario non farò mai nessun accordo che, per mia volontà, sia di danno a questo mio fratello Carlo.»
 
-[T56-852.voce1.chi] Giuramenti di Strasburgo, 14 febbraio 842, nelle Storie di Nitardo, III, 5. Ludovico il Germanico pronuncia queste parole nella lingua dei soldati di suo fratello Carlo il Calvo. Carlo a sua volta giura in tedesco per farsi capire dai soldati di Ludovico. Il giuramento di Ludovico è uno dei più antichi testi scritti in una lingua romanza, cioè derivata dal latino. Traduzione nostra.
+[T57-852.voce1.chi] Giuramenti di Strasburgo, 14 febbraio 842, nelle Storie di Nitardo, III, 5. Ludovico il Germanico pronuncia queste parole nella lingua dei soldati di suo fratello Carlo il Calvo. Carlo a sua volta giura in tedesco per farsi capire dai soldati di Ludovico. Il giuramento di Ludovico è uno dei più antichi testi scritti in una lingua romanza, cioè derivata dal latino. Traduzione nostra.
 
 
 ## 4. Cruscotto
@@ -2070,6 +2107,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [evento.assedio472] Luglio 472 · Da mesi il generale Ricimero assedia l'imperatore Antemio a Roma. Blocca il Tevere per impedire ai rifornimenti di raggiungere la città. La ricostruzione colloca gli accampamenti sulla riva destra, ma la loro posizione precisa è incerta. Lo scontro decisivo avviene a ponte Elio, davanti al mausoleo di Adriano. Antemio, che durante l'assedio si trovava nel palazzo imperiale, viene ucciso a San Crisogono, in Trastevere. Un'iscrizione ricorda che durante la guerra civile scoppiò un incendio vicino alla Curia, la sede del Senato. Alcuni studiosi lo collocano nei giorni dell'assedio.
 
 [evento.velo536] 536 · Per circa un anno il sole appare velato. I contemporanei raccontano che la sua luce scalda poco.
+
+[evento.africa534] 534 · Roma, governata dai Goti, non vede la guerra d'Africa. Ma qualcosa le appartiene: secondo Procopio, nel trionfo di Belisario a Costantinopoli sfilano anche i tesori del Tempio di Gerusalemme, che Tito aveva portato a Roma e i Vandali avevano preso nel sacco del 455.
 
 [evento.assedio537] Marzo 537 – marzo 538 · Il re goto Vitige assedia Roma, difesa da Belisario, per un anno e nove giorni. I Goti interrompono gli acquedotti e allestiscono sette accampamenti, sei davanti alle porte tra il nord e l'est della città e uno oltre il Tevere. Già dall'anno precedente il sole appare velato. Procopio paragona la sua luce a quella della luna. Cassiodoro racconta che in Italia a mezzogiorno i corpi non proiettavano ombra. Oggi il fenomeno è attribuito a grandi eruzioni vulcaniche.
 
@@ -4083,7 +4122,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [carta.citta] Roma · Ravenna · Milano · Treviri · Arles · Cartagine · Costantinopoli · Londinium · Sirmio · Antiochia · Alessandria · Tolosa · Adrianopoli
 
-[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Delta · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Soissons · Vouillé · Parigi · Tagina · Monte Lattaro · Thanet · Canterbury · Genova · Autun · Lérins · Aix · Vienne · Mar Ligure · Tirreno · Boulogne · Manica · Dover · York · Cornovaglia · Frisia · Frisia · Anglia orientale · Mare del Nord · Anglia orientale · Fano · Cesena · Urbino · Salona · Tournai · Angoulême · Abruzzo · Benevento · Visigoti · Alani · Romani · Unni · Unni
+[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Delta · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Soissons · Vouillé · Parigi · Tagina · Monte Lattaro · Thanet · Canterbury · Genova · Autun · Caputvada · Decimum · Malta · Lérins · Aix · Vienne · Mar Ligure · Tirreno · Boulogne · Manica · Dover · York · Cornovaglia · Frisia · Frisia · Anglia orientale · Mare del Nord · Anglia orientale · Fano · Cesena · Urbino · Salona · Tournai · Angoulême · Abruzzo · Benevento · Visigoti · Alani · Romani · Unni · Unni
 
 [carta.mari] Mare Nostrum · Oceano · Mare Interno · Ponto Eusino
 
@@ -4346,7 +4385,7 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/condividi.js
 
-[ui.condividi.01-r6] Come finisce un impero · La storia dell'Occidente romano dal 235 all'852 in 56 tappe. Segui i confini sulla carta e scopri come cambia Roma attraverso una ricostruzione in 3D.
+[ui.condividi.01-r6] Come finisce un impero · La storia dell'Occidente romano dal 235 all'852 in 57 tappe. Segui i confini sulla carta e scopri come cambia Roma attraverso una ricostruzione in 3D.
 
 [ui.condividi.02-r41] Link copiato
 

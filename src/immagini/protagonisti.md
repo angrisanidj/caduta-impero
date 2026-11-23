@@ -4,15 +4,15 @@ Generato da `node cerca.mjs info` (scelte a mano in `scelte.mjs`; licenze e auto
 
 ## Conteggi
 
-Righe della tabella: 138 (persone distinte: 105).
+Righe della tabella: 141 (persone distinte: 106).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 79 | 57 |
+| ritratto coevo | 80 | 57 |
 | ritratto posteriore | 21 | 18 |
 | di fantasia | 5 | 4 |
 | oggetto del tempo, senza volto | 22 | 16 |
-| nessuna immagine | 11 | 10 |
+| nessuna immagine | 13 | 11 |
 
 ## Da decidere
 
@@ -235,6 +235,12 @@ Le scelte di principio:
 - **Boezio** ([Q102851](https://www.wikidata.org/wiki/Q102851)) — *ritratto posteriore*: miniatura del Maestro del Boezio Lallemant in un manoscritto della «Consolazione» (BnF, Lat. 6643), 1498 circa. [Consolation de la philosophie - BNF Lat6643 f1 (Boèce au travail).jpg](https://commons.wikimedia.org/wiki/File:Consolation_de_la_philosophie_-_BNF_Lat6643_f1_(Bo%C3%A8ce_au_travail).jpg) — 448×661, Public domain; «Immagine: Master of the Lallemant Boethius, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo certo. Attenzione: il dittico di Brescia è del padre, Manlio Boezio console nel 487. La miniatura è di quasi mille anni dopo; su Commons ce ne sono di più antiche (categoria «Boethius in medieval miniatures»), non controllate.
 - **Amalasunta** ([Q371670](https://www.wikidata.org/wiki/Q371670)) — *ritratto coevo*: dittico consolare d'avorio di Oreste, 530, Victoria and Albert Museum: medaglioni con Atalarico e Amalasunta. [Detail of Consular diptych of Rufus Gennadius Probus Orestes.png](https://commons.wikimedia.org/wiki/File:Detail_of_Consular_diptych_of_Rufus_Gennadius_Probus_Orestes.png) — 1058×498, CC BY-SA 4.0; «Foto: Gabe the Pianist, CC BY-SA 4.0, da Wikimedia Commons». Identificazione dei due medaglioni con Atalarico e Amalasunta corrente, non scritta sull'avorio.
   - in alternativa: il dittico intero [Diptych Rufus Gennadius Probus Orestes VandA 139-1866.jpg](https://commons.wikimedia.org/wiki/File:Diptych_Rufus_Gennadius_Probus_Orestes_VandA_139-1866.jpg) — CC BY 2.5, Marie-Lan Nguyen (2012)
+
+### 534
+
+- **Belisario** ([Q174943](https://www.wikidata.org/wiki/Q174943)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa. [Meister von San Vitale in Ravenna 013.jpg](https://commons.wikimedia.org/wiki/File:Meister_von_San_Vitale_in_Ravenna_013.jpg) — 1576×1888, Public domain; «Immagine: Meister von San Vitale in Ravenna, pubblico dominio, da Wikimedia Commons». L'identificazione con Belisario della figura alla destra dell'imperatore è tradizionale ma discussa.
+- **Gelimero** (-) — *nessuna immagine*. 
+- **Procopio** ([Q186153](https://www.wikidata.org/wiki/Q186153)) — *nessuna immagine*. Nessun ritratto noto e nessun manoscritto antico trovato su Commons.
 
 ### 537
 
