@@ -255,6 +255,12 @@ const LUOGHI = { magonza: [8.27, 50.0, 'Magonza'], abritto: [26.52, 43.53, 'Abri
   babilonia: [31.23, 30.0, 'Babilonia d\'Egitto'], barca: [20.9, 32.45, 'Barca'], sinai: [33.4, 30.85, 'Sinai'], delta: [31.85, 30.75, 'Delta'], mareotide: [29.95, 30.75, 'Mareotide'], sirte2: [16.0, 30.75, 'Sirte'], marmarica1: [28.6, 30.6, 'Marmarica'], marmarica2: [25.6, 31.25, 'Marmarica'], cirenaica: [23.4, 31.85, 'Cirenaica'],
   misurata: [14.9, 32.0, 'Misurata'], leptis: [14.0, 32.45, 'Leptis'], giado: [11.6, 32.55, 'Tripolitania'], medenine: [10.45, 33.3, 'Medenine'], gafsa: [9.45, 34.35, 'Bizacena'], dnepr: [34.5, 47.5, 'Dnepr'], agedabia: [20.22, 30.6, 'Agedabia'], agheila: [19.1, 30.0, 'El Agheila'], sirte: [16.6, 31.1, 'Sirte'], tripoli: [13.18, 32.85, 'Tripoli'], qayrawan: [10.1, 35.68, 'Qayrawan'], tours: [0.69, 47.39, 'Tours'],
   /* lo schieramento ai Campi Catalaunici (Giordane, Getica 197-198): da dove vengono le tre ali e gli Unni è uno schema (l'orientamento del campo non è detto) */
+  /* tappe nuove del 23 novembre 2026: Clodoveo (Gregorio di Tours II 27, 37-38: Soissons, «in campo Vogladense decimo ab urbe Pictava miliario», Bordeaux, Tolosa, Tours), la fine dei Goti
+     (Procopio VIII 29-35: Tagina, oggi presso Gualdo Tadino, e il monte Lattaro, ai piedi del Vesuvio: il punto esatto delle due battaglie è discusso) e Agostino (Beda I 23-25: Arles, Thanet, Canterbury;
+     la strada per la Gallia è uno schema). Vouillé è il luogo della tradizione; c'è chi propone Voulon. */
+  soissonsc: [3.32, 49.38, 'Soissons'], vouille: [0.17, 46.64, 'Vouillé'], parigi: [2.35, 48.86, 'Parigi'], tagina: [12.77, 43.23, 'Tagina'], lattaro: [14.6, 40.73, 'Monte Lattaro'],
+  thanet: [1.35, 51.36, 'Thanet'], canterbury: [1.08, 51.28, 'Canterbury'], genova: [8.93, 44.41, 'Genova'], autun: [4.3, 46.95, 'Autun'], boulogne: [1.61, 50.73, 'Boulogne'], manica: [1.45, 51.0, 'Manica'],
+  fano: [13.0, 43.84, 'Fano'], cesena: [12.24, 44.14, 'Cesena'], urbino: [12.64, 43.73, 'Urbino'], salona: [16.48, 43.54, 'Salona'], tournai: [3.39, 50.61, 'Tournai'], angouleme: [0.16, 45.65, 'Angoulême'], pescara: [13.8, 42.3, 'Abruzzo'], benevento: [14.78, 41.13, 'Benevento'],
   catal_v: [3.05, 48.2, 'Visigoti'], catal_a: [2.85, 48.6, 'Alani'], catal_r: [3.05, 49.0, 'Romani'], catal_s: [3.7, 47.95, 'Unni'], catal_e: [5.3, 48.7, 'Unni'] };
 
 /* Cammini e marce sono stati controllati contro la linea di costa il 22 novembre 2026 (prova nel browser: si campiona ogni tracciato e si chiede a `isPointInFill` della terra):

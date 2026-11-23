@@ -306,3 +306,5 @@ window.RM_pagina={vai:vai, ferma:ferma, spie:SPIE, quando:function(f){ ascolto.p
   document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return; var d=document.getElementById(a.getAttribute('href').slice(1)); if(d && d.tagName==='DETAILS') d.open=true; });
   window.addEventListener('hashchange',apri); apri();
 })();
+/* il numero delle tappe nella testata si conta dai dati: non va più corretto a mano quando se ne aggiunge una (intermezzi compresi, come si è sempre contato) */
+(function(){ var n=document.getElementById('numTappe'), T=(window.RM_DATI||{}).TAPPE; if(n&&T) n.textContent=T.length; })();

@@ -4,15 +4,15 @@ Generato da `node cerca.mjs info` (scelte a mano in `scelte.mjs`; licenze e auto
 
 ## Conteggi
 
-Righe della tabella: 128 (persone distinte: 98).
+Righe della tabella: 138 (persone distinte: 105).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 76 | 56 |
-| ritratto posteriore | 16 | 14 |
+| ritratto coevo | 78 | 56 |
+| ritratto posteriore | 17 | 14 |
 | di fantasia | 5 | 4 |
 | oggetto del tempo, senza volto | 20 | 14 |
-| nessuna immagine | 11 | 10 |
+| nessuna immagine | 18 | 17 |
 
 ## Da decidere
 
@@ -222,6 +222,13 @@ Le scelte di principio:
 - **Odoacre** ([Q103333](https://www.wikidata.org/wiki/Q103333)) — *ritratto coevo*: moneta d'argento di Odoacre col suo busto, Ravenna, 477 circa, British Museum. [Coin of Odoacer at the British Museum (obverse).jpg](https://commons.wikimedia.org/wiki/File:Coin_of_Odoacer_at_the_British_Museum_(obverse).jpg) — 1095×1192, CC BY-SA 4.0; «Foto: British Museum (photo), CC BY-SA 4.0, da Wikimedia Commons».
 - **Cassiodoro** ([Q192365](https://www.wikidata.org/wiki/Q192365)) — *ritratto posteriore*: frontespizio dei «Gesta Theodorici» (Leida, Biblioteca universitaria, ms. Vulc. 46, fol. 2r), Fulda, 1177: Cassiodoro in trono con un libro. [Gesta Theodorici - Flavius Magnus Aurelius Cassiodorus (c 485 - c 580).jpg](https://commons.wikimedia.org/wiki/File:Gesta_Theodorici_-_Flavius_Magnus_Aurelius_Cassiodorus_(c_485_-_c_580).jpg) — 1098×1701, Public domain; «Immagine: Fulda workshop, pubblico dominio, da Wikimedia Commons». Quasi sette secoli dopo: non è un ritratto dal vero.
 
+### 507
+
+- **Clodoveo** (-) — *nessuna immagine*. 
+- **Alarico II** (-) — *nessuna immagine*. 
+- **Siagrio** (-) — *nessuna immagine*. 
+- **Remigio** (-) — *nessuna immagine*. 
+
 ### 526
 
 - **Teodorico** ([Q105105](https://www.wikidata.org/wiki/Q105105)) — *ritratto coevo*: medaglione d'oro da tre solidi col ritratto del re (pezzo unico, trovato a Senigallia), 493-526, Museo nazionale romano. [Regno dei goti, teodorico, pezzo da tre solidi con ritratto del re col palladio, 493-526, oro (pezzo unico).JPG](https://commons.wikimedia.org/wiki/File:Regno_dei_goti,_teodorico,_pezzo_da_tre_solidi_con_ritratto_del_re_col_palladio,_493-526,_oro_(pezzo_unico).JPG) — 639×614, CC BY-SA 3.0; «Foto: Sailko, CC BY-SA 3.0, da Wikimedia Commons». L'unico ritratto certo, con il nome; le sue monete correnti portano il volto dell'imperatore.
@@ -246,6 +253,12 @@ Le scelte di principio:
 - **Belisario** ([Q174943](https://www.wikidata.org/wiki/Q174943)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa. [Meister von San Vitale in Ravenna 013.jpg](https://commons.wikimedia.org/wiki/File:Meister_von_San_Vitale_in_Ravenna_013.jpg) — 1576×1888, Public domain; «Immagine: Meister von San Vitale in Ravenna, pubblico dominio, da Wikimedia Commons». L'identificazione con Belisario della figura alla destra dell'imperatore è tradizionale ma discussa.
 - **Narsete** ([Q294781](https://www.wikidata.org/wiki/Q294781)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa, fra l'imperatore e il vescovo Massimiano. [Narses.jpg](https://commons.wikimedia.org/wiki/File:Narses.jpg) — 509×700, Public domain; «Immagine: Vahan.hovh, pubblico dominio, da Wikimedia Commons». Indicata dall'utente il 22 novembre 2026. L'identificazione con Narsete è una proposta senza conferme: nel mosaico il nome non c'è, e la figura è stata letta anche in altri modi.
 
+### 552
+
+- **Narsete** ([Q294781](https://www.wikidata.org/wiki/Q294781)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa, fra l'imperatore e il vescovo Massimiano. [Narses.jpg](https://commons.wikimedia.org/wiki/File:Narses.jpg) — 509×700, Public domain; «Immagine: Vahan.hovh, pubblico dominio, da Wikimedia Commons». Indicata dall'utente il 22 novembre 2026. L'identificazione con Narsete è una proposta senza conferme: nel mosaico il nome non c'è, e la figura è stata letta anche in altri modi.
+- **Totila** ([Q159707](https://www.wikidata.org/wiki/Q159707)) — *ritratto coevo*: moneta di bronzo di Baduila (Totila) col suo busto (BMC 44), 541-552. [Baduila BMC 044.jpg](https://commons.wikimedia.org/wiki/File:Baduila_BMC_044.jpg) — 700×319, CC BY-SA 3.0; «Foto: Courtesy of CNG Auctions, www.cngcoins.com, CC BY-SA 3.0, da Wikimedia Commons». Sulle monete di bronzo il re si fa ritrarre (busto stilizzato); le opere di Salviati e Bonazza sono di fantasia.
+- **Teia** (-) — *nessuna immagine*. 
+
 ### 568
 
 - **Alboino** ([Q152877](https://www.wikidata.org/wiki/Q152877)) — *nessuna immagine*. Nessun ritratto coevo noto; su Commons la xilografia della Cronaca di Norimberga (1493), di fantasia.
@@ -260,6 +273,12 @@ Le scelte di principio:
 
 - **Gregorio Magno** ([Q42827](https://www.wikidata.org/wiki/Q42827)) — *ritratto posteriore*: miniatura del «Registrum Gregorii», Treviri, 983 circa. [Registrum gregorii, san gregorio magno ispirato dalla colomba, 983 miniatura, treviri stadtbiblithek, 19,8x27 cm.jpg](https://commons.wikimedia.org/wiki/File:Registrum_gregorii,_san_gregorio_magno_ispirato_dalla_colomba,_983_miniatura,_treviri_stadtbiblithek,_19,8x27_cm.jpg) — 951×1293, Public domain; «Immagine: Meister des Registrum Gregorii., pubblico dominio, da Wikimedia Commons». Circa quattro secoli dopo. Non è un ritratto dal vero (Giovanni Diacono, nel IX secolo, descrive un ritratto dipinto nel monastero, perduto).
 - **Agilulfo** ([Q315276](https://www.wikidata.org/wiki/Q315276)) — *ritratto coevo*: lamina di Agilulfo, placca frontale d'elmo in rame dorato, 591-616, Museo del Bargello. [Agilulf, king of the Lombards, depicted on a helmet forehead plate.jpg](https://commons.wikimedia.org/wiki/File:Agilulf,_king_of_the_Lombards,_depicted_on_a_helmet_forehead_plate.jpg) — 1434×999, CC BY-SA 3.0; «Foto: James Steakley, CC BY-SA 3.0, da Wikimedia Commons». Coeva e con il nome del re (REGI AGILU[LFO]); il volto è schematico. ATTENZIONE: secondo la descrizione del file la foto è di una COPIA (l'originale è al Bargello).
+
+### 597
+
+- **Gregorio Magno** ([Q42827](https://www.wikidata.org/wiki/Q42827)) — *ritratto posteriore*: miniatura del «Registrum Gregorii», Treviri, 983 circa. [Registrum gregorii, san gregorio magno ispirato dalla colomba, 983 miniatura, treviri stadtbiblithek, 19,8x27 cm.jpg](https://commons.wikimedia.org/wiki/File:Registrum_gregorii,_san_gregorio_magno_ispirato_dalla_colomba,_983_miniatura,_treviri_stadtbiblithek,_19,8x27_cm.jpg) — 951×1293, Public domain; «Immagine: Meister des Registrum Gregorii., pubblico dominio, da Wikimedia Commons». Circa quattro secoli dopo. Non è un ritratto dal vero (Giovanni Diacono, nel IX secolo, descrive un ritratto dipinto nel monastero, perduto).
+- **Agostino di Canterbury** (-) — *nessuna immagine*. 
+- **Etelberto** (-) — *nessuna immagine*. 
 
 ### 609
 

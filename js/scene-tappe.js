@@ -140,6 +140,24 @@ var prigionieri593=(function(){
   return {g:g, da:592.6, a:594};
 })();
 
+/* ---------- 552: Narsete e il forte dei Goti al mausoleo di Adriano ----------
+   Procopio VIII 33, 14-27 (Dewing, LacusCurtius): i Goti, troppo pochi per tutta la cinta, «enclosed a small part of the city with a short wall around the Tomb of Hadrian and, by connecting this
+   with the earlier wall, he made a kind of fortress»; poi si arrendono a Narsete, che avanza «against the fortress with his whole army». Qui: un muro basso attorno al mausoleo, interrotto
+   dove c'è il fiume (il tracciato è nostro), dal 550, quando Totila riprende Roma (la data della costruzione non è detta: ipotesi), e lo schieramento di Narsete sul lato di terra nel 552.
+   Dove fosse entrato Dagisteo con le scale non si sa: non si disegna. */
+var fortino552=(function(){
+  var B=new RM.Costruttore(), cx=-157, cz=-118, R=7.2, n=44, i;
+  for(i=0;i<n;i++){ var a=i/n*6.283, x=cx+Math.cos(a)*R, z=cz+Math.sin(a)*R; if(RM.distFiume(x,z)<6.4) continue;
+    B.scatola(1.1,.72,.24,x,RM.h(x,z)-.1,z,P.tufo,-a+Math.PI/2); if(i%6===0) B.scatola(.5,.96,.5,x,RM.h(x,z)-.1,z,P.tufo,-a); }
+  var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
+  var B2=new RM.Costruttore(), k=0;      // lo schieramento: file di fanti con le insegne, rivolte al forte, a nord-ovest, sul lato di terra
+  for(var fila=0;fila<6;fila++) for(var j=-14;j<=14;j++){ var ang=-2.25+j*.028, r=R+3.2+fila*.6, x2=cx+Math.cos(ang)*r, z2=cz+Math.sin(ang)*r; if(RM.distFiume(x2,z2)<6.5) continue;
+    uomo(B2,x2+(rnd()-.5)*.25,z2+(rnd()-.5)*.25,RM.h(x2,z2),fila<2?C.ferro:C.grigio,fila<3?C.rosso:null,Math.atan2(cx-x2,cz-z2)); k++;
+    if(fila===5 && j%7===0) insegna(B2,x2,z2,RM.h(x2,z2),C.porpora,.42); }
+  var g2=B2.maglia(RM.matPietra()); g2.visible=false; g2.castShadow=true; RM.scene.add(g2);
+  return {g:g, g2:g2, da:550, a:556, da2:551.6, a2:553};
+})();
+
 /* ---------- tombe dentro le mura ----------
    Fonti (scene-roma-fonti.md, sezione 4, dal Companion to Rome c. 400-c. 1050, Brill 2026: Andrews II pp. 674-676, Spera II pp. 828-836, Stefani II pp. 839-848):
    dal V secolo, rare; nella seconda metà del VI e nel VII quasi la regola; fosse semplici, casse di mattoni, coperture «a cappuccina» di tegole, anfore per i bambini.
@@ -163,13 +181,14 @@ var tombe=TOMBE.map(function(t){
 RM.moduli.push(function(anno){
   [milvio,corteo,assedio472,prigionieri593].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
   tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
+  fortino552.g.visible=anno>=fortino552.da&&anno<fortino552.a; fortino552.g2.visible=anno>=fortino552.da2&&anno<fortino552.a2;
 });
 
 /* ---------- regia: la vista va sul luogo dell'evento della tappa ---------- */
 var perId={}; (RM.MONUMENTI||[]).forEach(function(m){ perId[m.id]=m; });
 /* le due messe in scena hanno un'inquadratura fissa (punto guardato, posizione della camera): al ponte Milvio da sud, oltre il fiume, verso la riva dove fuggono;
    per il corteo da sud-est, sopra le case della via Lata */
-var VISTE={ milvio:{t:[-152,-486],c:[-140,10,-466]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
+var VISTE={ milvio:{t:[-152,-486],c:[-140,10,-466]}, fortino552:{t:[-163,-126],c:[-131,30,-90]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
   assedio472:{t:[-182,-110],c:[-143,47,-58]}, prigionieri593:{t:[-84,-232],c:[-57,33,-196]} };      // il campo vaticano e ponte Elio; la Flaminia fuori porta
 var portata=false;                                                                      // la vista ce l'ha portata la regia
 function scena(){ var s=document.getElementById('scene'); return s?s.getAttribute('data-vista'):null; }
