@@ -58,3 +58,7 @@
   .tesi-riga .chi{font-size:12px}
   .tesi-elenco{grid-template-columns:1fr}
 }
+/* Ritocchi del 23 novembre 2026 (audit del design): sul telefono «235» e «284» sull'asse si sovrapponevano («23384»): resta il primo.
+   Le etichette delle famiglie nelle schede salgono da 10,5 a 11 punti. */
+@media (max-width:520px){ .tesi-asse span:nth-child(2){display:none} }
+.tesi-scheda .fam{font-size:11px}

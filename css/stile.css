@@ -773,3 +773,25 @@ body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visib
 .evento:not(.vivo) .ev-chiudi,.evento:not(.vivo) .ev-riapri{pointer-events:none;visibility:hidden}      /* didascalia spenta: niente bottoni invisibili da toccare */
 /* telefono coricato, carta a tutto schermo: la legenda lunga (il 451) finiva sotto la linea del tempo; ora si ferma sopra e il resto scorre (23 novembre 2026) */
 @media (max-height:559px){ body.impero-largo .legenda-mappa{max-height:calc(100vh - 44px - var(--tempo,92px) - 22px - env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin} }
+
+/* ===== Ritocchi di veste del 23 novembre 2026 (audit del design: src/design/audit-design.md) ===== */
+/* Telefono coricato, carta e città dentro la pagina: la linea del tempo incollata in fondo occupava circa 150 dei 375 punti d'altezza e copriva quasi tutta la carta.
+   Ora sta su una riga sola, come già a tutto schermo: comandi a sinistra, poi le tacche, sopra solo gli anni degli atti. */
+@media (max-height:559px) and (orientation:landscape) and (max-width:1000px){
+  .tempo{flex-direction:row;align-items:center;gap:10px;padding:5px 8px}
+  .tempo .comandi button{flex:none;min-height:40px;padding:6px 10px}
+  .tempo .linea button{height:22px}
+  .atto-gruppo p span{display:none}
+}
+/* Telefono: le spie del cruscotto una sotto l'altra. In due colonne da 166 punti la nota dei «Commerci» andava su dieci righe strette e la spia accanto restava mezza vuota. */
+@media (max-width:520px){ .cruscotto{grid-template-columns:1fr} .cruscotto .spia small{min-height:0} }
+/* Protagonisti: il punto dopo le date non va più a capo da solo all'inizio della riga (spazio unificatore prima, spazio normale dopo) */
+.protagonisti .date{margin-right:.15em}
+.protagonisti .date::after{content:"\00a0· "}
+/* Telefono e tablet: il bottone fluttuante «Torna alla carta e alla città» copriva la riga della versione in fondo al piede; il piede gli lascia posto */
+@media (max-width:1000px){ .piede{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))} }
+/* «Leggi la tappa» / «Torna alla carta e alla città»: ora sale davvero sopra la linea del tempo incollata (js/pagina.js) e sta al centro, non a destra,
+   dove copriva il bottone del tutto schermo della carta e i comandi della città */
+.salta-giu{right:auto;left:50%;transform:translateX(-50%);white-space:nowrap}
+/* Telefoni stretti (360 punti, molti Android): l'occhiello «Infografica interattiva · 235-852» andava su due righe con «852» da solo; spaziatura un po' più stretta */
+@media (max-width:374px){ .apertura .occhiello{letter-spacing:.12em} }

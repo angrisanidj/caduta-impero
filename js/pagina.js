@@ -305,7 +305,7 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
     var r=tit.getBoundingClientRect(), s=sc.getBoundingClientRect(), dove=r.top>H*.85 && s.bottom>0 ? 'giu' : s.bottom<0 && r.top<H*.6 ? 'su' : '';
     b.hidden=!dove; if(!dove) return;
     if(b.dataset.dove!==dove){ b.dataset.dove=dove; b.textContent=dove==='giu'?'Leggi la tappa ↓':'↑ Torna alla carta e alla città'; }
-    var t=tp?tp.getBoundingClientRect():null; b.style.bottom=Math.max(14,t&&t.top<H&&t.bottom>H-4?H-t.top+10:14)+'px';
+    var t=tp?tp.getBoundingClientRect():null; b.style.bottom=Math.max(14,t&&t.top<H&&t.bottom>H-70?H-t.top+10:14)+'px';      // H-70 e non H-4: la linea incollata sta a 8 punti dal fondo (bottom:8px), e con H-4 il bottone finiva sopra le tacche degli ultimi atti; 70 = bottone 40 + 14 di margine + aria, così sale anche quando la linea, al suo posto nella pagina, passa nella sua fascia
   }
   function presto(){ if(!raf) raf=requestAnimationFrame(function(){ raf=0; aggiorna(); }); }
   window.addEventListener('scroll',presto,{passive:true}); window.addEventListener('resize',presto); window.addEventListener('scroll-tempo',presto); ascolto.push(presto); aggiorna();

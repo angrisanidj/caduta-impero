@@ -155,3 +155,5 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
 .m-fuori:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 body.carta-in-regia .m-fuori{display:none}
 @media (max-width:700px){ .m-fuori{font-size:12px;min-height:30px;padding:4px 9px} }
+/* Ritocco del 23 novembre 2026 (audit del design): sui dispositivi al tocco i bottoni «Passo per passo» salgono da 28 a 34 punti, più facili da prendere col dito */
+@media (pointer:coarse){ .m-passi button{min-height:34px} }

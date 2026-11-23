@@ -229,3 +229,5 @@
 @media (prefers-reduced-motion:reduce){ .atto-invito,.ai-apri{animation:none} }
 @media (max-width:700px){ .atto-invito{grid-template-columns:1fr;grid-template-areas:"testo" "cosa" "bottone";padding:13px 16px;row-gap:8px} .ai-apri{justify-self:start} }
 @media print{ .atto-invito{display:none} }
+/* Ritocco del 23 novembre 2026 (audit del design): «L'atto in breve» era alto 25 punti; al tocco diventa una pastiglia da 32 */
+@media (pointer:coarse){ .as-apri{min-height:32px;padding:5px 12px;vertical-align:1px} }

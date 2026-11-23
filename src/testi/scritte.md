@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 13:51:12.
+Generato da `src/testi.mjs` il 23/11/2026, 14:05:49.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,14 +117,14 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 12:53
+[pagina.52] Versione del 23/11/2026, ore 13:51
 
 
 ## 2. Gli atti
 
 [atto.I.nome] La crisi
 
-[atto.I.sommario] In cinquant'anni si succedono più di venti imperatori. Quasi tutti muoiono in battaglia o per mano dei propri soldati. Decio cade combattendo contro i Goti. I Persiani catturano Valeriano. L'impero si divide in tre parti, che Aureliano riesce a riunire. Dopo secoli, Roma si dota di una nuova cinta di mura. Intanto nelle monete d'argento la percentuale del metallo prezioso scende a circa il 5%.
+[atto.I.sommario] In cinquant'anni si succedono più di venti imperatori. Quasi tutti muoiono in battaglia o per mano dei propri soldati. Decio cade combattendo contro i Goti. I Persiani catturano Valeriano. L'impero si divide in tre parti, che Aureliano riesce a riunire. Dopo secoli, Roma si dota di una nuova cinta di mura. Intanto l'argento nelle monete scende sotto il 3%, finché Aureliano ne fissa il minimo al 5%.
 
 [atto.II.nome] La ricostruzione
 
@@ -185,7 +185,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T02-251.titolo] Un'epidemia nell'impero, Decio cade contro i Goti
 
-[T02-251.testo] Un'epidemia si diffonde nell'impero e dura più di dieci anni. Ad Abritto l'imperatore Decio muore combattendo contro i Goti. Le fonti romane lo ricordano come il primo imperatore caduto contro un nemico straniero. I Persiani, però, sostenevano di avere già ucciso Gordiano III nel 244.
+[T02-251.testo] Un'epidemia si diffonde nell'impero e dura più di dieci anni. Ad Abritto l'imperatore Decio muore combattendo contro i Goti. Per quanto sappiamo, è il primo imperatore caduto combattendo contro un nemico esterno. I Persiani, però, sostenevano di avere già ucciso Gordiano III nel 244.
 
 [T02-251.chi1.nome] Decio
 
@@ -272,7 +272,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T05-274.titolo] Aureliano riunisce l'impero
 
-[T05-274.testo] In tre anni Aureliano riconquista Palmira e le Gallie e riunisce i territori dell'impero. Con una riforma monetaria arresta la perdita di valore della moneta, che ormai contiene appena il 5% d'argento.
+[T05-274.testo] In tre anni Aureliano riconquista Palmira e le Gallie e riunisce i territori dell'impero. Con una riforma monetaria arresta la perdita di valore della moneta: dopo essere scesa sotto il 3% d'argento, ora deve contenerne almeno il 5%.
 
 [T05-274.chi1.nome] Aureliano
 
@@ -926,7 +926,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T23-429.titolo] I Vandali passano in Africa
 
-[T23-429.testo] Genserico guida i Vandali attraverso lo stretto di Gibilterra, dalla penisola iberica all'Africa settentrionale. Con le famiglie al seguito sarebbero forse 80.000 persone. Nel 430 assediano la città di Ippona. Il suo vescovo, Agostino, muore durante l'assedio.
+[T23-429.testo] Genserico guida i Vandali attraverso lo stretto di Gibilterra, dalla penisola iberica all'Africa settentrionale. Con le famiglie al seguito erano 80.000 persone, secondo Vittore di Vita: la cifra è discussa. Nel 430 assediano la città di Ippona. Il suo vescovo, Agostino, muore durante l'assedio.
 
 [T23-429.chi1.nome] Genserico
 
@@ -1368,7 +1368,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T37-537.titolo] I Goti interrompono gli acquedotti di Roma
 
-[T37-537.testo] Nel 535 Giustiniano, imperatore d'Oriente, invia in Italia il generale Belisario per riconquistare la penisola. Due anni dopo i Goti assediano Roma, difesa da Belisario, e tagliano tutti gli acquedotti che la riforniscono. Le grandi terme chiudono. Dopo la guerra alcuni acquedotti torneranno in funzione, ma le grandi terme resteranno chiuse.
+[T37-537.testo] Nel 535 Giustiniano, imperatore d'Oriente, invia in Italia il generale Belisario per riconquistare la penisola. Due anni dopo i Goti assediano Roma, difesa da Belisario, e tagliano tutti gli acquedotti che la riforniscono. Senz'acqua, le grandi terme non possono più funzionare. Dopo la guerra alcuni acquedotti torneranno in funzione, ma le grandi terme resteranno chiuse.
 
 [T37-537.chi1.nome] Giustiniano
 
@@ -1524,7 +1524,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T41-568.titolo] I Longobardi
 
-[T41-568.testo] Quattordici anni dopo la fine ufficiale della guerra fra Goti e Bizantini, i Longobardi entrano in un'Italia spopolata. Paolo Diacono data il loro arrivo al 568, un cronista contemporaneo al 569. La penisola resterà divisa politicamente per circa tredici secoli.
+[T41-568.testo] Quattordici anni dopo la fine ufficiale della guerra fra Goti e Bizantini, i Longobardi entrano in un'Italia provata da diciotto anni di guerra e dalla peste. Paolo Diacono data il loro arrivo al 568, un cronista contemporaneo al 569. La penisola resterà divisa politicamente per circa tredici secoli.
 
 [T41-568.chi1.nome] Alboino
 
@@ -1669,7 +1669,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T46-663.titolo] L'imperatore d'Oriente Costante II visita Roma
 
-[T46-663.testo] Il 5 luglio Costante II arriva a Roma. Nei dodici giorni della visita fa rimuovere dai monumenti il bronzo da inviare a Costantinopoli, comprese le tegole del Pantheon. Prosegue poi per la Sicilia. Roma appartiene ancora all'impero d'Oriente, ma in città il governo è di fatto nelle mani del papa.
+[T46-663.testo] Il 5 luglio Costante II arriva a Roma. Nei dodici giorni della visita fa rimuovere dai monumenti il bronzo da inviare a Costantinopoli, comprese le tegole del Pantheon. Prosegue poi per la Sicilia. Roma appartiene ancora all'impero d'Oriente. In città il papa conta sempre di più, ma l'imperatore comanda ancora: pochi anni prima, secondo il Liber Pontificalis, l'esarca ha portato via papa Martino I dalla basilica del Laterano e lo ha mandato a Costantinopoli.
 
 [T46-663.chi1.nome] Costante II
 
@@ -1926,7 +1926,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T53-801.titolo] La terra trema
 
-[T53-801.testo] Nella notte tra il 29 e il 30 aprile 801, quattro mesi dopo l'incoronazione di Carlo Magno, un terremoto fa crollare gran parte del tetto di San Paolo fuori le mura. Le cronache indicano il 30 aprile e, per Roma, ricordano soltanto i danni alla basilica. Papa Leone III fa ricostruire il tetto. San Paolo e San Pietro sono ormai fra gli edifici più curati della città.
+[T53-801.testo] La sera del 30 aprile 801, quattro mesi dopo l'incoronazione di Carlo Magno, un terremoto fa crollare gran parte del tetto di San Paolo fuori le mura. Per Roma, le cronache ricordano soltanto i danni alla basilica. Papa Leone III fa ricostruire il tetto. San Paolo e San Pietro sono ormai fra gli edifici più curati della città.
 
 [T53-801.chi1.nome] Leone III
 
@@ -1944,7 +1944,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T53-801.voce1.chi] Annali del regno dei Franchi, anno 801, tenuti alla corte: Carlo era a Spoleto, di ritorno da Roma.
 
-[T53-801.luogo1.roma] il terremoto del 29 aprile
+[T53-801.luogo1.roma] il terremoto del 30 aprile
 
 
 ### 846 · I Saraceni a San Pietro
@@ -1976,7 +1976,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T55-852.titolo] Le nuove mura proteggono San Pietro
 
-[T55-852.testo] Dopo il saccheggio dell'846 e l'incendio che devasta parte del quartiere del Borgo intorno all'847, papa Leone IV fa costruire nuove mura attorno a San Pietro. Il 27 giugno 852 nasce la «città leonina», che prende il nome dal papa. Le mura di Aureliano, lunghe diciannove chilometri, racchiudono ancora i quartieri della città antica, dove tra le rovine si coltivano orti e vigne. La nuova cinta protegge la basilica e il quartiere sorto attorno alla tomba dell'apostolo. È qui che Roma ha trovato un nuovo centro. Molti monumenti antichi assunsero l'aspetto attuale nei secoli successivi, soprattutto perché furono smontati per riutilizzarne i materiali. Il lato sud del Colosseo, per esempio, servì a lungo da cava. Il Parco archeologico del Colosseo attribuisce il crollo della parte che restava al terremoto dell'847. La data tradizionale è invece il 1349. Nessuna cronaca dell'epoca descrive il crollo.
+[T55-852.testo] Dopo il saccheggio dell'846 e l'incendio che devasta parte del quartiere del Borgo intorno all'847, papa Leone IV fa costruire nuove mura attorno a San Pietro. Il 27 giugno 852 nasce la «città leonina», che prende il nome dal papa. Le mura di Aureliano, lunghe diciannove chilometri, racchiudono ancora i quartieri della città antica, dove tra le rovine si coltivano orti e vigne. La nuova cinta protegge la basilica e il quartiere sorto attorno alla tomba dell'apostolo. È qui che Roma ha trovato un nuovo centro. Molti monumenti antichi assunsero l'aspetto attuale nei secoli successivi, soprattutto perché furono smontati per riutilizzarne i materiali. Il lato sud del Colosseo, per esempio, era già in parte smontato quando, secondo il Parco archeologico del Colosseo, il terremoto dell'847 ne fece crollare il resto. La data tradizionale è invece il 1349. Nessuna cronaca dell'epoca descrive il crollo.
 
 [T55-852.chi1.nome] Leone IV
 
@@ -2089,7 +2089,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.natale800] 25 dicembre 800 · In San Pietro papa Leone III incorona imperatore Carlo Magno, re dei Franchi. Un mese prima, il 24 novembre, il papa lo aveva accolto sui gradini della basilica. Secondo gli Annali dei Franchi, le bandiere della città gli erano state mandate incontro e lungo la strada gruppi di pellegrini e di cittadini cantavano le sue lodi.
 
-[evento.terremoto801] 29 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi.
+[evento.terremoto801] 30 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi.
 
 [evento.saraceni846] Agosto 846 · Una flotta saracena approda a Ostia e risale il Tevere. Gli assalitori saccheggiano San Pietro, fuori dalle mura di Roma, e, secondo il Liber Pontificalis, anche San Paolo. A Porto vengono uccisi gli uomini che le comunità straniere di Roma, le «scholae», avevano inviato a difendere l'abitato. Secondo la stessa fonte, i Saraceni risalgono il fiume con le navi e insieme a piedi e a cavallo. All'alba i cavalieri sbarcano e invadono San Pietro. I Romani, senza un capo, li affrontano armati nel campo di Nerone.
 
@@ -3382,7 +3382,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.esquilino.data1-226] La fontana monumentale, chiamata in latino «nymphaeum Alexandri», è attribuita a Severo Alessandro. La data è indicata a memoria e resta da verificare.
 
-[scheda.esquilino.data2-262] Aurelio Vittore dedica l'arco a Gallieno e a Salonina.
+[scheda.esquilino.data2-262] Un funzionario, Marco Aurelio Vittore, dedica l'arco a Gallieno e a Salonina. Non è lo storico Aurelio Vittore.
 
 [scheda.esquilino.data3-1590] I trofei vengono portati sulla balaustra del Campidoglio, dove stanno oggi.
 
@@ -4083,7 +4083,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [carta.citta] Roma · Ravenna · Milano · Treviri · Arles · Cartagine · Costantinopoli · Londinium · Sirmio · Antiochia · Alessandria · Tolosa · Adrianopoli
 
-[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Delta · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Soissons · Vouillé · Parigi · Tagina · Monte Lattaro · Thanet · Canterbury · Genova · Autun · Boulogne · Manica · Dover · York · Cornovaglia · Frisia · Frisia · Anglia orientale · Mare del Nord · Anglia orientale · Fano · Cesena · Urbino · Salona · Tournai · Angoulême · Abruzzo · Benevento · Visigoti · Alani · Romani · Unni · Unni
+[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Delta · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Soissons · Vouillé · Parigi · Tagina · Monte Lattaro · Thanet · Canterbury · Genova · Autun · Lérins · Aix · Vienne · Mar Ligure · Tirreno · Boulogne · Manica · Dover · York · Cornovaglia · Frisia · Frisia · Anglia orientale · Mare del Nord · Anglia orientale · Fano · Cesena · Urbino · Salona · Tournai · Angoulême · Abruzzo · Benevento · Visigoti · Alani · Romani · Unni · Unni
 
 [carta.mari] Mare Nostrum · Oceano · Mare Interno · Ponto Eusino
 
