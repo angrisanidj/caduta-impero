@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 10:06:31.
+Generato da `src/testi.mjs` il 23/11/2026, 10:09:14.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -111,7 +111,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.48] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Quelle segnate «Ricostruzione» sono state generate per questa pagina a partire dalle fonti: il volto è immaginario. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.49] Versione del 23/11/2026, ore 10:02
+[pagina.49] Versione del 23/11/2026, ore 10:06
 
 
 ## 2. Gli atti
@@ -1748,7 +1748,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T47-727.titolo] I pellegrini raggiungono San Pietro
 
-[T47-727.testo] Re e pellegrini anglosassoni, franchi e longobardi vengono a Roma a pregare sulla tomba di san Pietro. La basilica sorge fuori dalle mura. Intorno nascono monasteri, case di accoglienza e le «scholae», comunità di stranieri organizzate per nazione. Mentre la città antica si spopola, attorno a San Pietro cresce un nuovo quartiere.
+[T47-727.testo] Re e pellegrini anglosassoni, franchi e longobardi vengono a Roma a pregare sulla tomba di san Pietro. La basilica sorge fuori dalle mura. Intorno nascono monasteri, case di accoglienza e le «scholae», comunità di stranieri organizzate per nazione. Mentre la città antica si spopola, attorno a San Pietro cresce un nuovo quartiere. In quegli stessi anni il papa rompe con l'imperatore d'Oriente Leone III, che vuole nuove tasse in Italia e vieta le immagini dei santi: Gregorio II rifiuta, e gli eserciti d'Italia si schierano con lui.
 
 [T47-727.chi1.nome] Ine
 
@@ -1760,7 +1760,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T47-727.chi2.date] papa dal 715 al 731
 
-[T47-727.chi2.riga] Romano di nascita: si oppone alle tasse e agli editti dell'imperatore Leone III.
+[T47-727.chi2.riga] Romano di nascita: si oppone alle tasse e al divieto delle immagini voluti dall’imperatore Leone III.
 
 [T47-727.chi3.nome] Liutprando
 
@@ -1768,9 +1768,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T47-727.chi3.riga] Nel 728 dona al papa il castello di Sutri.
 
-[T47-727.voce1.testo] «[Ine, re dei Sassoni occidentali], dopo aver tenuto il regno per trentasette anni, lo lasciò anche lui, affidandolo ai più giovani, e partì per le soglie dei beati apostoli […] desiderando farsi per un tempo pellegrino in terra, vicino ai luoghi santi, per meritare di essere accolto con più familiarità dai santi in cielo; cosa che in questi tempi molti del popolo degli Angli, nobili e non nobili, laici e chierici, uomini e donne, hanno preso a fare a gara.»
+[T47-727.voce1.testo] «Con nuovi ordini l'imperatore aveva stabilito che non si tenesse più nessuna immagine di santo, di martire o di angelo: le diceva tutte maledette. Se il papa avesse acconsentito, avrebbe avuto il favore dell'imperatore; se lo avesse impedito, avrebbe perso la sua sede. Disprezzando l'ordine sacrilego del sovrano, il pio uomo si armò contro l'imperatore come contro un nemico […]. Allora gli eserciti della Pentapoli e delle Venezie si opposero agli ordini dell'imperatore.»
 
-[T47-727.voce1.chi] Beda, Storia ecclesiastica, V, 7. Monaco a Jarrow, nel regno anglosassone di Northumbria, termina l'opera nel 731. Ine era partito per Roma intorno al 726.
+[T47-727.voce1.chi] Liber Pontificalis, vita di Gregorio II, 17 (edizione Duchesne). La biografia è scritta negli uffici del papa, poco dopo i fatti e dalla sua parte. Traduzione nostra dal latino.
+
+[T47-727.voce2.testo] «[Ine, re dei Sassoni occidentali], dopo aver tenuto il regno per trentasette anni, lo lasciò anche lui, affidandolo ai più giovani, e partì per le soglie dei beati apostoli […] desiderando farsi per un tempo pellegrino in terra, vicino ai luoghi santi, per meritare di essere accolto con più familiarità dai santi in cielo; cosa che in questi tempi molti del popolo degli Angli, nobili e non nobili, laici e chierici, uomini e donne, hanno preso a fare a gara.»
+
+[T47-727.voce2.chi] Beda, Storia ecclesiastica, V, 7. Monaco a Jarrow, nel regno anglosassone di Northumbria, termina l'opera nel 731. Ine era partito per Roma intorno al 726.
 
 [T47-727.luogo1.roma] i pellegrini a San Pietro
 
@@ -1779,7 +1783,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T48-756.titolo] I Longobardi assediano Roma
 
-[T48-756.testo] Il re longobardo Astolfo assedia Roma per tre mesi. Il papa chiede ancora una volta aiuto ai Franchi, e non a Costantinopoli. Il loro re, Pipino il Breve, interviene in Italia e consegna al papa i territori riconquistati ai Longobardi. Queste terre formano il primo nucleo dello Stato della Chiesa.
+[T48-756.testo] Il re longobardo Astolfo assedia Roma per tre mesi. Il papa chiede ancora una volta aiuto ai Franchi, e non a Costantinopoli: da trent'anni Roma e l'imperatore sono divisi sulle immagini dei santi, che l'imperatore ha vietato e il papa difende. Il loro re, Pipino il Breve, interviene in Italia e consegna al papa i territori riconquistati ai Longobardi. Queste terre formano il primo nucleo dello Stato della Chiesa.
 
 [T48-756.chi1.nome] Astolfo
 
