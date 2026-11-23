@@ -1168,14 +1168,14 @@ function scatta(anno,posa,w,h,punti){
     RM_pagina.anno(anno);
     Rd.setPixelRatio(1); Rd.setSize(w,h,false); C.aspect=w/h; C.clearViewOffset(); C.position.set(posa.c[0],posa.c[1],posa.c[2]); C.lookAt(posa.t[0],posa.t[1],posa.t[2]); C.updateProjectionMatrix(); C.updateMatrixWorld(true);
     Rd.shadowMap.needsUpdate=true;
-    if(P&&P.attivo){ P.tela.setSize(w,h); P.mat.uniforms.px.value.set(1/w,1/h); P.mat.uniforms.sfoca.value=0; Rd.setRenderTarget(P.tela); Rd.render(R.scene,C); Rd.setRenderTarget(null); Rd.render(P.scena,P.camera); }
+    if(P&&P.attivo){ P.misura(w,h); P.mat.uniforms.sfoca.value=0; P.disegna(R.scene,C); }
     else Rd.render(R.scene,C);
     url=Rd.domElement.toDataURL('image/jpeg',.88);
     (punti||[]).forEach(function(q){ var v=new THREE.Vector3(q[1],q[2],q[3]).project(C); out[q[0]]=[(v.x+1)/2,(1-v.y)/2]; });
   }catch(e){ url=null; }
   try{ RM_pagina.anno(a0); }catch(e){}
   Rd.setPixelRatio(pr); Rd.setSize(sz.x,sz.y,false); C.aspect=asp; C.position.copy(cp); C.quaternion.copy(cq); K.target.copy(ct); if(vw) C.setViewOffset.apply(C,vw); C.updateProjectionMatrix();
-  if(P){ var W2=Math.max(2,Math.floor(sz.x*pr)), H2=Math.max(2,Math.floor(sz.y*pr)); P.tela.setSize(W2,H2); P.mat.uniforms.px.value.set(1/W2,1/H2); if(sf!=null) P.mat.uniforms.sfoca.value=sf; }
+  if(P){ var W2=Math.max(2,Math.floor(sz.x*pr)), H2=Math.max(2,Math.floor(sz.y*pr)); P.misura(W2,H2); if(sf!=null) P.mat.uniforms.sfoca.value=sf; }
   Rd.shadowMap.needsUpdate=true;
   return url&&url.length>2000?{url:url,p:out}:null;
 }

@@ -673,15 +673,17 @@ var CURVE={
 };
 
 /* dalla popolazione alla quota di isolati abitati nel modello */
-var ABITATI=[[0,0],[30000,.07],[500000,.74],[1000000,1]];
+var ABITATI=[[0,0],[30000,.07],[500000,.74],[900000,1]];      // il massimo è quello della curva (900.000 nel 235): con un milione, nel 235 un isolato su venti era già in rovina (23 novembre 2026)
 
 /* storia dei monumenti: [anno, stato]. Prima del primo anno vale "assente" se indicato, altrimenti il primo stato.
    Stati: uso | chiuso | spogliato (tolti bronzi e rivestimenti) | cava (smontato per ricavarne pietra e calce) | bruciato | crollato | assente. */
 var MONUMENTI={
   colosseo:[[80,'uso'],[523,'cava']], circo:[[0,'uso'],[556,'chiuso']], obelisco357:[[0,'assente'],[357,'uso']], fangocirco:[[0,'assente'],[556,'uso']],      // le ultime corse sono del 549-550: il passaggio (che sfuma nei sei anni prima della data) comincia dopo, così nel 546 il circo è ancora in uso
-  pompeo:[[0,'uso'],[546,'chiuso']],      // restaurato sotto Teodorico (testo della tappa del 493): senza questa voce il modello lo chiudeva nel 500. Quando smise di servire non è scritto: qui con la guerra gotica, per ipotesi fori:[[0,'uso'],[537,'chiuso'],[800,'cava']],
+  pompeo:[[0,'uso'],[546,'chiuso']],      // restaurato sotto Teodorico (testo della tappa del 493): senza questa voce il modello lo chiudeva nel 500. Quando smise di servire non è scritto: qui con la guerra gotica, per ipotesi
+  fori:[[0,'uso'],[537,'chiuso'],[800,'cava']],
   giove:[[0,'uso'],[392,'chiuso'],[455,'spogliato']], palatino:[[0,'uso'],[720,'chiuso']], pantheon:[[126,'uso'],[392,'chiuso'],[609,'uso']],      // il tetto spogliato nel 663 e rifatto in piombo verso il 735 è reso a parte (js/monumenti.js): la chiesa resta in uso
-  domiziano:[[86,'uso'],[450,'chiuso']], traiano:[[109,'uso'],[537,'chiuso']], santadriano:[[0,'assente'],[630,'uso']], curia:[[0,'assente'],[300,'uso'],[630,'assente']], curiaantica:[[0,'uso'],[283,'bruciato'],[285,'assente']],      // incendio del 283 e ricostruzione di Diocleziano (284-305): la fine dei lavori non è nota, qui il 300 pantheonchiesa:[[0,'assente'],[609,'uso']], tito:[[80,'uso'],[537,'chiuso']], saepta:[[0,'uso'],[450,'chiuso']], patriarchio:[[0,'assente'],[324,'uso']], triclinioleone:[[0,'assente'],[800,'uso']], apollo:[[0,'uso'],[392,'chiuso']], bellona:[[0,'uso'],[392,'chiuso']], caracalla:[[0,'assente'],[216,'uso'],[537,'chiuso']],
+  domiziano:[[86,'uso'],[450,'chiuso']], traiano:[[109,'uso'],[537,'chiuso']], santadriano:[[0,'assente'],[630,'uso']], curia:[[0,'assente'],[300,'uso'],[630,'assente']], curiaantica:[[0,'uso'],[283,'bruciato'],[285,'assente']],      // incendio del 283 e ricostruzione di Diocleziano (284-305): la fine dei lavori non è nota, qui il 300
+  pantheonchiesa:[[0,'assente'],[609,'uso']], tito:[[80,'uso'],[537,'chiuso']], saepta:[[0,'uso'],[450,'chiuso']], patriarchio:[[0,'assente'],[324,'uso']], triclinioleone:[[0,'assente'],[800,'uso']], apollo:[[0,'uso'],[392,'chiuso']], bellona:[[0,'uso'],[392,'chiuso']], caracalla:[[0,'assente'],[216,'uso'],[537,'chiuso']],
   diocleziano:[[0,'assente'],[306,'uso'],[537,'chiuso']], massenzio:[[0,'assente'],[312,'uso'],[600,'chiuso'],[847,'crollato']], adriano:[[139,'uso']], adrianostatue:[[139,'uso'],[537,'assente']],
   laterano:[[0,'assente'],[318,'uso']], pietro:[[0,'assente'],[333,'uso']], tegolepietro:[[0,'assente'],[630,'uso']], obeliscovaticano:[[0,'uso']],
   mura:[[0,'assente'],[275,'uso']], acquedotti:[[0,'uso'],[537,'chiuso'],[776,'uso']],

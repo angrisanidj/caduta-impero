@@ -826,9 +826,11 @@ var M=[
     rivolto verso il Palatino (it.wikipedia «Tempio del Divo Claudio»). Centro da it.wikipedia; il lato est è parallelo a via Claudia (OpenStreetMap, way 129115593), dove resta la facciata a nicchie
     della mostra d'acqua. Le misure del tempio sono indicative. */
  {id:'tempioclaudio', nome:'Tempio di Claudio', x:64.72,z:50.57, ry:-1.21, zone:[[-6.5,-4.5,4.5],[0,-4.5,4.5],[6.5,-4.5,4.5],[-6.5,4.5,4.5],[0,4.5,4.5],[6.5,4.5,4.5]], fa:function(B){
-    B.scatola(20,2.6,18,0,-2.55,0,P.tufo).scatola(19.6,.06,17.6,0,.02,0,P.prato);                 // la piattaforma, a giardino
+    /* La piattaforma sale di 8,5 m sopra la spianata (23 novembre 2026): prima il suo piano era a filo del terreno, e a sud-est il pendio del Celio, più alto, ne copriva un angolo.
+       Dal vero la terrazza dominava la valle del Colosseo con le sue sostruzioni e verso il colle arrivava alla quota della cima; l'altezza qui è indicativa. */
+    B.scatola(20,3.45,18,0,-2.55,0,P.tufo).scatola(19.6,.06,17.6,0,.87,0,P.prato);                // la piattaforma, a giardino
     B.aperture(10,-9,-10,-9,14,-1.9,1.2,.7);                                                         // le nicchie sul lato di via Claudia
-    tempietto(B,2.2,3.8,.35,1.4,6,0,0,0,false);
+    B.dentro(0,.85,0,0,function(B){ tempietto(B,2.2,3.8,.35,1.4,6,0,0,0,false); });
  }},
  /* Arco di Dolabella e Silano (10 d.C.), in travertino, poi sotto gli archi neroniani dell'acqua Claudia (Platner e Ashby, arcus). Contorno e orientamento: OpenStreetMap, way 135618677.
     Altezza e larghezza del fornice indicative. */

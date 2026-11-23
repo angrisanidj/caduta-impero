@@ -110,7 +110,10 @@ RM.grana = grana;
 
 /* ---- renderer ---- */
 var contenitore=document.getElementById('scena'), renderer;
-try{ renderer=new THREE.WebGLRenderer({antialias:true}); }
+/* Con WebGL2 la scena è disegnata su una tela intermedia e i bordi li liscia la passata finale (FXAA): l'antialias della tela vera non toccherebbe la scena
+   e costerebbe solo memoria e tempo (quattro campioni per pixel). Resta acceso dove la passata finale non c'è (WebGL1). 23 novembre 2026 */
+var GL2=!!window.WebGL2RenderingContext;
+try{ renderer=new THREE.WebGLRenderer({antialias:!GL2}); }
 catch(e){ document.getElementById('errore').hidden=false; RM.guasto=true; return; }
 var piccolo=Math.min(window.innerWidth,window.innerHeight)<700; RM.piccolo=piccolo;
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,piccolo?1.5:2));
@@ -244,7 +247,10 @@ RM.frame.push(function(){
   oc.left=-lato; oc.right=lato; oc.top=lato; oc.bottom=-lato; oc.updateProjectionMatrix(); sole.shadow.normalBias=Math.max(.14,.5*lato/420);
   renderer.shadowMap.needsUpdate=true;
 });
-RM.moduli.push(function(){ renderer.shadowMap.needsUpdate=true; });
+/* Mentre il tempo scorre fra due tappe l'anno cambia a ogni fotogramma: rifare ogni volta la mappa delle ombre (tutta la città, una seconda volta) era la voce più cara
+   del viaggio. Ora si rifà al massimo quindici volte al secondo, e sempre una volta dopo l'ultimo cambio (23 novembre 2026). */
+var ombraChiesta=false, ombraFatta=0, ultimoAnno=0;
+RM.moduli.push(function(){ ombraChiesta=true; ultimoAnno=performance.now(); });
 
 /* ---- terreno: maglia fitta sulla città, larga in campagna. Si posa dopo che i monumenti hanno dichiarato le loro terrazze (RM.posa) ---- */
 var CAMPI=[0x86a056,0x759a4c,0xb3aa62,0x9aa35a,0x6a9348,0xc0b06a].map(RM.col), URBE=RM.col(0xb8a684), RIVA=RM.col(0x5f8c46), PRATO=RM.col(0x7fa054);
@@ -368,9 +374,12 @@ RM.applicaLuce(0);
 
 /* ---- ciclo ---- */
 /* ---- effetti a tutto schermo ----
-   La scena viene disegnata su una tela intermedia con la sua mappa di profondità; un solo passaggio finale aggiunge:
-   contorni scuri dove la profondità salta (sagome di edifici e colli), una sfocatura «da miniatura» verso l'alto e il basso
-   dello schermo, un antialias leggero e un filo di saturazione. Serve WebGL2; altrimenti si disegna direttamente come prima. */
+   La scena viene disegnata su una tela intermedia con la sua mappa di profondità. Poi due passate a tutto schermo (dal 23 novembre 2026; prima era una sola):
+   1. i contorni: una linea scura dove la profondità salta (sagome di edifici e colli);
+   2. il finale: antialias (FXAA) su colori e contorni insieme, la sfocatura «da miniatura» verso l'alto e il basso dello schermo, un filo di saturazione.
+   Con una passata sola i contorni si disegnavano dopo l'antialias e restavano a scalini, e i bordi degli edifici erano solo ammorbiditi. L'antialias a più campioni (MSAA)
+   su questa tela è stato provato e scartato: con la profondità da riportare a un campione raddoppiava il tempo di ogni fotogramma.
+   Serve WebGL2; altrimenti si disegna direttamente, con l'antialias della tela. */
 var post=null;
 (function(){
   if(!renderer.capabilities.isWebGL2) return;
@@ -378,70 +387,123 @@ var post=null;
   var tela=new THREE.WebGLRenderTarget(4,4,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat,depthBuffer:true,stencilBuffer:false});
   tela.texture.encoding=THREE.sRGBEncoding; tela.texture.generateMipmaps=false;
   tela.depthTexture=new THREE.DepthTexture(4,4); tela.depthTexture.type=THREE.UnsignedIntType;
-  var mat=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
-    uniforms:{ tCol:{value:tela.texture}, tProf:{value:tela.depthTexture}, px:{value:new THREE.Vector2(1,1)}, vicino:{value:camera.near}, lontano:{value:camera.far}, notte:{value:0}, sfoca:{value:1} },
-    vertexShader:'varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.0,1.0); }',
+  var tela2=new THREE.WebGLRenderTarget(4,4,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat,depthBuffer:false,stencilBuffer:false});
+  tela2.texture.generateMipmaps=false;
+  var uPx={value:new THREE.Vector2(1,1)}, uSfoca={value:1}, uNotte={value:0}, uDens={value:1};      // condivisi dalle due passate
+  var VS='varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.0,1.0); }';
+  var FUOCO='float fuoco=smoothstep(0.24,0.52,abs(vUv.y-0.46))*sfoca;';                             // 0 al centro, 1 ai bordi alto e basso
+  var matC=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
+    uniforms:{ tCol:{value:tela.texture}, tProf:{value:tela.depthTexture}, px:uPx, vicino:{value:camera.near}, lontano:{value:camera.far}, notte:uNotte, sfoca:uSfoca },
+    vertexShader:VS,
     fragmentShader:[
       'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; uniform float sfoca; varying vec2 vUv;',
       'float prof(vec2 uv){ float z=texture2D(tProf,uv).x*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',
-      'float lum(vec3 c){ return dot(c,vec3(0.299,0.587,0.114)); }',
       'void main(){',
       '  vec3 c=texture2D(tCol,vUv).rgb;',
-      '  float fuoco=smoothstep(0.24,0.52,abs(vUv.y-0.46))*sfoca;',                                   // 0 al centro, 1 ai bordi alto e basso
-      '  vec3 n=texture2D(tCol,vUv+vec2(0.0,px.y)).rgb, s=texture2D(tCol,vUv-vec2(0.0,px.y)).rgb, e=texture2D(tCol,vUv+vec2(px.x,0.0)).rgb, o=texture2D(tCol,vUv-vec2(px.x,0.0)).rgb;',
-      '  float l=lum(c), l0=min(l,min(min(lum(n),lum(s)),min(lum(e),lum(o)))), l1=max(l,max(max(lum(n),lum(s)),max(lum(e),lum(o))));',
-      '  c=mix(c,(n+s+e+o)*0.25,0.42*smoothstep(0.06,0.2,l1-l0));',                               // antialias leggero sui bordi contrastati
-      '  if(fuoco>0.02){ vec2 r=px*fuoco*3.2;',
-      '    c=(c*2.0+texture2D(tCol,vUv+vec2(r.x,0.0)).rgb+texture2D(tCol,vUv-vec2(r.x,0.0)).rgb+texture2D(tCol,vUv+vec2(0.0,r.y)).rgb+texture2D(tCol,vUv-vec2(0.0,r.y)).rgb',
-      '      +texture2D(tCol,vUv+r*0.7).rgb+texture2D(tCol,vUv-r*0.7).rgb+texture2D(tCol,vUv+vec2(r.x,-r.y)*0.7).rgb+texture2D(tCol,vUv+vec2(-r.x,r.y)*0.7).rgb)/10.0; }',
+      '  '+FUOCO,
       '  float p=prof(vUv);',
       '  float salto=abs(prof(vUv+vec2(px.x,0.0))+prof(vUv-vec2(px.x,0.0))+prof(vUv+vec2(0.0,px.y))+prof(vUv-vec2(0.0,px.y))-4.0*p)/p;',
       '  float contorno=smoothstep(0.006,0.03,salto)*(1.0-fuoco)*(1.0-smoothstep(500.0,1400.0,p));',
       '  c=mix(c,c*vec3(0.34,0.25,0.18),contorno*0.62*(1.0-0.6*notte));',
+      '  gl_FragColor=vec4(c,1.0);',
+      '}'].join(NL) });
+  /* FXAA nella forma breve di Timothy Lottes (nove letture): cerca la direzione del bordo dai quattro angoli e media lungo quella */
+  var mat=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
+    uniforms:{ tCol:{value:tela2.texture}, px:uPx, sfoca:uSfoca, dens:uDens, notte:uNotte },
+    vertexShader:VS,
+    fragmentShader:[
+      'uniform sampler2D tCol; uniform vec2 px; uniform float sfoca; uniform float dens; varying vec2 vUv;',
+      'float lum(vec3 c){ return dot(c,vec3(0.299,0.587,0.114)); }',
+      'void main(){',
+      '  vec3 cM=texture2D(tCol,vUv).rgb;',
+      '  float lNO=lum(texture2D(tCol,vUv+vec2(-px.x,-px.y)).rgb), lNE=lum(texture2D(tCol,vUv+vec2(px.x,-px.y)).rgb), lSO=lum(texture2D(tCol,vUv+vec2(-px.x,px.y)).rgb), lSE=lum(texture2D(tCol,vUv+px).rgb), lM=lum(cM);',
+      '  float l0=min(lM,min(min(lNO,lNE),min(lSO,lSE))), l1=max(lM,max(max(lNO,lNE),max(lSO,lSE)));',
+      '  vec2 dir=vec2(-((lNO+lNE)-(lSO+lSE)),(lNO+lSO)-(lNE+lSE));',
+      '  float riduci=max((lNO+lNE+lSO+lSE)*0.03125,0.0078125);',
+      '  dir=clamp(dir/(min(abs(dir.x),abs(dir.y))+riduci),vec2(-8.0),vec2(8.0))*px;',
+      '  vec3 cA=0.5*(texture2D(tCol,vUv-dir*0.16667).rgb+texture2D(tCol,vUv+dir*0.16667).rgb);',
+      '  vec3 cB=cA*0.5+0.25*(texture2D(tCol,vUv-dir*0.5).rgb+texture2D(tCol,vUv+dir*0.5).rgb);',
+      '  float lB=lum(cB);',
+      '  vec3 c=(lB<l0||lB>l1)?cA:cB;',
+      '  '+FUOCO,
+      '  if(fuoco>0.02){ vec2 r=px*fuoco*2.1*dens;',                                                // la sfocatura ha la stessa larghezza sullo schermo a ogni risoluzione
+      '    c=(c*2.0+texture2D(tCol,vUv+vec2(r.x,0.0)).rgb+texture2D(tCol,vUv-vec2(r.x,0.0)).rgb+texture2D(tCol,vUv+vec2(0.0,r.y)).rgb+texture2D(tCol,vUv-vec2(0.0,r.y)).rgb',
+      '      +texture2D(tCol,vUv+r*0.7).rgb+texture2D(tCol,vUv-r*0.7).rgb+texture2D(tCol,vUv+vec2(r.x,-r.y)*0.7).rgb+texture2D(tCol,vUv+vec2(-r.x,r.y)*0.7).rgb)/10.0; }',
       '  float g=lum(c); c=mix(vec3(g),c,1.1);',
       '  gl_FragColor=vec4(c,1.0);',
       '}'].join(NL) });
   var quadro=new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat); quadro.frustumCulled=false;
-  var scena2=new THREE.Scene(); scena2.add(quadro);
-  post={ tela:tela, mat:mat, scena:scena2, camera:new THREE.OrthographicCamera(-1,1,1,-1,0,1), attivo:true };
+  var scena2=new THREE.Scene(), camera2=new THREE.OrthographicCamera(-1,1,1,-1,0,1); scena2.add(quadro);
+  post={ tela:tela, mat:mat, scena:scena2, camera:camera2, attivo:true, dens:uDens,
+    /* misure in pixel veri delle due tele */
+    misura:function(W,H){ tela.setSize(W,H); tela2.setSize(W,H); uPx.value.set(1/W,1/H); },
+    /* la scena e le due passate, sulla tela della pagina. Chi disegna fuori dal ciclo (i fotogrammi delle infografiche, le prove) passa di qui */
+    disegna:function(sc,cam){
+      renderer.setRenderTarget(tela); renderer.render(sc,cam);
+      quadro.material=matC; renderer.setRenderTarget(tela2); renderer.render(scena2,camera2);
+      quadro.material=mat; renderer.setRenderTarget(null); renderer.render(scena2,camera2);
+    } };
 })();
 RM.post=post;
 function misura(){
   var w=contenitore.clientWidth||1, h=contenitore.clientHeight||1;
   renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
-  if(post){ var pr=renderer.getPixelRatio(), W=Math.max(2,Math.floor(w*pr)), H=Math.max(2,Math.floor(h*pr)); post.tela.setSize(W,H); post.mat.uniforms.px.value.set(1/W,1/H); }
+  if(post){ var pr=renderer.getPixelRatio(); post.misura(Math.max(2,Math.floor(w*pr)),Math.max(2,Math.floor(h*pr))); post.dens.value=pr; }
 }
 window.addEventListener('resize',misura); misura();
 if(window.ResizeObserver) new ResizeObserver(misura).observe(contenitore);
-/* Regolatore: se i fotogrammi durano troppo, la scena rinuncia per gradi a ciò che costa di più.
-   1 = niente effetti a tutto schermo; 2 = risoluzione a un pixel per pixel; 3 = niente ombre; 4 = niente passanti né fumo. Non risale: evita di oscillare. */
+/* Regolatore della qualità (rifatto il 23 novembre 2026).
+   Prima scattava solo sotto i 28 fotogrammi al secondo, non risaliva mai, e il suo primo gradino (spegnere gli effetti a tutto schermo) su molte schede rallentava invece
+   di alleggerire, perché riaccendeva l'antialias a più campioni. Le misure dicono che il tempo di un fotogramma dipende soprattutto dal numero di pixel: quindi
+   - i gradini sono, nell'ordine: la risoluzione (da quella di partenza fino a un pixel per pixel, a passi di un terzo dei pixel), poi le ombre, poi passanti e fumo (RM.leggero);
+   - si scende quando la media di cinquanta fotogrammi supera i 22 millesimi (sotto i 45 al secondo);
+   - dopo ogni discesa si controlla se è servita: se il guadagno è sotto il 7% il freno è altrove (il processore, o un telefono in risparmio energetico, che ferma tutto
+     a 30 al secondo): si rimette com'era e ci si ferma;
+   - dopo sei medie di fila a pieno ritmo si prova a risalire di un gradino di risoluzione; se non regge si torna giù e non si riprova più; in tutto si risale al massimo tre volte.
+   I fotogrammi in cui l'anno sta cambiando non contano: lì si ricostruisce mezza città. ?qualita=fissa lo spegne (per le prove). RM.livello = gradino corrente, 0 = tutto. */
 RM.livello=0;
-function alleggerisci(){
-  RM.livello++;
-  if(RM.livello===1){ if(post) post.attivo=false; else alleggerisci(); }
-  else if(RM.livello===2){ renderer.setPixelRatio(1); misura(); }
-  else if(RM.livello===3){ sole.castShadow=false; }
-  else if(RM.livello===4){ RM.leggero=true; }
+var PR0=renderer.getPixelRatio(), PR_MIN=PR0>1?1:.8, GRADINI=[];
+(function(){ var q=PR0; while(q>PR_MIN+.01){ q=Math.round(q*.82*100)/100; if(q-PR_MIN<.2) q=PR_MIN; GRADINI.push(q); } GRADINI.push('ombre','leggero'); })();
+function metti(n){                                   // porta la scena al gradino n
+  var pr=PR0, ombre=true, leggero=false, k, g;
+  for(k=0;k<n;k++){ g=GRADINI[k]; if(typeof g==='number') pr=g; else if(g==='ombre') ombre=false; else leggero=true; }
+  if(Math.abs(renderer.getPixelRatio()-pr)>.001){ renderer.setPixelRatio(pr); misura(); }
+  if(sole.castShadow!==ombre){ sole.castShadow=ombre; renderer.shadowMap.needsUpdate=true; }
+  if(leggero) RM.leggero=true;
+  RM.livello=n;
 }
-var orologio=new THREE.Clock(), somma=0, quanti=0, scalda=40;
+var SOGLIA=.022, prova=null, buone=0, noSalita=false, salite=0, fermo=/[?&]qualita=fissa/.test(location.search), scalda=40;
+function regola(media){
+  if(fermo) return;
+  if(prova){
+    var p=prova; prova=null;
+    if(p.su){ if(media>.0185){ metti(RM.livello+1); noSalita=true; scalda=20; } return; }                                      // la risalita non ha retto
+    if(media>p.prima*.93 && GRADINI[RM.livello-1]!=='leggero'){ metti(RM.livello-1); fermo=true; scalda=20; return; }           // la discesa non è servita
+  }
+  if(media>SOGLIA){ buone=0; if(RM.livello<GRADINI.length){ prova={prima:media}; metti(RM.livello+1); scalda=20; } return; }
+  if(media<.0172 && RM.livello>0 && !noSalita && typeof GRADINI[RM.livello-1]==='number'){ if(++buone>=6){ buone=0; prova={su:true}; metti(RM.livello-1); scalda=20; if(++salite>=3) noSalita=true; } }
+  else buone=0;
+}
+RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livello:RM.livello, pr:renderer.getPixelRatio(), ombre:sole.castShadow, leggero:!!RM.leggero, fermo:fermo, noSalita:noSalita}; } };      // per le prove
+var orologio=new THREE.Clock(), somma=0, quanti=0;
 /* Quando la scena non è sullo schermo (si è scesi a leggere, o sul telefono si guarda la mappa) non si disegna: la pagina scorre meglio e la batteria ringrazia. */
 RM.fuoriVista=false;
 if(window.IntersectionObserver) new IntersectionObserver(function(v){ RM.fuoriVista=!v[v.length-1].isIntersecting; },{rootMargin:'80px'}).observe(contenitore);
 (function ciclo(){
   requestAnimationFrame(ciclo);
   if(RM.fuoriVista){ orologio.getDelta(); return; }
-  var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1);
-  if(!document.hidden && grezzo<.4){                       // le pause (scheda nascosta, caricamento) non contano
+  var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1), ora=performance.now();
+  if(!document.hidden && grezzo<.4 && ora-ultimoAnno>400){      // le pause (scheda nascosta, caricamento) e il viaggio fra due tappe non contano
     if(scalda>0) scalda--; else { somma+=grezzo; quanti++; }
-    if(quanti>=50){ if(somma/quanti>.036 && RM.livello<4){ alleggerisci(); scalda=20; } somma=0; quanti=0; }
+    if(quanti>=50){ regola(somma/quanti); somma=0; quanti=0; }
   }
   for(var i=0;i<RM.frame.length;i++) RM.frame[i](dt);
   controlli.update();
+  if(ombraChiesta && ora-ombraFatta>66){ renderer.shadowMap.needsUpdate=true; ombraChiesta=false; ombraFatta=ora; }
   if(post && post.attivo){
     post.mat.uniforms.notte.value=RM.notte||0;
     post.mat.uniforms.sfoca.value=RM.sfuma(70,260,camera.position.distanceTo(controlli.target));      // l'effetto «plastico» sfoca i bordi solo da lontano: da vicino si vuole vedere nitido
-    renderer.setRenderTarget(post.tela); renderer.render(scene,camera);
-    renderer.setRenderTarget(null); renderer.render(post.scena,post.camera);
+    post.disegna(scene,camera);
   } else renderer.render(scene,camera);
 })();
 
