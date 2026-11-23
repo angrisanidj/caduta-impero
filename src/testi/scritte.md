@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 09:29:11.
+Generato da `src/testi.mjs` il 23/11/2026, 10:06:31.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -111,7 +111,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.48] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Quelle segnate «Ricostruzione» sono state generate per questa pagina a partire dalle fonti: il volto è immaginario. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.49] Versione del 23/11/2026, ore 09:20
+[pagina.49] Versione del 23/11/2026, ore 10:02
 
 
 ## 2. Gli atti
@@ -763,7 +763,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T20-409.titolo] La Britannia lasciata a sé stessa
 
-[T20-409.testo] Dopo la partenza delle truppe, le città della Britannia cacciano i funzionari di Costantino III e organizzano da sole la difesa. Il governo romano non riprenderà più il controllo dell'isola. Intanto Vandali, Alani e Svevi passano dalla Gallia alla penisola iberica attraverso i Pirenei.
+[T20-409.testo] Dopo la partenza delle truppe, le città della Britannia cacciano i funzionari di Costantino III e organizzano da sole la difesa. Il governo romano non riprenderà più il controllo dell'isola. Nei decenni seguenti, a est, si stabiliscono Angli e Sassoni venuti dal mare; a ovest restano regni britanni. Intanto Vandali, Alani e Svevi passano dalla Gallia alla penisola iberica attraverso i Pirenei.
 
 [T20-409.chi1.nome] Onorio
 
@@ -781,9 +781,33 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T20-409.voce1.chi] Zosimo, Storia nuova, VI, 5 e 10. Scrive a Costantinopoli intorno al 500 usando il racconto di Olimpiodoro, contemporaneo degli avvenimenti. La traduzione segue l'edizione inglese del 1814. Gli studiosi discutono se la lettera di Onorio fosse indirizzata alle città della Britannia o a quelle del Bruzio, nell'Italia meridionale.
 
-[T20-409.leggenda] Re Artù, se è esistito, appartiene a questi anni senza Roma. Verso il 540 il monaco Gildas racconta che i Britanni, rimasti soli, tennero testa ai Sassoni sotto la guida di Ambrosio Aureliano, forse l'unico superstite di stirpe romana, fino all'assedio del monte Badon. Sembra collocare l'assedio nell'anno della propria nascita, quarantaquattro anni prima di scrivere. Il passo è di difficile interpretazione. Gildas non nomina Artù. Il nome appare tre secoli dopo nella Historia Brittonum. Qui Artù non è un re ma un «dux bellorum», un comandante che combatte al fianco dei re britanni. Gli vengono attribuite dodici vittorie, l'ultima proprio a Badon, dove avrebbe ucciso di sua mano 960 nemici. I successivi Annali del Galles datano Badon al 516 e la battaglia di Camlann, «in cui caddero Artù e Medraut», al 537. Un comandante di cultura romano-britannica potrebbe essere vissuto fra la fine del V secolo e i primi decenni del VI. Nessuna fonte contemporanea lo identifica con Artù. I racconti sul re, la Tavola rotonda e Camelot risalgono al XII secolo.
+[T20-409.leggenda] Dei primi Sassoni la tradizione conosce i nomi; le fonti più antiche no. Gildas parla soltanto di un «tiranno superbo» che li chiamò, e di tre navi. Beda, nel 731, lo chiama Vortigern; scrive che i capi dei Sassoni «si dice» fossero due fratelli, Hengist e Horsa, e che di Horsa si mostrava ancora la tomba nel Kent. Re Artù, se è esistito, appartiene a questi anni senza Roma. Verso il 540 il monaco Gildas racconta che i Britanni, rimasti soli, tennero testa ai Sassoni sotto la guida di Ambrosio Aureliano, forse l'unico superstite di stirpe romana, fino all'assedio del monte Badon. Sembra collocare l'assedio nell'anno della propria nascita, quarantaquattro anni prima di scrivere. Il passo è di difficile interpretazione. Gildas non nomina Artù. Il nome appare tre secoli dopo nella Historia Brittonum. Qui Artù non è un re ma un «dux bellorum», un comandante che combatte al fianco dei re britanni. Gli vengono attribuite dodici vittorie, l'ultima proprio a Badon, dove avrebbe ucciso di sua mano 960 nemici. I successivi Annali del Galles datano Badon al 516 e la battaglia di Camlann, «in cui caddero Artù e Medraut», al 537. Un comandante di cultura romano-britannica potrebbe essere vissuto fra la fine del V secolo e i primi decenni del VI. Nessuna fonte contemporanea lo identifica con Artù. I racconti sul re, la Tavola rotonda e Camelot risalgono al XII secolo.
+
+[T20-409.storici] Quando e come arrivarono i Sassoni? Le fonti sono poche e lontane fra loro. Una cronaca scritta in Gallia nel 452 annota, verso il 441, che le province britanniche «passano sotto il dominio dei Sassoni»; ma l'anno è discusso, e c'è chi lo ritiene un'aggiunta dell'editore ottocentesco. Gildas, che scrive in Britannia verso il 540, racconta che i Britanni chiamarono i Sassoni come soldati a pagamento contro Pitti e Scoti, e che questi poi si ribellarono; non dà date. Beda, nel 731, mette il loro arrivo nel 449. Le date dei manuali vengono da Beda; la notizia più vicina ai fatti è quella della cronaca gallica.
 
 [T20-409.luogo1.londra] le città britanne restano senza truppe
+
+[T20-409.passo1.anno] 407
+
+[T20-409.passo1.testo] Le truppe di Britannia fanno imperatore un loro soldato, Costantino. Lasciati altri al comando, passa il mare con l'esercito dell'isola e sbarca a Boulogne, per prendersi la Gallia.
+
+[T20-409.passo1.freccia3] Costantino III
+
+[T20-409.passo2.anno] 409-410
+
+[T20-409.passo2.testo] Rimasti senza soldati, i Britanni prendono le armi da soli contro i barbari venuti dal mare e cacciano i funzionari di Costantino: secondo Zosimo vivono ormai «non più sotto le leggi romane». Onorio scrive alle città di difendersi da sé, se la lettera era davvero per la Britannia.
+
+[T20-409.passo2.freccia1] incursioni
+
+[T20-409.passo3.anno] verso il 441
+
+[T20-409.passo3.testo] Una cronaca scritta in Gallia nel 452 annota che le province britanniche, dopo molte sventure, passano sotto il dominio dei Sassoni. È la notizia più vicina ai fatti, ma l'anno è discusso.
+
+[T20-409.passo3.freccia1] Sassoni
+
+[T20-409.passo4.anno] fra V e VI secolo
+
+[T20-409.passo4.testo] Gildas, che scrive in Britannia verso il 540, racconta che i Britanni, guidati da Ambrosio Aureliano, «l'unico della gente romana rimasto per caso in vita», resistono fino alla vittoria del monte Badon. Dove fosse Badon, e in che anno, non si sa.
 
 
 ### 410 · Il sacco di Roma
@@ -3955,7 +3979,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [carta.citta] Roma · Ravenna · Milano · Treviri · Arles · Cartagine · Costantinopoli · Londinium · Sirmio · Antiochia · Alessandria · Tolosa · Adrianopoli
 
-[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Delta · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Soissons · Vouillé · Parigi · Tagina · Monte Lattaro · Thanet · Canterbury · Genova · Autun · Boulogne · Manica · Fano · Cesena · Urbino · Salona · Tournai · Angoulême · Abruzzo · Benevento · Visigoti · Alani · Romani · Unni · Unni
+[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Delta · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Soissons · Vouillé · Parigi · Tagina · Monte Lattaro · Thanet · Canterbury · Genova · Autun · Boulogne · Manica · Dover · York · Cornovaglia · Frisia · Frisia · Anglia orientale · Mare del Nord · Anglia orientale · Fano · Cesena · Urbino · Salona · Tournai · Angoulême · Abruzzo · Benevento · Visigoti · Alani · Romani · Unni · Unni
 
 [carta.mari] Mare Nostrum · Oceano · Mare Interno · Ponto Eusino
 
@@ -4003,17 +4027,17 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.16-r224] Tutto schermo
 
-[ui.pagina.17-r293] Leggi la tappa ↓
+[ui.pagina.17-r307] Leggi la tappa ↓
 
-[ui.pagina.18-r293] ↑ Carta e città
+[ui.pagina.18-r307] ↑ Carta e città
 
-[ui.pagina.19-r321] voci di allora
+[ui.pagina.19-r335] voci di allora
 
-[ui.pagina.20-r322] Fra storia e leggenda
+[ui.pagina.20-r336] Fra storia e leggenda
 
-[ui.pagina.21-r323] Gli storici discutono
+[ui.pagina.21-r337] Gli storici discutono
 
-[ui.pagina.22-r325] Da leggere in questa tappa
+[ui.pagina.22-r339] Da leggere in questa tappa
 
 
 ### js/mappa.js

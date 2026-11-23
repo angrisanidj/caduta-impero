@@ -484,7 +484,7 @@ function avviaRegia(l,sc,da,forza){
   if(pocoMoto) return;
   if(grandeSi && (!forza && !vista.libera || Object.keys(dita).length)) return;
   var passi=passiOra, foto=[], i, a;
-  if(passi){ for(i=da||0;i<passi.length;i++) foto.push({a:riquadroLuoghi(capiDi(passi[i].sc),.92,3.4)||BASE.slice(),i:i,y1:fondoDi(capiDi(passi[i].sc))}); }      // un passo può stare stretto: la carta si avvicina fino a 3,4 volte
+  if(passi){ for(i=da||0;i<passi.length;i++){ var cp=capiDi(passi[i].sc).concat((passi[i].vista||[]).map(function(k){ return [k]; })); foto.push({a:riquadroLuoghi(cp,.92,3.4)||BASE.slice(),i:i,y1:fondoDi(cp)}); } }      // vista: luoghi da tenere nell'inquadratura anche senza segni (un passo che racconta soltanto)      // un passo può stare stretto: la carta si avvicina fino a 3,4 volte
   else {
     if(!l || !l.length) return;
     a=null; if(sc && sc.length) a=riquadroLuoghi(capiDi(sc),.92);      // con una scena, lo zoom tiene dentro marce e rotte

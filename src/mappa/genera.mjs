@@ -260,6 +260,9 @@ const LUOGHI = { magonza: [8.27, 50.0, 'Magonza'], abritto: [26.52, 43.53, 'Abri
      la strada per la Gallia è uno schema). Vouillé è il luogo della tradizione; c'è chi propone Voulon. */
   soissonsc: [3.32, 49.38, 'Soissons'], vouille: [0.17, 46.64, 'Vouillé'], parigi: [2.35, 48.86, 'Parigi'], tagina: [12.77, 43.23, 'Tagina'], lattaro: [14.6, 40.73, 'Monte Lattaro'],
   thanet: [1.35, 51.36, 'Thanet'], canterbury: [1.08, 51.28, 'Canterbury'], genova: [8.93, 44.41, 'Genova'], autun: [4.3, 46.95, 'Autun'], boulogne: [1.61, 50.73, 'Boulogne'], manica: [1.45, 51.0, 'Manica'],
+  /* la Britannia a passi (Zosimo VI 2-5 e 10; Cronaca gallica del 452; Gildas 23-26): Dover e York servono a inquadrare e a passare il mare; l'Anglia orientale e la Frisia
+     sono i due capi, schematici, delle incursioni e dell'arrivo dei Sassoni; la Cornovaglia segna l'ovest rimasto ai Britanni */
+  dover: [1.25, 51.15, 'Dover'], york: [-1.08, 53.96, 'York'], cornovaglia: [-4.9, 50.45, 'Cornovaglia'], frisiac: [6.9, 53.3, 'Frisia'], rivafrisia: [6.1, 53.42, 'Frisia'], rivaanglia: [1.72, 52.62, 'Anglia orientale'], marenord: [3.2, 53.1, 'Mare del Nord'], anglia: [1.0, 52.55, 'Anglia orientale'],
   fano: [13.0, 43.84, 'Fano'], cesena: [12.24, 44.14, 'Cesena'], urbino: [12.64, 43.73, 'Urbino'], salona: [16.48, 43.54, 'Salona'], tournai: [3.39, 50.61, 'Tournai'], angouleme: [0.16, 45.65, 'Angoulême'], pescara: [13.8, 42.3, 'Abruzzo'], benevento: [14.78, 41.13, 'Benevento'],
   catal_v: [3.05, 48.2, 'Visigoti'], catal_a: [2.85, 48.6, 'Alani'], catal_r: [3.05, 49.0, 'Romani'], catal_s: [3.7, 47.95, 'Unni'], catal_e: [5.3, 48.7, 'Unni'] };
 
