@@ -79,7 +79,7 @@ function scegli(k){ scelto=k; mostraPasso(k?passi.length-1:0); }
 function ferma(){ clearTimeout(timer); clearTimeout(attesa); timer=attesa=0; osp.classList.remove('gioca'); if(bGioca) bGioca.setAttribute('aria-pressed','false'); }
 function gioca(){
   ferma(); if(!passi.length) return; var p=0; osp.classList.add('gioca'); bGioca.setAttribute('aria-pressed','true');
-  (function passo(){ mostraPasso(p); if(p>=passi.length-1){ timer=0; scelto=1; osp.classList.remove('gioca'); bGioca.setAttribute('aria-pressed','false'); return; } p++; timer=setTimeout(passo, p===1?650:820); })();
+  (function passo(){ mostraPasso(p); if(p>=passi.length-1){ timer=0; scelto=1; osp.classList.remove('gioca'); bGioca.setAttribute('aria-pressed','false'); return; } p++; timer=setTimeout(passo, p===1?1400:2200); })();      // 23 novembre 2026: rallentata su richiesta dell'utente («così è troppo veloce»), era 650 e 820 ms
 }
 function preparaPassi(k){
   var at=D.ATTI[k]; passi=[{anno:at.da, stati:statiA(at.da), i:-1}];

@@ -45,7 +45,7 @@
 .m-mini-citta{fill:#FBF6EA;stroke:#241E1A;stroke-width:2.2}
 .m-mini-citta-nome{font-family:var(--serif);font-style:italic;font-size:25px;fill:#241E1A;paint-order:stroke;stroke:rgba(251,246,234,.92);stroke-width:5px;pointer-events:none}
 .m-mini-citta-nome.roma{font-weight:700;font-size:28px}
-.m-mini .m-regione{transition:opacity .3s ease}
+.m-mini .m-regione{transition:opacity .3s ease,fill .6s ease,color .6s ease}
 .m-mini.m-fuoco .m-regione.spento{opacity:.16}
 @media (prefers-reduced-motion:reduce){ .m-mini .m-regione{transition:none} }
 /* la targa dell'anno, come nel Senato: in alto a sinistra, sull'Atlantico, dove non copre regioni colorate */
