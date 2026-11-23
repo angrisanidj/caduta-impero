@@ -195,6 +195,18 @@ function arto(B,a,b,r0,r1,col,lati,giunto){
   if(giunto!==false) B.geo(new THREE.SphereGeometry(r1*1.03,lati||7,5).translate(b[0],b[1],b[2]),col);
   return B;
 }
+/* Una pelle liscia tesa su una fila di anelli ovali [x, y, z, raggio di lato, raggio in profondità]: ogni anello sta di traverso alla linea che unisce i centri, così la stessa
+   funzione fa un torso, una gamba o un braccio piegato. Le normali sono quelle dei vertici, quindi la superficie non mostra spigoli: serve per le statue grandi (il Colosso). */
+function pelle(B,anelli,col,lati){
+  var n=lati||12, m=anelli.length, pos=[], idx=[], i, j, T=new THREE.Vector3(), U=new THREE.Vector3(), V=new THREE.Vector3(), X=new THREE.Vector3(1,0,0);
+  for(i=0;i<m;i++){ var p=anelli[i], q0=anelli[Math.max(0,i-1)], q1=anelli[Math.min(m-1,i+1)], rz=p[4]==null?p[3]:p[4];
+    T.set(q1[0]-q0[0],q1[1]-q0[1],q1[2]-q0[2]).normalize(); U.copy(X).addScaledVector(T,-X.dot(T)).normalize(); V.crossVectors(T,U);
+    for(j=0;j<n;j++){ var an=2*Math.PI*j/n, c=Math.cos(an)*p[3], d=Math.sin(an)*rz; pos.push(p[0]+U.x*c+V.x*d,p[1]+U.y*c+V.y*d,p[2]+U.z*c+V.z*d); } }
+  for(i=0;i<m-1;i++) for(j=0;j<n;j++){ var a0=i*n+j, a1=i*n+(j+1)%n; idx.push(a0,a1,a0+n,a1,a1+n,a0+n); }
+  [0,m-1].forEach(function(k,fine){ var ce=pos.length/3; pos.push(anelli[k][0],anelli[k][1],anelli[k][2]);      // i due capi, chiusi
+    for(j=0;j<n;j++){ var x=k*n+j, y=k*n+(j+1)%n; if(fine) idx.push(x,y,ce); else idx.push(y,x,ce); } });
+  var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setIndex(idx); g.computeVertexNormals(); return B.geo(g,col);
+}
 function palla(B,r,x,y,z,col,sx,sy,sz,lati){ return B.geo(new THREE.SphereGeometry(r,lati||8,6).scale(sx||1,sy||1,sz||1).translate(x,y,z),col); }
 function cavallo(B,x,y,z,ry,s,col){ return B.dentro(x,y,z,ry,function(){
   var u=s*.01;                                                                                                   // un centimetro di statua
@@ -298,19 +310,37 @@ var M=[
  /* Il Colosso: statua di bronzo di circa 35 m, sul basamento reale (OpenStreetMap, way 709011412). La figura è indicativa: stante, corona di raggi, timone nella destra e globo
     nella sinistra come sulle monete; da che parte guardasse non si sa. */
  {id:'colosso', nome:'Colosso del Sole', x:47.2,z:18.1, ry:-.3, come:'colosseo', fa:function(B){
-    var S=P.statua, k;
-    /* figura nuda stante, il peso sulla gamba destra e la sinistra appena arretrata (posa indicativa, come tutto il resto: delle fonti restano l'altezza, i raggi, il timone e il globo) */
-    arto(B,[.19,.5,.03],[.2,1.28,.06],.1,.135,S,10); arto(B,[.2,1.28,.06],[.16,2.06,0],.14,.2,S,10,false);                // gamba destra, portante
-    arto(B,[-.22,.5,-.16],[-.21,1.26,.03],.1,.135,S,10); arto(B,[-.21,1.26,.03],[-.16,2.06,0],.14,.2,S,10,false);        // gamba sinistra
-    palla(B,.34,0,2.1,0,S,1,.62,.78,12);                                                                             // bacino
-    arto(B,[0,2.08,0],[0,2.56,0],.3,.27,S,12,false); arto(B,[0,2.56,0],[0,3.02,0],.27,.37,S,12,false);              // vita e torace
-    palla(B,.4,0,3.02,0,S,1.12,.42,.66,12);                                                                          // spalle
-    arto(B,[0,3.1,0],[0,3.3,0],.12,.11,S,8,false); palla(B,.19,0,3.5,.01,S,1,1.16,1.06,12);                         // collo e testa
-    arto(B,[.44,3,0],[.56,2.42,.03],.115,.095,S,8); arto(B,[.56,2.42,.03],[.61,1.86,.13],.09,.075,S,8);             // braccio destro, lungo il fianco: regge il timone
-    B.scatola(.05,2.3,.05,.63,.5,.16,S).scatola(.05,.5,.3,.63,.5,.16,S);                                             // il timone
-    arto(B,[-.44,3,0],[-.54,2.5,.08],.115,.095,S,8); arto(B,[-.54,2.5,.08],[-.5,2.62,.5],.09,.075,S,8);             // braccio sinistro, piegato in avanti
-    palla(B,.13,-.5,2.78,.52,S,1,1,1,10);                                                                            // il globo
-    for(k=-3;k<=3;k++) B.geo(new THREE.ConeGeometry(.035,.42,5).translate(0,.4,0).rotateZ(-k*.42).translate(0,3.5,0),P.oro);      // i raggi del Sole
+    /* Rifatto il 23 novembre 2026 (l'utente: «Rifai il colosso?»): prima a blocchi, poi a pezzi tondi incastrati che sembravano un manichino. Ora è una figura sola dalla pelle liscia:
+       nudo stante, il peso sulla gamba destra e la sinistra flessa e arretrata, le spalle inclinate al contrario del bacino, come nelle statue classiche. Guardando la statua di fronte
+       la sua destra è a -x: lì sta il timone, a terra, e nella sinistra il globo (prima erano scambiati). La statua è alta 35 m (Svetonio, nella scheda) sopra il basamento.
+       Posa, anatomia e volto sono indicativi: delle fonti restano l'altezza, i raggi, il timone e il globo. */
+    var S=P.statua, k, F=3.5/3.2, Y0=.5;
+    function R(x,y,z,rx,rz){ return [x*F,y*F+Y0,z*F,rx*F,(rz==null?rx:rz)*F]; }
+    function fila(l){ return l.map(function(q){ return R(q[0],q[1],q[2],q[3],q[4]); }); }
+    /* gamba destra, portante */
+    pelle(B,fila([[-.15,.03,.0,.05],[-.15,.16,-.01,.058,.07],[-.15,.4,-.02,.08,.088],[-.155,.62,-.03,.1,.108],[-.16,.8,-.01,.085,.09],[-.16,.92,.01,.092,.098],[-.165,1.1,.015,.112,.12],[-.17,1.35,.01,.145,.155],[-.16,1.56,0,.16,.17],[-.12,1.7,0,.15,.16]]),S,14);
+    pelle(B,fila([[-.15,.02,-.07,.05,.035],[-.15,.045,.0,.062,.05],[-.15,.04,.1,.066,.04],[-.15,.03,.18,.05,.028]]),S,10);                                    // piede destro
+    /* gamba sinistra, scarica: ginocchio in avanti, piede indietro e di lato, il tallone alzato */
+    pelle(B,fila([[.27,.07,-.17,.05],[.265,.2,-.15,.058,.07],[.25,.44,-.09,.08,.088],[.235,.64,-.03,.098,.106],[.215,.82,.06,.085,.09],[.205,.93,.105,.092,.098],[.19,1.12,.09,.112,.12],[.17,1.36,.045,.145,.155],[.15,1.56,.01,.16,.17],[.11,1.7,0,.15,.16]]),S,14);
+    pelle(B,fila([[.28,.1,-.24,.045,.035],[.275,.07,-.17,.06,.05],[.265,.04,-.08,.064,.04],[.26,.03,-.01,.05,.028]]),S,10);                                    // piede sinistro
+    /* tronco: bacino spostato sulla gamba portante, vita, costato, petto, spalle */
+    pelle(B,fila([[-.02,1.46,0,.12,.1],[-.025,1.56,0,.25,.175],[-.03,1.72,-.01,.272,.195],[-.03,1.87,-.005,.258,.185],[-.015,2.02,.005,.24,.17],[-.005,2.2,.012,.285,.192],[0,2.36,.022,.335,.218],[.002,2.48,.02,.365,.215],[.005,2.57,.005,.37,.185],[.005,2.64,-.005,.33,.155],[.005,2.71,-.01,.16,.12],[.005,2.83,0,.085,.088]]),S,20);
+    /* testa: mento, guance, tempie, calotta */
+    pelle(B,fila([[.005,2.8,.01,.06,.07],[.005,2.86,.025,.095,.105],[.005,2.95,.03,.122,.14],[.005,3.05,.02,.132,.155],[.005,3.14,.01,.11,.132],[.005,3.2,0,.045,.06]]),S,16);
+    function pezzo(r,x,y,z,sx,sy,sz,col){ return palla(B,r*F,x*F,y*F+Y0,z*F,col||S,sx,sy,sz,10); }
+    pezzo(.026,.005,2.975,.168,.75,1.9,1); pezzo(.07,.005,3.045,.118,1.55,.42,.8); pezzo(.05,.005,2.875,.105,1.05,.7,.8);            // naso, arcata delle sopracciglia, mento
+    pezzo(.034,.005,2.915,.145,1.25,.42,.6); [-1,1].forEach(function(q){ pezzo(.03,.005+q*.132,2.985,.02,.45,1.2,.8); });               // labbra, orecchie
+    pezzo(.15,.005,3.085,-.03,1,.92,1.12,P.tronco); [-1,1].forEach(function(q){ pezzo(.06,.005+q*.105,3.0,-.04,.8,1.5,1.5,P.tronco); });  // i capelli: una calotta più scura, che scende sulla nuca e dietro le orecchie
+    [-1,1].forEach(function(q){ pezzo(.15,-.03+q*.125,1.66,-.12,.95,1,.55); });                                                          // glutei. Il petto lo dà il tronco: due pettorali a parte, provati, sembravano un seno
+    /* braccio destro (a -x): scende lungo il fianco, la mano sul timone */
+    pelle(B,fila([[-.31,2.6,0,.1,.12],[-.4,2.54,0,.115,.128],[-.44,2.36,0,.104,.114],[-.46,2.13,-.01,.088,.094],[-.47,1.98,.03,.094,.098],[-.475,1.8,.09,.078,.082],[-.475,1.67,.14,.056,.062],[-.475,1.58,.17,.062,.07],[-.475,1.5,.19,.035]]),S,12);
+    arto(B,[-.5*F,Y0,.26*F],[-.468*F,1.86*F+Y0,.15*F],.022*F,.022*F,S,8,false);                                                                               // il timone: l'asta
+    B.dentro(-.5*F,Y0,.26*F,.25,function(B){ B.scatola(.2*F,.62*F,.035*F,0,0,0,S); });                                                                        // e la pala, poggiata a terra
+    /* braccio sinistro (a +x): gomito al fianco, avambraccio in avanti, il globo sul palmo */
+    pelle(B,fila([[.32,2.6,0,.1,.12],[.41,2.54,0,.115,.128],[.45,2.36,.01,.104,.114],[.462,2.13,.03,.088,.094],[.45,2.07,.17,.094,.09],[.43,2.1,.33,.076,.074],[.418,2.13,.44,.056,.06],[.412,2.14,.51,.068,.045],[.41,2.14,.58,.035,.022]]),S,12);
+    palla(B,.125*F,.41*F,2.3*F+Y0,.5*F,S,1,1,1,14);                                                                                                           // il globo
+    /* la corona: sette raggi a ventaglio attorno al capo */
+    for(k=-3;k<=3;k++) B.geo(new THREE.ConeGeometry(.026*F,.4*F,6).translate(0,.2*F,0).rotateZ(-k*.4).translate(.005*F+Math.sin(k*.4)*.13*F,3.06*F+Y0+Math.cos(k*.4)*.13*F,0),P.oro);
  }},
  /* Meta Sudans: fontana conica flavia, con la vasca di 21 m rifatta nel IV secolo. Demolita nel 1936; la posizione è quella delle coordinate correnti (41°53'24" N, 12°29'27" E),
     a nord dell'arco di Costantino: vale entro una quindicina di metri. Altezza del cono (circa 17 m) dalle ricostruzioni correnti. */
