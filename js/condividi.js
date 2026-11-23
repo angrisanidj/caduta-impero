@@ -1,6 +1,6 @@
 /* Pulsanti per condividere la pagina: collegamenti semplici ai moduli di condivisione dei social, senza tracciatori né script esterni.
    Si montano in ogni elemento con l'attributo data-condividi (la fascia sotto l'apertura e la colonna che sul desktop sta fissa sul bordo sinistro).
-   «Copia il link» copia l'indirizzo pubblico con la tappa corrente (#tappa-22), che js/pagina.js tiene aggiornata in location.hash. */
+   «Copia il link» copia l'indirizzo pubblico con la tappa corrente (#410, o #476-citta per un intermezzo), che js/pagina.js tiene aggiornata in location.hash. */
 (function(){
 var INDIRIZZO='https://angrisanidj.github.io/caduta-impero/';
 var TESTO='Come finisce un impero · La storia dell\'Occidente romano dal 235 all\'852 in 54 tappe. Una carta mostra come cambiano i confini e una ricostruzione in 3D permette di esplorare Roma.';
@@ -23,7 +23,7 @@ var RETI=[
 var ANELLI='<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>';
 
 function icona(d){ return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">'+d+'</svg>'; }
-function indirizzoTappa(){ return INDIRIZZO+(/^#tappa-\d+$/.test(location.hash)?location.hash:''); }
+function indirizzoTappa(){ return INDIRIZZO+(/^#\d{3}(-[a-z]+)?$/.test(location.hash)?location.hash:''); }      // #552, #476-citta (js/pagina.js, chiaveTappa)
 
 function monta(ospite){
   var h='<p class="condividi-titolo" id="condividi-'+ospite.getAttribute('data-condividi')+'">Condividi</p><ul class="condividi-tasti" aria-labelledby="condividi-'+ospite.getAttribute('data-condividi')+'">';

@@ -6,7 +6,7 @@ var D=window.RM_DATI, RM=window.RM||{moduli:[]}, MAPPA=window.RM_mappa;
 var T=D.TAPPE, A0=235, A1=852;
 var $=function(id){ return document.getElementById(id); };
 var nf=new Intl.NumberFormat('it-IT');
-var idx=0, anno=T[0].anno, meta=anno, vel=0, notte=0, metaNotte=0, coda=null, ascolto=[];      // ascolto: chi vuole sapere quando cambia la tappa (js/atti.js)
+var avvio=true, idx=0, anno=T[0].anno, meta=anno, vel=0, notte=0, metaNotte=0, coda=null, ascolto=[];      // ascolto: chi vuole sapere quando cambia la tappa (js/atti.js)
 
 /* ---------- cruscotto ---------- */
 var territorio=T.map(function(t){ return [t.anno, MAPPA?MAPPA.territorio(t.regioni,t.anno):100]; });
@@ -183,7 +183,7 @@ function vai(i,subito){
   bottoni.forEach(function(b,k){ b.setAttribute('aria-current',k===idx?'true':'false'); b.classList.toggle('passata',k<idx); });
   gruppi.forEach(function(g,k){ g.g.classList.toggle('attivo',k===Math.min(t.atto,gruppi.length-1)); });
   $('btnPrima').disabled=idx===0; $('btnDopo').disabled=idx===T.length-1;
-  try{ history.replaceState(null,'','#tappa-'+(idx+1)); }catch(e){}
+  try{ if(!avvio || !location.hash || /^#(tappa-\d+|\d{3}(-[a-z]+)?)$/.test(location.hash)) history.replaceState(null,'','#'+chiaveTappa(t)); }catch(e){}      // all'apertura un'ancora d'altro tipo (#fonti, #licenze) resta: la apre il piede      // l'indirizzo dice l'anno della tappa (#552; un intermezzo: #476-citta), non il suo numero, che cambia quando se ne aggiunge una
   ascolto.forEach(function(f){ f(idx,t); });
   if(subito) applica();
 }
@@ -263,11 +263,24 @@ var ultimo=performance.now(), contaGiri=0;
 })();
 
 /* ---------- avvio ---------- */
-var m=/^#tappa-(\d+)$/.exec(location.hash);
-if(m){ vai(parseInt(m[1],10)-1,true); }
+/* Indirizzi delle tappe (23 novembre 2026): l'anno, e per i quattro intermezzi l'anno col nome (#284-moneta, #395-commerci, #439-barbari, #476-citta).
+   I vecchi #tappa-N contavano le tappe: con le tre tappe del 23 novembre dalla 34 in poi portavano alla tappa sbagliata. Si traducono secondo la numerazione
+   rimasta in rete dalla notte del 22 alla mattina del 23 novembre (51 tappe; VECCHIE); i link ancora più vecchi, di quando le tappe erano 47, non si possono distinguere. */
+function chiaveTappa(t){ return t.intermezzo?t.anno+'-'+String(t.titolo).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/^(la|il|lo|le|i|gli)\s+/,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''):String(t.anno); }
+var VECCHIE='235 251 260 271 274 284i 293 301 312 330 357 363 378 384 394 395 395i 402 406 409 410 418 429 439 439i 451 455 458 468 472 476 476i 493 526 537 542 546 568 589 593 609 663 711 727 756 780 791 800 801 846 852'.split(' ');
+function tappaDaIndirizzo(h){
+  var m=/^#tappa-(\d+)$/.exec(h), i, v;
+  if(m){ v=VECCHIE[parseInt(m[1],10)-1]; if(!v) return -1; for(i=0;i<T.length;i++) if(String(T[i].anno)===v.replace('i','') && !!T[i].intermezzo===(v.slice(-1)==='i')) return i; return -1; }
+  for(i=0;i<T.length;i++) if('#'+chiaveTappa(T[i])===h) return i;
+  return -1;
+}
+var daIndirizzo=tappaDaIndirizzo(location.hash);
+if(daIndirizzo>=0){ vai(daIndirizzo,true); }
 else{                                   // apertura dalla fine: la città del 550, poi il riavvolgimento
   anno=550; vai(0); vel=(550-T[0].anno)/4.5; applica();
 }
+avvio=false;
+window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location.hash); if(i>=0 && i!==idx) vai(i,true); });      // un indirizzo scritto a mano, o un link interno
 /* Prova: ?guarda=<id>&anno=<anno>&dist=<distanza>&da=<n|s|e|o|ne|no|se|so> apre la città a tutto schermo, già puntata su un monumento in un certo anno
    (oppure ?guarda=punto&x=..&z=..). Serve alle catture di controllo fatte con il browser senza finestra; nella pagina normale non fa nulla. */
 (function(){
