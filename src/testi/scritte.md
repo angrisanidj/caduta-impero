@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 15:00:40.
+Generato da `src/testi.mjs` il 23/11/2026, 15:24:58.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 14:57
+[pagina.52] Versione del 23/11/2026, ore 15:23
 
 
 ## 2. Gli atti
@@ -2411,6 +2411,25 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.emilia.certezza-B] Si conservano le fondazioni e il pavimento. La forma dell'edificio sopra il livello del suolo è ricostruita.
 
 
+### Basilica Emilia
+
+[scheda.emiliarovina.nome] Basilica Emilia
+
+[scheda.emiliarovina.cosa] Grande edificio pubblico sul lato nord del Foro, destinato ad attività civili.
+
+[scheda.emiliarovina.data1.quando] inizio del V secolo
+
+[scheda.emiliarovina.data1] Il tetto brucia, probabilmente nel sacco del 410: sul pavimento sono rimaste le monete, le più tarde del 409.
+
+[scheda.emiliarovina.data2.quando] dopo
+
+[scheda.emiliarovina.data2] L'aula non viene ricostruita e serve da cava di materiali. Secondo alcuni studiosi fu rifatto il portico di facciata; altri lo negano.
+
+[scheda.emiliarovina.certezza-B] Si conservano le fondazioni e il pavimento. La forma dell'edificio sopra il livello del suolo è ricostruita.
+
+[scheda.emiliarovina.nota-chiuso] in rovina dopo l’incendio
+
+
 ### Tempio di Giove Capitolino
 
 [scheda.giove.nome] Tempio di Giove Capitolino
@@ -4360,63 +4379,63 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.47-r440] Rivedi la scena dall'inizio
 
-[ui.mappa.48-r465] Chiudi la didascalia
+[ui.mappa.48-r470] Chiudi la didascalia
 
-[ui.mappa.49-r466] Mostra la didascalia
+[ui.mappa.49-r471] Mostra la didascalia
 
-[ui.mappa.50-r475] ▶ Guarda la scena
+[ui.mappa.50-r480] ▶ Guarda la scena
 
-[ui.mappa.51-r475] Guarda la scena di questa tappa sulla carta
+[ui.mappa.51-r480] Guarda la scena di questa tappa sulla carta
 
-[ui.mappa.52-r568] Regni dei Franchi
+[ui.mappa.52-r573] Regni dei Franchi
 
-[ui.mappa.53-r568] Impero dei Franchi
+[ui.mappa.53-r573] Impero dei Franchi
 
-[ui.mappa.54-r695] regno d'Italia di Odoacre
+[ui.mappa.54-r700] regno d'Italia di Odoacre
 
-[ui.mappa.55-r695] regno degli Ostrogoti
+[ui.mappa.55-r700] regno degli Ostrogoti
 
-[ui.mappa.56-r695] regno dei Franchi
+[ui.mappa.56-r700] regno dei Franchi
 
-[ui.mappa.57-r696] impero romano
+[ui.mappa.57-r701] impero romano
 
-[ui.mappa.58-r696] impero d'Occidente
+[ui.mappa.58-r701] impero d'Occidente
 
-[ui.mappa.59-r696] territorio con un imperatore rivale
+[ui.mappa.59-r701] territorio con un imperatore rivale
 
-[ui.mappa.60-r696] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.60-r701] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.61-r696] regione contesa in guerra
+[ui.mappa.61-r701] regione contesa in guerra
 
-[ui.mappa.62-r697] popoli insediati per trattato
+[ui.mappa.62-r702] popoli insediati per trattato
 
-[ui.mappa.63-r697] impero d'Oriente
+[ui.mappa.63-r702] impero d'Oriente
 
-[ui.mappa.64-r698] califfato ed emirati arabi
+[ui.mappa.64-r703] califfato ed emirati arabi
 
-[ui.mappa.65-r698] regni franchi dopo la divisione dell'843
+[ui.mappa.65-r703] regni franchi dopo la divisione dell'843
 
-[ui.mappa.66-r698] abbandonata da Roma
+[ui.mappa.66-r703] abbandonata da Roma
 
-[ui.mappa.67-r698] fuori dal controllo romano
+[ui.mappa.67-r703] fuori dal controllo romano
 
-[ui.mappa.68-r730] Mostra meno voci della legenda
+[ui.mappa.68-r735] Mostra meno voci della legenda
 
-[ui.mappa.69-r740] Mostra le altre
+[ui.mappa.69-r745] Mostra le altre
 
-[ui.mappa.70-r790] mai appartenuta all'impero
+[ui.mappa.70-r795] mai appartenuta all'impero
 
-[ui.mappa.71-r834] Carta a tutto schermo
+[ui.mappa.71-r839] Carta a tutto schermo
 
-[ui.mappa.72-r839] Tutto schermo
+[ui.mappa.72-r844] Tutto schermo
 
-[ui.mappa.73-r839] Esci dallo schermo intero
+[ui.mappa.73-r844] Esci dallo schermo intero
 
-[ui.mappa.74-r930] Torna alla carta intera
+[ui.mappa.74-r935] Torna alla carta intera
 
-[ui.mappa.75-r932] La scena continua fuori dalla carta, verso
+[ui.mappa.75-r937] La scena continua fuori dalla carta, verso
 
-[ui.mappa.76-r932] : guardala tutta
+[ui.mappa.76-r937] : guardala tutta
 
 
 ### js/atti.js

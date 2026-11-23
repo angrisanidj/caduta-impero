@@ -1,54 +1,339 @@
-/* Infografiche animate (js/infografiche.js, 23 novembre 2026). L'invito sotto il testo della tappa e la finestra con il grafico. */
-.ig-inviti{margin:14px 0 4px;max-width:44em;display:flex;flex-wrap:wrap;gap:8px}
+/* Infografiche animate (js/infografiche.js, 23 novembre 2026; rifatte lo stesso giorno). L'invito sotto il testo della tappa e la finestra con la regia.
+   Il palco è disegnato in pixel veri (viewBox = misure del riquadro): le scritte hanno qui la loro grandezza reale. */
+
+/* ---------- l'invito ---------- */
+.ig-inviti{margin:16px 0 6px;max-width:44em;display:flex;flex-wrap:wrap;gap:10px}
 .ig-inviti[hidden]{display:none}
-.ig-invito{display:flex;align-items:center;gap:11px;min-height:48px;padding:8px 16px 8px 9px;font:inherit;font-family:var(--ui);color:var(--ink);text-align:left;cursor:pointer;
-  background:#fff;border:1px solid var(--line);border-left:3px solid var(--gold2);border-radius:4px 10px 10px 4px;box-shadow:var(--ombra)}
-.ig-invito:hover{border-color:var(--gold2)}
-.ig-invito:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
-.ig-play{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;color:#fff;background:var(--porpora)}
-.ig-testi{display:flex;flex-direction:column;gap:1px}
-.ig-testi b{font-size:14.5px;font-weight:600}
-.ig-testi span{font-size:12.5px;color:var(--muted)}
-.ig-finestra{width:min(760px,calc(100vw - 24px));max-height:calc(100dvh - 24px);padding:18px 20px 14px;border:0;border-radius:12px;background:var(--carta,#F6F4EF);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.4);overflow:auto}
-.ig-finestra::backdrop{background:rgba(20,14,10,.62)}
-.ig-testa{position:relative;padding-right:44px}
-.ig-titolo{margin:0;font-family:var(--cap);font-size:22px;color:var(--porpora)}
-.ig-sotto{margin:2px 0 8px;font-family:var(--ui);font-size:13px;color:var(--muted)}
-.ig-chiudi{position:absolute;top:-6px;right:-8px;width:44px;height:44px;font-size:26px;line-height:1;border:0;background:transparent;color:var(--ink);cursor:pointer;border-radius:50%}
-.ig-chiudi:hover{background:rgba(0,0,0,.06)}
-.ig-grafico{display:block;width:100%;height:auto;background:#fff;border:1px solid var(--line);border-radius:8px}
-.ig-griglia{stroke:#E3DDD2;stroke-width:1}
-.ig-asse{font-family:var(--ui);font-size:11px;fill:#5F554B}
-.ig-fascia{fill:rgba(122,31,43,.14)}
+.ig-invito{position:relative;display:flex;align-items:center;gap:12px;min-height:62px;padding:8px 12px 8px 8px;font:inherit;font-family:var(--ui);color:var(--ink);text-align:left;cursor:pointer;
+  background:linear-gradient(180deg,#fff,#FBF8F2);border:1px solid var(--line);border-radius:12px;box-shadow:var(--ombra);transition:transform .2s ease,box-shadow .25s ease,border-color .2s ease}
+.ig-invito:hover{transform:translateY(-1px);border-color:var(--gold2);box-shadow:0 2px 4px rgba(34,28,24,.06),0 14px 28px -16px rgba(122,31,43,.5)}
+.ig-invito:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.ig-inv-icona{flex:none;width:46px;height:46px;border-radius:10px;display:grid;place-items:center;color:var(--gold3);
+  background:radial-gradient(120% 120% at 30% 18%,var(--vino-chiaro,#6E1A26),var(--vino,#4A1119) 58%,var(--vino-scuro,#22070B));box-shadow:inset 0 0 0 1px rgba(241,217,154,.18)}
+.ig-inv-icona svg{width:28px;height:28px}
+.ig-testi{display:flex;flex-direction:column;gap:1px;min-width:0}
+.ig-inv-occh{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--oro-t)}
+.ig-testi b{font-family:var(--cap);font-size:15px;font-weight:600;color:var(--porpora);line-height:1.2}
+.ig-inv-sotto{font-size:12.5px;color:var(--muted)}
+.ig-play{flex:none;margin-left:6px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--porpora);box-shadow:0 4px 10px -4px rgba(122,31,43,.7);transition:transform .2s}
+.ig-play svg{width:16px;height:16px;margin-left:2px}
+.ig-invito:hover .ig-play{transform:scale(1.08)}
+
+/* ---------- la finestra ---------- */
+.ig-finestra{width:min(1080px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);margin:auto;padding:0;border:0;border-radius:16px;background:var(--carta,#F6F4EF);color:var(--ink);
+  box-shadow:0 30px 80px -20px rgba(20,10,6,.65);overflow:auto;overscroll-behavior:contain}
+.ig-finestra::backdrop{background:radial-gradient(120% 90% at 50% 40%,rgba(46,22,18,.66),rgba(12,6,4,.86))}
+.ig-finestra[open]{animation:ig-apri .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes ig-apri{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+.ig-corpo{display:flex;flex-direction:column;padding:14px 22px 18px}
+.ig-testa{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.ig-testa-t{flex:1;min-width:0}
+.ig-occhiello{margin:0;font-family:var(--ui);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--oro-t)}
+.ig-titolo{margin:2px 0 0;font-family:var(--cap);font-size:20px;font-weight:600;color:var(--porpora);line-height:1.2}
+.ig-chiudi{flex:none;width:44px;height:44px;margin:-4px -10px 0 0;padding:0;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.ig-chiudi svg{width:22px;height:22px}
+.ig-chiudi:hover{background:rgba(34,28,24,.07)}
+.ig-finestra button:focus-visible,.ig-scorri input:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+
+/* il palco: carta appena granulosa, luce dall'alto */
+.ig-palco{position:relative;height:clamp(300px,calc(100dvh - 372px),600px);border-radius:12px;overflow:hidden;isolation:isolate;
+  background-color:#FBF8F1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .24 0 0 0 0 .16 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),radial-gradient(130% 100% at 50% 0%,#FFFDF8 0%,#F5EEE1 100%);
+  box-shadow:inset 0 0 0 1px rgba(34,28,24,.08),inset 0 -50px 70px -60px rgba(122,31,43,.16)}
+.ig-grafico{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;z-index:1}
+.ig-strato{position:absolute;z-index:2}
+.ig-strato.ig-carta{z-index:0}
+.ig-palco.subito *{transition:none!important}
+
+/* la copertina */
+.ig-copertina{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:inherit;
+  transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.2,1),visibility 0s 0s}
+.ig-copertina.via{opacity:0;transform:scale(1.05);visibility:hidden;transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.2,1),visibility 0s .8s}
+.ig-copertina.gira>*{animation:ig-su .8s cubic-bezier(.2,.8,.2,1) both}
+.ig-copertina.gira>.ig-cop-tit{animation-delay:.1s}
+.ig-copertina.gira>.ig-cop-filo{animation-name:ig-filo;animation-delay:.3s}
+.ig-copertina.gira>.ig-cop-sotto{animation-delay:.38s}
+.ig-cop-occh{font-family:var(--ui);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--oro-t)}
+.ig-cop-tit{display:block;margin-top:10px;font-family:var(--cap);font-size:clamp(28px,5vw,54px);font-weight:600;line-height:1.08;color:var(--porpora)}
+.ig-cop-filo{display:block;width:130px;height:2px;margin:18px 0 14px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.ig-cop-sotto{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.2vw,23px);line-height:1.35;color:var(--muted);max-width:28em}
+@keyframes ig-su{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ig-filo{from{opacity:0;transform:scaleX(0)}to{opacity:1;transform:scaleX(1)}}
+
+/* la frase, i comandi, le fonti */
+.ig-lato{display:flex;flex-direction:column;min-width:0}
+.ig-frase{display:flex;gap:12px;align-items:baseline;min-height:2.9em;margin:14px 2px 10px;font-family:var(--serif);font-size:21px;line-height:1.38;color:var(--ink)}
+.ig-frase-anno{flex:none;font-family:var(--cap);font-weight:700;font-size:17px;letter-spacing:.04em;color:var(--porpora)}
+.ig-frase-anno:empty,.ig-frase[hidden]{display:none}
+.ig-frase.entra .ig-frase-anno,.ig-frase.entra .ig-frase-testo{animation:ig-su .6s cubic-bezier(.2,.8,.2,1) both}
+.ig-frase.entra .ig-frase-testo{animation-delay:.07s}
+.ig-comandi{display:flex;align-items:center;gap:6px}
+.ig-comandi[hidden]{display:none}
+.ig-b{flex:none;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,background .2s,transform .15s}
+.ig-b svg{width:20px;height:20px}
+.ig-b:hover{border-color:var(--gold2)}
+.ig-b:active{transform:scale(.93)}
+.ig-b-play{width:48px;height:48px;color:#fff;background:var(--porpora);border-color:var(--porpora);box-shadow:0 8px 16px -8px rgba(122,31,43,.75)}
+.ig-b-play:hover{background:var(--vino-chiaro,#6E1A26);border-color:var(--vino-chiaro,#6E1A26)}
+.ig-b-play svg{width:22px;height:22px}
+.ig-scorri{position:relative;flex:1;min-width:90px;height:44px;margin:0 6px}
+.ig-scorri input{--p:0%;position:absolute;inset:0;width:100%;height:44px;margin:0;padding:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.ig-scorri input::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--porpora) var(--p),#DED6C8 var(--p))}
+.ig-scorri input::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-7px;border-radius:50%;background:#fff;border:3px solid var(--porpora);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.ig-scorri input::-moz-range-track{height:4px;border-radius:2px;background:#DED6C8}
+.ig-scorri input::-moz-range-progress{height:4px;border-radius:2px;background:var(--porpora)}
+.ig-scorri input::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--porpora);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.ig-tacche{position:absolute;left:9px;right:9px;top:50%;height:0;pointer-events:none}
+.ig-tacche i{position:absolute;top:6px;width:2px;height:6px;margin-left:-1px;border-radius:1px;background:var(--gold)}
+.ig-fonte{margin:14px 2px 0;font-family:var(--ui);font-size:12.5px;line-height:1.5;color:var(--muted)}
+.ig-fonte b{color:var(--ink);font-weight:600}
+.ig-elenco{list-style:none;margin:14px 0 2px;padding:0;display:grid;gap:9px}
+.ig-elenco li{padding:2px 0 2px 14px;border-left:2px solid var(--gold2);font-family:var(--serif);font-size:17.5px;line-height:1.4}
+.ig-elenco b{font-family:var(--cap);font-weight:700;color:var(--porpora);margin-right:4px}
+.ig-fermo .ig-copertina{display:none}
+.ig-fermo *{transition:none!important;animation:none!important}
+.ig-legenda.fermo{display:flex;flex-wrap:wrap;gap:6px 12px;margin:14px 0 0;opacity:1}
+
+/* ---------- elementi comuni del disegno ---------- */
+.ig-asse{font-family:var(--ui);font-size:12px;fill:#5F554B;font-variant-numeric:tabular-nums;paint-order:stroke;stroke:rgba(251,248,241,.85);stroke-width:3px;stroke-linejoin:round}
+.ig-griglia{stroke:rgba(34,28,24,.1);stroke-width:1}
+.ig-base{stroke:rgba(34,28,24,.42);stroke-width:1}
+.ig-assi,.ig-spia,.ig-conta,.ig-citta-leg,.ig-mosaico-testi{opacity:0;transition:opacity .8s ease}
+.ig-assi.vis,.ig-spia.vis,.ig-conta.vis,.ig-citta-leg.vis,.ig-mosaico-testi.vis{opacity:1}
+.ig-fascia{fill:rgba(122,31,43,.11)}
+.ig-fascia-nome{font-family:var(--serif);font-style:italic;font-size:14px;fill:#7A5A52;opacity:0;transition:opacity .8s}
+.ig-fascia-nome.vis{opacity:1}
 .ig-linea{fill:none;stroke:var(--porpora,#7A1F2B);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
-.ig-momento{opacity:.18;transition:opacity .4s}
-.ig-momento.acceso{opacity:1}
-.ig-momento circle{fill:#D4AE55;stroke:#5a3f12;stroke-width:1}
-.ig-asta{stroke:#D4AE55;stroke-width:1;stroke-dasharray:2 3}
-.ig-valore{font-family:var(--ui);font-size:12px;font-weight:700;fill:var(--ink);paint-order:stroke;stroke:#fff;stroke-width:4px}
-.ig-frase{min-height:3.2em;margin:10px 2px 6px;font-family:var(--serif);font-size:18px;line-height:1.4}
-.ig-comandi{display:flex;gap:8px}
-.ig-comandi button{min-height:40px;padding:6px 14px;font-family:var(--ui);font-size:13.5px;font-weight:600;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;cursor:pointer}
-.ig-comandi button:disabled{opacity:.45;cursor:default}
-.ig-elenco{margin:8px 0;padding-left:18px;font-size:14px;line-height:1.45}
-.ig-fonte{margin:10px 2px 0;font-family:var(--ui);font-size:12px;line-height:1.45;color:var(--muted)}
-@media (max-width:520px){ .ig-finestra{padding:14px 12px 12px} .ig-titolo{font-size:19px} .ig-frase{font-size:16px;min-height:4.2em} .ig-asse{font-size:13px} }
-@media (prefers-reduced-motion:reduce){ .ig-momento{transition:none} }
-.ig-moneta{stroke:#6d5a3a;stroke-width:2}
-.ig-moneta-num{font-family:var(--cap);font-size:24px;font-weight:700;fill:#221C18}
-.ig-nave path{fill:#5b4a3a;stroke:#5b4a3a;stroke-width:1.2;stroke-linejoin:round;transition:opacity .5s}
-.ig-nave .ig-vela{fill:#efe6d4}
-.ig-nave.spenta{opacity:.12}
-.ig-barra{fill:var(--porpora,#7A1F2B)}
-@media (prefers-reduced-motion:reduce){ .ig-nave path{transition:none} }
-.ig-fiume{fill:none;stroke:#8fb7c9;stroke-width:7;stroke-linejoin:round;stroke-linecap:round}
-.ig-mura{fill:rgba(205,190,160,.25);stroke:#8a7356;stroke-width:2}
-.ig-luogo{opacity:.15;transition:opacity .5s}
-.ig-luogo.acceso{opacity:1}
-.ig-luogo.fuoco circle{fill:#D0563A}
-.ig-luogo.rifugio circle{fill:#D4AE55;stroke:#5a3f12}
-.ig-luogo.goti circle{fill:#241E1A}
-.ig-freccia{stroke:#241E1A;stroke-width:3}
-.ig-giorni{font-family:var(--cap);font-size:22px;font-weight:700;fill:var(--porpora,#7A1F2B)}
-@media (prefers-reduced-motion:reduce){ .ig-luogo{transition:none} }
-.ig-anno{font-family:var(--cap);font-size:40px;font-weight:700;fill:#241E1A;paint-order:stroke;stroke:rgba(251,246,234,.9);stroke-width:6px}
+.ig-linea.sottile{stroke-width:2.2}
+.ig-linea.metallo{stroke:url(#ig-agl);stroke-width:3.2}
+.ig-linea.mare{stroke:#2F5864;stroke-width:2.4}
+.ig-segno{fill:#D4AE55;stroke:#fff;stroke-width:1.6;opacity:0;transform:scale(.2);transform-box:fill-box;transform-origin:center;transition:opacity .3s,transform .5s cubic-bezier(.3,1.6,.5,1)}
+.ig-segno.vis{opacity:1;transform:none}
+.ig-cursore{opacity:0;transition:opacity .4s}
+.ig-cursore.vis{opacity:1}
+.ig-cur-linea{stroke:rgba(122,31,43,.42);stroke-width:1;stroke-dasharray:2 3}
+.ig-cur-alone{fill:rgba(122,31,43,.15);transform-box:fill-box;transform-origin:center;animation:ig-pulsa 1.8s ease-in-out infinite}
+.ig-cur-punto{fill:var(--porpora,#7A1F2B);stroke:#fff;stroke-width:2.2}
+.ig-cur-punto.metallo{fill:#8A5A3A}
+.ig-cur-punto.mare{fill:#2F5864;opacity:0;transition:opacity .4s}
+.ig-cur-punto.mare.vis{opacity:1}
+@keyframes ig-pulsa{0%,100%{transform:scale(.8);opacity:.9}50%{transform:scale(1.5);opacity:.25}}
+.ig-nota{opacity:0;transform:translateY(6px);transition:opacity .35s ease,transform .55s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.ig-nota.vis{opacity:1;transform:none}
+.ig-nota-linea{fill:none;stroke:#A87B2A;stroke-width:1.2}
+.ig-nota-fondo{fill:#fff;stroke:rgba(34,28,24,.1);filter:drop-shadow(0 6px 10px rgba(34,28,24,.13))}
+.ig-nota-filo{fill:var(--gold2,#D4AE55)}
+.ig-nota-anno{font-family:var(--cap);font-weight:700;font-size:13px;letter-spacing:.05em;fill:var(--porpora,#7A1F2B)}
+.ig-nota-testo{font-family:var(--ui);font-size:13px;fill:var(--ink,#221C18)}
+.ig-k-anno{font-family:var(--ui);font-size:12px;font-weight:700;letter-spacing:.16em;fill:var(--oro-t,#7A5617)}
+.ig-k-num{font-family:var(--cap);font-weight:600;fill:var(--ink,#221C18);font-variant-numeric:tabular-nums}
+.ig-k-lab{font-family:var(--ui);font-size:13.5px;fill:var(--muted,#5F554B)}
+.ig-k-lab2{font-family:var(--ui);font-size:12.5px;fill:var(--muted,#5F554B)}
+.ig-sintesi{opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.ig-sintesi.vis{opacity:1;transform:none}
+.ig-sint-1{font-family:var(--serif);font-style:italic;font-size:22px;fill:var(--muted,#5F554B)}
+.ig-sint-2{font-family:var(--serif);font-size:27px;font-weight:600;fill:var(--porpora,#7A1F2B)}
+.ig-legenda{display:flex;flex-wrap:wrap;gap:6px 12px;align-content:flex-start;overflow:hidden;opacity:0;transition:opacity .5s}
+.ig-legenda.vis{opacity:1}
+.ig-legenda.in-riga{gap:3px 14px}
+.ig-legenda.in-riga .ig-chip{font-size:12px;line-height:16px}
+.ig-legenda.due{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px;align-items:start}
+.ig-legenda.due .ig-chip{align-items:flex-start;font-size:12px}
+.ig-legenda.due .ig-chip i{margin-top:1px}
+.ig-chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--ui);font-size:12.5px;line-height:1.25;color:var(--ink)}
+.ig-chip i{flex:none;width:13px;height:13px;border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+
+/* ---------- 1. la città di punti ---------- */
+.ig-citta-fondo{fill:url(#ig-suolo);stroke:rgba(34,28,24,.08)}
+.ig-tevere{fill:none;stroke:#8FB2C0;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.ig-tevere-alone{fill:none;stroke:rgba(143,178,192,.22);stroke-width:11;stroke-linecap:round;stroke-linejoin:round}
+.ig-mura-citta{fill:none;stroke:#8A7356;stroke-width:2.2;stroke-linejoin:round;opacity:0}
+.ig-mura-citta.vis{opacity:1}
+.ig-mura-fondo{fill:rgba(205,188,155,.2);stroke:none;opacity:0;transition:opacity 1.2s}
+.ig-mura-fondo.vis{opacity:1}
+.ig-leg-mura{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#6E5A40;opacity:0;transition:opacity .7s}
+.ig-leg-mura.vis{opacity:1}
+.ig-leg-tevere{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#4A6F7E}
+.ig-leg{font-family:var(--ui);font-size:12px;fill:var(--muted,#5F554B)}
+.ig-ab{fill:var(--porpora,#7A1F2B);stroke:rgba(122,31,43,0);stroke-width:1.3;opacity:0;transform:scale(.1);transform-box:fill-box;transform-origin:center;
+  transition:opacity .45s ease,transform .6s cubic-bezier(.3,1.5,.5,1),fill .5s ease,stroke .5s ease}
+.ig-ab.pieno{opacity:1;transform:none}
+.ig-ab.vuoto{opacity:1;transform:scale(.9);fill:rgba(255,255,255,0);stroke:rgba(122,31,43,.55)}
+.ig-ab.fisso{transition:none}
+
+/* ---------- 2. il mosaico dell'Occidente ---------- */
+.ig-tes{fill:currentColor;color:var(--st-perso);opacity:0;transform:scale(.55);transform-box:fill-box;transform-origin:center;
+  transition:color .7s ease,fill .7s ease,opacity .5s ease,transform .8s cubic-bezier(.2,.9,.3,1.15)}
+.ig-tes.vis{opacity:1;transform:none}
+.ig-tes.roma{color:var(--st-roma)} .ig-tes.usurpatore{color:var(--st-usurpatore)} .ig-tes.federati{color:var(--st-federati)} .ig-tes.regno{color:var(--st-regno)}
+.ig-tes.oriente{color:var(--st-oriente)} .ig-tes.perso{color:var(--st-perso)} .ig-tes.califfato{color:var(--st-califfato)} .ig-tes.carolingio{color:var(--st-carolingio)} .ig-tes.chiesa{color:var(--st-chiesa)}
+.ig-tes.conteso{fill:url(#ig-trama)}
+.ig-tes-luce{fill:rgba(255,246,220,.3);stroke:#F1D99A;stroke-width:2.6;opacity:0;transition:opacity .6s ease;pointer-events:none}
+.ig-tes-luce.vis{opacity:1;animation:ig-lampo 1.9s ease-out both}
+@keyframes ig-lampo{0%{fill:rgba(255,250,232,.75)}100%{fill:rgba(255,246,220,.12)}}
+.ig-tes-nome{font-family:var(--ui);font-size:11.5px;font-weight:600;fill:#fff;paint-order:stroke;stroke:rgba(34,28,24,.55);stroke-width:3px;stroke-linejoin:round;opacity:0;transition:opacity .5s}
+.ig-tes-nome.vis{opacity:1}
+.ig-tes-anno{font-family:var(--cap);font-size:12px;font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(34,28,24,.62);stroke-width:3px;stroke-linejoin:round;opacity:0;transform:translateY(-4px);transition:opacity .5s,transform .6s}
+.ig-tes-anno.vis{opacity:1;transform:none}
+.ig-gr-nome{font-family:var(--cap);font-size:11.5px;font-weight:700;letter-spacing:.1em;fill:#fff;paint-order:stroke;stroke:rgba(34,28,24,.62);stroke-width:3.2px;stroke-linejoin:round}
+
+/* ---------- 3. la moneta ---------- */
+.ig-mon-posto{opacity:0;transition:opacity .4s}
+.ig-mon-posto.vis{opacity:1}
+.ig-mon-ombra{fill:rgba(34,28,24,.2);filter:blur(5px)}
+.ig-luccica{mix-blend-mode:soft-light;pointer-events:none}
+.ig-ag-area{opacity:.5}
+.ig-barra-rame{fill:#B8693A;opacity:.85}
+.ig-barra-ag{fill:#D4D7DC;stroke:#7D838C;stroke-width:.8}
+.ig-solido{opacity:0;transition:opacity .5s}
+.ig-solido.vis{opacity:1}
+.ig-sol-1{font-family:var(--serif);font-style:italic;font-size:18px;fill:#7A5617;opacity:0;transition:opacity .7s}
+.ig-sol-2{font-family:var(--cap);font-weight:700;font-size:15px;letter-spacing:.05em;fill:#7A5617;opacity:0;transition:opacity .7s .15s}
+.ig-sol-1.vis,.ig-sol-2.vis{opacity:1}
+
+/* ---------- 4. la notte del 410 ---------- */
+.ig-notte .ig-palco{background-color:#120D0A;background-image:radial-gradient(120% 100% at 55% 45%,#2C211A 0%,#17110D 58%,#0B0806 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+.ig-notte .ig-copertina{background:#150F0B}
+.ig-notte .ig-cop-tit{color:#F1D99A}
+.ig-notte .ig-cop-sotto{color:#D9CBB4}
+.ig-notte .ig-cop-occh{color:#D4AE55}
+.ig-mondo{opacity:0;transition:opacity 1.2s ease}
+.ig-mondo.vis{opacity:1}
+.ig-n-fiume{fill:none;stroke:#4E7A8C;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.ig-n-fiume-alone{fill:none;stroke:rgba(78,122,140,.2);stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+.ig-n-strade{fill:none;stroke:rgba(232,196,128,.3);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.ig-n-mura{fill:rgba(217,185,122,.05);stroke:#D9B97A;stroke-width:1.8;stroke-linejoin:round}
+.ig-n-mura-alone{fill:none;stroke:rgba(217,185,122,.14);stroke-width:8;stroke-linejoin:round}
+.ig-luogo{opacity:0;transition:opacity .7s ease}
+.ig-luogo.vis{opacity:1}
+.ig-icona{transform:scale(.3);transition:transform .8s cubic-bezier(.3,1.5,.5,1)}
+.ig-luogo.vis .ig-icona{transform:none}
+.ig-luogo-lab{transition:opacity .4s}
+.ig-luogo-lab.via{opacity:0}
+.ig-luogo.tevere{opacity:1}
+.ig-n-nome{font-family:var(--ui);font-size:13px;font-weight:600;fill:#F6EBD6;paint-order:stroke;stroke:rgba(10,7,5,.88);stroke-width:3.5px;stroke-linejoin:round}
+.ig-luogo.tevere .ig-n-nome{font-family:var(--serif);font-style:italic;font-weight:400;font-size:14px;fill:#9CC0CF}
+.ig-n-sotto{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#E6D2AA;paint-order:stroke;stroke:rgba(10,7,5,.88);stroke-width:3.5px;stroke-linejoin:round}
+.ig-n-guida{stroke:rgba(246,235,214,.5);stroke-width:1}
+.ig-tenda{fill:#E9D7B0;stroke:#120D0A;stroke-width:.8;stroke-linejoin:round}
+.ig-porta-punto{fill:#F6EBD6}
+.ig-porta-onda{fill:none;stroke:#F6EBD6;stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:ig-onda-porta 2.2s ease-out infinite}
+@keyframes ig-onda-porta{from{transform:scale(.6);opacity:.9}to{transform:scale(2.6);opacity:0}}
+.ig-fiamma{mix-blend-mode:screen;transform-box:fill-box;transform-origin:center;animation:ig-guizzo 1.3s ease-in-out infinite alternate}
+.ig-fuoco.incerto .ig-fiamma{opacity:.75}
+@keyframes ig-guizzo{0%{transform:scale(.9);opacity:.8}45%{transform:scale(1.06);opacity:1}100%{transform:scale(.97);opacity:.88}}
+.ig-brace{fill:#FFF6DC}
+.ig-incerto{fill:none;stroke:#F1D99A;stroke-width:1.4;stroke-dasharray:3 3.5}
+.ig-alone{mix-blend-mode:screen;transform-box:fill-box;transform-origin:center;animation:ig-respira 3.4s ease-in-out infinite}
+@keyframes ig-respira{0%,100%{transform:scale(.92);opacity:.85}50%{transform:scale(1.1);opacity:1}}
+.ig-croce{stroke:#FFF0C6;stroke-width:2.2;stroke-linecap:round;fill:none}
+.ig-ingresso{opacity:0;transition:opacity .4s}
+.ig-ingresso.vis{opacity:1}
+.ig-freccia-linea{fill:none;stroke:#F6EBD6;stroke-width:3;stroke-linecap:round}
+.ig-freccia-punta{fill:#F6EBD6}
+.ig-data{opacity:0;transition:opacity .9s ease}
+.ig-data.vis{opacity:1}
+.ig-data-1{font-family:var(--cap);font-size:20px;font-weight:700;letter-spacing:.08em;fill:#E8C877}
+.ig-data-2{font-family:var(--ui);font-size:12.5px;fill:#CDBFA6}
+.ig-orologio{opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-orologio.vis{opacity:1;transform:none}
+.ig-orologio-fondo{fill:rgba(16,11,8,.8);stroke:rgba(241,217,154,.2)}
+.ig-arco-vuoto{fill:none;stroke:rgba(255,255,255,.1);stroke-width:9}
+.ig-arco{fill:none;stroke-width:9}
+.ig-arco.orosio,.ig-sw.orosio{stroke:#E8A640;fill:#E8A640}
+.ig-arco.marcellino{stroke:#B98FC9}
+.ig-sw.marcellino{fill:#B98FC9}
+.ig-arco{fill:none}
+.ig-oro-num{font-family:var(--cap);font-size:26px;font-weight:700;fill:#FFF3D6}
+.ig-oro-lab{font-family:var(--ui);font-size:11px;letter-spacing:.1em;fill:#CDBFA6}
+.ig-oro-voce{opacity:0;transition:opacity .6s}
+.ig-oro-voce.vis{opacity:1}
+.ig-oro-t{font-family:var(--ui);font-size:12.5px;fill:#F0E4CC}
+.ig-oro-nota{font-family:var(--serif);font-style:italic;font-size:14.5px;fill:#E8C877;opacity:0;transition:opacity .9s}
+.ig-oro-nota.vis{opacity:1}
+
+/* ---------- 5. la flotta ---------- */
+.ig-onda{fill:none;stroke:#fff;stroke-width:1}
+.ig-fila{animation:ig-dondola 3.4s ease-in-out infinite alternate}
+@keyframes ig-dondola{from{transform:translateY(0)}to{transform:translateY(-2.2px)}}
+.ig-n{opacity:0;transform:translateY(8px);transition:opacity .9s ease,transform 1.2s cubic-bezier(.4,0,.7,.2)}
+.ig-n.su{opacity:1;transform:none;transition:opacity .5s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-n.via{opacity:.1;transform:translateY(5px)}
+.ig-conta.chiaro .ig-k-anno{fill:#F1D99A}
+.ig-conta.chiaro .ig-k-num{fill:#FFF8EA}
+.ig-conta.chiaro .ig-k-lab{fill:#E7DDCB}
+.ig-k-su{font-family:var(--cap);font-size:20px;font-weight:600;fill:#E7DDCB}
+.ig-k-prima{font-family:var(--serif);font-style:italic;font-size:18px;fill:#F3EBDC}
+
+/* ---------- 6. la carta che cambia ---------- */
+.ig-carta{opacity:0;transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.ig-carta.vis{opacity:1}
+.ig-carta.via{opacity:0;transform:scale(.95)}
+.ig-carta svg{display:block;width:100%;height:100%;border-radius:8px;box-shadow:0 14px 30px -20px rgba(34,28,24,.7),0 0 0 1px rgba(34,28,24,.08)}
+.ig-mini .m-mini-nome{display:none}
+.ig-mini .m-regione{transition:color .9s ease,fill .9s ease,opacity .3s ease}
+.ig-mini-luce{fill:rgba(255,244,214,.42);opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+.ig-mini-luce.vis{opacity:1;transition:opacity .25s ease .5s}
+.ig-regno{font-family:var(--ui);font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(34,28,24,.66);stroke-linejoin:round;opacity:0;transition:opacity .6s ease}
+.ig-regni-f.vis .ig-regno{opacity:1}
+.ig-regni-f:not(.vis) .ig-regno{transition-delay:0s!important}
+.ig-pannello{display:flex;flex-direction:column;gap:10px;overflow:hidden;opacity:0;transition:opacity .7s ease}
+.ig-pannello.vis{opacity:1}
+.ig-pannello.via{opacity:0}
+.ig-pannello.sopra{padding:8px 10px;border-radius:10px;background:rgba(251,248,241,.92);box-shadow:0 6px 16px -10px rgba(34,28,24,.5);gap:6px}
+.ig-p-anno{font-family:var(--cap);font-weight:600;font-size:clamp(44px,6vw,76px);line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.ig-pannello.sopra .ig-p-anno{font-size:30px}
+.ig-pannello.sotto{overflow-y:auto;gap:6px}
+.ig-pannello.sotto .ig-p-anno{font-size:40px}
+.ig-pannello.sotto .ig-p-titolo{font-size:16px}
+.ig-p-titolo{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.3;color:var(--muted)}
+.ig-p-titolo[hidden]{display:none}
+.ig-legenda.dentro{opacity:1;transition:opacity .35s ease}
+.ig-legenda.dentro.cambia{opacity:0}
+.ig-legenda-fuori{margin:12px 0 0}
+.ig-legenda-fuori .ig-legenda.dentro{gap:4px 12px}
+.ig-legenda.dentro.via{opacity:0}
+.ig-quattro{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;align-content:center;visibility:hidden}
+.ig-quattro.riga{grid-template-columns:repeat(4,1fr)}
+.ig-quattro.vis{visibility:visible}
+.ig-q{margin:0;min-width:0;opacity:0;transform:translateY(16px) scale(.95);transition:opacity .8s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-quattro.vis .ig-q{opacity:1;transform:none}
+.ig-quattro:not(.vis) .ig-q{transition-delay:0s!important}
+.ig-q svg{display:block;width:100%;height:auto;aspect-ratio:810/518;border-radius:6px;box-shadow:0 10px 22px -16px rgba(34,28,24,.7),0 0 0 1px rgba(34,28,24,.08)}
+.ig-q figcaption{display:flex;gap:8px;align-items:baseline;margin-top:6px;font-family:var(--ui);font-size:12px;line-height:1.3;color:var(--muted)}
+.ig-quattro.stretta figcaption span{display:none}
+.ig-q figcaption b{flex:none;font-family:var(--cap);font-size:18px;font-weight:700;color:var(--porpora)}
+
+/* ---------- telefoni in piedi ---------- */
+@media (max-width:600px){
+  .ig-finestra{width:100vw;height:100dvh;max-height:100dvh;margin:0;border-radius:0}
+  .ig-corpo{padding:8px 12px 18px}
+  .ig-testa{margin-bottom:8px}
+  .ig-titolo{font-size:17px}
+  .ig-palco{height:clamp(300px,56dvh,520px);border-radius:10px}
+  .ig-frase{flex-direction:column;gap:2px;min-height:5.4em;margin:12px 2px 8px;font-size:17.5px}
+  .ig-frase-anno{font-size:15px}
+  .ig-comandi{gap:4px}
+  .ig-scorri{margin:0 2px;min-width:70px}
+  .ig-sint-1{font-size:17px}
+  .ig-sint-2{font-size:20px}
+  .ig-p-titolo{font-size:16px}
+  .ig-quattro.stretta figcaption span{display:none}
+.ig-q figcaption b{font-size:16px}
+}
+/* ---------- telefoni coricati: il disegno a sinistra, il testo a destra ---------- */
+@media (max-height:500px) and (min-width:601px){
+  .ig-finestra{width:100vw;height:100dvh;max-height:100dvh;margin:0;border-radius:0;overflow:hidden}
+  .ig-corpo{display:grid;grid-template-columns:minmax(0,1fr) 290px;grid-template-rows:auto minmax(0,1fr);column-gap:16px;padding:10px 12px;height:100%;box-sizing:border-box}
+  .ig-palco{grid-column:1;grid-row:1/span 2;height:calc(100dvh - 20px)}
+  .ig-testa{grid-column:2;grid-row:1;margin-bottom:2px}
+  .ig-titolo{font-size:16px}
+  .ig-lato{grid-column:2;grid-row:2;overflow:auto;min-height:0}
+  .ig-frase{flex-direction:column;gap:2px;min-height:6.2em;margin:4px 0 8px;font-size:16.5px}
+  .ig-frase-anno{font-size:14px}
+  .ig-comandi{flex-wrap:wrap;gap:6px}
+  .ig-scorri{order:5;flex-basis:100%;margin:0}
+  .ig-cop-tit{font-size:30px}
+  .ig-cop-sotto{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){ .ig-finestra[open]{animation:none} .ig-invito,.ig-play{transition:none} }
