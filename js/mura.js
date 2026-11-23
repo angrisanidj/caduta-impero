@@ -158,8 +158,8 @@ var acque=(function(){
      è un'ipotesi); posizione dalla via OpenStreetMap 226257804. Il ponte di Agrippa (noto da un cippo di Claudio) e il Sublicio, di legno, «standing as late as the fifth century»
      ma in un punto discusso, non si disegnano. */
   var PC={A:new RM.Costruttore(),B:new RM.Costruttore(),C:new RM.Costruttore()}, B, curva=RM.curvaFiume, storie=[];
-  function ponte(B,parti){      // parti: 'tutto', 'rotto' (senza un'arcata), 'pile'
-    if(parti!=='pile'){
+  function ponte(B,parti,q,rot){      // parti: 'tutto', 'rotto' (senza un'arcata), 'pile'
+    if(parti!=='pile'){ rampe(B,q,rot,7.5,1.15,.65,P.travertino);
       if(parti==='rotto'){ B.scatola(6.8,.3,1.3,-4.1,.85,0,P.travertino).scatola(5.2,.3,1.3,4.9,.85,0,P.travertino); }      // manca il tratto fra le due pile centrali
       else B.scatola(15,.3,1.3,0,.85,0,P.travertino).scatola(15,.16,.12,0,1.15,.6,P.travertino).scatola(15,.16,.12,0,1.15,-.6,P.travertino);
     }
@@ -169,8 +169,8 @@ var acque=(function(){
   [[-157,-104,'A'],[-120,1,'B',0,772],[-66,28,'A'],[-52,38,'A'],[-84,97,'C',280],[-152,-479,'A'],[-173.5,-92.6,'C',0,null,300]].forEach(function(p){     // Elio, Aurelio (ponte Sisto), isola Tiberina, Emilio, Probo, Milvio, Neroniano
     var m=1e9, tm=0, i, q; for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); var dd=Math.hypot(q.x-p[0],q.z-p[1]); if(dd<m){ m=dd; tm=i/2400; } }
     q=curva.getPoint(tm); var tg=curva.getTangent(tm), rot=Math.atan2(-tg.x,-tg.z);            // l'asse x locale attraversa il fiume
-    if(!p[3] && !p[4] && !p[5]){ PC[p[2]].dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,'tutto'); }); return; }      // i ponti che non cambiano restano nella maglia comune
-    var mat=RM.matPietra(p[2]), fa=function(parti){ var C=new RM.Costruttore(); C.dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,parti); }); var g=C.maglia(mat); g.visible=false; RM.scene.add(g); return g; };
+    if(!p[3] && !p[4] && !p[5]){ PC[p[2]].dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,'tutto',q,rot); }); return; }      // i ponti che non cambiano restano nella maglia comune
+    var mat=RM.matPietra(p[2]), fa=function(parti){ var C=new RM.Costruttore(); C.dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,parti,q,rot); }); var g=C.maglia(mat); g.visible=false; RM.scene.add(g); return g; };
     storie.push({dal:p[3]||0, rotto:p[4], pile:p[5], intero:fa('tutto'), mezzo:p[4]?fa('rotto'):null, resti:p[5]?fa('pile'):null});
   });
   RM.moduli.push(function(anno){ storie.forEach(function(s){
@@ -185,6 +185,18 @@ var acque=(function(){
   ['A','B','C'].forEach(function(k){ RM.scene.add(PC[k].maglia(RM.matPietra(k))); });
 })();
 
+/* Le testate dei ponti scendono (o salgono) fino al terreno con una rampa: prima l'impalcato finiva di colpo sopra la riva o dentro (23 novembre 2026, l'utente: «sembra che i ponti
+   siano sospesi senza finire»). q, rot: centro del ponte e rotazione; mezzo: metà lunghezza; yTop: piano dell'impalcato in coordinate locali (origine a -0,5); larga: metà larghezza */
+function rampe(B,q,rot,mezzo,yTop,larga,colore){
+  [-1,1].forEach(function(s){
+    var c=Math.cos(rot), sn=Math.sin(rot), hq=RM.hSuolo||RM.h, x0=s*mezzo, k, yg=yTop;
+    for(k=1;k<=12;k++){ var xl=s*(mezzo+k*.5); yg=hq(q.x+xl*c,q.z-xl*sn)+.5; if(Math.abs(yg-yTop)<.08) break; }      // il terreno lungo l'asse, mezzo metro alla volta
+    var dy=yg-yTop; if(Math.abs(dy)<.05) return;
+    var L=Math.min(6,Math.max(1.2,Math.abs(dy)*3)), x1=s*(mezzo+L), y1=hq(q.x+x1*c,q.z-x1*sn)+.5+.04, fondo=Math.min(yTop,y1)-.4;
+    B.quad([x0,yTop,larga],[x1,y1,larga],[x1,y1,-larga],[x0,yTop,-larga],colore);      // il piano della rampa
+    B.quad([x0,fondo,larga],[x1,fondo,larga],[x1,y1,larga],[x0,yTop,larga],colore).quad([x0,yTop,-larga],[x1,y1,-larga],[x1,fondo,-larga],[x0,fondo,-larga],colore);      // i fianchi
+  });
+}
 /* 312: il ponte provvisorio di Massenzio accanto al ponte Milvio. Zosimo II 15-16 (traduzione del 1814): un ponte di travi in due metà, unite al centro da ferri da togliere, che cede
    sotto i fuggiaschi; Eusebio, Storia ecclesiastica IX 9, 5-7: un ponte di barche; Lattanzio 44, 9: il ponte alle spalle di Massenzio «viene tagliato». Dove fosse esattamente non è scritto:
    qui una passerella di travi su cavalletti, una trentina di metri a monte del ponte di pietra, visibile solo nella tappa del 312. È uno schema, detto nella didascalia (milvio312 in js/dati.js). */
@@ -193,8 +205,9 @@ var acque=(function(){
   for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); dd=Math.hypot(q.x-p[0],q.z-p[1]); if(dd<m){ m=dd; tm=i/2400; } }
   var c0=curva.getPoint(tm), t=tm;
   while(t>0.0005){ t-=0.0002; q=curva.getPoint(t); if(Math.hypot(q.x-c0.x,q.z-c0.z)>=3.2) break; }      // circa 30 m lungo il fiume
-  var tg=curva.getTangent(t), B=new RM.Costruttore();
-  B.dentro(q.x,-.5,q.z,Math.atan2(-tg.x,-tg.z),function(B){
+  var tg=curva.getTangent(t), B=new RM.Costruttore(), rp=Math.atan2(-tg.x,-tg.z);
+  B.dentro(q.x,-.5,q.z,rp,function(B){
+    rampe(B,q,rp,7.8,1,.4,P.tronco);
     B.scatola(15.6,.1,.8,0,.9,0,P.tronco).scatola(15.6,.22,.05,0,1,.38,P.tronco).scatola(15.6,.22,.05,0,1,-.38,P.tronco);      // impalcato e parapetti
     for(var x=-7;x<=7.01;x+=1.4){ B.scatola(.14,.95,.14,x,0,.3,P.tronco).scatola(.14,.95,.14,x,0,-.3,P.tronco); }      // cavalletti nel fiume
   });

@@ -263,7 +263,7 @@ function nucleo(x,z){ var t=0; RM.NUCLEI.forEach(function(n){ var d=Math.hypot(x
 function posaSuolo(){
   var S=piccolo?220:300, geo=new THREE.PlaneGeometry(2,2,S,S); geo.rotateX(-Math.PI/2);
   var pos=geo.attributes.position, uv=geo.attributes.uv, col=new Float32Array(pos.count*3), urb=new Float32Array(pos.count*2), c=new THREE.Color(), i, x, z;
-  var curva=function(t){ var a=Math.abs(t); return (t<0?-1:1)*(.12*a+.88*a*a*a)*3400; };      // più fitta al centro: un vertice ogni 27 m sul Foro (prima 68), come prima ai margini della città (23 novembre 2026)
+  var curva=function(t){ var a=Math.abs(t), a3=a*a*a; return (t<0?-1:1)*(.2*a+.05*a3+.75*a3*a3*a)*3400; };      // fitta in tutta la città: un vertice ogni 45 m sul Foro (prima 68), ogni 100 a ponte Milvio (prima 130, più della larghezza del Tevere, e la maglia gli passava sopra); rada solo nella campagna lontana (23 novembre 2026)
   for(i=0;i<pos.count;i++){
     x=curva(pos.getX(i)); z=curva(pos.getZ(i));
     pos.setXYZ(i,x,RM.h(x,z),z); uv.setXY(i,x/42,z/42);
@@ -301,7 +301,7 @@ function posaSuolo(){
   suolo.receiveShadow=true; scene.add(suolo); RM.suolo=suolo;
   /* la quota del terreno come è disegnato (triangolo per triangolo): fra un vertice e l'altro della maglia RM.h, più fine, può uscirne di qualche metro sui bordi delle terrazze.
      Le strade la seguono, così non galleggiano e non affondano (23 novembre 2026) */
-  var N=S+1, inv=function(v){ var s=v<0?-1:1, a=Math.min(1,Math.abs(v)/3400), t=a; for(var k=0;k<8;k++) t-=(.12*t+.88*t*t*t-a)/(.12+2.64*t*t); return s*t; };
+  var N=S+1, inv=function(v){ var s=v<0?-1:1, a=Math.min(1,Math.abs(v)/3400), t=a; for(var k=0;k<8;k++) var t2=t*t, t6=t2*t2*t2; t-=(.2*t+.05*t2*t+.75*t6*t-a)/(.2+.15*t2+5.25*t6); return s*t; };
   RM.hSuolo=function(x,z){
     var tx=(inv(x)+1)*S/2, tz=(inv(z)+1)*S/2, ix=Math.max(0,Math.min(S-1,Math.floor(tx))), iz=Math.max(0,Math.min(S-1,Math.floor(tz)));
     var x0=curva(ix*2/S-1), x1=curva((ix+1)*2/S-1), z0=curva(iz*2/S-1), z1=curva((iz+1)*2/S-1), fx=(x-x0)/(x1-x0), fz=(z-z0)/(z1-z0);
