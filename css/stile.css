@@ -671,7 +671,11 @@ body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.9
 .salta-giu{position:fixed;right:12px;bottom:14px;z-index:30;min-height:40px;padding:0 16px;border:1px solid rgba(212,174,85,.6);border-radius:999px;background:rgba(36,30,26,.92);color:#F6E4B0;
   font-family:var(--ui);font-size:13px;font-weight:600;letter-spacing:.02em;box-shadow:0 6px 16px -6px rgba(0,0,0,.5);cursor:pointer;-webkit-tap-highlight-color:transparent}
 .salta-giu[hidden]{display:none}
-@media (min-width:1001px){ .salta-giu{display:none} }
+/* anche sul PC (23 novembre 2026, l'utente: «anche da desktop dovresti darmi indicazione di scendere giù per leggere ad ogni tappa»): a ogni tappa nuova il bottone pulsa due volte */
+.salta-giu.pulsa{animation:salta-pulsa 1.1s ease-in-out 2}
+@keyframes salta-pulsa{0%,100%{box-shadow:0 6px 16px -6px rgba(0,0,0,.5)} 50%{box-shadow:0 0 0 6px rgba(212,174,85,.35),0 6px 16px -6px rgba(0,0,0,.5)}}
+@media (prefers-reduced-motion:reduce){ .salta-giu.pulsa{animation:none} }
+@media (min-width:1001px){ .salta-giu{font-size:14px;min-height:42px;padding:0 20px} }
 @media print{ .salta-giu{display:none} }
 
 /* piede a voci che si aprono (23 novembre 2026, chiesto dall'utente: «mettila ad apertura in maniera carina»): Fonti, Come è fatta questa pagina, Licenze.

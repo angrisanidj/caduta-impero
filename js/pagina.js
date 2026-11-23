@@ -301,7 +301,7 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
   b.type='button'; b.className='salta-giu'; b.hidden=true; document.body.appendChild(b);
   function aggiorna(){
     var B=document.body.classList, H=window.innerHeight;
-    if(window.innerWidth>1000 || B.contains('roma-grande') || B.contains('impero-grande')){ b.hidden=true; return; }
+    if(B.contains('roma-grande') || B.contains('impero-grande')){ b.hidden=true; return; }      // dal 23 novembre 2026 anche sul PC (prima solo fino a 1000 punti)
     if(B.contains('tempo-attesa')){ b.hidden=true; return; }      // in cima alla pagina, prima di scorrere, non c'è (come la linea del tempo)
     var ca=$('cause'), pi=document.querySelector('.piede'); if((ca&&ca.getBoundingClientRect().top<H-60) || (pi&&pi.getBoundingClientRect().top<H)){ b.hidden=true; return; }      // su «Perché cadde» e sul piede copriva le righe (proposta dell'audit del design, fatta il 23 novembre 2026)
     var r=tit.getBoundingClientRect(), s=sc.getBoundingClientRect(), dove=r.top>H*.85 && s.bottom>0 ? 'giu' : s.bottom<0 && r.top<H*.6 ? 'su' : '';
@@ -311,6 +311,7 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
   }
   function presto(){ if(!raf) raf=requestAnimationFrame(function(){ raf=0; aggiorna(); }); }
   window.addEventListener('scroll',presto,{passive:true}); window.addEventListener('resize',presto); window.addEventListener('scroll-tempo',presto); ascolto.push(presto); aggiorna();
+  ascolto.push(function(){ setTimeout(function(){ aggiorna(); if(b.hidden||b.dataset.dove!=='giu') return; b.classList.remove('pulsa'); void b.offsetWidth; b.classList.add('pulsa'); },250); });      // tappa nuova: «Leggi la tappa» pulsa, per dire che il racconto è sotto
   b.addEventListener('click',function(){ var ridotto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
     (b.dataset.dove==='giu'?tit:sc).scrollIntoView({behavior:ridotto?'auto':'smooth',block:'start'}); });
 })();
