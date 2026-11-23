@@ -444,16 +444,14 @@ var M=[
        il nucleo conico ha 5 m di diametro alla base; «the whole structure was originally covered with marble»; attribuita a Domiziano. La grande vasca di 21 m è «probably of the
        time of Constantine»: qui compare dal 315, con l'arco (metasudansvasca); prima c'è una vasca più piccola, di misura indicativa. Zoccolo, cornice a metà, pigna in cima e
        rivoli sono come sulle monete e nelle ricostruzioni correnti: indicativi. */
-    B.cilindro(.66,.16,0,0,0,P.marmo,.66,24).cilindro(.58,.03,0,.15,0,P.acqua,.58,24);                                                         // la vasca di prima
+    B.cilindro(.66,.16,0,0,0,P.marmo,.66,24);                                                                                                  // la vasca di prima (l'acqua, che si muove, sta più sotto: «l'acqua della Meta Sudans»)
     B.cilindro(.4,.12,0,.12,0,P.marmo,.4,20).cilindro(.36,.34,0,.24,0,P.marmo,.34,18).cilindro(.38,.05,0,.58,0,P.marmo,.38,18);                // lo zoccolo e la sua cornice
     B.geo(new THREE.LatheGeometry([[.31,0],[.295,.25],[.262,.5],[.21,.75],[.14,.98],[.085,1.12],[.07,1.16]].map(function(q){ return new THREE.Vector2(q[0],q[1]); }),18).translate(0,.63,0),P.marmo);      // il cono
     B.cilindro(.115,.045,0,1.2,0,P.marmo,.115,12).geo(new THREE.SphereGeometry(.085,10,8).scale(1,1.25,1).translate(0,1.9,0),P.marmo).cilindro(.05,.1,0,1.79,0,P.marmo,.07,8);      // una cornice a metà, la pigna in cima
-    for(var r=0;r<10;r++){ var a=r*.6283+.2, c=Math.cos(a), d=Math.sin(a);                                                                      // l'acqua che scende lungo il cono
-      B.quad([c*.075,1.78,d*.075],[c*.075-d*.012,1.78,d*.075+c*.012],[c*.318-d*.03,.64,d*.318+c*.03],[c*.318,.64,d*.318],P.acqua); }
  }},
  {id:'metasudansvasca', x:45.6,z:27.8, ry:0, come:'colosseo', fa:function(B){                                                                 // la vasca di 21 m, dal 315
     var e1=RM.ellisse(1.05,1.05,28), e2=RM.ellisse(.97,.97,28), e3=RM.ellisse(.67,.67,28);
-    B.striscia(e1,0,e1,.2,P.marmo).striscia(e1,.2,e2,.2,P.marmo).striscia(e2,.2,e2,.1,P.marmo).striscia(e2,.17,e3,.17,P.acqua);
+    B.striscia(e1,0,e1,.2,P.marmo).striscia(e1,.2,e2,.2,P.marmo).striscia(e2,.2,e2,.1,P.marmo).striscia(e2,.1,e3,.1,P.marmo);
  }},
  {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], et:1, fa:function(B){
     circo(B,62,14,2.5,true);
@@ -1279,6 +1277,45 @@ RM.moduli.push(function(anno){
       us.uSud.value=.2*RM.sfuma(523,800,anno)+.3*RM.sfuma(846.6,847,anno); us.uRovina.value*=.4; }      // il fronte sud: cava dal VI secolo; nell'847, secondo il Parco del Colosseo, cade quel che ne resta
   });
 });
+
+/* ---------- l'acqua della Meta Sudans ----------
+   «Sudans described the appearance of the jets of water» (Platner e Ashby): l'acqua esce in cima e scende lungo il cono, a rivoli, fino alla vasca. Qui è una pelle trasparente
+   sopra il cono, con i rivoli che scorrono, e uno specchio d'acqua nella vasca, con i cerchi che si allargano. Quanti fossero i rivoli e come uscisse l'acqua non si sa: è uno
+   schema. Dal 537, tagliati gli acquedotti, la fontana è asciutta. (23 novembre 2026, l'utente: «La Meta Sudans con l'acqua che scende?») */
+(function(){
+  var o=M.filter(function(m){ return m.id==='metasudans'; })[0]; if(!o||!o.g) return;
+  var NL=String.fromCharCode(10), uF={value:1}, uG={value:0}, uN={value:0}, gr=new THREE.Group(); gr.position.copy(o.g.position); RM.scene.add(gr);
+  var VS='varying vec2 vUv; varying vec2 vP; void main(){ vUv=uv; vP=position.xz; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }';
+  var matCono=new THREE.ShaderMaterial({transparent:true,depthWrite:false,toneMapped:false,side:THREE.DoubleSide,uniforms:{uTempo:RM.tempoAcqua,uForza:uF,uNotte:uN},vertexShader:VS,fragmentShader:[
+    'uniform float uTempo; uniform float uForza; uniform float uNotte; varying vec2 vUv;',
+    'float hh(float n){ return fract(sin(n*127.1)*43758.5453); }',
+    'void main(){ float n=18.0; float c=floor(vUv.x*n); float f=fract(vUv.x*n); float giu=1.0-vUv.y;',                                                  // giu: 0 in cima, 1 al piede
+    '  float larg=0.2+0.28*hh(c+3.0); float riv=smoothstep(larg,0.0,abs(f-0.5+0.12*sin(giu*9.0+hh(c)*6.28)));',                                       // ogni rivolo ha la sua larghezza e serpeggia un poco
+    '  float vel=1.2+0.9*hh(c);',
+    '  float onde=0.5+0.5*sin(giu*30.0-uTempo*vel*3.4+hh(c+7.0)*6.28);',                                                                              // le onde scendono
+    '  float gocce=smoothstep(0.7,1.0,sin(giu*85.0-uTempo*vel*8.0+hh(c+1.0)*6.28));',
+    '  float a=(0.05+riv*(0.3+0.34*onde+0.36*gocce))*uForza;',
+    '  vec3 col=mix(vec3(0.60,0.80,0.86),vec3(0.96,0.99,1.0),riv*(0.35*onde+0.65*gocce));',
+    '  gl_FragColor=vec4(col*(1.0-0.7*uNotte),a); }'].join(NL)});
+  var matVasca=new THREE.ShaderMaterial({transparent:true,depthWrite:false,toneMapped:false,uniforms:{uTempo:RM.tempoAcqua,uForza:uF,uNotte:uN,uR0:{value:.4}},vertexShader:VS,fragmentShader:[
+    'uniform float uTempo; uniform float uForza; uniform float uNotte; uniform float uR0; varying vec2 vP;',
+    'void main(){ float r=length(vP); float an=atan(vP.y,vP.x);',
+    '  float cerchi=0.5+0.5*sin(r*46.0-uTempo*3.2+0.6*sin(an*7.0));',                                                                                // i cerchi si allargano dal piede del cono
+    '  float schiuma=smoothstep(uR0+0.12,uR0,r)*(0.55+0.45*sin(an*22.0+uTempo*7.0+r*80.0));',                                                         // dove l'acqua cade
+    '  vec3 col=vec3(0.40,0.60,0.64)*(0.86+0.2*cerchi)+vec3(0.5,0.52,0.52)*schiuma;',
+    '  gl_FragColor=vec4(col*(1.0-0.7*uNotte),0.93*uForza); }'].join(NL)});
+  var cono=new THREE.Mesh(new THREE.LatheGeometry([[.318,0],[.303,.25],[.27,.5],[.218,.75],[.148,.98],[.093,1.12],[.078,1.16]].map(function(q){ return new THREE.Vector2(q[0],q[1]); }),36).translate(0,.63,0),matCono);
+  var piede=new THREE.Mesh(new THREE.LatheGeometry([[.4,0],[.385,.34],[.39,.4],[.318,.42]].map(function(q){ return new THREE.Vector2(q[0],q[1]); }),36).translate(0,.2,0),matCono);      // il velo continua sullo zoccolo
+  var matGrande=matVasca.clone(); matGrande.uniforms.uTempo=RM.tempoAcqua; matGrande.uniforms.uForza=uG; matGrande.uniforms.uNotte=uN; matGrande.uniforms.uR0={value:.7};
+  var piccola=new THREE.Mesh(new THREE.RingGeometry(.4,.6,40).rotateX(-Math.PI/2).translate(0,.175,0),matVasca);
+  var grande=new THREE.Mesh(new THREE.RingGeometry(.66,.97,48).rotateX(-Math.PI/2).translate(0,.165,0),matGrande);
+  [cono,piede,piccola,grande].forEach(function(m){ m.renderOrder=3; gr.add(m); });
+  var secca=((D.MONUMENTI.metasudans||[]).filter(function(q){ return q[1]==='chiuso'; })[0]||[537])[0];
+  RM.moduli.push(function(anno){
+    var f=1-RM.sfuma(secca-.3,secca+.2,anno), st=RM.statoMonumento('metasudansvasca',anno), g=(st.s0==='assente'?(st.s1==='assente'?0:st.t>.98?1:0):1)*f;
+    uF.value=f; uG.value=g; uN.value=RM.notte||0; gr.visible=f>.01; grande.visible=g>.01;
+  });
+})();
 
 /* ---------- travertini ai piedi del Colosseo ----------
    Dal VI secolo il fronte sud è un cantiere di smontaggio: pochi blocchi a terra in attesa d'essere portati via.
