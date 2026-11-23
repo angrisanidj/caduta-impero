@@ -372,9 +372,12 @@ var TOMBE=[      // [x, z, raggio, numero, dal anno, nome]
   [73,146,4,26,568,'recinto delle terme di Caracalla, lato est'],
   [10,11,1.2,6,593,'atrio di Santa Maria Antiqua e casa delle Vestali']];
 var tombe=TOMBE.map(function(t){
-  var B=new RM.Costruttore(), coppi=P.coppi||RM.col(0xa8553a), terra=RM.col(0x8a7a62), k=0, tent=0;
+  var B=new RM.Costruttore(), coppi=P.coppi||RM.col(0xa8553a), terra=RM.col(0x8a7a62), smossa=RM.col(0x6f6150), k=0, tent=0, hq=RM.hSuolo||RM.h;
+  /* sotto il gruppo una chiazza di terra smossa, irregolare, che si vede anche da lontano (23 novembre 2026, l'utente: «dove si vedono le tombe?»): le fosse sono in grandezza vera */
+  var n=14, j, pr=[]; for(j=0;j<n;j++){ var aj=j/n*6.283, rj=(t[2]+.5)*(.8+.35*rnd()); pr.push([t[0]+Math.cos(aj)*rj, t[1]+Math.sin(aj)*rj]); }
+  for(j=0;j<n;j++){ var p1=pr[j], p2=pr[(j+1)%n]; B.tri([t[0],hq(t[0],t[1])+.03,t[1]],[p2[0],hq(p2[0],p2[1])+.03,p2[1]],[p1[0],hq(p1[0],p1[1])+.03,p1[1]],smossa); }
   while(k<t[3] && tent<t[3]*20){ tent++;
-    var a=rnd()*6.283, r=Math.sqrt(rnd())*t[2], x=t[0]+Math.cos(a)*r, z=t[1]+Math.sin(a)*r, ry=(rnd()-.5)*.6+(rnd()<.5?0:Math.PI/2), y=RM.h(x,z);
+    var a=rnd()*6.283, r=Math.sqrt(rnd())*t[2], x=t[0]+Math.cos(a)*r, z=t[1]+Math.sin(a)*r, ry=(rnd()-.5)*.6+(rnd()<.5?0:Math.PI/2), y=hq(x,z)+.03;
     if(rnd()<.75) B.falde(.08,.045,.21,x,y,z,coppi,ry); else B.scatola(.08,.03,.21,x,y,z,terra,ry);      // a cappuccina (due file di tegole a tetto) o fossa coperta di terra
     k++; }
   var g=B.maglia(RM.matPietra()); g.visible=false; RM.scene.add(g); return {g:g, da:t[4]};
@@ -392,7 +395,8 @@ var perId={}; (RM.MONUMENTI||[]).forEach(function(m){ perId[m.id]=m; });
 /* le due messe in scena hanno un'inquadratura fissa (punto guardato, posizione della camera): al ponte Milvio da sud, oltre il fiume, verso la riva dove fuggono;
    per il corteo da sud-est, sopra le case della via Lata */
 var VISTE={ milvio:{t:[-152,-486],c:[-140,10,-466]}, fortino552:{t:[-163,-126],c:[-131,30,-90]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
-  assedio472:{t:[-182,-110],c:[-143,47,-58]}, prigionieri593:{t:[-84,-232],c:[-57,33,-196]}, trionfo274:{t:[8,8],c:[44,26,44]}, carlo800:{t:[-236,-108],c:[-212,24,-84]}, saraceni846:{t:[-214,-104],c:[-182,34,-66]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
+  assedio472:{t:[-158,-109],c:[-122,44,-62]},      /* centrata sul mausoleo di Adriano e su ponte Elio, dove avviene lo scontro (23 novembre 2026, richiesta dell'utente); il campo resta a sinistra */
+  prigionieri593:{t:[-84,-232],c:[-57,33,-196]}, trionfo274:{t:[8,8],c:[44,26,44]}, carlo800:{t:[-236,-108],c:[-212,24,-84]}, saraceni846:{t:[-214,-104],c:[-182,34,-66]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
 var portata=false;                                                                      // la vista ce l'ha portata la regia
 function scena(){ var s=document.getElementById('scene'); return s?s.getAttribute('data-vista'):null; }
 function vista(v){
