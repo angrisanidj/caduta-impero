@@ -764,3 +764,311 @@
 .ig-c-porte-via.vis{opacity:1}
 .ig-c-alt-st{font-family:var(--ui);font-size:12.5px;font-weight:600;fill:#7A1F2B}
 .ig-m-schema.ig-f.vis{opacity:1}
+
+/* ---------- aiuti delle infografiche 11-13 (finestra sulla carta, rotte, segni) ---------- */
+.ig-fin-reg{fill-opacity:.3;transition:fill-opacity .8s ease}
+.ig-fin-reg.acceso{fill-opacity:.78;animation:ig-acceso 1.6s ease-in-out infinite}
+@keyframes ig-acceso{0%,100%{fill-opacity:.78}50%{fill-opacity:.5}}
+.ig-v-fiume.forte{stroke-width:2.2}
+.ig-rt{--c:#3B2F26;opacity:0;transition:opacity .4s}
+.ig-rt.vis{opacity:1}
+.ig-rt-l{fill:none;stroke:var(--c);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.ig-rt-l.schema{stroke-width:2.6;stroke-dasharray:6 5;stroke-linecap:butt}
+.ig-rt-maschera{fill:none;stroke:#fff;stroke-width:12;stroke-linecap:round}
+.ig-rt-p{fill:var(--c);opacity:0;transition:opacity .25s}
+.ig-rt-p.vis{opacity:1}
+.ig-rt-nome{font-family:var(--ui);font-size:12px;font-weight:700;fill:var(--c);paint-order:stroke;stroke:rgba(251,246,234,.94);stroke-width:3.5px;stroke-linejoin:round;opacity:0;transition:opacity .5s}
+.ig-rt-nome.vis{opacity:1}
+.ig-sg{opacity:0;transition:opacity .5s}
+.ig-sg.vis{opacity:1}
+.ig-sg-fiamma{fill:#D9531E;stroke:#FFF1D6;stroke-width:1.2}
+.ig-sg-alone{fill:rgba(240,138,46,.28);transform-box:fill-box;transform-origin:center;animation:ig-pulsa 1.6s ease-in-out infinite}
+.ig-v-luogo.grande .ig-v-punto{stroke-width:2}
+.ig-m-passo.chiaro .ig-m-passo-n{fill:#F1D99A}
+.ig-m-passo.chiaro .ig-m-passo-c{fill:#22070B}
+.ig-m-passo.chiaro .ig-m-passo-t{fill:#F0E4CC}
+
+/* ---------- 11. Adrianopoli (js/infografiche.js, disegnaAdrianopoli) ---------- */
+.ig-ad-fiume{font-family:var(--serif);font-style:italic;font-size:14px;fill:#2F5864;paint-order:stroke;stroke:rgba(246,240,226,.9);stroke-width:3px}
+.ig-ad-mare{font-family:var(--serif);font-style:italic;font-size:13.5px;letter-spacing:.06em;fill:#3E6A78}
+.ig-ad-zona{fill:rgba(59,47,38,.08);stroke:#3B2F26;stroke-width:1.4;stroke-dasharray:3 3}
+.ig-ad-zona-t{font-family:var(--serif);font-style:italic;font-size:13px;fill:#3B2F26;paint-order:stroke;stroke:rgba(246,240,226,.92);stroke-width:3px}
+.ig-ad-riga{opacity:0;transform:translateX(-10px);transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.ig-ad-riga.vis{opacity:.5;transform:none}
+.ig-ad-riga.ora{opacity:1}
+.ig-ad-anno{font-family:var(--cap);font-size:27px;font-weight:700;fill:var(--porpora,#7A1F2B);font-variant-numeric:tabular-nums}
+.ig-ad-rn{font-family:var(--cap);font-size:15px;font-weight:700;fill:var(--ink,#221C18)}
+.ig-ad-rs{font-family:var(--serif);font-style:italic;font-size:15.5px;fill:#4A4038}
+.ig-ad-scheda{opacity:0;transition:opacity .4s}
+.ig-ad-scheda.vis{opacity:1}
+.ig-ad-num{opacity:0;transform:translateY(8px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-ad-num.vis{opacity:1;transform:none}
+.ig-ad-num-n{font-family:var(--cap);font-size:42px;font-weight:700;fill:#3B2F26;font-variant-numeric:tabular-nums}
+.ig-ad-num-t{font-family:var(--ui);font-size:13px;fill:#5F554B}
+.ig-ad-strada-b{fill:none;stroke:#C9AE7C;stroke-linecap:round;stroke-linejoin:round}
+.ig-ad-strada{fill:none;stroke:#FBF4E2;stroke-linecap:round;stroke-linejoin:round}
+.ig-ad-colonna{fill:none;stroke:#9A2F2A;stroke-linecap:butt;opacity:0;transition:opacity .6s}
+.ig-ad-colonna.vis{opacity:.9}
+.ig-ad-quota{fill:none;stroke:rgba(140,108,58,.22);stroke-width:1}
+.ig-ad-citta{fill:#E8D9B8;stroke:#8A7356;stroke-width:2.2;stroke-linejoin:round}
+.ig-ad-casa{fill:#C9B08A}
+.ig-ad-bagaglio{fill:#8A6A3A;stroke:#F6EEDC;stroke-width:.6}
+.ig-ad-et{font-family:var(--ui);font-size:12px;font-weight:600;fill:#3b322b;paint-order:stroke;stroke:rgba(246,238,216,.94);stroke-width:3.5px;stroke-linejoin:round}
+.ig-ad-et.forte{font-family:var(--cap);font-size:13px;font-weight:700;fill:#7A1F2B}
+.ig-ad-tag{opacity:0;transition:opacity .5s}
+.ig-ad-tag.vis{opacity:1}
+.ig-ad-tag.piccola{font-size:11.5px}
+.ig-ad-tag.scuro{fill:#22170F}
+.ig-ad-tag.notte{font-family:var(--serif);font-style:italic;font-size:14px;font-weight:400;fill:#E9E2D0;stroke:rgba(14,20,36,.6)}
+.ig-ad-carro{opacity:0;transition:opacity .35s}
+.ig-ad-carro.vis{opacity:1}
+.ig-ad-cassa{fill:#7A5530;stroke:#3E2A16;stroke-width:.8}
+.ig-ad-ruota{fill:#3E2A16}
+.ig-ad-goto{fill:#5E4B3C;opacity:.7}
+.ig-ad-caldo{opacity:0;transition:opacity 2s ease;mix-blend-mode:multiply}
+.ig-ad-caldo.vis{opacity:.6}
+.ig-ad-fuoco{opacity:0;transition:opacity .6s}
+.ig-ad-fuoco.vis{opacity:1}
+.ig-ad-fiamma{fill:#E2601F;stroke:#FFE3A8;stroke-width:1}
+.ig-ad-fiamma.grande{fill:#E8621C;stroke:none;filter:drop-shadow(0 0 8px rgba(255,150,50,.85))}
+.ig-ad-fiamma.cuore{fill:#FFD27A;stroke:none}
+.ig-ad-asta{stroke:#4A5068;stroke-width:1.3;stroke-linecap:round}
+.ig-ad-fumo{fill:rgba(110,96,84,.35);transform-box:fill-box;transform-origin:center;animation:ig-ad-fumo 2.7s linear infinite}
+@keyframes ig-ad-fumo{0%{transform:translate(0,0) scale(.5);opacity:0}20%{opacity:.8}100%{transform:translate(-7px,-26px) scale(2.2);opacity:0}}
+.ig-ad-u{opacity:0;transition:opacity .5s ease}
+.ig-ad-u.vis{opacity:1}
+.ig-ad-u.roma{fill:#9A2F2A;stroke:#F6F1E6;stroke-width:.9}
+.ig-ad-u.goti{fill:#5E4B3C;stroke:#F6F1E6;stroke-width:.9}
+.ig-ad-u.goti.cav{fill:#2E241C}
+.ig-ad-u.stretti{stroke:#3a0f0c;stroke-width:1.3}
+.ig-ad-u.travolto{opacity:0;transition:opacity 1s ease}
+.ig-ad-u.rotto{opacity:0;transition:opacity 1.6s ease}
+.ig-ad-inviato{fill:#fff;stroke:#3B2F26;stroke-width:1.4;opacity:0;transition:opacity .3s}
+.ig-ad-inviato.vis{opacity:1}
+.ig-ad-ricomere{fill:#7A1F2B;stroke:#fff;stroke-width:1.6;opacity:0;transition:opacity .3s}
+.ig-ad-ricomere.vis{opacity:1}
+.ig-ad-ricomere.fermo{stroke-dasharray:2 2}
+.ig-ad-arciere{fill:#C0473C;stroke:#fff;stroke-width:.8;opacity:0;transition:opacity .3s}
+.ig-ad-arciere.vis{opacity:1}
+.ig-ad-freccia{stroke:#2E241C;stroke-width:1.2;stroke-linecap:round;opacity:0}
+.ig-ad-freccia.vis{animation:ig-ad-piove 1.6s linear infinite}
+@keyframes ig-ad-piove{0%{opacity:0;transform:translate(10px,-8px)}30%{opacity:.85}100%{opacity:0;transform:translate(-6px,6px)}}
+.ig-ad-polvere{pointer-events:none}
+.ig-ad-fuggiasco{fill:#9A2F2A;opacity:0;transition:opacity .6s}
+.ig-ad-fuggiasco.vis{opacity:.85}
+.ig-ad-buio{fill:#0E1424;pointer-events:none}
+.ig-ad-lente{opacity:0;transition:opacity .6s ease}
+.ig-ad-lente.vis{opacity:1}
+.ig-ad-lente-bordo{fill:#fff;stroke:#7A1F2B;stroke-width:2;filter:drop-shadow(0 8px 16px rgba(34,28,24,.3))}
+.ig-ad-lente-fondo{fill:#EADBB8}
+.ig-omino.roma{fill:#9A2F2A;stroke:#9A2F2A}
+.ig-omino.porpora{fill:#B04A9A;stroke:#B04A9A}
+.ig-omino.porpora-chiaro{fill:#F1D99A;stroke:#F1D99A}
+.ig-omino.ig-ad-ombra{fill:#2A3248;stroke:#2A3248}
+.ig-ad-carta.casa .ig-omino.ig-ad-ombra{fill:#120804;stroke:#120804}
+.ig-ad-sole line{stroke:#E59A2C;stroke-width:2;stroke-linecap:round;transition:opacity .6s}
+.ig-ad-sole circle{fill:#F7C24E;stroke:#fff;stroke-width:1.6;transition:fill 1s,stroke 1s}
+.ig-ad-sole.notte line{opacity:0}
+.ig-ad-sole.notte circle{fill:#1B2238;stroke:#8B93AB}
+.ig-ad-ora-l{stroke:rgba(34,28,24,.35);stroke-width:1.2}
+.ig-ad-ora-t{font-family:var(--ui);font-size:11.5px;fill:#7d6f5a;transition:fill .4s}
+.ig-ad-ora-t.ora{fill:#7A1F2B;font-weight:700}
+.ig-ad-cita{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-ad-cita.vis{opacity:1;transform:none}
+.ig-ad-c-suolo{fill:#070A12}
+.ig-ad-c-suolo.caldo{fill:#1A0D08}
+.ig-ad-c-et{font-family:var(--ui);font-size:12px;font-weight:700;fill:#E7C6E0;opacity:0;transition:opacity .5s}
+.ig-ad-c-et.vis{opacity:1}
+.ig-ad-scia{fill:none;stroke:rgba(241,217,154,.85);stroke-width:1.6;opacity:0}
+.ig-ad-scia.vis{opacity:1}
+.ig-ad-punta{fill:#F1D99A;opacity:0}
+.ig-ad-punta.vis{opacity:1}
+.ig-ad-carta g.via{opacity:0;transition:opacity 1.2s ease}
+.ig-ad-perso{opacity:0;transition:opacity 1.2s ease}
+.ig-ad-perso.vis{opacity:1}
+.ig-ad-perso .ig-omino{fill:none;stroke:rgba(241,217,154,.7);stroke-dasharray:2 2}
+.ig-ad-c-nota-r{font-family:var(--serif);font-style:italic;font-size:13px;fill:#9AA3BB}
+.ig-ad-c-nota{font-family:var(--serif);font-style:italic;font-size:15.5px;fill:#F1D99A;opacity:0;transition:opacity .8s}
+.ig-ad-c-nota.vis{opacity:1}
+.ig-ad-vampa{mix-blend-mode:screen}
+.ig-ad-muro{fill:#CDB894;stroke:#6E5838;stroke-width:1;transition:fill 1.4s ease}
+.ig-ad-muro.alto{fill:#D8C6A2}
+.ig-ad-tetto{fill:#7A4A2C;stroke:#4E2E18;stroke-width:1;transition:fill 1.4s ease}
+.ig-ad-porta,.ig-ad-fin{fill:#2A1A10}
+.ig-ad-balcone{fill:none;stroke:#4E2E18;stroke-width:2.2;stroke-linecap:round}
+.ig-ad-arco{fill:none;stroke:#120804;stroke-width:1.2}
+.ig-ad-casa2.bruciata .ig-ad-muro{fill:#5A3E2C}
+.ig-ad-casa2.bruciata .ig-ad-tetto{fill:#2A1810}
+.ig-ad-fascina{fill:#C9A050;stroke:#5E4318;stroke-width:.8;opacity:0;transition:opacity .4s}
+.ig-ad-fascina.vis{opacity:1}
+.ig-ad-traiett{fill:none;stroke:none}
+.ig-ad-terzo{font-family:var(--cap);font-weight:700;fill:var(--porpora,#7A1F2B)}
+.ig-ad-conto-t{font-family:var(--serif);font-style:italic;font-size:18px;fill:var(--ink,#221C18)}
+.ig-ad-conto-n{font-family:var(--ui);font-size:14px;fill:#4A4038}
+.ig-omino.perso{fill:none;stroke:rgba(154,47,42,.32);transition:fill .6s,stroke .6s}
+.ig-ad-filo{stroke:#7A1F2B;stroke-width:1.4;stroke-dasharray:3 3;opacity:0;transition:opacity .6s}
+.ig-ad-filo.vis{opacity:1}
+.ig-ad-canne{opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.ig-ad-canne.vis{opacity:1;transform:none}
+.ig-ad-canne-q{font-family:var(--serif);font-style:italic;font-size:22px;fill:var(--porpora,#7A1F2B)}
+.ig-ad-sovr .ig-m-sovr{fill:rgba(251,248,241,.92)}
+@media (max-width:600px){ .ig-ad-canne-q{font-size:18px} .ig-ad-anno{font-size:22px} .ig-ad-num-n{font-size:32px} .ig-ad-rs{font-size:14px} }
+@media (prefers-reduced-motion:reduce){ .ig-ad-fumo,.ig-ad-freccia.vis,.ig-fin-reg.acceso,.ig-sg-alone{animation:none} }
+
+/* ---------- 12. Campi Catalaunici (js/infografiche.js, disegnaCatalaunici) ---------- */
+.ig-ca-zona{fill:rgba(122,31,43,.07);stroke:#7A1F2B;stroke-width:1.6;stroke-dasharray:4 3}
+.ig-ca-zona-n{font-family:var(--cap);font-size:14px;font-weight:700;fill:#7A1F2B;paint-order:stroke;stroke:rgba(246,240,226,.94);stroke-width:3.5px;stroke-linejoin:round}
+.ig-ca-chi-b{fill:#7A1F2B;stroke:#fff;stroke-width:2}
+.ig-ca-chi-p{fill:#fff;stroke:#7A1F2B;stroke-width:2}
+.ig-ca-chi-n{font-family:var(--cap);font-size:13px;font-weight:700;fill:var(--ink,#221C18)}
+.ig-ca-chi-t{font-family:var(--ui);font-size:11.5px;fill:#5F554B}
+.ig-ca-cresta{fill:none;stroke:#8C6C3A;stroke-width:1.6;stroke-dasharray:2 3;opacity:0;transition:opacity .6s}
+.ig-ca-cresta.vis{opacity:1}
+.ig-ca-rivo-b{fill:none;stroke:rgba(90,120,130,.18);stroke-linecap:round}
+.ig-ca-rivo{fill:none;stroke:#7FA8B8;stroke-linecap:round;transition:stroke 2.4s ease}
+.ig-ca-rivo.sangue{stroke:#8E1E1A}
+.ig-ca-u{--c:#555;opacity:0;transition:opacity .5s ease}
+.ig-ca-u.vis{opacity:1}
+.ig-ca-u rect{fill:var(--c);stroke:#F6F1E6;stroke-width:.9}
+.ig-ca-u.scuro rect{stroke:rgba(246,241,230,.35)}
+.ig-ca-chiuso{fill:none;stroke:#C9A14A;stroke-width:1.8;stroke-dasharray:3 2.5;opacity:0;transition:opacity .6s}
+.ig-ca-chiuso.vis{opacity:1}
+.ig-ca-et{font-family:var(--ui);font-size:12px;font-weight:700;paint-order:stroke;stroke:rgba(246,240,224,.95);stroke-width:3.5px;stroke-linejoin:round}
+.ig-ca-capo{--c:#333;opacity:0;transition:opacity .4s}
+.ig-ca-capo.vis{opacity:1}
+.ig-ca-capo circle{fill:var(--c);stroke:#F1D99A;stroke-width:2.2}
+.ig-ca-capo-t{font-family:var(--ui);font-size:12px;font-weight:700;fill:var(--c);paint-order:stroke;stroke:rgba(246,240,224,.95);stroke-width:3.5px;stroke-linejoin:round}
+.ig-ca-croce{opacity:0;transition:opacity .6s}
+.ig-ca-croce.vis{opacity:1}
+.ig-ca-croce-l{fill:none;stroke:#3B2F26;stroke-width:2.4;stroke-linecap:round}
+.ig-ca-tenda{fill:#26222A}
+.ig-ca-fuoco-lontano{fill:#F2A341;animation:ig-ca-tremola 1.4s ease-in-out infinite}
+@keyframes ig-ca-tremola{0%,100%{opacity:.9}50%{opacity:.35}}
+.ig-ca-cassa{fill:#5A3E26;stroke:#2A1C10;stroke-width:1}
+.ig-ca-telo{fill:#8C7A5C;stroke:#2A1C10;stroke-width:1}
+.ig-ca-carro.dietro .ig-ca-cassa{fill:#3E2C1C}
+.ig-ca-carro.dietro .ig-ca-telo{fill:#5E5240}
+.ig-ca-ruota{fill:none;stroke:#2A1C10;stroke-width:1.8}
+.ig-ca-mozzo{fill:#2A1C10}
+.ig-ca-sella{opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.ig-ca-sella.vis{opacity:1;transform:none}
+.ig-ca-sella-c{fill:#7A4E2A;stroke:#2E1A0C;stroke-width:1}
+.ig-ca-sella-l{fill:none;stroke:#C9A060;stroke-width:1}
+.ig-ca-brace{mix-blend-mode:screen;pointer-events:none}
+.ig-omino.ig-ca-ombra{fill:#0E0B09;stroke:#0E0B09}
+.ig-omino.ig-ca-ombra-oro{fill:#1A130C;stroke:#C9A14A;stroke-width:.6}
+.ig-ca-attila{opacity:0;transition:opacity .8s}
+.ig-ca-attila.vis{opacity:1}
+.ig-ca-dardo{stroke:#F1D99A;stroke-width:1.3;stroke-linecap:round;animation:ig-ca-dardo 1.6s linear infinite}
+@keyframes ig-ca-dardo{0%{opacity:0;transform:translate(0,0)}20%{opacity:1}100%{opacity:0;transform:translate(0,-10px)}}
+.ig-ca-tromba{opacity:0;transition:opacity .5s}
+.ig-ca-tromba.vis{opacity:1}
+.ig-ca-onda{fill:none;stroke:rgba(241,217,154,.75);stroke-width:1.6;opacity:0;animation:ig-ca-squillo 1.8s ease-out infinite}
+@keyframes ig-ca-squillo{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+.ig-ca-et-n{font-family:var(--serif);font-style:italic;font-size:15px;fill:#F1D99A;opacity:0;transition:opacity .8s}
+.ig-ca-et-n.vis,.ig-ca-corteo .ig-ca-et-n{opacity:1}
+.ig-ca-corteo{opacity:0;transition:opacity .8s}
+.ig-ca-corteo.vis{opacity:1}
+.ig-ca-bara{fill:#C9A14A}
+.ig-ca-torcia{stroke:#8C6C3A;stroke-width:1.6}
+.ig-ca-fiammella{fill:#FFB45A;filter:drop-shadow(0 0 4px rgba(255,170,60,.9))}
+.ig-ca-scritta{opacity:0;transform:translateY(8px);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-ca-scritta.vis{opacity:1;transform:none}
+.ig-ca-q{font-family:var(--serif);font-style:italic;fill:#F4E9D2}
+.ig-ca-q-chi{font-family:var(--ui);font-size:11.5px;fill:#B9AE98}
+.ig-ca-num{font-family:var(--cap);font-weight:700;fill:var(--porpora,#7A1F2B);font-variant-numeric:tabular-nums}
+.ig-ca-bollo{opacity:0;transform:scale(1.3) rotate(-4deg);transform-box:fill-box;transform-origin:center;transition:opacity .3s,transform .5s cubic-bezier(.3,1.6,.5,1)}
+.ig-ca-bollo.vis{opacity:1;transform:rotate(-2deg)}
+.ig-ca-bollo-r{fill:none;stroke:#7A1F2B;stroke-width:2}
+.ig-ca-bollo-t{font-family:var(--ui);font-size:12px;font-weight:800;letter-spacing:.12em;fill:#7A1F2B}
+.ig-ca-linea{opacity:0;transition:opacity .6s}
+.ig-ca-linea.vis{opacity:1}
+.ig-ca-asse{stroke:rgba(34,28,24,.45);stroke-width:1.4}
+.ig-ca-arco{fill:none;stroke:#C9A14A;stroke-width:2;stroke-dasharray:4 4;opacity:0}
+.ig-ca-arco.vis{opacity:1}
+.ig-ca-sec{font-family:var(--serif);font-style:italic;font-size:16px;fill:#7A5617;opacity:0;transition:opacity .6s}
+.ig-ca-sec.vis{opacity:1}
+.ig-ca-ev{opacity:0;transform:translateY(6px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-ca-ev.vis{opacity:1;transform:none}
+.ig-ca-ev circle{fill:#fff;stroke:#7A1F2B;stroke-width:2.2}
+.ig-ca-ev.batt circle{fill:#7A1F2B}
+.ig-ca-ev-n{font-family:var(--cap);font-size:15px;font-weight:700;fill:var(--porpora,#7A1F2B)}
+.ig-ca-ev-t{font-family:var(--serif);font-style:italic;font-size:14.5px;fill:var(--ink,#221C18)}
+@media (prefers-reduced-motion:reduce){ .ig-ca-fuoco-lontano,.ig-ca-dardo,.ig-ca-onda{animation:none} .ig-ca-onda{opacity:.6} }
+.ig-ca-croce-f{fill:#fff;stroke:#8054C3;stroke-width:2}
+.ig-ca-capo-t.viola{fill:#5A3596}
+
+/* ---------- 13. Capo Bon (js/infografiche.js, disegnaCapobon) ---------- */
+.ig-cb-num{font-family:var(--cap);font-weight:700;fill:var(--porpora,#7A1F2B);font-variant-numeric:tabular-nums}
+.ig-cb-num-t{font-family:var(--serif);font-style:italic;font-size:16px;fill:var(--ink,#221C18)}
+.ig-cb-num-n{font-family:var(--ui);font-size:11.5px;fill:#5F554B}
+.ig-cb-fr-n{font-family:var(--cap);font-size:14px;font-weight:700;fill:var(--ink,#221C18)}
+.ig-cb-fr-t{font-family:var(--serif);font-style:italic;font-size:15px;fill:#4A4038}
+.ig-cb-nave{opacity:0;transition:opacity .5s,fill .8s}
+.ig-cb-nave.vis{opacity:1}
+.ig-cb-scafo{fill:#7A4E2C;stroke:#3A2414;stroke-width:.8;transition:fill 1s ease}
+.ig-cb-vela{fill:none;stroke:#F3EAD6;stroke-width:2;stroke-linecap:round}
+.ig-cb-nave.vandali .ig-cb-scafo{fill:#3B2E22}
+.ig-cb-nave.vandali .ig-cb-vela{stroke:#C9A060}
+.ig-cb-nave.vuota .ig-cb-scafo{fill:rgba(240,230,210,.25);stroke:#F3EAD6;stroke-dasharray:2 1.5}
+.ig-cb-nave.vuota .ig-cb-vela{stroke:rgba(243,234,214,.6)}
+.ig-cb-nave.arde .ig-cb-scafo{fill:#B23A16}
+.ig-cb-nave.bruciata .ig-cb-scafo{fill:#2A1D14}
+.ig-cb-nave.bruciata .ig-cb-vela{stroke:#4A3A2C}
+.ig-cb-nave.speronata .ig-cb-scafo{fill:#2A1D14}
+.ig-cb-tempio{fill:#F4EEE0;stroke:#3B322B;stroke-width:1.2}
+.ig-cb-tempio-t{font-family:var(--serif);font-style:italic;font-size:12.5px;fill:#3B322B;paint-order:stroke;stroke:rgba(246,240,226,.92);stroke-width:3px}
+.ig-cb-dist{fill:none;stroke:#7A1F2B;stroke-width:1.6;stroke-dasharray:4 3}
+.ig-cb-dist-t{font-family:var(--ui);font-size:12px;font-weight:700;fill:#7A1F2B;paint-order:stroke;stroke:rgba(246,240,226,.94);stroke-width:3.5px;stroke-linejoin:round}
+.ig-cb-et{font-family:var(--ui);font-size:12px;font-weight:700;fill:#22313A;paint-order:stroke;stroke:rgba(246,240,226,.94);stroke-width:3.5px;stroke-linejoin:round;opacity:0;transition:opacity .5s}
+.ig-cb-et.vis{opacity:1}
+.ig-cb-et.scuro{fill:#1A1410}
+.ig-cb-vento{opacity:0;transition:opacity .8s}
+.ig-cb-vento.vis{opacity:1}
+.ig-cb-vento-l{fill:none;stroke:rgba(255,255,255,.85);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:14 40;animation:ig-cb-soffia 2.2s linear infinite}
+.ig-cb-vento-l.fermo{stroke:#4D7684;animation:none;stroke-dasharray:none}
+@keyframes ig-cb-soffia{from{stroke-dashoffset:54}to{stroke-dashoffset:0}}
+.ig-cb-giorno-r{fill:#fff;stroke:rgba(34,28,24,.2);transition:fill .5s,stroke .5s}
+.ig-cb-giorno-n{font-family:var(--cap);font-size:14px;font-weight:700;fill:#8a7d6c;transition:fill .5s}
+.ig-cb-giorno.pieno .ig-cb-giorno-r{fill:#7A1F2B;stroke:#7A1F2B}
+.ig-cb-giorno.pieno .ig-cb-giorno-n{fill:#fff}
+.ig-cb-moneta{fill:#E5C26A;stroke:#9A7424;stroke-width:1}
+.ig-cb-onda{fill:none;stroke:rgba(200,225,232,.16);stroke-width:1.2;stroke-linecap:round}
+.ig-cb-fuoco{opacity:0;transition:opacity .5s}
+.ig-cb-fuoco.vis{opacity:1}
+.ig-cb-fumo{fill:rgba(60,52,48,.55);transform-box:fill-box;transform-origin:center;animation:ig-cb-fumo 2.6s linear infinite}
+@keyframes ig-cb-fumo{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:.85}100%{transform:translate(26px,-18px) scale(2.6);opacity:0}}
+.ig-cb-cavo{stroke:rgba(243,234,214,.75);stroke-width:1.2;stroke-dasharray:3 2;opacity:0}
+.ig-cb-cavo.vis{opacity:1}
+.ig-cb-pertica{stroke:#E9D8B4;stroke-width:1.6;stroke-linecap:round;opacity:0;transition:opacity .4s;transform-box:fill-box;transform-origin:right center}
+.ig-cb-pertica.vis{opacity:1;animation:ig-cb-spinge .9s ease-in-out infinite alternate}
+@keyframes ig-cb-spinge{from{transform:translateX(0)}to{transform:translateX(-5px)}}
+.ig-atto g.giu{opacity:0;transition:opacity 2s ease}
+.ig-cb-q-fondo{fill:rgba(12,20,26,.55)}
+.ig-m-schema.chiaro{fill:rgba(230,240,242,.7)}
+.ig-cb-fumo-lontano{fill:rgba(90,80,74,.22)}
+.ig-cb-l-scafo{fill:#6B4A2E;stroke:#2E1E10;stroke-width:2}
+.ig-cb-lato.vandali .ig-cb-l-scafo{fill:#3B2E22}
+.ig-cb-l-ponte{stroke:#C9A060;stroke-width:3}
+.ig-cb-l-remo{stroke:#4E3824;stroke-width:3;stroke-linecap:round}
+.ig-cb-l-albero{stroke:#3E2A16;stroke-width:5}
+.ig-cb-l-vela{fill:#F1E6CE;stroke:#8C7A5C;stroke-width:2}
+.ig-cb-lato.vandali .ig-cb-l-vela{fill:#C9A87A}
+.ig-omino.ig-cb-ombra{fill:#1A1410;stroke:#1A1410}
+.ig-cb-braccio{fill:none;stroke:#1A1410;stroke-width:2.2;stroke-linecap:round}
+.ig-cb-giov{font-family:var(--serif);font-style:italic;fill:var(--porpora,#7A1F2B)}
+.ig-cb-giov-n{font-family:var(--serif);font-size:17px;fill:var(--ink,#221C18)}
+.ig-cb-ic{fill:#7A1F2B;stroke:#7A1F2B}
+.ig-cb-es-n{font-family:var(--cap);font-size:16px;font-weight:700;fill:var(--porpora,#7A1F2B)}
+.ig-cb-es-t{font-family:var(--serif);font-style:italic;font-size:16.5px;fill:var(--ink,#221C18)}
+.ig-cb-fine{font-family:var(--serif);font-weight:600;fill:var(--porpora,#7A1F2B)}
+@media (prefers-reduced-motion:reduce){ .ig-cb-vento-l,.ig-cb-fumo,.ig-cb-pertica.vis{animation:none} }
+.ig-m-velo{fill:rgba(18,12,8,.6)}
+.ig-m-banda{fill:rgba(255,246,220,.14)}
+.ig-m-banda-l{fill:none;stroke:#E8C46A;stroke-width:2;opacity:0}
+.ig-m-banda-l.vis{opacity:1}
+.ig-m-banda-l.luce{filter:drop-shadow(0 0 5px rgba(241,217,154,.95));animation:ig-m-brilla 2.4s ease-in-out infinite}
+@keyframes ig-m-brilla{0%,100%{stroke-opacity:1}50%{stroke-opacity:.55}}
+@media (prefers-reduced-motion:reduce){ .ig-m-banda-l.luce{animation:none} }
+.ig-m-foto-fondo{fill:#3a6fb0}
+.ig-cb-vento-l.scuro{stroke:#2F5864;stroke-width:2.2}

@@ -690,7 +690,7 @@ function disegnaValeriano(svg,S,W,H){
   /* il rilievo di Naqsh-e Rostam: la foto (Carole Raddato, CC BY-SA 2.0, da Wikimedia Commons; scaricata a mano perché Commons rifiuta gli scarichi da questa rete) occupa lo spazio
      libero a sinistra, sul telefono sotto la carta; finché la foto manca resta uno schema (un cavaliere e due figure), non una copia (23 novembre 2026, l'utente: «troppo spazio vuoto sulla sinistra, mettici il bassorilievo famoso») */
   var mapL=ox+V[0]*k, mapB=oy+(V[1]+V[3])*k;
-  var rx=pad, ry=oriz?pad+112:mapB+14, rw=oriz?Math.max(160,mapL-pad-20):W-2*pad, rh=oriz?H-ry-pad-22:H-ry-pad-22; if(!oriz) rh=Math.min(rh,rw*.62);
+  var rx=pad, ry=oriz?pad+112:mapB+14, rw=oriz?Math.max(160,mapL-pad-20):W-2*pad, rh=H-ry-pad-38; if(!oriz) rh=Math.min(rh,rw*.62);      // sotto la foto due righe di didascalia (23 novembre 2026: sul telefono una riga sola usciva dalla tavola)
   var ril=el('g',{'class':'ig-v-rilievo',transform:'translate('+r1(rx)+','+r1(ry)+')'},svg);
   var cr=el('clipPath',{id:'ig-v-ril-clip'},el('defs',null,svg)); el('rect',{x:0,y:0,width:r1(rw),height:r1(rh),rx:8},cr);
   var schema=el('g',null,ril); el('rect',{x:0,y:0,width:r1(rw),height:r1(rh),rx:8,'class':'ig-v-roccia'},schema);
@@ -701,7 +701,9 @@ function disegnaValeriano(svg,S,W,H){
   el('path',{d:sp('M36 100 L40 84 Q42 76 50 76 L58 78 L56 100 Z M44 74 Q44 64 50 64 Q56 64 56 74 Z'),'class':'ig-v-fig r'},schema);      // una figura in ginocchio
   var lab=tx(ril,0,rh+15,'ig-v-ril-lab','Naqsh-e Rostam: schema del rilievo','start');
   var foto=el('image',{x:0,y:0,width:r1(rw),height:r1(rh),preserveAspectRatio:'xMidYMid slice','clip-path':'url(#ig-v-ril-clip)','class':'ig-v-foto'},ril);
-  foto.addEventListener('load',function(){ schema.style.display='none'; lab.textContent='Il trionfo di Shapur a Naqsh-e Rostam · foto Carole Raddato, CC BY-SA 2.0, Wikimedia Commons'; });
+  foto.addEventListener('load',function(){ schema.style.display='none'; lab.textContent='';
+    var r1t=el('tspan',{x:0},lab), r2t=el('tspan',{x:0,dy:15},lab); r1t.textContent='Il trionfo di Shapur a Naqsh-e Rostam'; r2t.textContent='foto Carole Raddato, CC BY-SA 2.0, Wikimedia Commons';
+    if(largo(r2t)>rw){ r2t.textContent=''; lab.removeChild(r2t); var resto=el('text',{x:0,y:r1(rh+30),'class':'ig-v-ril-lab'},ril); avvolgi(resto,'foto Carole Raddato, CC BY-SA 2.0, Wikimedia Commons',rw,13); } });
   foto.addEventListener('error',function(){ foto.style.display='none'; });
   foto.setAttribute('href','img/infografiche/shapur-naqsh-e-rostam.jpg'); foto.setAttributeNS(XL,'xlink:href','img/infografiche/shapur-naqsh-e-rostam.jpg');
   var t1=1400, t2=6200, t3=11000, t4=16000, t5=21400, t6=27400, tF=33600;
@@ -762,7 +764,7 @@ function disegnaMilvio(svg,S,W,H){
   var oriz=W/H>=1.15, pad=oriz?20:12, defs=el('defs',null,svg);
   var CI=function(c){ var q=G.citta[c]||(G.luoghi||{})[c]; return q?[q.x,q.y]:null; };
   var T={a1:1400,a2:6000,a3:11000,a4:15800,b1:21200,b2:27400,s1:33800,s2:39800,c1:46800,c2:51600,c3:56200,d1:62200};
-  T.fin=T.d1+7200;
+  T.fin=T.d1+8400;
   grad(defs,'ig-m-notte',[[0,'#141A2A'],[1,'#2C3754']]);
   grad(defs,'ig-m-giorno',[[0,'#FFF4DA'],[.6,'#F7DFAE'],[1,'#EBC27C']]);
   grad(defs,'ig-m-sole',[[0,'#FFFDF4'],[.45,'#FFE7A6'],[1,'#F2B94E',0]],{cx:'50%',cy:'50%',r:'50%'});
@@ -947,13 +949,24 @@ function disegnaMilvio(svg,S,W,H){
   var kL=cartaSegno(rS[0],rS[1],cwS,chS,'lattanzio'), kE=cartaSegno(affianco?rS[0]+cwS+16:rS[0],affianco?rS[1]:rS[1]+chS+14,cwS,chS,'eusebio');
 
   /* ---------- C. tre ponti, tre racconti ---------- */
-  var gC=el('g',{'class':'ig-atto'},svg), riga=W/3>=210, gap=12, pW=riga?(W-2*pad-2*gap)/3:W-2*pad, pH=riga?H-2*pad:(H-2*pad-2*gap)/3;
+  /* Ogni carta è alta quanto il suo testo, misurato dopo avvolgi (23 novembre 2026: sul telefono la citazione di Lattanzio usciva dalla carta); fra opera e numero del passo
+     uno spazio unificatore, perché il numero non vada a capo da solo */
+  var gC=el('g',{'class':'ig-atto'},svg), riga=W/3>=210, gap=12, pW=riga?(W-2*pad-2*gap)/3:W-2*pad, disp=H-2*pad-(riga?0:2*gap), basso=!riga&&disp/3<175, frTw=.42, pHs=[];
+  var TESTI=[['LATTANZIO','La morte dei persecutori\u00a044,\u00a09','Il ponte alle spalle di Massenzio viene tagliato: nella fuga è «interrotto».'],['EUSEBIO','Storia ecclesiastica\u00a0IX\u00a09','Un ponte di barche.'],
+    ['ZOSIMO','libro\u00a0II,\u00a015-16','Travi in due metà, unite al centro da ferri da togliere: sotto i fuggiaschi cede.']];
+  function righeDi(s,cl,w,lh){ var t=el('text',{x:0,y:0,'class':cl},gC); t.textContent=s; var n=1; if(largo(t)>w){ t.textContent=''; n=avvolgi(t,s,w,lh); } t.remove(); return n; }
+  function serve(d,tw){ var nr=righeDi(d[1],'ig-m-c-sot dark',tw-4,13); return (nr>1?72:58)+(righeDi(d[2],'ig-m-pann-dida',tw-4,16)-1)*16+14; }
+  if(riga) pHs=[disp,disp,disp];
+  else if(basso){ var tw0, nec; [.42,.5,.58,.66].some(function(f){ frTw=f; tw0=Math.min(pW*f,f>.42?260:190); nec=TESTI.map(function(d){ return serve(d,tw0); }); return nec[0]+nec[1]+nec[2]<=disp; });
+    var ex=Math.max(0,(disp-nec[0]-nec[1]-nec[2])/3); pHs=nec.map(function(n){ return n+ex; }); }
+  else pHs=[disp/3,disp/3,disp/3];
   function pannello(i,chi,rif,dida){
-    var x=pad+(riga?i*(pW+gap):0), y=pad+(riga?0:i*(pH+gap)), g=el('g',{'class':'ig-m-pann'},gC), basso=pH<175;
+    var pH=pHs[i], x=pad+(riga?i*(pW+gap):0), y=pad+(riga?0:pHs.slice(0,i).reduce(function(a,b){ return a+b+gap; },0)), g=el('g',{'class':'ig-m-pann'},gC);
     el('rect',{x:r1(x),y:r1(y),width:r1(pW),height:r1(pH),rx:12,'class':'ig-m-pann-fondo'},g);
-    var tw=basso?Math.min(pW*0.42,190):pW-24, bx=basso?[x+tw+14,y+8,pW-tw-22,pH-16]:[x+12,y+52,pW-24,pH-52-(pH>300?64:52)];
+    var tw=basso?Math.min(pW*frTw,frTw>.42?260:190):pW-24;
     tx(g,x+12,y+(basso?22:24),'ig-m-c-tit dark',chi); var r=tx(g,x+12,y+(basso?38:41),'ig-m-c-sot dark',rif); if(largo(r)>tw-4){ r.textContent=''; avvolgi(r,rif,tw-4,13); }
-    var dd=el('text',{x:r1(x+12),y:r1(basso?y+(r.childNodes.length>1?72:58):y+pH-(pH>300?42:32)),'class':'ig-m-pann-dida'},g); avvolgi(dd,dida,tw-4,basso?16:18);
+    var lh=basso?16:18, dd=el('text',{x:r1(x+12),y:0,'class':'ig-m-pann-dida'},g), nd=avvolgi(dd,dida,tw-4,lh), yd=basso?y+(r.childNodes.length>1?72:58):y+pH-14-(nd-1)*lh;
+    dd.setAttribute('y',r1(yd)); var top=y+(r.childNodes.length>1?62:50), bx=basso?[x+tw+14,y+8,pW-tw-22,pH-16]:[x+12,top,pW-24,yd-lh-6-top];
     var cp=el('clipPath',{id:'ig-m-pc'+i},defs); el('rect',{x:r1(bx[0]),y:r1(bx[1]),width:r1(bx[2]),height:r1(bx[3]),rx:8},cp);
     var dis=el('g',{'clip-path':'url(#ig-m-pc'+i+')'},g); return {g:g,b:bx,d:dis};
   }
@@ -970,9 +983,7 @@ function disegnaMilvio(svg,S,W,H){
     var et=tx(P.d,x+w-8,y+15,'ig-m-schema','schema','end');
     return {x:x,y:y,w:w,h:h,yw:yw,yd:yd,xa:xa,xb:xb};
   }
-  var P1=pannello(0,'LATTANZIO','La morte dei persecutori 44, 9','Il ponte alle spalle di Massenzio viene tagliato: nella fuga è «interrotto».');
-  var P2=pannello(1,'EUSEBIO','Storia ecclesiastica IX 9','Un ponte di barche.');
-  var P3=pannello(2,'ZOSIMO','libro II, 15-16','Travi in due metà, unite al centro da ferri da togliere: sotto i fuggiaschi cede.');
+  var P1=pannello(0,TESTI[0][0],TESTI[0][1],TESTI[0][2]), P2=pannello(1,TESTI[1][0],TESTI[1][1],TESTI[1][2]), P3=pannello(2,TESTI[2][0],TESTI[2][1],TESTI[2][2]);
   var f1=fiumeLato(P1), f2=fiumeLato(P2), f3=fiumeLato(P3), th=Math.max(4,f1.h*0.045), hu=Math.max(8,f1.h*0.12);
   /* 1. Lattanzio: un piano su pile; il tratto di mezzo si stacca e cade */
   var L1={}, m1=(f1.xa+f1.xb)/2, g1=(f1.xb-f1.xa)*0.11;
@@ -1000,8 +1011,8 @@ function disegnaMilvio(svg,S,W,H){
 
   /* ---------- D. l'arco del Senato ---------- */
   var gD=el('g',{'class':'ig-atto'},svg), ab, tb;
-  if(oriz){ var aw=Math.min(W*(W<700?0.46:0.54),(H-2*pad)*1.25); ab=[pad+10,(H-aw/1.25)/2+6,aw,aw/1.25]; tb=[ab[0]+aw+34,pad,W-(ab[0]+aw+34)-pad,H-2*pad]; }
-  else { var aw2=W-2*pad-10, ah2=Math.min(aw2/1.25,H*0.5); aw2=ah2*1.25; ab=[(W-aw2)/2,pad+6,aw2,ah2]; tb=[pad,ab[1]+ah2+18,W-2*pad,H-(ab[1]+ah2+18)-4]; }
+  if(oriz){ var aw=Math.min(W*(W<700?0.46:0.54),(H-2*pad-30)*1.25); ab=[pad+10,(H-30-aw/1.25)/2+4,aw,aw/1.25]; tb=[ab[0]+aw+34,pad,W-(ab[0]+aw+34)-pad,H-2*pad]; }
+  else { var aw2=W-2*pad-10, ah2=Math.min(aw2/1.25,H*0.5); aw2=ah2*1.25; ab=[(W-aw2)/2,pad+6,aw2,ah2]; tb=[pad,ab[1]+ah2+40,W-2*pad,H-(ab[1]+ah2+40)-4]; }
   var arcoG=el('g',{'class':'ig-m-arco'},gD), az=el('g',null,arcoG), A=function(px,py){ return [ab[0]+px/100*ab[2], ab[1]+py/80*ab[3]]; }, p0=function(px){ return A(px,0)[0]; };
   grad(defs,'ig-m-buio',[[0,'#2A221D'],[.75,'#3B322B'],[1,'#6B5A49']]);
   el('ellipse',{cx:r1(ab[0]+ab[2]/2),cy:r1(ab[1]+ab[3]+2),rx:r1(ab[2]*0.56),ry:r1(ab[3]*0.03),'class':'ig-m-a-ombra'},arcoG);
@@ -1032,9 +1043,43 @@ function disegnaMilvio(svg,S,W,H){
   var ts=tx(gT,tb[0],yq+fq*0.9+28+tn.childNodes.length*19+10,'ig-m-arco-f','Arco di Costantino, dedicato dal Senato · CIL VI 1139');
   if(largo(ts)>tb[2]) ts.textContent='Arco di Costantino · CIL VI 1139';
   var tsc=tx(gD,ab[0]+ab[2],ab[1]+ab[3]+14,'ig-m-schema','arco: disegno schematico','end');
+  /* Le due foto vere (23 novembre 2026, richiesta dall'utente), da Wikimedia Commons: l'arco intero, lato sud (Paris Orlando, CC BY-SA 4.0) e l'iscrizione da vicino
+     (Carole Raddato, CC BY-SA 2.0). Tutto si disegna nelle coordinate della foto dell'arco (1200 x 1013); la foto ravvicinata (1200 x 900) vi è posata nel riquadro RI, che copre
+     la stessa porzione dell'attico (misurato sui due file: lo specchio dell'iscrizione va da x 478 a 772 nell'arco e da x 190 a 1000 nella foto ravvicinata). Una «camera» passa
+     dall'arco intero all'attico, la foto ravvicinata entra in dissolvenza, un velo scurisce il resto e una banda dorata segna «INSTINCTV DIVINITATIS» (misurata sul file: x 292-842,
+     y 313-345), poi la camera si avvicina alla riga. Se manca una foto si usa l'altra; se mancano tutte e due resta il disegno. Con «Riduci movimento» le due foto stanno ferme,
+     una sopra l'altra, con la riga già segnata. Le didascalie seguono la foto che si vede. */
+  var cpF=el('clipPath',{id:'ig-m-arco-clip'},defs); el('rect',{x:r1(ab[0]),y:r1(ab[1]),width:r1(ab[2]),height:r1(ab[3]),rx:10},cpF);
+  var AW=1200, AH=1013, RI=[409,177,435,326.25], ks=RI[2]/1200, BAND=[292,313,550,32], BR=[RI[0]+BAND[0]*ks,RI[1]+BAND[1]*ks,BAND[2]*ks,BAND[3]*ks];
+  var fotoG=el('g',{'class':'ig-m-arco ig-m-arco-foto'},gD), fotoA=null, ok={a:false,i:false}, capOra='';
+  fotoG.style.display='none';
+  function pannelloFoto(box,id){ var cp=el('clipPath',{id:id},defs); el('rect',{x:r1(box[0]),y:r1(box[1]),width:r1(box[2]),height:r1(box[3]),rx:10},cp);
+    var o={box:box,g:el('g',{'clip-path':'url(#'+id+')'},fotoG)}; el('rect',{x:r1(box[0]),y:r1(box[1]),width:r1(box[2]),height:r1(box[3]),'class':'ig-m-foto-fondo'},o.g); o.cam=el('g',null,o.g);
+    o.imA=el('image',{x:0,y:0,width:AW,height:AH,preserveAspectRatio:'none'},o.cam);
+    o.vic=el('g',{transform:'translate('+RI[0]+','+RI[1]+') scale('+Math.round(ks*100000)/100000+')'},o.cam); o.imI=el('image',{x:0,y:0,width:1200,height:900,preserveAspectRatio:'none'},o.vic);
+    o.velo=el('path',{d:'M-20 -20 H1220 V920 H-20 Z M'+BAND[0]+' '+BAND[1]+' V'+(BAND[1]+BAND[3])+' H'+(BAND[0]+BAND[2])+' V'+BAND[1]+' Z','fill-rule':'evenodd','class':'ig-m-velo',opacity:0},o.vic);
+    o.banda=el('rect',{x:BAND[0],y:BAND[1],width:BAND[2],height:BAND[3],rx:3,'class':'ig-m-banda',opacity:0},o.vic);
+    o.bandaL=el('rect',{x:BAND[0],y:BAND[1],width:BAND[2],height:BAND[3],rx:3,'class':'ig-m-banda-l','vector-effect':'non-scaling-stroke'},o.vic);
+    o.bandaL._L=2*(BAND[2]+BAND[3]); o.bandaL.style.strokeDasharray=o.bandaL._L+' '+o.bandaL._L; o.bandaL.setAttribute('stroke-dashoffset',o.bandaL._L);
+    o.K=function(R,cover){ var s=cover?Math.max(box[2]/R[2],box[3]/R[3]):Math.min(box[2]*.92/R[2],box[3]*.9/R[3]); return {s:s,c:[R[0]+R[2]/2,R[1]+R[3]/2]}; };
+    o.metti=function(K){ fissa(o.cam,'transform','translate('+r1(box[0]+box[2]/2)+','+r1(box[1]+box[3]/2)+') scale('+Math.round(K.s*100000)/100000+') translate('+r1(-K.c[0])+','+r1(-K.c[1])+')'); };
+    return o; }
+  function mezzo(a,b,e){ return {s:a.s*Math.pow(b.s/a.s,e),c:[lerp(a.c[0],b.c[0],e),lerp(a.c[1],b.c[1],e)]}; }
+  var PF=[], vicinoR=[BR[0]-BR[2]*.05,BR[1]-BR[3]*1.4,BR[2]*1.1,BR[3]*3.8];
+  if(POCO){ var hh=(ab[3]-8)/2; PF.push(pannelloFoto([ab[0],ab[1],ab[2],hh],'ig-m-fa')); PF.push(pannelloFoto([ab[0],ab[1]+hh+8,ab[2],hh],'ig-m-fb')); }
+  else PF.push(pannelloFoto(ab,'ig-m-fa'));
+  PF.forEach(function(P){ P.K0=P.K([0,0,AW,AH],true); P.K1=P.K(RI,true); P.K2=P.K(vicinoR,false); });
+  function didascalia(s){ if(capOra===s) return; capOra=s; tsc.textContent=''; tsc.setAttribute('text-anchor','start'); tsc.setAttribute('x',r1(ab[0])); tsc.setAttribute('class','ig-v-ril-lab'); avvolgi(tsc,s,ab[2],14); }
+  var CAP={a:"L'arco di Costantino, lato sud · foto Paris Orlando (NikonZ7II), CC BY-SA 4.0, Wikimedia Commons",i:"L'iscrizione sul lato sud dell'arco · foto Carole Raddato, CC BY-SA 2.0, Wikimedia Commons",
+    due:"Sopra l'arco, lato sud: foto Paris Orlando (NikonZ7II), CC BY-SA 4.0. Sotto l'iscrizione: foto Carole Raddato, CC BY-SA 2.0. Wikimedia Commons"};
+  function pronta(){ fotoA=fotoG; fotoG.style.display=''; arcoG.style.display='none'; if(S._t!=null) S.passo(S._t); }      // ridisegna il fotogramma in corso (anche fermo, con «Riduci movimento»)
+  PF.forEach(function(P,ii){
+    P.imA.addEventListener('load',function(){ ok.a=true; pronta(); }); P.imA.addEventListener('error',function(){ P.imA.remove(); });
+    P.imI.addEventListener('load',function(){ ok.i=true; pronta(); }); P.imI.addEventListener('error',function(){ P.vic.remove(); });
+    href(P.imA,'img/infografiche/arco-costantino.jpg'); href(P.imI,'img/infografiche/arco-costantino-iscrizione.jpg'); });
 
   /* ---------- la regia ---------- */
-  S.passo=function(t){
+  S.passo=function(t){ S._t=t;
     /* A */
     var vA=t>=300&&t<T.b1-250; cls(gA,'vis',vA);
     var z=lerp(1,3.4,E.io(fase(t,T.b1-2400,T.b1-300))); fissa(zoom,'transform',z>1.001?'translate('+r1(Rm[0])+','+r1(Rm[1])+') scale('+Math.round(z*1000)/1000+') translate('+r1(-Rm[0])+','+r1(-Rm[1])+')':'');
@@ -1093,6 +1138,13 @@ function disegnaMilvio(svg,S,W,H){
     cls(gD,'vis',t>=T.d1-300);
     var zi=E.io(fase(t,T.d1+1700,T.d1+2900))*(1-E.io(fase(t,T.d1+4800,T.d1+6000))), zs=1+zi*(oriz?1.9:1.6);
     fissa(az,'transform',zi>0.001?'translate('+xy(lente)+') scale('+Math.round(zs*1000)/1000+') translate('+r1(-lente[0])+','+r1(-lente[1])+')':'');
+    if(fotoA){ cls(fotoG,'vis',t>=T.d1);
+      var z1=E.io(fase(t,T.d1+1600,T.d1+3200)), xf=E.io(fase(t,T.d1+3000,T.d1+3900)), fv=E.io(fase(t,T.d1+3900,T.d1+4600)), fl2=E.io(fase(t,T.d1+4200,T.d1+5200)), z2=E.io(fase(t,T.d1+5400,T.d1+6900));
+      if(!ok.a){ z1=1; xf=1; } if(!ok.i){ xf=0; fv=0; fl2=0; z2=0; }
+      PF.forEach(function(P,ii){ var K, x=xf, v=fv, f=fl2;
+        if(PF.length>1){ K=ii?P.K1:P.K0; x=ii?(ok.i?1:0):0; v=x; f=x; if(!ok.a&&!ii) K=P.K1; } else K=z2>0?mezzo(P.K1,P.K2,z2):mezzo(P.K0,P.K1,z1);
+        P.metti(K); fissa(P.vic,'opacity',r1(x*100)/100); fissa(P.velo,'opacity',r1(v*100)/100); fissa(P.banda,'opacity',r1(f*100)/100); traccia(P.bandaL,f); cls(P.bandaL,'luce',f>=1); });
+      didascalia(PF.length>1&&ok.a&&ok.i?CAP.due:(xf>=.5?CAP.i:CAP.a)); }
     cls(arcoG,'vis',t>=T.d1); cls(tI,'vis',t>=T.d1+2600); cls(isc,'luce',t>=T.d1+2600); righeI.forEach(function(r,ii){ cls(r,'vis',t>=T.d1+1400+ii*120); });
     cls(gT,'vis',t>=T.d1+5200); cls(tsc,'vis',t>=T.d1+800);
   };
@@ -1478,6 +1530,845 @@ function disegnaCuria(svg,S,W,H){
   S.battute=fasi.map(function(f,j){ return {t:T[j],anno:f[0],testo:f[1]}; });
 }
 
+/* ---------- aiuti per le infografiche 11-13 (Adrianopoli, Campi Catalaunici, Capo Bon) ---------- */
+/* i colori degli stati della carta della pagina (css/stile.css e REGNI in js/mappa.js) */
+var COLORE_STATO={roma:'#9A2F2A',oriente:'#B8B3BB',federati:'#94AC84',usurpatore:'#F2C85A',conteso:'#C89A8E',regno:'#4D6B7C',
+  'regno:vandali':'#967E56','regno:visigoti':'#8054C3','regno:burgundi':'#C16BBC','regno:franchi':'#405D83','regno:svevi':'#AD6B0A','regno:persia':'#C79931'};
+function statiDi(anno){ var t=(D.TAPPE||[]).filter(function(q){ return q.anno===anno&&!q.intermezzo; })[0]; return t&&t.regioni||{}; }
+/* una finestra sulla carta della pagina (RM_MAPPA, col rilievo): V in unità della carta, b in pixel; M() porta un punto della carta in pixel, C() un luogo per nome */
+function finestra(par,defs,id,V,b,o){
+  var G=window.RM_MAPPA; o=o||{}; var k=b[2]/V[2], g=el('g',{'class':'ig-fin'},par);
+  var cp=el('clipPath',{id:id},defs); el('rect',{x:r1(b[0]),y:r1(b[1]),width:r1(b[2]),height:r1(b[3]),rx:12},cp);
+  var zoom=el('g',null,el('g',{'clip-path':'url(#'+id+')'},g));
+  var carta=el('g',{transform:'translate('+r1(b[0]-V[0]*k)+','+r1(b[1]-V[1]*k)+') scale('+Math.round(k*1000)/1000+')'},zoom);
+  el('rect',{x:V[0]-V[2],y:V[1]-V[3],width:V[2]*3,height:V[3]*3,'class':'ig-v-mare'},carta); var terra=el('path',{d:G.terra,'class':'ig-v-terra'},carta);
+  var reg={}; if(o.stati) Object.keys(G.regioni).forEach(function(r){ var c=COLORE_STATO[o.stati[r]]; if(c) reg[r]=el('path',{d:G.regioni[r].d,'class':'ig-fin-reg',style:'fill:'+c},carta); });
+  if(o.rilievo!==false) href(el('image',{x:0,y:0,width:G.w,height:G.h,preserveAspectRatio:'none','class':'ig-m-rilievo'},carta),'img/rilievo.jpg');
+  (G.fiumi||[]).forEach(function(f){ if(f.d) el('path',{d:f.d,'class':'ig-v-fiume'+(f.forte?' forte':''),'vector-effect':'non-scaling-stroke'},carta); });
+  el('path',{d:G.terra,'class':'ig-v-costa','vector-effect':'non-scaling-stroke'},carta);
+  var sopra=el('g',null,zoom); el('rect',{x:r1(b[0]),y:r1(b[1]),width:r1(b[2]),height:r1(b[3]),rx:12,'class':'ig-m-cornice'},g);
+  function M(p){ return [b[0]+(p[0]-V[0])*k, b[1]+(p[1]-V[1])*k]; }
+  return {g:g,zoom:zoom,carta:carta,sopra:sopra,reg:reg,k:k,b:b,M:M,terra:terra,inTerra:function(p){ try{ var q=(window.DOMPoint?new DOMPoint(p[0],p[1]):{x:p[0],y:p[1]}); return terra.isPointInFill(q); }catch(e){ return false; } },C:function(n){ var q=(G.luoghi||{})[n]||G.citta[n]; return q?M([q.x,q.y]):null; }};
+}
+/* un luogo sulla finestra: punto e nome */
+function luogo(par,q,nome,dx,dy,an,cl){ var g=el('g',{'class':'ig-v-luogo'+(cl?' '+cl:''),transform:'translate('+xy(q)+')'},par); el('circle',{r:cl&&/grande/.test(cl)?5:3.8,'class':'ig-v-punto'+(cl&&/roma/.test(cl)?' roma':'')},g);
+  tx(g,dx,dy,'ig-v-nome'+(cl&&/roma/.test(cl)?' roma':''),nome,an||'start'); return g; }
+/* una rotta che si traccia, con la punta che segue la linea; o.schema la fa a trattini (si scopre con una maschera), o.c ne dà il colore */
+var NRT=0;
+function rotta(par,defs,pts,o){
+  o=o||{}; var g=el('g',{'class':'ig-rt'+(o.cl?' '+o.cl:'')},par); if(o.c) g.style.setProperty('--c',o.c);
+  var d=pts.length>2?curvaPezzi(pts).join(' '):'M'+xy(pts[0])+' L'+xy(pts[1]);
+  var p=el('path',{d:d,'class':'ig-rt-l'+(o.schema?' schema':'')},g), L=lungo(p), r={g:g,p:p,L:L,f:-1};
+  if(o.schema){ var id='ig-rtm'+(++NRT), m=el('mask',{id:id,maskUnits:'userSpaceOnUse',x:-3000,y:-3000,width:9000,height:9000},defs);
+    r.m=el('path',{d:d,'class':'ig-rt-maschera'},m); r.m.style.strokeDasharray=L+' '+L; r.m.setAttribute('stroke-dashoffset',L); p.setAttribute('mask','url(#'+id+')'); }
+  else { p.style.strokeDasharray=L+' '+L; p.setAttribute('stroke-dashoffset',L); }
+  r.pu=el('path',{d:'M3 0 L-8 -5.5 L-5.5 0 L-8 5.5 Z','class':'ig-rt-p'},g);
+  if(o.nome){ var q=puntoA(p,L*(o.dove==null?.5:o.dove)); r.et=tx(g,q[0]+(o.dx||0),q[1]+(o.dy||0),'ig-rt-nome',o.nome,o.an||'middle'); }
+  return r;
+}
+function segui(r,f){ f=clamp(f,0,1); if(r.f===f) return; r.f=f; cls(r.g,'vis',f>0); fissa(r.m||r.p,'stroke-dashoffset',r1(r.L*(1-f)));
+  var a=puntoA(r.p,Math.max(0,r.L*f-4)), b=puntoA(r.p,Math.max(4,r.L*f)); fissa(r.pu,'transform','translate('+xy(b)+') rotate('+r1(Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI)+')');
+  cls(r.pu,'vis',f>.04); if(r.et) cls(r.et,'vis',f>=.97); }
+/* i segni della carta: scontro, assedio, fuoco */
+var FIAMMA='M0 -12c1.2 4.8 7 7 7 13.5a7 7 0 0 1-14 0c0-3.5 1.9-5.4 3.5-7 .4 2.3 1.4 3.5 2.6 3.7C-1.6 -5 -1.1 -8.5 0 -12z';
+function segnoCarta(par,tipo,q,s){ s=s||1; var g=el('g',{'class':'ig-sg '+tipo,transform:'translate('+xy(q)+')'},par);
+  if(tipo==='scontro'){ el('circle',{r:r1(12*s),'class':'ig-v-lampo'},g); el('path',{d:'M-6.5 -6.5 L6.5 6.5 M6.5 -6.5 L-6.5 6.5','class':'ig-v-spade'},g); }
+  else if(tipo==='assedio') el('circle',{r:r1(12*s),'class':'ig-v-anello'},g);
+  else { el('circle',{r:r1(11*s),'class':'ig-sg-alone'},g); el('path',{d:FIAMMA,'class':'ig-sg-fiamma',transform:'scale('+s+')'},g); }
+  return g; }
+/* posizione lungo una fila di tappe [t, x, y]: fra una e l'altra con accelerazione morbida */
+/* una macchia chiusa e morbida (colli, nuvole di polvere): raggi un po' irregolari, sempre gli stessi per lo stesso seme */
+function macchia(cx,cy,rx,ry,seme,n){ var R=caso(seme), P=[]; n=n||11; for(var i=0;i<n;i++){ var a=i/n*Math.PI*2, f=1+(R()-.5)*.38; P.push([cx+Math.cos(a)*rx*f,cy+Math.sin(a)*ry*f]); }
+  var d='M'+xy(P[0]); for(i=0;i<n;i++){ var p0=P[(i-1+n)%n], p1=P[i], p2=P[(i+1)%n], p3=P[(i+2)%n]; d+=' C'+xy([p1[0]+(p2[0]-p0[0])/6,p1[1]+(p2[1]-p0[1])/6])+' '+xy([p2[0]-(p3[0]-p1[0])/6,p2[1]-(p3[1]-p1[1])/6])+' '+xy(p2); } return d+'Z'; }
+function pista(K,t){ if(t<=K[0][0]) return [K[0][1],K[0][2]]; for(var i=1;i<K.length;i++) if(t<K[i][0]){ var e=E.io((t-K[i-1][0])/((K[i][0]-K[i-1][0])||1)); return [lerp(K[i-1][1],K[i][1],e),lerp(K[i-1][2],K[i][2],e)]; }
+  var z=K[K.length-1]; return [z[1],z[2]]; }
+/* una citazione con il filo d'oro a sinistra: testo, chi; restituisce l'altezza */
+function citazione(p,x,y,w,q,chi,fs){ fs=fs||18; var g=el('g',{'class':'ig-ad-cita'},p), fi=el('rect',{x:r1(x),y:r1(y),width:3,height:10,rx:1.5,'class':'ig-m-cita-filo'},g);
+  var t=el('text',{x:r1(x+13),y:r1(y+fs*.95),'class':'ig-m-cita-t'},g); t.style.fontSize=fs+'px'; var n=avvolgi(t,q,w-16,fs*1.18);
+  var c=tx(g,x+13,y+fs*.95+(n-1)*fs*1.18+fs*.95,'ig-m-cita-chi',chi); if(largo(c)>w-16){ c.textContent=''; avvolgi(c,chi,w-16,14); }
+  var hh=fs*.95+(n-1)*fs*1.18+fs*.95+(c.childNodes.length>1?(c.childNodes.length-1)*14:0)+6; fi.setAttribute('height',r1(hh)); g._h=hh; return g; }
+/* passi numerati sotto un disegno (come nei due racconti del segno di ponte Milvio) */
+function passi(p,x,y,w,voci,chiaro,cap){ var impila=cap||w/voci.length<150, out=[];
+  voci.forEach(function(s,i){ var g=el('g',{'class':'ig-m-passo'+(chiaro?' chiaro':'')},p), xx=impila?x:x+i*w/voci.length, yy=impila?y+i*20:y;
+    el('circle',{cx:r1(xx+8),cy:r1(yy-4),r:8,'class':'ig-m-passo-n'},g); tx(g,xx+8,yy,'ig-m-passo-c',String(i+1),'middle'); var t=tx(g,xx+21,yy,'ig-m-passo-t',s);
+    if(!impila&&largo(t)>w/voci.length-26){ t.textContent=''; avvolgi(t,s,w/voci.length-26,14); t.setAttribute('y',r1(yy-6)); [].forEach.call(t.childNodes,function(c){ c.setAttribute('x',r1(xx+21)); }); }
+    out.push(g); }); return out; }
+
+/* ======================================================================
+   11. Adrianopoli (378)
+   Aggiunta il 23 novembre 2026. Quattro quadri: dal Danubio ad Adrianopoli sulla carta della pagina; la battaglia del 9 agosto su un campo schematico, ora per ora; le due morti
+   di Valente; il conto. Fonte letta: Ammiano Marcellino, Storie XXXI, nella traduzione inglese di Rolfe (LacusCurtius), e il latino dei due passi già annotati in js/dati.js.
+   XXXI 4-5 e 7-8 (il passaggio dei Tervingi col permesso di Valente, i Greutungi «on rafts», la rivolta presso Marcianopoli, la Tracia saccheggiata) sono quelli già usati per i passi
+   della tappa (PASSI_CARTA[378] in js/dati.js); XXXI 11, 6: Graziano scende il Danubio per venire in aiuto; 12, 3: i Goti a quindici miglia dalla città, «making for the station of Nice»,
+   e gli esploratori che «through some mistake or other» li dicono «only ten thousand men»; 12, 7: Valente non aspetta Graziano; 12, 10: all'alba del «fifth before the Ides of August»
+   l'esercito parte e lascia «all its baggage and packs near the walls of Hadrianopolis», tesoro e insegne dentro le mura; 12, 11: «after hastening a long distance over rough ground…
+   at the eighth hour they saw the wagons of the enemy… arranged in the form of a perfect circle»; la cavalleria dell'ala destra spinta avanti per prima, «the greater part of the infantry
+   waited in reserve»; 12, 12: l'ala sinistra che arriva di corsa, «very many of them were still scattered along the roads», e i Goti che chiedono la pace perché Alateo e Safrace sono lontani;
+   12, 13: «the broad plains gleamed with fires», la sete, la fame; 12, 15-16: Ricomere che va come ostaggio, gli arcieri di Bacurio e Cassione che attaccano «too eagerly» e si ritirano;
+   12, 17: la cavalleria gota di Alateo e Safrace, con gli Alani, «dashed out as a thunderbolt»; 13, 2: «the left wing, which had made its way as far as the very wagons… being deserted by
+   the rest of the cavalry… was crushed» e i fanti «ita concatervatis manipulis ut vix mucronem exerere aut manus reducere quisquam posset. nec iam obiectu pulveris caelum patere potuit»;
+   13, 7: la fuga; 13, 11: «a night without the bright light of the moon put an end» alla strage; 13, 12: Valente colpito da una freccia «amid the common soldiers as was supposed (for no one
+   asserted that he had seen him…)», mai ritrovato; 13, 14-16: «Others say» la casa di contadini «well fortified in its second storey», bruciata, e il soldato della guardia che salta dalla
+   finestra e poi racconta; 13, 18-19: Traiano e Sebastiano, trentacinque tribuni, «constatque vix tertiam evasisse exercitus partem. nec ulla annalibus praeter Cannensem pugnam ita ad
+   internecionem res legitur gesta». Ammiano non dà numeri dei Romani, distanze né l'orientamento del campo: tutto il campo è uno schema, ed è detto nel disegno. */
+var ADRIANOPOLI={ titolo:"Adrianopoli", sotto:"9 agosto 378: l'esercito d'Oriente distrutto e l'imperatore ucciso, secondo Ammiano Marcellino",
+  fasi:[["376","I Goti Tervingi passano il Danubio con il permesso di Valente. Poco dopo passano anche i Greutungi, su zattere e senza permesso. Dove passarono, le fonti non lo dicono."],
+    ["377","Affamati e maltrattati dai funzionari romani, i Goti si ribellano vicino a Marcianopoli e saccheggiano la Tracia."],
+    ["378","Valente marcia verso Adrianopoli. I Goti, da Cabile, vanno verso la stazione di Nice. Graziano, il nipote, scende il Danubio per venire in aiuto."],
+    ["378","Gli esploratori dicono a Valente che i Goti sono soltanto diecimila. Secondo Ammiano era un errore. Valente decide di attaccare senza aspettare Graziano."],
+    ["9 agosto","All'alba l'esercito parte in gran fretta. Bagagli, tesoro e insegne restano ad Adrianopoli. Dopo una lunga marcia su un terreno accidentato, all'ottava ora appaiono i carri dei Goti, disposti in un cerchio perfetto."],
+    ["9 agosto","La cavalleria dell'ala destra si schiera per prima; gran parte dei fanti aspetta dietro. L'ala sinistra arriva di corsa: molti cavalieri sono ancora sparsi lungo le strade."],
+    ["9 agosto","I Goti chiedono la pace e prendono tempo. Accendono fuochi nella pianura. I Romani, affamati, soffrono il caldo e la sete."],
+    ["9 agosto","Ricomere sta per andare dai Goti come ostaggio, quando gli arcieri di Bacurio e Cassione attaccano troppo presto e si ritirano. Torna la cavalleria gota di Alateo e Safrace, con gli Alani: piomba sui Romani «come un fulmine»."],
+    ["9 agosto","L'ala sinistra arriva fino ai carri, ma il resto della cavalleria la lascia sola, ed è travolta. I fanti restano scoperti, così ammassati che a stento si poteva sguainare la spada o ritirare il braccio."],
+    ["9 agosto","Per la polvere non si vede più il cielo; le frecce arrivano da ogni parte. Alla fine la linea romana si spezza e i soldati fuggono come possono. Una notte senza luna mette fine alla strage."],
+    ["Ammiano","Come morì Valente? Secondo una versione, al calare del buio, fra i soldati semplici, fu colpito da una freccia. Ma nessuno disse di averlo visto, e il corpo non fu mai trovato."],
+    ["Altri dicono","Ferito, fu portato in una casa di contadini a due piani. I Goti, senza sapere chi fosse, la circondarono e le diedero fuoco. Uno della guardia saltò da una finestra: fu lui, più tardi, a raccontarlo."],
+    ["Il conto","Morirono anche i generali Traiano e Sebastiano e trentacinque tribuni. Secondo Ammiano si salvò appena un terzo dell'esercito: negli annali una disfatta così si legge solo per Canne."]],
+  fonte:"Ammiano Marcellino, Storie XXXI 4-13, nella traduzione inglese di Rolfe (LacusCurtius); i passi dei fanti ammassati e del terzo dell'esercito anche nel latino. Ammiano scrive a Roma verso il 390 e non assistette alla battaglia. La carta è quella della pagina: il punto in cui i Goti passarono il Danubio non è noto e le linee sono uno schema. Il campo di battaglia è un disegno schematico: Ammiano non dà distanze, numeri dei Romani né l'orientamento dello schieramento, e non dice da dove arrivasse la cavalleria di Alateo e Safrace. Le due morti di Valente sono le due versioni che riferisce Ammiano; i disegni sono indicativi." };
+function disegnaAdrianopoli(svg,S,W,H){
+  var G=window.RM_MAPPA; if(!G||!G.citta) return;
+  var oriz=W/H>=1.15, stretto=oriz&&W<700, pad=oriz?20:12, defs=el('defs',null,svg), i, j;
+  var T={a1:1400,a2:7000,a3:12200,a4:17600,b1:23400,b2:29400,b3:35000,b4:40600,b5:47400,b6:54400,c1:61400,c2:67400,d1:74400}; T.fin=T.d1+9000;
+  grad(defs,'ig-ad-suolo',[[0,'#F4E7C6'],[1,'#E3CC98']]);
+  grad(defs,'ig-ad-colle',[[0,'#D9BE86',.9],[1,'#D9BE86',0]],{cx:'50%',cy:'50%',r:'50%'});
+  grad(defs,'ig-ad-caldo',[[0,'#F08A2E',.55],[1,'#F08A2E',0]],{cx:'50%',cy:'50%',r:'50%'});
+  grad(defs,'ig-ad-polvere',[[0,'#A8936F',.95],[.55,'#B9A27C',.7],[1,'#C4AD86',0]],{cx:'50%',cy:'50%',r:'50%'});
+  grad(defs,'ig-ad-notte',[[0,'#0E1424'],[1,'#25304A']]);
+  grad(defs,'ig-ad-fiamme',[[0,'#2A1710'],[.55,'#4A2416'],[1,'#8A3A16']]);
+  grad(defs,'ig-ad-vampa',[[0,'#FFD27A',.9],[.5,'#F08A2E',.45],[1,'#F08A2E',0]],{cx:'50%',cy:'50%',r:'50%'});
+
+  /* ---------- A. dal Danubio ad Adrianopoli ---------- */
+  var gA=el('g',{'class':'ig-atto'},svg), V=[600,197,182,161], mb;
+  if(oriz){ var mh=H-2*pad, mw=mh*V[2]/V[3]; if(mw>W*(stretto?.58:.56)){ mw=W*(stretto?.58:.56); mh=mw*V[3]/V[2]; } mb=[W-pad-mw,(H-mh)/2,mw,mh]; }
+  else { var mw2=W-2*pad, mh2=Math.min(mw2*V[3]/V[2],H*.6); mw2=mh2*V[2]/V[3]; mb=[(W-mw2)/2,pad,mw2,mh2]; }
+  var F=finestra(gA,defs,'ig-ad-clipA',V,mb,{stati:statiDi(378)}), sA=F.sopra, MP=F.M;
+  var DN=F.C('dnestr'), DU=F.C('durostoro'), MA=F.C('marcianopoli'), CB=F.C('cabile'), AD=F.C('adrianopoli'), CO=F.C('costantinopoli'); if(!DN||!DU||!MA||!CB||!AD||!CO) return;
+  var tDa=tx(sA,MP([643,281])[0],MP([643,281])[1],'ig-ad-fiume','Danubio','middle'), tPE=tx(sA,MP([760,300])[0],MP([760,300])[1],'ig-ad-mare','Ponto Eusino','middle');
+  var zona=el('g',{'class':'ig-f'},sA); el('ellipse',{cx:r1(DU[0]),cy:r1(DU[1]),rx:r1(16*F.k),ry:r1(5.5*F.k),'class':'ig-ad-zona'},zona);
+  var tZ=tx(zona,DU[0]+16*F.k+5,DU[1]+16,'ig-ad-zona-t','dove? non è detto','start');
+  var rT=rotta(sA,defs,[MP([723.4,221.6]),MP([716,252]),MP([703,280])],{c:'#3B2F26',nome:'Tervingi',dove:.45,dx:-8,an:'end'});
+  var rGr=rotta(sA,defs,[MP([741,228]),MP([731,258]),MP([712,284])],{c:'#3B2F26',schema:true,nome:'Greutungi',dove:.4,dx:8,an:'start'});
+  var rR=rotta(sA,defs,[MP([701,288]),MA,MP([700,312]),MP([693,316])],{c:'#3B2F26',nome:'i Goti in rivolta',dove:.62,dx:-9,an:'end'});
+  var rV=rotta(sA,defs,[MP([735,344]),MP([716,349]),MP([700,341])],{c:'#9A2F2A',nome:'Valente',dove:.5,dy:-9});
+  var rN=rotta(sA,defs,[MP([692.5,321]),MP([695,333])],{c:'#3B2F26',schema:true,nome:'verso Nice',dove:.75,dx:8,an:'start'});
+  var rGz=rotta(sA,defs,[MP([601,262]),MP([618,264]),MP([630,262])],{c:'#9A2F2A',schema:true,nome:'Graziano',dove:.4,dy:-9});
+  var sMA=segnoCarta(sA,'scontro',MA,.85), onda=el('circle',{cx:r1(AD[0]),cy:r1(AD[1]),r:9,'class':'ig-m-onda'},sA);
+  var pDU=luogo(sA,DU,'Durostoro',8,-7,'start','tenue'), pMA=luogo(sA,MA,'Marcianopoli',13,4,'start'), pCB=luogo(sA,CB,'Cabile',-8,4,'end'), pAD=luogo(sA,AD,'Adrianopoli',-9,15,'end','grande roma'), pCO=luogo(sA,CO,'Costantinopoli',-6,17,'end');
+  var avvA=el('text',{x:r1(mb[0]+10),y:r1(mb[1]+18),'class':'ig-m-avverte su-carta'},gA); avvA.textContent='le linee sono uno schema: le strade non sono scritte'; if(largo(avvA)>mb[2]-20) avvA.textContent='le linee sono uno schema';
+  /* il registro accanto: tre anni e il numero degli esploratori */
+  var lb=oriz?[pad+4,pad,mb[0]-pad-34,H-2*pad]:[pad,mb[1]+mb[3]+14,W-2*pad,H-(mb[1]+mb[3]+14)-4];
+  var REG=[{a:'376',n:'Il Danubio',s:'i Tervingi passano con il permesso; i Greutungi senza',t:T.a1},{a:'377',n:'La rivolta',s:'presso Marcianopoli; la Tracia è saccheggiata',t:T.a2},{a:'378',n:'Adrianopoli',s:'Valente non aspetta Graziano',t:T.a3}];
+  var gR=el('g',{'class':'ig-ad-reg'},gA), righe=[], modo=lb[2]>=300&&lb[3]>=300?'righe':'scheda', sch=null, gNum, cNum;
+  if(modo==='righe'){
+    var y0=lb[1]+Math.max(0,(lb[3]-330)/2);
+    tx(gR,lb[0],y0+12,'ig-m-testata','DAL DANUBIO AD ADRIANOPOLI'); tx(gR,lb[0],y0+31,'ig-m-sotto','Ammiano Marcellino, Storie XXXI 4-12');
+    REG.forEach(function(r,ii){ var y=y0+58+ii*58, g=el('g',{'class':'ig-ad-riga'},el('g',{transform:'translate(0,'+r1(y)+')'},gR));
+      tx(g,lb[0],24,'ig-ad-anno',r.a); tx(g,lb[0]+78,13,'ig-ad-rn',r.n); var s=el('text',{x:r1(lb[0]+78),y:32,'class':'ig-ad-rs'},g); avvolgi(s,r.s,lb[2]-80,16);
+      el('line',{x1:r1(lb[0]),x2:r1(lb[0]+lb[2]),y1:50,y2:50,'class':'ig-m-filo'},g); righe.push(g); });
+    gNum=el('g',{'class':'ig-ad-num'},el('g',{transform:'translate(0,'+r1(y0+242)+')'},gR)); cNum=tx(gNum,lb[0],34,'ig-ad-num-n','0');
+    var nl=el('text',{x:r1(lb[0]+150),y:12,'class':'ig-ad-num-t'},gNum); avvolgi(nl,'i Goti visti dagli esploratori. «Per qualche errore», scrive Ammiano: erano molti di più.',lb[2]-150,16);
+  } else {
+    sch={g:el('g',{'class':'ig-ad-scheda'},gR)}; var sx=lb[0], sy=lb[1]+(oriz?6:0);
+    sch.a=tx(sch.g,sx,sy+26,'ig-ad-anno',''); sch.n=tx(sch.g,sx+(oriz?0:74),sy+(oriz?50:12),'ig-ad-rn',''); sch.s=el('text',{x:r1(sx+(oriz?0:74)),y:r1(sy+(oriz?70:31)),'class':'ig-ad-rs'},sch.g); sch.w=lb[2]-(oriz?0:76);
+    gNum=el('g',{'class':'ig-ad-num'},el('g',{transform:'translate(0,'+r1(oriz?sy+lb[3]-92:sy+Math.min(lb[3]-46,72))+')'},gR)); cNum=tx(gNum,sx,34,'ig-ad-num-n','0');
+    var nl2=el('text',{x:r1(sx+(oriz?0:136)),y:r1(oriz?56:12),'class':'ig-ad-num-t'},gNum); avvolgi(nl2,'i Goti secondo gli esploratori: «per qualche errore»',oriz?lb[2]:lb[2]-136,15);
+  }
+
+  /* ---------- B. il 9 agosto, sul campo (schema) ---------- */
+  var gB=el('g',{'class':'ig-atto'},svg), FW=100, FH=62, fb, sb=null;
+  if(oriz&&!stretto){ var fh=H-2*pad, fw=fh*FW/FH; if(fw>W*.64){ fw=W*.64; fh=fw*FH/FW; } fb=[pad,(H-fh)/2,fw,fh]; sb=[pad+fw+28,pad+4,W-(pad+fw+28)-pad,H-2*pad-4]; }
+  else if(stretto){ var fw2=Math.min(W-2*pad,(H-2*pad)*FW/FH); fb=[(W-fw2)/2,(H-fw2*FH/FW)/2,fw2,fw2*FH/FW]; }
+  else { var fw3=W-2*pad; fb=[pad,pad,fw3,fw3*FH/FW]; sb=[pad,fb[1]+fb[3]+14,W-2*pad,H-(fb[1]+fb[3]+14)-6]; }
+  var ku=fb[2]/FW; function Fp(x,y){ return [fb[0]+x*ku, fb[1]+y*ku]; }
+  var cpB=el('clipPath',{id:'ig-ad-clipB'},defs); el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),rx:12},cpB);
+  var campo=el('g',{'clip-path':'url(#ig-ad-clipB)'},gB);
+  el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),fill:'url(#ig-ad-suolo)'},campo);
+  var pz=el('pattern',{id:'ig-ad-erba',width:9,height:7,patternUnits:'userSpaceOnUse'},defs); el('path',{d:'M1 6 l1.4 -3.2 M4.5 6.5 l-.8 -3 M7 5.5 l1.2 -2.6',stroke:'rgba(140,110,60,.2)','stroke-width':.8,fill:'none'},pz);
+  el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),fill:'url(#ig-ad-erba)'},campo);
+  /* i colli e il terreno accidentato della marcia */
+  [[24,16,14,7.5],[34,51,13,6],[14,55,10,5],[44,8,11,5],[91,55,13,6.5],[93,8,10,5.5],[30,30,6,3]].forEach(function(c,ii){ var q=Fp(c[0],c[1]);
+    el('path',{d:macchia(q[0],q[1],c[2]*ku*1.15,c[3]*ku*1.15,40+ii),fill:'url(#ig-ad-colle)'},campo);
+    for(var l=0;l<3;l++) el('path',{d:macchia(q[0]+l*.5*ku,q[1]-l*.35*ku,c[2]*ku*(.92-l*.26),c[3]*ku*(.92-l*.26),70+ii*5+l),'class':'ig-ad-quota'},campo); });
+  var STR=[[12,39],[19,35.5],[27,37],[35,33.5],[43,31.5],[50,31]].map(function(p){ return Fp(p[0],p[1]); }), strD=curvaPezzi(STR).join(' ');
+  el('path',{d:strD,'class':'ig-ad-strada-b','stroke-width':r1(Math.max(3,1.3*ku))},campo); el('path',{d:strD,'class':'ig-ad-strada','stroke-width':r1(Math.max(1.4,.55*ku))},campo);
+  var colonna=el('path',{d:strD,'class':'ig-ad-colonna','stroke-width':r1(Math.max(2.4,.9*ku))},campo); colonna.style.strokeDasharray=r1(1.2*ku)+' '+r1(.9*ku);
+  /* Adrianopoli, con i bagagli sotto le mura */
+  var cA=Fp(7,40), muraA=[]; for(i=0;i<9;i++){ var an=i/9*Math.PI*2+.3, rr=(i%2?4.4:5)*ku; muraA.push([cA[0]+Math.cos(an)*rr,cA[1]+Math.sin(an)*rr*.86]); }
+  el('path',{d:'M'+muraA.map(xy).join('L')+'Z','class':'ig-ad-citta'},campo);
+  for(i=0;i<7;i++) el('rect',{x:r1(cA[0]+(i%3-1.4)*1.8*ku),y:r1(cA[1]+(Math.floor(i/3)-1.2)*1.7*ku),width:r1(1.2*ku),height:r1(.9*ku),'class':'ig-ad-casa'},campo);
+  var tAd=tx(campo,cA[0]-4.6*ku,cA[1]-5.6*ku,'ig-ad-et forte','Adrianopoli','start');
+  var gBag=el('g',{'class':'ig-f'},campo); for(i=0;i<5;i++) el('rect',{x:r1(cA[0]+5*ku+(i%3)*1.3*ku),y:r1(cA[1]+1.5*ku+Math.floor(i/3)*1.1*ku),width:r1(1.1*ku),height:r1(.8*ku),rx:1,'class':'ig-ad-bagaglio'},gBag);
+  var tBag=tx(gBag,cA[0]+4.6*ku,cA[1]+6.6*ku,'ig-ad-et','bagagli, tesoro, insegne','start');
+  /* il cerchio dei carri */
+  var C0=[80,31], RC=11, carri=[], gC=el('g',null,campo);
+  var interno=el('g',{'class':'ig-f'},gC), Rg=caso(378); for(i=0;i<46;i++){ var aa=Rg()*Math.PI*2, dd=Math.sqrt(Rg())*RC*.78, q=Fp(C0[0]+Math.cos(aa)*dd,C0[1]+Math.sin(aa)*dd); el('circle',{cx:r1(q[0]),cy:r1(q[1]),r:r1(Math.max(1.1,.4*ku)),'class':'ig-ad-goto'},interno); }
+  for(i=0;i<34;i++){ var a2=i/34*Math.PI*2, q2=Fp(C0[0]+Math.cos(a2)*RC,C0[1]+Math.sin(a2)*RC), g=el('g',{'class':'ig-ad-carro',transform:'translate('+xy(q2)+') rotate('+r1(a2*180/Math.PI+90)+')'},gC);
+    el('rect',{x:r1(-1.05*ku),y:r1(-.5*ku),width:r1(2.1*ku),height:r1(1*ku),rx:r1(.2*ku),'class':'ig-ad-cassa'},g);
+    [-.7,.7].forEach(function(s){ el('circle',{cx:r1(s*ku),cy:r1(.62*ku),r:r1(.36*ku),'class':'ig-ad-ruota'},g); }); carri.push(g); }
+  var tCarri=tx(campo,Fp(C0[0],C0[1]-RC-2.2)[0],Fp(C0[0],C0[1]-RC-2.2)[1],'ig-ad-et ig-ad-tag','i carri dei Goti, in cerchio','middle');
+  /* i fuochi della pianura e il caldo */
+  var caldo=el('ellipse',{cx:r1(Fp(60,31)[0]),cy:r1(Fp(60,31)[1]),rx:r1(46*ku),ry:r1(34*ku),fill:'url(#ig-ad-caldo)','class':'ig-ad-caldo'},campo);
+  var fuochi=[[63,25],[67,35.5],[59,7],[69,47],[71,11],[56,54],[73,41],[66,21],[61,58],[74,52]].map(function(p,ii){ var q=Fp(p[0],p[1]), g=el('g',{'class':'ig-ad-fuoco',transform:'translate('+xy(q)+')'},campo), s=Math.max(.45,ku*.11);
+    el('circle',{r:r1(9*s),'class':'ig-sg-alone'},g);
+    for(var k=0;k<3;k++){ var f=el('circle',{cx:0,cy:r1(-8*s),r:r1(4.5*s),'class':'ig-ad-fumo'},g); f.style.animationDelay=(-(ii*.37+k*.9)).toFixed(2)+'s'; }
+    el('path',{d:FIAMMA,transform:'scale('+r1(s*.75*100)/100+')','class':'ig-ad-fiamma'},g); return g; });
+  var tFuochi=tx(campo,Fp(74,5)[0],Fp(74,5)[1]+4,'ig-ad-et ig-ad-tag','fuochi nella pianura','start');
+  /* i reparti */
+  function reparto(tipo,cl){ var g=el('g',{'class':'ig-ad-u '+cl},campo);
+    if(tipo==='f') el('rect',{x:r1(-1.6*ku),y:r1(-1.05*ku),width:r1(3.2*ku),height:r1(2.1*ku),rx:r1(.3*ku)},g);
+    else el('path',{d:'M'+r1(1.8*ku)+' 0 L'+r1(-1.4*ku)+' '+r1(-1.2*ku)+' L'+r1(-.75*ku)+' 0 L'+r1(-1.4*ku)+' '+r1(1.2*ku)+' Z'},g); return g; }
+  function metti(g,p,ang){ fissa(g,'transform','translate('+xy(Fp(p[0],p[1]))+')'+(ang?' rotate('+r1(ang)+')':'')); }
+  var fanti=[], destra=[], sinistra=[], goticav=[], gotifanti=[], frecce=[], fuga=[];
+  for(i=0;i<2;i++) for(j=0;j<5;j++) fanti.push({g:reparto('f','roma'),b:[49.5+i*4.2,23+j*4.1]});
+  [[62,43.5],[65.6,45.6],[62,47.8],[65.6,49.9]].forEach(function(p){ destra.push({g:reparto('c','roma'),b:p}); });
+  [[24,34.5],[30,36.3],[36,33],[41,31.4],[45.5,31.2]].forEach(function(p,ii){ sinistra.push({g:reparto('c','roma'),a:p,b:[[61.5,13],[65,15.2],[61.5,17.4],[65,19.6],[58,15.4]][ii],k:ii}); });
+  for(i=0;i<8;i++) goticav.push({g:reparto('c','goti cav'),k:i});
+  [[61.5,21.5],[63.2,25.6],[63.8,30],[63.8,34.4],[63.2,38.6],[61,42.3],[56.5,19.2],[51,19],[55.5,43.4]].forEach(function(p,ii){ gotifanti.push({g:reparto('f','goti'),a:[71.5,24+ii*1.7],b:p}); });
+  var inviato=el('circle',{r:r1(Math.max(2,.6*ku)),'class':'ig-ad-inviato'},campo), ricomere=el('circle',{r:r1(Math.max(2.3,.7*ku)),'class':'ig-ad-ricomere'},campo);
+  var arcieri=[]; for(i=0;i<6;i++) arcieri.push({c:el('circle',{r:r1(Math.max(1.4,.45*ku)),'class':'ig-ad-arciere'},campo),o:[(i%3)*1.1,Math.floor(i/3)*1.2]});
+  var Rf=caso(13); for(i=0;i<34;i++){ var fq=Fp(44+Rf()*24,16+Rf()*32), ang=200+Rf()*50, l=Math.max(5,1.6*ku), fl=el('line',{x1:r1(fq[0]),y1:r1(fq[1]),x2:r1(fq[0]+Math.cos(ang*Math.PI/180)*l),y2:r1(fq[1]+Math.sin(ang*Math.PI/180)*l),'class':'ig-ad-freccia'},campo); fl.style.animationDelay=(-Rf()*1.6).toFixed(2)+'s'; frecce.push(fl); }
+  var polveri=[[55,30,24,15],[46,21,16,10],[61,41,18,11],[50,38,14,9],[66,25,15,10],[40,32,12,8]].map(function(p){ var q=Fp(p[0],p[1]); return {e:el('ellipse',{cx:r1(q[0]),cy:r1(q[1]),rx:r1(p[2]*ku),ry:r1(p[3]*ku),fill:'url(#ig-ad-polvere)','class':'ig-ad-polvere',opacity:0},campo),dx:p[2]*.18}; });
+  for(i=0;i<70;i++){ var a0=[50+Rf()*8,22+Rf()*19], b0=[8+Rf()*34,6+Rf()*52]; fuga.push({c:el('circle',{r:r1(Math.max(1.3,.42*ku)),'class':'ig-ad-fuggiasco'},campo),a:a0,b:b0,t0:T.b6+2600+Rf()*1800,d:1600+Rf()*1400}); }
+  var notte=el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),'class':'ig-ad-buio',opacity:0},campo);
+  /* le etichette del campo, ciascuna nel suo momento */
+  function etichetta(x,y,s,an,cl){ var q=Fp(x,y); return tx(campo,q[0],q[1],'ig-ad-et ig-ad-tag'+(cl?' '+cl:''),s,an||'middle'); }
+  var E1=etichetta(66.5,55.6,'ala destra','middle'), E2=etichetta(61,10,'ala sinistra','middle'), E3=etichetta(48,47.5,'fanti','middle'), E4=etichetta(64,28.2,'inviati: chiedono la pace','middle','piccola'),
+    E5=etichetta(64.5,26,'Ricomere, ostaggio','start','piccola'), E6=etichetta(68,39.6,'arcieri di Bacurio e Cassione','start','piccola'), E7=etichetta(84,3.6,'Alateo e Safrace, con gli Alani','end','scuro'),
+    E8=etichetta(71,15.8,'fino ai carri','start','scuro'), E9=etichetta(54,25,'ammassati','middle','scuro'), E10=etichetta(50,58.5,'notte senza luna','middle','notte');
+  var lMaxE7=largo(E7); if(Fp(84,0)[0]-lMaxE7<fb[0]+4) E7.setAttribute('text-anchor','start');
+  /* la lente: i fanti stretti (schema) */
+  var LC=Fp(29,14.5), LR=Math.max(40,13*ku), gLe=el('g',{'class':'ig-ad-lente'},gB), cpL=el('clipPath',{id:'ig-ad-clipL'},defs); el('circle',{cx:r1(LC[0]),cy:r1(LC[1]),r:r1(LR)},cpL);
+  el('circle',{cx:r1(LC[0]),cy:r1(LC[1]),r:r1(LR+3),'class':'ig-ad-lente-bordo'},gLe); var dentroL=el('g',{'clip-path':'url(#ig-ad-clipL)'},gLe);
+  el('circle',{cx:r1(LC[0]),cy:r1(LC[1]),r:r1(LR),'class':'ig-ad-lente-fondo'},dentroL); var omL=[];
+  for(i=0;i<6;i++) for(j=0;j<9;j++) omL.push({o:omino(dentroL,LR*.34,'roma vis'),i:j-4,j:i-2.5});
+  var tLe=tx(gLe,LC[0]+LR*.8,LC[1]+LR*.8+8,'ig-ad-et','schema','start');
+  el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),rx:12,'class':'ig-m-cornice'},gB);
+  var tSch=tx(gB,fb[0]+fb[2]-10,fb[1]+fb[3]-9,'ig-m-schema','schema: posizioni e distanze non sono nelle fonti','end'); if(largo(tSch)>fb[2]-20) tSch.textContent='schema';
+  /* il pannello: la data, l'ora, la legenda, le parole di Ammiano */
+  var gP=el('g',{'class':'ig-ad-pann'},gB), ora=null, quote=[], legY;
+  function voce(x,y,cl,tipo,s){ var g=el('g',{'class':'ig-ad-leg'},gP); if(tipo==='f') el('rect',{x:x,y:y-9,width:14,height:9,rx:1.5,'class':'ig-ad-u vis '+cl},g); else el('path',{d:'M'+(x+15)+' '+(y-4.5)+' L'+x+' '+(y-10)+' L'+(x+3)+' '+(y-4.5)+' L'+x+' '+(y+1)+' Z','class':'ig-ad-u vis '+cl},g);
+    tx(g,x+21,y,'ig-m-leg-t',s); return g; }
+  if(sb){
+    var dD=tx(gP,sb[0],sb[1]+(oriz?24:20),'ig-m-data','9 AGOSTO 378'); dD.style.fontSize=(oriz?30:22)+'px'; while(largo(dD)>sb[2]&&parseFloat(dD.style.fontSize)>15) dD.style.fontSize=(parseFloat(dD.style.fontSize)-1)+'px';
+    var oy=sb[1]+(oriz?46:34), ow=Math.min(sb[2],oriz?sb[2]:sb[2]);
+    ora={g:el('g',{'class':'ig-ad-ora'},gP)}; el('line',{x1:r1(sb[0]+6),x2:r1(sb[0]+ow-6),y1:r1(oy+12),y2:r1(oy+12),'class':'ig-ad-ora-l'},ora.g);
+    ora.tac=[['alba',0],['mezzogiorno',.42],['ottava ora',.66],['notte',1]].map(function(q){ var x=sb[0]+6+q[1]*(ow-12); el('line',{x1:r1(x),x2:r1(x),y1:r1(oy+8),y2:r1(oy+16),'class':'ig-ad-ora-l'},ora.g);
+      return tx(ora.g,x,oy+31,'ig-ad-ora-t',q[0],q[1]===0?'start':q[1]===1?'end':'middle'); });
+    ora.sole=el('g',{'class':'ig-ad-sole'},ora.g); for(i=0;i<8;i++){ var ar=i/8*Math.PI*2; el('line',{x1:r1(Math.cos(ar)*9),y1:r1(Math.sin(ar)*9),x2:r1(Math.cos(ar)*13),y2:r1(Math.sin(ar)*13)},ora.sole); } el('circle',{r:6.5},ora.sole);
+    ora.x0=sb[0]+6; ora.w=ow-12; ora.y=oy+12;
+    legY=oy+(oriz?62:52); var lw=Math.min(150,sb[2]/2);
+    voce(sb[0],legY,'roma','f','fanti romani'); voce(sb[0]+lw,legY,'roma','c','cavalieri romani'); voce(sb[0],legY+19,'goti','f','Goti'); voce(sb[0]+lw,legY+19,'goti cav','c','cavalieri goti');
+    var qy=legY+(oriz?46:34), qw=sb[2], qh=sb[1]+sb[3]-qy, fsq=oriz?(qw>=320?22:18):16;
+    [["«i carri… disposti in un cerchio perfetto»","Ammiano XXXI 12, 11",T.b1+5200],["«la pianura brillava di fuochi»","Ammiano XXXI 12, 13",T.b3+800],["«come un fulmine»","Ammiano XXXI 12, 17: la cavalleria gota",T.b4+2600],
+     ["«così ammassati che a stento qualcuno poteva sguainare la spada o ritirare il braccio»","Ammiano XXXI 13, 2 · ita concatervatis manipulis ut vix mucronem exerere aut manus reducere quisquam posset",T.b5+2600],
+     ["«per la polvere non si riusciva più a vedere il cielo»","Ammiano XXXI 13, 2",T.b6],["«una notte senza luna mise fine alla strage»","Ammiano XXXI 13, 11",T.b6+4200]].forEach(function(d){
+      var c=citazione(gP,sb[0],qy,qw,d[0],d[1],fsq); if(c._h>qh){ c.remove(); c=citazione(gP,sb[0],qy,qw,d[0],d[1].split(' · ')[0],fsq-2); } if(c._h>qh+4){ c.remove(); return; } quote.push({g:c,t:d[2]}); });
+  } else {
+    var box=el('g',{'class':'ig-ad-sovr'},gP), dS=tx(box,fb[0]+12,fb[1]+22,'ig-m-data','9 AGOSTO 378'); dS.style.fontSize='17px'; var bw2=largo(dS)+24;
+    ora={g:box,solo:tx(box,fb[0]+12,fb[1]+40,'ig-ad-ora-t','alba')}; el('rect',{x:r1(fb[0]+4),y:r1(fb[1]+5),width:r1(Math.max(bw2,120)),height:44,rx:8,'class':'ig-m-sovr'},box).parentNode.insertBefore(box.lastChild,box.firstChild);
+  }
+
+  /* ---------- C. le due morti di Valente ---------- */
+  var gCm=el('g',{'class':'ig-atto'},svg), rS=[pad,pad,W-2*pad,H-2*pad], aff=rS[2]>=rS[3]*1.25, cw=aff?(rS[2]-16)/2:rS[2], ch=aff?rS[3]:(rS[3]-14)/2;
+  function scheda(x,y,w,h,tipo){
+    var g=el('g',{'class':'ig-m-carta ig-ad-carta '+tipo},gCm), primo=tipo==='freccia', o={g:g};
+    el('rect',{x:r1(x),y:r1(y),width:r1(w),height:r1(h),rx:14,fill:primo?'url(#ig-ad-notte)':'url(#ig-ad-fiamme)','class':'ig-m-carta-fondo'},g);
+    var cp=el('clipPath',{id:'ig-ad-cc'+tipo},defs); el('rect',{x:r1(x),y:r1(y),width:r1(w),height:r1(h),rx:14},cp); var art=el('g',{'clip-path':'url(#ig-ad-cc'+tipo+')'},g);
+    tx(g,x+16,y+26,'ig-m-c-tit',primo?'UNA VERSIONE':'ALTRI DICONO'); var so=tx(g,x+16,y+43,'ig-m-c-sot',primo?'Ammiano XXXI 13, 12':'Ammiano XXXI 13, 14-16');
+    var voci=primo?['una freccia, al buio','il corpo non si trovò']:['una casa a due piani','i Goti le danno fuoco','uno si salta giù e racconterà'];
+    voci=primo?voci:['una casa a due piani','i Goti le danno fuoco','uno salta giù: racconterà'];
+    var impila=(w-32)/voci.length<175, foot=impila?voci.length*20+16:36, ax=x+16, ay=y+54, aw=w-32, ah=h-54-foot;
+    o.passi=passi(g,x+16,y+h-foot+(impila?14:20),w-32,voci,true,impila);
+    var suolo=ay+ah*.84;
+    if(primo){
+      el('path',{d:'M'+r1(x)+' '+r1(suolo)+' Q'+r1(x+w*.3)+' '+r1(suolo-ah*.05)+' '+r1(x+w*.55)+' '+r1(suolo+2)+' T'+r1(x+w)+' '+r1(suolo-3)+' V'+r1(y+h)+' H'+r1(x)+' Z','class':'ig-ad-c-suolo'},art);
+      var Rs=caso(9), hu=Math.max(16,ah*.2), sold=[];
+      for(var q=0;q<11;q++){ var sx=ax+aw*(.05+q*.09)+(Rs()-.5)*10; if(Math.abs(sx-(ax+aw*.58))<aw*.05) continue; var gi=Rs()<.35, om=omino(art,hu*(.75+Rs()*.3),'vis ig-ad-ombra');
+        om.setAttribute('transform','translate('+r1(sx)+','+r1(suolo+2+Rs()*6)+')'+(gi?' rotate('+r1(70+Rs()*25)+')':'')); sold.push(om); }
+      var vx=ax+aw*.58, vy=suolo+3; o.val=el('g',{transform:'translate('+r1(vx)+','+r1(vy)+')'},art); o.valI=el('g',{'class':'ig-ad-valente'},o.val); omino(o.valI,hu*1.05,'vis porpora');
+      o.vT=tx(art,vx,vy-hu*1.25,'ig-ad-c-et','Valente?','middle');
+      var p0=[ax+aw*.04,ay+ah*.06], p1=[vx-hu*.05,vy-hu*.7]; o.fr=el('path',{d:'M'+xy(p0)+' Q'+xy([lerp(p0[0],p1[0],.55),p0[1]-ah*.02])+' '+xy(p1),'class':'ig-ad-scia'},art); scopri(o.fr);
+      o.fp=el('path',{d:'M3 0 L-6 -3.5 L-4 0 L-6 3.5 Z','class':'ig-ad-punta'},art);
+      o.perso=el('g',{'class':'ig-ad-perso',transform:'translate('+r1(vx)+','+r1(vy)+') rotate(-82)'},art); omino(o.perso,hu*1.05,'vis');
+      for(q=0;q<16;q++){ var lx=ax+Rs()*aw, ly=suolo+4+Rs()*(y+h-foot-suolo-8), la=(Rs()<.5?-1:1)*(18+Rs()*30), ll=hu*(.45+Rs()*.5); el('line',{x1:r1(lx),y1:r1(ly),x2:r1(lx+Math.sin(la*Math.PI/180)*ll),y2:r1(ly-Math.cos(la*Math.PI/180)*ll),'class':'ig-ad-asta'},art); }
+      if(w>=300) tx(art,x+w-16,y+26,'ig-ad-c-nota-r','notte senza luna','end');
+      o.nota=el('text',{x:r1(x+16),y:r1(ay+ah*.2),'class':'ig-ad-c-nota'},art); avvolgi(o.nota,'«nessuno disse di averlo visto»',Math.min(aw*.5,230),16);
+      o.nota.setAttribute('x',r1(x+w-16)); o.nota.setAttribute('text-anchor','end'); [].forEach.call(o.nota.childNodes,function(c){ c.setAttribute('x',r1(x+w-16)); }); o.nota.setAttribute('y',r1(ay+ah*.42));
+    } else {
+      el('rect',{x:r1(x),y:r1(suolo),width:r1(w),height:r1(y+h-suolo),'class':'ig-ad-c-suolo caldo'},art);
+      var hw=Math.min(aw*.4,ah*.95), hs=hw*.36, hx=ax+aw*.5-hw/2, top=suolo-2*hs;
+      o.vampa=el('ellipse',{cx:r1(hx+hw/2),cy:r1(suolo-hs*.6),rx:r1(hw*1.1),ry:r1(hs*1.9),fill:'url(#ig-ad-vampa)','class':'ig-ad-vampa',opacity:0},art);
+      o.casa=el('g',{'class':'ig-ad-casa2'},art);
+      el('rect',{x:r1(hx),y:r1(top+hs),width:r1(hw),height:r1(hs),'class':'ig-ad-muro'},o.casa); el('rect',{x:r1(hx+hw*.04),y:r1(top),width:r1(hw*.92),height:r1(hs),'class':'ig-ad-muro alto'},o.casa);
+      el('path',{d:'M'+r1(hx-hw*.06)+' '+r1(top)+' L'+r1(hx+hw/2)+' '+r1(top-hs*.7)+' L'+r1(hx+hw*1.06)+' '+r1(top)+' Z','class':'ig-ad-tetto'},o.casa);
+      el('rect',{x:r1(hx+hw*.43),y:r1(top+hs*1.35),width:r1(hw*.14),height:r1(hs*.65),'class':'ig-ad-porta'},o.casa);
+      el('rect',{x:r1(hx+hw*.14),y:r1(top+hs*.28),width:r1(hw*.12),height:r1(hs*.38),'class':'ig-ad-fin'},o.casa); el('rect',{x:r1(hx+hw*.74),y:r1(top+hs*.28),width:r1(hw*.12),height:r1(hs*.38),'class':'ig-ad-fin'},o.casa);
+      el('path',{d:'M'+r1(hx-hw*.08)+' '+r1(top+hs)+' H'+r1(hx+hw*.36)+' M'+r1(hx-hw*.08)+' '+r1(top+hs*.8)+' V'+r1(top+hs),'class':'ig-ad-balcone'},o.casa);
+      var hu2=Math.max(12,hs*.62); [hx+hw*.02,hx+hw*.2].forEach(function(px){ var a=omino(o.casa,hu2,'vis ig-ad-ombra'); a.setAttribute('transform','translate('+r1(px)+','+r1(top+hs-1)+')'); el('path',{d:'M'+r1(px+hu2*.16)+' '+r1(top+hs-hu2*.85)+' q'+r1(hu2*.22)+' '+r1(hu2*.2)+' 0 '+r1(hu2*.4),'class':'ig-ad-arco'},o.casa); });
+      o.fasci=[]; for(var fsx=0;fsx<9;fsx++) o.fasci.push(el('rect',{x:r1(hx-hw*.06+fsx*hw*.135),y:r1(suolo-hs*.2-(fsx%2)*hs*.1),width:r1(hw*.13),height:r1(hs*.2),rx:2,'class':'ig-ad-fascina'},art));
+      o.gotici=[]; [-.3,-.18,1.18,1.32,1.45].forEach(function(f){ var a=omino(art,hu2*1.05,'ig-ad-ombra'); a.setAttribute('transform','translate('+r1(hx+hw*f)+','+r1(suolo+3)+')'); o.gotici.push(a); });
+      o.fiamme=[]; for(var fi=0;fi<7;fi++){ var fg=el('g',{transform:'translate('+r1(hx+hw*(-.02+fi*.17))+','+r1(suolo)+')'},art), fl=el('g',null,fg); el('path',{d:FIAMMA,'class':'ig-ad-fiamma grande'},fl); el('path',{d:FIAMMA,'class':'ig-ad-fiamma cuore',transform:'translate(0,2) scale(.55)'},fl); o.fiamme.push({g:fl,s:hs/12*(fi%2?.5:.68)}); }
+      var pj0=[hx+hw*.8,top+hs*.62], pj1=[hx+hw*1.32,suolo+2]; o.salto=el('path',{d:'M'+xy(pj0)+' Q'+xy([hx+hw*1.12,top-hs*.2])+' '+xy(pj1),'class':'ig-ad-traiett'},art); o.saltoL=lungo(o.salto);
+      o.saltatore=omino(art,hu2,'porpora-chiaro');
+      o.nota=el('text',{x:r1(x+w-16),y:r1(ay+16),'class':'ig-ad-c-nota','text-anchor':'end'},art); avvolgi(o.nota,'preso, poi fuggì e tornò dai Romani',Math.min(aw*.42,220),16); [].forEach.call(o.nota.childNodes,function(c){ c.setAttribute('x',r1(x+w-16)); });
+    }
+    return o;
+  }
+  var K1=scheda(rS[0],rS[1],cw,ch,'freccia'), K2=scheda(aff?rS[0]+cw+16:rS[0],aff?rS[1]:rS[1]+ch+14,cw,ch,'casa');
+
+  /* ---------- D. il conto ---------- */
+  var gD=el('g',{'class':'ig-atto'},svg), tb, gb;
+  if(oriz){ tb=[pad+6,pad,stretto?W*.5:Math.min(W*.42,420),H-2*pad]; gb=[tb[0]+tb[2]+(stretto?18:30),pad+10,W-(tb[0]+tb[2]+(stretto?18:30))-pad,H-2*pad-20]; }
+  else { tb=[pad,pad,W-2*pad,Math.min(H*.46,230)]; gb=[pad,tb[1]+tb[3]+10,W-2*pad,H-(tb[1]+tb[3]+10)-pad]; }
+  var gT=el('g',{'class':'ig-ad-conto'},gD), yT=tb[1]+(oriz?Math.max(20,tb[3]*.12):18);
+  var tT1=tx(gT,tb[0],yT,'ig-m-testata','SI SALVÒ APPENA'), tT2=tx(gT,tb[0],yT+(oriz&&!stretto?58:46),'ig-ad-terzo','un terzo'); tT2.style.fontSize=(oriz&&!stretto?60:44)+'px'; while(largo(tT2)>tb[2]&&parseFloat(tT2.style.fontSize)>28) tT2.style.fontSize=(parseFloat(tT2.style.fontSize)-2)+'px';
+  var gr3=oriz&&!stretto, tT3=el('text',{x:r1(tb[0]),y:r1(yT+(gr3?88:70)),'class':'ig-ad-conto-t'},gT); if(stretto) tT3.style.fontSize='16px'; var n3=avvolgi(tT3,"dell'esercito, scrive Ammiano. Quanti fossero i soldati, non lo dice.",tb[2],stretto?18:20);
+  var yN=yT+(gr3?88:70)+n3*(stretto?18:20)+(gr3?16:8), gNomi=el('g',{'class':'ig-f'},gT), tN=el('text',{x:r1(tb[0]),y:r1(yN),'class':'ig-ad-conto-n'},gNomi), n4=avvolgi(tN,'Morti anche i generali Traiano e Sebastiano e trentacinque tribuni.',tb[2],stretto?16:18); if(stretto) tN.style.fontSize='12.5px';
+  var gCa=el('g',{'class':'ig-ad-canne'},gD), yC=oriz?yN+n4*(stretto?16:18)+(stretto?24:30):null, fC=oriz&&!stretto?24:stretto?17:19;
+  /* la fila degli uomini: uno su tre resta */
+  var cols, rows, N=60; if(gb[2]/gb[3]>2.2){ rows=3; cols=20; } else if(gb[2]/gb[3]>1.1){ rows=5; cols=12; } else { rows=6; cols=10; }
+  var cel=Math.min(gb[2]/cols,gb[3]/(rows+(oriz?0:1.6))), hu3=cel*.8, gx=gb[0]+(gb[2]-cols*cel)/2, gy=gb[1]+(oriz?(gb[3]-rows*cel)/2:0), uomini=[];
+  for(i=0;i<rows;i++) for(j=0;j<cols;j++){ var om2=omino(gD,hu3,'roma vis'); om2.setAttribute('transform','translate('+r1(gx+(j+.5)*cel)+','+r1(gy+(i+.92)*cel)+')'); uomini.push({o:om2,j:j}); }
+  var sopr=Math.round(cols/3), filo=el('line',{x1:r1(gx+sopr*cel),x2:r1(gx+sopr*cel),y1:r1(gy-4),y2:r1(gy+rows*cel+4),'class':'ig-ad-filo'},gD);
+  var tF=tx(gD,gx,gy+rows*cel+18,'ig-m-schema','schema: la proporzione è di Ammiano, le figure non sono un numero','start'); if(largo(tF)>gb[2]) tF.textContent='schema: la proporzione, non un numero'; if(largo(tF)>gb[2]) tF.textContent='schema';
+  if(!oriz) yC=gy+rows*cel+(gb[3]-rows*cel>70?44:30);
+  var cq=el('text',{x:r1(oriz?tb[0]:pad),y:r1(yC),'class':'ig-ad-canne-q'},gCa), nc=avvolgi(cq,'«Negli annali non si legge di un\'altra disfatta così, tranne Canne.»',oriz?tb[2]:W-2*pad,fC*1.1); cq.style.fontSize=fC+'px';
+  tx(gCa,oriz?tb[0]:pad,yC+(nc-1)*fC*1.1+fC,'ig-m-cita-chi','Ammiano XXXI 13, 19 · praeter Cannensem pugnam');
+
+  /* ---------- la regia ---------- */
+  S.passo=function(t){
+    /* A */
+    cls(gA,'vis',t>=300&&t<T.b1-300);
+    segui(rT,E.io(fase(t,T.a1+300,T.a1+2600))); segui(rGr,E.io(fase(t,T.a1+2600,T.a1+4400))); cls(zona,'vis',t>=T.a1+1800); cls(pDU,'vis',t>=T.a1+1800);
+    segui(rR,E.io(fase(t,T.a2+200,T.a2+2600))); cls(sMA,'vis',t>=T.a2+1300); cls(pMA,'vis',t>=400); cls(pCB,'vis',t>=400); cls(pAD,'vis',t>=400); cls(pCO,'vis',t>=400);
+    if(F.reg.tracia) cls(F.reg.tracia,'acceso',t>=T.a2+1800&&t<T.a3); if(F.reg.mesia_inf) cls(F.reg.mesia_inf,'acceso',t>=T.a2+800&&t<T.a3);
+    segui(rV,E.io(fase(t,T.a3+300,T.a3+2600))); segui(rN,E.io(fase(t,T.a3+1200,T.a3+2600))); segui(rGz,E.io(fase(t,T.a3+2400,T.a3+4000))); cls(onda,'vis',t>=T.a4); cls(avvA,'vis',t>=T.a1+800);
+    var ri=-1; REG.forEach(function(r,ii){ if(t>=r.t) ri=ii; });
+    if(modo==='righe') righe.forEach(function(r,ii){ cls(r,'vis',ii<=ri); cls(r,'ora',ii===ri); });
+    else if(sch){ cls(sch.g,'vis',ri>=0&&!(t>=T.a4&&!oriz&&lb[3]<120)); if(sch.ri!==ri&&ri>=0){ sch.ri=ri; scrivi(sch.a,REG[ri].a); scrivi(sch.n,REG[ri].n); sch.s.textContent=''; avvolgi(sch.s,REG[ri].s,sch.w,15); } }
+    var fn=E.out(fase(t,T.a4+200,T.a4+2400)); cls(gNum,'vis',t>=T.a4); scrivi(cNum,num(Math.round(10000*fn/100)*100));
+    /* B */
+    cls(gB,'vis',t>=T.b1-400&&t<T.c1-300);
+    var mar=fase(t,T.b1+400,T.b1+5200); cls(colonna,'vis',mar>0&&t<T.b2+600); fissa(colonna,'stroke-dashoffset',r1(-(t-T.b1)/1000*ku*6));
+    cls(gBag,'vis',t>=T.b1+600); carri.forEach(function(c,ii){ cls(c,'vis',t>=T.b1+4200+ii*45); }); cls(interno,'vis',t>=T.b1+4800); cls(tCarri,'vis',t>=T.b1+5400&&t<T.b4);
+    var sole=t<T.b1+5200?lerp(0,.66,E.io(fase(t,T.b1,T.b1+5200))):t<T.b6+2600?.66:lerp(.66,1,E.io(fase(t,T.b6+2600,T.b6+5600)));
+    if(ora){ if(ora.sole){ fissa(ora.sole,'transform','translate('+r1(ora.x0+sole*ora.w)+','+r1(ora.y)+')'); cls(ora.sole,'notte',sole>=.97); ora.tac.forEach(function(q,ii){ cls(q,'ora',[0,.42,.66,1][ii]<=sole+.01&&(ii===3||[0,.42,.66,1][ii+1]>sole+.01)); }); }
+      else scrivi(ora.solo,sole<.3?'alba':sole<.6?'verso mezzogiorno':sole<.97?'ottava ora':'notte senza luna'); }
+    var dep=E.io(fase(t,T.b2-600,T.b2+1800)), sq=E.io(fase(t,T.b5+1800,T.b5+4400)), via=fase(t,T.b6+2400,T.b6+4400);
+    fanti.forEach(function(f,ii){ var p=[lerp(50,f.b[0],dep),lerp(31,f.b[1],dep)]; p=[lerp(p[0],54+(f.b[0]-51.6)*.42,sq),lerp(p[1],31+(f.b[1]-31.2)*.4,sq)]; metti(f.g,p); cls(f.g,'vis',t>=T.b2-800+ii*60&&via<1); cls(f.g,'stretti',sq>.5); cls(f.g,'rotto',t>=T.b6+2400); });
+    var depD=E.io(fase(t,T.b2-1800,T.b2+600)); destra.forEach(function(f){ metti(f.g,[lerp(50,f.b[0],depD),lerp(31,f.b[1],depD)]); cls(f.g,'vis',t>=T.b2-1900&&t<T.b6+2400); });
+    sinistra.forEach(function(f){ var k0=T.b2+900+f.k*500, p=pista([[k0,f.a[0],f.a[1]],[k0+2600,f.b[0],f.b[1]],[T.b5+200,f.b[0],f.b[1]],[T.b5+1600,f.b[0]+7.5,f.b[1]+3]],t); metti(f.g,p); cls(f.g,'vis',t>=T.b2+400+f.k*500&&t<T.b5+2600); cls(f.g,'travolto',t>=T.b5+1700); });
+    goticav.forEach(function(f){ var k=f.k, a=[104+k*1.6,-8+k*2.2], m=[88-k*.8,4+k*.9], b=[70.5+(k%4)*1.6,13.5+Math.floor(k/4)*2.4], c2=[59+(k%4)*1.5,19.5+Math.floor(k/4)*2],
+      K=[[T.b4+2400,a[0],a[1]],[T.b4+3600,m[0],m[1]],[T.b4+4800,b[0],b[1]],[T.b5+2200,b[0],b[1]],[T.b5+4200,c2[0],c2[1]]], p=pista(K,t), p2=pista(K,t-80), an=Math.hypot(p[0]-p2[0],p[1]-p2[1])>.01?Math.atan2(p[1]-p2[1],p[0]-p2[0])*180/Math.PI:(f.an||180);
+      f.an=an; metti(f.g,p,an); cls(f.g,'vis',t>=T.b4+2400&&t<T.b6+4800); });
+    gotifanti.forEach(function(f,ii){ var e=E.io(fase(t,T.b5+600+ii*120,T.b5+3400+ii*120)); metti(f.g,[lerp(f.a[0],f.b[0],e),lerp(f.a[1],f.b[1],e)]); cls(f.g,'vis',e>0&&t<T.b6+5200); });
+    fuochi.forEach(function(f,ii){ cls(f,'vis',t>=T.b3+500+ii*160&&t<T.b6+800); }); cls(caldo,'vis',t>=T.b3+800&&t<T.b6+3000); cls(tFuochi,'vis',t>=T.b3+900&&t<T.b4);
+    var pi=pista([[T.b3+2400,69.5,30],[T.b3+3800,59.8,30],[T.b3+4300,59.8,30],[T.b3+5400,69.5,30]],t); fissa(inviato,'transform','translate('+xy(Fp(pi[0],pi[1]))+')'); cls(inviato,'vis',t>=T.b3+2300&&t<T.b3+5500);
+    var pr=pista([[T.b4,57.2,27.4],[T.b4+1800,63.6,27.4]],t); fissa(ricomere,'transform','translate('+xy(Fp(pr[0],pr[1]))+')'); cls(ricomere,'vis',t>=T.b4&&t<T.b5); cls(ricomere,'fermo',t>=T.b4+2000);
+    var pa=pista([[T.b4+600,56.5,36],[T.b4+1600,66.5,35.5],[T.b4+1900,66.5,35.5],[T.b4+2900,58,36.5]],t); arcieri.forEach(function(a){ fissa(a.c,'transform','translate('+xy(Fp(pa[0]+a.o[0],pa[1]+a.o[1]))+')'); cls(a.c,'vis',t>=T.b4+500&&t<T.b5); });
+    cls(E1,'vis',t>=T.b2&&t<T.b4); cls(E2,'vis',t>=T.b2+2600&&t<T.b4+2400); cls(E3,'vis',t>=T.b2+1400&&t<T.b3); cls(E4,'vis',t>=T.b3+2600&&t<T.b3+5400); cls(E5,'vis',t>=T.b4+400&&t<T.b4+3000);
+    cls(E6,'vis',t>=T.b4+1000&&t<T.b4+3200); cls(E7,'vis',t>=T.b4+3000&&t<T.b5+1200); cls(E8,'vis',t>=T.b5+400&&t<T.b5+2400); cls(E9,'vis',t>=T.b5+3600&&t<T.b6+1800); cls(E10,'vis',t>=T.b6+5000);
+    cls(gLe,'vis',t>=T.b5+2400&&t<T.b6+1600); var ls=E.io(fase(t,T.b5+2600,T.b5+4600)), sxL=LR*lerp(.3,.2,ls), syL=LR*lerp(.36,.29,ls);
+    omL.forEach(function(o){ fissa(o.o,'transform','translate('+r1(LC[0]+o.i*sxL+(o.j%2?sxL*.5:0))+','+r1(LC[1]+o.j*syL+LR*.2)+')'); });
+    frecce.forEach(function(f){ cls(f,'vis',t>=T.b6-200&&t<T.b6+3600); });
+    var pv=fase(t,T.b6-600,T.b6+1200)*(1-fase(t,T.b6+4800,T.b6+6400)); polveri.forEach(function(p,ii){ fissa(p.e,'opacity',r1(pv*.9*100)/100); fissa(p.e,'transform',pv>0?'translate('+r1(Math.sin((t-T.b6)/1400+ii)*p.dx*ku)+',0)':''); });
+    fuga.forEach(function(f){ var p=fase(t,f.t0,f.t0+f.d), e=E.out(p); if(p>0){ var q=Fp(lerp(f.a[0],f.b[0],e),lerp(f.a[1],f.b[1],e)); fissa(f.c,'cx',r1(q[0])); fissa(f.c,'cy',r1(q[1])); } cls(f.c,'vis',p>0&&t<T.b6+6200); });
+    fissa(notte,'opacity',r1(E.io(fase(t,T.b6+3600,T.b6+6200))*.6*100)/100);
+    quote.forEach(function(q,ii){ cls(q.g,'vis',t>=q.t&&(ii===quote.length-1||t<quote[ii+1].t)); });
+    /* C */
+    cls(gCm,'vis',t>=T.c1-300&&t<T.d1-300); cls(K1.g,'vis',t>=T.c1-300); cls(K2.g,'vis',t>=T.c2-300); cls(K1.g,'pieno',t<T.c2); cls(K2.g,'pieno',t>=T.c2);
+    K1.passi.forEach(function(p,ii){ cls(p,'vis',t>=T.c1+500+ii*2900); }); K2.passi.forEach(function(p,ii){ cls(p,'vis',t>=T.c2+500+ii*1700); });
+    var ff=E.io(fase(t,T.c1+1000,T.c1+2300)); traccia(K1.fr,ff); var fa=puntoA(K1.fr,Math.max(0,K1.fr._L*ff-4)), fb2=puntoA(K1.fr,Math.max(4,K1.fr._L*ff));
+    fissa(K1.fp,'transform','translate('+xy(fb2)+') rotate('+r1(Math.atan2(fb2[1]-fa[1],fb2[0]-fa[0])*180/Math.PI)+')'); cls(K1.fp,'vis',ff>.03&&ff<1);
+    var cad=E.io(fase(t,T.c1+2300,T.c1+3100)); fissa(K1.valI,'transform',cad>0?'rotate('+r1(-cad*82)+')':''); cls(K1.val,'via',t>=T.c1+3900); cls(K1.perso,'vis',t>=T.c1+3900); cls(K1.vT,'vis',t>=T.c1+300&&t<T.c1+3900); cls(K1.nota,'vis',t>=T.c1+4200);
+    K2.fasci.forEach(function(f,ii){ cls(f,'vis',t>=T.c2+1500+ii*90); }); K2.gotici.forEach(function(g,ii){ cls(g,'vis',t>=T.c2+900+ii*120); });
+    var fu=E.out(fase(t,T.c2+2600,T.c2+3800)), cresce=1+.55*E.io(fase(t,T.c2+3400,T.c2+5600)); K2.fiamme.forEach(function(f,ii){ var s=f.s*fu*cresce*(ii%3===1?1.15:1)*(1+.08*Math.sin(t/120+ii*1.7)); fissa(f.g,'transform',fu>0?'scale('+r1(s*100)/100+','+r1(s*(1+.12*Math.sin(t/90+ii))*100)/100+')':'scale(0)'); });
+    fissa(K2.vampa,'opacity',r1(fu*(.75+.15*Math.sin(t/160))*100)/100); cls(K2.casa,'bruciata',t>=T.c2+3600);
+    var fs2=E.io(fase(t,T.c2+3900,T.c2+4900)), qs=puntoA(K2.salto,K2.saltoL*fs2); fissa(K2.saltatore,'transform','translate('+xy(qs)+')'+(fs2>0&&fs2<1?' rotate('+r1(fs2*40)+')':'')); cls(K2.saltatore,'vis',t>=T.c2+3800); cls(K2.nota,'vis',t>=T.c2+5000);
+    /* D */
+    cls(gD,'vis',t>=T.d1-300); cls(gNomi,'vis',t>=T.d1+3400); cls(gCa,'vis',t>=T.d1+5600);
+    uomini.forEach(function(u){ cls(u.o,'perso',u.j>=sopr&&t>=T.d1+900+(cols-1-u.j)*90); }); cls(filo,'vis',t>=T.d1+900+(cols-sopr)*90+300);
+  };
+  S.dura=T.fin;
+  var bt=[T.a1,T.a2,T.a3,T.a4,T.b1,T.b2,T.b3,T.b4,T.b5,T.b6,T.c1,T.c2,T.d1];
+  S.battute=ADRIANOPOLI.fasi.map(function(f,ii){ return {t:bt[ii],anno:f[0],testo:f[1]}; });
+}
+
+/* l'ora del giorno su una linea: tacche [nome, posizione 0..1]; set(f) sposta il sole (oltre .97 diventa notte) e accende la tacca giusta */
+function orologio(par,x,y,w,tacche){ var g=el('g',{'class':'ig-ad-ora'},par), o={g:g};
+  el('line',{x1:r1(x+6),x2:r1(x+w-6),y1:r1(y+12),y2:r1(y+12),'class':'ig-ad-ora-l'},g);
+  o.t=tacche.map(function(q){ var xx=x+6+q[1]*(w-12); el('line',{x1:r1(xx),x2:r1(xx),y1:r1(y+8),y2:r1(y+16),'class':'ig-ad-ora-l'},g); return {t:tx(g,xx,y+31,'ig-ad-ora-t',q[0],q[1]===0?'start':q[1]===1?'end':'middle'),f:q[1]}; });
+  o.sole=el('g',{'class':'ig-ad-sole'},g); for(var i=0;i<8;i++){ var a=i/8*Math.PI*2; el('line',{x1:r1(Math.cos(a)*9),y1:r1(Math.sin(a)*9),x2:r1(Math.cos(a)*13),y2:r1(Math.sin(a)*13)},o.sole); } el('circle',{r:6.5},o.sole);
+  o.set=function(f,notte){ fissa(o.sole,'transform','translate('+r1(x+6+f*(w-12))+','+r1(y+12)+')'); cls(o.sole,'notte',!!notte);
+    var k=-1; o.t.forEach(function(q,i){ if(q.f<=f+.01) k=i; }); o.t.forEach(function(q,i){ cls(q.t,'ora',i===k); }); };
+  return o; }
+
+/* ======================================================================
+   12. Campi Catalaunici (451)
+   Aggiunta il 23 novembre 2026. Quattro quadri: dalla Pannonia ai Campi Catalaunici sulla carta della pagina; la battaglia su un campo schematico; il recinto dei carri e il rogo di
+   selle; i morti di Giordane. Fonti lette: Giordane, Getica (The Latin Library). 192: «Convenitur itaque in campos Catalaunicos, qui et Mauriaci nominantur, centum leuvas… in longum
+   tenentes et septuaginta in latum»; 194-195: Sangibano, re degli Alani, promette di consegnare Orléans ad Attila, Teodorico ed Ezio fortificano la città e lo mettono «inter suos
+   auxiliares medium»; 195-196: gli aruspici annunciano «Hunnis infausta», ma che «summus hostium ductor de parte adversa occumberet», e Attila attacca «circa nonam diei horam… ut, si
+   secus cederet, nox imminens subveniret»; 197: «Erat autem positio loci declivi tumore in editum collis excrescens»; «Dextrum itaque cornum cum Vesegothis Theoderidus tenebat,
+   sinistrum Aetius cum Romanis, conlocantes in medio Sanguibanum… ut eum, de cuius animo minus praesumebant, fidelium turba concluderent»; 198-200: «in medio Attila cum suis
+   fortissimis», alle ali gli Ostrogoti di Valamiro, Teodemiro e Videmiro e i Gepidi di Ardarico, su cui Attila contava «contra parentes Vesegothas» (quale ala tenessero non è detto);
+   201: Attila manda i suoi a prendere la cima, «sed a Thorismundo et Aetio praevenitur»; 208: «si senioribus credere fas est» il ruscello del campo divenne un torrente di sangue;
+   209: Teodorico «equo depulsus pedibusque suorum conculcatus», o, per altri, «interfectum telo Andagis»; 210: i Visigoti «dividentes se ab Alanis» quasi uccidono Attila, che si chiude
+   «intra septa castrorum, quam plaustris vallatum habebat»; 211-212: Torismondo «ad hostium carpenta ignarus incurrit», ferito alla testa; Ezio «relicuum noctis scutorum defensione
+   transegit»; Attila chiuso «velut leo venabulis praessus speluncae aditus obambulans», con le trombe; 213: Goti e Romani decidono «eum obsidione fatigari», e i suoi arcieri «intra
+   septa castrorum locatis» tengono lontani i nemici; «Fertur autem… equinis sellis construxisse pyram seseque, si adversarii inrumperent, flammis inicere voluisse»; 214-216: il corpo
+   di Teodorico ritrovato «inter densissima cadavera» e portato via «cantibus»; Ezio consiglia a Torismondo di tornare, «metuens, ne Hunnis funditus interemptis a Gothis Romanum
+   praemeretur imperium»; 217: «ab utrisque partibus clxv milia caesa referuntur, exceptis quindecim milibus Gepidarum et Francorum». Gregorio di Tours II 7 (letto): Orléans liberata
+   da «Aetius et Theudor Gothorum rex ac Thorismodus», Attila «Mauriacum campum adiens»; Metz bruciata la vigilia di Pasqua e la partenza dalla Pannonia «ut quidam ferunt» vengono dai
+   passi della tappa (PASSI_CARTA[451] in js/dati.js), come la voce di Prospero («stragi incalcolabili», «chiude l'opera nel 455») e la data di Giordane (verso il 551).
+   Schemi, detti nel disegno: il luogo del campo, le linee della marcia, l'orientamento dello schieramento, le ali di Ostrogoti e Gepidi, distanze e numeri dei reparti, la forma del
+   recinto e del rogo. */
+var CATALAUNICI={ titolo:"Campi Catalaunici", sotto:"451: Ezio, Teodorico e Attila nella battaglia raccontata da Giordane",
+  fasi:[["451","In primavera gli Unni di Attila lasciano la Pannonia e passano il Reno: le fonti non dicono dove. Alla vigilia di Pasqua Metz viene incendiata."],
+    ["451","Attila assedia Orléans. Ezio e Teodorico, re dei Visigoti, accorrono e liberano la città. Dentro ci sono gli Alani di Sangibano: secondo Giordane volevano consegnarla ad Attila."],
+    ["451","Attila si ritira verso est. Gli eserciti si incontrano nei Campi Catalaunici, «detti anche Mauriaci». Dove fossero di preciso, non si sa."],
+    ["Giordane","Prima della battaglia gli indovini di Attila annunciano una sconfitta per gli Unni, ma anche la morte del capo nemico. Attila attacca verso la nona ora, perché la notte lo aiuti se le cose vanno male."],
+    ["Lo schieramento","Sull'ala destra Teodorico con i Visigoti, sulla sinistra Ezio con i Romani. Al centro Sangibano con gli Alani, chiusi fra gli altri: di lui non ci si fidava."],
+    ["Lo schieramento","Di fronte, Attila al centro con i suoi Unni più forti. Alle ali i popoli sottomessi: gli Ostrogoti di Valamiro, Teodemiro e Videmiro, e i Gepidi del re Ardarico."],
+    ["La collina","Il campo sale verso una collina. Attila manda i suoi a prenderne la cima, ma Torismondo, figlio di Teodorico, ed Ezio arrivano prima e respingono gli Unni dall'alto."],
+    ["Teodorico","Il re Teodorico, mentre incita i suoi, cade da cavallo e muore calpestato. Altri dicono che lo uccise una lancia di Andagis, un Ostrogoto. Secondo i vecchi, il ruscello del campo si gonfiò di sangue."],
+    ["La notte","I Visigoti si staccano dagli Alani e caricano gli Unni. Quasi uccidono Attila, che si chiude nel recinto dei suoi carri. Nel buio Torismondo finisce fra i carri nemici ed è ferito; Ezio passa la notte al riparo degli scudi."],
+    ["Il giorno dopo","Attila resta chiuso nel cerchio dei carri, fra squilli di tromba, «come un leone» stretto dalle lance. Goti e Romani decidono di prenderlo per fame; i suoi arcieri tengono lontano chi si avvicina."],
+    ["Si racconta","Si racconta che Attila preparò un rogo di selle di cavallo, per gettarsi tra le fiamme se i nemici fossero entrati: nessuno doveva prenderlo vivo."],
+    ["Torismondo","I Visigoti trovano il corpo del re fra i cadaveri e lo portano via con i canti. Ezio consiglia a Torismondo di tornare a Tolosa a prendersi il regno: secondo Giordane temeva che, distrutti gli Unni, i Goti diventassero un pericolo per l'impero."],
+    ["I morti","Giordane scrive di 165.000 morti, più 15.000 Franchi e Gepidi uccisi la notte prima. È la cifra della fonte, scritta un secolo dopo, e non è credibile come conto. Prospero, che scriveva in quegli anni, parla solo di «stragi incalcolabili»."]],
+  fonte:"Giordane, Storia dei Goti 192-217, nel latino (The Latin Library); Gregorio di Tours, Storie II 7; Prospero d'Aquitania, Cronaca, anno 451, citato nella tappa. Giordane scrive verso il 551, un secolo dopo; Prospero chiude la sua cronaca nel 455. Il luogo della battaglia non è noto: la carta lo segna dove lo mette la tradizione, e le linee della marcia sono uno schema. Lo schieramento segue Giordane; l'orientamento del campo, le distanze e i reparti sono disegnati a schema, e su quale ala stessero Ostrogoti e Gepidi Giordane non è esplicito. Il ruscello di sangue è un racconto «dei vecchi», il rogo di selle un «si racconta»; i 165.000 morti sono la cifra di Giordane, non un conto credibile." };
+function disegnaCatalaunici(svg,S,W,H){
+  var G=window.RM_MAPPA; if(!G||!G.citta) return;
+  var oriz=W/H>=1.15, stretto=oriz&&W<700, pad=oriz?20:12, defs=el('defs',null,svg), i, j;
+  var T={a1:1400,a2:7000,a3:12600,b1:19000,b2:24400,b3:29400,b4:34600,b5:40400,b6:46400,c1:53400,c2:59000,c3:64600,d1:70600}; T.fin=T.d1+9500;
+  var CO={roma:'#9A2F2A',romani:'#9A2F2A',visigoti:'#8054C3',alani:'#5E8A63',unni:'#4A3A2C',ostrogoti:'#B07A38',gepidi:'#7E7A62'};
+  grad(defs,'ig-ca-suolo',[[0,'#EEE6C9'],[1,'#DCCFA5']]); grad(defs,'ig-ca-colle',[[0,'#CDBB86',.95],[1,'#CDBB86',0]],{cx:'50%',cy:'50%',r:'50%'});
+  grad(defs,'ig-ca-cielo',[[0,'#0B1020'],[.6,'#1C2540'],[1,'#3A3550']]); grad(defs,'ig-ca-terra',[[0,'#1B1712'],[1,'#0C0A08']]);
+  grad(defs,'ig-ca-brace',[[0,'#FFB45A',.75],[.5,'#E06A1E',.3],[1,'#E06A1E',0]],{cx:'50%',cy:'50%',r:'50%'});
+
+  /* ---------- A. dalla Pannonia ai Campi Catalaunici ---------- */
+  var gA=el('g',{'class':'ig-atto'},svg), V=[282,150,196,168], mb;
+  if(oriz){ var mh=H-2*pad, mw=mh*V[2]/V[3]; if(mw>W*(stretto?.6:.58)){ mw=W*(stretto?.6:.58); mh=mw*V[3]/V[2]; } mb=[W-pad-mw,(H-mh)/2,mw,mh]; }
+  else { var mw2=W-2*pad, mh2=Math.min(mw2*V[3]/V[2],H*.66); mw2=mh2*V[2]/V[3]; mb=[(W-mw2)/2,pad,mw2,mh2]; }
+  var F=finestra(gA,defs,'ig-ca-clipA',V,mb,{stati:statiDi(451)}), sA=F.sopra, MP=F.M, Cq=F.C;
+  var TB=Cq('tibisco'), MZ=Cq('magonza'), ME=Cq('metz'), OR=Cq('orleans'), AR=Cq('arles'), TO=Cq('tolosa'), CC=Cq('catalaunici'); if(!TB||!MZ||!ME||!OR||!AR||!TO||!CC) return;
+  var reno=el('g',{'class':'ig-f'},sA); el('ellipse',{cx:r1(MZ[0]),cy:r1(MZ[1]),rx:r1(9*F.k),ry:r1(6*F.k),'class':'ig-ad-zona'},reno); if(F.k>=2) tx(reno,MZ[0],MZ[1]+6*F.k+14,'ig-ad-zona-t','il Reno: dove, non è detto','middle');
+  var r1a=rotta(sA,defs,[MP([480,196]),MP([452,184]),MP([420,178])],{c:CO.unni,schema:true,nome:'dalla Pannonia',dove:.3,dy:-10});
+  var r1b=rotta(sA,defs,[MP([416,176]),MP([402,183]),MP([388,192])],{c:CO.unni});
+  var sME=segnoCarta(sA,'fuoco',ME,.9);
+  var r2a=rotta(sA,defs,[MP([385,194]),MP([355,198]),MP([324,211])],{c:CO.unni,nome:'Attila',dove:.45,dy:-9});
+  var r2e=rotta(sA,defs,[MP([352,305]),MP([340,262]),MP([325,216])],{c:CO.roma,nome:'Ezio',dove:.55,dx:8,an:'start'});
+  var r2t=rotta(sA,defs,[MP([303,302]),MP([308,260]),MP([320,216])],{c:CO.visigoti,nome:'Teodorico',dove:.3,dx:7,an:'start'});
+  var sOR=segnoCarta(sA,'assedio',OR,.9);
+  var r3=rotta(sA,defs,[MP([324,213]),MP([348,214]),MP([372,200]),MP([360,201])],{c:CO.unni,nome:F.k>=2?'si ritira':null,dove:.22,dy:15});
+  var zonaC=el('g',{'class':'ig-f'},sA); el('ellipse',{cx:r1(CC[0]),cy:r1(CC[1]),rx:r1(17*F.k),ry:r1(9*F.k),'class':'ig-ca-zona'},zonaC);
+  var tZ1=tx(zonaC,CC[0]+6,CC[1]+9*F.k+16,'ig-ca-zona-n','Campi Catalaunici','middle'), tZ2=tx(zonaC,CC[0]+6,CC[1]+9*F.k+31,'ig-ad-zona-t','il luogo esatto non è noto','middle');
+  var sCC=segnoCarta(sA,'scontro',CC,.85);
+  var pME=luogo(sA,ME,'Metz',9,4,'start'), pOR=luogo(sA,OR,'Orléans',-8,-7,'end'), pAR=luogo(sA,AR,'Arles',8,4,'start','tenue'), pTO=luogo(sA,TO,'Tolosa',F.k>=2?-8:7,F.k>=2?4:-6,F.k>=2?'end':'start','tenue'), pMZ=luogo(sA,MZ,'Magonza',8,-6,'start','tenue');
+  var avvA=el('text',{x:r1(mb[0]+10),y:r1(mb[1]+18),'class':'ig-m-avverte su-carta'},gA); avvA.textContent='le linee sono uno schema: le strade non sono scritte'; if(largo(avvA)>mb[2]-20||F.k<2) avvA.textContent='le linee sono uno schema';
+  var lb=oriz?[pad+4,pad,mb[0]-pad-30,H-2*pad]:[pad,mb[1]+mb[3]+14,W-2*pad,H-(mb[1]+mb[3]+14)-4];
+  var REG=[{n:'Metz',s:'incendiata alla vigilia di Pasqua',f:'passi della tappa',t:T.a1+2600,ic:'fuoco'},{n:'Orléans',s:'assediata, poi liberata da Ezio e Teodorico',f:'Gregorio di Tours II 7; Giordane 194-195',t:T.a2+1800,ic:'assedio'},
+    {n:'Campi Catalaunici',s:'«detti anche Mauriaci»: dove, non si sa',f:'Giordane 192; Gregorio II 7',t:T.a3+2200,ic:'scontro'}];
+  var gR=el('g',null,gA), righe=[], modo=lb[2]>=300&&lb[3]>=280?'righe':'scheda', sch=null, gChi=null;
+  if(modo==='righe'){
+    var y0=lb[1]+Math.max(0,(lb[3]-330)/2);
+    tx(gR,lb[0],y0+12,'ig-m-testata','DALLA PANNONIA ALLA GALLIA'); tx(gR,lb[0],y0+31,'ig-m-sotto','tre luoghi, tre fonti');
+    REG.forEach(function(r,ii){ var y=y0+52+ii*64, g=el('g',{'class':'ig-ad-riga'},el('g',{transform:'translate(0,'+r1(y)+')'},gR));
+      segnoCarta(g,r.ic,[lb[0]+13,26],.85).setAttribute('class','ig-sg vis '+r.ic); tx(g,lb[0]+36,16,'ig-ad-rn',r.n); var s=el('text',{x:r1(lb[0]+36),y:34,'class':'ig-ad-rs'},g); var ns=avvolgi(s,r.s,lb[2]-38,16);
+      tx(g,lb[0]+36,34+ns*16+1,'ig-m-cita-chi',r.f); el('line',{x1:r1(lb[0]),x2:r1(lb[0]+lb[2]),y1:58,y2:58,'class':'ig-m-filo'},g); righe.push(g); });
+    gChi=el('g',{'class':'ig-ad-num'},el('g',{transform:'translate(0,'+r1(y0+52+3*64+14)+')'},gR));
+    tx(gChi,lb[0],10,'ig-m-testata','CHI LO RACCONTA'); var ax0=lb[0]+6, ax1=lb[0]+lb[2]-6, X=function(a){ return ax0+(a-451)/(551-451)*(ax1-ax0); };
+    el('line',{x1:r1(ax0),x2:r1(ax1),y1:34,y2:34,'class':'ig-ad-ora-l'},gChi);
+    [[451,'451','',-6,22,'start'],[455,'Prospero','entro il 455',-4,58,'start'],[551,'Giordane','verso il 551',6,22,'end']].forEach(function(q,ii){ var x=X(q[0]); el('circle',{cx:r1(x),cy:34,r:ii?5:6.5,'class':ii?'ig-ca-chi-p':'ig-ca-chi-b'},gChi);
+      tx(gChi,x+q[3],q[4],'ig-ca-chi-n',q[1],q[5]); if(q[2]) tx(gChi,x+q[3],ii===1?q[4]+15:q[4]+36,'ig-ca-chi-t',q[2],q[5]); });
+  } else {
+    sch={g:el('g',{'class':'ig-ad-scheda'},gR)}; var sx=lb[0], sy=lb[1]+(oriz?8:2);
+    sch.n=tx(sch.g,sx,sy+18,'ig-ad-rn',''); sch.s=el('text',{x:r1(sx),y:r1(sy+40),'class':'ig-ad-rs'},sch.g); sch.f=tx(sch.g,sx,sy+40,'ig-m-cita-chi','');
+  }
+
+  /* ---------- B. la battaglia (schema) ---------- */
+  var gB=el('g',{'class':'ig-atto'},svg), FW=100, FH=62, fb, sb=null;
+  if(oriz&&!stretto){ var fh=H-2*pad, fw=fh*FW/FH; if(fw>W*.64){ fw=W*.64; fh=fw*FH/FW; } fb=[pad,(H-fh)/2,fw,fh]; sb=[pad+fw+28,pad+4,W-(pad+fw+28)-pad,H-2*pad-4]; }
+  else if(stretto){ var fw2=Math.min(W-2*pad,(H-2*pad)*FW/FH); fb=[(W-fw2)/2,(H-fw2*FH/FW)/2,fw2,fw2*FH/FW]; }
+  else { var fw3=W-2*pad; fb=[pad,pad,fw3,fw3*FH/FW]; sb=[pad,fb[1]+fb[3]+14,W-2*pad,H-(fb[1]+fb[3]+14)-6]; }
+  var ku=fb[2]/FW; function Fp(x,y){ return [fb[0]+x*ku, fb[1]+y*ku]; }
+  var cpB=el('clipPath',{id:'ig-ca-clipB'},defs); el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),rx:12},cpB);
+  var campo=el('g',{'clip-path':'url(#ig-ca-clipB)'},gB);
+  el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),fill:'url(#ig-ca-suolo)'},campo);
+  el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),fill:'url(#ig-ad-erba)'},campo);
+  var pz=el('pattern',{id:'ig-ad-erba',width:9,height:7,patternUnits:'userSpaceOnUse'},defs); el('path',{d:'M1 6 l1.4 -3.2 M4.5 6.5 l-.8 -3 M7 5.5 l1.2 -2.6',stroke:'rgba(110,110,60,.2)','stroke-width':.8,fill:'none'},pz);
+  /* la collina: «declivi tumore in editum collis excrescens» */
+  var HC=Fp(50,10);
+  el('path',{d:macchia(HC[0],HC[1],30*ku,11*ku,451,13),fill:'url(#ig-ca-colle)'},campo);
+  for(var l=0;l<4;l++) el('path',{d:macchia(HC[0]+l*.4*ku,HC[1]-l*.6*ku,ku*(27-l*6.2),ku*(9.6-l*2.1),460+l,12),'class':'ig-ad-quota'},campo);
+  var cima=el('path',{d:'M'+xy(Fp(41,7.5))+' Q'+xy(Fp(50,5.5))+' '+xy(Fp(59,7.6)),'class':'ig-ca-cresta'},campo);
+  var tCol=tx(campo,HC[0],HC[1]+8*ku,'ig-ad-et ig-ad-tag','la collina','middle');
+  /* il ruscello del campo */
+  var RU=[[2,58],[18,54],[34,56.5],[50,53.5],[66,56],[82,52.5],[99,55]].map(function(p){ return Fp(p[0],p[1]); }), ruD=curvaPezzi(RU).join(' ');
+  el('path',{d:ruD,'class':'ig-ca-rivo-b','stroke-width':r1(Math.max(4,1.3*ku))},campo); var rivo=el('path',{d:ruD,'class':'ig-ca-rivo','stroke-width':r1(Math.max(2,.6*ku))},campo);
+  var tRivo=tx(campo,Fp(50,50.5)[0],Fp(50,50.5)[1],'ig-ad-et ig-ad-tag scuro','«se si deve credere ai vecchi»: un torrente di sangue','middle'); if(largo(tRivo)>fb[2]-20) tRivo.textContent='il ruscello di sangue, «secondo i vecchi»';
+  /* il recinto dei carri di Attila */
+  var CR=[91,31], RCr=6.5, carriA=[]; for(i=0;i<22;i++){ var a2=i/22*Math.PI*2, q2=Fp(CR[0]+Math.cos(a2)*RCr,CR[1]+Math.sin(a2)*RCr), g=el('g',{'class':'ig-ad-carro vis',transform:'translate('+xy(q2)+') rotate('+r1(a2*180/Math.PI+90)+')'},campo);
+    el('rect',{x:r1(-.9*ku),y:r1(-.45*ku),width:r1(1.8*ku),height:r1(.9*ku),rx:r1(.2*ku),'class':'ig-ad-cassa'},g); carriA.push(g); }
+  var tRec=tx(campo,Fp(CR[0]-1,CR[1]-RCr-2.2)[0],Fp(CR[0]-1,CR[1]-RCr-2.2)[1],'ig-ad-et ig-ad-tag','i carri di Attila','middle');
+  /* i reparti */
+  function blocco(c,x,y,lato){ var g=el('g',{'class':'ig-ca-u'},campo); g.style.setProperty('--c',c); el('rect',{x:r1(-1.6*ku),y:r1(-1.4*ku),width:r1(3.2*ku),height:r1(2.8*ku),rx:r1(.3*ku)},g); return {g:g,b:[x,y],lato:lato}; }
+  var R=[], U=[], gruppi={};
+  function schiera(nome,c,xs,ys,lato){ gruppi[nome]=[]; xs.forEach(function(x){ ys.forEach(function(y){ var b=blocco(c,x,y,lato); b.n=nome; gruppi[nome].push(b); (lato<0?R:U).push(b); }); }); }
+  schiera('romani',CO.roma,[20,24.5],[15,19.5,24],-1); schiera('alani',CO.alani,[22,26.5],[29.5,33.5],-1); schiera('visigoti',CO.visigoti,[18.5,23,27.5],[38.5,43,47.5],-1);
+  schiera('gepidi',CO.gepidi,[72,76.5],[15,19.5,24],1); schiera('unni',CO.unni,[73,77.5],[29.5,33.5],1); schiera('ostrogoti',CO.ostrogoti,[71,75.5,80],[38.5,43,47.5],1);
+  var recAl=el('rect',{x:r1(Fp(19.6,0)[0]),y:r1(Fp(0,27.4)[1]),width:r1(9.3*ku),height:r1(8.2*ku),rx:r1(1*ku),'class':'ig-ca-chiuso'},campo);
+  var NOMI=[['romani','Ezio e i Romani',22,11.2],['alani','Alani di Sangibano',24.3,37],['visigoti','Visigoti di Teodorico',23,52.6],['gepidi','Gepidi di Ardarico',74.3,11.2],['unni','Attila e gli Unni',75.3,37],['ostrogoti','Ostrogoti',75.5,52.6]], etG={};
+  NOMI.forEach(function(n){ var q=Fp(n[2],n[3]); etG[n[0]]=tx(campo,q[0],q[1],'ig-ca-et ig-ad-tag',n[1],'middle'); etG[n[0]].style.fill=CO[n[0]]; });
+  function capo(c,nome,an,dy){ var g=el('g',{'class':'ig-ca-capo'},campo); g.style.setProperty('--c',c); el('circle',{r:r1(Math.max(4,1.25*ku))},g); var t=tx(g,an==='end'?-9:9,dy==null?4:dy,'ig-ca-capo-t',nome,an||'start'); return {g:g,t:t}; }
+  var kAt=capo(CO.unni,'Attila','start'), kTe=capo(CO.visigoti,'Teodorico','end'), kTo=capo(CO.visigoti,'Torismondo','end',-5), kEz=capo(CO.roma,'Ezio','end',15);
+  var croce=el('g',{'class':'ig-ca-croce'},campo); var rcr=Math.max(7,1.7*ku); el('circle',{r:r1(rcr),'class':'ig-ca-croce-f'},croce); el('path',{d:'M0 '+r1(-rcr*.66)+' V'+r1(rcr*.66)+' M'+r1(-rcr*.42)+' '+r1(-rcr*.2)+' H'+r1(rcr*.42),'class':'ig-ca-croce-l'},croce); tx(croce,-rcr-5,4,'ig-ca-capo-t viola','Teodorico muore','end');
+  var mischia=[[49.5,17],[49.5,31.5],[49.5,43]].map(function(p){ return segnoCarta(campo,'scontro',Fp(p[0],p[1]),Math.max(.6,ku*.11)); });
+  var vetta=[]; for(i=0;i<3;i++){ var gw=el('g',{'class':'ig-ad-u goti cav'},campo); el('path',{d:'M'+r1(1.8*ku)+' 0 L'+r1(-1.4*ku)+' '+r1(-1.2*ku)+' L'+r1(-.75*ku)+' 0 L'+r1(-1.4*ku)+' '+r1(1.2*ku)+' Z'},gw); vetta.push(gw); }
+  var notte=el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),'class':'ig-ad-buio',opacity:0},campo);
+  el('rect',{x:r1(fb[0]),y:r1(fb[1]),width:r1(fb[2]),height:r1(fb[3]),rx:12,'class':'ig-m-cornice'},gB);
+  var tSch=tx(gB,fb[0]+fb[2]-10,fb[1]+fb[3]-9,'ig-m-schema','schema: orientamento e distanze non sono nelle fonti','end'); if(largo(tSch)>fb[2]-20) tSch.textContent='schema';
+  var gP=el('g',null,gB), ora=null, quote=[];
+  if(sb){
+    var dD=tx(gP,sb[0],sb[1]+(oriz?24:20),'ig-m-data','451 · CAMPI CATALAUNICI'); dD.style.fontSize=(oriz?24:19)+'px'; while(largo(dD)>sb[2]&&parseFloat(dD.style.fontSize)>13) dD.style.fontSize=(parseFloat(dD.style.fontSize)-1)+'px';
+    var oy=sb[1]+(oriz?42:32); ora=orologio(gP,sb[0],oy,sb[2],[['nona ora',0],['notte',.5],['il giorno dopo',1]]);
+    var legY=oy+(oriz?60:50), lw=sb[2]/2, LEG=[['romani','Romani'],['unni','Unni'],['visigoti','Visigoti'],['ostrogoti','Ostrogoti'],['alani','Alani'],['gepidi','Gepidi']];
+    LEG.forEach(function(q,ii){ var x=sb[0]+(ii%2)*lw, y=legY+Math.floor(ii/2)*18, g=el('g',null,gP); el('rect',{x:r1(x),y:r1(y-9),width:14,height:9,rx:1.5,style:'fill:'+CO[q[0]]},g); tx(g,x+21,y,'ig-m-leg-t',q[1]); });
+    var qy=legY+(oriz?46:46), qh=sb[1]+sb[3]-qy, fsq=oriz?(sb[2]>=320?20:17):15.5;
+    [["«verso la nona ora del giorno»","Giordane 196",T.b1+800],["«perché lo chiudesse in mezzo gente fidata»","Giordane 197: Sangibano e gli Alani",T.b2+1600],["«Attila al centro, con i più forti dei suoi»","Giordane 198",T.b3+600],
+     ["«saliti per primi, respinsero facilmente gli Unni che arrivavano»","Giordane 201",T.b4+2400],["«se si deve credere ai vecchi», il ruscello del campo divenne un torrente di sangue","Giordane 208",T.b5+2600],
+     ["«si chiuse dentro il recinto del campo, che aveva cinto di carri»","Giordane 210",T.b6+1200]].forEach(function(d){
+      var c=citazione(gP,sb[0],qy,sb[2],d[0],d[1],fsq); if(c._h>qh+4){ c.remove(); return; } quote.push({g:c,t:d[2]}); });
+  } else {
+    var box=el('g',{'class':'ig-ad-sovr'},gP), rb=el('rect',{x:r1(fb[0]+4),y:r1(fb[1]+5),height:44,rx:8,'class':'ig-m-sovr'},box), dS=tx(box,fb[0]+12,fb[1]+22,'ig-m-data','451'); dS.style.fontSize='17px';
+    ora={solo:tx(box,fb[0]+12,fb[1]+40,'ig-ad-ora-t','nona ora')}; rb.setAttribute('width','118');
+  }
+
+  /* ---------- C. il recinto dei carri e il rogo di selle ---------- */
+  var gC=el('g',{'class':'ig-atto'},svg), tv=[pad,pad,W-2*pad,H-2*pad];
+  var cpC=el('clipPath',{id:'ig-ca-clipC'},defs); el('rect',{x:r1(tv[0]),y:r1(tv[1]),width:r1(tv[2]),height:r1(tv[3]),rx:14},cpC);
+  var tav=el('g',{'clip-path':'url(#ig-ca-clipC)'},gC), oriz2=tv[2]/tv[3]>1.2, oz=tv[1]+tv[3]*(oriz2?.36:.3);
+  el('rect',{x:r1(tv[0]),y:r1(tv[1]),width:r1(tv[2]),height:r1(tv[3]),fill:'url(#ig-ca-cielo)'},tav);
+  var Rst=caso(451); for(i=0;i<40;i++) el('circle',{cx:r1(tv[0]+Rst()*tv[2]),cy:r1(tv[1]+Rst()*(oz-tv[1])),r:r1(.5+Rst()*1),'class':'ig-m-stella'},tav);
+  el('rect',{x:r1(tv[0]),y:r1(oz),width:r1(tv[2]),height:r1(tv[1]+tv[3]-oz),fill:'url(#ig-ca-terra)'},tav);
+  /* all'orizzonte, i campi di Goti e Romani */
+  for(i=0;i<18;i++){ var hx=tv[0]+tv[2]*(.03+i*.055)+Rst()*10, hs=5+Rst()*6, tg=el('path',{d:'M'+r1(hx-hs)+' '+r1(oz)+' L'+r1(hx)+' '+r1(oz-hs*1.1)+' L'+r1(hx+hs)+' '+r1(oz)+' Z','class':'ig-ca-tenda'},tav);
+    if(i%3===1){ var fc=el('circle',{cx:r1(hx+hs*1.6),cy:r1(oz-1.5),r:2.2,'class':'ig-ca-fuoco-lontano'},tav); fc.style.animationDelay=(-Rst()*2).toFixed(2)+'s'; } }
+  var cx=tv[0]+tv[2]*(oriz2?.6:.5), cy=oz+(tv[1]+tv[3]-oz)*(oriz2?.5:.42), rx=Math.min(tv[2]*(oriz2?.3:.44),(tv[1]+tv[3]-oz)*1.5), ry=rx*(oriz2?.3:.5);
+  var brace=el('ellipse',{cx:r1(cx),cy:r1(cy-ry*.2),rx:r1(rx*.55),ry:r1(ry*1.3),fill:'url(#ig-ca-brace)','class':'ig-ca-brace',opacity:0},tav);
+  function carroLato(p,s,dietro){ var g=el('g',{'class':'ig-ca-carro'+(dietro?' dietro':''),transform:'translate('+xy(p)+') scale('+r1(s*100)/100+')'},tav);
+    el('path',{d:'M-14 -2 L14 -2 L12 -12 L-12 -12 Z','class':'ig-ca-cassa'},g); el('path',{d:'M-11 -12 Q0 -24 11 -12','class':'ig-ca-telo'},g);
+    [-8,8].forEach(function(x){ el('circle',{cx:x,cy:0,r:4.4,'class':'ig-ca-ruota'},g); el('circle',{cx:x,cy:0,r:1,'class':'ig-ca-mozzo'},g); }); return g; }
+  var NC=24, cDietro=[], cDavanti=[]; for(i=0;i<NC;i++){ var a=i/NC*Math.PI*2, p=[cx+Math.cos(a)*rx,cy+Math.sin(a)*ry], d=Math.sin(a)<0; (d?cDietro:cDavanti).push({p:p,s:(.72+.28*(Math.sin(a)+1)/2)*Math.max(.7,rx/220),y:p[1],d:d}); }
+  cDietro.sort(function(a,b){ return a.y-b.y; }).forEach(function(c){ carroLato(c.p,c.s,true); });
+  /* il rogo di selle, al centro */
+  var sel=[], sS=Math.max(.7,rx/(oriz2?260:170)), righeS=[5,4,3,2,1];
+  righeS.forEach(function(n,ri){ for(var k=0;k<n;k++){ var sx=cx+(k-(n-1)/2)*20*sS, sy=cy-ri*9*sS, g=el('g',{'class':'ig-ca-sella'},el('g',{transform:'translate('+r1(sx)+','+r1(sy)+') scale('+r1(sS*100)/100+')'},tav));
+    el('path',{d:'M-11 0 Q-10 -8 -3 -7 Q0 -6 3 -7 Q10 -8 11 0 Q6 3 0 2 Q-6 3 -11 0 Z','class':'ig-ca-sella-c'},g); el('path',{d:'M-9 -1 Q0 -4 9 -1','class':'ig-ca-sella-l'},g); sel.push(g); } });
+  var attila=el('g',{'class':'ig-ca-attila',transform:'translate('+r1(cx+62*sS)+','+r1(cy+4)+')'},tav); omino(attila,Math.max(26,40*sS),'vis ig-ca-ombra-oro'); tx(attila,0,16,'ig-ca-et-n vis','Attila','middle');
+  var arcieri=[]; [[-.62,-.15],[.66,-.1],[-.4,.42],[.42,.45],[-.82,.28],[.84,.3]].forEach(function(q,ii){ var p=[cx+q[0]*rx,cy+q[1]*ry], g=el('g',{transform:'translate('+xy(p)+')'},tav), om=omino(g,Math.max(16,24*sS),'vis ig-ca-ombra');
+    var dir=q[0]<0?-1:1, fr=el('line',{x1:0,y1:r1(-14*sS),x2:r1(dir*18*sS),y2:r1(-20*sS),'class':'ig-ca-dardo'},g); fr.style.animationDelay=(-ii*.31).toFixed(2)+'s'; arcieri.push(g); });
+  cDavanti.sort(function(a,b){ return a.y-b.y; }).forEach(function(c){ carroLato(c.p,c.s,false); });
+  var trombe=[]; [[-.95,-.6],[.95,-.7]].forEach(function(q,ii){ var p=[cx+q[0]*rx,cy+q[1]*ry-10], g=el('g',{'class':'ig-ca-tromba',transform:'translate('+xy(p)+')'},tav);
+    for(var k=0;k<3;k++){ var ar=el('path',{d:'M0 '+r1(-8-k*7)+' A'+r1(8+k*7)+' '+r1(8+k*7)+' 0 0 '+(q[0]<0?0:1)+' 0 '+r1(8+k*7),'class':'ig-ca-onda'},g); ar.style.animationDelay=(k*.35+ii*.2).toFixed(2)+'s'; ar.setAttribute('transform','scale('+(q[0]<0?-1:1)+',1)'); } trombe.push(g); });
+  var tRogo=tx(tav,cx,cy-righeS.length*9*sS-16,'ig-ca-et-n','rogo di selle: «si racconta»','middle');
+  /* il corteo di Teodorico, in primo piano */
+  var corteo=el('g',{'class':'ig-ca-corteo'},tav), ycort=tv[1]+tv[3]-(oriz2?22:18), hcort=Math.max(18,Math.min(30,tv[3]*.07)), xc0=tv[0]+tv[2]*(oriz2?.36:.62);
+  for(i=0;i<6;i++){ var om3=omino(corteo,hcort,'vis ig-ca-ombra-oro'); om3.setAttribute('transform','translate('+r1(xc0+i*hcort*.9)+','+r1(ycort)+')'); }
+  el('rect',{x:r1(xc0+hcort*.5),y:r1(ycort-hcort*.78),width:r1(hcort*3.2),height:r1(hcort*.16),rx:2,'class':'ig-ca-bara'},corteo);
+  [0,4].forEach(function(k){ var tx0=xc0+k*hcort*.9+hcort*.15; el('line',{x1:r1(tx0),y1:r1(ycort-hcort*.65),x2:r1(tx0+3),y2:r1(ycort-hcort*1.3),'class':'ig-ca-torcia'},corteo); el('circle',{cx:r1(tx0+3),cy:r1(ycort-hcort*1.38),r:3,'class':'ig-ca-fiammella'},corteo); });
+  var tCort=tx(corteo,xc0-8,ycort-hcort*.3,'ig-ca-et-n','verso Tolosa','end');
+  /* le parole di Giordane, in alto a sinistra (sul telefono in alto, su tutta la larghezza) */
+  var gQ=el('g',null,gC), qx=tv[0]+18, qw=oriz2?Math.min(tv[2]*(stretto?.52:.38),360):tv[2]-36, fq=Math.max(15,oriz2?Math.min(22,qw/14):Math.min(18,qw/16));
+  function scritta(y,q,chi,t){ var g=el('g',{'class':'ig-ca-scritta'},gQ), te=el('text',{x:r1(qx),y:r1(y),'class':'ig-ca-q'},g); te.style.fontSize=fq+'px'; var n=avvolgi(te,q,qw,fq*1.2);
+    tx(g,qx,y+(n-1)*fq*1.2+fq*.95,'ig-ca-q-chi',chi); return {g:g,t:t}; }
+  var SQ=[scritta(tv[1]+30,'«come un leone stretto dalle lance dei cacciatori, che si aggira davanti alla tana»','Giordane 212',T.c1+900),
+    scritta(tv[1]+30,'«si racconta che avesse costruito un rogo di selle di cavallo»','Giordane 213 · equinis sellis construxisse pyram',T.c2+800),
+    scritta(tv[1]+30,'«lo portarono via con i canti, sotto gli occhi dei nemici»','Giordane 214',T.c3+600)];
+
+  /* ---------- D. i morti di Giordane ---------- */
+  var gD=el('g',{'class':'ig-atto'},svg), nb, ab2;
+  if(oriz&&!stretto){ nb=[pad+6,pad,Math.min(W*.46,460),H-2*pad]; ab2=[nb[0]+nb[2]+30,pad,W-(nb[0]+nb[2]+30)-pad,H-2*pad]; }
+  else { nb=[pad+(stretto?6:0),pad,W-2*pad-(stretto?12:0),stretto?186:Math.min(H*.5,240)]; ab2=[pad,nb[1]+nb[3]+8,W-2*pad,H-(nb[1]+nb[3]+8)-pad]; }
+  var yN=nb[1]+(oriz&&!stretto?Math.max(24,nb[3]*.16):22), fN=oriz&&!stretto?64:46;
+  var tN0=tx(gD,nb[0],yN,'ig-m-testata','I MORTI, SECONDO GIORDANE'), cN=tx(gD,nb[0],yN+fN+4,'ig-ca-num','0'); cN.style.fontSize=fN+'px';
+  var tN1=el('text',{x:r1(nb[0]),y:r1(yN+fN+30),'class':'ig-ad-conto-t ig-f'},gD); if(stretto) tN1.style.fontSize='15.5px'; var n1=avvolgi(tN1,'più 15.000 Franchi e Gepidi uccisi la notte prima',nb[2],stretto?17:20);
+  var bollo=el('g',{'class':'ig-ca-bollo'},gD), yb=yN+fN+30+n1*(stretto?17:20)+(stretto?10:18), bt=tx(bollo,nb[0]+10,yb+17,'ig-ca-bollo-t','CIFRA DELLA FONTE · NON CREDIBILE COME CONTO');
+  if(largo(bt)>nb[2]-20){ bt.textContent='CIFRA DELLA FONTE'; } var bw3=largo(bt)+20; el('rect',{x:r1(nb[0]),y:r1(yb),width:r1(bw3),height:26,rx:4,'class':'ig-ca-bollo-r'},bollo).parentNode.insertBefore(bollo.lastChild,bollo.firstChild);
+  var tN2=el('text',{x:r1(nb[0]),y:r1(yb+50),'class':'ig-ad-conto-n ig-f'},gD); avvolgi(tN2,'«clxv milia caesa referuntur»: «si dice» che ne siano caduti 165.000. Giordane scrive verso il 551, un secolo dopo.',nb[2],stretto?16:18); if(stretto) tN2.style.fontSize='12.5px';
+  /* la linea del tempo: chi scrive, e quando */
+  var gL=el('g',{'class':'ig-ca-linea'},gD), lx0=ab2[0]+10, lx1=ab2[0]+ab2[2]-10, ly=ab2[1]+ab2[3]*(oriz&&!stretto?.56:.5), XL=function(a){ return lx0+(a-445)/(560-445)*(lx1-lx0); };
+  el('line',{x1:r1(lx0),x2:r1(lx1),y1:r1(ly),y2:r1(ly),'class':'ig-ca-asse'},gL); [450,500,550].forEach(function(a){ el('line',{x1:r1(XL(a)),x2:r1(XL(a)),y1:r1(ly-4),y2:r1(ly+4),'class':'ig-ca-asse'},gL); tx(gL,XL(a),ly+20,'ig-asse',String(a),'middle'); });
+  var arcoT=el('path',{d:'M'+r1(XL(455))+' '+r1(ly-8)+' Q'+r1((XL(455)+XL(551))/2)+' '+r1(ly-ab2[3]*.22)+' '+r1(XL(551))+' '+r1(ly-8),'class':'ig-ca-arco'},gL); scopri(arcoT);
+  var tSec=tx(gL,(XL(455)+XL(551))/2,ly+44,'ig-ca-sec','un secolo','middle');
+  function evento(a,nome,sotto,cl,su){ var g=el('g',{'class':'ig-ca-ev '+cl},gL), x=XL(a); el('circle',{cx:r1(x),cy:r1(ly),r:cl==='batt'?8:6},g);
+    var an=a>520?'end':a<460?'start':'middle', xt=x+(an==='start'?-8:an==='end'?8:0), t2=el('text',{x:r1(xt),y:0,'class':'ig-ca-ev-t','text-anchor':an},g), n=avvolgi(t2,sotto,Math.min(220,ab2[2]*.62),15);
+    var y1=su?ly-22-(n-1)*15-20:ly+42; t2.setAttribute('y',r1(y1+18)); [].forEach.call(t2.childNodes,function(c){ c.setAttribute('x',r1(xt)); }); tx(g,xt,y1,'ig-ca-ev-n',nome,an); return g; }
+  var eB=evento(451,'451','la battaglia','batt',false), eP=evento(455,'Prospero','in quegli anni: nessun numero','pros',true), eG=evento(551,'Giordane','un secolo dopo: 165.000','gior',false);
+
+  /* ---------- la regia ---------- */
+  S.passo=function(t){
+    /* A */
+    cls(gA,'vis',t>=300&&t<T.b1-300);
+    segui(r1a,E.io(fase(t,T.a1+200,T.a1+2000))); cls(reno,'vis',t>=T.a1+1600); segui(r1b,E.io(fase(t,T.a1+2000,T.a1+2700))); cls(sME,'vis',t>=T.a1+2700);
+    segui(r2a,E.io(fase(t,T.a2,T.a2+1700))); segui(r2e,E.io(fase(t,T.a2+1500,T.a2+3300))); segui(r2t,E.io(fase(t,T.a2+1700,T.a2+3500))); cls(sOR,'vis',t>=T.a2+1500&&t<T.a3+600);
+    segui(r3,E.io(fase(t,T.a3+200,T.a3+2000))); cls(zonaC,'vis',t>=T.a3+1800); cls(sCC,'vis',t>=T.a3+2400);
+    [pME,pOR,pAR,pTO,pMZ].forEach(function(p){ cls(p,'vis',t>=400); }); cls(avvA,'vis',t>=T.a1+800);
+    var ri=-1; REG.forEach(function(r,ii){ if(t>=r.t) ri=ii; });
+    if(modo==='righe'){ righe.forEach(function(r,ii){ cls(r,'vis',ii<=ri); cls(r,'ora',ii===ri); }); cls(gChi,'vis',t>=T.a3+3200); }
+    else if(sch){ cls(sch.g,'vis',ri>=0); if(sch.ri!==ri&&ri>=0){ sch.ri=ri; var r=REG[ri]; scrivi(sch.n,r.n); sch.s.textContent=''; var ns=avvolgi(sch.s,r.s,lb[2],16); sch.f.setAttribute('y',r1(+sch.s.getAttribute('y')+ns*16+2)); scrivi(sch.f,r.f); } }
+    /* B */
+    cls(gB,'vis',t>=T.b1-400&&t<T.c1-300);
+    var avR=E.io(fase(t,T.b5,T.b5+2200)), avU=E.io(fase(t,T.b5+200,T.b5+2400)), vis6=E.io(fase(t,T.b6,T.b6+2400)), riU=E.io(fase(t,T.b6+600,T.b6+3200));
+    R.forEach(function(b,ii){ var e=E.out(fase(t,T.b2+ii*70,T.b2+900+ii*70)), x=b.b[0]-(1-e)*6+avR*18+(b.n==='visigoti'?vis6*9:0), y=b.b[1]; fissa(b.g,'transform','translate('+xy(Fp(x,y))+')'); cls(b.g,'vis',e>0); cls(b.g,'scuro',t>=T.b6+2600&&b.n!=='visigoti'); });
+    U.forEach(function(b,ii){ var e=E.out(fase(t,T.b3+ii*70,T.b3+900+ii*70)), x=b.b[0]+(1-e)*6-avU*17, y=b.b[1]; if(b.n==='unni'){ x=lerp(x,CR[0]-2,riU); y=lerp(y,CR[1]+(b.b[1]-31.5)*.6,riU); } else x+=riU*5;
+      fissa(b.g,'transform','translate('+xy(Fp(x,y))+')'); cls(b.g,'vis',e>0&&!(b.n==='unni'&&riU>=1)); });
+    cls(recAl,'vis',t>=T.b2+1500&&t<T.b5); fissa(recAl,'transform','');
+    ['romani','alani','visigoti'].forEach(function(n){ cls(etG[n],'vis',t>=T.b2+600&&t<T.b4); }); ['gepidi','unni','ostrogoti'].forEach(function(n){ cls(etG[n],'vis',t>=T.b3+600&&t<T.b4); });
+    cls(tCol,'vis',t>=T.b1+400&&t<T.b2); cls(tRec,'vis',t>=T.b1+800&&t<T.b2||t>=T.b6+1600&&t<T.c1); cls(cima,'vis',t>=T.b4);
+    var pA=pista([[T.b3,82.5,31.5],[T.b6+600,82.5-avU*17+3,31.5],[T.b6+2600,CR[0],CR[1]]],t); if(t<T.b6+600) pA=[82.5-avU*17*.6,31.5]; fissa(kAt.g,'transform','translate('+xy(Fp(pA[0],pA[1]))+')'); cls(kAt.g,'vis',t>=T.b3+800);
+    var pT=[23+avR*18,43]; fissa(kTe.g,'transform','translate('+xy(Fp(pT[0],pT[1]))+')'); cls(kTe.g,'vis',t>=T.b2+900&&t<T.b5+2200); fissa(croce,'transform','translate('+xy(Fp(pT[0],pT[1]))+')'); cls(croce,'vis',t>=T.b5+2200&&t<T.b6+3000); mischia.forEach(function(m,ii){ cls(m,'vis',t>=T.b5+1700+ii*200&&t<T.b6+1600); });
+    var pTo=pista([[T.b4+200,27,37],[T.b4+2000,46,8.4],[T.b5,46,8.4],[T.b5+1600,40,30],[T.b6+2400,50,40],[T.b6+4400,CR[0]-4,CR[1]+8]],t); fissa(kTo.g,'transform','translate('+xy(Fp(pTo[0],pTo[1]))+')'); cls(kTo.g,'vis',t>=T.b4); scrivi(kTo.t,t>=T.b6+4200?'Torismondo, ferito':'Torismondo');
+    var pEz=pista([[T.b4+200,24,22],[T.b4+2000,43,9.6],[T.b5,43,9.6],[T.b5+1600,38,20],[T.b6+2400,58,24],[T.b6+3600,46,30],[T.b6+5200,20,26]],t); fissa(kEz.g,'transform','translate('+xy(Fp(pEz[0],pEz[1]))+')'); cls(kEz.g,'vis',t>=T.b4); scrivi(kEz.t,t>=T.b6+4600?'Ezio, fra gli scudi':'Ezio');
+    vetta.forEach(function(v,ii){ var p=pista([[T.b4+500,70,22+ii*2],[T.b4+2400,57+ii*1.6,9+ii*1.4],[T.b4+2700,57+ii*1.6,9+ii*1.4],[T.b4+4200,68,19+ii*2]],t), p2=pista([[T.b4+500,70,22+ii*2],[T.b4+2400,57+ii*1.6,9+ii*1.4],[T.b4+2700,57+ii*1.6,9+ii*1.4],[T.b4+4200,68,19+ii*2]],t-80);
+      var an=Math.hypot(p[0]-p2[0],p[1]-p2[1])>.01?Math.atan2(p[1]-p2[1],p[0]-p2[0])*180/Math.PI:200; fissa(v,'transform','translate('+xy(Fp(p[0],p[1]))+') rotate('+r1(an)+')'); cls(v,'vis',t>=T.b4+400&&t<T.b4+4400); });
+    cls(rivo,'sangue',t>=T.b5+2600); cls(tRivo,'vis',t>=T.b5+2800&&t<T.b6+600);
+    fissa(notte,'opacity',r1(E.io(fase(t,T.b6+1800,T.b6+4400))*.55*100)/100);
+    var fo=t<T.b6+1800?0:t<T.b6+4400?lerp(0,.5,E.io(fase(t,T.b6+1800,T.b6+4400))):lerp(.5,1,E.io(fase(t,T.b6+5000,T.b6+6800)));
+    if(ora.set) ora.set(fo,fo>.3&&fo<.8); else scrivi(ora.solo,fo<.3?'nona ora':fo<.8?'notte':'il giorno dopo');
+    quote.forEach(function(q,ii){ cls(q.g,'vis',t>=q.t&&(ii===quote.length-1||t<quote[ii+1].t)); });
+    /* C */
+    cls(gC,'vis',t>=T.c1-300&&t<T.d1-300);
+    arcieri.forEach(function(a){ cls(a,'vis',t>=T.c1+600); }); trombe.forEach(function(a){ cls(a,'vis',t>=T.c1+300&&t<T.c3); });
+    sel.forEach(function(s,ii){ cls(s,'vis',t>=T.c2+600+ii*170); }); cls(tRogo,'vis',t>=T.c2+3200); cls(attila,'vis',t>=T.c1+200);
+    fissa(brace,'opacity',r1(E.io(fase(t,T.c2+1200,T.c2+3400))*(.7+.15*Math.sin(t/300))*100)/100);
+    var pc=E.io(fase(t,T.c3+400,T.c3+5000)); fissa(corteo,'transform',pc>0?'translate('+r1(-pc*tv[2]*.22)+',0)':''); cls(corteo,'vis',t>=T.c3+200);
+    SQ.forEach(function(q,ii){ cls(q.g,'vis',t>=q.t&&(ii===SQ.length-1||t<SQ[ii+1].t)); });
+    /* D */
+    cls(gD,'vis',t>=T.d1-300); var fn=E.out(fase(t,T.d1+400,T.d1+2600)); scrivi(cN,num(Math.round(165000*fn/1000)*1000));
+    cls(tN1,'vis',t>=T.d1+2400); cls(bollo,'vis',t>=T.d1+3000); cls(tN2,'vis',t>=T.d1+3800);
+    cls(eB,'vis',t>=T.d1+4400); cls(eP,'vis',t>=T.d1+5200); cls(eG,'vis',t>=T.d1+6000); traccia(arcoT,E.io(fase(t,T.d1+5400,T.d1+6800))); cls(tSec,'vis',t>=T.d1+6800); cls(gL,'vis',t>=T.d1+4000);
+  };
+  S.dura=T.fin;
+  var bt=[T.a1,T.a2,T.a3,T.b1,T.b2,T.b3,T.b4,T.b5,T.b6,T.c1,T.c2,T.c3,T.d1];
+  S.battute=CATALAUNICI.fasi.map(function(f,ii){ return {t:bt[ii],anno:f[0],testo:f[1]}; });
+}
+
+/* una nave vista dall'alto (lunghezza L in pixel), con la vela; la prua guarda verso +x */
+function naveAlto(p,L,cl){ var g=el('g',{'class':'ig-cb-nave'+(cl?' '+cl:'')},p), w=L*.3;
+  el('path',{d:'M'+r1(L/2)+' 0 Q'+r1(L*.18)+' '+r1(-w/2)+' '+r1(-L/2)+' '+r1(-w*.4)+' L'+r1(-L/2)+' '+r1(w*.4)+' Q'+r1(L*.18)+' '+r1(w/2)+' '+r1(L/2)+' 0 Z','class':'ig-cb-scafo'},g);
+  el('path',{d:'M'+r1(-L*.05)+' '+r1(-w*.85)+' Q'+r1(L*.08)+' 0 '+r1(-L*.05)+' '+r1(w*.85),'class':'ig-cb-vela'},g); return g; }
+
+/* ======================================================================
+   13. Capo Bon (468)
+   Aggiunta il 23 novembre 2026. Quadri: la flotta e i tre fronti sulla carta della pagina; Mercurio e i cinque giorni; i brulotti; Giovanni; l'esito. Fonte letta: Procopio, Guerre III 6
+   nella traduzione inglese di Dewing (LacusCurtius, pagina 3B). 6, 1: Leone raccoglie un esercito «they say… about one hundred thousand men» e una flotta «from the whole of the eastern
+   Mediterranean»; 6, 2: «thirteen hundred centenaria were expended by him to no purpose» (nota 10 di Dewing: «130,000 Roman pounds»), comandante Basilisco, fratello della moglie Berina;
+   6, 8: Marcelliano «bade him go to the island of Sardinia… he drove out the Vandals»; 6, 9: Eraclio «sent from Byzantium to Tripolis… leaving his ships there, led his army on foot toward
+   Carthage»; 6, 10: Basilisco «put in at a town distant from Carthage no less than two hundred and eighty stades», Mercurio, dal tempio di Ermes; 6, 10-11: preso subito Cartagine, se non avesse
+   esitato, «whether caused by cowardice or treachery»; 6, 11: la flotta «such as the Romans were said never to have had before»; 6, 12: Genserico riempie le navi, «but not all, for some he kept in
+   readiness empty, and they were the ships which sailed most swiftly»; 6, 13-15: la tregua di cinque giorni, l'oro mandato di nascosto, il vento favorevole atteso; 6, 17-18: «taking in tow the boats…
+   they set fire to the boats… when their sails were bellied by the wind, and let them go against the Roman fleet»; 6, 19-21: il fuoco che passa da una nave all'altra, «a great din that rivalled
+   the noise caused by the wind and the roaring of the flames», le pertiche, i Vandali che speronano e affondano; 6, 22-24: Giovanni, Genzone, «that John would never come under the hands of dogs»;
+   6, 25-26: Eraclio torna a casa, Marcelliano ucciso a tradimento, Basilisco supplice in Santa Sofia. Procopio non dà il numero delle navi. Schemi: le rotte (Procopio non le dice), la posizione
+   delle navi, la direzione del vento, l'ordine in cui il fuoco passa da una nave all'altra. Che Mercurio sia presso Capo Bon è l'identificazione della carta della pagina (SCENE_CARTA[468]). */
+var CAPOBON={ titolo:"Capo Bon", sotto:"468: la grande flotta contro i Vandali e i brulotti di Genserico, secondo Procopio",
+  fasi:[["468","Per punire i Vandali, l'imperatore d'Oriente Leone raccoglie navi da tutto il Mediterraneo orientale. Secondo Procopio, si diceva che l'esercito contasse circa centomila uomini."],
+    ["468","Si diceva anche che Leone avesse speso milletrecento «centenari», e invano. Sono cifre riferite da Procopio, che scrive circa ottant'anni dopo; quante fossero le navi, non lo dice."],
+    ["468","La guerra ha tre fronti. Marcelliano toglie la Sardegna ai Vandali. Eraclio, partito da Costantinopoli, sbarca a Tripoli, batte i Vandali e marcia a piedi verso Cartagine. Basilisco, cognato di Leone, guida la flotta."],
+    ["Mercurio","Basilisco getta l'ancora con tutta la flotta a Mercurio, un luogo che prende il nome da un antico tempio di Ermes, a non meno di 280 stadi da Cartagine."],
+    ["Mercurio","Secondo Procopio, se fosse andato subito su Cartagine l'avrebbe presa al primo assalto: Genserico aveva paura. Ma Basilisco esita, per viltà o per tradimento."],
+    ["Cinque giorni","Genserico arma i suoi e riempie le navi, ma ne tiene alcune vuote, le più veloci. Chiede a Basilisco cinque giorni di tregua. Si raccontava che gli avesse mandato anche molto oro, di nascosto."],
+    ["Cinque giorni","Basilisco accetta e resta fermo. Genserico aspetta il vento favorevole, e il vento arriva."],
+    ["Il fuoco","I Vandali spiegano le vele e rimorchiano le barche vuote. Arrivati vicino, le incendiano e le lasciano andare, con le vele gonfie di vento, contro la flotta romana."],
+    ["Il fuoco","Le navi romane sono tante e vicine: il fuoco passa dall'una all'altra. Soldati e marinai gridano e respingono con le pertiche i brulotti e le loro stesse navi."],
+    ["Il fuoco","Intanto arrivano i Vandali: speronano, affondano, catturano chi tenta di fuggire e ne prendono le armi."],
+    ["Giovanni","Giovanni, un generale di Basilisco estraneo al tradimento, combatte sul ponte della sua nave. Quando sta per essere presa, si getta in mare con tutte le armi. Genzone, figlio di Genserico, gli promette salva la vita: Giovanni risponde che non cadrà mai «nelle mani dei cani»."],
+    ["Dopo","Basilisco torna a Costantinopoli e si rifugia supplice in Santa Sofia. Eraclio torna a casa; Marcelliano è ucciso a tradimento da un altro ufficiale. L'Occidente perde l'ultima occasione di riprendere l'Africa."]],
+  fonte:"Procopio, Guerre III 6, nella traduzione inglese di Dewing (LacusCurtius), con la sua nota sui centenari («130.000 libbre romane»). Procopio scrive a Costantinopoli verso il 550, circa ottant'anni dopo; l'esercito di centomila uomini e la spesa di milletrecento centenari sono cifre che riferisce come voci («si dice»), e il numero delle navi non lo dà. Non ci è giunto un racconto contemporaneo della sconfitta: Idazio registra soltanto la partenza della flotta. Le rotte sono uno schema: Procopio non dice la strada della flotta, di Eraclio e di Marcelliano. Che Mercurio sia presso Capo Bon è l'identificazione della carta di questa pagina. La disposizione delle navi, la direzione del vento e l'ordine in cui il fuoco passa da una nave all'altra sono disegni schematici." };
+function disegnaCapobon(svg,S,W,H){
+  var G=window.RM_MAPPA; if(!G||!G.citta) return;
+  var oriz=W/H>=1.15, stretto=oriz&&W<700, pad=oriz?20:12, defs=el('defs',null,svg), i, j;
+  var T={a1:1400,a2:6800,a3:12000,b1:18400,b2:24000,b3:29600,b4:35600,c1:41000,c2:47000,c3:53000,d1:59000,d2:66000}; T.fin=T.d2+8000;
+  var CO={roma:'#9A2F2A',vandali:'#6E5634',era:'#8A5A9E',marc:'#2F6E7A'};
+  grad(defs,'ig-cb-mare',[[0,'#2C4F5E'],[1,'#1B3542']]); grad(defs,'ig-cb-alba',[[0,'#F3E2C4'],[.55,'#E9C99A'],[1,'#9DB8BE']]);
+  grad(defs,'ig-cb-vampa',[[0,'#FFD27A',.85],[.45,'#F08A2E',.4],[1,'#F08A2E',0]],{cx:'50%',cy:'50%',r:'50%'});
+  grad(defs,'ig-cb-onda',[[0,'#7FA6B3'],[1,'#4D7684']]);
+
+  /* ---------- A. la flotta e i tre fronti ---------- */
+  var gA=el('g',{'class':'ig-atto'},svg), V=[392,282,362,282], mb;
+  if(oriz){ var mh=H-2*pad, mw=mh*V[2]/V[3]; if(mw>W*(stretto?.6:.58)){ mw=W*(stretto?.6:.58); mh=mw*V[3]/V[2]; } mb=[W-pad-mw,(H-mh)/2,mw,mh]; }
+  else { var mw2=W-2*pad, mh2=Math.min(mw2*V[3]/V[2],H*.6); mw2=mh2*V[2]/V[3]; mb=[(W-mw2)/2,pad,mw2,mh2]; }
+  var F=finestra(gA,defs,'ig-cb-clipA',V,mb,{stati:statiDi(468)}), sA=F.sopra, MP=F.M, Cq=F.C;
+  var CP=Cq('costantinopoli'), CT=Cq('cartagine'), CB=Cq('capobon'), TR=Cq('tripoli'); if(!CP||!CT||!CB||!TR) return;
+  var giro=['costantinopoli','marmara','propontide','gallipoli','lampsaco','ellesponto','abido','dardanelli','egeo','cicladi','cicladisud','malea','matapan','ionio','canale','capobon'].map(Cq).filter(function(q){ return q; });
+  var rF=rotta(sA,defs,giro,{c:CO.roma,schema:true,nome:'Basilisco',dove:.62,dy:-10});
+  var rM=rotta(sA,defs,[[537,318],[552,338],[572,365],[580,392],[562,425],[522,463],[498,473],[470,452],[452,432],[436,414],[428,406]].map(MP),{c:CO.marc,schema:true,nome:'Marcelliano',dove:.12,dx:9,an:'start'});
+  var rE=rotta(sA,defs,[[697.9,448.9],[662,492],[610,512],[545,528],[500,540],[486,544]].map(MP),{c:CO.era,schema:true,nome:'Eraclio',dove:.5,dy:16});
+  var rE2=rotta(sA,defs,[[484,545],[462,545],[440,535],[425,515],[430,490],[432,474]].map(MP),{c:CO.era,nome:'a piedi',dove:.5,dx:8,an:'start'});
+  var pCP=luogo(sA,CP,'Costantinopoli',-6,17,'end'), pCT=luogo(sA,CT,'Cartagine',2,-10,'middle','grande'), pTR=luogo(sA,TR,'Tripoli',9,13,'start'), pSA=luogo(sA,MP([416.7,388.5]),'Sardegna',9,4,'start','tenue');
+  var mCB=el('g',{'class':'ig-f'},sA); el('circle',{cx:r1(CB[0]),cy:r1(CB[1]),r:9,'class':'ig-m-onda vis'},mCB);
+  var avvA=el('text',{x:r1(mb[0]+10),y:r1(mb[1]+18),'class':'ig-m-avverte su-carta'},gA); avvA.textContent='le rotte sono uno schema: Procopio non le dice'; if(largo(avvA)>mb[2]-20) avvA.textContent='rotte: uno schema';
+  var lb=oriz?[pad+4,pad,mb[0]-pad-30,H-2*pad]:[pad,mb[1]+mb[3]+14,W-2*pad,H-(mb[1]+mb[3]+14)-4];
+  var gR=el('g',null,gA), largoR=lb[2]>=300&&lb[3]>=280, blocchi=[];
+  function blocco(y,num,et,nota,t){ var g=el('g',{'class':'ig-ad-num'},el('g',{transform:'translate(0,'+r1(y)+')'},gR)), c=tx(g,lb[0],largoR?40:30,'ig-cb-num','0'); c.style.fontSize=(largoR?44:30)+'px';
+    var sotto=lb[2]<260, dx=sotto?0:largoR?(num>9999?190:150):(num>9999?124:90), e=el('text',{x:r1(lb[0]+dx),y:sotto?52:largoR?20:12,'class':'ig-cb-num-t'},g), ne=avvolgi(e,et,lb[2]-dx,16); if(sotto) nota=null;
+    if(nota){ var n=el('text',{x:r1(lb[0]+dx),y:r1((largoR?20:12)+ne*16+2),'class':'ig-cb-num-n'},g); avvolgi(n,nota,lb[2]-dx,14); } return {g:g,c:c,t:t}; }
+  if(largoR){ var y0=lb[1]+Math.max(0,(lb[3]-330)/2); tx(gR,lb[0],y0+12,'ig-m-testata','LA FLOTTA DELLE DUE CORTI'); tx(gR,lb[0],y0+31,'ig-m-sotto','Procopio, Guerre III 6, verso il 550');
+    blocchi.push(blocco(y0+52,100000,'uomini, «si diceva»','la cifra è una voce che Procopio riferisce',T.a1+400)); blocchi.push(blocco(y0+132,1300,'«centenari» spesi, e «invano»','130.000 libbre romane, secondo la nota di Dewing',T.a2+300));
+    var gTre=el('g',{'class':'ig-ad-num'},el('g',{transform:'translate(0,'+r1(y0+222)+')'},gR)); tx(gTre,lb[0],12,'ig-m-testata','TRE FRONTI');
+    [['Basilisco','la flotta, verso Cartagine',CO.roma],['Marcelliano','la Sardegna',CO.marc],['Eraclio','da Tripoli, a piedi',CO.era]].forEach(function(q,ii){ var y=34+ii*22; el('circle',{cx:r1(lb[0]+6),cy:r1(y-4),r:5,style:'fill:'+q[2]},gTre); tx(gTre,lb[0]+18,y,'ig-cb-fr-n',q[0]); tx(gTre,lb[0]+128,y,'ig-cb-fr-t',q[1]); });
+    blocchi.push({g:gTre,t:T.a3}); }
+  else { blocchi.push(blocco(lb[1]+(oriz?4:0),100000,'uomini, «si diceva»',null,T.a1+400)); blocchi.push(blocco(lb[1]+(oriz?4:0)+(oriz?Math.min(lb[2]<260?96:110,lb[3]/2.6):54),1300,'«centenari» spesi, «invano»',oriz?'130.000 libbre romane (nota di Dewing)':null,T.a2+300)); }
+  var navNota=tx(gR,lb[0],lb[1]+lb[3]-6,'ig-m-avverte','Quante fossero le navi, Procopio non lo dice.'); if(largo(navNota)>lb[2]) navNota.textContent='Le navi: Procopio non dice quante.';
+
+  /* ---------- B. Mercurio e i cinque giorni ---------- */
+  var gB=el('g',{'class':'ig-atto'},svg), VB=[420,434,46,34], bb;
+  if(oriz){ var bh=H-2*pad, bw=bh*VB[2]/VB[3]; if(bw>W*(stretto?.5:.6)){ bw=W*(stretto?.5:.6); bh=bw*VB[3]/VB[2]; } bb=[W-pad-bw,(H-bh)/2,bw,bh]; }
+  else { var bw2=W-2*pad, bh2=Math.min(bw2*VB[3]/VB[2],H*.56); bw2=bh2*VB[2]/VB[3]; bb=[(W-bw2)/2,pad,bw2,bh2]; }
+  var FB=finestra(gB,defs,'ig-cb-clipB',VB,bb,{rilievo:false,stati:statiDi(468)}), sB=FB.sopra, MB=FB.M, kB=FB.k;
+  var CTb=FB.C('cartagine'), CBb=FB.C('capobon');
+  var pCTb=luogo(sB,CTb,'Cartagine',-9,-7,'end','grande'), tem=el('g',{'class':'ig-v-luogo vis',transform:'translate('+xy(MB([446.2,456.2]))+')'},sB);
+  el('path',{d:'M-7 -1 L0 -7 L7 -1 Z M-6 0 H6 V7 H-6 Z','class':'ig-cb-tempio'},tem); tx(tem,-10,-4,'ig-v-nome','Mercurio','end'); tx(tem,-10,10,'ig-cb-tempio-t','il tempio di Ermes','end');
+  var dist=el('g',{'class':'ig-f'},sB), dA=MB([436,457.4]), dB=MB([445.6,456.8]); el('path',{d:'M'+xy(dA)+' Q'+xy([(dA[0]+dB[0])/2,(dA[1]+dB[1])/2+26])+' '+xy(dB),'class':'ig-cb-dist'},dist);
+  var tDist=tx(dist,(dA[0]+dB[0])/2,(dA[1]+dB[1])/2+30,'ig-cb-dist-t','non meno di 280 stadi','middle');
+  /* le navi romane all'ancora e quelle dei Vandali nel porto: solo dove la carta è mare */
+  function inMare(c,rx,ry,n,seme){ var R=caso(seme), out=[], prove=0; while(out.length<n&&prove<4000){ prove++; var a=R()*Math.PI*2, d=Math.sqrt(R()), p=[c[0]+Math.cos(a)*rx*d,c[1]+Math.sin(a)*ry*d];
+      if(FB.inTerra(p)||FB.inTerra([p[0]+.6,p[1]])||FB.inTerra([p[0]-.6,p[1]])) continue; var ok=true; for(var q=0;q<out.length;q++) if(Math.hypot(out[q][0]-p[0],out[q][1]-p[1])<.95) ok=false; if(ok) out.push(p); } return out; }
+  var Lb=Math.max(9,kB*1.15), flottaB=inMare([453.5,446.5],7,5.5,46,468).map(function(p){ var o=el('g',{transform:'translate('+xy(MB(p))+') rotate(195)'},sB); return {g:naveAlto(o,Lb,'roma'),p:p}; });
+  var vandB=inMare([437.5,450],3.2,2.4,12,439).map(function(p,ii){ var o=el('g',{transform:'translate('+xy(MB(p))+') rotate(15)'},sB); return naveAlto(o,Lb*(ii<4?.8:1),ii<4?'vuota':'vandali'); });
+  var vento=el('g',{'class':'ig-cb-vento'},sB); for(i=0;i<9;i++){ var v0=MB([424+(i%3)*4,441+i*2.6]), lv=kB*11; var vl=el('path',{d:'M'+xy(v0)+' q'+r1(lv*.35)+' '+r1(-kB*1.2)+' '+r1(lv*.7)+' 0 t'+r1(lv*.3)+' 0','class':'ig-cb-vento-l scuro'},vento); vl.style.animationDelay=(-i*.37).toFixed(2)+'s'; }
+  var tVento=tx(sB,MB([428,439])[0],MB([428,439])[1],'ig-cb-et','il vento, favorevole ai Vandali (direzione: schema)','start'); if(largo(tVento)>bb[2]*.8) tVento.textContent='il vento (schema)';
+  var tFlB=tx(sB,MB([453.5,438.5])[0],MB([453.5,438.5])[1],'ig-cb-et','la flotta di Basilisco','middle'), tVaB=tx(sB,MB([436,447])[0],MB([436,447])[1],'ig-cb-et','i Vandali','middle');
+  var sbB=oriz?[pad+4,pad,bb[0]-pad-30,H-2*pad]:[pad,bb[1]+bb[3]+12,W-2*pad,H-(bb[1]+bb[3]+12)-4];
+  var gPB=el('g',null,gB), cal=[], gOro;
+  var tM1=tx(gPB,sbB[0],sbB[1]+(oriz?26:20),'ig-m-data','MERCURIO'); tM1.style.fontSize=(oriz?26:19)+'px';
+  var tM2=el('text',{x:r1(sbB[0]),y:r1(sbB[1]+(oriz?48:38)),'class':'ig-m-sotto'},gPB); var nm2=avvolgi(tM2,'«non meno di 280 stadi» da Cartagine',sbB[2],17);
+  var yc=sbB[1]+(oriz?48:38)+nm2*17+(oriz?26:16), gCal=el('g',{'class':'ig-ad-num'},gPB), cw=Math.min(52,(sbB[2]-4*8)/5);
+  var tTr=tx(gCal,sbB[0],yc,'ig-m-testata','LA TREGUA: CINQUE GIORNI'); if(largo(tTr)>sbB[2]) tTr.textContent='CINQUE GIORNI';
+  for(i=0;i<5;i++){ var gx=sbB[0]+i*(cw+8), gq=el('g',{'class':'ig-cb-giorno'},gCal); el('rect',{x:r1(gx),y:r1(yc+10),width:r1(cw),height:r1(cw*.8),rx:6,'class':'ig-cb-giorno-r'},gq); tx(gq,gx+cw/2,yc+10+cw*.52,'ig-cb-giorno-n',['I','II','III','IV','V'][i],'middle'); cal.push(gq); }
+  var yo=yc+10+cw*.8+(oriz?28:18); gOro=el('g',{'class':'ig-ad-num'},gPB); for(i=0;i<3;i++) el('ellipse',{cx:r1(sbB[0]+9+i*5),cy:r1(yo-4-i*3),rx:9,ry:3.4,'class':'ig-cb-moneta'},gOro);
+  var tOro=el('text',{x:r1(sbB[0]+34),y:r1(yo-4),'class':'ig-cb-num-t'},gOro), nOro=avvolgi(tOro,'oro mandato di nascosto, «si diceva»',sbB[2]-34,15);
+  var gVen=el('g',{'class':'ig-ad-num'},gPB), yv=yo+(oriz?32:24)+(nOro-1)*15; for(i=0;i<3;i++){ var wl=el('path',{d:'M'+r1(sbB[0])+' '+r1(yv-8+i*6)+' q8 -4 16 0 t16 0','class':'ig-cb-vento-l fermo'},gVen); }
+  tx(gVen,sbB[0]+40,yv,'ig-cb-num-t','e il vento arriva');
+
+  /* ---------- C. i brulotti (schema dall'alto) ---------- */
+  var gC=el('g',{'class':'ig-atto'},svg), tv=[pad,pad,W-2*pad,H-2*pad], oc=tv[2]/tv[3]>1.1;
+  var cpC=el('clipPath',{id:'ig-cb-clipC'},defs); el('rect',{x:r1(tv[0]),y:r1(tv[1]),width:r1(tv[2]),height:r1(tv[3]),rx:14},cpC);
+  var mare=el('g',{'clip-path':'url(#ig-cb-clipC)'},gC); el('rect',{x:r1(tv[0]),y:r1(tv[1]),width:r1(tv[2]),height:r1(tv[3]),fill:'url(#ig-cb-mare)'},mare);
+  var Ro=caso(46); for(i=0;i<70;i++){ var ox=tv[0]+Ro()*tv[2], oy=tv[1]+Ro()*tv[3], ol=8+Ro()*16; el('path',{d:'M'+r1(ox)+' '+r1(oy)+' q'+r1(ol/2)+' -2.5 '+r1(ol)+' 0','class':'ig-cb-onda'},mare); }
+  var Ln=Math.max(18,Math.min(oc?tv[2]/22:tv[2]/11,40)), flotta=[], fx0=tv[0]+tv[2]*(oc?.46:.18), fx1=tv[0]+tv[2]*(oc?.96:.94), fy0=tv[1]+tv[3]*(oc?.14:.44), fy1=tv[1]+tv[3]*(oc?.9:.94);
+  var Rf=caso(4680), colsF=Math.max(4,Math.floor((fx1-fx0)/(Ln*1.25))), rowsF=Math.max(4,Math.floor((fy1-fy0)/(Ln*.62)));
+  for(i=0;i<colsF;i++) for(j=0;j<rowsF;j++){ var px=fx0+(i+.5)*(fx1-fx0)/colsF+(Rf()-.5)*Ln*.3+(j%2?Ln*.3:0), py=fy0+(j+.5)*(fy1-fy0)/rowsF+(Rf()-.5)*Ln*.12;
+    var o=el('g',{transform:'translate('+r1(px)+','+r1(py)+') rotate('+r1(180+(Rf()-.5)*14)+')'},mare), n=naveAlto(o,Ln,'roma vis'), fu=el('g',{'class':'ig-cb-fuoco'},o);
+    el('circle',{r:r1(Ln*.55),fill:'url(#ig-cb-vampa)'},fu); el('path',{d:FIAMMA,transform:'scale('+r1(Ln/26*100)/100+')','class':'ig-ad-fiamma grande'},fu); el('path',{d:FIAMMA,transform:'translate(0,1) scale('+r1(Ln/48*100)/100+')','class':'ig-ad-fiamma cuore'},fu);
+    for(var k=0;k<2;k++){ var fm=el('circle',{cx:0,cy:0,r:r1(Ln*.22),'class':'ig-cb-fumo'},fu); fm.style.animationDelay=(-(i*.4+j*.7+k*1.1)%2.6).toFixed(2)+'s'; }
+    flotta.push({o:o,n:n,fu:fu,p:[px,py],t:Infinity,sink:false}); }
+  /* i brulotti: barche rimorchiate dalle navi vandale, poi lasciate andare in fiamme */
+  var nB=oc?5:4, brul=[], vand=[], frontX=fx0+Ln*.2;
+  var davanti=flotta.slice().sort(function(a,b){ return a.p[0]-b.p[0]; }).slice(0,Math.max(nB*2,8));
+  for(i=0;i<nB;i++){ var yy=fy0+(i+.5)*(fy1-fy0)/nB, tgt=davanti.reduce(function(b,f){ return Math.abs(f.p[1]-yy)<Math.abs(b.p[1]-yy)?f:b; },davanti[0]);
+    var ov=el('g',null,mare), nv=naveAlto(ov,Ln*1.05,'vandali vis'), ob=el('g',null,mare), nbt=naveAlto(ob,Ln*.7,'vuota vis'), fb2=el('g',{'class':'ig-cb-fuoco'},ob); el('circle',{r:r1(Ln*.5),fill:'url(#ig-cb-vampa)'},fb2); el('path',{d:FIAMMA,transform:'scale('+r1(Ln/30*100)/100+')','class':'ig-ad-fiamma grande'},fb2);
+    var cavo=el('line',{'class':'ig-cb-cavo'},mare); tgt.t=Math.min(tgt.t,T.c1+4600+i*180); brul.push({ov:ov,ob:ob,fb:fb2,cavo:cavo,y:yy,x1:tgt.p[0]-Ln*.55,tgt:tgt}); }
+  /* il fuoco passa da una nave all'altra: chi è vicino prende fuoco dopo un poco (schema) */
+  var Rp=caso(66), cambiato=true; while(cambiato){ cambiato=false; flotta.forEach(function(a){ if(a.t===Infinity) return; flotta.forEach(function(b){ var d=Math.hypot(a.p[0]-b.p[0],a.p[1]-b.p[1]); if(d<Ln*1.35){ var tb=a.t+420+d/Ln*260+((a.p[0]*7+b.p[1]*3)%5)*70; if(tb<b.t){ b.t=tb; cambiato=true; } } }); }); }
+  flotta.forEach(function(f){ if(f.t>T.c3+600) f.t=Infinity; });
+  var rami=flotta.filter(function(f){ return f.t===Infinity; }).sort(function(a,b){ return a.p[1]-b.p[1]; }), assalti=[];
+  for(i=0;i<Math.min(4,rami.length);i++){ var bersaglio=rami[Math.floor((i+.5)*rami.length/Math.min(4,rami.length))], ov2=el('g',null,mare); naveAlto(ov2,Ln*1.05,'vandali vis'); assalti.push({o:ov2,b:bersaglio,da:[tv[0]+tv[2]*(oc?.2:.05)+i*6,bersaglio.p[1]+(i%2?-1:1)*Ln*.6]}); }
+  var pertiche=[]; davanti.slice(0,6).forEach(function(f,ii){ var l=el('line',{x1:r1(f.p[0]-Ln*.2),y1:r1(f.p[1]),x2:r1(f.p[0]-Ln*.95),y2:r1(f.p[1]+(ii%2?-1:1)*Ln*.25),'class':'ig-cb-pertica'},mare); l.style.animationDelay=(-ii*.23).toFixed(2)+'s'; pertiche.push(l); });
+  var ventoC=el('g',{'class':'ig-cb-vento'},mare); for(i=0;i<10;i++){ var vy=tv[1]+tv[3]*(.08+i*.09), vx=tv[0]+tv[2]*(.03+(i%3)*.08); var vl2=el('path',{d:'M'+r1(vx)+' '+r1(vy)+' q'+r1(tv[2]*.05)+' -6 '+r1(tv[2]*.1)+' 0 t'+r1(tv[2]*.08)+' 0','class':'ig-cb-vento-l'},ventoC); vl2.style.animationDelay=(-i*.3).toFixed(2)+'s'; }
+  var schC=tx(gC,tv[0]+tv[2]-12,tv[1]+tv[3]-10,'ig-m-schema chiaro','schema: navi e fuoco disegnati, non contati','end'); if(largo(schC)>tv[2]-24) schC.textContent='schema';
+  var gQ=el('g',null,gC), qx=tv[0]+16, qw=oc?Math.min(tv[2]*.38,330):tv[2]-32, fqc=Math.max(15,Math.min(oc?21:18,qw/14));
+  function scrittaC(q,chi,t){ var g=el('g',{'class':'ig-ca-scritta'},gQ), y=tv[1]+28, te=el('text',{x:r1(qx),y:r1(y),'class':'ig-ca-q'},g); te.style.fontSize=fqc+'px'; var n=avvolgi(te,q,qw,fqc*1.2);
+    var bgh=(n-1)*fqc*1.2+fqc*.95+22; var bg=el('rect',{x:r1(qx-10),y:r1(y-fqc-6),width:r1(qw+20),height:r1(bgh+12),rx:10,'class':'ig-cb-q-fondo'},g); g.insertBefore(bg,te);
+    tx(g,qx,y+(n-1)*fqc*1.2+fqc*.95,'ig-ca-q-chi',chi); return {g:g,t:t}; }
+  var SQ=[scrittaC('«con le vele gonfie di vento, le lasciarono andare contro la flotta romana»','Procopio III 6, 18',T.c1+2600),scrittaC('«un grande frastuono, che gareggiava con il vento e il ruggito delle fiamme»','Procopio III 6, 20',T.c2+500),
+    scrittaC('«i Vandali speronavano e affondavano le navi»','Procopio III 6, 21',T.c3+400)];
+
+  /* ---------- D1. Giovanni ---------- */
+  var gD=el('g',{'class':'ig-atto'},svg), dv=[pad,pad,W-2*pad,H-2*pad], aff=dv[2]/dv[3]>1.25, ib=aff?[dv[0],dv[1],dv[2]*.56,dv[3]]:[dv[0],dv[1],dv[2],dv[3]*.6];
+  var cpD=el('clipPath',{id:'ig-cb-clipD'},defs); el('rect',{x:r1(ib[0]),y:r1(ib[1]),width:r1(ib[2]),height:r1(ib[3]),rx:14},cpD);
+  var scena=el('g',{'clip-path':'url(#ig-cb-clipD)'},gD), oriz0=ib[1]+ib[3]*.46;
+  el('rect',{x:r1(ib[0]),y:r1(ib[1]),width:r1(ib[2]),height:r1(ib[3]),fill:'url(#ig-cb-alba)'},scena);
+  for(i=0;i<5;i++){ var fy=ib[1]+ib[3]*(.12+i*.05); el('ellipse',{cx:r1(ib[0]+ib[2]*(.15+i*.18)),cy:r1(fy),rx:r1(ib[2]*.12),ry:r1(ib[3]*.05),'class':'ig-cb-fumo-lontano'},scena); }
+  el('rect',{x:r1(ib[0]),y:r1(oriz0),width:r1(ib[2]),height:r1(ib[1]+ib[3]-oriz0),fill:'url(#ig-cb-onda)'},scena);
+  for(i=0;i<5;i++){ var wy=oriz0+12+i*(ib[1]+ib[3]-oriz0)/5, wd='M'+r1(ib[0])+' '+r1(wy); for(var wx=ib[0];wx<ib[0]+ib[2]+30;wx+=24) wd+=' q6 -3 12 0 t12 0'; el('path',{d:wd,'class':'ig-onda',style:'opacity:'+(.3-i*.04)},scena); }
+  var sc=Math.min(ib[2]/420,ib[3]/260), nx=ib[0]+ib[2]*.42, ny=oriz0+ib[3]*.2;
+  function naveLato(p,x,y,s,cl){ var g=el('g',{'class':'ig-cb-lato '+cl,transform:'translate('+r1(x)+','+r1(y)+') scale('+r1(s*100)/100+')'},p);
+    el('path',{d:'M-120 -20 L120 -20 Q112 14 70 20 L-80 20 Q-116 12 -120 -20 Z','class':'ig-cb-l-scafo'},g); el('path',{d:'M-118 -20 H118','class':'ig-cb-l-ponte'},g);
+    for(var r=-90;r<=90;r+=18) el('line',{x1:r,y1:12,x2:r-10,y2:34,'class':'ig-cb-l-remo'},g);
+    el('line',{x1:0,y1:-20,x2:0,y2:-150,'class':'ig-cb-l-albero'},g); el('path',{d:'M-56 -140 Q0 -120 56 -140 L52 -60 Q0 -44 -52 -60 Z','class':'ig-cb-l-vela'},g); return g; }
+  var naveG=naveLato(scena,nx,ny,sc,'roma'), naveV=naveLato(scena,ib[0]+ib[2]*.86,ny+10*sc,sc*.7,'vandali'), naveV2=naveLato(scena,ib[0]+ib[2]*.08,ny+16*sc,sc*.6,'vandali');
+  var gio=el('g',null,scena), gioI=omino(gio,48*sc,'vis porpora'), genz=el('g',{transform:'translate('+r1(ib[0]+ib[2]*.86-30*sc)+','+r1(ny+10*sc-14*sc)+')'},scena); omino(genz,34*sc,'vis ig-cb-ombra');
+  el('path',{d:'M0 '+r1(-24*sc)+' l'+r1(-14*sc)+' '+r1(-10*sc),'class':'ig-cb-braccio'},genz);
+  var tGio=tx(scena,nx-20*sc,ny-20*sc-58*sc,'ig-cb-et scuro','Giovanni','middle'), tGen=tx(scena,ib[0]+ib[2]*.86-30*sc,ny-36*sc-30*sc,'ig-cb-et scuro','Genzone','middle');
+  var salto=el('path',{d:'M'+r1(nx-20*sc)+' '+r1(ny-20*sc)+' Q'+r1(nx-120*sc)+' '+r1(ny-120*sc)+' '+r1(nx-150*sc)+' '+r1(oriz0+ib[3]*.32),'class':'ig-ad-traiett'},scena), saltoL=lungo(salto);
+  var spruzzo=el('ellipse',{cx:r1(nx-150*sc),cy:r1(oriz0+ib[3]*.32),rx:r1(22*sc),ry:r1(6*sc),'class':'ig-m-spruzzo'},scena);
+  var tbx=aff?[ib[0]+ib[2]+28,dv[1],dv[2]-ib[2]-28,dv[3]]:[dv[0],ib[1]+ib[3]+16,dv[2],dv[3]-ib[3]-16], gTq=el('g',{'class':'ig-ca-scritta'},gD), fqd=aff?Math.min(30,tbx[2]/11):Math.min(22,W/16);
+  var tqd=el('text',{x:r1(tbx[0]),y:r1(tbx[1]+(aff?tbx[3]*.3:fqd)),'class':'ig-cb-giov'},gTq); tqd.style.fontSize=r1(fqd)+'px'; var nqd=avvolgi(tqd,'«Giovanni non cadrà mai nelle mani dei cani»',tbx[2],fqd*1.15);
+  var ytq=+tqd.getAttribute('y')+(nqd-1)*fqd*1.15; tx(gTq,tbx[0],ytq+fqd*.9,'ig-m-cita-chi','Procopio, Guerre III 6, 24');
+  var tqn=el('text',{x:r1(tbx[0]),y:r1(ytq+fqd*.9+24),'class':'ig-cb-giov-n'},gTq); if(aff||tbx[3]>110) avvolgi(tqn,'Genzone, figlio di Genserico, gli aveva promesso salva la vita.',tbx[2],18);
+
+  /* ---------- D2. come finisce ---------- */
+  var gE=el('g',{'class':'ig-atto'},svg), eb=[pad+(oriz?10:0),pad,oriz?W*(stretto?.58:.46):W-2*pad,H-2*pad];
+  var yE=eb[1]+(oriz&&!stretto?Math.max(26,eb[3]*.12):18), fE=oriz&&!stretto?24:stretto?16:19;
+  tx(gE,eb[0],yE,'ig-m-testata','COME FINISCE');
+  var ESITO=[['sofia','Basilisco','torna a Costantinopoli e si rifugia supplice in Santa Sofia'],['casa','Eraclio','torna a casa'],['croce','Marcelliano','è ucciso a tradimento da un altro ufficiale']], righeE=[], ye=yE+(oriz?20:14);
+  ESITO.forEach(function(q){ var g=el('g',{'class':'ig-ad-num'},el('g',{transform:'translate(0,'+r1(ye)+')'},gE)), ic=el('g',{transform:'translate('+r1(eb[0]+14)+',20)','class':'ig-cb-ic'},g);
+    if(q[0]==='sofia') el('path',{d:'M-11 8 V0 A11 9 0 0 1 11 0 V8 Z M-13 8 H13'},ic); else if(q[0]==='casa') el('path',{d:'M-10 8 V-1 L0 -9 L10 -1 V8 Z'},ic); else el('path',{d:'M0 -10 V10 M-6 -4 H6',fill:'none','stroke-width':2.6},ic);
+    tx(g,eb[0]+38,16,'ig-cb-es-n',q[1]); var t=el('text',{x:r1(eb[0]+38),y:36,'class':'ig-cb-es-t'},g), n=avvolgi(t,q[2],eb[2]-40,17); righeE.push(g); ye+=36+n*17+(oriz&&!stretto?10:2); });
+  var fin=el('g',{'class':'ig-ca-scritta'},gE), tF=el('text',{x:r1(eb[0]),y:r1(ye+fE+6),'class':'ig-cb-fine'},fin); tF.style.fontSize=fE+'px'; var nF=avvolgi(tF,"L'Occidente perde l'ultima occasione di riprendere l'Africa.",eb[2],fE*1.2);
+  tx(fin,eb[0],ye+fE+6+(nF-1)*fE*1.2+22,'ig-m-cita-chi','dalla tappa del 468 di questa pagina');
+  /* accanto (o sotto), la carta: l'Africa resta ai Vandali */
+  var yFin=ye+fE+6+(nF-1)*fE*1.2+40, VE=[388,412,190,160], eb2=null;
+  if(oriz){ var ew=W-pad-(eb[0]+eb[2]+24), eh=Math.min(H-2*pad,ew*VE[3]/VE[2]); ew=eh*VE[2]/VE[3]; eb2=[W-pad-ew,(H-eh)/2,ew,eh]; }
+  else if(H-pad-yFin>120){ var eh2=H-pad-yFin, ew2=Math.min(W-2*pad,eh2*VE[2]/VE[3]); eh2=ew2*VE[3]/VE[2]; eb2=[(W-ew2)/2,H-pad-eh2,ew2,eh2]; }
+  var gMap=null; if(eb2){ gMap=el('g',{'class':'ig-ca-scritta'},gE); var FE=finestra(gMap,defs,'ig-cb-clipE',VE,eb2,{stati:statiDi(468)}), cE=FE.C('cartagine');
+    if(FE.reg.africa) cls(FE.reg.africa,'acceso',true); if(cE) luogo(FE.sopra,cE,'Cartagine',0,-9,'middle','grande').setAttribute('class','ig-v-luogo vis grande');
+    var tAf=tx(FE.sopra,eb2[0]+eb2[2]/2,eb2[1]+eb2[3]-14,'ig-cb-et vis scuro',"l'Africa resta ai Vandali",'middle'); }
+
+  /* ---------- la regia ---------- */
+  S.passo=function(t){
+    /* A */
+    cls(gA,'vis',t>=300&&t<T.b1-300);
+    segui(rF,E.io(fase(t,T.a1+300,T.a1+4400))); segui(rM,E.io(fase(t,T.a3+200,T.a3+2600))); segui(rE,E.io(fase(t,T.a3+800,T.a3+3000))); segui(rE2,E.io(fase(t,T.a3+3000,T.a3+4400)));
+    if(F.reg.sardegna){ cls(F.reg.sardegna,'acceso',t>=T.a3+2600); fissa(F.reg.sardegna,'style','fill:'+(t>=T.a3+2600?COLORE_STATO.roma:COLORE_STATO['regno:vandali'])); }
+    [pCP,pCT,pTR,pSA].forEach(function(p){ cls(p,'vis',t>=400); }); cls(mCB,'vis',t>=T.a1+4200); cls(avvA,'vis',t>=T.a1+800);
+    blocchi.forEach(function(b,ii){ cls(b.g,'vis',t>=b.t); if(b.c){ var f=E.out(fase(t,b.t+200,b.t+2200)); scrivi(b.c,num(Math.round((ii?1300:100000)*f/(ii?10:1000))*(ii?10:1000))); } });
+    cls(navNota,'vis',t>=T.a2+1600); if(!largoR) cls(navNota,'vis',t>=T.a2+1600&&lb[3]>110);
+    /* B */
+    cls(gB,'vis',t>=T.b1-400&&t<T.c1-300); cls(pCTb,'vis',true);
+    flottaB.forEach(function(f,ii){ cls(f.g,'vis',t>=T.b1+300+ii*28); cls(f.g,'ferma',t>=T.b2); }); vandB.forEach(function(v,ii){ cls(v,'vis',t>=T.b3+400+ii*120); });
+    cls(dist,'vis',t>=T.b1+1600); cls(tFlB,'vis',t>=T.b1+1400&&t<T.b4); cls(tVaB,'vis',t>=T.b3+800); cls(vento,'vis',t>=T.b4+1200); cls(tVento,'vis',t>=T.b4+1600);
+    cls(gCal,'vis',t>=T.b3+200); cal.forEach(function(c,ii){ cls(c,'pieno',t>=T.b3+1200+ii*900); }); cls(gOro,'vis',t>=T.b3+3200); cls(gVen,'vis',t>=T.b4+1400);
+    /* C */
+    cls(gC,'vis',t>=T.c1-300&&t<T.d1-300);
+    var vv=E.io(fase(t,T.c1+200,T.c1+2600)), lib=E.io(fase(t,T.c1+2600,T.c1+4600));
+    brul.forEach(function(b,ii){ var xs=tv[0]-Ln*2+vv*(b.x1-Ln*2.2-(tv[0]-Ln*2)), yb=b.y, xb=lerp(xs+Ln*1.3,b.x1,lib), ret=E.io(fase(t,T.c1+3000,T.c1+5400));
+      fissa(b.ov,'transform','translate('+r1(xs-ret*Ln*1.4)+','+r1(yb+ret*Ln*.4*(ii%2?1:-1))+')'+(ret>0?' rotate('+r1(ret*(ii%2?140:-140))+')':''));
+      fissa(b.ob,'transform','translate('+r1(xb)+','+r1(yb)+')'); cls(b.fb,'vis',t>=T.c1+2600); cls(b.ob,'giu',t>=T.c1+6400);
+      fissa(b.cavo,'x1',r1(xs+Ln*.5)); fissa(b.cavo,'y1',r1(yb)); fissa(b.cavo,'x2',r1(xb-Ln*.35)); fissa(b.cavo,'y2',r1(yb)); cls(b.cavo,'vis',t>=T.c1&&t<T.c1+2600); cls(b.ov,'giu',t<T.c1||t>=T.c1+6200); });
+    flotta.forEach(function(f){ var a=t>=f.t, bru=t>=f.t+3200; cls(f.n,'arde',a&&!bru); cls(f.n,'bruciata',bru); cls(f.fu,'vis',a&&t<f.t+5200); cls(f.o,'giu',t>=f.t+5600||f.sink&&t>=f.sink); });
+    assalti.forEach(function(a,ii){ var t0=T.c3+300+ii*400, e=E.io(fase(t,t0,t0+2200)), x=lerp(a.da[0],a.b.p[0]-Ln*.6,e), y=lerp(a.da[1],a.b.p[1],e); fissa(a.o,'transform','translate('+r1(x)+','+r1(y)+')'); cls(a.o,'giu',t<t0);
+      a.b.sink=t0+2400; cls(a.b.n,'speronata',t>=t0+2200); });
+    pertiche.forEach(function(p){ cls(p,'vis',t>=T.c2&&t<T.c3+1500); }); cls(ventoC,'vis',t>=T.c1);
+    SQ.forEach(function(q,ii){ cls(q.g,'vis',t>=q.t&&(ii===SQ.length-1||t<SQ[ii+1].t)); });
+    /* D1 */
+    cls(gD,'vis',t>=T.d1-300&&t<T.d2-300);
+    var sl=E.io(fase(t,T.d1+2600,T.d1+3800)), qs=sl>0?puntoA(salto,saltoL*sl):[nx-20*sc,ny-20*sc];
+    fissa(gio,'transform','translate('+xy(qs)+')'+(sl>0?' rotate('+r1(-sl*120)+')':''))
+    fissa(gioI,'transform',sl>0?'':'scale('+(Math.sin(t/260)>0?1:-1)+',1)'); cls(gio,'giu',t>=T.d1+4000); cls(spruzzo,'vis',t>=T.d1+3700&&t<T.d1+5600);
+    cls(tGio,'vis',t>=T.d1+300&&t<T.d1+2800); cls(tGen,'vis',t>=T.d1+1000); cls(gTq,'vis',t>=T.d1+4200);
+    /* D2 */
+    cls(gE,'vis',t>=T.d2-300); righeE.forEach(function(r,ii){ cls(r,'vis',t>=T.d2+400+ii*900); }); cls(fin,'vis',t>=T.d2+3400); if(gMap) cls(gMap,'vis',t>=T.d2+4200);
+  };
+  S.dura=T.fin;
+  var bt=[T.a1,T.a2,T.a3,T.b1,T.b2,T.b3,T.b4,T.c1,T.c2,T.c3,T.d1,T.d2];
+  S.battute=CAPOBON.fasi.map(function(f,ii){ return {t:bt[ii],anno:f[0],testo:f[1]}; });
+}
+
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
   moneta:{d:MONETA, disegna:disegnaMoneta, tappe:function(t){ return t.anno===284&&t.intermezzo; }},      // solo nell'intermezzo «La moneta» (23 novembre 2026, l'utente: «toglila dalla tappa del 274»)
   navi:{d:NAVI, disegna:disegnaNavi, tappe:function(t){ return t.anno===395&&t.intermezzo || t.anno===711&&!t.intermezzo; }},
@@ -1487,8 +2378,11 @@ var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno==
   curia:{d:CURIA, disegna:disegnaCuria, tappe:function(t){ return t.anno===630&&!t.intermezzo; }},
   pantheon:{d:PANTHEON, disegna:disegnaPantheon, tappe:function(t){ return t.anno===609&&!t.intermezzo; }},
   milvio:{d:MILVIO, disegna:disegnaMilvio, tappe:function(t){ return t.anno===312&&!t.intermezzo; }},
+  adrianopoli:{d:ADRIANOPOLI, disegna:disegnaAdrianopoli, tappe:function(t){ return t.anno===378&&!t.intermezzo; }},
+  catalaunici:{d:CATALAUNICI, disegna:disegnaCatalaunici, tappe:function(t){ return t.anno===451&&!t.intermezzo; }},
+  capobon:{d:CAPOBON, disegna:disegnaCapobon, tappe:function(t){ return t.anno===468&&!t.intermezzo; }},
   terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo) || t.anno===439&&!t.intermezzo; }} };
-var ORDINE=['valeriano','moneta','milvio','navi','sacco','terre','governo','pantheon','curia','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 395, 410, 439, 476, 609, 630; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
+var ORDINE=['valeriano','moneta','milvio','navi','adrianopoli','sacco','terre','catalaunici','capobon','governo','pantheon','curia','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 395, 410, 439, 476, 609, 630; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
 var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
   pausa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',
   prima:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18 6.5v11l-8.5-5.5z" fill="currentColor"/></svg>',
@@ -1505,6 +2399,9 @@ var GLIFI={ valeriano:'<path d="M7 12l2.2-5 2.6 3 2.2-4 2.2 4 2.6-3 2.2 5z"/><re
   milvio:'<path d="M3 13.5h22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5.5 13.5v-2.2a3.8 3.8 0 0 1 7.6 0v2.2M14.9 13.5v-2.2a3.8 3.8 0 0 1 7.6 0v2.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 18.5q2.5-1.6 5 0t5 0 5 0 5 0M6 22.5q2.5-1.6 5 0t5 0 5 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".7"/><path d="M14 2.5v7M11.2 5h5.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
   pantheon:'<path d="M5 12.5a9 7 0 0 1 18 0z"/><rect x="4" y="13.5" width="20" height="2" rx=".5"/><path d="M6.5 16.5v6M10 16.5v6M13.5 16.5v6M17 16.5v6M20.5 16.5v6" stroke="currentColor" stroke-width="1.7"/><rect x="3.5" y="23" width="21" height="1.8" rx=".5"/><circle cx="14" cy="5.6" r="1.2" fill="none" stroke="currentColor" stroke-width="1"/>',
   curia:'<path d="M6 10.5L14 4l8 6.5z"/><rect x="6.5" y="11.5" width="15" height="12" rx=".6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M9.2 14.5v2.5M14 14.5v2.5M18.8 14.5v2.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="12" y="18.3" width="4" height="5.2" rx=".4"/><path d="M4.5 24.2h19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  adrianopoli:'<g fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="14" cy="14" r="8.5" stroke-dasharray="3.2 1.6"/></g><path d="M3 21l5.5-3.2v6.4z"/><path d="M14 9.5l1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" opacity=".85"/>',
+  catalaunici:'<path d="M3 22c4-7 8-10 11-10s7 3 11 10z" opacity=".55"/><path d="M7 17.5l4-4M7 13.5l4 4M17 17.5l4-4M17 13.5l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M14 4.5l1.6 3.4 3.4.4-2.5 2.3.7 3.4-3.2-1.8-3.2 1.8.7-3.4-2.5-2.3 3.4-.4z"/>',
+  capobon:'<path d="M4 18.5h20l-3.2 4.5H7.2z"/><path d="M14 4v13" stroke="currentColor" stroke-width="1.5"/><path d="M14.8 5.5c4 2 5.5 5.5 5.5 9.5h-5.5z" opacity=".8"/><path d="M9.5 7c1 3 3.6 4 3.6 7.6a3.6 3.6 0 0 1-7.2 0c0-2 1-3 1.9-3.9.3 1.2.8 1.9 1.4 2 0-2.4.3-4.2.3-5.7z"/>',
   governo:'<path d="M4 8l6-3 8 3 6-3v15l-6 3-8-3-6 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 5v15M18 8v15" stroke="currentColor" stroke-width="1.2" opacity=".6"/>' };
 
 /* ---------- la finestra ---------- */

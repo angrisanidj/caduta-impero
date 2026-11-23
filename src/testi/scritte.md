@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 19:38:09.
+Generato da `src/testi.mjs` il 23/11/2026, 20:29:41.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 18:47
+[pagina.52] Versione del 23/11/2026, ore 20:23
 
 
 ## 2. Gli atti
@@ -4286,17 +4286,17 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.18-r309] ↑ Torna alla carta e alla città
 
-[ui.pagina.19-r337] voci di allora
+[ui.pagina.19-r338] voci di allora
 
-[ui.pagina.20-r338] Fra storia e leggenda
+[ui.pagina.20-r339] Fra storia e leggenda
 
-[ui.pagina.21-r339] Gli storici discutono
+[ui.pagina.21-r340] Gli storici discutono
 
-[ui.pagina.22-r341] Letture di questa tappa
+[ui.pagina.22-r342] Letture di questa tappa
 
-[ui.pagina.23-r366] A Roma, in quest'anno
+[ui.pagina.23-r367] A Roma, in quest'anno
 
-[ui.pagina.24-r366] Guarda la città →
+[ui.pagina.24-r367] Guarda la città →
 
 
 ### js/mappa.js
@@ -4407,55 +4407,55 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.53-r575] Impero dei Franchi
 
-[ui.mappa.54-r702] regno d'Italia di Odoacre
+[ui.mappa.54-r704] regno d'Italia di Odoacre
 
-[ui.mappa.55-r702] regno degli Ostrogoti
+[ui.mappa.55-r704] regno degli Ostrogoti
 
-[ui.mappa.56-r702] regno dei Franchi
+[ui.mappa.56-r704] regno dei Franchi
 
-[ui.mappa.57-r703] impero romano
+[ui.mappa.57-r705] impero romano
 
-[ui.mappa.58-r703] impero d'Occidente
+[ui.mappa.58-r705] impero d'Occidente
 
-[ui.mappa.59-r703] territorio con un imperatore rivale
+[ui.mappa.59-r705] territorio con un imperatore rivale
 
-[ui.mappa.60-r703] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.60-r705] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.61-r703] regione contesa in guerra
+[ui.mappa.61-r705] regione contesa in guerra
 
-[ui.mappa.62-r704] popoli insediati per trattato
+[ui.mappa.62-r706] popoli insediati per trattato
 
-[ui.mappa.63-r704] impero d'Oriente
+[ui.mappa.63-r706] impero d'Oriente
 
-[ui.mappa.64-r705] califfato ed emirati arabi
+[ui.mappa.64-r707] califfato ed emirati arabi
 
-[ui.mappa.65-r705] regni franchi dopo la divisione dell'843
+[ui.mappa.65-r707] regni franchi dopo la divisione dell'843
 
-[ui.mappa.66-r705] abbandonata da Roma
+[ui.mappa.66-r707] abbandonata da Roma
 
-[ui.mappa.67-r705] fuori dal controllo romano
+[ui.mappa.67-r707] fuori dal controllo romano
 
-[ui.mappa.68-r737] Mostra meno voci della legenda
+[ui.mappa.68-r739] Mostra meno voci della legenda
 
-[ui.mappa.69-r747] Mostra le altre
+[ui.mappa.69-r749] Mostra le altre
 
-[ui.mappa.70-r797] mai appartenuta all'impero
+[ui.mappa.70-r799] mai appartenuta all'impero
 
-[ui.mappa.71-r841] Carta a tutto schermo
+[ui.mappa.71-r843] Carta a tutto schermo
 
-[ui.mappa.72-r846] ⤢ Guarda la carta a tutto schermo
+[ui.mappa.72-r848] ⤢ Guarda la carta a tutto schermo
 
-[ui.mappa.73-r847] Non ora
+[ui.mappa.73-r849] Non ora
 
-[ui.mappa.74-r858] Tutto schermo
+[ui.mappa.74-r860] Tutto schermo
 
-[ui.mappa.75-r858] Esci dallo schermo intero
+[ui.mappa.75-r860] Esci dallo schermo intero
 
-[ui.mappa.76-r949] Torna alla carta intera
+[ui.mappa.76-r951] Torna alla carta intera
 
-[ui.mappa.77-r951] La scena continua fuori dalla carta, verso
+[ui.mappa.77-r953] La scena continua fuori dalla carta, verso
 
-[ui.mappa.78-r951] : guardala tutta
+[ui.mappa.78-r953] : guardala tutta
 
 
 ### js/atti.js
