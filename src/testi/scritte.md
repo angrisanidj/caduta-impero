@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 11:37:08.
+Generato da `src/testi.mjs` il 23/11/2026, 11:40:17.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 11:33
+[pagina.52] Versione del 23/11/2026, ore 11:37
 
 
 ## 2. Gli atti
@@ -4170,49 +4170,53 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.46-r432] Rivedi la scena dall'inizio
 
-[ui.mappa.47-r534] Regni dei Franchi
+[ui.mappa.47-r457] Chiudi la didascalia
 
-[ui.mappa.48-r534] Impero dei Franchi
+[ui.mappa.48-r458] Mostra la didascalia
 
-[ui.mappa.49-r655] regno d'Italia di Odoacre
+[ui.mappa.49-r550] Regni dei Franchi
 
-[ui.mappa.50-r655] regno degli Ostrogoti
+[ui.mappa.50-r550] Impero dei Franchi
 
-[ui.mappa.51-r655] regno dei Franchi
+[ui.mappa.51-r671] regno d'Italia di Odoacre
 
-[ui.mappa.52-r656] impero romano
+[ui.mappa.52-r671] regno degli Ostrogoti
 
-[ui.mappa.53-r656] impero d'Occidente
+[ui.mappa.53-r671] regno dei Franchi
 
-[ui.mappa.54-r656] territorio con un imperatore rivale
+[ui.mappa.54-r672] impero romano
 
-[ui.mappa.55-r656] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.55-r672] impero d'Occidente
 
-[ui.mappa.56-r656] regione contesa in guerra
+[ui.mappa.56-r672] territorio con un imperatore rivale
 
-[ui.mappa.57-r657] popoli insediati per trattato
+[ui.mappa.57-r672] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.58-r657] impero d'Oriente
+[ui.mappa.58-r672] regione contesa in guerra
 
-[ui.mappa.59-r658] califfato ed emirati arabi
+[ui.mappa.59-r673] popoli insediati per trattato
 
-[ui.mappa.60-r658] regni franchi dopo la divisione dell'843
+[ui.mappa.60-r673] impero d'Oriente
 
-[ui.mappa.61-r658] abbandonata da Roma
+[ui.mappa.61-r674] califfato ed emirati arabi
 
-[ui.mappa.62-r658] fuori dal controllo romano
+[ui.mappa.62-r674] regni franchi dopo la divisione dell'843
 
-[ui.mappa.63-r689] Mostra meno voci della legenda
+[ui.mappa.63-r674] abbandonata da Roma
 
-[ui.mappa.64-r699] Mostra le altre
+[ui.mappa.64-r674] fuori dal controllo romano
 
-[ui.mappa.65-r749] mai appartenuta all'impero
+[ui.mappa.65-r705] Mostra meno voci della legenda
 
-[ui.mappa.66-r793] Carta a tutto schermo
+[ui.mappa.66-r715] Mostra le altre
 
-[ui.mappa.67-r798] Tutto schermo
+[ui.mappa.67-r765] mai appartenuta all'impero
 
-[ui.mappa.68-r798] Esci dallo schermo intero
+[ui.mappa.68-r809] Carta a tutto schermo
+
+[ui.mappa.69-r814] Tutto schermo
+
+[ui.mappa.70-r814] Esci dallo schermo intero
 
 
 ### js/atti.js

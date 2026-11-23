@@ -126,3 +126,19 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
 #mappa svg.m-fuoco .m-regione.acceso.incerto{opacity:.5}
 .legenda-luoghi span.tetra{color:var(--ink2,var(--ink))}
 .legenda-luoghi span.tetra::before{width:16px;height:0;margin:0 7px 0 1px;background:none;border-top:2px dotted currentColor;transform:none;vertical-align:3px}
+
+/* La didascalia della regia si chiude (js/mappa.js, 23 novembre 2026): × in alto a destra, poi una «i» rotonda che la riporta */
+.m-didascalia{padding-right:38px}
+.m-did-testo{display:flex;flex-direction:column;gap:2px}
+.m-did-chiudi,.m-did-riapri{pointer-events:auto;cursor:pointer;color:#FBF6EA;border:0;font-family:var(--ui,sans-serif);line-height:1}
+.m-did-chiudi{position:absolute;top:1px;right:1px;width:34px;height:34px;font-size:21px;background:transparent;border-radius:50%;opacity:.85}
+.m-did-chiudi:hover,.m-did-chiudi:focus-visible{opacity:1;background:rgba(255,255,255,.12)}
+.m-did-riapri{display:none}
+.m-didascalia.chiusa{padding:0;background:none;border:0;right:auto;width:auto;max-width:none}
+.m-didascalia.chiusa .m-did-testo,.m-didascalia.chiusa .m-did-chiudi{display:none}
+.m-didascalia.chiusa .m-did-riapri{display:grid;place-items:center;width:34px;height:34px;font-size:16px;font-weight:700;font-style:italic;font-family:Georgia,serif;
+  background:rgba(36,30,26,.9);border:1px solid var(--gold2);border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.m-didascalia:not(.viva) .m-did-chiudi,.m-didascalia:not(.viva) .m-did-riapri{pointer-events:none;visibility:hidden}      /* didascalia spenta: niente bottoni invisibili da toccare */
+.m-did-chiudi:focus-visible,.m-did-riapri:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+@media (max-width:700px){ .m-didascalia{padding-right:36px} }
+.m-didascalia.in-alto.chiusa{right:10px}

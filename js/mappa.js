@@ -438,15 +438,31 @@ function segnaPasso(i){ var bs=barraPassi.querySelectorAll('.m-passo'); for(var 
   if(bs[i] && barraPassi.scrollWidth>barraPassi.clientWidth) barraPassi.scrollLeft=bs[i].offsetLeft-barraPassi.clientWidth/2+bs[i].offsetWidth/2; }      // a tutto schermo la barra scorre: il passo acceso resta in vista
 function suPasso(i,daCapo){
   if(!pocoMoto){ avviaRegia(luoghiRegia,scenaOra,i,true); return; }
-  /* chi ha chiesto meno animazioni: il passo si mostra fermo, senza zoom; toccato di nuovo, si torna alla scena intera */
-  if(passoOra===i && !daCapo){ fermaRegia(); return; }
+  /* chi ha chiesto meno animazioni: il passo si mostra fermo, senza zoom; toccato di nuovo, si torna alla scena intera.
+     ▶ (daCapo) fa tutto il giro anche qui (23 novembre 2026, l'utente: «quando clicchi su play dovrebbe fare tutto il giro»): un passo dopo l'altro, fermi, col tempo di leggere */
+  if(daCapo){ giroFermo(0); return; }
+  if(passoOra===i){ fermaRegia(); return; }
+  mostraFermo(i);
+}
+function mostraFermo(i){
   fermaRegia(); passoOra=i; svg.classList.add('in-passi'); classiPassi(i); stratoScena.setAttribute('class','m-scena passi ferma'); coloraRegioni(statiPasso(i)); ricolorata=true; segnaPasso(i);
   scriviDidascalia({i:i}); didascalia.classList.add('viva');
 }
-var regia=null, scenaOra=null, annoVisto=null, didascalia=document.createElement('p'); didascalia.className='m-didascalia'; didascalia.setAttribute('aria-hidden','true'); ospite.appendChild(didascalia);
+var giro=0;
+function giroFermo(i){ if(!passiOra || i>=passiOra.length){ fermaRegia(); return; } mostraFermo(i); giro=setTimeout(function(){ giroFermo(i+1); },Math.min(7500,2800+passiOra[i].t.length*22)); }
+/* La didascalia della regia si può chiudere (23 novembre 2026, l'utente: «anche qui la scritta dovrebbe essere chiudibile»): la × la toglie per questa tappa, la regia continua;
+   resta una «i» rotonda che la riporta. Alla tappa seguente ricompare. */
+var regia=null, scenaOra=null, annoVisto=null, didChiusa=false, didascalia=document.createElement('div'); didascalia.className='m-didascalia'; ospite.appendChild(didascalia);
+var didTesto=document.createElement('div'); didTesto.className='m-did-testo'; didTesto.setAttribute('aria-hidden','true'); didascalia.appendChild(didTesto);
+var didX=document.createElement('button'); didX.type='button'; didX.className='m-did-chiudi'; didX.textContent='×'; didX.setAttribute('aria-label','Chiudi la didascalia'); didascalia.appendChild(didX);
+var didI=document.createElement('button'); didI.type='button'; didI.className='m-did-riapri'; didI.textContent='i'; didI.title='Mostra la didascalia'; didI.setAttribute('aria-label','Mostra la didascalia'); didascalia.appendChild(didI);
+function chiudiDid(si){ didChiusa=si; didascalia.classList.toggle('chiusa',si); }
+didX.addEventListener('click',function(e){ e.stopPropagation(); chiudiDid(true); });
+didI.addEventListener('click',function(e){ e.stopPropagation(); chiudiDid(false); });
 var pocoMoto=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);      // ?moto=1 forza l'animazione, per le prove
 function fermaRegia(){
   var r=regia; if(r){ cancelAnimationFrame(r.rf); regia=null; }
+  clearTimeout(giro); giro=0;      // anche il giro dei passi fermi
   passoOra=null; svg.classList.remove('in-passi'); classiPassi(passoInVista()); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
   if(bordo[0]!==103){ bordo=[103,897,63,565]; scalaScena=1; testoMin=0; if(annoVisto!=null) mostraPopoli(annoVisto); }
   didascalia.classList.remove('viva'); document.body.classList.remove('carta-in-regia');
@@ -472,10 +488,10 @@ function suSchermo(a){
   var cx=a[0]+a[2]/2, cy=a[1]+a[3]/2; return [Math.max(0,Math.min(G.w-w,cx-w/2)),Math.max(0,Math.min(G.h-h,cy-h/2)),w,h];
 }
 function scriviDidascalia(f){
-  didascalia.textContent='';
-  if(f.i!=null){ var q=passiOra[f.i], s=document.createElement('span'), b=document.createElement('b'); b.textContent=q.a+' · '; s.appendChild(b); s.appendChild(document.createTextNode(q.t)); didascalia.appendChild(s); return; }
+  didTesto.textContent='';
+  if(f.i!=null){ var q=passiOra[f.i], s=document.createElement('span'), b=document.createElement('b'); b.textContent=q.a+' · '; s.appendChild(b); s.appendChild(document.createTextNode(q.t)); didTesto.appendChild(s); return; }
   var a=f.a; f.l.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var px=Math.max(8,Math.min(G.w-8,p.x)); if(px<a[0]-2||px>a[0]+a[2]+2||p.y<a[1]-2||p.y>a[1]+a[3]+2) return;      // nella didascalia solo i luoghi che lo zoom inquadra
-    var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); didascalia.appendChild(s); });
+    var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); didTesto.appendChild(s); });
 }
 /* La regia è una fila di inquadrature: per una scena semplice una sola, per una scena a passi una per passo (da «da» in poi). Ognuna entra in 0,9 secondi dalla precedente e resta ferma
    il tempo di leggere la didascalia; alla fine la carta torna alla vista di partenza. A tutto schermo parte solo se chi guarda non ha mosso la carta (o se ha toccato un passo), e si ferma al primo tocco */
@@ -874,7 +890,7 @@ window.RM_mappa={
     return out;
   },
   mostra:function(stati,anno,luoghi,scena,passi){
-    if(anno!=null){ fermaRegia(); annoVisto=anno; scriviLuoghi(luoghi); scenaOra=scena||null; passiOra=passi&&passi.length?passi:null; statiTappa=stati; faiBarra(); }      // la scena va saputa prima dei cartellini: mostraPopoli la disegna e la fa evitare
+    if(anno!=null){ fermaRegia(); if(anno!==annoVisto) chiudiDid(false); /* tappa nuova: la didascalia chiusa ricompare */ annoVisto=anno; scriviLuoghi(luoghi); scenaOra=scena||null; passiOra=passi&&passi.length?passi:null; statiTappa=stati; faiBarra(); }      // la scena va saputa prima dei cartellini: mostraPopoli la disegna e la fa evitare
     if(anno!=null && scritte.costantinopoli){ var nc=anno<330?'Bisanzio':G.citta.costantinopoli.nome; if(scritte.costantinopoli.textContent!==nc) scritte.costantinopoli.textContent=nc; }      // prima di piazzare i nomi: Bisanzio è più corto
     var visti=anno!=null?mostraPopoli(anno):null;
     if(anno!=null) avviaRegia(luoghi,scenaOra);
