@@ -10,8 +10,13 @@ body.impero-largo .legenda-luoghi[hidden]{display:none}
 .m-didascalia{position:absolute;left:10px;right:58px;bottom:10px;max-width:520px;margin:0;padding:7px 11px;display:flex;flex-direction:column;gap:2px;font-family:var(--ui,sans-serif);font-size:13px;line-height:1.35;color:#FBF6EA;
   background:rgba(36,30,26,.9);border-left:3px solid var(--gold2);border-radius:3px;opacity:0;transition:opacity .45s;pointer-events:none;z-index:2}
 .m-didascalia.viva{opacity:1}
+.m-didascalia.in-alto{top:10px;bottom:auto;left:auto;right:10px;width:max-content;max-width:min(520px,calc(100% - 96px))}      /* in alto a destra: a sinistra c'è l'anno */
 .m-didascalia b{font-weight:600;color:var(--gold3)}
-body.impero-grande .m-didascalia{display:none}
+/* dal 23 novembre 2026 la regia c'è anche a tutto schermo: didascalia in basso al centro, sopra la barra dei passi (se c'è); in alto al centro quando la scena sta in basso */
+body.impero-grande .m-didascalia{left:50%;right:auto;transform:translateX(-50%);width:max-content;max-width:min(560px,calc(100% - 24px));bottom:12px}
+body.impero-grande .m-didascalia:not(.in-alto):has(~.m-passi:not([hidden])){bottom:54px}
+body.impero-grande .m-didascalia.in-alto{top:12px;bottom:auto}
+body.impero-largo.carta-in-regia .legenda-luoghi{opacity:0;pointer-events:none}
 @media (max-width:700px){ .m-didascalia{font-size:12px;padding:6px 9px;right:60px} }
 /* la scena dell'evento sulla carta (js/mappa.js, disegnaScena): le marce si tracciano, poi compaiono la punta della freccia e i segni di scontro, assedio e sacco */
 .m-scena{pointer-events:none}
@@ -23,9 +28,38 @@ body.impero-grande .m-didascalia{display:none}
 .m-scena.viva .marcia{stroke-dashoffset:0}
 .m-scena.viva .mare{opacity:1} .m-scena.viva .mare.sotto{opacity:.55}
 .m-scena.viva .punta,.m-scena.viva .scontro,.m-scena.viva .assedio,.m-scena.viva .fuoco{opacity:1}
-.m-scena:not(.viva) *{transition-delay:0s;transition-duration:.35s}
+.m-scena:not(.viva):not(.passi) *{transition-delay:0s;transition-duration:.35s}
 .m-scena.ferma *{transition:none}
 @media (prefers-reduced-motion:reduce){ .m-scena *{transition:none} }
+/* nomi sulle frecce e morti (js/mappa.js, disegnaScena): compaiono dopo la linea */
+.m-scena .m-nome-freccia{font-family:var(--ui,sans-serif);font-weight:600;stroke:#FBF6EA;stroke-linejoin:round;paint-order:stroke;opacity:0;transition:opacity .4s ease 1.2s}
+.m-scena .morte{opacity:0;transition:opacity .4s ease 1.5s}
+.m-scena.viva .m-nome-freccia,.m-scena.viva .morte{opacity:1}
+/* durante i passi i popoli (punti, cartellini, rotte) si nascondono: dicono dove stanno i gruppi nell'anno della tappa, non in quello del passo */
+svg.in-passi .m-rotte,svg.in-passi .m-popoli,svg.in-passi .m-luogo>g{opacity:0;transition:opacity .4s}      /* anche i cartellini dei luoghi della tappa: i rombi restano */
+.m-luogo>g{transition:opacity .4s}
+.m-rotte,.m-popoli{transition:opacity .4s}
+/* scene a passi: il passo in corso si disegna, quelli già visti restano chiari e senza nomi, i seguenti non si vedono */
+.m-scena .passo{transition:opacity .5s}
+.m-scena .passo.viva .marcia,.m-scena .passo.prima .marcia{stroke-dashoffset:0}
+.m-scena .passo.viva .mare,.m-scena .passo.prima .mare{opacity:1} .m-scena .passo.viva .mare.sotto,.m-scena .passo.prima .mare.sotto{opacity:.55}
+.m-scena .passo.viva :is(.punta,.scontro,.assedio,.fuoco,.morte,.m-nome-freccia),.m-scena .passo.prima :is(.punta,.scontro,.assedio,.fuoco,.morte){opacity:1}
+.m-scena .passo.prima{opacity:.4} .m-scena .passo.prima *{transition:none}
+/* la barra dei passi, sotto la carta come la riga dei luoghi; a tutto schermo in alto a destra, sopra la carta, dove non ci sono le legende */
+.m-passi{margin:0;padding:6px 10px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:4px 5px;font-family:var(--ui,sans-serif)}
+.m-passi[hidden]{display:none}
+.m-passi>b{font:600 11px/1 var(--ui,sans-serif);letter-spacing:.06em;text-transform:uppercase;color:var(--oro-t,#7A5A1E);margin-right:4px}
+.m-passi button{font:600 12px/1 var(--ui,sans-serif);color:#241E1A;background:#FBF6EA;border:1px solid rgba(36,30,26,.28);border-radius:999px;padding:5px 9px;cursor:pointer;min-height:26px}
+.m-passi button:hover{border-color:#241E1A}
+.m-passi button:focus-visible{outline:2px solid var(--gold2);outline-offset:1px}
+.m-passi button[aria-current]{background:#241E1A;color:#FBF6EA;border-color:#241E1A}
+.m-passi .m-passo-via{padding:5px 8px;font-size:10px}
+body.impero-grande .m-passi{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:3;border:0;padding:0;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;width:max-content;max-width:calc(100% - 24px)}      /* una riga sola: sul telefono scorre di lato */
+body.impero-grande .m-passi button{flex:none}
+body.impero-grande .m-passi>b{display:none}
+body.impero-grande .m-passi button{background:rgba(251,246,234,.94)}
+body.impero-grande .m-passi button[aria-current]{background:#241E1A}
+@media (max-width:700px){ .m-passi{gap:4px;padding:6px 8px} .m-passi button{font-size:11.5px;padding:5px 8px;min-height:28px} }
 /* La legenda risponde (js/mappa.js): ogni voce è un bottone a pastiglia. Toccata, tiene vive sulla carta le sole regioni di quel colore, o i soli popoli con quel rapporto. */
 .legenda-mappa,.legenda-popoli{gap:5px 6px}
 /* «Legenda» davanti alle voci degli stati, come «I popoli» davanti a quelle dei popoli */

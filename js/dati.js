@@ -1112,8 +1112,6 @@ var SCENE_CARTA={
     (Eutropio IX 13: «haud longe ab Antiochia»), poi davanti a Emesa, poi l'assedio di Palmira. Tetrico: Eutropio IX 13, «superavit in Gallia Tetricum apud Catalaunos» (thelatinlibrary).
     I fatti sono del 272-274; il deserto fra Emesa e Palmira non è descritto. */
  274:[['marcia','roma',['ancira','tiana','mopsuestia','isso','portesirie','antiochia','emesa','palmira']],['assedio','palmira'],['scontro','chalons']],
- /* Ammiano XXXI 11-12 (LacusCurtius): Valente da Antiochia a Costantinopoli, poi alla villa di Melanzia e ad Adrianopoli; i Goti, già dentro l'impero dal 376 (per questo partono dalla Tracia),
-    stanno attorno a Cabile (XXXI 11, 5) e marciano verso la stazione di Nice, a quindici miglia dalla città (XXXI 12, 3). */
  /* Panegirico del 313 (Pan. Lat. XII, ed. Baehrens 1874, archive.org): «a Rheno ad Alpes» (5, 4), una città «sub ipsis Alpium iugis» presa d'assalto (5, 4-6), «Taurinatibus campis» (6, 4), Milano (7, 5),
     assedio di Verona (8-10), resa di Aquileia (11, 1); Nazario (Pan. Lat. IV, 321): Susa (17, 3; 21, 1), «aput Taurinos» (22, 1), «aput Brixiam» (25, 1), Verona (25-26), «te, Aquileia, te, Mutina» (27, 1).
     Nessuno nomina Treviri: la partenza da lì è un'ipotesi (la residenza di Costantino); da Modena a Roma il tracciato è uno schema. Battaglia: Aurelio Vittore 40, 23 (Saxa Rubra, nove miglia da Roma; morte al ponte Milvio). */
@@ -1124,7 +1122,6 @@ var SCENE_CARTA={
  /* Orosio VII 35, 13: Eugenio e Arbogaste tengono i passi delle Alpi; Zosimo IV 58: Teodosio «attraversò in fretta» le terre di mezzo. Le strade di entrambi sono schemi: Teodosio lungo la via
     militare dei Balcani, Eugenio da Milano, sua residenza, per la pianura veneta. Eugenio ha il colore degli usurpatori. */
  394:[['marcia','roma',['costantinopoli','adrianopoli','sirmio','emona','frigido']],['marcia','usurpatore',['milano','verona','aquileia','frigido']],['scontro','frigido']],
- 378:[['marcia','roma',['costantinopoli','adrianopoli']],['marcia','altri',['cabile','adrianopoli']],['scontro','adrianopoli']],
  /* Bury, Later Roman Empire, cap. V § 3 (LacusCurtius, su Claudiano, Prospero, i Fasti Vindobonenses): Alarico viene dall'Illirico, passa le Alpi nel novembre 401, prende Aquileia, entra
     nelle città venete, minaccia Milano, ripiega su Asti e combatte a Pollenzo il 6 aprile 402. Emona come porta delle Alpi Giulie e Verona come passaggio sono schemi: la battaglia di Verona
     viene dopo (estate 403 per Bury, 402 per altri). */
@@ -1132,18 +1129,11 @@ var SCENE_CARTA={
  /* Bury cap. VI § 1 (LacusCurtius, su Olimpiodoro, Zosimo, Sozomeno, Orosio) e Girolamo, Lettera 123, 15 (newadvent): passano il Reno presso Magonza l'ultimo giorno del 406; Magonza presa,
     Treviri e Reims devastate, poi Amiens, Arras, Tournai (tutte in Girolamo tranne Treviri). Il seguito (Aquitania, Pirenei nel 409) non è disegnato. La partenza d'oltre Reno è schematica. */
  406:[['marcia','altri',['oltrereno','magonza','treviri','reims','amiens']]],
- /* Bury cap. VI § 4 (su Olimpiodoro e Sozomeno IX 9): estate 410, Attalo deposto presso Rimini, dove Alarico aveva il grosso dell'esercito; dopo l'attacco di Saro presso Ravenna marcia su Roma
-    ed entra dalla porta Salaria il 24 agosto. Alarico era in Italia dal 408: è giusto che parta da dentro. La strada fra Rimini e Roma non è detta. */
- 410:[['marcia','altri',['rimini','roma']],['assedio','roma'],['fuoco','roma']],
  /* Procopio III 3, 26 (LacusCurtius): «the Vandals crossed the strait at Gadira and came into Libya»; poi l'assedio di Ippona (III 3, 31-34). Per mare solo lo stretto; il cammino per terra
     lungo le Mauretanie e la Numidia è uno schema: nessuna fonte letta lo descrive, e c'è chi pensa a un viaggio in parte per mare. */
  429:[['mare','altri',['tarifa','tangeri']],['marcia','altri',['tangeri','taza','tlemcen','cesarea','sitifi','cirta','ippona']],['assedio','ippona']],
  /* Da Ippona, la base dei Vandali dopo il 430 (Procopio III 3-4), a Cartagine, presa nel 439 (testo della tappa). Il cammino è una linea fra i due capi. */
  439:[['marcia','altri',['ippona','cartagine']]],
- /* Gregorio di Tours II 6-7 (thelatinlibrary): gli Unni «a Pannoniis egressi, ut quidam ferunt», Metz bruciata «in ipsa sanctae paschae vigilia», l'assedio di Orléans, dove accorrono
-    «Aetius et Theudor Gothorum rex ac Thorismodus»; la battaglia al «Mauriacum campum». Giordane, Getica 192-195: «campos Catalaunicos, qui et Mauriaci nominantur», Orléans assediata.
-    Il passaggio del Reno a Magonza è uno schema (nessuna delle due fonti dice dove); le partenze di Ezio da Arles e dei Visigoti da Tolosa, alleati di Roma e dipinti in oro, sono indicative. */
- 451:[['marcia','altri',['tibisco','magonza','metz','orleans','catalaunici']],['marcia','roma',['arles','orleans','catalaunici']],['marcia','roma',['tolosa','orleans']],['scontro','catalaunici']],
  /* Procopio III 5, 1: Genserico «set sail for Italy with a great fleet» e sale a Roma; lo sbarco alla foce del Tevere è dei manuali (Procopio non nomina il porto). */
  455:[['mare','altri',['cartagine','tirreno','ostia']],['fuoco','roma']],
  /* Procopio III 6 (LacusCurtius): Basilisco getta l'ancora a Mercurio, «no less than two hundred and eighty stades» da Cartagine, e lì i Vandali lanciano i brulotti (III 6, 18). Le altre due
@@ -1166,12 +1156,6 @@ var SCENE_CARTA={
     «post tres annos et aliquot menses» (cade nel 572). La Pannonia longobarda è dipinta come avara perché Alboino la lascia agli Avari: per questo la freccia parte da lì. Savaria (la Pannonia
     occidentale) ed Emona sono schemi: Paolo non dice la strada. */
  568:[['marcia','altri',['savaria','emona','cividale','verona','milano']],['assedio','pavia']],
- /* Il 711: lo sbarco a Gibilterra, il monte che porta il nome di Tariq (Gabal Tariq), viene dalla tradizione araba, a memoria; la Cronaca del 754 non è stata riletta per questo passo;
-    Tarifa, dove la mettevano le versioni precedenti, è lo sbarco di Tarif dell'anno prima. Toledo è presa dopo la battaglia (testo della tappa).
-    Il 732: Cronaca del 754, Chron. min. II pp. 361-362 (letta, vedi LUOGHI_TAPPA): passa «montana Vacceorum», i Pirenei occidentali, batte Oddone oltre la Garonna, punta su Tours. Il punto
-    da cui partì non è detto: la freccia comincia a Pamplona, sotto i monti. Carlo è «consulem Francie interioris Austrie»: Metz sta per l'Austrasia, Orléans è uno schema. */
- 711:[['mare','altri',['tangeri','calpe']],['marcia','altri',['calpe','guadalete','toledo']],['scontro','guadalete'],
-      ['marcia','altri',['pamplona','bordeaux','poitiers']],['marcia','franchi',['metz','orleans','poitiers']],['scontro','poitiers']],
  /* Annales regni Francorum 755 e 756 (la.wikisource): Pipino «iterum iter peragens in Italiam Papiam obsedit, Haistulfum inclusit». Lione e il Moncenisio (Susa) vengono dalla continuazione
     di Fredegario, a memoria, non riletta. L'assedio di Roma di Astolfo è nel testo della tappa; la strada per Lucca (la Francigena) è uno schema. */
  756:[['marcia','altri',['pavia','lucca','roma']],['assedio','roma'],['marcia','franchi',['lione','susa','pavia']],['assedio','pavia']],
@@ -1182,10 +1166,81 @@ var SCENE_CARTA={
  846:[['mare','altri',['tirreno','ostia']],['fuoco','roma']]
 };
 TAPPE.forEach(function(t){ if(!t.intermezzo && SCENE_CARTA[t.anno]) t.scena=SCENE_CARTA[t.anno]; });
+/* Le scene «a passi» (23 novembre 2026, chieste dall'utente: «L'invasione degli Unni è poco chiara… L'espansione degli arabi non si vede proprio»). Ogni passo ha un anno (a), il nome breve del suo bottone se l'anno si ripete (b), una didascalia (t),
+   i suoi segni (sc, come in SCENE_CARTA; il quarto elemento di una marcia è il nome scritto sulla freccia) e, se serve, gli stati delle regioni durante quel passo (regioni, sopra quelli della tappa).
+   La regia della carta (js/mappa.js) li mostra uno dopo l'altro: i passi già visti restano più chiari. Fonti lette accanto a ogni passo; dove le fonti non dicono la strada, il tracciato è uno schema. */
+var PASSI_CARTA={
+ /* Ammiano XXXI (LacusCurtius, traduzione Rolfe). 3, 1: gli Unni travolgono gli Alani del Don («Tanaïtes») e con loro invadono le terre di Ermanarico, re dei Greutungi; 3, 5-8: Atanarico,
+    capo dei Tervingi, si accampa sul Dnestr («Danastius»), gli Unni lo aggirano di notte e lo battono. 4, 1-5: i Tervingi di Alavivo (e Fritigerno) chiedono di essere accolti e passano il Danubio
+    con il permesso di Valente; 4, 12-13 e 5, 3: i Greutungi passano poi da soli, su zattere. Dove passarono non è detto: Durostoro è uno schema. 5, 1-9: affamati e maltrattati, i Tervingi si
+    ribellano presso Marcianopoli e battono Lupicino; 7-8: la battaglia «ad Salices» (377) e il saccheggio della Tracia fino al Rodope. 11-12: Valente da Costantinopoli ad Adrianopoli; i Goti,
+    attorno a Cabile, marciano verso la stazione di Nice; 12, 5-7 Valente decide di non aspettare Graziano; 12, 10 il 9 agosto («quintum idus Augustas»). La data «verso il 375» viene dai manuali:
+    Ammiano non dà l'anno dell'attacco degli Unni, solo che i Goti arrivarono al Danubio nel 376. */
+ 378:[
+  {a:'verso il 375', t:"Gli Unni arrivano dalla steppa con gli Alani del Don. Travolgono i Goti Greutungi, poi battono sul Dnestr i Goti Tervingi di Atanarico.", sc:[['marcia','altri',['don','dnepr','dnestr'],'Unni'],['scontro','dnestr']]},
+  {a:'376', t:"I Tervingi chiedono di entrare nell'impero. Valente li lascia passare il Danubio; i Greutungi passano poco dopo da soli, su zattere. Dove passarono non è detto.", sc:[['marcia','altri',['dnestr','durostoro'],'Tervingi']]},
+  {a:'377', t:"Affamati e maltrattati dai funzionari romani, i Goti si ribellano presso Marcianopoli, battono il generale Lupicino e saccheggiano la Tracia.", sc:[['marcia','altri',['durostoro','marcianopoli','cabile'],'Goti'],['scontro','marcianopoli']]},
+  {a:'378', t:"Il 9 agosto Valente attacca i Goti presso Adrianopoli senza aspettare l'esercito del nipote Graziano. È sconfitto e muore sul campo.", sc:[['marcia','roma',['costantinopoli','adrianopoli'],'Valente'],['marcia','altri',['cabile','adrianopoli'],'Fritigerno'],['scontro','adrianopoli']]}],
+ /* Alarico. 401-402: Bury, Later Roman Empire, cap. V § 3 (LacusCurtius): dall'Illirico, Aquileia, Milano minacciata, Asti, Pollenzo il 6 aprile 402; Verona nel 403 (o 402).
+    408: Zosimo V 34 (traduzione del 1814, tertullian.org): Stilicone decapitato a Ravenna il 22 agosto 408; V 35: «the soldiers who were in the city… fell upon all the women and children…
+    who belonged to the Barbarians», e i parenti, «to the number of thirty thousand», scelgono Alarico. Quali città non è detto: la freccia dei federati dalla pianura padana al Norico è uno schema.
+    V 37: autunno 408, Aquileia, Concordia, Altino, Cremona, il Po, Bologna, Rimini, «leaving Ravenna in his rear», il Piceno, Roma; V 39-41: il blocco del Tevere e il riscatto
+    («five thousand pounds of gold, and thirty thousand of silver»). 409: Zosimo VI 6-7: Alarico prende il porto, dove stanno le scorte, e il Senato accetta Attalo imperatore; VI 12: Attalo deposto
+    «before the city of Ariminum» (410). 410: Bury cap. VI § 4 (su Olimpiodoro e Sozomeno IX 9): dopo l'attacco di Saro presso Ravenna, Roma presa per la porta Salaria il 24 agosto.
+    Dopo il sacco: Giordane, Getica 156-158 (thelatinlibrary): «per Campaniam et Lucania… Brittios accesserunt», la tempesta nello stretto («fretus ille horribilis aliquantas naves submersit»),
+    la morte e la sepoltura nel Busento presso Cosenza. La strada lungo la Popilia è uno schema. */
+ 410:[
+  {a:'401-402', come:402, t:"Alarico scende dai Balcani in Italia. Stilicone lo affronta a Pollenzo nel 402 e di nuovo presso Verona; i Goti tornano nell'Illirico.", sc:[['marcia','altri',['emona','aquileia','verona','milano','asti','pollenzo'],'Alarico'],['scontro','pollenzo']]},
+  {a:'408', b:'408 · Ravenna', t:"Il 22 agosto Stilicone è ucciso a Ravenna. Secondo Zosimo i soldati romani massacrano nelle città le mogli e i figli dei barbari federati, e trentamila uomini passano con Alarico.", sc:[['morte','ravenna'],['marcia','altri',['milano','verona','aquileia','emona'],'federati']]},
+  {a:'408', b:'408 · Roma', t:"In autunno Alarico torna in Italia, lascia Ravenna alle spalle e blocca Roma. La città paga: cinquemila libbre d'oro e trentamila d'argento.", sc:[['marcia','altri',['emona','aquileia','concordia','altino','cremona','bologna','rimini','piceno','roma'],'Alarico'],['assedio','roma']]},
+  {a:'409', t:"Alarico prende il porto di Roma, dove stanno le scorte di grano. Il Senato accetta l'imperatore che vuole lui, Attalo; l'anno dopo Alarico lo depone presso Rimini.", sc:[['assedio','ostia'],['marcia','altri',['roma','narni','rimini'],'Alarico']]},
+  {a:'410', b:'410 · Roma', t:"Fallite le trattative con Onorio, Alarico torna su Roma. Il 24 agosto i Goti entrano dalla porta Salaria e saccheggiano la città.", sc:[['marcia','altri',['rimini','roma'],'Alarico'],['assedio','roma'],['fuoco','roma']]},
+  {a:'410', b:'410 · Bruzio', t:"I Goti scendono per la Campania e la Lucania fino al Bruzio. Vogliono passare in Sicilia e in Africa, ma una tempesta affonda le navi. Alarico muore presso Cosenza.", sc:[['marcia','altri',['roma','cassino','napoli','eboli','lagonegro','cosenza','catanzaro','aspromonte','reggio'],'Alarico'],['morte','cosenza']]}],
+ /* Gregorio di Tours II 5-7 (thelatinlibrary): gli Unni «a Pannoniis egressi, ut quidam ferunt», Metz bruciata «in ipsa sanctae paschae vigilia», l'assedio di Orléans, dove accorrono
+    «Aetius et Theudor Gothorum rex ac Thorismodus», la battaglia al «Mauriacum campum». Giordane, Getica (thelatinlibrary): 194-195 Sangibano, re degli Alani, promette Orléans ad Attila;
+    Teodorico ed Ezio fortificano la città e mettono gli Alani in mezzo ai loro; 197 «Dextrum… cornum cum Vesegothis Theoderidus tenebat, sinistrum Aetius cum Romanis», al centro Sangibano;
+    198-199 Attila al centro, Ostrogoti e Gepidi alle ali (sulla carta le tre ali vengono da ovest e gli Unni, che si ritirano da Orléans, da est: è uno schema, l'orientamento del campo non è detto); 209 Teodorico muore; 210-213 Attila si chiude dentro i carri; 216-218 Torismondo torna a Tolosa. Il passaggio del Reno a Magonza è uno schema;
+    le partenze di Ezio da Arles e dei Visigoti da Tolosa sono indicative. 452: Getica 219-223: Aquileia assediata a lungo e distrutta, poi le città venete, Milano e Pavia; papa Leone lo incontra
+    «in agro Venetum Ambuleio, ubi Mincius amnis commeantium frequentatione transitur», e Attila torna oltre il Danubio. La strada dalla Pannonia ad Aquileia (per Emona) è uno schema, come quella di Leone da Roma al Mincio. */
+ 451:[
+  {a:'451', b:'451 · Metz', t:"In primavera gli Unni di Attila lasciano la Pannonia e passano il Reno. Metz brucia la vigilia di Pasqua. Dove passarono il fiume non è detto.", sc:[['marcia','altri',['tibisco','magonza','metz'],'Attila'],['fuoco','metz']]},
+  {a:'451', b:'451 · Orléans', t:"Attila assedia Orléans. Ezio e il re dei Visigoti Teodorico accorrono e salvano la città. Dentro ci sono gli Alani di Sangibano, che secondo Giordane volevano consegnarla ad Attila.", sc:[['marcia','altri',['metz','orleans'],'Attila'],['marcia','roma',['arles','orleans'],'Ezio'],['marcia','roma',['tolosa','orleans'],'Teodorico'],['assedio','orleans']]},
+  {a:'451', b:'451 · Campi Catalaunici', t:"Attila si ritira verso est e lo scontro avviene ai Campi Catalaunici. Secondo Giordane, Teodorico tiene l'ala destra, Ezio la sinistra, gli Alani il centro. Teodorico muore; Attila si chiude dietro i carri e poi se ne va.", sc:[['marcia','altri',['orleans','catal_s','catal_e','catalaunici'],'Unni'],['marcia','roma',['catal_v','catalaunici'],'Visigoti'],['marcia','roma',['catal_a','catalaunici'],'Alani'],['marcia','roma',['catal_r','catalaunici'],'Ezio e i Romani'],['scontro','catalaunici']]},
+  {a:'452', b:'452 · Italia', t:"L'anno dopo Attila scende in Italia. Dopo un lungo assedio distrugge Aquileia, poi devasta Milano e Pavia. Presso il Mincio lo incontra papa Leone, e Attila torna oltre il Danubio.", sc:[['marcia','altri',['tibisco','savaria','emona','aquileia','verona','milano','pavia'],'Attila'],['assedio','aquileia'],['marcia','roma',['roma','narni','bologna','mincio'],'papa Leone']]}]
+};
+/* Gli Arabi, dalla Siria a Poitiers. Fonti: per la guerra persiana, la Siria, l'Egitto e il Maghreb ho letto le sintesi moderne (voci della Wikipedia inglese «Byzantine–Sasanian War of 602–628»,
+   «Battle of the Yarmuk», «Muslim conquest of Egypt», «Battle of Carthage (698)», «Muslim conquest of the Maghreb», 23 novembre 2026, che citano Howard-Johnston, Kaegi, Butler, Kennedy):
+   Damasco ed Emesa persiane nel 613, Gerusalemme nel 614 dopo tre settimane d'assedio, l'Egitto invaso nel 618 e tenuto fino al 629, l'assedio di Costantinopoli del 626, Ninive nel 627;
+   lo Yarmuk nell'agosto 636; Amr a Pelusio alla fine del 639, Alessandria che si arrende nel 641 e le ultime truppe che partono il 17 settembre 642; Qayrawan fondata nel 670, Cartagine presa
+   nel 698. Le strade sono schemi (i Persiani dal Tigri, Eraclio per l'Anatolia, gli Arabi dall'Arabia, lungo la costa africana). Il 711: lo sbarco a Gibilterra (Gabal Tariq) viene dalla tradizione araba;
+   Toledo presa dopo la battaglia (testo della tappa). Il 732: Cronaca del 754, Chron. min. II pp. 361-362 (letta, vedi LUOGHI_TAPPA): passa «montana Vacceorum», batte Oddone oltre la Garonna,
+   punta su Tours; Carlo è «consulem Francie interioris Austrie» (Metz sta per l'Austrasia, Orléans è uno schema). Gli stati delle regioni nei primi passi riportano la carta a prima delle conquiste. */
+(function(){
+  var prima={levante:'conteso',egitto:'conteso',africa:'oriente',numidia:'oriente',mauri:'oriente',mauretania:'perso',hispania:'regno:visigoti',spania:'regno:visigoti',asturie:'regno:visigoti'};
+  function con(o){ var r={}, k; for(k in prima) r[k]=prima[k]; for(k in o) r[k]=o[k]; return r; }
+  PASSI_CARTA[711]=[
+   {a:'602-628', t:"Prima degli Arabi, Bisanzio e la Persia combattono per ventisei anni. I Persiani prendono la Siria, Gerusalemme e l'Egitto e nel 626 arrivano davanti a Costantinopoli. Eraclio vince nel 627, ma i due imperi escono stremati.",
+    sc:[['marcia','altri',['tigri','edessa','antiochia','emesa','damasco','gerusalemme'],'Persiani'],['marcia','altri',['gerusalemme','gaza','sinai','pelusio','alessandria']],['assedio','costantinopoli'],['marcia','roma',['costantinopoli','nicomedia','ancira','tiana','tigri'],'Eraclio']], regioni:con({})},
+   {a:'636', t:"Pochi anni dopo arrivano dall'Arabia gli eserciti del califfato. Ad agosto del 636, presso il fiume Yarmuk, distruggono l'esercito mandato da Eraclio: la Siria è perduta.",
+    sc:[['marcia','altri',['arabia','yarmuk'],'Arabi'],['scontro','yarmuk'],['marcia','altri',['yarmuk','damasco','emesa','antiochia']]], regioni:con({levante:'califfato',egitto:'oriente'})},
+   {a:'639-642', t:"Alla fine del 639 Amr ibn al-As entra in Egitto da Pelusio. Alessandria si arrende nel 641 e nel settembre 642 le ultime truppe bizantine partono per mare.",
+    sc:[['marcia','altri',['gaza','sinai','pelusio','babilonia','alessandria'],'Amr'],['assedio','alessandria']], regioni:con({levante:'califfato',egitto:'califfato'})},
+   {a:'698', t:"La conquista dell'Africa dura mezzo secolo. Nel 670 gli Arabi fondano Qayrawan; nel 698 prendono Cartagine.",
+    sc:[['marcia','altri',['alessandria','mareotide','marmarica1','marmarica2','cirenaica','barca','agedabia','agheila','sirte','sirte2','misurata','leptis','tripoli','giado','medenine','gafsa','qayrawan','cartagine'],'Arabi'],['assedio','cartagine']], regioni:con({levante:'califfato',egitto:'califfato',africa:'califfato',numidia:'califfato'})},
+   {a:'711', t:"Nel 711 Tariq passa lo stretto con un esercito di Berberi e Arabi e sconfigge i Visigoti presso il Guadalete. Toledo, la capitale, cade.",
+    sc:[['mare','altri',['tangeri','calpe']],['marcia','altri',['calpe','guadalete','toledo'],'Tariq'],['scontro','guadalete']]},
+   {a:'732', t:"Nel 732, o nel 733, il governatore Abd al-Rahman passa i Pirenei e punta su Tours. Fra Tours e Poitiers lo ferma Carlo Martello con i Franchi.",
+    sc:[['marcia','altri',['pamplona','bordeaux','poitiers'],'Abd al-Rahman'],['marcia','franchi',['metz','orleans','poitiers'],'Carlo Martello'],['scontro','poitiers']], regioni:{hispania:'califfato',spania:'califfato',gallaecia:'califfato',settimania:'califfato',asturie:'regno:asturie'}}];
+})();
+/* la tappa riceve i passi e, come scena, tutti i loro segni insieme (ognuno sa a quale passo appartiene: p) */
+TAPPE.forEach(function(t){ var P=!t.intermezzo&&PASSI_CARTA[t.anno]; if(!P) return; t.passi=P; t.scena=[];
+  P.forEach(function(q,i){ q.sc.forEach(function(e){ var c=e.slice(); c.p=i; t.scena.push(c); }); }); });
 /* stato cumulato delle regioni a ogni tappa */
 var st={}; OVEST.concat(EST).forEach(function(k){ st[k]='roma'; }); OLTRE.forEach(function(k){ st[k]='fuori'; });
 TAPPE.forEach(function(t){ var c=!t.intermezzo&&CAMBI[t.anno], k; if(c){ for(k in FIGLIE) if(c[FIGLIE[k]]!=null && c[k]==null) st[k]=c[FIGLIE[k]]; for(k in c) st[k]=c[k]; } t.regioni=JSON.parse(JSON.stringify(st)); });
 /* l'atto avanza dopo ogni intermezzo: l'intermezzo chiude l'atto che lo precede */
+/* un passo con «come»: gli stati delle regioni sono quelli della tappa di quell'anno (il 401-402 del sacco del 410 si vede con la Gallia ancora romana) */
+for(var ap in PASSI_CARTA) PASSI_CARTA[ap].forEach(function(q){ if(q.come==null) return; var tc=TAPPE.filter(function(t){ return !t.intermezzo && t.anno===q.come; })[0]; if(tc) q.regioni=tc.regioni; });
 var atto=0; TAPPE.forEach(function(t){ if(t.apre) atto++; t.atto=atto; if(t.intermezzo) atto++; });   // "apre": la tappa inizia un atto nuovo
 
 return {ATTI:ATTI,TAPPE:TAPPE,CAMBI:CAMBI,CURVE:CURVE,ABITATI:ABITATI,MONUMENTI:MONUMENTI,CANTIERI:CANTIERI,MURA_ALTE:MURA_ALTE,EVENTI:EVENTI,SCHEDE:SCHEDE,CERTEZZA:CERTEZZA,CHIESE:CHIESE,ITINERARIO:ITINERARIO,interp:interp};

@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 01:09:12.
+Generato da `src/testi.mjs` il 23/11/2026, 08:21:15.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -103,7 +103,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.44] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Quelle segnate «Ricostruzione» sono state generate per questa pagina a partire dalle fonti: il volto è immaginario. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.45] Versione del 23/11/2026, ore 00:59
+[pagina.45] Versione del 23/11/2026, ore 08:21
 
 
 ## 2. Gli atti
@@ -532,6 +532,32 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T13-378.luogo1.adrianopoli] i Goti distruggono l'esercito d'Oriente; muore Valente
 
+[T13-378.passo1.anno] verso il 375
+
+[T13-378.passo1.testo] Gli Unni arrivano dalla steppa con gli Alani del Don. Travolgono i Goti Greutungi, poi battono sul Dnestr i Goti Tervingi di Atanarico.
+
+[T13-378.passo1.freccia1] Unni
+
+[T13-378.passo2.anno] 376
+
+[T13-378.passo2.testo] I Tervingi chiedono di entrare nell'impero. Valente li lascia passare il Danubio; i Greutungi passano poco dopo da soli, su zattere. Dove passarono non è detto.
+
+[T13-378.passo2.freccia1] Tervingi
+
+[T13-378.passo3.anno] 377
+
+[T13-378.passo3.testo] Affamati e maltrattati dai funzionari romani, i Goti si ribellano presso Marcianopoli, battono il generale Lupicino e saccheggiano la Tracia.
+
+[T13-378.passo3.freccia1] Goti
+
+[T13-378.passo4.anno] 378
+
+[T13-378.passo4.testo] Il 9 agosto Valente attacca i Goti presso Adrianopoli senza aspettare l'esercito del nipote Graziano. È sconfitto e muore sul campo.
+
+[T13-378.passo4.freccia1] Valente
+
+[T13-378.passo4.freccia2] Fritigerno
+
 
 ### 384 · L'altare della dea Vittoria divide il Senato
 
@@ -790,6 +816,42 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T21-410.luogo1.roma] il sacco dei Goti di Alarico
 
+[T21-410.passo1.anno] 401-402
+
+[T21-410.passo1.testo] Alarico scende dai Balcani in Italia. Stilicone lo affronta a Pollenzo nel 402 e di nuovo presso Verona; i Goti tornano nell'Illirico.
+
+[T21-410.passo1.freccia1] Alarico
+
+[T21-410.passo2.anno] 408 · Ravenna
+
+[T21-410.passo2.testo] Il 22 agosto Stilicone è ucciso a Ravenna. Secondo Zosimo i soldati romani massacrano nelle città le mogli e i figli dei barbari federati, e trentamila uomini passano con Alarico.
+
+[T21-410.passo2.freccia2] federati
+
+[T21-410.passo3.anno] 408 · Roma
+
+[T21-410.passo3.testo] In autunno Alarico torna in Italia, lascia Ravenna alle spalle e blocca Roma. La città paga: cinquemila libbre d'oro e trentamila d'argento.
+
+[T21-410.passo3.freccia1] Alarico
+
+[T21-410.passo4.anno] 409
+
+[T21-410.passo4.testo] Alarico prende il porto di Roma, dove stanno le scorte di grano. Il Senato accetta l'imperatore che vuole lui, Attalo; l'anno dopo Alarico lo depone presso Rimini.
+
+[T21-410.passo4.freccia2] Alarico
+
+[T21-410.passo5.anno] 410 · Roma
+
+[T21-410.passo5.testo] Fallite le trattative con Onorio, Alarico torna su Roma. Il 24 agosto i Goti entrano dalla porta Salaria e saccheggiano la città.
+
+[T21-410.passo5.freccia1] Alarico
+
+[T21-410.passo6.anno] 410 · Bruzio
+
+[T21-410.passo6.testo] I Goti scendono per la Campania e la Lucania fino al Bruzio. Vogliono passare in Sicilia e in Africa, ma una tempesta affonda le navi. Alarico muore presso Cosenza.
+
+[T21-410.passo6.freccia1] Alarico
+
 
 ### 418 · Un regno dentro l'impero
 
@@ -920,6 +982,42 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [T26-451.leggenda] Il Gunther del poema dei Nibelunghi ricorda un re realmente esistito, Gundicario. Secondo Prospero d'Aquitania, nel 435 Ezio sconfisse in Gallia i Burgundi di Gundicario e gli concesse la pace. Poco dopo, scrive Prospero, gli Unni «lo annientarono con il suo popolo, fin dalla radice». Le fonti non concordano. La Cronaca gallica del 452 attribuisce la strage a Ezio, senza nominare gli Unni, e la data al 436. Idazio parla di 20.000 morti. Nel 443 i superstiti ottennero la regione della Sapaudia e nel 451 combatterono al fianco di Ezio. La legge dei Burgundi ricorda quattro re antenati, Gibica, Gundomar, Gislahar e Gundahar. Due nomi riecheggiano in quelli di Gunther e Giselher, due dei tre re fratelli del poema. Anche la morte di Attila ha versioni diverse. Giordane, che cita Prisco, racconta che nel 453, la notte delle nozze con Ildico, il re morì soffocato dal proprio sangue, senza ferite. Già nel VI secolo, prima di Giordane, il cronista Marcellino scrive che una donna lo avrebbe pugnalato, ma ricorda anche la versione dell'emorragia. Verso il 1200 il poema dei Nibelunghi unisce le due vicende. I Burgundi vi muoiono alla corte di Attila, chiamato Etzel, per la vendetta di una donna.
 
 [T26-451.luogo1.catalaunici] Ezio e i Visigoti fermano Attila (il luogo esatto è incerto)
+
+[T26-451.passo1.anno] 451 · Metz
+
+[T26-451.passo1.testo] In primavera gli Unni di Attila lasciano la Pannonia e passano il Reno. Metz brucia la vigilia di Pasqua. Dove passarono il fiume non è detto.
+
+[T26-451.passo1.freccia1] Attila
+
+[T26-451.passo2.anno] 451 · Orléans
+
+[T26-451.passo2.testo] Attila assedia Orléans. Ezio e il re dei Visigoti Teodorico accorrono e salvano la città. Dentro ci sono gli Alani di Sangibano, che secondo Giordane volevano consegnarla ad Attila.
+
+[T26-451.passo2.freccia1] Attila
+
+[T26-451.passo2.freccia2] Ezio
+
+[T26-451.passo2.freccia3] Teodorico
+
+[T26-451.passo3.anno] 451 · Campi Catalaunici
+
+[T26-451.passo3.testo] Attila si ritira verso est e lo scontro avviene ai Campi Catalaunici. Secondo Giordane, Teodorico tiene l'ala destra, Ezio la sinistra, gli Alani il centro. Teodorico muore; Attila si chiude dietro i carri e poi se ne va.
+
+[T26-451.passo3.freccia1] Unni
+
+[T26-451.passo3.freccia2] Visigoti
+
+[T26-451.passo3.freccia3] Alani
+
+[T26-451.passo3.freccia4] Ezio e i Romani
+
+[T26-451.passo4.anno] 452 · Italia
+
+[T26-451.passo4.testo] L'anno dopo Attila scende in Italia. Dopo un lungo assedio distrugge Aquileia, poi devasta Milano e Pavia. Presso il Mincio lo incontra papa Leone, e Attila torna oltre il Danubio.
+
+[T26-451.passo4.freccia1] Attila
+
+[T26-451.passo4.freccia3] papa Leone
 
 
 ### 455 · Il secondo sacco
@@ -1405,6 +1503,46 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [T43-711.luogo2.cartagine] presa dagli Arabi nel 698
 
 [T43-711.luogo3.poitiers] nel 732 Carlo Martello ferma una spedizione araba diretta a Tours (il luogo esatto è incerto)
+
+[T43-711.passo1.anno] 602-628
+
+[T43-711.passo1.testo] Prima degli Arabi, Bisanzio e la Persia combattono per ventisei anni. I Persiani prendono la Siria, Gerusalemme e l'Egitto e nel 626 arrivano davanti a Costantinopoli. Eraclio vince nel 627, ma i due imperi escono stremati.
+
+[T43-711.passo1.freccia1] Persiani
+
+[T43-711.passo1.freccia4] Eraclio
+
+[T43-711.passo2.anno] 636
+
+[T43-711.passo2.testo] Pochi anni dopo arrivano dall'Arabia gli eserciti del califfato. Ad agosto del 636, presso il fiume Yarmuk, distruggono l'esercito mandato da Eraclio: la Siria è perduta.
+
+[T43-711.passo2.freccia1] Arabi
+
+[T43-711.passo3.anno] 639-642
+
+[T43-711.passo3.testo] Alla fine del 639 Amr ibn al-As entra in Egitto da Pelusio. Alessandria si arrende nel 641 e nel settembre 642 le ultime truppe bizantine partono per mare.
+
+[T43-711.passo3.freccia1] Amr
+
+[T43-711.passo4.anno] 698
+
+[T43-711.passo4.testo] La conquista dell'Africa dura mezzo secolo. Nel 670 gli Arabi fondano Qayrawan; nel 698 prendono Cartagine.
+
+[T43-711.passo4.freccia1] Arabi
+
+[T43-711.passo5.anno] 711
+
+[T43-711.passo5.testo] Nel 711 Tariq passa lo stretto con un esercito di Berberi e Arabi e sconfigge i Visigoti presso il Guadalete. Toledo, la capitale, cade.
+
+[T43-711.passo5.freccia2] Tariq
+
+[T43-711.passo6.anno] 732
+
+[T43-711.passo6.testo] Nel 732, o nel 733, il governatore Abd al-Rahman passa i Pirenei e punta su Tours. Fra Tours e Poitiers lo ferma Carlo Martello con i Franchi.
+
+[T43-711.passo6.freccia1] Abd al-Rahman
+
+[T43-711.passo6.freccia2] Carlo Martello
 
 
 ### 727 · I pellegrini raggiungono San Pietro
@@ -3638,7 +3776,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [carta.citta] Roma · Ravenna · Milano · Treviri · Arles · Cartagine · Costantinopoli · Londinium · Sirmio · Antiochia · Alessandria · Tolosa · Adrianopoli
 
-[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura
+[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Visigoti · Alani · Romani · Unni · Unni
 
 [carta.mari] Mare Nostrum · Oceano · Mare Interno · Ponto Eusino
 
@@ -3779,49 +3917,55 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.43-r114] Khanato dei Bulgari
 
-[ui.mappa.44-r392] Regni dei Franchi
+[ui.mappa.44-r402] La scena passo per passo
 
-[ui.mappa.45-r392] Impero dei Franchi
+[ui.mappa.45-r405] Passo per passo
 
-[ui.mappa.46-r512] regno d'Italia di Odoacre
+[ui.mappa.46-r406] Rivedi la scena dall'inizio
 
-[ui.mappa.47-r512] regno degli Ostrogoti
+[ui.mappa.47-r507] Regni dei Franchi
 
-[ui.mappa.48-r512] regno dei Franchi
+[ui.mappa.48-r507] Impero dei Franchi
 
-[ui.mappa.49-r513] impero romano
+[ui.mappa.49-r627] regno d'Italia di Odoacre
 
-[ui.mappa.50-r513] impero d'Occidente
+[ui.mappa.50-r627] regno degli Ostrogoti
 
-[ui.mappa.51-r513] territorio con un imperatore rivale
+[ui.mappa.51-r627] regno dei Franchi
 
-[ui.mappa.52-r513] territorio romano che non obbedisce più a Ravenna
+[ui.mappa.52-r628] impero romano
 
-[ui.mappa.53-r513] regione contesa in guerra
+[ui.mappa.53-r628] impero d'Occidente
 
-[ui.mappa.54-r514] barbari insediati per trattato
+[ui.mappa.54-r628] territorio con un imperatore rivale
 
-[ui.mappa.55-r514] impero d'Oriente
+[ui.mappa.55-r628] territorio romano che non obbedisce più a Ravenna
 
-[ui.mappa.56-r515] califfato ed emirati arabi
+[ui.mappa.56-r628] regione contesa in guerra
 
-[ui.mappa.57-r515] regni franchi dopo la divisione dell'843
+[ui.mappa.57-r629] barbari insediati per trattato
 
-[ui.mappa.58-r515] lasciata dall'impero
+[ui.mappa.58-r629] impero d'Oriente
 
-[ui.mappa.59-r515] uscita dall'impero
+[ui.mappa.59-r630] califfato ed emirati arabi
 
-[ui.mappa.60-r546] Mostra meno voci della legenda
+[ui.mappa.60-r630] regni franchi dopo la divisione dell'843
 
-[ui.mappa.61-r556] Mostra le altre
+[ui.mappa.61-r630] lasciata dall'impero
 
-[ui.mappa.62-r606] mai dentro l’impero
+[ui.mappa.62-r630] uscita dall'impero
 
-[ui.mappa.63-r650] Carta a tutto schermo
+[ui.mappa.63-r661] Mostra meno voci della legenda
 
-[ui.mappa.64-r655] Tutto schermo
+[ui.mappa.64-r671] Mostra le altre
 
-[ui.mappa.65-r655] Esci dallo schermo intero
+[ui.mappa.65-r721] mai dentro l’impero
+
+[ui.mappa.66-r765] Carta a tutto schermo
+
+[ui.mappa.67-r770] Tutto schermo
+
+[ui.mappa.68-r770] Esci dallo schermo intero
 
 
 ### js/atti.js

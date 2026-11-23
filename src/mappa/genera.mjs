@@ -246,7 +246,16 @@ const LUOGHI = { magonza: [8.27, 50.0, 'Magonza'], abritto: [26.52, 43.53, 'Abri
   /* tappe della storia religiosa del IV secolo (src/testi/tappe-cristianesimo.md): il Frigido è il Vipacco presso Aidussina (identificazione corrente; il punto esatto della battaglia non si conosce); Mursa è Osijek */
   frigido: [13.9, 45.88, 'Frigido'], mursa: [18.69, 45.55, 'Mursa'], torino: [7.68, 45.07, 'Torino'], brescia: [10.22, 45.54, 'Brescia'], modena: [10.93, 44.65, 'Modena'],
   /* la marcia di Giuliano nel 363 (Ammiano XXIII 2-5): Batne è Suruç, Callinico è Raqqa, Circesio è alla foce del Khabur; a Dura la carta finisce, Ctesifonte sta oltre il bordo */
-  ierapoli: [37.95, 36.53, 'Ierapoli'], batne: [38.42, 36.98, 'Batne'], callinico: [39.02, 35.95, 'Callinico'], circesio: [40.45, 35.17, 'Circesio'], dura: [40.73, 34.75, 'Dura'] };
+  ierapoli: [37.95, 36.53, 'Ierapoli'], batne: [38.42, 36.98, 'Batne'], callinico: [39.02, 35.95, 'Callinico'], circesio: [40.45, 35.17, 'Circesio'], dura: [40.73, 34.75, 'Dura'],
+  /* le scene «a passi» (PASSI_CARTA in js/dati.js, 23 novembre 2026; fonti accanto a ogni passo). Il Don cade oltre il bordo e si disegna sul bordo; il passaggio del Danubio a Durostoro
+     è uno schema (Ammiano non dice dove); il Mincio è l'«ager Ambuleius» di Giordane (Getica 223), di posizione incerta; il Piceno, l'Arabia e la Sirte sono punti di una regione, non città */
+  don: [39.6, 47.25, 'Don'], dnestr: [29.6, 46.85, 'Dnestr'], durostoro: [27.27, 44.12, 'Durostoro'], marcianopoli: [27.58, 43.22, 'Marcianopoli'],
+  concordia: [12.84, 45.76, 'Concordia'], altino: [12.42, 45.54, 'Altino'], cremona: [10.03, 45.13, 'Cremona'], bologna: [11.34, 44.49, 'Bologna'], piceno: [13.3, 43.35, 'Piceno'], mincio: [10.75, 45.2, 'Mincio'],
+  gerusalemme: [35.23, 31.78, 'Gerusalemme'], damasco: [36.3, 33.51, 'Damasco'], yarmuk: [35.95, 32.75, 'Yarmuk'], arabia: [37.4, 30.4, 'Arabia'], gaza: [34.47, 31.45, 'Gaza'],
+  babilonia: [31.23, 30.0, 'Babilonia d\'Egitto'], barca: [20.9, 32.45, 'Barca'], sinai: [33.4, 30.85, 'Sinai'], mareotide: [29.95, 30.75, 'Mareotide'], sirte2: [16.0, 30.75, 'Sirte'], marmarica1: [28.6, 30.6, 'Marmarica'], marmarica2: [25.6, 31.25, 'Marmarica'], cirenaica: [23.4, 31.85, 'Cirenaica'],
+  misurata: [14.9, 32.0, 'Misurata'], leptis: [14.0, 32.45, 'Leptis'], giado: [11.6, 32.55, 'Tripolitania'], medenine: [10.45, 33.3, 'Medenine'], gafsa: [9.45, 34.35, 'Bizacena'], dnepr: [34.5, 47.5, 'Dnepr'], agedabia: [20.22, 30.6, 'Agedabia'], agheila: [19.1, 30.0, 'El Agheila'], sirte: [16.6, 31.1, 'Sirte'], tripoli: [13.18, 32.85, 'Tripoli'], qayrawan: [10.1, 35.68, 'Qayrawan'], tours: [0.69, 47.39, 'Tours'],
+  /* lo schieramento ai Campi Catalaunici (Giordane, Getica 197-198): da dove vengono le tre ali e gli Unni è uno schema (l'orientamento del campo non è detto) */
+  catal_v: [3.05, 48.2, 'Visigoti'], catal_a: [2.85, 48.6, 'Alani'], catal_r: [3.05, 49.0, 'Romani'], catal_s: [3.7, 47.95, 'Unni'], catal_e: [5.3, 48.7, 'Unni'] };
 
 /* Cammini e marce sono stati controllati contro la linea di costa il 22 novembre 2026 (prova nel browser: si campiona ogni tracciato e si chiede a `isPointInFill` della terra):
    per mare restano solo lo stretto di Gibilterra dei Vandali, lo stretto di Messina e il viaggio di Angli e Sassoni, che sono veri. Chi aggiunge un punto rifaccia la prova.

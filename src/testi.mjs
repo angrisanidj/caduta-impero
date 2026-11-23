@@ -37,6 +37,7 @@ D.TAPPE.forEach((t,i)=>{
   (t.voci||[]).forEach((v,k)=>{ voce(s+'.voce'+(k+1)+'.testo',v.testo); voce(s+'.voce'+(k+1)+'.chi',v.chi); });
   voce(s+'.leggenda',t.leggenda); voce(s+'.storici',t.storici);
   (t.luoghi||[]).forEach((l,k)=>voce(s+'.luogo'+(k+1)+'.'+l[0],l[1]));
+  (t.passi||[]).forEach((q,k)=>{ const p=s+'.passo'+(k+1); voce(p+'.anno',q.b||q.a); voce(p+'.testo',q.t); q.sc.forEach((e,j)=>{ if(e[3]) voce(p+'.freccia'+(j+1),e[3]); }); });      // la carta a passi (PASSI_CARTA)
 });
 
 /* ---- 3. cruscotto ed eventi ---- */

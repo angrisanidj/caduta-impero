@@ -249,10 +249,10 @@ function morbida(pp,k,terra){
 }
 /* scalaScena: durante lo zoom della regia la carta si ingrandisce di z volte; la scena (frecce, anelli, segni) si disegna più piccola (per z alla 0,35: 0,73 quando la carta cresce di 2,5 volte),
    così sullo schermo cresce un poco ma non diventa enorme rispetto alla carta. I rombi dei luoghi (kr) restano come sono */
-var scenaFatta=null, scalaScena=1;
+var scenaFatta=null, scalaScena=1, testoMin=0;      // testoMin: durante la regia, la misura dei nomi sulle frecce (unità per k), perché sullo schermo siano di 11,5 pixel a ogni ingrandimento e su ogni schermo
 function disegnaScena(sc,kr,pos,fissi,k){
   k=k||kr;
-  var ch=[kr,k,bordo.join()].join('|'), quale=sc;
+  var kt=testoMin>0?testoMin:k, ch=[kr,k,kt.toFixed(3),bordo.join()].join('|'), quale=sc;
   if(scenaFatta && scenaFatta.sc===quale && scenaFatta.l===luoghiOra && scenaFatta.ch===ch){ nucleiOra=scenaFatta.nuclei; Array.prototype.push.apply(fissi,scenaFatta.fissi); return; }
   while(stratoScena.firstChild) stratoScena.removeChild(stratoScena.firstChild);
   var nuovi=[], nuclei={}, G5=.5*k;
@@ -261,9 +261,12 @@ function disegnaScena(sc,kr,pos,fissi,k){
   function dentro(p){ return [Math.max(bordo[0],Math.min(bordo[1],p[0])),Math.max(bordo[2],Math.min(bordo[3],p[1]))]; }
   function metti(r){ fissi.push(r); nuovi.push(r); }
   sc=sc||[];
+  /* una scena a passi (PASSI_CARTA): i segni di ogni passo stanno in un gruppo suo, che la regia accende, schiarisce o nasconde */
+  var gp=[]; sc.forEach(function(e){ if(e.p!=null) while(gp.length<=e.p) gp.push(el('g',{'class':'passo','data-p':gp.length},stratoScena)); });
+  function dove(e){ return e.p!=null?gp[e.p]:stratoScena; }
   sc.forEach(function(e){
     if(e[0]!=='assedio') return; var p=puntoDi(e[1]); if(!p) return; p=dentro(p);
-    var g=el('g',{'class':'assedio',transform:'translate('+p[0]+' '+p[1]+')'},stratoScena), gi=el('g',{transform:'scale('+k+')'},g), n=chiave(p[0],p[1]);
+    var g=el('g',{'class':'assedio',transform:'translate('+p[0]+' '+p[1]+')'},dove(e)), gi=el('g',{transform:'scale('+k+')'},g), n=chiave(p[0],p[1]);
     el('circle',{r:12,fill:'none',stroke:'#241E1A','stroke-width':2.2,'stroke-dasharray':'4 3'},gi); el('circle',{r:12,fill:'none',stroke:'#FBF6EA','stroke-width':.8,'stroke-dasharray':'4 3','stroke-dashoffset':3.5},gi);
     (nuclei[n]=nuclei[n]||{c:0,r:0}).r=13.1*k; metti([p[0],p[1],26.2*k,26.2*k,1]);
   });
@@ -327,60 +330,172 @@ function disegnaScena(sc,kr,pos,fissi,k){
         var l=Math.hypot(via[i][0]-via[i-1][0],via[i][1]-via[i-1][1]);
         if(resta<l){ via=[[via[i-1][0]+(via[i][0]-via[i-1][0])*resta/l,via[i-1][1]+(via[i][1]-via[i-1][1])*resta/l]].concat(via.slice(i)); break; }
         resta-=l; } }      // se il cammino è troppo corto resta com'è
-    var d='M'+via.map(function(v){ return v[0].toFixed(1)+' '+v[1].toFixed(1); }).join('L');
-    el('path',{'class':cl+' sotto',d:d,pathLength:1,fill:'none',stroke:col[1],'stroke-width':(3.8*k).toFixed(2),'stroke-linecap':'round','stroke-linejoin':'round'},stratoScena);
-    el('path',{'class':cl,d:d,pathLength:1,fill:'none',stroke:col[0],'stroke-width':(2*k).toFixed(2),'stroke-linecap':'round','stroke-linejoin':'round'},stratoScena);
-    el('path',{'class':'punta',d:'M0 0L-8.5 -4.6L-8.5 4.6Z',transform:'translate('+b[0].toFixed(2)+' '+b[1].toFixed(2)+') rotate('+(ang*180/Math.PI).toFixed(1)+') scale('+k+')',fill:col[0],stroke:col[1],'stroke-width':1.2,'stroke-linejoin':'round'},stratoScena);
-    metti(ingo);
+    var d='M'+via.map(function(v){ return v[0].toFixed(1)+' '+v[1].toFixed(1); }).join('L'), pa=dove(e);
+    el('path',{'class':cl+' sotto',d:d,pathLength:1,fill:'none',stroke:col[1],'stroke-width':(3.8*k).toFixed(2),'stroke-linecap':'round','stroke-linejoin':'round'},pa);
+    el('path',{'class':cl,d:d,pathLength:1,fill:'none',stroke:col[0],'stroke-width':(2*k).toFixed(2),'stroke-linecap':'round','stroke-linejoin':'round'},pa);
+    el('path',{'class':'punta',d:'M0 0L-8.5 -4.6L-8.5 4.6Z',transform:'translate('+b[0].toFixed(2)+' '+b[1].toFixed(2)+') rotate('+(ang*180/Math.PI).toFixed(1)+') scale('+k+')',fill:col[0],stroke:col[1],'stroke-width':1.2,'stroke-linejoin':'round'},pa);
+    metti(ingo); f.via=via; f.col=col;
   });
   var ost=fissi.slice();      // spade e fiamme evitano anche i nomi, al loro posto di sempre
   nomiPos.forEach(function(np){ ost.push(rettoNome(np,[0,0])); });
   cittaPos.forEach(function(cp){ ost.push(rettoCitta(cp,[cp.lato,cp.dy,7],largaCitta(cp.id))); });
+  /* Il nome sulla freccia (quarto elemento di una marcia: «Unni», «Ezio»): orizzontale, accanto alla linea (sopra, sotto o di lato), nel punto del cammino dove copre di meno
+     le altre linee, i segni, i rombi e i nomi; si prova dal mezzo verso i capi. Diventa un ingombro anche lui, così spade e fiamme lo evitano */
+  var linee=[];
+  frecce.forEach(function(f){ if(!f.via) return; for(var i=1;i<f.via.length;i++){ var a=f.via[i-1], b2=f.via[i], l=Math.hypot(b2[0]-a[0],b2[1]-a[1]), n=Math.max(1,Math.ceil(l/(4*k)));
+    for(var m=0;m<=n;m++) linee.push([a[0]+(b2[0]-a[0])*m/n,a[1]+(b2[1]-a[1])*m/n,4.4*k,4.4*k]); } });
+  frecce.forEach(function(f){
+    var nome=f.e[3]; if(!nome||!f.via||f.via.length<2) return;
+    var t=el('text',{'class':'m-nome-freccia','text-anchor':'middle','font-size':(11*kt).toFixed(2),'stroke-width':(3.2*kt).toFixed(2),fill:f.col===COLORI_SCENA.franchi?'#1F3345':'#241E1A'},dove(f.e)); t.textContent=nome;
+    var W=0; try{ W=t.getComputedTextLength(); }catch(x){} if(!(W>2)) W=nome.length*6.1*kt; W+=3*kt; var H=12.5*kt;
+    var cum=[0], i; for(i=1;i<f.via.length;i++) cum.push(cum[i-1]+Math.hypot(f.via[i][0]-f.via[i-1][0],f.via[i][1]-f.via[i-1][1]));
+    var L=cum[cum.length-1], meglio=null, minimo=1e12;
+    [.5,.4,.6,.3,.7,.22,.78,.14].forEach(function(fr){
+      var s=L*fr; for(i=1;i<cum.length-1&&cum[i]<s;i++); var u=(s-cum[i-1])/((cum[i]-cum[i-1])||1), x=f.via[i-1][0]+(f.via[i][0]-f.via[i-1][0])*u, y=f.via[i-1][1]+(f.via[i][1]-f.via[i-1][1])*u;
+      [[0,-(H/2+3*k)],[0,H/2+3*k],[W/2+3.5*k,0],[-(W/2+3.5*k),0]].forEach(function(o,j){
+        var r=[x+o[0],y+o[1],W,H], c=ingombro(r,ost)+ingombro(r,linee)+(r[0]-W/2<bordo[0]-4||r[0]+W/2>bordo[1]+4||r[1]-H/2<bordo[2]-4||r[1]+H/2>bordo[3]+4?400*k*k:0)+Math.abs(fr-.5)*4*k+j*.3*k;
+        if(c<minimo){ minimo=c; meglio=r; } });
+    });
+    t.setAttribute('x',meglio[0].toFixed(1)); t.setAttribute('y',(meglio[1]+H*.34).toFixed(1)); metti(meglio); ost.push(meglio);
+  });
   sc.forEach(function(e){
-    var tipo=e[0]; if(tipo!=='scontro'&&tipo!=='fuoco') return; var p=puntoDi(e[1]); if(!p) return; p=dentro(p);
+    var tipo=e[0]; if(tipo!=='scontro'&&tipo!=='fuoco'&&tipo!=='morte') return; var p=puntoDi(e[1]); if(!p) return; p=dentro(p);
+    if(tipo==='morte'){      // una morte che conta nel racconto (Stilicone, Alarico): una croce in un tondo chiaro, accanto al luogo
+      var mw=8.6*k, cm=Math.max(nucleoDi(p[0],p[1]),4*k)+G5, prm=[[0,-(cm+mw)],[cm+mw,0],[-(cm+mw),0],[0,cm+mw]], jm, rm, best=0, bm=1e9;
+      for(jm=0;jm<prm.length;jm++){ rm=[p[0]+prm[jm][0],p[1]+prm[jm][1],2*mw,2*mw,1]; var tm=ingombro(rm,ost)+ingombro(rm,linee); if(tm<bm){ bm=tm; best=jm; if(!tm) break; } }
+      rm=[p[0]+prm[best][0],p[1]+prm[best][1],2*mw,2*mw,1]; metti(rm); ost.push(rm);
+      var gm=el('g',{'class':'morte',transform:'translate('+rm[0].toFixed(1)+' '+rm[1].toFixed(1)+')'},dove(e)), gmi=el('g',{transform:'scale('+k+')'},gm);
+      el('circle',{r:7.6,fill:'#FBF6EA',stroke:'#241E1A','stroke-width':1.4},gmi); el('path',{d:'M0 -4.8V5M-3.4 -1.6H3.4',fill:'none',stroke:'#241E1A','stroke-width':1.9,'stroke-linecap':'round'},gmi);
+      return;
+    }
     var scontro=tipo==='scontro', sw=(scontro?10.3:12.6)*k, sh=(scontro?10.3:13.1)*k, lc=scontro?[0,-15]:[1,-11.5], c=Math.max(nucleoDi(p[0],p[1]),4*k)+G5, ox=c+sw, oy=c+sh;
     var prove=[[0,-oy],[ox,0],[-ox,0],[0,oy],[ox,-oy],[-ox,-oy],[ox,oy],[-ox,oy]], meglio=0, minimo=1e9, j, r, t;
     for(j=0;j<prove.length;j++){ r=[p[0]+prove[j][0],p[1]+prove[j][1],2*sw,2*sh,scontro?1:0];
       t=ingombro(r,ost)+(r[0]-sw<bordo[0]-6||r[0]+sw>bordo[1]+6||r[1]-sh<bordo[2]-6||r[1]+sh>bordo[3]+6?500*k:0);      // fuori dal bordo vale meno
       if(t<minimo){ minimo=t; meglio=j; if(!t) break; } }
     r=[p[0]+prove[meglio][0],p[1]+prove[meglio][1],2*sw,2*sh,scontro?1:0]; metti(r); ost.push(r);
-    var g=el('g',{'class':tipo,transform:'translate('+(r[0]-lc[0]*k).toFixed(1)+' '+(r[1]-lc[1]*k).toFixed(1)+')'},stratoScena), gi=el('g',{transform:'scale('+k+')'},g);
+    var g=el('g',{'class':tipo,transform:'translate('+(r[0]-lc[0]*k).toFixed(1)+' '+(r[1]-lc[1]*k).toFixed(1)+')'},dove(e)), gi=el('g',{transform:'scale('+k+')'},g);
     if(scontro){ el('circle',{r:9.5,cy:-15,fill:'#FBF6EA',stroke:'#8E2A2A','stroke-width':1.6},gi); el('path',{d:'M-5.2 -20.2L5.2 -9.8M5.2 -20.2L-5.2 -9.8M-5.9 -12.9L-2.3 -9.3M5.9 -12.9L2.3 -9.3',fill:'none',stroke:'#8E2A2A','stroke-width':1.9,'stroke-linecap':'round'},gi); }
     else el('path',{d:'M0 -24C5 -18 8 -14 6 -9C10 -11 9 -16 9 -16C13 -11 12 -4 6 -1C2 1 -3 1 -6 -1C-11 -4 -11 -11 -6 -15C-6 -11 -4 -10 -3 -11C-5 -16 -2 -20 0 -24Z',fill:'#E0672A',stroke:'#FBF6EA','stroke-width':1.1,'stroke-linejoin':'round'},gi);
   });
   scenaFatta={sc:quale,l:luoghiOra,ch:ch,fissi:nuovi,nuclei:nuclei};
+  if(gp.length) classiPassi(passoOra);      // ridisegnata durante la regia (cambia l'ingrandimento), la scena tiene il passo in corso
 }
 /* Regia: a ogni tappa la carta si avvicina ai luoghi dell'evento, li mostra per qualche secondo con una didascalia e torna alla vista intera.
-   Non a tutto schermo (lì la carta la muove chi guarda) e non per chi ha chiesto meno animazioni. Se i luoghi sono troppo lontani fra loro la carta resta intera. */
+   Anche a tutto schermo, se chi guarda non ha mosso la carta (dal 23 novembre 2026: «Perché non si vede lo zoom quando metto la mappa a piena pagina?»); mai per chi ha chiesto meno animazioni.
+   Se i luoghi sono troppo lontani fra loro la carta resta intera. */
+/* Scene a passi (PASSI_CARTA in js/dati.js): passoOra è il passo che la regia mostra (null: nessuno, si vedono tutti insieme). I passi già visti restano più chiari (classe prima),
+   quello in corso si disegna (viva), i seguenti non si vedono. Un passo può ricolorare alcune regioni: la carta torna ai colori della tappa a regia finita. */
+var passiOra=null, passoOra=null, luoghiRegia=null, statiTappa={}, ricolorata=false;
+function classiPassi(i){
+  var gs=stratoScena.querySelectorAll('.passo'); for(var j=0;j<gs.length;j++){ var p=+gs[j].getAttribute('data-p'); gs[j].setAttribute('class','passo'+(i==null?'':p<i?' prima':p===i?' viva':'')); }
+}
+function coloraRegioni(stati){
+  for(var id in regioni){
+    var s=stati[id]||'perso', chi=s.indexOf('regno:')===0?s.slice(6):''; if(chi) s='regno';
+    regioni[id].setAttribute('class','m-regione '+s); regioni[id].style.color=chi&&REGNI[chi]?REGNI[chi][0]:'';
+    if(nomi[id]) nomi[id].setAttribute('class','m-nome'+(s==='perso'||s==='conteso'?' chiaro':''));
+  }
+}
+function statiPasso(i){ var q=passiOra&&passiOra[i], o={}, k; for(k in statiTappa) o[k]=statiTappa[k]; if(q&&q.regioni) for(k in q.regioni) o[k]=q.regioni[k]; return o; }
+/* la barra dei passi, sotto la carta (a tutto schermo in alto a destra, sopra la carta): un bottone per passo (l'anno) e uno per ricominciare. Toccato, un passo fa ripartire la regia da lì */
+var barraPassi=document.createElement('div'); barraPassi.className='m-passi'; barraPassi.hidden=true; barraPassi.setAttribute('role','group'); barraPassi.setAttribute('aria-label','La scena passo per passo'); ospite.parentNode.insertBefore(barraPassi,rigaLuoghi);      // sotto la carta, sopra la riga dei luoghi: sulla carta coprirebbe l'anno
+function faiBarra(){
+  barraPassi.textContent=''; barraPassi.hidden=!passiOra; if(!passiOra) return;
+  var et=document.createElement('b'); et.textContent='Passo per passo'; barraPassi.appendChild(et);
+  var b0=document.createElement('button'); b0.type='button'; b0.className='m-passo-via'; b0.textContent='▶'; b0.title='Rivedi la scena dall\'inizio'; b0.setAttribute('aria-label','Rivedi la scena dall\'inizio'); barraPassi.appendChild(b0);
+  b0.addEventListener('click',function(){ suPasso(0,true); });
+  passiOra.forEach(function(q,i){ var b=document.createElement('button'); b.type='button'; b.className='m-passo'; b.textContent=q.b||q.a; b.setAttribute('aria-label','Passo '+(i+1)+', '+q.a+': '+q.t); b.title=q.t; barraPassi.appendChild(b);
+    b.addEventListener('click',function(){ suPasso(i); }); });
+}
+function segnaPasso(i){ var bs=barraPassi.querySelectorAll('.m-passo'); for(var j=0;j<bs.length;j++){ if(j===i) bs[j].setAttribute('aria-current','step'); else bs[j].removeAttribute('aria-current'); }
+  if(bs[i] && barraPassi.scrollWidth>barraPassi.clientWidth) barraPassi.scrollLeft=bs[i].offsetLeft-barraPassi.clientWidth/2+bs[i].offsetWidth/2; }      // a tutto schermo la barra scorre: il passo acceso resta in vista
+function suPasso(i,daCapo){
+  if(!pocoMoto){ avviaRegia(luoghiRegia,scenaOra,i,true); return; }
+  /* chi ha chiesto meno animazioni: il passo si mostra fermo, senza zoom; toccato di nuovo, si torna alla scena intera */
+  if(passoOra===i && !daCapo){ fermaRegia(); return; }
+  fermaRegia(); passoOra=i; svg.classList.add('in-passi'); classiPassi(i); stratoScena.setAttribute('class','m-scena passi ferma'); coloraRegioni(statiPasso(i)); ricolorata=true; segnaPasso(i);
+  scriviDidascalia({i:i}); didascalia.classList.add('viva');
+}
 var regia=null, scenaOra=null, annoVisto=null, didascalia=document.createElement('p'); didascalia.className='m-didascalia'; didascalia.setAttribute('aria-hidden','true'); ospite.appendChild(didascalia);
 var pocoMoto=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);      // ?moto=1 forza l'animazione, per le prove
-function fermaRegia(){ if(regia){ cancelAnimationFrame(regia.rf); regia=null; } if(bordo[0]!==103){ bordo=[103,897,63,565]; scalaScena=1; if(annoVisto!=null) mostraPopoli(annoVisto); } didascalia.classList.remove('viva'); if(!grandeSi && !pocoMoto) stratoScena.setAttribute('class','m-scena'); if(!grandeSi) svg.setAttribute('viewBox',BASE.join(' ')); }
-function riquadroLuoghi(l,massimo){
+function fermaRegia(){
+  var r=regia; if(r){ cancelAnimationFrame(r.rf); regia=null; }
+  passoOra=null; svg.classList.remove('in-passi'); classiPassi(null); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
+  if(bordo[0]!==103){ bordo=[103,897,63,565]; scalaScena=1; testoMin=0; if(annoVisto!=null) mostraPopoli(annoVisto); }
+  didascalia.classList.remove('viva'); document.body.classList.remove('carta-in-regia');
+  stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':''));
+  if(!grandeSi) svg.setAttribute('viewBox',BASE.join(' ')); else if(r) applicaVista();      // a tutto schermo si torna alla vista di chi guarda
+}
+function riquadroLuoghi(l,massimo,minimo){      // minimo: di quante volte al più si avvicina; con minimo (i passi) anche i margini sono più stretti
   var xs=[], ys=[]; l.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(p){ xs.push(Math.max(8,Math.min(G.w-8,p.x))); ys.push(Math.max(8,Math.min(G.h-8,p.y))); } });
   if(!xs.length) return null;
   var x0=Math.min.apply(null,xs), x1=Math.max.apply(null,xs), y0=Math.min.apply(null,ys), y1=Math.max.apply(null,ys), rap=BASE[3]/BASE[2];
-  var w=Math.max(BASE[2]/2.5,x1-x0+230), h=w*rap; if(h<y1-y0+170){ h=y1-y0+170; w=h/rap; }
+  var mx=minimo?160:230, my=minimo?130:170, w=Math.max(BASE[2]/(minimo||2.5),x1-x0+mx), h=w*rap; if(h<y1-y0+my){ h=y1-y0+my; w=h/rap; }
   if(w>BASE[2]*(massimo||.8)) return null;
   return [Math.max(0,Math.min(G.w-w,(x0+x1)/2-w/2)), Math.max(0,Math.min(G.h-h,(y0+y1)/2-h/2)), w, h];
 }
-function avviaRegia(l,sc){
-  fermaRegia(); stratoScena.setAttribute('class','m-scena'); if(grandeSi || pocoMoto){ stratoScena.setAttribute('class','m-scena viva ferma'); return; }      // la scena l'ha già disegnata mostraPopoli, prima dei cartellini
-  if(!l || !l.length) return;
-  var a=null;
-  if(sc && sc.length){ var capi=[]; sc.forEach(function(e){ if(e[0]==='marcia'||e[0]==='mare') e[2].forEach(function(q){ capi.push([q]); }); else capi.push([e[1]]); }); a=riquadroLuoghi(capi,.92); }      // con una scena, lo zoom tiene dentro marce e rotte
-  if(!a) a=riquadroLuoghi(l); if(!a){ l=l.slice(0,1); a=riquadroLuoghi(l); }      // luoghi troppo lontani fra loro: la carta si avvicina al primo, quello del titolo
-  if(!a) return;
-  didascalia.textContent=''; l.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var px=Math.max(8,Math.min(G.w-8,p.x)); if(px<a[0]-2||px>a[0]+a[2]+2||p.y<a[1]-2||p.y>a[1]+a[3]+2) return;      // nella didascalia solo i luoghi che lo zoom inquadra
+function testoDi(a){ var w=svg.getBoundingClientRect().width; return w>0?11.5/11*a[2]/w:0; }      // 11,5 pixel sullo schermo con quell'inquadratura
+function scalaDi(a){ return Math.min(1,Math.pow(a[2]/BASE[2],.35)); }
+function fondoDi(l){ var y=-1e9; l.forEach(function(q){ var p=puntoDi(q[0]); if(p) y=Math.max(y,Math.min(G.h-8,p[1])); }); return y; }      // il punto più basso della scena
+function capiDi(sc){ var capi=[]; sc.forEach(function(e){ if(e[0]==='marcia'||e[0]==='mare') e[2].forEach(function(q){ capi.push([q]); }); else capi.push([e[1]]); }); return capi; }
+/* a tutto schermo il riquadro della carta ha un altro rapporto: la finestra della regia lo prende, restando dentro il disegno */
+function suSchermo(a){
+  if(!grandeSi) return a; var rc=svg.getBoundingClientRect(), q=rc.width/(rc.height||1); if(!(q>0)) return a;
+  var w=a[2], h=a[3]; if(w/h>q) h=w/q; else w=h*q; if(w>G.w){ w=G.w; h=w/q; } if(h>G.h){ h=G.h; w=h*q; }
+  var cx=a[0]+a[2]/2, cy=a[1]+a[3]/2; return [Math.max(0,Math.min(G.w-w,cx-w/2)),Math.max(0,Math.min(G.h-h,cy-h/2)),w,h];
+}
+function scriviDidascalia(f){
+  didascalia.textContent='';
+  if(f.i!=null){ var q=passiOra[f.i], s=document.createElement('span'), b=document.createElement('b'); b.textContent=q.a+' · '; s.appendChild(b); s.appendChild(document.createTextNode(q.t)); didascalia.appendChild(s); return; }
+  var a=f.a; f.l.forEach(function(q){ var p=(G.luoghi||{})[q[0]]||G.citta[q[0]]; if(!p) return; var px=Math.max(8,Math.min(G.w-8,p.x)); if(px<a[0]-2||px>a[0]+a[2]+2||p.y<a[1]-2||p.y>a[1]+a[3]+2) return;      // nella didascalia solo i luoghi che lo zoom inquadra
     var s=document.createElement('span'), b=document.createElement('b'); b.textContent=p.nome; s.appendChild(b); s.appendChild(document.createTextNode(': '+q[1])); didascalia.appendChild(s); });
-  bordo=[8,G.w-8,8,G.h-8]; scalaScena=Math.min(1,Math.pow(a[2]/BASE[2],.35)); if(annoVisto!=null) mostraPopoli(annoVisto);      // con il bordo vero della carta si rifanno scena, nomi e cartellini
-  var r=regia={t0:0,a:a,rf:0}, ENTRA=900, FERMA=sc&&sc.length?4500:3200, ESCE=900, viva=false;
+}
+/* La regia è una fila di inquadrature: per una scena semplice una sola, per una scena a passi una per passo (da «da» in poi). Ognuna entra in 0,9 secondi dalla precedente e resta ferma
+   il tempo di leggere la didascalia; alla fine la carta torna alla vista di partenza. A tutto schermo parte solo se chi guarda non ha mosso la carta (o se ha toccato un passo), e si ferma al primo tocco */
+function avviaRegia(l,sc,da,forza){
+  fermaRegia(); luoghiRegia=l;
+  if(pocoMoto) return;
+  if(grandeSi && (!forza && !vista.libera || Object.keys(dita).length)) return;
+  var passi=passiOra, foto=[], i, a;
+  if(passi){ for(i=da||0;i<passi.length;i++) foto.push({a:riquadroLuoghi(capiDi(passi[i].sc),.92,3.4)||BASE.slice(),i:i,y1:fondoDi(capiDi(passi[i].sc))}); }      // un passo può stare stretto: la carta si avvicina fino a 3,4 volte
+  else {
+    if(!l || !l.length) return;
+    a=null; if(sc && sc.length) a=riquadroLuoghi(capiDi(sc),.92);      // con una scena, lo zoom tiene dentro marce e rotte
+    if(!a) a=riquadroLuoghi(l); if(!a){ l=l.slice(0,1); a=riquadroLuoghi(l); }      // luoghi troppo lontani fra loro: la carta si avvicina al primo, quello del titolo
+    if(!a) return; foto.push({a:a,l:l,y1:fondoDi(sc&&sc.length?capiDi(sc):l)});
+  }
+  if(!foto.length) return;
+  bordo=[8,G.w-8,8,G.h-8]; scalaScena=scalaDi(foto[0].a); testoMin=testoDi(foto[0].a);      // ogni inquadratura ha la sua misura della scena: un passo largo (la guerra persiana) non si disegna minuscolo
+  if(passi){ passoOra=foto[0].i; stratoScena.setAttribute('class','m-scena passi'); }
+  if(annoVisto!=null) mostraPopoli(annoVisto);      // con il bordo vero della carta si rifanno scena, nomi e cartellini
+  foto.forEach(function(f){ f.a=suSchermo(f.a); f.ferma=f.i!=null?Math.min(7500,2800+passi[f.i].t.length*22):sc&&sc.length?4500:3200; });
+  var vb=(svg.getAttribute('viewBox')||BASE.join(' ')).split(/[ ,]+/).map(Number), r=regia={t0:0,rf:0,n:-1,da:vb,foto:foto,fine:false}, ENTRA=900, ESCE=900;
+  function inizia(n){
+    var f=foto[n]; r.n=n; scriviDidascalia(f); didascalia.classList.add('viva'); document.body.classList.add('carta-in-regia');      // a tutto schermo, sulla carta larga, la riga dei luoghi in alto si nasconde
+    /* la didascalia copre il fondo della carta: l'inquadratura scende di metà della sua altezza, così la scena sta nella parte libera (al più 55 unità: il margine del riquadro è di 65 unità per lato nei passi, 85 altrove) */
+    var hs=svg.getBoundingClientRect().height, c=hs>0?Math.min(.45,(didascalia.offsetHeight+12)/hs):0; var sp=Math.min(55,c*f.a[3]/2), y0=Math.max(0,Math.min(G.h-f.a[3],f.a[1]+sp)), alto=c>0 && f.y1>y0+f.a[3]*(1-c)-30;      // anche così la scena finirebbe sotto la didascalia (la costa d'Africa), o ci starebbe a meno di 30 unità, che servono al nome sotto la freccia: la didascalia va in alto
+    didascalia.classList.toggle('in-alto',alto); if(c>0) f.a=[f.a[0],alto?Math.max(0,Math.min(G.h-f.a[3],f.a[1]-sp)):y0,f.a[2],f.a[3]];
+    var sn=scalaDi(f.a), tm=testoDi(f.a); if(Math.abs(sn-scalaScena)>.02 || Math.abs(tm-testoMin)>.02){ scalaScena=sn; testoMin=tm; if(annoVisto!=null) mostraPopoli(annoVisto); svg.getBoundingClientRect(); }      // ridisegnata col passo di prima: il nuovo poi si traccia
+    if(f.i!=null){ svg.classList.add('in-passi'); passoOra=f.i; classiPassi(f.i); segnaPasso(f.i); coloraRegioni(statiPasso(f.i)); ricolorata=true; }
+  }
   function passo(ora){
-    if(regia!==r) return; if(!r.t0){ r.t0=ora; didascalia.classList.add('viva'); }
-    var t=ora-r.t0, k=t<ENTRA?t/ENTRA:t<ENTRA+FERMA?1:Math.max(0,1-(t-ENTRA-FERMA)/ESCE); k=k*k*(3-2*k);
-    svg.setAttribute('viewBox',[0,1,2,3].map(function(i){ return (BASE[i]+(r.a[i]-BASE[i])*k).toFixed(1); }).join(' '));
-    if(t>ENTRA*.7 && !viva){ viva=true; stratoScena.setAttribute('class','m-scena viva'); }
-    if(t>ENTRA+FERMA){ didascalia.classList.remove('viva'); stratoScena.setAttribute('class','m-scena'); }
-    if(t<ENTRA+FERMA+ESCE) r.rf=requestAnimationFrame(passo); else { fermaRegia(); }
+    if(regia!==r) return; if(!r.t0) r.t0=ora;
+    var t=ora-r.t0, acc=0, n, u, k, A, B;
+    for(n=0;n<foto.length;n++){ if(t<acc+ENTRA+foto[n].ferma) break; acc+=ENTRA+foto[n].ferma; }
+    if(n<foto.length){
+      if(n!==r.n) inizia(n);
+      u=t-acc; k=Math.min(1,u/ENTRA); A=n?foto[n-1].a:r.da; B=foto[n].a;
+      if(!passi && u>ENTRA*.7 && !r.viva){ r.viva=true; stratoScena.setAttribute('class','m-scena viva'); }
+    } else {
+      if(!r.fine){ r.fine=true; didascalia.classList.remove('viva'); document.body.classList.remove('carta-in-regia'); passoOra=null; svg.classList.remove('in-passi'); classiPassi(null); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
+        stratoScena.setAttribute('class','m-scena'+(grandeSi?' viva ferma':'')); }
+      u=t-acc; k=Math.min(1,u/ESCE); A=foto[foto.length-1].a; B=r.da;
+      if(u>=ESCE){ fermaRegia(); return; }
+    }
+    k=k*k*(3-2*k);
+    svg.setAttribute('viewBox',[0,1,2,3].map(function(j){ return (A[j]+(B[j]-A[j])*k).toFixed(1); }).join(' '));
+    r.rf=requestAnimationFrame(passo);
   }
   r.rf=requestAnimationFrame(passo);
 }
@@ -611,7 +726,7 @@ svg.addEventListener('click',function(e){
 });
 /* Su Safari per iPhone, scorrendo, la barra degli indirizzi entra ed esce e la finestra cambia di continuo la sola altezza: in pagina le legende non dipendono
    dall'altezza, quindi non si rimisurano (prima ogni volta si rifacevano tutte, una per tappa, e la pagina poteva dare scatti mentre si legge). A tutto schermo sì. */
-var attesa=0, largPrima=window.innerWidth; window.addEventListener('resize',function(){ var w=window.innerWidth, soloAltezza=w===largPrima; largPrima=w; adatta(); if(soloAltezza && !grandeSi) return; clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); },200); });
+var attesa=0, largPrima=window.innerWidth; window.addEventListener('resize',function(){ var w=window.innerWidth, soloAltezza=w===largPrima; largPrima=w; if(grandeSi && regia) fermaRegia(); adatta(); if(soloAltezza && !grandeSi) return; clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); },200); });
 spazioLegende();
 
 /* A tutto schermo la carta riempie la finestra e si può ingrandire e trascinare (rotella, due dita, i bottoni + e −). La finestra sulla carta (viewBox) prende
@@ -653,7 +768,8 @@ function grande(si){
   fermaRegia(); grandeSi=si; legenda.parentNode.style.minHeight=''; setTimeout(function(){ stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':'')); },60);      // a tutto schermo la scena dell'evento resta ferma sulla carta (la ridisegna mostraPopoli, con le nuove misure)
   document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');      // queste due istruzioni erano finite per sbaglio dentro il commento della riga sopra
   bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Esci dallo schermo intero':'Carta a tutto schermo');
-  dita={}; presa=null;
+  dita={}; presa=null; vista.libera=si;
+  if(si) ospite.appendChild(barraPassi); else ospite.parentNode.insertBefore(barraPassi,rigaLuoghi);      // a tutto schermo la barra dei passi sta sulla carta, in basso al centro
   if(si){ vista.k=1; vista.cx=500; vista.cy=314; adatta(); if(vista.alto){ vista.k=Math.max(1,BASE[2]*vista.alto/(G.h*vista.aw)); vista.cx=470; vista.cy=330; applicaVista(); } }      // in verticale si parte con la carta che riempie il riquadro, sull'Italia: il bottone − la mostra intera
   else { vista.alto=0; ospite.style.width=ospite.style.height=''; applicaVista();
     /* Su un iPhone, appena usciti dallo schermo intero, la carta è rimasta ingrandita e più alta del riquadro (cattura dell'utente, 22 novembre 2026). In Chrome non si riproduce
@@ -662,9 +778,11 @@ function grande(si){
     var rimetti=function(){ if(grandeSi || regia) return; svg.removeAttribute('viewBox'); svg.setAttribute('viewBox',BASE.join(' ')); };
     requestAnimationFrame(rimetti); setTimeout(rimetti,320); }
   ingr=0; window.dispatchEvent(new Event('resize'));                    // il gestore qui sopra rifà misure, legende e cartellini
+  if(si) setTimeout(function(){ if(grandeSi && vista.libera && annoVisto!=null && !regia) avviaRegia(luoghiRegia,scenaOra); },500);      // aperta la carta grande, la regia della tappa riparte lì
 }
 function unita(){ return larghezzaVista()/(svg.getBoundingClientRect().width||1); }      // unità della carta per pixel
 function zoomSu(f,px,py){
+  if(regia) fermaRegia(); vista.libera=false;
   var k0=vista.k, k1=Math.max(1,Math.min(6,k0*f)); if(k1===k0) return;
   if(px!=null){ var r=svg.getBoundingClientRect(), u=unita(); vista.cx+=(px-r.left-r.width/2)*u*(1-k0/k1); vista.cy+=(py-r.top-r.height/2)*u*(1-k0/k1); }      // resta fermo il punto sotto il cursore
   vista.k=k1; applicaVista();
@@ -674,6 +792,7 @@ function distanza(){ var id=Object.keys(dita), a=dita[id[0]], b=dita[id[1]]; ret
 function prendi(){ var id=Object.keys(dita); presa=id.length===1?{x:dita[id[0]][0],y:dita[id[0]][1],cx:vista.cx,cy:vista.cy}:id.length===2?{d:distanza(),k:vista.k}:null; }
 function lascia(e){ delete dita[e.pointerId]; prendi(); svg.style.cursor=''; }
 svg.addEventListener('pointerdown',function(e){ if(!grandeSi) return; if(e.isPrimary) dita={};      // un tocco nuovo azzera i tocchi rimasti appesi: senza, un dito «fantasma» faceva leggere ogni trascinamento come un pizzico
+  if(regia) fermaRegia(); vista.libera=false;      // il primo tocco ferma la regia: da qui la carta la muove chi guarda
   dita[e.pointerId]=[e.clientX,e.clientY]; try{ svg.setPointerCapture(e.pointerId); }catch(x){} prendi(); svg.style.cursor='grabbing'; });
 svg.addEventListener('pointermove',function(e){
   if(!grandeSi||!dita[e.pointerId]||!presa) return; dita[e.pointerId]=[e.clientX,e.clientY];
@@ -726,20 +845,16 @@ window.RM_mappa={
     STATI.forEach(function(s){ if(ci[s[0]]) out.push([s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':s[0].indexOf('regno:')===0?REGNI[s[0].slice(6)][0]:'var(--st-'+s[0]+')', voceStato(s[0],anno), s[0]]); });      // il terzo elemento è lo stato: serve alla legenda che risponde (js/atti.js)
     return out;
   },
-  mostra:function(stati,anno,luoghi,scena){
-    if(anno!=null){ fermaRegia(); annoVisto=anno; scriviLuoghi(luoghi); scenaOra=scena||null; }      // la scena va saputa prima dei cartellini: mostraPopoli la disegna e la fa evitare
+  mostra:function(stati,anno,luoghi,scena,passi){
+    if(anno!=null){ fermaRegia(); annoVisto=anno; scriviLuoghi(luoghi); scenaOra=scena||null; passiOra=passi&&passi.length?passi:null; statiTappa=stati; faiBarra(); }      // la scena va saputa prima dei cartellini: mostraPopoli la disegna e la fa evitare
     if(anno!=null && scritte.costantinopoli){ var nc=anno<330?'Bisanzio':G.citta.costantinopoli.nome; if(scritte.costantinopoli.textContent!==nc) scritte.costantinopoli.textContent=nc; }      // prima di piazzare i nomi: Bisanzio è più corto
     var visti=anno!=null?mostraPopoli(anno):null;
     if(anno!=null) avviaRegia(luoghi,scenaOra);
     if(anno!=null){ tetra.setAttribute('class','m-tetra'+(tetrarchia(anno)?'':' via')); notaTetra(anno); }
     if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
     aggiornaLegende(stati,anno,visti);
-    for(var id in regioni){
-      var s=stati[id]||'perso', chi=s.indexOf('regno:')===0?s.slice(6):''; statoOra[id]=s;
-      if(chi) s='regno';
-      regioni[id].setAttribute('class','m-regione '+s); regioni[id].style.color=chi&&REGNI[chi]?REGNI[chi][0]:'';
-      if(nomi[id]) nomi[id].setAttribute('class','m-nome'+(s==='perso'||s==='conteso'?' chiaro':''));
-    }
+    for(var id in regioni) statoOra[id]=stati[id]||'perso';
+    if(!ricolorata) coloraRegioni(stati);      // durante un passo che ricolora (Arabi del 711) i colori restano quelli del passo
     applicaFuoco(); nascondiChi();      // la voce accesa in legenda resta accesa da una tappa all'altra, finché c'è
   },
   /* quota dell'Occidente governata da Roma, pesata per regione: federati e contesi valgono metà, ma solo finché c'è un governo romano d'Occidente (fino al 480, quando muore Giulio Nepote
