@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 11:26:49.
+Generato da `src/testi.mjs` il 23/11/2026, 11:28:53.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -27,91 +27,97 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.06] 900.000 → a 30.000 abitanti a Roma, secondo le stime
 
-[pagina.07] La storia Perché cadde Fonti Licenze
+[pagina.07] A ogni tappa cambiano insieme
 
-[pagina.08] L'Impero
+[pagina.08] L'Impero i confini sulla carta
 
-[pagina.09] Roma
+[pagina.09] Roma in 3D la città che cambia
 
-[pagina.10] Legenda
+[pagina.10] La storia Perché cadde Fonti Licenze
 
-[pagina.11] I popoli
+[pagina.11] L'Impero
 
-[pagina.12] Sulla carta il nome di ogni popolo indica la zona in cui viveva il gruppo più numeroso, comprese le famiglie. La linea tratteggiata ne mostra la provenienza e il probabile percorso via terra. Sia le posizioni sia i percorsi sono approssimativi. In ogni tappa la legenda spiega i simboli presenti sulla carta. Nel novembre 2026 abbiamo ricontrollato sulle fonti le date e i rapporti di ciascun popolo con Roma.
+[pagina.12] Roma
 
-[pagina.13] Roma — abitanti, stima
+[pagina.13] Legenda
 
-[pagina.14] Strumenti
+[pagina.14] I popoli
 
-[pagina.15] Notte
+[pagina.15] Sulla carta il nome di ogni popolo indica la zona in cui viveva il gruppo più numeroso, comprese le famiglie. La linea tratteggiata ne mostra la provenienza e il probabile percorso via terra. Sia le posizioni sia i percorsi sono approssimativi. In ogni tappa la legenda spiega i simboli presenti sulla carta. Nel novembre 2026 abbiamo ricontrollato sulle fonti le date e i rapporti di ciascun popolo con Roma.
 
-[pagina.16] Percorso del pellegrino
+[pagina.16] Roma — abitanti, stima
 
-[pagina.17] Prima e dopo
+[pagina.17] Strumenti
 
-[pagina.18] Che cosa sappiamo
+[pagina.18] Notte
 
-[pagina.19] Tocca la città per esplorarla
+[pagina.19] Percorso del pellegrino
 
-[pagina.20] Posizione e pianta certe. L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.
+[pagina.20] Prima e dopo
 
-[pagina.21] Sappiamo dove sorgeva l'edificio. Per ricostruirne l'aspetto ci basiamo sugli scavi, sulle piante antiche o sui resti sopravvissuti alle trasformazioni successive.
+[pagina.21] Che cosa sappiamo
 
-[pagina.22] La posizione o la forma sono ipotetiche. È il caso, per esempio, delle singole case che il modello mostra nei quartieri abitati o in rovina.
+[pagina.22] Tocca la città per esplorarla
 
-[pagina.23] I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.
+[pagina.23] Posizione e pianta certe. L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.
 
-[pagina.24] Il modello 3D non è disponibile su questo dispositivo.
+[pagina.24] Sappiamo dove sorgeva l'edificio. Per ricostruirne l'aspetto ci basiamo sugli scavi, sulle piante antiche o sui resti sopravvissuti alle trasformazioni successive.
 
-[pagina.25] ▶ Riproduci
+[pagina.25] La posizione o la forma sono ipotetiche. È il caso, per esempio, delle singole case che il modello mostra nei quartieri abitati o in rovina.
 
-[pagina.26] Protagonisti · tocca un'immagine per ingrandirla e vederne fonte e licenza
+[pagina.26] I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.
 
-[pagina.27] Una voce di allora
+[pagina.27] Il modello 3D non è disponibile su questo dispositivo.
 
-[pagina.28] Fra storia e leggenda
+[pagina.28] ▶ Riproduci
 
-[pagina.29] Le interpretazioni degli storici
+[pagina.29] Protagonisti · tocca un'immagine per ingrandirla e vederne fonte e licenza
 
-[pagina.30] I monumenti di Roma · seleziona un nome per aprire la scheda
+[pagina.30] Una voce di allora
 
-[pagina.31] in uso in disuso spogliato di materiali usato come cava bruciato danneggiato da un terremoto
+[pagina.31] Fra storia e leggenda
 
-[pagina.32] Mostra tutti
+[pagina.32] Le interpretazioni degli storici
 
-[pagina.33] Le interpretazioni degli storici
+[pagina.33] I monumenti di Roma · seleziona un nome per aprire la scheda
 
-[pagina.34] Perché cadde l'Occidente?
+[pagina.34] in uso in disuso spogliato di materiali usato come cava bruciato danneggiato da un terremoto
 
-[pagina.35] Perché cadde l'Impero romano d'Occidente? Da tre secoli gli storici propongono risposte diverse. Alcuni guardano alle difficoltà di governare territori tanto vasti, al costo dell'esercito, alle tasse o al ruolo della religione. Altri si concentrano sull'avanzata degli Unni e sui popoli che attraversarono il Reno e il Danubio. Altri ancora studiano il clima e le epidemie. Per alcuni storici furono decisive scelte che avrebbero potuto avere un esito diverso. Per altri, parlare di «trasformazione» aiuta a capire che cosa sopravvisse del mondo romano nei secoli successivi. Seleziona uno storico per leggere la sua tesi, una citazione, le obiezioni e gli episodi a cui si riferisce.
+[pagina.35] Mostra tutti
 
-[pagina.36] Segui sulla carta l'avanzata degli Unni e l'attraversamento del Danubio da parte dei Goti nel 376. Passa poi al Reno nel 406 e a Cartagine nel 439. A ogni tappa puoi vedere quanta parte dell'Occidente era ancora sotto il controllo di Roma. Il grafico della popolazione ti permette anche di confrontare le stime sugli abitanti con le testimonianze sul sole velato del 536 e sulla peste del 542.
+[pagina.36] Le interpretazioni degli storici
 
-[pagina.37] Come finisce un impero
+[pagina.37] Perché cadde l'Occidente?
 
-[pagina.38] Fonti Testi antichi e medievali e studi moderni consultati
+[pagina.38] Perché cadde l'Impero romano d'Occidente? Da tre secoli gli storici propongono risposte diverse. Alcuni guardano alle difficoltà di governare territori tanto vasti, al costo dell'esercito, alle tasse o al ruolo della religione. Altri si concentrano sull'avanzata degli Unni e sui popoli che attraversarono il Reno e il Danubio. Altri ancora studiano il clima e le epidemie. Per alcuni storici furono decisive scelte che avrebbero potuto avere un esito diverso. Per altri, parlare di «trasformazione» aiuta a capire che cosa sopravvisse del mondo romano nei secoli successivi. Seleziona uno storico per leggere la sua tesi, una citazione, le obiezioni e gli episodi a cui si riferisce.
 
-[pagina.39] Tra gli autori antichi e medievali consultati figurano Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Tra le opere consultate ci sono anche l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Per le cronache e gli annali abbiamo consultato gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Tra le altre fonti figurano l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.
+[pagina.39] Segui sulla carta l'avanzata degli Unni e l'attraversamento del Danubio da parte dei Goti nel 376. Passa poi al Reno nel 406 e a Cartagine nel 439. A ogni tappa puoi vedere quanta parte dell'Occidente era ancora sotto il controllo di Roma. Il grafico della popolazione ti permette anche di confrontare le stime sugli abitanti con le testimonianze sul sole velato del 536 e sulla peste del 542.
 
-[pagina.40] Per Gibbon abbiamo consultato il testo e per Jones la conclusione. Per Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer abbiamo verificato singoli passi. Di Pirenne abbiamo letto l'articolo del 1922. Per la popolazione e gli scavi di Roma abbiamo consultato le pagine dedicate a questi temi nel Companion to Rome e, per la popolazione, anche lo studio di Durliat. Per Heather abbiamo letto le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), di cui abbiamo consultato la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
+[pagina.40] Come finisce un impero
 
-[pagina.41] Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.
+[pagina.41] Fonti Testi antichi e medievali e studi moderni consultati
 
-[pagina.42] Come abbiamo ricostruito la carta e la città Dati misurati e stime
+[pagina.42] Tra gli autori antichi e medievali consultati figurano Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Tra le opere consultate ci sono anche l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Per le cronache e gli annali abbiamo consultato gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Tra le altre fonti figurano l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.
 
-[pagina.43] La carta prende come punto di partenza le province romane intorno al 200 d.C. Per l'Italia usa le regioni istituite da Augusto. La base cartografica è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Quando i confini dei regni successivi si discostavano da quelli romani, li abbiamo ridisegnati seguendo i fiumi, i crinali e le città citati nelle fonti. Il tracciato è quindi approssimativo. Nel novembre 2026 abbiamo rivisto i confini, gli spostamenti dei popoli e l'attribuzione delle regioni ai diversi governi. Abbiamo consultato Bury, Ammiano, Zosimo ed Eugippio, oltre a Beda e, per i singoli regni, alle relative voci di Wikipedia. Alcune date sono riportate a memoria. Per la Corsica, i manuali ipotizzano un dominio longobardo dal 725 circa, ma manca una testimonianza diretta. Il dominio dei Franchi è documentato dall'806.
+[pagina.43] Per Gibbon abbiamo consultato il testo e per Jones la conclusione. Per Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer abbiamo verificato singoli passi. Di Pirenne abbiamo letto l'articolo del 1922. Per la popolazione e gli scavi di Roma abbiamo consultato le pagine dedicate a questi temi nel Companion to Rome e, per la popolazione, anche lo studio di Durliat. Per Heather abbiamo letto le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), di cui abbiamo consultato la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
 
-[pagina.44] Per ricostruire Roma abbiamo ripreso da OpenStreetMap il corso del Tevere e il tracciato delle mura (© OpenStreetMap contributors). Partendo da un rilievo moderno del terreno (SRTM), abbiamo ridisegnato i colli alle quote antiche. Nel modello ne abbiamo poi quasi raddoppiato l'altezza. Gli edifici occupano la posizione ricostruita dalle fonti e hanno forme semplificate. Alcune strade moderne conservano percorsi antichi. È il caso di via del Corso, sul tracciato della via Lata, dell'Appia Antica e di via dei Coronari. Nel Foro restano visibili anche tratti dei pavimenti della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. Abbiamo disegnato a mano i tratti mancanti. Nel Foro romano e nei Fori imperiali i resti archeologici permettono di collocare gli edifici. Per gli acquedotti, percorsi e altezze sono ricostruzioni. Il modello genera gli isolati e propone una possibile successione nell'abbandono dei quartieri.
+[pagina.44] Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.
 
-[pagina.45] L'indicatore «Occidente governato da Roma» mostra quanta parte del territorio occidentale era ancora sotto il controllo di Roma. Il totale di riferimento è la superficie dell'Occidente sulla nostra carta, circa 2,7 milioni di km². Come si confronta questo dato con quelli degli storici? Per l'intero impero le cifre sono vicine. Intorno al 200 le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km², che scendono a 4,5 senza Mesopotamia, Dacia e Agri Decumates. Nel 1979 Rein Taagepera, usando l'atlante storico di Shepherd, calcolò 4,6 milioni di km² per il 138, 4,5 per il 275 e 4,4 per il 390. La differenza emerge quando si considerano separatamente Oriente e Occidente dopo la divisione del 395. Taagepera parla di «due parti pressoché uguali». Stima 2 milioni di km² per l'Occidente e 2,1 per l'Oriente, con un margine di 0,3 milioni per l'Oriente. Le sue cifre arrotondate danno un totale di 4,1 milioni, contro i 4,4 stimati per il 390. Sulla nostra carta l'Oriente misura 1,9 milioni e l'Occidente 2,7, circa un terzo in più della sua stima per l'Occidente.
+[pagina.45] Come abbiamo ricostruito la carta e la città Dati misurati e stime
 
-[pagina.46] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
+[pagina.46] La carta prende come punto di partenza le province romane intorno al 200 d.C. Per l'Italia usa le regioni istituite da Augusto. La base cartografica è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Quando i confini dei regni successivi si discostavano da quelli romani, li abbiamo ridisegnati seguendo i fiumi, i crinali e le città citati nelle fonti. Il tracciato è quindi approssimativo. Nel novembre 2026 abbiamo rivisto i confini, gli spostamenti dei popoli e l'attribuzione delle regioni ai diversi governi. Abbiamo consultato Bury, Ammiano, Zosimo ed Eugippio, oltre a Beda e, per i singoli regni, alle relative voci di Wikipedia. Alcune date sono riportate a memoria. Per la Corsica, i manuali ipotizzano un dominio longobardo dal 725 circa, ma manca una testimonianza diretta. Il dominio dei Franchi è documentato dall'806.
 
-[pagina.47] Licenze Come riutilizzare i materiali
+[pagina.47] Per ricostruire Roma abbiamo ripreso da OpenStreetMap il corso del Tevere e il tracciato delle mura (© OpenStreetMap contributors). Partendo da un rilievo moderno del terreno (SRTM), abbiamo ridisegnato i colli alle quote antiche. Nel modello ne abbiamo poi quasi raddoppiato l'altezza. Gli edifici occupano la posizione ricostruita dalle fonti e hanno forme semplificate. Alcune strade moderne conservano percorsi antichi. È il caso di via del Corso, sul tracciato della via Lata, dell'Appia Antica e di via dei Coronari. Nel Foro restano visibili anche tratti dei pavimenti della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. Abbiamo disegnato a mano i tratti mancanti. Nel Foro romano e nei Fori imperiali i resti archeologici permettono di collocare gli edifici. Per gli acquedotti, percorsi e altezze sono ricostruzioni. Il modello genera gli isolati e propone una possibile successione nell'abbandono dei quartieri.
 
-[pagina.48] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
+[pagina.48] L'indicatore «Occidente governato da Roma» mostra quanta parte del territorio occidentale era ancora sotto il controllo di Roma. Il totale di riferimento è la superficie dell'Occidente sulla nostra carta, circa 2,7 milioni di km². Come si confronta questo dato con quelli degli storici? Per l'intero impero le cifre sono vicine. Intorno al 200 le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km², che scendono a 4,5 senza Mesopotamia, Dacia e Agri Decumates. Nel 1979 Rein Taagepera, usando l'atlante storico di Shepherd, calcolò 4,6 milioni di km² per il 138, 4,5 per il 275 e 4,4 per il 390. La differenza emerge quando si considerano separatamente Oriente e Occidente dopo la divisione del 395. Taagepera parla di «due parti pressoché uguali». Stima 2 milioni di km² per l'Occidente e 2,1 per l'Oriente, con un margine di 0,3 milioni per l'Oriente. Le sue cifre arrotondate danno un totale di 4,1 milioni, contro i 4,4 stimati per il 390. Sulla nostra carta l'Oriente misura 1,9 milioni e l'Occidente 2,7, circa un terzo in più della sua stima per l'Occidente.
 
-[pagina.49] Versione del 23/11/2026, ore 11:17
+[pagina.49] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
+
+[pagina.50] Licenze Come riutilizzare i materiali
+
+[pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
+
+[pagina.52] Versione del 23/11/2026, ore 11:26
 
 
 ## 2. Gli atti

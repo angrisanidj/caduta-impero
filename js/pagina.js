@@ -383,3 +383,15 @@ function inCitta(t){
   function presto(){ if(!raf) raf=requestAnimationFrame(aggiorna); }
   window.addEventListener('scroll',presto,{passive:true}); window.addEventListener('resize',presto); aggiorna(); setTimeout(aggiorna,400);
 })();
+
+/* Le due pastiglie dell'apertura («L'Impero», «Roma»): portano alle scene; dove le scene stanno a schede (telefono) aprono quella toccata. */
+(function(){
+  [].forEach.call(document.querySelectorAll('.ds-voce'),function(a){
+    a.addEventListener('click',function(e){
+      var v=a.getAttribute('data-vista'), b=document.querySelector('.schede button[data-vista="'+v+'"]'), sc=document.getElementById('scene');
+      if(b && getComputedStyle(b.parentNode).display!=='none' && sc && sc.getAttribute('data-vista')!==v) b.click();
+      if(!sc) return; e.preventDefault();
+      var basso=matchMedia('(prefers-reduced-motion: reduce)').matches; sc.scrollIntoView({behavior:basso?'auto':'smooth',block:'start'});
+    });
+  });
+})();

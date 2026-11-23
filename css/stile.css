@@ -744,3 +744,16 @@ body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visib
   .condividi-lato .condividi-titolo{padding:9px 5px;border:1px solid var(--line);border-radius:999px;background:rgba(251,246,234,.96);color:var(--oro-t);
     box-shadow:0 1px 2px rgba(34,28,24,.12);font-weight:600;letter-spacing:.14em}
 }
+
+/* «A ogni tappa cambiano insieme: L'Impero · Roma» (23 novembre 2026, l'utente: dire in alto che si vedono sia la trasformazione di Roma sia quella dell'impero).
+   Due pastiglie leggere sotto i numeri dell'apertura; toccate portano alle scene (sul telefono aprono la scheda giusta: js/pagina.js). */
+.due-scene{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:22px 0 0}
+.ds-guida{font-family:var(--ui);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#D2C0A8;margin-right:4px}
+.ds-voce{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:5px 13px 5px 11px;font-family:var(--ui);font-size:13.5px;color:var(--crema);text-decoration:none;
+  background:rgba(255,255,255,.06);border:1px solid rgba(212,174,85,.42);border-radius:999px;transition:background .15s,border-color .15s}
+.ds-voce svg{flex:none;color:var(--gold2)}
+.ds-voce b{font-weight:600;color:var(--gold3)}
+.ds-voce:hover{background:rgba(255,255,255,.12);border-color:var(--gold2)}
+.ds-voce:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+@media (max-width:760px){ .due-scene{margin-top:14px;gap:6px 8px} .ds-guida{width:100%;font-size:11.5px;letter-spacing:.06em} .ds-voce{font-size:13.5px;min-height:36px} .ds-cosa{display:none} }
+@media (prefers-reduced-motion:reduce){ .ds-voce{transition:none} }
