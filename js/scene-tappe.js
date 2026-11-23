@@ -405,6 +405,18 @@ var fortino552=(function(){
   for(var fila=0;fila<6;fila++) for(var j=-14;j<=14;j++){ var ang=-2.25+j*.028, r=R+3.2+fila*.6, x2=cx+Math.cos(ang)*r, z2=cz+Math.sin(ang)*r; if(RM.distFiume(x2,z2)<6.5) continue;
     uomo(B2,x2+(rnd()-.5)*.25,z2+(rnd()-.5)*.25,H(x2,z2),fila<2?C.ferro:C.grigio,fila<3?C.rosso:null,Math.atan2(cx-x2,cz-z2)); k++;
     if(fila===5 && j%7===0) insegna(B2,x2,z2,H(x2,z2),C.porpora,.42); }
+  /* l'assalto al forte (23 novembre 2026, l'utente: «mostra la battaglia qui»). Procopio VIII 33 racconta l'attacco alle mura e la resa del forte attorno al mausoleo, non come fu
+     assalito il forte: scale appoggiate al muro dal lato di terra, assalitori ammassati ai piedi con gli scudi alzati e difensori goti sul muro sono uno schema */
+  var ROSSO=C.rosso, GOTI=RM.col(0x5a5a3a);
+  for(i=0;i<7;i++){ var aa=-2.6+i*.17, xw=cx+Math.cos(aa)*R, zw=cz+Math.sin(aa)*R; if(RM.distFiume(xw,zw)<6.4) continue;
+    var xo=cx+Math.cos(aa)*(R+.55), zo=cz+Math.sin(aa)*(R+.55), yo=H(xo,zo), yt=H(xw,zw)+.66, tx=-Math.sin(aa)*.05, tz=Math.cos(aa)*.05;
+    [-1,1].forEach(function(sg){ B2.quad([xo+tx*sg,yo,zo+tz*sg],[xw+tx*sg,yt,zw+tz*sg],[xw+tx*sg*1.4,yt,zw+tz*sg*1.4],[xo+tx*sg*1.4,yo,zo+tz*sg*1.4],P.tronco); });      // i due montanti della scala
+    for(var gr=1;gr<6;gr++){ var f=gr/6; B2.scatola(.1,.012,.012,xo+(xw-xo)*f,yo+(yt-yo)*f,zo+(zw-zo)*f,P.tronco,-aa+Math.PI/2); }      // i pioli
+    for(var u=0;u<9;u++){ var ra=R+.4+rnd()*1.3, an=aa+(rnd()-.5)*.12, xu=cx+Math.cos(an)*ra, zu=cz+Math.sin(an)*ra; uomo(B2,xu,zu,H(xu,zu),C.ferro,ROSSO,Math.atan2(cx-xu,cz-zu)); }
+    var ys=H(xo,zo)+(yt-yo)*.55; uomo(B2,xo+(xw-xo)*.55,zo+(zw-zo)*.55,ys,C.ferro,ROSSO,Math.atan2(cx-xo,cz-zo));      // uno che sale
+  }
+  for(i=0;i<40;i++){ var ad=-3.1+i*.05, xd=cx+Math.cos(ad)*(R-.06), zd=cz+Math.sin(ad)*(R-.06); if(RM.distFiume(xd,zd)<6.4 || rnd()<.35) continue;
+    uomo(B2,xd,zd,H(xd,zd)+.62,GOTI,C.cavalloB,Math.atan2(xd-cx,zd-cz)); }      // i Goti sul muro, rivolti fuori
   var g2=B2.maglia(RM.matPietra()); g2.visible=false; g2.castShadow=true; RM.scene.add(g2);
   return {g:g, g2:g2, da:550, a:556, da2:551.6, a2:553};
 })();
