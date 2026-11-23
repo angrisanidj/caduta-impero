@@ -504,6 +504,10 @@ var M=[
     B.scatola(3.4,1.8,1.5,0,0,0,P.intonaco).falde(3.5,.45,1.6,0,1.8,0,P.coppi,0,P.intonaco);
     B.cilindro(.62,1.5,1.7,0,0,P.intonaco,null,12).cono(.66,.35,1.7,1.5,0,P.coppi,12);                       // l'abside principale; le dieci absidi laterali non si disegnano
  }},
+ /* Sant'Adriano (verso il 630): la Curia diventa chiesa (Liber Pontificalis, vita di Onorio I). Si aggiunge una croce sul frontone, sopra la Curia dei Fori (stessa posizione e orientamento di inForo). */
+ {id:'santadriano', nome:"Sant'Adriano (la Curia)", etichetta:"Sant'Adriano", x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
+    B.scatola(.07,.5,.07,0,2.95,1.3,P.oro).scatola(.28,.07,.07,0,3.27,1.3,P.oro);
+ }},
  {id:'pietro', nome:'San Pietro', x:-259,z:-108, ry:0, zone:[[0,0,9],[10,0,7]], et:1, fa:function(B){
     sanPietro(B);
     B.scatola(5.4,.07,7.2,13.7,0,0,P.selce).scatola(5.4,.1,.5,13.7,0,3.4,P.travertino).scatola(5.4,.1,.5,13.7,0,-3.4,P.travertino);      // il sagrato lastricato davanti all'atrio, dove si raccolgono i pellegrini
@@ -984,7 +988,7 @@ RM.statoMonumento=function(id,anno){
    c = incuria: dal 390 circa la manutenzione pubblica si dirada per tutti, e accelera dopo la chiusura. Si vede come crepe, colature, erba, coppi mancanti.
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
+var CURA={laterano:0, santadriano:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
@@ -1003,7 +1007,7 @@ RM.rovina=function(id,anno){
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
-var SENZA_CANTIERE={obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
+var SENZA_CANTIERE={santadriano:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
 function ponteggio(o,t){
   if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
   if(!o.pont){

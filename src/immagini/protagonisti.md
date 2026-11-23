@@ -4,7 +4,7 @@ Generato da `node cerca.mjs info` (scelte a mano in `scelte.mjs`; licenze e auto
 
 ## Conteggi
 
-Righe della tabella: 144 (persone distinte: 108).
+Righe della tabella: 146 (persone distinte: 110).
 
 | | righe | persone |
 |---|---|---|
@@ -12,7 +12,7 @@ Righe della tabella: 144 (persone distinte: 108).
 | ritratto posteriore | 21 | 18 |
 | di fantasia | 5 | 4 |
 | oggetto del tempo, senza volto | 22 | 16 |
-| nessuna immagine | 15 | 13 |
+| nessuna immagine | 17 | 15 |
 
 ## Da decidere
 
@@ -291,6 +291,11 @@ Le scelte di principio:
 - **Foca** ([Q31556](https://www.wikidata.org/wiki/Q31556)) — *ritratto coevo*: moneta d'oro di Foca, 602-610, Museo nazionale romano (Palazzo Massimo alle Terme). [Impero romano d'oriente, foca, emissione aurea, 602-610.JPG](https://commons.wikimedia.org/wiki/File:Impero_romano_d%27oriente,_foca,_emissione_aurea,_602-610.JPG) — 384×357, CC BY-SA 3.0; «Foto: Sailko, CC BY-SA 3.0, da Wikimedia Commons». Scelta del 22 novembre 2026 al posto di «Phocas cons.jpg», che non indica l'autore della foto.
 - **Bonifacio IV** ([Q170505](https://www.wikidata.org/wiki/Q170505)) — *ritratto posteriore*: incisione da G. B. Cavalieri, «Pontificum Romanorum effigies», Roma, 1580. [Bonifacius IV. Bonifacio IV.jpg](https://commons.wikimedia.org/wiki/File:Bonifacius_IV._Bonifacio_IV.jpg) — 2851×3748, CC0; «Foto: Giovanni Battista de' Cavalieri, CC0, da Wikimedia Commons». Messa il 22 novembre 2026 su decisione dell'utente («mettile come immagine più tarda»). Nessun ritratto coevo: è un volto di fantasia inciso quasi mille anni dopo. Su Commons c'è anche il medaglione di San Paolo fuori le mura, ottocentesco, con provenienza meno chiara.
 - **Smaragdo** ([Q1340553](https://www.wikidata.org/wiki/Q1340553)) — *oggetto del tempo, senza volto*: la colonna di Foca nel Foro Romano, che Smaragdo dedicò nel 608. [Column of Phocas.jpg](https://commons.wikimedia.org/wiki/File:Column_of_Phocas.jpg) — 2448×3264, CC BY 3.0; «Foto: F l a n k e r, CC BY 3.0, da Wikimedia Commons». Nessun ritratto noto. Va scelta una foto in cui si legga l'iscrizione (questa è presa a caso dalla categoria).
+
+### 630
+
+- **Onorio I** (-) — *nessuna immagine*. 
+- **Eraclio** (-) — *nessuna immagine*. 
 
 ### 663
 
