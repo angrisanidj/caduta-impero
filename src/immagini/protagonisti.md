@@ -4,11 +4,11 @@ Generato da `node cerca.mjs info` (scelte a mano in `scelte.mjs`; licenze e auto
 
 ## Conteggi
 
-Righe della tabella: 146 (persone distinte: 110).
+Righe della tabella: 147 (persone distinte: 111).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 84 | 60 |
+| ritratto coevo | 85 | 61 |
 | ritratto posteriore | 21 | 18 |
 | di fantasia | 5 | 4 |
 | oggetto del tempo, senza volto | 23 | 17 |
@@ -61,6 +61,7 @@ Le scelte di principio:
 ### 260
 
 - **Valeriano** ([Q46750](https://www.wikidata.org/wiki/Q46750)) — *ritratto coevo*: aureo di Valeriano (RIC 34), 253-260. [Aureus Valerian-RIC 0034-transparent.png](https://commons.wikimedia.org/wiki/File:Aureus_Valerian-RIC_0034-transparent.png) — 416×200, CC BY-SA 3.0; «Foto: Classical Numismatic Group, Inc. (cngcoins.com), CC BY-SA 3.0, da Wikimedia Commons».
+- **Gallieno** (-) — *ritratto coevo*: testa ritratto di Gallieno, Musei Capitolini (MC 360). [Portrait head of Gallienus (Rome MC 360) 01.jpg](https://commons.wikimedia.org/wiki/File:Portrait_head_of_Gallienus_(Rome_MC_360)_01.jpg) — 2304×3004, CC BY 4.0; «Foto: Mark Landon (user:Choliamb), CC BY 4.0, da Wikimedia Commons». Immagine mandata dall’utente il 23 novembre 2026: non riscaricare.
 - **Shapur I** ([Q191455](https://www.wikidata.org/wiki/Q191455)) — *ritratto coevo*: rilievo rupestre del trionfo di Shapur I sugli imperatori romani, Naqsh-e Rostam (Iran), dopo il 260. [The triumph of Shapur I over the Roman emperors Valerian and Philip the Arab (detail), Naqsh-e Rostam, Iran (48098809022).jpg](https://commons.wikimedia.org/wiki/File:The_triumph_of_Shapur_I_over_the_Roman_emperors_Valerian_and_Philip_the_Arab_(detail),_Naqsh-e_Rostam,_Iran_(48098809022).jpg) — 4928×3264, CC BY-SA 2.0; «Foto: Carole Raddato from Frankfurt, Germany, CC BY-SA 2.0, da Wikimedia Commons». Quale imperatore sia la figura in ginocchio e quale quella tenuta per mano (Filippo l'Arabo, Valeriano, Gordiano III) è discusso.
 - **Postumo** ([Q312603](https://www.wikidata.org/wiki/Q312603)) — *ritratto coevo*: doppio sesterzio di Postumo, 260-269. [Postumus-2sest.jpg](https://commons.wikimedia.org/wiki/File:Postumus-2sest.jpg) — 247×247, CC BY-SA 3.0; «Foto: CharlesS (caricata su Wikipedia nel 2004), CC BY-SA 3.0, da Wikimedia Commons».
 
