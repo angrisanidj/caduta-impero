@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 00:57:25.
+Generato da `src/testi.mjs` il 23/11/2026, 01:09:12.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -103,7 +103,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.44] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma sono © OpenStreetMap contributors, licenza ODbL. Le immagini dei protagonisti vengono da Wikimedia Commons: autore e licenza sono indicati accanto a ciascuna. Quelle segnate «Ricostruzione» sono state generate per questa pagina a partire dalle fonti: il volto è immaginario. Le didascalie seguono le descrizioni dei file su Commons e non sono state riscontrate sulle schede dei musei. I dettagli sono nel file LICENZA.md .
 
-[pagina.45] Versione del 23/11/2026, ore 00:53
+[pagina.45] Versione del 23/11/2026, ore 00:59
 
 
 ## 2. Gli atti
@@ -1666,6 +1666,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.legge458] 458 · Maggioriano vieta di demolire gli edifici pubblici per recuperarne i materiali. Si smontano, scrive, grandi costruzioni antiche per riparare cose da poco.
 
+[evento.tombe476] Dal V secolo si comincia a seppellire dentro le mura: prima di rado, poi, nella seconda metà del VI secolo, quasi sempre. Attorno al Colosseo, lungo la strada dei magazzini sul Tevere, più tardi sul Palatino e nel recinto delle terme di Caracalla. Sono fosse semplici, spesso coperte di tegole. Gli archeologi ne contano più di ottanta luoghi.
+
 [evento.milvio312] 28 ottobre 312 · A ponte Milvio Costantino sconfigge Massenzio, che annega nel Tevere durante la fuga. Dopo la vittoria Costantino scioglie il corpo dei pretoriani, i soldati della guardia imperiale. Sul colle del Celio viene demolita la caserma della guardia a cavallo. Al suo posto sorgerà la basilica del Laterano. Nella ricostruzione, accanto al ponte di pietra si vede un passaggio provvisorio. La sua forma e la sua posizione sono ipotetiche.
 
 [evento.visita357] 357 · Costanzo II visita Roma per la prima volta. Al Circo Massimo fa innalzare un secondo obelisco sulla barriera centrale attorno alla quale girano i carri durante le corse. Dalla sede del Senato fa rimuovere l'altare della dea Vittoria.
@@ -1680,7 +1682,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.teodorico493] Sotto Teodorico si restaurano le mura e il teatro di Pompeo; al Colosseo si danno ancora le cacce.
 
-[evento.agilulfo593] 593 · I Longobardi di Agilulfo arrivano sotto le mura. È papa Gregorio a trattare con loro.
+[evento.agilulfo593] 593 · I Longobardi di Agilulfo arrivano sotto le mura. Gregorio scrive di aver visto Romani portati via «legati al collo come cani», per essere venduti in Francia. Dove fosse il campo dei Longobardi le fonti non lo dicono. È il papa a trattare con il re.
 
 [evento.pantheon609] 13 maggio 609 · Il Pantheon, donato dall'imperatore Foca a papa Bonifacio IV, è consacrato come chiesa. L'anno prima, nel Foro, è stata dedicata a Foca l'ultima colonna onoraria.
 
@@ -1696,7 +1698,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.sacco455] 2-16 giugno 455 · I Vandali di Genserico saccheggiano Roma per quattordici giorni. Secondo Prospero d'Aquitania, papa Leone ottiene che siano risparmiati agli abitanti incendi, stragi e torture. I Vandali portano via sistematicamente i beni della città, compresa metà del tetto di bronzo dorato del tempio di Giove.
 
-[evento.assedio472] Luglio 472 · L'imperatore Antemio si rifugia sul Palatino mentre Ricimero assedia Roma. Dopo mesi di assedio, lo scontro decisivo si combatte a ponte Elio, davanti al mausoleo di Adriano. Ricimero conquista la città. Un'iscrizione ricorda un incendio presso la Curia durante la guerra civile: alcuni studiosi lo riferiscono a questi giorni.
+[evento.assedio472] Luglio 472 · Ricimero assedia per mesi l'imperatore Antemio e blocca il Tevere per affamare la città. I suoi campi stanno probabilmente sulla riva destra: il luogo esatto non si conosce, e nella scena è un'ipotesi. Lo scontro decisivo si combatte a ponte Elio, davanti al mausoleo di Adriano. Antemio, che stava nel palazzo, viene ucciso a San Crisogono, in Trastevere. Un'iscrizione ricorda un incendio presso la Curia durante la guerra civile: alcuni studiosi lo riferiscono a questi giorni.
 
 [evento.velo536] 536 · Per circa un anno il sole appare velato. I contemporanei raccontano che la sua luce scalda poco.
 
@@ -1706,7 +1708,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.piena589] Autunno 589 · Il Tevere allaga i quartieri bassi e danneggia i granai della Chiesa. Gregorio di Tours scrive «nel nono mese», probabilmente novembre. Nella scena l'estensione della piena è indicativa: le zone più basse e più vicine al fiume.
 
-[evento.piena791] Dicembre 791 · Secondo il Liber Pontificalis, il Tevere travolge porta Flaminia e la trascina lungo la via Lata fino all'arco chiamato Tres Falciclas. Qui l'acqua supera il doppio dell'altezza di un uomo. Nella scena l'area allagata è indicativa.
+[evento.piena791] Dicembre 791 · Secondo il Liber Pontificalis, il Tevere travolge porta Flaminia e la trascina lungo la via Lata fino all'arco chiamato Tres Falciclas. Qui l'acqua supera il doppio dell'altezza di un uomo. Poi piega verso il fiume e, presso l'attuale ponte Sisto, abbatte un tratto delle mura. Nella scena l'area allagata e la lunghezza del tratto caduto sono indicative.
 
 [evento.costante663] 5-17 luglio 663 · Costante II è l'ultimo imperatore a visitare Roma finché l'impero la governa. In dodici giorni fa smontare il bronzo dei monumenti, comprese le tegole del Pantheon.
 
@@ -3815,11 +3817,11 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.62-r606] mai dentro l’impero
 
-[ui.mappa.63-r648] Carta a tutto schermo
+[ui.mappa.63-r650] Carta a tutto schermo
 
-[ui.mappa.64-r653] Tutto schermo
+[ui.mappa.64-r655] Tutto schermo
 
-[ui.mappa.65-r653] Esci dallo schermo intero
+[ui.mappa.65-r655] Esci dallo schermo intero
 
 
 ### js/atti.js

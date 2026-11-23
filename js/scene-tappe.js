@@ -94,15 +94,83 @@ var corteo=(function(){
   return {g:g, da:356.6, a:358, carro:[pc[0],pc[1]]};
 })();
 
+/* ---------- 472: Ricimero assedia Antemio ----------
+   Fonti (src/testi/scene-roma-fonti.md, sezione 1): Paolo Diacono, Historia Romana XV 3, il campo «apud Anicionis pontem» (ponte non identificato: ponte Milvio è un'ipotesi
+   di Tillemont, Roberto e MacGeorge); XV 4, lo scontro a ponte Elio; Giovanni di Antiochia fr. 209 (Blockley): Ricimero chiude «la zona attorno al Tevere».
+   Qui, come ipotesi dichiarata nella didascalia: il campo principale nella piana vaticana (i luoghi delle fonti sono tutti a ovest: Sessa, Roberto, MacGeorge),
+   un campo piccolo all'imbocco nord di ponte Milvio, uno sbarramento di barche sul Tevere sotto l'Aventino (la forma è nostra) e la mischia su ponte Elio. */
+function campo(B,cx,cz,ry,nx,nz){
+  var ca=Math.cos(ry), sa=Math.sin(ry), tela=[RM.col(0xd8c9a8),RM.col(0xc4b08a),RM.col(0xb99f7c)], W=nx*1.6+1, L=nz*1.6+1;
+  B.dentro(cx,RM.h(cx,cz),cz,ry,function(B){ B.scatola(W,.4,.12,0,0,-L/2,P.tronco).scatola(W,.4,.12,0,0,L/2,P.tronco).scatola(.12,.4,L,-W/2,0,0,P.tronco).scatola(.12,.4,L,W/2,0,0,P.tronco); });
+  for(var i=0;i<nx;i++) for(var j=0;j<nz;j++){ if(rnd()<.2) continue; var lx=(i-(nx-1)/2)*1.6, lz=(j-(nz-1)/2)*1.6, x=cx+lx*ca+lz*sa, z=cz-lx*sa+lz*ca; B.cono(.4+.18*rnd(),.48+.2*rnd(),x,RM.h(x,z),z,tela[(rnd()*3)|0],4); }
+}
+var assedio472=(function(){
+  var B=new RM.Costruttore(), i;
+  campo(B,-206,-97,.1,8,4); campo(B,-150,-494,.3,4,3);      // il campo principale fra il portico di San Pietro e il fiume, a valle del mausoleo
+  // sbarramento: barche legate di traverso al fiume sotto l'Aventino
+  var curva=RM.curvaFiume, m=1e9, tm=0, q, dd; for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); dd=Math.hypot(q.x+95,q.z-112); if(dd<m){ m=dd; tm=i/2400; } }
+  q=curva.getPoint(tm); var tg=curva.getTangent(tm);
+  B.dentro(q.x,-.55,q.z,Math.atan2(-tg.x,-tg.z),function(B){ for(var k=-6;k<=6;k++) B.scatola(.32,.16,.9,k*.95,0,0,P.tronco).scatola(.06,.6,.06,k*.95,.15,0,P.tronco); B.scatola(12.6,.05,.05,0,.32,0,P.tronco); });
+  // la mischia su ponte Elio e davanti al mausoleo: due schiere che si scontrano
+  (function(){      // lungo l'asse vero del ponte (perpendicolare al fiume) e sulla riva davanti al mausoleo
+    var m2=1e9, t2=0, k, qq; for(k=0;k<=2400;k++){ qq=curva.getPoint(k/2400); var d2=Math.hypot(qq.x+157,qq.z+104); if(d2<m2){ m2=d2; t2=k/2400; } }
+    var c2=curva.getPoint(t2), tg2=curva.getTangent(t2), ax=[-tg2.z,tg2.x], lat=[tg2.x,tg2.z], mz=[-157-c2.x,-118-c2.z];
+    if(ax[0]*mz[0]+ax[1]*mz[1]<0) ax=[-ax[0],-ax[1]];      // ax punta verso il mausoleo
+    for(k=0;k<240;k++){
+      var s=(rnd()-.4)*15, w=(rnd()-.5)*(Math.abs(s)>7.4?6:1.1), x=c2.x+ax[0]*s+lat[0]*w, z=c2.z+ax[1]*s+lat[1]*w, sul=Math.abs(s)<=7.4;
+      if(!sul && RM.distFiume(x,z)<6.2) continue;
+      var dife=s>.3, ry=Math.atan2(ax[0],ax[1])+(dife?Math.PI:0);      // dalla parte del mausoleo gli uomini di Ricimero, rivolti alla città; dall'altra quelli di Antemio (colori di comodo)
+      uomo(B,x,z,sul?.66:RM.h(x,z),dife?C.tunica:C.grigio,dife?C.rosso:C.grigio,ry);
+    }
+  })();
+  var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
+  return {g:g, da:471.6, a:473};
+})();
+
+/* ---------- 593: i Longobardi di Agilulfo sotto Roma ----------
+   Le fonti non dicono dove fosse il loro campo (Gregorio, Omelie su Ezechiele, prefazione al libro II e II 10, 24; Paolo Diacono IV 8): niente accampamento.
+   Si vede ciò che Gregorio scrive di aver visto (Registrum V 36, giugno 595): Romani portati via «more canum in collis funibus», per essere venduti in Francia;
+   qui una fila di prigionieri legati, con uomini a cavallo, sulla Flaminia verso nord (la strada è una scelta nostra), e casali che bruciano (i fuochi stanno in EVENTI). */
+var prigionieri593=(function(){
+  var B=new RM.Costruttore(), A=[-75.6,-206], i, t, x, z, dx=-.29, dz=-.957;      // la Flaminia fuori porta: il primo tratto di RM_TOPO.strade[0], da porta Flaminia verso nord-ovest
+  for(i=0;i<46;i++){ t=8+i*.55; x=A[0]+dx*t+(i%2?.12:-.12); z=A[1]+dz*t; uomo(B,x,z,RM.h(x,z),C.folla[i%C.folla.length],null,Math.PI); }
+  for(i=0;i<46;i+=2){ t=8+i*.55; x=A[0]+dx*t; z=A[1]+dz*t; B.scatola(.012,.012,.55,x,RM.h(x,z)+.17,z,P.tronco); }      // la corda che li lega, al collo
+  for(i=0;i<9;i++){ t=7+i*3.2; x=A[0]+dx*t+(i%2?.7:-.7); z=A[1]+dz*t; cavaliere(B,x,z,RM.h(x,z),Math.PI,C.cavalloB,C.ferro); }
+  var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
+  return {g:g, da:592.6, a:594};
+})();
+
+/* ---------- tombe dentro le mura ----------
+   Fonti (scene-roma-fonti.md, sezione 4, dal Companion to Rome c. 400-c. 1050, Brill 2026: Andrews II pp. 674-676, Spera II pp. 828-836, Stefani II pp. 839-848):
+   dal V secolo, rare; nella seconda metà del VI e nel VII quasi la regola; fosse semplici, casse di mattoni, coperture «a cappuccina» di tegole, anfore per i bambini.
+   Sei luoghi; le posizioni sono quelle dei monumenti, non delle singole fosse (il catalogo del 2004 non è stato letto), e il numero delle tombe disegnate è indicativo,
+   tranne i 44 di Vigna Barberini. L'Athenaeum di piazza Venezia (dieci tombe, VIII secolo) sta in una sala coperta e non si vede dall'alto. */
+var TOMBE=[      // [x, z, raggio, numero, dal anno, nome]
+  [51,37,2.6,6,410,'valle del Colosseo'],[51,37,3.2,16,537,'valle del Colosseo'],
+  [-78,160,2.2,4,455,'via Marmorata e Porticus Aemilia'],[-78,160,2.8,10,568,'via Marmorata e Porticus Aemilia'],
+  [27,32,2.6,44,526,'Vigna Barberini, sul Palatino'],
+  [73,146,4,26,568,'recinto delle terme di Caracalla, lato est'],
+  [10,11,1.2,6,593,'atrio di Santa Maria Antiqua e casa delle Vestali']];
+var tombe=TOMBE.map(function(t){
+  var B=new RM.Costruttore(), coppi=P.coppi||RM.col(0xa8553a), terra=RM.col(0x8a7a62), k=0, tent=0;
+  while(k<t[3] && tent<t[3]*20){ tent++;
+    var a=rnd()*6.283, r=Math.sqrt(rnd())*t[2], x=t[0]+Math.cos(a)*r, z=t[1]+Math.sin(a)*r, ry=(rnd()-.5)*.6+(rnd()<.5?0:Math.PI/2), y=RM.h(x,z);
+    if(rnd()<.75) B.falde(.08,.045,.21,x,y,z,coppi,ry); else B.scatola(.08,.03,.21,x,y,z,terra,ry);      // a cappuccina (due file di tegole a tetto) o fossa coperta di terra
+    k++; }
+  var g=B.maglia(RM.matPietra()); g.visible=false; RM.scene.add(g); return {g:g, da:t[4]};
+});
+
 RM.moduli.push(function(anno){
-  [milvio,corteo].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
+  [milvio,corteo,assedio472,prigionieri593].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
+  tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
 });
 
 /* ---------- regia: la vista va sul luogo dell'evento della tappa ---------- */
 var perId={}; (RM.MONUMENTI||[]).forEach(function(m){ perId[m.id]=m; });
 /* le due messe in scena hanno un'inquadratura fissa (punto guardato, posizione della camera): al ponte Milvio da sud, oltre il fiume, verso la riva dove fuggono;
    per il corteo da sud-est, sopra le case della via Lata */
-var VISTE={ milvio:{t:[-152,-486],c:[-140,10,-466]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]} };
+var VISTE={ milvio:{t:[-152,-486],c:[-140,10,-466]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
+  assedio472:{t:[-182,-110],c:[-143,47,-58]}, prigionieri593:{t:[-84,-232],c:[-57,33,-196]} };      // il campo vaticano e ponte Elio; la Flaminia fuori porta
 var portata=false;                                                                      // la vista ce l'ha portata la regia
 function scena(){ var s=document.getElementById('scene'); return s?s.getAttribute('data-vista'):null; }
 function vista(v){

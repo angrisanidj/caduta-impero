@@ -36,7 +36,7 @@ var mura=(function(){
   });
   var magliaPorte=G.maglia(mat), flaminia=GF.pos.length?GF.maglia(mat):null; RM.scene.add(magliaPorte); if(flaminia) RM.scene.add(flaminia);
   RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'}]).concat(flaminia?[{maglia:flaminia,id:'mura'}]:[]);
-  passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; });     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
+  passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; p.riva791=Math.hypot(p.x+115.3,p.z+3.3)<1.3; });      // riva791: il tratto di mura sul Tevere presso ponte Sisto che la piena del dicembre 791 abbatte («usque ad pontem Antonini, ipsum evertens murum», Liber Pontificalis, Adriano I 95; ponte Sisto per Duchesne). Lunghezza indicativa; rifatto qui nel 795, anno ignoto     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
   /* Il cantiere. «Rome, which before had no walls, was now surrounded with them. This work was begun in the reign of Aurelianus, and was finished by Probus» (Zosimo I 49,
      letto il 22 novembre 2026 nella traduzione del 1814, tertullian.org). L'anno della fine non è scritto: nel modello il 280, a metà del regno di Probo (276-282); che il grosso
      fosse in piedi alla morte di Aureliano (275) è l'opinione corrente, non un dato. In che ordine salissero i tratti non si sa: qui a blocchi di circa 240 m, in ordine casuale.
@@ -46,15 +46,15 @@ var mura=(function(){
   var ponteggi=istanze(S.geometria(),RM.matPietra(),passi.length); ponteggi.visible=false; ponteggi.receiveShadow=false;
   /* Dicembre 791: il Tevere «portam quae dicitur Flamminea … a fundamenta evellens» (LP, Adriano I 94). Quando sia stata rifatta non è scritto: qui resta abbattuta. */
   function vistaFlaminia(alt,anno){ if(flaminia){ flaminia.visible=alt>.01&&!(anno>=790.9);      /* alla tappa del 791 la porta è già a terra, come dicono testo e didascalia */ flaminia.scale.y=Math.max(alt,.0001); } }
-  var ultima=-1, ultimaBr=-1, ultimoCant=-1;
+  var ultima=-1, ultimaBr=-1, ultimoCant=-1, ultimo791=-1;
   return function(alt,br,anno,cant){
-    var rialzo=alt>1.004&&alt<1.496, inCantiere=(cant>0&&cant<1)||rialzo, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
+    var r791=anno>=790.9&&anno<795?1:0, rialzo=alt>1.004&&alt<1.496, inCantiere=(cant>0&&cant<1)||rialzo, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
     vistaFlaminia(porteSu,anno);
-    if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01 && Math.abs(cant-ultimoCant)<.002) return; ultima=alt; ultimaBr=br; ultimoCant=cant;
+    if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01 && Math.abs(cant-ultimoCant)<.002 && r791===ultimo791) return; ultima=alt; ultimaBr=br; ultimoCant=cant; ultimo791=r791;
     passi.forEach(function(p,j){
       if(p.y==null){ var cx=Math.cos(p.ang)*p.len/2, cz=-Math.sin(p.ang)*p.len/2, ya=RM.h(p.x-cx,p.z-cz), yb=RM.h(p.x+cx,p.z+cz); p.y=(ya+yb)/2-.3; p.yt=ya-.3; p.pend=Math.atan2(yb-ya,p.len); }   // sui pendii la cortina segue il terreno invece di salire a gradoni
       var c=cant>=1?1:cant<=0?0:Math.max(.1,Math.min(1,(cant-p.turno*.55)/.45));      // quanto è alto questo tratto: 0,1 sono i primi filari sopra la fondazione, lungo tutto il tracciato
-      var y=p.y, sy=Math.max(alt*c,.0001)*(p.rotto?1-.8*br:1);
+      var y=p.y, sy=Math.max(alt*c,.0001)*(p.rotto?1-.8*br:1)*(p.riva791&&r791?.12:1);
       d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix(); tratti.setMatrixAt(j,d.matrix);
       d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.z=0; d.scale.set(1,sy,1); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);      // una torre a ogni passo
       if(inCantiere){      // ponteggio sui tratti che stanno salendo, un poco più alto del muro
