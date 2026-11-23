@@ -655,9 +655,9 @@ function disegnaValeriano(svg,S,W,H){
   var G=window.RM_MAPPA; if(!G) return;
   var L=function(k){ var q=(G.luoghi||{})[k]||G.citta[k]; return q?[q.x,q.y]:null; };
   var AN=L('antiochia'), ED=L('edessa'), CA=L('carre'), NI=L('nisibi'), TI=L('tigri'); if(!AN||!ED||!CA) return;
-  var oriz=W/H>=1.15, pad=oriz?22:14, top=oriz?pad+34:70, riserva=oriz?0:Math.min(150,H*.28);
+  var oriz=W/H>=1.15, pad=oriz?22:14, top=oriz?pad+34:70, riserva=oriz?0:Math.min(210,H*.36);
   var V=[836,330,166,132];      // la finestra sulla carta: da Antiochia al Tigri
-  var k=Math.min((W-2*pad-(oriz?Math.min(240,W*.28):0))/V[2],(H-top-pad-riserva)/V[3]), ox=(oriz?W-pad-V[2]*k:(W-V[2]*k)/2)-V[0]*k, oy=top+(H-top-pad-riserva-V[3]*k)/2-V[1]*k;
+  var k=Math.min((W-2*pad-(oriz?Math.min(420,W*.42):0))/V[2],(H-top-pad-riserva)/V[3]), ox=(oriz?W-pad-V[2]*k:(W-V[2]*k)/2)-V[0]*k, oy=top+(H-top-pad-riserva-V[3]*k)/2-V[1]*k;
   function B(p){ return [ox+p[0]*k, oy+p[1]*k]; }
   var clip=el('clipPath',{id:'ig-v-clip'},el('defs',null,svg)); el('rect',{x:r1(ox+V[0]*k),y:r1(oy+V[1]*k),width:r1(V[2]*k),height:r1(V[3]*k),rx:10},clip);
   var carta=el('g',{'class':'ig-v-carta','clip-path':'url(#ig-v-clip)'},svg), mondo=el('g',{transform:'translate('+r1(ox)+','+r1(oy)+') scale('+Math.round(k*1000)/1000+')'},carta);
@@ -685,16 +685,23 @@ function disegnaValeriano(svg,S,W,H){
   /* la data e il numero dei settantamila */
   var gd=el('g',{'class':'ig-data'},svg); tx(gd,pad,pad+18,'ig-v-data1','260'); tx(gd,pad+56,pad+17,'ig-v-data2','Mesopotamia');
   var nx=oriz?pad:W-pad, an=oriz?'start':'end', ny=oriz?pad+78:pad+18, gn=el('g',{'class':'ig-v-numero'},svg), cN=tx(gn,nx,ny,'ig-v-num','0',an); tx(gn,nx,ny+17,'ig-v-num-lab','soldati romani, secondo Shapur',an);
-  /* il rilievo: uno schema (un cavaliere e due figure), non una copia */
-  var rw=oriz?Math.min(220,W*.25):Math.min(230,W*.62), rh=rw*.5, rx=oriz?pad:(W-rw)/2, ry=oriz?H-pad-rh-18:H-pad-rh-18;
+  /* il rilievo di Naqsh-e Rostam: la foto (Carole Raddato, CC BY-SA 2.0, da Wikimedia Commons; scaricata a mano perché Commons rifiuta gli scarichi da questa rete) occupa lo spazio
+     libero a sinistra, sul telefono sotto la carta; finché la foto manca resta uno schema (un cavaliere e due figure), non una copia (23 novembre 2026, l'utente: «troppo spazio vuoto sulla sinistra, mettici il bassorilievo famoso») */
+  var mapL=ox+V[0]*k, mapB=oy+(V[1]+V[3])*k;
+  var rx=pad, ry=oriz?pad+112:mapB+14, rw=oriz?Math.max(160,mapL-pad-20):W-2*pad, rh=oriz?H-ry-pad-22:H-ry-pad-22; if(!oriz) rh=Math.min(rh,rw*.62);
   var ril=el('g',{'class':'ig-v-rilievo',transform:'translate('+r1(rx)+','+r1(ry)+')'},svg);
-  el('rect',{x:0,y:0,width:r1(rw),height:r1(rh),rx:8,'class':'ig-v-roccia'},ril);
-  var sx=rw/220, sy=rh/110; function sp(d){ var i=0; return d.replace(/-?\d+(\.\d+)?/g,function(n){ i++; return r1(+n*(i%2?sx:sy)); }); }
-  el('path',{d:sp('M70 100 L74 70 Q78 58 96 56 L128 54 Q140 50 146 38 L150 30 L156 34 L154 46 L146 60 L148 100 L142 100 L140 72 L104 74 L102 100 L96 100 L94 74 L82 76 L78 100 Z'),'class':'ig-v-fig'},ril);      // il cavallo
-  el('path',{d:sp('M112 56 L110 34 Q112 26 120 26 Q128 26 128 34 L126 56 Z M114 24 L126 24 L124 12 L116 12 Z'),'class':'ig-v-fig'},ril);      // il re, con la corona
-  el('path',{d:sp('M162 100 L164 66 Q166 58 172 58 Q178 58 180 66 L182 100 Z M166 56 Q166 46 172 46 Q178 46 178 56 Z'),'class':'ig-v-fig r'},ril);      // una figura in piedi
-  el('path',{d:sp('M36 100 L40 84 Q42 76 50 76 L58 78 L56 100 Z M44 74 Q44 64 50 64 Q56 64 56 74 Z'),'class':'ig-v-fig r'},ril);      // una figura in ginocchio
-  tx(ril,rw/2,rh+14,'ig-v-ril-lab','Naqsh-e Rostam: schema del rilievo','middle');
+  var cr=el('clipPath',{id:'ig-v-ril-clip'},el('defs',null,svg)); el('rect',{x:0,y:0,width:r1(rw),height:r1(rh),rx:8},cr);
+  var schema=el('g',null,ril); el('rect',{x:0,y:0,width:r1(rw),height:r1(rh),rx:8,'class':'ig-v-roccia'},schema);
+  var sw=Math.min(rw,rh*2), s0=(rw-sw)/2, sx=sw/220, sy=rh/110; function sp(d){ var i=0; return d.replace(/-?\d+(\.\d+)?/g,function(n){ i++; return r1(i%2?s0+n*sx:n*sy); }); }
+  el('path',{d:sp('M70 100 L74 70 Q78 58 96 56 L128 54 Q140 50 146 38 L150 30 L156 34 L154 46 L146 60 L148 100 L142 100 L140 72 L104 74 L102 100 L96 100 L94 74 L82 76 L78 100 Z'),'class':'ig-v-fig'},schema);      // il cavallo
+  el('path',{d:sp('M112 56 L110 34 Q112 26 120 26 Q128 26 128 34 L126 56 Z M114 24 L126 24 L124 12 L116 12 Z'),'class':'ig-v-fig'},schema);      // il re, con la corona
+  el('path',{d:sp('M162 100 L164 66 Q166 58 172 58 Q178 58 180 66 L182 100 Z M166 56 Q166 46 172 46 Q178 46 178 56 Z'),'class':'ig-v-fig r'},schema);      // una figura in piedi
+  el('path',{d:sp('M36 100 L40 84 Q42 76 50 76 L58 78 L56 100 Z M44 74 Q44 64 50 64 Q56 64 56 74 Z'),'class':'ig-v-fig r'},schema);      // una figura in ginocchio
+  var lab=tx(ril,0,rh+15,'ig-v-ril-lab','Naqsh-e Rostam: schema del rilievo','start');
+  var foto=el('image',{x:0,y:0,width:r1(rw),height:r1(rh),preserveAspectRatio:'xMidYMid slice','clip-path':'url(#ig-v-ril-clip)','class':'ig-v-foto'},ril);
+  foto.addEventListener('load',function(){ schema.style.display='none'; lab.textContent='Il trionfo di Shapur a Naqsh-e Rostam · foto Carole Raddato, CC BY-SA 2.0, Wikimedia Commons'; });
+  foto.addEventListener('error',function(){ foto.style.display='none'; });
+  foto.setAttribute('href','img/infografiche/shapur-naqsh-e-rostam.jpg'); foto.setAttributeNS(XL,'xlink:href','img/infografiche/shapur-naqsh-e-rostam.jpg');
   var t1=1400, t2=6200, t3=11000, t4=16000, t5=21400, t6=27400, tF=33600;
   S.passo=function(t){
     cls(carta,'vis',t>=200); cls(pA,'vis',t>=t1-300); cls(pE,'vis',t>=400); cls(pC,'vis',t>=400); if(pN) cls(pN,'vis',t>=400); cls(gd,'vis',t>=400);
@@ -715,7 +722,7 @@ var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno==
   governo:{d:GOVERNO, disegna:disegnaGoverno, tappe:function(t){ return !t.intermezzo && (t.anno===476||t.anno===568||t.anno===800); }},
   valeriano:{d:VALERIANO, disegna:disegnaValeriano, tappe:function(t){ return t.anno===260&&!t.intermezzo; }},
   terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo) || t.anno===439&&!t.intermezzo; }} };
-var ORDINE=['roma','terre','moneta','sacco','navi','governo','valeriano'];
+var ORDINE=['valeriano','moneta','navi','sacco','terre','governo','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 274, 395, 410, 439, 476, 590); riordinate il 23 novembre 2026 su richiesta dell'utente
 var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
   pausa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',
   prima:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18 6.5v11l-8.5-5.5z" fill="currentColor"/></svg>',
