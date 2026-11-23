@@ -51,3 +51,4 @@
 .ig-freccia{stroke:#241E1A;stroke-width:3}
 .ig-giorni{font-family:var(--cap);font-size:22px;font-weight:700;fill:var(--porpora,#7A1F2B)}
 @media (prefers-reduced-motion:reduce){ .ig-luogo{transition:none} }
+.ig-anno{font-family:var(--cap);font-size:40px;font-weight:700;fill:#241E1A;paint-order:stroke;stroke:rgba(251,246,234,.9);stroke-width:6px}

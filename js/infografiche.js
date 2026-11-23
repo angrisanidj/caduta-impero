@@ -139,10 +139,25 @@ function disegnaSacco(svg,stato){
   stato.tutti=SACCO.fasi.map(function(x){ return ['410',x[1]]; });
 }
 
+/* ---------- 6. Chi governa l'Occidente ----------
+   Quattro fotogrammi della carta piccola (RM_mappa.miniatura) con gli stati delle regioni delle tappe del 395, 476, 568 e 800 (CAMBI in js/dati.js). Le frasi riassumono quelle tappe. */
+var GOVERNO={ titolo:"Chi governa l'Occidente", sotto:"La carta in quattro momenti: 395, 476, 568, 800", vb:'0 0 640 330',
+  fasi:[[395,"Nel 395 l'Occidente è ancora governato da Roma, da un imperatore che risiede a Milano."],[476,"Nel 476 Odoacre governa l'Italia; Visigoti, Franchi, Burgundi, Vandali e Svevi hanno i loro regni."],
+    [568,"Nel 568 l'Italia e l'Africa sono dell'impero d'Oriente, dopo le guerre di Giustiniano; e i Longobardi entrano in Italia."],[800,"Nell'800 Carlo Magno, re dei Franchi, è incoronato imperatore a Roma; gran parte della Spagna e l'Africa sono degli Arabi."]],
+  fonte:"I colori sono quelli della carta di questa pagina nelle tappe del 395, 476, 568 e 800: confini e attribuzioni delle regioni sono approssimativi, come spiegato in fondo alla pagina." };
+function disegnaGoverno(svg,stato){
+  var M=window.RM_mappa; if(!M||!M.miniatura) return; var m=M.miniatura(); m.svg.setAttribute('width','640'); m.svg.setAttribute('height','330'); m.svg.removeAttribute('class'); m.svg.setAttribute('class','m-mini ig-mini'); svg.appendChild(m.svg);
+  var anno=el('text',{x:24,y:56,class:'ig-anno'},svg), visto=null;
+  function stati(a){ var t=(D.TAPPE||[]).filter(function(t){ return t.regioni && !t.intermezzo && t.anno===a; })[0]; return t?t.regioni:{}; }
+  stato.passo=function(k){ var i=Math.min(3,Math.floor(k*4)), f=GOVERNO.fasi[i]; if(visto!==i){ visto=i; m.mostra(stati(f[0]),f[0]); anno.textContent=f[0]; } return f[1]; };
+  stato.tutti=GOVERNO.fasi.map(function(f){ return [f[0],f[1]]; });
+}
+
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, dura:26000, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
   moneta:{d:MONETA, disegna:disegnaMoneta, dura:20000, tappe:function(t){ return t.anno===284&&t.intermezzo || t.anno===274&&!t.intermezzo; }},
   navi:{d:NAVI, disegna:disegnaNavi, dura:22000, tappe:function(t){ return t.anno===395&&t.intermezzo || t.anno===711&&!t.intermezzo; }},
   sacco:{d:SACCO, disegna:disegnaSacco, dura:24000, tappe:function(t){ return t.anno===410&&!t.intermezzo; }},
+  governo:{d:GOVERNO, disegna:disegnaGoverno, dura:20000, tappe:function(t){ return !t.intermezzo && (t.anno===476||t.anno===568||t.anno===800); }},
   terre:{d:TERRE, disegna:disegnaTerre, dura:22000, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo) || t.anno===439&&!t.intermezzo; }} };
 
 /* ---------- la finestra ---------- */
