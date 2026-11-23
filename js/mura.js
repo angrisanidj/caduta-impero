@@ -82,7 +82,7 @@ var mura=(function(){
 var acque=(function(){
   var LINEE=[{passo:3.6, p:[[619,361,9],[420,170,8.8],[249,12,8.6],[163,62,8.45],[89,74,8.3],[40,54,8.2],[29,51,8.18]]},       // Claudia e Anio Novus fino a porta Maggiore, poi archi neroniani sul Celio fino al Palatino
              {passo:3.2, p:[[600,330,8.5],[400,140,8.25],[255,5,8],[208.5,-53.5,7.9],[160,-84,7.8],[136,-92,7.75]]},              // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina, poi interrate verso le terme di Diocleziano
-             {passo:1.5, p:[[-22,-175,3.9],[-19,-150,3.85],[-13.2,-112.4,3.79],[-17,-93,3.75],[-44,-74,3.7]]},                                    // Vergine: esce dalle pendici del Pincio e attraversa il Campo Marzio
+             {passo:1.5, p:[[-22,-175,3.9],[-19,-150,3.85],[-13.2,-112.4,3.79],[-17,-93,3.75],[-34.8,-75.8,3.72],[-44,-74,3.7]]},      /* il punto sull'arco di Claudio, dove l'acquedotto attraversava la via Lata (Platner e Ashby, Arcus Claudii; posizione in js/monumenti.js): prima la linea passava circa 47 m più a nord */                                    // Vergine: esce dalle pendici del Pincio e attraversa il Campo Marzio
              {passo:1.6, suolo:.5, p:[[-422,28],[-371,37.8],[-311,40.8],[-263,41.8],[-240,43.5],[-198,46],[-160,33]]},
              /* Antoniniano (212-213), il ramo per le terme di Caracalla. Punti reali: i resti di piazza Galeria e l'arco detto di Druso (OpenStreetMap). Secondo Ashby correva interrato o su
                 sostruzioni lungo la via Latina e saliva su arcate solo presso le mura e sulla via Appia: qui si vede dove il terreno scende sotto il canale. La quota sull'arco di Druso
@@ -152,17 +152,30 @@ var acque=(function(){
 (function(){
   /* Certezza, ponte per ponte: Elio, i due dell'isola, Emilio (ponte Rotto) e Milvio sono in piedi o lo sono le loro pile (A); dell'Aurelio si sono trovati i resti sotto ponte Sisto (B);
      il ponte di Probo è noto solo dai cataloghi, e il sito è dedotto da quello del ponte di Teodosio, le cui ultime pile furono tolte nel 1878 (C). */
-  var PC={A:new RM.Costruttore(),B:new RM.Costruttore(),C:new RM.Costruttore()}, B, curva=RM.curvaFiume;
-  [[-157,-104,'A'],[-120,1,'B'],[-66,28,'A'],[-52,38,'A'],[-84,97,'C'],[-152,-479,'A']].forEach(function(p){     // Elio, Aurelio (ponte Sisto), isola Tiberina, Emilio, Probo, Milvio
-    B=PC[p[2]];
+  /* Ogni ponte con la sua storia (Platner e Ashby, voci Pons …, lette il 23 novembre 2026): il ponte di Probo è «a new construction of the emperor Probus (276–282)», poi rifatto da
+     Teodosio (384-387): nel modello compare nel 280; l'Aurelio, rifatto da Valentiniano I nel 365-366, fu «partially destroyed in 772, hence the name ruptus»: da allora gli manca un'arcata;
+     il Neroniano, subito sotto ponte Vittorio Emanuele, era in rovina «probably in the fourth [century], as it is not mentioned in Not.»: qui intero fino al 300 e poi le sole pile (l'anno
+     è un'ipotesi); posizione dalla via OpenStreetMap 226257804. Il ponte di Agrippa (noto da un cippo di Claudio) e il Sublicio, di legno, «standing as late as the fifth century»
+     ma in un punto discusso, non si disegnano. */
+  var PC={A:new RM.Costruttore(),B:new RM.Costruttore(),C:new RM.Costruttore()}, B, curva=RM.curvaFiume, storie=[];
+  function ponte(B,parti){      // parti: 'tutto', 'rotto' (senza un'arcata), 'pile'
+    if(parti!=='pile'){
+      if(parti==='rotto'){ B.scatola(6.8,.3,1.3,-4.1,.85,0,P.travertino).scatola(5.2,.3,1.3,4.9,.85,0,P.travertino); }      // manca il tratto fra le due pile centrali
+      else B.scatola(15,.3,1.3,0,.85,0,P.travertino).scatola(15,.16,.12,0,1.15,.6,P.travertino).scatola(15,.16,.12,0,1.15,-.6,P.travertino);
+    }
+    [-4.4,-1.5,1.5,4.4].forEach(function(x){ B.scatola(.7,parti==='pile'?.6:.9,1.5,x,0,0,P.travertino); });
+    if(parti!=='pile') B.scatola(2,.9,1.3,-6.6,0,0,P.travertino).scatola(2,.9,1.3,6.6,0,0,P.travertino);
+  }
+  [[-157,-104,'A'],[-120,1,'B',0,772],[-66,28,'A'],[-52,38,'A'],[-84,97,'C',280],[-152,-479,'A'],[-173.5,-92.6,'C',0,null,300]].forEach(function(p){     // Elio, Aurelio (ponte Sisto), isola Tiberina, Emilio, Probo, Milvio, Neroniano
     var m=1e9, tm=0, i, q; for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); var dd=Math.hypot(q.x-p[0],q.z-p[1]); if(dd<m){ m=dd; tm=i/2400; } }
-    q=curva.getPoint(tm); var tg=curva.getTangent(tm);
-    B.dentro(q.x,-.5,q.z,Math.atan2(-tg.x,-tg.z),function(B){            // l'asse x locale attraversa il fiume
-      B.scatola(15,.3,1.3,0,.85,0,P.travertino).scatola(15,.16,.12,0,1.15,.6,P.travertino).scatola(15,.16,.12,0,1.15,-.6,P.travertino);
-      [-4.4,-1.5,1.5,4.4].forEach(function(x){ B.scatola(.7,.9,1.5,x,0,0,P.travertino); });
-      B.scatola(2,.9,1.3,-6.6,0,0,P.travertino).scatola(2,.9,1.3,6.6,0,0,P.travertino);
-    });
+    q=curva.getPoint(tm); var tg=curva.getTangent(tm), rot=Math.atan2(-tg.x,-tg.z);            // l'asse x locale attraversa il fiume
+    if(!p[3] && !p[4] && !p[5]){ PC[p[2]].dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,'tutto'); }); return; }      // i ponti che non cambiano restano nella maglia comune
+    var mat=RM.matPietra(p[2]), fa=function(parti){ var C=new RM.Costruttore(); C.dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,parti); }); var g=C.maglia(mat); g.visible=false; RM.scene.add(g); return g; };
+    storie.push({dal:p[3]||0, rotto:p[4], pile:p[5], intero:fa('tutto'), mezzo:p[4]?fa('rotto'):null, resti:p[5]?fa('pile'):null});
   });
+  RM.moduli.push(function(anno){ storie.forEach(function(s){
+    var su=anno>=s.dal, r=s.rotto&&anno>=s.rotto, pi=s.pile&&anno>=s.pile;
+    s.intero.visible=su&&!r&&!pi; if(s.mezzo) s.mezzo.visible=su&&r; if(s.resti) s.resti.visible=pi; }); });
   B=PC.A;                                                                  // l'isola c'è; il tempio e la casa sopra sono indicativi
   B.dentro(-66,-.5,28,1.2,function(B){
     var is=RM.ellisse(2.3,6.6,20), su=RM.ellisse(2.1,6.3,20), ce=su.map(function(){ return [0,0]; });

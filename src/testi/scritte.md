@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 12:04:31.
+Generato da `src/testi.mjs` il 23/11/2026, 12:18:16.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 11:55
+[pagina.52] Versione del 23/11/2026, ore 12:04
 
 
 ## 2. Gli atti
@@ -2399,6 +2399,21 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.traiano.certezza-B] Restano in piedi alcune sale semicircolari e la grande cisterna delle Sette Sale. Per la parte centrale delle terme le principali testimonianze sono i disegni del Cinquecento.
 
 
+### Terme di Tito
+
+[scheda.tito.nome] Terme di Tito
+
+[scheda.tito.cosa] Le prime grandi terme imperiali, costruite in fretta da Tito per l'inaugurazione del Colosseo, sul bordo del colle Oppio sopra l'anfiteatro.
+
+[scheda.tito.data1-80] Inaugurate con giochi magnifici, secondo Svetonio.
+
+[scheda.tito.data2-238] Si pensa a un restauro, secondo la Storia Augusta.
+
+[scheda.tito.data3-537] Nel modello chiudono con il taglio degli acquedotti, come le altre terme. Una data precisa non è nota.
+
+[scheda.tito.certezza-C] Oggi non ne resta quasi nulla. Si conoscono la pianta disegnata da Palladio nel Cinquecento e le misure, circa 105 per 120 metri. Nel modello centro e orientamento sono stimati.
+
+
 ### Terme di Caracalla
 
 [scheda.caracalla.nome] Terme di Caracalla
@@ -2512,6 +2527,28 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.marcello.certezza-A] Nel palazzo costruito sopra il teatro si conserva parte della facciata curva, con due livelli di arcate. Il terzo livello, la scena e le gradinate sono andati perduti. Nel modello sono ricostruiti sulla base della pianta conosciuta.
 
 
+### Tempio di Apollo Sosiano
+
+[scheda.apollo.nome] Tempio di Apollo Sosiano
+
+[scheda.apollo.cosa] Tempio di Apollo «in circo», rifatto da Gaio Sosio dopo il 34 a.C., accanto al teatro di Marcello.
+
+[scheda.apollo.data1-392] Nel modello è chiuso dopo le leggi di Teodosio, come gli altri templi. La data effettiva è incerta.
+
+[scheda.apollo.certezza-B] Restano il podio e tre colonne rialzate nel Novecento. Posizione e contorno vengono da OpenStreetMap. Le altezze sono indicative.
+
+
+### Tempio di Bellona
+
+[scheda.bellona.nome] Tempio di Bellona
+
+[scheda.bellona.cosa] Tempio di Bellona, la dea della guerra, promesso in voto nel 296 a.C. da Appio Claudio Cieco.
+
+[scheda.bellona.data1-392] Nel modello è chiuso dopo le leggi di Teodosio, come gli altri templi. La data effettiva è incerta.
+
+[scheda.bellona.certezza-B] Resta il podio. L'identificazione con Bellona è degli studi successivi al 1929. Prima il sito del tempio non era noto con certezza. Le altezze sono indicative.
+
+
 ### San Giovanni in Laterano
 
 [scheda.laterano.nome] San Giovanni in Laterano
@@ -2527,6 +2564,30 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.laterano.data4-455] I Vandali asportano gli arredi; papa Leone I fa rifare i vasi sacri.
 
 [scheda.laterano.certezza-B] La pianta costantiniana è nota dagli scavi sotto la chiesa attuale: cinque navate, digradanti in altezza, e in fondo una navatella trasversale bassa. Larghezze e alzato sono ricostruiti.
+
+
+### Patriarchio lateranense
+
+[scheda.patriarchio.nome] Patriarchio lateranense
+
+[scheda.patriarchio.cosa] Il palazzo del vescovo di Roma, accanto alla basilica del Laterano. Fu la residenza dei papi per tutto l'alto Medioevo.
+
+[scheda.patriarchio.data1-324] Dal IV secolo è la residenza del vescovo accanto alla sua chiesa.
+
+[scheda.patriarchio.data2-745] Verso la metà dell'VIII secolo papa Zaccaria vi costruisce una grande sala da banchetto, decorata con marmi, mosaici e affreschi, secondo il Liber Pontificalis.
+
+[scheda.patriarchio.certezza-C] Il palazzo fu demolito alla fine del Cinquecento. Sappiamo che stava a nord della basilica, dove oggi sono il palazzo del Laterano e la Scala Santa. Nel modello forma e misure sono uno schema.
+
+
+### Triclinio di Leone III
+
+[scheda.triclinioleone.nome] Triclinio di Leone III
+
+[scheda.triclinioleone.cosa] La grande sala da banchetto costruita da papa Leone III nel palazzo del Laterano.
+
+[scheda.triclinioleone.data1-800] Il Liber Pontificalis la descrive molto ampia, con un'abside a mosaico e altre dieci absidi dipinte con gli apostoli. Leone III è papa dal 795 all'816: nel modello la sala compare verso l'800, ma la data precisa non è nota.
+
+[scheda.triclinioleone.certezza-C] La sala è scomparsa con il palazzo. La conosciamo dalla descrizione del Liber Pontificalis. Nel modello posizione e forma sono indicative.
 
 
 ### San Pietro

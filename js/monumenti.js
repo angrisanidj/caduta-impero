@@ -417,7 +417,11 @@ var M=[
     B.scatola(4.5,2,1.9,0,0,-3.7,P.mattone).falde(4.6,.5,2,0,2,-3.7,P.coppi,0,P.mattone);
  }},
  {id:'domiziano', nome:'Stadio di Domiziano', x:-101,z:-74, ry:PI/2, lunga:[28,7.5], fa:function(B){ stadio(B,27.5,10.6,1.9); }},      // circa 275 x 106 m, la curva a nord: è piazza Navona. Ordini di arcate e altezza della facciata sono ricostruiti
- {id:'traiano', nome:'Terme di Traiano', x:88,z:5, ry:-.62, zone:[[0,0,23]], fa:function(B){ terme(B,31,32,{pc:21,zc:-3.8}); }},      // corpo centrale di circa 190 x 212 m, verso il lato nord del recinto (it.wikipedia, da Caruso e Volpe); il caldarium tondo è schematico
+ {id:'traiano', nome:'Terme di Traiano', x:97.4,z:3.7, ry:-.62, zone:[[0,0,23]], fa:function(B){ terme(B,31,32,{pc:21,zc:-3.8}); }},      /* posizione: il centro della relazione OpenStreetMap 13162787 «Thermae Traianae» (Nominatim, 23 novembre 2026); prima stava circa 95 m più a ovest */
+ /* Terme di Tito: «just west of the later thermae Traianae on the edge of the slope overhanging the Colosseum, with the same orientation as the domus Aurea … about 105 by 120 metres.
+    The façade and principal entrance were on the north side … a caldarium projecting out from the south side» (Platner e Ashby, Thermae Titi). Oggi quasi nulla resta (it.wikipedia: fra via Nicola Salvi,
+    via delle Terme di Tito e viale del Monte Oppio). Centro e orientamento sono stimati da queste vie; corpo unico senza recinto, caldario verso il Colosseo. */
+ {id:'tito', nome:'Terme di Tito', x:68,z:10, ry:0, zone:[[0,0,5]], fa:function(B){ terme(B,10.5,12,{recinto:false,lc:10.5,pc:8.5,zc:-.5,rc:.9}); }},      // corpo centrale di circa 190 x 212 m, verso il lato nord del recinto (it.wikipedia, da Caruso e Volpe); il caldarium tondo è schematico
  {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ terme(B,33.7,32.8,{rc:1.75}); }},      // il caldarium rotondo, al centro del lato sud-ovest, ha una cupola di 35 m (Platner)
  {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36,{lc:28,pc:16}); }},      // corpo centrale di 280 x 160 m (Platner); il caldarium tondo è schematico
  {id:'massenzio', nome:'Basilica di Massenzio', x:25,z:7, ry:-.35, zone:[[0,0,7.5]], fa:function(B){
@@ -478,11 +482,28 @@ var M=[
     [-.9,.9].forEach(function(x){ B.scatola(.22,.2,.22,x,0,5.1,P.marmo).cilindro(.09,1.4,x,.2,5.1,P.sabbia,.06,4).cono(.065,.14,x,1.6,5.1,P.sabbia,4); });      // i due obelischi ai lati dell'ingresso
  }},
  {id:'pompeo', x:-94.3,z:-30.8, ry:-PI/2, zone:[[0,0,10],[0,-14,10]], fa:function(B){ teatro(B,8,2.6); B.tempio(2,2.6,1.4,0,6.6,PI,{fronte:6}); portico(B,13,18,0,0,-11.5,1.1,P.prato); }},   // teatro e portici di Pompeo
- {id:'marcello', nome:'Teatro di Marcello', x:-46,z:7, ry:PI*.8, zone:[[0,0,8]], fa:function(B){ teatro(B,6.5,2.9,true); }},      // «built with three series of open arcades»: dorico, ionico e un terzo ordine a lesene corinzie, perduto (Platner)
+ {id:'marcello', nome:'Teatro di Marcello', x:-49.85,z:9, ry:PI*.8, zone:[[0,0,7.5]], fa:function(B){ teatro(B,6,2.9,true); }},      /* centro e raggio ricavati dal cerchio della facciata curva conservata (OpenStreetMap, via 86217821: raggio di circa 59 m); prima il teatro stava circa 45 m più a nord-est e copriva i due templi */
+ /* I due templi a nord del teatro, sui contorni di OpenStreetMap (vie 182282759 e 998844739): Apollo «in circo», detto Sosiano (it.wikipedia) e quello che gli studi successivi a Platner e Ashby
+    identificano con Bellona (per loro, nel 1929, il sito di Bellona «is not known with certainty»; it.wikipedia lo pone accanto al tempio di Apollo). Fronte verso nord, verso il circo Flaminio:
+    orientamento e alzati sono indicativi. Chiusi come gli altri templi dopo le leggi di Teodosio. */
+ {id:'apollo', nome:'Tempio di Apollo Sosiano', x:-47.8,z:.8, ry:PI, zone:[[0,0,2.3]], fa:function(B){ B.tempio(2,3.3,1.5,0,0,0,{fronte:6,lati:9,podio:.4}); }},
+ {id:'bellona', nome:'Tempio di Bellona', x:-44.8,z:1.15, ry:PI, zone:[[0,0,2.4]], fa:function(B){ B.tempio(1.6,3.9,1.4,0,0,0,{fronte:6,podio:.4}); }},      // «built with three series of open arcades»: dorico, ionico e un terzo ordine a lesene corinzie, perduto (Platner)
  {id:'laterano', nome:'San Giovanni in Laterano', x:169,z:73, ry:.1, zone:[[0,0,8],[8,0,6],[-11.3,-3.5,2.6]], fa:function(B){
     /* cinque navate «fortemente digradanti in altezza» e in fondo «una navatella trasversale, il primitivo transetto» (it.wikipedia, Basilica di San Giovanni in Laterano); larghezze e altezze indicative */
     cinqueNavate(B,10,{nave:1.9,nav:.85,hn:2.9,hi:2,he:1.4,ra:.95,ali:{prof:1.4,alto:1.9},atrio:{lato:4.8,prof:4.8}});
     B.cilindro(1.2,1.6,-11.3,0,-3.5,P.mattone,null,8).cono(1.3,.7,-11.3,1.6,-3.5,P.coppi,8); }},      // il battistero ottagonale, dov'è oggi (OpenStreetMap): dietro l'abside, verso nord
+ /* Il Patriarchio, la residenza del vescovo di Roma accanto alla basilica dal IV secolo (it.wikipedia, «Palazzo del Laterano», che riassume il Liber Pontificalis): verso la metà dell'VIII secolo
+    papa Zaccaria vi costruisce un triclinio; Leone III (795-816) un altro, «di ampiezza impressionante», con un'abside a mosaico e altre dieci absidi. Demolito da Sisto V alla fine del Cinquecento.
+    Stava a nord della basilica, dove oggi sono il palazzo del Laterano e la Scala Santa (OpenStreetMap: Scala Santa a 178,8, 59,2). Forma e misure sono uno schema: della pianta antica non sappiamo. */
+ {id:'patriarchio', nome:'Patriarchio lateranense', x:176.5,z:63, ry:.1, zone:[[0,0,4.2]], fa:function(B){
+    B.scatola(7,1.6,2,0,0,0,P.intonaco).falde(7.2,.5,2.2,0,1.6,0,P.coppi,0,P.intonaco);                       // il corpo lungo, verso la basilica
+    B.scatola(2.2,1.9,3,-2.6,0,-2.2,P.intonaco).falde(2.4,.5,3.2,-2.6,1.9,-2.2,P.coppi,PI/2,P.intonaco);      // un'ala a nord
+    B.scatola(1,3,1,3.1,0,-.6,P.mattone).falde(1.1,.4,1.1,3.1,3,-.6,P.coppi,0,P.mattone);                   // una torre
+ }},
+ {id:'triclinioleone', nome:'Triclinio di Leone III', x:183,z:61.5, ry:.1, come:'patriarchio', zone:[[0,0,2.4]], fa:function(B){
+    B.scatola(3.4,1.8,1.5,0,0,0,P.intonaco).falde(3.5,.45,1.6,0,1.8,0,P.coppi,0,P.intonaco);
+    B.cilindro(.62,1.5,1.7,0,0,P.intonaco,null,12).cono(.66,.35,1.7,1.5,0,P.coppi,12);                       // l'abside principale; le dieci absidi laterali non si disegnano
+ }},
  {id:'pietro', nome:'San Pietro', x:-259,z:-108, ry:0, zone:[[0,0,9],[10,0,7]], et:1, fa:function(B){
     sanPietro(B);
     B.scatola(5.4,.07,7.2,13.7,0,0,P.selce).scatola(5.4,.1,.5,13.7,0,3.4,P.travertino).scatola(5.4,.1,.5,13.7,0,-3.4,P.travertino);      // il sagrato lastricato davanti all'atrio, dove si raccolgono i pellegrini
@@ -949,7 +970,7 @@ RM.statoMonumento=function(id,anno){
    c = incuria: dal 390 circa la manutenzione pubblica si dirada per tutti, e accelera dopo la chiusura. Si vede come crepe, colature, erba, coppi mancanti.
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
+var CURA={laterano:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
