@@ -200,10 +200,15 @@ function vista(v){
 if(window.RM_pagina) RM_pagina.quando(function(i,t){
   if(document.body.classList.contains('roma-grande')) return;                            // a tutto schermo decide chi guarda
   var telefono=window.innerWidth<=1000; if(telefono && scena()!=='roma') return;         // sul telefono la città non si apre da sola
+  regia(t);
+});
+/* chiamata anche dalla riga «A Roma, in quest'anno» del telefono (js/pagina.js), dopo aver aperto la città */
+RM.regiaTappa=function(t){ regia(t); };
+function regia(t){
   var ev=null; (D.EVENTI||[]).forEach(function(e){ if(!ev && Math.floor(e.da)===t.anno && !t.intermezzo) ev=e; });
   var v=ev?vista(ev.vista):null;
   if(v&&v.t){ RM.volaA(v.t,v.c); portata=true; }
   else if(v){ RM.vola(v[0],v[1],v[2]); portata=true; }
   else if(portata && RM.vistaInsieme){ RM.vistaInsieme(); portata=false; }
-});
+}
 })();

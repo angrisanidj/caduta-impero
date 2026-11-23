@@ -178,7 +178,7 @@ function vai(i,subito){
   else chi.forEach(function(p){ var li=document.createElement('li'), b=document.createElement('b'); b.textContent=p[0]; li.appendChild(b); var d=document.createElement('span'); d.className='date'; d.textContent=p[1]||''; li.appendChild(d);      /* anche senza date: lo span porta lo stacco e il punto fra nome e riga (prima «Cniva» restava attaccato al testo) */ li.appendChild(document.createTextNode(p[2])); bc.appendChild(li); });
   var voci=t.voci||[], bv=$('tVoci'); $('tVoce').hidden=!voci.length; bv.textContent=''; $('tVoceTitolo').textContent=voci.length>1?'Voci di allora':'Una voce di allora';      // parole dei contemporanei, tradotte dalla fonte
   voci.forEach(function(v){ var q=document.createElement('blockquote'), c=document.createElement('p'); q.textContent=v.testo; c.className='chi'; c.textContent=v.chi; bv.appendChild(q); bv.appendChild(c); });
-  daLeggere(t);
+  daLeggere(t); inCitta(t);
   if(MAPPA) MAPPA.mostra(t.regioni,t.anno,t.luoghi,t.scena,t.passi);
   bottoni.forEach(function(b,k){ b.setAttribute('aria-current',k===idx?'true':'false'); b.classList.toggle('passata',k<idx); });
   gruppi.forEach(function(g,k){ g.g.classList.toggle('attivo',k===Math.min(t.atto,gruppi.length-1)); });
@@ -344,6 +344,31 @@ function daLeggere(t){
     b.appendChild(s); var c=document.createElement('span'); c.className='dl-testi'; c.appendChild(tt); c.appendChild(so); b.appendChild(c); li.appendChild(b); ul.appendChild(li);
     b.addEventListener('click',function(){ var r=$(x.id); if(!r) return; var basso=matchMedia('(prefers-reduced-motion: reduce)').matches; r.scrollIntoView({behavior:basso?'auto':'smooth',block:'center'});
       r.classList.remove('risalta'); void r.offsetWidth; r.classList.add('risalta'); });
+  });
+}
+
+/* «A Roma, in quest'anno» (23 novembre 2026): sul telefono la città non si apre da sola, e chi legge non sa che c'è qualcosa da vedere. Sotto il testo della tappa, se nell'anno
+   della tappa c'è un evento di Roma (EVENTI in js/dati.js), una riga con la sua didascalia accorciata e il bottone «Guarda la città»: apre la scheda «Roma», porta su la scena
+   e la fa volare sul luogo (RM.regiaTappa in js/scene-tappe.js). Sul PC le due scene stanno insieme e la regia parte da sola: la riga lì non si mostra (css/stile.css). */
+function inCitta(t){
+  var box=document.getElementById('tCitta'); if(!box) return; box.textContent='';
+  var ev=null; if(!t.intermezzo) ((window.RM_DATI||{}).EVENTI||[]).forEach(function(e){ if(!ev && Math.floor(e.da)===t.anno && e.testo) ev=e; });
+  box.hidden=!ev; if(!ev) return;
+  var s=String(ev.testo).replace(/\s+/g,' ').trim(), k=s.indexOf(' · '); if(k>=0 && k<40) s=s.slice(k+3);      // via la data in testa («Luglio 472 · …»): l'anno c'è già
+  var fr=s.match(/[^.!?]+[.!?]+(\s|$)/g)||[s], o1='';      // le frasi intere che stanno in 130 caratteri (almeno la prima)
+  for(var j=0;j<fr.length && (!o1 || (o1+fr[j]).trim().length<=130);j++) o1+=fr[j]; s=o1.trim();
+  if(s.length>130){ var w=s.split(' '), o=''; for(var i=0;i<w.length && (o+' '+w[i]).length<=125;i++) o+=(o?' ':'')+w[i]; s=o.replace(/[,;:.]$/,'')+'…'; }
+  var b=document.createElement('button'), ic=document.createElement('span'), tx=document.createElement('span'), tt=document.createElement('b'), so=document.createElement('span'), va=document.createElement('span');
+  b.type='button'; b.className='ic-bottone'; ic.className='ic-segno'; ic.setAttribute('aria-hidden','true');
+  ic.innerHTML='<svg viewBox="0 0 24 24" width="16" height="16"><path d="M3 20h18M5 20V11l7-5 7 5v9M9 20v-5h6v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+  tx.className='ic-testi'; tt.textContent='A Roma, in quest\'anno'; so.className='ic-sotto'; so.textContent=s; va.className='ic-vai'; va.textContent='Guarda la città →';
+  tx.appendChild(tt); tx.appendChild(so); tx.appendChild(va); b.appendChild(ic); b.appendChild(tx); box.appendChild(b);
+  b.addEventListener('click',function(){
+    var sc=document.getElementById('scene'), br=document.querySelector('.schede button[data-vista="roma"]');
+    if(sc && sc.getAttribute('data-vista')!=='roma' && br) br.click();
+    var rq=document.querySelector('.riquadro.roma'), basso=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(rq) rq.scrollIntoView({behavior:basso?'auto':'smooth',block:'start'});
+    setTimeout(function(){ if(RM.regiaTappa) RM.regiaTappa(t); },60);      // dopo il ridimensionamento della scena appena mostrata
   });
 }
 
