@@ -191,16 +191,27 @@ L'antialias a più campioni (MSAA) sulla tela degli effetti è stato provato e s
 - Dividere case e rovine in riquadri, così da vicino si disegna solo il quartiere inquadrato. È il lavoro che rende di più sui telefoni lenti. Tocca `js/citta.js`.
 - Terreno più rado lontano dalla città.
 
-## Proposte, in ordine di resa
+## Le nove proposte: fatte
 
-Servono un sì, perché cambiano l'aspetto.
+L'utente ha detto di farle tutte. Fatte lo stesso giorno, 23 novembre 2026.
 
-1. **Tevere** color fiume: giallo-verde torbido al posto del turchese.
-2. **Prati e campagna**: verde meno saturo, con una grana (campi, filari, alberi). Vale per i recinti delle terme, la piana vaticana, la terrazza di Claudio.
-3. **Statue** a tutto tondo al posto dei blocchi: Colosso, quadriga di Adriano, Traiano a cavallo.
-4. **Colonne coclidi** (Traiana, di Marco Aurelio) con il fregio a spirale.
-5. **Terme** distinte fra loro, lette sulle piante: per prima Diocleziano.
-6. **Rovine da vicino**: trama dei muri non stirata, cespugli veri, chiazze d'erba più fini.
-7. **Bronzo** dello stesso colore prima e dopo il trasloco delle tegole.
-8. **Monte Testaccio** a gradoni di cocci.
-9. **Ponti** con le arcate e isola Tiberina a forma di nave.
+1. **Tevere.** Non più turchese: verde-grigio scuro e torbido. Il giallo fango, provato per primo, dall'alto non si leggeva più come un fiume. L'acqua limpida resta quella degli acquedotti (fontane, vasche). Anche la piena è torbida.
+2. **Prati e campagna.** Verde meno saturo. I prati hanno una grana d'erba e ingialliscono quando il monumento è lasciato a sé. In campagna si vedono i confini dei campi e i solchi.
+3. **Statue.** A tutto tondo: il Colosso, la quadriga e le statue del mausoleo di Adriano, i cavalli. Le pose sono indicative, ed è scritto nel codice.
+4. **Colonne.** Traiana e di Marco Aurelio hanno il fregio a spirale. I giri (23 e 21) sono i numeri correnti: **non letti** in Platner.
+5. **Terme.** Lette in Platner e Ashby. Diocleziano: caldarium rettangolare che sporge a sud-ovest, tepidarium circolare, due sale rotonde agli angoli ovest e sud. Caracalla: gradinata e cisterne al centro del lato sud-ovest, due esedre (Platner non dice su quali lati: qui stanno sui fianchi, come nelle piante correnti). Traiano aveva già il corpo centrale verso nord: su questo l'audit sbagliava.
+6. **Rovine da vicino.** La trama dei muri non si stira più; i cespugli non sono più piramidi; le chiazze d'erba sui pavimenti hanno grane diverse e bordi sfrangiati.
+7. **Bronzo.** Un colore solo, bronzo dorato. Le tegole di San Pietro hanno lo stesso oro che avevano sul tempio di Venere e Roma.
+8. **Testaccio.** A terrazze, come dice la scheda. Sei gradoni: il numero è indicativo.
+9. **Ponti e isola.** I ponti hanno arcate e rostri (lo stesso numero di arcate per tutti: non è quello vero di ciascuno). L'isola Tiberina è lunga 269 m e larga 67 (Platner) e ha la forma di una nave; prima era un ovale di 46 per 132. Quale capo fosse la prua la voce di Platner non lo dice in modo univoco.
+
+Due voci dell'audit che la rilettura ha chiuso senza toccare nulla: la vasca della Meta Sudans (21 m, già annotata nel codice come rifatta nel IV secolo) e le mura dei Castra Praetoria (4,73 m, da Platner).
+
+Costo: la scena pesa circa il 5% in più di triangoli (statue, spirali, arcate, cespugli); sui telefoni i cespugli restano semplici.
+
+### Ancora da fare
+
+- Provare tutto su un telefono vero.
+- Dividere case e rovine in riquadri (`js/citta.js`), per i telefoni lenti.
+- Le voci **da verificare** rimaste: asse dello stadio di Domiziano, recinto del tempio di Adriano, misura in pianta dei Castra, i triangoli chiari accanto agli obelischi del Circo, la lama bianca sul Colosseo nell'852.
+- Terme di Costantino, di Nerone e di Tito: ancora dallo stampo comune.

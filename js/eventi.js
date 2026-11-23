@@ -79,14 +79,14 @@ bagliori.frustumCulled=false; bagliori.visible=false; RM.scene.add(bagliori);
    (il rilievo della scena è accentuato, quindi l'acqua ha uno spessore fisso e non la profondità vera).
    La maglia si costruisce la prima volta che serve. */
 var piena=null, matPiena=new THREE.ShaderMaterial({
-  transparent:true, depthWrite:false, uniforms:{ livello:{value:-9}, colore:{value:RM.col(0x87a094)}, onda:{value:2} },
+  transparent:true, depthWrite:false, uniforms:{ livello:{value:-9}, colore:{value:RM.col(0x8a9478)}, onda:{value:2} },
   /* onda: dove è arrivata l'ondata, lungo il fiume (lungo: 0 a monte, 1 a valle); a monte del fronte l'acqua è salita, a valle no; sul fronte una fascia chiara di schiuma */
   vertexShader:['attribute float soglia; attribute float lungo; uniform float livello; uniform float onda; varying float vF; varying float vS;',
     'void main(){ float k=clamp((onda-lungo)/0.045,0.0,1.0); float lv=mix(-1.4,livello,k); vF=clamp((lv-soglia)*0.6,0.0,0.24);',
     ' vS=(1.0-smoothstep(0.0,0.02,abs(onda-lungo-0.012)))*step(onda,1.5); gl_Position=projectionMatrix*modelViewMatrix*vec4(position.x,position.y+vF+vS*0.05,position.z,1.0); }'].join(NL),
   fragmentShader:['uniform vec3 colore; varying float vF; varying float vS;','void main(){ if(vF<0.004) discard; vec3 c=mix(colore,vec3(0.93,0.9,0.82),vS*0.75); gl_FragColor=vec4(c,smoothstep(0.0,0.07,vF)*(0.84+0.12*vS));','#include <encodings_fragment>','}'].join(NL)
 });
-var coloreAcqua=RM.col(0x87a094);
+var coloreAcqua=RM.col(0x8a9478);      // torbida come il fiume (23 novembre 2026)
 function posaPiena(){
   var PS=5, X0=-340, Z0=-420, NX=137, NZ=173, pos=new Float32Array(NX*NZ*3), sg=new Float32Array(NX*NZ), lu=new Float32Array(NX*NZ), ind=[], c, r, k=0;
   var cf=RM.curvaFiume, N=400, cp=[], j; for(j=0;j<=N;j++){ var q=cf.getPoint(j/N); cp.push([q.x,q.z]); }      // per l'ondata: a che punto del fiume corrisponde ogni vertice

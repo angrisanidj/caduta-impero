@@ -253,12 +253,13 @@ var ombraChiesta=false, ombraFatta=0, ultimoAnno=0;
 RM.moduli.push(function(){ ombraChiesta=true; ultimoAnno=performance.now(); });
 
 /* ---- terreno: maglia fitta sulla città, larga in campagna. Si posa dopo che i monumenti hanno dichiarato le loro terrazze (RM.posa) ---- */
-var CAMPI=[0x86a056,0x759a4c,0xb3aa62,0x9aa35a,0x6a9348,0xc0b06a].map(RM.col), URBE=RM.col(0xb8a684), RIVA=RM.col(0x5f8c46), PRATO=RM.col(0x7fa054);
+/* campagna: grano e stoppie, maggese, pascolo, vigna, oliveto; meno verde brillante di prima (23 novembre 2026: sembrava un prato all'inglese) */
+var CAMPI=[0x93a062,0x7f9457,0xbcae6e,0xa6a468,0x738c52,0xc7b57a,0xa8996a,0x8b9a60,0xb5a56c].map(RM.col), URBE=RM.col(0xb8a684), RIVA=RM.col(0x6a8650), PRATO=RM.col(0x899a5e);
 function coloreSuolo(x,z,c){
   var df=RM.distFiume(x,z), bordo=RM.distLinea(x,z,RM.MURA,true), dentro=RM.dentroMura(x,z);
   var ca=.82, sa=.57, u=(x*ca+z*sa)/26, v=(-x*sa+z*ca)/19;                  // campi: scacchiera ruotata
   c.copy(CAMPI[Math.floor(grana(Math.floor(u),Math.floor(v))*CAMPI.length)]);
-  c.lerp(PRATO,.35+.3*RM.rumore(x/60,z/60));
+  c.lerp(PRATO,.2+.3*RM.rumore(x/60,z/60));
   var urbano=dentro?Math.min(1,bordo/26):Math.max(0,1-bordo/40)*.5;          // terra battuta in città
   c.lerp(URBE,urbano*(.75+.25*RM.rumore(x/14,z/14)));
   c.lerp(RIVA,Math.max(0,1-df/20)*.8);
@@ -292,6 +293,13 @@ function posaSuolo(){
         'float pe=sin(vXZ.x*0.21+sin(vXZ.y*0.13)*2.0)*sin(vXZ.y*0.19+sin(vXZ.x*0.11)*2.0)*0.5+0.5;',
         'float gr=dot(diffuseColor.rgb,vec3(0.34))/0.42;',
         'diffuseColor.rgb=mix(diffuseColor.rgb,uVerde*(0.72+0.4*pe)*clamp(gr,0.7,1.25),vUrb.x*smoothstep(0.1,0.5,uErba-vUrb.y*0.95)*(0.6+0.4*pe));',
+        /* campagna: i confini fra i campi (siepi, fossi) e i solchi, ogni campo col suo verso e il suo passo; solo fuori città. La scacchiera è la stessa di coloreSuolo */
+        'float camp=1.0-smoothstep(0.0,0.25,vUrb.x);',
+        'if(camp>0.0){ vec2 fq=vec2(dot(vXZ,vec2(0.82,0.57))/26.0,dot(vXZ,vec2(-0.57,0.82))/19.0); float hc=fract(sin(dot(floor(fq),vec2(127.1,311.7)))*43758.5453);',
+        '  float lungo=hc>0.5?fq.x*26.0:fq.y*19.0; float passoC=0.7+1.1*fract(hc*7.3); float fwC=fwidth(lungo)/passoC;',
+        '  float solco=sin(lungo/passoC*6.2832)*(1.0-smoothstep(0.12,0.4,fwC))*step(0.25,hc);',
+        '  vec2 bc=abs(fract(fq)-0.5); float fwB=max(fwidth(fq.x),fwidth(fq.y)); float siepe=smoothstep(0.5-0.012-fwB,0.5-0.006,max(bc.x,bc.y))*(1.0-smoothstep(0.01,0.05,fwB));',
+        '  diffuseColor.rgb*=1.0+camp*(0.07*solco-0.22*siepe); }',
         'diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.27,0.25,0.15)*(0.8+0.4*pe),smoothstep(0.025,0.2,vPend)*0.8);',
         /* da vicino il terreno prende una grana più fine (ciuffi, sassi), che sfuma quando ci si allontana e non sfarfalla */
         'float fwS=max(fwidth(vXZ.x),fwidth(vXZ.y)); float vic=1.0-smoothstep(0.03,0.14,fwS);',
@@ -334,7 +342,8 @@ RM.nastro=function(linea,larga,materiale,alza,quotaFissa){
 var matStrada=new THREE.MeshStandardMaterial({color:RM.col(0xcdbfa3),roughness:1,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
 
 /* Tevere */
-RM.matFiume=new THREE.MeshStandardMaterial({color:RM.col(0x4f97a6),roughness:.2,metalness:.1,side:THREE.DoubleSide});
+/* Il Tevere è torbido: «flavus», biondo, per i poeti latini. Fino al 23 novembre 2026 era turchese, più bello che vero; ora è un verde-grigio scuro: il giallo fango, provato, dall'alto non si leggeva più come un fiume. L'acqua limpida resta quella degli acquedotti (fontane, vasche). */
+RM.matFiume=new THREE.MeshStandardMaterial({color:RM.col(0x5a6c53),roughness:.25,metalness:.1,side:THREE.DoubleSide});
 RM.tempoAcqua={value:0};
 RM.matFiume.onBeforeCompile=function(sh){                       // corrente che scorre e schiuma lungo le rive
   var A=String.fromCharCode(10); sh.uniforms.uTempo=RM.tempoAcqua;
@@ -357,7 +366,7 @@ RM.posa=function(){
 
 /* ---- giorno / notte ---- */
 RM.notte=0;
-var fiumeG=RM.col(0x4f97a6), fiumeN=RM.col(0x0d1626);
+var fiumeG=RM.col(0x5a6c53), fiumeN=RM.col(0x10160f);
 /* il velo del 536: sole pallido e azzurrognolo, cielo lattiginoso, ombre deboli (Cassiodoro, Variae XII 25; Procopio, Guerre IV 14) */
 RM.velo=0;
 var VELO={ alto:RM.col(0xa9b2ba), basso:RM.col(0xcfc9ba), sole:RM.col(0xc4d0e6) };

@@ -135,6 +135,10 @@ Forma.prototype.q=function(gr,a,b,c,d,piano){
   var u=piano?[[.01,.99],[.01,.99],[.01,.99],[.01,.99]]:[[0,0],[1,0],[1,1],[0,1]], v=[a,b,c,d];
   [[0,1,2],[0,2,3]].forEach(function(t){ t.forEach(function(k){ this.g[gr].push(v[k][0],v[k][1],v[k][2],u[k][0],u[k][1]); },this); },this); return this;
 };
+/* come q, ma con le coordinate della trama date punto per punto */
+Forma.prototype.qu=function(gr,a,b,c,d,u){
+  var v=[a,b,c,d]; [[0,1,2],[0,2,3]].forEach(function(t){ t.forEach(function(k){ this.g[gr].push(v[k][0],v[k][1],v[k][2],u[k][0],u[k][1]); },this); },this); return this;
+};
 Forma.prototype.t=function(gr,a,b,c){ [a,b,c].forEach(function(p){ this.g[gr].push(p[0],p[1],p[2],.01,.99); },this); return this; };
 Forma.prototype.muri=function(h){
   var s=.5;
@@ -166,8 +170,8 @@ var FORME=[
 var geoRudere=(function(){ var f=new Forma(), n=4, lati=[[-s,s,s,s],[s,s,s,-s],[s,-s,-s,-s],[-s,-s,-s,s]],
     alt=[[[1,1],[.92,.7],[.7,.96],[.96,.82]],[[.82,.82],[.36,.3],[.3,.9],[1,1]],[[.66,.52],[.94,.94],[.94,.8],[.46,.2]],[[.9,.9],[.74,.6],[.2,.26],[.6,.88]]];
   lati.forEach(function(l,i){ for(var k=0;k<n;k++){ var x0=l[0]+(l[2]-l[0])*k/n, z0=l[1]+(l[3]-l[1])*k/n, x1=l[0]+(l[2]-l[0])*(k+1)/n, z1=l[1]+(l[3]-l[1])*(k+1)/n, h=alt[i][k];
-    f.q(0,[x0,0,z0],[x1,0,z1],[x1,h[1],z1],[x0,h[0],z0]); } });
-  f.q(0,[-.12,0,-s],[-.12,0,s],[-.12,.5,s],[-.12,.84,-s]).q(0,[-.12,0,.1],[s,0,.1],[s,.34,.1],[-.12,.62,.1]);
+    f.qu(0,[x0,0,z0],[x1,0,z1],[x1,h[1],z1],[x0,h[0],z0],[[k/2,0],[(k+1)/2,0],[(k+1)/2,h[1]],[k/2,h[0]]]); } });      /* prima ogni tratto prendeva la trama intera, alta o bassa che fosse: sui muri bassi le finestre si schiacciavano, sui tramezzi si stiravano (23 novembre 2026) */
+  f.qu(0,[-.12,0,-s],[-.12,0,s],[-.12,.5,s],[-.12,.84,-s],[[0,0],[2,0],[2,.5],[0,.84]]).qu(0,[-.12,0,.1],[s,0,.1],[s,.34,.1],[-.12,.62,.1],[[0,0],[1.24,0],[1.24,.34],[0,.62]]);
   return f.fine(); })();
 /* quel che resta del tetto subito dopo l'abbandono: una falda e mezza, sfondata */
 var geoTettoRotto=(function(){ var f=new Forma();
@@ -183,8 +187,10 @@ var geoMacerie=(function(){ var f=new Forma(), r=RM.casuale(99);                
   return f.fine(); })();
 /* sterpi e alberelli cresciuti fra i muri */
 var geoSterpi=(function(){ var B=new RM.Costruttore(), secco=RM.col(0x8a8a5c), rovo=RM.col(0x66744a);
-  [[-.3,-.26,.14,rovo],[.3,.32,.17,P.chioma2],[.12,-.42,.11,secco],[-.38,.3,.12,secco]].forEach(function(c){
-    B.geo(new THREE.SphereGeometry(c[2],4,2).scale(1,.75,1).translate(c[0],c[2]*.45,c[1]),c[3]); });
+  /* macchie di rovi e arbusti, larghe e basse: prima erano sfere a quattro spicchi, cioè piramidi verdi (23 novembre 2026). Sui telefoni restano più semplici. */
+  var sg=RM.piccolo?[5,2]:[7,3];
+  [[-.3,-.26,.15,rovo,1.5,.5,1.1],[.3,.32,.17,P.chioma2,1.1,.8,1.3],[.12,-.42,.12,secco,1.6,.45,1],[-.38,.3,.13,secco,1,.55,1.5]].forEach(function(c,i){
+    B.geo(new THREE.SphereGeometry(c[2],sg[0],sg[1]).scale(c[4],c[5],c[6]).rotateY(i*1.1).translate(c[0],c[2]*c[5]*.55,c[1]),c[3]); });
   return B.geometria(); })();
 
 /* ---------- maglie ---------- */

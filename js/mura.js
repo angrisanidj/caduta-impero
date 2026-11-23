@@ -158,7 +158,14 @@ var acque=(function(){
      è un'ipotesi); posizione dalla via OpenStreetMap 226257804. Il ponte di Agrippa (noto da un cippo di Claudio) e il Sublicio, di legno, «standing as late as the fifth century»
      ma in un punto discusso, non si disegnano. */
   var PC={A:new RM.Costruttore(),B:new RM.Costruttore(),C:new RM.Costruttore()}, B, curva=RM.curvaFiume, storie=[];
+  /* un'arcata fra due pile: i due fianchi sotto l'impalcato e l'intradosso, a mezzo ovale (23 novembre 2026: prima i ponti erano tavole posate su quattro blocchi).
+     Il numero delle arcate è lo stesso per tutti e non è quello di ciascun ponte vero. */
+  function arcata(B,x0,x1,ys,yc,w,col){ var N=8, k, xa, xb, ya, yb;
+    for(k=0;k<N;k++){ xa=x0+(x1-x0)*k/N; xb=x0+(x1-x0)*(k+1)/N; ya=ys+(yc-ys)*Math.sin(Math.PI*k/N); yb=ys+(yc-ys)*Math.sin(Math.PI*(k+1)/N);
+      B.quad([xa,ya,w],[xb,yb,w],[xb,yc,w],[xa,yc,w],col).quad([xb,yb,-w],[xa,ya,-w],[xa,yc,-w],[xb,yc,-w],col).quad([xa,ya,-w],[xb,yb,-w],[xb,yb,w],[xa,ya,w],col); } }
   function ponte(B,parti,q,rot){      // parti: 'tutto', 'rotto' (senza un'arcata), 'pile'
+    [-4.4,-1.5,1.5,4.4].forEach(function(x){ B.scatola(.5,parti==='pile'?.45:.6,.5,x,0,.75,P.travertino,Math.PI/4).scatola(.5,parti==='pile'?.45:.6,.5,x,0,-.75,P.travertino,Math.PI/4); });      // i rostri delle pile
+    if(parti!=='pile') (parti==='rotto'?[[-5.6,-4.75],[-4.05,-1.85],[4.75,5.6]]:[[-5.6,-4.75],[-4.05,-1.85],[-1.15,1.15],[1.85,4.05],[4.75,5.6]]).forEach(function(c){ arcata(B,c[0],c[1],.25,.87,.65,P.travertino); });
     if(parti!=='pile'){ rampe(B,q,rot,7.5,1.15,.65,P.travertino);
       if(parti==='rotto'){ B.scatola(6.8,.3,1.3,-4.1,.85,0,P.travertino).scatola(5.2,.3,1.3,4.9,.85,0,P.travertino); }      // manca il tratto fra le due pile centrali
       else B.scatola(15,.3,1.3,0,.85,0,P.travertino).scatola(15,.16,.12,0,1.15,.6,P.travertino).scatola(15,.16,.12,0,1.15,-.6,P.travertino);
@@ -176,12 +183,27 @@ var acque=(function(){
   RM.moduli.push(function(anno){ storie.forEach(function(s){
     var su=anno>=s.dal, r=s.rotto&&anno>=s.rotto, pi=s.pile&&anno>=s.pile;
     s.intero.visible=su&&!r&&!pi; if(s.mezzo) s.mezzo.visible=su&&r; if(s.resti) s.resti.visible=pi; }); });
-  B=PC.A;                                                                  // l'isola c'è; il tempio e la casa sopra sono indicativi
-  B.dentro(-66,-.5,28,1.2,function(B){
-    var is=RM.ellisse(2.3,6.6,20), su=RM.ellisse(2.1,6.3,20), ce=su.map(function(){ return [0,0]; });
-    B.striscia(is,0,su,.85,P.travertino).striscia(su,.85,ce,.85,P.selce);
-    B.dentro(0,.85,0,0,function(B){ B.tempio(1.5,2.4,1.1,0,-2.6,0,{fronte:4,podio:.25}); B.scatola(2.2,1,2.4,0,0,1.8,P.intonaco).falde(2.4,.5,2.4,0,1,1.8,P.coppi); B.cilindro(.1,1.4,0,0,-.4,P.mattone,.05,4); });
-  });
+  /* Isola Tiberina. «The present length of the island is 269 metres, and its greatest width 67 metres»; «the island itself was made to resemble a ship. A stone platform was built
+     round it, and upon this a wall was erected which in shape reproduced exactly the sides of a Roman ship»; l'obelisco «is thought to have represented the mast» (Platner e Ashby,
+     Insula Tiberina, letto il 23 novembre 2026). Quale capo fosse la prua la voce non lo dice in modo univoco (poppa a est nel testo, prua a est in una nota): qui i due capi sono
+     a punta, quello a valle di più. Prima l'isola era un ovale di 46 x 132 m. Segue la curva del fiume; il fiume del modello è largo 112 m dappertutto, quindi i due rami
+     restano più stretti del vero. Il tempio di Esculapio c'era, ma a quale capo la voce non lo dice: tempio e case sono indicativi. */
+  B=PC.A;
+  (function(){
+    var m=1e9, tm=0, i, q, L=curva.getLength(), sx=[], dx=[], N=14, W=3.35, MEZZA=13.45, monte=curva.getPoint(0).z<curva.getPoint(1).z?-1:1;      // il fiume scende da nord: da che parte della curva sta il monte
+    for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); var dd=Math.hypot(q.x+66,q.z-28); if(dd<m){ m=dd; tm=i/2400; } }
+    tm+=monte*3.2/L;      /* i due ponti non stanno a metà dell'isola ma verso valle: il centro va 32 m a monte, così il capo a valle resta prima del ponte Emilio (posizione dei capi indicativa) */
+    for(i=0;i<=N*2;i++){ var u=i/N-1, c=curva.getPoint(tm+u*MEZZA/L), tg=curva.getTangent(tm+u*MEZZA/L), n=Math.hypot(tg.x,tg.z)||1, w=W*Math.pow(1-Math.pow(Math.abs(u),u*monte<0?1.7:2.6),.75);
+      sx.push([c.x-tg.z/n*w,c.z+tg.x/n*w,c.x-tg.z/n*w*.9,c.z+tg.x/n*w*.9]); dx.push([c.x+tg.z/n*w,c.z-tg.x/n*w,c.x+tg.z/n*w*.9,c.z-tg.x/n*w*.9]); }
+    for(i=0;i<N*2;i++){ var a=sx[i], b=sx[i+1], e=dx[i], f=dx[i+1];
+      B.quad([a[0],-.5,a[1]],[b[0],-.5,b[1]],[b[2],.35,b[3]],[a[2],.35,a[3]],P.travertino).quad([f[0],-.5,f[1]],[e[0],-.5,e[1]],[e[2],.35,e[3]],[f[2],.35,f[3]],P.travertino);      // le fiancate di travertino
+      B.quad([a[2],.35,a[3]],[b[2],.35,b[3]],[f[2],.35,f[3]],[e[2],.35,e[3]],P.selce); }                                                                                           // il piano dell'isola
+    q=curva.getPoint(tm); var t0=curva.getTangent(tm);
+    B.dentro(q.x,.35,q.z,Math.atan2(t0.x,t0.z),function(B){
+      B.tempio(1.6,2.6,1.1,0,6.2,0,{fronte:4,podio:.25});
+      B.scatola(2.4,.9,2.6,.3,0,-5.2,P.intonaco).falde(2.6,.5,2.6,.3,.9,-5.2,P.coppi); B.scatola(1.8,.7,3,-.4,0,-8.6,P.intonaco).falde(3,.4,2,-.4,.7,-8.6,P.coppi,Math.PI/2);
+      B.scatola(.3,.3,.3,0,0,1.6,P.marmo).cilindro(.1,1.4,0,.3,1.6,P.granito,.05,4); });      // l'obelisco, l'albero della nave
+  })();
   ['A','B','C'].forEach(function(k){ RM.scene.add(PC[k].maglia(RM.matPietra(k))); });
 })();
 

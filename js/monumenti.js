@@ -49,15 +49,34 @@ function teatro(B,r,h,tre){                              // cavea a semicerchio 
   [0,1].forEach(function(l){ B.colonne(-r*.66,.07,r*.66,.07,10,h*.36,.05,.35+l*h*.4).scatola(r*1.36,.07,.16,0,.35+l*h*.4+h*.36,.07,P.marmo); });      // la fronte della scena: due ordini di colonne
   B.aperture(r*.9,-r*.24,-r*.9,-r*.24,9,.2,h*.42);                                                                                                   // gli archi sul retro della scena
 }
-/* o (facoltativo): lc e pc, larghezza e profondità del corpo centrale; zc, dove sta il suo centro; rc, raggio del caldarium; recinto:false per le terme senza peribolo */
+/* o (facoltativo): lc e pc, larghezza e profondità del corpo centrale; zc, dove sta il suo centro; rc, raggio del caldarium; recinto:false per le terme senza peribolo.
+   Dal 23 novembre 2026 le grandi terme non escono più tutte dallo stesso stampo (fonti lette: Platner e Ashby, Thermae Diocletiani e Thermae Antoninianae):
+   caldarium:'rettangolo' (Diocleziano: «the rectangular caldarium, which projected south-westwards»); tepidarium:'tondo' («the circular tepidarium»);
+   rotonde:true (due sale circolari «at the west and south angles of the peribolus», una è San Bernardo); stadio:true (Caracalla: al centro del lato sud-ovest «rows of seats,
+   with a curve at each end», e dietro, più in alto, le cisterne, «sixty-four vaulted chambers in two stories and in two rows»); esedreLati:true (Caracalla: «two huge exedrae»;
+   Platner non dice su quali lati: qui stanno sui due fianchi, come nelle piante correnti). Raggi, altezze e numero dei gradini sono indicativi. */
 function terme(B,L,Pd,o){                                 // recinto con giardini, corpo centrale a volte, caldarium a sud (+z)
   o=o||{}; var s=.7, a=1.5, zc=o.zc==null?-Pd*.05:o.zc, lc=o.lc||L*.64, cd=o.pc||Pd*.3, rc=o.rc||L*.085, zk=zc+cd/2+Pd*.05;
   if(o.recinto!==false){
   B.scatola(L-1,.08,Pd-1,0,0,0,P.prato);
-  arcato(B,L,a,s,0,0,-Pd/2,P.mattone,1,Math.round(L/1.6)); arcato(B,L*.36,a,s,-L*.32,0,Pd/2,P.mattone,1,8); arcato(B,L*.36,a,s,L*.32,0,Pd/2,P.mattone,1,8);
+  arcato(B,L,a,s,0,0,-Pd/2,P.mattone,1,Math.round(L/1.6));
   B.scatola(s,a,Pd,-L/2,0,0,P.mattone).scatola(s,a,Pd,L/2,0,0,P.mattone);
-  var es=RM.ellisse(L*.15,L*.12,16,0,PI).map(function(p){ return [p[0],p[1]+Pd/2]; });           // esedra del recinto
-  B.striscia(es,0,es,a+.3,P.mattone,false).fornici(es,.2,.8,.5,1,false);
+  if(o.stadio){                                                                                  // Caracalla: gradinata e cisterne al centro del lato di fondo
+    var ws=L*.42, zf=Pd/2-Pd*.07-.2, gs;
+    arcato(B,L,a,s,0,0,Pd/2,P.mattone,1,Math.round(L/1.6));
+    B.scatola(ws,2.2,Pd*.07,0,0,Pd/2-Pd*.035-.2,P.mattone);                                      // le cisterne: due file di camere su due piani
+    [.2,1.25].forEach(function(y){ B.aperture(ws/2,zf,-ws/2,zf,16,y,.75); });
+    for(gs=0;gs<4;gs++) B.scatola(ws*.86,.9-.22*gs,.42,0,0,zf-.21-.42*gs,P.travertino);          // le file di sedili, verso il giardino
+    [-1,1].forEach(function(k){ var cu=RM.ellisse(1.7,1.7,8,0,PI).map(function(q){ return [k*(ws*.43+q[1]*.8),zf-.84+q[0]*-.5]; });      // la curva a ciascun capo
+      B.striscia(cu,0,cu,.5,P.travertino,false); });
+  } else {
+    arcato(B,L*.36,a,s,-L*.32,0,Pd/2,P.mattone,1,8); arcato(B,L*.36,a,s,L*.32,0,Pd/2,P.mattone,1,8);
+    var es=RM.ellisse(L*.15,L*.12,16,0,PI).map(function(p){ return [p[0],p[1]+Pd/2]; });         // esedra del recinto
+    B.striscia(es,0,es,a+.3,P.mattone,false).fornici(es,.2,.8,.5,1,false);
+  }
+  if(o.esedreLati) [-1,1].forEach(function(k){ var el=RM.ellisse(Pd*.17,L*.085,14,0,PI).map(function(q){ return [k*(L/2+q[1]),q[0]]; });
+    B.striscia(el,0,el,a+.5,P.mattone,false).fornici(el,.2,.9,.5,1,false); });
+  if(o.rotonde) [-1,1].forEach(function(k){ B.cilindro(1.15,1.7,k*(L/2-.6),0,Pd/2-.6,P.mattone,null,16).cupola(1.15,k*(L/2-.6),1.7,Pd/2-.6,P.intonaco,.55); });
   }
   arcato(B,lc,2.3,cd,0,0,zc,P.intonaco,2,Math.round(o.lc?lc*.78:L*.5));                                   // corpo centrale: i muri di mattoni erano coperti di intonaco
   B.scatola(L*.2,3.7,Pd*.17,0,0,zc,P.intonaco);                                                   // frigidarium, a tre crociere
@@ -70,10 +89,16 @@ function terme(B,L,Pd,o){                                 // recinto con giardin
     if(o.recinto!==false) B.scatola(L*.1,1.9,Pd*.1,k*L*.3,0,Pd*.3,P.mattone).falde(L*.1,.5,Pd*.1,k*L*.3,1.9,Pd*.3,P.coppi);       // biblioteche
   });
   B.scatola(L*.2,.14,Pd*.09,0,2.3,zc-Pd*.11,P.acqua);                                                       // natatio
+  if(o.caldarium==='rettangolo'){ var wq=rc*2.5, dq=rc*1.7;                                                // caldarium rettangolare, che sporge dal corpo centrale
+    B.scatola(wq,3.1,dq,0,0,zk,P.intonaco).falde(wq+.1,.8,dq+.1,0,3.1,zk,P.coppi,0,P.intonaco);
+    B.aperture(-wq/2,zk+dq/2,wq/2,zk+dq/2,3,.5,1.3).aperture(-wq/2,zk+dq/2,wq/2,zk+dq/2,3,2.05,.85);
+  } else {
   B.cilindro(rc,3.3,0,0,zk,P.intonaco).cupola(rc,0,3.3,zk,P.intonaco,.62);                                 // caldarium: rotonda a cupola, con le grandi finestre a sud per il sole del pomeriggio
   var cal=RM.ellisse(rc,rc,12,0,PI).map(function(p){ return [p[0],p[1]+zk]; });
   B.fornici(cal,.5,1.1,.5,1,false).fornici(cal,2,.9,.5,1,false);
-  B.scatola(L*.1,2.6,Pd*.08,0,0,zk-Pd*.08,P.intonaco);
+  }
+  if(o.tepidarium==='tondo'){ var zt=(zc+Pd*.085+zk-rc*.85)/2; B.cilindro(L*.045,2.75,0,0,zt,P.intonaco,null,14).cupola(L*.045,0,2.75,zt,P.intonaco,.55); }      // tepidarium circolare, fra l'aula centrale e il caldarium
+  else B.scatola(L*.1,2.6,Pd*.08,0,0,zk-Pd*.08,P.intonaco);
 }
 /* opz (facoltativo): strette = navatelle larghe circa metà della navata, il rapporto delle basiliche a tre navate di Roma (senza opz restano larghe come prima);
    finestre = finestre per lato della navata; atrio:false = niente quadriportico */
@@ -149,22 +174,48 @@ function sanPietro(B){
   for(var g=0;g<3;g++) B.scatola(.3,.3-.1*g,5.4,11.87+.3*g,0,0,P.travertino);                                            // la gradinata
 }
 /* Le tegole di bronzo di Onorio I (625-638): «cooperuit ecclesiam omnem ex tegulis aereis quas levavit de templo qui appellatur Romae» (Liber Pontificalis, Onorio I, Duchesne I p. 323).
-   Uno strato sottile sopra i tetti di sanPietro, con le stesse misure: compare dal 630 come monumento a parte (tegolepietro). */
+   Uno strato sottile sopra i tetti di sanPietro, con le stesse misure: compare dal 630 come monumento a parte (tegolepietro). Hanno lo stesso colore dorato che avevano
+   sul tempio di Venere e Roma: sono le stesse tegole (23 novembre 2026; prima erano verdi). */
 function tegolePietro(B){
   var Ln=9.7, xn=.9, e=.025;
-  B.falde(Ln+.04,.75,2.6+.04,xn,3.3+e,0,P.bronzo,0,P.mattone);
-  [-1,1].forEach(function(k){ B.scatola(Ln+.08,.03,1.06,xn,2.17,k*1.7,P.bronzo).scatola(Ln+.08,.03,1.08,xn,1.52,k*2.7,P.bronzo); });
-  B.falde(9+.04,.7,2+.04,-4.85,3+e,0,P.bronzo,PI/2,P.mattone).cono(.97,.6,-5.75,2.4+e,0,P.bronzo,14);
+  B.falde(Ln+.04,.75,2.6+.04,xn,3.3+e,0,P.oro,0,P.mattone);
+  [-1,1].forEach(function(k){ B.scatola(Ln+.08,.03,1.06,xn,2.17,k*1.7,P.oro).scatola(Ln+.08,.03,1.08,xn,1.52,k*2.7,P.oro); });
+  B.falde(9+.04,.7,2+.04,-4.85,3+e,0,P.oro,PI/2,P.mattone).cono(.97,.6,-5.75,2.4+e,0,P.oro,14);
 }
 
 /* complessi su terreno in pendenza: ogni corpo poggia alla quota del suo punto */
 function quota(x,z){ return Math.min(RM.h(x,z),RM.h(x+5,z),RM.h(x-5,z),RM.h(x,z+5),RM.h(x,z-5))-.1; }
 function suTerreno(X,Z,ry){ var q=quota(X,Z), c=Math.cos(ry||0), s=Math.sin(ry||0); return function(lx,lz){ return RM.h(X+lx*c+lz*s,Z-lx*s+lz*c)-q; }; }
-/* statue a blocchi, quanto basta per leggerle da vicino: un cavallo col muso verso +z e un uomo in piedi; s=1 è la grandezza naturale (cavallo lungo 2,2 m, uomo alto 1,85) */
+/* Statue a tutto tondo (23 novembre 2026; prima erano blocchi, e da vicino il Colosso sembrava un giocattolo). Un arto è un tronco di cono fra due punti qualsiasi, con una sfera
+   al giunto d'arrivo; un uomo in piedi e un cavallo col muso verso +z si fanno con quelli. s=1 è la grandezza naturale (cavallo lungo 2,2 m, uomo alto 1,85). Le pose sono indicative. */
+var SU=new THREE.Vector3(0,1,0);
+function arto(B,a,b,r0,r1,col,lati,giunto){
+  var d=new THREE.Vector3(b[0]-a[0],b[1]-a[1],b[2]-a[2]), L=d.length(), g=new THREE.CylinderGeometry(r1,r0,L,lati||7,1);
+  g.applyMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(SU,d.normalize()))); g.translate((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2); B.geo(g,col);
+  if(giunto!==false) B.geo(new THREE.SphereGeometry(r1*1.03,lati||7,5).translate(b[0],b[1],b[2]),col);
+  return B;
+}
+function palla(B,r,x,y,z,col,sx,sy,sz,lati){ return B.geo(new THREE.SphereGeometry(r,lati||8,6).scale(sx||1,sy||1,sz||1).translate(x,y,z),col); }
 function cavallo(B,x,y,z,ry,s,col){ return B.dentro(x,y,z,ry,function(){
-  B.scatola(.055*s,.085*s,.025*s,0,0,.08*s,col).scatola(.055*s,.085*s,.025*s,0,0,-.08*s,col).scatola(.06*s,.07*s,.22*s,0,.08*s,0,col)      // zampe a coppie, corpo
-   .scatola(.04*s,.1*s,.05*s,0,.13*s,.095*s,col).scatola(.035*s,.04*s,.09*s,0,.2*s,.135*s,col); }); }                                  // collo, testa
-function uomo(B,x,y,z,s,col){ return B.scatola(.05*s,.15*s,.035*s,x,y,z,col).scatola(.03*s,.035*s,.03*s,x,y+.15*s,z,col); }
+  var u=s*.01;                                                                                                   // un centimetro di statua
+  palla(B,3.6*u,0,12.3*u,0,col,.95,1,2.25,10);                                                                   // tronco
+  palla(B,3.2*u,0,12.9*u,-4.6*u,col,1,1.05,1.1); palla(B,3.1*u,0,12.6*u,4.6*u,col,1,1.05,1.1);                   // groppa e petto
+  arto(B,[0,13.5*u,5.5*u],[0,19.4*u,8.6*u],3*u,1.9*u,col,7);                                                     // collo
+  arto(B,[0,19.6*u,8.4*u],[0,16.6*u,13*u],2*u,1.15*u,col,6);                                                     // testa, il muso in avanti e in basso
+  arto(B,[0,20.6*u,8*u],[0,21.6*u,7.6*u],.5*u,.2*u,col,4,false);                                                 // orecchie, accennate
+  [[-1,1],[1,1],[-1,-1],[1,-1]].forEach(function(q,n){ var zx=q[1]*5.2*u, xx=q[0]*2.1*u, gin=zx+(q[1]<0?-.9*u:.3*u);      // zampe: una anteriore sollevata
+    if(n===0){ arto(B,[xx,11*u,zx],[xx,7*u,zx+2.6*u],1.5*u,1.05*u,col,6); arto(B,[xx,7*u,zx+2.6*u],[xx,3.4*u,zx+1.2*u],1*u,.8*u,col,6); }
+    else { arto(B,[xx,11*u,zx],[xx,5.6*u,gin],1.6*u,1*u,col,6); arto(B,[xx,5.6*u,gin],[xx,.2*u,zx],.95*u,.85*u,col,6,false); } });
+  arto(B,[0,13.4*u,-7.6*u],[0,6.5*u,-9.6*u],1.1*u,.5*u,col,5,false);                                             // coda
+}); }
+function uomo(B,x,y,z,s,col,ry){ return B.dentro(x,y,z,ry||0,function(){
+  var u=s*.01;
+  [-1,1].forEach(function(k){ arto(B,[k*1.5*u,0,0],[k*1.7*u,9.2*u,0],.95*u,1.45*u,col,6,false); });               // gambe
+  arto(B,[0,8.6*u,0],[0,12.2*u,0],2.5*u,2.2*u,col,8,false); arto(B,[0,12.2*u,0],[0,15.2*u,0],2.2*u,2.85*u,col,8,false);      // bacino e vita, torace
+  palla(B,3*u,0,15.1*u,0,col,1.05,.5,.72);                                                                       // spalle
+  [-1,1].forEach(function(k){ arto(B,[k*3.1*u,15*u,0],[k*3.6*u,11.4*u,.3*u],.95*u,.8*u,col,6); arto(B,[k*3.6*u,11.4*u,.3*u],[k*3.4*u,8.4*u,1.2*u],.78*u,.65*u,col,6); });   // braccia lungo i fianchi
+  arto(B,[0,15.4*u,0],[0,16.6*u,0],.85*u,.8*u,col,6,false); palla(B,1.25*u,0,17.5*u,.1*u,col,1,1.15,1.08);        // collo e testa
+}); }
 function casa(B,y,lx,lz,w,d,h,ry){ B.scatola(w,h+.3,d,lx,y-.3,lz,P.mattone,ry).falde(w+.2,.45,d+.2,lx,y+h,lz,P.coppi,ry,P.mattone); }
 
 /* tracciato delle mura leonine (848-852): dal mausoleo di Adriano attorno al colle Vaticano, fino al Tevere. Coordinate relative a (-215,-92).
@@ -248,11 +299,17 @@ var M=[
     nella sinistra come sulle monete; da che parte guardasse non si sa. */
  {id:'colosso', nome:'Colosso del Sole', x:47.2,z:18.1, ry:-.3, come:'colosseo', fa:function(B){
     var S=P.statua, k;
-    [-.2,.2].forEach(function(x){ B.cilindro(.17,1.5,x,.5,0,S,.14,8); });                                         // gambe
-    B.cilindro(.31,1.15,0,2,0,S,.38,10);                                                                         // torso
-    B.geo(new THREE.SphereGeometry(.2,10,8).translate(0,3.5,0),S).cilindro(.1,.18,0,3.15,0,S,.1,8);             // testa e collo
-    B.cilindro(.09,1.15,.48,2,0,S,.1,6).scatola(.05,2.3,.05,.62,.5,.14,S).scatola(.05,.5,.3,.62,.5,.14,S);       // braccio destro e timone
-    B.cilindro(.09,.55,-.48,2.6,0,S,.1,6).geo(new THREE.CylinderGeometry(.08,.08,.5,6).rotateX(PI/2).translate(-.48,2.62,.25),S).geo(new THREE.SphereGeometry(.13,8,6).translate(-.48,2.74,.52),S);   // braccio sinistro e globo
+    /* figura nuda stante, il peso sulla gamba destra e la sinistra appena arretrata (posa indicativa, come tutto il resto: delle fonti restano l'altezza, i raggi, il timone e il globo) */
+    arto(B,[.19,.5,.03],[.2,1.28,.06],.1,.135,S,10); arto(B,[.2,1.28,.06],[.16,2.06,0],.14,.2,S,10,false);                // gamba destra, portante
+    arto(B,[-.22,.5,-.16],[-.21,1.26,.03],.1,.135,S,10); arto(B,[-.21,1.26,.03],[-.16,2.06,0],.14,.2,S,10,false);        // gamba sinistra
+    palla(B,.34,0,2.1,0,S,1,.62,.78,12);                                                                             // bacino
+    arto(B,[0,2.08,0],[0,2.56,0],.3,.27,S,12,false); arto(B,[0,2.56,0],[0,3.02,0],.27,.37,S,12,false);              // vita e torace
+    palla(B,.4,0,3.02,0,S,1.12,.42,.66,12);                                                                          // spalle
+    arto(B,[0,3.1,0],[0,3.3,0],.12,.11,S,8,false); palla(B,.19,0,3.5,.01,S,1,1.16,1.06,12);                         // collo e testa
+    arto(B,[.44,3,0],[.56,2.42,.03],.115,.095,S,8); arto(B,[.56,2.42,.03],[.61,1.86,.13],.09,.075,S,8);             // braccio destro, lungo il fianco: regge il timone
+    B.scatola(.05,2.3,.05,.63,.5,.16,S).scatola(.05,.5,.3,.63,.5,.16,S);                                             // il timone
+    arto(B,[-.44,3,0],[-.54,2.5,.08],.115,.095,S,8); arto(B,[-.54,2.5,.08],[-.5,2.62,.5],.09,.075,S,8);             // braccio sinistro, piegato in avanti
+    palla(B,.13,-.5,2.78,.52,S,1,1,1,10);                                                                            // il globo
     for(k=-3;k<=3;k++) B.geo(new THREE.ConeGeometry(.035,.42,5).translate(0,.4,0).rotateZ(-k*.42).translate(0,3.5,0),P.oro);      // i raggi del Sole
  }},
  /* Meta Sudans: fontana conica flavia, con la vasca di 21 m rifatta nel IV secolo. Demolita nel 1936; la posizione è quella delle coordinate correnti (41°53'24" N, 12°29'27" E),
@@ -335,9 +392,8 @@ var M=[
       basilica(B,17,5.6,2.4,0,-7.6,P.bronzo);                                                  // basilica Ulpia, con le absidi alle due testate
       [-1,1].forEach(function(q){ B.cilindro(2.5,2,q*8.5,0,-7.6,P.marmo,null,18).cilindro(2.5,.55,q*8.5,2,-7.6,P.bronzo,.3,18); });
       /* colonna Traiana: piedistallo «5.4 metres high»; base, fusto e capitello «3.70 metres in diameter … measure 100 Roman feet (29.77 metres)» (Platner e Ashby, Forum Traiani) */
-      B.scatola(.56,.55,.56,0,0,-11.6,P.marmo).cilindro(.23,.1,0,.55,-11.6,P.marmo,.2,14).cilindro(.185,2.73,0,.65,-11.6,P.marmo,.165,14);      // basamento, toro, fusto
-      for(var gk=1;gk<9;gk++) B.cilindro(.187,.022,0,.65+gk*.3,-11.6,P.travertino,.185,14);     // le spire del fregio, accennate
-      B.scatola(.45,.12,.45,0,3.38,-11.6,P.marmo).cilindro(.09,.5,0,3.5,-11.6,P.statua,.07,6);  // capitello e statua dell'imperatore
+      B.scatola(.56,.55,.56,0,0,-11.6,P.marmo).cilindro(.23,.1,0,.55,-11.6,P.marmo,.2,14).coclide(.185,.165,2.73,0,.65,-11.6,23,P.marmo);      // basamento, toro, fusto col fregio a spirale: ventitré giri è il numero corrente, non letto in Platner
+      B.scatola(.45,.12,.45,0,3.38,-11.6,P.marmo).cilindro(.11,.1,0,3.5,-11.6,P.marmo,.1,10); uomo(B,0,3.6,-11.6,2.1,P.statua);  // capitello e statua dell'imperatore (indicativa)
       B.scatola(2,1.8,2.6,-2.8,0,-11.6,P.mattone).scatola(2,1.8,2.6,2.8,0,-11.6,P.mattone);     // biblioteche
       B.tempio(3.8,5.4,2.4,0,-16.4,PI,{fronte:8,lati:9,podio:.7});                              // tempio del Divo Traiano
       B.dentro(5.75,0,0,0,function(B){
@@ -435,8 +491,8 @@ var M=[
     The façade and principal entrance were on the north side … a caldarium projecting out from the south side» (Platner e Ashby, Thermae Titi). Oggi quasi nulla resta (it.wikipedia: fra via Nicola Salvi,
     via delle Terme di Tito e viale del Monte Oppio). Centro e orientamento sono stimati da queste vie; corpo unico senza recinto, caldario verso il Colosseo. */
  {id:'tito', nome:'Terme di Tito', x:68,z:10, ry:0, zone:[[0,0,5]], fa:function(B){ terme(B,10.5,12,{recinto:false,lc:10.5,pc:8.5,zc:-.5,rc:.9}); }},      // corpo centrale di circa 190 x 212 m, verso il lato nord del recinto (it.wikipedia, da Caruso e Volpe); il caldarium tondo è schematico
- {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ terme(B,33.7,32.8,{rc:1.75}); }},      // il caldarium rotondo, al centro del lato sud-ovest, ha una cupola di 35 m (Platner)
- {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36,{lc:28,pc:16}); }},      // corpo centrale di 280 x 160 m (Platner); il caldarium tondo è schematico
+ {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ terme(B,33.7,32.8,{rc:1.75,stadio:true,esedreLati:true}); }},      // il caldarium rotondo, al centro del lato sud-ovest, ha una cupola di 35 m; sul fondo del recinto la gradinata e le cisterne, sui fianchi le due esedre (Platner)
+ {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36,{lc:28,pc:16,caldarium:'rettangolo',tepidarium:'tondo',rotonde:true}); }},      // corpo centrale di 280 x 160 m, caldarium rettangolare che sporge a sud-ovest, tepidarium circolare, grande esedra al centro del lato sud-ovest, due sale rotonde agli angoli ovest e sud (Platner)
  {id:'massenzio', nome:'Basilica di Massenzio', x:25,z:7, ry:-.35, zone:[[0,0,7.5]], fa:function(B){
     B.scatola(8.2,3.5,2.6,0,0,0,P.mattone); for(var i=-1;i<=1;i++){ B.falde(2.7,.9,2.7,i*2.72,3.5,0,P.bronzo,PI/2,P.mattone);
       [-1,1].forEach(function(k){ B.scatola(2.6,2.4,2,i*2.72,0,k*2.3,P.mattone).volta(2,1.3,i*2.72,2.4,k*2.3,P.intonaco,PI/2); B.vano(i*2.72,.25,k*3.31,1,0,.5,.9).vano(i*2.72-.75,.25,k*3.31,1,0,.5,.9).vano(i*2.72+.75,.25,k*3.31,1,0,.5,.9).vano(i*2.72,1.4,k*3.31,1,0,1.6,1.5); }); }      // ogni campata laterale: tre archi in basso e il grande finestrone sopra
@@ -749,10 +805,14 @@ var M=[
     for(k=-4;k<=4;k++) B.scatola(1.8,1.15,1.2,k*5.2,-1.75,-14.6,P.travertino);                                                             // scale e rampe verso l'acqua
  }},
  {id:'testaccio', nome:'Monte Testaccio', x:-84,z:184, ry:0, zone:[[4,-10,6],[0,-3,10.5],[1,5,11],[4,11,6]], et:1, fa:function(B){       // collina di cocci d'anfora: 35 m sul piano, qui 1,8 volte tanto come gli altri rilievi
-    var H=6.3, giri=[[1,-.15],[.86,.42*H],[.72,.78*H],[.6,.95*H],[.45,H]], k, a, b;
-    function giro(s){ return TESTACCIO.map(function(p){ return [p[0]*s,p[1]*s]; }); }
-    for(k=0;k<giri.length-1;k++){ a=giri[k]; b=giri[k+1]; B.striscia(giro(a[0]),a[1],giro(b[0]),b[1],P.cocci); }
-    B.striscia(giro(.45),H,TESTACCIO.map(function(){ return [0,0]; }),H+.12,P.cocci);
+    /* A terrazze, come dice la scheda («i cocci disposti a terrazze»): scarpate ripide e ripiani, sei gradoni (il numero è indicativo). Il contorno, quello di oggi, è arrotondato
+       tagliando gli spigoli due volte: prima la collina era una tenda a spicchi (23 novembre 2026). */
+    var H=6.3, k, sc=1, y=-.15, N=6, chiaro=P.cocci.clone().multiplyScalar(1.16), profilo=TESTACCIO;
+    for(k=0;k<2;k++) profilo=profilo.map(function(p,i,L){ var q=L[(i+1)%L.length]; return [[p[0]*.75+q[0]*.25,p[1]*.75+q[1]*.25],[p[0]*.25+q[0]*.75,p[1]*.25+q[1]*.75]]; }).reduce(function(a,b){ return a.concat(b); },[]);
+    function giro(s){ return profilo.map(function(p){ return [p[0]*s,p[1]*s]; }); }
+    for(k=0;k<N;k++){ var y1=k===N-1?H:y+(H+.15)/N, s1=sc-.04, s2=sc-.092;
+      B.striscia(giro(sc),y,giro(s1),y1,P.cocci); if(k<N-1) B.striscia(giro(s1),y1,giro(s2),y1+.03,chiaro); sc=k<N-1?s2:s1; y=y1+.03; }
+    B.striscia(giro(sc),H,profilo.map(function(){ return [0,0]; }),H+.14,chiaro);
  }},
  /* ======== Inventario del 22 novembre 2026: i monumenti che mancavano, al loro posto antico. Fonti lette: Platner e Ashby (LacusCurtius), it.wikipedia, OpenStreetMap (Overpass,
     Nominatim, API), annotate voce per voce; ciò che è detto «indicativo» non viene da una fonte. Le misure in metri delle fonti stanno nei commenti; nel modello 1 unità = 10 m. ======== */
@@ -762,7 +822,7 @@ var M=[
  {id:'colonnamarco', nome:'Colonna di Marco Aurelio', x:-44,z:-92.8, ry:0, zone:[[0,0,2.2]], fa:function(B){
     B.scatola(.8,.95,.8,0,-.1,0,P.marmo).scatola(.9,.1,.9,0,.85,0,P.marmo);                        // piedistallo e cornice (indicativi)
     B.cilindro(.235,.1385,0,.95,0,P.marmo,.215,18);                                                  // plinto e toro
-    B.cilindro(.195,2.65,0,1.0885,0,P.marmo,.18,18);                                                 // il fusto: rastrema meno di quello di Traiano
+    B.coclide(.195,.18,2.65,0,1.0885,0,21,P.marmo);                                                  // il fusto col fregio a spirale (ventuno giri è il numero corrente, non letto in Platner): rastrema meno di quello di Traiano
     B.scatola(.44,.15,.44,0,3.7385,0,P.marmo).cilindro(.14,.12,0,3.8885,0,P.marmo,.12,12);           // capitello dorico e tamburo in cima
  }},
  /* Orologio di Augusto. L'obelisco di Psammetico II, portato da Augusto nel 10 a.C., è alto 21,79 m e fa da gnomone a una meridiana: un pavimento di marmo a nord, con le linee di bronzo dorato

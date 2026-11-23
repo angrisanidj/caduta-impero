@@ -6,12 +6,13 @@ var RM=window.RM; if(!RM||RM.guasto) return;
 
 /* tavolozza (colori lineari) */
 var P=RM.P={ travertino:RM.col(0xe8dcc2), marmo:RM.col(0xf3ede0), tufo:RM.col(0xc9b08a), mattone:RM.col(0xb39274), intonaco:RM.col(0xe3cfa8),
-  coppi:RM.col(0xb0603e), bronzo:RM.col(0x7d8a5f), oro:RM.col(0xd9b24a), ombra:RM.col(0x2c221b), sabbia:RM.col(0xd8c08f),
-  prato:RM.col(0x74a04a), chioma:RM.col(0x3d6b2c), chioma2:RM.col(0x5c8a3a), tronco:RM.col(0x5a4633), selce:RM.col(0xb9ad98), acqua:RM.col(0x6d9aa0), cocci:RM.col(0x9c7355), statua:RM.col(0x7a6238), granito:RM.col(0x9d9b97) };
+  coppi:RM.col(0xb0603e), bronzo:RM.col(0xa8843f), oro:RM.col(0xd9b24a), ombra:RM.col(0x2c221b), sabbia:RM.col(0xd8c08f),
+  prato:RM.col(0x879a58), chioma:RM.col(0x3d6b2c), chioma2:RM.col(0x5c8a3a), tronco:RM.col(0x5a4633), selce:RM.col(0xb9ad98), acqua:RM.col(0x6d9aa0), cocci:RM.col(0x9c7355), statua:RM.col(0x7a6238), granito:RM.col(0x9d9b97) };
 
 function C(){ this.pos=[]; this.nor=[]; this.col=[]; this.tip=[]; this.pila=[new THREE.Matrix4()]; }
-/* tipo del materiale: 0 muratura, 1 copertura (coppi, bronzo, oro), 2 verde. Serve al degrado. */
-function tipoDi(c){ return (c===P.coppi||c===P.oro||c===P.bronzo)?1:(c===P.prato||c===P.chioma||c===P.chioma2||c===P.acqua||c===P.statua)?2:0; }      // il tipo 2 non prende conci, crepe né crolli
+/* tipo del materiale: 0 muratura, 1 copertura (coppi, bronzo, oro), 2 verde e altro che non si degrada, 3 prato (prende una grana d'erba). Serve al degrado.
+   Il bronzo (tetti, porte) è bronzo brunito, non verde: prima le tegole dorate del tempio di Venere e Roma diventavano verdi una volta portate a San Pietro (23 novembre 2026). */
+function tipoDi(c){ return (c===P.coppi||c===P.oro||c===P.bronzo)?1:c===P.prato?3:(c===P.chioma||c===P.chioma2||c===P.acqua||c===P.statua)?2:0; }      // il tipo 2 non prende conci, crepe né crolli
 var m4=new THREE.Matrix4(), a=new THREE.Vector3(), b=new THREE.Vector3(), c=new THREE.Vector3(), n=new THREE.Vector3(), ab=new THREE.Vector3(), ac=new THREE.Vector3();
 
 /* sistema di riferimento locale: tutto ciò che fn costruisce è spostato e ruotato */
@@ -61,6 +62,20 @@ C.prototype.falde=function(w,h,d,x,y,z,colore,ry,timpano){
 /* volta a botte, asse lungo x */
 C.prototype.volta=function(lunga,r,x,y,z,colore,ry){
   var g=new THREE.CylinderGeometry(r,r,lunga,14,1,false,0,Math.PI); g.rotateZ(Math.PI/2); if(ry) g.rotateY(ry); g.translate(x||0,y||0,z||0); return this.geo(g,colore||P.travertino);
+};
+/* Fusto di una colonna coclide (Traiana, di Marco Aurelio): il fregio sale a spirale. La superficie è tagliata lungo l'elica: per ogni giro una fascia chiara (il fregio,
+   con un tono diverso da un riquadro all'altro, a suggerire le figure) e un listello in ombra che la separa dal giro di sopra. r0 al piede, r1 in cima. */
+C.prototype.coclide=function(r0,r1,h,x,y,z,giri,colore){
+  var col=colore||P.marmo, lati=20, passo=h/giri, k, i, t, s=this, sc=col.clone().multiplyScalar(.4), toni=[col.clone().multiplyScalar(.84),col,col.clone().multiplyScalar(.93)];
+  function pt(a,q){ q=Math.max(0,Math.min(h,q)); var r=r0+(r1-r0)*q/h; return [x+r*Math.cos(a),y+q,z+r*Math.sin(a)]; }
+  for(k=-1;k<giri;k++) for(i=0;i<lati;i++){
+    var a0=2*Math.PI*i/lati, a1=2*Math.PI*(i+1)/lati, q0=(k+i/lati)*passo, q1=(k+(i+1)/lati)*passo;
+    if(q1+passo<=0) continue;
+    t=toni[Math.abs(i*7+k*3+((i*k)%2))%3];
+    s.quad(pt(a0,q0),pt(a0,q0+passo*.2),pt(a1,q1+passo*.2),pt(a1,q1),sc);
+    s.quad(pt(a0,q0+passo*.2),pt(a0,q0+passo),pt(a1,q1+passo),pt(a1,q1+passo*.2),t);
+  }
+  return this;
 };
 /* fila di colonne fra due punti */
 C.prototype.colonne=function(x0,z0,x1,z1,quante,h,r,y,colore){
@@ -194,12 +209,15 @@ var COLORA=[
   '  float riga=(1.0-smoothstep(largo*0.5,largo,e))*clamp(0.4/fw,0.0,1.0)*smoothstep(0.0,0.1,0.12+uCrepe*0.48-zona)*smoothstep(0.3,0.5,rmN(vec3(cp*2.3,7.0)));',
   '  diffuseColor.rgb*=1.0-0.52*riga;',
   '  if(piano){',
-  '    if(rq2<0.4) diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.25,0.29,0.12),uCrepe*0.9*smoothstep(0.42,0.62,rmN(vec3(vLoc.xz*1.8,9.0))+0.3*riga));',      // erba fra le lastre
+  '    if(rq2<0.4) diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.27,0.3,0.14)*(0.85+0.3*rmN(vec3(vLoc.xz*9.0,8.0))),uCrepe*0.85*smoothstep(0.4,0.7,0.55*rmN(vec3(vLoc.xz*1.8,9.0))+0.3*rmN(vec3(vLoc.xz*5.3,9.5))+0.15*rmN(vec3(vLoc.xz*14.0,9.7))+0.3*riga));',      // erba fra le lastre: chiazze a più grane, dal bordo sfrangiato (prima erano macchie larghe e nette, da tela mimetica)
   '    else diffuseColor.rgb*=1.0-0.55*clamp((uRovina*2.0+uCrepe*uCrepe*0.2)*3.0,0.0,1.0);',                                                           // sotto i tetti sfondati si vede il buio
   '  } else diffuseColor.rgb*=1.0-0.34*uCrepe*smoothstep(0.5,0.8,rmN(vec3(cp.x*4.0,vLoc.y*0.45,3.0)));',                                              // colature
   '}',
   'if(vTipo<1.5){ float rm=smoothstep(0.35,0.72,rmN(vLoc*2.3+0.11)); diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.5,0.56,0.38),clamp((uRovina*2.4+uCrepe*0.5)*rm*(1.15-rq2),0.0,1.0)); }',
   'if(vTipo>0.5 && vTipo<1.5){ diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.2,0.215,0.235),uPiombo); }',      // uPiombo: coperture rifatte in lastre di piombo (il Pantheon dopo Gregorio III)
+  'if(vTipo>2.5){ float pa=rmN(vec3(vLoc.xz*0.9,11.0)); float pb=rmN(vec3(vLoc.xz*4.3,12.0)); float pc=rmN(vec3(vLoc.xz*17.0,13.0));',                    // prato: chiazze larghe, ciuffi, filo d'erba
+  '  diffuseColor.rgb*=0.82+0.22*pa+0.12*(pb-0.5)+0.1*(pc-0.5);',
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.36,0.34,0.17)*(0.8+0.5*pb),clamp(uCrepe*1.1,0.0,0.85)*smoothstep(0.25,0.65,pa+0.3*pb)); }',                // lasciato a sé stesso ingiallisce e si fa incolto
   'if(vTipo<1.5) diffuseColor.rgb*=mix(0.74,1.0,smoothstep(0.0,0.2,rq2));'].join(NL);      // ombra d'appoggio al piede
 function innesta(sh,u,colore){
   sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol;
