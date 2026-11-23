@@ -840,9 +840,21 @@ var comandi=document.createElement('div'); comandi.className='comandi-scena coma
 function bottone(t,et,cl){ var b=document.createElement('button'); b.type='button'; b.className=cl; b.textContent=t; b.setAttribute('aria-label',et); b.title=et; comandi.appendChild(b); return b; }
 var bMeno=bottone('−','Allontana','zoom'), bPiu=bottone('+','Avvicina','zoom'), bGrande=bottone('⤢','Carta a tutto schermo','grande'); bGrande.setAttribute('aria-pressed','false');
 ospite.appendChild(comandi);
+/* Telefono coricato: la carta, le legende e la linea del tempo non stanno insieme sullo schermo (audit del design, proposta 3; 23 novembre 2026). Un invito sulla carta propone il tutto
+   schermo; non si apre da solo. Chiuso con la ×, per questa visita non torna */
+var invita=document.createElement('div'); invita.className='m-invita'; invita.hidden=true;
+var invSi=document.createElement('button'); invSi.type='button'; invSi.textContent='⤢ Guarda la carta a tutto schermo'; invita.appendChild(invSi);
+var invNo=document.createElement('button'); invNo.type='button'; invNo.className='no'; invNo.textContent='×'; invNo.setAttribute('aria-label','Non ora'); invita.appendChild(invNo);
+ospite.appendChild(invita);
+var mqCoricato=window.matchMedia?window.matchMedia('(orientation:landscape) and (max-height:500px) and (max-width:1000px)'):null;
+function invitoGrande(){ var no=false; try{ no=sessionStorage.getItem('rm-invito-grande')==='no'; }catch(e){} invita.hidden=no||grandeSi||!mqCoricato||!mqCoricato.matches; }
+invSi.addEventListener('click',function(e){ e.stopPropagation(); grande(true); });
+invNo.addEventListener('click',function(e){ e.stopPropagation(); try{ sessionStorage.setItem('rm-invito-grande','no'); }catch(er){} invita.hidden=true; });
+if(mqCoricato){ if(mqCoricato.addEventListener) mqCoricato.addEventListener('change',invitoGrande); else if(mqCoricato.addListener) mqCoricato.addListener(invitoGrande); }
+setTimeout(invitoGrande,0);
 function grande(si){
   fermaRegia(); grandeSi=si; legenda.parentNode.style.minHeight=''; setTimeout(function(){ stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':'')); },60);      // a tutto schermo la scena dell'evento resta ferma sulla carta (la ridisegna mostraPopoli, con le nuove misure)
-  document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo');      // queste due istruzioni erano finite per sbaglio dentro il commento della riga sopra
+  document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo'); invitoGrande();      // queste due istruzioni erano finite per sbaglio dentro il commento della riga sopra
   bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Esci dallo schermo intero':'Carta a tutto schermo');
   dita={}; presa=null; vista.libera=si; setTimeout(segnaFuori,120);      // il bottone «Continua a…»: via a tutto schermo, di nuovo all'uscita (con le misure nuove)
   if(si) ospite.appendChild(barraPassi); else ospite.parentNode.insertBefore(barraPassi,rigaLuoghi);      // a tutto schermo la barra dei passi sta sulla carta, in basso al centro

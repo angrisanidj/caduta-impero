@@ -164,3 +164,13 @@ body.carta-in-regia .m-fuori{display:none}
 @media (max-width:700px){ .m-fuori{font-size:12px;min-height:30px;padding:4px 9px} }
 /* Ritocco del 23 novembre 2026 (audit del design): sui dispositivi al tocco i bottoni «Passo per passo» salgono da 28 a 34 punti, più facili da prendere col dito */
 @media (pointer:coarse){ .m-passi button{min-height:34px} }
+
+/* pastiglie della legenda: al tocco la zona sensibile è più alta di qualche punto, senza cambiare l'aspetto né lo spazio che la legenda occupa (audit del design, proposta 1; 23 novembre 2026) */
+@media (pointer:coarse){ .legenda-mappa span,#legendaPopoli span{position:relative} .legenda-mappa span::after,#legendaPopoli span::after{content:"";position:absolute;inset:-3px -3px} }
+/* telefono coricato: un invito a mettere la carta a tutto schermo (js/mappa.js, invitoGrande) */
+.m-invita{position:absolute;z-index:3;left:50%;top:12px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:4px 6px 4px 14px;border:1px solid var(--gold2);border-radius:999px;
+  background:rgba(36,30,26,.92);color:#F6E4B0;font-family:var(--ui,sans-serif);font-size:13px;font-weight:600;box-shadow:0 2px 10px rgba(0,0,0,.3);white-space:nowrap}
+.m-invita[hidden]{display:none}
+.m-invita button{all:unset;cursor:pointer;display:inline-flex;align-items:center;min-height:30px;padding:0 4px}
+.m-invita .no{width:28px;justify-content:center;border-radius:50%;font-size:17px;color:#D9CBB4}
+.m-invita button:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}

@@ -303,6 +303,7 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
     var B=document.body.classList, H=window.innerHeight;
     if(window.innerWidth>1000 || B.contains('roma-grande') || B.contains('impero-grande')){ b.hidden=true; return; }
     if(B.contains('tempo-attesa')){ b.hidden=true; return; }      // in cima alla pagina, prima di scorrere, non c'è (come la linea del tempo)
+    var ca=$('cause'), pi=document.querySelector('.piede'); if((ca&&ca.getBoundingClientRect().top<H-60) || (pi&&pi.getBoundingClientRect().top<H)){ b.hidden=true; return; }      // su «Perché cadde» e sul piede copriva le righe (proposta dell'audit del design, fatta il 23 novembre 2026)
     var r=tit.getBoundingClientRect(), s=sc.getBoundingClientRect(), dove=r.top>H*.85 && s.bottom>0 ? 'giu' : s.bottom<0 && r.top<H*.6 ? 'su' : '';
     b.hidden=!dove; if(!dove) return;
     if(b.dataset.dove!==dove){ b.dataset.dove=dove; b.textContent=dove==='giu'?'Leggi la tappa ↓':'↑ Torna alla carta e alla città'; }
