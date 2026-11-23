@@ -39,11 +39,12 @@ body.impero-largo.carta-in-regia .legenda-luoghi{opacity:0;pointer-events:none}
 svg.in-passi .m-rotte,svg.in-passi .m-popoli,svg.in-passi .m-luogo>g{opacity:0;transition:opacity .4s}      /* anche i cartellini dei luoghi della tappa: i rombi restano */
 .m-luogo>g{transition:opacity .4s}
 .m-rotte,.m-popoli{transition:opacity .4s}
-/* scene a passi: il passo in corso si disegna, quelli già visti restano chiari e senza nomi, i seguenti non si vedono */
+/* scene a passi: il passo in corso si disegna, quelli già visti restano chiari e senza nomi né segni, i seguenti non si vedono. Fuori dalla regia (a tutto schermo, o con meno animazioni) il passo in corso è l'ultimo */
 .m-scena .passo{transition:opacity .5s}
-.m-scena .passo.viva .marcia,.m-scena .passo.prima .marcia{stroke-dashoffset:0}
-.m-scena .passo.viva .mare,.m-scena .passo.prima .mare{opacity:1} .m-scena .passo.viva .mare.sotto,.m-scena .passo.prima .mare.sotto{opacity:.55}
-.m-scena .passo.viva :is(.punta,.scontro,.assedio,.fuoco,.morte,.m-nome-freccia),.m-scena .passo.prima :is(.punta,.scontro,.assedio,.fuoco,.morte){opacity:1}
+.m-scena:is(.passi,.viva) .passo.viva .marcia,.m-scena:is(.passi,.viva) .passo.prima .marcia{stroke-dashoffset:0}
+.m-scena:is(.passi,.viva) .passo.viva .mare,.m-scena:is(.passi,.viva) .passo.prima .mare{opacity:1} .m-scena:is(.passi,.viva) .passo.viva .mare.sotto,.m-scena:is(.passi,.viva) .passo.prima .mare.sotto{opacity:.55}
+.m-scena:is(.passi,.viva) .passo.viva :is(.punta,.scontro,.assedio,.fuoco,.morte,.m-nome-freccia),.m-scena:is(.passi,.viva) .passo.prima .punta{opacity:1}
+.m-scena .passo.prima :is(.scontro,.assedio,.fuoco,.morte,.m-nome-freccia){opacity:0}      /* dei passi già visti restano le linee: segni e nomi solo per il passo in corso */
 .m-scena .passo.prima{opacity:.4} .m-scena .passo.prima *{transition:none}
 /* la barra dei passi, sotto la carta come la riga dei luoghi; a tutto schermo in alto a destra, sopra la carta, dove non ci sono le legende */
 .m-passi{margin:0;padding:6px 10px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:4px 5px;font-family:var(--ui,sans-serif)}

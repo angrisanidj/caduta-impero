@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 08:21:15.
+Generato da `src/testi.mjs` il 23/11/2026, 08:52:21.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -3776,7 +3776,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [carta.citta] Roma · Ravenna · Milano · Treviri · Arles · Cartagine · Costantinopoli · Londinium · Sirmio · Antiochia · Alessandria · Tolosa · Adrianopoli
 
-[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Visigoti · Alani · Romani · Unni · Unni
+[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Delta · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Visigoti · Alani · Romani · Unni · Unni
 
 [carta.mari] Mare Nostrum · Oceano · Mare Interno · Ponto Eusino
 
@@ -3917,55 +3917,55 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.43-r114] Khanato dei Bulgari
 
-[ui.mappa.44-r402] La scena passo per passo
+[ui.mappa.44-r428] La scena passo per passo
 
-[ui.mappa.45-r405] Passo per passo
+[ui.mappa.45-r431] Passo per passo
 
-[ui.mappa.46-r406] Rivedi la scena dall'inizio
+[ui.mappa.46-r432] Rivedi la scena dall'inizio
 
-[ui.mappa.47-r507] Regni dei Franchi
+[ui.mappa.47-r534] Regni dei Franchi
 
-[ui.mappa.48-r507] Impero dei Franchi
+[ui.mappa.48-r534] Impero dei Franchi
 
-[ui.mappa.49-r627] regno d'Italia di Odoacre
+[ui.mappa.49-r655] regno d'Italia di Odoacre
 
-[ui.mappa.50-r627] regno degli Ostrogoti
+[ui.mappa.50-r655] regno degli Ostrogoti
 
-[ui.mappa.51-r627] regno dei Franchi
+[ui.mappa.51-r655] regno dei Franchi
 
-[ui.mappa.52-r628] impero romano
+[ui.mappa.52-r656] impero romano
 
-[ui.mappa.53-r628] impero d'Occidente
+[ui.mappa.53-r656] impero d'Occidente
 
-[ui.mappa.54-r628] territorio con un imperatore rivale
+[ui.mappa.54-r656] territorio con un imperatore rivale
 
-[ui.mappa.55-r628] territorio romano che non obbedisce più a Ravenna
+[ui.mappa.55-r656] territorio romano che non obbedisce più a Ravenna
 
-[ui.mappa.56-r628] regione contesa in guerra
+[ui.mappa.56-r656] regione contesa in guerra
 
-[ui.mappa.57-r629] barbari insediati per trattato
+[ui.mappa.57-r657] barbari insediati per trattato
 
-[ui.mappa.58-r629] impero d'Oriente
+[ui.mappa.58-r657] impero d'Oriente
 
-[ui.mappa.59-r630] califfato ed emirati arabi
+[ui.mappa.59-r658] califfato ed emirati arabi
 
-[ui.mappa.60-r630] regni franchi dopo la divisione dell'843
+[ui.mappa.60-r658] regni franchi dopo la divisione dell'843
 
-[ui.mappa.61-r630] lasciata dall'impero
+[ui.mappa.61-r658] lasciata dall'impero
 
-[ui.mappa.62-r630] uscita dall'impero
+[ui.mappa.62-r658] uscita dall'impero
 
-[ui.mappa.63-r661] Mostra meno voci della legenda
+[ui.mappa.63-r689] Mostra meno voci della legenda
 
-[ui.mappa.64-r671] Mostra le altre
+[ui.mappa.64-r699] Mostra le altre
 
-[ui.mappa.65-r721] mai dentro l’impero
+[ui.mappa.65-r749] mai dentro l’impero
 
-[ui.mappa.66-r765] Carta a tutto schermo
+[ui.mappa.66-r793] Carta a tutto schermo
 
-[ui.mappa.67-r770] Tutto schermo
+[ui.mappa.67-r798] Tutto schermo
 
-[ui.mappa.68-r770] Esci dallo schermo intero
+[ui.mappa.68-r798] Esci dallo schermo intero
 
 
 ### js/atti.js

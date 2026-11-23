@@ -259,6 +259,8 @@ function disegnaScena(sc,kr,pos,fissi,k){
   pos.forEach(function(l){ nuclei[chiave(l.x,l.y)]={c:6.3*kr,r:0}; });
   nucleiOra=nuclei;
   function dentro(p){ return [Math.max(bordo[0],Math.min(bordo[1],p[0])),Math.max(bordo[2],Math.min(bordo[3],p[1]))]; }
+  /* le marce si tengono solo dentro il disegno: schiacciate sul bordo della vista normale (fuori dalla regia) la costa libica diventava una riga dritta sul mare */
+  function dentroCarta(p){ return [Math.max(8,Math.min(G.w-8,p[0])),Math.max(8,Math.min(G.h-8,p[1]))]; }
   function metti(r){ fissi.push(r); nuovi.push(r); }
   sc=sc||[];
   /* una scena a passi (PASSI_CARTA): i segni di ogni passo stanno in un gruppo suo, che la regia accende, schiarisce o nasconde */
@@ -273,7 +275,7 @@ function disegnaScena(sc,kr,pos,fissi,k){
   var frecce=[], gruppi={};
   sc.forEach(function(e){
     if(e[0]!=='marcia'&&e[0]!=='mare') return;
-    var pp=[]; e[2].map(puntoDi).filter(Boolean).map(dentro).forEach(function(p){ var u=pp[pp.length-1]; if(!u || Math.hypot(p[0]-u[0],p[1]-u[1])>.5) pp.push(p); });      // chi cade fuori dal bordo (Palmira, il Tigri, fuori dalla regia) sta sul bordo, come il suo rombo
+    var pp=[]; e[2].map(puntoDi).filter(Boolean).map(dentroCarta).forEach(function(p){ var u=pp[pp.length-1]; if(!u || Math.hypot(p[0]-u[0],p[1]-u[1])>.5) pp.push(p); });      // chi cade fuori dal bordo (Palmira, il Tigri, fuori dalla regia) sta sul bordo, come il suo rombo
     if(pp.length<2) return;
     var a=pp[pp.length-1], ctl=null, pts, da;
     if(pp.length===2){ var mx=(pp[0][0]+pp[1][0])/2, my=(pp[0][1]+pp[1][1])/2, nx=-(pp[1][1]-pp[0][1])*.12, ny=(pp[1][0]-pp[0][0])*.12; ctl=[mx+nx,my+ny]; da=ctl;
@@ -341,7 +343,7 @@ function disegnaScena(sc,kr,pos,fissi,k){
   cittaPos.forEach(function(cp){ ost.push(rettoCitta(cp,[cp.lato,cp.dy,7],largaCitta(cp.id))); });
   /* Il nome sulla freccia (quarto elemento di una marcia: «Unni», «Ezio»): orizzontale, accanto alla linea (sopra, sotto o di lato), nel punto del cammino dove copre di meno
      le altre linee, i segni, i rombi e i nomi; si prova dal mezzo verso i capi. Diventa un ingombro anche lui, così spade e fiamme lo evitano */
-  var linee=[];
+  var linee=[], etichette=[];
   frecce.forEach(function(f){ if(!f.via) return; for(var i=1;i<f.via.length;i++){ var a=f.via[i-1], b2=f.via[i], l=Math.hypot(b2[0]-a[0],b2[1]-a[1]), n=Math.max(1,Math.ceil(l/(4*k)));
     for(var m=0;m<=n;m++) linee.push([a[0]+(b2[0]-a[0])*m/n,a[1]+(b2[1]-a[1])*m/n,4.4*k,4.4*k]); } });
   frecce.forEach(function(f){
@@ -356,7 +358,7 @@ function disegnaScena(sc,kr,pos,fissi,k){
         var r=[x+o[0],y+o[1],W,H], c=ingombro(r,ost)+ingombro(r,linee)+(r[0]-W/2<bordo[0]-4||r[0]+W/2>bordo[1]+4||r[1]-H/2<bordo[2]-4||r[1]+H/2>bordo[3]+4?400*k*k:0)+Math.abs(fr-.5)*4*k+j*.3*k;
         if(c<minimo){ minimo=c; meglio=r; } });
     });
-    t.setAttribute('x',meglio[0].toFixed(1)); t.setAttribute('y',(meglio[1]+H*.34).toFixed(1)); metti(meglio); ost.push(meglio);
+    t.setAttribute('x',meglio[0].toFixed(1)); t.setAttribute('y',(meglio[1]+H*.34).toFixed(1)); metti(meglio); ost.push(meglio); etichette.push(meglio);
   });
   sc.forEach(function(e){
     var tipo=e[0]; if(tipo!=='scontro'&&tipo!=='fuoco'&&tipo!=='morte') return; var p=puntoDi(e[1]); if(!p) return; p=dentro(p);
@@ -365,6 +367,7 @@ function disegnaScena(sc,kr,pos,fissi,k){
       for(jm=0;jm<prm.length;jm++){ rm=[p[0]+prm[jm][0],p[1]+prm[jm][1],2*mw,2*mw,1]; var tm=ingombro(rm,ost)+ingombro(rm,linee); if(tm<bm){ bm=tm; best=jm; if(!tm) break; } }
       rm=[p[0]+prm[best][0],p[1]+prm[best][1],2*mw,2*mw,1]; metti(rm); ost.push(rm);
       var gm=el('g',{'class':'morte',transform:'translate('+rm[0].toFixed(1)+' '+rm[1].toFixed(1)+')'},dove(e)), gmi=el('g',{transform:'scale('+k+')'},gm);
+      gm._alt=altriPosti(p,cm+mw,cm+mw,[0,0]); gm._r=rm; gm._lc=[0,0];
       el('circle',{r:7.6,fill:'#FBF6EA',stroke:'#241E1A','stroke-width':1.4},gmi); el('path',{d:'M0 -4.8V5M-3.4 -1.6H3.4',fill:'none',stroke:'#241E1A','stroke-width':1.9,'stroke-linecap':'round'},gmi);
       return;
     }
@@ -375,12 +378,35 @@ function disegnaScena(sc,kr,pos,fissi,k){
       if(t<minimo){ minimo=t; meglio=j; if(!t) break; } }
     r=[p[0]+prove[meglio][0],p[1]+prove[meglio][1],2*sw,2*sh,scontro?1:0]; metti(r); ost.push(r);
     var g=el('g',{'class':tipo,transform:'translate('+(r[0]-lc[0]*k).toFixed(1)+' '+(r[1]-lc[1]*k).toFixed(1)+')'},dove(e)), gi=el('g',{transform:'scale('+k+')'},g);
+    g._alt=altriPosti(p,ox,oy,[lc[0]*k,lc[1]*k]); g._r=r; g._lc=[lc[0]*k,lc[1]*k];      // i posti di riserva, se poi una scritta finisce sotto (sistemaSegni)
     if(scontro){ el('circle',{r:9.5,cy:-15,fill:'#FBF6EA',stroke:'#8E2A2A','stroke-width':1.6},gi); el('path',{d:'M-5.2 -20.2L5.2 -9.8M5.2 -20.2L-5.2 -9.8M-5.9 -12.9L-2.3 -9.3M5.9 -12.9L2.3 -9.3',fill:'none',stroke:'#8E2A2A','stroke-width':1.9,'stroke-linecap':'round'},gi); }
     else el('path',{d:'M0 -24C5 -18 8 -14 6 -9C10 -11 9 -16 9 -16C13 -11 12 -4 6 -1C2 1 -3 1 -6 -1C-11 -4 -11 -11 -6 -15C-6 -11 -4 -10 -3 -11C-5 -16 -2 -20 0 -24Z',fill:'#E0672A',stroke:'#FBF6EA','stroke-width':1.1,'stroke-linejoin':'round'},gi);
   });
-  scenaFatta={sc:quale,l:luoghiOra,ch:ch,fissi:nuovi,nuclei:nuclei};
-  if(gp.length) classiPassi(passoOra);      // ridisegnata durante la regia (cambia l'ingrandimento), la scena tiene il passo in corso
+  scenaFatta={sc:quale,l:luoghiOra,ch:ch,fissi:nuovi,nuclei:nuclei,etichette:etichette};      // i nomi sulle frecce contano come scritte per sistemaSegni
+  if(gp.length) classiPassi(passoInVista());      // ridisegnata durante la regia (cambia l'ingrandimento), la scena tiene il passo in corso
 }
+/* posti di riserva di un segno attorno al suo luogo p: le otto direzioni a una e a una volta e mezza la distanza; lc è lo scarto fra il centro del segno e il punto del suo disegno */
+function altriPosti(p,ox,oy,lc){ var out=[]; [1,1.55].forEach(function(m){ [[0,-1],[1,0],[-1,0],[0,1],[1,-1],[-1,-1],[1,1],[-1,1]].forEach(function(d){ out.push([p[0]+d[0]*ox*m-lc[0],p[1]+d[1]*oy*m-lc[1]]); }); }); return out; }
+/* Le battaglie, i fuochi e le croci non coprono le scritte (richiesta dell'utente, 23 novembre 2026). Si piazzano prima di nomi, città e cartellini, che poi li evitano;
+   ma quando una scritta non trova un posto libero si mette dove copre di meno, anche sopra un segno. Allora, a scritte piazzate, è il segno che si sposta: nel primo dei suoi posti di riserva
+   che non tocca scritte (né altri segni, rombi, punte), o in quello che ne tocca meno. Il conto si fa sulle posizioni d'arrivo, in unità della carta: sullo schermo i cartellini dei popoli
+   scivolano per quasi un secondo e misurarli lì darebbe posti vecchi. Gli anelli degli assedi stanno sulla città e non si spostano: sono i cartellini a evitarli (migliorePop). */
+var ultimiTesti=[], ultimiFissi=[];
+function sistemaSegni(testi,fissi){
+  var segni=[].slice.call(stratoScena.querySelectorAll('.scontro,.fuoco,.morte')).filter(function(g){ if(!g._alt) return false; var pa=g.parentNode; return !(pa.classList&&pa.classList.contains('passo')&&!pa.classList.contains('viva')&&passoInVista()!=null); });
+  if(!segni.length||!testi) return;
+  function senza(lista,r){ return lista.filter(function(x){ return x!==r; }); }
+  segni.forEach(function(g){
+    var r=g._r; if(!ingombro(r,testi)) return;
+    var altri=senza(fissi,r).concat(segni.filter(function(h){ return h!==g; }).map(function(h){ return h._r; })), meglio=null, minimo=10*ingombro(r,testi)+ingombro(r,altri);
+    for(var j=0;j<g._alt.length && minimo>0;j++){ var q=[g._alt[j][0]+g._lc[0],g._alt[j][1]+g._lc[1],r[2],r[3],r[4]], c=10*ingombro(q,testi)+ingombro(q,altri)+(q[0]<bordo[0]-6||q[0]>bordo[1]+6||q[1]<bordo[2]-6||q[1]>bordo[3]+6?1e6:0); if(c<minimo){ minimo=c; meglio=j; } }
+    if(meglio==null) return;
+    var nr=[g._alt[meglio][0]+g._lc[0],g._alt[meglio][1]+g._lc[1],r[2],r[3],r[4]], i=fissi.indexOf(r); if(i>=0) fissi[i]=nr;
+    g._r=nr; g.setAttribute('transform','translate('+g._alt[meglio][0].toFixed(1)+' '+g._alt[meglio][1].toFixed(1)+')');
+  });
+}
+/* il passo che si vede quando la regia non c'è (a tutto schermo, o per chi ha chiesto meno animazioni): l'ultimo, con i precedenti più chiari */
+function passoInVista(){ return passoOra!=null?passoOra:passiOra?passiOra.length-1:null; }
 /* Regia: a ogni tappa la carta si avvicina ai luoghi dell'evento, li mostra per qualche secondo con una didascalia e torna alla vista intera.
    Anche a tutto schermo, se chi guarda non ha mosso la carta (dal 23 novembre 2026: «Perché non si vede lo zoom quando metto la mappa a piena pagina?»); mai per chi ha chiesto meno animazioni.
    Se i luoghi sono troppo lontani fra loro la carta resta intera. */
@@ -421,7 +447,7 @@ var regia=null, scenaOra=null, annoVisto=null, didascalia=document.createElement
 var pocoMoto=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);      // ?moto=1 forza l'animazione, per le prove
 function fermaRegia(){
   var r=regia; if(r){ cancelAnimationFrame(r.rf); regia=null; }
-  passoOra=null; svg.classList.remove('in-passi'); classiPassi(null); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
+  passoOra=null; svg.classList.remove('in-passi'); classiPassi(passoInVista()); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
   if(bordo[0]!==103){ bordo=[103,897,63,565]; scalaScena=1; testoMin=0; if(annoVisto!=null) mostraPopoli(annoVisto); }
   didascalia.classList.remove('viva'); document.body.classList.remove('carta-in-regia');
   stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':''));
@@ -478,6 +504,7 @@ function avviaRegia(l,sc,da,forza){
     didascalia.classList.toggle('in-alto',alto); if(c>0) f.a=[f.a[0],alto?Math.max(0,Math.min(G.h-f.a[3],f.a[1]-sp)):y0,f.a[2],f.a[3]];
     var sn=scalaDi(f.a), tm=testoDi(f.a); if(Math.abs(sn-scalaScena)>.02 || Math.abs(tm-testoMin)>.02){ scalaScena=sn; testoMin=tm; if(annoVisto!=null) mostraPopoli(annoVisto); svg.getBoundingClientRect(); }      // ridisegnata col passo di prima: il nuovo poi si traccia
     if(f.i!=null){ svg.classList.add('in-passi'); passoOra=f.i; classiPassi(f.i); segnaPasso(f.i); coloraRegioni(statiPasso(f.i)); ricolorata=true; }
+    sistemaSegni(ultimiTesti,ultimiFissi);      // con il passo nuovo acceso
   }
   function passo(ora){
     if(regia!==r) return; if(!r.t0) r.t0=ora;
@@ -488,7 +515,7 @@ function avviaRegia(l,sc,da,forza){
       u=t-acc; k=Math.min(1,u/ENTRA); A=n?foto[n-1].a:r.da; B=foto[n].a;
       if(!passi && u>ENTRA*.7 && !r.viva){ r.viva=true; stratoScena.setAttribute('class','m-scena viva'); }
     } else {
-      if(!r.fine){ r.fine=true; didascalia.classList.remove('viva'); document.body.classList.remove('carta-in-regia'); passoOra=null; svg.classList.remove('in-passi'); classiPassi(null); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
+      if(!r.fine){ r.fine=true; didascalia.classList.remove('viva'); document.body.classList.remove('carta-in-regia'); passoOra=null; svg.classList.remove('in-passi'); classiPassi(passoInVista()); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
         stratoScena.setAttribute('class','m-scena'+(grandeSi?' viva ferma':'')); }
       u=t-acc; k=Math.min(1,u/ESCE); A=foto[foto.length-1].a; B=r.da;
       if(u>=ESCE){ fermaRegia(); return; }
@@ -521,9 +548,9 @@ function postiPop(W,nc,k,H){
   return [[0,-H-su],[0,giu],[lato,-H/2],[-lato,-H/2],[dd,-H-su],[-dd,-H-su],[dd,giu],[-dd,giu],[0,-2*H-su-2*k],[0,H+giu+2*k],[dd,-2*H-su-2*k],[-dd,-2*H-su-2*k],[lato,-H-su],[-lato,-H-su],[lato,giu],[-lato,giu],[0,-3*H-su-4*k]];
 }
 function rettoPop(v,o,W,H){ return [Math.max(97+W/2,Math.min(903-W/2,v[1]+o[0])),v[2]+o[1]+H/2,W,H]; }
-function migliorePop(v,prove,W,H,ost){      // il primo posto libero, o quello che copre di meno
+function migliorePop(v,prove,W,H,ost,segni){      // il primo posto libero, o quello che copre di meno; coprire un segno della scena (segni) costa venti volte tanto: battaglie e assedi non stanno sopra i nomi
   var meglio=0, minimo=1e9, j, t;
-  for(j=0;j<prove.length;j++){ t=ingombro(rettoPop(v,prove[j],W,H),ost); if(t<minimo){ minimo=t; meglio=j; if(!t) break; } }
+  for(j=0;j<prove.length;j++){ t=ingombro(rettoPop(v,prove[j],W,H),ost)+(segni?19*ingombro(rettoPop(v,prove[j],W,H),segni):0); if(t<minimo){ minimo=t; meglio=j; if(!t) break; } }
   return prove[meglio];
 }
 /* Cartellini fermi durante la sosta. Finché un popolo resta nello stesso punto con lo stesso nome in tappe consecutive (una «sosta»), il suo cartellino
@@ -565,7 +592,7 @@ function faiPianta(k){
       for(a=so.i;a<=so.f;a++) tot+=ingombro(r,ob[a].fissi)+ingombro(r,posti[a])>0?1e5:ingombro(r,ob[a].messi);      // ogni tappa in cui il posto copre qualcosa che non si sposta costa un'eccezione: prima le meno eccezioni, poi il meno ingombro
       if(tot<minimo){ minimo=tot; meglio=j; if(!tot) break; } }
     for(a=so.i;a<=so.f;a++){ var o=prove[meglio]; r=rettoPop(v,o,W,H);
-      if(ingombro(r,ob[a].fissi)+ingombro(r,posti[a])>0){ o=migliorePop(v,prove,W,H,ob[a].messi.concat(posti[a])); r=rettoPop(v,o,W,H); }      // l'eccezione
+      if(ingombro(r,ob[a].fissi)+ingombro(r,posti[a])>0){ o=migliorePop(v,prove,W,H,ob[a].messi.concat(posti[a]),ob[a].fissi); r=rettoPop(v,o,W,H); }      // l'eccezione
       out[so.id][chiaveTappa(T[a].anno,T[a].luoghi,T[a].scena)]={o:o}; posti[a].push(r); }
   });
   return {k:k,p:out};
@@ -613,11 +640,12 @@ function mostraPopoli(anno){
   disegnaLuoghi(k,H,messi,pos);
   for(id in qui){
     var c=qui[id], r; p=popoli[id]; v=c.v; W=c.W; o=c.o;
-    if(!o){ o=migliorePop(v,postiPop(W,nucleoIntorno(v[1],v[2]),k,H),W,H,messi); messi.push(rettoPop(v,o,W,H)); }
+    if(!o){ o=migliorePop(v,postiPop(W,nucleoIntorno(v[1],v[2]),k,H),W,H,messi,fissi); messi.push(rettoPop(v,o,W,H)); }
     r=rettoPop(v,o,W,H);
     p.fondo.setAttribute('x',(-W/2).toFixed(1)); p.fondo.setAttribute('width',W.toFixed(1)); p.fondo.setAttribute('height',H.toFixed(1)); p.t.setAttribute('y',(H*.72).toFixed(1));
     p.c.style.transform='translate('+(r[0]-v[1]).toFixed(1)+'px,'+o[1].toFixed(1)+'px)';
   }
+  ultimiTesti=posti.concat(messi.slice(fp.length),(scenaFatta&&scenaFatta.etichette)||[]); ultimiFissi=fissi; sistemaSegni(ultimiTesti,ultimiFissi);
   return visti;
 }
 

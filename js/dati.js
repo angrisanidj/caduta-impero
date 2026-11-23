@@ -1220,7 +1220,7 @@ var PASSI_CARTA={
   function con(o){ var r={}, k; for(k in prima) r[k]=prima[k]; for(k in o) r[k]=o[k]; return r; }
   PASSI_CARTA[711]=[
    {a:'602-628', t:"Prima degli Arabi, Bisanzio e la Persia combattono per ventisei anni. I Persiani prendono la Siria, Gerusalemme e l'Egitto e nel 626 arrivano davanti a Costantinopoli. Eraclio vince nel 627, ma i due imperi escono stremati.",
-    sc:[['marcia','altri',['tigri','edessa','antiochia','emesa','damasco','gerusalemme'],'Persiani'],['marcia','altri',['gerusalemme','gaza','sinai','pelusio','alessandria']],['assedio','costantinopoli'],['marcia','roma',['costantinopoli','nicomedia','ancira','tiana','tigri'],'Eraclio']], regioni:con({})},
+    sc:[['marcia','altri',['tigri','edessa','antiochia','emesa','damasco','gerusalemme'],'Persiani'],['marcia','altri',['gerusalemme','gaza','sinai','pelusio','delta','alessandria']],['assedio','costantinopoli'],['marcia','roma',['costantinopoli','nicomedia','ancira','tiana','tigri'],'Eraclio']], regioni:con({})},
    {a:'636', t:"Pochi anni dopo arrivano dall'Arabia gli eserciti del califfato. Ad agosto del 636, presso il fiume Yarmuk, distruggono l'esercito mandato da Eraclio: la Siria è perduta.",
     sc:[['marcia','altri',['arabia','yarmuk'],'Arabi'],['scontro','yarmuk'],['marcia','altri',['yarmuk','damasco','emesa','antiochia']]], regioni:con({levante:'califfato',egitto:'oriente'})},
    {a:'639-642', t:"Alla fine del 639 Amr ibn al-As entra in Egitto da Pelusio. Alessandria si arrende nel 641 e nel settembre 642 le ultime truppe bizantine partono per mare.",
