@@ -36,3 +36,8 @@
 @media (prefers-reduced-motion:reduce){ .ig-momento{transition:none} }
 .ig-moneta{stroke:#6d5a3a;stroke-width:2}
 .ig-moneta-num{font-family:var(--cap);font-size:24px;font-weight:700;fill:#221C18}
+.ig-nave path{fill:#5b4a3a;stroke:#5b4a3a;stroke-width:1.2;stroke-linejoin:round;transition:opacity .5s}
+.ig-nave .ig-vela{fill:#efe6d4}
+.ig-nave.spenta{opacity:.12}
+.ig-barra{fill:var(--porpora,#7A1F2B)}
+@media (prefers-reduced-motion:reduce){ .ig-nave path{transition:none} }

@@ -92,8 +92,30 @@ function disegnaMoneta(svg,stato){
   stato.tutti=segni.map(function(s){ return [s.a,s.t]; });
 }
 
+/* ---------- 5. Le navi scompaiono ----------
+   I relitti datati nel Mediterraneo, con il I secolo uguale a 100 (CURVE.commerci: banca dati di Oxford, 2017; Robinson e Wilson 2011). Cento navicelle: restano accese quante ne dicono i dati.
+   I momenti vengono dalle tappe (439, 534, la conquista araba nei passi del 711). */
+var NAVI={ titolo:"Le navi scompaiono", sotto:"Relitti datati nel Mediterraneo: per ogni 100 del I secolo, quanti ne restano",
+  momenti:[[235,"Nel III secolo i relitti sono già meno della metà di quelli del I secolo."],[439,"I Vandali prendono Cartagine, il grande porto del grano per Roma."],[534,"Belisario riprende l'Africa: il mare torna dell'impero, ma i traffici restano bassi."],
+    [642,"Gli Arabi prendono Alessandria; nel 698 anche Cartagine."],[725,"Nell'VIII secolo i relitti sono pochissimi."]],
+  fonte:"Banca dati dei relitti di Strauss, Wilson e Flohr (Oxford Roman Economy Project, 2017) e Robinson e Wilson (2011). Si contano le navi trovate e datate, non le merci: navi più grandi, o meno naufragi, cambierebbero il quadro." };
+function disegnaNavi(svg,stato){
+  var C=(D.CURVE||{}).commerci; if(!C) return; var P=C.punti, navi=[], i;
+  for(i=0;i<100;i++){ var cx=40+(i%20)*28, cy=40+Math.floor(i/20)*34, g=el('g',{class:'ig-nave',transform:'translate('+cx+','+cy+')'},svg);
+    el('path',{d:'M-10 0 L10 0 L6 6 L-6 6 Z'},g); el('path',{d:'M0 -12 L0 0 M0 -12 L8 -3 L0 -3',class:'ig-vela'},g); navi.push(g); }
+  var base=el('line',{x1:40,x2:600,y1:238,y2:238,class:'ig-griglia'},svg), sx=function(a){ return 40+(a-235)/(852-235)*560; };
+  [235,400,500,600,700,852].forEach(function(a){ var t=el('text',{x:sx(a),y:258,class:'ig-asse','text-anchor':'middle'},svg); t.textContent=a; });
+  var barra=el('rect',{x:40,y:232,width:0,height:6,class:'ig-barra'},svg), num=el('text',{x:600,y:222,class:'ig-valore','text-anchor':'end'},svg);
+  var segni=NAVI.momenti.map(function(m){ var g=el('g',{class:'ig-momento'},svg); el('circle',{cx:sx(m[0]),cy:238,r:4.5},g); return {a:m[0],g:g,t:m[1]}; });
+  stato.passo=function(k){ var anno=235+k*617, v=Math.round(valore(P,anno)); navi.forEach(function(n,j){ n.classList.toggle('spenta',j>=v); });
+    barra.setAttribute('width',(sx(anno)-40).toFixed(1)); num.textContent=Math.round(anno)+': '+v+' su 100';
+    var ultimo=null; segni.forEach(function(s){ var on=s.a<=anno; s.g.classList.toggle('acceso',on); if(on) ultimo=s; }); return ultimo?ultimo.a+' · '+ultimo.t:NAVI.sotto; };
+  stato.tutti=segni.map(function(s){ return [s.a,s.t]; });
+}
+
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, dura:26000, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
   moneta:{d:MONETA, disegna:disegnaMoneta, dura:20000, tappe:function(t){ return t.anno===284&&t.intermezzo || t.anno===274&&!t.intermezzo; }},
+  navi:{d:NAVI, disegna:disegnaNavi, dura:22000, tappe:function(t){ return t.anno===395&&t.intermezzo || t.anno===711&&!t.intermezzo; }},
   terre:{d:TERRE, disegna:disegnaTerre, dura:22000, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo) || t.anno===439&&!t.intermezzo; }} };
 
 /* ---------- la finestra ---------- */
