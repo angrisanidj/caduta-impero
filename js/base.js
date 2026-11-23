@@ -139,14 +139,25 @@ controlli.screenSpacePanning=false; controlli.panSpeed=1.1;
 controlli.mouseButtons={LEFT:THREE.MOUSE.PAN, MIDDLE:THREE.MOUSE.DOLLY, RIGHT:THREE.MOUSE.ROTATE};
 controlli.touches={ONE:THREE.TOUCH.PAN, TWO:THREE.TOUCH.DOLLY_ROTATE};
 controlli.addEventListener('change',function(){ var t=controlli.target, x=Math.max(-330,Math.min(330,t.x)), z=Math.max(-520,Math.min(260,t.z)); if(x!==t.x||z!==t.z){ camera.position.x+=x-t.x; camera.position.z+=z-t.z; t.x=x; t.z=z; } });
-controlli.autoRotate=true; controlli.autoRotateSpeed=.22;
-renderer.domElement.addEventListener('pointerdown',function(){ controlli.autoRotate=false; });
-/* La rotazione lenta dell'avvio è un dondolio di pochi gradi attorno alla vista d'insieme, non un giro: lasciata girare per qualche minuto (su un PC, senza toccare la scena)
-   portava la città di traverso e fuori centro. Quando l'angolo si allontana di più di nove gradi da quello della vista d'insieme, il verso si inverte. */
-var azPrima=0;
-RM.frame.push(function(){
-  if(!controlli.autoRotate) return;
-  var d=controlli.getAzimuthalAngle()-Math.atan2(-200,465); d=Math.atan2(Math.sin(d),Math.cos(d));
+var MENO_MOTO=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);      // ?moto=1 come nella carta, per le prove
+controlli.autoRotate=!MENO_MOTO; controlli.autoRotateSpeed=.22;
+/* La rotazione lenta è un dondolio di pochi gradi attorno a un angolo di riferimento, non un giro: lasciata girare per qualche minuto portava la città di traverso.
+   Quando l'angolo si allontana di più di nove gradi dal riferimento, il verso si inverte. All'avvio il riferimento è la vista d'insieme.
+   Si ferma al primo tocco, a ogni volo (un monumento, la regia di una tappa) e a ogni zoom; dal 23 novembre 2026 riparte da sola dopo cinque secondi di quiete
+   (nessun dito o tasto premuto, nessun volo in corso), attorno alla vista in cui ci si è fermati. L'utente: «Perché la città smette di muoversi circolarmente dopo che faccio zoom su un monumento?».
+   Non per chi ha chiesto meno animazioni, né durante il confronto «Prima e dopo» (RM.senzaGiro), dove l'inquadratura deve restare la stessa da un anno all'altro. */
+var azRif=Math.atan2(-200,465), azPrima=0, quiete=0, premuto=0;
+function fermaGiro(){ controlli.autoRotate=false; quiete=0; }
+renderer.domElement.addEventListener('pointerdown',function(){ fermaGiro(); premuto++; });
+window.addEventListener('pointerup',function(){ premuto=0; quiete=0; }); window.addEventListener('pointercancel',function(){ premuto=0; quiete=0; });
+renderer.domElement.addEventListener('wheel',function(){ fermaGiro(); },{passive:true});
+RM.frame.push(function(dt){
+  if(!controlli.autoRotate){
+    if(MENO_MOTO || premuto || volo || RM.senzaGiro){ quiete=0; return; }
+    quiete+=dt; if(quiete<5) return;
+    azRif=controlli.getAzimuthalAngle(); azPrima=0; controlli.autoRotateSpeed=Math.abs(controlli.autoRotateSpeed); controlli.autoRotate=true; return;
+  }
+  var d=controlli.getAzimuthalAngle()-azRif; d=Math.atan2(Math.sin(d),Math.cos(d));
   if(Math.abs(d)>.16 && Math.abs(d)>Math.abs(azPrima)) controlli.autoRotateSpeed*=-1;
   azPrima=d;
 });
@@ -156,13 +167,13 @@ RM.apertura=function(){ if(window.matchMedia && window.matchMedia('(prefers-redu
 /* volo di camera verso un punto: tiene la direzione da cui si sta guardando */
 var volo=null;
 RM.vola=function(x,z,dist,quota){
-  controlli.autoRotate=false;
+  fermaGiro();
   var t1=new THREE.Vector3(x,(quota==null?RM.h(x,z):quota)+1,z), dir=camera.position.clone().sub(controlli.target); dir.y=0;
   if(dir.lengthSq()<1) dir.set(-.4,0,1); dir.normalize();
   var p1=t1.clone().add(dir.multiplyScalar(dist*.82)); p1.y=t1.y+dist*.56;
   volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:t1,p1:p1};
 };
-RM.volaA=function(t,c){ controlli.autoRotate=false; volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(t[0],RM.h(t[0],t[1])+1,t[1]),p1:new THREE.Vector3(c[0],c[1],c[2])}; };   // verso un'inquadratura fissa
+RM.volaA=function(t,c){ fermaGiro(); volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(t[0],RM.h(t[0],t[1])+1,t[1]),p1:new THREE.Vector3(c[0],c[1],c[2])}; };   // verso un'inquadratura fissa
 /* La scena può scorrere dentro il suo riquadro, in pixel: quando una scheda o la linea del tempo ne coprono una parte, ciò che si guarda
    deve restare al centro di quel che si vede, non al centro del riquadro. x positivo sposta la scena a destra, y positivo in alto. */
 var spost={x:0,y:0,mx:0,my:0};
@@ -176,14 +187,14 @@ RM.frame.push(function(dt){
 });
 /* zoom a passi: ci si avvicina o ci si allontana dal punto che si sta guardando */
 RM.zoom=function(f){
-  controlli.autoRotate=false;
+  fermaGiro();
   var d=camera.position.clone().sub(controlli.target), L=Math.max(controlli.minDistance*1.3,Math.min(controlli.maxDistance,d.length()*f));
   volo={t:0,dur:.45,t0:controlli.target.clone(),p0:camera.position.clone(),t1:controlli.target.clone(),p1:controlli.target.clone().add(d.setLength(L))};
 };
 RM.inVistaInsieme=function(){ return Math.abs(camera.position.distanceTo(controlli.target)-567)<50 && Math.abs(camera.position.y-255)<60 && controlli.target.length()<25; };      // la rotazione lenta dell'avvio non conta: conta distanza, quota e punto guardato
 var INSIEME=new THREE.Vector3(-200,255,470);
 RM.apertura();
-RM.vistaInsieme=function(){ controlli.autoRotate=false; volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(0,0,5),p1:new THREE.Vector3(-200,255,470)}; };
+RM.vistaInsieme=function(){ fermaGiro(); volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(0,0,5),p1:new THREE.Vector3(-200,255,470)}; };
 renderer.domElement.addEventListener('pointerdown',function(){ volo=null; });
 renderer.domElement.addEventListener('wheel',function(){ volo=null; },{passive:true});
 RM.frame.push(function(dt){

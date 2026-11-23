@@ -14,7 +14,7 @@ barra.innerHTML='<div class="viste">'+VISTE.map(function(v,k){ return '<button t
 var cursore=$('confrontoAnno'), ora=$('confrontoOra'), tasti=[].slice.call(barra.querySelectorAll('.viste button[data-k]'));
 function guarda(k){ vista=k; RM.volaA(VISTE[k].t,VISTE[k].c); tasti.forEach(function(b,j){ b.setAttribute('aria-pressed',j===k?'true':'false'); }); }
 function accendi(si){
-  attivo=si; barra.hidden=!si; bottone.setAttribute('aria-pressed',si?'true':'false'); riquadro.classList.toggle('confronto-attivo',si);
+  attivo=si; RM.senzaGiro=si; barra.hidden=!si;      // nel confronto l'inquadratura resta ferma: il dondolio della città (js/base.js) non riparte bottone.setAttribute('aria-pressed',si?'true':'false'); riquadro.classList.toggle('confronto-attivo',si);
   if(si){
     PG.ferma();
     var pel=$('btnPellegrino'); if(pel&&pel.getAttribute('aria-pressed')==='true') pel.click();

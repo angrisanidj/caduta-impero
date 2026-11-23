@@ -299,3 +299,10 @@ else{                                   // apertura dalla fine: la città del 55
 })();
 window.RM_pagina={vai:vai, ferma:ferma, spie:SPIE, quando:function(f){ ascolto.push(f); }, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
 })();
+
+/* il piede a voci che si aprono: un collegamento a #fonti, #come o #licenze (il menu in testa, un indirizzo con l'ancora) apre la voce e ci porta */
+(function(){
+  function apri(){ var id=location.hash.slice(1), d=id&&document.getElementById(id); if(d && d.tagName==='DETAILS'){ d.open=true; setTimeout(function(){ d.scrollIntoView({block:'start'}); },30); } }
+  document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return; var d=document.getElementById(a.getAttribute('href').slice(1)); if(d && d.tagName==='DETAILS') d.open=true; });
+  window.addEventListener('hashchange',apri); apri();
+})();

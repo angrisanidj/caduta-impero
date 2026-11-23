@@ -671,3 +671,26 @@ body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.9
 .salta-giu[hidden]{display:none}
 @media (min-width:1001px){ .salta-giu{display:none} }
 @media print{ .salta-giu{display:none} }
+
+/* piede a voci che si aprono (23 novembre 2026, chiesto dall'utente: «mettila ad apertura in maniera carina»): Fonti, Come è fatta questa pagina, Licenze.
+   Ogni voce è un <details>: titolo in Cinzel dorato, una riga che dice che cosa c'è dentro, un segno + che diventa −. I collegamenti del menu (#fonti, #licenze) la aprono (js/pagina.js). */
+.piede .piede-voce{border-top:1px solid rgba(212,174,85,.28)}
+.piede .piede-voce:last-of-type{border-bottom:1px solid rgba(212,174,85,.28)}
+.piede .piede-voce summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:16px;padding:15px 2px 14px;-webkit-tap-highlight-color:transparent}
+.piede .piede-voce summary::-webkit-details-marker{display:none}
+.piede .piede-voce summary::after{content:"+";grid-column:2;grid-row:1 / span 2;align-self:center;width:30px;height:30px;border:1px solid rgba(212,174,85,.5);border-radius:50%;display:grid;place-items:center;
+  font:400 19px/1 var(--ui,sans-serif);color:var(--gold3);transition:transform .25s,background .2s}
+.piede .piede-voce[open] summary::after{content:"−";background:rgba(212,174,85,.14)}
+.piede .piede-voce summary:hover::after{background:rgba(212,174,85,.2)}
+.piede .piede-voce summary:focus-visible{outline:2px solid var(--gold2);outline-offset:3px;border-radius:4px}
+.piede .piede-titolo{font-family:var(--cap);font-weight:700;font-size:16px;letter-spacing:.06em;color:var(--gold3)}
+.piede .piede-sotto{grid-column:1;font-family:var(--ui,sans-serif);font-size:13px;color:#BFA98E;margin-top:3px}
+.piede .piede-corpo{padding:2px 2px 20px;display:grid;gap:12px;animation:piede-apri .28s ease}
+.piede .piede-corpo p{font-size:14.5px;line-height:1.65;color:#E6D6C0}
+.piede .piede-corpo .elenco{font-size:14.5px;color:#E6D6C0}
+.piede .piede-corpo b{color:var(--gold3);font-weight:600}
+.piede .piede-corpo .licenze{margin:0;padding:0;border:0;font-size:14px}
+.piede .versione{margin-top:16px}
+@keyframes piede-apri{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .piede .piede-corpo{animation:none} .piede .piede-voce summary::after{transition:none} }
+@media (max-width:700px){ .piede .piede-titolo{font-size:15px} .piede .piede-sotto{font-size:12.5px} .piede .piede-corpo p{font-size:14px} }
