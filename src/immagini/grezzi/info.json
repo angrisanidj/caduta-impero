@@ -1428,5 +1428,44 @@
   "descrizione": "Mosaic of Saint Cyprian of Carthage from Sant'Apollinare Nuovo in Ravenna",
   "data": "IV sec.date QS:P,+350-00-00T00:00:00Z/7",
   "restrizioni": ""
+ },
+ "Ludwig der Deutsche.jpg": {
+  "pagina": "https://commons.wikimedia.org/wiki/File:Ludwig_der_Deutsche.jpg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/2/28/Ludwig_der_Deutsche.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "larghezza": 379,
+  "altezza": 421,
+  "licenza": "Public domain",
+  "licenzaUrl": null,
+  "autore": "",
+  "credito": "",
+  "descrizione": "",
+  "data": "",
+  "restrizioni": ""
+ },
+ "Psautier Charles le Chauve 3v.jpg": {
+  "pagina": "https://commons.wikimedia.org/wiki/File:Psautier_Charles_le_Chauve_3v.jpg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/e/ee/Psautier_Charles_le_Chauve_3v.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "larghezza": 2387,
+  "altezza": 2936,
+  "licenza": "Public domain",
+  "licenzaUrl": null,
+  "autore": "École du Palais de Charles le Chauve.",
+  "credito": "Questa immagine è resa disponibile dalla biblioteca digitale Gallica con il numero identificativo di btv1b55001423q/f12",
+  "descrizione": "Psautier de Charles le Chauve, copié par Liuthard. Charles le Chauve trônant. Conservé dans son état originel, ce psautier allie l'élégance de la copie et le luxe des peintures à une reliure exceptionnelle. Le destinataire, Charles le Chauve, y figure assis sur un trône et tenant dans sa main un sceptre et un globe, symboles de sa fonction avec la légende Cum sedeat Karolus magno coronatus honore ",
+  "data": "prima del 869",
+  "restrizioni": ""
+ },
+ "Vandalen- Gelimer - Münzkabinett, Berlin - 5502968.jpg": {
+  "pagina": "https://commons.wikimedia.org/wiki/File:Vandalen-_Gelimer_-_M%C3%BCnzkabinett,_Berlin_-_5502968.jpg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Vandalen-_Gelimer_-_M%C3%BCnzkabinett%2C_Berlin_-_5502968.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "larghezza": 533,
+  "altezza": 279,
+  "licenza": "Public domain",
+  "licenzaUrl": null,
+  "autore": "Reinhard Saczewski",
+  "credito": "Onlinesammlung der Staatlichen Museen zu Berlin: 2364271",
+  "descrizione": "Vandalen: Gelimer",
+  "data": "",
+  "restrizioni": ""
  }
 }

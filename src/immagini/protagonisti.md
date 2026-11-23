@@ -8,11 +8,11 @@ Righe della tabella: 146 (persone distinte: 110).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 81 | 57 |
+| ritratto coevo | 83 | 59 |
 | ritratto posteriore | 21 | 18 |
 | di fantasia | 5 | 4 |
-| oggetto del tempo, senza volto | 22 | 16 |
-| nessuna immagine | 17 | 15 |
+| oggetto del tempo, senza volto | 23 | 17 |
+| nessuna immagine | 14 | 12 |
 
 ## Da decidere
 
@@ -239,7 +239,7 @@ Le scelte di principio:
 ### 534
 
 - **Belisario** ([Q174943](https://www.wikidata.org/wiki/Q174943)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa. [Meister von San Vitale in Ravenna 013.jpg](https://commons.wikimedia.org/wiki/File:Meister_von_San_Vitale_in_Ravenna_013.jpg) — 1576×1888, Public domain; «Immagine: Meister von San Vitale in Ravenna, pubblico dominio, da Wikimedia Commons». L'identificazione con Belisario della figura alla destra dell'imperatore è tradizionale ma discussa.
-- **Gelimero** (-) — *nessuna immagine*. Esistono monete d'argento col suo nome (silique), da cercare su Commons quando non limita le richieste (23 novembre 2026: rifiuti per troppo traffico).
+- **Gelimero** (-) — *ritratto coevo*: moneta da 50 denari di Gelimero, le due facce, Münzkabinett di Berlino. [Vandalen- Gelimer - Münzkabinett, Berlin - 5502968.jpg](https://commons.wikimedia.org/wiki/File:Vandalen-_Gelimer_-_M%C3%BCnzkabinett,_Berlin_-_5502968.jpg) — 533×279, Public domain; «Immagine: Reinhard Saczewski, pubblico dominio, da Wikimedia Commons». Scelta il 23 novembre 2026; immagine mandata dall'utente (Commons limitava gli scarichi): non riscaricare.
 - **Procopio** ([Q186153](https://www.wikidata.org/wiki/Q186153)) — *nessuna immagine*. Nessun ritratto noto e nessun manoscritto antico trovato su Commons.
 
 ### 537
@@ -346,8 +346,8 @@ Le scelte di principio:
 
 - **Lotario I** ([Q150735](https://www.wikidata.org/wiki/Q150735)) — *ritratto coevo*: miniatura dell'Evangeliario di Lotario (BnF, Lat. 266), Tours, 849-851. [Lothar I.jpg](https://commons.wikimedia.org/wiki/File:Lothar_I.jpg) — 1278×1975, Public domain; «Immagine: miniatore di Tours, pubblico dominio, da Wikimedia Commons».
   - in alternativa: medaglione del Salterio di Lotario (British Library, Add MS 37768), metà IX secolo [Medallion of Lothair, from the Lothaire Psalter.jpg](https://commons.wikimedia.org/wiki/File:Medallion_of_Lothair,_from_the_Lothaire_Psalter.jpg) — CC0, British Library
-- **Ludovico il Germanico** (-) — *nessuna immagine*. 
-- **Carlo il Calvo** (-) — *nessuna immagine*. 
+- **Ludovico il Germanico** (-) — *oggetto del tempo, senza volto*: sigillo di Ludovico il Germanico, con una testa all’antica al centro. [Ludwig der Deutsche.jpg](https://commons.wikimedia.org/wiki/File:Ludwig_der_Deutsche.jpg) — 379×421, Public domain; «Immagine: autore non indicato, pubblico dominio, da Wikimedia Commons». Immagine mandata dall'utente il 23 novembre 2026: non riscaricare. La testa è all'antica: come in altri sigilli carolingi è probabilmente una gemma romana riusata, non il volto del re.
+- **Carlo il Calvo** (-) — *ritratto coevo*: ritratto nel Salterio di Carlo il Calvo (Parigi, BnF, lat. 1152, fol. 3v), verso l’869. [Psautier Charles le Chauve 3v.jpg](https://commons.wikimedia.org/wiki/File:Psautier_Charles_le_Chauve_3v.jpg) — 2387×2936, Public domain; «Immagine: École du Palais de Charles le Chauve., pubblico dominio, da Wikimedia Commons». Ritratto fatto mentre il re era vivo; la scritta dice «CUM SEDEAT KAROLUS MAGNO CORONATUS HONORE». Immagine mandata dall'utente, ritaglio a mano: non riscaricare. Segnatura e data da verificare sulla scheda di Commons.
 
 ### 846
 
