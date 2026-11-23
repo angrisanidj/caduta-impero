@@ -82,6 +82,11 @@ C.prototype.colonne=function(x0,z0,x1,z1,quante,h,r,y,colore){
   var c=colore||P.marmo, ang=Math.atan2(-(z1-z0),x1-x0), ha=RM.piccolo&&r<.1?0:Math.min(.09,r*.7), hb=r>=.1?Math.min(.07,r*.5):0;      // sui telefoni le colonne piccole restano semplici fusti
   for(var i=0;i<quante;i++){
     var t=quante>1?i/(quante-1):.5, x=x0+(x1-x0)*t, z=z0+(z1-z0)*t, yy=y||0;
+    if(r>=.1 && !RM.piccolo){      /* le colonne grandi (templi, pronai) hanno una base a due tori sul plinto e un capitello che si allarga sotto l'abaco: prima erano un fusto fra due dadi (23 novembre 2026) */
+      this.cilindro(r,h-ha-hb,x,yy+hb,z,c,r*.86,12);
+      this.cilindro(r*.9,ha*.62,x,yy+h-ha,z,c,r*1.3,12).scatola(r*2.75,ha*.38,r*2.75,x,yy+h-ha*.38,z,c,ang);
+      this.scatola(r*2.7,hb*.4,r*2.7,x,yy,z,c,ang).cilindro(r*1.3,hb*.35,x,yy+hb*.4,z,c,r*1.22,12).cilindro(r*1.15,hb*.25,x,yy+hb*.75,z,c,r*1.05,12);
+      continue; }
     this.cilindro(r,h-ha-hb,x,yy+hb,z,c,r*.86,r>=.1?9:7); if(ha) this.scatola(r*2.5,ha,r*2.5,x,yy+h-ha,z,c,ang);      // fusto e capitello
     if(hb) this.scatola(r*2.5,hb,r*2.5,x,yy,z,c,ang);                                                      // base
   }

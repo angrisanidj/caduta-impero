@@ -706,7 +706,7 @@ var MONUMENTI={
   /* riuso */
   mulini:[[0,'assente'],[537,'uso']], casenerva:[[0,'assente'],[850,'uso']],
   /* luoghi del lavoro e dei commerci */
-  testaccio:[[0,'uso']], arcotito:[[0,'uso']], colosso:[[0,'uso'],[455,'assente']], metasudans:[[0,'uso'],[537,'chiuso']], emporio:[[0,'uso'],[430,'chiuso']], balbo:[[0,'uso'],[430,'chiuso'],[750,'cava']], antoniniano:[[0,'uso'],[537,'chiuso'],[776,'uso']]
+  testaccio:[[0,'uso']], arcotito:[[0,'uso']], colosso:[[0,'uso'],[455,'assente']], metasudans:[[0,'uso'],[537,'chiuso']], metasudansvasca:[[0,'assente'],[315,'uso'],[537,'chiuso']], emporio:[[0,'uso'],[430,'chiuso']], balbo:[[0,'uso'],[430,'chiuso'],[750,'cava']], antoniniano:[[0,'uso'],[537,'chiuso'],[776,'uso']]
 };
 
 /* Chiese minori attorno a cui si raccoglie l'abitato: [nome, latitudine, longitudine, anno in cui compare, tipo, anno in cui scompare (facoltativo)].

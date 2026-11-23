@@ -288,8 +288,34 @@ function tempietto(B,w,d,hp,hc,nf,x,z,ry,lati){
   });
 }
 /* arco a un fornice: largo w, profondo p, alto h; fornice largo f e alto hf (quadro: architrave piano); fronte verso +z */
+/* Un muro attraversato da fornici veri (23 novembre 2026: prima gli archi erano toppe scure dipinte su un blocco pieno, e da vicino non ci si passava sotto con lo sguardo).
+   Largo w, alto h, profondo p, la base a quota y; fornici: [[x del centro, larghezza, altezza, piatto]…], piatto = architrave dritto invece dell'arco. */
+function muroForato(B,w,h,p,fornici,col,y){
+  y=y||0; var N=8, P2=p/2, W2=w/2, ord=fornici.slice().sort(function(q,r){ return q[0]-r[0]; }), c=col||P.marmo;
+  function arco(f){ var a=f[1]/2, hs=f[3]?f[2]:f[2]-a, l=[], k; if(f[3]) return [[f[0]-a,y+hs],[f[0]+a,y+hs]]; for(k=0;k<=N;k++){ var t=Math.PI*(1-k/N); l.push([f[0]+a*Math.cos(t),y+hs+a*Math.sin(t)]); } return l; }
+  [1,-1].forEach(function(q){ var z=q*P2, xa=-W2;
+    ord.forEach(function(f){ var l=arco(f), k; B.quad([xa,y,z],[l[0][0],y,z],[l[0][0],y+h,z],[xa,y+h,z],c);
+      for(k=0;k<l.length-1;k++) B.quad([l[k][0],l[k][1],z],[l[k+1][0],l[k+1][1],z],[l[k+1][0],y+h,z],[l[k][0],y+h,z],c);
+      xa=l[l.length-1][0]; });
+    B.quad([xa,y,z],[W2,y,z],[W2,y+h,z],[xa,y+h,z],c); });
+  ord.forEach(function(f){ var l=arco(f), a=f[1]/2, k; [f[0]-a,f[0]+a].forEach(function(x,j){ var yy=l[j?l.length-1:0][1]; B.quad([x,y,P2],[x,y,-P2],[x,yy,-P2],[x,yy,P2],c); });      // i piedritti
+    for(k=0;k<l.length-1;k++) B.quad([l[k][0],l[k][1],P2],[l[k+1][0],l[k+1][1],P2],[l[k+1][0],l[k+1][1],-P2],[l[k][0],l[k][1],-P2],c); });                                      // l'intradosso
+  B.quad([-W2,y,P2],[-W2,y,-P2],[-W2,y+h,-P2],[-W2,y+h,P2],c).quad([W2,y,-P2],[W2,y,P2],[W2,y+h,P2],[W2,y+h,-P2],c).quad([-W2,y+h,P2],[W2,y+h,P2],[W2,y+h,-P2],[-W2,y+h,-P2],c);
+  return B;
+}
+/* una campata d'arcata lungo un muro curvo, fra due punti del profilo: i due piedritti, l'arco, l'intradosso profondo t verso l'interno */
+function campata(B,P0,P1,y0,y1,aw,ah,t,col){
+  var dx=P1[0]-P0[0], dz=P1[1]-P0[1], L=Math.hypot(dx,dz), ux=dx/L, uz=dz/L, mx=(P0[0]+P1[0])/2, mz=(P0[1]+P1[1])/2, m=Math.hypot(mx,mz)||1, nx=mx/m, nz=mz/m, a=aw/2, hs=ah-a, N=6, k, sl=L/2-a;
+  function pt(q,yy,d){ return [P0[0]+ux*q-nx*d,yy,P0[1]+uz*q-nz*d]; }
+  B.quad(pt(0,y0,0),pt(sl,y0,0),pt(sl,y1,0),pt(0,y1,0),col).quad(pt(L-sl,y0,0),pt(L,y0,0),pt(L,y1,0),pt(L-sl,y1,0),col);
+  B.quad(pt(sl,y0,0),pt(sl,y0,t),pt(sl,y0+hs,t),pt(sl,y0+hs,0),col).quad(pt(L-sl,y0,t),pt(L-sl,y0,0),pt(L-sl,y0+hs,0),pt(L-sl,y0+hs,t),col);
+  for(k=0;k<N;k++){ var t0=Math.PI*(1-k/N), t1=Math.PI*(1-(k+1)/N), q0=L/2+a*Math.cos(t0), q1=L/2+a*Math.cos(t1), h0=y0+hs+a*Math.sin(t0), h1=y0+hs+a*Math.sin(t1);
+    B.quad(pt(q0,h0,0),pt(q1,h1,0),pt(q1,y1,0),pt(q0,y1,0),col).quad(pt(q0,h0,0),pt(q0,h0,t),pt(q1,h1,t),pt(q1,h1,0),col); }
+}
+/* un disco in piedi (scudo, tondo a rilievo), la faccia verso +z locale */
+function disco(B,r,sp,x,y,z,ry,col){ return B.dentro(x,y,z,ry||0,function(B){ B.geo(new THREE.CylinderGeometry(r,r,sp,12).rotateX(Math.PI/2),col); }); }
 function arcoUno(B,w,p,h,f,hf,x,y,z,ry,col,quadro){
-  return B.dentro(x,y,z,ry||0,function(B){ B.scatola(w,h,p,0,0,0,col||P.marmo).vano(0,0,p/2+.01,1,0,f,hf,quadro).vano(0,0,-p/2-.01,-1,0,f,hf,quadro); });
+  return B.dentro(x,y,z,ry||0,function(B){ muroForato(B,w,h,p,[[0,f,hf,quadro]],col||P.marmo); });
 }
 /* Castra Praetoria: gli spigoli sono quelli delle mura del modello (js/roma-topo.js, da OpenStreetMap): nord-ovest, nord-est, sud-est; sud-ovest ricavato; SU è dove la cinta Aureliana
    lascia il lato sud. muri = lato ovest e metà ovest del lato sud (quelli che Aureliano non usa); camere = la fila di camere lungo l'interno dei quattro lati */
@@ -307,20 +333,42 @@ var VARIANO={x:277.7, z:25.3, ry:1.065};
 /* ---------- elenco ---------- */
 var M=[
  {id:'colosseo', nome:'Colosseo', x:57,z:26, ry:-.3, zone:[[0,0,14.5]], et:1, fa:function(B){
-    var n=80, e=RM.ellisse(9.4,7.8,n), i=RM.ellisse(8.5,6.9,n), m1=RM.ellisse(7.3,5.7,n), m2=RM.ellisse(6.1,4.5,n), po=RM.ellisse(4.9,3.3,n), ar=RM.ellisse(4.35,2.75,n), ce=ar.map(function(){ return [0,0]; });
-    B.striscia(e,0,e,4.85,P.travertino).striscia(e,4.85,i,4.85,P.travertino).striscia(i,4.85,i,4,P.travertino)
-     .striscia(i,4,m1,3.1,P.tufo).striscia(m1,3.1,m1,2.8,P.travertino).striscia(m1,2.8,m2,1.9,P.tufo).striscia(m2,1.9,m2,1.6,P.travertino).striscia(m2,1.6,po,.9,P.tufo)
-     .striscia(po,.9,po,.25,P.marmo).striscia(po,.25,ar,.25,P.marmo).striscia(ar,.25,ce,.25,P.sabbia);
-    B.fornici(e,.22,.9,.5).fornici(e,1.45,.88,.5).fornici(e,2.65,.88,.5).fornici(e,4.02,.34,.26,2,true,true);
-    e.forEach(function(p){ var q=1.008; [[.12,1.16],[1.4,1.08],[2.6,1.1],[3.82,1.03]].forEach(function(l,k){ B.scatola(k<3?.11:.09,l[1],k<3?.11:.07,p[0]*q,l[0],p[1]*q,P.travertino,Math.atan2(p[0],p[1])); }); });      // semicolonne dei tre ordini e lesene dell'attico, fra un fornice e l'altro
-    [1.28,2.48,3.7].forEach(function(y){ var c=RM.ellisse(9.5,7.9,n); B.striscia(c,y,c,y+.12,P.marmo); });      // cornici
-    /* secondo anello: il muro ad arcate che oggi fa da facciata sul lato sud, dove l'anello esterno è caduto. Arriva a due ordini, circa due terzi dell'altezza del muro esterno;
-       dietro, al posto della parte alta della cavea, resta un ripiano di rovine. Finché l'esterno è in piedi tutto questo resta nascosto */
+    /* Rifatto il 23 novembre 2026 sulla voce Amphitheatrum Flavium di Platner e Ashby. Assi di 188 e 156 m, facciata alta 48,50; «eighty arches in the lower arcade», alti 7,05 m
+       e larghi 4,20, poi 6,45 e 6,40 ai due ordini di sopra; semicolonne doriche, ioniche e corinzie (qui uguali: cambia solo il capitello, che a questa scala non si vede);
+       l'attico con le lesene, una finestra «between every second pair of pilasters», gli scudi di bronzo (clipea) negli altri riquadri e tre mensole per riquadro con i fori per le
+       antenne del velario; «in each of the second and third arcades was a statue». Dentro: arena di 86 x 54 m, il podio «about 4 metres above the arena», il maenianum primum
+       («about twenty rows»), il secundum («about sixteen»), in cima un colonnato corinzio e il maenianum summum in ligneis, con i sedili di legno. Le arcate ora sono aperte: dietro
+       c'è l'ambulacro, con il secondo anello in fondo. Le file dei sedili sono la metà di quelle vere; quote dei piani, altezza del colonnato e forma del suo tetto sono indicative. */
+    var n=80, nc=40, ricco=!RM.piccolo, e=RM.ellisse(9.4,7.8,n), i=RM.ellisse(8.5,6.9,n), ce, k, j, PIANI=[[.06,1.28,.705],[1.4,2.48,.645],[2.6,3.7,.64]];
+    function an(rx,quanti){ return RM.ellisse(rx,rx-1.6,quanti||nc); }
+    /* facciata: tre ordini di arcate aperte, cornici, attico */
+    for(k=0;k<n;k++) PIANI.forEach(function(q){ campata(B,e[k],e[(k+1)%n],q[0],q[1],.42,q[2],.24,P.travertino); });
+    [1.28,2.48,3.7].forEach(function(y){ var c=RM.ellisse(9.5,7.9,n); B.striscia(c,y,c,y+.12,P.marmo).striscia(c,y+.12,e,y+.12,P.marmo).striscia(e,y,c,y,P.marmo); });      // cornici, con il loro aggetto
+    B.striscia(e,3.82,e,4.85,P.travertino).striscia(e,4.85,i,4.85,P.travertino).striscia(i,4.85,i,3.75,P.travertino).fornici(e,4.02,.34,.26,2,true,true);                     // l'attico e le sue finestre, una ogni due riquadri
+    { var c2=RM.ellisse(9.52,7.92,n); B.striscia(c2,4.78,c2,4.87,P.marmo).striscia(c2,4.87,e,4.87,P.marmo); }                                                                // il cornicione
+    e.forEach(function(p,q){ var ang=Math.atan2(p[0],p[1]);
+      PIANI.forEach(function(l){ B.dentro(p[0]*1.004,l[0],p[1]*1.004,ang,function(B){ B.geo(new THREE.CylinderGeometry(.05,.056,l[1]-l[0]-.1,5,1,true,-Math.PI/2,Math.PI).translate(0,(l[1]-l[0]-.1)/2,0),P.travertino).scatola(.15,.1,.09,0,l[1]-l[0]-.1,.02,P.travertino); }); });      // semicolonne
+      B.scatola(.09,1.03,.07,p[0]*1.008,3.82,p[1]*1.008,P.travertino,ang);                                                                                                  // lesene dell'attico
+      var d=e[(q+1)%n], mx=(p[0]+d[0])/2, mz=(p[1]+d[1])/2, am=Math.atan2(mx,mz);
+      if(q%2) disco(B,.12,.03,mx*1.004,4.2,mz*1.004,am,P.bronzo);                                                                                                           // gli scudi di bronzo, dove non c'è la finestra
+      [1.4,2.6].forEach(function(y){ B.scatola(.07,.2,.05,mx*.985,y,mz*.985,P.marmo,am).scatola(.045,.05,.045,mx*.985,y+.2,mz*.985,P.marmo,am); });                        // una statua in ogni arco del secondo e del terzo ordine
+      (ricco?[.25,.5,.75]:[.5]).forEach(function(f){ var x=p[0]+(d[0]-p[0])*f, z=p[1]+(d[1]-p[1])*f;
+        if(ricco) B.scatola(.05,.08,.07,x*1.006,4.5,z*1.006,P.travertino,am); B.scatola(.035,.85,.035,x*.999,4.58,z*.999,P.tronco,am); }); });                              // le mensole e le antenne del velario: tre per riquadro, duecentoquaranta in tutto
+    /* l'ambulacro dietro le arcate: i piani, e il secondo anello, che oggi fa da facciata sul lato sud dove l'anello esterno è caduto */
     var w=RM.ellisse(8.7,7.2,n), wc=RM.ellisse(8.74,7.24,n);
-    B.striscia(w,0,w,3,P.travertino).fornici(w,.22,.9,.5).fornici(w,1.45,.88,.5).striscia(w,3,m1,3.08,P.tufo);
+    [1.3,2.5,3.72].forEach(function(y){ B.striscia(e,y,w,y,P.travertino); });
+    B.striscia(w,0,w,3.72,P.travertino).fornici(w,.22,.9,.5).fornici(w,1.45,.88,.5);
     [1.28,2.48].forEach(function(y){ B.striscia(wc,y,wc,y+.1,P.marmo); });
-    /* i pali del velario: duecentoquaranta nella realtà, infilati nelle mensole dell'attico; qui uno ogni tre */
-    e.forEach(function(p){ B.scatola(.05,.95,.05,p[0]*.997,4.45,p[1]*.997,P.tronco); });
+    /* la cavea, a file di sedili */
+    var arena=an(4.3), podio=an(4.62), ce=arena.map(function(){ return [0,0]; });
+    B.striscia(arena,.12,ce,.12,P.sabbia).striscia(arena,.12,arena,.52,P.marmo).striscia(arena,.52,podio,.52,P.marmo);                                                        // arena, e il podio a quattro metri
+    function gradinata(r0,r1,y0,y1,file,col){ for(j=0;j<file;j++){ var ra=r0+(r1-r0)*j/file, rb=r0+(r1-r0)*(j+1)/file, ya=y0+(y1-y0)*j/file, yb=y0+(y1-y0)*(j+1)/file; B.striscia(an(ra),ya,an(ra),yb,col).striscia(an(ra),yb,an(rb),yb,col); } }
+    gradinata(4.62,6.1,.52,1.75,10,P.marmo);                                                                                                                                 // maenianum primum
+    B.striscia(an(6.1),1.75,an(6.1),2.05,P.travertino); gradinata(6.1,7.5,2.05,3.35,8,P.travertino);                                                                         // il muro di cintura e il maenianum secundum
+    B.striscia(an(7.5),3.35,an(7.5),3.75,P.travertino).striscia(an(7.5),3.75,i.filter(function(q,z){ return z%2===0; }),3.75,P.travertino);                                   // il muro e il ripiano del colonnato
+    gradinata(7.75,8.4,3.78,4.2,3,P.tronco);                                                                                                                                 // maenianum summum in ligneis: i sedili di legno
+    RM.ellisse(7.62,6.02,n).forEach(function(p){ B.cilindro(.045,.82,p[0],3.75,p[1],P.granito,.04,5); });                                                                     // il colonnato in cima
+    B.striscia(RM.ellisse(7.56,5.96,n),4.57,i,4.8,P.coppi).striscia(RM.ellisse(7.56,5.96,n),4.5,RM.ellisse(7.56,5.96,n),4.57,P.travertino);                                   // il suo tetto (di tegole: ipotesi)
     B.scatola(.7,.5,.7,-11.7,0,-4.65,P.marmo);                                                                   // il basamento del Colosso: «7 metres square, of brick-faced concrete, and was originally covered with marble» (Platner e Ashby, Colossus Neronis); resta fino al 1936
  }},
  /* Il Colosso: statua di bronzo di circa 35 m, sul basamento reale (OpenStreetMap, way 709011412). La figura è indicativa: stante, corona di raggi, timone nella destra e globo
@@ -392,8 +440,20 @@ var M=[
  /* Meta Sudans: fontana conica flavia, con la vasca di 21 m rifatta nel IV secolo. Demolita nel 1936; la posizione è quella delle coordinate correnti (41°53'24" N, 12°29'27" E),
     a nord dell'arco di Costantino: vale entro una quindicina di metri. Altezza del cono (circa 17 m) dalle ricostruzioni correnti. */
  {id:'metasudans', nome:'Meta Sudans', x:45.6,z:27.8, ry:0, come:'colosseo', fa:function(B){
-    B.cilindro(1.05,.14,0,0,0,P.marmo,1.05,24).cilindro(.95,.03,0,.13,0,P.acqua,.95,24);
-    B.cilindro(.37,.36,0,.12,0,P.marmo,.34,14).cilindro(.31,1.2,0,.48,0,P.marmo,.07,14).geo(new THREE.SphereGeometry(.09,8,6).translate(0,1.74,0),P.marmo);
+    /* Rifatta il 23 novembre 2026 (Platner e Ashby, Meta Sudans): «in shape it resembled a goal in the circus (meta) and sudans described the appearance of the jets of water»;
+       il nucleo conico ha 5 m di diametro alla base; «the whole structure was originally covered with marble»; attribuita a Domiziano. La grande vasca di 21 m è «probably of the
+       time of Constantine»: qui compare dal 315, con l'arco (metasudansvasca); prima c'è una vasca più piccola, di misura indicativa. Zoccolo, cornice a metà, pigna in cima e
+       rivoli sono come sulle monete e nelle ricostruzioni correnti: indicativi. */
+    B.cilindro(.66,.16,0,0,0,P.marmo,.66,24).cilindro(.58,.03,0,.15,0,P.acqua,.58,24);                                                         // la vasca di prima
+    B.cilindro(.4,.12,0,.12,0,P.marmo,.4,20).cilindro(.36,.34,0,.24,0,P.marmo,.34,18).cilindro(.38,.05,0,.58,0,P.marmo,.38,18);                // lo zoccolo e la sua cornice
+    B.geo(new THREE.LatheGeometry([[.31,0],[.295,.25],[.262,.5],[.21,.75],[.14,.98],[.085,1.12],[.07,1.16]].map(function(q){ return new THREE.Vector2(q[0],q[1]); }),18).translate(0,.63,0),P.marmo);      // il cono
+    B.cilindro(.115,.045,0,1.2,0,P.marmo,.115,12).geo(new THREE.SphereGeometry(.085,10,8).scale(1,1.25,1).translate(0,1.9,0),P.marmo).cilindro(.05,.1,0,1.79,0,P.marmo,.07,8);      // una cornice a metà, la pigna in cima
+    for(var r=0;r<10;r++){ var a=r*.6283+.2, c=Math.cos(a), d=Math.sin(a);                                                                      // l'acqua che scende lungo il cono
+      B.quad([c*.075,1.78,d*.075],[c*.075-d*.012,1.78,d*.075+c*.012],[c*.318-d*.03,.64,d*.318+c*.03],[c*.318,.64,d*.318],P.acqua); }
+ }},
+ {id:'metasudansvasca', x:45.6,z:27.8, ry:0, come:'colosseo', fa:function(B){                                                                 // la vasca di 21 m, dal 315
+    var e1=RM.ellisse(1.05,1.05,28), e2=RM.ellisse(.97,.97,28), e3=RM.ellisse(.67,.67,28);
+    B.striscia(e1,0,e1,.2,P.marmo).striscia(e1,.2,e2,.2,P.marmo).striscia(e2,.2,e2,.1,P.marmo).striscia(e2,.17,e3,.17,P.acqua);
  }},
  {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], et:1, fa:function(B){
     circo(B,62,14,2.5,true);
@@ -443,8 +503,8 @@ var M=[
     inForo(B,11.6,3.7,0,function(B){ B.tempio(2.1,3.4,1.7,0,0,0,{fronte:6}); });                                                  // Antonino e Faustina
     inForo(B,-14.5,-5.2,PI/2,function(B){ B.scatola(7.4,1.1,2.4,0,0,0,P.tufo); arcato(B,7.2,1.9,2.2,0,1.1,0,P.tufo,2,11); });      // Tabularium: l'alto basamento di tufo e, sopra, la galleria ad arcate
     inForo(B,-4.6,-3.7,0,function(B){                                                                                             // arco di Settimio Severo: tre fornici, colonne su piedistalli, attico
-      B.scatola(2.3,1.45,1.1,0,0,0,P.marmo).scatola(2.42,.13,1.22,0,1.45,0,P.marmo).scatola(2.3,.52,1.1,0,1.58,0,P.marmo);
-      [1,-1].forEach(function(q){ B.vano(0,0,q*.575,1,0,.68,1.2).vano(-.78,0,q*.575,1,0,.34,.76).vano(.78,0,q*.575,1,0,.34,.76); B.colonne(-1.06,q*.66,1.06,q*.66,4,1.2,.06,.25); [-1.06,-.353,.353,1.06].forEach(function(x){ B.scatola(.2,.25,.2,x,0,q*.66,P.marmo); }); });
+      muroForato(B,2.3,1.45,1.1,[[0,.68,1.2],[-.78,.34,.76],[.78,.34,.76]],P.marmo); B.scatola(2.42,.13,1.22,0,1.45,0,P.marmo).scatola(2.3,.52,1.1,0,1.58,0,P.marmo);      // i fornici sono aperti (23 novembre 2026)
+      [1,-1].forEach(function(q){ B.colonne(-1.06,q*.66,1.06,q*.66,4,1.2,.06,.25); [-1.06,-.353,.353,1.06].forEach(function(x){ B.scatola(.2,.25,.2,x,0,q*.66,P.marmo); }); });
     });
     inForo(B,0,-13.2,IMP,function(B){ portico(B,7,15,0,0,0,1.1); B.tempio(2.6,3.6,1.7,0,-5.2,0,{fronte:8}); });                   // foro di Cesare, Venere Genitrice a nord-ovest
     inForo(B,11.2,-19.5,IMP,function(B){                                                                                          // foro di Augusto: Marte Ultore contro il muro tagliafuoco verso la Suburra, le due esedre ai lati
@@ -600,8 +660,12 @@ var M=[
  /* L'arco sta a nove metri dal centro del recinto di Venere e Roma, dentro la sua terrazza: con una terrazza propria, più bassa, restava sepolto. Ora poggia sullo stesso piano del tempio,
     che è il colmo della via Sacra fra il Foro e la valle del Colosseo; per questo la voce sta dopo quella del tempio. */
  {id:'arcotito', nome:'Arco di Tito', x:27.2,z:20.15, ry:1.14, come:'venere', fa:function(B){                                     // un solo fornice, a cavallo della via Sacra; posizione e orientamento dal contorno su OpenStreetMap (way 23913953): il fornice guarda a ovest-nord-ovest verso il Foro e a est-sud-est verso il Colosseo
-    B.scatola(1.35,1,.5,0,0,0,P.marmo).scatola(1.45,.1,.6,0,1,0,P.marmo).scatola(1.35,.44,.5,0,1.1,0,P.marmo);
-    [1,-1].forEach(function(q){ B.vano(0,0,q*.275,1,0,.54,.84).colonne(-.58,q*.3,.58,q*.3,2,.8,.05,.2).colonne(-.38,q*.3,.38,q*.3,2,.8,.05,.2); });
+    /* «13.50 metres wide, 15.40 high, and 4.75 deep. The archway is 8.30 metres high and 5.36 wide»; colonne scanalate su piedistalli; «an attic 4.40 metres in height, on which is
+       the inscription» (Platner e Ashby, Arcus Titi). Il fornice ora è aperto (23 novembre 2026). Che cosa stesse in cima la voce non lo dice: niente. */
+    muroForato(B,1.35,1,.475,[[0,.536,.83]],P.marmo);
+    B.scatola(1.45,.1,.58,0,1,0,P.marmo).scatola(1.35,.44,.475,0,1.1,0,P.marmo);
+    [1,-1].forEach(function(q){ [-.58,-.38,.38,.58].forEach(function(x){ B.scatola(.13,.2,.1,x,0,q*.27,P.marmo); }); B.colonne(-.58,q*.27,.58,q*.27,2,.8,.05,.2).colonne(-.38,q*.27,.38,q*.27,2,.8,.05,.2);
+      B.scatola(.7,.28,.02,0,1.18,q*.24,P.travertino); });                                                                                        // i piedistalli, le colonne, la lastra dell'iscrizione
  }},
  {id:'adriano', nome:'Mausoleo di Adriano', x:-157,z:-118, ry:.1, zone:[[0,0,10]], et:1, fa:function(B){
     /* basamento quadrato di circa 84 m di lato e 10 di altezza, tamburo di 64 m di diametro e 21 di altezza, sopra un giardino (Platner) */
@@ -699,12 +763,18 @@ var M=[
     portico(B,5.5,7.5,0,0,11.75,1.2);
  }},
  {id:'arcocostantino', nome:'Arco di Costantino', x:44.5,z:30.4, ry:-.3, zone:[[0,0,3]], fa:function(B){
-    B.scatola(2.6,1.5,.75,0,0,0,P.marmo).scatola(2.72,.14,.87,0,1.5,0,P.marmo).scatola(2.6,.5,.75,0,1.64,0,P.marmo);          // fornici, cornice, attico
-    B.aperture(-.33,.38,.33,.38,1,0,1.15,.62).aperture(-1.05,.38,-.55,.38,1,0,.72,.34).aperture(.55,.38,1.05,.38,1,0,.72,.34);
-    B.aperture(.33,-.38,-.33,-.38,1,0,1.15,.62).aperture(-.55,-.38,-1.05,-.38,1,0,.72,.34).aperture(1.05,-.38,.55,-.38,1,0,.72,.34);
-    B.colonne(-1.2,.47,1.2,.47,4,1.3,.07,.1,P.sabbia).colonne(-1.2,-.47,1.2,-.47,4,1.3,.07,.1,P.sabbia);                    // colonne di giallo antico
-    /* «The eight statues of Dacians in pavonazzetto … standing on the cornice in front of the attic, each above one of the giallo antico columns» (Platner e Ashby, Arcus Constantini) */
-    [-1.2,-.4,.4,1.2].forEach(function(x){ [-1,1].forEach(function(q){ B.scatola(.2,.14,.14,x,1.5,q*.48,P.marmo).scatola(.12,.32,.1,x,1.64,q*.49,P.marmo); }); });
+    /* Rifatto il 23 novembre 2026 (Platner e Ashby, Arcus Constantini): «21 metres high, 25.70 wide, and 7.40 deep; the central archway is 11.50 high and 6.50 wide, and the two
+       lateral arches are 7.40 metres high and 3.36 wide»; «eight fluted Corinthian columns of giallo antico» su piedistalli; «eight statues of Dacians in pavonazzetto… standing on
+       the cornice in front of the attic, each above one of the giallo antico columns»; nell'attico l'iscrizione e otto rilievi rettangolari; sopra i fornici laterali, quattro tondi
+       per facciata. I fornici ora sono aperti. Dei rilievi si vede solo dove stanno; se in cima ci fosse una quadriga la voce non lo dice: non c'è. */
+    muroForato(B,2.57,1.5,.74,[[0,.65,1.15],[-.8,.336,.74],[.8,.336,.74]],P.marmo);
+    B.scatola(2.69,.14,.86,0,1.5,0,P.marmo).scatola(2.57,.46,.74,0,1.64,0,P.marmo).scatola(2.63,.05,.8,0,2.08,0,P.marmo);                          // cornice, attico, coronamento
+    [1,-1].forEach(function(q){ var z=q*.375, ry=q>0?0:Math.PI;
+      [-1.2,-.4,.4,1.2].forEach(function(x){ B.scatola(.2,.4,.2,x,0,q*.47,P.marmo).colonne(x,q*.47,x,q*.47,1,.98,.058,.4,P.sabbia).scatola(.22,.14,.22,x,1.5,q*.47,P.marmo);      // piedistallo, colonna di giallo antico, il suo tratto di trabeazione
+        uomo(B,x,1.64,q*.49,1.55,P.marmo,ry); });                                                                                                  // i Daci
+      B.scatola(.68,.36,.02,0,1.69,z,P.travertino); [-.98,-.62,.62,.98].forEach(function(x){ B.scatola(.3,.36,.02,x,1.69,z,P.travertino); });    // l'iscrizione e i rilievi dell'attico
+      [-.9,-.7,.7,.9].forEach(function(x){ disco(B,.085,.02,x,.98,z,ry,P.travertino); });                                                         // i tondi
+      B.scatola(.5,.1,.02,-.8,1.16,z,P.travertino).scatola(.5,.1,.02,.8,1.16,z,P.travertino); });                                                 // il fregio basso sopra i fornici laterali
  }},
  {id:'termecostantino', nome:'Terme di Costantino', x:21.5,z:-65.9, ry:-.2, sc:.45, zone:[[0,0,9]], fa:function(B){      // senza peribolo: il corpo occupa tutto lo spazio fra le strade, davanti si apre un'area chiusa a nord da una linea curva (Platner). Misure schematiche
     terme(B,33,32,{recinto:false,pc:14,zc:2});
@@ -1185,7 +1255,7 @@ RM.rovina=function(id,anno){
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
-var SENZA_CANTIERE={santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
+var SENZA_CANTIERE={metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
 function ponteggio(o,t){
   if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
   if(!o.pont){
