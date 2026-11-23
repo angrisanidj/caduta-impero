@@ -435,8 +435,10 @@ var M=[
     B.colonne(-1,3.75,1,3.75,4,1.5,.09,0).scatola(2.6,.14,.8,0,1.5,3.7,P.marmo);                                  // il portico d'ingresso sul fianco sud
     B.cilindro(1,2.4,0,0,-3.3,P.mattone,null,16).cupola(1,0,2.4,-3.3,P.intonaco,.6);                               // l'abside nord, la sala del tribunale
  }},
- {id:'venere', nome:'Tempio di Venere e Roma', x:36,z:18.6, ry:-.3, zone:[[0,0,9.5]], fa:function(B){                            // tempio di Venere e Roma
-    /* Podio di 145 x 100 m rivestito di travertino; tempio decastilo e pseudodiptero, con colonne di 1,8 m di diametro e due celle schiena contro schiena, ciascuna con quattro colonne fra le ante;
+ {id:'venere', nome:'Tempio di Venere e Roma', x:36.3,z:17.8, ry:-.42, zone:[[0,0,9.5]], fa:function(B){                            // tempio di Venere e Roma
+    /* Posizione e orientamento dal contorno della piattaforma su OpenStreetMap (relazione 1841091, 23 novembre 2026): i lati lunghi corrono a circa 24° a sud dell'est, lungo la via Sacra,
+       che passa libera fra il podio e il Palatino. Prima era girato di 7° di meno e copriva la strada a est dell'Arco di Tito.
+       Podio di 145 x 100 m rivestito di travertino; tempio decastilo e pseudodiptero, con colonne di 1,8 m di diametro e due celle schiena contro schiena, ciascuna con quattro colonne fra le ante;
        sui lati lunghi del recinto, portici di colonne di granito grigio (Platner e Ashby). La cella di Roma guarda il Foro (-x), quella di Venere il Colosseo (+x).
        Non lette: il numero delle colonne sui fianchi (qui 22) e le altezze. Le tegole erano di bronzo dorato: le porta via papa Onorio I verso il 630. */
     B.scatola(14.5,.7,10,0,0,0,P.travertino);
@@ -451,7 +453,7 @@ var M=[
  }},
  /* L'arco sta a nove metri dal centro del recinto di Venere e Roma, dentro la sua terrazza: con una terrazza propria, più bassa, restava sepolto. Ora poggia sullo stesso piano del tempio,
     che è il colmo della via Sacra fra il Foro e la valle del Colosseo; per questo la voce sta dopo quella del tempio. */
- {id:'arcotito', nome:'Arco di Tito', x:27.2,z:20.3, ry:1.38, come:'venere', fa:function(B){                                     // un solo fornice, a cavallo della via Sacra; posizione reale (OpenStreetMap)
+ {id:'arcotito', nome:'Arco di Tito', x:27.2,z:20.15, ry:1.14, come:'venere', fa:function(B){                                     // un solo fornice, a cavallo della via Sacra; posizione e orientamento dal contorno su OpenStreetMap (way 23913953): il fornice guarda a ovest-nord-ovest verso il Foro e a est-sud-est verso il Colosseo
     B.scatola(1.35,1,.5,0,0,0,P.marmo).scatola(1.45,.1,.6,0,1,0,P.marmo).scatola(1.35,.44,.5,0,1.1,0,P.marmo);
     [1,-1].forEach(function(q){ B.vano(0,0,q*.275,1,0,.54,.84).colonne(-.58,q*.3,.58,q*.3,2,.8,.05,.2).colonne(-.38,q*.3,.38,q*.3,2,.8,.05,.2); });
  }},

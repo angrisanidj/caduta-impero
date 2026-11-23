@@ -79,11 +79,13 @@ RM.hGrezza = function(x,z){
   return y*(1-w)-1.2*w;
 };
 /* terreno con le terrazze: sotto ogni grande monumento il suolo è spianato alla quota del suo centro (zone con h) */
+/* Dove due terrazze si sfiorano le loro quote si fondono, pesate con l'ottava potenza della vicinanza: prima vinceva la più vicina e fra la terrazza di Venere e Roma e quella
+   della basilica di Massenzio il suolo saltava di 20 m di colpo, e la via Sacra restava sospesa (23 novembre 2026). Nel nucleo di una terrazza l'altra pesa meno dell'1%. */
 RM.h = function(x,z){
-  var y=RM.hGrezza(x,z), i, q, d, w, meglio=0, hb=0;
+  var y=RM.hGrezza(x,z), i, q, d, w, p, meglio=0, sp=0, sh=0;
   for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(q.h==null) continue; d=Math.abs(x-q.x)+Math.abs(z-q.z); if(d>(q.r+7)*1.5) continue;
-    d=Math.hypot(x-q.x,z-q.z); if(d<q.r+7){ w=1-RM.sfuma(q.r,q.r+7,d); if(w>meglio){ meglio=w; hb=q.h; } } }
-  return meglio?y*(1-meglio)+hb*meglio:y;
+    d=Math.hypot(x-q.x,z-q.z); if(d<q.r+7){ w=1-RM.sfuma(q.r,q.r+7,d); if(w<=0) continue; if(w>meglio) meglio=w; p=w*w; p*=p; p*=p; sp+=p; sh+=p*q.h; } }
+  return meglio?y*(1-meglio)+sh/sp*meglio:y;
 };
 /* quota letta da una griglia riempita al bisogno: per ciò che si muove a ogni fotogramma (passanti, fumo), dove RM.h costerebbe troppo */
 var GR=2, GX0=-360, GZ0=-430, GNX=361, GNZ=446, griglia=null;
@@ -261,7 +263,7 @@ function nucleo(x,z){ var t=0; RM.NUCLEI.forEach(function(n){ var d=Math.hypot(x
 function posaSuolo(){
   var S=piccolo?220:300, geo=new THREE.PlaneGeometry(2,2,S,S); geo.rotateX(-Math.PI/2);
   var pos=geo.attributes.position, uv=geo.attributes.uv, col=new Float32Array(pos.count*3), urb=new Float32Array(pos.count*2), c=new THREE.Color(), i, x, z;
-  var curva=function(t){ var a=Math.abs(t); return (t<0?-1:1)*(.3*a+.7*a*a*a)*3400; };
+  var curva=function(t){ var a=Math.abs(t); return (t<0?-1:1)*(.12*a+.88*a*a*a)*3400; };      // più fitta al centro: un vertice ogni 27 m sul Foro (prima 68), come prima ai margini della città (23 novembre 2026)
   for(i=0;i<pos.count;i++){
     x=curva(pos.getX(i)); z=curva(pos.getZ(i));
     pos.setXYZ(i,x,RM.h(x,z),z); uv.setXY(i,x/42,z/42);
@@ -297,15 +299,24 @@ function posaSuolo(){
   };
   var suolo=new THREE.Mesh(geo,matSuolo);
   suolo.receiveShadow=true; scene.add(suolo); RM.suolo=suolo;
+  /* la quota del terreno come è disegnato (triangolo per triangolo): fra un vertice e l'altro della maglia RM.h, più fine, può uscirne di qualche metro sui bordi delle terrazze.
+     Le strade la seguono, così non galleggiano e non affondano (23 novembre 2026) */
+  var N=S+1, inv=function(v){ var s=v<0?-1:1, a=Math.min(1,Math.abs(v)/3400), t=a; for(var k=0;k<8;k++) t-=(.12*t+.88*t*t*t-a)/(.12+2.64*t*t); return s*t; };
+  RM.hSuolo=function(x,z){
+    var tx=(inv(x)+1)*S/2, tz=(inv(z)+1)*S/2, ix=Math.max(0,Math.min(S-1,Math.floor(tx))), iz=Math.max(0,Math.min(S-1,Math.floor(tz)));
+    var x0=curva(ix*2/S-1), x1=curva((ix+1)*2/S-1), z0=curva(iz*2/S-1), z1=curva((iz+1)*2/S-1), fx=(x-x0)/(x1-x0), fz=(z-z0)/(z1-z0);
+    var a=pos.getY(iz*N+ix), b=pos.getY((iz+1)*N+ix), c=pos.getY((iz+1)*N+ix+1), d=pos.getY(iz*N+ix+1);      // i due triangoli della cella: (a,b,d) e (b,c,d), come in PlaneGeometry
+    return fx+fz<=1 ? a+(d-a)*fx+(b-a)*fz : c+(b-c)*(1-fx)+(d-c)*(1-fz);
+  };
 }
 
 /* nastro steso sul terreno lungo una linea */
 RM.nastro=function(linea,larga,materiale,alza,quotaFissa){
   var punti=linea.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); });
-  var curva=new THREE.CatmullRomCurve3(punti,false,'catmullrom',.35), n=Math.max(20,Math.round(curva.getLength()/3)), v=[], uv=[], idx=[], k, p, t, nx, nz, y1, y2;
+  var curva=new THREE.CatmullRomCurve3(punti,false,'catmullrom',.35), n=Math.max(20,Math.round(curva.getLength()/(larga<.5?1:3))), v=[], uv=[], idx=[], k, p, t, nx, nz, y1, y2;
   for(k=0;k<=n;k++){
-    p=curva.getPoint(k/n); t=curva.getTangent(k/n); nx=-t.z; nz=t.x;
-    y1=quotaFissa!=null?quotaFissa:RM.h(p.x+nx*larga,p.z+nz*larga)+alza; y2=quotaFissa!=null?quotaFissa:RM.h(p.x-nx*larga,p.z-nz*larga)+alza;
+    p=curva.getPointAt(k/n); t=curva.getTangentAt(k/n); nx=-t.z; nz=t.x;      // a passo costante lungo la via: con getPoint i tratti lunghi restavano radi e il terreno copriva la strada
+    var hq=RM.hSuolo||RM.h; y1=quotaFissa!=null?quotaFissa:hq(p.x+nx*larga,p.z+nz*larga)+alza; y2=quotaFissa!=null?quotaFissa:hq(p.x-nx*larga,p.z-nz*larga)+alza;
     v.push(p.x+nx*larga,y1,p.z+nz*larga, p.x-nx*larga,y2,p.z-nz*larga); uv.push(0,k/2,1,k/2);
     if(k<n){ var a=k*2; idx.push(a,a+2,a+1, a+1,a+2,a+3); }
   }
@@ -313,7 +324,7 @@ RM.nastro=function(linea,larga,materiale,alza,quotaFissa){
   g.setAttribute('position',new THREE.Float32BufferAttribute(v,3)); g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.setIndex(idx); g.computeVertexNormals();
   var m=new THREE.Mesh(g,materiale); m.receiveShadow=true; scene.add(m); m.userData.curva=curva; return m;
 };
-/* strade */
+/* strade (le vie strette del centro prendono la quota ogni 10 m, le altre ogni 30: con 30 m sulla Velia il nastro affondava nel terreno e la via Sacra sembrava a pezzi; 23 novembre 2026) */
 var matStrada=new THREE.MeshStandardMaterial({color:RM.col(0xcdbfa3),roughness:1,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
 
 /* Tevere */
@@ -334,7 +345,7 @@ RM.frame.push(function(dt){ RM.tempoAcqua.value+=dt; });
 RM.posa=function(){
   if(RM.suolo) return;
   posaSuolo();
-  RM.STRADE.forEach(function(s,i){ RM.nastro(s,TOPO.stradeLarghe[i],matStrada,.06); });
+  RM.STRADE.forEach(function(s,i){ RM.nastro(s,TOPO.stradeLarghe[i],matStrada,.1); });
   RM.curvaFiume=RM.nastro(RM.FIUME,5.6,RM.matFiume,0,-.5).userData.curva;
 };
 

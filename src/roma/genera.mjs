@@ -84,12 +84,13 @@ const VIE=[
   {nome:'Salaria', p:[[80,-128],[106,-203],[120,-330],[130,-500]], vie:['Via Salaria'], fissi:[[106.4,-203.3,10]]},
   {nome:'verso il Laterano e porta Asinaria', p:[[66,34],[120,60],[194,76],[330,170]], vie:['Via dei Santi Quattro']},
   /* vie del centro antico (strette): nel Foro e sul Palatino sono i basolati antichi rilevati da OSM con il loro nome; fuori, la via moderna che li ricalca */
-  {nome:'via Sacra e clivo Capitolino', stretta:true, p:[[43,26],[31,22],[27,20],[17,9],[4,1],[-1,-1],[-7,-1],[-10,-2],[-12,1],[-17,6],[-19,5]], vie:['Via Sacra','Clivus Capitolinus']},
+  {nome:'via Sacra e clivo Capitolino', stretta:true, p:[[43,26],[31,22],[27,20],[17,9],[4,1],[-1,-1],[-7,-1],[-10,-2],[-12,1],[-17,6],[-19,5]], vie:['Via Sacra','Clivus Capitolinus'],
+     fissi:[[28.3,20.65,1.5],[26.1,19.65,1.5],[24.6,17.2,2]]},      /* il passaggio sotto l'Arco di Tito, lungo il suo asse (contorno dell'arco su OpenStreetMap, way 23913953; 23 novembre 2026): la via moderna gira subito verso nord */
   {nome:'vico Patrizio', stretta:true, p:[[61,-25],[80,-52],[96,-77]], vie:['Via Urbana'], innesto:4},
   {nome:'vico Tusco', stretta:true, p:[[2,5],[-1,12],[-9,23],[-14,43],[-17,48]], vie:['Vicus Tuscus','Via di San Teodoro']},
   {nome:'vico Iugario', stretta:true, p:[[-7,-1],[-10,4],[-28,16],[-39,18]], vie:['Vicus Iugarius','Vico Jugario']},
   {nome:'clivo Argentario', stretta:true, p:[[-3,-4],[-6,-11],[-9,-18],[-22,-37]], vie:['Clivo Argentario']},
-  {nome:'via Nova', stretta:true, p:[[25,22],[17,18],[12,16],[6,13]], vie:['Via Nova']},
+  {nome:'via Nova', stretta:true, p:[[26.4,20.2],[25,22],[17,18],[12,16],[6,13]], vie:['Via Nova'], fissi:[[26.4,20.2,.5]]},      /* parte dalla via Sacra, appena a ovest dell'Arco di Tito (23 novembre 2026: prima finiva nel vuoto con una piega) */
   {nome:'clivo di Scauro e via Celimontana', stretta:true, tol:14, p:[[40,66],[59,69],[85,70],[125,68],[163,62]], vie:['Clivo di Scauro','Via di San Paolo della Croce','Via di Santo Stefano Rotondo']},
   {nome:"vico Capo d'Africa", stretta:true, p:[[70,38],[103,47]], vie:["Via Capo d'Africa"]}
 ];
