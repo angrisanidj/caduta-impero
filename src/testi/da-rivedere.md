@@ -1,6 +1,6 @@
 # Come finisce un impero · tutti i testi da rivedere
 
-Generato da `src/testi/rivedere.mjs` il 23/11/2026, 14:14:20, dalla pagina pubblicata.
+Generato da `src/testi/rivedere.mjs` il 23/11/2026, 14:16:42, dalla pagina pubblicata.
 
 **Come si legge.** Le tappe stanno nell'ordine della linea del tempo. Davanti a ogni testo c'è un'etichetta in corsivo che dice che cos'è (il testo della tappa, una voce di allora, la leggenda, un passo della carta…).
 Il segno 🆕 indica un testo **nuovo o cambiato dopo le tue revisioni** del 22 e 23 novembre: sono quelli da leggere per primi. Gli altri li hai già corretti tu.
@@ -8,13 +8,13 @@ Il segno 🆕 indica un testo **nuovo o cambiato dopo le tue revisioni** del 22 
 **Come si corregge.** Ogni testo sta su una riga che comincia con la sua sigla fra parentesi quadre: cambia il testo dopo la sigla, ma non toccare la sigla e non unire due righe.
 Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiungi in fondo alla riga `<<nota: …>>`. Le citazioni sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano.
 
-**In tutto:** 1922 testi, di cui **105 nuovi o cambiati** (🆕).
+**In tutto:** 1940 testi, di cui **120 nuovi o cambiati** (🆕).
 
 ## Indice
 
 - [1. Testata, riquadri fissi e piè di pagina (index.html)](#1-testata-riquadri-fissi-e-piè-di-pagina-indexhtml) · 🆕 15
 - [2. Gli atti](#2-gli-atti) · 🆕 3
-- [3. Le tappe](#3-le-tappe) · 🆕 30
+- [3. Le tappe](#3-le-tappe) · 🆕 44
   - [251 · Un'epidemia nell'impero, Decio cade contro i Goti](#251--unepidemia-nellimpero-decio-cade-contro-i-goti) · 🆕 1
   - [260 · Valeriano catturato, in Occidente un imperatore rivale](#260--valeriano-catturato-in-occidente-un-imperatore-rivale) · 🆕 1
   - [274 · Aureliano riunisce l'impero](#274--aureliano-riunisce-limpero) · 🆕 1
@@ -31,9 +31,10 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
   - [780 · Papa Adriano I restaura Roma](#780--papa-adriano-i-restaura-roma) · 🆕 1
   - [800 · Carlo Magno incoronato imperatore a San Pietro](#800--carlo-magno-incoronato-imperatore-a-san-pietro) · 🆕 1
   - [801 · La terra trema](#801--la-terra-trema) · 🆕 2
+  - [843 · L'impero dei Franchi diviso in tre](#843--limpero-dei-franchi-diviso-in-tre) · 🆕 14
   - [852 · Le nuove mura proteggono San Pietro](#852--le-nuove-mura-proteggono-san-pietro) · 🆕 1
 - [4. Cruscotto](#4-cruscotto)
-- [5. Eventi sulla scena di Roma (didascalie)](#5-eventi-sulla-scena-di-roma-didascalie) · 🆕 5
+- [5. Eventi sulla scena di Roma (didascalie)](#5-eventi-sulla-scena-di-roma-didascalie) · 🆕 6
 - [6. Schede dei monumenti](#6-schede-dei-monumenti) · 🆕 28
 - [7. Il percorso del pellegrino](#7-il-percorso-del-pellegrino)
 - [8. «Perché cadde l'Occidente?» (js/cause.js)](#8-perché-cadde-loccidente-jscausejs) · 🆕 1
@@ -47,7 +48,7 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 [pagina.titolo] Come finisce un impero · L'Occidente romano dal 235 all'852
 
 *Testo* · 🆕
-[pagina.descrizione] Dal 235 all'852, la storia dell'Occidente romano in 57 tappe. Segui sulla carta i confini che cambiano, esplora Roma in 3D e leggi come i testimoni dell'epoca raccontarono quegli eventi.
+[pagina.descrizione] Dal 235 all'852, la storia dell'Occidente romano in 58 tappe. Segui sulla carta i confini che cambiano, esplora Roma in 3D e leggi come i testimoni dell'epoca raccontarono quegli eventi.
 
 [pagina.immagine] Apertura della pagina con il titolo e tre dati di sintesi. Sotto, la carta dei regni romano-barbarici nel 476 e una veduta di Roma dall'alto.
 
@@ -167,7 +168,7 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
 *Testo* · 🆕
-[pagina.52] Versione del 23/11/2026, ore 14:10
+[pagina.52] Versione del 23/11/2026, ore 14:14
 
 ---
 
@@ -2861,94 +2862,149 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 *Sulla carta, accanto al rombo di «roma»* · 🆕
 [T54-801.luogo1.roma] il terremoto del 30 aprile
 
+### 843 · L'impero dei Franchi diviso in tre
+
+**🆕 14 testi nuovi o cambiati**
+
+*Titolo* · 🆕
+[T55-843.titolo] L'impero dei Franchi diviso in tre
+
+*Testo* · 🆕
+[T55-843.testo] Nell'814 muore Carlo Magno. Gli succede il figlio Ludovico il Pio, ma dopo la sua morte i tre figli si combattono. Il 10 agosto 843, a Verdun, si dividono l'impero. A Carlo il Calvo vanno le terre a ovest, a Ludovico il Germanico quelle a est. A Lotario, che porta il titolo di imperatore, tocca una lunga fascia nel mezzo, dal mare del Nord all'Italia, con Roma. Roma resta legata all'imperatore franco: dall'824 il papa eletto deve giurargli fedeltà davanti a un suo inviato. Intanto, dall'827, gli Arabi dell'Africa conquistano la Sicilia un pezzo alla volta.
+
+*Protagonista 1: nome*
+[T55-843.chi1.nome] Lotario I
+
+*Protagonista 1: date* · 🆕
+[T55-843.chi1.date] morto nell'855
+
+*Protagonista 1: riga* · 🆕
+[T55-843.chi1.riga] Il figlio maggiore di Ludovico il Pio: con il titolo di imperatore riceve la parte di mezzo, con l'Italia e Roma.
+
+*Protagonista 2: nome*
+[T55-843.chi2.nome] Ludovico il Germanico
+
+*Protagonista 2: date* · 🆕
+[T55-843.chi2.date] morto nell'876
+
+*Protagonista 2: riga* · 🆕
+[T55-843.chi2.riga] Riceve le terre a est del Reno.
+
+*Protagonista 3: nome*
+[T55-843.chi3.nome] Carlo il Calvo
+
+*Protagonista 3: date* · 🆕
+[T55-843.chi3.date] morto nell'877
+
+*Protagonista 3: riga* · 🆕
+[T55-843.chi3.riga] Riceve le terre a ovest. Per lui scrive lo storico Nitardo.
+
+*Una voce di allora (1)* · 🆕
+[T55-843.voce1.testo] «Al tempo di Carlo Magno, di buona memoria, morto ormai quasi trent'anni fa, il popolo percorreva un'unica e retta via, la via pubblica del Signore: per questo c'erano ovunque pace e concordia. Ora, al contrario, ciascuno va per il sentiero che vuole, e ovunque si vedono discordie e risse. Allora ovunque abbondanza e letizia, ora ovunque miseria e tristezza.»
+
+*Chi la scrive (1)* · 🆕
+[T55-843.voce1.chi] Nitardo, Storie, IV, 7. Nipote di Carlo Magno, combatté per Carlo il Calvo e scrive all'inizio dell'843, pochi mesi prima di Verdun. Traduzione nostra dal latino.
+
+*Sulla carta, accanto al rombo di «verdun»* · 🆕
+[T55-843.luogo1.verdun] Il 10 agosto 843 i tre fratelli si dividono l'impero
+
+*Sulla carta, accanto al rombo di «aquisgrana»* · 🆕
+[T55-843.luogo2.aquisgrana] Aquisgrana, la residenza di Carlo Magno, nella parte di Lotario
+
+*Sulla carta, accanto al rombo di «roma»* · 🆕
+[T55-843.luogo3.roma] Roma, nella parte dell'imperatore Lotario
+
+*Sulla carta, accanto al rombo di «mazara»* · 🆕
+[T55-843.luogo4.mazara] Dall'827 gli Arabi sbarcano in Sicilia
+
 ### 846 · I Saraceni a San Pietro
 
 *Titolo*
-[T55-846.titolo] I Saraceni a San Pietro
+[T56-846.titolo] I Saraceni a San Pietro
 
 *Testo*
-[T55-846.testo] Una flotta saracena, forse partita dalla Sicilia o dall'Africa settentrionale, approda a Ostia e risale il Tevere. Le mura di Aureliano proteggono Roma, ma due delle basiliche più venerate dell'Occidente sorgono fuori dalla cinta. Gli assalitori saccheggiano San Pietro e, secondo il Liber Pontificalis, anche San Paolo.
+[T56-846.testo] Una flotta saracena, forse partita dalla Sicilia o dall'Africa settentrionale, approda a Ostia e risale il Tevere. Le mura di Aureliano proteggono Roma, ma due delle basiliche più venerate dell'Occidente sorgono fuori dalla cinta. Gli assalitori saccheggiano San Pietro e, secondo il Liber Pontificalis, anche San Paolo.
 
 *Protagonista 1: nome*
-[T55-846.chi1.nome] Sergio II
+[T56-846.chi1.nome] Sergio II
 
 *Protagonista 1: date*
-[T55-846.chi1.date] papa dall'844 all'847
+[T56-846.chi1.date] papa dall'844 all'847
 
 *Protagonista 1: riga*
-[T55-846.chi1.riga] È papa quando San Pietro viene saccheggiato.
+[T56-846.chi1.riga] È papa quando San Pietro viene saccheggiato.
 
 *Protagonista 2: nome*
-[T55-846.chi2.nome] Lotario I
+[T56-846.chi2.nome] Lotario I
 
 *Protagonista 2: date*
-[T55-846.chi2.date] imperatore dall'840 all'855
+[T56-846.chi2.date] imperatore dall'840 all'855
 
 *Protagonista 2: riga*
-[T55-846.chi2.riga] Nell'846 o nell'847 emana un provvedimento, detto capitolare, che ordina di costruire mura intorno a San Pietro.
+[T56-846.chi2.riga] Nell'846 o nell'847 emana un provvedimento, detto capitolare, che ordina di costruire mura intorno a San Pietro.
 
 *Una voce di allora (1)*
-[T55-846.voce1.testo] «Nel mese di agosto Saraceni e Mauri, giunti a Roma per il Tevere, devastano la basilica del beato Pietro, principe degli apostoli: portano via, insieme all'altare stesso, che era stato posto sopra la sua tomba, tutti gli ornamenti e i tesori.»
+[T56-846.voce1.testo] «Nel mese di agosto Saraceni e Mauri, giunti a Roma per il Tevere, devastano la basilica del beato Pietro, principe degli apostoli: portano via, insieme all'altare stesso, che era stato posto sopra la sua tomba, tutti gli ornamenti e i tesori.»
 
 *Chi la scrive (1)*
-[T55-846.voce1.chi] Prudenzio, Annali di San Bertino, anno 846. Scrive alla corte di Carlo il Calvo pochi mesi dopo i fatti. Gli studiosi discutono se gli assalitori abbiano davvero portato via anche l'altare.
+[T56-846.voce1.chi] Prudenzio, Annali di San Bertino, anno 846. Scrive alla corte di Carlo il Calvo pochi mesi dopo i fatti. Gli studiosi discutono se gli assalitori abbiano davvero portato via anche l'altare.
 
 *Sulla carta, accanto al rombo di «roma»*
-[T55-846.luogo1.roma] i Saraceni saccheggiano San Pietro
+[T56-846.luogo1.roma] i Saraceni saccheggiano San Pietro
 
 ### 852 · Le nuove mura proteggono San Pietro
 
 **🆕 1 testo nuovo o cambiato**
 
 *Titolo*
-[T56-852.titolo] Le nuove mura proteggono San Pietro
+[T57-852.titolo] Le nuove mura proteggono San Pietro
 
 *Testo* · 🆕
-[T56-852.testo] Dopo il saccheggio dell'846 e l'incendio che devasta parte del quartiere del Borgo intorno all'847, papa Leone IV fa costruire nuove mura attorno a San Pietro. Il 27 giugno 852 nasce la «città leonina», che prende il nome dal papa. Le mura di Aureliano, lunghe diciannove chilometri, racchiudono ancora i quartieri della città antica, dove tra le rovine si coltivano orti e vigne. La nuova cinta protegge la basilica e il quartiere sorto attorno alla tomba dell'apostolo. È qui che Roma ha trovato un nuovo centro. Molti monumenti antichi assunsero l'aspetto attuale nei secoli successivi, soprattutto perché furono smontati per riutilizzarne i materiali. Il lato sud del Colosseo, per esempio, era già in parte smontato quando, secondo il Parco archeologico del Colosseo, il terremoto dell'847 ne fece crollare il resto. La data tradizionale è invece il 1349. Nessuna cronaca dell'epoca descrive il crollo.
+[T57-852.testo] Dopo il saccheggio dell'846 e l'incendio che devasta parte del quartiere del Borgo intorno all'847, papa Leone IV fa costruire nuove mura attorno a San Pietro. Il 27 giugno 852 nasce la «città leonina», che prende il nome dal papa. Le mura di Aureliano, lunghe diciannove chilometri, racchiudono ancora i quartieri della città antica, dove tra le rovine si coltivano orti e vigne. La nuova cinta protegge la basilica e il quartiere sorto attorno alla tomba dell'apostolo. È qui che Roma ha trovato un nuovo centro. Molti monumenti antichi assunsero l'aspetto attuale nei secoli successivi, soprattutto perché furono smontati per riutilizzarne i materiali. Il lato sud del Colosseo, per esempio, era già in parte smontato quando, secondo il Parco archeologico del Colosseo, il terremoto dell'847 ne fece crollare il resto. La data tradizionale è invece il 1349. Nessuna cronaca dell'epoca descrive il crollo.
 
 *Protagonista 1: nome*
-[T56-852.chi1.nome] Leone IV
+[T57-852.chi1.nome] Leone IV
 
 *Protagonista 1: date*
-[T56-852.chi1.date] papa dall'847 all'855
+[T57-852.chi1.date] papa dall'847 all'855
 
 *Protagonista 1: riga*
-[T56-852.chi1.riga] Fa costruire le mura in quattro anni e le benedice a piedi nudi.
+[T57-852.chi1.riga] Fa costruire le mura in quattro anni e le benedice a piedi nudi.
 
 *Protagonista 2: nome*
-[T56-852.chi2.nome] Lotario I
+[T57-852.chi2.nome] Lotario I
 
 *Protagonista 2: date*
-[T56-852.chi2.date] imperatore dall'840 all'855
+[T57-852.chi2.date] imperatore dall'840 all'855
 
 *Protagonista 2: riga*
-[T56-852.chi2.riga] Contribuisce alla spesa.
+[T57-852.chi2.riga] Contribuisce alla spesa.
 
 *Una voce di allora (1)*
-[T56-852.voce1.testo] «Ordinò […] che con lui tutti i vescovi e i sacerdoti, e anche i diaconi e tutti gli ordini dei chierici […], dopo le litanie e il canto del salterio, con inni e cantici spirituali, facessero il giro di tutte le mura a piedi nudi, con la cenere sul capo. […] “Questa città, che da poco, con il tuo aiuto, abbiamo fondato, fa' che resti per sempre al sicuro dalla tua ira, e che sui nemici, a causa dei quali è stata costruita, abbia nuovi e molti trionfi.”»
+[T57-852.voce1.testo] «Ordinò […] che con lui tutti i vescovi e i sacerdoti, e anche i diaconi e tutti gli ordini dei chierici […], dopo le litanie e il canto del salterio, con inni e cantici spirituali, facessero il giro di tutte le mura a piedi nudi, con la cenere sul capo. […] “Questa città, che da poco, con il tuo aiuto, abbiamo fondato, fa' che resti per sempre al sicuro dalla tua ira, e che sui nemici, a causa dei quali è stata costruita, abbia nuovi e molti trionfi.”»
 
 *Chi la scrive (1)*
-[T56-852.voce1.chi] Liber Pontificalis, vita di Leone IV. Un membro del clero al servizio del papa descrive la cerimonia di benedizione delle nuove mura e riporta la prima delle tre preghiere di Leone. Il testo è contemporaneo e ha un intento celebrativo.
+[T57-852.voce1.chi] Liber Pontificalis, vita di Leone IV. Un membro del clero al servizio del papa descrive la cerimonia di benedizione delle nuove mura e riporta la prima delle tre preghiere di Leone. Il testo è contemporaneo e ha un intento celebrativo.
 
 *Fra storia e leggenda*
-[T56-852.leggenda] Papa Leone IV muore il 17 luglio 855. Secondo una leggenda, prima del suo successore Benedetto III sarebbe diventata papa una donna conosciuta come «Giovanni Anglico, nato a Magonza». Dopo due anni, sette mesi e quattro giorni di pontificato, avrebbe partorito per strada «fra il Colosseo e la chiesa di San Clemente». Questa versione compare nell'ultima redazione della cronaca di Martino Polono, che arriva al 1277, oltre quattro secoli dopo i fatti. Una versione più antica, in una cronaca di Metz del Duecento, lascia la donna senza nome e colloca l'episodio intorno al 1099. Che cosa dicono invece i testi del IX secolo? Nessuno ricorda una donna papa e le testimonianze sulla successione di Leone IV non lasciano spazio a un altro pontificato. Incmaro di Reims racconta che i suoi inviati appresero della morte di Leone mentre andavano a Roma e ottennero da Benedetto il privilegio richiesto. Secondo le enciclopedie consultate, Benedetto fu consacrato già il 29 settembre 855, dopo uno scontro con Anastasio, che rivendicava a sua volta il papato. Si citano anche monete su cui il nome di Benedetto compare accanto a quello dell'imperatore Lotario, morto in quegli stessi giorni.
+[T57-852.leggenda] Papa Leone IV muore il 17 luglio 855. Secondo una leggenda, prima del suo successore Benedetto III sarebbe diventata papa una donna conosciuta come «Giovanni Anglico, nato a Magonza». Dopo due anni, sette mesi e quattro giorni di pontificato, avrebbe partorito per strada «fra il Colosseo e la chiesa di San Clemente». Questa versione compare nell'ultima redazione della cronaca di Martino Polono, che arriva al 1277, oltre quattro secoli dopo i fatti. Una versione più antica, in una cronaca di Metz del Duecento, lascia la donna senza nome e colloca l'episodio intorno al 1099. Che cosa dicono invece i testi del IX secolo? Nessuno ricorda una donna papa e le testimonianze sulla successione di Leone IV non lasciano spazio a un altro pontificato. Incmaro di Reims racconta che i suoi inviati appresero della morte di Leone mentre andavano a Roma e ottennero da Benedetto il privilegio richiesto. Secondo le enciclopedie consultate, Benedetto fu consacrato già il 29 settembre 855, dopo uno scontro con Anastasio, che rivendicava a sua volta il papato. Si citano anche monete su cui il nome di Benedetto compare accanto a quello dell'imperatore Lotario, morto in quegli stessi giorni.
 
 *Sulla carta, accanto al rombo di «roma»*
-[T56-852.luogo1.roma] le mura di Leone IV attorno a San Pietro
+[T57-852.luogo1.roma] le mura di Leone IV attorno a San Pietro
 
 ### Intermezzo · Che cosa resta
 
 *Titolo*
-[T57-852.titolo] Che cosa resta
+[T58-852.titolo] Che cosa resta
 
 *Testo*
-[T57-852.testo] Nell'852, quasi quattro secoli dopo la fine dell'Impero romano d'Occidente, che cosa rimane del mondo romano? Il latino sopravvive nei libri, mentre la lingua parlata è cambiata. Nell'813 a Tours un'assemblea di vescovi chiede ai sacerdoti di predicare «nella lingua romana rustica o in quella tedesca», così che tutti possano capire. La prima espressione indica la parlata locale derivata dal latino. Nell'842, a Strasburgo, due nipoti di Carlo Magno pronunciano un giuramento davanti ai loro eserciti, uno in lingua romanza e l'altro in tedesco. Lo storico Nitardo ne trascrive le parole. Anche il diritto romano sopravvive, accanto a quello degli altri popoli. Verso l'820 il vescovo Agobardo di Lione osserva che persino cinque uomini seduti insieme possono seguire leggi diverse a seconda delle loro origini, per esempio quella franca, burgunda o romana. Rimangono la Chiesa di Roma, protetta dai re franchi, e l'idea di impero. Nell'800 il papa ha incoronato Carlo Magno a Roma. La storia del titolo imperiale in Occidente proseguirà, con interruzioni, fino al 1806.
+[T58-852.testo] Nell'852, quasi quattro secoli dopo la fine dell'Impero romano d'Occidente, che cosa rimane del mondo romano? Il latino sopravvive nei libri, mentre la lingua parlata è cambiata. Nell'813 a Tours un'assemblea di vescovi chiede ai sacerdoti di predicare «nella lingua romana rustica o in quella tedesca», così che tutti possano capire. La prima espressione indica la parlata locale derivata dal latino. Nell'842, a Strasburgo, due nipoti di Carlo Magno pronunciano un giuramento davanti ai loro eserciti, uno in lingua romanza e l'altro in tedesco. Lo storico Nitardo ne trascrive le parole. Anche il diritto romano sopravvive, accanto a quello degli altri popoli. Verso l'820 il vescovo Agobardo di Lione osserva che persino cinque uomini seduti insieme possono seguire leggi diverse a seconda delle loro origini, per esempio quella franca, burgunda o romana. Rimangono la Chiesa di Roma, protetta dai re franchi, e l'idea di impero. Nell'800 il papa ha incoronato Carlo Magno a Roma. La storia del titolo imperiale in Occidente proseguirà, con interruzioni, fino al 1806.
 
 *Una voce di allora (1)*
-[T57-852.voce1.testo] «Per l'amore di Dio e per il popolo cristiano e la salvezza di noi due, da questo giorno in avanti, per quanto Dio mi darà di sapere e di potere, io salverò questo mio fratello Carlo, con il mio aiuto e in ogni cosa, come per diritto si deve salvare il proprio fratello, purché egli faccia altrettanto con me. E con Lotario non farò mai nessun accordo che, per mia volontà, sia di danno a questo mio fratello Carlo.»
+[T58-852.voce1.testo] «Per l'amore di Dio e per il popolo cristiano e la salvezza di noi due, da questo giorno in avanti, per quanto Dio mi darà di sapere e di potere, io salverò questo mio fratello Carlo, con il mio aiuto e in ogni cosa, come per diritto si deve salvare il proprio fratello, purché egli faccia altrettanto con me. E con Lotario non farò mai nessun accordo che, per mia volontà, sia di danno a questo mio fratello Carlo.»
 
 *Chi la scrive (1)*
-[T57-852.voce1.chi] Giuramenti di Strasburgo, 14 febbraio 842, nelle Storie di Nitardo, III, 5. Ludovico il Germanico pronuncia queste parole nella lingua dei soldati di suo fratello Carlo il Calvo. Carlo a sua volta giura in tedesco per farsi capire dai soldati di Ludovico. Il giuramento di Ludovico è uno dei più antichi testi scritti in una lingua romanza, cioè derivata dal latino. Traduzione nostra.
+[T58-852.voce1.chi] Giuramenti di Strasburgo, 14 febbraio 842, nelle Storie di Nitardo, III, 5. Ludovico il Germanico pronuncia queste parole nella lingua dei soldati di suo fratello Carlo il Calvo. Carlo a sua volta giura in tedesco per farsi capire dai soldati di Ludovico. Il giuramento di Ludovico è uno dei più antichi testi scritti in una lingua romanza, cioè derivata dal latino. Traduzione nostra.
 
 ---
 
@@ -3067,6 +3123,9 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 
 *Didascalia nella città di Roma* · 🆕
 [evento.terremoto801] 30 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi.
+
+*Didascalia nella città di Roma* · 🆕
+[evento.verdun843] 843 · A Verdun l'impero dei Franchi si divide, e Roma tocca a Lotario, l'imperatore. Dall'824, con la Constitutio Romana, il papa appena eletto deve giurare fedeltà all'imperatore davanti a un suo inviato, prima di essere consacrato.
 
 *Didascalia nella città di Roma* · 🆕
 [evento.saraceni846] Agosto 846 · Una flotta saracena approda a Ostia e risale il Tevere. Gli assalitori saccheggiano San Pietro, fuori dalle mura di Roma, e, secondo il Liber Pontificalis, anche San Paolo. A Porto vengono uccisi gli uomini che le comunità straniere di Roma, le «scholae», avevano inviato a difendere l'abitato. Secondo la stessa fonte, i Saraceni risalgono il fiume con le navi e insieme a piedi e a cavallo. All'alba i cavalieri sbarcano e invadono San Pietro. I Romani, senza un capo, li affrontano armati nel campo di Nerone.
@@ -5762,7 +5821,7 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 [carta.citta] Roma · Ravenna · Milano · Treviri · Arles · Cartagine · Costantinopoli · Londinium · Sirmio · Antiochia · Alessandria · Tolosa · Adrianopoli
 
 *Testo* · 🆕
-[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Delta · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Soissons · Vouillé · Parigi · Tagina · Monte Lattaro · Thanet · Canterbury · Genova · Autun · Caputvada · Decimum · Malta · Lérins · Aix · Vienne · Mar Ligure · Tirreno · Boulogne · Manica · Dover · York · Cornovaglia · Frisia · Frisia · Anglia orientale · Mare del Nord · Anglia orientale · Fano · Cesena · Urbino · Salona · Tournai · Angoulême · Abruzzo · Benevento · Visigoti · Alani · Romani · Unni · Unni
+[carta.luoghi] Magonza · Abritto · Edessa · Colonia · Palmira · Châlons · Campi Catalaunici · Nicomedia · Pollenzo · Stretto di Gibilterra · Capo Bon · Nisibi · Emesa · Metz · Orléans · Piacenza · Verona · Napoli · Siracusa · Tangeri · Toledo · Susa · Lione · Ippona · Rimini · pianura del Tibisco · Egeo · Ionio · Tirreno · oltre il Reno · Tarifa · Taza · Tlemcen · Cesarea · Sitifi · Cirta · Ostia · Marmara · Dardanelli · capo Matapan · Messina · Reggio · Cosenza · Salerno · Catania · Aspromonte · Catanzaro · Lagonegro · Eboli · canale di Sicilia · Cassino · Lucca · Mediterraneo · Poitiers · Pamplona · Bordeaux · Pelusio · Cividale · Guadalete · Pavia · Aquisgrana · Tigri · Carre · Ancira · Tiana · Cabile · Emona · Aquileia · Asti · Reims · Amiens · Novae · Isonzo · Savaria · Spoleto · Narni · Ginevra · Martigny · Aosta · Ivrea · Gibilterra · Propontide · Gallipoli · Lampsaco · Ellesponto · Abido · Cicladi · Cicladi · capo Malea · Mopsuestia · Isso · Porte Sirie · Lentini · Frigido · Mursa · Torino · Brescia · Modena · Ierapoli · Batne · Callinico · Circesio · Dura · Don · Dnestr · Durostoro · Marcianopoli · Concordia · Altino · Cremona · Bologna · Piceno · Mincio · Gerusalemme · Damasco · Yarmuk · Arabia · Gaza · Babilonia d'Egitto · Barca · Sinai · Delta · Mareotide · Sirte · Marmarica · Marmarica · Cirenaica · Misurata · Leptis · Tripolitania · Medenine · Bizacena · Dnepr · Agedabia · El Agheila · Sirte · Tripoli · Qayrawan · Tours · Soissons · Vouillé · Parigi · Tagina · Monte Lattaro · Thanet · Canterbury · Genova · Autun · Caputvada · Decimum · Malta · Verdun · Mazara · Lérins · Aix · Vienne · Mar Ligure · Tirreno · Boulogne · Manica · Dover · York · Cornovaglia · Frisia · Frisia · Anglia orientale · Mare del Nord · Anglia orientale · Fano · Cesena · Urbino · Salona · Tournai · Angoulême · Abruzzo · Benevento · Visigoti · Alani · Romani · Unni · Unni
 
 [carta.mari] Mare Nostrum · Oceano · Mare Interno · Ponto Eusino
 
@@ -6043,7 +6102,7 @@ Se una riga va tolta, lascia la sigla e scrivi `TOGLIERE`. Per un dubbio aggiung
 **🆕 1 testo nuovo o cambiato**
 
 *Testo* · 🆕
-[ui.condividi.01-r6] Come finisce un impero · La storia dell'Occidente romano dal 235 all'852 in 57 tappe. Segui i confini sulla carta e scopri come cambia Roma attraverso una ricostruzione in 3D.
+[ui.condividi.01-r6] Come finisce un impero · La storia dell'Occidente romano dal 235 all'852 in 58 tappe. Segui i confini sulla carta e scopri come cambia Roma attraverso una ricostruzione in 3D.
 
 [ui.condividi.02-r41] Link copiato
 

@@ -4,15 +4,15 @@ Generato da `node cerca.mjs info` (scelte a mano in `scelte.mjs`; licenze e auto
 
 ## Conteggi
 
-Righe della tabella: 141 (persone distinte: 106).
+Righe della tabella: 144 (persone distinte: 108).
 
 | | righe | persone |
 |---|---|---|
-| ritratto coevo | 80 | 57 |
+| ritratto coevo | 81 | 57 |
 | ritratto posteriore | 21 | 18 |
 | di fantasia | 5 | 4 |
 | oggetto del tempo, senza volto | 22 | 16 |
-| nessuna immagine | 13 | 11 |
+| nessuna immagine | 15 | 13 |
 
 ## Da decidere
 
@@ -239,7 +239,7 @@ Le scelte di principio:
 ### 534
 
 - **Belisario** ([Q174943](https://www.wikidata.org/wiki/Q174943)) — *ritratto coevo*: figura del mosaico di Giustiniano in San Vitale, Ravenna, 547 circa. [Meister von San Vitale in Ravenna 013.jpg](https://commons.wikimedia.org/wiki/File:Meister_von_San_Vitale_in_Ravenna_013.jpg) — 1576×1888, Public domain; «Immagine: Meister von San Vitale in Ravenna, pubblico dominio, da Wikimedia Commons». L'identificazione con Belisario della figura alla destra dell'imperatore è tradizionale ma discussa.
-- **Gelimero** (-) — *nessuna immagine*. 
+- **Gelimero** (-) — *nessuna immagine*. Esistono monete d'argento col suo nome (silique), da cercare su Commons quando non limita le richieste (23 novembre 2026: rifiuti per troppo traffico).
 - **Procopio** ([Q186153](https://www.wikidata.org/wiki/Q186153)) — *nessuna immagine*. Nessun ritratto noto e nessun manoscritto antico trovato su Commons.
 
 ### 537
@@ -336,6 +336,13 @@ Le scelte di principio:
 
 - **Leone III** ([Q132086](https://www.wikidata.org/wiki/Q132086)) — *ritratto posteriore*: mosaico del Triclinio Leoniano (Laterano): Pietro dà il pallio a Leone III. [Pope Leo III portrait – Triclinium Leoninum.jpg](https://commons.wikimedia.org/wiki/File:Pope_Leo_III_portrait_%E2%80%93_Triclinium_Leoninum.jpg) — 370×480, Public domain; «Immagine: autore sconosciuto; rifacimento di Ferdinando Fuga (1743), pubblico dominio, da Wikimedia Commons». Il mosaico originale (fine VIII secolo) è perduto: quello visibile è il rifacimento del 1743 sui disegni antichi. Leone III vi ha il nimbo quadrato dei vivi.
 - **Carlo Magno** ([Q3044](https://www.wikidata.org/wiki/Q3044)) — *ritratto coevo*: denaro col busto laureato di Carlo, zecca di Magonza, 812-814. [Charlemagne denier Mayence 812 814.jpg](https://commons.wikimedia.org/wiki/File:Charlemagne_denier_Mayence_812_814.jpg) — 2070×2070, Public domain; «Immagine: Bibliothèque nationale de France, pubblico dominio, da Wikimedia Commons».
+
+### 843
+
+- **Lotario I** ([Q150735](https://www.wikidata.org/wiki/Q150735)) — *ritratto coevo*: miniatura dell'Evangeliario di Lotario (BnF, Lat. 266), Tours, 849-851. [Lothar I.jpg](https://commons.wikimedia.org/wiki/File:Lothar_I.jpg) — 1278×1975, Public domain; «Immagine: miniatore di Tours, pubblico dominio, da Wikimedia Commons».
+  - in alternativa: medaglione del Salterio di Lotario (British Library, Add MS 37768), metà IX secolo [Medallion of Lothair, from the Lothaire Psalter.jpg](https://commons.wikimedia.org/wiki/File:Medallion_of_Lothair,_from_the_Lothaire_Psalter.jpg) — CC0, British Library
+- **Ludovico il Germanico** (-) — *nessuna immagine*. 
+- **Carlo il Calvo** (-) — *nessuna immagine*. 
 
 ### 846
 
