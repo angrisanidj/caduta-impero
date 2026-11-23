@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 14:05:49.
+Generato da `src/testi.mjs` il 23/11/2026, 14:10:53.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 13:51
+[pagina.52] Versione del 23/11/2026, ore 14:05
 
 
 ## 2. Gli atti
@@ -1224,352 +1224,352 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [T32-476.voce1.chi] Vegezio, L'arte della guerra, I, 20. Scrive tra la fine del IV e la metà del V secolo. Il suo giudizio sui soldati del suo tempo risente dell'ammirazione per l'esercito del passato. Traduzione nostra dal latino.
 
 
-### Intermezzo · La città
-
-[T33-476.titolo] La città
-
-[T33-476.testo] Come si segue lo spopolamento di Roma in assenza di censimenti regolari? Un indizio viene dai registri dei viveri. Nel 2 a.C. poco più di 200.000 abitanti ricevono grano dallo Stato. Nel 419 una legge prevede 4.000 razioni di carne al giorno. Nel 452 lo Stato distribuisce ancora oltre 3,6 milioni di libbre di carne di maiale. In seguito le distribuzioni si fanno più rare. Nessuna legge dice quando cessino. Cambia anche il paesaggio. Nel 458 l'imperatore Maggioriano minaccia di multare i magistrati che permettono di smontare i monumenti e di far tagliare le mani ai loro subalterni. La severità della legge mostra quanto il recupero dei materiali preoccupi le autorità. Nel 537 i Goti interrompono i quattordici acquedotti. Per continuare a macinare il grano, il generale Belisario fa installare mulini galleggianti sul Tevere. Un altro indizio viene dalle tombe. Già nella prima metà del V secolo compaiono, ancora rare, sepolture dentro le mura, dove la legge antica le vietava. Gli archeologi che le hanno censite ipotizzano che durante gli assedi fosse difficile portare fuori i morti. Nel VI e nel VII secolo seppellire i morti nei quartieri ormai vuoti e nelle terme abbandonate diventa abituale.
-
-
 ### 493 · Teodorico
 
-[T34-493.titolo] Teodorico
+[T33-493.titolo] Teodorico
 
-[T34-493.testo] Il re ostrogoto Teodorico governa l'Italia da Ravenna con l'aiuto di funzionari romani. A Roma fa restaurare le mura e il teatro di Pompeo e vieta di deviare l'acqua degli acquedotti. Al Colosseo continuano gli spettacoli di caccia agli animali selvatici. L'ultima testimonianza risale al 523.
+[T33-493.testo] Il re ostrogoto Teodorico governa l'Italia da Ravenna con l'aiuto di funzionari romani. A Roma fa restaurare le mura e il teatro di Pompeo e vieta di deviare l'acqua degli acquedotti. Al Colosseo continuano gli spettacoli di caccia agli animali selvatici. L'ultima testimonianza risale al 523.
 
-[T34-493.chi1.nome] Teodorico
+[T33-493.chi1.nome] Teodorico
 
-[T34-493.chi1.date] circa 454-526
+[T33-493.chi1.date] circa 454-526
 
-[T34-493.chi1.riga] Re degli Ostrogoti, in Italia dal 489 per incarico dell'imperatore Zenone.
+[T33-493.chi1.riga] Re degli Ostrogoti, in Italia dal 489 per incarico dell'imperatore Zenone.
 
-[T34-493.chi2.nome] Odoacre
+[T33-493.chi2.nome] Odoacre
 
-[T34-493.chi2.date] circa 433-493
+[T33-493.chi2.date] circa 433-493
 
-[T34-493.chi2.riga] Dopo due anni e mezzo di assedio, Odoacre si arrende a Ravenna. Teodorico lo uccide personalmente.
+[T33-493.chi2.riga] Dopo due anni e mezzo di assedio, Odoacre si arrende a Ravenna. Teodorico lo uccide personalmente.
 
-[T34-493.chi3.nome] Cassiodoro
+[T33-493.chi3.nome] Cassiodoro
 
-[T34-493.chi3.date] nato verso il 485, morto verso il 585
+[T33-493.chi3.date] nato verso il 485, morto verso il 585
 
-[T34-493.chi3.riga] Senatore romano: dal 507 scriverà le lettere del re.
+[T33-493.chi3.riga] Senatore romano: dal 507 scriverà le lettere del re.
 
-[T34-493.voce1.testo] «C'era allora in città una grandissima gioia: la presenza del re Teodorico rallegrava l'assemblea del Senato e del popolo romano. […] “Fratelli, quanto può essere bella la Gerusalemme celeste, se così risplende la Roma terrena!”»
+[T33-493.voce1.testo] «C'era allora in città una grandissima gioia: la presenza del re Teodorico rallegrava l'assemblea del Senato e del popolo romano. […] “Fratelli, quanto può essere bella la Gerusalemme celeste, se così risplende la Roma terrena!”»
 
-[T34-493.voce1.chi] Vita di Fulgenzio, vescovo di Ruspe, 27. Nel 500 il monaco africano Fulgenzio è a Roma e assiste al discorso di Teodorico al popolo. Un suo discepolo racconta l'episodio a Cartagine verso il 533. È un'agiografia, cioè un'opera che celebra la vita del santo.
+[T33-493.voce1.chi] Vita di Fulgenzio, vescovo di Ruspe, 27. Nel 500 il monaco africano Fulgenzio è a Roma e assiste al discorso di Teodorico al popolo. Un suo discepolo racconta l'episodio a Cartagine verso il 533. È un'agiografia, cioè un'opera che celebra la vita del santo.
 
-[T34-493.voce2.testo] «Entrato in città, venne in Senato e alla Palma parlò al popolo: promise di osservare inviolabilmente, con l'aiuto di Dio, tutto ciò che i principi romani avevano stabilito prima di lui. […] Donò al popolo romano e ai poveri centoventimila moggi di grano ogni anno, e ordinò che per il restauro del palazzo e per la riparazione delle mura della città si dessero ogni anno duecento libbre dalla cassa del vino.»
+[T33-493.voce2.testo] «Entrato in città, venne in Senato e alla Palma parlò al popolo: promise di osservare inviolabilmente, con l'aiuto di Dio, tutto ciò che i principi romani avevano stabilito prima di lui. […] Donò al popolo romano e ai poveri centoventimila moggi di grano ogni anno, e ordinò che per il restauro del palazzo e per la riparazione delle mura della città si dessero ogni anno duecento libbre dalla cassa del vino.»
 
-[T34-493.voce2.chi] Anonimo Valesiano, 66-67. La cronaca descrive la stessa visita del 500. Fu scritta in Italia verso la metà del VI secolo. Per questo periodo l'autore dà un giudizio favorevole su Teodorico.
+[T33-493.voce2.chi] Anonimo Valesiano, 66-67. La cronaca descrive la stessa visita del 500. Fu scritta in Italia verso la metà del VI secolo. Per questo periodo l'autore dà un giudizio favorevole su Teodorico.
 
-[T34-493.luogo1.ravenna] Teodorico elimina Odoacre e governa l'Italia
+[T33-493.luogo1.ravenna] Teodorico elimina Odoacre e governa l'Italia
 
 
 ### 507 · Clodoveo estende il regno dei Franchi
 
-[T35-507.titolo] Clodoveo estende il regno dei Franchi
+[T34-507.titolo] Clodoveo estende il regno dei Franchi
 
-[T35-507.testo] Sotto Clodoveo il regno dei Franchi si estende dal nord della Gallia fino ai Pirenei. Nel quinto anno del suo regno, di solito datato al 486, Clodoveo sconfigge a Soissons Siagrio, che governava gli ultimi territori romani della Gallia settentrionale. Lo storico Gregorio di Tours chiama Siagrio «re dei Romani». Clodoveo riceve il battesimo cattolico dal vescovo Remigio di Reims. Altri grandi sovrani germanici seguono invece il cristianesimo ariano, che considera il Figlio subordinato a Dio Padre. Nel 507 Clodoveo sconfigge i Visigoti a Vouillé, vicino a Poitiers. Secondo Gregorio uccide personalmente il loro re Alarico II. A Tours riceve dall'imperatore d'Oriente Anastasio il titolo onorifico di console.
+[T34-507.testo] Sotto Clodoveo il regno dei Franchi si estende dal nord della Gallia fino ai Pirenei. Nel quinto anno del suo regno, di solito datato al 486, Clodoveo sconfigge a Soissons Siagrio, che governava gli ultimi territori romani della Gallia settentrionale. Lo storico Gregorio di Tours chiama Siagrio «re dei Romani». Clodoveo riceve il battesimo cattolico dal vescovo Remigio di Reims. Altri grandi sovrani germanici seguono invece il cristianesimo ariano, che considera il Figlio subordinato a Dio Padre. Nel 507 Clodoveo sconfigge i Visigoti a Vouillé, vicino a Poitiers. Secondo Gregorio uccide personalmente il loro re Alarico II. A Tours riceve dall'imperatore d'Oriente Anastasio il titolo onorifico di console.
 
-[T35-507.chi1.nome] Clodoveo
+[T34-507.chi1.nome] Clodoveo
 
-[T35-507.chi1.date] nato verso il 466, morto nel 511
+[T34-507.chi1.date] nato verso il 466, morto nel 511
 
-[T35-507.chi1.riga] Regna sui Franchi per trent'anni e muore a Parigi nel 511.
+[T34-507.chi1.riga] Regna sui Franchi per trent'anni e muore a Parigi nel 511.
 
-[T35-507.chi2.nome] Alarico II
+[T34-507.chi2.nome] Alarico II
 
-[T35-507.chi2.date] re dei Visigoti dal 484 al 507
+[T34-507.chi2.date] re dei Visigoti dal 484 al 507
 
-[T35-507.chi2.riga] Muore nella battaglia di Vouillé. Secondo Gregorio di Tours, a ucciderlo è lo stesso Clodoveo.
+[T34-507.chi2.riga] Muore nella battaglia di Vouillé. Secondo Gregorio di Tours, a ucciderlo è lo stesso Clodoveo.
 
-[T35-507.chi3.nome] Siagrio
+[T34-507.chi3.nome] Siagrio
 
-[T35-507.chi3.date] morto dopo il 486
+[T34-507.chi3.date] morto dopo il 486
 
-[T35-507.chi3.riga] Figlio del generale romano Egidio, dopo la sconfitta di Soissons si rifugia a Tolosa. Il re visigoto Alarico II lo consegna a Clodoveo, che lo fa uccidere in segreto.
+[T34-507.chi3.riga] Figlio del generale romano Egidio, dopo la sconfitta di Soissons si rifugia a Tolosa. Il re visigoto Alarico II lo consegna a Clodoveo, che lo fa uccidere in segreto.
 
-[T35-507.chi4.nome] Remigio
+[T34-507.chi4.nome] Remigio
 
-[T35-507.chi4.date] vescovo di Reims
+[T34-507.chi4.date] vescovo di Reims
 
-[T35-507.chi4.riga] È il vescovo che battezza Clodoveo.
+[T34-507.chi4.riga] È il vescovo che battezza Clodoveo.
 
-[T35-507.voce1.testo] «Ricevette dall'imperatore Anastasio il documento della nomina a console; nella basilica di San Martino indossò la tunica di porpora e il mantello e si pose sul capo il diadema. Poi salì a cavallo e, lungo la strada che va dalla porta dell'atrio alla chiesa della città, distribuì con le sue mani oro e argento alla folla. Da quel giorno fu chiamato come un console o un augusto.»
+[T34-507.voce1.testo] «Ricevette dall'imperatore Anastasio il documento della nomina a console; nella basilica di San Martino indossò la tunica di porpora e il mantello e si pose sul capo il diadema. Poi salì a cavallo e, lungo la strada che va dalla porta dell'atrio alla chiesa della città, distribuì con le sue mani oro e argento alla folla. Da quel giorno fu chiamato come un console o un augusto.»
 
-[T35-507.voce1.chi] Gregorio di Tours, Storie, II, 38. Gregorio, vescovo della città in cui si svolge la cerimonia, scrive tra il 575 e il 590 circa, a una settantina d'anni o più dai fatti. Traduzione nostra dal latino.
+[T34-507.voce1.chi] Gregorio di Tours, Storie, II, 38. Gregorio, vescovo della città in cui si svolge la cerimonia, scrive tra il 575 e il 590 circa, a una settantina d'anni o più dai fatti. Traduzione nostra dal latino.
 
-[T35-507.leggenda] Secondo Gregorio di Tours, prima che Clodoveo ricevesse il battesimo i suoi soldati saccheggiarono una chiesa e portarono via un grande vaso di particolare bellezza. Il vescovo ne chiese la restituzione. Clodoveo lo invitò a seguirlo a Soissons, dove i soldati si sarebbero divisi il bottino. Il re chiese il vaso in aggiunta alla parte che gli spettava. Un soldato colpì il vaso con l'ascia e gridò «Non avrai nulla, se non quello che ti tocca in sorte». Clodoveo tacque e restituì il vaso al vescovo. Un anno dopo, durante una rassegna delle truppe, il re si fermò davanti allo stesso soldato. Gli rimproverò di aver trascurato le armi e gliele gettò a terra. Quando l'uomo si chinò a raccoglierle, Clodoveo lo colpì alla testa con l'ascia. «Così tu hai fatto al vaso a Soissons». Gregorio è l'unico autore a raccontare l'episodio e scrive quasi un secolo più tardi. Gli dobbiamo anche le parole che il vescovo Remigio avrebbe rivolto a Clodoveo mentre il re entrava nell'acqua per ricevere il battesimo. «Piega il capo, Sicambro: adora ciò che hai bruciato, brucia ciò che hai adorato».
+[T34-507.leggenda] Secondo Gregorio di Tours, prima che Clodoveo ricevesse il battesimo i suoi soldati saccheggiarono una chiesa e portarono via un grande vaso di particolare bellezza. Il vescovo ne chiese la restituzione. Clodoveo lo invitò a seguirlo a Soissons, dove i soldati si sarebbero divisi il bottino. Il re chiese il vaso in aggiunta alla parte che gli spettava. Un soldato colpì il vaso con l'ascia e gridò «Non avrai nulla, se non quello che ti tocca in sorte». Clodoveo tacque e restituì il vaso al vescovo. Un anno dopo, durante una rassegna delle truppe, il re si fermò davanti allo stesso soldato. Gli rimproverò di aver trascurato le armi e gliele gettò a terra. Quando l'uomo si chinò a raccoglierle, Clodoveo lo colpì alla testa con l'ascia. «Così tu hai fatto al vaso a Soissons». Gregorio è l'unico autore a raccontare l'episodio e scrive quasi un secolo più tardi. Gli dobbiamo anche le parole che il vescovo Remigio avrebbe rivolto a Clodoveo mentre il re entrava nell'acqua per ricevere il battesimo. «Piega il capo, Sicambro: adora ciò che hai bruciato, brucia ciò che hai adorato».
 
-[T35-507.storici] Quando ricevette il battesimo Clodoveo? Gregorio di Tours colloca l'episodio dopo una vittoria sugli Alamanni. Su questo racconto si basa la data tradizionale del 496. L'unica testimonianza contemporanea, una lettera del vescovo Avito di Vienne a Clodoveo, non menziona battaglie. Alcuni studiosi, tra cui Danuta Shanzer in uno studio del 1998, propongono il 507 o il 508, poco prima o poco dopo la guerra contro i Visigoti. La data resta incerta.
+[T34-507.storici] Quando ricevette il battesimo Clodoveo? Gregorio di Tours colloca l'episodio dopo una vittoria sugli Alamanni. Su questo racconto si basa la data tradizionale del 496. L'unica testimonianza contemporanea, una lettera del vescovo Avito di Vienne a Clodoveo, non menziona battaglie. Alcuni studiosi, tra cui Danuta Shanzer in uno studio del 1998, propongono il 507 o il 508, poco prima o poco dopo la guerra contro i Visigoti. La data resta incerta.
 
-[T35-507.luogo1.soissonsc] Verso il 486 Clodoveo sconfigge Siagrio
+[T34-507.luogo1.soissonsc] Verso il 486 Clodoveo sconfigge Siagrio
 
-[T35-507.luogo2.vouille] Nel 507 i Franchi vincono a Vouillé. Il luogo esatto della battaglia è discusso.
+[T34-507.luogo2.vouille] Nel 507 i Franchi vincono a Vouillé. Il luogo esatto della battaglia è discusso.
 
-[T35-507.luogo3.tours] A Tours Clodoveo riceve il titolo onorifico di console
+[T34-507.luogo3.tours] A Tours Clodoveo riceve il titolo onorifico di console
 
-[T35-507.passo1.anno] 486
+[T34-507.passo1.anno] 486
 
-[T35-507.passo1.testo] Nel quinto anno del suo regno Clodoveo sconfigge Siagrio, che da Soissons governa gli ultimi territori romani della Gallia settentrionale. Siagrio si rifugia a Tolosa. Il re dei Visigoti lo consegna a Clodoveo, che lo fa uccidere in segreto.
+[T34-507.passo1.testo] Nel quinto anno del suo regno Clodoveo sconfigge Siagrio, che da Soissons governa gli ultimi territori romani della Gallia settentrionale. Siagrio si rifugia a Tolosa. Il re dei Visigoti lo consegna a Clodoveo, che lo fa uccidere in segreto.
 
-[T35-507.passo1.freccia1] Clodoveo
+[T34-507.passo1.freccia1] Clodoveo
 
-[T35-507.passo1.freccia3] Siagrio
+[T34-507.passo1.freccia3] Siagrio
 
-[T35-507.passo2.anno] 507
+[T34-507.passo2.anno] 507
 
-[T35-507.passo2.testo] «Mi pesa che questi ariani tengano una parte delle Gallie». Così, secondo Gregorio di Tours, Clodoveo spiega la decisione di marciare contro i Visigoti. A dieci miglia da Poitiers i Franchi li sconfiggono. Secondo Gregorio, Clodoveo uccide di persona il loro re, Alarico II.
+[T34-507.passo2.testo] «Mi pesa che questi ariani tengano una parte delle Gallie». Così, secondo Gregorio di Tours, Clodoveo spiega la decisione di marciare contro i Visigoti. A dieci miglia da Poitiers i Franchi li sconfiggono. Secondo Gregorio, Clodoveo uccide di persona il loro re, Alarico II.
 
-[T35-507.passo2.freccia1] Clodoveo
+[T34-507.passo2.freccia1] Clodoveo
 
-[T35-507.passo2.freccia2] Alarico II
+[T34-507.passo2.freccia2] Alarico II
 
-[T35-507.passo3.anno] 507-508
+[T34-507.passo3.anno] 507-508
 
-[T35-507.passo3.testo] Clodoveo trascorre l'inverno a Bordeaux e porta via da Tolosa il tesoro dei re visigoti. Tornato a Tours, riceve dall'imperatore d'Oriente il titolo di console. Sceglie poi Parigi come sede del suo regno.
+[T34-507.passo3.testo] Clodoveo trascorre l'inverno a Bordeaux e porta via da Tolosa il tesoro dei re visigoti. Tornato a Tours, riceve dall'imperatore d'Oriente il titolo di console. Sceglie poi Parigi come sede del suo regno.
 
-[T35-507.passo3.freccia1] Clodoveo
+[T34-507.passo3.freccia1] Clodoveo
 
 
 ### 526 · Muore Teodorico
 
-[T36-526.titolo] Muore Teodorico
+[T35-526.titolo] Muore Teodorico
 
-[T36-526.testo] Il 30 agosto 526 Teodorico muore a Ravenna dopo tre giorni di malattia. Gli succede il nipote Atalarico. Il regno è allora più esteso che mai. Dopo la vittoria dei Franchi sui Visigoti nel 507, Teodorico aveva ottenuto la Provenza e assunto il governo dei territori visigoti in Spagna. Negli ultimi anni si erano però guastati i suoi rapporti con le famiglie più influenti di Roma. Il re aveva fatto uccidere il filosofo Boezio e poi suo suocero Simmaco, il più autorevole dei senatori. Anche papa Giovanni aveva perso il favore del re ed era morto pochi giorni dopo il ritorno da una missione a Costantinopoli. Nove anni dopo la morte di Teodorico, l'imperatore d'Oriente Giustiniano invierà in Italia il generale Belisario.
+[T35-526.testo] Il 30 agosto 526 Teodorico muore a Ravenna dopo tre giorni di malattia. Gli succede il nipote Atalarico. Il regno è allora più esteso che mai. Dopo la vittoria dei Franchi sui Visigoti nel 507, Teodorico aveva ottenuto la Provenza e assunto il governo dei territori visigoti in Spagna. Negli ultimi anni si erano però guastati i suoi rapporti con le famiglie più influenti di Roma. Il re aveva fatto uccidere il filosofo Boezio e poi suo suocero Simmaco, il più autorevole dei senatori. Anche papa Giovanni aveva perso il favore del re ed era morto pochi giorni dopo il ritorno da una missione a Costantinopoli. Nove anni dopo la morte di Teodorico, l'imperatore d'Oriente Giustiniano invierà in Italia il generale Belisario.
 
-[T36-526.chi1.nome] Teodorico
+[T35-526.chi1.nome] Teodorico
 
-[T36-526.chi1.date] circa 454-526
+[T35-526.chi1.date] circa 454-526
 
-[T36-526.chi1.riga] Muore a Ravenna dopo trentatré anni di regno in Italia.
+[T35-526.chi1.riga] Muore a Ravenna dopo trentatré anni di regno in Italia.
 
-[T36-526.chi2.nome] Boezio
+[T35-526.chi2.nome] Boezio
 
-[T36-526.chi2.date] circa 480-524 o 526
+[T35-526.chi2.date] circa 480-524 o 526
 
-[T36-526.chi2.riga] Senatore e filosofo. Durante la prigionia scrive La consolazione della filosofia.
+[T35-526.chi2.riga] Senatore e filosofo. Durante la prigionia scrive La consolazione della filosofia.
 
-[T36-526.chi3.nome] Amalasunta
+[T35-526.chi3.nome] Amalasunta
 
-[T36-526.chi3.date] morta nel 535
+[T35-526.chi3.date] morta nel 535
 
-[T36-526.chi3.riga] Figlia di Teodorico, governa in nome del giovane figlio Atalarico.
+[T35-526.chi3.riga] Figlia di Teodorico, governa in nome del giovane figlio Atalarico.
 
-[T36-526.voce1.testo] «Fu colto da un flusso di ventre e, consumato in tre giorni, perse insieme il regno e la vita proprio nel giorno in cui si rallegrava di prendersi le chiese. […] Da vivo si era fatto un monumento di pietra squadrata, opera di mirabile grandezza, e aveva cercato un masso enorme da mettergli sopra.»
+[T35-526.voce1.testo] «Fu colto da un flusso di ventre e, consumato in tre giorni, perse insieme il regno e la vita proprio nel giorno in cui si rallegrava di prendersi le chiese. […] Da vivo si era fatto un monumento di pietra squadrata, opera di mirabile grandezza, e aveva cercato un masso enorme da mettergli sopra.»
 
-[T36-526.voce1.chi] Anonimo Valesiano, 95-96. Il cronista cattolico è ostile a Teodorico, che segue la dottrina cristiana ariana. Il monumento menzionato è il mausoleo del re a Ravenna.
+[T35-526.voce1.chi] Anonimo Valesiano, 95-96. Il cronista cattolico è ostile a Teodorico, che segue la dottrina cristiana ariana. Il monumento menzionato è il mausoleo del re a Ravenna.
 
-[T36-526.luogo1.ravenna] muore Teodorico
+[T35-526.luogo1.ravenna] muore Teodorico
 
 
 ### 537 · I Goti interrompono gli acquedotti di Roma
 
-[T37-537.titolo] I Goti interrompono gli acquedotti di Roma
+[T36-537.titolo] I Goti interrompono gli acquedotti di Roma
 
-[T37-537.testo] Nel 535 Giustiniano, imperatore d'Oriente, invia in Italia il generale Belisario per riconquistare la penisola. Due anni dopo i Goti assediano Roma, difesa da Belisario, e tagliano tutti gli acquedotti che la riforniscono. Senz'acqua, le grandi terme non possono più funzionare. Dopo la guerra alcuni acquedotti torneranno in funzione, ma le grandi terme resteranno chiuse.
+[T36-537.testo] Nel 535 Giustiniano, imperatore d'Oriente, invia in Italia il generale Belisario per riconquistare la penisola. Due anni dopo i Goti assediano Roma, difesa da Belisario, e tagliano tutti gli acquedotti che la riforniscono. Senz'acqua, le grandi terme non possono più funzionare. Dopo la guerra alcuni acquedotti torneranno in funzione, ma le grandi terme resteranno chiuse.
 
-[T37-537.chi1.nome] Giustiniano
+[T36-537.chi1.nome] Giustiniano
 
-[T37-537.chi1.date] imperatore dal 527 al 565
+[T36-537.chi1.date] imperatore dal 527 al 565
 
-[T37-537.chi1.riga] Vuole riportare i territori dell'antico impero d'Occidente sotto il governo di Costantinopoli.
+[T36-537.chi1.riga] Vuole riportare i territori dell'antico impero d'Occidente sotto il governo di Costantinopoli.
 
-[T37-537.chi2.nome] Belisario
+[T36-537.chi2.nome] Belisario
 
-[T37-537.chi2.date] circa 500-565
+[T36-537.chi2.date] circa 500-565
 
-[T37-537.chi2.riga] Generale di Giustiniano, entra a Roma nel dicembre 536 e difende la città per un anno.
+[T36-537.chi2.riga] Generale di Giustiniano, entra a Roma nel dicembre 536 e difende la città per un anno.
 
-[T37-537.chi3.nome] Vitige
+[T36-537.chi3.nome] Vitige
 
-[T37-537.chi3.date] re dei Goti dal 536 al 540
+[T36-537.chi3.date] re dei Goti dal 536 al 540
 
-[T37-537.chi3.riga] Assedia Roma e fa tagliare gli acquedotti.
+[T36-537.chi3.riga] Assedia Roma e fa tagliare gli acquedotti.
 
-[T37-537.voce1.testo] «Tutti vediamo ancora il sole come azzurrognolo; ci stupiamo che a mezzogiorno i corpi non facciano ombra, e non per il venir meno momentaneo di un'eclissi, ma per quasi un anno intero. Abbiamo avuto un inverno senza tempeste, una primavera senza mitezza, un'estate senza calura.»
+[T36-537.voce1.testo] «Tutti vediamo ancora il sole come azzurrognolo; ci stupiamo che a mezzogiorno i corpi non facciano ombra, e non per il venir meno momentaneo di un'eclissi, ma per quasi un anno intero. Abbiamo avuto un inverno senza tempeste, una primavera senza mitezza, un'estate senza calura.»
 
-[T37-537.voce1.chi] Cassiodoro, Variae, XII, 25. Alto funzionario del regno goto con il titolo di prefetto del pretorio, descrive in una lettera di quegli anni il sole velato del 536.
+[T36-537.voce1.chi] Cassiodoro, Variae, XII, 25. Alto funzionario del regno goto con il titolo di prefetto del pretorio, descrive in una lettera di quegli anni il sole velato del 536.
 
-[T37-537.luogo1.roma] i Goti assediano Belisario e tagliano gli acquedotti
+[T36-537.luogo1.roma] i Goti assediano Belisario e tagliano gli acquedotti
 
 
 ### 542 · La peste
 
-[T38-542.titolo] La peste
+[T37-542.titolo] La peste
 
-[T38-542.testo] La peste bubbonica si diffonde dall'Egitto nel 541. Raggiunge Costantinopoli nel 542 e l'Italia nel 543, quando la guerra nella penisola dura già da otto anni. L'epidemia si ripresenterà a ondate per due secoli.
+[T37-542.testo] La peste bubbonica si diffonde dall'Egitto nel 541. Raggiunge Costantinopoli nel 542 e l'Italia nel 543, quando la guerra nella penisola dura già da otto anni. L'epidemia si ripresenterà a ondate per due secoli.
 
-[T38-542.chi1.nome] Giustiniano
+[T37-542.chi1.nome] Giustiniano
 
-[T38-542.chi1.date] imperatore dal 527 al 565
+[T37-542.chi1.date] imperatore dal 527 al 565
 
-[T38-542.chi1.riga] Anche l'imperatore Giustiniano contrae la peste e guarisce.
+[T37-542.chi1.riga] Anche l'imperatore Giustiniano contrae la peste e guarisce.
 
-[T38-542.chi2.nome] Procopio
+[T37-542.chi2.nome] Procopio
 
-[T38-542.chi2.date] nato verso il 500, morto verso il 565
+[T37-542.chi2.date] nato verso il 500, morto verso il 565
 
-[T38-542.chi2.riga] Consigliere giuridico di Belisario: descrive l'epidemia a Costantinopoli.
+[T37-542.chi2.riga] Consigliere giuridico di Belisario: descrive l'epidemia a Costantinopoli.
 
-[T38-542.voce1.testo] «All'inizio i morti erano poco più del solito; poi la mortalità salì ancora, e in seguito il conto dei morti arrivò a cinquemila al giorno, e poi anche a diecimila e più. […] In quel tempo non era facile vedere qualcuno per le strade di Bisanzio: chi aveva la fortuna di essere sano stava in casa, a curare i malati o a piangere i morti. E se capitava di incontrare un uomo che usciva, portava un morto.»
+[T37-542.voce1.testo] «All'inizio i morti erano poco più del solito; poi la mortalità salì ancora, e in seguito il conto dei morti arrivò a cinquemila al giorno, e poi anche a diecimila e più. […] In quel tempo non era facile vedere qualcuno per le strade di Bisanzio: chi aveva la fortuna di essere sano stava in casa, a curare i malati o a piangere i morti. E se capitava di incontrare un uomo che usciva, portava un morto.»
 
-[T38-542.voce1.chi] Procopio, Guerre, II, 23. L'autore si trovava a Costantinopoli durante l'epidemia del 542. Le sue cifre si riferiscono alla capitale d'Oriente e restano discusse. Traduzione dalla versione inglese di Dewing.
+[T37-542.voce1.chi] Procopio, Guerre, II, 23. L'autore si trovava a Costantinopoli durante l'epidemia del 542. Le sue cifre si riferiscono alla capitale d'Oriente e restano discusse. Traduzione dalla versione inglese di Dewing.
 
-[T38-542.luogo1.pelusio] di qui parte la peste, nel 541
+[T37-542.luogo1.pelusio] di qui parte la peste, nel 541
 
-[T38-542.luogo2.costantinopoli] la peste arriva nel 542
+[T37-542.luogo2.costantinopoli] la peste arriva nel 542
 
 
 ### 546 · Totila conquista Roma e fa evacuare la città
 
-[T39-546.titolo] Totila conquista Roma e fa evacuare la città
+[T38-546.titolo] Totila conquista Roma e fa evacuare la città
 
-[T39-546.testo] Il re goto Totila conquista Roma e fa portar via gli abitanti. Secondo una cronaca, la città sarebbe rimasta deserta per almeno quaranta giorni. Nel 550 Totila la riconquista e assiste alle ultime corse di cavalli a Roma di cui ci sia giunta notizia.
+[T38-546.testo] Il re goto Totila conquista Roma e fa portar via gli abitanti. Secondo una cronaca, la città sarebbe rimasta deserta per almeno quaranta giorni. Nel 550 Totila la riconquista e assiste alle ultime corse di cavalli a Roma di cui ci sia giunta notizia.
 
-[T39-546.chi1.nome] Totila
+[T38-546.chi1.nome] Totila
 
-[T39-546.chi1.date] re dei Goti dal 541 al 552
+[T38-546.chi1.date] re dei Goti dal 541 al 552
 
-[T39-546.chi1.riga] Riprende quasi tutta l'Italia; muore nel 552 dopo la sconfitta di Tagina.
+[T38-546.chi1.riga] Riprende quasi tutta l'Italia; muore nel 552 dopo la sconfitta di Tagina.
 
-[T39-546.chi2.nome] Belisario
+[T38-546.chi2.nome] Belisario
 
-[T39-546.chi2.date] circa 500-565
+[T38-546.chi2.date] circa 500-565
 
-[T39-546.chi2.riga] Rimandato in Italia con poche truppe, non riesce a salvare Roma.
+[T38-546.chi2.riga] Rimandato in Italia con poche truppe, non riesce a salvare Roma.
 
-[T39-546.chi3.nome] Narsete
+[T38-546.chi3.nome] Narsete
 
-[T39-546.chi3.date] nato verso il 480, morto verso il 573
+[T38-546.chi3.date] nato verso il 480, morto verso il 573
 
-[T39-546.chi3.riga] Il generale che chiuderà la guerra fra il 552 e il 554.
+[T38-546.chi3.riga] Il generale che chiuderà la guerra fra il 552 e il 554.
 
-[T39-546.voce1.testo] «Abbatté le fortificazioni in molti punti, così che ne andò distrutto circa un terzo. Stava anche per bruciare gli edifici più belli e più notevoli e per fare di Roma un pascolo per le pecore, ma Belisario lo seppe e gli mandò una lettera: “[…] L'hanno costruita a poco a poco, lasciando alle generazioni future il ricordo del valore di tutti: oltraggiare questi monumenti sarebbe un grande crimine contro gli uomini di ogni tempo”. […] Totila la lesse più volte, si convinse e non fece altro male a Roma. […] Non permise però che in città restasse anima viva, e la lasciò del tutto deserta.»
+[T38-546.voce1.testo] «Abbatté le fortificazioni in molti punti, così che ne andò distrutto circa un terzo. Stava anche per bruciare gli edifici più belli e più notevoli e per fare di Roma un pascolo per le pecore, ma Belisario lo seppe e gli mandò una lettera: “[…] L'hanno costruita a poco a poco, lasciando alle generazioni future il ricordo del valore di tutti: oltraggiare questi monumenti sarebbe un grande crimine contro gli uomini di ogni tempo”. […] Totila la lesse più volte, si convinse e non fece altro male a Roma. […] Non permise però che in città restasse anima viva, e la lasciò del tutto deserta.»
 
-[T39-546.voce1.chi] Procopio di Cesarea, Guerre, VII, 22. Era stato consigliere di Belisario. Come spesso accade nella storiografia antica, l'autore rielabora la lettera che riporta. Potrebbe aver esagerato indicando in un «terzo» la parte delle mura abbattuta.
+[T38-546.voce1.chi] Procopio di Cesarea, Guerre, VII, 22. Era stato consigliere di Belisario. Come spesso accade nella storiografia antica, l'autore rielabora la lettera che riporta. Potrebbe aver esagerato indicando in un «terzo» la parte delle mura abbattuta.
 
-[T39-546.leggenda] Papa Gregorio Magno racconta che il re goto Totila volle mettere alla prova Benedetto, un monaco che aveva fama di saper predire il futuro. Poco prima di raggiungere il monastero, il re mandò avanti il suo scudiero Riggo con le scarpe e gli abiti del sovrano e con tre conti al seguito. Benedetto riconobbe l'inganno e gridò da lontano «Togli, figlio, togli: quello che porti non è tuo». Allora Totila si presentò di persona e si gettò a terra. Benedetto lo rialzò, lo rimproverò e gli predisse «Entrerai a Roma, passerai il mare, regnerai nove anni e al decimo morirai». Secondo Gregorio, da quel giorno il re divenne meno crudele. Il papa raccoglie la storia nei Dialoghi, un libro di miracoli composto verso il 593, circa cinquant'anni dopo i fatti. Quando scrive, conosce già la sorte di Totila. Gregorio attribuisce a Benedetto anche una profezia su Roma. La città si sarebbe consumata lentamente per tempeste e terremoti, senza che i barbari dovessero distruggerla. Il papa vede nelle mura e nelle case crollate i segni della profezia, ma precisa che il discepolo che gliel'ha riferita non l'aveva udita da Benedetto.
+[T38-546.leggenda] Papa Gregorio Magno racconta che il re goto Totila volle mettere alla prova Benedetto, un monaco che aveva fama di saper predire il futuro. Poco prima di raggiungere il monastero, il re mandò avanti il suo scudiero Riggo con le scarpe e gli abiti del sovrano e con tre conti al seguito. Benedetto riconobbe l'inganno e gridò da lontano «Togli, figlio, togli: quello che porti non è tuo». Allora Totila si presentò di persona e si gettò a terra. Benedetto lo rialzò, lo rimproverò e gli predisse «Entrerai a Roma, passerai il mare, regnerai nove anni e al decimo morirai». Secondo Gregorio, da quel giorno il re divenne meno crudele. Il papa raccoglie la storia nei Dialoghi, un libro di miracoli composto verso il 593, circa cinquant'anni dopo i fatti. Quando scrive, conosce già la sorte di Totila. Gregorio attribuisce a Benedetto anche una profezia su Roma. La città si sarebbe consumata lentamente per tempeste e terremoti, senza che i barbari dovessero distruggerla. Il papa vede nelle mura e nelle case crollate i segni della profezia, ma precisa che il discepolo che gliel'ha riferita non l'aveva udita da Benedetto.
 
-[T39-546.storici] Roma rimase davvero deserta? Procopio scrive che Totila la lasciò «del tutto deserta». L'autore che proseguì la cronaca di Marcellino Comes parla di «quaranta giorni o più» in cui vi sarebbero rimasti soltanto gli animali. È difficile che ogni abitante se ne fosse andato. Le due testimonianze rendono però l'idea di quanto la città si fosse spopolata.
+[T38-546.storici] Roma rimase davvero deserta? Procopio scrive che Totila la lasciò «del tutto deserta». L'autore che proseguì la cronaca di Marcellino Comes parla di «quaranta giorni o più» in cui vi sarebbero rimasti soltanto gli animali. È difficile che ogni abitante se ne fosse andato. Le due testimonianze rendono però l'idea di quanto la città si fosse spopolata.
 
-[T39-546.luogo1.roma] presa da Totila
+[T38-546.luogo1.roma] presa da Totila
 
 
 ### 552 · La fine del regno dei Goti in Italia
 
-[T40-552.titolo] La fine del regno dei Goti in Italia
+[T39-552.titolo] La fine del regno dei Goti in Italia
 
-[T40-552.testo] Nel 552 il generale Narsete, inviato in Italia dall'imperatore d'Oriente Giustiniano, sconfigge il re goto Totila a Tagina, sull'Appennino. Totila muore durante la fuga. Narsete riconquista Roma e manda a Giustiniano le chiavi delle porte. Secondo lo storico Procopio, è la quinta volta che la città passa di mano dall'inizio del regno di Giustiniano. Durante la ritirata i Goti uccidono alcuni senatori che dalla Campania stavano tornando a Roma. Il loro ultimo re, Teia, muore in battaglia ai piedi del Vesuvio. Dopo diciotto anni di guerra l'Italia torna sotto il governo imperiale. Il 13 agosto 554 Giustiniano emana la Prammatica Sanzione, un provvedimento che annulla le decisioni di Totila. Conferma i fondi per rifornire Roma di grano e per la manutenzione degli edifici pubblici, del letto del Tevere, del porto e degli acquedotti.
+[T39-552.testo] Nel 552 il generale Narsete, inviato in Italia dall'imperatore d'Oriente Giustiniano, sconfigge il re goto Totila a Tagina, sull'Appennino. Totila muore durante la fuga. Narsete riconquista Roma e manda a Giustiniano le chiavi delle porte. Secondo lo storico Procopio, è la quinta volta che la città passa di mano dall'inizio del regno di Giustiniano. Durante la ritirata i Goti uccidono alcuni senatori che dalla Campania stavano tornando a Roma. Il loro ultimo re, Teia, muore in battaglia ai piedi del Vesuvio. Dopo diciotto anni di guerra l'Italia torna sotto il governo imperiale. Il 13 agosto 554 Giustiniano emana la Prammatica Sanzione, un provvedimento che annulla le decisioni di Totila. Conferma i fondi per rifornire Roma di grano e per la manutenzione degli edifici pubblici, del letto del Tevere, del porto e degli acquedotti.
 
-[T40-552.chi1.nome] Narsete
+[T39-552.chi1.nome] Narsete
 
-[T40-552.chi1.date] nato verso il 480, morto verso il 573
+[T39-552.chi1.date] nato verso il 480, morto verso il 573
 
-[T40-552.chi1.riga] Narsete, eunuco e alto funzionario alla corte di Giustiniano, comanda le truppe imperiali che sconfiggono i Goti a Tagina e al monte Lattaro.
+[T39-552.chi1.riga] Narsete, eunuco e alto funzionario alla corte di Giustiniano, comanda le truppe imperiali che sconfiggono i Goti a Tagina e al monte Lattaro.
 
-[T40-552.chi2.nome] Totila
+[T39-552.chi2.nome] Totila
 
-[T40-552.chi2.date] re dei Goti dal 541 al 552
+[T39-552.chi2.date] re dei Goti dal 541 al 552
 
-[T40-552.chi2.riga] Ferito a Tagina, muore nella fuga.
+[T39-552.chi2.riga] Ferito a Tagina, muore nella fuga.
 
-[T40-552.chi3.nome] Teia
+[T39-552.chi3.nome] Teia
 
-[T40-552.chi3.date] re dei Goti nel 552
+[T39-552.chi3.date] re dei Goti nel 552
 
-[T40-552.chi3.riga] Ultimo re dei Goti in Italia, muore combattendo ai piedi del Vesuvio.
+[T39-552.chi3.riga] Ultimo re dei Goti in Italia, muore combattendo ai piedi del Vesuvio.
 
-[T40-552.voce1.testo] «I barbari, atterriti, ricevuta la promessa di aver salva la vita, consegnarono sé stessi e la fortezza. […] Così Roma fu presa per la quinta volta durante il suo regno, e Narsete mandò subito all'imperatore le chiavi delle sue porte. […] Ma questa vittoria si rivelò per il Senato e il popolo romano causa di una rovina ben maggiore.»
+[T39-552.voce1.testo] «I barbari, atterriti, ricevuta la promessa di aver salva la vita, consegnarono sé stessi e la fortezza. […] Così Roma fu presa per la quinta volta durante il suo regno, e Narsete mandò subito all'imperatore le chiavi delle sue porte. […] Ma questa vittoria si rivelò per il Senato e il popolo romano causa di una rovina ben maggiore.»
 
-[T40-552.voce1.chi] Procopio di Cesarea, Guerre, VIII, 33-34. La fortezza di cui parla è il mausoleo di Adriano, circondato dai Goti con un muro difensivo. Traduzione dalla versione inglese di Dewing.
+[T39-552.voce1.chi] Procopio di Cesarea, Guerre, VIII, 33-34. La fortezza di cui parla è il mausoleo di Adriano, circondato dai Goti con un muro difensivo. Traduzione dalla versione inglese di Dewing.
 
-[T40-552.voce2.testo] «Ordiniamo che si conservino le consuetudini e i privilegi della città di Roma, e i fondi concessi per riparare gli edifici pubblici, il letto del Tevere, il foro e il porto di Roma, e per riparare gli acquedotti.»
+[T39-552.voce2.testo] «Ordiniamo che si conservino le consuetudini e i privilegi della città di Roma, e i fondi concessi per riparare gli edifici pubblici, il letto del Tevere, il foro e il porto di Roma, e per riparare gli acquedotti.»
 
-[T40-552.voce2.chi] Prammatica Sanzione, paragrafo 25. È la legge con cui Giustiniano riorganizza il governo dell'Italia. La emana a Costantinopoli il 13 agosto 554 su richiesta di papa Vigilio. Traduzione nostra dal latino.
+[T39-552.voce2.chi] Prammatica Sanzione, paragrafo 25. È la legge con cui Giustiniano riorganizza il governo dell'Italia. La emana a Costantinopoli il 13 agosto 554 su richiesta di papa Vigilio. Traduzione nostra dal latino.
 
-[T40-552.leggenda] Nel racconto di Procopio, l'ultimo re dei Goti combatte come un eroe dei poemi antichi. Per un terzo del giorno Teia resta in prima fila, a piedi. Ogni volta che le lance conficcate nello scudo lo rendono troppo pesante, chiama uno scudiero e si fa dare un altro scudo senza voltare le spalle. Quando le lance sono dodici, Teia chiede il cambio. Per un istante ha il petto scoperto e un giavellotto lo uccide. I Romani mostrano la sua testa ai due eserciti, su un palo. Procopio ne paragona il coraggio a quello degli eroi della leggenda. Scrive da Costantinopoli sulla base di racconti altrui, secondo il gusto degli storici antichi per le scene eroiche.
+[T39-552.leggenda] Nel racconto di Procopio, l'ultimo re dei Goti combatte come un eroe dei poemi antichi. Per un terzo del giorno Teia resta in prima fila, a piedi. Ogni volta che le lance conficcate nello scudo lo rendono troppo pesante, chiama uno scudiero e si fa dare un altro scudo senza voltare le spalle. Quando le lance sono dodici, Teia chiede il cambio. Per un istante ha il petto scoperto e un giavellotto lo uccide. I Romani mostrano la sua testa ai due eserciti, su un palo. Procopio ne paragona il coraggio a quello degli eroi della leggenda. Scrive da Costantinopoli sulla base di racconti altrui, secondo il gusto degli storici antichi per le scene eroiche.
 
-[T40-552.luogo1.tagina] Nel 552 Narsete sconfigge Totila
+[T39-552.luogo1.tagina] Nel 552 Narsete sconfigge Totila
 
-[T40-552.luogo2.roma] Narsete riconquista Roma
+[T39-552.luogo2.roma] Narsete riconquista Roma
 
-[T40-552.luogo3.lattaro] Nel 552 o nel 553 muore Teia, ultimo re dei Goti in Italia. Il luogo esatto è discusso.
+[T39-552.luogo3.lattaro] Nel 552 o nel 553 muore Teia, ultimo re dei Goti in Italia. Il luogo esatto è discusso.
 
-[T40-552.passo1.anno] 552 · Tagina
+[T39-552.passo1.anno] 552 · Tagina
 
-[T40-552.passo1.testo] Da Ravenna Narsete avanza lungo la costa adriatica e imbocca la via Flaminia. Totila gli va incontro attraversando l'Etruria. I due eserciti si scontrano a Tagina, sull'Appennino. I Goti vengono sconfitti e Totila muore durante la ritirata.
+[T39-552.passo1.testo] Da Ravenna Narsete avanza lungo la costa adriatica e imbocca la via Flaminia. Totila gli va incontro attraversando l'Etruria. I due eserciti si scontrano a Tagina, sull'Appennino. I Goti vengono sconfitti e Totila muore durante la ritirata.
 
-[T40-552.passo1.freccia1] Narsete
+[T39-552.passo1.freccia1] Narsete
 
-[T40-552.passo1.freccia2] Totila
+[T39-552.passo1.freccia2] Totila
 
-[T40-552.passo2.anno] 552 · Roma
+[T39-552.passo2.anno] 552 · Roma
 
-[T40-552.passo2.testo] Narsete riconquista Roma. I Goti, troppo pochi per difendere l'intera cinta di mura, si sono ritirati in un forte attorno al mausoleo di Adriano. Mentre il grosso dell'esercito attacca, Dagisteo e i suoi uomini usano le scale per superare un tratto di mura senza guardie. I difensori del forte si arrendono.
+[T39-552.passo2.testo] Narsete riconquista Roma. I Goti, troppo pochi per difendere l'intera cinta di mura, si sono ritirati in un forte attorno al mausoleo di Adriano. Mentre il grosso dell'esercito attacca, Dagisteo e i suoi uomini usano le scale per superare un tratto di mura senza guardie. I difensori del forte si arrendono.
 
-[T40-552.passo2.freccia1] Narsete
+[T39-552.passo2.freccia1] Narsete
 
-[T40-552.passo3.anno] Monte Lattaro
+[T39-552.passo3.anno] Monte Lattaro
 
-[T40-552.passo3.testo] A Pavia i Goti superstiti eleggono re Teia. Per evitare Narsete, il nuovo re raggiunge la Campania seguendo il versante adriatico. Muore combattendo al monte Lattaro, ai piedi del Vesuvio. Con la sua morte i Goti perdono il loro ultimo re in Italia.
+[T39-552.passo3.testo] A Pavia i Goti superstiti eleggono re Teia. Per evitare Narsete, il nuovo re raggiunge la Campania seguendo il versante adriatico. Muore combattendo al monte Lattaro, ai piedi del Vesuvio. Con la sua morte i Goti perdono il loro ultimo re in Italia.
 
-[T40-552.passo3.freccia1] Teia
+[T39-552.passo3.freccia1] Teia
 
-[T40-552.passo3.freccia2] Narsete
+[T39-552.passo3.freccia2] Narsete
 
 
 ### 568 · I Longobardi
 
-[T41-568.titolo] I Longobardi
+[T40-568.titolo] I Longobardi
 
-[T41-568.testo] Quattordici anni dopo la fine ufficiale della guerra fra Goti e Bizantini, i Longobardi entrano in un'Italia provata da diciotto anni di guerra e dalla peste. Paolo Diacono data il loro arrivo al 568, un cronista contemporaneo al 569. La penisola resterà divisa politicamente per circa tredici secoli.
+[T40-568.testo] Quattordici anni dopo la fine ufficiale della guerra fra Goti e Bizantini, i Longobardi entrano in un'Italia provata da diciotto anni di guerra e dalla peste. Paolo Diacono data il loro arrivo al 568, un cronista contemporaneo al 569. La penisola resterà divisa politicamente per circa tredici secoli.
 
-[T41-568.chi1.nome] Alboino
+[T40-568.chi1.nome] Alboino
 
-[T41-568.chi1.date] morto nel 572 o 573
+[T40-568.chi1.date] morto nel 572 o 573
 
-[T41-568.chi1.riga] Re dei Longobardi: guida il suo popolo dalla Pannonia in Italia; ucciso a Verona.
+[T40-568.chi1.riga] Re dei Longobardi: guida il suo popolo dalla Pannonia in Italia; ucciso a Verona.
 
-[T41-568.chi2.nome] Giustino II
+[T40-568.chi2.nome] Giustino II
 
-[T41-568.chi2.date] imperatore dal 565 al 578
+[T40-568.chi2.date] imperatore dal 565 al 578
 
-[T41-568.chi2.riga] Succede a Giustiniano, ma non dispone di truppe da inviare in Italia.
+[T40-568.chi2.riga] Succede a Giustiniano, ma non dispone di truppe da inviare in Italia.
 
-[T41-568.voce1.testo] «Subito la feroce gente dei Longobardi, tratta dal fodero della sua dimora, si è abbattuta sul nostro collo, e il genere umano, che in questa terra era cresciuto fitto come una messe, è stato falciato e si è seccato. Città spopolate, fortezze abbattute, chiese bruciate, monasteri di uomini e di donne distrutti; i campi, abbandonati dagli uomini e privi di chi li coltivi, sono una terra deserta […] le bestie hanno occupato i luoghi che prima teneva una moltitudine di uomini.»
+[T40-568.voce1.testo] «Subito la feroce gente dei Longobardi, tratta dal fodero della sua dimora, si è abbattuta sul nostro collo, e il genere umano, che in questa terra era cresciuto fitto come una messe, è stato falciato e si è seccato. Città spopolate, fortezze abbattute, chiese bruciate, monasteri di uomini e di donne distrutti; i campi, abbandonati dagli uomini e privi di chi li coltivi, sono una terra deserta […] le bestie hanno occupato i luoghi che prima teneva una moltitudine di uomini.»
 
-[T41-568.voce1.chi] Gregorio Magno, Dialoghi, III, 38. Scrive a Roma nel 593-594, una generazione dopo l'arrivo dei Longobardi, e descrive le devastazioni con il tono di chi teme la fine del mondo.
+[T40-568.voce1.chi] Gregorio Magno, Dialoghi, III, 38. Scrive a Roma nel 593-594, una generazione dopo l'arrivo dei Longobardi, e descrive le devastazioni con il tono di chi teme la fine del mondo.
 
-[T41-568.luogo1.cividale] i Longobardi entrano in Italia
+[T40-568.luogo1.cividale] i Longobardi entrano in Italia
 
 
 ### 589 · Il Tevere allaga Roma
 
-[T42-589.titolo] Il Tevere allaga Roma
+[T41-589.titolo] Il Tevere allaga Roma
 
-[T42-589.testo] Nell'autunno del 589, probabilmente a novembre, il Tevere supera le mura, inonda i quartieri più bassi e danneggia i granai della Chiesa. Pochi mesi dopo torna la peste. Tra le vittime c'è papa Pelagio II, a cui succede Gregorio Magno. Le fonti ricordano altre grandi piene. Nel 716 o 717 l'acqua rimane in città per sette giorni e sulla via Lata raggiunge una volta e mezzo l'altezza di un uomo. Il fiume straripa di nuovo nel dicembre 791.
+[T41-589.testo] Nell'autunno del 589, probabilmente a novembre, il Tevere supera le mura, inonda i quartieri più bassi e danneggia i granai della Chiesa. Pochi mesi dopo torna la peste. Tra le vittime c'è papa Pelagio II, a cui succede Gregorio Magno. Le fonti ricordano altre grandi piene. Nel 716 o 717 l'acqua rimane in città per sette giorni e sulla via Lata raggiunge una volta e mezzo l'altezza di un uomo. Il fiume straripa di nuovo nel dicembre 791.
 
-[T42-589.chi1.nome] Pelagio II
+[T41-589.chi1.nome] Pelagio II
 
-[T42-589.chi1.date] papa dal 579 al 590
+[T41-589.chi1.date] papa dal 579 al 590
 
-[T42-589.chi1.riga] Muore di peste nel febbraio 590.
+[T41-589.chi1.riga] Muore di peste nel febbraio 590.
 
-[T42-589.chi2.nome] Gregorio Magno
+[T41-589.chi2.nome] Gregorio Magno
 
-[T42-589.chi2.date] circa 540-604
+[T41-589.chi2.date] circa 540-604
 
-[T42-589.chi2.riga] Prima di diventare monaco aveva amministrato Roma come prefetto. Viene eletto papa nel 590.
+[T41-589.chi2.riga] Prima di diventare monaco aveva amministrato Roma come prefetto. Viene eletto papa nel 590.
 
-[T42-589.voce1.testo] «Il nostro diacono, tornando dalla città di Roma con le reliquie dei santi, riferì che l'anno prima, nel nono mese, il Tevere aveva coperto Roma con una piena tale che gli edifici antichi crollavano; furono abbattuti anche i granai della Chiesa, e vi andarono perdute alcune migliaia di moggi di grano. […] Seguì subito l'epidemia che chiamano inguinale.»
+[T41-589.voce1.testo] «Il nostro diacono, tornando dalla città di Roma con le reliquie dei santi, riferì che l'anno prima, nel nono mese, il Tevere aveva coperto Roma con una piena tale che gli edifici antichi crollavano; furono abbattuti anche i granai della Chiesa, e vi andarono perdute alcune migliaia di moggi di grano. […] Seguì subito l'epidemia che chiamano inguinale.»
 
-[T42-589.voce1.chi] Gregorio di Tours, Storie, X, 1, scritte nel 590-591. Il vescovo riferisce il racconto di un suo diacono, secondo cui la corrente avrebbe trascinato al mare anche serpenti e un drago.
+[T41-589.voce1.chi] Gregorio di Tours, Storie, X, 1, scritte nel 590-591. Il vescovo riferisce il racconto di un suo diacono, secondo cui la corrente avrebbe trascinato al mare anche serpenti e un drago.
 
-[T42-589.leggenda] Da dove viene il nome di Castel Sant'Angelo? La leggenda lo fa risalire alla peste del 590. In quell'anno Gregorio, appena eletto papa, organizza una processione. Gregorio di Tours, informato da un diacono presente a Roma, racconta che sette cortei partirono da altrettante chiese per raggiungere la basilica di Santa Maria. In una sola ora sarebbero morte ottanta persone. Nessun angelo compare nel suo racconto, né in quelli successivi di Paolo Diacono e di Giovanni Diacono, che scrive verso l'875. Fra le fonti consultate, la prima a raccontare l'apparizione è la Legenda aurea di Jacopo da Varazze, intorno al 1260. In cima al mausoleo di Adriano appare un angelo che asciuga una spada insanguinata e la ripone nel fodero. Jacopo ricorda anche un'immagine sacra attribuita a san Luca e il canto del Regina coeli. Da quel giorno, dice, il castello prese il nome dell'angelo. Il legame del luogo con l'arcangelo Michele è però documentato già nel X secolo, tre secoli prima del racconto di Jacopo. Liutprando di Cremona menziona infatti sulla sommità del mausoleo la «chiesa del santo Angelo fino ai cieli».
+[T41-589.leggenda] Da dove viene il nome di Castel Sant'Angelo? La leggenda lo fa risalire alla peste del 590. In quell'anno Gregorio, appena eletto papa, organizza una processione. Gregorio di Tours, informato da un diacono presente a Roma, racconta che sette cortei partirono da altrettante chiese per raggiungere la basilica di Santa Maria. In una sola ora sarebbero morte ottanta persone. Nessun angelo compare nel suo racconto, né in quelli successivi di Paolo Diacono e di Giovanni Diacono, che scrive verso l'875. Fra le fonti consultate, la prima a raccontare l'apparizione è la Legenda aurea di Jacopo da Varazze, intorno al 1260. In cima al mausoleo di Adriano appare un angelo che asciuga una spada insanguinata e la ripone nel fodero. Jacopo ricorda anche un'immagine sacra attribuita a san Luca e il canto del Regina coeli. Da quel giorno, dice, il castello prese il nome dell'angelo. Il legame del luogo con l'arcangelo Michele è però documentato già nel X secolo, tre secoli prima del racconto di Jacopo. Liutprando di Cremona menziona infatti sulla sommità del mausoleo la «chiesa del santo Angelo fino ai cieli».
 
-[T42-589.luogo1.roma] la piena del Tevere
+[T41-589.luogo1.roma] la piena del Tevere
+
+
+### Intermezzo · La città
+
+[T42-590.titolo] La città
+
+[T42-590.testo] Come si segue lo spopolamento di Roma in assenza di censimenti regolari? Un indizio viene dai registri dei viveri. Nel 2 a.C. poco più di 200.000 abitanti ricevono grano dallo Stato. Nel 419 una legge prevede 4.000 razioni di carne al giorno. Nel 452 lo Stato distribuisce ancora oltre 3,6 milioni di libbre di carne di maiale. In seguito le distribuzioni si fanno più rare. Nessuna legge dice quando cessino. Cambia anche il paesaggio. Nel 458 l'imperatore Maggioriano minaccia di multare i magistrati che permettono di smontare i monumenti e di far tagliare le mani ai loro subalterni. La severità della legge mostra quanto il recupero dei materiali preoccupi le autorità. Nel 537 i Goti interrompono i quattordici acquedotti. Per continuare a macinare il grano, il generale Belisario fa installare mulini galleggianti sul Tevere. Un altro indizio viene dalle tombe. Già nella prima metà del V secolo compaiono, ancora rare, sepolture dentro le mura, dove la legge antica le vietava. Gli archeologi che le hanno censite ipotizzano che durante gli assedi fosse difficile portare fuori i morti. Nel VI e nel VII secolo seppellire i morti nei quartieri ormai vuoti e nelle terme abbandonate diventa abituale.
 
 
 ### 593 · «Dov'è il Senato? Dov'è ormai il popolo?»
@@ -4131,21 +4131,21 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.16-r224] Tutto schermo
 
-[ui.pagina.17-r307] Leggi la tappa ↓
+[ui.pagina.17-r308] Leggi la tappa ↓
 
-[ui.pagina.18-r307] ↑ Torna alla carta e alla città
+[ui.pagina.18-r308] ↑ Torna alla carta e alla città
 
-[ui.pagina.19-r335] voci di allora
+[ui.pagina.19-r336] voci di allora
 
-[ui.pagina.20-r336] Fra storia e leggenda
+[ui.pagina.20-r337] Fra storia e leggenda
 
-[ui.pagina.21-r337] Gli storici discutono
+[ui.pagina.21-r338] Gli storici discutono
 
-[ui.pagina.22-r339] Letture di questa tappa
+[ui.pagina.22-r340] Letture di questa tappa
 
-[ui.pagina.23-r364] A Roma, in quest'anno
+[ui.pagina.23-r365] A Roma, in quest'anno
 
-[ui.pagina.24-r364] Guarda la città →
+[ui.pagina.24-r365] Guarda la città →
 
 
 ### js/mappa.js
