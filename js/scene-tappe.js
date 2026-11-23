@@ -140,6 +140,107 @@ var prigionieri593=(function(){
   return {g:g, da:592.6, a:594};
 })();
 
+/* ---------- aiuti per le cinque scene aggiunte il 23 novembre 2026 (274, 410, 455, 663, 852) ---------- */
+function spezzata(L){      // un punto lungo una linea spezzata: t da 0 a 1, lat di lato (a sinistra positivo); ry rivolto nel verso di marcia
+  var seg=[], tot=0, i; for(i=0;i<L.length-1;i++){ var l=Math.hypot(L[i+1][0]-L[i][0],L[i+1][1]-L[i][1]); seg.push(l); tot+=l; }
+  return function(t,lat){ var d=Math.max(0,Math.min(1,t))*tot, k=0; while(k<seg.length-1 && d>seg[k]){ d-=seg[k]; k++; }
+    var a=L[k], b=L[k+1], dx=(b[0]-a[0])/seg[k], dz=(b[1]-a[1])/seg[k], x=a[0]+dx*d-dz*(lat||0), z=a[1]+dz*d+dx*(lat||0);
+    return {x:x, z:z, y:RM.h(x,z), ry:Math.atan2(dx,dz), lung:tot}; };
+}
+function elefante(B,x,z,y,ry){ var c=RM.col(0x8c8781); B.dentro(x,y,z,ry,function(B){
+  [[-.055,-.1],[.055,-.1],[-.055,.1],[.055,.1]].forEach(function(p){ B.scatola(.05,.13,.05,p[0],0,p[1],c); });
+  B.scatola(.17,.15,.34,0,.12,0,c).scatola(.11,.12,.1,0,.17,.2,c).scatola(.03,.15,.03,0,.04,.26,c); }); }
+function carro(B,x,z,y,ry,carico){ B.dentro(x,y,z,ry,function(B){
+  B.scatola(.13,.05,.22,0,.05,0,P.tronco).scatola(.015,.09,.09,-.075,0,0,P.tronco).scatola(.015,.09,.09,.075,0,0,P.tronco);
+  if(carico) B.scatola(.11,.05,.17,0,.1,0,carico);
+  B.scatola(.055,.08,.19,-.04,0,.3,C.cavalloC).scatola(.055,.08,.19,.04,0,.3,C.cavalloC); }); }
+function vicinoAlFiume(px,pz){ var curva=RM.curvaFiume, m=1e9, tm=0, q, dd; for(var i=0;i<=2400;i++){ q=curva.getPoint(i/2400); dd=Math.hypot(q.x-px,q.z-pz); if(dd<m){ m=dd; tm=i/2400; } } return curva.getPoint(tm); }
+function maglia(B){ var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g); return g; }
+
+/* ---------- 274: il trionfo di Aureliano ----------
+   Eutropio IX 13 (thelatinlibrary, letto il 23 novembre 2026): «nobilem triumphum … egit praecedentibus currum Tetrico et Zenobia». Storia Augusta, Aureliano 33-34 (Magie, LacusCurtius):
+   Aureliano sale al Campidoglio; venti elefanti e duecento animali; cartelli con i nomi dei popoli; Tetrico in clamide scarlatta e calzoni gallici; Zenobia coperta di gemme, in catene d'oro;
+   poi il popolo, le insegne, i cavalieri corazzati. La Storia Augusta è una fonte poco sicura: elefanti e colori vengono da lei; il carro tirato da cervi che racconta non si disegna
+   (qui quattro cavalli). Del percorso si mostra solo l'ultimo tratto, sulla via Sacra dall'arco di Tito al Campidoglio (la salita al Campidoglio è nella fonte; il resto è uno schema). */
+var trionfo274=(function(){
+  var B=new RM.Costruttore(), i, p, via=spezzata([[42,25.9],[28.1,20.6],[25.9,16.7],[21.9,12.3],[19.3,10.7],[12.5,7.5],[6.2,3],[-1.6,-1.7],[-4.4,-2.5],[-8.9,-1.7],[-13,2.2],[-18.4,5.1],[-23,3.6],[-25,2]]);      // la via Sacra di js/roma-topo.js, poi la salita al tempio
+  for(i=0;i<6;i++){ p=via(.97+i*.005,(i%2?.25:-.25)); insegna(B,p.x,p.z,p.y,C.oro,.4); }                                          // i cartelli con i nomi dei popoli
+  for(i=0;i<20;i++){ p=via(.80+(i>>1)*.016,(i&1?.17:-.17)); elefante(B,p.x,p.z,p.y,p.ry); }                                      // venti elefanti (Storia Augusta)
+  for(i=0;i<60;i++){ p=via(.69+(i>>2)*.0068,((i&3)-1.5)*.12); uomo(B,p.x,p.z,p.y,C.folla[i%C.folla.length],null,p.ry); }           // i prigionieri dei popoli vinti
+  p=via(.665,-.08); uomo(B,p.x,p.z,p.y,C.rosso,null,p.ry); p=via(.665,.08); uomo(B,p.x,p.z,p.y,C.oro,null,p.ry);                      // Tetrico in scarlatto, Zenobia in oro
+  p=via(.64,0); B.dentro(p.x,p.y,p.z,p.ry,function(B){ B.scatola(.16,.09,.2,0,.07,0,C.oro).scatola(.02,.1,.1,.09,0,0,C.oro).scatola(.02,.1,.1,-.09,0,0,C.oro).scatola(.05,.1,.04,0,.16,-.02,C.porpora).scatola(.03,.035,.03,0,.26,-.02,C.pelle); });
+  for(i=0;i<4;i++){ p=via(.648+.002*(i>>1),((i&1)-.5)*.07); cavaliere(B,p.x,p.z,p.y,p.ry,C.bianco,C.bianco); }
+  for(i=0;i<440;i++){ p=via(.33+(i>>2)/110*.29,((i&3)-1.5)*.13); uomo(B,p.x,p.z,p.y,C.ferro,C.rosso,p.ry); }                        // l'esercito dietro il carro
+  for(i=0;i<8;i++){ p=via(.36+i*.032,(i%2?.32:-.32)); insegna(B,p.x,p.z,p.y,C.rosso,.42); }
+  for(i=0;i<60;i++){ p=via(.06+rnd()*.25,(rnd()-.5)*.5); cavaliere(B,p.x,p.z,p.y,p.ry,C.cavalloB,C.ferro); }                       // i cavalieri corazzati, in coda
+  for(i=0;i<900;i++){ var lat=(rnd()<.5?-1:1)*(.85+rnd()*.6); p=via(rnd(),lat); uomo(B,p.x,p.z,p.y,C.folla[(rnd()*C.folla.length)|0],null,p.ry+(lat>0?-1:1)*Math.PI/2+(rnd()-.5)); }
+  return {g:maglia(B), da:273.6, a:275};
+})();
+
+/* ---------- 410: i Goti entrano da porta Salaria ----------
+   Procopio, Guerre III 2, 22-24 (Dewing, LacusCurtius, letto il 23 novembre 2026): Alaric «was holding them in readiness close by the Salarian Gate; for it happened that he had
+   encamped there at the beginning of the siege»; i giovani aprono la porta «and received Alaric and the army into the city»; bruciano le case vicino alla porta e la casa di Sallustio
+   (i fuochi stanno in EVENTI). Qui il campo fuori porta e la colonna che entra; grandezza del campo e numero degli uomini sono uno schema. */
+var salaria410=(function(){
+  var B=new RM.Costruttore(), G=RM_TOPO.porte['Porta Salaria'], i, s, w, x, z, o, la, dentro;
+  var fuori=[-.164,-.986], verso=[-.331,.944];      // la via Salaria di js/roma-topo.js: fuori porta verso nord, dentro verso il Quirinale
+  campo(B,G[0]+fuori[0]*17+5,G[1]+fuori[1]*17,Math.atan2(fuori[0],fuori[1]),9,5);
+  for(i=0;i<520;i++){ s=-15+rnd()*29; o=s>=0?fuori:[-verso[0],-verso[1]]; la=[-o[1],o[0]]; dentro=Math.atan2(-o[0],-o[1]);
+    w=(rnd()-.5)*(s>-1&&s<1.5?.5:Math.min(3.4,.6+Math.abs(s)*.22)); x=G[0]+o[0]*s+la[0]*w; z=G[1]+o[1]*s+la[1]*w;      // s col segno: fuori porta lungo «fuori», dentro lungo «verso»
+    if(s>-1&&s<1.5){ uomo(B,x,z,RM.h(x,z),C.grigio,C.cavalloB,dentro); continue; }
+    if(rnd()<.1) cavaliere(B,x,z,RM.h(x,z),dentro,C.cavalloB,C.grigio); else uomo(B,x,z,RM.h(x,z),rnd()<.6?C.grigio:C.tunica,C.cavalloB,dentro+(rnd()-.5)*.6); }
+  return {g:maglia(B), da:409.6, a:411};
+})();
+
+/* ---------- 455: i Vandali portano via il bottino ----------
+   Procopio, Guerre III 5, 3-5 (Dewing, LacusCurtius, letto il 23 novembre 2026): Genserico carica sulle navi l'oro e il tesoro imperiale, «having spared neither bronze nor anything else
+   whatsoever in the palace»; «He plundered also the temple of Jupiter Capitolinus, and tore off half of the roof», di bronzo coperto d'oro; prende prigioniere Eudossia e le figlie.
+   Qui: uomini sul tetto del tempio di Giove che ne smontano metà, le tegole dorate ammucchiate a terra, e una fila di carri e di prigionieri che esce da porta Portese verso Porto
+   (Procopio dice solo che salpò con le navi: la strada e la fila sono uno schema). */
+var vandali455=(function(){
+  var B=new RM.Costruttore(), cx=-29, cz=0, ry=.5, c=Math.cos(ry), sn=Math.sin(ry), y0=RM.h(cx,cz)+.2, i, lx, lz, x, z;
+  function mondo(lx,lz){ return [cx+lx*c+lz*sn, cz-lx*sn+lz*c]; }
+  for(i=0;i<34;i++){ lx=.3+rnd()*1.9; lz=(rnd()-.5)*5; var q=mondo(lx,lz); uomo(B,q[0],q[1],y0+.3+2.8+.22+.945*(1-lx/2.35)-.02,C.tunica,null,ry+(rnd()-.5)*2); }      // sul tetto, metà verso est
+  for(i=0;i<14;i++){ var q2=mondo(3.3+rnd()*.7,(rnd()-.5)*4.6); B.scatola(.22,.05+rnd()*.12,.3,q2[0],RM.h(q2[0],q2[1]),q2[1],C.oro,ry+(rnd()-.5)*.4); }      // le tegole dorate a terra
+  for(i=0;i<22;i++){ var q3=mondo(3.1+rnd()*1.4,(rnd()-.5)*5); uomo(B,q3[0],q3[1],RM.h(q3[0],q3[1]),C.tunica,null,rnd()*6.28); }
+  var G=RM_TOPO.porte['Porta Portese'], d=[-.838,.546], la=[-d[1],d[0]], rv=Math.atan2(d[0],d[1]);      // verso Porto (41,78 N, 12,26 E)
+  for(i=0;i<70;i++){ var s=2+i*.62, w=(i%3-1)*.2; x=G[0]+d[0]*s+la[0]*w; z=G[1]+d[1]*s+la[1]*w; if(RM.distFiume(x,z)<6.3) continue;
+    if(i%5===0) carro(B,x,z,RM.h(x,z),rv,i%10?C.oro:P.bronzo); else uomo(B,x,z,RM.h(x,z),i%7?C.folla[i%C.folla.length]:C.bianco,null,rv); }
+  for(i=0;i<16;i++){ var s2=1+i*2.7; x=G[0]+d[0]*s2+la[0]*(i%2?.7:-.7); z=G[1]+d[1]*s2+la[1]*(i%2?.7:-.7); if(RM.distFiume(x,z)<6.3) continue; cavaliere(B,x,z,RM.h(x,z),rv,C.cavalloB,C.grigio); }
+  return {g:maglia(B), da:454.6, a:456};
+})();
+
+/* ---------- 663: Costante II porta via il bronzo ----------
+   Liber Pontificalis, vita di Vitaliano (Duchesne I p. 343, letto sul testo il 23 novembre 2026): «Omnia quae erant in aere ad ornatum civitatis deposuit, sed et ecclesiam beatae Mariae
+   ad Martyres, quae de tegulis aereis erat, discooperuit et in regia urbe cum alia diversa quas deposuerat direxit». Qui: uomini sulla cupola del Pantheon che tolgono le tegole,
+   le tegole a terra davanti al portico e i carri verso il Tevere, dove le aspetta una barca (la strada e la barca sono uno schema: la fonte dice solo che le mandò a Costantinopoli). */
+var costante663=(function(){
+  var B=new RM.Costruttore(), cx=-70, cz=-68, y0=RM.h(cx,cz), i, a, r, x, z;
+  for(i=0;i<40;i++){ a=rnd()*6.283; r=.7+rnd()*1.45; x=cx+Math.cos(a)*r; z=cz+Math.sin(a)*r; uomo(B,x,z,y0+3.6+2.24*.44*Math.sqrt(1-r*r/(2.24*2.24))-.03,C.tunica,null,a); }
+  for(i=0;i<12;i++){ a=rnd()*6.283; x=cx+Math.cos(a)*2.55; z=cz+Math.sin(a)*2.55; uomo(B,x,z,y0+3.12+(2.74-2.55)*.6,C.tunica,null,a); }
+  for(i=0;i<16;i++){ x=cx+(rnd()-.5)*4; z=cz-5.4-rnd()*2.2; B.scatola(.24,.05+rnd()*.1,.3,x,RM.h(x,z),z,P.bronzo,rnd()); }      // davanti al portico, che guarda a nord
+  var F=vicinoAlFiume(cx,cz-6), A=[cx,cz-7], v=[F.x-A[0],F.z-A[1]], L=Math.hypot(v[0],v[1]), d=[v[0]/L,v[1]/L], rv=Math.atan2(d[0],d[1]);
+  for(i=0;i<9;i++){ var s=1+i*(L-9)/9; x=A[0]+d[0]*s; z=A[1]+d[1]*s; if(RM.distFiume(x,z)<6.3) continue; carro(B,x,z,RM.h(x,z),rv,P.bronzo); uomo(B,x-d[1]*.2,z+d[0]*.2,RM.h(x,z),C.tunica,null,rv); }
+  var bx=F.x-d[0]*4.6, bz=F.z-d[1]*4.6; B.dentro(bx,-.55,bz,rv+Math.PI/2,function(B){ B.scatola(.5,.18,2.2,0,0,0,P.tronco).scatola(.04,1.1,.04,0,.18,0,P.tronco).scatola(.4,.08,.6,0,.18,.3,P.bronzo); });
+  for(i=0;i<6;i++) uomo(B,F.x-d[0]*(6.6+rnd()*.6)+(rnd()-.5)*1.4,F.z-d[1]*(6.6+rnd()*.6)+(rnd()-.5)*1.4,RM.h(F.x-d[0]*6.8,F.z-d[1]*6.8),C.tunica,null,rv);
+  return {g:maglia(B), da:662.6, a:664};
+})();
+
+/* ---------- 852: Leone IV benedice le mura nuove ----------
+   Liber Pontificalis, vita di Leone IV, 72-73 (Duchesne II pp. 123-124, letto sul testo il 23 novembre 2026): vescovi, sacerdoti e tutti gli ordini del clero «per totum murorum
+   ambitum, nudis pedibus, cinerem portantes in capite, circuirent», spargendo acqua benedetta «transeuntes per murum»; il papa recita tre preghiere sulle mura: sulla porta «que respicit
+   ad sanctum Peregrinum», sulla postierla presso Castel Sant'Angelo e su quella «que respicit ad scolam Saxonum». Il giorno, 27 giugno 852, è quello della didascalia.
+   Qui il clero in fila sul cammino delle mura (il tracciato è quello di js/monumenti.js) e il papa con il suo gruppo sopra porta San Pellegrino, la prima preghiera. */
+var leone852=(function(){
+  var B=new RM.Costruttore(), L=[[-163,-120],[-233.3,-121],[-250,-124],[-272,-127],[-294,-124.5],[-300,-119],[-307,-111],[-313,-100.5],[-304,-96.5],[-285,-89],[-262,-87],[-240.2,-87.7],[-212,-86.5],[-196.5,-86.7],[-187,-84]],
+      via=spezzata(L), lung=via(0).lung, n=Math.round(lung/.42), i, p, PP=RM_TOPO.porte['Porta San Pellegrino'];
+  for(i=0;i<n;i++){ p=via(i/n,0); if(Math.hypot(p.x-PP[0],p.z-PP[1])<1.4) continue; uomo(B,p.x,p.z,p.y+1.05,i%9?C.bianco:C.tunica,null,p.ry); }
+  for(i=0;i<14;i++){ var a=i/14*6.283, x=PP[0]+Math.cos(a)*.5, z=PP[1]+Math.sin(a)*.5; uomo(B,x,z,RM.h(PP[0],PP[1])+1.05,C.bianco,null,Math.atan2(PP[0]-x,PP[1]-z)); }
+  uomo(B,PP[0],PP[1],RM.h(PP[0],PP[1])+1.05,C.oro,null,0); insegna(B,PP[0]+.25,PP[1],RM.h(PP[0],PP[1])+1.05,C.oro,.4);      // il papa e la croce
+  for(i=0;i<300;i++){ var t=rnd(), q=via(t,(rnd()<.5?-1:1)*(1.2+rnd()*1.6)); if(RM.distFiume(q.x,q.z)<6.3) continue; uomo(B,q.x,q.z,q.y,C.folla[(rnd()*C.folla.length)|0],null,q.ry+(rnd()-.5)*2); }      // il popolo sotto le mura
+  return {g:maglia(B), da:851.6, a:853};
+})();
+
 /* ---------- 552: Narsete e il forte dei Goti al mausoleo di Adriano ----------
    Procopio VIII 33, 14-27 (Dewing, LacusCurtius): i Goti, troppo pochi per tutta la cinta, «enclosed a small part of the city with a short wall around the Tomb of Hadrian and, by connecting this
    with the earlier wall, he made a kind of fortress»; poi si arrendono a Narsete, che avanza «against the fortress with his whole army». Qui: un muro basso attorno al mausoleo, interrotto
@@ -179,7 +280,7 @@ var tombe=TOMBE.map(function(t){
 });
 
 RM.moduli.push(function(anno){
-  [milvio,corteo,assedio472,prigionieri593].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
+  [milvio,corteo,assedio472,prigionieri593,trionfo274,salaria410,vandali455,costante663,leone852].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
   tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
   fortino552.g.visible=anno>=fortino552.da&&anno<fortino552.a; fortino552.g2.visible=anno>=fortino552.da2&&anno<fortino552.a2;
 });
@@ -189,7 +290,7 @@ var perId={}; (RM.MONUMENTI||[]).forEach(function(m){ perId[m.id]=m; });
 /* le due messe in scena hanno un'inquadratura fissa (punto guardato, posizione della camera): al ponte Milvio da sud, oltre il fiume, verso la riva dove fuggono;
    per il corteo da sud-est, sopra le case della via Lata */
 var VISTE={ milvio:{t:[-152,-486],c:[-140,10,-466]}, fortino552:{t:[-163,-126],c:[-131,30,-90]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
-  assedio472:{t:[-182,-110],c:[-143,47,-58]}, prigionieri593:{t:[-84,-232],c:[-57,33,-196]} };      // il campo vaticano e ponte Elio; la Flaminia fuori porta
+  assedio472:{t:[-182,-110],c:[-143,47,-58]}, prigionieri593:{t:[-84,-232],c:[-57,33,-196]}, trionfo274:{t:[8,8],c:[44,26,44]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
 var portata=false;                                                                      // la vista ce l'ha portata la regia
 function scena(){ var s=document.getElementById('scene'); return s?s.getAttribute('data-vista'):null; }
 function vista(v){
