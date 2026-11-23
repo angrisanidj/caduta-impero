@@ -362,6 +362,18 @@ var M=[
     });
  }},
  {id:'emilia', nome:'Basilica Emilia', x:7.2,z:-1, ry:-.35, come:'fori', fa:function(B){ basilica(B,8,3.4,1.8,0,0); }},
+ /* La Basilica Emilia dopo l'incendio, probabilmente del 410 (scheda): il tetto è crollato e non viene rifatto; sul pavimento restano le monete. Qui il pavimento di marmo, i pilastri
+    delle arcate rotti ad altezze diverse, i monconi delle colonne della navata, qualche fusto caduto e le travi bruciate. Altezze e numero dei pezzi sono indicativi; il portico di
+    facciata che alcuni studiosi vogliono rifatto nel V secolo non si disegna (è discusso). Prima del 23 novembre 2026 era il blocco intero annerito dallo shader («va resa meglio»). */
+ {id:'emiliarovina', nome:'Basilica Emilia', x:7.2,z:-1, ry:-.35, come:'fori', note:{chiuso:'in rovina dopo l’incendio'}, fa:function(B){
+    var r=RM.casuale(410), i, h, x, TR=P.travertino, CARB=RM.col(0x3a3129);
+    B.scatola(8,.08,3.4,0,0,0,P.marmo);                                                                                      // il pavimento
+    for(i=0;i<8;i++){ x=-3.5+i; h=.45+1.25*r(); if(r()>.15) B.scatola(.42,h,.34,x,0,1.55,TR); h=.6+1.1*r(); if(r()>.1) B.scatola(.42,h,.34,x,0,-1.55,TR); }      // pilastri delle arcate, verso il Foro e dietro
+    [-1,1].forEach(function(k){ B.scatola(.3,.9+.8*r(),3.4,k*3.85,0,0,TR); });                                               // i lati corti
+    for(i=0;i<12;i++){ x=-3.3+i*.6; [-.75,.75].forEach(function(z){ if(r()<.75) B.cilindro(.07,.15+.9*r(),x,.08,z,P.marmo,.065,8); }); }      // i monconi delle colonne della navata
+    for(i=0;i<5;i++) B.scatola(.85,.12,.12,-3+6*r(),.08,-1+2*r(),P.marmo,r()*3.14);                                            // fusti caduti
+    for(i=0;i<6;i++) B.scatola(1.4,.1,.1,-3+6*r(),.1,-1.2+2.4*r(),CARB,r()*3.14);                                               // travi del tetto bruciate
+ }},
  {id:'giove', nome:'Tempio di Giove Capitolino', x:-29,z:0, ry:.5, zone:[[0,0,7.5]], fa:function(B){      // basamento di circa 54 x 62 m, la misura più citata (le stime pubblicate vanno da 50 a 74 m di lato: pianta discussa)
     B.scatola(5.4,.2,6.2,0,0,0,P.tufo).dentro(0,.2,0,0,function(B){ B.tempio(4.5,5.3,2.8,0,0,0,{fronte:6,lati:7,tetto:P.oro,podio:.3,r:.17}); });      // podio alto in tutto 5 m: «Its height was apparently from 4 to 5 metres» (Platner e Ashby, Aedes Iovis Capitolini)
  }},
@@ -1029,7 +1041,7 @@ RM.rovina=function(id,anno){
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
-var SENZA_CANTIERE={santadriano:1, curia:1, pantheonchiesa:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
+var SENZA_CANTIERE={santadriano:1, curia:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
 function ponteggio(o,t){
   if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
   if(!o.pont){

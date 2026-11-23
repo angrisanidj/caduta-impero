@@ -683,7 +683,8 @@ var MONUMENTI={
   laterano:[[0,'assente'],[318,'uso']], pietro:[[0,'assente'],[333,'uso']], tegolepietro:[[0,'assente'],[630,'uso']], obeliscovaticano:[[0,'uso']],
   mura:[[0,'assente'],[275,'uso']], acquedotti:[[0,'uso'],[537,'chiuso'],[776,'uso']],
   /* quel che viene costruito, o distrutto, durante la storia */
-  emilia:[[0,'uso'],[410,'bruciato']], marcello:[[0,'uso'],[537,'cava']], venere:[[0,'uso'],[392,'chiuso'],[630,'spogliato']],
+  emilia:[[0,'uso'],[410,'bruciato'],[410.5,'assente']], emiliarovina:[[0,'assente'],[410.5,'chiuso']],      // dopo l'incendio la rovina vera e propria (js/monumenti.js)
+  marcello:[[0,'uso'],[537,'cava']], venere:[[0,'uso'],[392,'chiuso'],[630,'spogliato']],
   sole:[[0,'assente'],[274,'uso'],[392,'chiuso']], arcocostantino:[[0,'assente'],[315,'uso']], termecostantino:[[0,'assente'],[315,'uso'],[537,'chiuso']],
   croce:[[0,'assente'],[330,'uso']], lorenzo:[[0,'assente'],[335,'uso']], lorenzopelagio:[[0,'assente'],[580,'uso']], agnese:[[0,'assente'],[350,'uso'],[640,'chiuso']], costanza:[[0,'assente'],[350,'uso']], agneseonorio:[[0,'assente'],[630,'uso']],
   paolocostantino:[[0,'assente'],[324,'uso'],[386,'assente']], paolo:[[0,'assente'],[390,'uso'],[801,'crollato'],[806,'uso']],
@@ -1006,6 +1007,7 @@ var CERTEZZA={
   antoniniano:['B',"Certi due punti: l'arco detto di Druso, in piedi, e i resti di piazza Galeria. Il tracciato fra l'uno e l'altro e fino alle terme è ricostruito."],
   chiese:['B',"Ogni chiesa compare nel luogo in cui sorge oggi. Poiché per quasi tutte si è perduta la pianta antica, nella ricostruzione si usa lo stesso edificio schematico."]
 };
+SCHEDE.emiliarovina=SCHEDE.emilia; CERTEZZA.emiliarovina=CERTEZZA.emilia;      // la rovina dopo il 410 ha la stessa scheda della basilica
 var MURA_ALTE=[[0,0],[270.6,0],[270.7,1],[400.6,1],[403.2,1.5]];   // l'altezza a lavori finiti: come sale il cantiere fra il 271 e il 280 sta in js/mura.js (CANTIERE_MURA). Rialzate nel 401-403 (o già sotto Massenzio: discusso). 1 vale 7 m fuori terra («not more than 25 feet», Platner), 1,5 vale 12 m (da 6-8 ad almeno 10,5-15 m, it.wikipedia)
 
 function interp(punti,x){
