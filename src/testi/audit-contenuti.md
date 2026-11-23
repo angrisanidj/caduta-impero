@@ -63,6 +63,8 @@ Lettura di `js/dati.js` (TAPPE, ATTI, CAMBI, LUOGHI_TAPPA, SCENE_CARTA, PASSI_CA
 
 ## Priorità media
 
+> Fatte il 23 novembre 2026, alle 17, sulle fonti indicate accanto a ciascuna in `js/dati.js` (script in scratchpad `audit.py`): M1, M2, M3, M4, M8, M10, M11, M12, M13, M16, M17. Le altre (M5-M7, M9, M14, M15) erano già state applicate con gli errori chiari.
+
 **M1. La Britannia «usurpatore» nel 293 non è spiegata**
 - Dove: `CAMBI` 293 (r. 372); T07-293 (r. 428).
 - Problema: la carta colora la Britannia come usurpata e Carausio compare solo nei commenti. Né il testo, né i luoghi, né i protagonisti lo nominano.

@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 16:39:22.
+Generato da `src/testi.mjs` il 23/11/2026, 17:25:14.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 16:34
+[pagina.52] Versione del 23/11/2026, ore 16:49
 
 
 ## 2. Gli atti
@@ -224,17 +224,23 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T03-260.chi1.riga] Catturato presso Edessa, muore prigioniero in Persia.
 
-[T03-260.chi2.nome] Shapur I
+[T03-260.chi2.nome] Gallieno
 
-[T03-260.chi2.date] re dal 240 al 270 circa
+[T03-260.chi2.date] imperatore dal 253 al 268
 
-[T03-260.chi2.riga] Il re persiano celebra la vittoria in due modi. Fa scolpire nella roccia la scena del trionfo e fa incidere su una torre di pietra il racconto della campagna.
+[T03-260.chi2.riga] Figlio di Valeriano, dal 260 regna da solo. Le Gallie gli sfuggono con Postumo. Con un rescritto restituisce ai vescovi i luoghi di culto e, con un altro, i cimiteri (Eusebio).
 
-[T03-260.chi3.nome] Postumo
+[T03-260.chi3.nome] Shapur I
 
-[T03-260.chi3.date] morto nel 269
+[T03-260.chi3.date] re dal 240 al 270 circa
 
-[T03-260.chi3.riga] Generale delle truppe sul Reno, diventa imperatore delle Gallie nel 260.
+[T03-260.chi3.riga] Il re persiano celebra la vittoria in due modi. Fa scolpire nella roccia la scena del trionfo e fa incidere su una torre di pietra il racconto della campagna.
+
+[T03-260.chi4.nome] Postumo
+
+[T03-260.chi4.date] morto nel 269
+
+[T03-260.chi4.riga] Generale delle truppe sul Reno, diventa imperatore delle Gallie nel 260.
 
 [T03-260.voce1.testo] «Nella terza guerra, quando attaccammo Carre ed Edessa e le stringevamo d'assedio, il Cesare Valeriano venne contro di noi […] con una forza di settantamila uomini. Al di là di Carre e di Edessa ci fu una grande battaglia con il Cesare Valeriano. E il Cesare Valeriano lo facemmo prigioniero noi, con le nostre mani; e gli altri, il prefetto del pretorio, i senatori, i generali e chiunque in quell'esercito avesse un comando, tutti li facemmo prigionieri e li portammo via, in Persia.»
 
@@ -341,6 +347,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [T07-293.luogo3.treviri] residenza di Costanzo, il vice di Massimiano
 
 [T07-293.luogo4.sirmio] residenza di Galerio, il vice di Diocleziano. Fino al 296 circa, però, vi soggiorna più spesso Diocleziano.
+
+[T07-293.luogo5.londra] Carausio, poi Alletto, governano la Britannia come imperatori rivali dal 286 al 296
 
 
 ### 301 · I prezzi fissati per legge
@@ -520,7 +528,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T13-378.titolo] Adrianopoli
 
-[T13-378.testo] Nel 376 l'imperatore d'Oriente Valente permette a un gruppo di Goti di attraversare il Danubio e stabilirsi nell'impero. Ridotti alla fame, i Goti si ribellano. Due anni dopo, ad Adrianopoli, sconfiggono l'esercito di Valente. L'imperatore muore in battaglia. Secondo lo storico Ammiano Marcellino, dei soldati romani sopravvive appena uno su tre.
+[T13-378.testo] Nel 376 l'imperatore d'Oriente Valente permette a un gruppo di Goti di attraversare il Danubio e stabilirsi nell'impero. Ridotti alla fame, i Goti si ribellano. Due anni dopo, ad Adrianopoli, sconfiggono l'esercito di Valente. L'imperatore muore in battaglia. Secondo lo storico Ammiano Marcellino, dei soldati romani sopravvive appena uno su tre. Molti di questi Goti sono cristiani, ma della corrente ariana, la stessa di Valente: secondo lo storico Socrate la scelsero per riguardo all'imperatore.
 
 [T13-378.chi1.nome] Valente
 
@@ -577,7 +585,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T14-384.titolo] L'altare della dea Vittoria divide il Senato
 
-[T14-384.testo] Intorno al 382 l'imperatore Graziano fa rimuovere dalla sede del Senato l'altare della dea Vittoria. Taglia anche i finanziamenti pubblici per i culti tradizionali di Roma e per le Vestali, le sacerdotesse di Vesta. L'anno seguente le truppe romane in Britannia proclamano imperatore il loro comandante, Magno Massimo. Questi passa in Gallia, fa uccidere Graziano ed estende il proprio potere alle province della penisola iberica. Nel 384 Valentiniano II governa quindi solo una parte dell'Occidente. A lui si rivolge Simmaco, il prefetto di Roma, per chiedere che l'altare torni in Senato e che lo Stato riprenda a finanziare i culti. Simmaco parla a nome di tutti i senatori. Ambrogio, vescovo di Milano, obietta che i senatori cristiani non condividono la richiesta. Per Ambrogio, un imperatore cristiano non può pagare i sacrifici agli dèi. Valentiniano respinge la richiesta di Simmaco.
+[T14-384.testo] Intorno al 382 l'imperatore Graziano fa rimuovere dalla sede del Senato l'altare della dea Vittoria. Era già stato tolto da Costanzo II nel 357 e poi rimesso al suo posto, probabilmente sotto Giuliano: le fonti non dicono quando. Taglia anche i finanziamenti pubblici per i culti tradizionali di Roma e per le Vestali, le sacerdotesse di Vesta. L'anno seguente le truppe romane in Britannia proclamano imperatore il loro comandante, Magno Massimo. Questi passa in Gallia, fa uccidere Graziano ed estende il proprio potere alle province della penisola iberica. Nel 384 Valentiniano II governa quindi solo una parte dell'Occidente. A lui si rivolge Simmaco, il prefetto di Roma, per chiedere che l'altare torni in Senato e che lo Stato riprenda a finanziare i culti. Simmaco parla a nome di tutti i senatori. Ambrogio, vescovo di Milano, obietta che i senatori cristiani non condividono la richiesta. Per Ambrogio, un imperatore cristiano non può pagare i sacrifici agli dèi. Valentiniano respinge la richiesta di Simmaco.
 
 [T14-384.chi1.nome] Simmaco
 
@@ -624,7 +632,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T15-394.titolo] La battaglia del fiume Frigido
 
-[T15-394.testo] Nel IV secolo gli eserciti romani combattono più volte gli uni contro gli altri per decidere chi governerà l'Impero. Nel 351, a Mursa, nella provincia della Pannonia, Costanzo II sconfigge il rivale Magnenzio. I combattimenti costano all'esercito romano pesanti perdite. Nel 388 Teodosio sconfigge Magno Massimo, che viene catturato e ucciso ad Aquileia. Negli anni successivi la lotta per il trono si intreccia con le dispute religiose. Nel 391 Teodosio vieta i sacrifici e l'ingresso nei templi per celebrarvi riti. Nel 392 una sua legge destinata alle province orientali vieta anche i riti domestici in onore degli antichi dèi. Intanto, con l'appoggio del generale Arbogaste, Eugenio diventa imperatore d'Occidente. Si professa cristiano e concede doni ai senatori che difendono i culti tradizionali. Ai primi di settembre del 394 l'esercito di Teodosio affronta quello di Eugenio sul fiume Frigido, alle porte dell'Italia. Dopo due giorni di battaglia Teodosio vince. Alcuni autori cristiani attribuiranno la sua vittoria a un vento mandato da Dio.
+[T15-394.testo] Nel IV secolo gli eserciti romani combattono più volte gli uni contro gli altri per decidere chi governerà l'Impero. Nel 351, a Mursa, nella provincia della Pannonia, Costanzo II sconfigge il rivale Magnenzio. I combattimenti costano all'esercito romano pesanti perdite. Nel 388 Teodosio sconfigge Magno Massimo, che viene catturato e ucciso ad Aquileia. Negli anni successivi la lotta per il trono si intreccia con le dispute religiose. Già nel 380 un editto di Teodosio aveva stabilito che tutti seguissero la fede del vescovo di Roma, Damaso, e di quello di Alessandria: chi la rifiutava era considerato eretico. Nel 391 Teodosio vieta i sacrifici e l'ingresso nei templi per celebrarvi riti. Nel 392 una sua legge destinata alle province orientali vieta anche i riti domestici in onore degli antichi dèi. Intanto, con l'appoggio del generale Arbogaste, Eugenio diventa imperatore d'Occidente. Si professa cristiano e concede doni ai senatori che difendono i culti tradizionali. Ai primi di settembre del 394 l'esercito di Teodosio affronta quello di Eugenio sul fiume Frigido, alle porte dell'Italia. Dopo due giorni di battaglia Teodosio vince. Alcuni autori cristiani attribuiranno la sua vittoria a un vento mandato da Dio.
 
 [T15-394.chi1.nome] Teodosio I
 
@@ -918,6 +926,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [T22-418.voce1.testo] «[Ataulfo raccontava] di aver dapprima desiderato ardentemente che, cancellato il nome romano, tutto il suolo romano diventasse e si chiamasse impero dei Goti, e che fosse, per dirla alla buona, Gothia ciò che era stato Romania […] ma poi, avendo provato con lunga esperienza che i Goti non potevano in alcun modo obbedire alle leggi, per la loro sfrenata barbarie, e che allo Stato non si possono togliere le leggi, senza le quali uno Stato non è uno Stato, aveva scelto almeno di cercare la gloria restaurando e accrescendo il nome romano con le forze dei Goti.»
 
 [T22-418.voce1.chi] Orosio, Storie contro i pagani, VII, 43, scritte nel 417-418. Un nobile di Narbona, amico del re goto Ataulfo, raccontò l'episodio a Girolamo, a Betlemme. Orosio era presente e lo sentì lui stesso: le parole di Ataulfo gli arrivano quindi attraverso una sola persona.
+
+[T22-418.storici] Che cosa ricevettero i Visigoti? Per lo storico Walter Goffart (1980) non ebbero campi, ma una parte delle imposte che i proprietari romani pagavano su quelle terre. Altri studiosi pensano che abbiano ricevuto vere terre, divise con i proprietari. Altri ancora ritengono che le soluzioni potessero cambiare da un luogo all'altro. Le fonti dell'epoca sono brevi e si prestano a più letture.
 
 [T22-418.luogo1.tolosa] i Visigoti insediati in Aquitania
 
@@ -1447,6 +1457,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T38-542.voce1.chi] Procopio, Guerre, II, 23. L'autore si trovava a Costantinopoli durante l'epidemia del 542. Le sue cifre si riferiscono alla capitale d'Oriente e restano discusse. Traduzione dalla versione inglese di Dewing.
 
+[T38-542.storici] Quanto pesò la peste di Giustiniano? Per alcuni storici, come Kyle Harper, uccise una parte grande della popolazione e cambiò la storia del Mediterraneo. Altri, come Lee Mordechai e Merle Eisenberg, pensano che le fonti dell'epoca la esagerino e che i suoi effetti siano stati più limitati. Una cosa ormai è certa: il DNA trovato in tombe del VI secolo mostra che era la stessa malattia della peste nera del Trecento.
+
 [T38-542.luogo1.pelusio] di qui parte la peste, nel 541
 
 [T38-542.luogo2.costantinopoli] la peste arriva nel 542
@@ -1491,7 +1503,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T40-552.titolo] La fine del regno dei Goti in Italia
 
-[T40-552.testo] Nel 552 il generale Narsete, inviato in Italia dall'imperatore d'Oriente Giustiniano, sconfigge il re goto Totila a Tagina, sull'Appennino. Totila muore durante la fuga. Narsete riconquista Roma e manda a Giustiniano le chiavi delle porte. Secondo lo storico Procopio, è la quinta volta che la città passa di mano dall'inizio del regno di Giustiniano. Durante la ritirata i Goti uccidono alcuni senatori che dalla Campania stavano tornando a Roma. Il loro ultimo re, Teia, muore in battaglia ai piedi del Vesuvio. Dopo diciotto anni di guerra l'Italia torna sotto il governo imperiale. Il 13 agosto 554 Giustiniano emana la Prammatica Sanzione, un provvedimento che annulla le decisioni di Totila. Conferma i fondi per rifornire Roma di grano e per la manutenzione degli edifici pubblici, del letto del Tevere, del porto e degli acquedotti.
+[T40-552.testo] Nel 552 il generale Narsete, inviato in Italia dall'imperatore d'Oriente Giustiniano, sconfigge il re goto Totila a Tagina, sull'Appennino. Totila muore durante la fuga. Narsete riconquista Roma e manda a Giustiniano le chiavi delle porte. Secondo lo storico Procopio, è la quinta volta che la città passa di mano dall'inizio del regno di Giustiniano. Durante la ritirata i Goti uccidono alcuni senatori che dalla Campania stavano tornando a Roma. Il loro ultimo re, Teia, muore in battaglia ai piedi del Vesuvio. Dopo diciotto anni di guerra l'Italia torna sotto il governo imperiale. Il 13 agosto 554 Giustiniano emana la Prammatica Sanzione, un provvedimento che annulla le decisioni di Totila ed estende all'Italia le leggi raccolte nei suoi codici. Conferma i fondi per rifornire Roma di grano e per la manutenzione degli edifici pubblici, del letto del Tevere, del porto e degli acquedotti.
 
 [T40-552.chi1.nome] Narsete
 
@@ -1862,7 +1874,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T51-756.titolo] I Longobardi assediano Roma
 
-[T51-756.testo] Il re longobardo Astolfo assedia Roma per tre mesi. Il papa chiede di nuovo aiuto ai Franchi. Da circa trent'anni i rapporti con Costantinopoli sono tesi anche per il divieto imperiale delle immagini sacre, che i papi difendono. Pipino il Breve, re dei Franchi, interviene in Italia e consegna al papa i territori sottratti ai Longobardi. Nasce così il primo nucleo dello Stato della Chiesa, il territorio su cui i papi esercitano anche il potere politico.
+[T51-756.testo] Il re longobardo Astolfo assedia Roma per tre mesi. Il papa chiede di nuovo aiuto ai Franchi. Da circa trent'anni i rapporti con Costantinopoli sono tesi anche per il divieto imperiale delle immagini sacre, che i papi difendono. Pipino il Breve, re dei Franchi, interviene in Italia e consegna al papa i territori sottratti ai Longobardi. Già verso il 728 il re longobardo Liutprando aveva «restituito e donato» agli apostoli Pietro e Paolo il castello di Sutri: per molti è il primo possesso dei papi. Con Pipino il papa riceve invece un vero territorio. Nasce così lo Stato della Chiesa, su cui i papi esercitano anche il potere politico.
 
 [T51-756.chi1.nome] Astolfo
 
@@ -1979,6 +1991,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T54-800.voce2.chi] Eginardo, Vita di Carlo, 28. Membro della corte, scrive tra l'817 e l'830, una generazione dopo i fatti. Il sovrano riluttante ad accettare il potere è anche un motivo ricorrente nella letteratura.
 
+[T54-800.storici] Carlo voleva essere incoronato? Il suo biografo Eginardo scrive che, se l'avesse saputo, quel giorno non sarebbe entrato in chiesa. Gli storici discutono se fosse vero o una formula di modestia. Gli Annali di Lorsch, scritti pochi anni dopo, sono l'unica fonte che lo contraddice: la cosa, dicono, fu discussa a Roma in un'assemblea, dopo l'arrivo di Carlo. E giustificano il titolo con il fatto che a Costantinopoli mancava un imperatore, perché governava una donna, Irene.
+
 [T54-800.luogo1.roma] Carlo Magno incoronato imperatore
 
 [T54-800.luogo2.aquisgrana] sede della corte di Carlo Magno
@@ -2075,7 +2089,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T58-852.titolo] Le nuove mura proteggono San Pietro
 
-[T58-852.testo] Dopo il saccheggio dell'846 e l'incendio che devasta parte del quartiere del Borgo intorno all'847, papa Leone IV fa costruire nuove mura attorno a San Pietro. Il 27 giugno 852 nasce la «città leonina», che prende il nome dal papa. Le mura di Aureliano, lunghe diciannove chilometri, racchiudono ancora i quartieri della città antica, dove tra le rovine si coltivano orti e vigne. La nuova cinta protegge la basilica e il quartiere sorto attorno alla tomba dell'apostolo. È qui che Roma ha trovato un nuovo centro. Molti monumenti antichi assunsero l'aspetto attuale nei secoli successivi, soprattutto perché furono smontati per riutilizzarne i materiali. Il lato sud del Colosseo, per esempio, era già in parte smontato quando, secondo il Parco archeologico del Colosseo, il terremoto dell'847 ne fece crollare il resto. La data tradizionale è invece il 1349. Nessuna cronaca dell'epoca descrive il crollo.
+[T58-852.testo] Dopo il saccheggio dell'846 e l'incendio che devasta parte del quartiere del Borgo intorno all'847, papa Leone IV fa costruire nuove mura attorno a San Pietro. Nell'849, davanti a Ostia, le navi di Napoli, Amalfi e Gaeta, benedette dal papa, sconfiggono una flotta saracena, dispersa anche da una tempesta. Il 27 giugno 852 nasce la «città leonina», che prende il nome dal papa. Le mura di Aureliano, lunghe diciannove chilometri, racchiudono ancora i quartieri della città antica, dove tra le rovine si coltivano orti e vigne. La nuova cinta protegge la basilica e il quartiere sorto attorno alla tomba dell'apostolo. È qui che Roma ha trovato un nuovo centro. Molti monumenti antichi assunsero l'aspetto attuale nei secoli successivi, soprattutto perché furono smontati per riutilizzarne i materiali. Il lato sud del Colosseo, per esempio, era già in parte smontato quando, secondo il Parco archeologico del Colosseo, il terremoto dell'847 ne fece crollare il resto. La data tradizionale è invece il 1349. Nessuna cronaca dell'epoca descrive il crollo.
 
 [T58-852.chi1.nome] Leone IV
 
@@ -2102,7 +2116,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T59-852.titolo] Che cosa resta
 
-[T59-852.testo] Nell'852, quasi quattro secoli dopo la fine dell'Impero romano d'Occidente, che cosa rimane del mondo romano? Il latino sopravvive nei libri, mentre la lingua parlata è cambiata. Nell'813 a Tours un'assemblea di vescovi chiede ai sacerdoti di predicare «nella lingua romana rustica o in quella tedesca», così che tutti possano capire. La prima espressione indica la parlata locale derivata dal latino. Nell'842, a Strasburgo, due nipoti di Carlo Magno pronunciano un giuramento davanti ai loro eserciti, uno in lingua romanza e l'altro in tedesco. Lo storico Nitardo ne trascrive le parole. Anche il diritto romano sopravvive, accanto a quello degli altri popoli. Verso l'820 il vescovo Agobardo di Lione osserva che persino cinque uomini seduti insieme possono seguire leggi diverse a seconda delle loro origini, per esempio quella franca, burgunda o romana. Rimangono la Chiesa di Roma, protetta dai re franchi, e l'idea di impero. Nell'800 il papa ha incoronato Carlo Magno a Roma. La storia del titolo imperiale in Occidente proseguirà, con interruzioni, fino al 1806.
+[T59-852.testo] Nell'852, quasi quattro secoli dopo la fine dell'Impero romano d'Occidente, che cosa rimane del mondo romano? Il latino sopravvive nei libri, mentre la lingua parlata è cambiata. Nell'813 a Tours un'assemblea di vescovi chiede ai sacerdoti di predicare «nella lingua romana rustica o in quella tedesca», così che tutti possano capire. La prima espressione indica la parlata locale derivata dal latino. Nell'842, a Strasburgo, due nipoti di Carlo Magno pronunciano un giuramento davanti ai loro eserciti, uno in lingua romanza e l'altro in tedesco. Lo storico Nitardo ne trascrive le parole. Anche il diritto romano sopravvive, accanto a quello degli altri popoli. Nel 506 il re visigoto Alarico II ne fa raccogliere una sintesi per i suoi sudditi romani della Gallia e della Spagna, il «Breviario di Alarico». In Italia valgono le leggi di Giustiniano. Verso l'820 il vescovo Agobardo di Lione osserva che persino cinque uomini seduti insieme possono seguire leggi diverse a seconda delle loro origini, per esempio quella franca, burgunda o romana. Rimangono la Chiesa di Roma, protetta dai re franchi, e l'idea di impero. Nell'800 il papa ha incoronato Carlo Magno a Roma. La storia del titolo imperiale in Occidente proseguirà, con interruzioni, fino al 1806.
 
 [T59-852.voce1.testo] «Per l'amore di Dio e per il popolo cristiano e la salvezza di noi due, da questo giorno in avanti, per quanto Dio mi darà di sapere e di potere, io salverò questo mio fratello Carlo, con il mio aiuto e in ogni cosa, come per diritto si deve salvare il proprio fratello, purché egli faccia altrettanto con me. E con Lotario non farò mai nessun accordo che, per mia volontà, sia di danno a questo mio fratello Carlo.»
 
@@ -2173,6 +2187,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [evento.africa534] 534 · Roma, governata dai Goti, non vede la guerra d'Africa. Ma qualcosa le appartiene: secondo Procopio, nel trionfo di Belisario a Costantinopoli sfilano anche i tesori del Tempio di Gerusalemme, che Tito aveva portato a Roma e i Vandali avevano preso nel sacco del 455.
 
 [evento.assedio537] Marzo 537 – marzo 538 · Il re goto Vitige assedia Roma, difesa da Belisario, per un anno e nove giorni. I Goti interrompono gli acquedotti e allestiscono sette accampamenti, sei davanti alle porte tra il nord e l'est della città e uno oltre il Tevere. Già dall'anno precedente il sole appare velato. Procopio paragona la sua luce a quella della luna. Cassiodoro racconta che in Italia a mezzogiorno i corpi non proiettavano ombra. Oggi il fenomeno è attribuito a grandi eruzioni vulcaniche.
+
+[evento.tetrarchia293] 293 · Gli imperatori non vivono più a Roma, ma vi fanno ancora costruire. Diocleziano fa rifare la Curia, bruciata nel 283. Dal 298 sorgeranno le sue terme, le più grandi della città.
 
 [evento.totila546] 17 dicembre 546 · Totila entra di notte da porta Asinaria. Fa abbattere alcuni tratti delle mura, brucia una parte di Trastevere e porta via gli abitanti. Secondo una cronaca, Roma rimane deserta per settimane.
 
@@ -4299,143 +4315,143 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.07-r9] fuori dall'impero
 
-[ui.mappa.08-r11] impero persiano
+[ui.mappa.08-r13] impero persiano
 
-[ui.mappa.09-r11] regno degli Svevi
+[ui.mappa.09-r13] regno degli Svevi
 
-[ui.mappa.10-r11] regno dei Vandali
+[ui.mappa.10-r13] regno dei Vandali
 
-[ui.mappa.11-r11] regno dei Visigoti
+[ui.mappa.11-r13] regno dei Visigoti
 
-[ui.mappa.12-r11] regno dei Burgundi
+[ui.mappa.12-r13] regno dei Burgundi
 
-[ui.mappa.13-r11] regni dei Franchi
+[ui.mappa.13-r13] regni dei Franchi
 
-[ui.mappa.14-r12] regno d'Italia
+[ui.mappa.14-r14] regno d'Italia
 
-[ui.mappa.15-r12] regno e ducati dei Longobardi
+[ui.mappa.15-r14] regno e ducati dei Longobardi
 
-[ui.mappa.16-r12] regni anglosassoni
+[ui.mappa.16-r14] regni anglosassoni
 
-[ui.mappa.17-r12] regno delle Asturie
+[ui.mappa.17-r14] regno delle Asturie
 
-[ui.mappa.18-r13] regni dei Britanni
+[ui.mappa.18-r15] regni dei Britanni
 
-[ui.mappa.19-r13] regno dei Turingi
+[ui.mappa.19-r15] regno dei Turingi
 
-[ui.mappa.20-r13] regno dei Gepidi
+[ui.mappa.20-r15] regno dei Gepidi
 
-[ui.mappa.21-r13] dominio degli Unni
+[ui.mappa.21-r15] dominio degli Unni
 
-[ui.mappa.22-r13] regno degli Avari
+[ui.mappa.22-r15] regno degli Avari
 
-[ui.mappa.23-r14] regno dei Bulgari
+[ui.mappa.23-r16] regno dei Bulgari
 
-[ui.mappa.24-r14] principato di Moravia
+[ui.mappa.24-r16] principato di Moravia
 
-[ui.mappa.25-r15] Mappa dell'Impero romano
+[ui.mappa.25-r17] Mappa dell'Impero romano
 
-[ui.mappa.26-r25] Asia Minore
+[ui.mappa.26-r27] Asia Minore
 
-[ui.mappa.27-r77] : mostra i territori che governa
+[ui.mappa.27-r79] : mostra i territori che governa
 
-[ui.mappa.28-r88] le Gallie al di là delle Alpi (Aurelio Vittore)
+[ui.mappa.28-r90] le Gallie al di là delle Alpi (Aurelio Vittore)
 
-[ui.mappa.29-r89] tutto il resto, cioè l’Oriente (Aurelio Vittore)
+[ui.mappa.29-r91] tutto il resto, cioè l’Oriente (Aurelio Vittore)
 
-[ui.mappa.30-r94] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
+[ui.mappa.30-r96] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
 
-[ui.mappa.31-r112] oltre il confine
+[ui.mappa.31-r114] oltre il confine
 
-[ui.mappa.32-r112] insediati nell'impero per accordo
+[ui.mappa.32-r114] insediati nell'impero per accordo
 
-[ui.mappa.33-r112] in armi dentro l'impero
+[ui.mappa.33-r114] in armi dentro l'impero
 
-[ui.mappa.34-r112] con un proprio regno (vedi il colore nella legenda)
+[ui.mappa.34-r114] con un proprio regno (vedi il colore nella legenda)
 
-[ui.mappa.35-r114] Regno dei Visigoti
+[ui.mappa.35-r116] Regno dei Visigoti
 
-[ui.mappa.36-r114] Regno degli Ostrogoti
+[ui.mappa.36-r116] Regno degli Ostrogoti
 
-[ui.mappa.37-r114] Regno dei Vandali
+[ui.mappa.37-r116] Regno dei Vandali
 
-[ui.mappa.38-r114] Regno degli Svevi
+[ui.mappa.38-r116] Regno degli Svevi
 
-[ui.mappa.39-r114] Regno dei Burgundi
+[ui.mappa.39-r116] Regno dei Burgundi
 
-[ui.mappa.40-r114] Regno dei Franchi
+[ui.mappa.40-r116] Regno dei Franchi
 
-[ui.mappa.41-r114] Regni anglosassoni
+[ui.mappa.41-r116] Regni anglosassoni
 
-[ui.mappa.42-r114] Regno dei Longobardi
+[ui.mappa.42-r116] Regno dei Longobardi
 
-[ui.mappa.43-r114] Regno degli Avari
+[ui.mappa.43-r116] Regno degli Avari
 
-[ui.mappa.44-r114] Regno dei Bulgari
+[ui.mappa.44-r116] Regno dei Bulgari
 
-[ui.mappa.45-r436] La scena passo per passo
+[ui.mappa.45-r438] La scena passo per passo
 
-[ui.mappa.46-r439] Passo per passo
+[ui.mappa.46-r441] Passo per passo
 
-[ui.mappa.47-r440] Rivedi la scena dall'inizio
+[ui.mappa.47-r442] Rivedi la scena dall'inizio
 
-[ui.mappa.48-r470] Chiudi la didascalia
+[ui.mappa.48-r472] Chiudi la didascalia
 
-[ui.mappa.49-r471] Mostra la didascalia
+[ui.mappa.49-r473] Mostra la didascalia
 
-[ui.mappa.50-r480] ▶ Guarda la scena
+[ui.mappa.50-r482] ▶ Guarda la scena
 
-[ui.mappa.51-r480] Guarda la scena di questa tappa sulla carta
+[ui.mappa.51-r482] Guarda la scena di questa tappa sulla carta
 
-[ui.mappa.52-r573] Regni dei Franchi
+[ui.mappa.52-r575] Regni dei Franchi
 
-[ui.mappa.53-r573] Impero dei Franchi
+[ui.mappa.53-r575] Impero dei Franchi
 
-[ui.mappa.54-r700] regno d'Italia di Odoacre
+[ui.mappa.54-r702] regno d'Italia di Odoacre
 
-[ui.mappa.55-r700] regno degli Ostrogoti
+[ui.mappa.55-r702] regno degli Ostrogoti
 
-[ui.mappa.56-r700] regno dei Franchi
+[ui.mappa.56-r702] regno dei Franchi
 
-[ui.mappa.57-r701] impero romano
+[ui.mappa.57-r703] impero romano
 
-[ui.mappa.58-r701] impero d'Occidente
+[ui.mappa.58-r703] impero d'Occidente
 
-[ui.mappa.59-r701] territorio con un imperatore rivale
+[ui.mappa.59-r703] territorio con un imperatore rivale
 
-[ui.mappa.60-r701] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.60-r703] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.61-r701] regione contesa in guerra
+[ui.mappa.61-r703] regione contesa in guerra
 
-[ui.mappa.62-r702] popoli insediati per trattato
+[ui.mappa.62-r704] popoli insediati per trattato
 
-[ui.mappa.63-r702] impero d'Oriente
+[ui.mappa.63-r704] impero d'Oriente
 
-[ui.mappa.64-r703] califfato ed emirati arabi
+[ui.mappa.64-r705] califfato ed emirati arabi
 
-[ui.mappa.65-r703] regni franchi dopo la divisione dell'843
+[ui.mappa.65-r705] regni franchi dopo la divisione dell'843
 
-[ui.mappa.66-r703] abbandonata da Roma
+[ui.mappa.66-r705] abbandonata da Roma
 
-[ui.mappa.67-r703] fuori dal controllo romano
+[ui.mappa.67-r705] fuori dal controllo romano
 
-[ui.mappa.68-r735] Mostra meno voci della legenda
+[ui.mappa.68-r737] Mostra meno voci della legenda
 
-[ui.mappa.69-r745] Mostra le altre
+[ui.mappa.69-r747] Mostra le altre
 
-[ui.mappa.70-r795] mai appartenuta all'impero
+[ui.mappa.70-r797] mai appartenuta all'impero
 
-[ui.mappa.71-r839] Carta a tutto schermo
+[ui.mappa.71-r841] Carta a tutto schermo
 
-[ui.mappa.72-r844] Tutto schermo
+[ui.mappa.72-r846] Tutto schermo
 
-[ui.mappa.73-r844] Esci dallo schermo intero
+[ui.mappa.73-r846] Esci dallo schermo intero
 
-[ui.mappa.74-r935] Torna alla carta intera
+[ui.mappa.74-r937] Torna alla carta intera
 
-[ui.mappa.75-r937] La scena continua fuori dalla carta, verso
+[ui.mappa.75-r939] La scena continua fuori dalla carta, verso
 
-[ui.mappa.76-r937] : guardala tutta
+[ui.mappa.76-r939] : guardala tutta
 
 
 ### js/atti.js
