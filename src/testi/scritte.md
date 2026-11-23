@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 22:01:36.
+Generato da `src/testi.mjs` il 23/11/2026, 22:20:04.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 21:59
+[pagina.52] Versione del 23/11/2026, ore 22:18
 
 
 ## 2. Gli atti
@@ -1618,7 +1618,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T43-590.titolo] La città
 
-[T43-590.testo] Come si segue lo spopolamento di Roma in assenza di censimenti regolari? Un indizio viene dai registri dei viveri. Nel 2 a.C. poco più di 200.000 abitanti ricevono grano dallo Stato. Nel 419 una legge prevede 4.000 razioni di carne al giorno. Nel 452 lo Stato distribuisce ancora oltre 3,6 milioni di libbre di carne di maiale. In seguito le distribuzioni si fanno più rare. Nessuna legge dice quando cessino. Cambia anche il paesaggio. Nel 458 l'imperatore Maggioriano minaccia di multare i magistrati che permettono di smontare i monumenti e di far tagliare le mani ai loro subalterni. La severità della legge mostra quanto il recupero dei materiali preoccupi le autorità. Nel 537 i Goti interrompono i quattordici acquedotti. Per continuare a macinare il grano, il generale Belisario fa installare mulini galleggianti sul Tevere. Un altro indizio viene dalle tombe. Già nella prima metà del V secolo compaiono, ancora rare, sepolture dentro le mura, dove la legge antica le vietava. Gli archeologi che le hanno censite ipotizzano che durante gli assedi fosse difficile portare fuori i morti. Nel VI e nel VII secolo seppellire i morti nei quartieri ormai vuoti e nelle terme abbandonate diventa abituale.
+[T43-590.testo] Come si segue lo spopolamento di Roma in assenza di censimenti regolari? Un indizio viene dai registri dei viveri. Nel 2 a.C. poco più di 200.000 abitanti ricevono grano dallo Stato. Nel 419 una legge prevede 4.000 razioni di carne al giorno. Nel 452 lo Stato distribuisce ancora oltre 3,6 milioni di libbre di carne di maiale. In seguito le distribuzioni si fanno più rare. Nessuna legge dice quando cessino. Cambia anche il paesaggio. Nel 458 l'imperatore Maggioriano minaccia di multare i magistrati che permettono di smontare i monumenti e di far tagliare le mani ai loro subalterni. La severità della legge mostra quanto il recupero dei materiali preoccupi le autorità. Nel 537 i Goti tagliano tutti gli acquedotti di Roma: quattordici, secondo Procopio. Per continuare a macinare il grano, il generale Belisario fa installare mulini galleggianti sul Tevere. Un altro indizio viene dalle tombe. Già nella prima metà del V secolo compaiono, ancora rare, sepolture dentro le mura, dove la legge antica le vietava. Gli archeologi che le hanno censite ipotizzano che durante gli assedi fosse difficile portare fuori i morti. Nel VI e nel VII secolo seppellire i morti nei quartieri ormai vuoti e nelle terme abbandonate diventa abituale.
 
 
 ### 593 · «Dov'è il Senato? Dov'è ormai il popolo?»
@@ -3669,7 +3669,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 ### acquedotti
 
-[scheda.acquedotti.cosa] Undici condotti rifornivano d'acqua le terme, le fontane e i mulini di Roma.
+[scheda.acquedotti.cosa] Undici grandi acquedotti, costruiti dal 312 a.C. al III secolo, portavano l'acqua alle terme, alle fontane e ai mulini di Roma. Contando anche rami e diramazioni, un catalogo del IV secolo arriva a diciannove. Procopio, per il 537, ne conta quattordici: il perché non è spiegato nelle fonti che abbiamo letto.
 
 [scheda.acquedotti.data1-537] Tagliati dai Goti durante l'assedio.
 

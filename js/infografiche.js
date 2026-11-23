@@ -2701,9 +2701,9 @@ function disegnaSacchi(svg,S,W,H){
    - tappa del 493 (Teodorico vieta di deviare l'acqua degli acquedotti); voce del 780 (Liber Pontificalis, vita di Adriano I).
    Schemi, detti nel disegno: i tracciati degli acquedotti, i punti dei tagli (le fonti non dicono dove), le posizioni dei campi, i mulini galleggianti (numero e forma), l'acqua che si
    svuota e torna. Che la Iovia sia il ramo di Caracalla (l'Antoniniano) è l'ipotesi del modello: è detto. Lasciato fuori perché la pagina non lo dice: che cosa fecero i Romani agli
-   sbocchi degli acquedotti, quali acquedotti funzionassero fra il 538 e il 776, i nomi degli altri condotti. Le due cifre (quattordici e undici) sono tutte e due nella pagina: si dicono. */
+   sbocchi degli acquedotti, quali acquedotti funzionassero fra il 538 e il 776, i nomi degli altri condotti. Le cifre (undici, quattordici per Procopio, diciannove coi rami) vengono dalla scheda degli acquedotti, messa d'accordo il 23 novembre 2026. */
 var ACQUEDOTTI={ titolo:"Gli acquedotti tagliati", sotto:"537: i Goti fermano l'acqua di Roma. Che cosa si spegne, che cosa torna",
-  fasi:[["Prima","Gli acquedotti portano a Roma l'acqua per le terme, le fontane e i mulini. Procopio ne conta quattordici; nella scheda degli acquedotti di questa pagina sono undici."],
+  fasi:[["Prima","Gli acquedotti portano a Roma l'acqua per le terme, le fontane e i mulini. I grandi acquedotti sono undici; con i rami, un catalogo del IV secolo arriva a diciannove. Procopio ne conta quattordici."],
     ["493","Il re goto Teodorico, che governa l'Italia, vieta di deviare l'acqua degli acquedotti."],
     ["Marzo 537","Il re goto Vitige assedia Roma, difesa da Belisario. I Goti allestiscono sette accampamenti: sei davanti alle porte fra il nord e l'est, uno oltre il Tevere."],
     ["537","I Goti tagliano tutti gli acquedotti che riforniscono la città."],
