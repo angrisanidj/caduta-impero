@@ -8,10 +8,12 @@ function el(tipo,attr,padre){ var e=document.createElementNS(NS,tipo); for(var k
 
 var STATI=[['roma','governo di Roma'],['usurpatore','imperatore rivale'],['conteso','conteso'],['federati','alleati per trattato'],['regno:svevi',''],['regno:vandali',''],['regno:visigoti',''],['regno:burgundi',''],['regno:franchi',''],['regno:italia',''],['regno:longobardi',''],['regno:anglosassoni',''],['regno:asturie',''],['regno:britanni',''],['regno:turingi',''],['regno:gepidi',''],['regno:unni',''],['regno:avari',''],['regno:bulgari',''],['regno:moravi',''],['regno:persia',''],['oriente','corte d\'Oriente'],['califfato','califfato'],['carolingio','impero dei Franchi'],['chiesa','terre della Chiesa'],['perso','fuori dall\'impero']];
 /* i regni: colore e nome. I colori si ripetono solo fra regni che non sono mai sulla carta insieme. */
-var REGNI={persia:['#C29A4B','impero persiano'],svevi:['#D08C60','regno degli Svevi'],vandali:['#7B5B3A','regno dei Vandali'],visigoti:['#6A4C93','regno dei Visigoti'],burgundi:['#D684A4','regno dei Burgundi'],franchi:['#3E5F7A','regni dei Franchi'],
-  italia:['#3D7A4F','regno d\'Italia'],longobardi:['#8A8F3A','regno e ducati dei Longobardi'],anglosassoni:['#6E94B4','regni anglosassoni'],asturie:['#D08C60','regno delle Asturie'],
-  britanni:['#A99BD0','regni dei Britanni'],turingi:['#8B4F6B','regno dei Turingi'],gepidi:['#5A9096','regno dei Gepidi'],unni:['#5B5348','dominio degli Unni'],avari:['#5B5348','regno degli Avari'],
-  bulgari:['#8B4F6B','regno dei Bulgari'],moravi:['#A7B37A','principato di Moravia']};
+/* Colori rivisti il 23 novembre 2026 per chi non distingue i colori (src/prove/daltonismo.mjs: CIEDE2000 fra le coppie presenti insieme, sotto protanopia, deuteranopia e tritanopia;
+   la differenza minima è passata da 2 a quasi 10). Restano il rosso di Roma, il beige delle terre perse, l'oro della Chiesa e la trama dei contesi */
+var REGNI={persia:['#C79931','impero persiano'],svevi:['#AD6B0A','regno degli Svevi'],vandali:['#967E56','regno dei Vandali'],visigoti:['#8054C3','regno dei Visigoti'],burgundi:['#C16BBC','regno dei Burgundi'],franchi:['#405D83','regni dei Franchi'],
+  italia:['#90A889','regno d\'Italia'],longobardi:['#725302','regno e ducati dei Longobardi'],anglosassoni:['#848FB4','regni anglosassoni'],asturie:['#BF7A1E','regno delle Asturie'],
+  britanni:['#ACC6FD','regni dei Britanni'],turingi:['#684856','regno dei Turingi'],gepidi:['#5F9088','regno dei Gepidi'],unni:['#67664E','dominio degli Unni'],avari:['#67664E','regno degli Avari'],
+  bulgari:['#886B7E','regno dei Bulgari'],moravi:['#767C5F','principato di Moravia']};
 var svg=el('svg',{viewBox:'95 55 810 518',   /* ritaglio sull'Occidente: stesso rapporto del riquadro */ role:'img','aria-label':'Mappa dell\'Impero romano','preserveAspectRatio':'xMidYMid slice'},ospite);
 var defs=el('defs',{},svg), trama=el('pattern',{id:'trama-conteso',width:7,height:7,patternUnits:'userSpaceOnUse',patternTransform:'rotate(40)'},defs);
 el('rect',{width:7,height:7,fill:'#DCD0B8'},trama); el('rect',{width:3.2,height:7,fill:'#9A2F2A'},trama);

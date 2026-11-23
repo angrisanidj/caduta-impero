@@ -8,7 +8,7 @@
   --porpora:#7A1F2B;--vetro:rgba(33,25,18,.8);
   --vino:#4A1119;--vino-chiaro:#6E1A26;--vino-scuro:#22070B;--crema:#EBDCC8;      /* l'apertura e il piede, come nel Senato */
   /* stati delle regioni */
-  --st-roma:#9A2F2A;--st-usurpatore:#C98A2B;--st-federati:#6E8B5B;--st-regno:#4D6B7C;--st-oriente:#AF9DA7;--st-califfato:#3F8F86;--st-carolingio:#5A3F78;--st-perso:#DCD0B8;--st-chiesa:#E6C55A;
+  --st-roma:#9A2F2A;--st-usurpatore:#F2C85A;--st-federati:#94AC84;--st-regno:#4D6B7C;--st-oriente:#B8B3BB;--st-califfato:#48A48C;--st-carolingio:#5A3F78;--st-perso:#DCD0B8;--st-chiesa:#E6C55A;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
