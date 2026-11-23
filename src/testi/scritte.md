@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 17:25:14.
+Generato da `src/testi.mjs` il 23/11/2026, 19:38:09.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 16:49
+[pagina.52] Versione del 23/11/2026, ore 18:47
 
 
 ## 2. Gli atti
@@ -4282,21 +4282,21 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.16-r224] Tutto schermo
 
-[ui.pagina.17-r308] Leggi la tappa ↓
+[ui.pagina.17-r309] Leggi la tappa ↓
 
-[ui.pagina.18-r308] ↑ Torna alla carta e alla città
+[ui.pagina.18-r309] ↑ Torna alla carta e alla città
 
-[ui.pagina.19-r336] voci di allora
+[ui.pagina.19-r337] voci di allora
 
-[ui.pagina.20-r337] Fra storia e leggenda
+[ui.pagina.20-r338] Fra storia e leggenda
 
-[ui.pagina.21-r338] Gli storici discutono
+[ui.pagina.21-r339] Gli storici discutono
 
-[ui.pagina.22-r340] Letture di questa tappa
+[ui.pagina.22-r341] Letture di questa tappa
 
-[ui.pagina.23-r365] A Roma, in quest'anno
+[ui.pagina.23-r366] A Roma, in quest'anno
 
-[ui.pagina.24-r365] Guarda la città →
+[ui.pagina.24-r366] Guarda la città →
 
 
 ### js/mappa.js
@@ -4443,15 +4443,19 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.71-r841] Carta a tutto schermo
 
-[ui.mappa.72-r846] Tutto schermo
+[ui.mappa.72-r846] ⤢ Guarda la carta a tutto schermo
 
-[ui.mappa.73-r846] Esci dallo schermo intero
+[ui.mappa.73-r847] Non ora
 
-[ui.mappa.74-r937] Torna alla carta intera
+[ui.mappa.74-r858] Tutto schermo
 
-[ui.mappa.75-r939] La scena continua fuori dalla carta, verso
+[ui.mappa.75-r858] Esci dallo schermo intero
 
-[ui.mappa.76-r939] : guardala tutta
+[ui.mappa.76-r949] Torna alla carta intera
+
+[ui.mappa.77-r951] La scena continua fuori dalla carta, verso
+
+[ui.mappa.78-r951] : guardala tutta
 
 
 ### js/atti.js
