@@ -25,6 +25,7 @@ Parole da evitare comuni a tutti (negative): `text, letters, inscription, waterm
 | Tariq ibn Ziyad (711) | circa 40 (nato verso il 670, stima) | al-Maqqari (XVII secolo, leggenda: fronte alta, neo peloso sulla spalla); Procopio IV 6 sui Mauri (mantello pesante, tunica ruvida); dinaro del califfo in piedi | berbero, comandante, liberto o cliente di Musa | volto, carnagione, copricapo, colori | quasi nulla |
 | Musa ibn Nusayr (711) | circa 71 (nato nel 640 secondo al-Bakri) o 60 (altra fonte non letta) | nessuna; dinaro del califfo in piedi (693-697); Qusayr Amra (723-743) | anziano governatore arabo | quasi tutto | quasi nulla |
 | Ine (727) | circa 60 (stima) | nessuna; Beda V 7, *Cronaca anglosassone* 728; Paolo Diacono IV 22 (vesti «qualia Anglisaxones habere solent»); scrigno Franks | lascia il trono per andare pellegrino a Roma | volto, età, barba, colori, abito da viaggio | poco |
+| Siagrio (507) | ignota; scelta 45 (il padre muore nel 464-465) | nessuna su di lui; Gregorio di Tours II 27; Sidonio, *Lettere* V 5 (un Siagrio colto che parla burgundo: identificazione discussa) | generale romano, figlio di un *magister militum*: abito da ufficiale tardoromano | volto, età, colori; il viso rasato è un'ipotesi | quasi nulla |
 
 Due avvertenze valide per tutti. Gli oggetti di museo citati «a memoria dalle fotografie» vanno guardati prima di generare: il prompt descrive ciò che ricordo, non ciò che ho riletto. E dove la scheda dice «si sceglie», la scelta va scritta nella didascalia o nella riserva del ritratto, accanto a «Ricostruzione: il volto è immaginario».
 
@@ -288,6 +289,24 @@ Negative: le parole comuni, più `curved scimitar, Ottoman turban, Mamluk, henna
 Photorealistic half-length portrait of Ine, king of the West Saxons, in 727 AD as he gives up his throne to travel to Rome as a pilgrim, a grave, weathered man of about 60, grey-blond hair falling to the neck, a full grey beard, calm resolute eyes. He wears a loose long-sleeved tunic of off-white linen with broad tablet-woven bands of red, yellow and dark blue at the neck and cuffs, and a heavy travelling cloak of dark brown wool fastened on the right shoulder with a round gold brooch set with flat red garnets. No crown, no helmet, no weapons. Plain dark charcoal-brown studio backdrop, softly mottled, no objects. Natural side light from the left as from a window. Looks like a photograph of a real person in historically accurate early 8th-century Anglo-Saxon costume, shallow depth of field, 85mm lens.
 ```
 Negative: le parole comuni, più `crown, Sutton Hoo helmet, Viking, horns, fur, scallop shell, pilgrim staff, monk habit, friar`.
+
+## 14. Siagrio (tappa del 507, per i fatti del 486)
+
+**Le fonti sull'aspetto.** Nessuna lo descrive. Gregorio di Tours, *Storie* II 27 (latino su thelatinlibrary, letto il 23 novembre 2026): «Siacrius Romanorum rex, Egidi filius, apud civitatem Sexonas, quam quondam supra memoratus Egidius tenuerat, sedem habebat»; sconfitto, fugge a Tolosa da Alarico II, che lo consegna; Clodoveo lo fa uccidere di nascosto. II 12 e 18: il padre Egidio era stato mandato in Gallia «magister militum» dalla repubblica. Sidonio Apollinare, *Lettere* V 5 (latino su thelatinlibrary, letto): a un Siagrio «consulis pronepos», istruito nelle scuole («scholis liberalibus»), che ha imparato così bene la lingua dei Burgundi da far loro da interprete e da giudice. Che sia il Siagrio di Soissons è discusso: qui serve solo a ricordare che un aristocratico gallo-romano di quegli anni poteva essere insieme uomo di lettere e capo di soldati; per l'aspetto non si usa.
+
+**Età, rango, abiti.** Il padre muore nel 464 o 465; nel 486 Siagrio è adulto e comanda un esercito. Si sceglie un uomo sui 45 anni. Rango: generale romano senza imperatore, figlio di un *magister militum*: l'abito del funzionario militare tardoromano, come per Arbogaste (tunica a maniche lunghe con riquadri tessuti, cintura militare, clamide con fibula a balestra), ma un secolo dopo. Capelli corti e viso rasato, all'uso degli aristocratici romani di fine V secolo come nei dittici consolari (per esempio quello di Boezio del 487, a Brescia: a memoria, non riguardato): una scelta che lo distingue dai re germanici. Da NON mettere: corona, elmo da film, corazza anatomica, porpora imperiale (non era imperatore: «re» è la parola di Gregorio, non un titolo che usasse).
+
+**Inventato.** Volto, età, colori, ricami; anche la scelta del viso rasato è un'ipotesi.
+
+**Prompt.**
+```
+Photorealistic half-length portrait of a Gallo-Roman aristocrat and military commander around 486 AD, a composed, intelligent man of about 45, short dark hair with some grey, clean-shaven, slightly tired dignified expression. He wears a long-sleeved tunic of undyed off-white wool with woven dark red roundels on the shoulders and narrow bands at the cuffs, a broad military belt with bronze fittings, and a heavy dark green chlamys cloak fastened on the right shoulder with a gilded crossbow brooch. No crown, no helmet, no armour. Plain dark charcoal-brown studio backdrop, softly mottled, no objects. Natural side light from the left as from a window. Looks like a photograph of a real person in historically accurate late Roman dress, shallow depth of field, 85mm lens.
+```
+Negative: le parole comuni, più `muscle cuirass, red plumed helmet, gladiator, lorica segmentata, Hollywood Roman, purple imperial robe`.
+
+**Risultato.** Generate due varianti (Seedream 5 Pro, flusso 2LwfThTRkR5w6dfGyh8Y: RAj75JgFkREcygYzf1np e xmLltH5ZM9DfrgfBxlR7); scelta la prima, più composta (la seconda sorride). Scarto dalla scheda: la fibula è venuta rotonda, non a balestra. Ritagliata in img/protagonisti/ric-siagrio.jpg.
+
+---
 
 ## Controllo sulle immagini dei musei (23 novembre 2026, dopo la generazione)
 

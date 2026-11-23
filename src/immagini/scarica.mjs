@@ -139,6 +139,7 @@ const RICOSTRUZIONI = {
   'Tariq ibn Ziyad': 'comandante berbero nel 711: abiti dei Berberi del tempo; le fonti non lo descrivono',
   'Musa ibn Nusayr': 'governatore arabo dell\'Africa, anziano nel 711: abiti arabi omayyadi; le fonti non lo descrivono',
   'Ine': 're del Wessex in partenza per Roma: abito da viaggio secondo i corredi anglosassoni intorno al 700',
+  'Siagrio': 'generale romano in Gallia nel 486, figlio di un magister militum: abito da ufficiale tardoromano; viso rasato all’uso degli aristocratici romani del tempo (ipotesi)',
 };
 for (const x of elenco) {
   const cosa = RICOSTRUZIONI[x.nome], chiave = x.anno + '|' + x.nome; if (!cosa || indice[chiave]) continue;
