@@ -337,3 +337,47 @@
   .ig-cop-sotto{font-size:17px}
 }
 @media (prefers-reduced-motion:reduce){ .ig-finestra[open]{animation:none} .ig-invito,.ig-play{transition:none} }
+
+/* ---------- 7. la cattura di Valeriano (js/infografiche.js, disegnaValeriano) ---------- */
+.ig-v-carta{opacity:0;transition:opacity 1s ease}
+.ig-v-carta.vis{opacity:1}
+.ig-v-mare{fill:#C7D6D3}
+.ig-v-terra{fill:#E9DFC9}
+.ig-v-roma{fill:#9A2F2A;fill-opacity:.3}
+.ig-v-fiume{fill:none;stroke:#6E9FB3;stroke-width:1.6;stroke-opacity:.9}
+.ig-v-costa{fill:none;stroke:#7d6f5a;stroke-width:1;stroke-opacity:.6}
+.ig-v-luogo{opacity:0;transition:opacity .7s ease}
+.ig-v-luogo.vis{opacity:1}
+.ig-v-punto{fill:#221C18;stroke:#FBF6EA;stroke-width:1.6}
+.ig-v-nome{font-family:var(--ui);font-size:13px;font-weight:600;fill:#221C18;paint-order:stroke;stroke:rgba(251,246,234,.92);stroke-width:3.5px;stroke-linejoin:round}
+.ig-v-freccia{opacity:0;transition:opacity .4s}
+.ig-v-freccia.vis{opacity:1}
+.ig-v-linea{fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.ig-v-freccia.roma .ig-v-linea{stroke:#7A1F2B} .ig-v-freccia.roma .ig-v-punta{fill:#7A1F2B}
+.ig-v-freccia.persia .ig-v-linea{stroke:#8a6a2c} .ig-v-freccia.persia .ig-v-punta{fill:#8a6a2c}
+.ig-v-freccia.prigionieri .ig-v-linea{stroke:#3b322b} .ig-v-freccia.prigionieri .ig-v-punta{fill:#3b322b}
+.ig-v-punta{opacity:0;transition:opacity .3s}
+.ig-v-punta.vis{opacity:1}
+.ig-v-assedio{opacity:0;transition:opacity .6s}
+.ig-v-assedio.vis{opacity:1}
+.ig-v-assedio.spento{opacity:.25}
+.ig-v-anello{fill:none;stroke:#8a6a2c;stroke-width:2.4;stroke-dasharray:3 3}
+.ig-v-scontro{opacity:0;transition:opacity .5s}
+.ig-v-scontro.vis{opacity:1}
+.ig-v-spade{stroke:#7A1F2B;stroke-width:3.4;stroke-linecap:round}
+.ig-v-lampo{fill:rgba(251,246,234,.85);stroke:#C9A14A;stroke-width:2}
+.ig-v-verso{font-family:var(--serif);font-style:italic;font-size:14px;fill:#3b322b;opacity:0;transition:opacity .7s;paint-order:stroke;stroke:rgba(251,246,234,.9);stroke-width:3px}
+.ig-v-verso.vis{opacity:1}
+.ig-v-data1{font-family:'Cinzel',serif;font-size:24px;font-weight:700;fill:#7A1F2B}
+.ig-v-data2{font-family:var(--ui);font-size:12px;letter-spacing:.08em;text-transform:uppercase;fill:#5b4f45}
+.ig-v-numero{opacity:0;transition:opacity .6s}
+.ig-v-numero.vis{opacity:1}
+.ig-v-num{font-family:'Cinzel',serif;font-size:30px;font-weight:700;fill:#221C18}
+.ig-v-num-lab{font-family:var(--ui);font-size:11.5px;fill:#5b4f45}
+.ig-v-rilievo{opacity:0;transition:opacity 1s ease}
+.ig-v-rilievo.vis{opacity:1}
+.ig-v-roccia{fill:#C4B293;stroke:#8c785e;stroke-width:1}
+.ig-v-fig{fill:#8c785e;stroke:#6e5c46;stroke-width:1}
+.ig-v-fig.r{fill:#a08b6c}
+.ig-v-ril-lab{font-family:var(--ui);font-size:11.5px;fill:#5b4f45}
+@media (prefers-reduced-motion:reduce){ .ig-v-carta,.ig-v-luogo,.ig-v-freccia,.ig-v-assedio,.ig-v-scontro,.ig-v-numero,.ig-v-rilievo,.ig-v-punta,.ig-v-verso{transition:none} }

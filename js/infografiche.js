@@ -635,13 +635,87 @@ function disegnaGoverno(svg,S,W,H){
   S.fermo=function(lato){ var l=h('div','ig-legenda fermo',null,lato); (M.vociPresenti(FR.map(function(f){ return f.stati; }),800)||[]).forEach(function(v){ if(v[2]==='perso') return; var c=h('span','ig-chip',null,l); h('i',null,null,c).style.background=v[0]; h('span',null,v[1],c); }); return l; };
 }
 
+/* ======================================================================
+   7. La cattura di Valeriano (260)
+   Aggiunta il 23 novembre 2026 (l'utente: «tra le infografiche animate anche la cattura di Valeriano?»). La carta è quella della pagina (RM_MAPPA: coste, fiumi, regioni),
+   inquadrata sulla Mesopotamia; i luoghi sono quelli della tappa. Fonti lette: Shapur I, iscrizione della Ka'ba-ye Zardosht (nell'inglese di Sprengling, già nelle voci della tappa:
+   l'assedio di Carre ed Edessa, i settantamila, la battaglia «al di là di Carre e di Edessa», la cattura di Valeriano, del prefetto del pretorio, di senatori e generali, portati in Persia);
+   Eutropio IX 7 («mox etiam captus apud Parthos ignobili servitute consenuit»); Lattanzio, Sulla morte dei persecutori 5, 2-6 (lo sgabello: «inclinare sibi Romanum iubebat ac terga
+   praebere et imposito pede super dorsum eius»; la pelle «infecta rubro colore» nel tempio): Lattanzio scrive verso il 315, è cristiano e Valeriano aveva perseguitato i cristiani;
+   il rilievo di Naqsh-e Rostam e le identificazioni discusse dalla voce «Naqsh-e Rostam» della Wikipedia inglese. Le frecce sono uno schema: il cammino vero non è noto. */
+var VALERIANO={ titolo:"La cattura di Valeriano", sotto:"260: per la prima volta un imperatore romano è fatto prigioniero",
+  fasi:["Shapur I, re dei Persiani, assedia Carre ed Edessa, in Mesopotamia. L'imperatore Valeriano gli va contro, da Antiochia.",
+    "Secondo Shapur l'esercito romano conta settantamila uomini. Il numero è quello del vincitore.",
+    "«Al di là di Carre e di Edessa» i Romani sono sconfitti. Valeriano è fatto prigioniero, con il prefetto del pretorio, senatori e generali.",
+    "Shapur li porta via, in Persia. Secondo Eutropio Valeriano vi invecchiò in una schiavitù senza onore.",
+    "Lattanzio, un cristiano che scrive mezzo secolo dopo, ostile a Valeriano che aveva perseguitato i cristiani, racconta che Shapur lo usava come sgabello per salire a cavallo. Gli storici ne discutono.",
+    "A Naqsh-e Rostam, in Persia, un rilievo mostra Shapur a cavallo davanti a imperatori romani sottomessi. Di solito vi si riconoscono Valeriano e Filippo l'Arabo, ma le identificazioni sono discusse."],
+  fonte:"Shapur I, iscrizione della Ka'ba-ye Zardosht (traduzione inglese di Sprengling, 1953); Eutropio, Breviario IX 7; Lattanzio, Sulla morte dei persecutori 5 (fonte cristiana e ostile, verso il 315); per il rilievo di Naqsh-e Rostam la voce della Wikipedia inglese. La carta è quella della pagina; le frecce sono uno schema: il cammino degli eserciti non è noto." };
+function disegnaValeriano(svg,S,W,H){
+  var G=window.RM_MAPPA; if(!G) return;
+  var L=function(k){ var q=(G.luoghi||{})[k]||G.citta[k]; return q?[q.x,q.y]:null; };
+  var AN=L('antiochia'), ED=L('edessa'), CA=L('carre'), NI=L('nisibi'), TI=L('tigri'); if(!AN||!ED||!CA) return;
+  var oriz=W/H>=1.15, pad=oriz?22:14, top=oriz?pad+34:70, riserva=oriz?0:Math.min(150,H*.28);
+  var V=[836,330,166,132];      // la finestra sulla carta: da Antiochia al Tigri
+  var k=Math.min((W-2*pad-(oriz?Math.min(240,W*.28):0))/V[2],(H-top-pad-riserva)/V[3]), ox=(oriz?W-pad-V[2]*k:(W-V[2]*k)/2)-V[0]*k, oy=top+(H-top-pad-riserva-V[3]*k)/2-V[1]*k;
+  function B(p){ return [ox+p[0]*k, oy+p[1]*k]; }
+  var clip=el('clipPath',{id:'ig-v-clip'},el('defs',null,svg)); el('rect',{x:r1(ox+V[0]*k),y:r1(oy+V[1]*k),width:r1(V[2]*k),height:r1(V[3]*k),rx:10},clip);
+  var carta=el('g',{'class':'ig-v-carta','clip-path':'url(#ig-v-clip)'},svg), mondo=el('g',{transform:'translate('+r1(ox)+','+r1(oy)+') scale('+Math.round(k*1000)/1000+')'},carta);
+  el('rect',{x:V[0]-5,y:V[1]-5,width:V[2]+10,height:V[3]+10,'class':'ig-v-mare'},mondo); el('path',{d:G.terra,'class':'ig-v-terra'},mondo);
+  ['anatolia','levante','nisibi'].forEach(function(id){ if(G.regioni[id]) el('path',{d:G.regioni[id].d,'class':'ig-v-roma'},mondo); });
+  (G.fiumi||[]).forEach(function(f){ if(f.d) el('path',{d:f.d,'class':'ig-v-fiume','vector-effect':'non-scaling-stroke'},mondo); });
+  el('path',{d:G.terra,'class':'ig-v-costa','vector-effect':'non-scaling-stroke'},mondo);
+  var sopra=el('g',null,svg);
+  function punto(p,nome,dx,dy,an){ var q=B(p), g=el('g',{'class':'ig-v-luogo',transform:'translate('+xy(q)+')'},sopra); el('circle',{r:4.2,'class':'ig-v-punto'},g);
+    tx(g,dx,dy,'ig-v-nome',nome,an||'start'); return g; }
+  var pA=punto(AN,'Antiochia',-8,18,'end'), pE=punto(ED,'Edessa',-9,-9,'end'), pC=punto(CA,'Carre',13,-11,'start'), pN=NI?punto(NI,'Nisibi',8,-8,'start'):null;
+  var est=B([V[0]+V[2]-4,CA[1]+18]);
+  /* frecce: si tracciano con stroke-dashoffset */
+  function freccia(pts,cl){ var g=el('g',{'class':'ig-v-freccia '+cl},sopra), q=pts.map(B), d='M'+q.map(xy).join(' L'), p=el('path',{d:d,'class':'ig-v-linea'},g), l=p.getTotalLength?p.getTotalLength():300;
+    p.style.strokeDasharray=l+' '+l; p.setAttribute('stroke-dashoffset',l); var a=q[q.length-2], b=q[q.length-1], ang=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
+    var pu=el('path',{d:'M0 0 L-11 -6 L-8 0 L-11 6 Z','class':'ig-v-punta',transform:'translate('+xy(b)+') rotate('+r1(ang)+')'},g); return {g:g,p:p,l:l,pu:pu}; }
+  var fR=freccia([AN,[(AN[0]+ED[0])/2,AN[1]-14],[ED[0]-3,ED[1]+5]],'roma'), fP=freccia([[V[0]+V[2]-2,CA[1]-6],NI||CA,[CA[0]+5,CA[1]-2]],'persia');
+  var SC=[(ED[0]+CA[0])/2-4,(ED[1]+CA[1])/2+14];      // la battaglia «al di là di Carre e di Edessa»: il punto è uno schema, sotto le due città perché non ne copra i nomi
+  var fV=freccia([SC,[CA[0]+20,CA[1]+10],[V[0]+V[2]-3,CA[1]+18]],'prigionieri');
+  function anello(p){ var q=B(p), g=el('g',{'class':'ig-v-assedio',transform:'translate('+xy(q)+')'},sopra); el('circle',{r:13,'class':'ig-v-anello'},g); return g; }
+  var aE=anello(ED), aC=anello(CA);
+  var sc=B(SC), scontro=el('g',{'class':'ig-v-scontro',transform:'translate('+xy(sc)+')'},sopra);
+  el('circle',{r:17,'class':'ig-v-lampo'},scontro); el('path',{d:'M-9 -9 L9 9 M9 -9 L-9 9','class':'ig-v-spade'},scontro);
+  var tP=tx(sopra,est[0]-6,est[1]+20,'ig-v-verso','verso la Persia','end');
+  /* la data e il numero dei settantamila */
+  var gd=el('g',{'class':'ig-data'},svg); tx(gd,pad,pad+18,'ig-v-data1','260'); tx(gd,pad+56,pad+17,'ig-v-data2','Mesopotamia');
+  var nx=oriz?pad:W-pad, an=oriz?'start':'end', ny=oriz?pad+78:pad+18, gn=el('g',{'class':'ig-v-numero'},svg), cN=tx(gn,nx,ny,'ig-v-num','0',an); tx(gn,nx,ny+17,'ig-v-num-lab','soldati romani, secondo Shapur',an);
+  /* il rilievo: uno schema (un cavaliere e due figure), non una copia */
+  var rw=oriz?Math.min(220,W*.25):Math.min(230,W*.62), rh=rw*.5, rx=oriz?pad:(W-rw)/2, ry=oriz?H-pad-rh-18:H-pad-rh-18;
+  var ril=el('g',{'class':'ig-v-rilievo',transform:'translate('+r1(rx)+','+r1(ry)+')'},svg);
+  el('rect',{x:0,y:0,width:r1(rw),height:r1(rh),rx:8,'class':'ig-v-roccia'},ril);
+  var sx=rw/220, sy=rh/110; function sp(d){ var i=0; return d.replace(/-?\d+(\.\d+)?/g,function(n){ i++; return r1(+n*(i%2?sx:sy)); }); }
+  el('path',{d:sp('M70 100 L74 70 Q78 58 96 56 L128 54 Q140 50 146 38 L150 30 L156 34 L154 46 L146 60 L148 100 L142 100 L140 72 L104 74 L102 100 L96 100 L94 74 L82 76 L78 100 Z'),'class':'ig-v-fig'},ril);      // il cavallo
+  el('path',{d:sp('M112 56 L110 34 Q112 26 120 26 Q128 26 128 34 L126 56 Z M114 24 L126 24 L124 12 L116 12 Z'),'class':'ig-v-fig'},ril);      // il re, con la corona
+  el('path',{d:sp('M162 100 L164 66 Q166 58 172 58 Q178 58 180 66 L182 100 Z M166 56 Q166 46 172 46 Q178 46 178 56 Z'),'class':'ig-v-fig r'},ril);      // una figura in piedi
+  el('path',{d:sp('M36 100 L40 84 Q42 76 50 76 L58 78 L56 100 Z M44 74 Q44 64 50 64 Q56 64 56 74 Z'),'class':'ig-v-fig r'},ril);      // una figura in ginocchio
+  tx(ril,rw/2,rh+14,'ig-v-ril-lab','Naqsh-e Rostam: schema del rilievo','middle');
+  var t1=1400, t2=6200, t3=11000, t4=16000, t5=21400, t6=27400, tF=33600;
+  S.passo=function(t){
+    cls(carta,'vis',t>=200); cls(pA,'vis',t>=t1-300); cls(pE,'vis',t>=400); cls(pC,'vis',t>=400); if(pN) cls(pN,'vis',t>=400); cls(gd,'vis',t>=400);
+    [[fR,t1,t1+2200],[fP,t1+900,t1+3200],[fV,t4,t4+3200]].forEach(function(q){ var f=E.io(fase(t,q[1],q[2])); fissa(q[0].p,'stroke-dashoffset',r1(q[0].l*(1-f))); cls(q[0].g,'vis',f>0); cls(q[0].pu,'vis',f>=.98); });
+    cls(aE,'vis',t>=t1+2600); cls(aC,'vis',t>=t1+3000);
+    var fn=E.out(fase(t,t2,t2+2600)); cls(gn,'vis',t>=t2); scrivi(cN,num(Math.round(70000*fn/1000)*1000));
+    cls(scontro,'vis',t>=t3); cls(aE,'spento',t>=t3+600); cls(aC,'spento',t>=t3+600);
+    cls(tP,'vis',t>=t4+2600); cls(ril,'vis',t>=t6);
+  };
+  S.dura=tF+3000;
+  S.battute=[t1,t2,t3,t4,t5,t6].map(function(tt){ return {t:tt,anno:'260'}; }).map(function(b,i){ b.testo=VALERIANO.fasi[i]; return b; });
+}
+
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
   moneta:{d:MONETA, disegna:disegnaMoneta, tappe:function(t){ return t.anno===284&&t.intermezzo || t.anno===274&&!t.intermezzo; }},
   navi:{d:NAVI, disegna:disegnaNavi, tappe:function(t){ return t.anno===395&&t.intermezzo || t.anno===711&&!t.intermezzo; }},
   sacco:{d:SACCO, disegna:disegnaSacco, tappe:function(t){ return t.anno===410&&!t.intermezzo; }},
   governo:{d:GOVERNO, disegna:disegnaGoverno, tappe:function(t){ return !t.intermezzo && (t.anno===476||t.anno===568||t.anno===800); }},
+  valeriano:{d:VALERIANO, disegna:disegnaValeriano, tappe:function(t){ return t.anno===260&&!t.intermezzo; }},
   terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo) || t.anno===439&&!t.intermezzo; }} };
-var ORDINE=['roma','terre','moneta','sacco','navi','governo'];
+var ORDINE=['roma','terre','moneta','sacco','navi','governo','valeriano'];
 var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
   pausa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',
   prima:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18 6.5v11l-8.5-5.5z" fill="currentColor"/></svg>',
@@ -649,7 +723,8 @@ var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l1
   rivedi:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12a6.5 6.5 0 1 0 2-4.7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M6.6 3.6v4.6h4.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   chiudi:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>' };
 /* le icone degli inviti: una per infografica */
-var GLIFI={ roma:'<circle cx="9" cy="10" r="2.2"/><circle cx="15" cy="8" r="2.2"/><circle cx="20" cy="13" r="2.2"/><circle cx="12" cy="16" r="2.2"/><circle cx="18" cy="19" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="20" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/>',
+var GLIFI={ valeriano:'<path d="M7 12l2.2-5 2.6 3 2.2-4 2.2 4 2.6-3 2.2 5z"/><rect x="7" y="13" width="14" height="2.2" rx=".6"/><path d="M9 18.5h10" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2"/><circle cx="8" cy="18.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="20" cy="18.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/>',
+  roma:'<circle cx="9" cy="10" r="2.2"/><circle cx="15" cy="8" r="2.2"/><circle cx="20" cy="13" r="2.2"/><circle cx="12" cy="16" r="2.2"/><circle cx="18" cy="19" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="20" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/>',
   terre:'<rect x="4" y="5" width="11" height="10" rx="1"/><rect x="16.5" y="5" width="7.5" height="5" rx="1" opacity=".55"/><rect x="16.5" y="11.5" width="7.5" height="3.5" rx="1"/><rect x="4" y="16.5" width="7" height="6.5" rx="1" opacity=".55"/><rect x="12.5" y="16.5" width="11.5" height="6.5" rx="1" opacity=".3"/>',
   moneta:'<circle cx="14" cy="14" r="9.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="14" cy="14" r="6.6" opacity=".55"/>',
   sacco:'<path d="M14 4c1 4 6 6 6 11.5a6 6 0 0 1-12 0c0-3 1.6-4.6 3-6 .3 2 1.2 3 2.2 3.2C12.6 10 13 7 14 4z"/>',
@@ -664,11 +739,11 @@ function apri(chi){
   var ritorno=document.activeElement, n=ORDINE.indexOf(chi)+1;
   dlg=h('dialog','ig-finestra ig-'+chi+(I.d.notte?' ig-notte':'')+(POCO?' ig-fermo':''),null,document.body); dlg.setAttribute('aria-labelledby','igTitolo');
   var corpo=h('div','ig-corpo',null,dlg), testa=h('header','ig-testa',null,corpo), tt=h('div','ig-testa-t',null,testa);
-  h('p','ig-occhiello','Infografica animata · '+n+' di 6',tt); var ti=h('h2','ig-titolo',I.d.titolo,tt); ti.id='igTitolo';
+  h('p','ig-occhiello','Infografica animata · '+n+' di '+ORDINE.length,tt); var ti=h('h2','ig-titolo',I.d.titolo,tt); ti.id='igTitolo';
   var bx=bottone('ig-chiudi',ICO.chiudi,'Chiudi l\'infografica',testa);
   var palco=h('div','ig-palco',null,corpo), svg=el('svg',{'class':'ig-grafico',role:'img','aria-label':I.d.titolo+'. '+I.d.sotto},palco);
   var cop=h('div','ig-copertina gira',null,palco); cop.setAttribute('aria-hidden','true');
-  h('span','ig-cop-occh','Infografica '+n+' di 6',cop); h('span','ig-cop-tit',I.d.titolo,cop); h('span','ig-cop-filo',null,cop); h('span','ig-cop-sotto',I.d.sotto,cop);
+  h('span','ig-cop-occh','Infografica '+n+' di '+ORDINE.length,cop); h('span','ig-cop-tit',I.d.titolo,cop); h('span','ig-cop-filo',null,cop); h('span','ig-cop-sotto',I.d.sotto,cop);
   var lato=h('div','ig-lato',null,corpo), frase=h('p','ig-frase',null,lato); frase.setAttribute('aria-live','polite');
   var fA=h('span','ig-frase-anno','',frase), fT=h('span','ig-frase-testo',I.d.sotto,frase);
   var comandi=h('div','ig-comandi',null,lato), bP=bottone('ig-b ig-b-play',ICO.pausa,'Pausa',comandi), bI=bottone('ig-b',ICO.prima,'Momento precedente',comandi);
@@ -732,7 +807,7 @@ function inviti(i,t){
     h('span','ig-play',null,b).innerHTML=ICO.play; b.addEventListener('click',function(){ apri(k); }); });
 }
 if(window.RM_pagina && box){ RM_pagina.quando(inviti); var T0=(D.TAPPE||[])[RM_pagina.tappa()]; if(T0) inviti(RM_pagina.tappa(),T0); }      // anche la tappa aperta all'avvio
-/* per le prove: vai(f) ferma l'animazione aperta e la porta alla frazione f (da 0 a 1); ?info=<roma|terre|moneta|sacco|navi|governo>&infop=<0..1> la apre da sola */
+/* per le prove: vai(f) ferma l'animazione aperta e la porta alla frazione f (da 0 a 1); ?info=<roma|terre|moneta|sacco|navi|governo|valeriano>&infop=<0..1> la apre da sola */
 window.RM_infografiche={apri:apri, chiudi:chiudi, vai:function(f){ if(ctl) ctl.vai(f); }};
 (function(){ var q=/[?&]info=(\w+)/.exec(location.search), f=/[?&]infop=([\d.]+)/.exec(location.search); if(!q||!INFO[q[1]]) return;
   setTimeout(function(){ apri(q[1]); if(f) setTimeout(function(){ RM_infografiche.vai(+f[1]); },300); },900); })();
