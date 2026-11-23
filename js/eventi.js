@@ -6,11 +6,23 @@ var RM=window.RM, D=window.RM_DATI, didascalia=document.getElementById('evento')
 var EV=D.EVENTI||[];
 function atto(ev,anno){ return RM.sfuma(ev.da-.5,ev.da,anno)*(1-RM.sfuma(ev.a,ev.a+1.2,anno)); }     // 0…1: quanto l'evento è in scena
 /* la didascalia funziona anche senza 3D */
+/* La didascalia si può chiudere (23 novembre 2026, l'utente: «Fai in modo che sia possibile cancellare queste scritte»): la × la toglie finché in scena resta lo stesso evento;
+   al posto suo resta un piccolo bottone «i» che la riporta. Un evento nuovo la mostra di nuovo. */
+var testoEv=null, chiusa=null, riapri=null, ultimo=null;
+if(didascalia){
+  testoEv=document.createElement('span'); testoEv.className='ev-testo'; didascalia.textContent=''; didascalia.appendChild(testoEv);
+  var x=document.createElement('button'); x.type='button'; x.className='ev-chiudi'; x.setAttribute('aria-label','Chiudi la didascalia'); x.textContent='×'; didascalia.appendChild(x);
+  riapri=document.createElement('button'); riapri.type='button'; riapri.className='ev-riapri'; riapri.setAttribute('aria-label','Mostra la didascalia dell\'evento'); riapri.title='Mostra la didascalia'; riapri.textContent='i';
+  didascalia.appendChild(riapri);      // dentro la didascalia: ne eredita le posizioni (tutto schermo, telefono, «Prima e dopo»)
+  x.addEventListener('click',function(e){ e.stopPropagation(); chiusa=ultimo; aggiorna(); });
+  riapri.addEventListener('click',function(e){ e.stopPropagation(); chiusa=null; aggiorna(); });
+}
+function aggiorna(){ var c=!!ultimo && chiusa===ultimo; didascalia.classList.toggle('vivo',!!ultimo); didascalia.classList.toggle('chiusa',c); }
 function scrivi(anno){
   var vivo=null; EV.forEach(function(ev){ ev.q=atto(ev,anno); if(ev.q>.5) vivo=ev; });
   if(!didascalia) return;
-  if(vivo && didascalia.textContent!==vivo.testo) didascalia.textContent=vivo.testo;
-  didascalia.classList.toggle('vivo',!!vivo);
+  if(vivo && testoEv.textContent!==vivo.testo) testoEv.textContent=vivo.testo;
+  if(vivo!==ultimo){ ultimo=vivo; if(chiusa && chiusa!==vivo) chiusa=null; aggiorna(); }
 }
 if(!RM||RM.guasto){ if(RM&&RM.moduli) RM.moduli.push(scrivi); return; }
 var P=RM.P, rnd=RM.casuale(410), NL=String.fromCharCode(10), tempo=0;

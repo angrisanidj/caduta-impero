@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 23/11/2026, 11:28:53.
+Generato da `src/testi.mjs` il 23/11/2026, 11:30:47.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 23/11/2026, ore 11:26
+[pagina.52] Versione del 23/11/2026, ore 11:28
 
 
 ## 2. Gli atti
@@ -4267,4 +4267,13 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 [ui.condividi.01-r6] Come finisce un impero · La storia dell'Occidente romano dal 235 all'852 in 56 tappe. Segui i confini sulla carta e scopri come cambia Roma attraverso una ricostruzione in 3D.
 
 [ui.condividi.02-r41] Link copiato
+
+
+### js/eventi.js
+
+[ui.eventi.01-r14] Chiudi la didascalia
+
+[ui.eventi.02-r15] Mostra la didascalia dell'evento
+
+[ui.eventi.03-r15] Mostra la didascalia
 

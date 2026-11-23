@@ -757,3 +757,17 @@ body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visib
 .ds-voce:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 @media (max-width:760px){ .due-scene{margin-top:14px;gap:6px 8px} .ds-guida{width:100%;font-size:11.5px;letter-spacing:.06em} .ds-voce{font-size:13.5px;min-height:36px} .ds-cosa{display:none} }
 @media (prefers-reduced-motion:reduce){ .ds-voce{transition:none} }
+
+/* Didascalia dell'evento nella città: si chiude con la ×, resta una «i» che la riporta (js/eventi.js, 23 novembre 2026) */
+.evento{padding-right:40px}
+.ev-chiudi,.ev-riapri{pointer-events:auto;cursor:pointer;font-family:var(--ui);line-height:1;color:#fff;border:0}
+.ev-chiudi{position:absolute;top:2px;right:2px;width:36px;height:36px;font-size:22px;background:transparent;border-radius:50%;opacity:.85}
+.ev-chiudi:hover,.ev-chiudi:focus-visible{opacity:1;background:rgba(255,255,255,.12)}
+.ev-riapri{display:none}
+.evento.chiusa{padding:0;background:none;border:0;right:auto;width:auto;max-width:none;overflow:visible}
+.evento.chiusa .ev-testo,.evento.chiusa .ev-chiudi{display:none}
+.evento.chiusa .ev-riapri{display:grid;place-items:center;width:36px;height:36px;font-size:17px;font-weight:700;font-style:italic;font-family:var(--serif);
+  background:rgba(46,18,13,.82);border:1px solid rgba(208,86,58,.8);border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.ev-chiudi:focus-visible,.ev-riapri:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+@media (max-width:1000px){ body:not(.roma-grande) .evento.chiusa{display:block;border-bottom:0} }
+.evento:not(.vivo) .ev-chiudi,.evento:not(.vivo) .ev-riapri{pointer-events:none;visibility:hidden}      /* didascalia spenta: niente bottoni invisibili da toccare */
