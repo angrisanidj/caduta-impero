@@ -445,6 +445,9 @@ function faiBarra(){
 function segnaPasso(i){ var bs=barraPassi.querySelectorAll('.m-passo'); for(var j=0;j<bs.length;j++){ if(j===i) bs[j].setAttribute('aria-current','step'); else bs[j].removeAttribute('aria-current'); }
   if(bs[i] && barraPassi.scrollWidth>barraPassi.clientWidth) barraPassi.scrollLeft=bs[i].offsetLeft-barraPassi.clientWidth/2+bs[i].offsetWidth/2; }      // a tutto schermo la barra scorre: il passo acceso resta in vista
 function suPasso(i,daCapo){
+  /* ▶ (daCapo) riparte sempre dalla carta d'insieme (23 novembre 2026, l'utente: «non dovrebbe ripartire ogni volta dalla mappa generale»): la carta torna intera, ci resta un secondo,
+     poi la regia rifà tutti i passi e alla fine torna alla scena intera */
+  if(!pocoMoto && daCapo){ fermaRegia(); giro=setTimeout(function(){ giro=0; avviaRegia(luoghiRegia,scenaOra,0,true); },1000); return; }
   if(!pocoMoto){ avviaRegia(luoghiRegia,scenaOra,i,true); return; }
   /* chi ha chiesto meno animazioni: il passo si mostra fermo, senza zoom; toccato di nuovo, si torna alla scena intera.
      ▶ (daCapo) fa tutto il giro anche qui (23 novembre 2026, l'utente: «quando clicchi su play dovrebbe fare tutto il giro»): un passo dopo l'altro, fermi, col tempo di leggere */
@@ -452,8 +455,10 @@ function suPasso(i,daCapo){
   if(passoOra===i){ fermaRegia(); return; }
   mostraFermo(i);
 }
+/* alla città: quale anno racconta ora la carta (i fuochi del sacco aspettano il loro passo: js/eventi.js) */
+function segnalaPasso(i){ if(window.RM && RM.passoCarta) RM.passoCarta(i!=null&&passiOra&&passiOra[i]?parseInt(passiOra[i].a,10):null, annoVisto); }
 function mostraFermo(i){
-  fermaRegia(); passoOra=i; svg.classList.add('in-passi'); classiPassi(i); stratoScena.setAttribute('class','m-scena passi ferma'); coloraRegioni(statiPasso(i)); ricolorata=true; segnaPasso(i);
+  fermaRegia(); passoOra=i; segnalaPasso(i); svg.classList.add('in-passi'); classiPassi(i); stratoScena.setAttribute('class','m-scena passi ferma'); coloraRegioni(statiPasso(i)); ricolorata=true; segnaPasso(i);
   scriviDidascalia({i:i}); didascalia.classList.add('viva');
 }
 var giro=0;
@@ -477,7 +482,7 @@ bVia.addEventListener('click',function(e){ e.stopPropagation(); aspetta=false; a
 function via(){ aspetta=false; ['pointerdown','keydown','wheel'].forEach(function(n){ document.removeEventListener(n,via,true); }); }
 if(aspetta) ['pointerdown','keydown','wheel'].forEach(function(n){ document.addEventListener(n,via,{capture:true,passive:true}); });
 function fermaRegia(){
-  bVia.hidden=true;
+  bVia.hidden=true; segnalaPasso(null);
   var r=regia; if(r){ cancelAnimationFrame(r.rf); regia=null; }
   clearTimeout(giro); giro=0;      // anche il giro dei passi fermi
   passoOra=null; svg.classList.remove('in-passi'); classiPassi(passoInVista()); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
@@ -537,7 +542,7 @@ function avviaRegia(l,sc,da,forza){
     var hs=svg.getBoundingClientRect().height, c=hs>0?Math.min(.45,(didascalia.offsetHeight+12)/hs):0; var sp=Math.min(55,c*f.a[3]/2), y0=Math.max(0,Math.min(G.h-f.a[3],f.a[1]+sp)), alto=c>0 && f.y1>y0+f.a[3]*(1-c)-30;      // anche così la scena finirebbe sotto la didascalia (la costa d'Africa), o ci starebbe a meno di 30 unità, che servono al nome sotto la freccia: la didascalia va in alto
     didascalia.classList.toggle('in-alto',alto); if(c>0) f.a=[f.a[0],alto?Math.max(0,Math.min(G.h-f.a[3],f.a[1]-sp)):y0,f.a[2],f.a[3]];
     var sn=scalaDi(f.a), tm=testoDi(f.a); if(Math.abs(sn-scalaScena)>.02 || Math.abs(tm-testoMin)>.02){ scalaScena=sn; testoMin=tm; if(annoVisto!=null) mostraPopoli(annoVisto); svg.getBoundingClientRect(); }      // ridisegnata col passo di prima: il nuovo poi si traccia
-    if(f.i!=null){ svg.classList.add('in-passi'); passoOra=f.i; classiPassi(f.i); segnaPasso(f.i); coloraRegioni(statiPasso(f.i)); ricolorata=true; }
+    if(f.i!=null){ segnalaPasso(f.i); svg.classList.add('in-passi'); passoOra=f.i; classiPassi(f.i); segnaPasso(f.i); coloraRegioni(statiPasso(f.i)); ricolorata=true; }
     sistemaSegni(ultimiTesti,ultimiFissi);      // con il passo nuovo acceso
   }
   function passo(ora){
@@ -549,7 +554,7 @@ function avviaRegia(l,sc,da,forza){
       u=t-acc; k=Math.min(1,u/ENTRA); A=n?foto[n-1].a:r.da; B=foto[n].a;
       if(!passi && u>ENTRA*.7 && !r.viva){ r.viva=true; stratoScena.setAttribute('class','m-scena viva'); }
     } else {
-      if(!r.fine){ r.fine=true; didascalia.classList.remove('viva'); document.body.classList.remove('carta-in-regia'); passoOra=null; svg.classList.remove('in-passi'); classiPassi(passoInVista()); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
+      if(!r.fine){ r.fine=true; segnalaPasso(null); didascalia.classList.remove('viva'); document.body.classList.remove('carta-in-regia'); passoOra=null; svg.classList.remove('in-passi'); classiPassi(passoInVista()); segnaPasso(-1); if(ricolorata){ ricolorata=false; coloraRegioni(statiTappa); }
         stratoScena.setAttribute('class','m-scena'+(grandeSi?' viva ferma':'')); }
       u=t-acc; k=Math.min(1,u/ESCE); A=foto[foto.length-1].a; B=r.da;
       if(u>=ESCE){ fermaRegia(); return; }
