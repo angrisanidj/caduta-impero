@@ -722,3 +722,10 @@ body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.9
 .tempo{transition:transform .35s ease,opacity .3s ease,visibility 0s}
 body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visibility:hidden;transition:transform .35s ease,opacity .3s ease,visibility 0s .35s}
 @media (prefers-reduced-motion:reduce){ .tempo,body.tempo-attesa .tempo{transition:none} }
+
+/* «Condividi» nella colonna fissa del PC: sopra il porpora della testata la scritta grigia non si leggeva (cattura dell'utente, 23 novembre 2026).
+   Ora sta in una pastiglia color carta, leggibile su qualunque fondo, come i tondi dei tasti sotto. */
+@media (min-width:1001px){
+  .condividi-lato .condividi-titolo{padding:9px 5px;border:1px solid var(--line);border-radius:999px;background:rgba(251,246,234,.96);color:var(--oro-t);
+    box-shadow:0 1px 2px rgba(34,28,24,.12);font-weight:600;letter-spacing:.14em}
+}
