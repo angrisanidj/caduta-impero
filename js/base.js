@@ -138,7 +138,7 @@ controlli.maxPolarAngle=Math.PI*.475;
 controlli.screenSpacePanning=false; controlli.panSpeed=1.1;
 controlli.mouseButtons={LEFT:THREE.MOUSE.PAN, MIDDLE:THREE.MOUSE.DOLLY, RIGHT:THREE.MOUSE.ROTATE};
 controlli.touches={ONE:THREE.TOUCH.PAN, TWO:THREE.TOUCH.DOLLY_ROTATE};
-controlli.addEventListener('change',function(){ var t=controlli.target, x=Math.max(-330,Math.min(330,t.x)), z=Math.max(-520,Math.min(260,t.z)); if(x!==t.x||z!==t.z){ camera.position.x+=x-t.x; camera.position.z+=z-t.z; t.x=x; t.z=z; } });
+controlli.addEventListener('change',function(){ var t=controlli.target, x=Math.max(-330,Math.min(330,t.x)), z=Math.max(-520,Math.min(420,t.z)); if(x!==t.x||z!==t.z){ camera.position.x+=x-t.x; camera.position.z+=z-t.z; t.x=x; t.z=z; } });
 var MENO_MOTO=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);      // ?moto=1 come nella carta, per le prove
 controlli.autoRotate=!MENO_MOTO; controlli.autoRotateSpeed=.22;
 /* La rotazione lenta è un dondolio di pochi gradi attorno a un angolo di riferimento, non un giro: lasciata girare per qualche minuto portava la città di traverso.

@@ -287,6 +287,45 @@ var saraceni846=(function(){
   return {g:maglia(B), da:845.6, a:847};
 })();
 
+/* ---------- 801: il terremoto e il tetto di San Paolo ----------
+   23 novembre 2026, l'utente: «quando ci sia un terremoto si muove la terra inizialmente e crolla qualcosa». Annali del regno dei Franchi, 801: la sera del 29 aprile un terremoto
+   e il tetto di San Paolo crollato con le sue travi («cum ipsis trabibus», riassunto nella didascalia). Arrivati sulla basilica: la scena trema per tre secondi, il tetto cede
+   durante la scossa (crepe e crolli dello shader, che prima della scossa tornano allo stato dell'800), si alza la polvere e restano a terra travi e tegole fino ai restauri (806).
+   Forma e quantità dei detriti sono uno schema. Con meno animazioni niente scossa: il tetto è già crollato. */
+var terremoto801=(function(){
+  var o=(RM.MONUMENTI||[]).filter(function(m){ return m.id==='paolo'; })[0]; if(!o||!o.mat) return null;
+  var B=new RM.Costruttore(), c=Math.cos(o.ry), s=Math.sin(o.ry), i;
+  function mondo(lx,lz){ return [o.x+lx*c+lz*s, o.z-lx*s+lz*c]; }
+  for(i=0;i<46;i++){ var lx=-5.5+rnd()*11, lz=(rnd()-.5)*2.2, p=mondo(lx,lz), ry=o.ry+(rnd()-.5)*1.2;
+    if(i%3) B.scatola(.12,.09,1.6+rnd()*.9,p[0],o.g.position.y+.05+rnd()*.25,p[1],P.tronco,ry); else B.scatola(.5,.08+rnd()*.12,.5,p[0],o.g.position.y+.05,p[1],P.coppi,ry); }
+  var detriti=B.maglia(RM.matPietra()); detriti.visible=false; detriti.castShadow=true; RM.scene.add(detriti);
+  var polvere=[], mp=new THREE.MeshBasicMaterial({color:0xcfc4b0,transparent:true,opacity:0,depthWrite:false});
+  for(i=0;i<9;i++){ var q=mondo(-5+i*1.25,(rnd()-.5)*1.5), m=new THREE.Mesh(new THREE.SphereGeometry(1,10,8),mp); m.position.set(q[0],o.g.position.y+2.4+rnd()*.8,q[1]); m.visible=false; RM.scene.add(m); polvere.push(m); }
+  return {o:o, detriti:detriti, polvere:polvere, mp:mp, seq:null};
+})();
+var MENO_SCOSSE=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);
+function valoriPaolo(anno){ var r=RM.rovina('paolo',anno); return {r:r.r, s:r.s, c:r.c}; }
+function applicaScossa(){      // durante la sequenza: il tetto va dallo stato dell'800 a quello dell'801, la polvere sale e svanisce, la terra trema
+  var T=terremoto801, q=T&&T.seq; if(!q) return;
+  var t=(performance.now()-q.t0)/1000, u=T.o.mat.userData.u, k=RM.sfuma(.5,1.8,t), pre=q.pre, post=q.post;
+  if(t<0){ k=0; }
+  u.uRovina.value=pre.r+(post.r-pre.r)*k; u.uSpoglio.value=pre.s+(post.s-pre.s)*k; u.uCrepe.value=pre.c+(post.c-pre.c)*k;
+  T.o.mat.color.copy(RM.TINTA.uso).lerp(q.col,k);
+  T.detriti.visible=k>.35;
+  var pv=t>.6&&t<6.5; T.mp.opacity=pv?.55*RM.sfuma(.6,1.4,t)*(1-RM.sfuma(3.5,6.5,t)):0;
+  T.polvere.forEach(function(m,j){ m.visible=pv; var g=1+2.2*RM.sfuma(.6,4,t)+(j%3)*.3; m.scale.set(g,g*.7,g); m.position.y=T.o.g.position.y+2.2+1.6*RM.sfuma(.6,5,t); });
+  var a=t>0&&t<3.2?.22*(1-t/3.2):0; RM.scene.position.set(a*Math.sin(t*47),a*.5*Math.sin(t*31+1),a*Math.cos(t*53));      // la terra trema: si muove il mondo, non la camera
+  if(t>6.5){ T.seq=null; RM.scene.position.set(0,0,0); T.mp.opacity=0; T.polvere.forEach(function(m){ m.visible=false; }); }
+}
+if(terremoto801){
+  RM.frame.push(applicaScossa);
+  if(window.RM_pagina) RM_pagina.quando(function(i,t){
+    var T=terremoto801; T.seq=null; RM.scene.position.set(0,0,0);
+    if(t.anno!==801 || t.intermezzo || MENO_SCOSSE) return;
+    T.seq={t0:performance.now()+2300, pre:valoriPaolo(800.5), post:valoriPaolo(801), col:RM.TINTA.crollato.clone()};      // la scossa parte quando la vista è arrivata sulla basilica
+  });
+}
+
 /* ---------- 552: Narsete e il forte dei Goti al mausoleo di Adriano ----------
    Procopio VIII 33, 14-27 (Dewing, LacusCurtius): i Goti, troppo pochi per tutta la cinta, «enclosed a small part of the city with a short wall around the Tomb of Hadrian and, by connecting this
    with the earlier wall, he made a kind of fortress»; poi si arrendono a Narsete, che avanza «against the fortress with his whole army». Qui: un muro basso attorno al mausoleo, interrotto
@@ -328,6 +367,7 @@ var tombe=TOMBE.map(function(t){
 RM.moduli.push(function(anno){
   [milvio,corteo,assedio472,prigionieri593,trionfo274,salaria410,vandali455,costante663,leone852,carlo800,saraceni846].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
   tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
+  if(terremoto801){ terremoto801.detriti.visible=anno>=801&&anno<806; applicaScossa(); }      // le travi restano a terra fino ai restauri; durante la sequenza la scossa comanda
   fortino552.g.visible=anno>=fortino552.da&&anno<fortino552.a; fortino552.g2.visible=anno>=fortino552.da2&&anno<fortino552.a2;
 });
 

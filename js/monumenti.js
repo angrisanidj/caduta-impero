@@ -627,14 +627,14 @@ var M=[
  }},
  /* Le scholae: quella dei Sassoni dal 727 (tradizione tarda su re Ine), le altre tre dal 799, quando le nomina per la prima volta il Liber Pontificalis (Leone III).
     La torre campanaria di Stefano II non sta qui: è campanilepietro (prima ce n'era una seconda copia, che compariva nel 727). */
- {id:'scholae', nome:'La comunità dei Sassoni (Schola dei Sassoni)', x:-233,z:-108, ry:0, zone:[[33.5,12.5,5]], fa:function(B){
+ {id:'scholae', nome:'La comunità dei Sassoni (Schola dei Sassoni)', etichetta:'Comunità dei Sassoni', ex:-199.5,ez:-95.5, x:-233,z:-108, ry:0, zone:[[33.5,12.5,5]], fa:function(B){
     var y=suTerreno(-233,-108,0), q;
     [[33.5,12.5]].forEach(function(p){       // Sassoni, verso il fiume, sul sito di Santo Spirito in Sassia (OpenStreetMap)
       q=y(p[0],p[1]); casa(B,q,p[0]-1.2,p[1],3.6,2.4,1.2); casa(B,q,p[0]+1.4,p[1]+2,1.6,3,1,PI/2);
       B.scatola(1.3,1.8,2.6,p[0]+2.6,q-.3,p[1]-1.6,P.mattone).falde(2.6,.4,1.5,p[0]+2.6,q+1.5,p[1]-1.6,P.coppi,PI/2,P.mattone).cilindro(.5,1.4,p[0]+2.6,q-.3,p[1]-3,P.mattone,null,10);
     });
  }},
- {id:'scholae2', nome:'Le comunità dei Frisoni, dei Franchi e dei Longobardi (scholae)', x:-233,z:-108, ry:0, zone:[[14,9,5],[-8,17,5],[-12,-11,5],[-32,12.5,4]], fa:function(B){
+ {id:'scholae2', nome:'Le comunità dei Frisoni, dei Franchi e dei Longobardi (scholae)', etichetta:'Comunità di Frisoni, Franchi e Longobardi', ex:-245,ez:-91, x:-233,z:-108, ry:0, zone:[[14,9,5],[-8,17,5],[-12,-11,5],[-32,12.5,4]], fa:function(B){
     var y=suTerreno(-233,-108,0), q;
     [[14,9],[-8,17],[-12,-11]].forEach(function(p){       // Frisoni sul sito dei Santi Michele e Magno (OpenStreetMap), Franchi a sud dell'atrio, Longobardi a nord (posizione discussa)
       q=y(p[0],p[1]); casa(B,q,p[0]-1.2,p[1],3.6,2.4,1.2); casa(B,q,p[0]+1.4,p[1]+2,1.6,3,1,PI/2);
@@ -930,7 +930,7 @@ M.forEach(function(o){
   o.g.position.set(o.x,o.quota!=null?o.quota-.05:quota(o.x,o.z),o.z); o.g.rotation.y=o.ry||0;
   if(o.come) o.g.position.y=perId[o.come].g.position.y;                       // poggia sullo stesso piano del complesso vicino
   RM.scene.add(o.g);
-  if(o.nome){ o.div=document.createElement('span'); o.div.textContent=o.nome; etichette.appendChild(o.div); o.div.addEventListener('click',function(){ if(RM.apriScheda) RM.apriScheda(o.id); }); }
+  if(o.nome){ o.div=document.createElement('span'); o.div.textContent=o.etichetta||o.nome;      /* etichetta: nome corto per la scena, dove quello della scheda è lungo (23 novembre 2026) */ etichette.appendChild(o.div); o.div.addEventListener('click',function(){ if(RM.apriScheda) RM.apriScheda(o.id); }); }
 });
 RM.MONUMENTI=M.filter(function(o){ return o.nome; }).concat([{id:'mura', nome:'Mura Aureliane', x:106,z:-203, raggio:28, alto:2}, {id:'acquedotti', nome:'Acquedotti', note:{chiuso:'tagliati nel 537'}, x:249,z:12, raggio:30, alto:3},
   {id:'antoniniano', nome:'Acquedotto Antoniniano', note:{chiuso:'tagliato nel 537'}, x:120,z:200, raggio:26, alto:2}]);
@@ -962,8 +962,8 @@ RM.rovina=function(id,anno){
     if(q==='cava'){ if(anno>=y-3 && da==null) da=y; scavo=RM.sfuma(y,y+200,anno); spoglio=Math.max(spoglio,.6*RM.sfuma(y,y+40,anno)); }   // smontato poco a poco, dall'alto: prima le coperture e i rivestimenti
   }
   var chiuso=da==null?0:RM.sfuma(0,70,anno-da), eta=da==null?0:anno-da;
-  return {r:(da==null?0:RM.sfuma(-3,6,eta)*.03+.15*RM.sfuma(10,110,eta)+.04*RM.sfuma(110,320,eta))+.07*spoglio+.2*fuoco+.07*crollo+.1*scavo, s:spoglio,
-          c:Math.min(1,Math.max(.9*crollo,cura*(rinato?.35:1)*(.62*RM.sfuma(390,570,anno)+.45*chiuso+.2*spoglio+.5*fuoco+.3*scavo)))};
+  return {r:(da==null?0:RM.sfuma(-3,6,eta)*.03+.15*RM.sfuma(10,110,eta)+.04*RM.sfuma(110,320,eta))+.07*spoglio+.2*fuoco+.2*crollo+.1*scavo, s:spoglio,
+          c:Math.min(1,Math.max(.45*crollo,cura*(rinato?.35:1)*(.62*RM.sfuma(390,570,anno)+.45*chiuso+.2*spoglio+.5*fuoco+.3*scavo)))};
 };
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
@@ -1046,14 +1046,20 @@ RM.moduli.push(function(anno){
 /* ---------- etichette proiettate ---------- */
 var v=new THREE.Vector3();
 RM.frame.push(function(){
-  var w=riquadro.clientWidth, h=riquadro.clientHeight;
+  var w=riquadro.clientWidth, h=riquadro.clientHeight, messi=[];      // messi: i rettangoli delle etichette già visibili; una che ne coprirebbe un'altra si nasconde (23 novembre 2026: le due scholae si accavallavano)
   M.forEach(function(o){
     if(!o.div) return;
-    v.set(o.x,o.g.position.y+7,o.z).applyMatrix4(RM.camera.matrixWorldInverse); var davanti=v.z<-2;      // dietro la camera non si proietta
-    v.set(o.x,o.g.position.y+7,o.z).project(RM.camera);
+    var ex=o.ex!=null?o.ex:o.x, ez=o.ez!=null?o.ez:o.z;      // ex, ez: dove sta il nome, se non al centro del gruppo
+    v.set(ex,o.g.position.y+7,ez).applyMatrix4(RM.camera.matrixWorldInverse); var davanti=v.z<-2;      // dietro la camera non si proietta
+    v.set(ex,o.g.position.y+7,ez).project(RM.camera);
     var vis=o.presenza>.5 && davanti && v.z<1 && Math.abs(v.x)<.8 && v.y>-.9 && v.y<.88 && !(v.y>.3 && v.x<-.1) && (o.et || Math.hypot(RM.camera.position.x-o.x,RM.camera.position.y,RM.camera.position.z-o.z)<(o.raggio>6?150:95));   // non sui bordi né sopra il contatore; i monumenti minori hanno il nome solo da vicino
+    var px=(v.x+1)*w/2, py=(1-v.y)*h/2;
+    if(vis){ if(!o.lw){ o.lw=o.div.offsetWidth||o.div.textContent.length*7; o.lh=o.div.offsetHeight||16; }
+      var r=[px-o.lw/2-4,py-o.lh-2,px+o.lw/2+4,py+2];
+      for(var k=0;k<messi.length;k++){ var q=messi[k]; if(r[0]<q[2]&&r[2]>q[0]&&r[1]<q[3]&&r[3]>q[1]){ vis=false; break; } }
+      if(vis) messi.push(r); }
     o.div.style.opacity=vis?1:0; o.div.style.visibility=vis?'visible':'hidden';
-    if(vis) o.div.style.transform='translate(-50%,-100%) translate('+((v.x+1)*w/2).toFixed(1)+'px,'+((1-v.y)*h/2).toFixed(1)+'px)';
+    if(vis) o.div.style.transform='translate(-50%,-100%) translate('+px.toFixed(1)+'px,'+py.toFixed(1)+'px)';
   });
 });
 })();
