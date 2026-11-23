@@ -113,21 +113,21 @@
   "anno": 251,
   "nome": "Cipriano",
   "wikidata": "Q190240",
-  "file": null,
-  "pagina": null,
-  "url": null,
-  "larghezza": null,
-  "altezza": null,
-  "oggetto": null,
-  "coevo": "nessuno",
-  "ritratto": null,
-  "licenza": null,
-  "licenzaUrl": null,
-  "autore": null,
-  "credito": null,
-  "licenzaAccettabile": null,
+  "file": "Mosaic of Saint Cyprian of Carthage from Sant'Apollinare Nuovo in Ravenna.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Mosaic_of_Saint_Cyprian_of_Carthage_from_Sant%27Apollinare_Nuovo_in_Ravenna.jpg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Mosaic_of_Saint_Cyprian_of_Carthage_from_Sant%27Apollinare_Nuovo_in_Ravenna.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "larghezza": 523,
+  "altezza": 1508,
+  "oggetto": "mosaico del corteo dei martiri in Sant'Apollinare Nuovo a Ravenna, al tempo del vescovo Agnello (metà del VI secolo)",
+  "coevo": "posteriore",
+  "ritratto": true,
+  "licenza": "CC BY 4.0",
+  "licenzaUrl": "https://creativecommons.org/licenses/by/4.0",
+  "autore": "Sailko",
+  "credito": "Foto: Sailko, CC BY 4.0, da Wikimedia Commons",
+  "licenzaAccettabile": true,
   "verificato": true,
-  "nota": "Nessun ritratto coevo noto; su Commons solo immagini medievali e moderne. Da decidere se metterne una (vedi «Saint Cyprian in art»)."
+  "nota": "Scelto il 23 novembre 2026 al posto della ricostruzione: è la sua immagine più antica trovata, tre secoli dopo la morte. La descrizione su Commons dice «4th century», ma il file da cui è ritagliato è datato all'epoca del vescovo Agnello («epoca del vescovo agnello»): si scrive questa. Ritaglio del volto fatto a mano: non riscaricare."
  },
  {
   "anno": 260,
@@ -1777,7 +1777,7 @@
   "credito": "Foto: Christelle Molinié, CC BY-SA 4.0, da Wikimedia Commons",
   "licenzaAccettabile": true,
   "verificato": true,
-  "nota": "Il museo viene dalla scheda del file «Anneau sigillaire Alaric II». Scelta la foto da vicino; c’è anche «Siegelstein König Alarichs II», con la vetrina intera. È un’immagine ufficiale del re, non per forza somigliante."
+  "nota": "Il museo viene dalla scheda del file «Anneau sigillaire Alaric II». Scelta la foto da vicino, ritagliata a mano sulla pietra (img/protagonisti/alarico-ii.jpg: non riscaricarla); c’è anche «Siegelstein König Alarichs II», con la vetrina intera. È un’immagine ufficiale del re, non per forza somigliante."
  },
  {
   "anno": 507,
@@ -1797,7 +1797,7 @@
   "credito": null,
   "licenzaAccettabile": null,
   "verificato": true,
-  "nota": "Nessuna immagine antica; su Commons solo illustrazioni moderne di fantasia («Syagrius brought before Clovis», Waterhouse 1903)."
+  "nota": "Nessuna immagine antica; su Commons solo illustrazioni moderne di fantasia («Syagrius brought before Clovis», Waterhouse 1903). Dal 23 novembre 2026 ha un ritratto ricostruito (RICOSTRUZIONI in scarica.mjs, scheda 14 di ricostruzioni.md)."
  },
  {
   "anno": 507,

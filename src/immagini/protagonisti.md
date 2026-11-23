@@ -9,10 +9,10 @@ Righe della tabella: 138 (persone distinte: 105).
 | | righe | persone |
 |---|---|---|
 | ritratto coevo | 79 | 57 |
-| ritratto posteriore | 20 | 17 |
+| ritratto posteriore | 21 | 18 |
 | di fantasia | 5 | 4 |
 | oggetto del tempo, senza volto | 22 | 16 |
-| nessuna immagine | 12 | 11 |
+| nessuna immagine | 11 | 10 |
 
 ## Da decidere
 
@@ -56,7 +56,7 @@ Le scelte di principio:
 
 - **Decio** ([Q1830](https://www.wikidata.org/wiki/Q1830)) — *ritratto coevo*: busto in marmo attribuito a Decio, 249-251, Musei Capitolini. [Emperor Traianus Decius (Mary Harrsch).jpg](https://commons.wikimedia.org/wiki/File:Emperor_Traianus_Decius_(Mary_Harrsch).jpg) — 450×600, CC BY-SA 2.0; «Foto: Mary Harrsch, CC BY-SA 2.0, da Wikimedia Commons». L'identificazione del busto capitolino con Decio è quella corrente, fondata sul confronto con le monete.
 - **Cniva** ([Q558526](https://www.wikidata.org/wiki/Q558526)) — *nessuna immagine*. Nessun ritratto coevo noto, nessuna moneta. Su Commons solo una stampa moderna di fantasia («Gothic king Cniva and Emperor Decius at the battle of Abritus»): sconsigliata.
-- **Cipriano** ([Q190240](https://www.wikidata.org/wiki/Q190240)) — *nessuna immagine*. Nessun ritratto coevo noto; su Commons solo immagini medievali e moderne. Da decidere se metterne una (vedi «Saint Cyprian in art»).
+- **Cipriano** ([Q190240](https://www.wikidata.org/wiki/Q190240)) — *ritratto posteriore*: mosaico del corteo dei martiri in Sant'Apollinare Nuovo a Ravenna, al tempo del vescovo Agnello (metà del VI secolo). [Mosaic of Saint Cyprian of Carthage from Sant'Apollinare Nuovo in Ravenna.jpg](https://commons.wikimedia.org/wiki/File:Mosaic_of_Saint_Cyprian_of_Carthage_from_Sant%27Apollinare_Nuovo_in_Ravenna.jpg) — 523×1508, CC BY 4.0; «Foto: Sailko, CC BY 4.0, da Wikimedia Commons». Scelto il 23 novembre 2026 al posto della ricostruzione: è la sua immagine più antica trovata, tre secoli dopo la morte. La descrizione su Commons dice «4th century», ma il file da cui è ritagliato è datato all'epoca del vescovo Agnello («epoca del vescovo agnello»): si scrive questa. Ritaglio del volto fatto a mano: non riscaricare.
 
 ### 260
 
@@ -225,8 +225,8 @@ Le scelte di principio:
 ### 507
 
 - **Clodoveo** (-) — *oggetto del tempo, senza volto*: soldo d’oro coniato in Gallia sotto Clodoveo (491-507 per il catalogo), a nome dell’imperatore Anastasio. [Solidus à la victoire sous frappé sous Clovis.jpg](https://commons.wikimedia.org/wiki/File:Solidus_%C3%A0_la_victoire_sous_frapp%C3%A9_sous_Clovis.jpg) — 3967×1851, CC BY-SA 3.0; «Foto: cgb.fr, CC BY-SA 3.0, da Wikimedia Commons». I Franchi coniano a nome e con il busto dell’imperatore: il volto è di Anastasio. L’attribuzione al regno di Clodoveo è del catalogo d’asta (cgb.fr). Nessun ritratto coevo noto; su Commons ci sono busti moderni di fantasia.
-- **Alarico II** (-) — *ritratto coevo*: anello con la pietra da sigillo con un busto e la scritta ALARICVS REX GOTHORVM (a rovescio, per l’impronta), Kunsthistorisches Museum, Vienna. [Sceau-Alaric.jpg](https://commons.wikimedia.org/wiki/File:Sceau-Alaric.jpg) — 1331×1651, CC BY-SA 4.0; «Foto: Christelle Molinié, CC BY-SA 4.0, da Wikimedia Commons». Il museo viene dalla scheda del file «Anneau sigillaire Alaric II». Scelta la foto da vicino; c’è anche «Siegelstein König Alarichs II», con la vetrina intera. È un’immagine ufficiale del re, non per forza somigliante.
-- **Siagrio** (-) — *nessuna immagine*. Nessuna immagine antica; su Commons solo illustrazioni moderne di fantasia («Syagrius brought before Clovis», Waterhouse 1903).
+- **Alarico II** (-) — *ritratto coevo*: anello con la pietra da sigillo con un busto e la scritta ALARICVS REX GOTHORVM (a rovescio, per l’impronta), Kunsthistorisches Museum, Vienna. [Sceau-Alaric.jpg](https://commons.wikimedia.org/wiki/File:Sceau-Alaric.jpg) — 1331×1651, CC BY-SA 4.0; «Foto: Christelle Molinié, CC BY-SA 4.0, da Wikimedia Commons». Il museo viene dalla scheda del file «Anneau sigillaire Alaric II». Scelta la foto da vicino, ritagliata a mano sulla pietra (img/protagonisti/alarico-ii.jpg: non riscaricarla); c’è anche «Siegelstein König Alarichs II», con la vetrina intera. È un’immagine ufficiale del re, non per forza somigliante.
+- **Siagrio** (-) — *nessuna immagine*. Nessuna immagine antica; su Commons solo illustrazioni moderne di fantasia («Syagrius brought before Clovis», Waterhouse 1903). Dal 23 novembre 2026 ha un ritratto ricostruito (RICOSTRUZIONI in scarica.mjs, scheda 14 di ricostruzioni.md).
 - **Remigio** (-) — *ritratto posteriore*: placca d’avorio di legatura, Reims, ultimo quarto del IX secolo, Musée de Picardie, Amiens: Remigio battezza Clodoveo (con il miracolo della Santa Ampolla). [Saint Remy baptise Clovis.jpg](https://commons.wikimedia.org/wiki/File:Saint_Remy_baptise_Clovis.jpg) — 1195×655, Public domain; «Immagine: Pethrus (talk), pubblico dominio, da Wikimedia Commons».
 
 ### 526
