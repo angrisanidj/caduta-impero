@@ -3036,7 +3036,7 @@ var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno==
   barbari:{d:BARBARI, disegna:disegnaBarbari, tappe:function(t){ return t.anno===439&&t.intermezzo; }},
   acquedotti:{d:ACQUEDOTTI, disegna:disegnaAcquedotti, tappe:function(t){ return t.anno===537&&!t.intermezzo; }},
   sacchi:{d:SACCHI, disegna:disegnaSacchi, tappe:function(t){ return !t.intermezzo && (t.anno===455||t.anno===546); }},
-  terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo) || t.anno===439&&!t.intermezzo; }} };
+  terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo); }} };      /* solo nell'intermezzo «L'esercito»: dalla tappa del 439 (Cartagine) l'utente l'ha fatta togliere il 24 novembre 2026 */
 var ORDINE=['valeriano','moneta','milvio','navi','adrianopoli','altare','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','pantheon','curia','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 395, 410, 439, 476, 609, 630; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
 var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
   pausa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',

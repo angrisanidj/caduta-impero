@@ -142,12 +142,13 @@ const RICOSTRUZIONI = {
   'Musa ibn Nusayr': 'governatore arabo dell\'Africa, anziano nel 711: abiti arabi omayyadi; le fonti non lo descrivono',
   'Ine': 're del Wessex in partenza per Roma: abito da viaggio secondo i corredi anglosassoni intorno al 700',
   'Siagrio': 'generale romano in Gallia nel 486, figlio di un magister militum: abito da ufficiale tardoromano; viso rasato all’uso degli aristocratici romani del tempo (ipotesi)',
+  'Attila': 're degli Unni nel 451: i tratti sono quelli della descrizione di Giordane (Getica 182), scritta un secolo dopo; l’abito semplice, senza oro, viene da Prisco, che lo vide nel 449; l’età, circa 45 anni, è una scelta',
 };
 for (const x of elenco) {
   const cosa = RICOSTRUZIONI[x.nome], chiave = x.anno + '|' + x.nome; if (!cosa || indice[chiave]) continue;
   const nome = 'ric-' + sigla(x.nome) + '.jpg', p = path.join(CARTELLA, nome); if (!fs.existsSync(p)) { console.log('ricostruzione non ancora fatta:', x.nome); continue; }
   const [w, h] = misure(fs.readFileSync(p));
-  indice[chiave] = { f: 'img/protagonisti/' + nome, w, h, cosa: 'ricostruzione: ' + cosa, tipo: 'ricostruzione', credito: 'Generata per questa pagina con il modello Seedream 5 Pro (ElevenLabs), 23 novembre 2026', pagina: 'https://github.com/angrisanidj/caduta-impero/blob/main/src/immagini/ricostruzioni.md', licenza: 'CC BY-SA 4.0' };
+  indice[chiave] = { f: 'img/protagonisti/' + nome, w, h, cosa: 'ricostruzione: ' + cosa, tipo: 'ricostruzione', credito: 'Generata per questa pagina con il modello Seedream 5 Pro (ElevenLabs), ' + (x.nome === 'Attila' ? '24' : '23') + ' novembre 2026', pagina: 'https://github.com/angrisanidj/caduta-impero/blob/main/src/immagini/ricostruzioni.md', licenza: 'CC BY-SA 4.0' };
 }
 for (const n of Object.keys(RISERVE)) if (!elenco.some(x => x.nome === n && x.file)) console.log('riserva senza immagine:', n);
 fs.writeFileSync(path.join(RADICE, 'js', 'ritratti.js'),

@@ -91,8 +91,7 @@ export const SCELTE = {
   // 451
   'Ezio': { file: 'Diptych Aetius.jpg', oggetto: 'ritratto in rilievo del sarcofago detto «di Stilicone», Milano, basilica di Sant\'Ambrogio', coevo: 'si',
     nota: 'Rimessa il 22 novembre 2026 su richiesta dell\'utente, con riserva. Il titolo del file dice «dittico», ma è un rilievo di marmo: la pagina di Commons rimanda, come altra versione, al calco del «sarcofago di Stilicone» (foto Dall\'Orto), quindi è un particolare di quel sarcofago. Che sia Ezio è una proposta di Ian Hughes (Aetius: Attila\'s Nemesis), riferita dalla pagina; non letta nel libro. La data del sarcofago non è stata riscontrata.' },
-  'Attila': { file: 'Attila portrait (imaginary), by Giovio Paolo, 1483-1552, published 1575.jpg', oggetto: 'ritratto immaginario dagli «Elogia» di Paolo Giovio, 1575', coevo: 'fantasia',
-    nota: 'Nessun ritratto coevo noto: l\'immagine è dichiaratamente immaginaria (lo dice il titolo del file).' },
+  'Attila': { coevo: 'nessuno', nota: 'Nessuna immagine antica; su Commons solo opere dal XIV secolo in poi, di fantasia (Giovio e Stimmer 1575, Chronicon Pictum verso il 1360, Thuróczy 1488, placchette del Rinascimento). Il 24 novembre 2026 l\'utente ha scelto il ritratto ricostruito («Vai di alternativa per Attila. Ma rendilo davvero realistico»): RICOSTRUZIONI in scarica.mjs, scheda 15 di ricostruzioni.md.' },
   // 455, 458, 468
   'Leone I': { file: 'Raphael - The Meeting of Leo the Great and Attila.jpg', oggetto: 'particolare di Raffaello, «Incontro di Leone Magno con Attila», 1514, Stanze vaticane: il papa a cavallo', coevo: 'posteriore',
     nota: 'Nessun ritratto coevo; il papa ha il volto di Leone X, e la scena è quella del 452 con Attila, non quella del 455 con Genserico. Meglio nessuna immagine.' },

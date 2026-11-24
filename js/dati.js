@@ -1096,7 +1096,7 @@ var PROTAGONISTI={
  439:[["Genserico","circa 389-477","Entra a Cartagine il 19 ottobre 439 e ne fa la sua capitale."],
       ["Valentiniano III","419-455","Imperatore dal 425: nel 442 riconosce il regno vandalo."]],
  451:[["Ezio","circa 390-454","Generale d'Occidente dal 433; da ragazzo era stato ostaggio dei Goti di Alarico e poi degli Unni."],
-      ["Attila","morto nel 453","Attila governa gli Unni dal 434 circa, nei primi anni insieme al fratello Bleda. Non si conserva alcuna sua immagine realizzata all'epoca. La descrizione riportata qui sotto è dello storico Giordane."],
+      ["Attila","morto nel 453","Attila governa gli Unni dal 434 circa, nei primi anni insieme al fratello Bleda. Non si conserva alcuna sua immagine realizzata all'epoca: il ritratto qui accanto è una ricostruzione, e il volto è immaginario. Segue la descrizione riportata qui sotto, dello storico Giordane."],
       ["Teodorico I","re dal 418 al 451","Re dei Visigoti: muore nella battaglia."]],
  455:[["Valentiniano III","419-455","Nel 454 uccide personalmente il generale Ezio. L'anno seguente due uomini che avevano servito Ezio uccidono l'imperatore."],
       ["Genserico","circa 389-477","Porta a Cartagine il bottino, l'imperatrice Eudossia e le sue figlie."],

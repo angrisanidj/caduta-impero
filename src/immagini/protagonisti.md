@@ -10,9 +10,9 @@ Righe della tabella: 147 (persone distinte: 111).
 |---|---|---|
 | ritratto coevo | 85 | 61 |
 | ritratto posteriore | 21 | 18 |
-| di fantasia | 5 | 4 |
+| di fantasia | 4 | 3 |
 | oggetto del tempo, senza volto | 23 | 17 |
-| nessuna immagine | 13 | 11 |
+| nessuna immagine | 14 | 12 |
 
 ## Da decidere
 
@@ -185,7 +185,7 @@ Le scelte di principio:
 ### 451
 
 - **Ezio** ([Q185476](https://www.wikidata.org/wiki/Q185476)) — *ritratto coevo*: ritratto in rilievo del sarcofago detto «di Stilicone», Milano, basilica di Sant'Ambrogio. [Diptych Aetius.jpg](https://commons.wikimedia.org/wiki/File:Diptych_Aetius.jpg) — 900×900, CC BY-SA 4.0; «Foto: Tataryn, CC BY-SA 4.0, da Wikimedia Commons». Rimessa il 22 novembre 2026 su richiesta dell'utente, con riserva. Il titolo del file dice «dittico», ma è un rilievo di marmo: la pagina di Commons rimanda, come altra versione, al calco del «sarcofago di Stilicone» (foto Dall'Orto), quindi è un particolare di quel sarcofago. Che sia Ezio è una proposta di Ian Hughes (Aetius: Attila's Nemesis), riferita dalla pagina; non letta nel libro. La data del sarcofago non è stata riscontrata.
-- **Attila** ([Q36724](https://www.wikidata.org/wiki/Q36724)) — *di fantasia*: ritratto immaginario dagli «Elogia» di Paolo Giovio, 1575. [Attila portrait (imaginary), by Giovio Paolo, 1483-1552, published 1575.jpg](https://commons.wikimedia.org/wiki/File:Attila_portrait_(imaginary),_by_Giovio_Paolo,_1483-1552,_published_1575.jpg) — 605×774, Public domain; «Immagine: Giovio, Paolo, 1483-1552, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: l'immagine è dichiaratamente immaginaria (lo dice il titolo del file).
+- **Attila** ([Q36724](https://www.wikidata.org/wiki/Q36724)) — *nessuna immagine*. Nessuna immagine antica; su Commons solo opere dal XIV secolo in poi, di fantasia (Giovio e Stimmer 1575, Chronicon Pictum verso il 1360, Thuróczy 1488, placchette del Rinascimento). Il 24 novembre 2026 l'utente ha scelto il ritratto ricostruito («Vai di alternativa per Attila. Ma rendilo davvero realistico»): RICOSTRUZIONI in scarica.mjs, scheda 15 di ricostruzioni.md.
 - **Teodorico I** ([Q110892](https://www.wikidata.org/wiki/Q110892)) — *di fantasia*: quadro di Félix Castello, 1635, Museo del Prado. [Félix Castello, "Teodorico, rey godo", 1635.jpg](https://commons.wikimedia.org/wiki/File:F%C3%A9lix_Castello,_%22Teodorico,_rey_godo%22,_1635.jpg) — 1708×2953, Public domain; «Immagine: Félix Castello, pubblico dominio, da Wikimedia Commons». Nessun ritratto coevo noto: immagine di fantasia; meglio nessuna immagine.
 
 ### 455
