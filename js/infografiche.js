@@ -3739,6 +3739,177 @@ function disegnaPoitiers(svg,S,W,H){
   S.battute=POITIERS.fasi.map(function(f,ii){ return {t:bt2[ii],anno:f[0],testo:f[1]}; });
 }
 
+/* ======================================================================
+   Il Cristianesimo a Roma: da perseguitati a padroni di casa (303-852)
+   Aggiunta il 24 novembre 2026 (l'utente: «Procedi come proposto»; «Manteniamo la fedeltà con i veri racconti»). Una pianta di Roma che si riempie di chiese mentre i templi
+   chiudono, e un nastro del potere che cambia forma: culto perseguitato, culto libero, religione dell'Impero, il papa che governa. Tutto viene dalla pagina:
+   - tappe del 312 (la persecuzione del 303: distruggere le chiese e bruciare i libri; Galerio nel 311; Milano nel 313, libertà «ai cristiani e a tutti»; il segno in Lattanzio e
+     in Eusebio, con le loro voci; l'arco: «ispirazione della divinità»), 330 (le prime grandi basiliche), 384 (l'altare, Simmaco e Ambrogio), 394 (l'editto del 380, i divieti
+     del 391 e del 392), 593 (Gregorio: il grano, le trattative, «Dov'è il Senato?»), 609 (il Pantheon), 630 (la Curia e le tegole del tempio di Roma), 756 (lo Stato della Chiesa,
+     la lettera di Stefano II), 800 (l'incoronazione, gli Annali del regno dei Franchi), 852 (la città leonina, la vita di Leone IV);
+   - schede del Laterano («voluta da Costantino»; l'anno dei lavori «resta incerto») e di San Pietro («sulla tomba dell'apostolo, fuori le mura»);
+   - le chiese: anni e luoghi di CHIESE (js/dati.js) e di MONUMENTI, posizioni dei monumenti da js/monumenti.js, mura leonine da LEO in js/monumenti.js, mura e Tevere da RM_TOPO.
+   Letto ora (24 novembre 2026), una sola fonte in più: Codice Teodosiano XVI 1, 2 (Tessalonica, 27 febbraio 380, «ad populum urbis Constantinopolitanae»), nel latino di
+   droitromain.univ-grenoble-alpes.fr/Constitutiones/CTh16.html: «Cunctos populos, quos clementiae nostrae regit temperamentum, in tali volumus religione versari, quam divinum
+   petrum apostolum tradidisse Romanis». Traduzione nostra.
+   Schemi, detti nelle avvertenze in pagina: la pianta è quella del modello; i segni stanno sugli edifici attuali; per molte chiese minori l'anno è una scelta del modello dentro
+   un secolo o una prima attestazione; i templi segnati sono quelli che il modello chiude nel 392, ma la fine del culto non ha una data; il nastro del potere è un riassunto
+   delle tappe, non una periodizzazione delle fonti; il segno sullo scudo è disegnato dalla descrizione di Lattanzio. Nessun numero di cristiani: le fonti non lo danno. */
+var CRISTIANESIMO={ titolo:"Il Cristianesimo a Roma", sotto:"Da culto perseguitato a religione dell'Impero, fino al papa che governa la città: 303-852",
+  fasi:[["303","Sotto Diocleziano comincia la grande persecuzione dei cristiani. Le autorità ordinano di distruggere le chiese e bruciare i libri sacri."],
+    ["312","Ponte Milvio, in due racconti. Per Lattanzio, verso il 315, Costantino sogna e fa tracciare sugli scudi il segno di Cristo. Per Eusebio, dopo il 337, prima vede in cielo una croce luminosa, poi un sogno gli spiega come usare quel segno. L'arco del Senato parla solo di «ispirazione della divinità»."],
+    ["313","Nel 311 Galerio aveva riconosciuto ai cristiani il diritto di praticare la loro religione. Nel 313, a Milano, Costantino e Licinio garantiscono la libertà di culto «ai cristiani e a tutti»."],
+    ["Verso il 330","Sorgono le prime grandi basiliche cristiane. Il Laterano, la cattedrale voluta da Costantino, sorge sul Celio. San Pietro sorge fuori le mura, sulla tomba dell'apostolo."],
+    ["380","Un editto di Teodosio stabilisce che tutti seguano la fede del vescovo di Roma, Damaso, e di quello di Alessandria. Chi la rifiuta è considerato eretico."],
+    ["384","Graziano ha fatto togliere dal Senato l'altare della Vittoria e ha tagliato i fondi ai culti. Simmaco chiede di rimetterlo, Ambrogio si oppone. Valentiniano II respinge la richiesta."],
+    ["391-392","Teodosio vieta i sacrifici e l'ingresso nei templi per celebrarvi riti. Quando finì davvero il culto degli dèi non si sa: nella pianta i templi chiudono nel 392, per scelta del modello."],
+    ["593","I Longobardi marciano su Roma. È papa Gregorio Magno a organizzare la distribuzione del grano e a trattare con gli assedianti."],
+    ["609","L'imperatore Foca dona il Pantheon a papa Bonifacio IV. Il 13 maggio Bonifacio lo consacra come chiesa di Santa Maria ad Martyres. Il nuovo uso lo preserva."],
+    ["630","Papa Onorio I fa della Curia, l'aula del Senato, la chiesa di Sant'Adriano. Con il permesso dell'imperatore Eraclio toglie le tegole di bronzo dal tempio di Roma per coprire San Pietro."],
+    ["756","Pipino, re dei Franchi, consegna al papa i territori tolti ai Longobardi. Nasce lo Stato della Chiesa: i papi esercitano anche il potere politico."],
+    ["800","Nella basilica di San Pietro papa Leone III incorona Carlo Magno imperatore. Roma è la sede dei papi e la meta dei pellegrini."],
+    ["852","Leone IV fa costruire nuove mura attorno a San Pietro: nasce la «città leonina». È qui che Roma ha trovato un nuovo centro."]],
+  fonte:"Tappe del 312, 330, 384, 394, 593, 609, 630, 756, 800 e 852 di questa pagina, con le loro voci (Lattanzio, Eusebio, Simmaco, Ambrogio, Gregorio Magno, Liber Pontificalis, Stefano II, Annali del regno dei Franchi); schede del Laterano e di San Pietro; Codice Teodosiano XVI 1, 2, del 27 febbraio 380 (traduzione nostra). Schema: la pianta è quella del modello della città, con le chiese nei luoghi degli edifici di oggi; per molte chiese minori l'anno in cui compaiono è una scelta del modello, dentro un secolo o alla prima notizia; i templi segnati sono quelli che il modello chiude nel 392, ma quando finì il culto degli dèi non si sa; il nastro del potere riassume le tappe e non è una divisione delle fonti; il segno sullo scudo è disegnato dalla descrizione di Lattanzio. Quanti fossero i cristiani, le fonti non lo dicono." };
+/* le quote del modello (RM_TOPO.quote) come ombra leggera dei colli, luce da nord-ovest: lo stesso calcolo degli acquedotti */
+function ombraColli(par,TP,EXT,mb){
+  try{ var Q=TP.quote, ew=EXT[2]-EXT[0], eh=EXT[3]-EXT[1], cw=Math.round(Math.min(520,mb[2])), ch=Math.round(cw*eh/ew), cv=document.createElement('canvas'); cv.width=cw; cv.height=ch; var cx=cv.getContext('2d'), im=cx.createImageData(cw,ch);
+    var quota=function(x,z){ var c=(x-Q.x0)/Q.dx, r=(Q.z0-z)/Q.dz; c=clamp(c,0,Q.colonne-1.001); r=clamp(r,0,Q.righe-1.001); var c0=Math.floor(c), r0=Math.floor(r), fc=c-c0, fr=r-r0, n=r0*Q.colonne+c0;
+      return ((Q.q[n]*(1-fc)+Q.q[n+1]*fc)*(1-fr)+(Q.q[n+Q.colonne]*(1-fc)+Q.q[n+Q.colonne+1]*fc)*fr)/10; }, px=ew/cw;
+    for(var yy=0;yy<ch;yy++) for(var xx=0;xx<cw;xx++){ var X0=EXT[0]+xx*px, Z0=EXT[1]+yy*px, e=quota(X0,Z0), gx=(quota(X0+px*2,Z0)-quota(X0-px*2,Z0))/(px*40), gz=(quota(X0,Z0+px*2)-quota(X0,Z0-px*2))/(px*40);
+      var sh=clamp(.5-(gx*-1+gz*-1)*3.2,0,1), alto=clamp(e/45,0,1), o=(yy*cw+xx)*4;
+      im.data[o]=Math.round(238+alto*10-(1-sh)*52); im.data[o+1]=Math.round(229+alto*6-(1-sh)*56); im.data[o+2]=Math.round(208-alto*10-(1-sh)*60); im.data[o+3]=255; }
+    cx.putImageData(im,0,0); href(el('image',{x:r1(mb[0]),y:r1(mb[1]),width:r1(mb[2]),height:r1(mb[3]),preserveAspectRatio:'none','class':'ig-aq-rilievo'},par),cv.toDataURL('image/png')); }catch(err){} }
+/* i segni della pianta: il tempio col frontone (chiuso: grigio e incrinato), la chiesa (le maggiori come piccole basiliche) */
+function segnoTempio(par,p,s){ var g=el('g',{'class':'ig-cr-tempio',transform:'translate('+xy(p)+')'},par);
+  el('path',{d:'M'+r1(-s*.62)+' '+r1(-s*.28)+' L0 '+r1(-s*.62)+' L'+r1(s*.62)+' '+r1(-s*.28)+' Z M'+r1(-s*.55)+' '+r1(s*.42)+' H'+r1(s*.55)+' V'+r1(s*.54)+' H'+r1(-s*.55)+' Z','class':'ig-cr-t-pieno'},g);
+  [-.36,0,.36].forEach(function(x){ el('rect',{x:r1(s*x-s*.07),y:r1(-s*.24),width:r1(s*.14),height:r1(s*.66),'class':'ig-cr-t-pieno'},g); });
+  el('path',{d:'M'+r1(-s*.1)+' '+r1(-s*.55)+' l'+r1(s*.12)+' '+r1(s*.3)+' l'+r1(-s*.14)+' '+r1(s*.22)+' l'+r1(s*.1)+' '+r1(s*.4),'class':'ig-cr-crepa'},g); return g; }
+function segnoChiesa(par,p,s,grande){ var g=el('g',{'class':'ig-cr-chiesa '+(grande?'grande':'minore'),transform:'translate('+xy(p)+')'},par), q=el('g',{'class':'ig-cr-c-in'},g);
+  if(grande){ el('path',{d:'M'+r1(-s*.7)+' '+r1(s*.45)+' V'+r1(-s*.1)+' L0 '+r1(-s*.5)+' L'+r1(s*.7)+' '+r1(-s*.1)+' V'+r1(s*.45)+' Z','class':'ig-cr-c-corpo'},q); el('path',{d:'M0 '+r1(-s*.5)+' V'+r1(-s*1.15)+' M'+r1(-s*.24)+' '+r1(-s*.9)+' H'+r1(s*.24),'class':'ig-cr-c-croce'},q); }
+  else el('path',{d:'M0 '+r1(-s*.55)+' V'+r1(s*.55)+' M'+r1(-s*.36)+' '+r1(-s*.16)+' H'+r1(s*.36),'class':'ig-cr-c-croce'},q);
+  return g; }
+/* i piccoli disegni dei quadri, dalle descrizioni della pagina (schemi) */
+function vignettaCr(par,tipo,x,y,s){ var g=el('g',{'class':'ig-cr-vign',transform:'translate('+r1(x)+','+r1(y)+') scale('+r1(s/60*100)/100+')'},par);
+  el('rect',{x:0,y:0,width:60,height:60,rx:10,'class':'ig-cr-v-fondo'+(tipo==='libri'||tipo==='mura'?' scuro':'')},g);
+  if(tipo==='libri'){ el('path',{d:'M14 44 L30 40 L46 44 V30 L30 26 L14 30 Z','class':'ig-cr-v-libro'},g); el('path',{d:'M30 26 V40','class':'ig-cr-v-riga'},g); el('path',{d:FIAMMA,transform:'translate(30 25) scale(1.25)','class':'ig-cr-v-fiamma'},g); }
+  else if(tipo==='altare'){ el('path',{d:'M20 48 H40 V44 H37 V26 H40 V21 H20 V26 H23 V44 H20 Z','class':'ig-cr-v-altare'},g); el('path',{d:'M44 34 H54 M50 30 L54 34 L50 38','class':'ig-cr-v-via'},g); }
+  else if(tipo==='grano'){ [[18,40],[31,38],[44,40],[24,28],[38,28]].forEach(function(q){ el('path',{d:'M'+(q[0]-7)+' '+(q[1]+8)+' Q'+(q[0]-8)+' '+(q[1]-4)+' '+(q[0]-3)+' '+(q[1]-7)+' H'+(q[0]+3)+' Q'+(q[0]+8)+' '+(q[1]-4)+' '+(q[0]+7)+' '+(q[1]+8)+' Z','class':'ig-cr-v-sacco'},g); }); }
+  else if(tipo==='corona'){ el('path',{d:'M15 40 L17 22 L24 31 L30 18 L36 31 L43 22 L45 40 Z','class':'ig-cr-v-corona'},g); el('rect',{x:15,y:40,width:30,height:6,rx:1.5,'class':'ig-cr-v-corona'},g); }
+  else if(tipo==='mura'){ el('path',{d:'M6 48 V30 H11 V26 H16 V30 H22 V26 H27 V30 H33 V26 H38 V30 H44 V26 H49 V30 H54 V48 Z','class':'ig-cr-v-mura'},g); el('path',{d:'M30 24 V12 M26 16 H34','class':'ig-cr-v-croce'},g); }
+  else if(tipo==='scudo'){ el('ellipse',{cx:30,cy:31,rx:15,ry:19,'class':'ig-cr-scudo'},g); el('path',{d:'M23 25 L37 41 M37 25 L23 41 M30 33 V17 q6 -1 6 4 t-6 4','class':'ig-cr-segno'},g); }
+  else if(tipo==='croce'){ el('rect',{x:0,y:0,width:60,height:60,rx:10,'class':'ig-cr-cielo'},g); el('path',{d:'M30 14 V46 M20 25 H40','class':'ig-cr-luce'},g); }
+  else if(tipo==='basilica'){ el('path',{d:'M12 46 V30 L30 18 L48 30 V46 Z','class':'ig-cr-c-corpo'},g); el('path',{d:'M30 18 V8 M26 11.5 H34','class':'ig-cr-c-croce'},g); el('rect',{x:26,y:36,width:8,height:10,'class':'ig-cr-v-porta'},g); }
+  return g; }
+function disegnaCristianesimo(svg,S,W,H){
+  var TP=window.RM_TOPO; if(!TP||!TP.mura||!TP.fiume) return;
+  var oriz=W/H>=1.15, pad=oriz?16:10, defs=el('defs',null,svg), fasi=CRISTIANESIMO.fasi, i;
+  var EXT=[-305,-236,320,236], ew=EXT[2]-EXT[0], eh=EXT[3]-EXT[1], pb, cb;      /* Sant'Agnese e San Paolo, più lontane, stanno sul bordo, con il nome che lo dice */
+  if(oriz){ var ph=H-2*pad, pw=Math.min(ph*ew/eh,W*.58); ph=pw*eh/ew; pb=[pad,(H-ph)/2,pw,ph]; cb=[pad+pw+24,pad,W-(pad+pw+24)-pad,H-2*pad]; }
+  else { var pw2=W-2*pad, ph2=Math.min(pw2*eh/ew,H*.46); pw2=ph2*ew/eh; pb=[(W-pw2)/2,pad,pw2,ph2]; cb=[pad,pb[1]+ph2+12,W-2*pad,H-(pb[1]+ph2+12)-6]; }
+  var k=pb[2]/ew, B=function(p){ return [pb[0]+(clamp(p[0],EXT[0]+12,EXT[2]-12)-EXT[0])*k, pb[1]+(clamp(p[1],EXT[1]+12,EXT[3]-12)-EXT[1])*k]; }, Bl=function(p){ return [pb[0]+(p[0]-EXT[0])*k, pb[1]+(p[1]-EXT[1])*k]; },
+    LL=function(lat,lon){ return B([(lon-12.4853)*8287,-(lat-41.8925)*11113.2]); };      // come RM.ll in js/base.js
+  /* la pianta, protagonista: rilievo dei colli, Tevere, mura */
+  var tav=el('g',{'class':'ig-cr-tavola'},svg), cp=el('clipPath',{id:'ig-cr-clip'},defs); el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),rx:14},cp);
+  var carta=el('g',{'clip-path':'url(#ig-cr-clip)'},tav); el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),'class':'ig-aq-fondo'},carta); ombraColli(carta,TP,EXT,pb);
+  el('polyline',{points:TP.fiume.map(Bl).map(xy).join(' '),'class':'ig-aq-tevere-a'},carta); el('polyline',{points:TP.fiume.map(Bl).map(xy).join(' '),'class':'ig-aq-tevere'},carta);
+  el('path',{d:'M'+TP.mura.map(Bl).map(xy).join('L')+'Z','class':'ig-aq-mura'},carta);
+  var LEO=[[-163,-120],[-233.3,-121],[-250,-124],[-272,-127],[-294,-124.5],[-300,-119],[-307,-111],[-313,-100.5],[-304,-96.5],[-285,-89],[-262,-87],[-240.2,-87.7],[-212,-86.5],[-196.5,-86.7],[-187,-84]];      // LEO in js/monumenti.js
+  var leo=el('path',{d:'M'+LEO.map(Bl).map(xy).join(' L'),'class':'ig-cr-leonine'},carta); scopri(leo);
+  var sT=clamp(k*30,11,19), cs=clamp(k*16,6.5,10);
+  /* i templi che il modello chiude nel 392 (MONUMENTI) e la Curia */
+  var TEMPLI=[{id:'giove',p:[-29,0]},{id:'pantheon',p:[-70,-68],chiesa:609},{id:'venere',p:[36.3,17.8]},{id:'apollo',p:[-47.8,.8],s:.7},{id:'bellona',p:[-44.8,1.15],s:.7},{id:'sole',p:[-30,-106],dal:274}];
+  var gT=el('g',null,carta); TEMPLI.forEach(function(t){ t.g=segnoTempio(gT,B(t.p),sT*(t.s||1)); });
+  var curia=el('g',{'class':'ig-cr-curia',transform:'translate('+xy(B([.8,-5.1]))+')'},gT); el('rect',{x:r1(-sT*.4),y:r1(-sT*.32),width:r1(sT*.8),height:r1(sT*.64),rx:1.5},curia);
+  /* le chiese: le grandi (MONUMENTI, posizioni di js/monumenti.js) e le minori (CHIESE) */
+  var GRANDI=[['San Giovanni in Laterano',[169,73],318],['San Paolo',[-63.4,376.8],324],['Santa Croce',[253.3,47.6],330],['San Pietro',[-259,-108],333],['San Lorenzo',[296,-104.4],335],["Sant'Agnese",[265.6,-340.3],350],
+    ['Santa Sabina',[-46,89],432],['Santa Maria Maggiore',[109,-57],434],['Santo Stefano Rotondo',[94.5,88],475],['Santi Cosma e Damiano',[16.5,4],527],['Santa Maria ad Martyres',[-70,-68],609,'pantheon'],["Sant'Adriano",[.8,-5.1],630,'curia']];
+  var gC=el('g',null,carta), chiese=[];
+  ((D.CHIESE)||[]).forEach(function(c){ chiese.push({g:segnoChiesa(gC,LL(c[1],c[2]),cs,false),a:c[3],f:c[5]||1e4}); });
+  GRANDI.forEach(function(c){ var g=segnoChiesa(gC,B(c[1]),sT*1.05,true); chiese.push({g:g,a:c[2],f:1e4,muta:c[3],grande:true}); if(c[3]){ var p=B(c[1]); c.alone=el('circle',{cx:r1(p[0]),cy:r1(p[1]),r:r1(sT*1.3),'class':'ig-cr-muta'},gC); } });
+  var aloni=GRANDI.filter(function(c){ return c.alone; });
+  /* l'arco delle tegole: dal tempio di Roma a San Pietro (630) */
+  var pV=B([36.3,17.8]), pP=B([-259,-108]), teg=el('path',{d:'M'+xy(pV)+' Q'+r1((pV[0]+pP[0])/2)+' '+r1(Math.min(pV[1],pP[1])-pb[3]*.14)+' '+xy(pP),'class':'ig-cr-tegole'},carta); scopri(teg);
+  /* i nomi: sopra i segni (nomiInCima); uno solo per quadro, dove serve */
+  function nome(p,s,dx,dy,an){ var g=el('g',{'class':'ig-v-luogo ig-cr-luogo',transform:'translate('+xy(p)+')'},carta), t=tx(g,dx,dy,'ig-v-nome ig-cr-nome',s,an||'start'), b;
+    try{ b=t.getBBox(); }catch(e){ b=null; }      // il nome sta tutto dentro la pianta: se esce da un lato, passa dall'altro (24 novembre 2026)
+    if(b){ if(p[0]+b.x+b.width>pb[0]+pb[2]-5){ t.setAttribute('x',r1(-Math.abs(dx))); t.setAttribute('text-anchor','end'); } else if(p[0]+b.x<pb[0]+5){ t.setAttribute('x',r1(Math.abs(dx))); t.setAttribute('text-anchor','start'); } }
+    return g; }
+  var N={pietro:nome(pP,'San Pietro',-sT*.6,-sT-4,'start'),laterano:nome(B([169,73]),'Laterano',sT*.8,4,'start'),paolo:nome(B([-63.4,376.8]),'San Paolo, più a sud',sT*.8,-2,'start'),lorenzo:nome(B([296,-104.4]),'San Lorenzo',-sT*.8,-sT*.6,'end'),
+    agnese:nome(B([265.6,-340.3]),"Sant'Agnese, più a nord",-sT*.8,sT*.5,'end'),maggiore:nome(B([109,-57]),'Santa Maria Maggiore',sT*.8,-sT*.5,'start'),pantheon:nome(B([-70,-68]),pb[2]<420?'Pantheon → chiesa':'Pantheon → Santa Maria ad Martyres',sT*.9,-sT*.7,'start'),
+    giove:nome(B([-29,0]),'Giove Capitolino',-sT*.9,sT*.9,'end'),curia:nome(B([.8,-5.1]),"Curia → Sant'Adriano",sT*.8,-sT*.8,'start'),venere:nome(pV,'tempio di Roma',sT*.8,sT*.9,'start'),sole:nome(B([-30,-106]),'tempio del Sole',sT*.8,-sT*.4,'start'),
+    leonine:nome(pP,'San Pietro e la città leonina',-sT*.6,-sT-5,'start')};
+  tx(tav,pb[0]+12,pb[1]+pb[3]-12,'ig-m-schema ig-f','schema: pianta del modello','start');
+  el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),rx:14,'class':'ig-m-cornice'},tav);
+  /* la colonna: l'anno, la fase (il nastro del potere), il contatore, il disegno, la voce */
+  var FASCE=[[303,311,'perseguitati','pers'],[311,380,'culto libero','libero'],[380,756,"religione dell'Impero",'impero'],[756,853,'il papa governa','papa']];
+  var gK=el('g',{'class':'ig-p-col-d'},svg), fsA=oriz?Math.min(64,cb[2]/4.2,H*.16):Math.min(36,W/10), tA=tx(gK,cb[0],cb[1]+fsA*.82,'ig-p-anno',''); tA.style.fontSize=fsA+'px';
+  var yN=cb[1]+fsA*.82+14, hN=oriz?30:26, gN=el('g',{'class':'ig-cr-fasce'},gK), cwN=(cb[2]-9)/4, chip=FASCE.map(function(f,j){ var g=el('g',{'class':'ig-cr-fase '+f[3]},gN), x=cb[0]+j*(cwN+3);
+    el('rect',{x:r1(x),y:r1(yN),width:r1(cwN),height:hN,rx:hN/2,'class':'ig-cr-fase-r'},g); var t=tx(g,x+cwN/2,yN+hN*.66,'ig-cr-fase-t',f[2],'middle'); var fs=oriz?12:10.5; t.style.fontSize=fs+'px'; while(largo(t)>cwN-8&&fs>8){ fs-=.5; t.style.fontSize=fs+'px'; }
+    if(largo(t)>cwN-6){ t.textContent=''; var w=f[2].split(' '); var a1=el('tspan',{x:r1(x+cwN/2),dy:'-0.45em'},t), a2=el('tspan',{x:r1(x+cwN/2),dy:'1.05em'},t); a1.textContent=w.slice(0,Math.ceil(w.length/2)).join(' '); a2.textContent=w.slice(Math.ceil(w.length/2)).join(' '); }
+    return g; });
+  var yL=yN+hN+8, X=function(a){ return cb[0]+(a-303)/(852-303)*cb[2]; }, gL=el('g',{'class':'ig-cr-linea'},gK);
+  el('line',{x1:r1(cb[0]),x2:r1(cb[0]+cb[2]),y1:r1(yL),y2:r1(yL),'class':'ig-cr-asse'},gL); [303,380,593,756,852].forEach(function(a,j){ tx(gL,X(a),yL+13,'ig-cr-anno-p',String(a),j?j===4?'end':'middle':'start'); });
+  var curL=el('circle',{cx:r1(cb[0]),cy:r1(yL),r:4.5,'class':'ig-p-cur-p'},gL);
+  /* il contatore: una croce per ogni chiesa nella pianta, un frontone per ogni tempio aperto (nessuna cifra) */
+  var yC=yL+(oriz?34:28), gCo=el('g',{'class':'ig-cr-conta'},gK), passo=oriz?9:8, perRiga=Math.floor((cb[2]-100)/passo), cc=[], tt=[];
+  tx(gCo,cb[0],yC+4,'ig-cr-conta-t','chiese'); chiese.forEach(function(c,j){ var x=cb[0]+100+(j%perRiga)*passo, y=yC+Math.floor(j/perRiga)*11; cc.push(el('path',{d:'M'+r1(x)+' '+r1(y-4)+' V'+r1(y+4)+' M'+r1(x-2.6)+' '+r1(y-1.2)+' H'+r1(x+2.6),'class':'ig-cr-conta-c'},gCo)); });
+  var righeC=Math.ceil(chiese.length/perRiga), yT=yC+righeC*11+8; tx(gCo,cb[0],yT+4,'ig-cr-conta-t','templi aperti'); TEMPLI.forEach(function(t,j){ var x=cb[0]+100+j*(passo+5); var g=el('g',{transform:'translate('+r1(x)+','+r1(yT)+')'},gCo); el('path',{d:'M-4 -1 L0 -4.5 L4 -1 Z M-3.6 3.5 H3.6 V4.6 H-3.6 Z M-2.6 -1 V3.5 M0 -1 V3.5 M2.6 -1 V3.5','class':'ig-cr-conta-t2'},g); tt.push(g); });
+  var yQ=yT+(oriz?22:18), hQ=cb[1]+cb[3]-yQ, gQ=el('g',{'class':'ig-cr-voce'},gK);
+  var VOCI={1:[["Lattanzio, verso il 315","«Fu avvertito in sogno di segnare sugli scudi il segno celeste di Dio»"],["Eusebio, dopo il 337","«Un segno di vittoria a forma di croce luminosa, con la scritta “Con questo vinci”»"]],
+    2:[["l'accordo di Milano, 313","la libertà di culto «ai cristiani e a tutti»"]],
+    3:[["la scheda di San Pietro","«Basilica costantiniana sulla tomba dell'apostolo, fuori le mura»"]],
+    4:[["Codice Teodosiano XVI 1, 2 · 27 febbraio 380","«Vogliamo che tutti i popoli governati dalla nostra clemenza vivano nella religione che il divino apostolo Pietro trasmise ai Romani»"]],
+    5:[["Simmaco, Relazione III, 10","«Non si può arrivare per una sola strada a un mistero così grande»"],["Ambrogio, Lettera 18, 8","«Ciò che voi ignorate, noi l'abbiamo conosciuto dalla voce di Dio»"]],
+    7:[["Gregorio Magno, Omelie su Ezechiele II, 6, 22","«Dov'è il Senato? Dov'è ormai il popolo?»"]],
+    8:[["Liber Pontificalis, vita di Bonifacio IV","«Chiese all'imperatore Foca il tempio chiamato Pantheon, e ne fece la chiesa della beata Maria sempre vergine e di tutti i martiri»"]],
+    9:[["Liber Pontificalis, vita di Onorio I","«Coprì tutta la chiesa con tegole di bronzo, che tolse dal tempio chiamato di Roma»"]],
+    10:[["Stefano II ai Franchi, 756","«Io, Pietro apostolo […] correte e soccorrete»"]],
+    11:[["Annali del regno dei Franchi","«A Carlo augusto, coronato da Dio, grande e pacifico imperatore dei Romani, vita e vittoria!»"]],
+    12:[["Liber Pontificalis, vita di Leone IV","«Questa città, che da poco, con il tuo aiuto, abbiamo fondato, fa' che resti per sempre al sicuro dalla tua ira»"]]};
+  var DIS={0:[['libri','i libri sacri bruciati']],1:[['scudo','Lattanzio: sugli scudi'],['croce','Eusebio: in cielo']],3:[['basilica','le prime basiliche']],5:[['altare','l\'altare tolto']],7:[['grano','il grano del papa']],8:[['basilica','il tempio diventa chiesa']],11:[['corona','la corona a San Pietro']],12:[['mura','le mura di Leone']]};
+  function scriviVoci(j){ gQ.textContent=''; var y=yQ, w=cb[2], fin=j>=fasi.length;
+    if(fin){ /* il finale: la Roma del 303 in piccolo, accanto alla grande dell'852 */
+      var mh=Math.min(hQ-30,(w*.62)*eh/ew), mw=mh*ew/eh; if(mh<60) return; var mb=[cb[0],y+16,mw,mh], kk=mw/ew, Bm=function(p){ return [mb[0]+(clamp(p[0],EXT[0],EXT[2])-EXT[0])*kk, mb[1]+(clamp(p[1],EXT[1],EXT[3])-EXT[1])*kk]; };
+      var g=el('g',{'class':'ig-cr-mini'},gQ), cpm=el('clipPath',{id:'ig-cr-cm'},defs); el('rect',{x:r1(mb[0]),y:r1(mb[1]),width:r1(mw),height:r1(mh),rx:8},cpm); var gi=el('g',{'clip-path':'url(#ig-cr-cm)'},g);
+      el('rect',{x:r1(mb[0]),y:r1(mb[1]),width:r1(mw),height:r1(mh),'class':'ig-aq-fondo'},gi); el('polyline',{points:TP.fiume.map(Bm).map(xy).join(' '),'class':'ig-aq-tevere'},gi); el('path',{d:'M'+TP.mura.map(Bm).map(xy).join('L')+'Z','class':'ig-aq-mura'},gi);
+      TEMPLI.forEach(function(t){ if(!t.dal) segnoTempio(gi,Bm(t.p),Math.max(7,sT*mw/pb[2]*1.4)).setAttribute('class','ig-cr-tempio vis'); });
+      el('rect',{x:r1(mb[0]),y:r1(mb[1]),width:r1(mw),height:r1(mh),rx:8,'class':'ig-m-cornice'},g);
+      tx(g,mb[0],y+10,'ig-cr-mini-t','303: i templi, nessuna basilica','start'); var t2=tx(g,mb[0]+mw+14,mb[1]+mh/2,'ig-cr-mini-t',oriz?'← 852: la pianta grande':'852: la pianta sopra','start'); if(largo(t2)>w-mw-16){ t2.textContent=oriz?'← 852':'852 ↑'; } return; }
+    var d=DIS[j], x0=cb[0]; if(d&&hQ>110){ var sv=Math.min(64,hQ*.36); d.forEach(function(q,ii){ var x=cb[0]+ii*Math.max(sv+70,w/2); vignettaCr(gQ,q[0],x,y,sv); tx(gQ,x+sv+8,y+sv*.5+4,'ig-cr-segni-t',q[1]); }); tx(gQ,cb[0]+w,y+sv+14,'ig-m-schema ig-f','disegno: schema','end'); y+=sv+24; }
+    else if(d&&hQ>56){ var sv2=Math.min(50,hQ-8); vignettaCr(gQ,d[0][0],cb[0],y,sv2); tx(gQ,cb[0]+sv2/2,y+sv2+11,'ig-m-schema ig-f','schema','middle'); x0=cb[0]+sv2+12; w-=sv2+12; }      // sul telefono il disegno sta a sinistra della voce (24 novembre 2026: la corona dell'800 non si vedeva)
+    var vv=VOCI[j]; if(!vv) return; var fs=oriz&&cb[2]>300?17:14.5;
+    vv.forEach(function(v){ if(y>cb[1]+cb[3]-40) return; var g=citazione(gQ,x0,y,w,v[1],v[0],fs); if(y+g._h>cb[1]+cb[3]){ g.remove(); y=1e9; return; } g.classList.add('vis'); y+=g._h+12; }); }
+  /* la regia: il tempo scorre fra le tappe, le chiese compaiono nel loro anno; alla fine, prima e dopo */
+  var ANNI=[303,312,313,330,380,384,392,593,609,630,756,800,852];
+  var tm=Tempo(303,ANNI.map(function(a){ return {anno:a,sosta:4700}; }),{inizio:1500,vel:7,min:700}), tFine=tm.fine+300, tFin=tFine+6200, visto=-2;
+  function faseDi(a){ for(var j=FASCE.length-1;j>=0;j--) if(a>=FASCE[j][0]) return j; return 0; }
+  S.passo=function(t){
+    var a=tm.anno(t), i2=-1; tm.arrivi.forEach(function(x,j){ if(t>=x) i2=j; }); var fin=t>=tFine, q=fin?fasi.length:i2;
+    cls(tav,'vis',t>=200); cls(gK,'vis',t>=500);
+    var aperti=0; TEMPLI.forEach(function(tt,j){ var aperto=a<392&&a>=(tt.dal||0), chiesa=tt.chiesa&&a>=tt.chiesa; cls(tt.g,'vis',a>=(tt.dal||0)&&!chiesa); cls(tt.g,'chiuso',!aperto); if(aperto) aperti++; cls(tTT(j),'on',aperto); });
+    cls(curia,'vis',a<630);
+    var n=0; chiese.forEach(function(c){ var v=a>=c.a&&a<c.f; if(v) n++; if(c.v!==v){ c.v=v; cls(c.g,'vis',v); if(v&&t>700&&!POCO){ c.g.classList.remove('nasce'); void c.g.getBoundingClientRect(); c.g.classList.add('nasce'); } } });
+    cc.forEach(function(p,j){ cls(p,'on',j<n); });
+    aloni.forEach(function(c){ var tA0=tm.arrivi[ANNI.indexOf(c[2])], f=fase(t,tA0-200,tA0+2600); cls(c.alone,'vis',f>0&&f<1); });
+    var ii=Math.max(0,i2);
+    function mostra(k2,s){ cls(N[k2],'vis',!!s); }
+    mostra('pietro',i2===9||i2===11); mostra('laterano',a>=318&&(i2===3||i2===4)); mostra('paolo',i2===3); mostra('lorenzo',i2===3); mostra('agnese',i2===3); mostra('maggiore',i2===7);
+    mostra('giove',i2>=0&&i2<=1||i2===6); mostra('pantheon',i2===8); mostra('curia',i2===9); mostra('venere',i2===9); mostra('sole',i2===6); mostra('leonine',i2===12||fin);
+    traccia(teg,i2===9?E.io(fase(t,tm.arrivi[9]+900,tm.arrivi[9]+2600)):0); cls(teg,'vis',i2===9);
+    traccia(leo,E.io(fase(t,tm.arrivi[12]+300,tm.arrivi[12]+2600)));
+    var fz=faseDi(a); chip.forEach(function(g,j){ cls(g,'ora',j===fz&&t>=1200); cls(g,'passata',j<fz); });
+    fissa(curL,'cx',r1(X(a)));
+    if(q!==visto){ visto=q; setTimeout(sottoNomi,0); scrivi(tA,q<0?'':fin?'303 · 852':fasi[ii][0]); var fa=fsA; tA.style.fontSize=fa+'px'; while(largo(tA)>cb[2]&&fa>18){ fa-=2; tA.style.fontSize=fa+'px'; } scriviVoci(q); }
+    cls(gK,'cambia',i2>=0&&t<tm.arrivi[ii]+140);
+  };
+  function tTT(j){ return tt[j]; }
+  /* le croci minori che stanno sotto un nome acceso si velano, perché il nome si legga (le croci restano nella pianta) */
+  function sottoNomi(){ var R=[]; for(var k2 in N){ if(!N[k2].classList.contains('vis')) continue; [].forEach.call(carta.querySelectorAll('.ig-cr-nome'),function(t){ if(t.closest('.ig-v-luogo')&&t.closest('.ig-v-luogo').classList.contains('vis')){ var r=t.getBoundingClientRect(); R.push(r); } }); break; }
+    chiese.forEach(function(c){ var r=c.g.getBoundingClientRect(), sotto=R.some(function(q){ return r.left<q.right+2&&r.right>q.left-2&&r.top<q.bottom+2&&r.bottom>q.top-2; }); cls(c.g,'velata',sotto&&!c.grande); }); }      // le basiliche maggiori non si velano
+  S.dura=tFin;
+  S.battute=fasi.map(function(f,j){ return {t:tm.arrivi[j],anno:f[0],testo:f[1]}; }).concat([{t:tFine,anno:'303 e 852',testo:"Nella pianta grande la Roma dell'852; nel 303 c'erano i templi aperti e nessuna basilica. Le posizioni sono quelle del modello."}]);
+}
+
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
   moneta:{d:MONETA, disegna:disegnaMoneta, tappe:function(t){ return t.anno===284&&t.intermezzo; }},      // solo nell'intermezzo «La moneta» (23 novembre 2026, l'utente: «toglila dalla tappa del 274»)
   navi:{d:NAVI, disegna:disegnaNavi, tappe:function(t){ return t.anno===395&&t.intermezzo || t.anno===711&&!t.intermezzo; }},
@@ -3755,10 +3926,11 @@ var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno==
   barbari:{d:BARBARI, disegna:disegnaBarbari, tappe:function(t){ return t.anno===439&&t.intermezzo; }},
   acquedotti:{d:ACQUEDOTTI, disegna:disegnaAcquedotti, tappe:function(t){ return !t.intermezzo && (t.anno===537||t.anno===780); }, da:function(t){ return t&&t.anno===780?'verso il 776':null; }},      // anche nel 780 (24 novembre 2026, l'utente: «inserire», non spostare); aperta dal 780 parte dai restauri di Adriano I
   sacchi:{d:SACCHI, disegna:disegnaSacchi, tappe:function(t){ return !t.intermezzo && (t.anno===455||t.anno===546); }},
+  cristianesimo:{d:CRISTIANESIMO, disegna:disegnaCristianesimo, tappe:function(t){ return !t.intermezzo && (t.anno===330||t.anno===394||t.anno===756||t.anno===852); }, da:function(t){ return t&&t.anno===394?'380':t&&t.anno===756?'756':null; }},      // 24 novembre 2026; dal 394 parte dall'editto del 380, dal 756 dallo Stato della Chiesa
   terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo); }} };      /* solo nell'intermezzo «L'esercito»: dalla tappa del 439 (Cartagine) l'utente l'ha fatta togliere il 24 novembre 2026 */
 /* Poitiers: accesa il 24 novembre 2026 sulla tappa del 711, dopo le prove a 393, 1280 e 812x375 e con ?fermo=1 (prima era scritta ma spenta) */
 INFO.poitiers={d:POITIERS, disegna:disegnaPoitiers, tappe:function(t){ return t.anno===711&&!t.intermezzo; }};
-var ORDINE=['valeriano','moneta','milvio','navi','adrianopoli','altare','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','pantheon','curia','poitiers','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 395, 410, 439, 476, 609, 630, 711; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
+var ORDINE=['valeriano','moneta','milvio','cristianesimo','navi','adrianopoli','altare','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','pantheon','curia','poitiers','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 330, 395, 410, 439, 476, 609, 630, 711; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
 var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
   pausa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',
   prima:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18 6.5v11l-8.5-5.5z" fill="currentColor"/></svg>',
@@ -3783,6 +3955,7 @@ var GLIFI={ valeriano:'<path d="M7 12l2.2-5 2.6 3 2.2-4 2.2 4 2.6-3 2.2 5z"/><re
   barbari:'<path d="M3 7c3 1 4 4 3 7s0 6 3 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".55"/><path d="M9 10h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M24 10l-5-3.4v6.8z"/><path d="M9 16h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 16l-5-3.4v6.8z"/><path d="M9 22h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M25 22l-5-3.4v6.8z"/>',
   acquedotti:'<path d="M2 9h24v3H2z"/><path d="M4 12v11h3v-5a3 3 0 0 1 6 0v5h2v-5a3 3 0 0 1 6 0v5h3V12z" opacity=".8"/><path d="M2 7.2h24" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2.5 2"/>',
   governo:'<path d="M4 8l6-3 8 3 6-3v15l-6 3-8-3-6 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 5v15M18 8v15" stroke="currentColor" stroke-width="1.2" opacity=".6"/>' };
+GLIFI.cristianesimo='<path d="M14 3v22M8.5 9.5h11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M3 25h22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="4" y="18" width="5" height="7" rx=".6" opacity=".45"/><rect x="19" y="16" width="5" height="9" rx=".6" opacity=".45"/>';      /* la croce che sale fra due edifici */
 GLIFI.poitiers='<path d="M4.5 5v8M10 5v8M15.5 5v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="4.5" cy="15.5" r="3.4"/><circle cx="10" cy="15.5" r="3.4"/><circle cx="15.5" cy="15.5" r="3.4" opacity=".8"/><path d="M18.5 23.5l4.2-9 4.2 9z" opacity=".6"/><path d="M21.6 23.5l1.1-2.6 1.1 2.6z" fill="#fff" opacity=".7"/><path d="M2 23.8h24" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>';      /* il muro di scudi e una tenda vuota */
 
 /* ---------- la finestra ---------- */

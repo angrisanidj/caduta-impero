@@ -1599,3 +1599,81 @@ rect.ig-bb-leg-r{stroke:rgba(0,0,0,.2)}
 .ig-tr-scheda p{margin:4px 0;font-size:15px;line-height:1.35}
 .ig-tr-scheda-f{font-family:var(--ui);font-size:11.5px;color:#6B5F53}
 .ig-p-sch-v.iscr{font-family:var(--cap);letter-spacing:.04em;font-style:normal}
+/* «Il Cristianesimo a Roma» (24 novembre 2026): la pianta con le chiese che compaiono e i templi che chiudono, il nastro del potere */
+.ig-cr-tavola,.ig-cr-nastro{opacity:0;transition:opacity .8s}
+.ig-cr-tavola.vis,.ig-cr-nastro.vis{opacity:1}
+.ig-cr-tempio{opacity:0;transition:opacity .6s}
+.ig-cr-tempio.vis{opacity:1}
+.ig-cr-tempio rect,.ig-cr-leg-tempio{fill:#C79931;stroke:#7A5617;stroke-width:1;transition:fill .8s,stroke .8s}
+.ig-cr-tempio.chiuso rect,.ig-cr-leg-chiuso{fill:#CFC6B5;stroke:#8E8270;stroke-width:1}
+.ig-cr-curia{opacity:0;transition:opacity .6s}
+.ig-cr-curia.vis{opacity:1}
+.ig-cr-curia rect{fill:#E3D8C4;stroke:#7A5617;stroke-width:1}
+.ig-cr-chiesa{opacity:0;transition:opacity .5s}
+.ig-cr-chiesa.vis{opacity:1}
+.ig-cr-chiesa path{fill:none;stroke:#7A1F2B;stroke-linecap:round}
+.ig-cr-chiesa.minore path{stroke-width:1.6;stroke:#9A2F2A}
+.ig-cr-chiesa.grande path{stroke-width:2.6}
+.ig-cr-chiesa.nasce{animation:ig-cr-nasce .9s ease-out}
+@keyframes ig-cr-nasce{0%{opacity:0;transform:translateY(-6px) scale(1.8)}60%{opacity:1}100%{transform:none}}
+.ig-cr-leonine{fill:none;stroke:#7A1F2B;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.ig-cr-tegole{fill:none;stroke:#C79931;stroke-width:2.4;stroke-dasharray:5 4;opacity:0;transition:opacity .4s}
+.ig-cr-tegole.vis{opacity:1}
+.ig-cr-luogo.ora .ig-v-nome{fill:#7A1F2B}
+.ig-cr-nome{font-size:12px}
+.ig-cr-leg-t{font-family:var(--ui);font-size:11px;fill:#5F554B}
+.ig-cr-f{fill:#DCCFB8}
+.ig-cr-f.pers{fill:#4A3A2C} .ig-cr-f.libero{fill:#C79931} .ig-cr-f.impero{fill:#9A2F2A} .ig-cr-f.papa{fill:#5A3F78}
+.ig-cr-f-t{font-family:var(--ui);font-size:10.5px;font-weight:700;letter-spacing:.04em;fill:#FFF8EA}
+.ig-cr-f-t.libero{fill:#2A231D}
+.ig-cr-scudo{fill:#B48A4A;stroke:#5E3F1C;stroke-width:1.6}
+.ig-cr-segno{fill:none;stroke:#FFF8EA;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ig-cr-cielo{fill:#3E4C70}
+.ig-cr-luce{fill:none;stroke:#FFE7A8;stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 4px #FFE7A8)}
+.ig-cr-segni-t{font-family:var(--ui);font-size:11px;fill:#5F554B}
+@media (prefers-reduced-motion:reduce){ .ig-cr-chiesa.nasce{animation:none} }
+/* «Il Cristianesimo a Roma», seconda veste (24 novembre 2026): segni con forma, nastro del potere a fasce, contatore, disegni dei quadri, prima e dopo */
+.ig-cr-tavola{opacity:0;transition:opacity .9s}
+.ig-cr-tavola.vis{opacity:1}
+.ig-cr-tempio .ig-cr-t-pieno{fill:#D9A93F;stroke:#7A5617;stroke-width:.9;transition:fill .9s,stroke .9s}
+.ig-cr-tempio.chiuso .ig-cr-t-pieno{fill:#CDC3B1;stroke:#8E8270}
+.ig-cr-crepa{fill:none;stroke:#5F554B;stroke-width:1.1;opacity:0;transition:opacity .9s .4s}
+.ig-cr-tempio.chiuso .ig-cr-crepa{opacity:1}
+.ig-cr-c-corpo{fill:#9A2F2A;stroke:#5E1712;stroke-width:1}
+.ig-cr-c-croce{fill:none;stroke:#7A1F2B;stroke-width:2.1;stroke-linecap:round}
+.ig-cr-chiesa.minore .ig-cr-c-croce{stroke:#9A2F2A;stroke-width:2}
+.ig-cr-chiesa.grande .ig-cr-c-croce{stroke:#5E1712}
+.ig-cr-chiesa.nasce .ig-cr-c-in{animation:ig-cr-nasce2 .9s cubic-bezier(.2,1.5,.4,1)}
+@keyframes ig-cr-nasce2{0%{transform:scale(0)}100%{transform:scale(1)}}
+.ig-cr-muta{fill:none;stroke:#C79931;stroke-width:3;opacity:0}
+.ig-cr-muta.vis{animation:ig-cr-onda 1.4s ease-out infinite}
+@keyframes ig-cr-onda{0%{opacity:.95;transform:scale(.4)}100%{opacity:0;transform:scale(1.8)}}
+.ig-cr-muta{transform-box:fill-box;transform-origin:center}
+.ig-cr-fase-r{fill:#EFE7D8;stroke:#DCCFB8;transition:fill .6s,stroke .6s}
+.ig-cr-fase-t{font-family:var(--ui);font-weight:700;letter-spacing:.03em;fill:#8E8270;transition:fill .6s}
+.ig-cr-fase.passata .ig-cr-fase-r{fill:#E3D8C4}
+.ig-cr-fase.ora.pers .ig-cr-fase-r{fill:#4A3A2C;stroke:#4A3A2C} .ig-cr-fase.ora.libero .ig-cr-fase-r{fill:#C79931;stroke:#C79931}
+.ig-cr-fase.ora.impero .ig-cr-fase-r{fill:#9A2F2A;stroke:#9A2F2A} .ig-cr-fase.ora.papa .ig-cr-fase-r{fill:#5A3F78;stroke:#5A3F78}
+.ig-cr-fase.ora .ig-cr-fase-t{fill:#FFF8EA}
+.ig-cr-asse{stroke:#CDBFA6;stroke-width:1.5}
+.ig-cr-anno-p{font-family:var(--ui);font-size:10.5px;fill:#7B6E61}
+.ig-cr-conta-t{font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.06em;fill:#5F554B;text-transform:uppercase}
+.ig-cr-conta-c{fill:none;stroke:#E3D8C4;stroke-width:1.6;stroke-linecap:round;transition:stroke .3s}
+.ig-cr-conta-c.on{stroke:#9A2F2A}
+.ig-cr-conta-t2{fill:#CDC3B1;stroke:#CDC3B1;stroke-width:.8;transition:fill .5s,stroke .5s}
+.ig-cr-conta .on .ig-cr-conta-t2{fill:#D9A93F;stroke:#7A5617}
+.ig-cr-v-fondo{fill:#F4ECDD;stroke:#DCCFB8}
+.ig-cr-v-fondo.scuro{fill:#2E2620;stroke:#2E2620}
+.ig-cr-v-libro{fill:#E9DFC9;stroke:#5E3F1C;stroke-width:1.4;stroke-linejoin:round}
+.ig-cr-v-riga{stroke:#5E3F1C;stroke-width:1.2}
+.ig-cr-v-fiamma{fill:#E8622C}
+.ig-cr-v-altare{fill:#D9CFBF;stroke:#5F554B;stroke-width:1.4}
+.ig-cr-v-via{fill:none;stroke:#9A2F2A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ig-cr-v-sacco{fill:#D2B07A;stroke:#7A5617;stroke-width:1.2}
+.ig-cr-v-corona{fill:#D9A93F;stroke:#7A5617;stroke-width:1.2;stroke-linejoin:round}
+.ig-cr-v-mura{fill:#B9A88C;stroke:#E9DFC9;stroke-width:1}
+.ig-cr-v-croce{fill:none;stroke:#F1D99A;stroke-width:2.2;stroke-linecap:round}
+.ig-cr-v-porta{fill:#5E1712}
+.ig-cr-mini-t{font-family:var(--serif);font-style:italic;font-size:14px;fill:#3E352D}
+.ig-cr-segni-t{font-size:12.5px}
+.ig-cr-chiesa.vis.velata{opacity:.22}

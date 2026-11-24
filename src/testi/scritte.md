@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 24/11/2026, 15:16:51.
+Generato da `src/testi.mjs` il 24/11/2026, 17:23:28.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 24/11/2026, ore 15:02
+[pagina.52] Versione del 24/11/2026, ore 17:11
 
 
 ## 2. Gli atti
@@ -1395,6 +1395,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T36-534.voce1.chi] Procopio di Cesarea, Guerre, IV, 9, 11. Procopio era il consigliere di Belisario e seguì la spedizione in Africa: racconta da testimone. Traduzione dalla versione inglese di Dewing.
 
+[T36-534.leggenda] Che fine fecero i tesori del Tempio di Gerusalemme? Nel trionfo di Belisario a Costantinopoli sfilano le prede tolte ai Vandali: troni d'oro, gioielli, coppe d'oro, argento per molte migliaia di talenti. Fra queste, scrive Procopio, ci sono «i tesori dei Giudei». Li aveva portati a Roma Tito, figlio di Vespasiano, dopo la presa di Gerusalemme. Un giudeo li vede e parla con un conoscente dell'imperatore. Quei tesori, dice, non vanno portati nel palazzo: possono stare solo nel luogo dove li aveva messi Salomone, re dei Giudei. Per causa loro Genserico aveva preso il palazzo dei Romani, e ora l'esercito romano ha preso quello dei Vandali. Giustiniano ha paura e li manda subito ai santuari dei cristiani di Gerusalemme. Procopio non dice che cosa ne fu dopo, e la loro sorte non si conosce. Quando racconta il sacco di Roma del 455, Procopio non li nomina: che Genserico li avesse presi allora lo si ricava da qui, dal bottino dei Vandali e dalle parole del giudeo. Procopio non descrive i tesori uno per uno e non nomina il candelabro a sette bracci del Tempio. Il candelabro si vede invece a Roma, sull'arco di Tito: in un rilievo i soldati lo portano nel corteo del trionfo del 71, con altre spoglie del Tempio. Che fosse fra i tesori del 534 è possibile, ma è una deduzione: le fonti lette non lo dicono.
+
 [T36-534.luogo1.capovada] Nel 533 la flotta di Belisario sbarca a Caputvada
 
 [T36-534.luogo2.decimo] A Decimum i Vandali sono sconfitti
@@ -2184,7 +2186,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.velo536] 536 · Per circa un anno il sole appare velato. I contemporanei raccontano che la sua luce scalda poco.
 
-[evento.africa534] 534 · Roma, governata dai Goti, non vede la guerra d'Africa. Ma qualcosa le appartiene: secondo Procopio, nel trionfo di Belisario a Costantinopoli sfilano anche i tesori del Tempio di Gerusalemme, che Tito aveva portato a Roma e i Vandali avevano preso nel sacco del 455.
+[evento.africa534] 534 · Roma, governata dai Goti, non vede la guerra d'Africa. Ma qualcosa le appartiene: secondo Procopio, nel trionfo di Belisario a Costantinopoli sfilano anche i tesori del Tempio di Gerusalemme, che Tito aveva portato a Roma e che erano finiti nel bottino dei Vandali. Che li avessero presi nel sacco del 455 si deduce dal suo racconto: lì Procopio non li nomina.
 
 [evento.assedio537] Marzo 537 – marzo 538 · Il re goto Vitige assedia Roma, difesa da Belisario, per un anno e nove giorni. I Goti interrompono gli acquedotti e allestiscono sette accampamenti, sei davanti alle porte tra il nord e l'est della città e uno oltre il Tevere. Già dall'anno precedente il sole appare velato. Procopio paragona la sua luce a quella della luna. Cassiodoro racconta che in Italia a mezzogiorno i corpi non proiettavano ombra. Oggi il fenomeno è attribuito a grandi eruzioni vulcaniche.
 
@@ -4272,31 +4274,41 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.11-r74] Mostra meno
 
-[ui.pagina.12-r193] Voci di allora
+[ui.pagina.12-r155] · si legge sotto
 
-[ui.pagina.13-r193] Una voce di allora
+[ui.pagina.13-r195] Voci di allora
 
-[ui.pagina.14-r238] Esci dallo schermo intero
+[ui.pagina.14-r195] Una voce di allora
 
-[ui.pagina.15-r238] Scena a tutto schermo
+[ui.pagina.15-r240] Esci dallo schermo intero
 
-[ui.pagina.16-r238] Tutto schermo
+[ui.pagina.16-r240] Scena a tutto schermo
 
-[ui.pagina.17-r323] Leggi la tappa ↓
+[ui.pagina.17-r240] Tutto schermo
 
-[ui.pagina.18-r323] ↑ Torna alla carta e alla città
+[ui.pagina.18-r327] Leggi l’intermezzo ↓
 
-[ui.pagina.19-r352] voci di allora
+[ui.pagina.19-r327] Leggi la tappa ↓
 
-[ui.pagina.20-r353] Fra storia e leggenda
+[ui.pagina.20-r327] ↑ Torna alla carta e alla città
 
-[ui.pagina.21-r354] Gli storici discutono
+[ui.pagina.21-r355] Riduci l’avviso e guarda la scena
 
-[ui.pagina.22-r356] Letture di questa tappa
+[ui.pagina.22-r366] La carta e la città restano
 
-[ui.pagina.23-r381] A Roma, in quest'anno
+[ui.pagina.23-r367] Esci e leggi ↓
 
-[ui.pagina.24-r381] Guarda la città →
+[ui.pagina.24-r401] voci di allora
+
+[ui.pagina.25-r402] Fra storia e leggenda
+
+[ui.pagina.26-r403] Gli storici discutono
+
+[ui.pagina.27-r405] Letture di questa tappa
+
+[ui.pagina.28-r443] A Roma, in quest'anno
+
+[ui.pagina.29-r443] Guarda la città →
 
 
 ### js/mappa.js
@@ -4351,125 +4363,125 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.25-r17] Mappa dell'Impero romano
 
-[ui.mappa.26-r27] Asia Minore
+[ui.mappa.26-r33] Asia Minore
 
-[ui.mappa.27-r78] Carlo il Calvo, re
+[ui.mappa.27-r84] Carlo il Calvo, re
 
-[ui.mappa.28-r78] Lotario, imperatore
+[ui.mappa.28-r84] Lotario, imperatore
 
-[ui.mappa.29-r78] Ludovico il Germanico, re
+[ui.mappa.29-r84] Ludovico il Germanico, re
 
-[ui.mappa.30-r85] : mostra la sua parte
+[ui.mappa.30-r91] : mostra la sua parte
 
-[ui.mappa.31-r97] le terre a ovest. Sul confine restano a lui Reims, Laon, Amiens e Mâcon
+[ui.mappa.31-r103] le terre a ovest. Sul confine restano a lui Reims, Laon, Amiens e Mâcon
 
-[ui.mappa.32-r98] la fascia di mezzo, dal mare del Nord all'Italia, con Aquisgrana e Roma. Sul confine sono sue Arras, Cambrai, Verdun, Lione, Vienne e Arles, e sul Reno Colonia, Bonn, Coblenza e Strasburgo. Più chiare le terre della Chiesa, legate all'imperatore, e la Frisia, che la carta gli dà senza una fonte
+[ui.mappa.32-r104] la fascia di mezzo, dal mare del Nord all'Italia, con Aquisgrana e Roma. Sul confine sono sue Arras, Cambrai, Verdun, Lione, Vienne e Arles, e sul Reno Colonia, Bonn, Coblenza e Strasburgo. Più chiare le terre della Chiesa, legate all'imperatore, e la Frisia, che la carta gli dà senza una fonte
 
-[ui.mappa.33-r99] le terre a est del Reno e, sulla riva sinistra, Magonza, Worms e Spira. Rezia e Norico gli vanno sulla carta perché stanno a est: nessuna fonte letta lo dice
+[ui.mappa.33-r105] le terre a est del Reno e, sulla riva sinistra, Magonza, Worms e Spira. Rezia e Norico gli vanno sulla carta perché stanno a est: nessuna fonte letta lo dice
 
-[ui.mappa.34-r114] : mostra i territori che governa
+[ui.mappa.34-r120] : mostra i territori che governa
 
-[ui.mappa.35-r125] le Gallie al di là delle Alpi (Aurelio Vittore)
+[ui.mappa.35-r131] le Gallie al di là delle Alpi (Aurelio Vittore)
 
-[ui.mappa.36-r126] tutto il resto, cioè l’Oriente (Aurelio Vittore)
+[ui.mappa.36-r132] tutto il resto, cioè l’Oriente (Aurelio Vittore)
 
-[ui.mappa.37-r131] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
+[ui.mappa.37-r137] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
 
-[ui.mappa.38-r149] oltre il confine
+[ui.mappa.38-r155] oltre il confine
 
-[ui.mappa.39-r149] insediati nell'impero per accordo
+[ui.mappa.39-r155] insediati nell'impero per accordo
 
-[ui.mappa.40-r149] in armi dentro l'impero
+[ui.mappa.40-r155] in armi dentro l'impero
 
-[ui.mappa.41-r149] con un proprio regno (vedi il colore nella legenda)
+[ui.mappa.41-r155] con un proprio regno (vedi il colore nella legenda)
 
-[ui.mappa.42-r151] Regno dei Visigoti
+[ui.mappa.42-r157] Regno dei Visigoti
 
-[ui.mappa.43-r151] Regno degli Ostrogoti
+[ui.mappa.43-r157] Regno degli Ostrogoti
 
-[ui.mappa.44-r151] Regno dei Vandali
+[ui.mappa.44-r157] Regno dei Vandali
 
-[ui.mappa.45-r151] Regno degli Svevi
+[ui.mappa.45-r157] Regno degli Svevi
 
-[ui.mappa.46-r151] Regno dei Burgundi
+[ui.mappa.46-r157] Regno dei Burgundi
 
-[ui.mappa.47-r151] Regno dei Franchi
+[ui.mappa.47-r157] Regno dei Franchi
 
-[ui.mappa.48-r151] Regni anglosassoni
+[ui.mappa.48-r157] Regni anglosassoni
 
-[ui.mappa.49-r151] Regno dei Longobardi
+[ui.mappa.49-r157] Regno dei Longobardi
 
-[ui.mappa.50-r151] Regno degli Avari
+[ui.mappa.50-r157] Regno degli Avari
 
-[ui.mappa.51-r151] Regno dei Bulgari
+[ui.mappa.51-r157] Regno dei Bulgari
 
-[ui.mappa.52-r486] La scena passo per passo
+[ui.mappa.52-r492] La scena passo per passo
 
-[ui.mappa.53-r489] Passo per passo
+[ui.mappa.53-r495] Passo per passo
 
-[ui.mappa.54-r490] Rivedi la scena dall'inizio
+[ui.mappa.54-r496] Rivedi la scena dall'inizio
 
-[ui.mappa.55-r520] Chiudi la didascalia
+[ui.mappa.55-r526] Chiudi la didascalia
 
-[ui.mappa.56-r521] Mostra la didascalia
+[ui.mappa.56-r527] Mostra la didascalia
 
-[ui.mappa.57-r530] ▶ Guarda la scena
+[ui.mappa.57-r536] ▶ Guarda la scena
 
-[ui.mappa.58-r530] Guarda la scena di questa tappa sulla carta
+[ui.mappa.58-r536] Guarda la scena di questa tappa sulla carta
 
-[ui.mappa.59-r624] Regni dei Franchi
+[ui.mappa.59-r630] Regni dei Franchi
 
-[ui.mappa.60-r624] Impero dei Franchi
+[ui.mappa.60-r630] Impero dei Franchi
 
-[ui.mappa.61-r759] regno d'Italia di Odoacre
+[ui.mappa.61-r767] regno d'Italia di Odoacre
 
-[ui.mappa.62-r759] regno degli Ostrogoti
+[ui.mappa.62-r767] regno degli Ostrogoti
 
-[ui.mappa.63-r759] regno dei Franchi
+[ui.mappa.63-r767] regno dei Franchi
 
-[ui.mappa.64-r760] impero romano
+[ui.mappa.64-r768] impero romano
 
-[ui.mappa.65-r760] impero d'Occidente
+[ui.mappa.65-r768] impero d'Occidente
 
-[ui.mappa.66-r760] territorio con un imperatore rivale
+[ui.mappa.66-r768] territorio con un imperatore rivale
 
-[ui.mappa.67-r760] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.67-r768] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.68-r760] regione contesa in guerra
+[ui.mappa.68-r768] regione contesa in guerra
 
-[ui.mappa.69-r761] popoli insediati per trattato
+[ui.mappa.69-r769] popoli insediati per trattato
 
-[ui.mappa.70-r761] impero d'Oriente
+[ui.mappa.70-r769] impero d'Oriente
 
-[ui.mappa.71-r762] califfato ed emirati arabi
+[ui.mappa.71-r770] califfato ed emirati arabi
 
-[ui.mappa.72-r762] regni franchi dopo la divisione dell'843
+[ui.mappa.72-r770] regni franchi dopo la divisione dell'843
 
-[ui.mappa.73-r762] abbandonata da Roma
+[ui.mappa.73-r770] abbandonata da Roma
 
-[ui.mappa.74-r762] fuori dal controllo romano
+[ui.mappa.74-r770] fuori dal controllo romano
 
-[ui.mappa.75-r800] Mostra meno voci della legenda
+[ui.mappa.75-r808] Mostra meno voci della legenda
 
-[ui.mappa.76-r810] Mostra le altre
+[ui.mappa.76-r818] Mostra le altre
 
-[ui.mappa.77-r861] mai appartenuta all'impero
+[ui.mappa.77-r869] mai appartenuta all'impero
 
-[ui.mappa.78-r906] Carta a tutto schermo
+[ui.mappa.78-r923] Carta a tutto schermo
 
-[ui.mappa.79-r911] ⤢ Guarda la carta a tutto schermo
+[ui.mappa.79-r928] ⤢ Guarda la carta a tutto schermo
 
-[ui.mappa.80-r912] Non ora
+[ui.mappa.80-r929] Non ora
 
-[ui.mappa.81-r923] Tutto schermo
+[ui.mappa.81-r940] Tutto schermo
 
-[ui.mappa.82-r923] Esci dallo schermo intero
+[ui.mappa.82-r940] Esci dallo schermo intero
 
-[ui.mappa.83-r1014] Torna alla carta intera
+[ui.mappa.83-r1033] Torna alla carta intera
 
-[ui.mappa.84-r1016] La scena continua fuori dalla carta, verso
+[ui.mappa.84-r1035] La scena continua fuori dalla carta, verso
 
-[ui.mappa.85-r1016] : guardala tutta
+[ui.mappa.85-r1035] : guardala tutta
 
 
 ### js/atti.js
