@@ -18,14 +18,38 @@ function basilica(B,w,d,h,x,z,tetto){                    // basilica civile a du
   arcato(B,w,h,d,x,0,z,P.travertino,2,Math.round(w/1.1));
   B.scatola(w*.92,h*.4,d*.46,x,h,z,P.marmo).falde(w*.92,h*.24,d*.5,x,h*1.4,z,tetto||P.coppi);
 }
-function portico(B,w,d,x,y,z,h,suolo){                   // piazza porticata
-  var nx=Math.max(3,Math.round(w/.95)), nz=Math.max(3,Math.round(d/.95)), m=.65, r=.09, a=y+.1;
+/* Piazza porticata. Rifatta il 24 novembre 2026: prima le colonne stavano a 9,5 m l'una dall'altra, senza base né trabeazione, sotto una lastra di coppi piatta,
+   e da media distanza il portico era una fila di stecchi staccati dal tetto. Ora, con le proporzioni di Vitruvio (non misure lette per i singoli portici):
+   colonna alta dieci diametri (il corinzio romano), intercolumnio di due diametri e un quarto, l'«eustilo» (III 3, 6), quindi un interasse di 3,25 diametri;
+   la trabeazione è poco più di un quinto dell'altezza delle colonne (proporzione corrente, non letta); il tetto è a una falda, dalla cima del muro di fondo all'architrave, come nei portici veri, con la pendenza bassa
+   dei tetti di coppi (circa 17°). La cima dell'architrave sta dove prima stava la lastra; i muri sono un metro più bassi (prima sporgevano sopra il tetto e gettavano
+   sulla falda un'ombra radente a dente di sega). Il lato senza muro (+z) ha una seconda fila di colonne verso l'esterno, su cui poggia la falda: è uno schema. */
+function portico(B,w,d,x,y,z,h,suolo){
+  var m=.65, a=y+.1, he=h*.18, hc=h-he, r=hc/20, ia=r*6.5, X0=x-w/2+m, X1=x+w/2-m, Z0=z-d/2+m, Z1=z+d/2-m, ya=a+h, yo=a+h+.17, k;
+  function quante(L){ return Math.max(3,Math.round(L/ia)+1); }
+  var nx=quante(X1-X0), nz=quante(Z1-Z0), sz=(Z1-Z0)/(nz-1);
   B.scatola(w,.1,d,x,y,z,suolo||P.selce);
-  B.colonne(x-w/2+m,z-d/2+m,x+w/2-m,z-d/2+m,nx,h,r,a).colonne(x-w/2+m,z+d/2-m,x+w/2-m,z+d/2-m,nx,h,r,a)
-   .colonne(x-w/2+m,z-d/2+m,x-w/2+m,z+d/2-m,nz,h,r,a).colonne(x+w/2-m,z-d/2+m,x+w/2-m,z+d/2-m,nz,h,r,a);
-  B.scatola(w,.14,m+.4,x,a+h,z-d/2+m/2+.1,P.coppi).scatola(w,.14,m+.4,x,a+h,z+d/2-m/2-.1,P.coppi)
-   .scatola(m+.4,.14,d-2*m,x-w/2+m/2+.1,a+h,z,P.coppi).scatola(m+.4,.14,d-2*m,x+w/2-m/2-.1,a+h,z,P.coppi);
-  B.scatola(w,h+.35,.14,x,y,z-d/2,P.tufo).scatola(.14,h+.35,d,x-w/2,y,z,P.tufo).scatola(.14,h+.35,d,x+w/2,y,z,P.tufo);
+  var xe0=x-w/2+r*1.4, xe1=x+w/2-r*1.4, ze=z+d/2-r*1.4, nE=quante(xe1-xe0), id=[];      // la fila esterna sul lato aperto
+  B.colonne(X0,Z0,X1,Z0,nx,hc,r,a); id[0]=B.ultimaFila; B.colonne(X0,Z1,X1,Z1,nx,hc,r,a); id[1]=B.ultimaFila;
+  B.colonne(X0,Z0+sz,X0,Z1-sz,nz-2,hc,r,a); id[2]=B.ultimaFila; B.colonne(X1,Z0+sz,X1,Z1-sz,nz-2,hc,r,a); id[3]=B.ultimaFila;
+  B.colonne(xe0,ze,xe1,ze,nE,yo-he-a,r,a); id[4]=B.ultimaFila;
+  /* Architrave e tetto sono fatti a pezzi, uno per colonna (da mezzo interasse prima a mezzo dopo), e ogni pezzo porta il numero della sua colonna:
+     in rovina, dove la colonna manca cadono anche l'architrave e il tetto sopra di lei (si veda «Colonne che mancano» in js/costruttore.js) */
+  function num(f,i){ return id[f]?id[f]+i+1:0; }
+  var LATI=[[nx,function(q){ return num(0,q); }],[nz,function(q){ return q===0?num(0,nx-1):q===nz-1?num(1,nx-1):num(3,q-1); }],
+    [nx,function(q){ return num(1,nx-1-q); }],[nz,function(q){ return q===0?num(1,0):q===nz-1?num(0,0):num(2,nz-2-q); }]];
+  var C4=[[X0,Z0],[X1,Z0],[X1,Z1],[X0,Z1]], t=r*2.7, ht=ya-a-hc, g=r*2.2, O=[[x-w/2,yo,z-d/2],[x+w/2,yo,z-d/2],[x+w/2,yo,z+d/2],[x-w/2,yo,z+d/2]], I=[[X0+g,ya,Z0+g],[X1-g,ya,Z0+g],[X1-g,ya,Z1-g],[X0+g,ya,Z1-g]];
+  function lungo(P0,P1,f){ return [P0[0]+(P1[0]-P0[0])*f,P0[1]+(P1[1]-P0[1])*f,P0[2]+(P1[2]-P0[2])*f]; }
+  function trave(P0,P1,y0,n,numero,ry){ var L=Math.hypot(P1[0]-P0[0],P1[1]-P0[1]), q, f0, f1;      // l'architrave, largo quanto l'abaco, a pezzi
+    for(q=0;q<n;q++){ f0=q?(q-.5)/(n-1):-t/2/L; f1=q<n-1?(q+.5)/(n-1):1+t/2/L; B.fc=numero(q);
+      B.scatola((f1-f0)*L,ht,t,P0[0]+(P1[0]-P0[0])*(f0+f1)/2,y0,P0[1]+(P1[1]-P0[1])*(f0+f1)/2,P.marmo,ry); } B.fc=0; }
+  for(k=0;k<4;k++){ var j=(k+1)%4, n=LATI[k][0], nu=LATI[k][1], q;
+    trave(C4[k],C4[j],a+hc,n,nu,k%2?PI/2:0);
+    for(q=0;q<n;q++){ var f0=q?(q-.5)/(n-1):0, f1=q<n-1?(q+.5)/(n-1):1; B.fc=nu(q);      // il tetto: falde che scendono dal muro (alto) all'architrave (basso), con un poco di gronda
+      B.quad(lungo(O[k],O[j],f0),lungo(O[k],O[j],f1),lungo(I[k],I[j],f1),lungo(I[k],I[j],f0),P.coppi); }
+    B.fc=0; }
+  trave([xe0,ze],[xe1,ze],yo-ht,nE,function(q){ return num(4,q); },0);
+  B.scatola(w,h+.27,.14,x,y,z-d/2,P.tufo).scatola(.14,h+.27,d,x-w/2,y,z,P.tufo).scatola(.14,h+.27,d,x+w/2,y,z,P.tufo);
 }
 function circo(B,L,W,h,spina){                           // circo o stadio: gradinate, fornici, pista
   var pr=function(w){ return RM.stadio(L-(W-w),w,26,14); }, est=pr(W), cima=pr(W-1.3), pista=pr(W*.62);
@@ -583,7 +607,7 @@ var M=[
       var es=RM.ellisse(4.4,2.2,14,0,PI).map(function(p){ return [p[0]+2.6,p[1]+6.2]; }); B.striscia(es,-1.4,es,2.2,P.mattone,false).fornici(es,-1.1,.8,.5,1,false).fornici(es,.6,.8,.5,1,false);
       B.scatola(4.6,1.6,.3,9.4,0,-4.6,P.mattone).scatola(.3,1.6,14,7.2,0,2.4,P.mattone).scatola(.3,1.6,14,11.6,0,2.4,P.mattone).scatola(4,.1,13.6,9.4,0,2.4,P.prato);   // stadio palatino: giardino a forma di circo, col lato sud curvo
       var cs=RM.ellisse(2.2,1.4,8,0,PI).map(function(p){ return [p[0]+10.6,p[1]+6.8]; }); B.striscia(cs,0,cs,1.6,P.mattone,false);
-      B.colonne(9,-6.6,9,6.4,14,.9,.05,.1).colonne(12.2,-6.6,12.2,6.4,14,.9,.05,.1).scatola(.5,.08,13.4,8.75,1,-.1,P.coppi).scatola(.5,.08,13.4,12.45,1,-.1,P.coppi);      // il portico attorno
+      B.colonne(9,-6.6,9,6.4,46,.9,.045,.1).colonne(12.2,-6.6,12.2,6.4,46,.9,.045,.1).scatola(.5,.08,13.4,8.75,1,-.1,P.coppi).scatola(.5,.08,13.4,12.45,1,-.1,P.coppi);      // il portico attorno (colonne con le proporzioni di portico(): prima 14 per lato, a 10 m)
       B.scatola(1.6,2.2,2.6,13.6,0,-.2,P.mattone).cupola(1.3,13.6,2.2,-.2,P.intonaco,.5);        // la tribuna imperiale, sul lato est
       B.tempio(2.4,3.6,1.8,-11.5,3.4,0,{fronte:6});                                            // tempio di Apollo
     });
@@ -886,7 +910,7 @@ var M=[
  {id:'porticopietro', nome:'Portico dei pellegrini', x:-201.75,z:-108.1, ry:.0685, lunga:[90.5,2.2], fa:function(B){          // dalla testata di ponte Sant'Angelo (posizione da OpenStreetMap), sotto il mausoleo, ai gradini dell'atrio: circa 900 m
     var y=suTerreno(-201.75,-108.1,.0685), q;
     for(var k=0;k<12;k++){ var lx=(k-5.5)*7.54; q=y(lx,0);
-      B.scatola(7.64,.12,1.5,lx,q+1.05,0,P.coppi).colonne(lx-3.65,-.6,lx+3.65,-.6,8,1.35,.06,q-.3).colonne(lx-3.65,.6,lx+3.65,.6,8,1.35,.06,q-.3); }
+      B.scatola(7.64,.12,1.5,lx,q+1.05,0,P.coppi).colonne(lx-3.65,-.6,lx+3.65,-.6,18,1.35,.0675,q-.3).colonne(lx-3.65,.6,lx+3.65,.6,18,1.35,.0675,q-.3); }      // colonne con il passo dei portici di portico() (dieci diametri d'altezza, interasse di 3,25 diametri): uno schema, il passo vero non è noto; prima erano 8 per tratto, a 10 m
  }},
  /* «Item episcopia in eodem loco dextra levaque fecit» (Liber Pontificalis, Simmaco, 498-514): le due case stanno dove erano prima nel portico, ora con un'origine davanti all'atrio */
  {id:'episcopiapietro', nome:'Residenze di papa Simmaco', x:-248.11,z:-108.18, ry:.0685, fa:function(B){
@@ -1120,7 +1144,7 @@ var M=[
     var W=9.5, L=29;
     B.scatola(W-.4,.04,L-.4,0,0,0,P.selce);                                                             // la grande piazza
     [-1,1].forEach(function(q){ var x=q*(W/2-.7);                                                      // i due portici lunghi, a ovest e a est
-      B.scatola(.2,1.3,L,q*(W/2-.1),0,0,P.intonaco).colonne(x-q*.6,-L/2+.6,x-q*.6,L/2-.6,24,1.15,.07,0).falde(L,.32,1.4,x,1.15,0,P.coppi,PI/2,P.intonaco); });
+      B.scatola(.2,1.3,L,q*(W/2-.1),0,0,P.intonaco).colonne(x-q*.6,-L/2+.6,x-q*.6,L/2-.6,Math.round((L-1.2)/.374)+1,1.15,.0575,0).falde(L,.32,1.4,x,1.15,0,P.coppi,PI/2,P.intonaco); });      // colonne con le proporzioni dei portici (in portico(), qui sopra): prima erano 24 per lato, a 12 m l'una dall'altra
     [-1,1].forEach(function(q){ B.scatola(W,1.3,.25,0,0,q*(L/2-.12),P.intonaco); });                  // i lati corti
  }},
  /* Esquilino. Arco di Gallieno: la porta Esquilina rifatta e dedicata a Gallieno nel 262 (Platner e Ashby, Porta Esquilina; OpenStreetMap, way 81741050); misure a memoria, indicative

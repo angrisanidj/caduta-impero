@@ -312,9 +312,10 @@ function posaSuolo(){
         '  diffuseColor.rgb*=1.0+camp*(0.07*solco-0.22*siepe); }',
         'diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.27,0.25,0.15)*(0.8+0.4*pe),smoothstep(0.025,0.2,vPend)*0.8);',
         /* da vicino il terreno prende una grana più fine (ciuffi, sassi), che sfuma quando ci si allontana e non sfarfalla */
-        'float fwS=max(fwidth(vXZ.x),fwidth(vXZ.y)); float vic=1.0-smoothstep(0.03,0.14,fwS);',
+        /* 24 novembre 2026: la grana più fine (g2, passo di 5 cm) si spegne prima dell'altra e il contrasto è più basso: da vicino era una puntinatura dura */
+        'float fwS=max(fwidth(vXZ.x),fwidth(vXZ.y)); float vic=1.0-smoothstep(0.03,0.14,fwS); float vic2=1.0-smoothstep(0.015,0.06,fwS);',
         'if(vic>0.0){ float g1=texture2D(map,vUv*9.0).r; float g2=texture2D(map,vUv*31.0+0.37).r; float ch=sin(vXZ.x*3.1+sin(vXZ.y*2.3)*1.9)*sin(vXZ.y*2.7+sin(vXZ.x*1.9)*2.1);',
-        '  diffuseColor.rgb*=1.0+vic*((g1-0.9)*1.7+(g2-0.9)*1.1+0.06*ch); }',
+        '  diffuseColor.rgb*=1.0+vic*((g1-0.9)*1.35+0.06*ch)+vic2*(g2-0.9)*0.8; }',
         /* lontano dalla città il terreno diventa una carta antica: fondo color pergamena, tratteggio a inchiostro */
         'float lont=smoothstep(480.0,820.0,length(vXZ));',
         'vec3 carta=vec3(0.83,0.74,0.56)*(0.95+0.05*sin(vXZ.x*0.09)*sin(vXZ.y*0.09));',
@@ -403,7 +404,11 @@ RM.applicaLuce(0);
    Con una passata sola i contorni si disegnavano dopo l'antialias e restavano a scalini, e i bordi degli edifici erano solo ammorbiditi. L'antialias a più campioni (MSAA)
    su questa tela è stato provato e scartato: con la profondità da riportare a un campione raddoppiava il tempo di ogni fotogramma.
    Serve WebGL2; altrimenti si disegna direttamente, con l'antialias della tela. */
-var post=null;
+var post=null, ALTA=1;      // ALTA: quante volte i pixel dello schermo ha la tela degli effetti (1; 1,25 o 1,5 con l'«alta qualità», più sotto)
+/* Per i colonnati che da lontano diventano una fascia (js/costruttore.js): dov'è l'occhio e quanti pixel fa un'unità a distanza 1. Si aggiornano a ogni disegno,
+   anche per l'ombra, che così sceglie colonne o fascia come le vede la camera e non come le vede il sole (24 novembre 2026) */
+RM.vistaU={uOcchio:{value:new THREE.Vector3()}, uPxScala:{value:1000}, uSogliaCol:{value:7}};      // sotto i sette pixel di diametro una fila di colonne fitta (interasse di tre diametri) tremola: le misure del 24 novembre 2026 lo dicono
+RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU.uPxScala.value=H/(2*Math.tan(cam.fov*Math.PI/360)/(cam.zoom||1)); };
 (function(){
   if(!renderer.capabilities.isWebGL2) return;
   var NL=String.fromCharCode(10);
@@ -412,32 +417,39 @@ var post=null;
   tela.depthTexture=new THREE.DepthTexture(4,4); tela.depthTexture.type=THREE.UnsignedIntType;
   var tela2=new THREE.WebGLRenderTarget(4,4,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat,depthBuffer:false,stencilBuffer:false});
   tela2.texture.generateMipmaps=false;
-  var uPx={value:new THREE.Vector2(1,1)}, uSfoca={value:1}, uNotte={value:0}, uDens={value:1};      // condivisi dalle due passate
+  var uPx={value:new THREE.Vector2(1,1)}, uSfoca={value:1}, uNotte={value:0}, uDens={value:1}, uScala={value:1};      // condivisi dalle due passate; uScala: pixel della tela per pixel dello schermo
   var VS='varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.0,1.0); }';
   var FUOCO='float fuoco=smoothstep(0.24,0.52,abs(vUv.y-0.46))*sfoca;';                             // 0 al centro, 1 ai bordi alto e basso
   var matC=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
-    uniforms:{ tCol:{value:tela.texture}, tProf:{value:tela.depthTexture}, px:uPx, vicino:{value:camera.near}, lontano:{value:camera.far}, notte:uNotte, sfoca:uSfoca },
+    uniforms:{ tCol:{value:tela.texture}, tProf:{value:tela.depthTexture}, px:uPx, vicino:{value:camera.near}, lontano:{value:camera.far}, notte:uNotte, sfoca:uSfoca, scala:uScala },
     vertexShader:VS,
     fragmentShader:[
-      'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; uniform float sfoca; varying vec2 vUv;',
+      'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; uniform float sfoca; uniform float scala; varying vec2 vUv;',
       'float prof(vec2 uv){ float z=texture2D(tProf,uv).x*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',
       'void main(){',
       '  vec3 c=texture2D(tCol,vUv).rgb;',
       '  '+FUOCO,
-      '  float p=prof(vUv);',
-      '  float salto=abs(prof(vUv+vec2(px.x,0.0))+prof(vUv-vec2(px.x,0.0))+prof(vUv+vec2(0.0,px.y))+prof(vUv-vec2(0.0,px.y))-4.0*p)/p;',
-      '  float contorno=smoothstep(0.006,0.03,salto)*(1.0-fuoco)*(1.0-smoothstep(500.0,1400.0,p));',
-      '  c=mix(c,c*vec3(0.34,0.25,0.18),contorno*0.62*(1.0-0.6*notte));',
+      /* Dal 24 novembre 2026 la linea sta da un lato solo, sul pixel più lontano (fuori dalla sagoma), ed è un po' più chiara: con i due lati ogni spigolo
+         faceva una riga di due pixel che scattava avanti e indietro mentre la camera si muoveva (sui Fori da vicino il tremolio misurato cala di circa un decimo). La distanza che la
+         spegne si misura sul pixel più vicino, perché la sagoma contro lo sfondo lontano resti segnata. */
+      '  vec2 q=px*scala;',                                                                          // i vicini a un pixel di schermo: con la tela più grande la linea resta larga uguale
+      '  float p=prof(vUv), pa=prof(vUv+vec2(q.x,0.0)), pb=prof(vUv-vec2(q.x,0.0)), pc=prof(vUv+vec2(0.0,q.y)), pd=prof(vUv-vec2(0.0,q.y));',
+      '  float salto=max(0.0,4.0*p-pa-pb-pc-pd)/p, pv=min(p,min(min(pa,pb),min(pc,pd)));',
+      '  float contorno=smoothstep(0.006,0.03,salto)*(1.0-fuoco)*(1.0-smoothstep(500.0,1400.0,pv));',
+      '  c=mix(c,c*vec3(0.34,0.25,0.18),contorno*0.5*(1.0-0.6*notte));',
       '  gl_FragColor=vec4(c,1.0);',
       '}'].join(NL) });
   /* FXAA nella forma breve di Timothy Lottes (nove letture): cerca la direzione del bordo dai quattro angoli e media lungo quella */
   var mat=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
-    uniforms:{ tCol:{value:tela2.texture}, px:uPx, sfoca:uSfoca, dens:uDens, notte:uNotte },
+    uniforms:{ tCol:{value:tela2.texture}, px:uPx, sfoca:uSfoca, dens:uDens, notte:uNotte, scala:uScala },
     vertexShader:VS,
     fragmentShader:[
-      'uniform sampler2D tCol; uniform vec2 px; uniform float sfoca; uniform float dens; varying vec2 vUv;',
+      'uniform sampler2D tCol; uniform vec2 px; uniform float sfoca; uniform float dens; uniform float scala; varying vec2 vUv;',
       'float lum(vec3 c){ return dot(c,vec3(0.299,0.587,0.114)); }',
       'void main(){',
+      '  vec3 c;',
+      '  if(scala>1.01){ vec2 o=px*scala*0.25;',                                                     // tela più grande dello schermo («alta qualità»): ogni pixel è la media di quattro letture bilineari, al posto dell'FXAA
+      '    c=0.25*(texture2D(tCol,vUv-o).rgb+texture2D(tCol,vUv+vec2(o.x,-o.y)).rgb+texture2D(tCol,vUv+vec2(-o.x,o.y)).rgb+texture2D(tCol,vUv+o).rgb); } else {',
       '  vec3 cM=texture2D(tCol,vUv).rgb;',
       '  float lNO=lum(texture2D(tCol,vUv+vec2(-px.x,-px.y)).rgb), lNE=lum(texture2D(tCol,vUv+vec2(px.x,-px.y)).rgb), lSO=lum(texture2D(tCol,vUv+vec2(-px.x,px.y)).rgb), lSE=lum(texture2D(tCol,vUv+px).rgb), lM=lum(cM);',
       '  float l0=min(lM,min(min(lNO,lNE),min(lSO,lSE))), l1=max(lM,max(max(lNO,lNE),max(lSO,lSE)));',
@@ -447,9 +459,9 @@ var post=null;
       '  vec3 cA=0.5*(texture2D(tCol,vUv-dir*0.16667).rgb+texture2D(tCol,vUv+dir*0.16667).rgb);',
       '  vec3 cB=cA*0.5+0.25*(texture2D(tCol,vUv-dir*0.5).rgb+texture2D(tCol,vUv+dir*0.5).rgb);',
       '  float lB=lum(cB);',
-      '  vec3 c=(lB<l0||lB>l1)?cA:cB;',
+      '  c=(lB<l0||lB>l1)?cA:cB; }',
       '  '+FUOCO,
-      '  if(fuoco>0.02){ vec2 r=px*fuoco*2.1*dens;',                                                // la sfocatura ha la stessa larghezza sullo schermo a ogni risoluzione
+      '  if(fuoco>0.02){ vec2 r=px*fuoco*2.1*dens*scala;',                                                // la sfocatura ha la stessa larghezza sullo schermo a ogni risoluzione
       '    c=(c*2.0+texture2D(tCol,vUv+vec2(r.x,0.0)).rgb+texture2D(tCol,vUv-vec2(r.x,0.0)).rgb+texture2D(tCol,vUv+vec2(0.0,r.y)).rgb+texture2D(tCol,vUv-vec2(0.0,r.y)).rgb',
       '      +texture2D(tCol,vUv+r*0.7).rgb+texture2D(tCol,vUv-r*0.7).rgb+texture2D(tCol,vUv+vec2(r.x,-r.y)*0.7).rgb+texture2D(tCol,vUv+vec2(-r.x,r.y)*0.7).rgb)/10.0; }',
       '  float g=lum(c); c=mix(vec3(g),c,1.1);',
@@ -462,6 +474,8 @@ var post=null;
     misura:function(W,H){ tela.setSize(W,H); tela2.setSize(W,H); uPx.value.set(1/W,1/H); },
     /* la scena e le due passate, sulla tela della pagina. Chi disegna fuori dal ciclo (i fotogrammi delle infografiche, le prove) passa di qui */
     disegna:function(sc,cam){
+      uScala.value=Math.max(1,tela.width/Math.max(1,renderer.domElement.width));
+      if(cam.isPerspectiveCamera) RM.occhio(cam,tela.height/uScala.value);      // in pixel dello schermo: la soglia dei colonnati non cambia con la tela
       renderer.setRenderTarget(tela); renderer.render(sc,cam);
       quadro.material=matC; renderer.setRenderTarget(tela2); renderer.render(scena2,camera2);
       quadro.material=mat; renderer.setRenderTarget(null); renderer.render(scena2,camera2);
@@ -471,7 +485,7 @@ RM.post=post;
 function misura(){
   var w=contenitore.clientWidth||1, h=contenitore.clientHeight||1;
   renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
-  if(post){ var pr=renderer.getPixelRatio(); post.misura(Math.max(2,Math.floor(w*pr)),Math.max(2,Math.floor(h*pr))); post.dens.value=pr; }
+  if(post){ var pr=renderer.getPixelRatio(); post.misura(Math.max(2,Math.floor(w*pr*ALTA)),Math.max(2,Math.floor(h*pr*ALTA))); post.dens.value=pr; }
 }
 window.addEventListener('resize',misura); misura();
 if(window.ResizeObserver) new ResizeObserver(misura).observe(contenitore);
@@ -507,17 +521,47 @@ function regola(media){
   if(media<.0172 && RM.livello>0 && !noSalita && typeof GRADINI[RM.livello-1]==='number'){ if(++buone>=6){ buone=0; prova={su:true}; metti(RM.livello-1); scalda=20; if(++salite>=3) noSalita=true; } }
   else buone=0;
 }
-RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livello:RM.livello, pr:renderer.getPixelRatio(), ombre:sole.castShadow, leggero:!!RM.leggero, fermo:fermo, noSalita:noSalita}; } };      // per le prove
-var orologio=new THREE.Clock(), somma=0, quanti=0;
+RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livello:RM.livello, pr:renderer.getPixelRatio(), ombre:sole.castShadow, leggero:!!RM.leggero, fermo:fermo, noSalita:noSalita, alta:ALTA}; },
+  alta:{ stato:function(){ return {passo:ALTA, adatta:altaAdatta, ritorni:alta.ritorni, spenta:alta.spenta, motivo:alta.motivo, blocco:Math.max(0,Math.round(alta.blocco-performance.now()))}; }, passo:passoAlta, azzera:function(){ mettiAlta(0,'azzera'); alta.ritorni=0; alta.spenta=false; alta.blocco=0; } } };      // per le prove
+/* «Alta qualità» (24 novembre 2026; l'utente: «falla il più fluida possibile»). Da lontano la città trema soprattutto per le migliaia di case di pochi pixel, e lì serve solo
+   disegnare più pixel: sul PC, quando c'è margine, la tela degli effetti sale a 1,25 e poi a 1,5 volte i pixel dello schermo, e la passata finale la riduce (quattro letture
+   bilineari per pixel; misura: a 1,5 il tremolio cala di un decimo nella vista d'insieme e di un sesto a 1400 m). La tela della pagina non cambia: cambiano solo le due tele intermedie, e solo ai passi.
+   - Solo dove può servire: niente schermo al tocco, schermo non già fitto (rapporto di pixel fino a 1,25), regolatore acceso, nessun gradino di alleggerimento in corso.
+   - Sale di un passo quando per due secondi e mezzo la scena è tranquilla (niente volo, nessun cambio d'anno da un secondo e mezzo, camera ferma o mossa piano)
+     e negli ultimi novanta fotogrammi il ritmo è pieno (media sotto 17,5 millesimi) e il lavoro del processore per fotogramma sta sotto i 10,5 millesimi.
+     Il tempo che la scheda grafica passa a disegnare non si può leggere: per questo dopo ogni passo si guarda il ritmo vero, e
+   - scende subito a 1 se la media degli ultimi venti fotogrammi supera i 18,2 millesimi (sotto i 55 al secondo) e almeno quattro di loro sono lunghi:
+     è un «ritorno»; dopo il primo non riprova per trenta secondi, dopo il secondo non riprova più per tutta la visita.
+   - Durante i voli, i cambi d'anno e gli spostamenti veloci torna a 1 senza contarlo come ritorno, e risale a scena tranquilla.
+   ?qualita=fissa spegne tutto; ?qualita=alta tiene 1,5 fisso (per le prove). RM.regolatore.alta per le prove: stato(), passo(dt,lavoro,ora,calmo) per simulare i tempi. */
+var ALTA_PASSI=[1,1.25,1.5], altaFissa=/[?&]qualita=alta/.test(location.search), alta={i:0, ritorni:0, spenta:false, blocco:0, calma:0, f:[], ultimo:0, motivo:''};
+var altaAdatta=!fermo && PR0<=1.25 && !(navigator.maxTouchPoints>0) && !(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+if(altaFissa) fermo=true;
+function mettiAlta(i,motivo){ if(i===alta.i) return; alta.i=i; alta.motivo=motivo||''; ALTA=ALTA_PASSI[i]; misura(); alta.f.length=0; alta.calma=0; somma=0; quanti=0; }
+function passoAlta(dt,lavoro,ora,calmo){
+  if(altaFissa){ mettiAlta(2,'fissa'); return; }
+  if(!altaAdatta || alta.spenta){ if(alta.i) mettiAlta(0,'spenta'); return; }
+  var f=alta.f, k, n, s=0, l=0; f.push(dt,lavoro); if(f.length>180) f.splice(0,2);
+  if(alta.i>0){
+    n=Math.min(20,f.length/2); for(k=0;k<n;k++){ s+=f[f.length-2-2*k]; if(f[f.length-2-2*k]>.0182) l++; }
+    if(n>=12 && s/n>.0182 && l>=4){ mettiAlta(0,'lento'); alta.ritorni++; alta.blocco=ora+30000; if(alta.ritorni>=2) alta.spenta=true; return; }      // lento davvero: media alta e almeno quattro fotogrammi lunghi, perché un singolo inciampo (la memoria che si libera) non basti
+    if(!calmo || RM.livello>0){ mettiAlta(0,'movimento'); return; }
+  }
+  if(!calmo || RM.livello>0 || alta.i>=ALTA_PASSI.length-1 || ora<alta.blocco){ alta.calma=0; return; }
+  alta.calma+=dt; if(alta.calma<2.5 || f.length<180) return;
+  s=0; for(k=0;k<f.length;k+=2){ s+=f[k]; l+=f[k+1]; } n=f.length/2;
+  if(s/n<.0175 && l/n<.0105){ mettiAlta(alta.i+1,'margine'); alta.ultimo=ora; }
+}
+var orologio=new THREE.Clock(), somma=0, quanti=0, occhioPrima=new THREE.Vector3(), puntoPrima=new THREE.Vector3();
 /* Quando la scena non è sullo schermo (si è scesi a leggere, o sul telefono si guarda la mappa) non si disegna: la pagina scorre meglio e la batteria ringrazia. */
 RM.fuoriVista=false;
 if(window.IntersectionObserver) new IntersectionObserver(function(v){ RM.fuoriVista=!v[v.length-1].isIntersecting; },{rootMargin:'80px'}).observe(contenitore);
 (function ciclo(){
   requestAnimationFrame(ciclo);
-  if(RM.fuoriVista){ orologio.getDelta(); return; }
+  if(RM.fuoriVista || document.body.classList.contains('impero-grande')){ orologio.getDelta(); return; } // sotto la carta a tutto schermo la città è coperta: disegnarla costava 6 ms a fotogramma (misura del 24 novembre 2026)
   var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1), ora=performance.now();
   if(!document.hidden && grezzo<.4 && ora-ultimoAnno>400){      // le pause (scheda nascosta, caricamento) e il viaggio fra due tappe non contano
-    if(scalda>0) scalda--; else { somma+=grezzo; quanti++; }
+    if(scalda>0) scalda--; else if(alta.i===0){ somma+=grezzo; quanti++; }      // con la tela grande il ritmo lo guarda l'«alta qualità»: il regolatore conta solo a 1
     if(quanti>=50){ regola(somma/quanti); somma=0; quanti=0; }
   }
   for(var i=0;i<RM.frame.length;i++) RM.frame[i](dt);
@@ -527,7 +571,12 @@ if(window.IntersectionObserver) new IntersectionObserver(function(v){ RM.fuoriVi
     post.mat.uniforms.notte.value=RM.notte||0;
     post.mat.uniforms.sfoca.value=RM.sfuma(70,260,camera.position.distanceTo(controlli.target));      // l'effetto «plastico» sfoca i bordi solo da lontano: da vicino si vuole vedere nitido
     post.disegna(scene,camera);
-  } else renderer.render(scene,camera);
+  } else { RM.occhio(camera,renderer.domElement.height); renderer.render(scene,camera); }
+  if(post && post.attivo && !document.hidden && grezzo<.4){      // la camera si muove piano? (spostamento in quota della distanza, al secondo)
+    var dd=camera.position.distanceTo(controlli.target)||1, mv=(camera.position.distanceTo(occhioPrima)+controlli.target.distanceTo(puntoPrima))/dd/Math.max(dt,.001);
+    occhioPrima.copy(camera.position); puntoPrima.copy(controlli.target);
+    passoAlta(grezzo,(performance.now()-ora)/1000,ora,!volo && ora-ultimoAnno>1500 && mv<.15);
+  }
 })();
 
 })();
