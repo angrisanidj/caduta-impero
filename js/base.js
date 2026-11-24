@@ -293,12 +293,12 @@ function posaSuolo(){
     g.putImageData(d,0,0);
   });
   var matSuolo=new THREE.MeshStandardMaterial({vertexColors:true,map:granaTerra,roughness:1,metalness:0}), A=String.fromCharCode(10);
-  RM.erba={value:0};                       // 0…1: quanta parte della città è lasciata da abbastanza tempo perché ci cresca l'erba
+  RM.erba={value:0}; RM.pratoU=RM.pratoU||{value:1};                       // 0…1: quanta parte della città è lasciata da abbastanza tempo perché ci cresca l'erba
   matSuolo.onBeforeCompile=function(sh){
-    sh.uniforms.uErba=RM.erba; sh.uniforms.uVerde={value:RM.col(0x8e9163)};
+    sh.uniforms.uErba=RM.erba; sh.uniforms.uVerde={value:RM.col(0x8e9163)}; sh.uniforms.uPrato=RM.pratoU;
     sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute vec2 urb;','varying vec2 vUrb;','varying vec2 vXZ;','varying float vPend;'].join(A))
       .replace('#include <begin_vertex>',['#include <begin_vertex>','vUrb=urb; vXZ=position.xz; vPend=1.0-normal.y;'].join(A));
-    sh.fragmentShader=sh.fragmentShader.replace('#include <common>',['#include <common>','uniform float uErba; uniform vec3 uVerde;','varying vec2 vUrb;','varying vec2 vXZ;','varying float vPend;'].join(A))
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>',['#include <common>','uniform float uErba; uniform vec3 uVerde; uniform float uPrato;','varying vec2 vUrb;','varying vec2 vXZ;','varying float vPend;'].join(A))
       .replace('#include <color_fragment>',['#include <color_fragment>',
         'float pe=sin(vXZ.x*0.21+sin(vXZ.y*0.13)*2.0)*sin(vXZ.y*0.19+sin(vXZ.x*0.11)*2.0)*0.5+0.5;',
         'float gr=dot(diffuseColor.rgb,vec3(0.34))/0.42;',
@@ -310,6 +310,13 @@ function posaSuolo(){
         '  float solco=sin(lungo/passoC*6.2832)*(1.0-smoothstep(0.12,0.4,fwC))*step(0.25,hc);',
         '  vec2 bc=abs(fract(fq)-0.5); float fwB=max(fwidth(fq.x),fwidth(fq.y)); float siepe=smoothstep(0.5-0.012-fwB,0.5-0.006,max(bc.x,bc.y))*(1.0-smoothstep(0.01,0.05,fwB));',
         '  diffuseColor.rgb*=1.0+camp*(0.07*solco-0.22*siepe); }',
+        /* Prati (24 novembre 2026; l'utente: «l'erba inesistente»). Dove il suolo è verde (campagna, prati, città abbandonata all'erba) il colore varia su tre scale, leggendo
+           la stessa trama di rumore molto ingrandita (filtrata dai mipmap, quindi ferma quando la camera si muove): chiazze larghe più verdi e più spente (una trentina di metri),
+           macchie che seccano verso il color paglia (una decina), cespi più scuri (due o tre metri). Peso: RM.QUALITA.prato (0 sui telefoni e in «bassa») */
+        'float verde=clamp((diffuseColor.g-diffuseColor.r*0.92)*9.0+0.25*vUrb.x*uErba,0.0,1.0)*uPrato;',
+        'if(verde>0.0){ float n1=(texture2D(map,vXZ/900.0).r-0.8)*5.0; float n2=(texture2D(map,vXZ/260.0+0.31).r-0.8)*5.0; float n3=(texture2D(map,vXZ/61.0+0.67).r-0.8)*5.0;',
+        '  vec3 c0=diffuseColor.rgb*(0.84+0.3*n1)*mix(vec3(1.0),vec3(1.14,1.02,0.66),smoothstep(0.5,0.85,n2)*0.55)*(1.0-0.3*smoothstep(0.55,0.95,n3));',
+        '  diffuseColor.rgb=mix(diffuseColor.rgb,c0,verde); }',
         'diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.27,0.25,0.15)*(0.8+0.4*pe),smoothstep(0.025,0.2,vPend)*0.8);',
         /* da vicino il terreno prende una grana più fine (ciuffi, sassi), che sfuma quando ci si allontana e non sfarfalla */
         /* 24 novembre 2026: la grana più fine (g2, passo di 5 cm) si spegne prima dell'altra e il contrasto è più basso: da vicino era una puntinatura dura */
@@ -323,7 +330,7 @@ function posaSuolo(){
         'diffuseColor.rgb=mix(diffuseColor.rgb,carta*tratto,lont);'].join(A));
   };
   var suolo=new THREE.Mesh(geo,matSuolo);
-  suolo.receiveShadow=true; scene.add(suolo); RM.suolo=suolo;
+  suolo.receiveShadow=true; suolo.userData.gruppo='suolo'; scene.add(suolo); RM.suolo=suolo;
   /* la quota del terreno come è disegnato (triangolo per triangolo): fra un vertice e l'altro della maglia RM.h, più fine, può uscirne di qualche metro sui bordi delle terrazze.
      Le strade la seguono, così non galleggiano e non affondano (23 novembre 2026) */
   var N=S+1, inv=function(v){ var s=v<0?-1:1, a=Math.min(1,Math.abs(v)/3400), t=a; for(var k=0;k<8;k++) var t2=t*t, t6=t2*t2*t2; t-=(.2*t+.05*t2*t+.75*t6*t-a)/(.2+.15*t2+5.25*t6); return s*t; };
@@ -348,7 +355,7 @@ RM.nastro=function(linea,larga,materiale,alza,quotaFissa){
   }
   var g=new THREE.BufferGeometry();
   g.setAttribute('position',new THREE.Float32BufferAttribute(v,3)); g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.setIndex(idx); g.computeVertexNormals();
-  var m=new THREE.Mesh(g,materiale); m.receiveShadow=true; scene.add(m); m.userData.curva=curva; return m;
+  var m=new THREE.Mesh(g,materiale); m.receiveShadow=true; m.userData.gruppo='strade'; scene.add(m); m.userData.curva=curva; return m;
 };
 /* strade (le vie strette del centro prendono la quota ogni 10 m, le altre ogni 30: con 30 m sulla Velia il nastro affondava nel terreno e la via Sacra sembrava a pezzi; 23 novembre 2026) */
 var matStrada=new THREE.MeshStandardMaterial({color:RM.col(0xcdbfa3),roughness:1,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
@@ -493,7 +500,7 @@ if(window.ResizeObserver) new ResizeObserver(misura).observe(contenitore);
    Prima scattava solo sotto i 28 fotogrammi al secondo, non risaliva mai, e il suo primo gradino (spegnere gli effetti a tutto schermo) su molte schede rallentava invece
    di alleggerire, perché riaccendeva l'antialias a più campioni. Le misure dicono che il tempo di un fotogramma dipende soprattutto dal numero di pixel: quindi
    - i gradini sono, nell'ordine: la risoluzione (da quella di partenza fino a un pixel per pixel, a passi di un terzo dei pixel), poi le ombre, poi passanti e fumo (RM.leggero);
-   - si scende quando la media di cinquanta fotogrammi supera i 22 millesimi (sotto i 45 al secondo);
+   - si scende quando la media di cinquanta fotogrammi supera i 22 millesimi (sotto i 45 al secondo); dal 24 novembre 2026, sul PC, i 18,2 (sotto i 55: il gradino «media» deve tenere i 60);
    - dopo ogni discesa si controlla se è servita: se il guadagno è sotto il 7% il freno è altrove (il processore, o un telefono in risparmio energetico, che ferma tutto
      a 30 al secondo): si rimette com'era e ci si ferma;
    - dopo sei medie di fila a pieno ritmo si prova a risalire di un gradino di risoluzione; se non regge si torna giù e non si riprova più; in tutto si risale al massimo tre volte.
@@ -509,7 +516,7 @@ function metti(n){                                   // porta la scena al gradin
   if(leggero) RM.leggero=true;
   RM.livello=n;
 }
-var SOGLIA=.022, prova=null, buone=0, noSalita=false, salite=0, fermo=/[?&]qualita=fissa/.test(location.search), scalda=40;
+var SOGLIA=(piccolo||(navigator.maxTouchPoints>0))?.022:.0182, prova=null, buone=0, noSalita=false, salite=0, fermo=/[?&]qualita=fissa/.test(location.search), scalda=40;
 function regola(media){
   if(fermo) return;
   if(prova){
@@ -521,37 +528,66 @@ function regola(media){
   if(media<.0172 && RM.livello>0 && !noSalita && typeof GRADINI[RM.livello-1]==='number'){ if(++buone>=6){ buone=0; prova={su:true}; metti(RM.livello-1); scalda=20; if(++salite>=3) noSalita=true; } }
   else buone=0;
 }
-RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livello:RM.livello, pr:renderer.getPixelRatio(), ombre:sole.castShadow, leggero:!!RM.leggero, fermo:fermo, noSalita:noSalita, alta:ALTA}; },
-  alta:{ stato:function(){ return {passo:ALTA, adatta:altaAdatta, ritorni:alta.ritorni, spenta:alta.spenta, motivo:alta.motivo, blocco:Math.max(0,Math.round(alta.blocco-performance.now()))}; }, passo:passoAlta, azzera:function(){ mettiAlta(0,'azzera'); alta.ritorni=0; alta.spenta=false; alta.blocco=0; } } };      // per le prove
-/* «Alta qualità» (24 novembre 2026; l'utente: «falla il più fluida possibile»). Da lontano la città trema soprattutto per le migliaia di case di pochi pixel, e lì serve solo
-   disegnare più pixel: sul PC, quando c'è margine, la tela degli effetti sale a 1,25 e poi a 1,5 volte i pixel dello schermo, e la passata finale la riduce (quattro letture
-   bilineari per pixel; misura: a 1,5 il tremolio cala di un decimo nella vista d'insieme e di un sesto a 1400 m). La tela della pagina non cambia: cambiano solo le due tele intermedie, e solo ai passi.
-   - Solo dove può servire: niente schermo al tocco, schermo non già fitto (rapporto di pixel fino a 1,25), regolatore acceso, nessun gradino di alleggerimento in corso.
-   - Sale di un passo quando per due secondi e mezzo la scena è tranquilla (niente volo, nessun cambio d'anno da un secondo e mezzo, camera ferma o mossa piano)
-     e negli ultimi novanta fotogrammi il ritmo è pieno (media sotto 17,5 millesimi) e il lavoro del processore per fotogramma sta sotto i 10,5 millesimi.
-     Il tempo che la scheda grafica passa a disegnare non si può leggere: per questo dopo ogni passo si guarda il ritmo vero, e
-   - scende subito a 1 se la media degli ultimi venti fotogrammi supera i 18,2 millesimi (sotto i 55 al secondo) e almeno quattro di loro sono lunghi:
-     è un «ritorno»; dopo il primo non riprova per trenta secondi, dopo il secondo non riprova più per tutta la visita.
-   - Durante i voli, i cambi d'anno e gli spostamenti veloci torna a 1 senza contarlo come ritorno, e risale a scena tranquilla.
-   ?qualita=fissa spegne tutto; ?qualita=alta tiene 1,5 fisso (per le prove). RM.regolatore.alta per le prove: stato(), passo(dt,lavoro,ora,calmo) per simulare i tempi. */
-var ALTA_PASSI=[1,1.25,1.5], altaFissa=/[?&]qualita=alta/.test(location.search), alta={i:0, ritorni:0, spenta:false, blocco:0, calma:0, f:[], ultimo:0, motivo:''};
-var altaAdatta=!fermo && PR0<=1.25 && !(navigator.maxTouchPoints>0) && !(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
-if(altaFissa) fermo=true;
-function mettiAlta(i,motivo){ if(i===alta.i) return; alta.i=i; alta.motivo=motivo||''; ALTA=ALTA_PASSI[i]; misura(); alta.f.length=0; alta.calma=0; somma=0; quanti=0; }
+/* ---- La scala della qualità (24 novembre 2026; l'utente: «miglioralo al massimo e cerca un modo smart per renderlo il più fluido possibile», «metti uno switch»).
+   Quattro gradini: 0 «bassa» (i telefoni, com'erano), 1 «media» (il PC di riferimento, una Radeon integrata: deve tenere 60 fotogrammi al secondo), 2 «alta», 3 «massima».
+   Ogni gradino è solo una fila di numeri (RM.QUALITA): risoluzione della tela degli effetti, lato della mappa delle ombre, e quelli che i moduli aggiungono
+   (le figure vicine in js/vita.js, i ciuffi d'erba, gli alberi…), letti con RM.qp(nome). Chi deve rifare qualcosa al cambio si iscrive con RM.qualita.quando(fn).
+   «Automatica» (la norma, ricordata nel browser come le scelte a mano): parte da «bassa» sui dispositivi al tocco e sugli schermi piccoli, da «media» sul PC, e
+   - sale di un gradino quando per due secondi e mezzo la scena è tranquilla (niente volo, nessun cambio d'anno da un secondo e mezzo, camera ferma o mossa piano)
+     e negli ultimi novanta fotogrammi il ritmo è pieno (media sotto 17,5 millesimi) e il lavoro del processore per fotogramma sta sotto i 10,5 millesimi;
+     il tempo della scheda grafica dalla pagina non si legge: per questo dopo ogni passo si guarda il ritmo vero, e
+   - scende subito di un gradino (mai sotto quello di partenza) se la media degli ultimi venti fotogrammi supera i 18,2 millesimi e almeno quattro sono lunghi:
+     è un «ritorno»; dopo il primo non riprova per trenta secondi, dopo il secondo non sale più per tutta la visita.
+   - La risoluzione più alta (1,25 e 1,5 volte i pixel dello schermo: da lontano la città trema soprattutto per le migliaia di case di pochi pixel, e lì serve solo disegnare
+     più pixel; la passata finale riduce la tela con quattro letture bilineari per pixel) vale solo a scena tranquilla: nei voli, nei cambi d'anno e negli spostamenti veloci
+     la tela torna a 1, senza contarlo come ritorno. Cambiano solo le due tele intermedie, e solo ai passi.
+   Sotto «bassa» resta il regolatore di prima (risoluzione sotto 1, ombre, passanti): conta solo al gradino di partenza e con la tela a 1.
+   ?qualita=bassa|media|alta|massima fissa un gradino (per le prove, non ricordato); ?qualita=fissa spegne i regolatori e tiene il gradino di partenza.
+   RM.regolatore.alta per le prove: stato(), passo(dt,lavoro,ora,calmo) per simulare i tempi, azzera(). */
+var NOMI_Q=['bassa','media','alta','massima'];
+RM.QUALITA={ ris:[1,1,1.25,1.5], ombra:[1536,2048,4096,4096], prato:[0,1,1,1] };
+var TOCCO_Q=(navigator.maxTouchPoints>0) || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+var Q0=(piccolo||TOCCO_Q)?0:1, qScelta=null, qUrl=(/[?&]qualita=(bassa|media|alta|massima)/.exec(location.search)||[])[1];
+try{ var qMem=localStorage.getItem('rm-qualita'); if(NOMI_Q.indexOf(qMem)>=0) qScelta=qMem; }catch(e){}
+if(qUrl) qScelta=qUrl;
+var alta={g:qScelta?NOMI_Q.indexOf(qScelta):Q0, ritorni:0, spenta:false, blocco:0, discesa:-1e9, calma:0, f:[], motivo:'', calmo:true, ascoltatori:[]};
+var altaAdatta=!fermo && !qScelta && PR0<=1.25 && !TOCCO_Q && !piccolo;      // può salire da sola: PC con uno schermo non piccolo e non già fitto, regolatore acceso, nessuna scelta a mano
+if(qUrl) fermo=true;
+RM.q=alta.g;
+RM.qp=function(nome){ var v=RM.QUALITA[nome]; return v?v[RM.q]:undefined; };
+function risQ(){ return alta.calmo||!altaAdatta?RM.QUALITA.ris[alta.g]:1; }
+function applicaQ(){
+  RM.q=alta.g; var L=RM.QUALITA.ombra[alta.g]; RM.pratoU=RM.pratoU||{value:1}; RM.pratoU.value=RM.QUALITA.prato[alta.g];
+  if(sole.shadow.mapSize.x!==L){ sole.shadow.mapSize.set(L,L); if(sole.shadow.map){ sole.shadow.map.dispose(); sole.shadow.map=null; } renderer.shadowMap.needsUpdate=true; }
+  var r=risQ(); if(r!==ALTA){ ALTA=r; misura(); }
+  alta.ascoltatori.forEach(function(fn){ try{ fn(alta.g); }catch(e){} });
+  var b=document.getElementById('btnQualita'); if(b) b.textContent='Qualità · '+(qScelta?NOMI_Q[alta.g]:'automatica ('+NOMI_Q[alta.g]+')');
+}
+function mettiAlta(g,motivo){ alta.motivo=motivo||''; alta.f.length=0; alta.calma=0; somma=0; quanti=0; if(g===alta.g) return; alta.g=g; applicaQ(); }
 function passoAlta(dt,lavoro,ora,calmo){
-  if(altaFissa){ mettiAlta(2,'fissa'); return; }
-  if(!altaAdatta || alta.spenta){ if(alta.i) mettiAlta(0,'spenta'); return; }
+  if(calmo!==alta.calmo){ alta.calmo=calmo; var r=risQ(); if(r!==ALTA){ ALTA=r; misura(); alta.f.length=0; } }      // nei voli la tela torna a 1, a scena tranquilla risale
+  if(!altaAdatta) return;
   var f=alta.f, k, n, s=0, l=0; f.push(dt,lavoro); if(f.length>180) f.splice(0,2);
-  if(alta.i>0){
+  if(alta.g>Q0){
     n=Math.min(20,f.length/2); for(k=0;k<n;k++){ s+=f[f.length-2-2*k]; if(f[f.length-2-2*k]>.0182) l++; }
-    if(n>=12 && s/n>.0182 && l>=4){ mettiAlta(0,'lento'); alta.ritorni++; alta.blocco=ora+30000; if(alta.ritorni>=2) alta.spenta=true; return; }      // lento davvero: media alta e almeno quattro fotogrammi lunghi, perché un singolo inciampo (la memoria che si libera) non basti
-    if(!calmo || RM.livello>0){ mettiAlta(0,'movimento'); return; }
+    if(n>=12 && s/n>.0182 && l>=4){ mettiAlta(alta.g-1,'lento'); if(ora-alta.discesa>3000) alta.ritorni++; alta.discesa=ora; alta.blocco=ora+30000; if(alta.ritorni>=2) alta.spenta=true; return; }      // due discese di fila (da «massima» a «media») sono un ritorno solo      // lento davvero: media alta e almeno quattro fotogrammi lunghi, perché un singolo inciampo (la memoria che si libera) non basti
   }
-  if(!calmo || RM.livello>0 || alta.i>=ALTA_PASSI.length-1 || ora<alta.blocco){ alta.calma=0; return; }
+  if(alta.spenta || !calmo || RM.livello>0 || alta.g>=NOMI_Q.length-1 || ora<alta.blocco){ alta.calma=0; return; }      // spenta: scende ancora se serve, ma non sale più
   alta.calma+=dt; if(alta.calma<2.5 || f.length<180) return;
   s=0; for(k=0;k<f.length;k+=2){ s+=f[k]; l+=f[k+1]; } n=f.length/2;
-  if(s/n<.0175 && l/n<.0105){ mettiAlta(alta.i+1,'margine'); alta.ultimo=ora; }
+  if(s/n<.0175 && l/n<.0105) mettiAlta(alta.g+1,'margine');
 }
+RM.qualita={ nomi:NOMI_Q, gradino:function(){ return alta.g; }, automatica:function(){ return !qScelta; },
+  quando:function(fn){ alta.ascoltatori.push(fn); },
+  scegli:function(nome){ qScelta=NOMI_Q.indexOf(nome)>=0?nome:null; try{ if(qScelta) localStorage.setItem('rm-qualita',qScelta); else localStorage.removeItem('rm-qualita'); }catch(e){}
+    altaAdatta=!fermo && !qScelta && PR0<=1.25 && !TOCCO_Q && !piccolo; alta.ritorni=0; alta.spenta=false; alta.blocco=0; mettiAlta(qScelta?NOMI_Q.indexOf(qScelta):Q0,'scelta'); applicaQ(); } };
+/* il bottone nel menu «Strumenti» (index.html): a ogni tocco il gradino seguente, automatica → bassa → media → alta → massima → automatica */
+(function(){ var b=document.getElementById('btnQualita'); if(!b) return;
+  b.addEventListener('click',function(){ var i=qScelta?NOMI_Q.indexOf(qScelta)+1:0; RM.qualita.scegli(i<NOMI_Q.length?NOMI_Q[i]:null); }); })();
+applicaQ();
+RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livello:RM.livello, pr:renderer.getPixelRatio(), ombre:sole.castShadow, leggero:!!RM.leggero, fermo:fermo, noSalita:noSalita, ris:ALTA, qualita:NOMI_Q[alta.g]}; },
+  alta:{ stato:function(){ return {gradino:NOMI_Q[alta.g], ris:ALTA, adatta:altaAdatta, ritorni:alta.ritorni, spenta:alta.spenta, motivo:alta.motivo, blocco:Math.max(0,Math.round(alta.blocco-performance.now()))}; }, passo:passoAlta,
+    azzera:function(){ altaAdatta=!qScelta && PR0<=1.25 && !TOCCO_Q && !piccolo; mettiAlta(Q0,'azzera'); alta.ritorni=0; alta.spenta=false; alta.blocco=0; alta.discesa=-1e9; alta.calmo=true; } } };      // per le prove
 var orologio=new THREE.Clock(), somma=0, quanti=0, occhioPrima=new THREE.Vector3(), puntoPrima=new THREE.Vector3();
 /* Quando la scena non è sullo schermo (si è scesi a leggere, o sul telefono si guarda la mappa) non si disegna: la pagina scorre meglio e la batteria ringrazia. */
 RM.fuoriVista=false;
@@ -561,13 +597,14 @@ if(window.IntersectionObserver) new IntersectionObserver(function(v){ RM.fuoriVi
   if(RM.fuoriVista || document.body.classList.contains('impero-grande')){ orologio.getDelta(); return; } // sotto la carta a tutto schermo la città è coperta: disegnarla costava 6 ms a fotogramma (misura del 24 novembre 2026)
   var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1), ora=performance.now();
   if(!document.hidden && grezzo<.4 && ora-ultimoAnno>400){      // le pause (scheda nascosta, caricamento) e il viaggio fra due tappe non contano
-    if(scalda>0) scalda--; else if(alta.i===0){ somma+=grezzo; quanti++; }      // con la tela grande il ritmo lo guarda l'«alta qualità»: il regolatore conta solo a 1
+    if(scalda>0) scalda--; else if(alta.g===Q0 && ALTA===1){ somma+=grezzo; quanti++; }      // sopra il gradino di partenza, o con la tela grande, il ritmo lo guarda la scala della qualità: il regolatore di prima conta solo lì
     if(quanti>=50){ regola(somma/quanti); somma=0; quanti=0; }
   }
   for(var i=0;i<RM.frame.length;i++) RM.frame[i](dt);
   controlli.update();
   if(ombraChiesta && ora-ombraFatta>66){ renderer.shadowMap.needsUpdate=true; ombraChiesta=false; ombraFatta=ora; }
   if(post && post.attivo){
+    if(ALTA>1 && post.tela.width<renderer.domElement.width*ALTA*.98) misura();      // chi ha disegnato fuori dal ciclo (i fotogrammi delle infografiche) ha rimesso la tela a 1
     post.mat.uniforms.notte.value=RM.notte||0;
     post.mat.uniforms.sfoca.value=RM.sfuma(70,260,camera.position.distanceTo(controlli.target));      // l'effetto «plastico» sfoca i bordi solo da lontano: da vicino si vuole vedere nitido
     post.disegna(scene,camera);

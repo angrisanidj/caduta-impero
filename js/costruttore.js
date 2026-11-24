@@ -235,7 +235,7 @@ var NL=String.fromCharCode(10);
 var TAGLIO=[
   /* cantiere (uCant da 0 a 1): la muratura c'è solo fino a una certa quota, diversa da un tratto all'altro (celle di venti metri in pianta); tetti e parti alte arrivano per ultimi */
   'if(uCant<0.999){ float cn=rmH(vec3(floor(vLoc.xz*0.5+0.21),3.0)); if(vLoc.y>uAlt*uCant*(0.7+0.6*cn)+0.04) discard; }',
-  'if(vTipo<1.5){',
+  'if(vTipo<1.5 && uRovina*2.0+uCrepe*uCrepe*0.2>0.0){',      // (24 novembre 2026) le prove si fanno solo se c'è degrado: su un edificio intatto il pixel non paga il rumore
   '  float rn=rmH(vec3(floor(vLoc.xz*1.6+0.37),1.0));',
   '  float rq=clamp(vLoc.y/uAlt,0.0,1.0);',
   '  if(rq>1.0-uRovina*(0.25+1.7*rn)) discard;',
@@ -275,8 +275,8 @@ var COLORA=[
   '    else diffuseColor.rgb*=1.0-0.55*clamp((uRovina*2.0+uCrepe*uCrepe*0.2)*3.0,0.0,1.0);',                                                           // sotto i tetti sfondati si vede il buio
   '  } else diffuseColor.rgb*=1.0-0.34*uCrepe*smoothstep(0.5,0.8,rmN(vec3(cp.x*4.0,vLoc.y*0.45,3.0)));',                                              // colature
   '}',
-  'if(vTipo<1.5){ float rm=smoothstep(0.35,0.72,rmN(vLoc*2.3+0.11)); diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.5,0.56,0.38),clamp((uRovina*2.4+uCrepe*0.5)*rm*(1.15-rq2),0.0,1.0)); }',
-  'if(vTipo>0.5 && vTipo<1.5){ diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.2,0.215,0.235),uPiombo); }',      // uPiombo: coperture rifatte in lastre di piombo (il Pantheon dopo Gregorio III)
+  'if(vTipo<1.5 && uRovina*2.4+uCrepe*0.5>0.0){ float rm=smoothstep(0.35,0.72,rmN(vLoc*2.3+0.11)); diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.5,0.56,0.38),clamp((uRovina*2.4+uCrepe*0.5)*rm*(1.15-rq2),0.0,1.0)); }',
+  'if(vTipo>0.5 && vTipo<1.5){ if(uCrepe>0.0) diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.2,0.215,0.235),uPiombo); }',      // uPiombo: coperture rifatte in lastre di piombo (il Pantheon dopo Gregorio III)
   'if(vTipo>2.5){ float pa=rmN(vec3(vLoc.xz*0.9,11.0)); float pb=rmN(vec3(vLoc.xz*4.3,12.0)); float pc=rmN(vec3(vLoc.xz*17.0,13.0));',                    // prato: chiazze larghe, ciuffi, filo d'erba
   '  float fwP=fwidth(vLoc.x)+fwidth(vLoc.z); float kcP=1.0-smoothstep(0.012,0.035,fwP); float kbP=1.0-smoothstep(0.05,0.14,fwP);',                       // ciuffi e fili si spengono quando il loro passo scende sotto i tre pixel: da lontano brulicavano (24 novembre 2026)
   '  diffuseColor.rgb*=0.82+0.22*pa+0.12*kbP*(pb-0.5)+0.1*kcP*(pc-0.5);',

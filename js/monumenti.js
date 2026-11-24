@@ -268,6 +268,7 @@ function uomo(B,x,y,z,s,col,ry){ return B.dentro(x,y,z,ry||0,function(){
   [-1,1].forEach(function(k){ arto(B,[k*3.1*u,15*u,0],[k*3.6*u,11.4*u,.3*u],.95*u,.8*u,col,6); arto(B,[k*3.6*u,11.4*u,.3*u],[k*3.4*u,8.4*u,1.2*u],.78*u,.65*u,col,6); });   // braccia lungo i fianchi
   arto(B,[0,15.4*u,0],[0,16.6*u,0],.85*u,.8*u,col,6,false); palla(B,1.25*u,0,17.5*u,.1*u,col,1,1.15,1.08);        // collo e testa
 }); }
+RM.cavalloStatua=cavallo;      // per le figure delle scene (RM.figura.cavaliere in js/vita.js)
 function casa(B,y,lx,lz,w,d,h,ry){ B.scatola(w,h+.3,d,lx,y-.3,lz,P.mattone,ry).falde(w+.2,.45,d+.2,lx,y+h,lz,P.coppi,ry,P.mattone); }
 
 /* tracciato delle mura leonine (848-852): dal mausoleo di Adriano attorno al colle Vaticano, fino al Tevere. Coordinate relative a (-215,-92).
@@ -1244,7 +1245,7 @@ M.forEach(function(o){
   o.certezza=((D.CERTEZZA||{})[o.id]||['C'])[0]; o.mat.userData.u.uSapCol.value.copy(RM.sapere.COL[o.certezza]);      // «che cosa sappiamo davvero»
   o.g.position.set(o.x,o.quota!=null?o.quota-.05:quota(o.x,o.z),o.z); o.g.rotation.y=o.ry||0;
   if(o.come) o.g.position.y=perId[o.come].g.position.y;                       // poggia sullo stesso piano del complesso vicino
-  RM.scene.add(o.g);
+  o.g.userData.gruppo='monumenti'; RM.scene.add(o.g);
   if(o.nome){ o.div=document.createElement('span'); o.div.textContent=o.etichetta||o.nome;      /* etichetta: nome corto per la scena, dove quello della scheda è lungo (23 novembre 2026) */ etichette.appendChild(o.div); o.div.addEventListener('click',function(){ if(RM.apriScheda) RM.apriScheda(o.id); }); }
 });
 RM.MONUMENTI=M.filter(function(o){ return o.nome; }).concat([{id:'mura', nome:'Mura Aureliane', x:106,z:-203, raggio:28, alto:2}, {id:'acquedotti', nome:'Acquedotti', note:{chiuso:'tagliati nel 537'}, x:249,z:12, raggio:30, alto:3},
