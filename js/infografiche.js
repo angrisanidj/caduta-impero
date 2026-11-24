@@ -3937,6 +3937,8 @@ var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l1
   dopo:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M6 6.5v11l8.5-5.5z" fill="currentColor"/></svg>',
   rivedi:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 12a6.5 6.5 0 1 0 2-4.7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M6.6 3.6v4.6h4.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   chiudi:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>' };
+ICO.indietro='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.5 6.5v11L8 12z" fill="currentColor"/></svg>';
+ICO.avanti='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 6.5v11L16 12z" fill="currentColor"/></svg>';      /* un passo indietro o avanti; Inizio e Fine hanno la sbarra */
 /* le icone degli inviti: una per infografica */
 var GLIFI={ valeriano:'<path d="M7 12l2.2-5 2.6 3 2.2-4 2.2 4 2.6-3 2.2 5z"/><rect x="7" y="13" width="14" height="2.2" rx=".6"/><path d="M9 18.5h10" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2 2"/><circle cx="8" cy="18.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="20" cy="18.5" r="1.6" fill="none" stroke="currentColor" stroke-width="1.4"/>',
   roma:'<circle cx="9" cy="10" r="2.2"/><circle cx="15" cy="8" r="2.2"/><circle cx="20" cy="13" r="2.2"/><circle cx="12" cy="16" r="2.2"/><circle cx="18" cy="19" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="8" cy="20" r="2.2" fill="none" stroke="currentColor" stroke-width="1.4"/>',
@@ -3974,10 +3976,14 @@ function apri(chi,tp){
   h('span','ig-cop-occh','Infografica '+n+' di '+ORDINE.length,cop); h('span','ig-cop-tit',I.d.titolo,cop); h('span','ig-cop-filo',null,cop); h('span','ig-cop-sotto',I.d.sotto,cop);
   var lato=h('div','ig-lato',null,corpo), frase=h('p','ig-frase',null,lato); frase.setAttribute('aria-live','polite');
   var fA=h('span','ig-frase-anno','',frase), fT=h('span','ig-frase-testo',I.d.sotto,frase);
-  var comandi=h('div','ig-comandi',null,lato), bP=bottone('ig-b ig-b-play',ICO.pausa,'Pausa',comandi), bI=bottone('ig-b',ICO.prima,'Momento precedente',comandi);
+  /* i comandi (24 novembre 2026, l'utente: «un modo chiaro per andare alla fine o tornare all'inizio»): riproduci, «Inizio», indietro, avanti, «Fine»; il cursore
+     con le tacche dei quadri, che si toccano. «Inizio» fa anche ciò che faceva «Rivedi» */
+  var daAvv=h('button','ig-da',null,lato); daAvv.type='button'; daAvv.hidden=true; lato.insertBefore(daAvv,frase);
+  var comandi=h('div','ig-comandi',null,lato), bP=bottone('ig-b ig-b-play',ICO.pausa,'Pausa',comandi);
+  var bInizio=bottone('ig-b ig-b-testo',ICO.prima+'<span>Inizio</span>','Torna all\'inizio',comandi), bI=bottone('ig-b',ICO.indietro,'Momento precedente',comandi);
   var sc=h('div','ig-scorri',null,comandi), rng=h('input',null,null,sc); rng.type='range'; rng.min=0; rng.max=1000; rng.step=1; rng.value=0; rng.setAttribute('aria-label','Punto dell\'animazione');
-  var tac=h('div','ig-tacche',null,sc); tac.setAttribute('aria-hidden','true');
-  var bA=bottone('ig-b',ICO.dopo,'Momento successivo',comandi), bR=bottone('ig-b',ICO.rivedi,'Rivedi dall\'inizio',comandi);
+  var tac=h('div','ig-tacche',null,sc);
+  var bA=bottone('ig-b',ICO.avanti,'Momento successivo',comandi), bFine=bottone('ig-b ig-b-testo fine','<span>Fine</span>'+ICO.dopo,'Vai alla fine',comandi);
   var fonte=h('p','ig-fonte',null,lato); h('b',null,'Fonti e avvertenze. ',fonte); fonte.appendChild(document.createTextNode(I.d.fonte));
   if(dlg.showModal) dlg.showModal(); else dlg.setAttribute('open','');
   var S=null, W=0, H=0, t=0, vivo=!POCO, prima=0, fraseOra=null;
@@ -3987,7 +3993,8 @@ function apri(chi,tp){
     S={battute:[],dura:1000,passo:function(){},ferma:function(){ if(vivo) ferma(); },strato:function(c,sotto){ var d=h('div','ig-strato '+c); palco.insertBefore(d,sotto?svg:cop); return d; },
       fuori:function(c){ var d=h('div','ig-fuori '+c); lato.insertBefore(d,comandi.nextSibling); return d; }};      // fuori dal palco, nella colonna del testo
     I.disegna(svg,S,W,H); nomiInCima(svg); scansaNomi(svg);
-    tac.textContent=''; S.battute.forEach(function(b){ h('i',null,null,tac).style.left=(b.t/S.dura*100).toFixed(2)+'%'; });
+    tac.textContent=''; S.battute.forEach(function(b,j){ var q=h('button','ig-tacca',null,tac); q.type='button'; q.tabIndex=-1; q.style.left=(b.t/S.dura*100).toFixed(2)+'%'; q.setAttribute('data-et',String(b.anno)); q.setAttribute('aria-label','Vai al quadro '+(j+1)+': '+b.anno);
+      q.addEventListener('click',function(){ vaiA(b.t); }); });      // le tacche si toccano: si salta a quel quadro
   }
   function mostra(){
     S.passo(t); var cv=t>1150; if(cop._v!==cv){ if(!cv){ cop.classList.remove('gira'); void cop.offsetWidth; cop.classList.add('gira'); } cop._v=cv; } cls(cop,'via',cv);
@@ -4004,7 +4011,11 @@ function apri(chi,tp){
   function salta(d){ var bs=S.battute, i=-1; bs.forEach(function(x,j){ if(t>=x.t-1) i=j; }); var j=d>0?i+1:(i>=0&&t-bs[i].t>1500?i:i-1);
     t=j<0?0:j>=bs.length?S.dura:bs[j].t; if(t>=S.dura){ vivo=false; } mostra(); segna(); if(vivo&&!raf){ prima=0; raf=requestAnimationFrame(va); } }
   bP.addEventListener('click',function(){ if(vivo) ferma(); else parti(); });
-  bR.addEventListener('click',function(){ t=0; fraseOra=null; subito(mostra); parti(); });
+  function inizio(){ daAvv.hidden=true; t=0; fraseOra=null; subito(mostra); parti(); }
+  function fineTutto(){ ferma(); t=S.dura; subito(mostra); segna(); }      // l'ultimo quadro, fermo e completo
+  function vaiA(tt){ t=clamp(tt,0,S.dura); if(t<daT) daAvv.hidden=true; subito(mostra); if(t>=S.dura) vivo=false; segna(); if(vivo&&!raf){ prima=0; raf=requestAnimationFrame(va); } }
+  var daT=-1;
+  bInizio.addEventListener('click',inizio); bFine.addEventListener('click',fineTutto); daAvv.addEventListener('click',function(){ inizio(); bP.focus(); });
   bI.addEventListener('click',function(){ salta(-1); }); bA.addEventListener('click',function(){ salta(1); });
   rng.addEventListener('input',function(){ t=rng.value/1000*S.dura; subito(mostra); if(t>=S.dura){ vivo=false; } segna(); });
   bx.addEventListener('click',chiudi); dlg.addEventListener('cancel',function(e){ e.preventDefault(); chiudi(); });
@@ -4012,16 +4023,17 @@ function apri(chi,tp){
   dlg.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'||e.key==='ArrowLeft') e.stopPropagation();      // le frecce non devono cambiare anche la tappa della pagina, dietro la finestra
     if(e.target===rng||e.altKey||e.ctrlKey||e.metaKey) return;
     if(e.key==='ArrowRight'){ e.preventDefault(); salta(1); } else if(e.key==='ArrowLeft'){ e.preventDefault(); salta(-1); }
+    else if(e.key==='Home'&&!e.target.getAttribute('role')){ e.preventDefault(); inizio(); } else if(e.key==='End'&&!e.target.getAttribute('role')){ e.preventDefault(); fineTutto(); }      // Inizio e Fine da tastiera
     else if((e.key===' '||e.key==='k') && e.target.tagName!=='BUTTON'){ e.preventDefault(); if(vivo) ferma(); else parti(); } });
   var rt=0; function suMisura(){ clearTimeout(rt); rt=setTimeout(function(){ if(!dlg) return; var r=palco.getBoundingClientRect(); if(Math.abs(r.width-W)>6||Math.abs(r.height-H)>6) subito(function(){ costruisci(); mostra(); }); },160); }
   var ro=window.ResizeObserver?new ResizeObserver(suMisura):null; if(ro) ro.observe(palco); else window.addEventListener('resize',suMisura);      // anche quando cambia solo il palco (caratteri, barre del telefono)
   sgancia=function(){ if(ro) ro.disconnect(); else window.removeEventListener('resize',suMisura); clearTimeout(rt); try{ if(ritorno&&ritorno.focus) ritorno.focus(); }catch(e){} };
-  ctl={vai:function(f){ ferma(); t=clamp(f,0,1)*S.dura; subito(mostra); segna(); }};
+  ctl={vai:function(f){ ferma(); t=clamp(f,0,1)*S.dura; if(t<daT) daAvv.hidden=true; subito(mostra); segna(); }};
   costruisci();
   if(POCO){ t=S.dura; subito(mostra); comandi.hidden=true; var ul=h('ol','ig-elenco',null,lato); lato.insertBefore(ul,fonte);
     S.battute.forEach(function(b){ var li=h('li',null,null,ul); h('b',null,String(b.anno),li); li.appendChild(document.createTextNode(' '+b.testo)); });
     if(S.fermo) lato.insertBefore(S.fermo(lato),fonte); frase.hidden=true; bx.focus(); }
-  else { var da=I.da&&I.da(tp), bd=da&&S.battute.filter(function(x){ return x.anno===da; })[0]; if(bd) t=Math.max(0,bd.t-300);
+  else { var da=I.da&&I.da(tp), bd=da&&S.battute.filter(function(x){ return x.anno===da; })[0]; if(bd){ t=Math.max(0,bd.t-300); daT=t; daAvv.textContent='Comincia da «'+da+'» · Vedi dall\'inizio'; daAvv.hidden=false; }      // aperta a metà: lo si dice, e un tocco porta all'inizio
     mostra(); bP.focus(); raf=requestAnimationFrame(va); }
 }
 function chiudi(){ if(raf) cancelAnimationFrame(raf); raf=0; ctl=null; scattiTok++; if(dlg){ var d=dlg; dlg=null; try{ d.close(); }catch(e){} d.remove(); if(sgancia){ var s=sgancia; sgancia=null; s(); } } }
