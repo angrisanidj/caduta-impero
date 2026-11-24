@@ -142,6 +142,22 @@ T.forEach(function(t,i){
   var g=gruppi[Math.min(t.atto,gruppi.length-1)]; g.riga.appendChild(b); g.n++; bottoni.push(b);
 });
 gruppi.forEach(function(g){ g.g.style.setProperty('--n',g.n); });
+/* Inizio e fine (24 novembre 2026, l'utente: «un modo chiaro per poter andare alla fine o tornare all'inizio … velocemente»): i due anni ai capi della linea, 235 e 852,
+   diventano bottoni con il segno ⏮ / ⏭ (disegnato, non il carattere: su iPhone diventerebbe un'emoji). Stanno al posto dell'anno che c'era, fuori dal nome dell'atto
+   (che apre la sua scheda, js/atti.js); sul telefono il bersaglio si allarga verso il bordo e verso le prime (o ultime) tacche, che portano comunque lì. Si spengono
+   quando ci si è già. La fine è l'ultima voce della linea, «Che cosa resta» (852), come per ›. Da tastiera: Inizio e Fine col fuoco nella linea del tempo. Stili .capo in fondo a css/stile.css. */
+var SEGNO_CAPO=['<svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 2h1.6v8H2zM10.5 2v8L4.4 6z" fill="currentColor"/></svg>','<svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M10 2h-1.6v8H10zM1.5 2v8L7.6 6z" fill="currentColor"/></svg>'];
+var capi=[0,T.length-1].map(function(k,j){
+  var g=gruppi[j?gruppi.length-1:0].g, b=document.createElement('button'), a=T[k];
+  b.type='button'; b.className='capo '+(j?'capo-fine':'capo-inizio'); b.innerHTML=j?'<span>'+a.anno+'</span>'+SEGNO_CAPO[1]:SEGNO_CAPO[0]+'<span>'+a.anno+'</span>';
+  b.setAttribute('aria-label',(j?'Vai all’ultima tappa, ':'Vai alla prima tappa, ')+a.anno+': '+a.titolo); b.title=j?'Ultima tappa':'Prima tappa';
+  b.addEventListener('click',function(){ ferma(); vai(k); });
+  g.appendChild(b); g.classList.add(j?'ha-fine':'ha-inizio'); return b;
+});
+document.querySelector('.tempo').addEventListener('keydown',function(ev){      // Inizio e Fine solo col fuoco dentro la linea del tempo: altrove (testo, campi, pagina che scorre) i tasti restano loro
+  if(ev.altKey||ev.ctrlKey||ev.metaKey||ev.shiftKey) return;
+  if(ev.key==='Home'||ev.key==='End'){ ev.preventDefault(); ferma(); vai(ev.key==='Home'?0:T.length-1); var c=capi[ev.key==='Home'?1:0]; if(c && document.activeElement && document.activeElement.disabled) c.focus(); }
+});
 /* Il dito (o il mouse) scorre sulla linea: un fumetto dice anno e titolo della tappa che ha sotto, e al rilascio ci si va.
    Sui telefoni le tappe sono larghe pochi punti e non si toccano una per una; i tasti di ogni tappa restano per la tastiera. */
 var fumetto=document.createElement('p'), barra=$('linea'), cassa=barra.parentNode, mira=-1, premuto=false, centri=null;
@@ -158,7 +174,7 @@ function punta(x){
   fumetto.hidden=false; var r=cassa.getBoundingClientRect(), m=fumetto.offsetWidth/2+4; fumetto.style.left=Math.max(m,Math.min(r.width-m,centri[k]-r.left))+'px';
 }
 function smetti(){ if(mira>=0) bottoni[mira].classList.remove('mira'); mira=-1; fumetto.hidden=true; premuto=false; centri=null; }
-barra.addEventListener('pointerdown',function(e){ if(e.button) return; if(e.target.closest && e.target.closest('.atto-gruppo>p')) return;      // il nome dell'atto apre la sua scheda (js/atti.js), non sposta la tappa
+barra.addEventListener('pointerdown',function(e){ if(e.button) return; if(e.target.closest && e.target.closest('.atto-gruppo>p,.capo')) return;      // anche i bottoni di inizio e fine      // il nome dell'atto apre la sua scheda (js/atti.js), non sposta la tappa
   centri=null; premuto=true; punta(e.clientX); });
 barra.addEventListener('pointermove',function(e){ if(!premuto && e.pointerType==='mouse') punta(e.clientX); });
 barra.addEventListener('pointerleave',function(){ if(!premuto) smetti(); });
@@ -199,6 +215,7 @@ function vai(i,subito){
   bottoni.forEach(function(b,k){ b.setAttribute('aria-current',k===idx?'true':'false'); b.classList.toggle('passata',k<idx); });
   gruppi.forEach(function(g,k){ g.g.classList.toggle('attivo',k===Math.min(t.atto,gruppi.length-1)); });
   $('btnPrima').disabled=idx===0; $('btnDopo').disabled=idx===T.length-1;
+  capi[0].disabled=idx===0; capi[1].disabled=idx===T.length-1;
   try{ if(!avvio || !location.hash || /^#(tappa-\d+|\d{3}(-[a-z]+)?)$/.test(location.hash)) history.replaceState(null,'','#'+chiaveTappa(t)); }catch(e){}      // all'apertura un'ancora d'altro tipo (#fonti, #licenze) resta: la apre il piede      // l'indirizzo dice l'anno della tappa (#552; un intermezzo: #476-citta), non il suo numero, che cambia quando se ne aggiunge una
   ascolto.forEach(function(f){ f(idx,t); });
   if(subito) applica();

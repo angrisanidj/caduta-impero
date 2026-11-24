@@ -879,6 +879,31 @@ body.roma-grande .riquadro.roma>.ia-avviso.piccolo{padding-top:calc(78px + env(s
 @media (max-width:1000px){ .comandi .leggi-tappa{flex:none;padding:8px 12px} }
 @media (min-width:1001px){ .comandi .leggi-tappa{min-width:184px} }      /* «Leggi l'intermezzo» è più lungo di «Leggi la tappa»: la stessa larghezza, così le tacche della linea non si spostano */
 body.roma-grande .comandi .leggi-tappa,body.impero-grande .comandi .leggi-tappa{display:none}
+/* Inizio e fine della linea del tempo (js/pagina.js, capi): «⏮ 235» e «852 ⏭» al posto dei due anni ai capi, come pastiglie; spenti quando ci si è già */
+.atto-gruppo.ha-inizio,.atto-gruppo.ha-fine{position:relative}
+.atto-gruppo.ha-inizio p>b:first-child,.atto-gruppo.ha-fine p>b.fine{display:none}
+.atto-gruppo.ha-inizio p>span{display:none}
+.atto-gruppo.ha-inizio p::after{content:"\00a0"}      /* la riga resta alta quanto le altre: senza, le tacche del primo atto salivano */      /* il primo atto è stretto: accanto a «⏮ 235» del nome restava una lettera; la sua scheda si apre da «L'atto in breve» accanto al titolo della tappa */
+.atto-gruppo.ha-inizio p{padding-left:52px}
+.atto-gruppo.ha-fine p{padding-right:52px}
+/* .linea .capo e non .capo: le regole delle tacche (.linea button) varrebbero anche qui */
+.linea .capo{position:absolute;top:-3px;z-index:1;display:inline-flex;flex:none;align-items:center;justify-content:center;gap:4px;width:auto;min-width:0;height:22px;padding:0 7px;margin:0;
+  font-family:var(--ui);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em;color:var(--porpora);background:#FBF6EA;border:1px solid rgba(122,31,43,.4);border-radius:999px;cursor:pointer}
+.linea .capo-inizio{left:0} .linea .capo-fine{right:0}
+.linea .capo:hover:not(:disabled){color:#fff;background:var(--porpora);border-color:var(--porpora)}
+.linea .capo:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.linea .capo:disabled{color:var(--muted);background:transparent;border-color:var(--line);opacity:.75;cursor:default}
+.linea .capo::before{content:"";position:absolute;inset:-6px -4px}      /* bersaglio un po' più grande della pastiglia */
+/* telefono: il primo atto è largo poco più di trenta punti; la pastiglia ci sta stretta e il bersaglio si allarga verso il bordo della linea e in giù, sulle tacche che portano comunque al capo */
+@media (max-width:520px){
+  .atto-gruppo.ha-inizio p{padding-left:36px} .atto-gruppo.ha-fine p{padding-right:42px}
+  .linea .capo{height:20px;padding:0 4px;gap:1px;font-size:11.5px;top:-2px}
+  .linea .capo svg{width:7px;height:7px}
+  .linea .capo-inizio{left:-7px} .linea .capo-fine{right:-7px}      /* sporge nel margine della linea del tempo: così non tocca l'anno dell'atto seguente */
+  .linea .capo-inizio::before{inset:-9px -4px -17px -14px} .linea .capo-fine::before{inset:-9px -14px -17px -4px}
+}
+/* telefono coricato e tutto schermo stretto: la riga degli anni è sottile */
+@media (max-height:559px) and (orientation:landscape){ .linea .capo{height:20px;top:-2px;padding:0 5px;gap:2px} .linea .capo-inizio{left:-6px} .linea .capo-fine{right:-6px} }
 /* «↑ Torna alla carta e alla città»: fluttuante, sempre alla stessa quota; mai a tutto schermo */
 .salta-giu{bottom:14px}
 body.roma-grande .salta-giu,body.impero-grande .salta-giu{display:none}
