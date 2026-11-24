@@ -265,96 +265,132 @@ function disegnaRoma(svg,S,W,H){
 
 /* ======================================================================
    2. Senza soldi non c'è esercito
-   Il mosaico dell'Occidente: un tassello per ogni regione della carta di questa pagina, grande quanto la sua superficie (peso in RM_MAPPA), raggruppato per grandi aree
-   e colorato come la carta, tappa per tappa dal 395 al 476 (CAMBI). Il numero è RM_mappa.territorio: federati e contesi a metà fino al 480. Sui tasselli l'anno della tappa
-   in cui la regione esce dal governo di Roma. La tesi delle entrate perdute con le province è quella di «Perché cadde» (Wickham, Heather): qui non si aggiungono numeri sulle tasse. */
-var TERRE={ titolo:"Senza soldi non c'è esercito", sotto:"La parte dell'Occidente governata da Roma, dal 395 al 476, misurata sulla carta",
-  momenti:[[406,"Vandali, Alani e Svevi passano il Reno: la Gallia sfugge di mano."],[409,"La Britannia si difende da sola; i barbari entrano in Spagna."],[418,"I Visigoti si stabiliscono in Aquitania come alleati."],
-    [429,"I Vandali passano in Africa."],[439,"Cartagine cade: per molti storici è la perdita di entrate più grave."],[455,"I Vandali saccheggiano Roma."],[468,"Fallisce l'ultima spedizione per riprendere l'Africa."],[476,"Odoacre depone Romolo Augustolo."]],
-  fonte:"Percentuale misurata sulla carta di questa pagina: le regioni dei federati e quelle contese contano per metà. Ogni tassello è una regione della carta, grande quanto la sua superficie; i colori sono quelli della carta, l'anno è la tappa in cui la regione esce dal governo di Roma. Meno terre voleva dire meno tasse per pagare l'esercito: è la tesi di Wickham e di Heather, che trovi in «Perché cadde l'Occidente?»." };
+   Rifatta il 24 novembre 2026 (l'utente, per la seconda volta: «non è ancora ben chiaro il collegamento tra i soldi e l'esercito che perde controllo del terreno»;
+   il 23: «legenda cliccabile e interattiva»). Non mostra più solo il territorio che cala: mostra il giro che la tesi afferma, terra → tasse → paga → soldati → altra terra,
+   e lo fa ripartire a ogni perdita. Nessun numero nuovo: l'unica cifra è la quota dell'Occidente governata da Roma, misurata sulla carta (RM_mappa.territorio, federati
+   e contese a metà fino al 480). Le parole degli anelli vengono dalla pagina:
+   - tesi di Wickham in js/cause.js («Come pagava Roma i soldati e la corte? Soprattutto con le imposte sulle terre», «la principale singola struttura» dello Stato; «per molti
+     storici la perdita di entrate più grave risale al 439»); tesi di Heather (2005, p. 435: chi si insedia nelle province toglie al governo d'Occidente le tasse dei loro
+     abitanti); obiezione a Bury in js/cause.js («Heather e Ward-Perkins sottolineano che perdere una provincia significava perdere anche le imposte dei suoi abitanti. Con meno
+     entrate diventava più difficile pagare i soldati necessari a difendere le province rimaste»);
+   - intermezzo «L'esercito» in js/dati.js (la spesa maggiore dello Stato è l'esercito; le province danno reclute o l'equivalente in oro; nel V secolo combattono sempre più
+     gruppi alleati per trattato; Procopio V 1: nel 476 chiedono un terzo delle terre d'Italia, Oreste rifiuta ed è ucciso, Odoacre accetta);
+   - tappe del 406, 409, 418 (federati in Aquitania: terre o una parte delle imposte, gli storici discutono), 439 (Cartagine, le province più ricche, il grano), 468 (l'ultima
+     flotta: Costantinopoli sostiene quasi tutta la spesa);
+   - le due cautele del finale: Bury (una serie di eventi contingenti) e Jones (gli stessi mali nell'Oriente, che sopravvisse), in js/cause.js.
+   Non letto, quindi non usato: le Novelle di Valentiniano III sulla cassa vuota (si cercavano il 24 novembre 2026, il testo non si è trovato in rete). Il giro è uno schema:
+   quanto calassero tasse, paga e soldati, giro per giro, le fonti non lo dicono, e il disegno non lo misura. */
+var TERRE={ titolo:"Senza soldi non c'è esercito", sotto:"Terre, tasse, paga, soldati: il giro che, secondo molti storici, svuota l'Occidente fra il 395 e il 476",
+  fasi:[["Il giro","Lo Stato romano paga i soldati soprattutto con le imposte sulle terre. Meno terre, meno imposte; meno imposte, meno paga; meno paga, meno soldati; meno soldati, altre terre perse. È la tesi di Wickham, di Heather e di Ward-Perkins."],
+    ["406-409","Vandali, Alani e Svevi passano il Reno. Le truppe della Britannia seguono in Gallia l'usurpatore Costantino III e l'isola resta sola. Le terre perse non pagano più le imposte a Roma."],
+    ["418","I Visigoti si stabiliscono in Aquitania come federati: alleati tenuti a combattere per Roma. Gli storici discutono se in cambio abbiano ricevuto terre o una parte delle imposte della regione."],
+    ["439","I Vandali prendono Cartagine. Per molti storici è la perdita di entrate più grave: le province più ricche, il loro grano e le loro tasse."],
+    ["468","L'ultima flotta per riprendere l'Africa: Costantinopoli ne sostiene quasi tutta la spesa. Fallisce davanti a Capo Bon."],
+    ["476","I soldati alleati in Italia chiedono un terzo delle terre, secondo Procopio. Oreste rifiuta ed è ucciso; Odoacre accetta. Al posto della paga, la terra."],
+    ["È una tesi","Non tutti la leggono così. Per Bury la fine fu una serie di eventi, ognuno dei quali poteva andare diversamente. Per Jones gli stessi mali c'erano in Oriente, che sopravvisse."]],
+  fonte:"Tesi di Wickham, Heather e Ward-Perkins come le riassume «Perché cadde l'Occidente?» in questa pagina; intermezzo «L'esercito» (con Procopio, Guerre V 1) e tappe del 406, 409, 418, 439, 468 e 476. L'unico numero è la quota dell'Occidente governata da Roma, misurata sulla carta di questa pagina: le regioni dei federati e quelle contese contano per metà. Il giro è uno schema: di quanto calassero tasse, paga e soldati, giro per giro, le fonti non lo dicono e il disegno non lo misura. Tocca un anello del giro per leggerne la spiegazione, una voce della legenda per accendere le sue regioni." };
 var GRUPPI=[['Britannia',['britannia','galles']],['Gallie',['gallia','bretagna','belgica','soissons','aquitania','alvernia','provenza','settimania','burgundia','sapaudia']],
   ['Hispania',['hispania','baleari','gallaecia','asturie','marca','spania']],
   ['Italia e isole|Italia',['italia_nord','liguria','venezia','ravenna','bolognese','spoleto','pentapoli','roma','campania','napoli','benevento','salento','otranto','calabria','bruzio','sicilia','sardegna','corsica']],
   ['Alpi e Danubio|Danubio',['rezia','carantania','pannonia','dalmazia','decumati']],['Africa',['africa','numidia','mauri','mauretania']]];
+/* i quattro anelli del giro: nome, sottotitolo, la frase che porta all'anello seguente, la spiegazione (con la sua fonte) che si legge toccandolo */
+var ANELLI=[{k:'terra',n:'TERRA',s:'le province',freccia:'meno terre, meno imposte',
+    sp:"Le terre dell'Occidente governate da Roma. La quota è misurata sulla carta di questa pagina: le regioni dei federati e quelle contese contano per metà, fino al 480.",f:'misura della carta di questa pagina'},
+  {k:'tasse',n:'TASSE',s:'sulla terra',freccia:'meno imposte, meno paga',
+    sp:"Roma pagava soldati e corte soprattutto con le imposte sulle terre: per Wickham «la principale singola struttura» dello Stato. Chi perde una provincia perde le imposte dei suoi abitanti.",f:'Wickham 2005; Heather 2005, p. 435'},
+  {k:'paga',n:'PAGA',s:'dei soldati',freccia:'meno paga, meno soldati',
+    sp:"La spesa maggiore dello Stato romano è l'esercito. Ogni anno le province devono dare reclute o versare l'equivalente in oro.",f:"intermezzo «L'esercito»"},
+  {k:'soldati',n:'SOLDATI',s:'e federati',freccia:'meno soldati, altre terre perse',
+    sp:"Con meno entrate diventa più difficile pagare i soldati che difendono le province rimaste. Nel V secolo combattono sempre più alleati per trattato, compensati anche con terre.",f:"Heather e Ward-Perkins; intermezzo «L'esercito»"}];
+var GIRI=[{anno:409,nodo:0,tit:'Il Reno e la Britannia',riga:'le terre perse non pagano più le imposte a Roma',f:'tappe del 406 e del 409'},
+  {anno:418,nodo:3,tit:'I Visigoti federati',riga:'alleati in Aquitania: in cambio terre o imposte, si discute',f:'tappa del 418'},
+  {anno:439,nodo:1,tit:'Cartagine',riga:'per molti storici la perdita di entrate più grave',f:'tappa del 439; Wickham'},
+  {anno:468,nodo:2,tit:"L'ultima flotta",riga:'Costantinopoli ne paga quasi tutta la spesa',f:'tappa del 468'},
+  {anno:476,nodo:3,tit:'Un terzo delle terre',riga:'i soldati alleati chiedono terre, Odoacre accetta',f:'Procopio V 1'}];
 function disegnaTerre(svg,S,W,H){
   var M=window.RM_mappa, G=window.RM_MAPPA; if(!M||!M.territorio||!G) return;
-  var T=(D.TAPPE||[]).filter(function(t){ return t.regioni && !t.intermezzo && t.anno>=395 && t.anno<=476; });
-  var P=T.map(function(t){ return {anno:t.anno,stati:t.regioni,v:M.territorio(t.regioni,t.anno)}; }), ultimo=P.length-1;
-  var colori={}; (M.vociPresenti?M.vociPresenti(P.map(function(p){ return p.stati; }),476):[]).forEach(function(v){ colori[v[2]]=v[0]; });
+  var TP=(D.TAPPE||[]).filter(function(t){ return t.regioni && !t.intermezzo && t.anno>=395 && t.anno<=476; }); if(!TP.length) return;
+  function tappaA(a){ var s=TP[0]; TP.forEach(function(t){ if(t.anno<=a) s=t; }); return s; }
+  var P=[{anno:395,stati:TP[0].regioni,v:M.territorio(TP[0].regioni,TP[0].anno)}].concat(GIRI.map(function(g){ var t=tappaA(g.anno); return {anno:g.anno,stati:t.regioni,v:M.territorio(t.regioni,t.anno)}; }));
   var ovest=Object.keys(G.regioni).filter(function(id){ return !G.regioni[id].est && !G.regioni[id].oltre; }), messi={};
+  var colori={}; (M.vociPresenti?M.vociPresenti(P.map(function(p){ return p.stati; }),476):[]).forEach(function(v){ colori[v[2]]=v[0]; });
+  var oriz=W/H>=1.15, pad=oriz?16:10, defs=el('defs',null,svg), i;
+  /* le misure: il giro a sinistra (sul telefono in piedi in alto), il numero e il mosaico a destra (sotto) */
+  var gb, xR, wR;
+  if(oriz){ var lato=Math.min(H-2*pad,W*.5); gb=[pad,pad,lato,H-2*pad]; xR=pad+lato+22; wR=W-xR-pad; }
+  else { gb=[pad,pad,W-2*pad,Math.min(W-2*pad,H*.62)]; xR=pad; wR=W-2*pad; }
+  var did=30, cx=gb[0]+gb[2]/2, cy=gb[1]+(gb[3]-did)/2, mn=Math.min(gb[2],gb[3]-did), rn=clamp(mn*.13,25,46), R=mn/2-rn-6, A=[-90,0,90,180];
+  function polare(a,r){ var q=a*Math.PI/180; return [cx+Math.cos(q)*r, cy+Math.sin(q)*r]; }
+  /* il giro: il cerchio di fondo, i quattro archi con la punta, i quattro anelli */
+  var gG=el('g',{'class':'ig-tr-giro'},svg);
+  el('circle',{cx:r1(cx),cy:r1(cy),r:r1(R),'class':'ig-tr-orbita'},gG);
+  var da=Math.asin(Math.min(.95,(rn+6)/R))*180/Math.PI, archi=A.map(function(a,j){ var a1=a+da, a2=A[(j+1)%4]+(j===3?360:0)-da-2, p1=polare(a1,R), p2=polare(a2,R), g=el('g',{'class':'ig-tr-arco'},gG);
+    var p=el('path',{d:'M'+xy(p1)+' A'+r1(R)+' '+r1(R)+' 0 0 1 '+xy(p2)},g), tg=a2+90;
+    el('path',{d:'M3 0 L-8 -5.5 L-5.5 0 L-8 5.5 Z',transform:'translate('+xy(polare(a2+1,R))+') rotate('+r1(tg)+')','class':'ig-tr-punta'},g); return g; });
+  var palla=el('circle',{r:r1(clamp(rn*.17,5,8)),'class':'ig-tr-palla'},gG);      // sotto gli anelli: passa dietro le parole
+  var nodi=ANELLI.map(function(an,j){ var q=polare(A[j],R), g=el('g',{'class':'ig-tr-nodo '+an.k,transform:'translate('+xy(q)+')',tabindex:0,role:'button','aria-label':an.n.toLowerCase()+', '+an.s+': spiegazione'},gG);
+    el('circle',{r:r1(rn),'class':'ig-tr-nodo-c'},g); var t1=tx(g,0,rn>32?-1:2,'ig-tr-nodo-n',an.n,'middle'); t1.style.fontSize=r1(clamp(rn*.34,10.5,15))+'px';
+    if(rn>30){ var t2=tx(g,0,rn*.36,'ig-tr-nodo-s',an.s,'middle'); t2.style.fontSize=r1(clamp(rn*.24,9.5,12))+'px'; }
+    return g; });
+  /* al centro: il giro in corso */
+  var wc=2*(R-rn)-18, gC=el('g',{'class':'ig-tr-centro'},gG), cA=tx(gC,cx,cy-8,'ig-tr-c-anno','','middle'), cT=tx(gC,cx,cy+12,'ig-tr-c-tit','','middle'), cR=el('text',{x:r1(cx),y:r1(cy+30),'class':'ig-tr-c-riga','text-anchor':'middle'},gC), cF=tx(gC,cx,cy+60,'ig-tr-c-fonte','','middle');
+  cA.style.fontSize=r1(clamp(wc/4.6,22,40))+'px';
+  var cap=tx(gG,cx,gb[1]+gb[3]-8,'ig-tr-frase','','middle');
+  function centro(anno,tit,riga,fonte){ var fa=parseFloat(cA.style.fontSize); scrivi(cA,anno); cT.textContent=''; var nt=tit?avvolgi(cT,tit,wc,13):0; cR.textContent=''; var nr=riga?avvolgi(cR,riga,wc,14):0; scrivi(cF,fonte||'');
+    var hTot=fa*.8+(nt?6+nt*13:0)+(nr?6+nr*14:0)+(fonte?18:0), y=cy-hTot/2+fa*.8; cA.setAttribute('y',r1(y)); y+=nt?6+13:0; cT.setAttribute('y',r1(y)); [].forEach.call(cT.childNodes,function(c){ c.setAttribute('x',r1(cx)); });
+    var yy=y; [].forEach.call(cT.childNodes,function(c,ii){ if(ii) yy+=13; }); y=yy+(nr?6+14:0); cR.setAttribute('y',r1(y)); [].forEach.call(cR.childNodes,function(c){ c.setAttribute('x',r1(cx)); }); yy=y; [].forEach.call(cR.childNodes,function(c,ii){ if(ii) yy+=14; }); cF.setAttribute('y',r1(yy+18)); }
+  /* a destra (sotto): la quota misurata e il mosaico delle regioni */
+  var gK=el('g',{'class':'ig-conta'},svg), fsN=oriz?Math.min(60,wR/4.2,H*.16):Math.min(38,W/9), yK=oriz?pad+14:gb[1]+gb[3]+16;
+  var kA=tx(gK,xR,yK,'ig-k-anno','OCCIDENTE · 395'), kN=tx(gK,xR,yK+6+fsN*.86,'ig-k-num',''), kL=el('text',{x:r1(xR+(oriz?0:fsN*2.5)),y:r1(oriz?yK+fsN*.86+26:yK+fsN*.5),'class':'ig-k-lab'},gK); kN.style.fontSize=fsN+'px';
+  avvolgi(kL,'governato da Roma, misurato sulla carta',oriz?wR:wR-fsN*2.5,16);
+  var legIn=oriz&&H>=450, legH=legIn?58:0, tb=oriz?[xR,yK+fsN*.86+(kL.childNodes.length>1?56:40),wR,0]:[xR,yK+fsN*.86+16,wR,0]; tb[3]=Math.max(40,H-pad-legH-tb[1]);
   var gruppi=GRUPPI.map(function(g){ var ids=g[1].filter(function(id){ return ovest.indexOf(id)>=0; }); ids.forEach(function(id){ messi[id]=1; }); return {nome:g[0],ids:ids}; });
   var altri=ovest.filter(function(id){ return !messi[id]; }); if(altri.length) gruppi.push({nome:'Altre',ids:altri});
   gruppi.forEach(function(g){ g.v=0; g.ids.forEach(function(id){ g.v+=G.regioni[id].peso; }); }); gruppi=gruppi.filter(function(g){ return g.v>0; }).sort(function(a,b){ return b.v-a.v; });
-  var oriz=W/H>=1.15, pad=14, tb, kb, sb, lb, fsN;
-  /* quanto spazio vuole la legenda, sotto il mosaico: si stima la tappa con più voci */
-  function vociOvest(p){ var ci={}; ovest.forEach(function(id){ ci[p.stati[id]||'perso']=1; }); return (M.vociPresenti?M.vociPresenti([p.stati],p.anno):[]).filter(function(v){ return ci[v[2]]; }); }
-  var legH=0, prova=S.strato('ig-legenda in-riga vis'); prova.style.cssText='left:0;top:0;visibility:hidden;width:'+(W-2*pad)+'px';      // si misura davvero la legenda più lunga
-  P.forEach(function(p){ prova.textContent=''; vociOvest(p).forEach(function(v){ var c=h('span','ig-chip',null,prova); h('i',null,null,c); h('span',null,v[1],c); }); legH=Math.max(legH,prova.offsetHeight+10); }); prova.remove();
-  if(oriz){ var tw=Math.round(W*(W>800?0.6:0.56)); tb=[pad,pad,tw-pad,H-2*pad-legH]; var x0=tw+24; kb=[x0,pad,W-x0-pad]; fsN=Math.min(66,kb[2]/3.4,H*0.17);
-    var st=pad+20+fsN*.84+24+17+22; sb=[x0,st+8,W-x0-pad,Math.max(40,H-pad-legH-(st+8)-26)]; }
-  else { fsN=Math.min(44,W/8); kb=[pad,6,W-2*pad]; sb=[W*0.56,6,W*0.44-pad,24]; tb=[pad,76,W-2*pad,H-76-legH-4]; }
-  lb=[pad,H-legH+2,W-2*pad,legH-4];
-  var defs=el('defs',null,svg), pt=el('pattern',{id:'ig-trama',width:7,height:7,patternUnits:'userSpaceOnUse',patternTransform:'rotate(40)'},defs);
-  el('rect',{width:7,height:7,fill:'#DCD0B8'},pt); el('rect',{width:3.2,height:7,fill:'#9A2F2A'},pt);
-  /* il mosaico */
+  var pt=el('pattern',{id:'ig-trama',width:7,height:7,patternUnits:'userSpaceOnUse',patternTransform:'rotate(40)'},defs); el('rect',{width:7,height:7,fill:'#DCD0B8'},pt); el('rect',{width:3.2,height:7,fill:'#9A2F2A'},pt);
   squarify(gruppi,tb[0],tb[1],tb[2],tb[3]);
-  var gt=el('g',{'class':'ig-mosaico'},svg), gl=el('g',{'class':'ig-luci'},svg), gx=el('g',{'class':'ig-mosaico-testi'},svg), tessere=[], ord=0;
-  gruppi.forEach(function(gr){
-    var r=gr.r, x=r[0]+2, y=r[1]+2, w=r[2]-4, hh=r[3]-4;
-    var voci=gr.ids.map(function(id){ return {id:id,v:G.regioni[id].peso}; }).sort(function(a,b){ return b.v-a.v; });
+  var gt=el('g',{'class':'ig-mosaico'},svg), gx=el('g',{'class':'ig-mosaico-testi'},svg), tessere=[];
+  gruppi.forEach(function(gr){ var r=gr.r, x=r[0]+2, y=r[1]+2, w=r[2]-4, hh=r[3]-4, voci=gr.ids.map(function(id){ return {id:id,v:G.regioni[id].peso}; }).sort(function(a,b){ return b.v-a.v; });
     squarify(voci,x,y,w,hh);
-    var gn=null, gb2=null;
-    if(w>56 && hh>26){ var nomi=gr.nome.split('|'); for(var z=0;z<nomi.length && !gn;z++){ gn=tx(gx,x+7,y+16,'ig-gr-nome',nomi[z].toUpperCase()); if(largo(gn)>w-12){ gn.remove(); gn=null; } } if(gn) gb2=[x,y,x+12+largo(gn),y+22]; }
-    voci.forEach(function(it,j){ var q=it.r, at={x:r1(q[0]+.7),y:r1(q[1]+.7),width:r1(Math.max(0,q[2]-1.4)),height:r1(Math.max(0,q[3]-1.4))};
-      var rect=el('rect',at,gt); rect.setAttribute('class','ig-tes'); rect.style.transitionDelay=(j*40)+'ms, '+(j*40)+'ms, 0ms, 0ms';
-      at['class']='ig-tes-luce'; var luce=el('rect',at,gl);
-      var j0=-1, cambi=[]; for(var p=1;p<P.length;p++){ var a=P[p-1].stati[it.id]||'perso', b=P[p].stati[it.id]||'perso'; if(a!==b) cambi.push(p); if(j0<0 && a==='roma' && b!=='roma') j0=p; }
-      var nome=null, anno=null;
-      if(q[2]>=(oriz?80:66) && q[3]>=30){ nome=tx(gx,q[0]+7,q[1]+q[3]-8,'ig-tes-nome',G.regioni[it.id].nome); if(largo(nome)>q[2]-14){ nome.remove(); nome=null; } }
-      var sopraNome=gb2 && q[0]+q[2]-40<gb2[2] && q[1]<gb2[3];
-      if(j0>0 && q[2]>=32 && q[3]>=19 && !sopraNome) anno=tx(gx,q[0]+q[2]-5,q[1]+14,'ig-tes-anno',String(P[j0].anno),'end');
-      tessere.push({id:it.id,rect:rect,luce:luce,nome:nome,anno:anno,j0:j0,cambi:cambi,ord:ord++,st:null,vis:null}); });
-  });
-  /* il contatore */
-  var gk=el('g',{'class':'ig-conta'},svg), tA, tN, tL;
-  if(oriz){ tA=tx(gk,kb[0],kb[1]+14,'ig-k-anno',''); tN=tx(gk,kb[0],kb[1]+20+fsN*.84,'ig-k-num',''); tL=el('text',{x:kb[0],y:kb[1]+20+fsN*.84+24,'class':'ig-k-lab'},gk); }
-  else { tA=tx(gk,kb[0],kb[1]+13,'ig-k-anno',''); tN=tx(gk,kb[0],kb[1]+16+fsN*.9,'ig-k-num',''); tL=el('text',{x:kb[0],y:kb[1]+16+fsN*.9+16,'class':'ig-k-lab'},gk); }
-  tN.style.fontSize=fsN+'px';
-  function etichetta(fine){ tL.textContent=''; var s=fine?"dell'Occidente nel 476 · era il "+Math.round(P[0].v)+'% nel 395':"dell'Occidente governato da Roma";
-    if(!oriz){ var n=avvolgi(tL,fine?'nel 476 · era il '+Math.round(P[0].v)+'% nel 395':'governato da Roma',W-pad-(kb[0]+fsN*2.3+10),16); tL.setAttribute('y',r1(kb[1]+16+fsN*.9-4-(n-1)*16)); [].forEach.call(tL.childNodes,function(q){ q.setAttribute('x',tL.getAttribute('x')); }); return; }
-    avvolgi(tL,s,kb[2],17); }
-  if(!oriz) tL.setAttribute('x',r1(kb[0]+fsN*2.3+10));
-  etichetta(false);
-  /* la curva a gradini */
-  var gs=el('g',{'class':'ig-spia'},svg), sx=function(a){ return sb[0]+(a-395)/(476-395)*sb[2]; }, sy=function(v){ return sb[1]+(1-v/100)*sb[3]; };
-  (oriz?[0,50,100]:[0,100]).forEach(function(v){ el('line',{x1:sb[0],x2:sb[0]+sb[2],y1:r1(sy(v)),y2:r1(sy(v)),'class':v?'ig-griglia':'ig-base'},gs); if(oriz&&v) tx(gs,sb[0],sy(v)-4,'ig-asse',v+'%'); });
-  if(oriz){ [395,439,476].forEach(function(a,i){ tx(gs,sx(a),sb[1]+sb[3]+15,'ig-asse',String(a),i?i===2?'end':'middle':'start'); }); }
-  var d='M'+r1(sx(P[0].anno))+' '+r1(sy(P[0].v)); for(var i=1;i<P.length;i++) d+=' H'+r1(sx(P[i].anno))+' V'+r1(sy(P[i].v));
-  var cid=el('clipPath',{id:'ig-rv2'},defs), cR=el('rect',{x:sb[0]-4,y:sb[1]-10,width:0,height:sb[3]+20},cid);
-  var gsd=el('g',{'clip-path':'url(#ig-rv2)'},gs); el('path',{d:d+' V'+r1(sy(0))+' H'+r1(sx(395))+' Z','class':'ig-fascia'},gsd); el('path',{d:d,'class':'ig-linea sottile'},gsd);
-  var cur=el('circle',{r:4.5,'class':'ig-cur-punto vis'},gs);
-  /* la legenda, in HTML perché vada a capo */
-  var leg=S.strato('ig-legenda in-riga'); leg.style.left=lb[0]+'px'; leg.style.top=lb[1]+'px'; leg.style.width=lb[2]+'px'; leg.style.maxHeight=lb[3]+'px';
-  function legenda(j){ leg.textContent=''; vociOvest(P[j]).forEach(function(v){ var c=h('span','ig-chip',null,leg); h('i',null,null,c).style.background=v[0]; h('span',null,v[1],c); }); }
-  /* la regia */
-  var mom={}; TERRE.momenti.forEach(function(m){ mom[m[0]]=m[1]; });
-  var T0=1250, tm=Tempo(395,P.slice(1).map(function(p){ return {anno:p.anno,sosta:mom[p.anno]?2300:520}; }),{inizio:2800,vel:20,min:450});
-  function arrivo(j){ return j?tm.arrivi[j-1]:T0; }
-  var tFin=tm.arrivi[ultimo-1]+2300, visto=-1, finVisto=null;
+    if(w>56&&hh>24){ var nomi=gr.nome.split('|'), gn=null; for(var z=0;z<nomi.length&&!gn;z++){ gn=tx(gx,x+6,y+15,'ig-gr-nome',nomi[z].toUpperCase()); if(largo(gn)>w-10){ gn.remove(); gn=null; } } }
+    voci.forEach(function(it,j){ var q=it.r, rect=el('rect',{x:r1(q[0]+.7),y:r1(q[1]+.7),width:r1(Math.max(0,q[2]-1.4)),height:r1(Math.max(0,q[3]-1.4)),'class':'ig-tes'},gt); tessere.push({id:it.id,rect:rect,st:null}); }); });
+  /* la legenda degli stati: si tocca, e accende le regioni di quel colore */
+  var leg=legIn?S.strato('ig-legenda in-riga ig-tr-leg'):S.fuori('ig-legenda ig-tr-leg'), fuoco=null;      // sul telefono, anche coricato, la legenda sta nella colonna del testo
+  if(legIn){ leg.style.left=xR+'px'; leg.style.top=(H-pad-legH+6)+'px'; leg.style.width=wR+'px'; leg.style.maxHeight=(legH-4)+'px'; }
+  leg.setAttribute('role','group'); leg.setAttribute('aria-label','Legenda: tocca un colore per accendere le sue regioni');
+  function voci(j){ var ci={}; ovest.forEach(function(id){ ci[P[j].stati[id]||'perso']=1; }); return (M.vociPresenti?M.vociPresenti([P[j].stati],P[j].anno):[]).filter(function(v){ return ci[v[2]]; }); }
+  function accendi(){ tessere.forEach(function(q){ var s=q.st||'perso'; cls(q.rect,'spento',!!fuoco&&s!==fuoco); cls(q.rect,'acceso',!!fuoco&&s===fuoco); }); [].forEach.call(leg.children,function(b){ b.setAttribute('aria-pressed',b._st===fuoco?'true':'false'); }); }
+  function legenda(j){ leg.textContent=''; var vs=voci(j); if(fuoco&&!vs.some(function(v){ return v[2]===fuoco; })) fuoco=null;
+    vs.forEach(function(v){ var b=h('button','ig-chip ig-chip-b',null,leg); b.type='button'; b._st=v[2]; h('i',null,null,b).style.background=v[0]; h('span',null,v[1],b);
+      b.addEventListener('click',function(){ fuoco=fuoco===v[2]?null:v[2]; accendi(); }); }); accendi(); }
+  /* la spiegazione di un anello, toccandolo: nella colonna del testo; l'animazione si ferma */
+  var sch=S.fuori('ig-tr-scheda'), schOra=-1; sch.setAttribute('aria-live','polite'); sch.hidden=true;
+  function scheda(j){ schOra=schOra===j?-1:j; nodi.forEach(function(g,ii){ cls(g,'scelto',ii===schOra); g.setAttribute('aria-pressed',ii===schOra?'true':'false'); }); sch.textContent=''; sch.hidden=schOra<0; if(schOra<0) return;
+    var an=ANELLI[j]; h('b',null,an.n.charAt(0)+an.n.slice(1).toLowerCase()+' · '+an.s,sch); h('p',null,an.sp,sch); h('span','ig-tr-scheda-f',an.f,sch); }
+  nodi.forEach(function(g,j){ g.addEventListener('click',function(){ if(S.ferma) S.ferma(); scheda(j); });
+    g.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); e.stopPropagation(); if(S.ferma) S.ferma(); scheda(j); } }); });
+  /* la regia: un primo giro che disegna la catena, poi un giro per ogni perdita, che parte dall'anello in cui la perdita cade */
+  var T0=1400, PA=1150, TR=T0+4*PA+700, DR=5400, TF=TR+GIRI.length*DR, visto=-2;
+  function giroDi(t){ return t<TR?-1:Math.min(GIRI.length-1,Math.floor((t-TR)/DR)); }
   S.passo=function(t){
-    var j=0; for(var i=1;i<P.length;i++) if(t>=tm.arrivi[i-1]) j=i;
-    var a=tm.anno(t), v=j?lerp(P[j-1].v,P[j].v,E.out(fase(t,arrivo(j),arrivo(j)+850))):P[0].v*E.out(fase(t,T0+100,T0+1500));
-    cls(gk,'vis',t>=T0); scrivi(tA,'OCCIDENTE · '+Math.round(a)); scrivi(tN,Math.round(v)+'%');
-    if(j!==visto){ visto=j; legenda(j); }
-    var fine=t>=tFin; if(fine!==finVisto){ finVisto=fine; etichetta(fine); }
-    tessere.forEach(function(q){ var st=P[j].stati[q.id]||'perso', base=st.indexOf('regno:')===0?'regno':st, vis=t>=T0+80+q.ord*16;
-      if(q.st!==st||q.vis!==vis){ q.st=st; q.vis=vis; q.rect.setAttribute('class','ig-tes '+base+(vis?' vis':'')); q.rect.style.color=st.indexOf('regno:')===0&&colori[st]?colori[st]:''; }
-      cls(q.luce,'vis',q.cambi.indexOf(j)>=0 && t<arrivo(j)+1900); if(q.anno) cls(q.anno,'vis',q.j0<=j && vis); if(q.nome) cls(q.nome,'vis',vis); });
-    cls(gx,'vis',t>=T0+700); cls(gs,'vis',t>=T0+500); cls(leg,'vis',t>=T0+900);
-    fissa(cR,'width',r1(Math.max(0,sx(a)-sb[0]+5))); fissa(cur,'cx',r1(sx(a))); fissa(cur,'cy',r1(sy(P[j].v)));
+    var g=t>=TF?GIRI.length:giroDi(t), j=g<0?0:Math.min(g+1,P.length-1), ang, attivo=-1, fatti=4;
+    if(t<TR){ var f=clamp((t-T0)/(4*PA),0,1); ang=A[0]+360*f; attivo=t<T0?-1:Math.min(3,Math.floor(f*4)); fatti=Math.max(0,attivo); }
+    else if(g<GIRI.length){ var t0=TR+g*DR+900, f2=clamp((t-t0)/(4*1050),0,1), n0=GIRI[g].nodo; ang=A[n0]+360*f2; attivo=t<t0?-1:(n0+Math.min(3,Math.floor(f2*4)))%4; }
+    else ang=A[0];
+    var p=polare(ang,R); fissa(palla,'cx',r1(p[0])); fissa(palla,'cy',r1(p[1])); cls(palla,'vis',t>=T0&&t<TF+400);
+    archi.forEach(function(a,ii){ cls(a,'vis',t>=TR||ii<fatti||ii===attivo); cls(a,'attivo',ii===attivo); });
+    nodi.forEach(function(n,ii){ cls(n,'vis',t>=T0-600+ii*150); cls(n,'evento',g>=0&&g<GIRI.length&&GIRI[g].nodo===ii); });
+    scrivi(cap,attivo>=0?ANELLI[attivo].freccia:t>=TF?'il giro, secondo Wickham, Heather e Ward-Perkins':'');
+    if(g!==visto){ visto=g; if(g<0) centro('395','Il giro','',''); else if(g<GIRI.length) centro(String(GIRI[g].anno),GIRI[g].tit,GIRI[g].riga,GIRI[g].f); else centro('476','È una tesi','non tutti la leggono così','«Perché cadde l\'Occidente?»'); legenda(j); }
+    cls(gG,'vis',t>=T0-900); cls(gC,'vis',t>=T0-400);
+    /* la quota: scende all'inizio di ogni giro */
+    var v=j===0?P[0].v*E.out(fase(t,T0,T0+1600)):lerp(P[j-1].v,P[j].v,E.out(fase(t,TR+(j-1)*DR,TR+(j-1)*DR+900)));
+    scrivi(kA,'OCCIDENTE · '+P[j].anno); scrivi(kN,Math.round(v)+'%'); cls(gK,'vis',t>=T0);
+    tessere.forEach(function(q){ var st=P[j].stati[q.id]||'perso', base=st.indexOf('regno:')===0?'regno':st; if(q.st!==st){ q.st=st; q.rect.setAttribute('class','ig-tes vis '+base); q.rect.style.color=st.indexOf('regno:')===0&&colori[st]?colori[st]:''; } });
+    if(fuoco) accendi(); cls(gt,'vis',t>=T0+300); cls(gx,'vis',t>=T0+600); cls(leg,'vis',t>=T0+600);
   };
-  S.dura=tFin+4200;
-  S.battute=TERRE.momenti.map(function(m){ var j=0; P.forEach(function(p,i){ if(p.anno===m[0]) j=i; }); return {t:arrivo(j),anno:m[0],testo:m[1]}; });
+  S.dura=TF+5200;
+  S.battute=TERRE.fasi.map(function(f,ii){ return {t:ii===0?T0:ii<=GIRI.length?TR+(ii-1)*DR:TF,anno:f[0],testo:f[1]}; });
 }
 
 /* ======================================================================
@@ -844,13 +880,13 @@ function disegnaValeriano(svg,S,W,H){
   var sopra=el('g',null,svg);
   function punto(p,nome,dx,dy,an){ var q=B(p), g=el('g',{'class':'ig-v-luogo',transform:'translate('+xy(q)+')'},sopra); el('circle',{r:4.2,'class':'ig-v-punto'},g);
     tx(g,dx,dy,'ig-v-nome',nome,an||'start'); return g; }
-  var pA=punto(AN,'Antiochia',-8,18,'end'), pE=punto(ED,'Edessa',-14,-14,'end'), pC=punto(CA,'Carre',15,-14,'start'), pN=NI?punto(NI,'Nisibi',8,-8,'start'):null;      // i nomi stanno fuori dagli anelli dell'assedio (24 novembre 2026)
+  var pA=punto(AN,'Antiochia',-8,18,'end'), pE=punto(ED,'Edessa',-14,-14,'end'), pC=punto(CA,'Carre',11,-14,'start'), pN=NI?punto(NI,'Nisibi',8,-8,'start'):null;      // i nomi stanno fuori dagli anelli dell'assedio (24 novembre 2026)
   var est=B([V[0]+V[2]-4,CA[1]+18]);
   /* frecce: si tracciano con stroke-dashoffset */
-  function freccia(pts,cl){ var g=el('g',{'class':'ig-v-freccia '+cl},sopra), q=pts.map(B), d='M'+q.map(xy).join(' L'), p=el('path',{d:d,'class':'ig-v-linea'},g), l=p.getTotalLength?p.getTotalLength():300;
+  function freccia(pts,cl,curva){ var g=el('g',{'class':'ig-v-freccia '+cl},sopra), q=pts.map(B), d=curva?curvaPezzi(q).join(' '):'M'+q.map(xy).join(' L'), p=el('path',{d:d,'class':'ig-v-linea'},g), l=p.getTotalLength?p.getTotalLength():300;
     p.style.strokeDasharray=l+' '+l; p.setAttribute('stroke-dashoffset',l); var a=q[q.length-2], b=q[q.length-1], ang=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
     var pu=el('path',{d:'M0 0 L-11 -6 L-8 0 L-11 6 Z','class':'ig-v-punta',transform:'translate('+xy(b)+') rotate('+r1(ang)+')'},g); return {g:g,p:p,l:l,pu:pu}; }
-  var fR=freccia([AN,[(AN[0]+ED[0])/2,AN[1]-14],[ED[0]-3,ED[1]+5]],'roma'), fP=freccia([[V[0]+V[2]-2,CA[1]-6],NI||CA,[CA[0]+52/k,CA[1]+4/k],[CA[0]+17/k,CA[1]+2/k]],'persia');      // da Nisibi la freccia scende a destra di Carre e arriva da est, sotto il nome (24 novembre 2026: la punta copriva «Carre»)
+  var fR=freccia([AN,[(AN[0]+ED[0])/2,AN[1]-14],[ED[0]-3,ED[1]+5]],'roma'), fP=freccia([[V[0]+V[2]-2,CA[1]-6],NI||CA,[CA[0]+50/k,CA[1]-2/k],[CA[0]+17/k,CA[1]+3/k]],'persia',true);      // da Nisibi una curva morbida scende a destra di Carre e arriva da est, sotto il nome (24 novembre 2026: prima la punta copriva «Carre», poi un gomito ad angolo retto)
   var SC=[(ED[0]+CA[0])/2-4,(ED[1]+CA[1])/2+14];      // la battaglia «al di là di Carre e di Edessa»: il punto è uno schema, sotto le due città perché non ne copra i nomi
   var fV=freccia([SC,[CA[0]+20,CA[1]+10],[V[0]+V[2]-3,CA[1]+18]],'prigionieri');
   function anello(p){ var q=B(p), g=el('g',{'class':'ig-v-assedio',transform:'translate('+xy(q)+')'},sopra); el('circle',{r:13,'class':'ig-v-anello'},g); return g; }
@@ -1531,7 +1567,7 @@ var PANTHEON={ titolo:"Il Pantheon nel tempo", sotto:"Tempio, chiesa, tetto di p
     ["663","In luglio l'imperatore Costante II, in dodici giorni a Roma, fa togliere le tegole di bronzo e le spedisce verso Costantinopoli."],
     ["731-741","Papa Gregorio III lo ricopre di lastre di piombo."],
     ["Oggi","L'edificio si conserva per intero."]],
-  fonte:"Scheda del Pantheon, tappe del 609 e del 663 e voci del Liber Pontificalis (vite di Bonifacio IV, Vitaliano e Gregorio III: «tegulis aereis», «chartis plumbeis») in questa pagina; misure da Platner e Ashby, l'altezza delle colonne da Ziolkowski. Le fotografie sono fotogrammi della città in 3D di questa pagina negli anni indicati: una ricostruzione con le sue ipotesi (la chiusura nel 392 è una scelta del modello, la croce sul frontone è indicativa, che le tegole fossero dorate è un'ipotesi). La pianta e l'alzato sono schemi; la posizione delle file interne di colonne è indicativa." };
+  fonte:"Scheda del Pantheon, tappe del 609 e del 663 e voci del Liber Pontificalis (vite di Bonifacio IV, Vitaliano e Gregorio III: «tegulis aereis», «chartis plumbeis») in questa pagina; misure, e l'iscrizione di Agrippa sul fregio del portico (CIL VI 896), da Platner e Ashby; l'altezza delle colonne da Ziolkowski. Le fotografie sono fotogrammi della città in 3D di questa pagina negli anni indicati: una ricostruzione con le sue ipotesi (la chiusura nel 392 è una scelta del modello, la croce sul frontone è indicativa, che le tegole fossero dorate è un'ipotesi). La pianta e l'alzato sono schemi; la posizione delle file interne di colonne è indicativa." };
 var TETTI={ bronzo:['#E3C27A','#B58A3C','#7C5A22'], senza:['#DCD3C3','#C3B8A4','#9E927C'], piombo:['#B9C0C6','#8E979F','#5F6870'] };
 /* l'alzato da nord, in metri (dal modello e da Platner): tamburo di 56 m alto 30,5, sette gradoni, calotta fino a circa 45,6; avancorpo; pronao con otto colonne alte 14,15 su un podio di 1,3 */
 function alzato(p,b,id,defs){
@@ -1624,11 +1660,11 @@ function disegnaPantheon(svg,S,W,H){
   var CIT=[null,null,null,null,null,["«Chiese all'imperatore Foca il tempio chiamato Pantheon, e ne fece la chiesa della beata Maria sempre vergine e di tutti i martiri.»","Liber Pontificalis, vita di Bonifacio IV"],
     ["«Scoperchiò anche la chiesa di Santa Maria ad Martyres, che aveva le tegole di bronzo, e le mandò alla città imperiale.»","Liber Pontificalis, vita di Vitaliano"],["«chartis plumbeis»: con lastre di piombo","Liber Pontificalis, vita di Gregorio III"],null];
   var yCit=cb[1]+fsA*.82+(oriz?64:42), hCit=(oriz?cb[1]+cb[3]:cb[1]+cb[3])-yCit, gCit=el('g',{'class':'ig-p-cita'},gC), citVista=-1;
-  var SCH=[[['costruito da','Adriano'],['completato','nel 126'],['ingresso','a nord']],[['rotonda','56 m, 43,2 dentro'],['occhio','9 m'],['portico','34 × 13,6 m'],['colonne','16, alte 14,15 m']],
+  var SCH=[[['costruito da','Adriano'],['completato','nel 126'],['ingresso','a nord'],['sul fregio','M·AGRIPPA·L·F·COS·TERTIVM·FECIT']],      /* l'iscrizione di Agrippa sta sul fregio, non nel timpano (CIL VI 896; commento del Pantheon in js/monumenti.js, da Platner e Ashby, 24 novembre 2026) */[['rotonda','56 m, 43,2 dentro'],['occhio','9 m'],['portico','34 × 13,6 m'],['colonne','16, alte 14,15 m']],
     [['copertura','tegole di bronzo'],['dorate?',"un'ipotesi"]],[['ultima notizia','368 o 370'],['poi','nessuna fino al 609']],[['fine del culto','non si sa'],['nel modello','392']],null,null,null,[['oggi','si conserva per intero']]];
   function scriviCit(i){ gCit.textContent=''; var c=CIT[i]; if(stretta) return;
     if(!c && SCH[i]){ var rr=SCH[i], rh2=oriz?28:24, wl=oriz&&!stretta?112:96; if(rr.length*rh2+4>hCit) rr=rr.slice(0,Math.max(0,Math.floor((hCit-4)/rh2)));
-      rr.forEach(function(r,j){ var y=yCit+j*rh2; el('line',{x1:r1(cb[0]),x2:r1(cb[0]+cb[2]),y1:r1(y),y2:r1(y),'class':'ig-p-sch-filo'},gCit); tx(gCit,cb[0],y+rh2*.66,'ig-p-sch-k',r[0].toUpperCase()); var v=tx(gCit,cb[0]+wl,y+rh2*.68,'ig-p-sch-v',r[1]); if(largo(v)>cb[2]-wl){ v.style.fontSize='14px'; } });
+      rr.forEach(function(r,j){ var y=yCit+j*rh2; el('line',{x1:r1(cb[0]),x2:r1(cb[0]+cb[2]),y1:r1(y),y2:r1(y),'class':'ig-p-sch-filo'},gCit); tx(gCit,cb[0],y+rh2*.66,'ig-p-sch-k',r[0].toUpperCase()); var v=tx(gCit,cb[0]+wl,y+rh2*.68,'ig-p-sch-v'+(/·/.test(r[1])?' iscr':''),r[1]); if(largo(v)>cb[2]-wl){ v.style.fontSize='14px'; } if(largo(v)>cb[2]-wl){ v.setAttribute('x',r1(cb[0])); v.setAttribute('y',r1(y+rh2*.68+17)); var fz=14; while(largo(v)>cb[2]&&fz>9){ fz-=1; v.style.fontSize=fz+'px'; } } });      // l'iscrizione, se non entra accanto, va a capo sotto la sua voce
       return; }
     if(!c||hCit<60) return; var fq=oriz&&!stretta?18:15.5, t=el('text',{x:r1(cb[0]+14),y:r1(yCit+fq),'class':'ig-p-cita-t'},gCit); t.style.fontSize=fq+'px';
     var n=avvolgi(t,c[0],cb[2]-16,fq*1.22), hh=n*fq*1.22; if(hh+24>hCit){ gCit.textContent=''; return; } el('rect',{x:r1(cb[0]),y:r1(yCit),width:3,height:r1(hh+20),rx:1.5,'class':'ig-m-cita-filo'},gCit); tx(gCit,cb[0]+14,yCit+hh+fq*.4+12,'ig-m-cita-chi',c[1]); }
@@ -3530,9 +3566,15 @@ function disegnaPoitiers(svg,S,W,H){
   function alto(d){ return base*(.32+.85*d); }
   var DR=[.34,.44,.54,.64,.74,.84,.94], uF=oriz?.38:.4;
   function uFronte(d){ return uF+(d-.64)*.06; }
+  /* sul telefono in piedi il campo si guarda di fronte: il muro dei Franchi attraversa tutta la larghezza, gli Arabi scendono dall'accampamento verso chi guarda
+     (24 novembre 2026, l'utente: di lato il muro sembrava una torre). u resta la distanza dall'accampamento, d diventa la corsia da sinistra a destra */
+  var FR=!oriz;
+  function profF(u){ return clamp(.08+(1-u)/(1-uF)*.74,.04,.99); }
+  function QF(u,d){ return FR?[X0+TW*(.07+(d-.34)/.6*.86), oz+(yb-oz)*profF(u)]:Q(u,d); }
+  function scalaF(u,d){ return FR?alto(profF(u))/alto(d):1; }
   /* il gelo dietro il muro (si accende col secondo quadro del campo) */
-  var hM=alto(.94), cxM=X0+uFronte(.64)*TW-hM*.45, cyM=Q(0,.64)[1]-hM*.45;
-  var alone=el('ellipse',{cx:r1(cxM),cy:r1(cyM),rx:r1(hM*1.6),ry:r1((yb-oz)*.7),fill:'url(#ig-po-freddo)','class':'ig-po-alone'},sc);
+  var hM=alto(.94), cxM=FR?X0+TW/2:X0+uFronte(.64)*TW-hM*.45, cyM=FR?oz+(yb-oz)*.86-alto(.86)*.5:Q(0,.64)[1]-hM*.45;
+  var alone=el('ellipse',{cx:r1(cxM),cy:r1(cyM),rx:r1(FR?TW*.62:hM*1.6),ry:r1(FR?alto(.9)*1.3:(yb-oz)*.7),fill:'url(#ig-po-freddo)','class':'ig-po-alone'},sc);
   /* l'accampamento: file di tende fino all'orizzonte («castra Arabum innumerabilia») */
   var gT=el('g',null,sc), tende=[], DT=[.012,.035,.065,.105,.155,.215], uT=oriz?.56:.6;
   function tenda(p,x,y,hT){ var g=el('g',{'class':'ig-po-tenda',transform:'translate('+r1(x)+','+r1(y)+')'},p), w=hT*.62;
@@ -3543,7 +3585,7 @@ function disegnaPoitiers(svg,S,W,H){
   var fila=[], NF=30, A1=Q(oriz?.7:.73,.19), A2=Q(1.06,.03), hFila=Math.max(5,alto(.1)*.5);
   /* le fasce di profondità: in ognuna i Franchi del muro e gli altri, dal fondo verso chi guarda */
   var strati=DR.map(function(){ return el('g',null,sc); }), muro=[];
-  DR.forEach(function(d,b){ var hh=alto(d); for(var rk=3;rk>=0;rk--){ var x=X0+uFronte(d)*TW-rk*hh*.3, y=Q(0,d)[1], g=el('g',{transform:'translate('+r1(x)+','+r1(y)+')'},strati[b]);
+  if(!FR) DR.forEach(function(d,b){ var hh=alto(d); for(var rk=3;rk>=0;rk--){ var x=X0+uFronte(d)*TW-rk*hh*.3, y=Q(0,d)[1], g=el('g',{transform:'translate('+r1(x)+','+r1(y)+')'},strati[b]);
     guerriero(g,hh,{cl:'franco',mantello:true,scudo:true,lancia:true}); muro.push({x:x,y:y,h:hh}); } });
   function figura(b,h,o){ var g0=el('g',{'class':'ig-po-a'},strati[b]), gi=el('g',null,g0); guerriero(gi,h,o); return {g:g0,gi:gi}; }
   var Ra=caso(711), att=[];
@@ -3552,30 +3594,34 @@ function disegnaPoitiers(svg,S,W,H){
   att.forEach(function(a,ii){ a.tc=T.b2+400+a.w*800+2400*(1+ii%2)+1250; });
   var scar=[[4,-1,.6,.49],[2,-1,.64,.52],[5,1,0,.06],[3,1,0,.05]].map(function(q,ii){ var d=DR[q[0]], f0=figura(q[0],alto(d)*.96,{verso:q[1],cl:q[1]<0?'arabo':'franco',mantello:true,scudo:q[1]>0,lancia:q[1]>0,braccio:q[1]<0?'avanti':null});
     var u0=q[1]<0?q[2]:uFronte(d)+.012; return {g:f0.g,d:d,u0:u0,u1:q[1]<0?q[3]:u0+q[3],ph:ii*.31}; });
-  var dK=DR[3], qK=Q(oriz?.55:.59,dK), hK=alto(dK)*1.02, re=figura(3,hK,{verso:-1,cl:'arabo re',mantello:true,elmo:false,braccio:'avanti'}); fissa(re.g,'transform','translate('+xy(qK)+')');
+  var dK=DR[3], uK=oriz?.55:.59, qK=QF(uK,dK), sK=scalaF(uK,dK), hK=alto(dK)*1.02*sK, re=figura(3,alto(dK)*1.02,{verso:-1,cl:'arabo re',mantello:true,elmo:false,braccio:'avanti'}); fissa(re.g,'transform','translate('+xy(qK)+')'+(sK!==1?' scale('+r1(sK*100)/100+')':''));
   var cuneo=[]; for(i=0;i<5;i++){ var b2=3+(i%2), d2=DR[b2], f2=figura(b2,alto(d2),{cl:'franco',mantello:true,scudo:true,braccio:'avanti'}); cuneo.push({g:f2.g,d:d2,u0:uFronte(d2)+.006,u1:(oriz?.5:.54)-i*.011,k:i}); }
   var espl=[]; for(i=0;i<3;i++){ var d3=DR[1+i], f3=figura(1+i,alto(d3)*.9,{cl:'franco',mantello:true,lancia:true}); espl.push({g:f3.g,d:d3,u0:uFronte(d3)+.012,u1:(oriz?.58:.62)+i*.02}); }
   var bott=[]; for(i=0;i<4;i++){ var b4=2+i%3, d4=DR[b4], h4=alto(d4)*.92, f4=figura(b4,h4,{verso:-1,cl:'franco',mantello:true}); el('ellipse',{cx:r1(-h4*.04),cy:r1(-h4*1.02),rx:r1(h4*.2),ry:r1(h4*.12),'class':'ig-po-fagotto'},f4.gi);
     bott.push({g:f4.g,d:d4,u0:(oriz?.6:.64)+i*.012,u1:uFronte(d4)-.07-i*.015,k:i}); }
+  /* di fronte (telefono in piedi): tre file serrate di fanti con lo scudo, da un bordo all'altro, davanti agli Arabi che arrivano; i portatori del bottino sopra */
+  if(FR){ var gMuro=el('g',null,sc); [0,1,2].forEach(function(rk){ var u=uF-rk*.05, y=oz+(yb-oz)*profF(u), hh=alto(profF(u))*.95, sp=hh*.42, n=Math.ceil((TW+hh)/sp)+1;
+      for(var c=0;c<n;c++){ var x=X0-hh*.25+c*sp+(rk%2?sp*.5:0), g=el('g',{transform:'translate('+r1(x)+','+r1(y)+')'},gMuro); guerriero(g,hh,{cl:'franco',mantello:true,scudo:true,lancia:true}); muro.push({x:x,y:y,h:hh}); } });
+    var gBott=el('g',null,sc); bott.forEach(function(b){ gBott.appendChild(b.g); }); }
   /* il gelo sul muro: scintille («sicut et zona rigoris glacialiter») */
   var gGelo=el('g',{'class':'ig-po-gelo'},sc), Rg=caso(5); for(i=0;i<24;i++){ var m=muro[Math.floor(Rg()*muro.length)], sx=m.x+(Rg()-.4)*m.h*.4, sy=m.y-m.h*(.2+Rg()*.75), sz=1.6+Rg()*2.6;
     var sp=el('path',{d:'M'+r1(sx)+' '+r1(sy-sz*2)+' L'+r1(sx+sz*.4)+' '+r1(sy-sz*.4)+' L'+r1(sx+sz*2)+' '+r1(sy)+' L'+r1(sx+sz*.4)+' '+r1(sy+sz*.4)+' L'+r1(sx)+' '+r1(sy+sz*2)+' L'+r1(sx-sz*.4)+' '+r1(sy+sz*.4)+' L'+r1(sx-sz*2)+' '+r1(sy)+' L'+r1(sx-sz*.4)+' '+r1(sy-sz*.4)+' Z','class':'ig-po-scint'},gGelo); sp.style.animationDelay=(-Rg()*2.4).toFixed(2)+'s'; }
   /* la polvere dove le ondate urtano il muro */
-  var polveri=[.44,.64,.84].map(function(d,ii){ var q=Q(uFronte(d)+.03,d); return el('ellipse',{cx:r1(q[0]),cy:r1(q[1]-alto(d)*.3),rx:r1(alto(d)*.9),ry:r1(alto(d)*.42),'class':'ig-po-polvere',opacity:0},sc); });
+  var polveri=[.44,.64,.84].map(function(d,ii){ var q=QF(uFronte(d)+.03,d); return el('ellipse',{cx:r1(q[0]),cy:r1(q[1]-alto(d)*.3),rx:r1(alto(d)*.9),ry:r1(alto(d)*.42),'class':'ig-po-polvere',opacity:0},sc); });
   var buio=el('rect',{x:r1(X0),y:r1(Y0),width:r1(TW),height:r1(TH),'class':'ig-po-buio',opacity:0},sc);
   var gFila=el('g',null,sc); for(i=0;i<NF;i++) fila.push(omino(gFila,hFila,'ig-po-fug'));      /* sopra il buio, perché si vedano */
   var gSt=el('g',{opacity:0},sc), Rs=caso(732); for(i=0;i<46;i++) el('circle',{cx:r1(X0+Rs()*TW),cy:r1(Y0+Rs()*(oz-Y0-TH*.08)),r:r1(.5+Rs()*1.1),'class':'ig-m-stella'},gSt);
   /* le scritte del campo */
-  var tFr=tx(sc,X0+uFronte(.34)*TW-alto(.34)*.5,Q(0,.34)[1]-alto(.34)*1.22-8,'ig-ad-et ig-ad-tag ig-po-et-fr','i Franchi di Carlo','middle');
+  var tFr=tx(sc,FR?X0+10:X0+uFronte(.34)*TW-alto(.34)*.5,FR?oz+(yb-oz)*profF(uF)-alto(profF(uF))*.95-8:Q(0,.34)[1]-alto(.34)*1.22-8,'ig-ad-et ig-ad-tag ig-po-et-fr','i Franchi di Carlo',FR?'start':'middle');
   var tAc=tx(sc,Q(oriz?.79:.81,0)[0],oz-alto(.012)*.9-10,'ig-ad-et ig-ad-tag ig-po-et-ar',"l'accampamento degli Arabi",'middle');
-  var tMu=tx(sc,X0+uFronte(.94)*TW-hM*.55,yb-12,'ig-ad-et ig-ad-tag','«come un muro»','middle');
+  var tMu=tx(sc,FR?X0+TW*.4:X0+uFronte(.94)*TW-hM*.55,yb-12,'ig-ad-et ig-ad-tag','«come un muro»','middle');
   var tRe=tx(sc,qK[0],qK[1]-hK*1.05-8,'ig-ad-et ig-ad-tag','il re','middle');
   var croce=el('g',{'class':'ig-ca-croce'},sc), rcr=Math.max(7,base*.11); el('circle',{r:r1(rcr),'class':'ig-po-croce-f'},croce); el('circle',{r:r1(rcr*.34),'class':'ig-po-ucciso'},croce);      // il segno della morte senza croce: Abd al-Rahman è musulmano (24 novembre 2026)
   var pCr=[qK[0]+hK*.5,qK[1]-hK*.32-rcr]; fissa(croce,'transform','translate('+xy(pCr)+')'); tx(croce,0,-rcr-6,'ig-ca-capo-t ig-po-verde','Abd al-Rahman, ucciso','middle');
   var tFu=tx(sc,lerp(A1[0],A2[0],.45),oriz?Math.min(A1[1],A2[1])-hFila-12:Math.max(A1[1],A2[1])+16,'ig-ad-tag notte','in silenzio, nella notte','middle');
-  var tIm=tx(sc,oriz?Q(.7,.5)[0]:X0+TW-8,Q(0,.5)[1]-alto(.5)*1.3-6,'ig-ad-et ig-ad-tag',oriz?"temono un'imboscata: non inseguono":"temono un agguato",oriz?'middle':'end');      // sopra gli esploratori; sul telefono contro il bordo destro, lontano dal muro dei Franchi
-  var tBo=tx(sc,Q(oriz?.47:.5,.97)[0],yb-12,'ig-ad-et ig-ad-tag','il bottino, diviso','middle');
-  var cerchi=espl.slice(0,2).map(function(e){ var q=Q(e.u1,e.d); return el('ellipse',{cx:r1(q[0]),cy:r1(q[1]-alto(e.d)*.1),rx:r1(alto(e.d)*.95),ry:r1(alto(e.d)*.3),'class':'ig-po-cerca'},sc); });
+  var tIm=tx(sc,oriz?Q(.7,.5)[0]:X0+TW-8,FR?oz+(yb-oz)*.28:Q(0,.5)[1]-alto(.5)*1.3-6,'ig-ad-et ig-ad-tag',oriz?"temono un'imboscata: non inseguono":"temono un agguato",oriz?'middle':'end');      // sopra gli esploratori; sul telefono contro il bordo destro, lontano dal muro dei Franchi
+  var tBo=tx(sc,FR?X0+TW*.4:Q(.47,.97)[0],yb-12,'ig-ad-et ig-ad-tag','il bottino, diviso','middle');
+  var cerchi=espl.slice(0,2).map(function(e){ var q=QF(e.u1,e.d), ha=alto(e.d)*scalaF(e.u1,e.d); return el('ellipse',{cx:r1(q[0]),cy:r1(q[1]-ha*.1),rx:r1(ha*.95),ry:r1(ha*.3),'class':'ig-po-cerca'},sc); });
   [tFr,tAc,tMu,tRe,tFu,tIm,tBo].forEach(function(t){ nelRiquadro(t,[X0,Y0,TW,TH],8); });
   /* i giorni */
   var gG=el('g',{'class':'ig-f'},sc), gx0=oriz?X0+TW-16:X0+16, gy0=oriz?Y0+30:oz-30, dots=[];
@@ -3642,7 +3688,7 @@ function disegnaPoitiers(svg,S,W,H){
     if(t>=T.b4) n=E.io(fase(t,T.b4+200,T.b4+2200)); if(t>=T.b5) n=1-E.io(fase(t,T.b5,T.b5+2800)); return n; }
   function attU(a,t){ var t0=T.b2+400+a.w*800, P=2400, L=(t-t0)/P; if(L<0) return a.uS; var c=Math.floor(L), f=L-c, uB=lerp(a.uC,a.uS,.45), da=c===0?a.uS:uB;
     if(f<.5) return lerp(da,a.uC,E.io(f/.5)); if(f<.68) return a.uC+Math.sin((f-.5)*38+a.ph*6)*.004; return lerp(a.uC,uB,E.io((f-.68)/.32)); }
-  function posa(g,u,d,rot){ var q=Q(u,d); fissa(g,'transform','translate('+xy(q)+')'+(rot?' rotate('+r1(rot)+')':'')); }
+  function posa(g,u,d,rot){ var q=QF(u,d), k=scalaF(u,d); fissa(g,'transform','translate('+xy(q)+')'+(k!==1?' scale('+r1(k*100)/100+')':'')+(rot?' rotate('+r1(rot)+')':'')); }
   S.passo=function(t){
     /* A */
     cls(gA,'vis',t>=300&&t<T.b1-300);

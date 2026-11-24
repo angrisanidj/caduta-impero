@@ -1559,3 +1559,43 @@ rect.ig-bb-leg-r{stroke:rgba(0,0,0,.2)}
 .ig-pd-maniglia:focus-visible{box-shadow:0 0 0 3px #fff,0 0 0 6px #7A1F2B}
 .ig-po-ucciso{fill:#2F8A75}
 .ig-aq-nome.coperto{opacity:0}
+/* «Senza soldi non c'è esercito», rifatta il 24 novembre 2026: il giro terra → tasse → paga → soldati, gli anelli che si toccano, la legenda che accende le regioni */
+.ig-tr-giro,.ig-tr-centro{opacity:0;transition:opacity .7s ease}
+.ig-tr-giro.vis,.ig-tr-centro.vis{opacity:1}
+.ig-tr-orbita{fill:none;stroke:#E3D8C4;stroke-width:1.2;stroke-dasharray:3 5}
+.ig-tr-arco{opacity:0;transition:opacity .5s}
+.ig-tr-arco.vis{opacity:1}
+.ig-tr-arco path:first-child{fill:none;stroke:#B9A88C;stroke-width:3;stroke-linecap:round;transition:stroke .4s,stroke-width .4s}
+.ig-tr-punta{fill:#B9A88C;transition:fill .4s}
+.ig-tr-arco.attivo path:first-child{stroke:#9A2F2A;stroke-width:4.5}
+.ig-tr-arco.attivo .ig-tr-punta{fill:#9A2F2A}
+.ig-tr-nodo{opacity:0;transition:opacity .6s;cursor:pointer;outline:none}
+.ig-tr-nodo.vis{opacity:1}
+.ig-tr-nodo-c{fill:#FFFDF8;stroke:#B9A88C;stroke-width:2;transition:fill .4s,stroke .4s,stroke-width .4s}
+.ig-tr-nodo:hover .ig-tr-nodo-c{stroke:#7A1F2B}
+.ig-tr-nodo:focus-visible .ig-tr-nodo-c{stroke:#7A1F2B;stroke-width:3.5}
+.ig-tr-nodo.evento .ig-tr-nodo-c{fill:#9A2F2A;stroke:#7A1F2B}
+.ig-tr-nodo.evento .ig-tr-nodo-n,.ig-tr-nodo.evento .ig-tr-nodo-s{fill:#FFF8EA}
+.ig-tr-nodo.scelto .ig-tr-nodo-c{stroke:#C79931;stroke-width:4}
+.ig-tr-nodo-n{font-family:var(--cap);font-weight:700;letter-spacing:.06em;fill:#2A231D;pointer-events:none}
+.ig-tr-nodo-s{font-family:var(--ui);fill:#6B5F53;pointer-events:none}
+.ig-tr-palla{fill:#C79931;stroke:#FFF8EA;stroke-width:2;opacity:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.3))}
+.ig-tr-palla.vis{opacity:1}
+.ig-tr-c-anno{font-family:var(--cap);font-weight:600;fill:#2A231D}
+.ig-tr-c-tit{font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;fill:#7A1F2B}
+.ig-tr-c-riga{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#3E352D}
+.ig-tr-c-fonte{font-family:var(--ui);font-size:10.5px;fill:#7B6E61}
+.ig-tr-frase{font-family:var(--serif);font-style:italic;font-size:15px;fill:#7A1F2B}
+.ig-tes.spento{opacity:.22}
+.ig-tes.acceso{stroke:#2A231D;stroke-width:1.5}
+.ig-chip-b{background:none;border:1px solid #DCCFB8;border-radius:999px;padding:3px 9px 3px 6px;cursor:pointer;text-align:left}
+.ig-chip-b:hover{border-color:#B9A88C}
+.ig-chip-b[aria-pressed="true"]{background:#2A231D;color:#FFF8EA;border-color:#2A231D}
+.ig-chip-b:focus-visible{outline:2px solid #7A1F2B;outline-offset:2px}
+.ig-tr-leg{gap:5px 6px}
+.ig-fuori.ig-tr-leg{margin:10px 0 0;opacity:1}
+.ig-tr-scheda{margin:10px 0 0;padding:10px 12px;border-left:3px solid #C79931;background:#FFFDF8;border-radius:0 8px 8px 0;font-family:var(--serif);color:#2A231D}
+.ig-tr-scheda b{font-family:var(--cap);font-size:14px;color:#7A1F2B}
+.ig-tr-scheda p{margin:4px 0;font-size:15px;line-height:1.35}
+.ig-tr-scheda-f{font-family:var(--ui);font-size:11.5px;color:#6B5F53}
+.ig-p-sch-v.iscr{font-family:var(--cap);letter-spacing:.04em;font-style:normal}
