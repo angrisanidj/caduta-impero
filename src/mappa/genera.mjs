@@ -149,7 +149,25 @@ const REGIONI = {
 const VERDUN = {
   linee: [[[3.55, 51.45], [3.7, 51.05], [3.4, 50.6], [2.95, 50.45], [2.7, 50.3], [2.95, 50.1], [3.9, 49.9], [4.4, 49.7], [4.9, 49.3], [5.1, 48.1], [5, 47.1], [4.83, 45.75], [4.75, 44.3], [4.65, 43.81], [4.58, 43.68], [4.42, 43.44]],      // a Lotario Arras, Cambrai, Verdun, Lione, Vienne, Arles; a Carlo Reims, Laon, Amiens, Mâcon
           [[6.1, 51.85], [6.47, 51.66], [6.73, 51.42], [6.75, 51.22], [6.96, 50.94], [7.12, 50.73], [7.62, 50.36], [7.9, 49.97], [7.6, 49.6], [8.2, 48.97], [7.6, 47.56], [8.2, 47.55], [7.9, 46.6], [8.4, 46.5]]],     // a Lotario Colonia, Bonn, Coblenza, Strasburgo; a Ludovico Magonza, Worms, Spira (Langres, Digione e Basilea: non nominate dalla fonte)
-  nomi: [[0.3, 46.6, 'Carlo il Calvo'], [6.1, 46.9, 'Lotario'], [10.6, 50.3, 'Ludovico']]
+  nomi: [[0.3, 46.6, 'Carlo il Calvo', 're', 'carlo'], [6.1, 46.9, 'Lotario', 'imperatore', 'lotario'], [10.6, 50.3, 'Ludovico', 're', 'ludovico']],
+  /* Dal 24 novembre 2026 le tre parti sono anche gruppi di regioni, come la tetrarchia (l'utente: «non si capisce bene come i tre fratelli si sono divisi l'impero»).
+     Le regioni intere vanno a un fratello solo; tre regioni sono tagliate dalle due linee qui sopra, allungate in verticale oltre i capi fino ai bordi del disegno
+     (belgica da tutte e due; burgundia e provenza solo dalla prima, cioè Saône e Rodano). Il confine disegnato si ricalcola sulle parti (confiniFra).
+     Le parole della pagina: tappa 843 in js/dati.js («a ovest», «a est», «una lunga fascia nel mezzo, dal mare del Nord all'Italia, con Roma») e LUOGHI_TAPPA (Aquisgrana a Lotario).
+     SCHEMA, senza una fonte letta:
+     - la Frisia sta con Lotario (la pagina dice solo che la sua parte arriva al mare del Nord): al tocco è più chiara e il suo confine con la Sassonia è a trattini;
+     - la Rezia e il Norico orientale vanno a Ludovico perché stanno a est della linea;
+     - la riva destra del Rodano a nord della Settimania (la parte di `provenza` a ovest della linea) segue la linea e va a Carlo;
+     - Corsica e Umbria-Piceno stanno con Lotario come parti del regno d'Italia; le terre della Chiesa stanno nella sua parte, più chiare (la pagina: Roma resta «legata all'imperatore»);
+     - Pannonia e Dalmazia, franche dall'846 (CAMBI in js/dati.js), non sono in nessuna parte: restano del viola pieno, senza tinta. */
+  parti: {
+    carlo:    ['gallia', 'soissons', 'aquitania', 'alvernia', 'settimania', 'marca'],
+    lotario:  ['sapaudia', 'italia_nord', 'liguria', 'spoleto', 'corsica', 'ravenna', 'bolognese', 'pentapoli', 'roma'],
+    ludovico: ['sassonia', 'turingia', 'decumati', 'rezia', 'carantania']
+  },
+  frisia: ['frisia'],                                                                                   // con Lotario, ma senza fonte
+  incerte: { lotario: ['frisia', 'ravenna', 'bolognese', 'pentapoli', 'roma'] },                       // al tocco del nome restano più chiare
+  tagliate: { belgica: ['carlo', 'lotario', 'ludovico'], burgundia: ['carlo', 'lotario'], provenza: ['carlo', 'lotario'] }
 };
 /* La tetrarchia (293-305): le aree di comando dei quattro, disegnate come Verdun ma senza linee a mano: i tratti sono i bordi comuni dei gruppi di regioni qui sotto,
    calcolati più giù (confiniFra). Non erano Stati né confini fissi: l'impero restava uno e le leggi uscivano a nome di tutti (l'editto dei prezzi del 301 porta i quattro nomi).
@@ -341,7 +359,7 @@ out.luoghi = {};
 for (const [id, c] of Object.entries(LUOGHI)) { const p = proj([c[0], c[1]]); out.luoghi[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
 for (const [id, c] of Object.entries(CITTA)) { const p = proj([c[0], c[1]]); out.citta[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
 
-out.verdun = { linee: VERDUN.linee.map(l => 'M' + l.map(c => { const p = proj(c); return f1(p[0]) + ' ' + f1(p[1]); }).join('L')), nomi: VERDUN.nomi.map(n => { const p = proj([n[0], n[1]]); return [f1(p[0]), f1(p[1]), n[2]]; }) };
+out.verdun = { linee: VERDUN.linee.map(l => 'M' + l.map(c => { const p = proj(c); return f1(p[0]) + ' ' + f1(p[1]); }).join('L')), nomi: VERDUN.nomi.map(n => { const p = proj([n[0], n[1]]); return [f1(p[0]), f1(p[1]), n[2], n[3] || '', n[4] || '']; }) };      // quarto e quinto: il titolo e la parte, per accenderla al tocco (js/mappa.js)
 /* Il bordo comune di due aree della tetrarchia: si percorre il contorno dell'area A, lato per lato; un lato è «comune» se, a 2 o 3,5 unità dal suo punto medio,
    da una parte si esce da A e si entra in B (le province dell'atlante, sfoltite una per una, non combaciano al decimo di unità). I lati comuni consecutivi fanno una linea;
    le linee sotto le 8 unità (scogli, sbavature) si scartano. Gli stretti larghi più di 3,5 unità restano fuori da soli. */
@@ -376,6 +394,30 @@ function confiniFra(A, B) {
     gruppi: TETRARCHIA.gruppi
   };
   for (const l of out.tetrarchia.linee) console.log('tetrarchia', l.discussa ? 'discussa' : 'linea', l.d.split('M').length - 1, 'tratti,', l.d.length, 'car.');
+}
+/* Verdun come la tetrarchia: le parti dei tre fratelli. Le due linee a mano, allungate in verticale oltre i capi, fanno due semipiani (a ovest della prima, a est della seconda),
+   e con quelli si dividono le regioni tagliate. Il confine si ricalcola sulle parti: così prosegue sulle Alpi fra Italia e Rezia e fra Frisia (a trattini) e Sassonia */
+{
+  const L1 = VERDUN.linee[0].map(c => proj(c)), L2 = VERDUN.linee[1].map(c => proj(c)), F = 60;
+  const ovest = [[[[-F, -F], [L1[0][0], -F], ...L1, [L1[L1.length - 1][0], H + F], [-F, H + F], [-F, -F]]]];
+  const est = [[[[L2[0][0], -F], [W + F, -F], [W + F, H + F], [L2[L2.length - 1][0], H + F], ...L2.slice().reverse(), [L2[0][0], -F]]]];
+  const piu = (a, b) => !a || !a.length ? b : !b || !b.length ? a : pc.union(a, b);
+  const parti = {}, pezzi = {}, gruppi = {};
+  for (const [k, ids] of Object.entries(VERDUN.parti)) { gruppi[k] = ids.slice(); for (const id of ids) { if (!FORME[id]) throw new Error('regione sconosciuta a Verdun: ' + id); parti[k] = piu(parti[k], FORME[id]); } }
+  for (const [id, chi] of Object.entries(VERDUN.tagliate)) {
+    const f = FORME[id], resto = pc.difference(f, ovest), con2 = chi.includes('ludovico');
+    const p = { carlo: pc.intersection(f, ovest), lotario: con2 ? pc.difference(resto, est) : resto, ludovico: con2 ? pc.intersection(resto, est) : [] };
+    for (const k of Object.keys(p)) if (p[k].length) { parti[k] = piu(parti[k], p[k]); pezzi[k] = piu(pezzi[k], p[k]); gruppi[k].push(id); }
+  }
+  const frisia = VERDUN.frisia.reduce((m, id) => piu(m, FORME[id]), []);
+  gruppi.lotario.push(...VERDUN.frisia);
+  const traccia = ls => ls.map(l => 'M' + l.map(q => f1(q[0]) + ' ' + f1(q[1])).join('L')).join('');
+  out.verdun.parti = { carlo: tracciato(parti.carlo), ludovico: tracciato(parti.ludovico) };      // Lotario resta del viola pieno
+  out.verdun.pezzi = Object.fromEntries(Object.entries(pezzi).map(([k, g]) => [k, tracciato(g)]));
+  out.verdun.confini = [{ d: traccia(confiniFra(parti.carlo, parti.lotario)) }, { d: traccia(confiniFra(parti.lotario, parti.ludovico)) }, { d: traccia(confiniFra(frisia, parti.ludovico)), discussa: true }];
+  out.verdun.gruppi = gruppi; out.verdun.incerte = VERDUN.incerte;
+  for (const l of out.verdun.confini) console.log('verdun', l.discussa ? 'discussa' : 'linea', l.d.split('M').length - 1, 'tratti,', l.d.length, 'car.');
+  console.log('verdun parti', Object.entries(out.verdun.parti).map(([k, d]) => k + ' ' + d.length).join(', '), '· pezzi', Object.entries(out.verdun.pezzi).map(([k, d]) => k + ' ' + d.length).join(', '));
 }
 /* Fiumi: i corsi veri di Natural Earth 1:10m, scelti e sfoltiti da fiumi.mjs (grezzi/fiumi-scelti.json). Reno e Danubio sono il confine dell'impero e hanno il tratto più forte.
    Qui si proiettano e si sfoltiscono ancora: un punto ogni 0,6 unità della carta basta. */

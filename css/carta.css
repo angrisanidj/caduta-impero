@@ -194,3 +194,29 @@ body.carta-in-regia .m-fuori{display:none}
   body:not(.impero-grande) .m-nome{font-size:14px;letter-spacing:.08em}
   body:not(.impero-grande) .m-citta text{font-size:15px}
 }
+
+/* Verdun (843, js/mappa.js; 24 novembre 2026): le parti dei tre fratelli, velature (Carlo più chiaro e un po' più freddo, Ludovico più scuro, Lotario nel viola pieno).
+   Misurate con le formule di src/prove/daltonismo.mjs (CIEDE2000, visione normale e tre daltonismi) contro gli altri colori delle tappe 843-852: differenza minima 10,3
+   (Carlo e principato di Moravia); con il bianco puro Carlo scendeva a 8 contro i Bulgari e Lotario e Ludovico a 6,5. Il rilievo sopra cambia un poco i colori veri;
+   il confine ricalcolato sulle parti (a trattini quello della Frisia) e i nomi, che si toccano come quelli dei tetrarchi. Prevalgono sulle regole di css/stile.css (.m-verdun) */
+.m-verdun-parti{pointer-events:none;transition:opacity .9s ease} .m-verdun-parti.via{opacity:0}
+.m-verdun-parti .tinta{stroke:none;transition:fill-opacity .35s ease} .m-verdun-parti .tinta.carlo{fill:#C8E0FF;fill-opacity:.22} .m-verdun-parti .tinta.ludovico{fill:#000;fill-opacity:.42}
+.m-verdun-parti.con-fuoco .tinta{fill-opacity:0}
+.m-verdun-parti .pezzo{fill:var(--st-perso);fill-opacity:0;stroke:none;transition:fill-opacity .35s ease} .m-verdun-parti .pezzo.spento{fill-opacity:.84}
+.m-verdun{pointer-events:none}
+.m-verdun path{stroke-width:2}
+.m-verdun path.discussa{stroke-width:1.4;stroke-dasharray:2.6 3;stroke-linecap:butt;opacity:.85}
+.m-verdun text{pointer-events:auto;cursor:pointer;font-weight:600;paint-order:stroke;stroke:rgba(40,22,58,.8);stroke-width:2.8px;stroke-linejoin:round;
+  font-size:max(10.5px,calc(var(--pf,11.5px)*.86));transition:opacity .3s,fill .3s}
+.m-verdun .rango{font-size:.8em;letter-spacing:.06em}
+.m-verdun.via text{pointer-events:none}
+.m-verdun text[aria-pressed="true"]{fill:#F1D99A}
+.m-verdun.con-fuoco text[aria-pressed="false"]{opacity:.6}
+.m-verdun text:focus{outline:none} .m-verdun text:focus-visible{outline:1.5px solid #F1D99A;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){ .m-verdun-parti .tinta,.m-verdun-parti .pezzo{transition:none} }
+/* le tre pastiglie dei fratelli nella riga sotto la carta: come le residenze dei tetrarchi (.sede), senza rombo */
+.legenda-luoghi span.fratello{cursor:pointer;padding:5px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;transition:background .15s,border-color .15s}
+.legenda-luoghi span.fratello::before{display:none}
+.legenda-luoghi span.fratello:hover{border-color:var(--gold2)}
+.legenda-luoghi span.fratello[aria-pressed="true"]{background:#F4E6C8;border-color:var(--gold2)}
+.legenda-luoghi span.fratello:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}

@@ -30,6 +30,13 @@ Object.keys(G.regioni).forEach(function(id){
   regioni[id]=el('path',{'class':'m-regione perso',d:r.d},svg);
   el('title',{},regioni[id]).textContent=r.nome;
 });
+/* 843: le parti di Verdun (src/mappa/genera.mjs, VERDUN). Una velatura per fratello sopra il viola dei Franchi, sotto il rilievo: Carlo più chiaro, Ludovico più scuro, Lotario pieno.
+   I pezzi delle regioni tagliate dalla linea servono al tocco di un nome: coprono di beige le parti degli altri due, come se fossero spente */
+var verdunParti=el('g',{'class':'m-verdun-parti via'},svg), pezziV={};
+if(G.verdun && G.verdun.parti){
+  ['carlo','ludovico'].forEach(function(k){ if(G.verdun.parti[k]) el('path',{d:G.verdun.parti[k],'class':'tinta '+k},verdunParti); });
+  Object.keys(G.verdun.pezzi||{}).forEach(function(k){ pezziV[k]=el('path',{d:G.verdun.pezzi[k],'class':'pezzo'},verdunParti); });
+}
 /* sopra i colori: la grana della carta, il rilievo, il filo delle coste e i fiumi */
 (function(){
   try{                                                    // grana: un piccolo riquadro di rumore generato una volta sola e ripetuto
@@ -65,8 +72,36 @@ function copre(a,b){
 function ingombro(r,lista){ var s=0; for(var i=0;i<lista.length;i++) s+=copre(r,lista[i]); return s; }
 function rettoNome(np,o){ return [np.x+o[0],np.y+o[1]-3.2,np.w,16]; }      // la scatola del testo: dalla linea di base 11 unità in su e 5 in giù
 var annoCarta=document.createElement('p'); annoCarta.className='m-anno'; annoCarta.setAttribute('aria-hidden','true'); ospite.appendChild(annoCarta);
-var verdun=el('g',{'class':'m-verdun via'},svg);
-if(G.verdun){ G.verdun.linee.forEach(function(d){ el('path',{d:d},verdun); }); G.verdun.nomi.forEach(function(n){ el('text',{x:n[0],y:n[1]},verdun).textContent=n[2]; }); }      // 843: l'impero dei Franchi diviso fra i tre nipoti di Carlo Magno
+/* 843: la divisione di Verdun, come la tetrarchia (24 novembre 2026, l'utente: «non si capisce bene come i tre fratelli si sono divisi l'impero»).
+   Il confine è ricalcolato sulle parti (a trattini quello della Frisia, senza fonte); i tre nomi si toccano, e anche le tre pastiglie nella riga sotto la carta */
+var verdun=el('g',{'class':'m-verdun via'},svg), nomiV={}, areeV={}, fuocoV=null, notaV=null;
+var NOMEV={carlo:'Carlo il Calvo, re',lotario:'Lotario, imperatore',ludovico:'Ludovico il Germanico, re'};
+if(G.verdun){
+  if(G.verdun.confini) G.verdun.confini.forEach(function(l){ if(l.d) el('path',{d:l.d,'class':l.discussa?'discussa':''},verdun); });
+  else G.verdun.linee.forEach(function(d){ el('path',{d:d},verdun); });
+  G.verdun.nomi.forEach(function(n){ var t=el('text',{x:n[0],y:n[1]},verdun); t.textContent=n[2]; if(n[3]) el('tspan',{x:n[0],dy:'.95em','class':'rango'},t).textContent=n[3];
+    var k=n[4]; if(!k || !G.verdun.gruppi) return; var a={};
+    (G.verdun.gruppi[k]||[]).forEach(function(id){ a[id]=1; }); ((G.verdun.incerte||{})[k]||[]).forEach(function(id){ a[id]=2; });
+    nomiV[k]=t; areeV[k]=a; t.setAttribute('role','button'); t.setAttribute('tabindex','0'); t.setAttribute('aria-pressed','false'); t.setAttribute('aria-label',NOMEV[k]+': mostra la sua parte');
+    t.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toccaVerdun(k); } });
+  });
+}
+function verdunOra(){ return annoVisto!=null && annoVisto>=843; }
+function toccaVerdun(k){ fuocoV=fuocoV===k?null:k; fuoco=fuocoP=fuocoT=null; applicaFuoco(); }
+function nomeVerdunA(x,y){      // il nome di un fratello sotto il dito, con un margine, come per i tetrarchi
+  if(!verdunOra()) return null;
+  for(var k in nomiV){ var r=nomiV[k].getBoundingClientRect(); if(x>=r.left-10 && x<=r.right+10 && y>=r.top-8 && y<=r.bottom+8) return k; }
+  return null;
+}
+/* la parte di ciascuno con le parole della pagina: tappa 843 in js/dati.js (testo e protagonisti), LUOGHI_TAPPA (Aquisgrana), commento di VERDUN in src/mappa/genera.mjs (le città del confine) */
+var PARTE_V={carlo:'le terre a ovest. Sul confine restano a lui Reims, Laon, Amiens e Mâcon',
+  lotario:'la fascia di mezzo, dal mare del Nord all\'Italia, con Aquisgrana e Roma. Sul confine sono sue Arras, Cambrai, Verdun, Lione, Vienne e Arles, e sul Reno Colonia, Bonn, Coblenza e Strasburgo. Più chiare le terre della Chiesa, legate all\'imperatore, e la Frisia, che la carta gli dà senza una fonte',
+  ludovico:'le terre a est del Reno e, sulla riva sinistra, Magonza, Worms e Spira. Rezia e Norico gli vanno sulla carta perché stanno a est: nessuna fonte letta lo dice'};
+function scriviNotaVerdun(){
+  if(!notaV) return;
+  notaV.textContent=fuocoV ? NOMEV[fuocoV]+': '+PARTE_V[fuocoV]+'. Le città del confine vengono dagli Annali di San Bertino, letti in un riassunto moderno. Tocca di nuovo il nome per rivedere tutta la carta.'
+    : 'I puntini segnano la divisione di Verdun, del 10 agosto 843: a ovest Carlo il Calvo, nel mezzo Lotario, a est Ludovico il Germanico. La linea passa fra le città che il trattato dà all\'uno o all\'altro; fra una città e l\'altra è uno schema. Sono incerte la Frisia (a trattini), la Rezia e la riva destra del Rodano'+(annoVisto>=846?'; Pannonia e Dalmazia, franche dall\'846, non sono assegnate':'')+'. Tocca un nome, sulla carta o qui accanto, per vedere la sua parte.';
+}      // 843: l'impero dei Franchi diviso fra i tre nipoti di Carlo Magno
 /* 293-305: le aree di comando della tetrarchia, come Verdun. Le linee sono i bordi comuni delle regioni (src/mappa/genera.mjs, TETRARCHIA, con le fonti); quelle discusse sono a trattini */
 var tetra=el('g',{'class':'m-tetra via'},svg), nomiTetra={}, areeTetra={}, fuocoT=null, notaT=null;
 if(G.tetrarchia){
@@ -80,7 +115,7 @@ if(G.tetrarchia){
     t.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toccaTetra(n[4]); } });
   });
 }
-function toccaTetra(k){ fuocoT=fuocoT===k?null:k; fuoco=fuocoP=null; applicaFuoco(); }
+function toccaTetra(k){ fuocoT=fuocoT===k?null:k; fuoco=fuocoP=fuocoV=null; applicaFuoco(); }
 function nomeTetraA(x,y){      // il nome di un tetrarca sotto il dito, con un margine: sul telefono le scritte sono piccole
   if(annoVisto==null || !tetrarchia(annoVisto)) return null;
   for(var k in nomiTetra){ var r=nomiTetra[k].getBoundingClientRect(); if(x>=r.left-10 && x<=r.right+10 && y>=r.top-8 && y<=r.bottom+8) return k; }
@@ -130,6 +165,19 @@ function notaTetra(anno){
   notaT=null; if(!G.tetrarchia || !tetrarchia(anno)) return;
   var s=document.createElement('span'); s.className='tetra'; notaT=s; scriviNotaTetra();
   rigaLuoghi.appendChild(s); rigaLuoghi.hidden=false;
+}
+/* dal 843 la riga sotto la carta spiega la divisione di Verdun e ha tre pastiglie, una per fratello: sul telefono i nomi sulla carta sono piccoli */
+function notaVerdun(anno){
+  notaV=null; if(!G.verdun || !G.verdun.gruppi || anno==null || anno<843) return;
+  var s=document.createElement('span'); s.className='tetra'; notaV=s; rigaLuoghi.appendChild(s);
+  ['carlo','lotario','ludovico'].forEach(function(k){
+    var b=document.createElement('span'); b.className='fratello'; b.setAttribute('data-v',k); b.textContent=NOMEV[k].split(',')[0];
+    b.setAttribute('role','button'); b.setAttribute('tabindex','0'); b.setAttribute('aria-pressed',k===fuocoV?'true':'false'); b.setAttribute('aria-label',NOMEV[k]+': mostra la sua parte');
+    b.addEventListener('click',function(){ toccaVerdun(k); });
+    b.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toccaVerdun(k); } });
+    rigaLuoghi.appendChild(b);
+  });
+  scriviNotaVerdun(); rigaLuoghi.hidden=false;
 }
 function scriviLuoghi(l){
   luoghiOra=l||[]; rigaLuoghi.textContent=''; rigaLuoghi.hidden=!luoghiOra.length;
@@ -611,7 +659,13 @@ var piante={}, piantaDopo=0, piantaFatta=0, BORDO=[103,897,63,565];
 function tappeCarta(){ return ((window.RM_DATI||{}).TAPPE||[]).filter(function(t){ return t.regioni; }); }      // anche gli intermezzi (284, 395, 439, 476): la carta li mostra
 function chiaveTappa(anno,l,sc){ return anno+'|'+(l||[]).map(function(q){ return q[0]; }).join()+'|'+(sc?sc.length:0); }      // l'intermezzo del 395 e la tappa del 395 hanno lo stesso anno
 /* i nomi dei tetrarchi (293-305) come ingombri: i cartellini dei popoli e i nomi delle città li evitano (23 novembre 2026: «Costanzo» finiva sotto il cartellino degli Alamanni) */
-function tetraIngombri(anno,k){ if(!G.tetrarchia || anno==null || !tetrarchia(anno)) return []; return G.tetrarchia.nomi.filter(function(n){ return n[4]; }).map(function(n){ return [n[0], n[1]+3*k, Math.max(n[2].length,n[3].length)*6*k+8, 26*k]; }); }
+function tetraIngombri(anno,k){
+  var out=[]; if(anno==null) return out;
+  if(G.tetrarchia && tetrarchia(anno)) out=G.tetrarchia.nomi.filter(function(n){ return n[4]; }).map(function(n){ return [n[0], n[1]+3*k, Math.max(n[2].length,n[3].length)*6*k+8, 26*k]; });
+  /* dal 843 anche i nomi dei tre fratelli di Verdun (24 novembre 2026) */
+  if(G.verdun && anno>=843) out=out.concat(G.verdun.nomi.map(function(n){ return [n[0], n[1]+3*k, Math.max(n[2].length,(n[3]||'').length)*6*k+8, 26*k]; }));
+  return out;
+}
 function ingombriTappa(t,k,H){
   var salva=[luoghiOra,scenaFatta,stratoScena,stratoLuoghi,bordo,nucleiOra], bz=scritte.costantinopoli, nb=bz?bz.textContent:'';
   luoghiOra=t.luoghi||[]; scenaFatta=null; bordo=BORDO; stratoScena=el('g',{}); stratoLuoghi=el('g',{style:'visibility:hidden'},svg);
@@ -716,12 +770,18 @@ function applicaFuoco(){
   if(fuoco && (!vociStati[fuoco] || vociStati[fuoco].v.hidden)) fuoco=null;      // la voce accesa non c'è più in questa tappa
   if(fuocoP && (!vociPopoli[fuocoP] || vociPopoli[fuocoP].hidden)) fuocoP=null;
   if(fuocoT && (!areeTetra[fuocoT] || annoVisto==null || !tetrarchia(annoVisto))) fuocoT=null;      // fuori dagli anni della tetrarchia il nome acceso si spegne
-  var at=fuocoT?areeTetra[fuocoT]:null, k, q;
+  if(fuocoV && (!areeV[fuocoV] || !verdunOra())) fuocoV=null;      // prima del 843 il fratello acceso si spegne
+  var at=fuocoT?areeTetra[fuocoT]:fuocoV?areeV[fuocoV]:null, k, q;
   svg.classList.toggle('m-fuoco',!!fuoco||!!at); if(fuocoP) svg.setAttribute('data-fuoco',fuocoP); else svg.removeAttribute('data-fuoco');
   for(k in regioni){ q=at?(at[k]||(k==='britannia'&&britanniaDiCostanzo()?1:0)):0; regioni[k].classList.toggle('acceso',at?!!q:(!!fuoco && (statoOra[k]||'perso')===fuoco)); regioni[k].classList.toggle('incerto',q===2); }
   for(k in nomiTetra) nomiTetra[k].setAttribute('aria-pressed',k===fuocoT?'true':'false');
   [].forEach.call(rigaLuoghi.querySelectorAll('.sede'),function(r){ r.setAttribute('aria-pressed',r.getAttribute('data-t')===fuocoT?'true':'false'); });      // le residenze sotto la carta
   tetra.classList.toggle('con-fuoco',!!fuocoT); scriviNotaTetra();
+  /* Verdun: il nome acceso, le pastiglie sotto la carta e, nelle regioni tagliate, le parti degli altri due coperte di beige */
+  for(k in nomiV) nomiV[k].setAttribute('aria-pressed',k===fuocoV?'true':'false');
+  for(k in pezziV) pezziV[k].classList.toggle('spento',!!fuocoV && k!==fuocoV);
+  [].forEach.call(rigaLuoghi.querySelectorAll('.fratello'),function(r){ r.setAttribute('aria-pressed',r.getAttribute('data-v')===fuocoV?'true':'false'); });
+  verdun.classList.toggle('con-fuoco',!!fuocoV); verdunParti.classList.toggle('con-fuoco',!!fuocoV); scriviNotaVerdun();
   for(k in vociStati) vociStati[k].v.setAttribute('aria-pressed',k===fuoco?'true':'false');
   for(k in vociPopoli) vociPopoli[k].setAttribute('aria-pressed',k===fuocoP?'true':'false');
   legenda.classList.toggle('con-fuoco',!!fuoco); if(legendaPopoli) legendaPopoli.classList.toggle('con-fuoco',!!fuocoP);
@@ -754,11 +814,11 @@ STATI.forEach(function(s){
   var v=document.createElement('span'), i=document.createElement('i'), t=document.createTextNode(s[1]||voceStato(s[0],600));
   i.style.background=s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':s[0].indexOf('regno:')===0?REGNI[s[0].slice(6)][0]:'var(--st-'+s[0]+')';
   v.appendChild(i); v.appendChild(t); legenda.appendChild(v); vociStati[s[0]]={v:v,t:t};
-  voceCliccabile(v,function(){ fuoco=fuoco===s[0]?null:s[0]; fuocoP=fuocoT=null; applicaFuoco(); });
+  voceCliccabile(v,function(){ fuoco=fuoco===s[0]?null:s[0]; fuocoP=fuocoT=fuocoV=null; applicaFuoco(); });
 });
 bottoneAltre(legenda);
 if(legendaPopoli && G.popoli) RAPPORTI.forEach(function(r){ var v=document.createElement('span'), i=document.createElement('i'); i.className='p-'+r[0]; v.appendChild(i); v.appendChild(document.createTextNode(r[1])); legendaPopoli.appendChild(v); vociPopoli[r[0]]=v;
-  voceCliccabile(v,function(){ fuocoP=fuocoP===r[0]?null:r[0]; fuoco=fuocoT=null; applicaFuoco(); }); });
+  voceCliccabile(v,function(){ fuocoP=fuocoP===r[0]?null:r[0]; fuoco=fuocoT=fuocoV=null; applicaFuoco(); }); });
 if(legendaPopoli) bottoneAltre(legendaPopoli);
 var ultimo=null, legendeMax=0;
 /* Le legende sono alte quanto le loro voci: niente più fascia vuota fra gli stati e «I popoli» nelle tappe con poche voci. Perché la pagina non salti
@@ -795,6 +855,7 @@ svg.addEventListener('pointerdown',function(e){ giu=[e.clientX,e.clientY]; nasco
 svg.addEventListener('click',function(e){
   if(giu && Math.hypot(e.clientX-giu[0],e.clientY-giu[1])>6) return;      // era un trascinamento della carta
   var kt=nomeTetraA(e.clientX,e.clientY); if(kt){ toccaTetra(kt); return; }      // un nome della tetrarchia: accende la sua parte
+  var kv=nomeVerdunA(e.clientX,e.clientY); if(kv){ toccaVerdun(kv); return; }      // un fratello di Verdun: accende la sua parte
   var id=regioneA(e.clientX,e.clientY); if(!id) return;
   var st=statoOra[id]||'perso', r=ospite.getBoundingClientRect(), b=document.createElement('b'), x=e.clientX-r.left, y=e.clientY-r.top;
   chi.textContent=''; b.textContent=G.regioni[id].nome; chi.appendChild(b); chi.appendChild(document.createTextNode(st==='fuori'?'mai appartenuta all\'impero':voceStato(st,annoVisto!=null?annoVisto:600)));
@@ -976,8 +1037,8 @@ window.RM_mappa={
     if(anno!=null && scritte.costantinopoli){ var nc=anno<330?'Bisanzio':G.citta.costantinopoli.nome; if(scritte.costantinopoli.textContent!==nc) scritte.costantinopoli.textContent=nc; }      // prima di piazzare i nomi: Bisanzio è più corto
     var visti=anno!=null?mostraPopoli(anno):null;
     if(anno!=null) avviaRegia(luoghi,scenaOra);
-    if(anno!=null){ tetra.setAttribute('class','m-tetra'+(tetrarchia(anno)?'':' via')); notaTetra(anno); }
-    if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
+    if(anno!=null){ tetra.setAttribute('class','m-tetra'+(tetrarchia(anno)?'':' via')); notaTetra(anno); notaVerdun(anno); }
+    if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); verdunParti.setAttribute('class','m-verdun-parti'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
     aggiornaLegende(stati,anno,visti);
     for(var id in regioni) statoOra[id]=stati[id]||'perso';
     if(!ricolorata) coloraRegioni(stati);      // durante un passo che ricolora (Arabi del 711) i colori restano quelli del passo
