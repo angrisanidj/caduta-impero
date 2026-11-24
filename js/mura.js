@@ -51,6 +51,7 @@ var mura=(function(){
      si dessero ogni anno duecento libbre». Quale tratto si riparasse non è detto: qui, per ipotesi, i tre passi di cortina più vicini al teatro di Pompeo, lungo il Tevere, con il ponteggio,
      solo nell'anno della tappa, così si vedono nella stessa inquadratura del teatro in restauro. */
   var TEOD=(function(){ var d=passi.map(function(p,j){ return [Math.hypot(p.x+94.3,p.z+30.8),j]; }).sort(function(a,b){ return a[0]-b[0]; }); return d.slice(0,3).map(function(q){ return q[1]; }); })();
+  RM.muraTeodorico=TEOD.map(function(j){ return [passi[j].x,passi[j].z]; });      // per la regia del 493 (js/scene-tappe.js)
   var ultima=-1, ultimaBr=-1, ultimoCant=-1, ultimo791=-1, ultimaFlam=-1, ultimoTeod=-1;      // alla tappa del 791 la porta Flaminia è già a terra, come dicono testo e didascalia
   return function(alt,br,anno,cant){
     var r791=anno>=790.9&&anno<795?1:0, rialzo=alt>1.004&&alt<1.496, teod=anno>=492.6&&anno<494?1:0, inCantiere=(cant>0&&cant<1)||rialzo||teod, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
