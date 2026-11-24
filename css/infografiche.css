@@ -1360,3 +1360,66 @@ rect.ig-bb-leg-r{stroke:rgba(0,0,0,.2)}
 .ig-bb-card-k{font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.14em;fill:#7A5617}
 .ig-bb-card-t{font-family:var(--serif);font-size:16px;fill:var(--ink,#221C18)}
 @media (prefers-reduced-motion:reduce){ .ig-bb-pop-a{animation:none} .ig-bb-comp,.ig-bb-tag{transition:none} }
+
+/* Sagome, galee, fumo, rogo: le scene ridisegnate di Capo Bon e dei Campi Catalaunici (24 novembre 2026) */
+/* sagome d'uomo (guerriero) */
+.ig-gu-c{fill:#1E1610}
+.ig-gu-mant{fill:#3A2A1E}
+.ig-gu-braccio{fill:none;stroke:#1E1610;stroke-width:6.5;stroke-linecap:round}
+.ig-gu-asta{fill:#1E1610;stroke:#1E1610;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ig-gu-scudo{fill:#7A4E2A;stroke:#1E1610;stroke-width:2.4}
+.ig-gu-umbone{fill:#D9B46A}
+.ig-gu-arco{fill:none;stroke:#2A1C10;stroke-width:3.2;stroke-linecap:round}
+.ig-gu-corda{fill:none;stroke:#D8C69C;stroke-width:1.1}
+.ig-gu.porpora .ig-gu-mant{fill:#8E2A4E}
+.ig-gu.porpora .ig-gu-scudo{fill:#9A2F2A}
+.ig-gu.vandalo .ig-gu-mant{fill:#6E5634}
+.ig-gu.notte .ig-gu-c,.ig-gu.notte .ig-gu-mant{fill:#0F0B08;stroke:rgba(214,170,84,.75);stroke-width:2.2;paint-order:stroke;stroke-linejoin:round}
+.ig-gu.notte .ig-gu-braccio{stroke:#0F0B08}
+.ig-gu.notte .ig-gu-arco{stroke:#5A3E22}
+.ig-gu.oro .ig-gu-mant{fill:#2A1E14}
+/* galee viste di lato */
+.ig-gl-scafo{fill:#5E3E24;stroke:#24160C;stroke-width:2;stroke-linejoin:round}
+.ig-gl.vandali .ig-gl-scafo{fill:#3A2C20}
+.ig-gl-cinta{fill:none;stroke:#C9A060;stroke-width:3.2;stroke-linecap:round}
+.ig-gl.vandali .ig-gl-cinta{stroke:#8C6A3A}
+.ig-gl-foro{fill:#140C06}
+.ig-gl-parapetto{fill:none;stroke:#2E1E10;stroke-width:2.2;stroke-linecap:round}
+.ig-gl-remo{fill:none;stroke:#3E2A16;stroke-width:2.8;stroke-linecap:round}
+.ig-gl-timone{fill:none;stroke:#2E1E10;stroke-width:4.5;stroke-linecap:round}
+.ig-gl-pala{fill:#2E1E10}
+.ig-gl-albero{fill:none;stroke:#3E2A16;stroke-width:5;stroke-linecap:round}
+.ig-gl-pennone{fill:none;stroke:#3E2A16;stroke-width:4;stroke-linecap:round}
+.ig-gl-sartia{fill:none;stroke:rgba(46,30,16,.5);stroke-width:1.2}
+.ig-gl-vela{fill:#F4EAD3;stroke:#8C7A5C;stroke-width:1.6;stroke-linejoin:round}
+.ig-gl.vandali .ig-gl-vela{fill:#D3B482}
+.ig-gl-vela-ombra{fill:rgba(110,84,50,.17)}
+.ig-gl-cucitura{fill:none;stroke:rgba(110,84,50,.3);stroke-width:1.1}
+.ig-gl-fiamma{fill:#9A2F2A}
+.ig-gl.vandali .ig-gl-fiamma{fill:#6E5634}
+.ig-gl-orn{fill:none;stroke:#24160C;stroke-width:4;stroke-linecap:round}
+.ig-gl.lontana{opacity:.7}
+.ig-gl-rifl{opacity:.14;pointer-events:none}
+.ig-cb-onda2{fill:none;stroke:#EAF2F2;stroke-width:1.1;stroke-linecap:round}
+.ig-cb-orizzonte{fill:rgba(255,250,235,.55)}
+.ig-cb-fumo-col path{fill:#5E544E}
+/* la nave dall'alto (naveAlto): ora la vela è piena */
+.ig-cb-remi{fill:none;stroke:#3A2414;stroke-width:.9;stroke-linecap:round}
+.ig-cb-ponte{fill:none;stroke:rgba(243,234,214,.45);stroke-width:.8}
+.ig-cb-vela{fill:#F3EAD6;stroke:#8C7A5C;stroke-width:.6}
+.ig-cb-nave.vandali .ig-cb-vela{fill:#C9A060;stroke:#6E5634}
+.ig-cb-nave.vuota .ig-cb-vela{fill:none;stroke:rgba(243,234,214,.7);stroke-dasharray:2 1.5}
+.ig-cb-nave.vuota .ig-cb-remi{stroke:rgba(243,234,214,.45)}
+.ig-cb-nave.bruciata .ig-cb-vela{fill:#4A3A2C;stroke:#2A1D14}
+.ig-cb-nave.bruciata .ig-cb-remi,.ig-cb-nave.speronata .ig-cb-remi{opacity:.3}
+/* il recinto di Attila */
+.ig-ca-legno{fill:#4A2E18;stroke:#1C1008;stroke-width:1}
+.ig-ca-legno-t{fill:#8A5A32;stroke:#1C1008;stroke-width:.8}
+.ig-ca-sella-c{fill:#7E5230;stroke:#2A170A;stroke-width:1}
+.ig-ca-sella.sotto .ig-ca-sella-c{fill:#5E3C22}
+.ig-ca-sella-l{fill:none;stroke:#D9B070;stroke-width:1.1;stroke-linecap:round}
+.ig-ca-sella-cinghia{fill:none;stroke:#2A170A;stroke-width:1.2;stroke-linecap:round}
+.ig-ca-centina{fill:none;stroke:rgba(42,28,16,.55);stroke-width:1}
+.ig-ca-raggi{fill:none;stroke:#2A1C10;stroke-width:.9}
+.ig-ca-timone{fill:none;stroke:#2A1C10;stroke-width:1.6;stroke-linecap:round}
+.ig-ca-drappo{fill:#7A1F2B;stroke:#C9A14A;stroke-width:.8}

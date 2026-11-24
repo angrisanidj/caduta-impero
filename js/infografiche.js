@@ -33,7 +33,14 @@ function xy(p){ return r1(p[0])+','+r1(p[1]); }
 function cls(e,c,on){ on=!!on; if(e.classList.contains(c)!==on) e.classList.toggle(c,on); }
 function fissa(e,k,v){ if(e['_'+k]!==v){ e['_'+k]=v; e.setAttribute(k,v); } }
 function scrivi(e,s){ if(e._s!==s){ e._s=s; e.textContent=s; } }
-function largo(t){ try{ return t.getComputedTextLength(); }catch(e){ return (t.textContent||'').length*7; } }
+/* Larghezza di una scritta. Sull'iPhone (WebKit) getComputedTextLength non basta per le scritte con letter-spacing o text-transform:
+   per quelle si misura anche col canvas (maiuscole vere, spaziatura aggiunta a mano) e si tiene la misura più larga. */
+var MISURA=null;
+function largo(t){ var w; try{ w=t.getComputedTextLength(); }catch(e){ w=(t.textContent||'').length*7; }
+  try{ var cs=getComputedStyle(t), up=cs.textTransform==='uppercase', ls=parseFloat(cs.letterSpacing)||0;
+    if(up||ls>0){ var s=t.textContent||''; MISURA=MISURA||document.createElement('canvas').getContext('2d'); MISURA.font=cs.fontStyle+' '+cs.fontWeight+' '+cs.fontSize+' '+cs.fontFamily;
+      w=Math.max(w,MISURA.measureText(up?s.toUpperCase():s).width+ls*s.length); } }catch(e){}
+  return w; }
 /* testo a capo dentro maxW (tspan); restituisce il numero di righe */
 function avvolgi(t,s,maxW,lh){
   var x=t.getAttribute('x')||0, parole=String(s).split(' '), riga=[], ts=el('tspan',{x:x},t), n=1;
@@ -732,6 +739,122 @@ function grad(defs,id,stops,o){ var g=el(o&&o.r?'radialGradient':'linearGradient
   stops.forEach(function(s){ el('stop',{offset:s[0],'stop-color':s[1],'stop-opacity':s[2]==null?1:s[2]},g); }); return g; }
 /* un uomo piccolissimo, visto di lato (h = altezza in pixel) */
 function omino(p,h,cl){ var g=el('g',{'class':'ig-omino'+(cl?' '+cl:'')},p); el('circle',{cx:0,cy:r1(-h*.86),r:r1(h*.14)},g); el('path',{d:'M0 '+r1(-h*.7)+' L0 '+r1(-h*.32)+' M0 '+r1(-h*.32)+' L'+r1(-h*.16)+' 0 M0 '+r1(-h*.32)+' L'+r1(h*.18)+' '+r1(-h*.02)+' M0 '+r1(-h*.62)+' L'+r1(h*.2)+' '+r1(-h*.44)+' M0 '+r1(-h*.62)+' L'+r1(-h*.18)+' '+r1(-h*.46),'stroke-width':r1(Math.max(1,h*.1))},g); return g; }
+
+/* PROPOSTA (non applicata): funzioni nuove per js/infografiche.js, da mettere dopo omino() (riga ~734) e prima delle infografiche 11-13.
+   Nessun fatto nuovo: sono solo disegni. */
+
+/* ---------- una sagoma d'uomo, alta h pixel, piedi in (0,0), rivolta a destra (o.verso=-1: a sinistra) ----------
+   o.mantello, o.elmo (di serie sì), o.scudo, o.lancia, o.arco, o.braccio:'avanti' (gesto); o.cl: classi in più (notte, porpora, oro) */
+function guerriero(p,h,o){ o=o||{}; var g=el('g',{'class':'ig-gu'+(o.cl?' '+o.cl:'')},p), k=h/100, s=el('g',{transform:'scale('+r1(k*(o.verso||1)*1000)/1000+','+r1(k*1000)/1000+')'},g);
+  if(o.mantello) el('path',{d:'M-6 -79 Q-23 -62 -22 -29 Q-16 -25 -9 -29 Q-13 -55 -1 -76 Z','class':'ig-gu-mant'},s);
+  if(o.lancia) el('path',{d:'M-17 -3 L-6 -118 M-6 -120 l-3.6 10 l6.4 .7 Z','class':'ig-gu-asta'},s);
+  el('path',{d:'M-7 -31 L-11 0 L-3 0 L0 -21 L3 0 L11 0 L7 -31 Z','class':'ig-gu-c'},s); el('path',{d:'M-8 -79 Q0 -82 8 -79 L12 -57 L11 -37 L15 -28 Q0 -24 -15 -28 L-11 -37 L-12 -57 Z','class':'ig-gu-c'},s);      // gambe e tunica: due tracciati (in uno solo l'incrocio resterebbe vuoto)
+  el('circle',{cx:0,cy:-87,r:7.5,'class':'ig-gu-c'},s);
+  if(o.elmo!==false) el('path',{d:'M-8.6 -87 Q-8.6 -98.5 0 -98.5 Q8.6 -98.5 8.6 -87 L10.6 -85.6 L-10.6 -85.6 Z','class':'ig-gu-c'},s);
+  if(o.arco){ el('path',{d:'M5 -73 L19 -63','class':'ig-gu-braccio'},s); el('path',{d:'M19 -87 Q36 -63 19 -39','class':'ig-gu-arco'},s); el('path',{d:'M19 -87 L9 -65 L19 -39','class':'ig-gu-corda'},s); }
+  else if(o.braccio==='avanti') el('path',{d:'M5 -73 Q18 -80 31 -90','class':'ig-gu-braccio'},s);
+  if(o.scudo){ el('circle',{cx:7,cy:-55,r:15,'class':'ig-gu-scudo'},s); el('circle',{cx:7,cy:-55,r:3.4,'class':'ig-gu-umbone'},s); }
+  return g; }
+
+/* ---------- una nave da guerra vista di lato (lunga ~250 unità a s=1), linea di galleggiamento in y; prua verso +x (o.verso=-1: verso sinistra) ----------
+   remi, timone, albero con sartie, vela quadra gonfia con l'ombra e le cuciture, pennone, fiamma in cima, scafo con la cinta, i fori dei remi, il parapetto, l'aplustre a poppa.
+   Il rostro a prua è uno schema (Procopio dice che i Vandali «speronavano»). Restituisce {g, ponte(lx)}: il punto del ponte a lx unità dal centro. */
+var SCAFO_GL='M-114 -34 Q-104 -22 -84 -21 L84 -21 Q104 -22 114 -30 L118 -10 L133 -3 L116 4 L-98 4 Q-112 -4 -114 -34 Z', NGL=0;
+function galea(p,x,y,s,o){ o=o||{}; var v=o.verso||1, g=el('g',{'class':'ig-gl '+(o.cl||'roma'),transform:'translate('+r1(x)+','+r1(y)+') scale('+r1(s*v*1000)/1000+','+r1(s*1000)/1000+')'},p), k, d='';
+  g.id='ig-gl-'+(++NGL);
+  for(k=0;k<11;k++){ var rx=-78+k*15.5; d+='M'+r1(rx)+' -9 L'+r1(rx-13)+' 17 '; } el('path',{d:d,'class':'ig-gl-remo'},g);
+  el('path',{d:'M-96 -22 L-118 15','class':'ig-gl-timone'},g); el('path',{d:'M-118 15 l-5 9 l8 2 Z','class':'ig-gl-pala'},g);
+  el('path',{d:'M0 -158 L-100 -25 M0 -158 L106 -25','class':'ig-gl-sartia'},g);
+  el('path',{d:'M0 -21 V-163','class':'ig-gl-albero'},g);
+  if(o.vela!==false){ el('path',{d:'M-60 -144 Q0 -152 60 -144 C71 -116 67 -86 56 -66 Q0 -55 -56 -66 C-67 -86 -71 -116 -60 -144 Z','class':'ig-gl-vela'},g);
+    el('path',{d:'M6 -150 Q34 -149 60 -144 C71 -116 67 -86 56 -66 Q32 -60 6 -57 Z','class':'ig-gl-vela-ombra'},g);
+    el('path',{d:'M-30 -149 C-35 -112 -33 -82 -28 -59 M30 -149 C35 -112 33 -82 28 -59 M-62 -114 Q0 -122 66 -114 M-63 -86 Q0 -94 64 -86','class':'ig-gl-cucitura'},g); }
+  el('path',{d:'M-67 -146 Q0 -155 67 -146','class':'ig-gl-pennone'},g); el('path',{d:'M0 -163 L21 -158.5 L0 -154 Z','class':'ig-gl-fiamma'},g);
+  el('path',{d:SCAFO_GL,'class':'ig-gl-scafo'},g);
+  el('path',{d:'M-108 -12 Q0 -5 117 -13','class':'ig-gl-cinta'},g);
+  d=''; for(k=0;k<11;k++) d+='M'+r1(-79.8+k*15.5)+' -9 a1.8 1.8 0 1 0 3.6 0 a1.8 1.8 0 1 0 -3.6 0 '; el('path',{d:d,'class':'ig-gl-foro'},g);
+  d='M-94 -27 H100'; for(k=-90;k<=96;k+=12) d+=' M'+k+' -21 V-27'; el('path',{d:d,'class':'ig-gl-parapetto'},g);
+  el('path',{d:'M-114 -34 Q-127 -50 -117 -63 Q-108 -69 -104 -60 M114 -30 Q121 -40 116 -47','class':'ig-gl-orn'},g);
+  return {g:g,v:v,ponte:function(lx){ return [x+lx*s*v,y-21*s]; }}; }
+/* il riflesso di una nave (o di qualunque gruppo con id): la copia rovesciata sulla linea dell'acqua yA, schiacciata (k) e chiara */
+function riflesso(p,src,yA,kk){ kk=kk||.5; var u=el('use',{'class':'ig-gl-rifl',transform:'translate(0,'+r1(yA*(1+kk))+') scale(1,'+(-kk)+')'},p); return href(u,'#'+src.id); }
+/* una colonna di fumo che sale da (x,yb), alta hh, che piega col vento verso destra */
+function colonnaFumo(p,x,yb,hh,w,seme){ var g=el('g',{'class':'ig-cb-fumo-col'},p), R=caso(seme);
+  for(var i=0;i<7;i++){ var f=i/6, cx=x+f*f*hh*.45+(R()-.5)*w*.2, cy=yb-f*hh, rr=w*(.35+f*.75); el('path',{d:macchia(cx,cy,rr,rr*.62,seme+i,9),style:'opacity:'+r1((.5-f*.32)*100)/100},g); }
+  return g; }
+
+/* ---------- la nave vista dall'alto (lunghezza L pixel, prua verso +x): scafo affusolato, remi sotto i 16 pixel spariscono, ponte, vela di traverso ---------- */
+function naveAlto(p,L,cl){ var g=el('g',{'class':'ig-cb-nave'+(cl?' '+cl:'')},p), w=L*.26, d='';
+  if(L>=16){ for(var k=0;k<7;k++){ var x=-L*.3+k*L*.09; d+='M'+r1(x)+' '+r1(-w*.42)+' l'+r1(-L*.05)+' '+r1(-w*.6)+' M'+r1(x)+' '+r1(w*.42)+' l'+r1(-L*.05)+' '+r1(w*.6)+' '; } el('path',{d:d,'class':'ig-cb-remi'},g); }
+  el('path',{d:'M'+r1(L*.5)+' 0 C'+r1(L*.32)+' '+r1(-w*.56)+' '+r1(-L*.3)+' '+r1(-w*.6)+' '+r1(-L*.45)+' '+r1(-w*.32)+' Q'+r1(-L*.53)+' 0 '+r1(-L*.45)+' '+r1(w*.32)+' C'+r1(-L*.3)+' '+r1(w*.6)+' '+r1(L*.32)+' '+r1(w*.56)+' '+r1(L*.5)+' 0 Z','class':'ig-cb-scafo'},g);
+  if(L>=16) el('path',{d:'M'+r1(-L*.36)+' 0 H'+r1(L*.34),'class':'ig-cb-ponte'},g);
+  el('path',{d:'M'+r1(-L*.03)+' '+r1(-w*1.05)+' Q'+r1(L*.13)+' 0 '+r1(-L*.03)+' '+r1(w*1.05)+' Q'+r1(L*.04)+' 0 '+r1(-L*.03)+' '+r1(-w*1.05)+' Z','class':'ig-cb-vela'},g);
+  return g; }
+
+/* ---------- Capo Bon, D1: la scena di Giovanni (sostituisce le righe 2293-2308 di js/infografiche.js; ib, aff, sc come prima) ---------- */
+function scenaGiovanni(gD,defs,ib){
+  var cpD=el('clipPath',{id:'ig-cb-clipD'},defs); el('rect',{x:r1(ib[0]),y:r1(ib[1]),width:r1(ib[2]),height:r1(ib[3]),rx:14},cpD);
+  var scena=el('g',{'clip-path':'url(#ig-cb-clipD)'},gD), oriz0=ib[1]+ib[3]*.58, i;
+  el('rect',{x:r1(ib[0]),y:r1(ib[1]),width:r1(ib[2]),height:r1(oriz0-ib[1]+2),fill:'url(#ig-cb-cielo2)'},scena);
+  /* il fumo della flotta che brucia, lontano (il quadro di prima) */
+  [[.12,.34,.11,7],[.47,.42,.14,11],[.93,.3,.1,17]].forEach(function(q){ colonnaFumo(scena,ib[0]+ib[2]*q[0],oriz0-1,ib[3]*q[1],ib[2]*q[2],q[3]); });
+  el('rect',{x:r1(ib[0]),y:r1(oriz0),width:r1(ib[2]),height:r1(ib[1]+ib[3]-oriz0),fill:'url(#ig-cb-acqua)'},scena);
+  el('rect',{x:r1(ib[0]),y:r1(oriz0-.5),width:r1(ib[2]),height:1.4,'class':'ig-cb-orizzonte'},scena);
+  var sc=Math.min(ib[2]/330,ib[3]/228), ny=oriz0+ib[3]*.17, nx=ib[0]+ib[2]*.34;
+  var sV=sc*.6, xV=ib[0]+ib[2]*.86, yV=ny-12*sc, sV2=sc*.28, xV2=ib[0]+ib[2]*.6, yV2=oriz0+7*sc;
+  var rifl=el('g',null,scena), onde=el('g',null,scena), navi=el('g',null,scena);
+  var V2=galea(navi,xV2,yV2,sV2,{verso:-1,cl:'vandali lontana'}), V=galea(navi,xV,yV,sV,{verso:-1,cl:'vandali'}), G=galea(navi,nx,ny,sc,{cl:'roma'});
+  riflesso(rifl,V2.g,yV2,.45); riflesso(rifl,V.g,yV,.5); riflesso(rifl,G.g,ny,.5);
+  var Ro=caso(24); for(i=0;i<9;i++){ var wy=oriz0+6+Math.pow((i+.5)/9,1.4)*(ib[1]+ib[3]-oriz0-6), wd='M'+r1(ib[0]-20+Ro()*20)+' '+r1(wy), st=10+i*2.2; for(var wx=ib[0]-20;wx<ib[0]+ib[2]+40;wx+=st*2) wd+=' q'+r1(st/2)+' -'+r1(1.2+i*.25)+' '+r1(st)+' 0 t'+r1(st)+' 0'; el('path',{d:wd,'class':'ig-cb-onda2',style:'opacity:'+r1((.16+i*.035)*100)/100},onde); }
+  /* le persone: Giovanni sul ponte della sua nave, Genzone a prua della nave vandala */
+  var pG=G.ponte(40), hG=Math.max(34,52*sc), gio=el('g',{transform:'translate('+xy(pG)+')'},scena), gioI=guerriero(gio,hG,{cl:'porpora',mantello:true,scudo:true,lancia:true});
+  var pZ=V.ponte(70), hZ=Math.max(28,52*sV*1.2), genz=el('g',{transform:'translate('+xy(pZ)+')'},scena); guerriero(genz,hZ,{verso:-1,cl:'vandalo',mantello:true,braccio:'avanti'});
+  var tGio=tx(scena,pG[0],pG[1]-hG-9,'ig-cb-et scuro','Giovanni','middle'), tGen=tx(scena,pZ[0],pZ[1]-hZ-9,'ig-cb-et scuro','Genzone','middle');
+  /* il salto: dal ponte, verso chi guarda, in mare davanti allo scafo */
+  var arrivo=[pG[0]+56*sc,ny+30*sc], salto=el('path',{d:'M'+xy(pG)+' Q'+xy([pG[0]+60*sc,pG[1]-80*sc])+' '+xy(arrivo),'class':'ig-ad-traiett'},scena), saltoL=lungo(salto);
+  var spruzzo=el('ellipse',{cx:r1(arrivo[0]),cy:r1(arrivo[1]),rx:r1(20*sc),ry:r1(5*sc),'class':'ig-m-spruzzo'},scena);
+  return {gio:gio,gioI:gioI,genz:genz,tGio:tGio,tGen:tGen,salto:salto,saltoL:saltoL,spruzzo:spruzzo,pG:pG,hG:hG};
+}
+
+/* ---------- Campi Catalaunici, C: il recinto dei carri, gli arcieri, Attila e il rogo di selle (sostituisce le righe 2059-2082) ---------- */
+function carroLato(par,q,s,dietro){ var g=el('g',{'class':'ig-ca-carro'+(dietro?' dietro':''),transform:'translate('+xy(q)+') scale('+r1(s*100)/100+')'},par);
+  el('path',{d:'M15 -6 L25 -2','class':'ig-ca-timone'},g);
+  el('path',{d:'M-15 -3 L15 -3 L13 -12 L-13 -12 Z','class':'ig-ca-cassa'},g); el('path',{d:'M-12.5 -12 Q-12 -25.5 0 -26.5 Q12 -25.5 12.5 -12 Z','class':'ig-ca-telo'},g);
+  el('path',{d:'M-6 -12 Q-6.5 -21 -4 -25.4 M6 -12 Q6.5 -21 4 -25.4','class':'ig-ca-centina'},g);
+  [-8,8].forEach(function(x){ el('circle',{cx:x,cy:0,r:4.6,'class':'ig-ca-ruota'},g); el('path',{d:'M'+(x-4.2)+' 0 H'+(x+4.2)+' M'+x+' -4.2 V4.2','class':'ig-ca-raggi'},g); el('circle',{cx:x,cy:0,r:1.2,'class':'ig-ca-mozzo'},g); }); return g; }
+/* il rogo di selle (Giordane 213: «si racconta»): una catasta di legna e selle di cavallo ammucchiate. Non brucia: Attila lo aveva preparato. */
+function rogoSelle(p,x,y,s){ var g=el('g',{transform:'translate('+r1(x)+','+r1(y)+') scale('+r1(s*100)/100+')'},p), sel=[], R=caso(213), k;
+  for(k=0;k<3;k++) el('rect',{x:-50+k*4,y:-6-k*6,width:100-k*8,height:6,rx:3,'class':'ig-ca-legno'},g);
+  for(k=0;k<7;k++) el('circle',{cx:-45+k*15,cy:-3,r:3,'class':'ig-ca-legno-t'},g);
+  [7,6,5,4,3,2].forEach(function(n,ri){ for(var q=0;q<n;q++){ var sx=(q-(n-1)/2)*(15-ri*.4)+(R()-.5)*4, sy=-20-ri*9.5+(R()-.5)*2.5, rot=(R()-.5)*26, sg=el('g',{transform:'translate('+r1(sx)+','+r1(sy)+') rotate('+r1(rot)+')'},g), c=el('g',{'class':'ig-ca-sella'+(ri<2?' sotto':'')},sg);
+    el('path',{d:'M-12 -1 Q-14.5 -9 -9.5 -11.5 Q-7 -7.2 -3 -6.2 Q0 -5.6 3 -6.2 Q7.5 -7.2 9 -12.5 Q14.5 -10.5 12 -1 Q6 2 0 1.6 Q-6 2 -12 -1 Z','class':'ig-ca-sella-c'},c);
+    el('path',{d:'M-8.5 -6.8 Q0 -3.6 8 -7.6','class':'ig-ca-sella-l'},c); el('path',{d:'M-4 1.2 q-1.2 4.6 1 7.6 M5 1.2 q1 4 -1 6.6','class':'ig-ca-sella-cinghia'},c); sel.push(c); } });
+  return {g:g,sel:sel,alto:20+6*9.5+12}; }
+function scenaRecinto(tav,defs,tv,oz,oriz2,ST){
+  var cx=tv[0]+tv[2]*(oriz2?.6:.5), cy=oz+(tv[1]+tv[3]-oz)*(oriz2?.5:.42), rx=Math.min(tv[2]*(oriz2?.3:.44),(tv[1]+tv[3]-oz)*1.5), ry=rx*(oriz2?.3:.5), i;
+  /* la luce: un chiarore sul terreno del campo (il rogo non è acceso) */
+  var brace=el('ellipse',{cx:r1(cx),cy:r1(cy+ry*.05),rx:r1(rx*.78),ry:r1(ry*.95),fill:'url(#ig-ca-brace)','class':'ig-ca-brace',opacity:ST?.85:0},tav);
+  var NC=24, cDietro=[], cDavanti=[]; for(i=0;i<NC;i++){ var a=i/NC*Math.PI*2, p=[cx+Math.cos(a)*rx,cy+Math.sin(a)*ry], d=Math.sin(a)<0; (d?cDietro:cDavanti).push({p:p,s:(.72+.28*(Math.sin(a)+1)/2)*Math.max(.7,rx/220),y:p[1]}); }
+  cDietro.sort(function(a,b){ return a.y-b.y; }).forEach(function(c){ carroLato(tav,c.p,c.s,true); });
+  var sS=Math.max(.7,rx/(oriz2?260:170)), R=rogoSelle(tav,cx,cy+8*sS,sS*1.1);
+  /* Attila, a sinistra del rogo; il nome sopra la testa, dove nessuno lo copre */
+  var hA=Math.max(36,56*sS), xA=cx-58*sS*1.1-18*sS, attila=el('g',{'class':'ig-ca-attila'+(ST?' vis':''),transform:'translate('+r1(xA)+','+r1(cy+8*sS)+')'},tav);
+  guerriero(attila,hA,{cl:'notte oro',mantello:true,elmo:false}); tx(attila,0,-hA-8,'ig-ca-et-n vis','Attila','middle');
+  /* gli arcieri, lungo i carri e lontani dal centro: tirano verso fuori */
+  var arcieri=[]; [[-.8,-.18],[.78,-.22],[-.66,.42],[.62,.46],[.9,.16],[.12,.7]].forEach(function(q,ii){ var p=[cx+q[0]*rx,cy+q[1]*ry], v=q[0]<0?-1:1, g=el('g',{transform:'translate('+xy(p)+')'},tav);
+    guerriero(g,Math.max(22,30*sS),{verso:v,cl:'notte',arco:true});
+    var fr=el('line',{x1:r1(v*6*sS),y1:r1(-17*sS),x2:r1(v*24*sS),y2:r1(-23*sS),'class':'ig-ca-dardo'},g); fr.style.animationDelay=(-ii*.31).toFixed(2)+'s'; arcieri.push(g); });
+  cDavanti.sort(function(a,b){ return a.y-b.y; }).forEach(function(c){ carroLato(tav,c.p,c.s,false); });
+  var tRogo=tx(tav,cx+12*sS,cy+8*sS-R.alto*sS*1.1-12,'ig-ca-et-n'+(ST?' vis':''),'rogo di selle: «si racconta»','middle');
+  /* il corteo di Teodorico, in primo piano: sei uomini col mantello e la bara, due fiaccole */
+  var corteo=el('g',{'class':'ig-ca-corteo'+(ST?' vis':'')},tav), ycort=tv[1]+tv[3]-(oriz2?22:18), hcort=Math.max(22,Math.min(34,tv[3]*.08)), xc0=tv[0]+tv[2]*(oriz2?.36:.6);
+  el('path',{d:'M'+r1(xc0+hcort*.3)+' '+r1(ycort-hcort*.74)+' h'+r1(hcort*3.6)+' l'+r1(-hcort*.2)+' '+r1(hcort*.14)+' h'+r1(-hcort*3.2)+' Z','class':'ig-ca-bara'},corteo);
+  el('path',{d:'M'+r1(xc0+hcort*.6)+' '+r1(ycort-hcort*.74)+' q'+r1(hcort*1.4)+' '+r1(-hcort*.34)+' '+r1(hcort*3)+' 0 l'+r1(hcort*.1)+' '+r1(hcort*.3)+' h'+r1(-hcort*3.2)+' Z','class':'ig-ca-drappo'},corteo);
+  for(i=0;i<6;i++){ var gg=el('g',{transform:'translate('+r1(xc0+i*hcort*.78)+','+r1(ycort)+')'},corteo); guerriero(gg,hcort,{verso:-1,cl:'notte oro',mantello:true,elmo:false}); }
+  [0,5].forEach(function(k){ var t0=xc0+k*hcort*.78-hcort*.12; el('line',{x1:r1(t0),y1:r1(ycort-hcort*.62),x2:r1(t0-3),y2:r1(ycort-hcort*1.28),'class':'ig-ca-torcia'},corteo); el('circle',{cx:r1(t0-3),cy:r1(ycort-hcort*1.36),r:3,'class':'ig-ca-fiammella'},corteo); });
+  var tCort=tx(corteo,xc0-hcort*.4,ycort-hcort*.3,'ig-ca-et-n','verso Tolosa','end');
+  return {brace:brace,sel:R.sel,attila:attila,arcieri:arcieri,tRogo:tRogo,corteo:corteo,cx:cx,cy:cy,rx:rx,ry:ry};
+}
 
 /* ======================================================================
    8. Ponte Milvio (312)
@@ -1587,6 +1710,9 @@ function citazione(p,x,y,w,q,chi,fs){ fs=fs||18; var g=el('g',{'class':'ig-ad-ci
   var t=el('text',{x:r1(x+13),y:r1(y+fs*.95),'class':'ig-m-cita-t'},g); t.style.fontSize=fs+'px'; var n=avvolgi(t,q,w-16,fs*1.18);
   var c=tx(g,x+13,y+fs*.95+(n-1)*fs*1.18+fs*.95,'ig-m-cita-chi',chi); if(largo(c)>w-16){ c.textContent=''; avvolgi(c,chi,w-16,14); }
   var hh=fs*.95+(n-1)*fs*1.18+fs*.95+(c.childNodes.length>1?(c.childNodes.length-1)*14:0)+6; fi.setAttribute('height',r1(hh)); g._h=hh; return g; }
+/* tiene una scritta di una riga dentro il riquadro b=[x,y,w,h] (margine m): se esce, la sposta e la allinea a sinistra */
+function nelRiquadro(t,b,m){ m=m==null?6:m; var w=largo(t), an=t.getAttribute('text-anchor')||'start', x=+t.getAttribute('x'), x0=an==='middle'?x-w/2:an==='end'?x-w:x;
+  var x1=clamp(x0,b[0]+m,b[0]+b[2]-m-w); if(Math.abs(x1-x0)>.5){ t.setAttribute('x',r1(x1)); t.setAttribute('text-anchor','start'); } return t; }
 /* passi numerati sotto un disegno (come nei due racconti del segno di ponte Milvio) */
 function passi(p,x,y,w,voci,chiaro,cap){ var impila=cap||w/voci.length<150, out=[];
   voci.forEach(function(s,i){ var g=el('g',{'class':'ig-m-passo'+(chiaro?' chiaro':'')},p), xx=impila?x:x+i*w/voci.length, yy=impila?y+i*20:y;
@@ -1707,6 +1833,8 @@ function disegnaAdrianopoli(svg,S,W,H){
     el('rect',{x:r1(-1.05*ku),y:r1(-.5*ku),width:r1(2.1*ku),height:r1(1*ku),rx:r1(.2*ku),'class':'ig-ad-cassa'},g);
     [-.7,.7].forEach(function(s){ el('circle',{cx:r1(s*ku),cy:r1(.62*ku),r:r1(.36*ku),'class':'ig-ad-ruota'},g); }); carri.push(g); }
   var tCarri=tx(campo,Fp(C0[0],C0[1]-RC-2.2)[0],Fp(C0[0],C0[1]-RC-2.2)[1],'ig-ad-et ig-ad-tag','i carri dei Goti, in cerchio','middle');
+  if(fb[2]<480){ var xr=fb[0]+fb[2]-6, yr=Fp(0,C0[1]-RC-2.2)[1]; tCarri.textContent=''; tCarri.setAttribute('text-anchor','end'); tCarri.setAttribute('x',r1(xr)); tCarri.setAttribute('y',r1(yr-14));
+    el('tspan',{x:r1(xr)},tCarri).textContent='i carri dei Goti,'; el('tspan',{x:r1(xr),dy:14},tCarri).textContent='in cerchio'; }      // sul telefono: a capo, a destra sopra il cerchio, lontano dalle frecce dell'ala sinistra
   /* i fuochi della pianura e il caldo */
   var caldo=el('ellipse',{cx:r1(Fp(60,31)[0]),cy:r1(Fp(60,31)[1]),rx:r1(46*ku),ry:r1(34*ku),fill:'url(#ig-ad-caldo)','class':'ig-ad-caldo'},campo);
   var fuochi=[[63,25],[67,35.5],[59,7],[69,47],[71,11],[56,54],[73,41],[66,21],[61,58],[74,52]].map(function(p,ii){ var q=Fp(p[0],p[1]), g=el('g',{'class':'ig-ad-fuoco',transform:'translate('+xy(q)+')'},campo), s=Math.max(.45,ku*.11);
@@ -1736,7 +1864,7 @@ function disegnaAdrianopoli(svg,S,W,H){
   var E1=etichetta(66.5,55.6,'ala destra','middle'), E2=etichetta(61,10,'ala sinistra','middle'), E3=etichetta(48,47.5,'fanti','middle'), E4=etichetta(64,28.2,'inviati: chiedono la pace','middle','piccola'),
     E5=etichetta(64.5,26,'Ricomere, ostaggio','start','piccola'), E6=etichetta(68,39.6,'arcieri di Bacurio e Cassione','start','piccola'), E7=etichetta(84,3.6,'Alateo e Safrace, con gli Alani','end','scuro'),
     E8=etichetta(71,15.8,'fino ai carri','start','scuro'), E9=etichetta(54,25,'ammassati','middle','scuro'), E10=etichetta(50,58.5,'notte senza luna','middle','notte');
-  var lMaxE7=largo(E7); if(Fp(84,0)[0]-lMaxE7<fb[0]+4) E7.setAttribute('text-anchor','start');
+  [tAd,tBag,tFuochi,E1,E2,E3,E4,E5,E6,E7,E8,E9,E10].concat(fb[2]<480?[]:[tCarri]).forEach(function(t){ nelRiquadro(t,fb); });      // prima «fuochi nella pianura» usciva a destra
   /* la lente: i fanti stretti (schema) */
   var LC=Fp(29,14.5), LR=Math.max(40,13*ku), gLe=el('g',{'class':'ig-ad-lente'},gB), cpL=el('clipPath',{id:'ig-ad-clipL'},defs); el('circle',{cx:r1(LC[0]),cy:r1(LC[1]),r:r1(LR)},cpL);
   el('circle',{cx:r1(LC[0]),cy:r1(LC[1]),r:r1(LR+3),'class':'ig-ad-lente-bordo'},gLe); var dentroL=el('g',{'clip-path':'url(#ig-ad-clipL)'},gLe);
@@ -1828,12 +1956,14 @@ function disegnaAdrianopoli(svg,S,W,H){
   var gCa=el('g',{'class':'ig-ad-canne'},gD), yC=oriz?yN+n4*(stretto?16:18)+(stretto?24:30):null, fC=oriz&&!stretto?24:stretto?17:19;
   /* la fila degli uomini: uno su tre resta */
   var cols, rows, N=60; if(gb[2]/gb[3]>2.2){ rows=3; cols=20; } else if(gb[2]/gb[3]>1.1){ rows=5; cols=12; } else { rows=6; cols=10; }
-  var cel=Math.min(gb[2]/cols,gb[3]/(rows+(oriz?0:1.6))), hu3=cel*.8, gx=gb[0]+(gb[2]-cols*cel)/2, gy=gb[1]+(oriz?(gb[3]-rows*cel)/2:0), uomini=[];
+  var cq=el('text',{x:r1(oriz?tb[0]:pad),y:0,'class':'ig-ad-canne-q'},gCa); cq.style.fontSize=fC+'px';      // prima il carattere, poi si va a capo
+  var nc=avvolgi(cq,'«Negli annali non si legge di un\'altra disfatta così, tranne Canne.»',oriz?tb[2]:W-2*pad,fC*1.1), bassoQ=oriz?0:18+12+fC*.85+(nc-1)*fC*1.1+fC+4;      // sul telefono, sotto le figure: nota, citazione, fonte
+  var cel=Math.min(gb[2]/cols,(gb[3]-bassoQ)/rows), hu3=cel*.8, gx=gb[0]+(gb[2]-cols*cel)/2, gy=gb[1]+(oriz?(gb[3]-rows*cel)/2:0), uomini=[];
   for(i=0;i<rows;i++) for(j=0;j<cols;j++){ var om2=omino(gD,hu3,'roma vis'); om2.setAttribute('transform','translate('+r1(gx+(j+.5)*cel)+','+r1(gy+(i+.92)*cel)+')'); uomini.push({o:om2,j:j}); }
   var sopr=Math.round(cols/3), filo=el('line',{x1:r1(gx+sopr*cel),x2:r1(gx+sopr*cel),y1:r1(gy-4),y2:r1(gy+rows*cel+4),'class':'ig-ad-filo'},gD);
   var tF=tx(gD,gx,gy+rows*cel+18,'ig-m-schema','schema: la proporzione è di Ammiano, le figure non sono un numero','start'); if(largo(tF)>gb[2]) tF.textContent='schema: la proporzione, non un numero'; if(largo(tF)>gb[2]) tF.textContent='schema';
-  if(!oriz) yC=gy+rows*cel+(gb[3]-rows*cel>70?44:30);
-  var cq=el('text',{x:r1(oriz?tb[0]:pad),y:r1(yC),'class':'ig-ad-canne-q'},gCa), nc=avvolgi(cq,'«Negli annali non si legge di un\'altra disfatta così, tranne Canne.»',oriz?tb[2]:W-2*pad,fC*1.1); cq.style.fontSize=fC+'px';
+  if(!oriz) yC=gy+rows*cel+18+12+fC*.85;      // la nota «schema» sta a +18: 12 punti d'aria e l'altezza delle maiuscole
+  cq.setAttribute('y',r1(yC));
   tx(gCa,oriz?tb[0]:pad,yC+(nc-1)*fC*1.1+fC,'ig-m-cita-chi','Ammiano XXXI 13, 19 · praeter Cannensem pugnam');
 
   /* ---------- la regia ---------- */
@@ -2020,8 +2150,12 @@ function disegnaCatalaunici(svg,S,W,H){
   schiera('romani',CO.roma,[20,24.5],[15,19.5,24],-1); schiera('alani',CO.alani,[22,26.5],[29.5,33.5],-1); schiera('visigoti',CO.visigoti,[18.5,23,27.5],[38.5,43,47.5],-1);
   schiera('gepidi',CO.gepidi,[72,76.5],[15,19.5,24],1); schiera('unni',CO.unni,[73,77.5],[29.5,33.5],1); schiera('ostrogoti',CO.ostrogoti,[71,75.5,80],[38.5,43,47.5],1);
   var recAl=el('rect',{x:r1(Fp(19.6,0)[0]),y:r1(Fp(0,27.4)[1]),width:r1(9.3*ku),height:r1(8.2*ku),rx:r1(1*ku),'class':'ig-ca-chiuso'},campo);
-  var NOMI=[['romani','Ezio e i Romani',22,11.2],['alani','Alani di Sangibano',24.3,37],['visigoti','Visigoti di Teodorico',23,52.6],['gepidi','Gepidi di Ardarico',74.3,11.2],['unni','Attila e gli Unni',75.3,37],['ostrogoti','Ostrogoti',75.5,52.6]], etG={};
-  NOMI.forEach(function(n){ var q=Fp(n[2],n[3]); etG[n[0]]=tx(campo,q[0],q[1],'ig-ca-et ig-ad-tag',n[1],'middle'); etG[n[0]].style.fill=CO[n[0]]; });
+  /* i nomi: Alani e Unni accanto ai loro blocchi, verso il centro (fra le file non c'è posto); il testo in una tinta più scura del colore del blocco, per leggerlo sul campo chiaro */
+  var CO_T={romani:'#7A1F1B',alani:'#2F5A37',visigoti:'#5A3596',unni:'#2E241C',ostrogoti:'#7A4A12',gepidi:'#4F4B36'};
+  var NOMI=[['romani','Ezio e i Romani',22,11.2,'middle'],['alani','Alani di Sangibano',29.4,32.6,'start'],['visigoti','Visigoti di Teodorico',23,52.6,'middle'],['gepidi','Gepidi di Ardarico',74.3,11.2,'middle'],['unni','Attila e gli Unni',70.6,32.6,'end'],['ostrogoti','Ostrogoti',75.5,52.6,'middle']], etG={};
+  NOMI.forEach(function(n){ var q=Fp(n[2],n[3]); etG[n[0]]=tx(campo,q[0],q[1],'ig-ca-et ig-ad-tag',n[1],n[4]); etG[n[0]].style.fill=CO_T[n[0]]; });
+  if(largo(etG.alani)+largo(etG.unni)>(70.6-29.4)*ku-10){ scrivi(etG.alani,'Alani'); scrivi(etG.unni,'Unni'); }      // sul telefono i nomi corti (Sangibano resta nella citazione)
+  [tCol,tRivo,tRec].concat(NOMI.map(function(n){ return etG[n[0]]; })).forEach(function(t){ nelRiquadro(t,fb); });
   function capo(c,nome,an,dy){ var g=el('g',{'class':'ig-ca-capo'},campo); g.style.setProperty('--c',c); el('circle',{r:r1(Math.max(4,1.25*ku))},g); var t=tx(g,an==='end'?-9:9,dy==null?4:dy,'ig-ca-capo-t',nome,an||'start'); return {g:g,t:t}; }
   var kAt=capo(CO.unni,'Attila','start'), kTe=capo(CO.visigoti,'Teodorico','end'), kTo=capo(CO.visigoti,'Torismondo','end',-5), kEz=capo(CO.roma,'Ezio','end',15);
   var croce=el('g',{'class':'ig-ca-croce'},campo); var rcr=Math.max(7,1.7*ku); el('circle',{r:r1(rcr),'class':'ig-ca-croce-f'},croce); el('path',{d:'M0 '+r1(-rcr*.66)+' V'+r1(rcr*.66)+' M'+r1(-rcr*.42)+' '+r1(-rcr*.2)+' H'+r1(rcr*.42),'class':'ig-ca-croce-l'},croce); tx(croce,-rcr-5,4,'ig-ca-capo-t viola','Teodorico muore','end');
@@ -2056,30 +2190,9 @@ function disegnaCatalaunici(svg,S,W,H){
   /* all'orizzonte, i campi di Goti e Romani */
   for(i=0;i<18;i++){ var hx=tv[0]+tv[2]*(.03+i*.055)+Rst()*10, hs=5+Rst()*6, tg=el('path',{d:'M'+r1(hx-hs)+' '+r1(oz)+' L'+r1(hx)+' '+r1(oz-hs*1.1)+' L'+r1(hx+hs)+' '+r1(oz)+' Z','class':'ig-ca-tenda'},tav);
     if(i%3===1){ var fc=el('circle',{cx:r1(hx+hs*1.6),cy:r1(oz-1.5),r:2.2,'class':'ig-ca-fuoco-lontano'},tav); fc.style.animationDelay=(-Rst()*2).toFixed(2)+'s'; } }
-  var cx=tv[0]+tv[2]*(oriz2?.6:.5), cy=oz+(tv[1]+tv[3]-oz)*(oriz2?.5:.42), rx=Math.min(tv[2]*(oriz2?.3:.44),(tv[1]+tv[3]-oz)*1.5), ry=rx*(oriz2?.3:.5);
-  var brace=el('ellipse',{cx:r1(cx),cy:r1(cy-ry*.2),rx:r1(rx*.55),ry:r1(ry*1.3),fill:'url(#ig-ca-brace)','class':'ig-ca-brace',opacity:0},tav);
-  function carroLato(p,s,dietro){ var g=el('g',{'class':'ig-ca-carro'+(dietro?' dietro':''),transform:'translate('+xy(p)+') scale('+r1(s*100)/100+')'},tav);
-    el('path',{d:'M-14 -2 L14 -2 L12 -12 L-12 -12 Z','class':'ig-ca-cassa'},g); el('path',{d:'M-11 -12 Q0 -24 11 -12','class':'ig-ca-telo'},g);
-    [-8,8].forEach(function(x){ el('circle',{cx:x,cy:0,r:4.4,'class':'ig-ca-ruota'},g); el('circle',{cx:x,cy:0,r:1,'class':'ig-ca-mozzo'},g); }); return g; }
-  var NC=24, cDietro=[], cDavanti=[]; for(i=0;i<NC;i++){ var a=i/NC*Math.PI*2, p=[cx+Math.cos(a)*rx,cy+Math.sin(a)*ry], d=Math.sin(a)<0; (d?cDietro:cDavanti).push({p:p,s:(.72+.28*(Math.sin(a)+1)/2)*Math.max(.7,rx/220),y:p[1],d:d}); }
-  cDietro.sort(function(a,b){ return a.y-b.y; }).forEach(function(c){ carroLato(c.p,c.s,true); });
-  /* il rogo di selle, al centro */
-  var sel=[], sS=Math.max(.7,rx/(oriz2?260:170)), righeS=[5,4,3,2,1];
-  righeS.forEach(function(n,ri){ for(var k=0;k<n;k++){ var sx=cx+(k-(n-1)/2)*20*sS, sy=cy-ri*9*sS, g=el('g',{'class':'ig-ca-sella'},el('g',{transform:'translate('+r1(sx)+','+r1(sy)+') scale('+r1(sS*100)/100+')'},tav));
-    el('path',{d:'M-11 0 Q-10 -8 -3 -7 Q0 -6 3 -7 Q10 -8 11 0 Q6 3 0 2 Q-6 3 -11 0 Z','class':'ig-ca-sella-c'},g); el('path',{d:'M-9 -1 Q0 -4 9 -1','class':'ig-ca-sella-l'},g); sel.push(g); } });
-  var attila=el('g',{'class':'ig-ca-attila',transform:'translate('+r1(cx+62*sS)+','+r1(cy+4)+')'},tav); omino(attila,Math.max(26,40*sS),'vis ig-ca-ombra-oro'); tx(attila,0,16,'ig-ca-et-n vis','Attila','middle');
-  var arcieri=[]; [[-.62,-.15],[.66,-.1],[-.4,.42],[.42,.45],[-.82,.28],[.84,.3]].forEach(function(q,ii){ var p=[cx+q[0]*rx,cy+q[1]*ry], g=el('g',{transform:'translate('+xy(p)+')'},tav), om=omino(g,Math.max(16,24*sS),'vis ig-ca-ombra');
-    var dir=q[0]<0?-1:1, fr=el('line',{x1:0,y1:r1(-14*sS),x2:r1(dir*18*sS),y2:r1(-20*sS),'class':'ig-ca-dardo'},g); fr.style.animationDelay=(-ii*.31).toFixed(2)+'s'; arcieri.push(g); });
-  cDavanti.sort(function(a,b){ return a.y-b.y; }).forEach(function(c){ carroLato(c.p,c.s,false); });
+  var C=scenaRecinto(tav,defs,tv,oz,oriz2,false), brace=C.brace, sel=C.sel, attila=C.attila, arcieri=C.arcieri, tRogo=C.tRogo, corteo=C.corteo, cx=C.cx, cy=C.cy, rx=C.rx, ry=C.ry;      // il recinto, il rogo, Attila, gli arcieri, il corteo (scenaRecinto, più su)
   var trombe=[]; [[-.95,-.6],[.95,-.7]].forEach(function(q,ii){ var p=[cx+q[0]*rx,cy+q[1]*ry-10], g=el('g',{'class':'ig-ca-tromba',transform:'translate('+xy(p)+')'},tav);
     for(var k=0;k<3;k++){ var ar=el('path',{d:'M0 '+r1(-8-k*7)+' A'+r1(8+k*7)+' '+r1(8+k*7)+' 0 0 '+(q[0]<0?0:1)+' 0 '+r1(8+k*7),'class':'ig-ca-onda'},g); ar.style.animationDelay=(k*.35+ii*.2).toFixed(2)+'s'; ar.setAttribute('transform','scale('+(q[0]<0?-1:1)+',1)'); } trombe.push(g); });
-  var tRogo=tx(tav,cx,cy-righeS.length*9*sS-16,'ig-ca-et-n','rogo di selle: «si racconta»','middle');
-  /* il corteo di Teodorico, in primo piano */
-  var corteo=el('g',{'class':'ig-ca-corteo'},tav), ycort=tv[1]+tv[3]-(oriz2?22:18), hcort=Math.max(18,Math.min(30,tv[3]*.07)), xc0=tv[0]+tv[2]*(oriz2?.36:.62);
-  for(i=0;i<6;i++){ var om3=omino(corteo,hcort,'vis ig-ca-ombra-oro'); om3.setAttribute('transform','translate('+r1(xc0+i*hcort*.9)+','+r1(ycort)+')'); }
-  el('rect',{x:r1(xc0+hcort*.5),y:r1(ycort-hcort*.78),width:r1(hcort*3.2),height:r1(hcort*.16),rx:2,'class':'ig-ca-bara'},corteo);
-  [0,4].forEach(function(k){ var tx0=xc0+k*hcort*.9+hcort*.15; el('line',{x1:r1(tx0),y1:r1(ycort-hcort*.65),x2:r1(tx0+3),y2:r1(ycort-hcort*1.3),'class':'ig-ca-torcia'},corteo); el('circle',{cx:r1(tx0+3),cy:r1(ycort-hcort*1.38),r:3,'class':'ig-ca-fiammella'},corteo); });
-  var tCort=tx(corteo,xc0-8,ycort-hcort*.3,'ig-ca-et-n','verso Tolosa','end');
   /* le parole di Giordane, in alto a sinistra (sul telefono in alto, su tutta la larghezza) */
   var gQ=el('g',null,gC), qx=tv[0]+18, qw=oriz2?Math.min(tv[2]*(stretto?.52:.38),360):tv[2]-36, fq=Math.max(15,oriz2?Math.min(22,qw/14):Math.min(18,qw/16));
   function scritta(y,q,chi,t){ var g=el('g',{'class':'ig-ca-scritta'},gQ), te=el('text',{x:r1(qx),y:r1(y),'class':'ig-ca-q'},g); te.style.fontSize=fq+'px'; var n=avvolgi(te,q,qw,fq*1.2);
@@ -2143,7 +2256,7 @@ function disegnaCatalaunici(svg,S,W,H){
     cls(gC,'vis',t>=T.c1-300&&t<T.d1-300);
     arcieri.forEach(function(a){ cls(a,'vis',t>=T.c1+600); }); trombe.forEach(function(a){ cls(a,'vis',t>=T.c1+300&&t<T.c3); });
     sel.forEach(function(s,ii){ cls(s,'vis',t>=T.c2+600+ii*170); }); cls(tRogo,'vis',t>=T.c2+3200); cls(attila,'vis',t>=T.c1+200);
-    fissa(brace,'opacity',r1(E.io(fase(t,T.c2+1200,T.c2+3400))*(.7+.15*Math.sin(t/300))*100)/100);
+    fissa(brace,'opacity',r1((.45+.35*E.io(fase(t,T.c2+1200,T.c2+3400)))*100)/100);      // una luce ferma: il rogo non è acceso (Giordane: lo aveva preparato)
     var pc=E.io(fase(t,T.c3+400,T.c3+5000)); fissa(corteo,'transform',pc>0?'translate('+r1(-pc*tv[2]*.22)+',0)':''); cls(corteo,'vis',t>=T.c3+200);
     SQ.forEach(function(q,ii){ cls(q.g,'vis',t>=q.t&&(ii===SQ.length-1||t<SQ[ii+1].t)); });
     /* D */
@@ -2155,11 +2268,6 @@ function disegnaCatalaunici(svg,S,W,H){
   var bt=[T.a1,T.a2,T.a3,T.b1,T.b2,T.b3,T.b4,T.b5,T.b6,T.c1,T.c2,T.c3,T.d1];
   S.battute=CATALAUNICI.fasi.map(function(f,ii){ return {t:bt[ii],anno:f[0],testo:f[1]}; });
 }
-
-/* una nave vista dall'alto (lunghezza L in pixel), con la vela; la prua guarda verso +x */
-function naveAlto(p,L,cl){ var g=el('g',{'class':'ig-cb-nave'+(cl?' '+cl:'')},p), w=L*.3;
-  el('path',{d:'M'+r1(L/2)+' 0 Q'+r1(L*.18)+' '+r1(-w/2)+' '+r1(-L/2)+' '+r1(-w*.4)+' L'+r1(-L/2)+' '+r1(w*.4)+' Q'+r1(L*.18)+' '+r1(w/2)+' '+r1(L/2)+' 0 Z','class':'ig-cb-scafo'},g);
-  el('path',{d:'M'+r1(-L*.05)+' '+r1(-w*.85)+' Q'+r1(L*.08)+' 0 '+r1(-L*.05)+' '+r1(w*.85),'class':'ig-cb-vela'},g); return g; }
 
 /* ======================================================================
    13. Capo Bon (468)
@@ -2196,6 +2304,7 @@ function disegnaCapobon(svg,S,W,H){
   grad(defs,'ig-cb-mare',[[0,'#2C4F5E'],[1,'#1B3542']]); grad(defs,'ig-cb-alba',[[0,'#F3E2C4'],[.55,'#E9C99A'],[1,'#9DB8BE']]);
   grad(defs,'ig-cb-vampa',[[0,'#FFD27A',.85],[.45,'#F08A2E',.4],[1,'#F08A2E',0]],{cx:'50%',cy:'50%',r:'50%'});
   grad(defs,'ig-cb-onda',[[0,'#7FA6B3'],[1,'#4D7684']]);
+  grad(defs,'ig-cb-cielo2',[[0,'#CBB89A'],[.6,'#E6D3B0'],[1,'#EFE2C6']]); grad(defs,'ig-cb-acqua',[[0,'#7E9EA6'],[.35,'#587B86'],[1,'#2F4F5A']]);      // la scena di Giovanni
 
   /* ---------- A. la flotta e i tre fronti ---------- */
   var gA=el('g',{'class':'ig-atto'},svg), V=[392,282,362,282], mb;
@@ -2231,7 +2340,10 @@ function disegnaCapobon(svg,S,W,H){
   var FB=finestra(gB,defs,'ig-cb-clipB',VB,bb,{rilievo:false,stati:statiDi(468)}), sB=FB.sopra, MB=FB.M, kB=FB.k;
   var CTb=FB.C('cartagine'), CBb=FB.C('capobon');
   var pCTb=luogo(sB,CTb,'Cartagine',-9,-7,'end','grande'), tem=el('g',{'class':'ig-v-luogo vis',transform:'translate('+xy(MB([446.2,456.2]))+')'},sB);
-  el('path',{d:'M-7 -1 L0 -7 L7 -1 Z M-6 0 H6 V7 H-6 Z','class':'ig-cb-tempio'},tem); tx(tem,-10,-4,'ig-v-nome','Mercurio','end'); tx(tem,-10,10,'ig-cb-tempio-t','il tempio di Ermes','end');
+  el('path',{d:'M-7 -1 L0 -7 L7 -1 Z M-6 0 H6 V7 H-6 Z','class':'ig-cb-tempio'},tem); var tMe=tx(tem,-10,-4,'ig-v-nome','Mercurio','end'), tTe=tx(tem,-10,10,'ig-cb-tempio-t','il tempio di Ermes','end');
+  /* se i nomi del tempio arrivano su «Cartagine» (sul telefono), passano a destra del tempio */
+  var TE=MB([446.2,456.2]), xCT=CTb[0]-9, yCT=CTb[1]-7; function tocca(t,y){ return TE[0]-10-largo(t)<xCT+4 && Math.abs(y-yCT)<18; }
+  if(tocca(tMe,TE[1]-4)||tocca(tTe,TE[1]+10)) [tMe,tTe].forEach(function(t){ t.setAttribute('x',10); t.setAttribute('text-anchor','start'); });
   var dist=el('g',{'class':'ig-f'},sB), dA=MB([436,457.4]), dB=MB([445.6,456.8]); el('path',{d:'M'+xy(dA)+' Q'+xy([(dA[0]+dB[0])/2,(dA[1]+dB[1])/2+26])+' '+xy(dB),'class':'ig-cb-dist'},dist);
   var tDist=tx(dist,(dA[0]+dB[0])/2,(dA[1]+dB[1])/2+30,'ig-cb-dist-t','non meno di 280 stadi','middle');
   /* le navi romane all'ancora e quelle dei Vandali nel porto: solo dove la carta è mare */
@@ -2262,7 +2374,7 @@ function disegnaCapobon(svg,S,W,H){
   var Ln=Math.max(18,Math.min(oc?tv[2]/22:tv[2]/11,40)), flotta=[], fx0=tv[0]+tv[2]*(oc?.46:.18), fx1=tv[0]+tv[2]*(oc?.96:.94), fy0=tv[1]+tv[3]*(oc?.14:.44), fy1=tv[1]+tv[3]*(oc?.9:.94);
   var Rf=caso(4680), colsF=Math.max(4,Math.floor((fx1-fx0)/(Ln*1.25))), rowsF=Math.max(4,Math.floor((fy1-fy0)/(Ln*.62)));
   for(i=0;i<colsF;i++) for(j=0;j<rowsF;j++){ var px=fx0+(i+.5)*(fx1-fx0)/colsF+(Rf()-.5)*Ln*.3+(j%2?Ln*.3:0), py=fy0+(j+.5)*(fy1-fy0)/rowsF+(Rf()-.5)*Ln*.12;
-    var o=el('g',{transform:'translate('+r1(px)+','+r1(py)+') rotate('+r1(180+(Rf()-.5)*14)+')'},mare), n=naveAlto(o,Ln,'roma vis'), fu=el('g',{'class':'ig-cb-fuoco'},o);
+    var o=el('g',{transform:'translate('+r1(px)+','+r1(py)+')'},mare), n=naveAlto(el('g',{transform:'rotate('+r1(180+(Rf()-.5)*14)+')'},o),Ln,'roma vis'), fu=el('g',{'class':'ig-cb-fuoco'},o);      // il fuoco fuori dalla rotazione: le fiamme salgono
     el('circle',{r:r1(Ln*.55),fill:'url(#ig-cb-vampa)'},fu); el('path',{d:FIAMMA,transform:'scale('+r1(Ln/26*100)/100+')','class':'ig-ad-fiamma grande'},fu); el('path',{d:FIAMMA,transform:'translate(0,1) scale('+r1(Ln/48*100)/100+')','class':'ig-ad-fiamma cuore'},fu);
     for(var k=0;k<2;k++){ var fm=el('circle',{cx:0,cy:0,r:r1(Ln*.22),'class':'ig-cb-fumo'},fu); fm.style.animationDelay=(-(i*.4+j*.7+k*1.1)%2.6).toFixed(2)+'s'; }
     flotta.push({o:o,n:n,fu:fu,p:[px,py],t:Infinity,sink:false}); }
@@ -2289,23 +2401,7 @@ function disegnaCapobon(svg,S,W,H){
 
   /* ---------- D1. Giovanni ---------- */
   var gD=el('g',{'class':'ig-atto'},svg), dv=[pad,pad,W-2*pad,H-2*pad], aff=dv[2]/dv[3]>1.25, ib=aff?[dv[0],dv[1],dv[2]*.56,dv[3]]:[dv[0],dv[1],dv[2],dv[3]*.6];
-  var cpD=el('clipPath',{id:'ig-cb-clipD'},defs); el('rect',{x:r1(ib[0]),y:r1(ib[1]),width:r1(ib[2]),height:r1(ib[3]),rx:14},cpD);
-  var scena=el('g',{'clip-path':'url(#ig-cb-clipD)'},gD), oriz0=ib[1]+ib[3]*.46;
-  el('rect',{x:r1(ib[0]),y:r1(ib[1]),width:r1(ib[2]),height:r1(ib[3]),fill:'url(#ig-cb-alba)'},scena);
-  for(i=0;i<5;i++){ var fy=ib[1]+ib[3]*(.12+i*.05); el('ellipse',{cx:r1(ib[0]+ib[2]*(.15+i*.18)),cy:r1(fy),rx:r1(ib[2]*.12),ry:r1(ib[3]*.05),'class':'ig-cb-fumo-lontano'},scena); }
-  el('rect',{x:r1(ib[0]),y:r1(oriz0),width:r1(ib[2]),height:r1(ib[1]+ib[3]-oriz0),fill:'url(#ig-cb-onda)'},scena);
-  for(i=0;i<5;i++){ var wy=oriz0+12+i*(ib[1]+ib[3]-oriz0)/5, wd='M'+r1(ib[0])+' '+r1(wy); for(var wx=ib[0];wx<ib[0]+ib[2]+30;wx+=24) wd+=' q6 -3 12 0 t12 0'; el('path',{d:wd,'class':'ig-onda',style:'opacity:'+(.3-i*.04)},scena); }
-  var sc=Math.min(ib[2]/420,ib[3]/260), nx=ib[0]+ib[2]*.42, ny=oriz0+ib[3]*.2;
-  function naveLato(p,x,y,s,cl){ var g=el('g',{'class':'ig-cb-lato '+cl,transform:'translate('+r1(x)+','+r1(y)+') scale('+r1(s*100)/100+')'},p);
-    el('path',{d:'M-120 -20 L120 -20 Q112 14 70 20 L-80 20 Q-116 12 -120 -20 Z','class':'ig-cb-l-scafo'},g); el('path',{d:'M-118 -20 H118','class':'ig-cb-l-ponte'},g);
-    for(var r=-90;r<=90;r+=18) el('line',{x1:r,y1:12,x2:r-10,y2:34,'class':'ig-cb-l-remo'},g);
-    el('line',{x1:0,y1:-20,x2:0,y2:-150,'class':'ig-cb-l-albero'},g); el('path',{d:'M-56 -140 Q0 -120 56 -140 L52 -60 Q0 -44 -52 -60 Z','class':'ig-cb-l-vela'},g); return g; }
-  var naveG=naveLato(scena,nx,ny,sc,'roma'), naveV=naveLato(scena,ib[0]+ib[2]*.86,ny+10*sc,sc*.7,'vandali'), naveV2=naveLato(scena,ib[0]+ib[2]*.08,ny+16*sc,sc*.6,'vandali');
-  var gio=el('g',null,scena), gioI=omino(gio,48*sc,'vis porpora'), genz=el('g',{transform:'translate('+r1(ib[0]+ib[2]*.86-30*sc)+','+r1(ny+10*sc-14*sc)+')'},scena); omino(genz,34*sc,'vis ig-cb-ombra');
-  el('path',{d:'M0 '+r1(-24*sc)+' l'+r1(-14*sc)+' '+r1(-10*sc),'class':'ig-cb-braccio'},genz);
-  var tGio=tx(scena,nx-20*sc,ny-20*sc-58*sc,'ig-cb-et scuro','Giovanni','middle'), tGen=tx(scena,ib[0]+ib[2]*.86-30*sc,ny-36*sc-30*sc,'ig-cb-et scuro','Genzone','middle');
-  var salto=el('path',{d:'M'+r1(nx-20*sc)+' '+r1(ny-20*sc)+' Q'+r1(nx-120*sc)+' '+r1(ny-120*sc)+' '+r1(nx-150*sc)+' '+r1(oriz0+ib[3]*.32),'class':'ig-ad-traiett'},scena), saltoL=lungo(salto);
-  var spruzzo=el('ellipse',{cx:r1(nx-150*sc),cy:r1(oriz0+ib[3]*.32),rx:r1(22*sc),ry:r1(6*sc),'class':'ig-m-spruzzo'},scena);
+  var D1=scenaGiovanni(gD,defs,ib), gio=D1.gio, gioI=D1.gioI, tGio=D1.tGio, tGen=D1.tGen, salto=D1.salto, saltoL=D1.saltoL, spruzzo=D1.spruzzo;      // le navi, Giovanni e Genzone (scenaGiovanni, più su)
   var tbx=aff?[ib[0]+ib[2]+28,dv[1],dv[2]-ib[2]-28,dv[3]]:[dv[0],ib[1]+ib[3]+16,dv[2],dv[3]-ib[3]-16], gTq=el('g',{'class':'ig-ca-scritta'},gD), fqd=aff?Math.min(30,tbx[2]/11):Math.min(22,W/16);
   var tqd=el('text',{x:r1(tbx[0]),y:r1(tbx[1]+(aff?tbx[3]*.3:fqd)),'class':'ig-cb-giov'},gTq); tqd.style.fontSize=r1(fqd)+'px'; var nqd=avvolgi(tqd,'«Giovanni non cadrà mai nelle mani dei cani»',tbx[2],fqd*1.15);
   var ytq=+tqd.getAttribute('y')+(nqd-1)*fqd*1.15; tx(gTq,tbx[0],ytq+fqd*.9,'ig-m-cita-chi','Procopio, Guerre III 6, 24');
@@ -2357,7 +2453,7 @@ function disegnaCapobon(svg,S,W,H){
     SQ.forEach(function(q,ii){ cls(q.g,'vis',t>=q.t&&(ii===SQ.length-1||t<SQ[ii+1].t)); });
     /* D1 */
     cls(gD,'vis',t>=T.d1-300&&t<T.d2-300);
-    var sl=E.io(fase(t,T.d1+2600,T.d1+3800)), qs=sl>0?puntoA(salto,saltoL*sl):[nx-20*sc,ny-20*sc];
+    var sl=E.io(fase(t,T.d1+2600,T.d1+3800)), qs=sl>0?puntoA(salto,saltoL*sl):D1.pG;
     fissa(gio,'transform','translate('+xy(qs)+')'+(sl>0?' rotate('+r1(-sl*120)+')':''))
     fissa(gioI,'transform',sl>0?'':'scale('+(Math.sin(t/260)>0?1:-1)+',1)'); cls(gio,'giu',t>=T.d1+4000); cls(spruzzo,'vis',t>=T.d1+3700&&t<T.d1+5600);
     cls(tGio,'vis',t>=T.d1+300&&t<T.d1+2800); cls(tGen,'vis',t>=T.d1+1000); cls(gTq,'vis',t>=T.d1+4200);
