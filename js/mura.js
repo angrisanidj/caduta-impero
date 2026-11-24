@@ -72,82 +72,149 @@ var mura=(function(){
 })();
 
 /* ---------- acquedotti ----------
-   Il canale scende con una pendenza minima: la sommità delle arcate è quasi orizzontale e sono le pile ad allungarsi o ad accorciarsi
-   col terreno. Dove il suolo sale fino al canale l'acquedotto corre interrato e non si vede (la Vergine sotto il Pincio, la Marcia
-   oltre porta Tiburtina). Le quote della sommità [x, z, quota] sono una ricostruzione, non un rilievo: rispettano l'ordine noto
-   (la Claudia più alta della Marcia a porta Maggiore, la Vergine bassa sul Campo Marzio) dentro un rilievo accentuato 1,8 volte.
-   La Traiana arrivava al Gianicolo quasi a livello del suolo e scendeva il pendio verso i mulini: qui è un muro basso che segue il terreno.
-   La rovina nel tempo. Documentati: il taglio del 537 (Procopio); i quattro condotti rifatti da Adriano I (Liber Pontificalis, vita di Adriano, cc. 59-65):
-   Sabbatina cioè Traiana e Iobia, rotte da vent'anni (quindi, per Duchesne, dall'assedio di Astolfo del 756 e in funzione prima), Claudia, che serviva il Laterano
-   e portava ormai poca acqua, Vergine, «piena di rovine». La Iobia, secondo l'ipotesi più diffusa (Lanciani, Duchesne; Ashby dubita), è il ramo che Caracalla
-   costruì per le sue terme, l'Antoniniano: della linea della Marcia torna in piedi solo il tronco fuori città, e con esso questo ramo. Ipotesi nostre: quali tratti cadono e quando,
-   quanto fosse stato riparato dopo il 554, e che gli archi neroniani oltre il Laterano, mai nominati dalle fonti, non vengano più rialzati. I tratti rifatti nell'VIII secolo hanno il colore del mattone di recupero. */
+   Tracciati rifatti il 24 novembre 2026 sulle fonti lette quel giorno, scritte accanto a ogni linea. Il canale scende con una pendenza minima: la sommità delle
+   arcate è quasi orizzontale e sono le pile ad allungarsi o ad accorciarsi col terreno. Ogni punto è [x, z, quota della sommità, tipo del tratto che parte da lui]:
+   'a' arcate; 'm' muro basso che segue il suolo (la Traiana, che arrivava al Gianicolo quasi a livello del terreno); 's' sotterraneo, non si disegna; 'p' porta della città
+   scavalcata dall'acquedotto (si disegnano due pile e l'attico che porta il canale; sotto, dal 271, sta la porta delle mura); 'q' arco di js/monumenti.js che porta il canale
+   (nessuna campata: si aggiunge solo l'attico, se il canale sta più in alto dell'arco). Le quote sono una ricostruzione, non un rilievo: tengono l'ordine noto (la Claudia più
+   alta della Marcia a porta Maggiore, la Vergine bassa sul Campo Marzio) dentro un rilievo accentuato 1,8 volte; min è l'altezza minima della sommità sul suolo dove le fonti
+   dicono che c'erano arcate. Claudia e Marcia cominciano al bordo della griglia del terreno misurato (x 436).
+   La rovina nel tempo. Documentati: il taglio del 537 (Procopio); i quattro condotti rifatti da Adriano I (Liber Pontificalis, vita di Adriano, cc. 59-65): Sabbatina cioè Traiana
+   e Iobia, rotte da vent'anni (quindi, per Duchesne, dall'assedio di Astolfo del 756 e in funzione prima), Claudia, che serviva il Laterano e portava ormai poca acqua, Vergine,
+   «piena di rovine». La Iobia qui è la Marcia: è l'identificazione di Platner e Ashby (voce Aqua Marcia, letta il 24 novembre 2026: «The supply was increased by Diocletian, from
+   whom it took the name forma Iovia (Iobia, Iopia)»; «The conduit was restored by Hadrian I (LPD I.504), Sergius II (II.91) and Nicolas I»). Altri, Lanciani e Duchesne, la
+   mettono sul ramo per le terme di Caracalla, l'Antoniniano. La fonte non dice gli anni del cantiere: qui i quattro sono finiti fra il 774 e il 779, prima della tappa del 780.
+   Ipotesi nostre: quali tratti cadono e quando, quanto fosse stato riparato dopo il 554, che l'Antoniniano (le terme di Caracalla non riaprono) e gli archi neroniani oltre il
+   Patriarchio, mai nominati dalle fonti per l'VIII secolo, non vengano più rifatti. Quei tratti, dal 537, restano in piedi senza il canale, come rovine; un tratto in piedi di
+   meno di cinque arcate accanto a un crollo cade anche lui, così non restano spezzoni isolati. I tratti rifatti nell'VIII secolo hanno il colore del mattone di recupero. */
 var acque=(function(){
-  var LINEE=[{passo:3.6, p:[[619,361,9],[420,170,8.8],[249,12,8.6],[163,62,8.45],[89,74,8.3],[40,54,8.2],[29,51,8.18]]},       // Claudia e Anio Novus fino a porta Maggiore, poi archi neroniani sul Celio fino al Palatino
-             {passo:3.2, p:[[600,330,8.5],[400,140,8.25],[255,5,8],[208.5,-53.5,7.9],[160,-84,7.8],[136,-92,7.75]]},              // Marcia, Tepula, Giulia: lungo le mura fino a porta Tiburtina, poi interrate verso le terme di Diocleziano
-             {passo:1.5, p:[[-22,-175,3.9],[-19,-150,3.85],[-13.2,-112.4,3.79],[-17,-93,3.75],[-34.8,-75.8,3.72],[-44,-74,3.7]]},      /* il punto sull'arco di Claudio, dove l'acquedotto attraversava la via Lata (Platner e Ashby, Arcus Claudii; posizione in js/monumenti.js): prima la linea passava circa 47 m più a nord */                                    // Vergine: esce dalle pendici del Pincio e attraversa il Campo Marzio
-             {passo:1.6, suolo:.5, p:[[-422,28],[-371,37.8],[-311,40.8],[-263,41.8],[-240,43.5],[-198,46],[-160,33]]},
-             /* Antoniniano (212-213), il ramo per le terme di Caracalla. Punti reali: i resti di piazza Galeria e l'arco detto di Druso (OpenStreetMap). Secondo Ashby correva interrato o su
-                sostruzioni lungo la via Latina e saliva su arcate solo presso le mura e sulla via Appia: qui si vede dove il terreno scende sotto il canale. La quota sull'arco di Druso
-                (fondo del canale a 41,4 m sul mare, circa otto metri sopra la strada) è misurata; il resto del profilo e l'arrivo alle cisterne delle terme sono ricostruiti. */
-             {passo:1.5, p:[[240,214,4.42],[175.4,200.9,4.28],[133.7,208.1,4.15],[68,175,4.02]]}];
-  // la quarta linea, la Traiana: lungo l'Aurelia (dove oggi corre l'acqua Paola, che ne riusa il percorso), poi giù dal Gianicolo fino ai mulini di Trastevere
-  var el=[], rnd=RM.casuale(537), CIMA=.48;                                     // altezza del pezzo d'arcata (arco e canale), in quota della luce
+  var LINEE=[
+    /* 0. Claudia e Anio Novus. OpenStreetMap, relazioni 17803359 e 17803361 (vie 243044347, 1000800331, 998191581; la relazione dice che i luoghi sono approssimati): lungo il
+       Mandrione, poi sul tracciato delle mura (entro 5 m) fino all'angolo a sud di porta Maggiore, poi sopra la porta (relazione 13394492), dove finisce il condotto principale. */
+    {passo:3.6, min:.8, p:[[436,228.2,9.9,'a'],[423.5,210.9,9.89,'a'],[412.2,177.7,9.88,'a'],[397.1,139.7,9.87,'a'],[389.3,127.2,9.86,'a'],[376.9,101.4,9.85,'a'],[350.6,75,9.83,'a'],
+      [336,70.6,9.82,'a'],[318,63.4,9.81,'a'],[302.1,56.8,9.8,'a'],[275.9,40.7,9.78,'a'],[264.9,29.7,9.77,'a'],[244.9,17.4,9.76,'a'],[248.12,11.04,9.75,'p'],[249.48,8.36,9.745]]},
+    /* 1. Marcia, Tepula, Giulia. Platner e Ashby, Aqua Marcia: i tre canali «are to be seen in section in the Aurelian wall, just to the right of the Porta Maior. From this point
+       they have been made use of by it as far as the Porta Tiburtina», dove passano sull'arco di Augusto; poi «begin to run underground once more» fino al castello «at the north
+       angle of the thermae Diocletiani» (OpenStreetMap, via 201568922). Fuori città è uno schema: lo stesso corridoio della Claudia, una quindicina di metri più a nord-est. */
+    {passo:3.2, min:.8, castello:true, p:[[436,224,9.65,'a'],[423,207,9.64,'a'],[413.5,176.5,9.63,'a'],[398.5,138.5,9.62,'a'],[390.5,126,9.61,'a'],[378,100.2,9.6,'a'],[351.6,73.8,9.58,'a'],
+      [337,69.4,9.57,'a'],[319,62.2,9.56,'a'],[303,55.6,9.55,'a'],[277,39.5,9.53,'a'],[262,21,9.5,'a'],[253.5,6.5,9.47,'a'],[247.55,2.85,9.46,'a'],[241.1,-12.3,9.45,'a'],
+      [209.8,-50.8,9.44,'a'],[208.34,-53.94,9.435,'p'],[207.06,-56.66,9.43,'a'],[205.75,-59.46,9.42,'s'],[160,-95,9.3,'s'],[107,-140,9.2]]},
+    /* 2. Vergine. Platner e Ashby, Aqua Virgo: sotto terra fino al Pincio, sulle arcate dalla curva presso via Capo le Case (posizione a memoria); un arco in via del Nazareno
+       (OpenStreetMap, via 1390965274); passa la via Lata sull'arco di Claudio (js/monumenti.js: l'arco porta il canale, nessuna campata fra i suoi spigoli, a 0,7 unità dal centro
+       lungo la direzione del muro); le arcate finiscono «near the north-west angle of the church of S. Ignazio», dove stava il castello (coordinate della chiesa a memoria). */
+    {passo:1.5, min:.4, castello:true, p:[[-22,-175,4.15,'s'],[-19,-150,4.12,'s'],[-16,-121,4.1,'a'],[-13.2,-112.4,4.08,'a'],[-17,-93,4.05,'a'],[-32.7,-76.41,4.01,'a'],
+      [-34.138,-75.987,4.0,'q',1.3],[-35.482,-75.593,4.0,'a'],[-36.92,-75.17,3.99,'a'],[-49,-74.5,3.97]]},
+    /* 3. Traiana (Sabbatina). OpenStreetMap, vie 1331087548-1331087558 «Acquedotto Traiano» lungo l'Aurelia antica, dove oggi corre l'acqua Paola; il castello presso la porta
+       Aurelia, poi San Pancrazio (it.wikipedia, «Acquedotto Traiano»): qui passa le mura una quarantina di metri a sud del fornice, che sta sull'angolo della cinta; poi giù dal Gianicolo verso i mulini e Trastevere (schema). */
+    {passo:1.6, suolo:.5, p:[[-382,40.2,0,'m'],[-356.4,40.6,0,'m'],[-348.3,38.3,0,'m'],[-327.1,38.4,0,'m'],[-305.4,39.4,0,'m'],[-288.4,40.1,0,'m'],[-266.4,38.4,0,'m'],[-251,44.2,0,'m'],
+      [-242.7,50.7,0,'m'],[-236.7,56,0,'m'],[-229.9,57.6,0,'m'],[-222,55.1,0,'m'],[-206,51.5,0,'m'],[-195.3,48.7,0,'m'],[-183,38,0,'m'],[-160,33,0]]},
+    /* 4. Antoniniano (212-213), il ramo per le terme di Caracalla. Platner e Ashby, Aqua Marcia: l'inizio «is uncertain», forse presso il terzo miglio della via Latina; «crossed the
+       via Appia by the so-called Arco di Druso and thence led to the great reservoir to the south-west of the thermae». Punti reali: i resti di piazza Galeria, dove le arcate escono
+       dal terreno, e l'arco di Druso (OpenStreetMap); la quota sull'arco di Druso (fondo del canale a 41,4 m sul mare, circa otto metri sopra la strada) è misurata; il resto del
+       profilo e l'arrivo alle cisterne delle terme (js/monumenti.js) sono ricostruiti. Dal 537 non torna più in uso: è un'ipotesi. */
+    {passo:1.5, min:0, morto:true, p:[[175.4,200.9,4.28,'a'],[133.7,208.1,4.15,'a'],[68,175,4.02,'a'],[53.5,165.7,3.98]]},
+    /* 5. Archi neroniani, il ramo della Claudia sul Celio, e il prolungamento di Domiziano fino al Palatino. OpenStreetMap, relazioni 13394499 «Aqua Neroniana», 1876737 e 1900744,
+       vie 200350823 e 112174949 sul Celio, 131704036 e 131704118 ai piedi del Palatino; il punto 120,70, lungo via di Santo Stefano Rotondo, è un'ipotesi. Scavalca l'arco di Dolabella
+       (js/monumenti.js). Fino al Patriarchio (x 156) è la Claudia che serve il Laterano e Adriano I la rifà; oltre, per ipotesi, resta in rovina dopo il 537. */
+    {passo:3.2, min:.8, morto:function(x){ return x<156; }, p:[[244.9,17.4,9.74,'a'],[241,16.6,9.73,'a'],[234.6,18.1,9.71,'a'],[226,22,9.69,'a'],[220,27,9.67,'a'],[208,36.3,9.63,'a'],
+      [204.5,39.3,9.62,'a'],[196.2,45.7,9.59,'a'],[186,51.3,9.56,'a'],[176.9,54.4,9.53,'a'],[156.7,57.1,9.46,'a'],[120,70,9.2,'a'],[87.1,81.7,8.9,'a'],[82.16,76.83,8.87,'q',.65],
+      [81.56,76.29,8.86,'a'],[76.1,71.7,8.82,'a'],[71.1,66.9,8.78,'a'],[37,60.4,8.45,'a'],[32,59.4,8.4,'a'],[26,54,8.3]]}];
+  var el=[], rnd=RM.casuale(537), CIMA=.48, PEZZI=new RM.Costruttore();
+  /* attico sopra una porta o sopra un arco: da sopra il fornice (alto «sotto») fino alla sommità del canale; per le porte anche le due pile ai lati del passaggio */
+  function attico(a,b,sotto,pile){
+    var mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, L=Math.hypot(b[0]-a[0],b[1]-a[1]), y0=RM.h(mx,mz)-.3, su=(a[2]+b[2])/2-y0;
+    if(su<sotto+.05) return;
+    PEZZI.dentro(mx,y0,mz,Math.atan2(-(b[1]-a[1]),b[0]-a[0]),function(B){
+      if(pile) B.scatola(.62,sotto,.95,-(L/2-.31),0,0,P.travertino).scatola(.62,sotto,.95,L/2-.31,0,0,P.travertino);
+      B.scatola(L,su-sotto,.95,0,sotto,0,P.travertino).scatola(L+.12,.07,1.05,0,su-.07,0,P.travertino);
+    });
+  }
+  /* castello d'acqua alla fine di una linea: posizione dalle fonti dette sopra, forma e misure indicative */
+  function castello(q,ultimo){
+    var y=RM.h(q[0],q[1])-.2, su=ultimo==='s'?1.1:Math.max(1.1,q[2]-y+.1);
+    PEZZI.scatola(1.3,su,1.3,q[0],y,q[1],P.mattone).scatola(1.42,.08,1.42,q[0],y+su,q[1],P.tufo);
+  }
   LINEE.forEach(function(l,li){
+    var ord=0;
     for(var i=0;i<l.p.length-1;i++){
-      var a=l.p[i], b=l.p[i+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(L/l.passo)), ang=Math.atan2(-(b[1]-a[1]),b[0]-a[0]), ux=(b[0]-a[0])/L, uz=(b[1]-a[1])/L;
+      var a=l.p[i], b=l.p[i+1], tipo=a[3], L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(L/l.passo)), ang=Math.atan2(-(b[1]-a[1]),b[0]-a[0]), ux=(b[0]-a[0])/L, uz=(b[1]-a[1])/L;
+      if(tipo==='p') attico(a,b,1.3,true);
+      if(tipo==='q') attico(a,b,a[4],false);
+      if(tipo!=='a'&&tipo!=='m'){ ord+=2; continue; }
       for(var k=0;k<n;k++){
-        var t=(k+.5)/n, x=a[0]+(b[0]-a[0])*t, z=a[1]+(b[1]-a[1])*t, len=L/n, y=RM.h(x,z), ya=RM.h(x-ux*len/2,z-uz*len/2), yb=RM.h(x+ux*len/2,z+uz*len/2), giu=l.suolo?y:Math.min(y,ya,yb);
-        var cima=l.suolo?y+l.suolo:a[2]+(b[2]-a[2])*t;
-        el.push({li:li,perso:(li===0&&i>=3)||(li===1&&x<489),x:x,z:z,ang:ang,len:len,y:giu-.2,cima:cima,suolo:!!l.suolo,pend:l.suolo?Math.atan2(yb-ya,len):0,vis:cima-y>.3,rot:rnd(),blocco:li*1000+i*100+Math.floor(k/6),blocchetto:li*1000+i*100+Math.floor(k/3)});
+        var t=(k+.5)/n, x=a[0]+(b[0]-a[0])*t, z=a[1]+(b[1]-a[1])*t, len=L/n, y=RM.h(x,z), ya=RM.h(x-ux*len/2,z-uz*len/2), yb=RM.h(x+ux*len/2,z+uz*len/2), m=tipo==='m', giu=m?y:Math.min(y,ya,yb);
+        var cima=m?y+l.suolo:Math.max(a[2]+(b[2]-a[2])*t,y+(l.min||0)), morto=typeof l.morto==='function'?l.morto(x,z):!!l.morto;
+        el.push({li:li,ord:ord++,perso:morto,x:x,z:z,ang:ang,len:len,y:giu-.2,cima:cima,suolo:m,pend:m?Math.atan2(yb-ya,len):0,vis:m||cima-y>.3,rot:rnd(),blocco:li*1000+i*100+Math.floor(k/6),blocchetto:li*1000+i*100+Math.floor(k/(morto?6:3))});
       }
     }
+    if(l.castello) castello(l.p[l.p.length-1],l.p[l.p.length-2][3]);
   });
-  var sorte={}, RIPARA=[.5,.85,.4,1,.85], INCURIA=[.3,.2,.35,.1,.2], VENTI={1:1,3:1,4:1};        // VENTI: le linee «rotte da vent'anni» del Liber Pontificalis (Marcia-Iobia, Sabbatina, e l'Antoniniano se è la Iobia)
-  // RIPARA e INCURIA, per linea: quota dei tagli riparati dopo il 554; quota dei tratti che cedono per incuria fra VI e VIII secolo
+  /* RIPARA e INCURIA, per linea: quota dei tagli riparati dopo il 554; quota dei tratti che cedono per incuria fra VI e VIII secolo. VENTI: le linee «rotte da vent'anni» del
+     Liber Pontificalis, la Marcia (Iobia) e la Sabbatina, di nuovo rotte probabilmente nell'assedio di Astolfo. I tratti in rovina (perso) non si riparano e cedono di più. */
+  var sorte={}, RIPARA=[.5,.85,.4,1,0,.5], INCURIA=[.3,.2,.35,.1,.2,.3], VENTI={1:1,3:1};
   el.forEach(function(e){
     var b=sorte[e.blocco]||(sorte[e.blocco]=[rnd(),rnd(),rnd(),rnd()]), c=sorte['c'+e.blocchetto]||(sorte['c'+e.blocchetto]=[rnd(),rnd()]);
-    e.taglio=b[0]<.4?536.5+b[1]*.48:9999;                                           // il taglio del 537 colpisce tratti contigui
-    e.ripara=e.taglio<9999&&!e.perso&&b[2]<RIPARA[e.li]?556+b[3]*50:9999;          // riparazioni dopo la Prammatica Sanzione
-    e.cede=c[0]<(e.perso?.65:INCURIA[e.li])?570+c[1]*190:9999;                     // crolli per incuria
-    e.rotto756=VENTI[e.li]&&b[1]<.45?756+b[3]*.4:9999;                    // Sabbatina e Iobia: di nuovo rotte, probabilmente nell'assedio di Astolfo
-    e.rifatto=e.perso?9999:(VENTI[e.li]?775:776)+b[3]*(VENTI[e.li]?3:13);   // Adriano I
+    e.taglio=b[0]<.4?536.5+b[1]*.48:9999;
+    e.ripara=e.taglio<9999&&!e.perso&&b[2]<RIPARA[e.li]?556+b[3]*50:9999;
+    e.cede=c[0]<(e.perso?.45:INCURIA[e.li])?570+c[1]*190:9999;
+    e.rotto756=VENTI[e.li]&&b[1]<.45?756+b[3]*.4:9999;
+    e.rifatto=e.perso?9999:774+b[3]*5.5;
   });
   el=el.filter(function(e){ return e.vis; }); RM.campateAcquedotti=el;          // sotto le arcate non si costruisce (js/citta.js)
-  /* arcata: due mezze pile, arco a tutto sesto, canale. Pila: le due mezze pile sotto l'imposta, allungate fino al suolo */
-  var A=new RM.Costruttore(), r=.3, c=.36, k, a0, a1;
-  [-1,1].forEach(function(s){ A.scatola(.2,c,1,s*.4,0,0,P.tufo); });
-  for(k=0;k<8;k++){
-    a0=PI*k/8; a1=PI*(k+1)/8; var x0=r*Math.cos(a0), x1=r*Math.cos(a1), h0=r*Math.sin(a0), h1=r*Math.sin(a1);
-    A.quad([x0,h0,.5],[x1,h1,.5],[x1,c,.5],[x0,c,.5],P.tufo).quad([x0,h0,-.5],[x1,h1,-.5],[x1,c,-.5],[x0,c,-.5],P.tufo).quad([x0,h0,.5],[x1,h1,.5],[x1,h1,-.5],[x0,h0,-.5],P.ombra);
+  /* arcata: due mezze pile, arco a tutto sesto, canale; senza canale per i tratti in rovina. Pila: le due mezze pile sotto l'imposta, allungate fino al suolo */
+  var r=.3, c=.36, k, a0, a1;
+  function arcata(canale){
+    var A=new RM.Costruttore();
+    [-1,1].forEach(function(s){ A.scatola(.2,c,1,s*.4,0,0,P.tufo); });
+    for(var k=0;k<8;k++){
+      a0=PI*k/8; a1=PI*(k+1)/8; var x0=r*Math.cos(a0), x1=r*Math.cos(a1), h0=r*Math.sin(a0), h1=r*Math.sin(a1);
+      A.quad([x0,h0,.5],[x1,h1,.5],[x1,c,.5],[x0,c,.5],P.tufo).quad([x0,h0,-.5],[x1,h1,-.5],[x1,c,-.5],[x0,c,-.5],P.tufo).quad([x0,h0,.5],[x1,h1,.5],[x1,h1,-.5],[x0,h0,-.5],P.ombra);
+    }
+    if(canale) A.scatola(1,CIMA-c,1.1,0,c,0,P.travertino);
+    return A.geometria();
   }
-  A.scatola(1,CIMA-c,1.1,0,c,0,P.travertino);
   var Pl=new RM.Costruttore(); [-1,1].forEach(function(s){ Pl.scatola(.2,1,1,s*.4,0,0,P.tufo); });
   var R=new RM.Costruttore().scatola(.42,.5,.95,0,0,0,P.tufo); R.quad([-.21,.5,.47],[.21,.5,.47],[.21,.5,-.47],[-.21,.95,-.47],P.tufo).tri([-.21,.5,.47],[-.21,.95,-.47],[-.21,.5,-.47],P.tufo);   // moncone
-  var mat=RM.matPietra(classe('acquedotti')), N=el.length, arcate=istanze(A.geometria(),mat,N*2), pile=istanze(Pl.geometria(),mat,N), monconi=istanze(R.geometria(),mat,N), ultimo=-1, tinta=new THREE.Color(), MATTONE=RM.col(0xe4c6b2), BIANCO=new THREE.Color(1,1,1);
+  var mat=RM.matPietra(classe('acquedotti')), N=el.length, arcate=istanze(arcata(true),mat,N*2), spente=istanze(arcata(false),mat,N*2), pile=istanze(Pl.geometria(),mat,N), monconi=istanze(R.geometria(),mat,N), ultimo=-1, tinta=new THREE.Color(), MATTONE=RM.col(0xe4c6b2), BIANCO=new THREE.Color(1,1,1);
+  var pezzi=PEZZI.maglia(mat); pezzi.castShadow=pezzi.receiveShadow=true; RM.scene.add(pezzi);
   function quale(c){ var e=el[c.instanceId%N]; return e&&e.li===4?'antoniniano':'acquedotti'; }
-  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:arcate,id:quale},{maglia:pile,id:quale},{maglia:monconi,id:quale}]);
-  for(k=0;k<N;k++) monconi.setColorAt(k,BIANCO);                                 // le tre maglie condividono il materiale: tutte devono avere il colore per istanza
+  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:arcate,id:quale},{maglia:spente,id:quale},{maglia:pile,id:quale},{maglia:monconi,id:quale},{maglia:pezzi,id:'acquedotti'}]);
+  for(k=0;k<N;k++) monconi.setColorAt(k,BIANCO);                                 // le maglie condividono il materiale: tutte devono avere il colore per istanza
   function zero(maglia,j){ d.scale.set(0,0,0); d.updateMatrix(); maglia.setMatrixAt(j,d.matrix); }
+  function vicino(i,j){ return j>=0&&j<el.length&&el[j].li===el[i].li&&Math.abs(el[j].ord-el[i].ord)===1; }
   return function(anno){
     var passo=Math.round(anno*4); if(passo===ultimo) return; ultimo=passo;
-    el.forEach(function(e,j){
+    var st=el.map(function(e){
       var riparato=e.ripara<9999, perIncuria=e.cede<9999&&!(riparato&&e.cede<e.ripara);        // un crollo precedente alla riparazione viene rimesso su con quella
-      var giuTaglio=anno>=e.taglio&&!(anno>=e.ripara), giuIncuria=anno>=e.cede&&(perIncuria||anno<e.ripara), caduto=giuTaglio||giuIncuria||anno>=e.rotto756, daQuando=giuTaglio?e.taglio:giuIncuria?e.cede:e.rotto756;
-      var rifatto=anno>=e.rifatto, toppa=rifatto&&((e.taglio<9999&&!riparato)||(perIncuria&&e.cede<e.rifatto)||e.rotto756<9999), rotto=caduto&&!rifatto, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
-      d.rotation.set(0,e.ang,0);
-      if(rotto){ zero(arcate,j); zero(arcate,N+j); zero(pile,j); }
-      else if(e.suolo){ d.rotation.z=e.pend; d.position.set(e.x,e.y,e.z); d.scale.set(e.len/Math.cos(e.pend)+.05,H/CIMA,larga); d.updateMatrix(); arcate.setMatrixAt(j,d.matrix); d.rotation.z=0; zero(arcate,N+j); zero(pile,j); }   // arcatelle basse, schiacciate, inclinate col pendio
-      else{
-        d.position.set(e.x,e.cima-T,e.z); d.scale.set(e.len,e.len,larga); d.updateMatrix(); arcate.setMatrixAt(j,d.matrix);
-        if(Hp>.02){ d.position.y=e.y; d.scale.set(e.len,Hp,larga); d.updateMatrix(); pile.setMatrixAt(j,d.matrix); } else zero(pile,j);
-        if(Hp>T*1.7){ d.position.y=e.y+Hp*.5-T*.5; d.scale.set(e.len,e.len,larga); d.updateMatrix(); arcate.setMatrixAt(N+j,d.matrix); } else zero(arcate,N+j);   // le arcate più alte hanno un secondo ordine
-      }
-      if(rotto){ d.position.set(e.x-Math.cos(e.ang)*e.len/2,e.y,e.z+Math.sin(e.ang)*e.len/2); d.scale.set(e.len,H*(.25+.6*e.rot)*(1-.45*RM.sfuma(0,220,anno-daQuando)),larga); d.updateMatrix(); monconi.setMatrixAt(j,d.matrix); }
-      else zero(monconi,j);
-      tinta.copy(toppa?MATTONE:BIANCO); arcate.setColorAt(j,tinta); arcate.setColorAt(N+j,tinta); pile.setColorAt(j,tinta);
+      var giuTaglio=anno>=e.taglio&&!(anno>=e.ripara), giuIncuria=anno>=e.cede&&(perIncuria||anno<e.ripara), caduto=giuTaglio||giuIncuria||anno>=e.rotto756;
+      var rifatto=anno>=e.rifatto;
+      return {rotto:caduto&&!rifatto, da:giuTaglio?e.taglio:giuIncuria?e.cede:e.rotto756, toppa:rifatto&&((e.taglio<9999&&!riparato)||(perIncuria&&e.cede<e.rifatto)||e.rotto756<9999)};
     });
-    arcate.instanceMatrix.needsUpdate=true; pile.instanceMatrix.needsUpdate=true; monconi.instanceMatrix.needsUpdate=true; arcate.instanceColor.needsUpdate=true; pile.instanceColor.needsUpdate=true;
+    /* niente spezzoni: un tratto in piedi di meno di cinque arcate, chiuso da un crollo almeno da un lato, cade anche lui */
+    for(var i=0;i<el.length;){
+      if(st[i].rotto){ i++; continue; }
+      var j=i; while(vicino(j,j+1)&&!st[j+1].rotto) j++;
+      var prima=vicino(i,i-1)&&st[i-1].rotto, dopo=vicino(j,j+1)&&st[j+1].rotto;
+      if(j-i<4&&(prima||dopo)){ for(var q=i;q<=j;q++){ st[q].rotto=true; st[q].da=prima?st[i-1].da:st[j+1].da; } }
+      i=j+1;
+    }
+    el.forEach(function(e,j){
+      var s=st[j], rotto=s.rotto, spenta=e.perso&&anno>=537, ar=spenta?spente:arcate, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
+      d.rotation.set(0,e.ang,0);
+      zero(spenta?arcate:spente,j); zero(spenta?arcate:spente,N+j);
+      if(rotto){ zero(ar,j); zero(ar,N+j); zero(pile,j); }
+      else if(e.suolo){ d.rotation.z=e.pend; d.position.set(e.x,e.y,e.z); d.scale.set(e.len/Math.cos(e.pend)+.05,H/CIMA,larga); d.updateMatrix(); ar.setMatrixAt(j,d.matrix); d.rotation.z=0; zero(ar,N+j); zero(pile,j); }
+      else{
+        d.position.set(e.x,e.cima-T,e.z); d.scale.set(e.len,e.len,larga); d.updateMatrix(); ar.setMatrixAt(j,d.matrix);
+        if(Hp>.02){ d.position.y=e.y; d.scale.set(e.len,Hp,larga); d.updateMatrix(); pile.setMatrixAt(j,d.matrix); } else zero(pile,j);
+        if(Hp>T*1.7){ d.position.y=e.y+Hp*.5-T*.5; d.scale.set(e.len,e.len,larga); d.updateMatrix(); ar.setMatrixAt(N+j,d.matrix); } else zero(ar,N+j);
+      }
+      if(rotto){ d.position.set(e.x-Math.cos(e.ang)*e.len/2,e.y,e.z+Math.sin(e.ang)*e.len/2); d.scale.set(e.len,H*(.25+.6*e.rot)*(1-.45*RM.sfuma(0,220,anno-s.da)),larga); d.updateMatrix(); monconi.setMatrixAt(j,d.matrix); }
+      else zero(monconi,j);
+      tinta.copy(s.toppa?MATTONE:BIANCO); arcate.setColorAt(j,tinta); arcate.setColorAt(N+j,tinta); spente.setColorAt(j,tinta); spente.setColorAt(N+j,tinta); pile.setColorAt(j,tinta);
+    });
+    arcate.instanceMatrix.needsUpdate=true; spente.instanceMatrix.needsUpdate=true; pile.instanceMatrix.needsUpdate=true; monconi.instanceMatrix.needsUpdate=true;
+    arcate.instanceColor.needsUpdate=true; spente.instanceColor.needsUpdate=true; pile.instanceColor.needsUpdate=true;
   };
 })();
 
@@ -227,21 +294,8 @@ function rampe(B,q,rot,mezzo,yTop,larga,colore){
 }
 /* 312: il ponte provvisorio di Massenzio accanto al ponte Milvio. Zosimo II 15-16 (traduzione del 1814): un ponte di travi in due metà, unite al centro da ferri da togliere, che cede
    sotto i fuggiaschi; Eusebio, Storia ecclesiastica IX 9, 5-7: un ponte di barche; Lattanzio 44, 9: il ponte alle spalle di Massenzio «viene tagliato». Dove fosse esattamente non è scritto:
-   qui una passerella di travi su cavalletti, una trentina di metri a monte del ponte di pietra, visibile solo nella tappa del 312. È uno schema, detto nella didascalia (milvio312 in js/dati.js). */
-(function(){
-  var curva=RM.curvaFiume, p=[-152,-479], m=1e9, tm=0, i, q, dd;
-  for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); dd=Math.hypot(q.x-p[0],q.z-p[1]); if(dd<m){ m=dd; tm=i/2400; } }
-  var c0=curva.getPoint(tm), t=tm;
-  while(t>0.0005){ t-=0.0002; q=curva.getPoint(t); if(Math.hypot(q.x-c0.x,q.z-c0.z)>=3.2) break; }      // circa 30 m lungo il fiume
-  var tg=curva.getTangent(t), B=new RM.Costruttore(), rp=Math.atan2(-tg.x,-tg.z);
-  B.dentro(q.x,-.5,q.z,rp,function(B){
-    rampe(B,q,rp,7.8,1,.4,P.tronco);
-    B.scatola(15.6,.1,.8,0,.9,0,P.tronco).scatola(15.6,.22,.05,0,1,.38,P.tronco).scatola(15.6,.22,.05,0,1,-.38,P.tronco);      // impalcato e parapetti
-    for(var x=-7;x<=7.01;x+=1.4){ B.scatola(.14,.95,.14,x,0,.3,P.tronco).scatola(.14,.95,.14,x,0,-.3,P.tronco); }      // cavalletti nel fiume
-  });
-  var g=B.maglia(RM.matPietra()); g.visible=false; RM.scene.add(g);
-  RM.moduli.push(function(anno){ g.visible=anno>=311.6&&anno<313; });
-})();
+   qui una passerella di travi su cavalletti, una trentina di metri a monte del ponte di pietra, visibile solo nella tappa del 312. È uno schema, detto nella didascalia (milvio312 in js/dati.js).
+   Dal 24 novembre 2026 la passerella, con le sue rampe, sta in js/scene-tappe.js (fuga312), in due metà che cedono al centro. */
 
 /* avanzamento del cantiere delle mura (0-1): aperto nel 271, il grosso fatto alla morte di Aureliano, finito sotto Probo (vedi sopra); alla tappa del 271 è appena cominciato */
 var CANTIERE_MURA=[[270.6,0],[271,.3],[275,.85],[280,1]];

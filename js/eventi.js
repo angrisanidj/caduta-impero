@@ -104,14 +104,16 @@ function posaPiena(){
    a nord: il verso è quello giusto). Con meno animazioni la piena c'è subito, ferma. */
 var ondaAnim=null, MENO_ONDA=window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches && !/[?&]moto=1/.test(location.search);
 var ONDA=(function(){ var cf=RM.curvaFiume, a=0, b=1, ma=1e9, mb=1e9, i, q, d; for(i=0;i<=600;i++){ q=cf.getPoint(i/600); d=Math.hypot(q.x+152,q.z+479); if(d<ma){ ma=d; a=i/600; } d=Math.hypot(q.x+125,q.z-480); if(d<mb){ mb=d; b=i/600; } } return [a-.02,b+.06]; })();      // da ponte Milvio a valle di San Paolo
-RM.ondaPiena=function(ritardo){ if(MENO_ONDA) return; ondaAnim={t0:performance.now()+(ritardo||0)}; };
+/* dal 24 novembre 2026 il tempo dell'ondata avanza con il dt di RM.frame: quando la scena non si vede si ferma, e chi apre la città dopo non la trova già passata.
+   La fa partire la regia della città (js/scene-tappe.js), anche dal bottone «Guarda la città» del telefono */
+RM.ondaPiena=function(ritardo){ if(MENO_ONDA) return; ondaAnim={t:-(ritardo||0)/1000}; };
 var ondaFissa=/[?&]onda=([0-9.]+)/.exec(location.search);      // per le prove senza finestra: ?onda=0.45 ferma il fronte in quel punto del fiume
 function ondaOra(){
   if(ondaFissa) return +ondaFissa[1];
-  if(!ondaAnim) return 2; var t=(performance.now()-ondaAnim.t0)/1000; if(t<0) return ONDA[0];
+  if(!ondaAnim) return 2; var t=ondaAnim.t; if(t<0) return ONDA[0];
   if(t>7.5){ ondaAnim=null; return 2; } var k=Math.min(1,t/7); k=k*k*(3-2*k); return ONDA[0]+(ONDA[1]-ONDA[0])*k;
 }
-RM.frame.push(function(){ if(ondaAnim && piena) matPiena.uniforms.onda.value=ondaOra(); });
+RM.frame.push(function(dt){ if(ondaAnim){ ondaAnim.t+=dt; if(piena) matPiena.uniforms.onda.value=ondaOra(); } });
 function pienaEVelo(){
   var qp=0, qv=0; EV.forEach(function(ev){ if(ev.piena) qp=Math.max(qp,ev.q); if(ev.velo) qv=Math.max(qv,ev.q); });
   if(qp>.01 && !piena) posaPiena();

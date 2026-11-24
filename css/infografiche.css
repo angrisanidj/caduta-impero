@@ -1470,3 +1470,73 @@ rect.ig-bb-leg-r{stroke:rgba(0,0,0,.2)}
 .ig-legenda.fitta{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px}
 .ig-legenda.fitta .ig-chip{font-size:11px;line-height:1.2;align-items:flex-start}
 .ig-legenda.fitta .ig-chip i{margin-top:1px;width:11px;height:11px}
+
+/* ---------- Poitiers (js/infografiche.js, disegnaPoitiers; 24 novembre 2026) ---------- */
+/* la carta e il registro */
+.ig-po-ico-l{fill:none;stroke:#2F8A75;stroke-width:2.4;stroke-linecap:round}
+.ig-po-ico-p{fill:#2F8A75}
+.ig-po-ico-meta{fill:none;stroke:#2F8A75;stroke-width:1.6;stroke-dasharray:3 2}
+.ig-po-testa{transition:opacity .5s}
+.ig-po-testa.via{opacity:0}
+.ig-po-due{opacity:0;transition:opacity .7s}
+.ig-po-due.vis{opacity:1}
+.ig-po-racc-b{fill:#C9A14A}
+.ig-po-racc.franca .ig-po-racc-b{fill:#405D83}
+/* il campo */
+.ig-po-colle-l{fill:#C3BBA4}
+.ig-po-colle-v{fill:#ADA387}
+.ig-po-solco{stroke:rgba(70,56,34,.13);stroke-width:1}
+.ig-po-telo{fill:#E6DBC1;stroke:#7E6C50;stroke-width:1;stroke-linejoin:round;transition:fill 1s,opacity 1s}
+.ig-po-palo{stroke:#5A4630;stroke-width:1.2;stroke-linecap:round}
+.ig-po-porta{fill:#3A2E22;transition:fill .8s}
+.ig-po-tenda.vuota .ig-po-porta{fill:#F6E2B4}
+.ig-po-tenda.vuota .ig-po-telo{fill:#F1E9D6;opacity:.82}
+.ig-poitiers .ig-gu .ig-gu-c,.ig-poitiers .ig-gu .ig-gu-mant,.ig-poitiers .ig-gu .ig-gu-scudo{transition:fill 1.6s ease,stroke 1.6s ease}
+.ig-gu.franco .ig-gu-mant{fill:#405D83}
+.ig-gu.arabo .ig-gu-mant{fill:#2F8A75}
+.ig-gu.arabo.re .ig-gu-mant{fill:#48A48C;stroke:#E2B24A;stroke-width:3}
+.ig-po-gelato .ig-gu.franco .ig-gu-c{fill:#58788F}
+.ig-po-gelato .ig-gu.franco .ig-gu-mant{fill:#9CC3DA}
+.ig-po-gelato .ig-gu.franco .ig-gu-scudo{fill:#D4EAF6;stroke:#58788F}
+.ig-po-alone{opacity:0;transition:opacity 1.8s ease;pointer-events:none}
+.ig-po-alone.vis{opacity:1}
+.ig-po-gelo{opacity:0;transition:opacity 1.2s}
+.ig-po-gelo.vis{opacity:1}
+.ig-po-scint{fill:#F4FBFF;animation:ig-po-brilla 2.4s ease-in-out infinite}
+@keyframes ig-po-brilla{0%,100%{opacity:.1}50%{opacity:1}}
+.ig-po-a{opacity:0;transition:opacity .5s}
+.ig-po-a.vis{opacity:1}
+.ig-po-polvere{fill:#B3A07C;pointer-events:none}
+.ig-po-buio{fill:#070B18;pointer-events:none}
+.ig-omino.ig-po-fug{fill:#0E0B08;stroke:rgba(226,190,110,.85);stroke-width:.9}
+.ig-po-et-fr{fill:#2E4566}
+.ig-po-et-ar{fill:#1F5F50}
+.ig-po-croce-f{fill:#fff;stroke:#2F8A75;stroke-width:2}
+.ig-ca-capo-t.ig-po-verde{fill:#1F5F50}
+.ig-po-cerca{fill:none;stroke:#7A5617;stroke-width:1.4;stroke-dasharray:4 3;opacity:0;transition:opacity .5s;animation:ig-po-gira 2s linear infinite}
+.ig-po-cerca.vis{opacity:1}
+@keyframes ig-po-gira{to{stroke-dashoffset:-14}}
+.ig-po-fagotto{fill:#B88A4A;stroke:#3A2614;stroke-width:1}
+.ig-po-chip{fill:rgba(251,246,234,.9);stroke:rgba(34,28,24,.1)}
+.ig-po-dot{fill:none;stroke:#7A5617;stroke-width:1.4;transition:fill .3s}
+.ig-po-dot.on{fill:#C9A14A}
+.ig-po-cart{fill:rgba(251,246,234,.94);stroke:rgba(34,28,24,.1);filter:drop-shadow(0 4px 10px rgba(14,10,6,.18))}
+/* le schede finali */
+.ig-po-card{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-po-card.vis{opacity:1;transform:none}
+.ig-po-card-r{fill:rgba(255,253,248,.95);stroke:rgba(34,28,24,.12);filter:drop-shadow(0 8px 16px rgba(34,28,24,.1))}
+.ig-po-big{font-family:var(--cap);font-weight:700;fill:var(--porpora,#7A1F2B);font-variant-numeric:tabular-nums}
+.ig-po-corpo{font-family:var(--serif);font-style:italic;fill:#3A322B}
+.ig-po-fonte{font-family:var(--ui);fill:#4A4038}
+.ig-po-barra{stroke:#7A1F2B;stroke-width:3;stroke-linecap:round;opacity:0}
+.ig-po-barra.vis{opacity:1}
+.ig-po-card.scura .ig-po-card-r{fill:#4A1A22;stroke:rgba(226,194,122,.4)}
+.ig-po-card.scura .ig-m-testata{fill:#E2C27A}
+.ig-po-gq{font-family:var(--serif);font-style:italic;fill:#F6EBD3}
+.ig-po-gq2{font-family:var(--serif);font-style:italic;fill:#DCCBAA}
+.ig-po-gchi{font-family:var(--ui);fill:#CDB894}
+.ig-po-gchi.chiaro{fill:#6B5F53}
+.ig-po-lt{font-family:var(--serif);fill:#2A231D}
+.ig-po-lt.forte{font-weight:700;fill:#7A1F2B}
+.ig-po-sopr{font-family:var(--serif);font-style:italic;fill:#2A231D}
+@media (prefers-reduced-motion:reduce){ .ig-po-scint,.ig-po-cerca{animation:none} }

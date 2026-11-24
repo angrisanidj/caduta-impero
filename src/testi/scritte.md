@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 24/11/2026, 09:51:02.
+Generato da `src/testi.mjs` il 24/11/2026, 10:02:07.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 24/11/2026, ore 09:27
+[pagina.52] Versione del 24/11/2026, ore 09:51
 
 
 ## 2. Gli atti
@@ -1792,7 +1792,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T49-711.luogo2.cartagine] presa dagli Arabi nel 698
 
-[T49-711.luogo3.poitiers] nel 732 Carlo Martello ferma una spedizione araba diretta a Tours (il luogo esatto è incerto)
+[T49-711.luogo3.poitiers] nel 732 o nel 733 Carlo Martello ferma una spedizione araba diretta a Tours (il luogo esatto è incerto)
 
 [T49-711.passo1.anno] 602-628
 
@@ -2150,7 +2150,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.tombe476] Dal V secolo a Roma si cominciano a seppellire i morti anche dentro le mura. All'inizio accade di rado. Dalla seconda metà del VI secolo diventa la pratica abituale. Gli archeologi hanno individuato più di ottanta luoghi di sepoltura. Alcuni si trovano attorno al Colosseo e lungo la strada dei magazzini sul Tevere. Altri, più tardi, sul Palatino e nel recinto delle terme di Caracalla. Le tombe sono semplici fosse, spesso coperte di tegole.
 
-[evento.milvio312] 28 ottobre 312 · A ponte Milvio Costantino sconfigge Massenzio, che annega nel Tevere durante la fuga. Dopo la vittoria Costantino scioglie il corpo dei pretoriani, i soldati della guardia imperiale. Sul colle del Celio viene demolita la caserma della guardia a cavallo. Al suo posto sorgerà la basilica del Laterano. Nella ricostruzione, accanto al ponte di pietra si vede un passaggio provvisorio. La sua forma e la sua posizione sono ipotetiche.
+[evento.milvio312] 28 ottobre 312 · A ponte Milvio Costantino sconfigge Massenzio, che annega nel Tevere durante la fuga. Dopo la vittoria Costantino scioglie il corpo dei pretoriani, i soldati della guardia imperiale. Sul colle del Celio viene demolita la caserma della guardia a cavallo. Al suo posto sorgerà la basilica del Laterano. Nella ricostruzione, in rosso i cavalieri di Costantino, in chiaro e in grigio i soldati di Massenzio in fuga. La battaglia si combatte più a nord, a Saxa Rubra: qui si vede la fuga verso il ponte. Le fonti non dicono lo stesso del ponte. Per Lattanzio è interrotto, per Eusebio è fatto di barche, per Zosimo è di travi e cede sotto i fuggiaschi. La scena segue Zosimo: forma e posto del passaggio, numeri e tempi sono ipotetici.
 
 [evento.visita357] 357 · Costanzo II visita Roma per la prima volta. Al Circo Massimo fa innalzare un secondo obelisco sulla barriera centrale attorno alla quale girano i carri durante le corse. Dalla sede del Senato fa rimuovere l'altare della dea Vittoria.
 
@@ -2204,9 +2204,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.costante663] 5-17 luglio 663 · Costante II è l'ultimo imperatore a visitare Roma finché l'impero la governa. In dodici giorni fa smontare il bronzo dei monumenti, comprese le tegole del Pantheon.
 
-[evento.assedio756] Gennaio-marzo 756 · I Longobardi di Astolfo assediano Roma per tre mesi e devastano i dintorni. Il papa chiama i Franchi.
+[evento.assedio756] Gennaio-marzo 756 · I Longobardi di Astolfo assediano Roma per tre mesi e devastano i dintorni. Il papa chiama i Franchi. Nella ricostruzione, i casali bruciati e i campi anneriti fuori dalle porte sono una scelta del modello: le fonti non dicono dove furono i danni. Due acquedotti restano rotti per vent'anni, forse proprio da questo assedio.
 
-[evento.natale800] 25 dicembre 800 · In San Pietro papa Leone III incorona imperatore Carlo Magno, re dei Franchi. Un mese prima, il 24 novembre, il papa lo aveva accolto sui gradini della basilica. Secondo gli Annali dei Franchi, le bandiere della città gli erano state mandate incontro e lungo la strada gruppi di pellegrini e di cittadini cantavano le sue lodi.
+[evento.natale800] 25 dicembre 800 · In San Pietro papa Leone III incorona imperatore Carlo Magno, re dei Franchi. Un mese prima, il 24 novembre, il papa lo aveva accolto sui gradini della basilica. Secondo gli Annali dei Franchi, le bandiere della città gli erano state mandate incontro e lungo la strada gruppi di pellegrini e di cittadini cantavano le sue lodi. Arrivato, Carlo scende da cavallo e sale i gradini. Nella ricostruzione il corteo arriva da ponte Sant'Angelo lungo il portico: le fonti non dicono da quale strada venisse. Numeri e colori sono nostri.
 
 [evento.terremoto801] 30 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi.
 

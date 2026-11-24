@@ -3024,9 +3024,13 @@ function disegnaAcquedotti(svg,S,W,H){
   el('polyline',{points:TP.fiume.map(B).map(xy).join(' '),'class':'ig-aq-tevere-a'},carta); el('polyline',{points:TP.fiume.map(B).map(xy).join(' '),'class':'ig-aq-tevere'},carta);
   el('path',{d:'M'+TP.mura.map(B).map(xy).join('L')+'Z','class':'ig-aq-mura'},carta);
   /* gli acquedotti del modello (js/mura.js, LINEE): Claudia, Marcia, Vergine, Traiana, Antoniniano */
-  var LINEE=[{n:'Claudia',p:[[619,361],[420,170],[249,12],[163,62],[89,74],[40,54],[29,51]],r:4,taglio:[300,59]},{n:'Marcia',p:[[600,330],[400,140],[255,5],[208.5,-53.5],[160,-84],[136,-92]],r:0,taglio:[345,88]},
-    {n:'Vergine',p:[[-22,-175],[-19,-150],[-13.2,-112.4],[-17,-93],[-34.8,-75.8],[-44,-74]],r:6,taglio:[-21,-163]},{n:'Traiana',p:[[-422,28],[-371,37.8],[-311,40.8],[-263,41.8],[-240,43.5],[-198,46],[-160,33]],r:7,taglio:[-372,38]},
-    {n:'Antoniniano',p:[[240,214],[175.4,200.9],[133.7,208.1],[68,175]],r:4,taglio:[222,210]}];
+  /* i tracciati sono quelli della città in 3D (LINEE in js/mura.js, rifatti il 24 novembre 2026 su OpenStreetMap): la Claudia arriva a porta Maggiore e prosegue con gli archi
+     neroniani sul Celio; la Marcia segue le mura fino a porta Tiburtina; la Vergine finisce al suo castello nel Campo Marzio */
+  var LINEE=[{n:'Claudia',p:[[436,228.2],[423.5,210.9],[412.2,177.7],[397.1,139.7],[389.3,127.2],[376.9,101.4],[350.6,75],[336,70.6],[318,63.4],[302.1,56.8],[275.9,40.7],[264.9,29.7],[244.9,17.4],[241,16.6],[234.6,18.1],[226,22],[220,27],[208,36.3],[204.5,39.3],[196.2,45.7],[186,51.3],[176.9,54.4],[156.7,57.1],[120,70],[87.1,81.7],[82.16,76.83],[76.1,71.7],[71.1,66.9],[37,60.4],[32,59.4],[26,54]],r:4,taglio:[302.1,56.8]},
+    {n:'Marcia',p:[[436,224],[423,207],[413.5,176.5],[398.5,138.5],[390.5,126],[378,100.2],[351.6,73.8],[337,69.4],[319,62.2],[303,55.6],[277,39.5],[262,21],[253.5,6.5],[247.55,2.85],[241.1,-12.3],[209.8,-50.8],[205.75,-59.46]],r:0,taglio:[351.6,73.8]},
+    {n:'Vergine',p:[[-16,-121],[-13.2,-112.4],[-17,-93],[-32.7,-76.41],[-36.92,-75.17],[-49,-74.5]],r:6,taglio:[-14.6,-116.7]},
+    {n:'Traiana',p:[[-382,40.2],[-356.4,40.6],[-348.3,38.3],[-327.1,38.4],[-305.4,39.4],[-288.4,40.1],[-266.4,38.4],[-251,44.2],[-242.7,50.7],[-236.7,56],[-229.9,57.6],[-222,55.1],[-206,51.5],[-195.3,48.7],[-183,38],[-160,33]],r:7,taglio:[-356.4,40.6]},
+    {n:'Antoniniano',p:[[175.4,200.9],[133.7,208.1],[68,175],[53.5,165.7]],r:4,taglio:[154.5,204.5]}];
   var gL=el('g',null,carta);
   LINEE.forEach(function(l,j){ var pts=l.p.map(B), d='M'+pts.map(xy).join(' L');
     l.g=el('g',{'class':'ig-aq-linea'},gL); el('path',{d:d,'class':'ig-aq-condotto'},l.g);
@@ -3307,6 +3311,302 @@ function disegnaBarbari(svg,S,W,H){
   S.battute=fasi.map(function(f,j){ return {t:T[j],anno:f[0],testo:f[1]}; });
 }
 
+/* ======================================================================
+   Poitiers (732 o 733)
+   Aggiunta il 24 novembre 2026, nella tappa del 711, accanto a «Le navi». Quattro quadri: la spedizione sulla carta della pagina; il campo, dai sette giorni all'alba delle
+   tende vuote; ciò che non sappiamo; le due letture. Fonti lette il 24 novembre 2026:
+   - Cronaca del 754, edizione Mommsen, Chronica minora II (MGH, Auctores antiquissimi XI), pp. 361-362, testo di archive.org «chronicaminorasa11momm», e la traduzione
+     inglese pubblicata su aymennjawad.org/23270. Munnuza «ex Maurorum gente» fa pace con i Franchi e si ribella agli Arabi di Spagna; Eudo gli aveva dato la figlia «causa federis …
+     ob persecutionem Arabum differendam»; Abd al-Rahman lo assedia «in Cerritanensem [oppidum]» (in margine «Cerritanie»); Munnuza si getta «ab alto pinnaculo»; la testa e la figlia
+     di Eudo sono portate al re, che la manda «maria transvectans» al califfo. Poi «montana Vacceorum dissecans»; Eudo, «ultra fluvio nomine Garonna vel Dornoniam», fugge: «solus deus
+     numerum morientium vel pereuntium recognoscat»; «Turniensem eclesiam … depredare desiderat»; «consulem Francie interioris Austrie nomine Carrulum, virum ab ineunte etate belligerum
+     et rei militaris expertum ab Eudone premonitum»; «dum pene per septem dies utrique de pugne conflictu excruciant, sese postremo in aciem parant»; «gentes septentrionales in ictu oculi
+     ut paries immobiles permanentes sicut et zona rigoris glacialiter manent adstricti. Arabes gladio enecant»; «gens Austrie mole membrorum prevalida et ferrea manu per ardua
+     pectorabiliter ferientes regem inventum exanimant»; «statim nocte prelio dirimente … videntes castra Arabum innumerabilia ad pugnam sese reservant»; all'alba «prospiciunt Europenses
+     Arabum temtoria ordinata … nescientes cuncta esse pervacua»; gli esploratori trovano che «omnes tacite pernoctando cuneo stricto diffugiunt repatriando»; i Franchi temono agguati
+     «per semitas», non inseguono e «spolias tantum et manubias decenter divisas in suas se leti recipiunt patrias». La cronaca non dà l'anno della battaglia, il luogo né numeri.
+   - Continuazione di Fredegario, Recueil des historiens des Gaules II (nuova edizione 1869), pp. 454-455, capitolo CVIII (nell'edizione di Krusch è il capitolo 13: non verificato
+     sull'edizione), testo di archive.org: «Eudone Duce a jure foederis recedente», Carlo passa la Loira e lo mette in fuga; Eudo «cernens se superatum atque derisum, gentem perfidam
+     Sarracenorum ad auxilium contra Carlum Principem et gentem Francorum excitavit»; «cum Rege suo, Abdirama nomine, Garonnam transeunt, Burdegalensem urbem pervenerunt, ecclesiis igne
+     concrematis … usque Pictavis progressi sunt, ubi basilica sancti Hilarii igne concremata … ad domum beatissimi Martini evertendam destinant. Contra quos Carlus Princeps audacter aciem
+     instruit … Christo auxiliante, tentoria eorum subvertit … interfectoque Rege eorum, Abdirama nomine». Nota (k) del Recueil: già il Pagi riteneva inventato l'invito di Eudo, scritto
+     «in gratiam Caroli» dall'anonimo che aggiunse questa parte «jussu Childebrandi Comitis».
+   - Cronaca di Moissac (arriva all'818), stesso volume: «per Pampelonam et montes Pireneos», l'assedio di Bordeaux, Eudo battuto «super Garonna fluvio», la battaglia «in suburbio
+     Pictavensi», «Rex Abderaman cecidit». Il numero dell'anno, nella scansione, non si legge con sicurezza.
+   - Un rifacimento più tardo delle storie dei re dei Franchi, dal manoscritto edito da Labbe (stesso volume, p. 574): «non longe a Pictavis» e «extunc omnes coeperunt eum cognominare
+     Martellum; quia sicut martellus cunctum ferrum subigit, sic ipse, Domino adjuvante, cuncta praelia frangebat».
+   - Edward Gibbon, Decline and Fall, capitolo 52 (edizione Bury, volume VI, archive.org «historyofdecl06gibb»): «Perhaps the interpretation of the Koran would now be taught in the
+     schools of Oxford»; «From such calamities was Christendom delivered by the genius and fortune of one man»; i 375.000 morti contro 1.500 Franchi sono «this incredible tale», che
+     secondo la sua nota riferiscono Paolo Diacono e il Liber Pontificalis (questi due testi non sono stati letti).
+   Dalla pagina: gli stati della carta nel 732 (passo del 732 in PASSI_CARTA[711], js/dati.js) e la Settimania araba fino al 759 (revisione dei confini in testa a js/dati.js).
+   Schemi, detti nel disegno e nelle avvertenze: le linee della marcia, il luogo e l'orientamento del campo, le distanze, le figure e i loro colori (quelli della carta), le tende, le
+   frecce delle ondate. Fredegario dice che Carlo «rovesciò le tende»; la Cronaca del 754 le fa trovare in piedi e vuote all'alba: il campo segue la Cronaca. Narbona e la Cerdagna non
+   sono fra i luoghi della carta: sono proiettate qui con la stessa proiezione (cono conforme di src/mappa/genera.mjs) e andrebbero aggiunte a CITTA. */
+var POITIERS={ titolo:"Poitiers", sotto:"732 o 733: i Franchi di Carlo fermano Abd al-Rahman fra Tours e Poitiers, secondo la Cronaca del 754 e la fonte franca",
+  fasi:[["Verso il 731","Eudo, duca d'Aquitania, ha dato la figlia in sposa a Munnuza, un capo berbero in rivolta, per tenere lontani gli Arabi. Abd al-Rahman, il governatore arabo della Spagna, lo assedia in Cerdagna. Munnuza si getta da una rupe; la figlia di Eudo è mandata al califfo, oltre il mare."],
+    ["732 o 733","Abd al-Rahman passa i monti dei Vasconi, cioè i Pirenei, ed entra nelle terre dei Franchi. Una cronaca più tarda dice che passò per Pamplona."],
+    ["732 o 733","Oltre la Garonna e la Dordogna sconfigge Eudo, che fugge. «Solo Dio conosce il numero dei morti», scrive la Cronaca del 754. Secondo la fonte franca, a Bordeaux bruciano le chiese."],
+    ["732 o 733","Secondo la fonte franca, gli Arabi arrivano fino a Poitiers e bruciano la basilica di Sant'Ilario. La meta è Tours: vogliono saccheggiarne la chiesa, la casa di san Martino."],
+    ["732 o 733","Gli si para davanti Carlo, capo dei Franchi dell'Austrasia, «guerriero fin da giovane». Secondo la Cronaca del 754 lo aveva avvertito Eudo. La fonte franca, scritta dalla parte di Carlo, dice il contrario: Eudo avrebbe chiamato gli Arabi contro di lui."],
+    ["Sette giorni","Per quasi sette giorni i due eserciti si logorano a vicenda, senza schierarsi. Dove fossero di preciso, le fonti non lo dicono."],
+    ["Il muro","Poi si schierano e combattono duramente. I popoli del nord, scrive la Cronaca, restano fermi «come un muro», stretti «come il ghiaccio». Gli Arabi cadono sotto le loro spade."],
+    ["Il re","Gli uomini dell'Austrasia, «forti di membra e con la mano di ferro», trovano il re e lo uccidono. La fonte franca lo chiama Abdirama e dà la vittoria all'aiuto di Cristo."],
+    ["La notte","La notte divide i combattenti. I Franchi vedono l'accampamento immenso e si tengono pronti per il giorno dopo. Ma nella notte gli Arabi se ne vanno, in silenzio, in file strette."],
+    ["L'alba","All'alba le tende sono in fila, come prima. I Franchi pensano che dentro ci siano gli Arabi, pronti a combattere. Gli esploratori le trovano vuote. Temendo un'imboscata, i Franchi non inseguono: si dividono il bottino e tornano a casa."],
+    ["Quel che non sappiamo","Le fonti più vicine non danno l'anno: 732 o 733. La Cronaca del 754 non nomina Poitiers. Nessuna fonte del tempo dà numeri: i 375.000 morti di cui si scrisse più tardi non sono credibili."],
+    ["Due letture","Per Edward Gibbon, a fine Settecento, Carlo salvò la cristianità: senza di lui, forse a Oxford si insegnerebbe il Corano. Altri storici vedono una grande razzia respinta: gli Arabi si ritirano in ordine e tengono Narbona fino al 759."]],
+  fonte:"Cronaca del 754, nel latino dell'edizione Mommsen (Chronica minora II, pp. 361-362) e in una traduzione inglese: l'autore è un cristiano della Spagna araba e scrive poco più di vent'anni dopo. Continuazione di Fredegario, nel Recueil des historiens des Gaules II, pp. 454-455: fu scritta per il conte Childebrando, dalla parte di Carlo. Cronaca di Moissac e un rifacimento più tardo delle storie dei re dei Franchi, nello stesso volume. Gibbon, capitolo 52, nell'edizione Bury. Le fonti più vicine non danno l'anno, il luogo esatto né i numeri. Le linee sulla carta sono uno schema; Narbona e la Cerdagna sono messe a mano. Il campo di battaglia è un disegno schematico: luogo, orientamento, distanze, figure e colori non sono nelle fonti. Fredegario dice che Carlo rovesciò le tende; la Cronaca del 754 le fa trovare in piedi, vuote: il disegno segue la Cronaca. La lettura della «razzia respinta» non viene da un'opera letta per questa infografica." };
+function disegnaPoitiers(svg,S,W,H){
+  var G=window.RM_MAPPA; if(!G||!G.citta) return;
+  var oriz=W/H>=1.15, stretto=oriz&&W<700, pad=oriz?20:12, defs=el('defs',null,svg), i, k;
+  var T={a1:1400,a2:7400,a3:12800,a4:18400,a5:24200,b1:30800,b2:39200,b3:46400,b4:53600,b5:60400,c1:70600,d1:79000}; T.fin=T.d1+10600;
+  var CO={arabi:'#2F8A75',franchi:'#405D83',eudo:'#6C8FB8'};
+  if(!COLORE_STATO.califfato) COLORE_STATO.califfato='#48A48C'; if(!COLORE_STATO['regno:asturie']) COLORE_STATO['regno:asturie']='#BF7A1E';      /* i colori della carta della pagina (css/stile.css, js/mappa.js) */
+  var st={}, s7=statiDi(711); for(k in s7) st[k]=s7[k];
+  [['hispania','califfato'],['spania','califfato'],['gallaecia','califfato'],['settimania','califfato'],['asturie','regno:asturie']].forEach(function(q){ st[q[0]]=q[1]; });      /* come il passo del 732 della carta */
+
+  /* ---------- A. dai Pirenei a Tours ---------- */
+  var gA=el('g',{'class':'ig-atto'},svg), V=[232,172,172,170], mb;
+  if(oriz){ var mh=H-2*pad, mw=mh*V[2]/V[3]; if(mw>W*(stretto?.6:.56)){ mw=W*(stretto?.6:.56); mh=mw*V[3]/V[2]; } mb=[W-pad-mw,(H-mh)/2,mw,mh]; }
+  else { var mw2=W-2*pad, mh2=Math.min(mw2*V[3]/V[2],H*.64); mw2=mh2*V[2]/V[3]; mb=[(W-mw2)/2,pad,mw2,mh2]; }
+  var F=finestra(gA,defs,'ig-po-clipA',V,mb,{stati:st}), sA=F.sopra, MP=F.M, Cq=F.C, kk=F.k;
+  var PA=Cq('pamplona'), BO=Cq('bordeaux'), PO=Cq('poitiers'), TU=Cq('tours'), ME=Cq('metz'), OR=Cq('orleans'), TO=Cq('tolosa'); if(!PA||!BO||!PO||!TU||!ME||!OR||!TO) return;
+  var NA=MP([326,314.6]), CE=MP([308.2,328.5]);      /* Narbona (3,00 E; 43,18 N) e la Cerdagna (1,98 E; 42,43 N), proiettate come la carta */
+  var tPir=tx(sA,MP([281,331])[0],MP([281,331])[1],'ig-ad-zona-t ig-f',kk>=2.1?'monti dei Vasconi':'Pirenei','middle');
+  var sCE=segnoCarta(sA,'assedio',CE,.8);
+  var rMun=rotta(sA,defs,[CE,MP([321,328]),MP([338,337])],{c:CO.arabi,schema:true,nome:kk>=2.1?'al califfo, oltre il mare':'al califfo',dove:.98,dx:-4,dy:-11,an:'end'});
+  var rAb=rotta(sA,defs,[MP([244,339]),PA,MP([259,304]),MP([268,287]),BO],{c:CO.arabi,nome:'Abd al-Rahman',dove:.5,dx:-10,an:'end'});
+  var GA=MP([290,264]), zGa=el('g',{'class':'ig-f'},sA); el('ellipse',{cx:r1(GA[0]),cy:r1(GA[1]),rx:r1(8*kk),ry:r1(5*kk),'class':'ig-ad-zona'},zGa);
+  tx(zGa,GA[0]+8*kk+5,GA[1]+5,'ig-ad-zona-t',kk>=2.1?'oltre la Garonna e la Dordogna':'Garonna e Dordogna','start');
+  var sGa=segnoCarta(sA,'scontro',GA,.8), sBO=segnoCarta(sA,'fuoco',BO,.7);
+  var rEu=rotta(sA,defs,[MP([292,260]),MP([304,247]),MP([317,233])],{c:CO.eudo,schema:true,nome:'Eudo fugge',dove:.85,dx:8,an:'start'});
+  var rPo=rotta(sA,defs,[MP([279,268]),MP([285,254]),MP([293.6,241])],{c:CO.arabi});
+  var sPO=segnoCarta(sA,'fuoco',PO,.72);
+  var rTu=rotta(sA,defs,[MP([297.6,233]),MP([301.6,225.2])],{c:CO.arabi,schema:true,nome:'verso Tours',dove:.4,dx:-10,an:'end'});
+  var rCa=rotta(sA,defs,[ME,MP([356,199]),OR,MP([306,225])],{c:CO.franchi,schema:true,nome:'Carlo',dove:.22,dy:-10});
+  var BT=MP([299.5,229]), zBa=el('g',{'class':'ig-f'},sA); el('ellipse',{cx:r1(BT[0]),cy:r1(BT[1]),rx:r1(5.5*kk),ry:r1(11*kk),transform:'rotate(28 '+xy(BT)+')','class':'ig-ca-zona'},zBa);
+  var tZ1=tx(zBa,BT[0]+6*kk+4,BT[1]+5*kk+4,'ig-ca-zona-n','fra Tours e Poitiers','start'), tZ2=tx(zBa,BT[0]+6*kk+4,BT[1]+5*kk+20,'ig-ad-zona-t','il punto esatto non è noto','start');
+  var sBT=segnoCarta(sA,'scontro',BT,.8);
+  var pPA=luogo(sA,PA,'Pamplona',0,17,'middle'), pBO=luogo(sA,BO,'Bordeaux',-9,4,'end'), pPO=luogo(sA,PO,'Poitiers',-9,12,'end'), pTU=luogo(sA,TU,'Tours',-9,-5,'end','grande'),
+    pME=luogo(sA,ME,'Metz',-8,-7,'end','tenue'), pOR=luogo(sA,OR,'Orléans',4,-8,'start','tenue'), pTO=luogo(sA,TO,'Tolosa',8,4,'start','tenue'), pNA=luogo(sA,NA,'Narbona',8,4,'start','tenue'), pCE=luogo(sA,CE,'Cerdagna',-8,15,'end','tenue');
+  var avvA=el('text',{x:r1(mb[0]+10),y:r1(mb[1]+18),'class':'ig-m-avverte su-carta'},gA); avvA.textContent='le linee sono uno schema: le strade non sono scritte'; if(largo(avvA)>mb[2]-20||kk<2) avvA.textContent='le linee sono uno schema';
+  [tZ1,tZ2].forEach(function(t){ nelRiquadro(t,mb,8); });
+  /* il registro accanto: i luoghi e chi li nomina; al quinto quadro, i due racconti */
+  var lb=oriz?[pad+4,pad,mb[0]-pad-30,H-2*pad]:[pad,mb[1]+mb[3]+14,W-2*pad,H-(mb[1]+mb[3]+14)-4];
+  var REG=[{n:'Cerdagna',s:'Munnuza assediato; la figlia di Eudo mandata al califfo',f:'Cronaca del 754',t:T.a1+700,ic:'assedio'},
+    {n:'I monti dei Vasconi',s:'cioè i Pirenei: «per Pamplona», dice una cronaca più tarda',f:'Cronaca del 754; Cronaca di Moissac',t:T.a2+500,ic:'marcia'},
+    {n:'Garonna e Dordogna',s:'Eudo sconfitto: «solo Dio conosce il numero dei morti»',f:'Cronaca del 754',t:T.a3+400,ic:'scontro'},
+    {n:'Poitiers',s:'bruciata la basilica di Sant\'Ilario',f:'Continuazione di Fredegario',t:T.a4+1500,ic:'fuoco'},
+    {n:'Tours',s:'la meta: la chiesa di san Martino',f:'Cronaca del 754; Fredegario',t:T.a4+3000,ic:'meta'},
+    {n:'Due racconti',s:'Cronaca del 754: Eudo, sconfitto, avverte Carlo. Fonte franca: Eudo chiama gli Arabi contro Carlo.',f:'Cronaca del 754; Continuazione di Fredegario',t:T.a5+2400,ic:'meta'}];
+  function icona(g,tipo,q){ var a;
+    if(tipo==='marcia'){ a=el('g',{'class':'ig-sg vis',transform:'translate('+xy(q)+')'},g); el('path',{d:'M-9 5 Q-2 -6 7 -3','class':'ig-po-ico-l'},a); el('path',{d:'M10 -2 L2.5 -7 L4 -2 L2 3 Z','class':'ig-po-ico-p'},a); return a; }
+    if(tipo==='meta'){ a=el('g',{'class':'ig-sg vis',transform:'translate('+xy(q)+')'},g); el('circle',{r:8.5,'class':'ig-po-ico-meta'},a); el('circle',{r:3.4,'class':'ig-po-ico-p'},a); return a; }
+    a=segnoCarta(g,tipo,q,.85); a.setAttribute('class','ig-sg vis '+tipo); return a; }
+  var gR=el('g',null,gA), righe=[], modo=lb[2]>=300&&lb[3]>=340?'righe':'scheda', sch=null, gDue=null;
+  if(modo==='righe'){
+    var y0=lb[1]+Math.max(0,(lb[3]-336)/2);
+    var gTesta=el('g',{'class':'ig-po-testa'},gR); tx(gTesta,lb[0],y0+12,'ig-m-testata','DAI PIRENEI A TOURS'); tx(gTesta,lb[0],y0+31,'ig-m-sotto','i luoghi, e chi li nomina');
+    REG.slice(0,5).forEach(function(r,ii){ var y=y0+50+ii*57, g=el('g',{'class':'ig-ad-riga'},el('g',{transform:'translate(0,'+r1(y)+')'},gR));
+      icona(g,r.ic,[lb[0]+13,24]); tx(g,lb[0]+36,15,'ig-ad-rn',r.n); var s=el('text',{x:r1(lb[0]+36),y:33,'class':'ig-ad-rs'},g), ns=avvolgi(s,r.s,lb[2]-38,16);
+      tx(g,lb[0]+36,33+ns*16+1,'ig-m-cita-chi',r.f); el('line',{x1:r1(lb[0]),x2:r1(lb[0]+lb[2]),y1:55,y2:55,'class':'ig-m-filo'},g); righe.push(g); });
+    /* i due racconti, al posto delle righe */
+    gDue=el('g',{'class':'ig-po-due'},gR); tx(gDue,lb[0],y0+12,'ig-m-testata','DUE RACCONTI'); tx(gDue,lb[0],y0+31,'ig-m-sotto','chi avvertì chi?');
+    var yy=y0+58;
+    [['Cronaca del 754',"un cristiano della Spagna araba, poco più di vent'anni dopo",'Eudo, sconfitto, avverte Carlo.','cronaca'],
+     ['Continuazione di Fredegario','scritta per il conte Childebrando, dalla parte di Carlo','Eudo, battuto da Carlo, chiama gli Arabi contro di lui. Il Recueil ricorda che già il Pagi lo riteneva inventato.','franca']].forEach(function(q){
+      var g=el('g',{'class':'ig-po-racc '+q[3]},gDue), bar=el('rect',{x:r1(lb[0]),y:r1(yy-14),width:4,height:10,rx:2,'class':'ig-po-racc-b'},g);
+      tx(g,lb[0]+16,yy,'ig-ad-rn',q[0]); var c=el('text',{x:r1(lb[0]+16),y:r1(yy+18),'class':'ig-m-cita-chi'},g), nc=avvolgi(c,q[1],lb[2]-18,14);
+      var tt=el('text',{x:r1(lb[0]+16),y:r1(yy+18+nc*14+8),'class':'ig-ad-rs'},g), nt=avvolgi(tt,q[2],lb[2]-18,18);
+      var hh=18+nc*14+8+(nt-1)*18+10; bar.setAttribute('height',r1(hh+8)); yy+=hh+30; });
+  } else {
+    sch={g:el('g',{'class':'ig-ad-scheda'},gR)}; var sx=lb[0], sy=lb[1]+(oriz?8:2);
+    sch.n=tx(sch.g,sx,sy+18,'ig-ad-rn',''); sch.s=el('text',{x:r1(sx),y:r1(sy+40),'class':'ig-ad-rs'},sch.g); sch.f=tx(sch.g,sx,sy+40,'ig-m-cita-chi','');
+  }
+
+  /* ---------- B. il campo (schema): di lato, i Franchi a sinistra, l'accampamento arabo a destra fino all'orizzonte ---------- */
+  var gB=el('g',{'class':'ig-atto'},svg), X0=pad, Y0=pad, TW=W-2*pad, TH=H-2*pad, yb=Y0+TH, oz=Y0+TH*(oriz?.42:.4), hc=oz-Y0+2;
+  var cpB=el('clipPath',{id:'ig-po-clipB'},defs); el('rect',{x:r1(X0),y:r1(Y0),width:r1(TW),height:r1(TH),rx:14},cpB);
+  var sc=el('g',{'clip-path':'url(#ig-po-clipB)'},gB);
+  grad(defs,'ig-po-cg',[[0,'#A9BFCB'],[.75,'#E2E0D3'],[1,'#EFE7D2']]); grad(defs,'ig-po-cn',[[0,'#05080F'],[.65,'#111A30'],[1,'#252A3E']]);
+  grad(defs,'ig-po-ca',[[0,'#3E4C70'],[.45,'#B98378'],[.8,'#EDB97E'],[1,'#F6DCA8']]); grad(defs,'ig-po-su',[[0,'#C6BB96'],[1,'#887A58']]);
+  grad(defs,'ig-po-freddo',[[0,'#DDF2FF',.75],[.6,'#BFE0F2',.28],[1,'#BFE0F2',0]],{cx:'50%',cy:'50%',r:'50%'});
+  el('rect',{x:r1(X0),y:r1(Y0),width:r1(TW),height:r1(hc),fill:'url(#ig-po-cg)'},sc);
+  var cA=el('rect',{x:r1(X0),y:r1(Y0),width:r1(TW),height:r1(hc),fill:'url(#ig-po-ca)',opacity:0},sc), cN=el('rect',{x:r1(X0),y:r1(Y0),width:r1(TW),height:r1(hc),fill:'url(#ig-po-cn)',opacity:0},sc);
+  function profilo(seme,hm,cl){ var R=caso(seme), n=13, P=[], q; for(q=0;q<=n;q++) P.push([X0-10+q/n*(TW+20), oz-hm*(.25+.75*R())]);
+    var d='M'+r1(X0-10)+' '+r1(oz+2)+' L'+xy(P[0]); for(q=1;q<P.length;q++){ var m=[(P[q-1][0]+P[q][0])/2,(P[q-1][1]+P[q][1])/2]; d+=' Q'+xy(P[q-1])+' '+xy(m); }
+    return el('path',{d:d+' L'+xy(P[n])+' L'+r1(X0+TW+10)+' '+r1(oz+2)+' Z','class':cl},sc); }
+  profilo(732,TH*.1,'ig-po-colle-l'); profilo(733,TH*.055,'ig-po-colle-v');
+  el('rect',{x:r1(X0),y:r1(oz),width:r1(TW),height:r1(yb-oz),fill:'url(#ig-po-su)'},sc);
+  for(i=1;i<10;i++){ var ys=oz+(yb-oz)*Math.pow(i/10,1.7); el('line',{x1:r1(X0),x2:r1(X0+TW),y1:r1(ys),y2:r1(ys),'class':'ig-po-solco'},sc); }
+  var base=Math.min(TH*.2,TW*.1);
+  function Q(u,d){ return [X0+u*TW, oz+(yb-oz)*d]; }
+  function alto(d){ return base*(.32+.85*d); }
+  var DR=[.34,.44,.54,.64,.74,.84,.94], uF=oriz?.38:.4;
+  function uFronte(d){ return uF+(d-.64)*.06; }
+  /* il gelo dietro il muro (si accende col secondo quadro del campo) */
+  var hM=alto(.94), cxM=X0+uFronte(.64)*TW-hM*.45, cyM=Q(0,.64)[1]-hM*.45;
+  var alone=el('ellipse',{cx:r1(cxM),cy:r1(cyM),rx:r1(hM*1.6),ry:r1((yb-oz)*.7),fill:'url(#ig-po-freddo)','class':'ig-po-alone'},sc);
+  /* l'accampamento: file di tende fino all'orizzonte («castra Arabum innumerabilia») */
+  var gT=el('g',null,sc), tende=[], DT=[.012,.035,.065,.105,.155,.215], uT=oriz?.56:.6;
+  function tenda(p,x,y,hT){ var g=el('g',{'class':'ig-po-tenda',transform:'translate('+r1(x)+','+r1(y)+')'},p), w=hT*.62;
+    el('path',{d:'M'+r1(-w)+' 0 L'+r1(-w*.7)+' '+r1(-hT*.55)+' Q0 '+r1(-hT*1.04)+' '+r1(w*.7)+' '+r1(-hT*.55)+' L'+r1(w)+' 0 Z','class':'ig-po-telo'},g);
+    el('path',{d:'M0 '+r1(-hT*.98)+' V'+r1(-hT*1.22),'class':'ig-po-palo'},g); el('path',{d:'M'+r1(-w*.24)+' 0 L0 '+r1(-hT*.52)+' L'+r1(w*.24)+' 0 Z','class':'ig-po-porta'},g); return g; }
+  DT.forEach(function(d,ri){ var hT=alto(d)*.62, gap=hT*1.3, u=uT+d*.3+(ri%2?gap*.5/TW:0); for(;u<1.03;u+=gap/TW){ var q=Q(u,d); tende.push(tenda(gT,q[0],q[1],hT)); } });
+  /* la fila che se ne va di notte, fra le tende */
+  var fila=[], NF=30, A1=Q(oriz?.7:.73,.19), A2=Q(1.06,.03), hFila=Math.max(5,alto(.1)*.5);
+  /* le fasce di profondità: in ognuna i Franchi del muro e gli altri, dal fondo verso chi guarda */
+  var strati=DR.map(function(){ return el('g',null,sc); }), muro=[];
+  DR.forEach(function(d,b){ var hh=alto(d); for(var rk=3;rk>=0;rk--){ var x=X0+uFronte(d)*TW-rk*hh*.3, y=Q(0,d)[1], g=el('g',{transform:'translate('+r1(x)+','+r1(y)+')'},strati[b]);
+    guerriero(g,hh,{cl:'franco',mantello:true,scudo:true,lancia:true}); muro.push({x:x,y:y,h:hh}); } });
+  function figura(b,h,o){ var g0=el('g',{'class':'ig-po-a'},strati[b]), gi=el('g',null,g0); guerriero(gi,h,o); return {g:g0,gi:gi}; }
+  var Ra=caso(711), att=[];
+  for(i=0;i<21;i++){ var b=1+Math.floor(Ra()*6), d=DR[b], f0=figura(b,alto(d)*.96,{verso:-1,cl:'arabo',mantello:true,scudo:Ra()<.4,braccio:'avanti'});
+    att.push({g:f0.g,gi:f0.gi,d:d,w:i%3,uC:uFronte(d)+.024+Ra()*.025,uS:(oriz?.6:.64)+Ra()*.07,ph:Ra(),cade:Ra()<.3}); }
+  att.forEach(function(a,ii){ a.tc=T.b2+400+a.w*800+2400*(1+ii%2)+1250; });
+  var scar=[[4,-1,.6,.49],[2,-1,.64,.52],[5,1,0,.06],[3,1,0,.05]].map(function(q,ii){ var d=DR[q[0]], f0=figura(q[0],alto(d)*.96,{verso:q[1],cl:q[1]<0?'arabo':'franco',mantello:true,scudo:q[1]>0,lancia:q[1]>0,braccio:q[1]<0?'avanti':null});
+    var u0=q[1]<0?q[2]:uFronte(d)+.012; return {g:f0.g,d:d,u0:u0,u1:q[1]<0?q[3]:u0+q[3],ph:ii*.31}; });
+  var dK=DR[3], qK=Q(oriz?.55:.59,dK), hK=alto(dK)*1.02, re=figura(3,hK,{verso:-1,cl:'arabo re',mantello:true,elmo:false,braccio:'avanti'}); fissa(re.g,'transform','translate('+xy(qK)+')');
+  var cuneo=[]; for(i=0;i<5;i++){ var b2=3+(i%2), d2=DR[b2], f2=figura(b2,alto(d2),{cl:'franco',mantello:true,scudo:true,braccio:'avanti'}); cuneo.push({g:f2.g,d:d2,u0:uFronte(d2)+.006,u1:(oriz?.5:.54)-i*.011,k:i}); }
+  var espl=[]; for(i=0;i<3;i++){ var d3=DR[1+i], f3=figura(1+i,alto(d3)*.9,{cl:'franco',mantello:true,lancia:true}); espl.push({g:f3.g,d:d3,u0:uFronte(d3)+.012,u1:(oriz?.58:.62)+i*.02}); }
+  var bott=[]; for(i=0;i<4;i++){ var b4=2+i%3, d4=DR[b4], h4=alto(d4)*.92, f4=figura(b4,h4,{verso:-1,cl:'franco',mantello:true}); el('ellipse',{cx:r1(-h4*.04),cy:r1(-h4*1.02),rx:r1(h4*.2),ry:r1(h4*.12),'class':'ig-po-fagotto'},f4.gi);
+    bott.push({g:f4.g,d:d4,u0:(oriz?.6:.64)+i*.012,u1:uFronte(d4)-.07-i*.015,k:i}); }
+  /* il gelo sul muro: scintille («sicut et zona rigoris glacialiter») */
+  var gGelo=el('g',{'class':'ig-po-gelo'},sc), Rg=caso(5); for(i=0;i<24;i++){ var m=muro[Math.floor(Rg()*muro.length)], sx=m.x+(Rg()-.4)*m.h*.4, sy=m.y-m.h*(.2+Rg()*.75), sz=1.6+Rg()*2.6;
+    var sp=el('path',{d:'M'+r1(sx)+' '+r1(sy-sz*2)+' L'+r1(sx+sz*.4)+' '+r1(sy-sz*.4)+' L'+r1(sx+sz*2)+' '+r1(sy)+' L'+r1(sx+sz*.4)+' '+r1(sy+sz*.4)+' L'+r1(sx)+' '+r1(sy+sz*2)+' L'+r1(sx-sz*.4)+' '+r1(sy+sz*.4)+' L'+r1(sx-sz*2)+' '+r1(sy)+' L'+r1(sx-sz*.4)+' '+r1(sy-sz*.4)+' Z','class':'ig-po-scint'},gGelo); sp.style.animationDelay=(-Rg()*2.4).toFixed(2)+'s'; }
+  /* la polvere dove le ondate urtano il muro */
+  var polveri=[.44,.64,.84].map(function(d,ii){ var q=Q(uFronte(d)+.03,d); return el('ellipse',{cx:r1(q[0]),cy:r1(q[1]-alto(d)*.3),rx:r1(alto(d)*.9),ry:r1(alto(d)*.42),'class':'ig-po-polvere',opacity:0},sc); });
+  var buio=el('rect',{x:r1(X0),y:r1(Y0),width:r1(TW),height:r1(TH),'class':'ig-po-buio',opacity:0},sc);
+  var gFila=el('g',null,sc); for(i=0;i<NF;i++) fila.push(omino(gFila,hFila,'ig-po-fug'));      /* sopra il buio, perché si vedano */
+  var gSt=el('g',{opacity:0},sc), Rs=caso(732); for(i=0;i<46;i++) el('circle',{cx:r1(X0+Rs()*TW),cy:r1(Y0+Rs()*(oz-Y0-TH*.08)),r:r1(.5+Rs()*1.1),'class':'ig-m-stella'},gSt);
+  /* le scritte del campo */
+  var tFr=tx(sc,X0+uFronte(.34)*TW-alto(.34)*.5,Q(0,.34)[1]-alto(.34)*1.22-8,'ig-ad-et ig-ad-tag ig-po-et-fr','i Franchi di Carlo','middle');
+  var tAc=tx(sc,Q(oriz?.79:.81,0)[0],oz-alto(.012)*.9-10,'ig-ad-et ig-ad-tag ig-po-et-ar',"l'accampamento degli Arabi",'middle');
+  var tMu=tx(sc,X0+uFronte(.94)*TW-hM*.55,yb-12,'ig-ad-et ig-ad-tag','«come un muro»','middle');
+  var tRe=tx(sc,qK[0],qK[1]-hK*1.05-8,'ig-ad-et ig-ad-tag','il re','middle');
+  var croce=el('g',{'class':'ig-ca-croce'},sc), rcr=Math.max(7,base*.11); el('circle',{r:r1(rcr),'class':'ig-po-croce-f'},croce); el('path',{d:'M0 '+r1(-rcr*.66)+' V'+r1(rcr*.66)+' M'+r1(-rcr*.42)+' '+r1(-rcr*.2)+' H'+r1(rcr*.42),'class':'ig-ca-croce-l'},croce);
+  var pCr=[qK[0]+hK*.5,qK[1]-hK*.32-rcr]; fissa(croce,'transform','translate('+xy(pCr)+')'); tx(croce,0,-rcr-6,'ig-ca-capo-t ig-po-verde','Abd al-Rahman','middle');
+  var tFu=tx(sc,lerp(A1[0],A2[0],.45),Math.min(A1[1],A2[1])-hFila-12,'ig-ad-tag notte','in silenzio, nella notte','middle');
+  var tIm=tx(sc,Q(oriz?.7:.72,.5)[0],Q(0,.5)[1],'ig-ad-et ig-ad-tag',"temono un'imboscata: non inseguono",'middle');
+  var tBo=tx(sc,Q(oriz?.47:.5,.97)[0],yb-12,'ig-ad-et ig-ad-tag','il bottino, diviso','middle');
+  var cerchi=espl.slice(0,2).map(function(e){ var q=Q(e.u1,e.d); return el('ellipse',{cx:r1(q[0]),cy:r1(q[1]-alto(e.d)*.1),rx:r1(alto(e.d)*.95),ry:r1(alto(e.d)*.3),'class':'ig-po-cerca'},sc); });
+  [tFr,tAc,tMu,tRe,tFu,tIm,tBo].forEach(function(t){ nelRiquadro(t,[X0,Y0,TW,TH],8); });
+  /* i giorni */
+  var gG=el('g',{'class':'ig-f'},sc), gx0=oriz?X0+TW-16:X0+16, gy0=oriz?Y0+30:oz-30, dots=[];
+  el('rect',{x:r1(oriz?gx0-112:gx0-8),y:r1(gy0-18),width:120,height:44,rx:9,'class':'ig-po-chip'},gG);
+  var tG=tx(gG,oriz?gx0:gx0,gy0,'ig-m-testata','GIORNO 1',oriz?'end':'start');
+  for(i=0;i<7;i++) dots.push(el('circle',{cx:r1(oriz?gx0-96+i*15:gx0+5+i*15),cy:r1(gy0+13),r:4.6,'class':'ig-po-dot'},gG));
+  /* le parole delle fonti, in alto a sinistra, su un cartiglio */
+  var qx=X0+12, qy=Y0+12, qw=oriz?Math.min(TW*(stretto?.6:.46),430):TW-24, fq=oriz?(stretto?14:Math.min(18.5,Math.max(15,qw/23))):14, QS=[];
+  [["«per quasi sette giorni si logorano a vicenda; alla fine si schierano»","Cronaca del 754 · pene per septem dies",T.b1+500],
+   ["«i popoli del nord restano immobili come un muro, stretti come il ghiaccio»","Cronaca del 754 · ut paries immobiles… glacialiter",T.b2+1500],
+   ["«la gente dell'Austrasia, forte di membra e con la mano di ferro, trova il re e lo uccide»","Cronaca del 754 · regem inventum exanimant",T.b3+700],
+   ["«con l'aiuto di Cristo… ucciso il loro re, di nome Abdirama»","Continuazione di Fredegario · Christo auxiliante",T.b3+3800],
+   ["«la notte divide i combattenti»","Cronaca del 754 · nocte prelio dirimente",T.b4+300],
+   ["«nella notte se ne vanno tutti in silenzio, in file strette, verso casa»","Cronaca del 754 · tacite pernoctando cuneo stricto",T.b4+2800],
+   ["«vedono le tende degli Arabi in fila… non sanno che sono tutte vuote»","Cronaca del 754 · nescientes cuncta esse pervacua",T.b5+1200],
+   ["«si dividono il bottino e tornano, contenti, nelle loro terre»","Cronaca del 754 · in suas se leti recipiunt patrias",T.b5+5600]].forEach(function(q){
+    var g=citazione(sc,qx+10,qy+9,qw-20,q[0],q[1],fq), r=el('rect',{x:r1(qx),y:r1(qy),width:r1(qw),height:r1(g._h+16),rx:10,'class':'ig-po-cart'}); g.insertBefore(r,g.firstChild); QS.push({g:g,t:q[2]}); });
+  var gS=el('g',null,sc), tSch=tx(gS,X0+TW-14,yb-12,'ig-m-schema','schema: luogo, distanze, figure e colori non sono nelle fonti','end'); if(largo(tSch)>TW*.6) tSch.textContent='schema';
+  var wS=largo(tSch); el('rect',{x:r1(X0+TW-14-wS-8),y:r1(yb-26),width:r1(wS+16),height:20,rx:6,'class':'ig-po-chip'},gS).parentNode.insertBefore(gS.lastChild,gS.firstChild);
+  el('rect',{x:r1(X0),y:r1(Y0),width:r1(TW),height:r1(TH),rx:14,'class':'ig-m-cornice'},gB);
+
+  /* ---------- C. quel che non sappiamo ---------- */
+  var gC=el('g',{'class':'ig-atto'},svg), rC=[pad,pad,W-2*pad,H-2*pad], aff=rC[2]>=rC[3]*1.25, gp=oriz?14:10;
+  var cw=aff?(rC[2]-2*gp)/3:rC[2], chh=aff?rC[3]:(rC[3]-2*gp)/3, schede=[];
+  function scheda(ii,kick,big,righeT,cl){ var x=aff?rC[0]+ii*(cw+gp):rC[0], y=aff?rC[1]:rC[1]+ii*(chh+gp), g=el('g',{'class':'ig-po-card '+(cl||'')},gC), px=x+(aff?18:14), w=cw-(aff?36:28);
+    el('rect',{x:r1(x),y:r1(y),width:r1(cw),height:r1(chh),rx:14,'class':'ig-po-card-r'},g);
+    var yk=y+(aff?30:22); tx(g,px,yk,'ig-m-testata',kick);
+    var fb=aff?clamp(cw/7,20,40):clamp(chh/5.2,20,28), tb=tx(g,px,yk+fb*1.15+(aff?6:2),'ig-po-big',big); tb.style.fontSize=fb+'px'; while(largo(tb)>w&&fb>14){ fb-=1; tb.style.fontSize=fb+'px'; }
+    var y1=yk+fb*1.15+(aff?6:2), corpo=el('g',null,g), fs=aff?16:13.5, hMax=y+chh-(aff?18:10);
+    function prova(){ corpo.textContent=''; var yy=y1+fs*1.25+(aff?12:6);
+      righeT.forEach(function(q){ var cl2=q[1]||'ig-po-corpo', f2=cl2==='ig-po-corpo'?fs:Math.max(11,fs-2.5), t=el('text',{x:r1(px),y:r1(yy),'class':cl2},corpo); t.style.fontSize=f2+'px'; var n=avvolgi(t,q[0],w,f2*1.25); yy+=n*f2*1.25+(aff?6:3); });
+      return yy-fs*1.25; }
+    var fine=prova(); while(fine>hMax&&fs>11){ fs-=.5; fine=prova(); }
+    var o={g:g,x:x,y:y,px:px,w:w,tb:tb,y1:y1,fb:fb}; schede.push(o); return o; }
+  var K1=scheda(0,"L'ANNO",'732 o 733',[["Le fonti più vicine non lo dicono. La Cronaca del 754 racconta la battaglia fra i fatti del governo di Abd al-Rahman; la fonte franca non dà date."]]);
+  var K2=scheda(1,'IL LUOGO','fra Tours e Poitiers',[['Il punto esatto non è noto.'],['· Cronaca del 754: non nomina Poitiers','ig-po-fonte'],['· Fredegario: gli Arabi arrivano «fino a Poitiers»','ig-po-fonte'],['· Cronaca di Moissac, del IX secolo: «nei sobborghi di Poitiers»','ig-po-fonte']]);
+  var K3=scheda(2,'I NUMERI','375.000',[["Le fonti del tempo non danno numeri. Più tardi, in Italia, si scrisse di 375.000 Arabi uccisi contro 1.500 Franchi. Già Gibbon la chiamava «una storia incredibile»."]],'numeri');
+  scrivi(K3.tb,'0');
+  var tachi=el('line',{x1:r1(K3.px-4),x2:r1(K3.px-4),y1:r1(K3.y1-K3.fb*.35),y2:r1(K3.y1-K3.fb*.35),'class':'ig-po-barra'},K3.g);
+  var bolloP=el('g',null,K3.g), bollo=el('g',{'class':'ig-ca-bollo'},bolloP), bt=tx(bollo,0,17,'ig-ca-bollo-t','NON CREDIBILE'), bw=largo(bt)+20; bt.setAttribute('x',10);
+  el('rect',{x:0,y:0,width:r1(bw),height:26,rx:4,'class':'ig-ca-bollo-r'},bollo).parentNode.insertBefore(bollo.lastChild,bollo.firstChild);
+
+  /* ---------- D. due letture ---------- */
+  var gD=el('g',{'class':'ig-atto'},svg), rD=[pad,pad,W-2*pad,H-2*pad], affD=rD[2]>=rD[3]*1.2, gp2=oriz?16:10;
+  var fh=affD?(rD[2]>=760?78:96):(rD[2]>=330?92:104), cwD=affD?(rD[2]-gp2)/2:rD[2], chD=affD?rD[3]-fh-gp2:(rD[3]-fh-2*gp2)/2;
+  function cartaD(ii,cl){ var x=affD?rD[0]+ii*(cwD+gp2):rD[0], y=affD?rD[1]:rD[1]+ii*(chD+gp2), g=el('g',{'class':'ig-po-card '+cl},gD);
+    el('rect',{x:r1(x),y:r1(y),width:r1(cwD),height:r1(chD),rx:14,'class':'ig-po-card-r'},g); return {g:g,x:x,y:y,px:x+(affD?22:14),w:cwD-(affD?44:28),h:chD}; }
+  function scrittaIn(c,yy,s,cl,f,lh){ var t=el('text',{x:r1(c.px),y:r1(yy),'class':cl},c.g); t.style.fontSize=f+'px'; var n=avvolgi(t,s,c.w,f*(lh||1.22)); return {t:t,n:n,h:n*f*(lh||1.22)}; }
+  function riempi(c,parti){ var f=affD?(c.w>=380?22:19):17, ok=false;
+    while(!ok&&f>=12){ [].slice.call(c.g.querySelectorAll('.ig-po-dd')).forEach(function(e){ e.remove(); }); var yy=c.y+(affD?32:22), g=el('g',{'class':'ig-po-dd'},c.g);
+      var cc={g:g,px:c.px,w:c.w}; tx(g,c.px,yy,'ig-m-testata',parti.k); yy+=(affD?16:10);
+      parti.v.forEach(function(p,j){ var ff=p[2]?f*p[2]:f, r=scrittaIn(cc,yy+ff,p[0],p[1],ff); yy+=ff+r.h-ff*1.22+(j<parti.v.length-1?(affD?12:7):0); });
+      ok=yy<=c.y+c.h-12; if(!ok) f-=1; } }
+  var L1=cartaD(0,'scura'), L2=cartaD(1,'chiara');
+  riempi(L1,{k:'PER GIBBON, UNA SVOLTA',v:[['«Forse oggi nelle scuole di Oxford si insegnerebbe a interpretare il Corano.»','ig-po-gq'],["Edward Gibbon, Storia della decadenza e caduta dell'Impero romano, capitolo 52, fine Settecento",'ig-po-gchi',.6],['«Da tali sciagure la cristianità fu liberata dal genio e dalla fortuna di un solo uomo.»','ig-po-gq2',.78]]});
+  riempi(L2,{k:'PER ALTRI, UNA RAZZIA RESPINTA',v:[['Gli Arabi si ritirano in ordine, racconta la Cronaca del 754. La Settimania, con Narbona, resta loro fino al 759.','ig-po-lt'],['Più che una conquista fermata, una grande spedizione respinta.','ig-po-lt forte'],['altri storici; le date della Settimania sono quelle della carta della pagina','ig-po-gchi chiaro',.62]]});
+  var yF=affD?rD[1]+rD[3]-fh:rD[1]+2*(chD+gp2), gF=el('g',{'class':'ig-po-card piede'},gD);
+  el('rect',{x:r1(rD[0]),y:r1(yF),width:r1(rD[2]),height:r1(fh),rx:14,'class':'ig-po-card-r'},gF);
+  var LF={g:gF,px:rD[0]+(affD?22:14),w:rD[2]-(affD?44:28)}; tx(gF,LF.px,yF+(affD?26:22),'ig-m-testata','IL SOPRANNOME');
+  var fF=affD?16.5:13.5, rF; do{ [].slice.call(gF.querySelectorAll('.ig-po-sopr')).forEach(function(e){ e.remove(); }); rF=scrittaIn(LF,yF+(affD?26:22)+fF*1.35,'«Martello»: «come il martello doma ogni ferro, così lui, con l\'aiuto del Signore, spezzava ogni battaglia». Lo spiega un racconto franco più tardo.','ig-po-sopr',fF); fF-=.5; } while(yF+(affD?26:22)+fF*1.35+rF.h-fF>yF+fh-8&&fF>11);
+
+  /* ---------- la regia ---------- */
+  function notteF(t){ var n=0, c=(t-(T.b1+600))/1000; if(c>0&&c<6) n=Math.pow(Math.sin(Math.PI*c),2)*.9;
+    if(t>=T.b4) n=E.io(fase(t,T.b4+200,T.b4+2200)); if(t>=T.b5) n=1-E.io(fase(t,T.b5,T.b5+2800)); return n; }
+  function attU(a,t){ var t0=T.b2+400+a.w*800, P=2400, L=(t-t0)/P; if(L<0) return a.uS; var c=Math.floor(L), f=L-c, uB=lerp(a.uC,a.uS,.45), da=c===0?a.uS:uB;
+    if(f<.5) return lerp(da,a.uC,E.io(f/.5)); if(f<.68) return a.uC+Math.sin((f-.5)*38+a.ph*6)*.004; return lerp(a.uC,uB,E.io((f-.68)/.32)); }
+  function posa(g,u,d,rot){ var q=Q(u,d); fissa(g,'transform','translate('+xy(q)+')'+(rot?' rotate('+r1(rot)+')':'')); }
+  S.passo=function(t){
+    /* A */
+    cls(gA,'vis',t>=300&&t<T.b1-300);
+    [pPA,pBO,pPO,pTU,pME,pOR,pTO,pNA,pCE].forEach(function(p){ cls(p,'vis',t>=400); }); cls(avvA,'vis',t>=T.a1+800);
+    cls(sCE,'vis',t>=T.a1+700&&t<T.a3); segui(rMun,t<T.a3?E.io(fase(t,T.a1+2400,T.a1+4400)):0);
+    cls(tPir,'vis',t>=T.a2+300); segui(rAb,E.io(fase(t,T.a2+200,T.a2+3000)));
+    cls(zGa,'vis',t>=T.a3+300&&t<T.a5); cls(sGa,'vis',t>=T.a3+400); segui(rEu,t<T.a5?E.io(fase(t,T.a3+1800,T.a3+3600)):0); cls(sBO,'vis',t>=T.a3+2800);
+    segui(rPo,E.io(fase(t,T.a4+200,T.a4+1700))); cls(sPO,'vis',t>=T.a4+1500); segui(rTu,E.io(fase(t,T.a4+2300,T.a4+3600))); cls(pTU,'ora',t>=T.a4+2900&&t<T.a5);
+    segui(rCa,E.io(fase(t,T.a5+200,T.a5+3000))); cls(zBa,'vis',t>=T.a5+2600); cls(sBT,'vis',t>=T.a5+3200);
+    var ri=-1; REG.forEach(function(r,ii){ if(t>=r.t) ri=ii; });
+    if(modo==='righe'){ var due=t>=T.a5+1800; righe.forEach(function(r,ii){ cls(r,'vis',ii<=ri&&!due); cls(r,'ora',ii===ri); }); cls(gTesta,'via',due); cls(gDue,'vis',due); }
+    else if(sch){ cls(sch.g,'vis',ri>=0); if(sch.ri!==ri&&ri>=0){ sch.ri=ri; var r=REG[ri]; scrivi(sch.n,r.n); sch.s.textContent=''; var ns=avvolgi(sch.s,r.s,lb[2],16); sch.f.setAttribute('y',r1(+sch.s.getAttribute('y')+ns*16+2)); scrivi(sch.f,r.f); } }
+    /* B */
+    cls(gB,'vis',t>=T.b1-400&&t<T.c1-300);
+    var n=notteF(t), al=t<T.b5?0:fase(t,T.b5,T.b5+1400)*(1-E.io(fase(t,T.b5+3800,T.b5+6600)));
+    fissa(cN,'opacity',r1(n*100)/100); fissa(cA,'opacity',r1(al*100)/100); fissa(buio,'opacity',r1(n*.58*100)/100); fissa(gSt,'opacity',r1(n*100)/100);
+    var c0=(t-(T.b1+600))/1000, gi=t<T.b2?clamp(Math.round(c0)+1,1,7):7; scrivi(tG,'GIORNO '+gi); dots.forEach(function(dt,ii){ cls(dt,'on',ii<gi); }); cls(gG,'vis',t>=T.b1+300&&t<T.b2+600);
+    var gel=t>=T.b2+2200&&t<T.b4; cls(sc,'ig-po-gelato',gel); cls(alone,'vis',gel); cls(gGelo,'vis',gel);
+    att.forEach(function(a){ var u, rot=0, vis=t>=T.b2+100&&t<T.b4+600;
+      if(a.cade&&t>=a.tc){ u=attU(a,a.tc); rot=80*E.out(fase(t,a.tc,a.tc+500)); vis=vis&&t<T.b4+400; }
+      else if(t>=T.b3+4200){ u=lerp(attU(a,T.b3+4200),a.uS+.06,E.io(fase(t,T.b3+4200,T.b3+6200))); vis=vis&&t<T.b3+6400; }
+      else u=attU(a,t);
+      posa(a.g,u,a.d); fissa(a.gi,'transform',rot?'rotate('+r1(rot)+')':''); cls(a.g,'vis',vis); });
+    scar.forEach(function(s){ var f=.5-.5*Math.cos(Math.PI*2*((t-T.b1)/1700+s.ph)); posa(s.g,lerp(s.u0,s.u1,f),s.d); cls(s.g,'vis',t>=T.b1+500&&t<T.b2+300); });
+    var pv=t>=T.b2+1300&&t<T.b3+4400?.5+.3*Math.sin(t/260):t>=T.b1+900&&t<T.b2?.18+.14*Math.sin(t/300):0; polveri.forEach(function(p,ii){ fissa(p,'opacity',r1(Math.max(0,pv*(ii===1||t>=T.b2?1:0))*100)/100); });
+    cls(re.g,'vis',t>=T.b3&&t<T.b4+1400); var kf=E.out(fase(t,T.b3+2400,T.b3+3000)); fissa(re.gi,'transform',kf>0?'rotate('+r1(80*kf)+')':'');
+    cls(tRe,'vis',t>=T.b3+400&&t<T.b3+2600); cls(croce,'vis',t>=T.b3+3000&&t<T.b4+1600);
+    cuneo.forEach(function(c){ var e=E.io(fase(t,T.b3+500+c.k*120,T.b3+2300+c.k*120)), r=E.io(fase(t,T.b3+4300,T.b3+5800)); posa(c.g,lerp(c.u0,c.u1,e*(1-r)),c.d); cls(c.g,'vis',t>=T.b3+300&&t<T.b3+6000); });
+    fila.forEach(function(o,ii){ var t0=T.b4+2300+ii*105, e=fase(t,t0,t0+3400), q=[lerp(A1[0],A2[0],e),lerp(A1[1],A2[1],e)+(ii%2?1.6:-1.6)]; fissa(o,'transform','translate('+xy(q)+')'); cls(o,'vis',e>0&&e<1); });
+    cls(tFu,'vis',t>=T.b4+2700&&t<T.b5+500);
+    espl.forEach(function(e,ii){ var go=E.io(fase(t,T.b5+1000+ii*200,T.b5+3200+ii*200)), bk=E.io(fase(t,T.b5+5000,T.b5+6600)); posa(e.g,lerp(e.u0,e.u1,go*(1-bk)),e.d); cls(e.g,'vis',t>=T.b5+800&&t<T.b5+6800); });
+    tende.forEach(function(g,ii){ cls(g,'vuota',t>=T.b5+3000+(tende.length-1-ii)*16); });
+    scrivi(tAc,t>=T.b5+3300?'le tende sono vuote':"l'accampamento degli Arabi"); cls(tAc,'vis',t>=T.b1+400);
+    cerchi.forEach(function(c){ cls(c,'vis',t>=T.b5+3600&&t<T.b5+5400); }); cls(tIm,'vis',t>=T.b5+4000&&t<T.b5+7000);
+    bott.forEach(function(b){ var e=E.io(fase(t,T.b5+5800+b.k*250,T.b5+8600+b.k*250)); posa(b.g,lerp(b.u0,b.u1,e),b.d); cls(b.g,'vis',t>=T.b5+5600); }); cls(tBo,'vis',t>=T.b5+6400);
+    cls(tFr,'vis',t>=T.b1+400&&t<T.b4); cls(tMu,'vis',t>=T.b2+1800&&t<T.b3); scrivi(tMu,t>=T.b2+3400?'«come il ghiaccio»':'«come un muro»');
+    QS.forEach(function(q,ii){ cls(q.g,'vis',t>=q.t&&(ii===QS.length-1||t<QS[ii+1].t)); });
+    /* C */
+    cls(gC,'vis',t>=T.c1-300&&t<T.d1-300); schede.forEach(function(s,ii){ cls(s.g,'vis',t>=T.c1+300+ii*1800); });
+    var fn=E.out(fase(t,T.c1+3900,T.c1+5600)); scrivi(K3.tb,num(Math.round(375000*fn/1000)*1000)); var wN=largo(K3.tb);
+    fissa(tachi,'x2',r1(K3.px+4+wN*E.io(fase(t,T.c1+5900,T.c1+6500)))); cls(tachi,'vis',t>=T.c1+5900);
+    fissa(bolloP,'transform','translate('+r1(Math.min(K3.px+wN+14,K3.x+cw-bw-12))+','+r1(K3.y1-K3.fb*.8-(K3.px+wN+14>K3.x+cw-bw-12?-K3.fb*.55:0))+')'); cls(bollo,'vis',t>=T.c1+6300);
+    /* D */
+    cls(gD,'vis',t>=T.d1-300); cls(L1.g,'vis',t>=T.d1+300); cls(L2.g,'vis',t>=T.d1+3600); cls(gF,'vis',t>=T.d1+6800);
+  };
+  S.dura=T.fin;
+  var bt2=[T.a1,T.a2,T.a3,T.a4,T.a5,T.b1,T.b2,T.b3,T.b4,T.b5,T.c1,T.d1];
+  S.battute=POITIERS.fasi.map(function(f,ii){ return {t:bt2[ii],anno:f[0],testo:f[1]}; });
+}
+
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
   moneta:{d:MONETA, disegna:disegnaMoneta, tappe:function(t){ return t.anno===284&&t.intermezzo; }},      // solo nell'intermezzo «La moneta» (23 novembre 2026, l'utente: «toglila dalla tappa del 274»)
   navi:{d:NAVI, disegna:disegnaNavi, tappe:function(t){ return t.anno===395&&t.intermezzo || t.anno===711&&!t.intermezzo; }},
@@ -3324,6 +3624,8 @@ var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno==
   acquedotti:{d:ACQUEDOTTI, disegna:disegnaAcquedotti, tappe:function(t){ return t.anno===537&&!t.intermezzo; }},
   sacchi:{d:SACCHI, disegna:disegnaSacchi, tappe:function(t){ return !t.intermezzo && (t.anno===455||t.anno===546); }},
   terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo); }} };      /* solo nell'intermezzo «L'esercito»: dalla tappa del 439 (Cartagine) l'utente l'ha fatta togliere il 24 novembre 2026 */
+/* Poitiers: scritta ma non ancora provata sulla pagina; per accenderla, dopo le catture: INFO.poitiers={d:POITIERS, disegna:disegnaPoitiers, tappe:function(t){ return t.anno===711&&!t.intermezzo; }};
+   e 'poitiers' in ORDINE fra 'curia' e 'roma' (24 novembre 2026) */
 var ORDINE=['valeriano','moneta','milvio','navi','adrianopoli','altare','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','pantheon','curia','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 395, 410, 439, 476, 609, 630; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
 var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
   pausa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',
@@ -3349,6 +3651,7 @@ var GLIFI={ valeriano:'<path d="M7 12l2.2-5 2.6 3 2.2-4 2.2 4 2.6-3 2.2 5z"/><re
   barbari:'<path d="M3 7c3 1 4 4 3 7s0 6 3 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".55"/><path d="M9 10h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M24 10l-5-3.4v6.8z"/><path d="M9 16h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 16l-5-3.4v6.8z"/><path d="M9 22h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M25 22l-5-3.4v6.8z"/>',
   acquedotti:'<path d="M2 9h24v3H2z"/><path d="M4 12v11h3v-5a3 3 0 0 1 6 0v5h2v-5a3 3 0 0 1 6 0v5h3V12z" opacity=".8"/><path d="M2 7.2h24" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2.5 2"/>',
   governo:'<path d="M4 8l6-3 8 3 6-3v15l-6 3-8-3-6 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 5v15M18 8v15" stroke="currentColor" stroke-width="1.2" opacity=".6"/>' };
+GLIFI.poitiers='<path d="M4.5 5v8M10 5v8M15.5 5v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="4.5" cy="15.5" r="3.4"/><circle cx="10" cy="15.5" r="3.4"/><circle cx="15.5" cy="15.5" r="3.4" opacity=".8"/><path d="M18.5 23.5l4.2-9 4.2 9z" opacity=".6"/><path d="M21.6 23.5l1.1-2.6 1.1 2.6z" fill="#fff" opacity=".7"/><path d="M2 23.8h24" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>';      /* il muro di scudi e una tenda vuota */
 
 /* ---------- la finestra ---------- */
 var dlg=null, raf=0, sgancia=null, ctl=null;

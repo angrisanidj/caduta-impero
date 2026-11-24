@@ -178,7 +178,16 @@ RM.vola=function(x,z,dist,quota){
   var p1=t1.clone().add(dir.multiplyScalar(dist*.82)); p1.y=t1.y+dist*.56;
   volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:t1,p1:p1};
 };
-RM.volaA=function(t,c){ fermaGiro(); volo={t:0,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(t[0],RM.h(t[0],t[1])+1,t[1]),p1:new THREE.Vector3(c[0],c[1],c[2])}; };   // verso un'inquadratura fissa
+/* verso un'inquadratura fissa; dur in secondi (senza: 1,5) */
+RM.volaA=function(t,c,dur){ fermaGiro(); volo={t:0,dur:dur,t0:controlli.target.clone(),p0:camera.position.clone(),t1:new THREE.Vector3(t[0],RM.h(t[0],t[1])+1,t[1]),p1:new THREE.Vector3(c[0],c[1],c[2])}; };
+/* Volo che segue qualcosa che si muove (24 novembre 2026: il corteo dell'800): f(k), con k da 0 a 1 in dur secondi, dà {t:[x,y,z], c:[x,y,z]}, punto guardato e camera.
+   Come gli altri voli si ferma al primo tocco o alla rotella, e finché dura la rotazione lenta non riparte. */
+RM.segui=function(f,dur){ fermaGiro(); volo={t:0,dur:dur,f:f}; };
+/* Sul telefono in piedi il riquadro è più alto che largo e un'inquadratura pensata per il PC taglia i lati: la camera si allontana lungo la stessa direzione
+   (1,5 volte con il rapporto 0,5). Restituisce il fattore; RM.adatta(v) lo applica a un'inquadratura {t:[x,z], c:[x,y,z]}. */
+RM.fattoreVista=function(){ var a=camera.aspect||1; return a>=1?1:Math.min(1.9,Math.pow(1/a,.6)); };
+RM.adatta=function(v){ var k=RM.fattoreVista(); if(k===1||!v||!v.t) return v; var y0=RM.h(v.t[0],v.t[1])+1;
+  return {t:v.t, c:[v.t[0]+(v.c[0]-v.t[0])*k, y0+(v.c[1]-y0)*k, v.t[1]+(v.c[2]-v.t[1])*k]}; };
 /* La scena può scorrere dentro il suo riquadro, in pixel: quando una scheda o la linea del tempo ne coprono una parte, ciò che si guarda
    deve restare al centro di quel che si vede, non al centro del riquadro. x positivo sposta la scena a destra, y positivo in alto. */
 var spost={x:0,y:0,mx:0,my:0};
@@ -204,6 +213,7 @@ renderer.domElement.addEventListener('pointerdown',function(){ volo=null; });
 renderer.domElement.addEventListener('wheel',function(){ volo=null; },{passive:true});
 RM.frame.push(function(dt){
   if(!volo) return;
+  if(volo.f){ volo.t=Math.min(1,volo.t+dt/(volo.dur||1.5)); var r=volo.f(volo.t); controlli.target.set(r.t[0],r.t[1],r.t[2]); camera.position.set(r.c[0],r.c[1],r.c[2]); if(volo.t>=1) volo=null; return; }
   volo.t=Math.min(1,volo.t+dt/(volo.dur||1.5)); var k=volo.t*volo.t*(3-2*volo.t);
   controlli.target.lerpVectors(volo.t0,volo.t1,k); camera.position.lerpVectors(volo.p0,volo.p1,k);
   if(volo.t>=1) volo=null;
