@@ -62,7 +62,7 @@ function scriviSpie(){
 
 /* ---------- monumenti ---------- */
 var NOMI_CERTEZZA={A:'posizione e forma certe',B:'posizione certa, forma ricostruita',C:'ipotesi'};
-var NOMI_STATO={uso:'in uso',chiuso:'in disuso',spogliato:'spogliato',bruciato:'bruciato',crollato:'danneggiato da un terremoto',cava:'usato come cava',assente:'non ancora costruito'};
+var NOMI_STATO={uso:'in uso',chiuso:'in disuso',abbandonato:'abbandonato, ma in piedi',spogliato:'spogliato',bruciato:'bruciato',crollato:'danneggiato da un terremoto',cava:'usato come cava',assente:'non ancora costruito'};
 function nomeStato(m,st){ var s=(D.MONUMENTI||{})[m.id]; return st==='assente'&&s&&s[0][1]!=='assente'?'scomparso':NOMI_STATO[st]; }      // «assente» dopo essere esistito vuol dire sparito, non «non ancora costruito»
 var voci=(RM.MONUMENTI||[]).map(function(m){
   var li=document.createElement('li'), s=document.createElement('span'); li.appendChild(s); $('elencoMonumenti').appendChild(li); return {m:m,li:li,s:s,st:''};
@@ -130,6 +130,14 @@ function scriviMonumenti(){
   contaMonumenti(n);
 }
 
+/* L'ultima voce, «Che cosa resta», è un intermezzo nei dati ma si presenta come la fine (24 novembre 2026, l'utente: «Invece che intermezzo nella tappa finale metti (Fine: che cosa resta)») */
+function eFine(t){ return !!t.intermezzo && t===T[T.length-1]; }
+function nomeInter(t){ return eFine(t)?'Fine':'Intermezzo'; }
+/* Intermezzi già letti (24 novembre 2026, l'utente: «una volta che l'hai letto e torni sopra si tolga sia Intermezzo che FINE»): letto = il testo è salito fino a metà dello schermo
+   e ci è rimasto almeno due secondi e mezzo (uno sfioramento non conta). Da lì, per tutta la visita, sulle scene niente avviso né velo e il bottone «Leggi» torna normale. */
+var letti={}, quandoLetto=[]; try{ letti=JSON.parse(sessionStorage.getItem('rm-letti')||'{}')||{}; }catch(e){ letti={}; }
+function letto(t){ return !!t.intermezzo && !!letti[chiaveTappa(t)]; }
+function segnaLetto(t){ if(!t.intermezzo || letto(t)) return; letti[chiaveTappa(t)]=1; try{ sessionStorage.setItem('rm-letti',JSON.stringify(letti)); }catch(e){} quandoLetto.forEach(function(f){ f(); }); }
 /* ---------- linea del tempo ---------- */
 var bottoni=[], gruppi=D.ATTI.map(function(a,k){
   var g=document.createElement('div'), p=document.createElement('p'), riga=document.createElement('div');
@@ -137,7 +145,7 @@ var bottoni=[], gruppi=D.ATTI.map(function(a,k){
 });
 T.forEach(function(t,i){
   var b=document.createElement('button'); b.type='button'; if(t.intermezzo) b.className='intermezzo';
-  b.setAttribute('aria-label',(t.intermezzo?'Intermezzo: ':t.anno+' · ')+t.titolo+(t.intermezzo?' (carta e città non cambiano, il testo è sotto)':''));
+  b.setAttribute('aria-label',(t.intermezzo?nomeInter(t)+': ':t.anno+' · ')+t.titolo+(t.intermezzo?' (carta e città non cambiano, il testo è sotto)':''));
   b.addEventListener('click',function(){ ferma(); vai(i); });
   var g=gruppi[Math.min(t.atto,gruppi.length-1)]; g.riga.appendChild(b); g.n++; bottoni.push(b);
 });
@@ -151,7 +159,7 @@ var capi=[0,T.length-1].map(function(k,j){
   var g=gruppi[j?gruppi.length-1:0].g, b=document.createElement('button'), a=T[k];
   b.type='button'; b.className='capo '+(j?'capo-fine':'capo-inizio');      // sul PC due righe, «⏮ Inizio» sopra e l'anno sotto; sul telefono la parola è nascosta e resta «⏮235» in riga (css/stile.css)
   b.innerHTML=j?'<span class="capo-anno">'+a.anno+'</span><span class="capo-riga"><small>Fine</small>'+SEGNO_CAPO[1]+'</span>':'<span class="capo-riga">'+SEGNO_CAPO[0]+'<small>Inizio</small></span><span class="capo-anno">'+a.anno+'</span>';
-  b.setAttribute('aria-label',(j?'Vai all’ultima tappa, ':'Vai alla prima tappa, ')+a.anno+': '+a.titolo); b.title=j?'Vai all’ultima tappa':'Vai alla prima tappa';
+  b.setAttribute('aria-label',j?(eFine(a)?'Vai alla fine: '+a.titolo+' ('+a.anno+')':'Vai all’ultima tappa, '+a.anno+': '+a.titolo):'Vai alla prima tappa, '+a.anno+': '+a.titolo); b.title=j?(eFine(a)?'Vai alla fine':'Vai all’ultima tappa'):'Vai alla prima tappa';
   b.addEventListener('click',function(){ ferma(); vai(k); });
   g.appendChild(b); g.classList.add(j?'ha-fine':'ha-inizio'); return b;
 });
@@ -168,7 +176,7 @@ function punta(x){
   var k=0, d=1e9; centri.forEach(function(c,i){ var e=Math.abs(c-x); if(e<d){ d=e; k=i; } });
   if(k!==mira){
     if(mira>=0) bottoni[mira].classList.remove('mira'); mira=k; bottoni[k].classList.add('mira');
-    var t=T[k], b=document.createElement('b'); b.textContent=t.intermezzo?'Intermezzo':t.anno; fumetto.textContent=''; fumetto.appendChild(b); fumetto.appendChild(document.createTextNode(t.titolo));
+    var t=T[k], b=document.createElement('b'); b.textContent=t.intermezzo?nomeInter(t):t.anno; fumetto.textContent=''; fumetto.appendChild(b); fumetto.appendChild(document.createTextNode(t.titolo));
     if(t.intermezzo){ var n=document.createElement('i'); n.textContent=' · si legge sotto'; fumetto.appendChild(n); }      // l'intermezzo non cambia carta e città: il fumetto lo dice prima del rilascio
     fumetto.classList.toggle('intermezzo',!!t.intermezzo);
   }
@@ -202,7 +210,7 @@ function vai(i,subito){
   var t=T[idx], a=D.ATTI[Math.min(t.atto,D.ATTI.length-1)];
   if(cambia) tornaImpero();      // prima di ridisegnare la carta: così si ridisegna già visibile, alla misura giusta
   meta=t.anno; vel=Math.max(8,Math.abs(meta-anno))/1.7; if(subito) anno=meta;
-  $('tAtto').innerHTML=(t.intermezzo?'':'<b>'+t.anno+'</b>')+(t.intermezzo?'Intermezzo':t.epilogo?'Epilogo':'Atto '+a.n+' · '+a.nome)+'<button type="button" class="as-apri" aria-controls="attoScheda">L’atto in breve</button>';
+  $('tAtto').innerHTML=(t.intermezzo?'':'<b>'+t.anno+'</b>')+(t.intermezzo?nomeInter(t):t.epilogo?'Epilogo':'Atto '+a.n+' · '+a.nome)+'<button type="button" class="as-apri" aria-controls="attoScheda">L’atto in breve</button>';
   $('tTitolo').textContent=t.titolo; $('tTesto').textContent=t.testo;
   $('tStorici').hidden=!t.storici; $('tStoriciTesto').textContent=t.storici||'';
   $('tLeggenda').hidden=!t.leggenda; $('tLeggendaTesto').textContent=t.leggenda||''; figuraLeggenda(t);      // dove una leggenda nasce da questa tappa: che cosa dicono le fonti e che cosa viene dopo
@@ -227,7 +235,8 @@ function applica(){
 }
 
 /* ---------- comandi ---------- */
-function ferma(){ if(coda){ clearInterval(coda); coda=null; } $('btnPlay').textContent='▶ Riproduci'; }
+var fermati=[];      // chi vuole sapere quando «Riproduci» si ferma (il richiamo di «Leggi»)
+function ferma(){ var era=!!coda; if(coda){ clearInterval(coda); coda=null; } $('btnPlay').textContent='▶ Riproduci'; if(era) fermati.forEach(function(f){ f(); }); }
 $('btnPlay').addEventListener('click',function(){
   if(coda){ ferma(); return; }
   if(idx===T.length-1) vai(0);
@@ -335,11 +344,42 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
    da un IntersectionObserver, non a ogni scorrimento; sparisce su «Perché cadde» e sul piede. Stili in fondo a css/stile.css (.leggi-tappa, .salta-giu). */
 (function(){
   var tit=$('tAtto')||$('tTitolo'), co=document.querySelector('.tempo .comandi'); if(!tit||!co) return;
-  var l=document.createElement('button'); l.type='button'; l.className='leggi-tappa'; l.innerHTML='<span class="lt-lungo">Leggi la tappa</span><span class="lt-corto">Leggi</span> ↓'; co.appendChild(l);
-  function scrivi(){ var inter=!!T[idx].intermezzo; l.querySelector('.lt-lungo').textContent=inter?'Leggi l’intermezzo':'Leggi la tappa'; l.classList.toggle('acceso',inter); l.setAttribute('aria-label',inter?'Leggi l’intermezzo, sotto la linea del tempo':'Leggi il testo della tappa, sotto la linea del tempo'); }
-  l.addEventListener('click',function(){ var ridotto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches; tit.scrollIntoView({behavior:ridotto?'auto':'smooth',block:'start'}); });
-  ascolto.push(function(){ scrivi(); setTimeout(function(){ l.classList.remove('pulsa'); void l.offsetWidth; l.classList.add('pulsa'); },250); });      // tappa nuova: pulsa due volte, per dire che il racconto è sotto
-  scrivi();
+  var l=document.createElement('button'); l.type='button'; l.className='leggi-tappa'; l.innerHTML='<span class="lt-lungo">Leggi la tappa</span><span class="lt-corto">Leggi</span> <span class="lt-freccia" aria-hidden="true">↓</span>'; co.appendChild(l);
+  function scrivi(){ var inter=!!T[idx].intermezzo, fine=eFine(T[idx]); l.querySelector('.lt-lungo').textContent=fine?'Leggi la fine':inter?'Leggi l’intermezzo':'Leggi la tappa'; l.classList.toggle('acceso',inter && !letto(T[idx])); l.setAttribute('aria-label',(fine?'Leggi la fine, «'+T[idx].titolo+'»':inter?'Leggi l’intermezzo':'Leggi il testo della tappa')+', sotto la linea del tempo'); }
+  /* Richiamo (24 novembre 2026, l'utente: «quando c'è qualcosa da vedere sotto fai lampeggiante (in maniera professionale non pacchiana) il bottone leggi»): un alone che respira
+     e la freccia che scende di poco, finché il testo della tappa non è entrato nello schermo (IntersectionObserver) o finché non si tocca il bottone; riparte alla tappa seguente.
+     Non parte se il testo è già sullo schermo, né durante «Riproduci» (la pagina va avanti da sola ogni sei secondi e mezzo: lì chi guarda segue le scene, non deve leggere). */
+  /* Prima (fino al 25 novembre 2026) il richiamo si fidava degli scatti di un IntersectionObserver con un margine fisso del 22%: a 1280 e a 812x375 «non sempre» partiva o si fermava,
+     perché dopo un cambio di tappa il contenuto si sposta (carta, ritratti, invito dell'atto) e l'osservatore restava convinto di uno stato vecchio; e a 812x375 la linea del tempo
+     incollata è alta più del margine. Ora una sola misura (guarda) decide tutto, con la cima vera della linea del tempo: la chiamano lo scorrimento (una volta per fotogramma),
+     l'osservatore (per gli spostamenti senza scorrimento), il cambio di tappa (a 0,45 e a 1,3 secondi) e la fine di «Riproduci». Nel primo secondo dopo un cambio di tappa il testo
+     visibile spegne il richiamo ma non lo salda: se un ridisegno lo spinge fuori, il richiamo riparte. */
+  var visti={}, debito=true, ultimaT=idx, dal=Date.now(), t1=0, t2=0, metaT=0, metaDi=null, raf=0, te=$('tTesto')||tit, tp=document.querySelector('.tempo'), ca=$('cause'), pi=document.querySelector('.piede');
+  function richiama(si){ if(l.classList.contains('richiama')!==!!si) l.classList.toggle('richiama',!!si); }
+  function misura(){      // dove sta il testo rispetto alla parte libera dello schermo: sopra la linea del tempo, quando è incollata in fondo
+    var q=te.getBoundingClientRect(), H=window.innerHeight, giu=H;
+    if(tp){ var r=tp.getBoundingClientRect(); if(r.top>q.top && r.top<H && r.bottom>=H-4) giu=r.top; }
+    var oltre=(ca && ca.getBoundingClientRect().top<H*.9) || (pi && pi.getBoundingClientRect().top<H);      // su «Perché cadde» e sul piede non si richiama
+    return {vede:q.top<giu-24 && q.bottom>40, meta:q.top<H*.5 && q.bottom>H*.15, oltre:oltre};
+  }
+  function guarda(){ raf=0; var t=T[idx], m=misura(), B=document.body.classList;
+    if(m.vede && Date.now()-dal>1200){ debito=false; visti[idx]=1; }      // il testo è entrato nello schermo ed è rimasto lì: il richiamo è finito per questa tappa, e per questa visita
+    richiama(debito && !m.vede && !m.oltre && !coda && !B.contains('roma-grande') && !B.contains('impero-grande'));
+    /* letto (solo intermezzi): il testo sale fino a metà dello schermo e ci resta due secondi e mezzo (uno sfioramento non conta; sul telefono la pagina scende da sola al testo di un intermezzo, e chi torna subito su non l'ha letto) */
+    if(t.intermezzo && !letto(t) && m.meta){ if(metaDi!==t){ clearTimeout(metaT); metaDi=t; metaT=setTimeout(function(){ metaDi=null; if(T[idx]===t && misura().meta) segnaLetto(t); },2500); } }
+    else if(metaDi){ clearTimeout(metaT); metaDi=null; }
+  }
+  function presto(){ if(raf) return; var t=T[idx]; if(!debito && !(t.intermezzo && !letto(t))){ richiama(false); return; } raf=requestAnimationFrame(guarda); }      // niente da fare: nessuna misura
+  window.addEventListener('scroll',presto,{passive:true}); window.addEventListener('resize',presto);
+  if(window.IntersectionObserver) new IntersectionObserver(presto,{threshold:[0,.02,.25,.5,.75,1]}).observe(te);
+  if(window.MutationObserver) new MutationObserver(presto).observe(document.body,{attributes:true,attributeFilter:['class']});      // uscendo dallo schermo intero
+  fermati.push(function(){ setTimeout(presto,60); });      // finito «Riproduci»: la tappa dove si è fermato non è stata letta
+  l.addEventListener('click',function(){ debito=false; visti[idx]=1; richiama(false); var ridotto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches; tit.scrollIntoView({behavior:ridotto?'auto':'smooth',block:'start'}); });
+  ascolto.push(function(i){ scrivi(); if(i===ultimaT) return; ultimaT=i; debito=!visti[i] && !letto(T[i]); dal=Date.now();      /* una tappa già vista in questa visita non richiama più */
+    richiama(false); clearTimeout(metaT); metaDi=null;
+    clearTimeout(t1); clearTimeout(t2); t1=setTimeout(guarda,450); t2=setTimeout(guarda,1300); });
+  quandoLetto.push(scrivi);
+  scrivi(); t1=setTimeout(guarda,450); t2=setTimeout(guarda,1300);
 })();
 (function(){
   var b=document.createElement('button'), sc=$('scene'), ca=$('cause'), pi=document.querySelector('.piede'), sopra=false, fine={}; if(!sc||!window.IntersectionObserver) return;
@@ -375,23 +415,25 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
     avvisi.push({v:v,box:box,occhio:leggi.children[0],frase:leggi.children[1],vai:leggi.children[2]});
   });
   function scrivi(){
-    var t=T[idx], si=!!t.intermezzo, B=document.body.classList, tutto=B.contains('roma-grande')||B.contains('impero-grande'), k=si?idx+'|'+piccolo+'|'+tutto:'';
+    var t=T[idx], si=!!t.intermezzo && !letto(t), B=document.body.classList, tutto=B.contains('roma-grande')||B.contains('impero-grande'), k=si?idx+'|'+piccolo+'|'+tutto:'';
     if(k===scritto) return; scritto=k; B.toggle('in-intermezzo',si);
     avvisi.forEach(function(a){
       a.box.hidden=!si; a.v.hidden=!si||piccolo; a.box.classList.toggle('piccolo',piccolo); if(!si) return;
-      a.occhio.textContent='Intermezzo · '+t.titolo;
-      a.frase.textContent='La carta e la città restano '+al(t.anno)+'. L’intermezzo si legge sotto.';
-      a.vai.textContent=tutto?'Esci e leggi ↓':piccolo?'Leggi ↓':'Leggi l’intermezzo ↓';
+      var fine=eFine(t);
+      a.occhio.textContent=nomeInter(t)+' · '+t.titolo;
+      a.frase.textContent='La carta e la città restano '+al(t.anno)+'. '+(fine?'Si legge sotto.':'L’intermezzo si legge sotto.');
+      a.vai.textContent=tutto?'Esci e leggi ↓':piccolo?'Leggi ↓':fine?'Leggi la fine ↓':'Leggi l’intermezzo ↓';
     });
   }
   ascolto.push(function(i,t){
     var nuova=i!==ultima; ultima=i; if(nuova) piccolo=false; scrivi(); if(!nuova) return;
-    voce.textContent=t.intermezzo?'Intermezzo: '+t.titolo+'. La carta e la città restano '+al(t.anno)+'; il testo è sotto.':'';
+    voce.textContent=t.intermezzo?nomeInter(t)+': '+t.titolo+'. La carta e la città restano '+al(t.anno)+'; il testo è sotto.':'';
     var B=document.body.classList;
     if(t.intermezzo && !coda && !B.contains('roma-grande') && !B.contains('impero-grande') && window.matchMedia && matchMedia('(max-width:1000px)').matches)
       setTimeout(function(){ var y=tit.getBoundingClientRect().top; if(y>window.innerHeight*.35 || y<0) tit.scrollIntoView({behavior:ridotto()?'auto':'smooth',block:'start'}); },320);      // dopo tornaImpero e il ridisegno della carta
   });
   if(window.MutationObserver) new MutationObserver(scrivi).observe(document.body,{attributes:true,attributeFilter:['class']});      // aperto o chiuso lo schermo intero: cambia la scritta del bottone
+  quandoLetto.push(scrivi);      // letto: via avviso e velo
   scrivi();
 })();
 window.RM_pagina={vai:vai, ferma:ferma, spie:SPIE, quando:function(f){ ascolto.push(f); }, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)

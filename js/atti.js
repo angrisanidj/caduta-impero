@@ -135,8 +135,9 @@ function scrivi(k){
   bottoniTappe=tappe[k].map(function(i,j){
     var t=T[i], li=crea('li',t.intermezzo?'intermezzo':null,null,eTappe), b=crea('button',null,null,li); b.type='button';
     li.style.setProperty('--j',j);
-    crea('b',null,t.intermezzo?'Intermezzo':String(t.anno),b).setAttribute('aria-hidden','true'); crea('i',null,null,b); crea('span',null,t.titolo,b);
-    b.setAttribute('aria-label',(t.intermezzo?'Intermezzo':t.anno)+': '+t.titolo); b.title=(t.intermezzo?'Intermezzo':t.anno)+' · '+t.titolo;
+    var nomeI=t===T[T.length-1]?'Fine':'Intermezzo';      // l'ultima voce, «Che cosa resta», si presenta come la fine (24 novembre 2026, l'utente), come in js/pagina.js (nomeInter)
+    crea('b',null,t.intermezzo?nomeI:String(t.anno),b).setAttribute('aria-hidden','true'); crea('i',null,null,b); crea('span',null,t.titolo,b);
+    b.setAttribute('aria-label',(t.intermezzo?nomeI:t.anno)+': '+t.titolo); b.title=(t.intermezzo?nomeI:t.anno)+' · '+t.titolo;
     b.addEventListener('click',function(){ tenuta=true; P.ferma(); P.vai(i); });      // chi sceglie una tappa dalla scheda la tiene aperta
     /* passando sopra una tappa (o arrivandoci con la tastiera) la carta mostra quella tappa; uscendo torna all'interruttore */
     function anteprima(){ if(t.intermezzo||!carta) return; ferma(); var p=-1; passi.forEach(function(q,x){ if(q.i===i) p=x; }); if(p>=0) mostraPasso(p); else { vista=-1; carta.mostra(t.regioni||statiA(t.anno),t.anno); eTargaAnno.textContent=t.anno; } }

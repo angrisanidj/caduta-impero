@@ -157,14 +157,14 @@ h2{margin:2px 0 8px;font-family:var(--cap);font-weight:600;font-size:clamp(22px,
 .monumenti li{display:flex;align-items:center;gap:8px;padding:2px 0;break-inside:avoid}
 .monumenti li::before,.st::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:currentColor}
 .monumenti li>span{color:var(--ink)}
-.uso{color:#C29A32}.chiuso{color:#9C948A}.spogliato{color:#B0563F}.bruciato{color:#4A3F38}.assente{color:#D8CCB6}
+.uso{color:#C29A32}.chiuso{color:#9C948A}.abbandonato{color:#557083}.spogliato{color:#B0563F}.bruciato{color:#4A3F38}.assente{color:#D8CCB6}
 .monumenti li.assente>span{color:#A99C86}
 .legenda{display:flex;flex-wrap:wrap;gap:4px 12px;margin:8px 0 0;font-size:13px}
 .st{display:inline-flex;align-items:center;gap:5px}
 .st>*,.st{color:inherit}
 .legenda .st{color:var(--muted)}
 .legenda .st::before{width:7px;height:7px}
-.legenda .uso::before{background:#C29A32}.legenda .chiuso::before{background:#9C948A}.legenda .spogliato::before{background:#B0563F}.legenda .bruciato::before{background:#4A3F38}.legenda .assente::before{background:#D8CCB6}
+.legenda .uso::before{background:#C29A32}.legenda .chiuso::before{background:#9C948A}.legenda .abbandonato::before{background:#557083}.legenda .spogliato::before{background:#B0563F}.legenda .bruciato::before{background:#4A3F38}.legenda .assente::before{background:#D8CCB6}
 
 .cause{margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line);max-width:46em}
 .cause h2{margin:4px 0 10px}
@@ -203,8 +203,8 @@ h2{margin:2px 0 8px;font-family:var(--cap);font-weight:600;font-size:clamp(22px,
 }
 @media (prefers-reduced-motion:reduce){ .m-regione{transition:none} }
 
-/* pallino di stato sempre del suo colore, anche dove il testo è grigio */
-.st.uso::before{background:#C29A32}.st.chiuso::before{background:#9C948A}.st.spogliato::before{background:#B0563F}.st.bruciato::before{background:#4A3F38}.st.assente::before{background:#D8CCB6}
+/* pallino di stato sempre del suo colore, anche dove il testo è grigio; «abbandonato» (25 novembre 2026) è un grigio azzurro, l'unica tinta fredda fra gli stati: non si confonde con il grigio caldo di «in disuso» né con il rosso di «spogliato», anche per chi non distingue rosso e verde; 5 a 1 sul bianco */
+.st.uso::before{background:#C29A32}.st.chiuso::before{background:#9C948A}.st.abbandonato::before{background:#557083}.st.spogliato::before{background:#B0563F}.st.bruciato::before{background:#4A3F38}.st.assente::before{background:#D8CCB6}
 /* su schermi stretti la scheda è un foglio in basso, non un riquadro dentro la scena */
 @media (max-width:700px){
   .scheda,body.roma-grande .scheda{position:fixed;left:8px;right:8px;top:auto;bottom:8px;width:auto;max-height:46vh;z-index:70}
@@ -873,8 +873,23 @@ body.roma-grande .riquadro.roma>.ia-avviso.piccolo{padding-top:calc(78px + env(s
 .comandi .leggi-tappa:hover{color:#fff;background:var(--porpora);border-color:var(--porpora)}
 .comandi .leggi-tappa.acceso{color:#fff;background:var(--porpora);border-color:var(--gold2)}
 .leggi-tappa .lt-corto{display:none}
-.leggi-tappa.pulsa{animation:salta-pulsa 1.1s ease-in-out 2}
-@media (prefers-reduced-motion:reduce){ .leggi-tappa.pulsa{animation:none} }
+/* il richiamo (js/pagina.js, richiama): un alone morbido nel colore del bottone che respira (0,9 s su, pausa, 2,2 s il ciclo) e la freccia che scende di tre punti e torna.
+   Solo opacity e transform: niente cambi di misura, la riga non si muove. Nell'intermezzo (porpora acceso) l'alone è dorato. Con prefers-reduced-motion un alone fermo. */
+.comandi .leggi-tappa{position:relative}
+.leggi-tappa .lt-freccia{display:inline-block}
+.leggi-tappa::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;opacity:0;
+  box-shadow:0 0 0 4px rgba(122,31,43,.26),0 0 18px 3px rgba(122,31,43,.28)}
+.leggi-tappa.acceso::after{box-shadow:0 0 0 4px rgba(212,174,85,.42),0 0 16px 3px rgba(212,174,85,.34)}
+.leggi-tappa.richiama::after{animation:lt-respiro 2.2s ease-in-out infinite;will-change:opacity}
+.leggi-tappa.richiama .lt-freccia{animation:lt-scende 2.2s ease-in-out infinite;will-change:transform}
+@keyframes lt-respiro{0%{opacity:0}35%{opacity:1}70%,100%{opacity:0}}
+@keyframes lt-scende{0%,60%,100%{transform:translateY(0)}28%{transform:translateY(3px)}}
+body.tempo-attesa .leggi-tappa.richiama::after,body.tempo-attesa .leggi-tappa.richiama .lt-freccia{animation:none}      /* linea del tempo ancora nascosta: niente lavoro inutile */
+@media (prefers-reduced-motion:reduce){
+  .leggi-tappa.richiama::after{animation:none;opacity:1;box-shadow:0 0 0 2px rgba(122,31,43,.45)}
+  .leggi-tappa.acceso.richiama::after{box-shadow:0 0 0 2px rgba(212,174,85,.7)}
+  .leggi-tappa.richiama .lt-freccia{animation:none}
+}
 @media (max-width:1000px),(max-height:559px) and (orientation:landscape){ .leggi-tappa .lt-lungo{display:none} .leggi-tappa .lt-corto{display:inline} }
 @media (max-width:1000px){ .comandi .leggi-tappa{flex:none;padding:8px 12px} }
 @media (min-width:1001px){ .comandi .leggi-tappa{min-width:184px} }      /* «Leggi l'intermezzo» è più lungo di «Leggi la tappa»: la stessa larghezza, così le tacche della linea non si spostano */
@@ -936,3 +951,36 @@ body.roma-grande .comandi .leggi-tappa,body.impero-grande .comandi .leggi-tappa{
 /* «↑ Torna alla carta e alla città»: fluttuante, sempre alla stessa quota; mai a tutto schermo */
 .salta-giu{bottom:14px}
 body.roma-grande .salta-giu,body.impero-grande .salta-giu{display:none}
+
+/* Telefono, comandi della linea del tempo rifiniti (24 novembre 2026, cattura dell'utente su iPhone: «▶ RIPRODUCI» andava a capo, i quattro comandi avevano altezze
+   e pesi diversi, le pastiglie dei capi uscivano dalla linea). Ora: una riga sola, tutti alti 44 punti con gli stessi angoli; ‹ › quadrati; «▶ Riproduci» e «Leggi ↓»
+   in minuscolo e senza spaziatura larga (su iPhone le maiuscole spaziate sono più larghe che in Edge: misurato con un margine del 10%), mai a capo. */
+@media (max-width:1000px){
+  .tempo .comandi{display:flex;flex-wrap:nowrap;gap:6px;align-items:stretch}
+  .tempo .comandi button{height:44px;min-height:44px;margin:0;padding:0 13px;border-radius:10px;font-family:var(--ui);font-size:14px;font-weight:600;letter-spacing:.01em;
+    text-transform:none;white-space:nowrap;line-height:1;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+  .tempo .comandi #btnPrima,.tempo .comandi #btnDopo{flex:0 0 44px;width:44px;padding:0;font-size:25px;font-weight:600;padding-bottom:2px}
+  .tempo .comandi #btnPlay{flex:1 1 auto;min-width:0;overflow:hidden}
+  .tempo .comandi .leggi-tappa{flex:0 0 auto;padding:0 14px}
+  /* i capi stanno dentro la linea, allineati ai suoi bordi: il primo atto si allarga quanto basta per la pastiglia, così «284» ha aria */
+  .atto-gruppo.ha-inizio{min-width:56px}
+  .atto-gruppo.ha-fine{min-width:88px}      /* l'ultimo atto: «590» e la pastiglia «852 ⏭» insieme, con aria anche con le scritte più larghe dell'iPhone (a 360 punti l'atto era largo 72) */
+  .atto-gruppo.ha-inizio p{padding-left:0} .atto-gruppo.ha-fine p{padding-right:48px}
+  .linea .capo,.linea .capo-inizio,.linea .capo-fine{top:-2px;height:21px;padding:0 6px;gap:2px;font-size:12px}
+  .linea .capo-inizio{left:0} .linea .capo-fine{right:0}
+  .linea .capo-inizio::before{inset:-10px -3px -18px -8px} .linea .capo-fine::before{inset:-10px -8px -18px -3px}
+}
+/* telefoni stretti (360 punti): con le scritte più larghe dell'iPhone «Riproduci» si tagliava; frecce di 40 punti e margini interni più stretti */
+@media (max-width:379px){
+  .tempo .comandi{gap:5px}
+  .tempo .comandi button{padding:0 9px;gap:5px}
+  .tempo .comandi #btnPrima,.tempo .comandi #btnDopo{flex-basis:40px;width:40px}
+  .tempo .comandi .leggi-tappa{padding:0 10px}
+  .linea .capo,.linea .capo-inizio,.linea .capo-fine{padding:0 4px;gap:1px}
+}
+/* telefono coricato: la riga è una sola anche con la linea accanto; i comandi alti 40 */
+@media (max-height:559px) and (orientation:landscape) and (max-width:1000px){
+  .tempo .comandi button{height:40px;min-height:40px}
+  .tempo .comandi #btnPrima,.tempo .comandi #btnDopo{flex:0 0 40px;width:40px}
+  .tempo .comandi #btnPlay{flex:0 0 auto}
+}
