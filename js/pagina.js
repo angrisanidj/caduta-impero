@@ -149,8 +149,9 @@ gruppi.forEach(function(g){ g.g.style.setProperty('--n',g.n); });
 var SEGNO_CAPO=['<svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 2h1.6v8H2zM10.5 2v8L4.4 6z" fill="currentColor"/></svg>','<svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M10 2h-1.6v8H10zM1.5 2v8L7.6 6z" fill="currentColor"/></svg>'];
 var capi=[0,T.length-1].map(function(k,j){
   var g=gruppi[j?gruppi.length-1:0].g, b=document.createElement('button'), a=T[k];
-  b.type='button'; b.className='capo '+(j?'capo-fine':'capo-inizio'); b.innerHTML=j?'<span>'+a.anno+'</span>'+SEGNO_CAPO[1]:SEGNO_CAPO[0]+'<span>'+a.anno+'</span>';
-  b.setAttribute('aria-label',(j?'Vai all’ultima tappa, ':'Vai alla prima tappa, ')+a.anno+': '+a.titolo); b.title=j?'Ultima tappa':'Prima tappa';
+  b.type='button'; b.className='capo '+(j?'capo-fine':'capo-inizio');      // sul PC due righe, «⏮ Inizio» sopra e l'anno sotto; sul telefono la parola è nascosta e resta «⏮235» in riga (css/stile.css)
+  b.innerHTML=j?'<span class="capo-anno">'+a.anno+'</span><span class="capo-riga"><small>Fine</small>'+SEGNO_CAPO[1]+'</span>':'<span class="capo-riga">'+SEGNO_CAPO[0]+'<small>Inizio</small></span><span class="capo-anno">'+a.anno+'</span>';
+  b.setAttribute('aria-label',(j?'Vai all’ultima tappa, ':'Vai alla prima tappa, ')+a.anno+': '+a.titolo); b.title=j?'Vai all’ultima tappa':'Vai alla prima tappa';
   b.addEventListener('click',function(){ ferma(); vai(k); });
   g.appendChild(b); g.classList.add(j?'ha-fine':'ha-inizio'); return b;
 });

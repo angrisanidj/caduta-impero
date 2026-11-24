@@ -904,6 +904,35 @@ body.roma-grande .comandi .leggi-tappa,body.impero-grande .comandi .leggi-tappa{
 }
 /* telefono coricato e tutto schermo stretto: la riga degli anni è sottile */
 @media (max-height:559px) and (orientation:landscape){ .linea .capo{height:20px;top:-2px;padding:0 5px;gap:2px} .linea .capo-inizio{left:-6px} .linea .capo-fine{right:-6px} }
+.linea .capo .capo-riga{display:inline-flex;align-items:center;gap:inherit}
+.linea .capo small{display:none}
+/* PC (24 novembre 2026, l'utente: «Fallo più carino da pc»): due comandi veri, vestiti come ‹ › (fondo bianco, bordo, angoli di 8 punti), con il segno in porpora.
+   Provata anche la versione alta quanto la linea, con «Inizio» e «Fine» scritti: toglieva 140 punti alla linea e tagliava di più i nomi degli atti II-V. Questa sta nello
+   stesso posto degli anni di prima (sporge di 8 punti nel margine della linea del tempo), così nessun nome si accorcia e le tacche restano dove sono. */
+@media (min-width:1001px) and (min-height:560px){
+  .linea .capo{top:-7px;height:28px;padding:0 9px 0 8px;gap:5px;border-radius:8px;color:var(--ink);background:var(--carta2);border:1px solid var(--line);
+    box-shadow:0 1px 2px rgba(34,28,24,.08);font-family:var(--ui);font-size:13px;font-weight:700;letter-spacing:.02em;transition:color .15s,border-color .15s,background .15s,box-shadow .15s}
+  .linea .capo-inizio{left:-8px} .linea .capo-fine{right:-8px}
+  .linea .capo .capo-riga{color:var(--porpora)}
+  .linea .capo svg{width:10px;height:10px}
+  .linea .capo:hover:not(:disabled){color:var(--porpora);background:#FBF6EA;border-color:var(--porpora);box-shadow:0 3px 8px -4px rgba(122,31,43,.45)}
+  .linea .capo:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .linea .capo:disabled{color:#9C9186;background:transparent;border-style:dashed;box-shadow:none;opacity:1}
+  .linea .capo:disabled .capo-riga{color:#B5AA9E}
+  .linea .capo::before{inset:-4px -3px}
+}
+/* «La crisi», il nome del primo atto, torna dove ha posto accanto alla pastiglia: provato, a 1280 e a 1920 resterebbero 1 e 7 punti; non torna (il primo atto è largo 70-130 punti) */
+/* PC stretto (da 1001 a 1199 punti): il primo atto è largo una quarantina di punti. «Leggi ↓» corto dà spazio alla linea, e la pastiglia si stringe, così non copre «284» */
+@media (min-width:1001px) and (max-width:1199px){
+  .leggi-tappa .lt-lungo{display:none} .leggi-tappa .lt-corto{display:inline}
+  .comandi .leggi-tappa{min-width:0}
+}
+@media (min-width:1001px) and (max-width:1199px) and (min-height:560px){
+  .linea .capo{height:26px;top:-6px;padding:0 6px;gap:3px;font-size:12px}
+  .linea .capo svg{width:8px;height:8px}
+  .atto-gruppo.ha-inizio p>span{display:none} .atto-gruppo.ha-inizio p::after{content:"\00a0"} .atto-gruppo.ha-inizio p{padding-left:52px}      /* qui il nome non ci sta */
+}
+@media (min-width:1001px) and (min-height:560px) and (prefers-reduced-motion:reduce){ .linea .capo{transition:none} }
 /* «↑ Torna alla carta e alla città»: fluttuante, sempre alla stessa quota; mai a tutto schermo */
 .salta-giu{bottom:14px}
 body.roma-grande .salta-giu,body.impero-grande .salta-giu{display:none}
