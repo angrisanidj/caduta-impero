@@ -71,8 +71,9 @@ var gente=new THREE.Points(gGente,matGente); gente.frustumCulled=false; gente.us
    (paenula o pallium), donna con la stola lunga fino ai piedi e la palla sopra il capo, qualcuno in toga bianca; e bambini in tunica.
    Le fogge seguono il quadro corrente (Sebesta e Bonfante, The World of Roman Costume, 1994, per sommi capi): la tunica per tutti, la toga solo dei cittadini e di rado
    per strada, le donne velate fuori casa. I tagli sono semplificati; l'altezza (1,65 m) è una media, non una persona. Le gambe e le braccia oscillano col passo
-   nello shader (nessun lavoro per il processore). Quante, al massimo, dipende dal gradino della qualità (RM.QUALITA.figure); sui telefoni nessuna. */
-RM.QUALITA.figure=[0,400,700,1200];      // quante figure vicine al massimo, per gradino (misura del 24 novembre 2026: 400 figure costano meno di mezzo millesimo sulla Radeon integrata)
+   nello shader (nessun lavoro per il processore). Quante, al massimo, dipende dal gradino della qualità (RM.QUALITA.figure): nessuna in «bassa», 150 nel gradino «telefono»
+   (dal 24 novembre 2026, sera: anche sui telefoni, che prima non ne avevano); senza figure le maglie restano spente e non si disegnano nemmeno. */
+RM.QUALITA.figure=[0,400,700,1200,150];      // quante figure vicine al massimo, per gradino (bassa, media, alta, massima, telefono; misura del 24 novembre 2026: 400 figure costano meno di mezzo millesimo sulla Radeon integrata)
 var PELLE=[0xc9946c,0xb07a55,0xd8a882,0x9c6a48].map(RM.col), CAPELLI=[0x2c2018,0x3e2a1c,0x1e1712,0x6a5440].map(RM.col), LANA=RM.col(0x6b5a44), BIANCO=RM.col(0xefe9da), SANDALO=RM.col(0x4a3424), VELO=RM.col(0xe2d6bc);
 function Parti(){ this.p=[]; this.n=[]; this.c=[]; this.o=[]; this.f=[]; }
 Parti.prototype.metti=function(g,colore,osc,fisso){ var q=g.index?g.toNonIndexed():g, P=q.attributes.position.array, N=q.attributes.normal.array, i;
@@ -129,21 +130,21 @@ function matFigure(){ var m=new THREE.MeshLambertMaterial({vertexColors:true}), 
         '  vec3 q=transformed; q.y-=pv; float ca=cos(an), sa=sin(an); transformed=vec3(q.x,q.y*ca-q.z*sa,q.y*sa+q.z*ca); transformed.y+=pv; }',
         'transformed.y+=abs(sin(fP))*0.0035*moto;'].join(A));
   }; return m; }
-var figure=[], ombraFig, MAXF=RM.piccolo?0:Math.max.apply(null,RM.QUALITA.figure);
+var figure=[], ombraFig, MAXF=Math.max.apply(null,RM.QUALITA.figure);
 if(MAXF){
   var matF=matFigure();
   [0,1,2,3].forEach(function(f){ var g=corpo(f,f*3+1); g.setAttribute('fase',new THREE.InstancedBufferAttribute(new Float32Array(MAXF),1)); g.setAttribute('moto',new THREE.InstancedBufferAttribute(new Float32Array(MAXF),1));
     var m=new THREE.InstancedMesh(g,matF,MAXF); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(MAXF*3),3); m.instanceColor.setUsage(THREE.DynamicDrawUsage);
-    m.count=0; m.frustumCulled=false; m.receiveShadow=true; m.userData.gruppo='vita'; RM.scene.add(m); figure.push(m); });
+    m.count=0; m.visible=false; m.frustumCulled=false; m.receiveShadow=true; m.userData.gruppo='vita'; RM.scene.add(m); figure.push(m); });
   var texOmbra=RM.tela(32,32,function(g){ var q=g.createRadialGradient(16,16,0,16,16,16); q.addColorStop(0,'rgba(0,0,0,.55)'); q.addColorStop(.6,'rgba(0,0,0,.25)'); q.addColorStop(1,'rgba(0,0,0,0)'); g.fillStyle=q; g.fillRect(0,0,32,32); },false);
   ombraFig=new THREE.InstancedMesh(new THREE.PlaneGeometry(1,1).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({map:texOmbra,transparent:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-4,polygonOffsetUnits:-4}),MAXF);
-  ombraFig.instanceMatrix.setUsage(THREE.DynamicDrawUsage); ombraFig.count=0; ombraFig.frustumCulled=false; ombraFig.userData.gruppo='vita'; RM.scene.add(ombraFig);
+  ombraFig.instanceMatrix.setUsage(THREE.DynamicDrawUsage); ombraFig.count=0; ombraFig.visible=false; ombraFig.frustumCulled=false; ombraFig.userData.gruppo='vita'; RM.scene.add(ombraFig);
 }
 var dirF=new Float32Array(NP), prima=new Float32Array(NP*2), mF=new THREE.Matrix4(), qF=new THREE.Quaternion(), vF=new THREE.Vector3(), sF=new THREE.Vector3(), eF=new THREE.Euler();
 function foggiaDi(j){ var h=((j*2654435761)>>>0)%100; return h<4?{f:3,s:1}:h<12?{f:0,s:.62}:h<46?{f:0,s:1}:h<66?{f:1,s:1}:{f:2,s:.95}; }      // toga 4%, bambini 8%, tunica 34%, mantello 20%, donne 34%: proporzioni di comodo
 function figureVicine(n){
   var max=MAXF?(RM.QUALITA.figure[RM.q]||0):0, i, k;
-  if(!max){ if(MAXF && (figure[0].count||ombraFig.count)){ figure.forEach(function(m){ m.count=0; }); ombraFig.count=0; } return; }
+  if(!max){ if(MAXF && (figure[0].count||ombraFig.count||ombraFig.visible)){ figure.forEach(function(m){ m.count=0; m.visible=false; }); ombraFig.count=0; ombraFig.visible=false; } return; }      // spente: in «bassa» non si compilano né si disegnano
   var cam=RM.camera.position, lim=.165*RM.vistaU.uPxScala.value/12, lim2=lim*lim, conta=[0,0,0,0], tot=0, cx=cam.x, cy=cam.y, cz=cam.z;      // vicina: alta più di dodici pixel sullo schermo
   for(i=0;i<n;i++){ var o=i*3, y=pos[o+1]; if(y<-50) continue;
     var dx=pos[o]-cx, dz=pos[o+2]-cz, dy=y-cy, d2=dx*dx+dy*dy+dz*dz, mx=pos[o]-prima[i*2], mz=pos[o+2]-prima[i*2+1], mv=mx*mx+mz*mz;
@@ -155,8 +156,8 @@ function figureVicine(n){
     sF.set(.075*fg.s,1,.075*fg.s); vF.y+=.003; mF.compose(vF,qF,sF); ombraFig.setMatrixAt(tot-1,mF);
     pos[o+1]=-60;                                                                                                           // il punto lontano si spegne
   }
-  for(k=0;k<figure.length;k++){ var mm=figure[k]; mm.count=conta[k]; if(conta[k]){ mm.instanceMatrix.needsUpdate=true; mm.instanceColor.needsUpdate=true; mm.geometry.attributes.fase.needsUpdate=true; mm.geometry.attributes.moto.needsUpdate=true; } }
-  ombraFig.count=tot; if(tot) ombraFig.instanceMatrix.needsUpdate=true;
+  for(k=0;k<figure.length;k++){ var mm=figure[k]; mm.count=conta[k]; mm.visible=conta[k]>0; if(conta[k]){ mm.instanceMatrix.needsUpdate=true; mm.instanceColor.needsUpdate=true; mm.geometry.attributes.fase.needsUpdate=true; mm.geometry.attributes.moto.needsUpdate=true; } }
+  ombraFig.count=tot; ombraFig.visible=tot>0; if(tot) ombraFig.instanceMatrix.needsUpdate=true;
 }
 
 function muoviGente(dt){

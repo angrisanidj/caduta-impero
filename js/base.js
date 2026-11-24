@@ -116,10 +116,11 @@ var GL2=!!window.WebGL2RenderingContext;
 try{ renderer=new THREE.WebGLRenderer({antialias:!GL2}); }
 catch(e){ document.getElementById('errore').hidden=false; RM.guasto=true; return; }
 var piccolo=Math.min(window.innerWidth,window.innerHeight)<700; RM.piccolo=piccolo;
-/* La «veste» del PC (24 novembre 2026, fase 2; l'utente: «dobbiamo fare in modo davvero che migliori l'aspetto di Roma almeno da pc»): suolo, erba, luce, occlusione, acqua, tetti e muri.
-   Il codice nuovo degli shader si compila solo dove può servire (RM.VESTE: non sui telefoni né sugli schermi al tocco, che restano identici a prima); sul PC si accende e si spegne
-   col gradino della qualità (RM.vesteU: 0 in «bassa», che torna l'aspetto di prima, 1 dagli altri gradini). */
-RM.VESTE=!piccolo && !((navigator.maxTouchPoints>0) || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches)); RM.vesteU={value:RM.VESTE?1:0};
+/* La «veste» (24 novembre 2026, fase 2; l'utente: «dobbiamo fare in modo davvero che migliori l'aspetto di Roma almeno da pc»): suolo, erba, luce, occlusione, acqua, tetti e muri.
+   Dal 24 novembre 2026, sera, anche sui telefoni (l'utente: «Secondo te non si può migliorare la qualità della città anche su telefonino?»): il codice nuovo degli shader si compila
+   dovunque ci sia WebGL2 (RM.VESTE; ?veste=0 lo toglie, per le prove) e si accende e si spegne col gradino della qualità (RM.vesteU: 0 in «bassa», che resta l'aspetto di prima,
+   1 dal gradino «telefono» in su). In «bassa» i rami nuovi sono saltati da un'uniforme: aspetto e lavoro per pixel restano quelli di prima. */
+RM.VESTE=!!(renderer.capabilities && renderer.capabilities.isWebGL2) && !/[?&]veste=0/.test(location.search); RM.vesteU={value:RM.VESTE?1:0};
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,piccolo?1.5:2));
 renderer.outputEncoding=THREE.sRGBEncoding;
 renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.07;
@@ -704,80 +705,163 @@ function regola(media){
   else buone=0;
 }
 /* ---- La scala della qualità (24 novembre 2026; l'utente: «miglioralo al massimo e cerca un modo smart per renderlo il più fluido possibile», «metti uno switch»).
-   Quattro gradini: 0 «bassa» (i telefoni, com'erano), 1 «media» (il PC di riferimento, una Radeon integrata: deve tenere 60 fotogrammi al secondo), 2 «alta», 3 «massima».
+   Cinque gradini, dal più leggero: «bassa» (i telefoni com'erano fino al 24 novembre 2026), «telefono» (la veste senza le parti care: suolo ed erba, basolato, tetti e mattoni,
+   Tevere, luce e foschia, poche figure vicine; niente occlusione, niente risoluzione maggiorata, ombre a 2048), «media» (il PC di riferimento, una Radeon integrata: deve tenere
+   60 fotogrammi al secondo), «alta», «massima». Nelle file di RM.QUALITA l'indice è quello di NOMI_Q: «telefono» sta in coda (indice 4), così le file a quattro gradini scritte
+   dai moduli restano valide; l'ordine della scala è SCALA. Le file a quattro si completano da sole (completaQ: il valore di TEL_Q, o quello di «bassa»).
    Ogni gradino è solo una fila di numeri (RM.QUALITA): risoluzione della tela degli effetti, lato della mappa delle ombre, e quelli che i moduli aggiungono
    (le figure vicine in js/vita.js, i ciuffi d'erba, gli alberi…), letti con RM.qp(nome). Chi deve rifare qualcosa al cambio si iscrive con RM.qualita.quando(fn).
-   «Automatica» (la norma, ricordata nel browser come le scelte a mano): parte da «bassa» sui dispositivi al tocco e sugli schermi piccoli, da «media» sul PC, e
-   - sale di un gradino quando per due secondi e mezzo la scena è tranquilla (niente volo, nessun cambio d'anno da un secondo e mezzo, camera ferma o mossa piano)
-     e negli ultimi novanta fotogrammi il ritmo è pieno (media sotto 17,5 millesimi) e il lavoro del processore per fotogramma sta sotto i 10,5 millesimi;
-     il tempo della scheda grafica dalla pagina non si legge: per questo dopo ogni passo si guarda il ritmo vero, e
-   - scende subito di un gradino (mai sotto quello di partenza) se la media degli ultimi venti fotogrammi supera i 18,2 millesimi e almeno quattro sono lunghi:
-     è un «ritorno»; dopo il primo non riprova per trenta secondi, dopo il secondo non sale più per tutta la visita.
+   «Automatica» (la norma; ricordata nel browser come le scelte a mano) vale allo stesso modo su PC e telefoni, e non riconosce i modelli dal nome: misura.
+   - Misura d'avvio (24 novembre 2026, sera; l'utente: «una qualità automatica che faccia un controllo sulla capacità di ogni telefono»): la prima volta che la città è sullo
+     schermo, a scena tranquilla, si contano gli intervalli fra un fotogramma e l'altro (requestAnimationFrame è agganciato allo schermo, 60 o 120 volte al secondo: non si
+     misurano i millesimi sotto il tetto ma quanti fotogrammi saltano) e il lavoro del processore, per poco più di un secondo; se è lento si scende di un gradino e si riprova;
+     se è pulito, di nascosto, la scena si disegna una volta in più per fotogramma, poi due (la tela si ridisegna subito dopo: non si vede), e da quanto carico in più regge
+     si sceglie il gradino di partenza con la tabella COSTO (costo di ogni gradino rispetto al «telefono», misurato sul PC a 393 x 852 punti con densità 3 e alzato per prudenza):
+     la scena in più costa quasi un fotogramma intero, e se ne conta metà. In tutto tre o quattro secondi.
+     Il gradino trovato si ricorda (localStorage «rm-qualita-auto», con la data e la misura dello schermo) e si rimisura dopo sette giorni o su un altro schermo.
+   - Poi sale di un gradino quando per due secondi e mezzo la scena è tranquilla (niente volo, nessun cambio d'anno da un secondo e mezzo, camera ferma o mossa piano)
+     e negli ultimi novanta fotogrammi il ritmo è pieno (media sotto 1,05 volte il periodo di riferimento, cioè 17,5 millesimi a 60 al secondo), nessuno degli ultimi venti è lungo
+     e il lavoro del processore per fotogramma sta sotto i 10,5 millesimi; il tempo della scheda grafica dalla pagina non si legge: per questo dopo ogni passo si guarda il ritmo vero, e
+   - scende subito di un gradino se la media degli ultimi venti fotogrammi supera 1,09 volte il periodo (18,2 millesimi) e almeno quattro sono lunghi: è un «ritorno»; dopo il primo
+     non riprova per trenta secondi, dopo il secondo non sale più per tutta la visita. Sopra il gradino di partenza scende anche nei voli; sotto, solo a scena tranquilla.
+   - Se rallenta dopo tre quarti di minuto senza inciampi (il telefono si scalda, entra in risparmio energetico) scende e non risale più (e il gradino più basso non si ricorda);
+     se una discesa a scena tranquilla non migliora il ritmo il freno è altrove (un telefono in risparmio, fermo a 30 al secondo): si torna su e non si scende più.
+   - Il periodo di riferimento è 1/60 di secondo; se nei fotogrammi in cui la città non si disegna lo schermo batte più piano di 36 volte al secondo (risparmio energetico) vale quello.
    - La risoluzione più alta (1,25 e 1,5 volte i pixel dello schermo: da lontano la città trema soprattutto per le migliaia di case di pochi pixel, e lì serve solo disegnare
      più pixel; la passata finale riduce la tela con quattro letture bilineari per pixel) vale solo a scena tranquilla: nei voli, nei cambi d'anno e negli spostamenti veloci
-     la tela torna a 1, senza contarlo come ritorno. Cambiano solo le due tele intermedie, e solo ai passi.
-   Sotto «bassa» resta il regolatore di prima (risoluzione sotto 1, ombre, passanti): conta solo al gradino di partenza e con la tela a 1.
-   ?qualita=bassa|media|alta|massima fissa un gradino (per le prove, non ricordato); ?qualita=fissa spegne i regolatori e tiene il gradino di partenza.
+     la tela torna a 1, senza contarlo come ritorno. Cambiano solo le due tele intermedie, e solo ai passi. In automatica non si va oltre 2,25 pixel di tela per punto (CAP_RIS).
+   Sotto «bassa» resta il regolatore di prima (risoluzione sotto 1, ombre, passanti): in automatica conta solo in «bassa», con una scelta a mano dove la tela è a 1.
+   ?qualita=bassa|telefono|media|alta|massima fissa un gradino (per le prove, non ricordato); ?qualita=fissa spegne i regolatori e tiene il gradino di partenza.
+   ?prova=qualita carica js/prova-qualita.js, che prova i gradini uno dopo l'altro e dà una tabella (RM.qualita.forza e rilascia).
    RM.regolatore.alta per le prove: stato(), passo(dt,lavoro,ora,calmo) per simulare i tempi, azzera(). */
-var NOMI_Q=['bassa','media','alta','massima'];
-RM.QUALITA={ ris:[1,1,1.25,1.5], ombra:[1536,2048,4096,4096], prato:[0,1,1,1],
-  veste:[0,1,1,1],      // la veste del PC (suolo, erba, luce, acqua, tetti): 0 in «bassa», che resta com'era
-  ao:[0,.75,.8,.8],      // peso dell'occlusione d'ambiente negli effetti a tutto schermo
-  aoN:[0,6,8,12] };      // quante prove per pixel dell'occlusione (in «media» quattro sopra 1,6 milioni di pixel)
+var NOMI_Q=['bassa','media','alta','massima','telefono'];
+var SCALA=[0,4,1,2,3];      // l'ordine dei gradini, dal più leggero: bassa, telefono, media, alta, massima (indici delle file)
+RM.QUALITA={ ris:[1,1,1.25,1.5,1], ombra:[1536,2048,4096,4096,2048], prato:[0,1,1,1,1],
+  veste:[0,1,1,1,1],      // la veste (suolo, erba, luce, acqua, tetti): 0 in «bassa», che resta com'era
+  ao:[0,.75,.8,.8,0],      // peso dell'occlusione d'ambiente negli effetti a tutto schermo
+  aoN:[0,6,8,12,0] };      // quante prove per pixel dell'occlusione (in «media» quattro sopra 1,6 milioni di pixel)
+var TEL_Q={figScena:52000};      // il «telefono» nelle file a quattro gradini dei moduli: sui telefoni le scene preparano solo le persone di «bassa» (js/scene-tappe.js) e le mostrano tutte
+function completaQ(){ for(var k in RM.QUALITA){ var v=RM.QUALITA[k]; if(Array.isArray(v) && v.length<5) v[4]=(k in TEL_Q)?TEL_Q[k]:v[0]; } }
+var COSTO=[.95,1,1.15,1.5,1.9];      // costo di un fotogramma per gradino, nell'ordine della scala, rispetto al «telefono»: sulla Radeon a 393 x 852 (densità 3) 0,95 / 1 / 1,05 / 1,2 / 1,35, con la scena che pesa quasi tutto il fotogramma; qui alzati per le schede che pagano soprattutto i pixel (alta 1,56 e massima 2,25 volte i pixel)
 var TOCCO_Q=(navigator.maxTouchPoints>0) || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
-var Q0=(piccolo||TOCCO_Q)?0:1, qScelta=null, qUrl=(/[?&]qualita=(bassa|media|alta|massima)/.exec(location.search)||[])[1];
-try{ var qMem=localStorage.getItem('rm-qualita'); if(NOMI_Q.indexOf(qMem)>=0) qScelta=qMem; }catch(e){}
+var CAP_RIS=Math.max(1,2.25/PR0), FIRMA='';
+try{ FIRMA=[screen.width,screen.height,Math.round((window.devicePixelRatio||1)*100)].join('x'); }catch(e){}
+var P_DEF=(piccolo||TOCCO_Q)?1:2, qScelta=null, qUrl=(/[?&]qualita=(bassa|telefono|media|alta|massima)/.exec(location.search)||[])[1], memAuto=null;      // senza misura: «telefono» sui dispositivi al tocco e sugli schermi piccoli, «media» sul PC
+try{ var qMem=localStorage.getItem('rm-qualita'); if(NOMI_Q.indexOf(qMem)>=0) qScelta=qMem;
+  var ma=JSON.parse(localStorage.getItem('rm-qualita-auto')||'null'), et=ma?Date.now()-ma.t:-1; if(ma && NOMI_Q.indexOf(ma.g)>=0 && ma.s===FIRMA && et>=0 && et<7*864e5) memAuto=ma; }catch(e){}
 if(qUrl) qScelta=qUrl;
-var alta={g:qScelta?NOMI_Q.indexOf(qScelta):Q0, ritorni:0, spenta:false, blocco:0, discesa:-1e9, calma:0, f:[], motivo:'', calmo:true, ascoltatori:[]};
-var altaAdatta=!fermo && !qScelta && PR0<=1.25 && !TOCCO_Q && !piccolo;      // può salire da sola: PC con uno schermo non piccolo e non già fitto, regolatore acceso, nessuna scelta a mano
+function posDi(nome){ return SCALA.indexOf(NOMI_Q.indexOf(nome)); }
+var p0=qScelta?posDi(qScelta):memAuto?posDi(memAuto.g):P_DEF;
+var alta={p:p0, g:SCALA[p0], partenza:p0, ritorni:0, spenta:false, calore:false, giuFermo:false, verifica:null, blocco:0, discesa:-1e9, cambio:0, salvato:true, calma:0, f:[], motivo:'', calmo:true, ascoltatori:[]};
+var altaAdatta=!fermo && !qScelta, provaQ=null;      // in automatica: nessuna scelta a mano, regolatore acceso
+var avvio={fatta:!altaAdatta || !!memAuto, carico:0, f:[], calma:0, primo:0, scese:0};      // la misura d'avvio: si fa una volta, se non c'è un gradino ricordato
 if(qUrl) fermo=true;
 RM.q=alta.g;
-RM.qp=function(nome){ var v=RM.QUALITA[nome]; return v?v[RM.q]:undefined; };
-function risQ(){ return alta.calmo||!altaAdatta?RM.QUALITA.ris[alta.g]:1; }
+RM.qp=function(nome){ completaQ(); var v=RM.QUALITA[nome]; return v?v[RM.q]:undefined; };
+function risQ(){ var r=RM.QUALITA.ris[alta.g]; return altaAdatta?(alta.calmo?Math.min(r,CAP_RIS):1):r; }
+function nomeQ(){ return NOMI_Q[alta.g]; }
+function testoQ(){ return 'Qualità · '+(provaQ?'prova ('+nomeQ()+')':qScelta?nomeQ():'automatica ('+nomeQ()+')'); }
 function applicaQ(){
+  completaQ();
   RM.q=alta.g; var L=RM.QUALITA.ombra[alta.g]; RM.pratoU=RM.pratoU||{value:1}; RM.pratoU.value=RM.QUALITA.prato[alta.g];
   var ve=RM.VESTE?RM.QUALITA.veste[alta.g]:0; if(ve!==RM.vesteU.value){ RM.vesteU.value=ve; RM.applicaLuce(RM.notte); }
   if(post){ post.ao.value=RM.VESTE?RM.QUALITA.ao[alta.g]:0; post.aoN.value=RM.QUALITA.aoN[alta.g]||8; }
   if(sole.shadow.mapSize.x!==L){ sole.shadow.mapSize.set(L,L); if(sole.shadow.map){ sole.shadow.map.dispose(); sole.shadow.map=null; } renderer.shadowMap.needsUpdate=true; }
   var r=risQ(); if(r!==ALTA){ ALTA=r; misura(); }
   alta.ascoltatori.forEach(function(fn){ try{ fn(alta.g); }catch(e){} });
-  var b=document.getElementById('btnQualita'); if(b) b.textContent='Qualità · '+(qScelta?NOMI_Q[alta.g]:'automatica ('+NOMI_Q[alta.g]+')');
+  var b=document.getElementById('btnQualita'); if(b){ b.textContent=testoQ(); b.title='Qualità della città: automatica, bassa, telefono, media, alta, massima'; }
 }
-function mettiAlta(g,motivo){ alta.motivo=motivo||''; alta.f.length=0; alta.calma=0; somma=0; quanti=0; if(g===alta.g) return; alta.g=g; applicaQ(); }
+function mettiAlta(p,motivo){ p=Math.max(0,Math.min(SCALA.length-1,p)); alta.motivo=motivo||''; alta.f.length=0; alta.calma=0; somma=0; quanti=0; if(p===alta.p) return; alta.p=p; alta.g=SCALA[p]; alta.cambio=performance.now(); alta.assesta=alta.cambio+800; alta.salvato=false; applicaQ(); }      // assesta: i fotogrammi subito dopo un cambio (mappa delle ombre rifatta, alberi ricostruiti) sono lunghi e non dicono nulla del gradino
+/* periodo di riferimento: 1/60 di secondo, o quello dello schermo se, nei fotogrammi in cui la città non si disegna, batte più piano di 36 volte al secondo (risparmio energetico) */
+var vuoti=[], periodoV=0;
+function mediana(a){ var b=a.slice().sort(function(x,y){ return x-y; }); return b[b.length>>1]; }
+function TQ(){ return periodoV>1/36?periodoV:1/60; }
+/* il gradino trovato si ricorda dopo venti secondi tenuti a scena tranquilla, non se si è scesi per il calore */
+function ricorda(ora){
+  if(alta.salvato || !altaAdatta || provaQ || !avvio.fatta || alta.calore || !alta.calmo || ora-alta.cambio<20000) return;
+  salvaSubito(); }
+function salvaSubito(){ alta.salvato=true; memAuto={g:nomeQ(), t:Date.now(), s:FIRMA}; try{ localStorage.setItem('rm-qualita-auto',JSON.stringify(memAuto)); }catch(e){} }
+/* la misura d'avvio (si veda sopra): tre tempi di 72 fotogrammi, ognuno dopo 0,8 secondi di calma; il carico in più lo disegna il ciclo (avvio.carico) */
+function misuraAvvio(dt,lavoro,ora,calmo,T){
+  var a=avvio; if(!a.primo) a.primo=ora;
+  var pazienza=ora-a.primo>20000;      // dopo venti secondi senza un momento tranquillo si misura lo stesso
+  if(!calmo && !pazienza){ a.f.length=0; a.calma=0; return; }
+  a.calma+=dt; if(a.calma<.8) return;
+  a.f.push(dt,lavoro); if(a.f.length<144) return;
+  var n=a.f.length/2, s=0, l=0, lunghi=0, mx=0, k; for(k=0;k<a.f.length;k+=2){ s+=a.f[k]; l+=a.f[k+1]; if(a.f[k]>T*1.25) lunghi++; if(a.f[k]>mx) mx=a.f[k]; }      // lungo: oltre 20,8 millesimi a 60 al secondo
+  if(mx>.1){ s-=mx; n--; lunghi--; }      // un intoppo isolato (la memoria che si libera, un'altra app) non dice nulla del gradino
+  s/=n; l/=n+(mx>.1?1:0); a.f.length=0; a.calma=0;
+  var pulito=s<T*1.05 && lunghi<=n*.04 && l<T*.63, lento=s>T*1.12 || lunghi>n*.12;
+  a.ultima={media:+(s*1000).toFixed(1), lunghi:lunghi, lavoro:+(l*1000).toFixed(1), carico:a.carico, gradino:nomeQ()};
+  if(a.carico===0){
+    if(lento && alta.p>0 && a.scese<2){ a.scese++; mettiAlta(alta.p-1,'misura'); return; }      // lento: un gradino sotto, e si riprova
+    if(pulito && !a.scese){ a.carico=1; return; }
+    fineAvvio(alta.p); return; }
+  if(pulito && a.carico<2){ a.carico=2; return; }
+  var regge=pulito?a.carico:a.carico-1, m=1+.5*regge, c0=COSTO[alta.p], p=alta.p;      // la scena disegnata k volte in più costa quasi k fotogrammi: ne contiamo metà, per prudenza
+  while(p<SCALA.length-1 && COSTO[p+1]<=c0*m) p++;
+  fineAvvio(p);
+}
+function fineAvvio(p){ avvio.fatta=true; avvio.carico=0; alta.partenza=p; avvio.esito=NOMI_Q[SCALA[p]]; mettiAlta(p,'misura'); alta.blocco=performance.now()+4000; salvaSubito(); }
 function passoAlta(dt,lavoro,ora,calmo){
   if(calmo!==alta.calmo){ alta.calmo=calmo; var r=risQ(); if(r!==ALTA){ ALTA=r; misura(); alta.f.length=0; } }      // nei voli la tela torna a 1, a scena tranquilla risale
-  if(!altaAdatta) return;
-  var f=alta.f, k, n, s=0, l=0; f.push(dt,lavoro); if(f.length>180) f.splice(0,2);
-  if(alta.g>Q0){
-    n=Math.min(20,f.length/2); for(k=0;k<n;k++){ s+=f[f.length-2-2*k]; if(f[f.length-2-2*k]>.0182) l++; }
-    if(n>=12 && s/n>.0182 && l>=4){ mettiAlta(alta.g-1,'lento'); if(ora-alta.discesa>3000) alta.ritorni++; alta.discesa=ora; alta.blocco=ora+30000; if(alta.ritorni>=2) alta.spenta=true; return; }      // due discese di fila (da «massima» a «media») sono un ritorno solo      // lento davvero: media alta e almeno quattro fotogrammi lunghi, perché un singolo inciampo (la memoria che si libera) non basti
+  if(!altaAdatta || ora<(alta.assesta||0)) return;
+  var T=TQ(), f=alta.f, k, n, s=0, l=0; f.push(dt,lavoro); if(f.length>180) f.splice(0,2);
+  if(!avvio.fatta){ misuraAvvio(dt,lavoro,ora,calmo,T); return; }
+  if(alta.verifica && f.length>=80){ var v=alta.verifica; alta.verifica=null; for(k=0;k<f.length;k+=2) s+=f[k]; s/=f.length/2;      // una discesa a scena tranquilla che non ha migliorato il ritmo: il freno è altrove, si torna su e non si scende più
+    if(s>v.prima*.93 && s>T*1.09){ mettiAlta(alta.p+1,'inutile'); alta.partenza=alta.p; alta.giuFermo=true; alta.spenta=true; return; } s=0; }
+  if(alta.p>0 && !alta.giuFermo && !alta.verifica && (calmo || alta.p>alta.partenza)){      // con una verifica in corso non si scende ancora: prima si vede se la discesa è servita
+    n=Math.min(20,f.length/2); for(k=0;k<n;k++){ s+=f[f.length-2-2*k]; if(f[f.length-2-2*k]>T*1.09) l++; }
+    if(n>=12 && s/n>T*1.09 && l>=4){      // lento davvero: media alta e almeno quattro fotogrammi lunghi, perché un singolo inciampo (la memoria che si libera) non basti
+      var tenuto=ora-alta.cambio, prima=s/n, sotto=alta.p<=alta.partenza;
+      mettiAlta(alta.p-1,'lento'); if(ora-alta.discesa>3000) alta.ritorni++; alta.discesa=ora; alta.blocco=ora+30000; if(alta.ritorni>=2) alta.spenta=true;      // due discese di fila (da «massima» a «media») sono un ritorno solo
+      if(tenuto>45000){ alta.spenta=true; alta.calore=true; alta.motivo='calore'; }      // dopo tre quarti di minuto senza inciampi: il telefono si scalda o risparmia; si scende e non si risale
+      if(sotto){ alta.partenza=alta.p; alta.verifica={prima:prima}; }
+      return; }
+    s=0; l=0;
   }
-  if(alta.spenta || !calmo || RM.livello>0 || alta.g>=NOMI_Q.length-1 || ora<alta.blocco){ alta.calma=0; return; }      // spenta: scende ancora se serve, ma non sale più
+  ricorda(ora);
+  if(alta.spenta || !calmo || RM.livello>0 || alta.p>=SCALA.length-1 || ora<alta.blocco){ alta.calma=0; return; }      // spenta: scende ancora se serve, ma non sale più
   alta.calma+=dt; if(alta.calma<2.5 || f.length<180) return;
-  s=0; for(k=0;k<f.length;k+=2){ s+=f[k]; l+=f[k+1]; } n=f.length/2;
-  if(s/n<.0175 && l/n<.0105) mettiAlta(alta.g+1,'margine');
+  var lunghi=0; n=f.length/2; for(k=0;k<f.length;k+=2){ s+=f[k]; l+=f[k+1]; if(k>=f.length-40 && f[k]>T*1.09) lunghi++; }
+  if(s/n<T*1.05 && l/n<T*.63 && !lunghi) mettiAlta(alta.p+1,'margine');
 }
-RM.qualita={ nomi:NOMI_Q, gradino:function(){ return alta.g; }, automatica:function(){ return !qScelta; },
+function riparti(){ alta.ritorni=0; alta.spenta=false; alta.calore=false; alta.giuFermo=false; alta.verifica=null; alta.blocco=0; alta.discesa=-1e9; }
+RM.qualita={ nomi:NOMI_Q, scala:SCALA.map(function(g){ return NOMI_Q[g]; }), gradino:function(){ return alta.g; }, nome:nomeQ, automatica:function(){ return !qScelta; },
   quando:function(fn){ alta.ascoltatori.push(fn); },
   scegli:function(nome){ qScelta=NOMI_Q.indexOf(nome)>=0?nome:null; try{ if(qScelta) localStorage.setItem('rm-qualita',qScelta); else localStorage.removeItem('rm-qualita'); }catch(e){}
-    altaAdatta=!fermo && !qScelta && PR0<=1.25 && !TOCCO_Q && !piccolo; alta.ritorni=0; alta.spenta=false; alta.blocco=0; mettiAlta(qScelta?NOMI_Q.indexOf(qScelta):Q0,'scelta'); applicaQ(); } };
-/* il bottone nel menu «Strumenti» (index.html): a ogni tocco il gradino seguente, automatica → bassa → media → alta → massima → automatica */
+    altaAdatta=!fermo && !qScelta && !provaQ; riparti();
+    var pa=qScelta?posDi(qScelta):memAuto?posDi(memAuto.g):P_DEF; if(!qScelta && !memAuto){ avvio.fatta=false; avvio.primo=0; avvio.scese=0; avvio.carico=0; avvio.f.length=0; }      // tornando ad «automatica» senza un gradino ricordato si rimisura
+    alta.partenza=pa; mettiAlta(pa,'scelta'); applicaQ(); },
+  /* per la prova (js/prova-qualita.js): un gradino tenuto fermo, senza regolatori e senza ricordarlo; rilascia() torna com'era */
+  forza:function(nome){ if(!provaQ) provaQ={p:alta.p, adatta:altaAdatta}; altaAdatta=false; avvio.carico=0; metti(0); mettiAlta(posDi(nome),'prova'); applicaQ(); },
+  rilascia:function(){ if(!provaQ) return; var q=provaQ; provaQ=null; altaAdatta=q.adatta; mettiAlta(q.p,'fine prova'); applicaQ(); },
+  rimisura:function(){ try{ localStorage.removeItem('rm-qualita-auto'); }catch(e){} memAuto=null; if(!qScelta) RM.qualita.scegli(null); },
+  stato:function(){ return {gradino:nomeQ(), automatica:!qScelta, prova:!!provaQ, partenza:NOMI_Q[SCALA[alta.partenza]], misura:{fatta:avvio.fatta, carico:avvio.carico, esito:avvio.esito||null, ultima:avvio.ultima||null},
+    ricordato:memAuto?memAuto.g:null, periodo:+(TQ()*1000).toFixed(2), schermo:periodoV?+(periodoV*1000).toFixed(2):null, ris:ALTA, pr:renderer.getPixelRatio(), ritorni:alta.ritorni, spenta:alta.spenta, calore:alta.calore, motivo:alta.motivo, livello:RM.livello}; } };
+/* il bottone nel menu «Strumenti» (index.html): a ogni tocco il gradino seguente, automatica → bassa → telefono → media → alta → massima → automatica */
 (function(){ var b=document.getElementById('btnQualita'); if(!b) return;
-  b.addEventListener('click',function(){ var i=qScelta?NOMI_Q.indexOf(qScelta)+1:0; RM.qualita.scegli(i<NOMI_Q.length?NOMI_Q[i]:null); }); })();
+  b.addEventListener('click',function(){ var i=qScelta?posDi(qScelta)+1:0; RM.qualita.scegli(i<SCALA.length?NOMI_Q[SCALA[i]]:null); }); })();
 applicaQ();
-RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livello:RM.livello, pr:renderer.getPixelRatio(), ombre:sole.castShadow, leggero:!!RM.leggero, fermo:fermo, noSalita:noSalita, ris:ALTA, qualita:NOMI_Q[alta.g]}; },
-  alta:{ stato:function(){ return {gradino:NOMI_Q[alta.g], ris:ALTA, adatta:altaAdatta, ritorni:alta.ritorni, spenta:alta.spenta, motivo:alta.motivo, blocco:Math.max(0,Math.round(alta.blocco-performance.now()))}; }, passo:passoAlta,
-    azzera:function(){ altaAdatta=!qScelta && PR0<=1.25 && !TOCCO_Q && !piccolo; mettiAlta(Q0,'azzera'); alta.ritorni=0; alta.spenta=false; alta.blocco=0; alta.discesa=-1e9; alta.calmo=true; } } };      // per le prove
+/* le file dei moduli caricati dopo (js/scene-tappe.js) si completano e si riapplicano a pagina pronta */
+document.addEventListener('DOMContentLoaded',function(){ applicaQ(); });
+RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livello:RM.livello, pr:renderer.getPixelRatio(), ombre:sole.castShadow, leggero:!!RM.leggero, fermo:fermo, noSalita:noSalita, ris:ALTA, qualita:nomeQ()}; },
+  alta:{ stato:function(){ return {gradino:nomeQ(), ris:ALTA, adatta:altaAdatta, ritorni:alta.ritorni, spenta:alta.spenta, motivo:alta.motivo, partenza:NOMI_Q[SCALA[alta.partenza]], misura:avvio.fatta, blocco:Math.max(0,Math.round(alta.blocco-performance.now()))}; }, passo:passoAlta,
+    azzera:function(){ altaAdatta=!qScelta; avvio.fatta=true; avvio.carico=0; alta.partenza=P_DEF; mettiAlta(P_DEF,'azzera'); riparti(); alta.calmo=true; } } };      // per le prove
 var orologio=new THREE.Clock(), somma=0, quanti=0, occhioPrima=new THREE.Vector3(), puntoPrima=new THREE.Vector3();
 /* Quando la scena non è sullo schermo (si è scesi a leggere, o sul telefono si guarda la mappa) non si disegna: la pagina scorre meglio e la batteria ringrazia. */
 RM.fuoriVista=false;
 if(window.IntersectionObserver) new IntersectionObserver(function(v){ RM.fuoriVista=!v[v.length-1].isIntersecting; },{rootMargin:'80px'}).observe(contenitore);
-(function ciclo(){
+var tsPrima=0;
+(function ciclo(ts){
   requestAnimationFrame(ciclo);
-  if(RM.fuoriVista || document.body.classList.contains('impero-grande')){ orologio.getDelta(); return; } // sotto la carta a tutto schermo la città è coperta: disegnarla costava 6 ms a fotogramma (misura del 24 novembre 2026)
+  var iv=(ts && tsPrima)?(ts-tsPrima)/1000:0; tsPrima=ts||0;      // l'intervallo vero fra due fotogrammi, dal tempo che dà requestAnimationFrame (più fedele dell'orologio, che legge l'ora a metà del lavoro)
+  if(RM.fuoriVista || document.body.classList.contains('impero-grande')){ orologio.getDelta();      // sotto la carta a tutto schermo la città è coperta: disegnarla costava 6 ms a fotogramma (misura del 24 novembre 2026)
+    if(iv>0 && iv<.2 && !document.hidden){ vuoti.push(iv); if(vuoti.length>60) vuoti.shift(); if(vuoti.length>=30 && vuoti.length%10===0) periodoV=mediana(vuoti); }      // senza disegnare: il battito dello schermo
+    return; }
   var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1), ora=performance.now();
   if(!document.hidden && grezzo<.4 && ora-ultimoAnno>400){      // le pause (scheda nascosta, caricamento) e il viaggio fra due tappe non contano
-    if(scalda>0) scalda--; else if(alta.g===Q0 && ALTA===1){ somma+=grezzo; quanti++; }      // sopra il gradino di partenza, o con la tela grande, il ritmo lo guarda la scala della qualità: il regolatore di prima conta solo lì
+    if(scalda>0) scalda--; else if(!provaQ && avvio.fatta && ALTA===1 && (altaAdatta?alta.p===0:true)){ somma+=grezzo; quanti++; }      // il regolatore di prima: in automatica solo in «bassa» (sopra, il ritmo lo guarda la scala della qualità), con una scelta a mano dove la tela è a 1
     if(quanti>=50){ regola(somma/quanti); somma=0; quanti=0; }
   }
   for(var i=0;i<RM.frame.length;i++) RM.frame[i](dt);
@@ -787,13 +871,19 @@ if(window.IntersectionObserver) new IntersectionObserver(function(v){ RM.fuoriVi
     if(ALTA>1 && post.tela.width<renderer.domElement.width*ALTA*.98) misura();      // chi ha disegnato fuori dal ciclo (i fotogrammi delle infografiche) ha rimesso la tela a 1
     post.mat.uniforms.notte.value=RM.notte||0;
     post.mat.uniforms.sfoca.value=RM.sfuma(70,260,camera.position.distanceTo(controlli.target));      // l'effetto «plastico» sfoca i bordi solo da lontano: da vicino si vuole vedere nitido
+    for(var ci=0;ci<avvio.carico;ci++){ renderer.setRenderTarget(post.tela); renderer.render(scene,camera); }      // la misura d'avvio: la scena disegnata una o due volte in più, di nascosto (la tela si ridisegna qui sotto)
     post.disegna(scene,camera);
   } else { RM.occhio(camera,renderer.domElement.height); renderer.render(scene,camera); }
   if(post && post.attivo && !document.hidden && grezzo<.4){      // la camera si muove piano? (spostamento in quota della distanza, al secondo)
     var dd=camera.position.distanceTo(controlli.target)||1, mv=(camera.position.distanceTo(occhioPrima)+controlli.target.distanceTo(puntoPrima))/dd/Math.max(dt,.001);
     occhioPrima.copy(camera.position); puntoPrima.copy(controlli.target);
-    passoAlta(grezzo,(performance.now()-ora)/1000,ora,!volo && ora-ultimoAnno>1500 && mv<.15);
+    passoAlta(iv>0&&iv<.4?iv:grezzo,(performance.now()-ora)/1000,ora,!volo && ora-ultimoAnno>1500 && mv<.15);
   }
+  RM.lavoro=performance.now()-ora;      // millesimi di lavoro del processore in questo fotogramma (per la prova della qualità)
 })();
+/* ?prova=qualita: la prova dei gradini sul telefono (js/prova-qualita.js), caricata solo a richiesta, con la versione di questo file */
+(function(){ var sc=document.currentScript, v=sc && /\?v=[^&#]+/.exec(sc.src||''); RM.versione=v?v[0].slice(3):'';
+  if(!/[?&]prova=qualita/.test(location.search)) return;
+  window.addEventListener('load',function(){ var s=document.createElement('script'); s.src='js/prova-qualita.js'+(v?v[0]:''); document.body.appendChild(s); }); })();
 
 })();

@@ -302,7 +302,8 @@ var sterpi=pacco(geoSterpi,RM.matPietra(),N); sterpi.maglia.castShadow=false;
 var geoPiano=new THREE.PlaneGeometry(1,1); geoPiano.rotateX(-Math.PI/2);
 var incolti=pacco(geoPiano,new THREE.MeshStandardMaterial({map:texIncolto,roughness:1,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}),N); incolti.maglia.castShadow=false;
 /* Veste del PC: l'incolto non è più un quadrato col bordo netto (da lontano erano «macchie a spicchi»): sfuma nel suolo con un orlo irregolare, e prende il verde dell'erba nuova */
-if(RM.VESTE){ incolti.maglia.material.transparent=true; incolti.maglia.material.depthWrite=false; incolti.maglia.material.onBeforeCompile=function(sh){ hashIstanza(sh);
+if(RM.VESTE){ var trasparenteIncolti=function(){ var si=RM.vesteU.value>.5, m=incolti.maglia.material; m.transparent=si; m.depthWrite=!si; };      // in «bassa» (veste spenta) resta opaco come prima
+  trasparenteIncolti(); if(RM.qualita) RM.qualita.quando(trasparenteIncolti); incolti.maglia.material.onBeforeCompile=function(sh){ hashIstanza(sh);
   sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',
     'if(uVeste>0.5){ vec2 bq=min(vUvR,1.0-vUvR); float orlo=min(bq.x,bq.y)+(texture2D(map,vUvR*0.37+vHi).g-0.5)*0.22;',
     '  diffuseColor.a*=smoothstep(0.0,0.2,orlo); diffuseColor.rgb*=vec3(0.86,0.95,0.78); }'].join(String.fromCharCode(10))); }; }
@@ -314,9 +315,9 @@ var orti=pacco(geoOrto,new THREE.MeshStandardMaterial({map:texOrto,roughness:1,p
    il pino a ombrello (Pinus pinea) e il cipresso negli horti e attorno alle tombe; l'ulivo e il leccio negli orti e fra le rovine, dove crescono da sé; il pioppo bianco
    lungo il Tevere. Le posizioni sono quelle di prima (stesse estrazioni di rnd: l'ordine non cambia); la specie si sceglie dal posto, con RM.grana.
    Ogni chioma è un profilo girato con il contorno mosso e il colore che scurisce verso il basso e cambia da un punto all'altro: da lontano legge come un volume d'ombra
-   e di luce, non come una palla. Tre dettagli (RM.QUALITA.alberi): 0 i solidi di prima (telefoni e «bassa»), 1 circa cento triangoli per albero, 2 circa trecento
-   (chiome a più ciuffi). Forme e proporzioni sono indicative. */
-RM.QUALITA.alberi=[0,2,2,2];      // i dettagli 1 e 2 costano uguale sulla Radeon integrata (misura del 24 novembre 2026): da «media» le chiome a ciuffi
+   e di luce, non come una palla. Tre dettagli (RM.QUALITA.alberi): 0 i solidi di prima («bassa» e «telefono»), 1 circa cento triangoli per albero, 2 circa trecento
+   (chiome a più ciuffi). Forme e proporzioni sono indicative. Dal 24 novembre 2026, sera, valgono anche sui telefoni che reggono «media» e oltre. */
+RM.QUALITA.alberi=[0,2,2,2,0];      // bassa, media, alta, massima, telefono; i dettagli 1 e 2 costano uguale sulla Radeon integrata (misura del 24 novembre 2026): da «media» le chiome a ciuffi
 var matAlbero=RM.matPietra();
 var VERDI=[0x2f4a26,0x4a6330,0x7c8b5e,0x3d5631,0x6e8a4c].map(RM.col), CORTECCIA=RM.col(0x5e4e3e);
 function chioma(B,prof,lati,col,seme,irr,x,y,z){                                                    // un profilo girato, col contorno mosso e il colore che scurisce in basso
@@ -356,18 +357,18 @@ alberi=(function(){ var L=[alberi[0],[],[],[],[]];
     if(a.b===-2) sp=4; else if(a.b===-1) sp=g<.62?1:3; else if(isolati[a.b].fato===2) sp=g<.5?2:g<.72?1:3; else sp=g<.55?3:1;
     L[sp].push(a); });
   return L; })();
-var detAlberi=RM.piccolo?0:RM.QUALITA.alberi[RM.q];
+var detAlberi=RM.QUALITA.alberi[RM.q]||0;
 var magliaAlberi=alberi.map(function(l,k){ return istanze(alberoGeo(k,detAlberi),matAlbero,Math.max(1,l.length)); });
 alberi.forEach(function(l){ l.forEach(function(a){ a.y=RM.h(a.x,a.z); a.q0=-1; }); });
-if(RM.qualita && !RM.piccolo) RM.qualita.quando(function(g){ var d=RM.QUALITA.alberi[g]; if(d===detAlberi) return; detAlberi=d;      // al cambio di gradino si cambia solo la forma: posizioni e scale restano
+if(RM.qualita) RM.qualita.quando(function(g){ var d=RM.QUALITA.alberi[g]||0; if(d===detAlberi) return; detAlberi=d;      // al cambio di gradino si cambia solo la forma: posizioni e scale restano
   magliaAlberi.forEach(function(m,k){ var vecchia=m.geometry; m.geometry=alberoGeo(k,d); vecchia.dispose(); }); });
 magliaAlberi.forEach(function(m,k){ m.count=alberi[k].length; });      // una specie senza alberi non deve lasciare un'istanza nell'origine
 /* Canneti lungo il Tevere (24 novembre 2026): ciuffi di canne (Arundo donax e cannuccia di palude) sulle due rive, ogni trenta metri circa, fuori dal tratto urbano
    sempre; dentro le mura, dove le rive erano banchine e approdi, crescono solo con l'abbandono, dal VI secolo (scelta del modello). Ogni ciuffo sono tre fusti conici
-   di altezze diverse, giallo-verdi; da vicino, a duecento metri, si legge come una macchia di canne, non come singoli steli. Mancano sui telefoni e in «bassa». */
-RM.QUALITA.canne=[0,1,1,1];
+   di altezze diverse, giallo-verdi; da vicino, a duecento metri, si legge come una macchia di canne, non come singoli steli. Mancano in «bassa» e nel gradino «telefono». */
+RM.QUALITA.canne=[0,1,1,1,0];      // bassa, media, alta, massima, telefono
 var canne=null, listaCanne=[];
-if(!RM.piccolo){
+{      // dal 24 novembre 2026, sera, anche sui telefoni (spente finché il gradino non arriva a «media»)
   (function(){ var B=new RM.Costruttore(), CANNA=RM.col(0x9a9a5c), CANNA2=RM.col(0x7d8a4e);
     [[0,0,.26,.05,CANNA],[.05,.03,.2,.04,CANNA2],[-.04,.04,.17,.035,CANNA]].forEach(function(q){ B.geo(new THREE.ConeGeometry(q[3],q[2],5,1,true).translate(q[0],q[2]/2,q[1]),q[4]); });
     var L=RM.curvaFiume.getLength(), n=Math.round(L/3), k, s;
@@ -375,11 +376,11 @@ if(!RM.piccolo){
       if(g<.25) continue;                                                                                                   // qualche tratto di riva nuda
       while(off<10 && hq(p.x-tg.z*s*off,p.z+tg.x*s*off)<-.42) off+=.3; off+=.2+.5*g;                                      // dove la riva esce dall'acqua (il letto è scavato nel terreno)
       var x=p.x-tg.z*s*off, z=p.z+tg.x*s*off; listaCanne.push({x:x,z:z,y:(RM.hSuolo||RM.h)(x,z)-.02,s:.8+.6*RM.grana(k+11,s),r:g*20,dentro:RM.dentroMura(x,z)}); }
-    canne=istanze(B.geometria(),RM.matPietra(),Math.max(1,listaCanne.length)); canne.castShadow=false; canne.count=0; })();
+    canne=istanze(B.geometria(),RM.matPietra(),Math.max(1,listaCanne.length)); canne.castShadow=false; canne.count=0; canne.visible=false; })();
   var annoCanne=235, aggCanne=function(anno){ annoCanne=anno;
     var q=RM.QUALITA.canne[RM.q]?1:0, cresce=RM.sfuma(500,650,anno), i=0;
     listaCanne.forEach(function(c){ var v=q*(c.dentro?cresce:1); if(v<.05) return; d.position.set(c.x,c.y,c.z); d.rotation.set(0,c.r,0); d.scale.set(c.s*v,c.s*v,c.s*v); d.updateMatrix(); canne.setMatrixAt(i++,d.matrix); });
-    canne.count=i; canne.instanceMatrix.needsUpdate=true; };
+    canne.count=i; canne.visible=i>0; canne.instanceMatrix.needsUpdate=true; };
   RM.moduli.push(aggCanne); if(RM.qualita) RM.qualita.quando(function(){ aggCanne(annoCanne); });
 }
 
