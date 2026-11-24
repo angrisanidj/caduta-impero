@@ -183,3 +183,10 @@ Dieci pagine lette in rete (LacusCurtius, The Latin Library, New Advent, CCEL, W
 ## 11. Il 455: le navi (letto il 24 novembre 2026)
 
 - **Procopio, Guerre III 5, 3-5**: Genserico «placed an exceedingly great amount of gold and other imperial treasure in his ships and sailed to Carthage»; una delle navi, quella che portava le statue, si perse. Dove fossero le navi (a Porto, alla foce, o risalite fino alla città) Procopio non lo dice. Nella scena le chiatte che caricano il bottino sul Tevere, sotto porta Portese, sono uno schema dichiarato.
+
+## 852 · Santa Maria Nova fra le rovine di Venere e Roma (25 novembre 2026)
+
+- Platner e Ashby, «Venus et Roma, templum» (penelope.uchicago.edu, letto il 25 novembre 2026): la storia della distruzione del tempio è ignota; Leone IV (847-855) costruì S. Maria Nova «in its ruins», rifatta nel 1612, oggi S. Francesca Romana; il terremoto dell'847 è proposto come causa dei danni attorno al Foro (argomento, non fatto). La voce non dice in quale parte del tempio.
+- Liber Pontificalis, vita di Benedetto III (Duchesne II p. 145, già citato in `js/dati.js`): «nunc autem sita est iuxta via Sacra».
+- it.wikipedia, «Basilica di Santa Francesca Romana»: oratorio precedente di Paolo I; «un tempo a tre navate»; abside del X secolo.
+- Nel modello: monumento `santamarianova` (`js/monumenti.js`), cantiere 848-850 (scelta), tempio `crollato` nell'847 (scelta); forma, misure e orientamento schema, dichiarati nella scheda. Verifica degli anacronismi: `src/testi/audit-anacronismi.md`.

@@ -690,6 +690,22 @@ var M=[
     [1,-1].forEach(function(q){ [-.58,-.38,.38,.58].forEach(function(x){ B.scatola(.13,.2,.1,x,0,q*.27,P.marmo); }); B.colonne(-.58,q*.27,.58,q*.27,2,.8,.05,.2).colonne(-.38,q*.27,.38,q*.27,2,.8,.05,.2);
       B.scatola(.7,.28,.02,0,1.18,q*.24,P.travertino); });                                                                                        // i piedistalli, le colonne, la lastra dell'iscrizione
  }},
+ /* Santa Maria Nova (25 novembre 2026, l'utente: «Papa Leone IV costruisce Santa Maria Nova fra le sue rovine. Non vedo la chiesa»). Prima era una chiesetta di CHIESE (js/nuclei.js):
+    posata ai piedi del podio, alta una dozzina di metri sopra il suo piano, girata a caso, senza nome, coperta da ciò che restava del tetto del tempio.
+    Leone IV (847-855) la costruisce «in its ruins» (Platner e Ashby, Venus et Roma); sotto Benedetto III è «sita iuxta via Sacra» (Liber Pontificalis, Duchesne II p. 145); in antico
+    a tre navate (it.wikipedia, Basilica di Santa Francesca Romana). Il posto è quello della chiesa di oggi (OpenStreetMap, il punto che stava in CHIESE): l'estremità del podio verso il Foro.
+    Schema dichiarato nella scheda: tre navate, abside, nessun campanile (quello di oggi è del XII secolo), misure indicative (circa 26 x 13 m, navata alta 15 m sopra il podio);
+    sta di traverso sul podio, fra la scalinata e il colonnato della cella di Roma, con la facciata verso la via Sacra, perché il tempio non dice come fosse girata.
+    Centro: (-6,45, 0) nel riferimento del tempio di Venere e Roma (x 36,3, z 17,8, ry -0,42); ry -1,99 porta il suo +x (la facciata) sul +z del tempio, il lato della via Sacra. */
+ {id:'santamarianova', nome:'Santa Maria Nova', x:30.41,z:15.17, ry:-1.99, come:'venere', zone:[], fa:function(B){
+    var y0=.7;                                                                                                                       // il piano del podio del tempio
+    B.scatola(2.6,1.55,.62,0,y0,0,P.mattone).falde(2.6,.3,.68,0,y0+1.55,0,P.coppi,0,P.mattone);                                      // la navata centrale
+    B.aperture(-1.05,.31,1.05,.31,6,y0+1.1,.3,.13).aperture(1.05,-.31,-1.05,-.31,6,y0+1.1,.3,.13);                                  // le finestre alte
+    [-1,1].forEach(function(k){ B.scatola(2.6,.95,.36,0,y0,k*.49,P.mattone).scatola(2.66,.08,.4,0,y0+.95,k*.49,P.coppi); });          // le navate laterali
+    B.cilindro(.28,1.15,-1.3,y0,0,P.mattone,null,14).cono(.3,.28,-1.3,y0+1.15,0,P.coppi,14);                                        // l'abside
+    B.vano(1.33,y0,0,0,1,.3,.6).vano(1.33,y0,.49,0,1,.2,.45).vano(1.33,y0,-.49,0,1,.2,.45).vano(1.33,y0+1.05,0,0,1,.24,.32);        // le tre porte e la finestra della facciata
+    B.scatola(.5,.08,1.2,1.56,y0,0,P.travertino);                                                                                    // il gradino davanti alle porte
+ }},
  {id:'adriano', nome:'Mausoleo di Adriano', x:-156.97,z:-118, ry:.064,      /* sull'asse di ponte Sant'Angelo (OpenStreetMap): il ponte arriva alla porta (24 novembre 2026; prima x -157, ry 0,1) */ zone:[[0,0,10]], et:1, fa:function(B){
     /* basamento quadrato di circa 84 m di lato e 10 di altezza, tamburo di 64 m di diametro e 21 di altezza, sopra un giardino (Platner) */
     B.scatola(8.4,1,8.4,0,0,0,P.marmo).scatola(8.55,.12,8.55,0,1,0,P.marmo).cilindro(3.2,2.1,0,1.12,0,P.travertino,null,40).cilindro(3.27,.1,0,3.12,0,P.marmo,null,40).cilindro(3,.3,0,3.22,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.4,0,P.marmo).scatola(1.6,.1,1.6,0,5.1,0,P.marmo);
@@ -1266,7 +1282,7 @@ RM.statoMonumento=function(id,anno){
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Fino al 23 novembre 2026 alla chiusura toglieva subito un poco di cima a ogni tratto: sul tetto di Giove Capitolino il colmo si spezzava a blocchi e il tempio sembrava spaccato (l'utente: «fai delle crepe, non che si spacchi a metà»).
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
+var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
