@@ -17,12 +17,34 @@ if(didascalia){
   x.addEventListener('click',function(e){ e.stopPropagation(); chiusa=ultimo; aggiorna(); });
   riapri.addEventListener('click',function(e){ e.stopPropagation(); chiusa=null; aggiorna(); });
 }
-function aggiorna(){ var c=!!ultimo && chiusa===ultimo; didascalia.classList.toggle('vivo',!!ultimo); didascalia.classList.toggle('chiusa',c); }
+/* A tutto schermo sui dispositivi stretti (fino a 1000 punti, o telefono coricato) la didascalia parte raccolta a tre righe (due col telefono coricato), con «continua ▾»
+   che la apre per intero e «riduci ▴» che la richiude (24 novembre 2026: le didascalie lunghe del 410, 455, 800, 846, 852 coprivano metà della scena che raccontano).
+   Si apre solo al tocco: un evento nuovo, o una scena animata che va avanti, la lasciano raccolta. Sul PC resta intera. Stili .ev-continua in fondo a css/stile.css. */
+var aperta=false, continua=null, stretto=window.matchMedia?matchMedia('(max-width:1000px), (max-height:559px) and (orientation:landscape)'):null, rafMisura=0;
+if(didascalia){
+  testoEv.id='evTesto';
+  continua=document.createElement('button'); continua.type='button'; continua.className='ev-continua'; continua.setAttribute('aria-controls','evTesto'); continua.setAttribute('aria-expanded','false');
+  didascalia.insertBefore(continua,testoEv.nextSibling);
+  continua.addEventListener('click',function(e){ e.stopPropagation(); aperta=!aperta; misura(); });
+  window.addEventListener('resize',presto);
+  if(window.MutationObserver) new MutationObserver(presto).observe(document.body,{attributes:true,attributeFilter:['class']});      // aperto o chiuso lo schermo intero
+}
+function presto(){ if(!rafMisura) rafMisura=requestAnimationFrame(function(){ rafMisura=0; misura(); }); }
+function misura(){
+  if(!continua) return;
+  var s=!!(stretto && stretto.matches) && document.body.classList.contains('roma-grande');
+  didascalia.classList.toggle('raccolta',s && !aperta);
+  var t=s && (aperta || testoEv.scrollHeight>testoEv.clientHeight+2);      // c'è davvero altro da leggere?
+  didascalia.classList.toggle('tronca',t);
+  var etichetta=aperta?'riduci ▴':'continua ▾'; if(continua.textContent!==etichetta) continua.textContent=etichetta;
+  continua.setAttribute('aria-expanded',aperta?'true':'false'); continua.setAttribute('aria-label',aperta?'Riduci la didascalia':'Leggi tutta la didascalia');
+}
+function aggiorna(){ var c=!!ultimo && chiusa===ultimo; didascalia.classList.toggle('vivo',!!ultimo); didascalia.classList.toggle('chiusa',c); presto(); }
 function scrivi(anno){
   var vivo=null; EV.forEach(function(ev){ ev.q=atto(ev,anno); if(ev.q>.5) vivo=ev; });
   if(!didascalia) return;
-  if(vivo && testoEv.textContent!==vivo.testo) testoEv.textContent=vivo.testo;
-  if(vivo!==ultimo){ ultimo=vivo; if(chiusa && chiusa!==vivo) chiusa=null; aggiorna(); }
+  if(vivo && testoEv.textContent!==vivo.testo){ testoEv.textContent=vivo.testo; presto(); }
+  if(vivo!==ultimo){ ultimo=vivo; aperta=false; if(chiusa && chiusa!==vivo) chiusa=null; aggiorna(); }      // evento nuovo: di nuovo raccolta
 }
 if(!RM||RM.guasto){ if(RM&&RM.moduli) RM.moduli.push(scrivi); return; }
 var P=RM.P, rnd=RM.casuale(410), NL=String.fromCharCode(10), tempo=0;

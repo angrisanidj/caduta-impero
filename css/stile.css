@@ -775,6 +775,18 @@ body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visib
 .ev-chiudi:focus-visible,.ev-riapri:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
 @media (max-width:1000px){ body:not(.roma-grande) .evento.chiusa{display:block;border-bottom:0} }
 .evento:not(.vivo) .ev-chiudi,.evento:not(.vivo) .ev-riapri{pointer-events:none;visibility:hidden}      /* didascalia spenta: niente bottoni invisibili da toccare */
+/* A tutto schermo sui dispositivi stretti la didascalia parte raccolta, con «continua ▾» / «riduci ▴» (js/eventi.js, 24 novembre 2026); sul PC resta intera */
+.ev-continua{display:none}
+@media (max-width:1000px),(max-height:559px) and (orientation:landscape){
+  body.roma-grande .evento.raccolta:not(.chiusa) .ev-testo{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+  body.roma-grande .evento:not(.raccolta):not(.chiusa) .ev-testo{display:block;max-height:46vh;overflow-y:auto;overscroll-behavior:contain;pointer-events:auto}      /* aperta: se è più lunga di metà schermo scorre dentro di sé */
+  body.roma-grande .evento.tronca:not(.chiusa) .ev-continua{display:flex;align-items:center;min-height:40px;margin:2px 0 -4px -6px;padding:0 10px;pointer-events:auto;cursor:pointer;
+    font-family:var(--ui);font-size:13.5px;font-weight:600;letter-spacing:.02em;color:var(--gold3);background:none;border:0;border-radius:6px}
+  body.roma-grande .evento .ev-continua:focus-visible{outline:2px solid var(--gold2);outline-offset:0}
+  body.roma-grande .evento:not(.vivo) .ev-continua{pointer-events:none;visibility:hidden}
+}
+@media (max-height:559px) and (orientation:landscape){ body.roma-grande .evento.raccolta:not(.chiusa) .ev-testo{-webkit-line-clamp:2;line-clamp:2}
+  body.roma-grande .evento:not(.raccolta):not(.chiusa) .ev-testo{max-height:26vh} }      /* telefono coricato, aperta: quattro righe che scorrono, sotto il numero degli abitanti */
 /* telefono coricato, carta a tutto schermo: la legenda lunga (il 451) finiva sotto la linea del tempo; ora si ferma sopra e il resto scorre (23 novembre 2026) */
 @media (max-height:559px){ body.impero-largo .legenda-mappa{max-height:calc(100vh - 44px - var(--tempo,92px) - 22px - env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin} }
 
