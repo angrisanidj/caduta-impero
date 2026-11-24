@@ -28,7 +28,7 @@ function suStrada(x,z){
   var S=RM.STRADE, W=window.RM_TOPO&&RM_TOPO.stradeLarghe; if(!S||!W||!RM.hSuolo) return -1e9;
   if(!STRADE_BB) STRADE_BB=S.map(function(L,i){ var b=[1e9,1e9,-1e9,-1e9]; L.forEach(function(p){ b[0]=Math.min(b[0],p[0]); b[1]=Math.min(b[1],p[1]); b[2]=Math.max(b[2],p[0]); b[3]=Math.max(b[3],p[1]); }); var w=W[i]||.5; return [b[0]-w,b[1]-w,b[2]+w,b[3]+w]; });
   for(var i=0;i<S.length;i++){ var b=STRADE_BB[i]; if(x<b[0]||x>b[2]||z<b[1]||z>b[3]) continue;
-    var L=S[i], w=(W[i]||.5)*.95;
+    var L=S[i], w=(W[i]||.5)*1.0;      // fino all'orlo (prima 0,95: le guardie del 593 sul bordo della Flaminia affondavano di un metro nel nastro della strada)
     for(var k=0;k<L.length-1;k++){ var ax=L[k][0], az=L[k][1], dx=L[k+1][0]-ax, dz=L[k+1][1]-az, l2=dx*dx+dz*dz||1, t=Math.max(0,Math.min(1,((x-ax)*dx+(z-az)*dz)/l2));
       if(Math.hypot(x-ax-dx*t,z-az-dz*t)<w) return RM.hSuolo(x,z)+.1; } }
   return -1e9;
@@ -52,18 +52,23 @@ function pedinaCav(B,x,z,y,ry,colC,colU){
    con il corpo dei passanti di js/vita.js (RM.figuraGeo: gambe, veste con la cintura, braccia, collo, testa con i capelli, sandali), qui fermo e messo in posa: capo chino e mani
    legate davanti per i prigionieri, veste lunga fino ai piedi per il clero (scalzo nell'852: «nudis pedibus», vita di Leone IV, 72), il mantello di lana per chi lo portava;
    il cavallo è quello delle statue (RM.cavalloStatua, js/monumenti.js). Fogge, pose e colori sono indicativi: lana grezza, bruni, ocra, bianchi sporchi; la porpora solo
-   a chi la portava (gli imperatori sul carro, Massenzio, l'imperatrice Eudossia). Carlo a piedi porta il mantello blu che gli dà Eginardo («sago veneto amictus», Vita Karoli 23), senza corona.
+   a chi la portava (gli imperatori sul carro, Massenzio, l'imperatrice Eudossia). Carlo senza corona; la tunica blu è quella che la scena gli dava già (colori di comodo),
+   il mantello è di lana di colore sobrio (il mantello blu della Vita Karoli di Eginardo, 23, è un ricordo non riletto sul testo: da verificare prima di metterlo).
    Il peso: una persona sono da 350 a 400 triangoli (la pedina 24), un cavaliere circa 1250 (la pedina 84). Perciò:
-   - sui telefoni (RM.piccolo) le persone non si costruiscono nemmeno: restano le pedine di sempre;
+   - nel gradino «bassa» (i telefoni e i dispositivi al tocco partono da lì) c'è un tetto piccolo, speso solo dalle parti segnate «tel» (le più importanti: i prigionieri
+     e le guardie del 593, il papa e il clero sulle mura nell'852, Carlo, il papa e il clero sui gradini nell'800, le prigioniere del 455, chi apre la porta nel 410);
+     sui telefoni e sui dispositivi al tocco la persona è più leggera (LEGGERA: tre lati invece di cinque, niente mani) e le altre parti non si preparano nemmeno;
    - le figure importanti di una scena si raccolgono con vicine(B, scena, centro, fn): ognuna diventa una voce, disegnata due volte, come pedina (in una maglia figlia della maglia
      della scena) e come persona (maglie a istanze, una per foggia, con il colore della veste per istanza), in ordine di distanza dal punto che guarda la regia;
    - i gruppi che si muovono a istanze (il corteo dell'800, i Goti del 410, Massenzio) hanno una seconda maglia a istanze con la persona, sulle stesse matrici:
      o tutto il gruppo è fatto di persone, o nessuno;
    - a ogni gradino della qualità (RM.qualita.quando) ogni scena spende al massimo RM.QUALITA.figScena triangoli di persone: prima le parti più importanti (pr più basso),
-     dentro una lista le voci più vicine; le altre restano pedine (drawRange e count: nessun lavoro in più per il processore). In «bassa» tutte pedine.
+     dentro una lista le voci più vicine; le altre restano pedine (drawRange e count: nessun lavoro in più per il processore).
    - folle lontane, il pubblico del Colosseo e i grandi gruppi del 312 restano pedine. */
-var VERE=!!(RM.figuraGeo&&RM.figura&&RM.cavalloStatua)&&!RM.piccolo;
-RM.QUALITA.figScena=[0,52000,125000,210000];      // triangoli di persone per scena: circa 150, 350 e 600 persone a piedi a «media», «alta», «massima» (un cavaliere ne vale tre e mezzo)
+var VERE=!!(RM.figuraGeo&&RM.figura&&RM.cavalloStatua);
+var LEGGERA=!!RM.piccolo || (navigator.maxTouchPoints>0) || !!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);      // come TOCCO_Q di js/base.js
+RM.QUALITA.figScena=[15000,52000,125000,210000];      // triangoli di persone per scena: in «bassa» solo le parti «tel» (una sessantina di persone leggere); circa 150, 350 e 600 persone a «media», «alta», «massima» (un cavaliere ne vale tre e mezzo)
+var TETTO_TEL={'593':32000};      // in «bassa» il 593 ne ha di più: tutta la fila dei prigionieri (80) e le guardie a cavallo (30, col cavallo leggero)
 var VIC=null, DETT=false, contaP=0, PARTI={}, nParti=0, BASI={}, matPers=null, BIANCO1=new THREE.Color(1,1,1);
 var V_BIANCO=RM.col(0xefe9da), V_LANA=RM.col(0x6b5a44), V_VELO=RM.col(0xe2d6bc), V_SANDALO=RM.col(0x4a3424), V_PELLE=RM.col(0xb07a55), CORDA=RM.col(0x3a2a1a);      // i colori del corpo di js/vita.js
 function uomo(B,x,z,y,col,scudo,ry,ruolo){
@@ -83,14 +88,14 @@ function parte(nome,q){ var L=PARTI[nome]||(PARTI[nome]=[]); q.n=nParti++;
   if(q.chiave){ var g=L.filter(function(u){ return u.chiave===q.chiave; })[0]; if(g){ g.coppie=g.coppie.concat(q.coppie); return g; } }
   L.push(q); L.sort(function(a,b){ return (a.pr-b.pr)||(a.n-b.n); }); return q; }
 /* raccoglie le figure di fn disegnate in B: centro [x, z] è il punto guardato dalla regia (le più vicine diventano persone per prime), pr la priorità della parte nella scena */
-function vicine(B,nome,centro,fn,pr){
-  if(!VERE){ fn(); return; }
-  var r={B:B, c:centro, voci:[], q:parte(nome,{tipo:'lista', pr:pr||0})}, prima=VIC; VIC=r; fn(); VIC=prima;
+function vicine(B,nome,centro,fn,pr,tel){
+  if(!VERE || (LEGGERA && !tel)){ fn(); return; }      // sui telefoni le parti non «tel» restano pedine e non si preparano
+  var r={B:B, c:centro, voci:[], nome:nome, q:parte(nome,{tipo:'lista', pr:pr||0, tel:!!tel})}, prima=VIC; VIC=r; fn(); VIC=prima;
   (B.vicine||(B.vicine=[])).push(r);
   if(!B.magliaSola){ B.magliaSola=B.maglia; B.maglia=function(mat){ var g=this.magliaSola(mat), self=this; self.vicine.forEach(function(r){ chiudi(r,g); }); self.vicine=[]; return g; }; }
 }
 function chiudi(r,g){
-  var tetto=Math.max.apply(null,RM.QUALITA.figScena), S=new RM.Costruttore(), fS=[0], tri=[], somma=0, VAR={};
+  var tetto=LEGGERA?(TETTO_TEL[r.nome]||RM.QUALITA.figScena[0]):Math.max.apply(null,RM.QUALITA.figScena), S=new RM.Costruttore(), fS=[0], tri=[], somma=0, VAR={};      // sui telefoni si prepara solo ciò che serve a «bassa»
   r.voci.forEach(function(v){ v.d2=Math.hypot(v.p.x-r.c[0],v.p.z-r.c[1])*v.peso; });
   r.voci.sort(function(a,b){ return a.d2-b.d2; });
   r.voci.forEach(function(v,i){
@@ -99,7 +104,7 @@ function chiudi(r,g){
     var Q={pezzi:[], m:v.m}, t=0; v.d(Q);
     Q.pezzi.forEach(function(z){ t+=base(z.k,z.fa).attributes.position.count/3; (VAR[z.k]||(VAR[z.k]={k:z.k, v:[]})).v.push({i:i, m:z.m, t:z.t}); });
     tri.push(t); somma+=t; });
-  var mS=new THREE.Mesh(S.geometria(),g.material); mS.castShadow=mS.receiveShadow=true; g.add(mS);
+  var mS=new THREE.Mesh(S.geometria(),g.material); mS.castShadow=mS.receiveShadow=true; mS.userData.pedine=true; g.userData.scena=true; g.add(mS);
   r.q.mS=mS; r.q.fS=fS; r.q.tri=tri;
   r.q.vari=Object.keys(VAR).map(function(k){ var w=VAR[k], n=w.v.length, m=new THREE.InstancedMesh(base(k),matPersone(),n);
     m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(n*3),3);
@@ -137,7 +142,7 @@ function opzioni(col,scudo,ruolo,k){
   var h=((k*2654435761)>>>0)%100, o={f:0, k:(h&1)?3:0, veste:col||C.tunica, scudo:scudo||null, s:1};      // due carnagioni e due capigliature (js/vita.js), non quattro: meno maglie da disegnare
   if(ruolo==='clero' || ruolo==='papa'){ o.f=3; o.sopra=col; if(ruolo==='papa') o.veste=C.bianco; }
   else if(ruolo==='scalzo'){ o.f=3; o.sopra=col; o.scalzo=true; }
-  else if(ruolo==='carlo'){ o.f=1; o.sopra=col; o.veste=C.tunica; }
+  else if(ruolo==='carlo'){ o.f=1; o.sopra=RM.col(0x5a4a3a); }      // la tunica nel colore della scena, il mantello di lana sobrio (il blu di Eginardo è da verificare)
   else if(ruolo==='donna') o.f=2;
   else if(ruolo==='folla'){ if(h<32) o.f=2; else if(h<52) o.f=1; if(h>=92){ o.f=0; o.s=.7; } }      // donne, uomini col mantello, ragazzi
   else if(h<28) o.f=1;
@@ -154,13 +159,25 @@ function cavaliereVero(dest,x,z,y,ry,colC,colU,solo,ruolo){
   emetti(dest,chiaveP(o),function(){ return personaGeo(o); },m.clone().multiply(locale(0,.068,-.01,0)),o.veste);      // seduto in sella, come RM.figura.cavaliere di js/vita.js
 }
 function seduto(dest,x,y,z,ry,col){ var o=opzioni(col,null,null,contaP++); o.f=4; o.sopra=null; emetti(dest,chiaveP(o),function(){ return personaGeo(o); },locale(x,y,z,ry),o.veste); }      // l'imperatore sul carro
-function cavalloGeo(col){ var T=new RM.Costruttore(); RM.cavalloStatua(T,0,0,0,0,1,col); var g=T.geometria(); g.deleteAttribute('tipo');
+/* il cavallo leggero dei telefoni: le stesse misure di cavallo() in js/monumenti.js (un centimetro di statua = .0001), con meno lati e senza giunti: circa 200 triangoli invece di 900 */
+function cavalloLeggero(T,col){ var u=.01;
+  function palla(r,x,y,z,sx,sy,sz){ T.geo(new THREE.SphereGeometry(r,6,4).scale(sx,sy,sz).translate(x,y,z),col); }
+  function arto(a,b,r0,r1){ var d=new THREE.Vector3(b[0]-a[0],b[1]-a[1],b[2]-a[2]), L=d.length(), g=new THREE.CylinderGeometry(r1,r0,L,4,1);
+    g.applyMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize()))); g.translate((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2); T.geo(g,col); }
+  palla(3.6*u,0,12.3*u,0,.95,1,2.25); palla(3.2*u,0,12.9*u,-4.6*u,1,1.05,1.1); palla(3.1*u,0,12.6*u,4.6*u,1,1.05,1.1);
+  arto([0,13.5*u,5.5*u],[0,19.4*u,8.6*u],3*u,1.9*u); arto([0,19.6*u,8.4*u],[0,16.6*u,13*u],2*u,1.15*u);
+  [[-1,1],[1,1],[-1,-1],[1,-1]].forEach(function(q,n){ var zx=q[1]*5.2*u, xx=q[0]*2.1*u, gin=zx+(q[1]<0?-.9*u:.3*u);
+    if(n===0){ arto([xx,11*u,zx],[xx,7*u,zx+2.6*u],1.5*u,1.05*u); arto([xx,7*u,zx+2.6*u],[xx,3.4*u,zx+1.2*u],1*u,.8*u); }
+    else { arto([xx,11*u,zx],[xx,5.6*u,gin],1.6*u,1*u); arto([xx,5.6*u,gin],[xx,.2*u,zx],.95*u,.85*u); } });
+  arto([0,13.4*u,-7.6*u],[0,6.5*u,-9.6*u],1.1*u,.5*u);
+}
+function cavalloGeo(col){ var T=new RM.Costruttore(); if(LEGGERA) cavalloLeggero(T,col); else RM.cavalloStatua(T,0,0,0,0,1,col); var g=T.geometria(); g.deleteAttribute('tipo');
   g.setAttribute('fisso',new THREE.Float32BufferAttribute(new Float32Array(g.attributes.position.count).fill(1),1)); return g; }
 /* La geometria di una persona, in unità della scena (piedi a y=0, sguardo verso +z), dal corpo di js/vita.js. Le parti senza colore proprio (la veste) diventano bianche:
    il colore lo dà l'istanza o emetti(). Le pose: o.chino piega in avanti collo e testa attorno alla base del collo; o.legato porta le due braccia in avanti e verso il centro,
    le mani unite davanti al ventre con un giro di corda; o.collare mette un collare di corda al collo. */
 function personaGeo(o){
-  var g=RM.figuraGeo(o.f,o.k,5), pa=g.attributes.position.array, na=g.attributes.normal.array, ca=g.attributes.color.array, fa=g.attributes.fisso.array, oa=g.attributes.oscilla.array;
+  var g=RM.figuraGeo(o.f,o.k,LEGGERA?3:5), pa=g.attributes.position.array, na=g.attributes.normal.array, ca=g.attributes.color.array, fa=g.attributes.fisso.array, oa=g.attributes.oscilla.array;
   var Pp=[], Nn=[], Cc=[], Ff=[], i, n=pa.length/3, v=new THREE.Vector3(), w=new THREE.Vector3();
   function uguale(c,q){ return Math.abs(c[0]-q.r)+Math.abs(c[1]-q.g)+Math.abs(c[2]-q.b)<.01; }
   function rgb(q){ return [q.r,q.g,q.b]; }
@@ -168,7 +185,9 @@ function personaGeo(o){
   var X=new THREE.Vector3(1,0,0), Z=new THREE.Vector3(0,0,1);
   function braccio(p,nn,s){ var a=-.3*s, b=-.45; p.copy(ruota(ruota(p,Z,a,.138,0,s*.02),X,b,.138,0,0)); if(nn){ nn.applyAxisAngle(Z,a).applyAxisAngle(X,b); } }
   function testa(p,nn){ p.copy(ruota(p,X,o.chino,.143,0,0)); if(nn) nn.applyAxisAngle(X,o.chino); }
+  function mano(i){ var j=i*3, s=pa[j]>0?1:-1; return Math.hypot(pa[j]-s*.022,pa[j+1]-.081,pa[j+2]-.006)<.0042; }      // un vertice della sfera della mano (js/vita.js)
   for(i=0;i<n;i++){
+    if(LEGGERA && i%3===0 && Math.abs(oa[i])>1.5 && mano(i) && mano(i+1) && mano(i+2)){ i+=2; continue; }      // la persona leggera non ha le mani
     var j=i*3, c=[ca[j],ca[j+1],ca[j+2]], fis=fa[i], os=oa[i];
     v.set(pa[j],pa[j+1],pa[j+2]); w.set(na[j],na[j+1],na[j+2]);
     if(!fis) c=[1,1,1];
@@ -199,17 +218,20 @@ function prigioniero(dest,x,z,y,ry,h,veste,k){
 /* tutte le scene: ogni parte riceve la sua quota di triangoli, in ordine di priorità */
 function assegna(){
   var tetto=VERE?(RM.QUALITA.figScena[RM.q]||0):0;
-  Object.keys(PARTI).forEach(function(nome){ var resto=tetto;
+  Object.keys(PARTI).forEach(function(nome){ var resto=(RM.q===0 && TETTO_TEL[nome])||tetto;
     PARTI[nome].forEach(function(q){
+      var r0=resto; if(RM.q===0 && !q.tel) resto=0;      // in «bassa» spendono solo le parti «tel»
       if(q.tipo==='blocco'){ var t=0; q.coppie.forEach(function(c){ t+=c.tri*Math.max(0,c.g.count); }); var si=tetto>0&&t<=resto; if(si) resto-=t;
+        if(RM.q===0 && !q.tel) resto=r0;
         q.coppie.forEach(function(c){ c.gd.visible=si; c.g.geometry.setDrawRange(0,si?0:Infinity); }); return; }
       if(!q.mS) return;
       var n=0; while(n<q.tri.length && q.tri[n]<=resto){ resto-=q.tri[n]; n++; }
+      if(RM.q===0 && !q.tel) resto=r0;
       q.vari.forEach(function(w){ var c=0; while(c<w.ord.length && w.ord[c]<n) c++; w.m.count=c; });
       q.mS.geometry.setDrawRange(q.fS[n],Infinity); });
   });
 }
-RM.figureScene={ parti:PARTI, assegna:assegna, triangoli:function(nome){ var t=0; (PARTI[nome]||[]).forEach(function(q){      // per le prove: triangoli di persone accesi in una scena
+RM.figureScene={ parti:PARTI, assegna:assegna, tettoTel:TETTO_TEL, triangoli:function(nome){ var t=0; (PARTI[nome]||[]).forEach(function(q){      // per le prove: triangoli di persone accesi in una scena
   if(q.tipo==='blocco') q.coppie.forEach(function(c){ if(c.gd.visible) t+=c.tri*c.g.count; }); else if(q.vari) q.vari.forEach(function(w){ t+=w.m.count*w.m.geometry.attributes.position.count/3; }); }); return t; } };
 function insegna(B,x,z,y,col,alta){ B.scatola(.012,alta,.012,x,y,z,P.tronco).scatola(.11,.08,.008,x+.055,y+alta-.09,z,col); }
 
@@ -257,14 +279,14 @@ function anima(t){ var f=!t.intermezzo && ANIMA[t.anno]; if(f) f(); }
 var O3=new THREE.Object3D();
 /* nome, chiave, pr: se c'è nome il gruppo ha anche la maglia con le persone (vedi «persone vere» in testa), nella scena nome; i gruppi con la stessa chiave diventano persone
    tutti insieme; faD, se c'è, disegna la persona al posto di fa */
-function istanze(fa,N,nome,chiave,pr,faD){ var B=new RM.Costruttore(); fa(B); var g=new THREE.InstancedMesh(B.geometria(),RM.matPietra(),Math.max(1,N)); g.frustumCulled=false; g.castShadow=true; g.visible=false;
+function istanze(fa,N,nome,chiave,pr,faD,tel){ var B=new RM.Costruttore(); fa(B); var g=new THREE.InstancedMesh(B.geometria(),RM.matPietra(),Math.max(1,N)); g.frustumCulled=false; g.castShadow=true; g.visible=false;
   O3.position.set(0,-50,0); O3.scale.setScalar(0); O3.updateMatrix(); for(var k=0;k<g.count;k++) g.setMatrixAt(k,O3.matrix);      // le istanze non usate restano nascoste
-  if(nome && VERE){
+  if(nome && VERE && (tel || !LEGGERA)){
     var Bd=new RM.Costruttore(); DETT=true; try{ (faD||fa)(Bd); } finally { DETT=false; }
     var gd=new THREE.InstancedMesh(Bd.geometria(),g.material,Math.max(1,N)), cnt=g.count;
     gd.instanceMatrix=g.instanceMatrix; gd.frustumCulled=false; gd.castShadow=gd.receiveShadow=true; gd.visible=false; gd.count=cnt; g.add(gd);
     Object.defineProperty(g,'count',{configurable:true, get:function(){ return cnt; }, set:function(v){ cnt=v; gd.count=v; }});      // le due maglie mostrano le stesse istanze
-    parte(nome,{tipo:'blocco', pr:pr||0, chiave:chiave, coppie:[{g:g, gd:gd, tri:Bd.pos.length/9}]});
+    parte(nome,{tipo:'blocco', pr:pr||0, chiave:chiave, tel:!!tel, coppie:[{g:g, gd:gd, tri:Bd.pos.length/9}]});
   }
   RM.scene.add(g); return g; }
 function metti(g,k,x,y,z,ry,s){ O3.position.set(x,y,z); O3.rotation.set(0,ry||0,0); O3.scale.setScalar(s==null?1:s); O3.updateMatrix(); g.setMatrixAt(k,O3.matrix); }
@@ -517,6 +539,8 @@ var prigionieri593=(function(){
     }
     prima.push([prec,ryPrec]);      // il primo del gruppo, quello più avanti
   }
+  },0,true);
+  vicine(B,'593',[vt0.x,vt0.z],function(){
   /* le guardie: un cavaliere davanti a ogni gruppo, con la corda legata alla sella; altri ai due lati, con la lancia alzata */
   prima.forEach(function(cr,j){ var cp=cr[0], s=s0+j*(PASSO*10+.75)+9*PASSO+.4, qq=via(s/lunghezza,j%2?.14:-.14), cc=j%2?C.cavalloB:C.cavalloC;
     voce(B,qq.x,qq.y,qq.z,function(Q){ cavaliereVero(Q,qq.x,qq.z,qq.y,qq.ry,cc,C.ferro); trave(Q,[qq.x,qq.y+.12,qq.z],colloV(cp,cr[1]),SPESSA,corda); },
@@ -527,7 +551,7 @@ var prigionieri593=(function(){
     (function(q,ry,cc){ var lx=q.x+.04*Math.cos(q.ry), lz=q.z-.04*Math.sin(q.ry);      // la lancia, dritta accanto al cavaliere: da 1,2 a 4,2 m da terra
       voce(B,q.x,q.y,q.z,function(Q){ cavaliereVero(Q,q.x,q.z,q.y,ry,cc,C.ferro); asta(Q,lx,lz,q.y+.1,q.y+.42,true); },function(Q){ pedinaCav(Q,q.x,q.z,q.y,ry,cc,C.ferro); asta(Q,lx,lz,q.y+.12,q.y+.42); });
     })(q,q.ry+(r5()-.5)*.3,r5()<.5?C.cavalloB:C.cavalloC); }
-  });
+  },1,true);      // le guardie dopo i prigionieri: in «bassa» il tetto va prima alla fila
   var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
   /* la vista della regia: da fuori, a ovest della strada (verso il fiume, in piano), 13 m sopra il suolo, a una quarantina di metri dalla colonna, che viene verso chi guarda
      di tre quarti; la porta e le mura restano sullo sfondo */
@@ -607,8 +631,8 @@ var S410=(function(){
   vicine(gIn,'410',G,function(){
   GU.forEach(function(q){ var p=punto(q[0],q[1]), y=H(p[0],p[1]); uomo(gIn,p[0],p[1],y,ROSSO,C.ferro,VERSO_DENTRO+Math.PI);
     gGiu.dentro(p[0],y+.02,p[1],r4()*6.28,function(B){ B.scatola(.15,.035,.05,0,0,0,ROSSO).scatola(.035,.03,.03,.09,0,0,C.pelle).scatola(.06,.012,.06,-.03,0,.07,C.ferro); }); });      // a terra, con lo scudo accanto
-  });
-  vicine(gio,'410',G,function(){ for(i=0;i<9;i++){ var pg=punto(-.55-r4()*.7,(r4()-.5)*.7); uomo(gio,pg[0],pg[1],H(pg[0],pg[1]),C.tunica,null,VERSO_DENTRO+Math.PI+(r4()-.5)*.8); } });
+  },0,true);
+  vicine(gio,'410',G,function(){ for(i=0;i<9;i++){ var pg=punto(-.55-r4()*.7,(r4()-.5)*.7); uomo(gio,pg[0],pg[1],H(pg[0],pg[1]),C.tunica,null,VERSO_DENTRO+Math.PI+(r4()-.5)*.8); } },0,true);
   var mIn=maglia(gIn), mGiu=maglia(gGiu), mGio=maglia(gio);
   /* chi aspetta fuori e poi entra: fanti e cavalieri, a istanze (persone dal gradino che le regge: prima i cavalieri, poi i fanti) */
   var NF=RM.leggero?150:300, NC=RM.leggero?24:48, F=[], K=[];
@@ -736,8 +760,10 @@ var palazzo455=(function(){
   vicine(B,'455',[cx,cz],function(){
   for(i=0;i<22;i++){ x=cx-3+r5()*6; z=cz-2.4+r5()*3.4; var y=H(x,z), ry=r5()*6.28, porta=i%2===0;
     uomo(B,x,z,y,VAND,null,ry); if(porta) B.scatola(.09,.05,.07,x,y+.19,z,r5()<.25?C.oro:P.bronzo,ry); }      // chi porta fuori e chi carica: un pezzo sulle spalle
+  },0);
   var pz=[cx+2.6,cz+1.4], prig=[[0,0,C.porpora],[.12,.06,C.bianco],[-.12,.06,C.bianco]];      // Eudossia e le figlie, fra quattro guardie (l'imperatrice in porpora)
-  prig.forEach(function(q){ var xx=pz[0]+q[0], zz=pz[1]+q[1]; uomo(B,xx,zz,H(xx,zz),q[2],null,2.4,'donna'); });
+  vicine(B,'455',pz,function(){ prig.forEach(function(q){ var xx=pz[0]+q[0], zz=pz[1]+q[1]; uomo(B,xx,zz,H(xx,zz),q[2],null,2.4,'donna'); }); },-1,true);      // le prigioniere prima di tutto, anche in «bassa»
+  vicine(B,'455',[cx,cz],function(){
   [[-.3,-.2],[.3,-.2],[-.3,.35],[.3,.35]].forEach(function(q){ var xx=pz[0]+q[0], zz=pz[1]+q[1]; uomo(B,xx,zz,H(xx,zz),VAND,C.cavalloB,2.4); B.scatola(.01,.28,.01,xx+.03,H(xx,zz),zz,P.tronco); });
   },0);
   var g=maglia(B);
@@ -789,8 +815,10 @@ var leone852=(function(){
   vicine(B,'852',PP,function(){
   for(i=0;i<n;i++){ p=via(i/n,0); if(Math.abs(i-tp)<4 || !libero(p.x,p.z)) continue; uomo(B,p.x,p.z,cima(p.x,p.z),i%9?C.bianco:C.tunica,null,p.ry,'scalzo'); }      // il clero in fila sul cammino
   for(i=-3;i<=3;i++){ p=via((tp+i*.75)/n,0); if(!libero(p.x,p.z)) continue; if(i===0){ uomo(B,p.x,p.z,cima(p.x,p.z),C.oro,null,p.ry,'scalzo'); insegna(B,p.x+.03,p.z,cima(p.x,p.z),C.oro,.4); } else uomo(B,p.x,p.z,cima(p.x,p.z),i%2?C.bianco:C.tunica,null,p.ry,'scalzo'); }      // sopra la porta: il papa con la croce e il seguito
+  },0,true);
+  vicine(B,'852',PP,function(){
   for(i=0;i<300;i++){ var t=r2(), q=via(t,(r2()<.5?-1:1)*(1.2+r2()*1.6)); if(RM.distFiume(q.x,q.z)<6.3) continue; uomo(B,q.x,q.z,q.y,C.folla[(r2()*C.folla.length)|0],null,q.ry+(r2()-.5)*2,'folla'); }      // il popolo sotto le mura
-  });
+  },1);
   var vp=via(tp/n,0);
   return {g:maglia(B), da:851.6, a:853, porta:[vp.x,vp.z]};
 })();
@@ -857,13 +885,28 @@ var V800=(function(){
   var L=[[-110.2,-88.5],[-150,-90],[PE.x-PE.asse[0]*8.6,PE.z-PE.asse[1]*8.6],[PE.x+PE.asse[0]*6.4,PE.z+PE.asse[1]*6.4],[-159.5,zAsse(-159.5)-CORSIA],[-243,zAsse(-243)-CORSIA],[-245.4,-108]];
   return {L:L, zAsse:zAsse, CORSIA:CORSIA, PE:PE};
 })();
+/* La quota su cui posa una figura sopra gradini e podi di un monumento: la si legge dalla sua geometria, con un raggio che scende da poco sopra il suolo (alto, in unità:
+   sotto i tetti dei portici) e trova il primo piano che incontra. Senza il monumento, H. */
+var RAGGIO=new THREE.Raycaster(), GIU=new THREE.Vector3(0,-1,0);
+function quotaSu(id,x,z,alto){
+  var o=(RM.MONUMENTI||[]).filter(function(m){ return m.id===id; })[0], y0=H(x,z); if(!o||!o.g) return y0;
+  o.g.updateMatrixWorld(true); RAGGIO.set(new THREE.Vector3(x,y0+(alto||.6),z),GIU); RAGGIO.far=(alto||.6)+1;
+  var h=RAGGIO.intersectObject(o.g,true)[0]; return h?Math.max(y0,h.point.y):y0;
+}
 var carlo800=(function(){
   var B=new RM.Costruttore(), i, x, z, e=Math.PI/2, Z=-108.1, franco=RM.col(0x3e5f7a), zA=V800.zAsse, CO=V800.CORSIA;      // e: rivolti a est, verso chi arriva
-  /* le persone (24 novembre 2026): prima il papa e il clero sui gradini, poi Carlo, le bandiere e i capi, poi il seguito, poi i gruppi lungo il portico */
+  /* le persone (24 novembre 2026): prima il papa e il clero sui gradini, poi Carlo, le bandiere e i capi, poi il seguito, poi i gruppi lungo il portico.
+     I gradini (24 novembre 2026, sanPietro in js/monumenti.js): tre gradini larghi 3 m davanti ai fornici dell'atrio, da x -247,28 a -246,38, alti 3, 2 e 1 m, sopra il sagrato
+     lastricato (70 cm). Prima il clero stava fra x -247,9 e -247,24, cioè per tre quarti dentro il muro dei fornici, e a 70 cm sopra il suolo: si vedevano le teste. Ora le quattro
+     file stanno sui tre gradini, ognuna alla quota del suo gradino letta dalla geometria (quotaSu), e lasciano libero in mezzo il passaggio per cui sale Carlo. */
   vicine(B,'800',[-247,-108],function(){
-  for(i=0;i<36;i++){ x=-247.9+(i%4)*.22; z=Z-1.9+(i>>2)*.42+(rnd()-.5)*.1; uomo(B,x,z,H(x,z)+.07,i<8?C.oro:C.bianco,null,e,'clero'); }      // vescovi e clero
-  uomo(B,-247.1,Z,H(-247.1,Z)+.07,C.oro,null,e,'papa'); insegna(B,-247.1,Z-.22,H(-247.1,Z)+.07,C.oro,.45);                              // il papa e la croce
-  },0);
+  for(i=0;i<36;i++){ var zr=-1.9+(i>>2)*.42; x=-247.16+(i%4)*.22; z=Z+zr+(zr<0?-.25:.25)+(rnd()-.5)*.1; uomo(B,x,z,quotaSu('pietro',x,z),i<8?C.oro:C.bianco,null,e,'clero'); }      // vescovi e clero
+  var yp=quotaSu('pietro',-247.1,Z); uomo(B,-247.1,Z,yp,C.oro,null,e,'papa'); insegna(B,-247.1,Z-.22,quotaSu('pietro',-247.1,Z-.22),C.oro,.45);                              // il papa e la croce
+  },0,true);
+  var SAG=quotaSu('pietro',-244,-108), GRAD=[];      // il piano del sagrato; le quote lungo la salita di Carlo, da x -245,6 a -247
+  for(i=0;i<=28;i++) GRAD.push(quotaSu('pietro',-245.6-i*.05,-108.1));
+  function sulSagrato(x,z){ return (x>-248 && x<-242.6 && Math.abs(z+108)<3.6)?SAG:-1e9; }
+  function salita(x){ var k=Math.round((-245.6-x)/.05); return k<0?SAG:GRAD[Math.min(28,k)]; }
   /* le bandiere della città («vexilla», Annali dei Franchi, 800): più grandi e più numerose (23 novembre 2026, l'utente: «metti delle bandiere»), lungo il lato nord della corsia
      e fra le colonne del portico; colori e forma sono uno schema */
   function bandiera(B,x,z,y,col,alta){ B.scatola(.016,alta,.016,x,y,z,P.tronco).scatola(.17,.12,.01,x+.085,y+alta-.13,z,col).scatola(.06,.05,.01,x+.03,y+alta-.18,z,col); }
@@ -875,17 +918,17 @@ var carlo800=(function(){
       uomo(B,xx,zz,H(xx,zz),col[(rnd()*col.length)|0],null,Math.atan2(cx-xx,zA(cx)-CO-zz),'folla'); } });
   },4);
   var g=maglia(B);
-  /* il corteo, a istanze; via(t,lat) dà punto e verso lungo il percorso. Carlo a cavallo in blu, a piedi con il mantello blu sopra la tunica (Eginardo, Vita Karoli 23:
-     «sago veneto amictus»), a capo scoperto: niente corona il 24 novembre */
+  /* il corteo, a istanze; via(t,lat) dà punto e verso lungo il percorso. Carlo nella tunica blu che la scena gli dava, a piedi con un mantello di lana di colore sobrio
+     (il mantello blu di Eginardo, Vita Karoli 23, è da verificare sul testo), a capo scoperto: niente corona il 24 novembre */
   var via=spezzata(V800.L), LUN=via(0).lung, D=108.8, FINE=24, VIAGGIO=20;
   var cav=[istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,C.ferro); },35,'800','seguito',3), istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloC,C.ferro); },35,'800','seguito',3)];
   var capi=istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,franco); },8,'800','capi',2);      // qualche cavaliere dei Franchi in blu, come prima
   var band=[C.rosso,C.oro,C.bianco,C.porpora].map(function(col){ return istanze(function(B){ uomo(B,0,0,0,C.tunica,null,0); bandiera(B,.03,0,0,col,.55); },2,'800','bandiere',1); });
-  var re=istanze(function(B){ cavaliere(B,0,0,0,0,C.bianco,franco); },1,'800','carlo',1), cavallo=istanze(function(B){      // il cavallo, senza cavaliere
+  var re=istanze(function(B){ cavaliere(B,0,0,0,0,C.bianco,franco); },1,'800','carlo',1,null,true), cavallo=istanze(function(B){      // il cavallo, senza cavaliere
     B.scatola(.055,.085,.025,0,0,.08,C.bianco).scatola(.055,.085,.025,0,0,-.08,C.bianco).scatola(.06,.07,.22,0,.08,0,C.bianco).scatola(.04,.1,.05,0,.13,.095,C.bianco).scatola(.035,.04,.09,0,.2,.135,C.bianco); },1,'800','carlo',1,
-    function(B){ cavaliere(B,0,0,0,0,C.bianco,null,true); });
-  var aPiedi=istanze(function(B){ uomo(B,0,0,0,franco,null,0,'carlo'); },1,'800','carlo',1);
-  function y(p){ var d=RM.distFiume(p.x,p.z); return d<7.5?.66:Math.max(p.y,.66-(d-7.5)*.33); }      // sul piano di ponte Elio (0,65, js/mura.js), poi giù per la rampa
+    function(B){ cavaliere(B,0,0,0,0,C.bianco,null,true); },true);
+  var aPiedi=istanze(function(B){ uomo(B,0,0,0,franco,null,0,'carlo'); },1,'800','carlo',1,null,true);
+  function y(p){ var d=RM.distFiume(p.x,p.z); return d<7.5?.66:Math.max(p.y,.66-(d-7.5)*.33,sulSagrato(p.x,p.z)); }      // sul piano di ponte Elio (0,65, js/mura.js), poi giù per la rampa; in fondo sopra il sagrato
   function sC(t){ var k=Math.min(1,t/VIAGGIO); return LUN+D*(k*k*(3-2*k)-1); }      // dove sta Carlo lungo il percorso
   function posa(gm,k,s,lat,ry){ var p=via(Math.max(0,s)/LUN,lat); metti(gm,k,p.x,y(p),p.z,ry==null?p.ry:ry); return p; }
   function disegna(t){
@@ -893,8 +936,8 @@ var carlo800=(function(){
     for(i=0;i<70;i++){ var row=i>>1, gm=(i%9===4)?capi:cav[i&1], kk=gm===capi?(i/9)|0:(i>>1); posa(gm,kk,s-1-row*.42,(i&1)?.13:-.13); }
     for(i=0;i<6;i++){ var c=i%4, sb=Math.min(s+1.3+(i>>1)*.5,LUN-.4-(i>>1)*.5); posa(band[c],nb[c]++,sb,((i&1)?1:-1)*(.13+.8*apre)); }
     if(!scende){ posa(re,0,s,0); metti(cavallo,0,0,-50,0,0,0); metti(aPiedi,0,0,-50,0,0,0); }
-    else { metti(re,0,0,-50,0,0,0); metti(cavallo,0,pf.x,H(pf.x,pf.z),pf.z,pf.ry);      // sceso da cavallo, sale i gradini fino al papa
-      var ks=RM.sfuma(VIAGGIO+1,FINE,t), xa=-245.8+(-246.8+245.8)*ks; metti(aPiedi,0,xa,H(xa,-108.1)+.07*ks,-108.1-.3*(1-ks),-Math.PI/2); }
+    else { metti(re,0,0,-50,0,0,0); metti(cavallo,0,pf.x,Math.max(H(pf.x,pf.z),sulSagrato(pf.x,pf.z)),pf.z,pf.ry);      // sceso da cavallo, sale i gradini fino al papa
+      var ks=RM.sfuma(VIAGGIO+1,FINE,t), xa=-245.8+(-246.8+245.8)*ks; metti(aPiedi,0,xa,salita(xa),-108.1-.3*(1-ks),-Math.PI/2); }      // gradino per gradino (quotaSu)
     cav.concat([capi,re,cavallo,aPiedi],band).forEach(function(m){ m.instanceMatrix.needsUpdate=true; });
   }
   var tutte=[g].concat(cav,[capi,re,cavallo,aPiedi],band), F=function(){ return RM.fattoreVista(); };
