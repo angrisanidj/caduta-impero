@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 24/11/2026, 17:37:33.
+Generato da `src/testi.mjs` il 25/11/2026, 00:51:08.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -57,67 +57,69 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.21] Che cosa sappiamo
 
-[pagina.22] Tocca la città per esplorarla
+[pagina.22] Qualità · automatica
 
-[pagina.23] Posizione e pianta certe. L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.
+[pagina.23] Tocca la città per esplorarla
 
-[pagina.24] Sappiamo dove sorgeva l'edificio. Per ricostruirne l'aspetto ci basiamo sugli scavi, sulle piante antiche o sui resti sopravvissuti alle trasformazioni successive.
+[pagina.24] Posizione e pianta certe. L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.
 
-[pagina.25] La posizione o la forma sono ipotetiche. È il caso, per esempio, delle singole case che il modello mostra nei quartieri abitati o in rovina.
+[pagina.25] Sappiamo dove sorgeva l'edificio. Per ricostruirne l'aspetto ci basiamo sugli scavi, sulle piante antiche o sui resti sopravvissuti alle trasformazioni successive.
 
-[pagina.26] I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.
+[pagina.26] La posizione o la forma sono ipotetiche. È il caso, per esempio, delle singole case che il modello mostra nei quartieri abitati o in rovina.
 
-[pagina.27] Il modello 3D non è disponibile su questo dispositivo.
+[pagina.27] I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.
 
-[pagina.28] ▶ Riproduci
+[pagina.28] Il modello 3D non è disponibile su questo dispositivo.
 
-[pagina.29] Protagonisti · tocca un'immagine per ingrandirla e vederne fonte e licenza
+[pagina.29] ▶ Riproduci
 
-[pagina.30] Una voce di allora
+[pagina.30] Protagonisti · tocca un'immagine per ingrandirla e vederne fonte e licenza
 
-[pagina.31] Fra storia e leggenda
+[pagina.31] Una voce di allora
 
-[pagina.32] Le interpretazioni degli storici
+[pagina.32] Fra storia e leggenda
 
-[pagina.33] I monumenti di Roma · seleziona un nome per aprire la scheda
+[pagina.33] Le interpretazioni degli storici
 
-[pagina.34] in uso in disuso spogliato di materiali usato come cava bruciato danneggiato da un terremoto
+[pagina.34] I monumenti di Roma · seleziona un nome per aprire la scheda
 
-[pagina.35] Mostra tutti
+[pagina.35] in uso in disuso abbandonato, in piedi spogliato di materiali usato come cava bruciato danneggiato da un terremoto
 
-[pagina.36] Le interpretazioni degli storici
+[pagina.36] Mostra tutti
 
-[pagina.37] Perché cadde l'Occidente?
+[pagina.37] Le interpretazioni degli storici
 
-[pagina.38] Perché cadde l'Impero romano d'Occidente? Da tre secoli gli storici propongono risposte diverse. Alcuni guardano alle difficoltà di governare territori tanto vasti, al costo dell'esercito, alle tasse o al ruolo della religione. Altri si concentrano sull'avanzata degli Unni e sui popoli che attraversarono il Reno e il Danubio. Altri ancora studiano il clima e le epidemie. Per alcuni storici furono decisive scelte che avrebbero potuto avere un esito diverso. Per altri, parlare di «trasformazione» aiuta a capire che cosa sopravvisse del mondo romano nei secoli successivi. Seleziona uno storico per leggere la sua tesi, una citazione, le obiezioni e gli episodi a cui si riferisce.
+[pagina.38] Perché cadde l'Occidente?
 
-[pagina.39] Segui sulla carta l'avanzata degli Unni e l'attraversamento del Danubio da parte dei Goti nel 376. Passa poi al Reno nel 406 e a Cartagine nel 439. A ogni tappa puoi vedere quanta parte dell'Occidente era ancora sotto il controllo di Roma. Il grafico della popolazione ti permette anche di confrontare le stime sugli abitanti con le testimonianze sul sole velato del 536 e sulla peste del 542.
+[pagina.39] Perché cadde l'Impero romano d'Occidente? Da tre secoli gli storici propongono risposte diverse. Alcuni guardano alle difficoltà di governare territori tanto vasti, al costo dell'esercito, alle tasse o al ruolo della religione. Altri si concentrano sull'avanzata degli Unni e sui popoli che attraversarono il Reno e il Danubio. Altri ancora studiano il clima e le epidemie. Per alcuni storici furono decisive scelte che avrebbero potuto avere un esito diverso. Per altri, parlare di «trasformazione» aiuta a capire che cosa sopravvisse del mondo romano nei secoli successivi. Seleziona uno storico per leggere la sua tesi, una citazione, le obiezioni e gli episodi a cui si riferisce.
 
-[pagina.40] Come finisce un impero
+[pagina.40] Segui sulla carta l'avanzata degli Unni e l'attraversamento del Danubio da parte dei Goti nel 376. Passa poi al Reno nel 406 e a Cartagine nel 439. A ogni tappa puoi vedere quanta parte dell'Occidente era ancora sotto il controllo di Roma. Il grafico della popolazione ti permette anche di confrontare le stime sugli abitanti con le testimonianze sul sole velato del 536 e sulla peste del 542.
 
-[pagina.41] Fonti Testi antichi e medievali e studi moderni consultati
+[pagina.41] Come finisce un impero
 
-[pagina.42] Tra gli autori antichi e medievali consultati figurano Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Tra le opere consultate ci sono anche l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Per le cronache e gli annali abbiamo consultato gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Tra le altre fonti figurano l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.
+[pagina.42] Fonti Testi antichi e medievali e studi moderni consultati
 
-[pagina.43] Per Gibbon abbiamo consultato il testo e per Jones la conclusione. Per Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer abbiamo verificato singoli passi. Di Pirenne abbiamo letto l'articolo del 1922. Per la popolazione e gli scavi di Roma abbiamo consultato le pagine dedicate a questi temi nel Companion to Rome e, per la popolazione, anche lo studio di Durliat. Per Heather abbiamo letto le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), di cui abbiamo consultato la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
+[pagina.43] Tra gli autori antichi e medievali consultati figurano Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Tra le opere consultate ci sono anche l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Per le cronache e gli annali abbiamo consultato gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Tra le altre fonti figurano l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.
 
-[pagina.44] Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.
+[pagina.44] Per Gibbon abbiamo consultato il testo e per Jones la conclusione. Per Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer abbiamo verificato singoli passi. Di Pirenne abbiamo letto l'articolo del 1922. Per la popolazione e gli scavi di Roma abbiamo consultato le pagine dedicate a questi temi nel Companion to Rome e, per la popolazione, anche lo studio di Durliat. Per Heather abbiamo letto le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), di cui abbiamo consultato la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
 
-[pagina.45] Come abbiamo ricostruito la carta e la città Dati misurati e stime
+[pagina.45] Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.
 
-[pagina.46] La carta prende come punto di partenza le province romane intorno al 200 d.C. Per l'Italia usa le regioni istituite da Augusto. La base cartografica è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Quando i confini dei regni successivi si discostavano da quelli romani, li abbiamo ridisegnati seguendo i fiumi, i crinali e le città citati nelle fonti. Il tracciato è quindi approssimativo. Nel novembre 2026 abbiamo rivisto i confini, gli spostamenti dei popoli e l'attribuzione delle regioni ai diversi governi. Abbiamo consultato Bury, Ammiano, Zosimo ed Eugippio, oltre a Beda e, per i singoli regni, alle relative voci di Wikipedia. Alcune date sono riportate a memoria. Per la Corsica, i manuali ipotizzano un dominio longobardo dal 725 circa, ma manca una testimonianza diretta. Il dominio dei Franchi è documentato dall'806.
+[pagina.46] Come abbiamo ricostruito la carta e la città Dati misurati e stime
 
-[pagina.47] Per ricostruire Roma abbiamo ripreso da OpenStreetMap il corso del Tevere e il tracciato delle mura (© OpenStreetMap contributors). Partendo da un rilievo moderno del terreno (SRTM), abbiamo ridisegnato i colli alle quote antiche. Nel modello ne abbiamo poi quasi raddoppiato l'altezza. Gli edifici occupano la posizione ricostruita dalle fonti e hanno forme semplificate. Alcune strade moderne conservano percorsi antichi. È il caso di via del Corso, sul tracciato della via Lata, dell'Appia Antica e di via dei Coronari. Nel Foro restano visibili anche tratti dei pavimenti della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. Abbiamo disegnato a mano i tratti mancanti. Nel Foro romano e nei Fori imperiali i resti archeologici permettono di collocare gli edifici. Per gli acquedotti, percorsi e altezze sono ricostruzioni. Il modello genera gli isolati e propone una possibile successione nell'abbandono dei quartieri.
+[pagina.47] La carta prende come punto di partenza le province romane intorno al 200 d.C. Per l'Italia usa le regioni istituite da Augusto. La base cartografica è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Quando i confini dei regni successivi si discostavano da quelli romani, li abbiamo ridisegnati seguendo i fiumi, i crinali e le città citati nelle fonti. Il tracciato è quindi approssimativo. Nel novembre 2026 abbiamo rivisto i confini, gli spostamenti dei popoli e l'attribuzione delle regioni ai diversi governi. Abbiamo consultato Bury, Ammiano, Zosimo ed Eugippio, oltre a Beda e, per i singoli regni, alle relative voci di Wikipedia. Alcune date sono riportate a memoria. Per la Corsica, i manuali ipotizzano un dominio longobardo dal 725 circa, ma manca una testimonianza diretta. Il dominio dei Franchi è documentato dall'806.
 
-[pagina.48] L'indicatore «Occidente governato da Roma» mostra quanta parte del territorio occidentale era ancora sotto il controllo di Roma. Il totale di riferimento è la superficie dell'Occidente sulla nostra carta, circa 2,7 milioni di km². Come si confronta questo dato con quelli degli storici? Per l'intero impero le cifre sono vicine. Intorno al 200 le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km², che scendono a 4,5 senza Mesopotamia, Dacia e Agri Decumates. Nel 1979 Rein Taagepera, usando l'atlante storico di Shepherd, calcolò 4,6 milioni di km² per il 138, 4,5 per il 275 e 4,4 per il 390. La differenza emerge quando si considerano separatamente Oriente e Occidente dopo la divisione del 395. Taagepera parla di «due parti pressoché uguali». Stima 2 milioni di km² per l'Occidente e 2,1 per l'Oriente, con un margine di 0,3 milioni per l'Oriente. Le sue cifre arrotondate danno un totale di 4,1 milioni, contro i 4,4 stimati per il 390. Sulla nostra carta l'Oriente misura 1,9 milioni e l'Occidente 2,7, circa un terzo in più della sua stima per l'Occidente.
+[pagina.48] Per ricostruire Roma abbiamo ripreso da OpenStreetMap il corso del Tevere e il tracciato delle mura (© OpenStreetMap contributors). Partendo da un rilievo moderno del terreno (SRTM), abbiamo ridisegnato i colli alle quote antiche. Nel modello ne abbiamo poi quasi raddoppiato l'altezza. Gli edifici occupano la posizione ricostruita dalle fonti e hanno forme semplificate. Alcune strade moderne conservano percorsi antichi. È il caso di via del Corso, sul tracciato della via Lata, dell'Appia Antica e di via dei Coronari. Nel Foro restano visibili anche tratti dei pavimenti della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. Abbiamo disegnato a mano i tratti mancanti. Nel Foro romano e nei Fori imperiali i resti archeologici permettono di collocare gli edifici. Per gli acquedotti, percorsi e altezze sono ricostruzioni. Il modello genera gli isolati e propone una possibile successione nell'abbandono dei quartieri.
 
-[pagina.49] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
+[pagina.49] L'indicatore «Occidente governato da Roma» mostra quanta parte del territorio occidentale era ancora sotto il controllo di Roma. Il totale di riferimento è la superficie dell'Occidente sulla nostra carta, circa 2,7 milioni di km². Come si confronta questo dato con quelli degli storici? Per l'intero impero le cifre sono vicine. Intorno al 200 le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km², che scendono a 4,5 senza Mesopotamia, Dacia e Agri Decumates. Nel 1979 Rein Taagepera, usando l'atlante storico di Shepherd, calcolò 4,6 milioni di km² per il 138, 4,5 per il 275 e 4,4 per il 390. La differenza emerge quando si considerano separatamente Oriente e Occidente dopo la divisione del 395. Taagepera parla di «due parti pressoché uguali». Stima 2 milioni di km² per l'Occidente e 2,1 per l'Oriente, con un margine di 0,3 milioni per l'Oriente. Le sue cifre arrotondate danno un totale di 4,1 milioni, contro i 4,4 stimati per il 390. Sulla nostra carta l'Oriente misura 1,9 milioni e l'Occidente 2,7, circa un terzo in più della sua stima per l'Occidente.
 
-[pagina.50] Licenze Come riutilizzare i materiali
+[pagina.50] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
 
-[pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
+[pagina.51] Licenze Come riutilizzare i materiali
 
-[pagina.52] Versione del 24/11/2026, ore 17:23
+[pagina.52] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
+
+[pagina.53] Versione del 25/11/2026, ore 00:45
 
 
 ## 2. Gli atti
@@ -2174,13 +2176,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.adriano780] Papa Adriano I fa riparare quattro acquedotti, le mura e i tetti delle basiliche.
 
-[evento.leonina852] 847-852 · Nell'847 un forte terremoto scuote Roma: lo ricorda il Liber Pontificalis, senza dire che cosa crollò. Che abbia fatto cadere ciò che restava del lato sud del Colosseo è un'ipotesi degli studiosi, e la ricostruzione la mostra come tale. Dall'848 papa Leone IV fa costruire nuove mura attorno a San Pietro e al quartiere vicino: nella scena i quattro anni di lavoro durano pochi secondi. Il 27 giugno 852 le mura sono finite e benedette, e il clero le percorre in processione. Dal nome del papa deriva quello di «città leonina».
+[evento.leonina852] 847-852 · Nell'847 un forte terremoto scuote Roma: lo ricorda il Liber Pontificalis, senza dire che cosa crollò. Che abbia fatto cadere ciò che restava del lato sud del Colosseo è un'ipotesi degli studiosi, e la ricostruzione la mostra come tale. Dall'848 papa Leone IV fa costruire nuove mura attorno a San Pietro e al quartiere vicino: nella scena i quattro anni di lavoro durano pochi secondi. Il 27 giugno 852 le mura sono finite e benedette, e il clero le percorre in processione. Dal nome del papa deriva quello di «città leonina». Fra le rovine del tempio di Venere e Roma, accanto alla via Sacra, Leone IV costruisce anche la chiesa di Santa Maria Nova.
 
 [evento.cantieremura] 271 · Comincia la costruzione delle nuove mura di Roma, lungo un percorso di diciannove chilometri. Lo storico Zosimo riferisce che i lavori finirono sotto l'imperatore Probo. L'ordine in cui furono costruiti i diversi tratti resta incerto.
 
-[evento.sacco410] 24 agosto 410 · Dopo un lungo assedio i Goti di Alarico, accampati davanti a porta Salaria, entrano in città. Non ci fu battaglia: la porta fu aperta da dentro. Procopio ne dà due versioni: trecento giovani goti uccidono le guardie e aprono, oppure la nobile Proba fa aprire di notte dai suoi servi. Subito bruciano le case vicino alla porta e la casa di Sallustio. Il saccheggio dura tre giorni secondo Orosio, sei secondo Marcellino Comes. Probabilmente risale a quei giorni anche l'incendio della basilica Emilia, nel Foro. Chi cerca rifugio a San Pietro e a San Paolo è rispettato. Nella ricostruzione campo, numeri e tempi sono uno schema.
+[evento.sacco410] 24 agosto 410 · Dopo un lungo assedio i Goti di Alarico, accampati davanti a porta Salaria, entrano in città. Non ci fu battaglia: la porta fu aperta da dentro. Procopio ne dà due versioni: trecento giovani goti uccidono le guardie e aprono verso mezzogiorno, oppure la nobile Proba fa aprire di notte dai suoi servi. Girolamo, che scrive pochi anni dopo, parla di una notte: la ricostruzione mostra la notte. Subito bruciano le case vicino alla porta e la casa di Sallustio. Il saccheggio dura tre giorni secondo Orosio, sei secondo Marcellino Comes. Probabilmente risale a quei giorni anche l'incendio della basilica Emilia, nel Foro. Chi cerca rifugio a San Pietro e a San Paolo è rispettato. Nella ricostruzione campo, numeri e tempi sono uno schema.
 
-[evento.sacco455] 2-16 giugno 455 · I Vandali di Genserico saccheggiano Roma per quattordici giorni. Secondo Prospero d'Aquitania, papa Leone ottiene che siano risparmiati agli abitanti incendi, stragi e torture. I Vandali portano via sistematicamente i beni della città. Dal palazzo imperiale, scrive Procopio, prendono l'oro e il tesoro senza risparmiare il bronzo né altro, e portano via prigioniere l'imperatrice Eudossia e le figlie. Dal tempio di Giove tolgono metà del tetto di bronzo dorato. Nella ricostruzione gli oggetti sono generici: Procopio non dice che cosa fosse quel bronzo.
+[evento.sacco455] 2-16 giugno 455 · I Vandali di Genserico saccheggiano Roma per quattordici giorni. Secondo Prospero d'Aquitania, papa Leone ottiene che siano risparmiati agli abitanti incendi, stragi e torture. I Vandali portano via sistematicamente i beni della città. Dal palazzo imperiale, scrive Procopio, prendono l'oro e il tesoro senza risparmiare il bronzo né altro, e portano via prigioniere l'imperatrice Eudossia e le figlie. Dal tempio di Giove tolgono metà del tetto di bronzo dorato. Procopio scrive che caricò il bottino sulle navi e salpò per Cartagine. Nella ricostruzione gli oggetti sono generici, perché Procopio non dice che cosa fosse quel bronzo, e le chiatte sul Tevere sotto porta Portese sono uno schema: dove stessero le navi non è scritto.
 
 [evento.assedio472] Luglio 472 · Da mesi il generale Ricimero assedia l'imperatore Antemio a Roma. Blocca il Tevere per impedire ai rifornimenti di raggiungere la città. La ricostruzione colloca gli accampamenti sulla riva destra, ma la loro posizione precisa è incerta. Lo scontro decisivo avviene a ponte Elio, davanti al mausoleo di Adriano. Antemio, che durante l'assedio si trovava nel palazzo imperiale, viene ucciso a San Crisogono, in Trastevere. Un'iscrizione ricorda che durante la guerra civile scoppiò un incendio vicino alla Curia, la sede del Senato. Alcuni studiosi lo collocano nei giorni dell'assedio.
 
@@ -2208,7 +2210,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.assedio756] Gennaio-marzo 756 · I Longobardi di Astolfo assediano Roma per tre mesi e devastano i dintorni. Il papa chiama i Franchi. Nella ricostruzione, i casali bruciati e i campi anneriti fuori dalle porte sono una scelta del modello: le fonti non dicono dove furono i danni. Due acquedotti restano rotti per vent'anni, forse proprio da questo assedio.
 
-[evento.natale800] 25 dicembre 800 · In San Pietro papa Leone III incorona imperatore Carlo Magno, re dei Franchi. Un mese prima, il 24 novembre, il papa lo aveva accolto sui gradini della basilica. Secondo gli Annali dei Franchi, le bandiere della città gli erano state mandate incontro e lungo la strada gruppi di pellegrini e di cittadini cantavano le sue lodi. Arrivato, Carlo scende da cavallo e sale i gradini. Nella ricostruzione il corteo arriva da ponte Sant'Angelo lungo il portico: le fonti non dicono da quale strada venisse. Numeri e colori sono nostri.
+[evento.natale800] 24 novembre e 25 dicembre 800 · La scena ha due tempi. Il 24 novembre Carlo, re dei Franchi, arriva a San Pietro: le bandiere della città gli vanno incontro e gruppi di pellegrini e di cittadini cantano le sue lodi. Carlo scende da cavallo e sale i gradini, dove lo aspetta papa Leone III. Il giorno di Natale, alla messa, Carlo si alza dalla preghiera davanti alla tomba di Pietro e il papa gli posa la corona sul capo. I Romani gridano tre volte: «A Carlo augusto, incoronato da Dio, grande e pacifico imperatore dei Romani, vita e vittoria!». Poi il papa gli rende omaggio e unge re il figlio Carlo. Così raccontano gli Annali dei Franchi e il Liber Pontificalis. Nella ricostruzione la strada del corteo, numeri, colori e posti sono nostri. L'interno è uno spaccato: navate, colonne, arco e abside seguono la pianta nota; altezze, altare, la forma della corona e il gesto dell'omaggio sono ipotetici.
 
 [evento.terremoto801] 30 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi.
 
@@ -2250,7 +2252,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.colosseo.data8.quando] fine del VI secolo
 
-[scheda.colosseo.data8] Nei cunicoli si recuperavano pietra di travertino e metallo. Al primo livello è stata segnalata una vasca dove si mescolavano acqua e calce. Le pubblicazioni sugli scavi che abbiamo consultato non permettono di confermarne la presenza. Dalla seconda metà dell'VIII secolo il recupero dei materiali avviene su larga scala.
+[scheda.colosseo.data8] Nei cunicoli si recuperavano pietra di travertino e metallo. Al primo livello è stata segnalata una vasca dove si mescolavano acqua e calce. Le pubblicazioni sugli scavi che abbiamo consultato non permettono di confermarne la presenza. Dalla seconda metà dell'VIII secolo il recupero dei materiali avviene su larga scala. Gli scudi di bronzo dell'attico: quando siano stati tolti non si sa; nel modello si scuriscono, come tolti, a partire dal 523, quando l'anfiteatro diventa una cava.
 
 [scheda.colosseo.data9.quando] VI-IX secolo
 
@@ -2296,7 +2298,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.metasudans.data2] Attorno al cono una vasca di ventuno metri di diametro, probabilmente dell'età di Costantino.
 
-[scheda.metasudans.data3-537] La fontana dipendeva dagli acquedotti. Nel modello smette di funzionare quando vengono interrotti. La data è dedotta, senza una testimonianza diretta.
+[scheda.metasudans.data3-537] La fontana dipendeva dagli acquedotti. Nel modello smette di funzionare quando vengono interrotti. La data è dedotta, senza una testimonianza diretta. Il cono di mattoni resta in piedi fino al 1936: nel modello è abbandonato, non in rovina.
 
 [scheda.metasudans.data4-800] L'Itinerario di Einsiedeln la nomina ancora come punto di riferimento: «Meta sudante».
 
@@ -2346,11 +2348,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.obelisco357.data2] Cassiodoro lo descrive ancora in piedi, dedicato al Sole.
 
-[scheda.obelisco357.data3.quando] data ignota
+[scheda.obelisco357.data3-663] La fiaccola di bronzo dorato in cima, ricordata da Ammiano: quando sia stata tolta non si sa. Nel modello va via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano): è una scelta.
 
-[scheda.obelisco357.data3] Abbattuto, forse a mano, non si sa quando. Qui resta in piedi fino all'852.
+[scheda.obelisco357.data4.quando] data ignota
 
-[scheda.obelisco357.data4-1587] Ritrovato rotto in tre pezzi, a circa sette metri di profondità. Sisto V lo fa rialzare nel 1588 davanti al Laterano, circa quattro metri più corto.
+[scheda.obelisco357.data4] Abbattuto, forse a mano, non si sa quando. Qui resta in piedi fino all'852.
+
+[scheda.obelisco357.data5-1587] Ritrovato rotto in tre pezzi, a circa sette metri di profondità. Sisto V lo fa rialzare nel 1588 davanti al Laterano, circa quattro metri più corto.
 
 [scheda.obelisco357.certezza-A] L'obelisco si trova oggi davanti al Laterano. Forma e misure sono note. La posizione scelta nel circo è indicativa. Per la fiaccola sulla sommità abbiamo seguito il racconto di Ammiano.
 
@@ -2373,41 +2377,45 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.fori.data5-410] Brucia, probabilmente nel sacco, la basilica Emilia.
 
-[scheda.fori.data6.quando] 484 o 508
+[scheda.fori.data6-455] Le statue di bronzo sul frontone della Curia sono già un'ipotesi, presa dalle monete con la Curia di Augusto. Quando siano sparite non si sa: nel modello vanno via con il sacco dei Vandali, che portano via i bronzi (Procopio).
 
-[scheda.fori.data6] Un terremoto, secondo alcuni studi, danneggia il tempio della Pace e quello di Marte Ultore (non verificato sulle pubblicazioni di scavo).
+[scheda.fori.data7.quando] 484 o 508
 
-[scheda.fori.data7.quando] circa 500
+[scheda.fori.data7] Un terremoto, secondo alcuni studi, danneggia il tempio della Pace e quello di Marte Ultore (non verificato sulle pubblicazioni di scavo).
 
-[scheda.fori.data7] Tra la fine del V e l'inizio del VI secolo, quando i Goti governano l'Italia, alcuni artigiani smontano il tempio di Marte Ultore nel foro di Augusto per riutilizzarne i materiali. Sulla sommità di un blocco di colonna si legge il nome di Decio. Forse era il senatore autorizzato a recuperare la pietra. Un'interpretazione simile è stata proposta per il nome di Geronzio inciso al Colosseo. Per questi secoli mancano però dati sugli strati archeologici del foro che permettano di ricostruire la successione dei lavori.
+[scheda.fori.data8.quando] circa 500
 
-[scheda.fori.data8-527] Prima chiesa nell'area: Santi Cosma e Damiano.
+[scheda.fori.data8] Tra la fine del V e l'inizio del VI secolo, quando i Goti governano l'Italia, alcuni artigiani smontano il tempio di Marte Ultore nel foro di Augusto per riutilizzarne i materiali. Sulla sommità di un blocco di colonna si legge il nome di Decio. Forse era il senatore autorizzato a recuperare la pietra. Un'interpretazione simile è stata proposta per il nome di Geronzio inciso al Colosseo. Per questi secoli mancano però dati sugli strati archeologici del foro che permettano di ricostruire la successione dei lavori.
 
-[scheda.fori.data9-537] Dopo l'assedio la vita pubblica si riduce; il Senato è attestato fino al 603. Gli edifici restano in piedi.
+[scheda.fori.data9-527] Prima chiesa nell'area: Santi Cosma e Damiano.
 
-[scheda.fori.data10-608] Colonna di Foca: l'ultimo monumento eretto nel Foro.
+[scheda.fori.data10-537] Dopo l'assedio la vita pubblica si riduce; il Senato è attestato fino al 603. Gli edifici restano in piedi.
 
-[scheda.fori.data11-630] Intorno al 630 papa Onorio I trasforma la Curia del Senato nella chiesa di Sant'Adriano.
+[scheda.fori.data11-608] Colonna di Foca: l'ultimo monumento eretto nel Foro.
 
-[scheda.fori.data12.quando] VII-VIII secolo
+[scheda.fori.data12-630] Intorno al 630 papa Onorio I trasforma la Curia del Senato nella chiesa di Sant'Adriano.
 
-[scheda.fori.data12] La navata laterale ovest della basilica Giulia diventa una chiesa.
+[scheda.fori.data13-663] L'imperatore Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano). Se il tetto di bronzo della basilica Ulpia ci fosse ancora non si sa: nel modello da quest'anno i bronzi dei Fori non ci sono più.
 
-[scheda.fori.data13.quando] tra la fine dell'VIII e l'inizio del IX secolo
+[scheda.fori.data14.quando] VII-VIII secolo
 
-[scheda.fori.data13] Vengono rimosse le lastre di travertino che pavimentavano il foro di Cesare. Nella piazza sorgono due capanne e alcuni orti, poi una vigna. Tra la fine del IX e il X secolo vi si costruiscono case a un piano.
+[scheda.fori.data14] La navata laterale ovest della basilica Giulia diventa una chiesa.
 
-[scheda.fori.data14.quando] metà del IX secolo
+[scheda.fori.data15.quando] tra la fine dell'VIII e l'inizio del IX secolo
 
-[scheda.fori.data14] Nel foro di Nerva sorgono due case signorili a due piani, una con un portico di blocchi di peperino di recupero, e una casupola.
+[scheda.fori.data15] Vengono rimosse le lastre di travertino che pavimentavano il foro di Cesare. Nella piazza sorgono due capanne e alcuni orti, poi una vigna. Tra la fine del IX e il X secolo vi si costruiscono case a un piano.
 
-[scheda.fori.data15-847] Il crollo della basilica Ulpia, nel IX secolo, è attribuito a un terremoto: quello dell'801 o quello dell'847 (Galadini e altri, 2018). Le cronache non lo dicono.
+[scheda.fori.data16.quando] metà del IX secolo
 
-[scheda.fori.data16-850] Verso la metà del IX secolo si cominciano a rimuovere su larga scala le lastre di marmo dal pavimento del foro di Traiano. Fino ai tempi di Carlo Magno e dei suoi successori la piazza era rimasta in gran parte intatta. Forse il marmo veniva cotto per ricavarne la calce usata nella costruzione delle mura di papa Leone IV.
+[scheda.fori.data16] Nel foro di Nerva sorgono due case signorili a due piani, una con un portico di blocchi di peperino di recupero, e una casupola.
 
-[scheda.fori.data17.quando] XI secolo
+[scheda.fori.data17-847] Il crollo della basilica Ulpia, nel IX secolo, è attribuito a un terremoto: quello dell'801 o quello dell'847 (Galadini e altri, 2018). Le cronache non lo dicono.
 
-[scheda.fori.data17] Dopo la fine di questa storia la zona si impaluda: il villaggio nato nel foro di Cesare viene abbandonato e l'area prende il nome di «i Pantani», fino alla bonifica di fine Cinquecento.
+[scheda.fori.data18-850] Verso la metà del IX secolo si cominciano a rimuovere su larga scala le lastre di marmo dal pavimento del foro di Traiano. Fino ai tempi di Carlo Magno e dei suoi successori la piazza era rimasta in gran parte intatta. Forse il marmo veniva cotto per ricavarne la calce usata nella costruzione delle mura di papa Leone IV.
+
+[scheda.fori.data19.quando] XI secolo
+
+[scheda.fori.data19] Dopo la fine di questa storia la zona si impaluda: il villaggio nato nel foro di Cesare viene abbandonato e l'area prende il nome di «i Pantani», fino alla bonifica di fine Cinquecento.
 
 [scheda.fori.certezza-B] Alcuni monumenti sono ancora in piedi, tra cui la Curia, dove si riuniva il Senato, l'arco di Settimio Severo, la colonna e i mercati di Traiano e il tempio di Antonino e Faustina. Per ricostruire piazze, basiliche e altri templi abbiamo usato gli scavi e la pianta di Roma incisa nel marmo al tempo di Settimio Severo. Per il tempio dedicato a Traiano dopo la sua morte si può proporre soltanto un'ipotesi. Persino la sua posizione rispetto alla colonna è incerta.
 
@@ -2500,7 +2508,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.pantheon.data1-126] Completato sotto Adriano.
 
-[scheda.pantheon.data2-392] Nel 368 o 370 nel Pantheon si leggono ancora pubblicamente le leggi imperiali. Le fonti tornano a citarlo solo nel 609. Non sappiamo quando cessò il culto pagano. Nel modello abbiamo scelto il 392, sulla base dei divieti imperiali.
+[scheda.pantheon.data2-392] Nel 368 o 370 nel Pantheon si leggono ancora pubblicamente le leggi imperiali. Le fonti tornano a citarlo solo nel 609. Non sappiamo quando cessò il culto pagano. Nel modello abbiamo scelto il 392, sulla base dei divieti imperiali. Da allora è abbandonato, ma la cupola e i muri reggono: nel 609 il papa riceve un edificio intero.
 
 [scheda.pantheon.data3-609] Donato al papa dall'imperatore Foca, il 13 maggio è consacrato come Santa Maria ad Martyres: per questo è arrivato intero fino a noi.
 
@@ -2568,7 +2576,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.caracalla.data2] I marchi impressi sui mattoni permettono di datare un restauro al regno di Teodorico.
 
-[scheda.caracalla.data3-537] Senz'acqua dopo il taglio degli acquedotti; non riapriranno.
+[scheda.caracalla.data3-537] Senz'acqua dopo il taglio degli acquedotti; non riapriranno. Nel modello da qui sono abbandonate ma in piedi: per Platner e Ashby le rovine soffrirono meno di molti altri edifici, e nel Medioevo il nome resta (palatium Antonianum).
+
+[scheda.caracalla.data4-663] Quando si tolgano marmi e bronzi non lo dice la fonte letta: nel modello vanno via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano). È una scelta.
+
+[scheda.caracalla.data5-847] Negli scavi si sono trovati i segni dei danni del terremoto dell'847: una colonna del cortile poggia su un cumulo di macerie (Platner e Ashby). Nel modello qui cede una parte delle coperture.
 
 [scheda.caracalla.certezza-A] In piedi, con la pianta completa.
 
@@ -2581,7 +2593,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.diocleziano.data1-306] Inaugurate.
 
-[scheda.diocleziano.data2-537] Senz'acqua dopo il taglio degli acquedotti.
+[scheda.diocleziano.data2-537] Senz'acqua dopo il taglio degli acquedotti, che le rendono inutilizzabili (Platner e Ashby). Nel modello da qui sono abbandonate ma in piedi: l'aula centrale conserva le sue volte finché diventa la chiesa di Santa Maria degli Angeli, nel Cinquecento, e nel 625 un registro della Chiesa nomina ancora le terme.
+
+[scheda.diocleziano.data3-663] Quando si tolgano marmi e bronzi non lo dice la fonte letta: nel modello vanno via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano). È una scelta. Le grandi demolizioni vengono molto dopo, con Sisto V.
 
 [scheda.diocleziano.certezza-A] In buona parte in piedi (Santa Maria degli Angeli, l'aula ottagona, l'esedra della piazza).
 
@@ -2596,9 +2610,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.massenzio.data2.quando] VI secolo
 
-[scheda.massenzio.data2] Non sappiamo quando l'edificio cessò di essere usato. Il modello colloca l'abbandono intorno al 600.
+[scheda.massenzio.data2] Non sappiamo quando l'edificio cessò di essere usato. Il modello colloca l'abbandono intorno al 600; volte e muri reggono fino al terremoto dell'847.
 
-[scheda.massenzio.data3-847] Con il terremoto di quest'anno crollano probabilmente la navata sud e la volta centrale (Platner e Ashby). Il Liber Pontificalis registra la scossa ma non nomina la basilica.
+[scheda.massenzio.data3-663] Le tegole di bronzo del tetto: secondo alcuni sono quelle che papa Onorio I tolse verso il 630 al «tempio di Roma» (si veda il tempio di Venere e Roma). Nel modello vanno via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano): è una scelta.
+
+[scheda.massenzio.data4-847] Con il terremoto di quest'anno crollano probabilmente la navata sud e la volta centrale (Platner e Ashby). Il Liber Pontificalis registra la scossa ma non nomina la basilica.
 
 [scheda.massenzio.certezza-A] In piedi la navata nord; la pianta è nota per intero.
 
@@ -2615,7 +2631,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.venere.data3-630] Papa Onorio I (625-638), con il permesso dell'imperatore Eraclio, toglie le tegole di bronzo del «tempio di Roma» per coprire San Pietro. Per i più è questo tempio; secondo altri la vicina basilica di Massenzio.
 
-[scheda.venere.data4-850] Papa Leone IV costruisce Santa Maria Nova fra le sue rovine.
+[scheda.venere.data4-847] Un forte terremoto scuote Roma (Liber Pontificalis). Per Platner e Ashby potrebbe aver causato molti danni nel Foro e attorno, ma la storia della distruzione del tempio è ignota. Nel modello il tempio, già spogliato, crolla in quest'anno: è un'ipotesi.
+
+[scheda.venere.data5-850] Papa Leone IV (847-855) costruisce fra le sue rovine la chiesa di Santa Maria Nova, oggi Santa Francesca Romana (Platner e Ashby).
 
 [scheda.venere.certezza-A] Si conservano la base del tempio e parte delle due sale destinate al culto, ciascuna con una parete curva sul fondo. Le sale che vediamo oggi risalgono alla ricostruzione voluta da Massenzio dopo l'incendio del 307. Per mostrare il tempio originario, costruito sotto Adriano, è stato necessario ricostruire la forma dell'edificio e dei colonnati. Il modello segue Platner e Ashby per le misure della base (145 per 100 metri) e per le dieci colonne della facciata. Il numero delle colonne laterali e le altezze sono indicativi.
 
@@ -2633,6 +2651,19 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.arcotito.data2] Viene inglobato in una fortezza, ed è anche per questo che arriva fino a noi; le parti mancanti sono rifatte nell'Ottocento.
 
 [scheda.arcotito.certezza-A] In piedi; i fianchi sono un restauro dell'Ottocento.
+
+
+### Santa Maria Nova
+
+[scheda.santamarianova.nome] Santa Maria Nova
+
+[scheda.santamarianova.cosa] Chiesa costruita da papa Leone IV fra le rovine del tempio di Venere e Roma, sul lato verso il Foro e la via Sacra. Prende il posto di Santa Maria Antiqua, la chiesa ai piedi del Palatino: sotto Benedetto III, papa dall'855 all'858, il Liber Pontificalis la chiama «la basilica della santa Madre di Dio che un tempo si chiamava Antiqua e ora sorge accanto alla via Sacra». Secondo altri la chiesa sorge su un oratorio più antico, voluto da papa Paolo I (757-767). Il posto è quello della chiesa di oggi. Forma, misure e orientamento della chiesa del IX secolo non li conosciamo: un tempo aveva tre navate, ma non sappiamo da quando. Nel modello è uno schema: una basilica a tre navate con un'abside, di traverso sul podio del tempio, con la facciata verso la via Sacra.
+
+[scheda.santamarianova.data1-847] Leone IV diventa papa. Nello stesso anno un forte terremoto scuote Roma (Liber Pontificalis).
+
+[scheda.santamarianova.data2-850] Leone IV costruisce Santa Maria Nova fra le rovine del tempio (Platner e Ashby). L'anno preciso non lo conosciamo: nel modello i lavori vanno dall'848 all'850.
+
+[scheda.santamarianova.data3-1612] La chiesa viene rifatta. Oggi si chiama Santa Francesca Romana.
 
 
 ### Mausoleo di Adriano
@@ -2759,7 +2790,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.pietro.data5-727] Una tradizione tarda colloca in questi anni la nascita della Schola Saxonum, la casa di accoglienza dei pellegrini anglosassoni. Sarebbe la prima organizzata per popolo d'origine. Le fonti permettono solo di datare la nascita di queste comunità all'VIII secolo.
 
-[scheda.pietro.data6-800] Carlo Magno vi è incoronato imperatore.
+[scheda.pietro.data6-800] Il giorno di Natale papa Leone III vi incorona imperatore Carlo Magno, davanti alla confessione, la tomba di Pietro sotto l'altare (Annali dei Franchi; Liber Pontificalis). Nella città, solo in quella tappa, la basilica si apre in uno spaccato: le cinque navate, le quattro file di colonne, l'arco trionfale, il transetto e l'abside seguono la pianta nota; altezze, altare e pergula sono indicativi.
 
 [scheda.pietro.data7-846] Saccheggiata dai Saraceni: pochi anni dopo sarà chiusa dentro le mura leonine.
 
@@ -2789,9 +2820,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.sole.data2-392] Il modello colloca in questi anni la fine del culto pubblico nel tempio del Sole. Le leggi vietano i sacrifici. La data di chiusura del singolo edificio resta incerta.
 
-[scheda.sole.data3.quando] VI secolo?
+[scheda.sole.data3-663] Di che cosa fosse coperta la cupola della rotonda non lo dice nessuna fonte letta: nel modello è di bronzo dorato, come il tetto del Pantheon, ed è un'ipotesi. Nel modello il bronzo va via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano): è una scelta.
 
-[scheda.sole.data3] Un testo bizantino tardo sulle antichità di Costantinopoli racconta che otto colonne di porfido del tempio furono riutilizzate nella basilica di Santa Sofia. Non sono note testimonianze dirette di quel trasferimento.
+[scheda.sole.data4.quando] VI secolo?
+
+[scheda.sole.data4] Un testo bizantino tardo sulle antichità di Costantinopoli racconta che otto colonne di porfido del tempio furono riutilizzate nella basilica di Santa Sofia. Non sono note testimonianze dirette di quel trasferimento.
 
 [scheda.sole.certezza-C] Nessun resto sicuro: lo si colloca in questa zona per deduzione dalle fonti. Posizione e forma sono ipotesi.
 
@@ -2993,6 +3026,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.foca.cosa] Colonna onoraria nella piazza del Foro.
 
 [scheda.foca.data1-608] Dedicata il 1° agosto dall'esarca Smaragdo all'imperatore d'Oriente Foca. È l'ultimo monumento eretto nel Foro; colonna e basamento sono presi da monumenti più antichi.
+
+[scheda.foca.data2-663] In cima c'era una statua di Foca in bronzo dorato (Platner e Ashby). Foca viene ucciso nel 610, ma quando la statua sia stata tolta non si sa. Nel modello va via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano): è una scelta.
 
 [scheda.foca.certezza-A] In piedi.
 
@@ -3390,9 +3425,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioadriano.data1-145] Dedicato da Antonino Pio.
 
-[scheda.tempioadriano.data2.quando] oggi
+[scheda.tempioadriano.data2-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi. Le fonti che abbiamo letto non dicono quando cessò il culto né quando l'edificio cominciò a cadere.
 
-[scheda.tempioadriano.data2] Restano undici colonne del fianco nord in piazza di Pietra, dentro la facciata della Borsa.
+[scheda.tempioadriano.data3.quando] oggi
+
+[scheda.tempioadriano.data3] Restano undici colonne del fianco nord in piazza di Pietra, dentro la facciata della Borsa.
 
 [scheda.tempioadriano.certezza-A] Si conservano undici colonne e la sala interna del tempio. Dal colonnato si ricavano larghezza e lunghezza dell'edificio. L'orientamento della facciata è indicato a memoria e resta da verificare.
 
@@ -3411,7 +3448,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioclaudio.data3.quando] IV secolo
 
-[scheda.tempioclaudio.data3] Ultima menzione del tempio.
+[scheda.tempioclaudio.data3] Ultima menzione del tempio, negli elenchi delle regioni di Roma (Platner e Ashby). Come e quando sia andato in rovina non si sa.
+
+[scheda.tempioclaudio.data4-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi, e da allora va in rovina. La data è una scelta della ricostruzione.
+
+[scheda.tempioclaudio.data5-1217] Una bolla di papa Onorio III nomina ancora gli edifici «dentro il recinto di Claudio»: la piattaforma si riconosce ancora.
 
 [scheda.tempioclaudio.certezza-B] La piattaforma è in gran parte in piedi e il lato su via Claudia si vede; il tempio è perduto e qui ha misure indicative.
 
@@ -3460,6 +3501,12 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.foroboario.data3] L'arco di Giano, forse l'«arco del divo Costantino» dei cataloghi regionari.
 
+[scheda.foroboario.data4-392] Nel modello i due templi sono abbandonati dal 392, dopo le leggi di Teodosio: la data è una scelta della ricostruzione. Non crollano: sono arrivati fino a noi ben conservati perché diventarono chiese. Gli archi restano in piedi e il luogo resta un passaggio verso il fiume.
+
+[scheda.foroboario.data5-872] Il tempio rettangolare, detto di Portuno, diventa la chiesa di Santa Maria Egiziaca (Platner e Ashby, che lo chiamano tempio di Mater Matuta).
+
+[scheda.foroboario.data6-1140] Il tempio rotondo è attestato come chiesa di Santo Stefano Rotondo, più tardi Santo Stefano delle Carrozze e Santa Maria del Sole (Platner e Ashby, voce Portunium).
+
 [scheda.foroboario.certezza-A] I due templi e i due archi sono in piedi, contorni da OpenStreetMap; l'altezza del podio di Portuno e lo sbocco della Cloaca sono indicativi.
 
 
@@ -3477,7 +3524,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.ottavia.data3-203] Settimio Severo e Caracalla fanno ricostruire l'ingresso monumentale del portico, chiamato propileo. È la struttura ancora visibile.
 
-[scheda.ottavia.data4-755] Nell'ingresso monumentale sorge la chiesa di Sant'Angelo in Pescheria. La data è indicata a memoria e resta da verificare.
+[scheda.ottavia.data4-450] Dopo le leggi di Teodosio del 391-392 i templi di Giunone e di Giove non hanno più culto. Il portico invece è ancora curato: due colonne dell'ingresso sono sostituite da un arco di mattoni, forse dopo il terremoto del 442 (Platner e Ashby). Nel modello tutto il complesso è abbandonato verso il 450: è una scelta della ricostruzione.
+
+[scheda.ottavia.data5-755] Nell'ingresso monumentale sorge la chiesa di Sant'Angelo in Pescheria. La data è indicata a memoria e resta da verificare.
 
 [scheda.ottavia.certezza-B] L'ingresso monumentale si conserva e documenta la posizione e l'orientamento del portico. Conosciamo la piazza grazie all'antica pianta di Roma incisa nel marmo. Nel modello le dimensioni dei due templi interni sono indicative.
 
@@ -3492,9 +3541,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.argentina.data1] I templi più antichi; il B è rotondo.
 
-[scheda.argentina.data2.quando] IX secolo?
+[scheda.argentina.data2-392] Nel modello i quattro templi sono chiusi dal 392, dopo le leggi di Teodosio. La data è una scelta della ricostruzione.
 
-[scheda.argentina.data2] Il tempio A diventa la chiesa di San Nicola de Calcarario (data a memoria).
+[scheda.argentina.data3.quando] IX secolo?
+
+[scheda.argentina.data3] Il tempio A diventa la chiesa di San Nicola de Calcarario (data a memoria).
 
 [scheda.argentina.certezza-A] Oggi si possono vedere le basi di tutti e quattro i templi riportate alla luce dagli scavi. Il modello ne riprende i contorni da OpenStreetMap e ricostruisce le strutture che sorgevano sopra le basi.
 
@@ -3507,11 +3558,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.iseo.data1-80] Il santuario brucia nel grande incendio dell'80, sotto Tito. Domiziano lo fa ricostruire.
 
-[scheda.iseo.data2-1373] Si trova l'obelisco detto Macuteo, in piazza di San Macuto: oggi è sulla fontana davanti al Pantheon.
+[scheda.iseo.data2-392] Nel modello il santuario è chiuso dal 392, dopo le leggi di Teodosio. La data è una scelta della ricostruzione: le fonti che abbiamo letto non dicono quando cessò il culto.
 
-[scheda.iseo.data3-1665] Si trova l'obelisco della Minerva, che Bernini mette sull'elefante in piazza della Minerva nel 1667.
+[scheda.iseo.data3-1373] Si trova l'obelisco detto Macuteo, in piazza di San Macuto: oggi è sulla fontana davanti al Pantheon.
 
-[scheda.iseo.data4-1883] Sotto l'abside di Santa Maria sopra Minerva si trova l'obelisco poi dedicato ai caduti di Dogali, oggi presso le Terme di Diocleziano.
+[scheda.iseo.data4-1665] Si trova l'obelisco della Minerva, che Bernini mette sull'elefante in piazza della Minerva nel 1667.
+
+[scheda.iseo.data5-1883] Sotto l'abside di Santa Maria sopra Minerva si trova l'obelisco poi dedicato ai caduti di Dogali, oggi presso le Terme di Diocleziano.
 
 [scheda.iseo.certezza-C] Il santuario compare nell'antica pianta marmorea di Roma ed è documentato da ritrovamenti sparsi. La sua estensione nel modello è ipotetica. Gli obelischi si conservano e sono rappresentati nei luoghi in cui furono ritrovati. Per due di essi la posizione è approssimativa.
 
@@ -3537,7 +3590,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.esquilino.data2-262] Un funzionario, Marco Aurelio Vittore, dedica l'arco a Gallieno e a Salonina. Non è lo storico Aurelio Vittore.
 
-[scheda.esquilino.data3-1590] I trofei vengono portati sulla balaustra del Campidoglio, dove stanno oggi.
+[scheda.esquilino.data3-537] Quando i Goti tagliano gli acquedotti la fontana resta senz'acqua. Nel modello da quest'anno il complesso è abbandonato ma non crolla: l'arco è in piedi ancora oggi.
+
+[scheda.esquilino.data4-1590] I trofei vengono portati sulla balaustra del Campidoglio, dove stanno oggi.
 
 [scheda.esquilino.certezza-B] Arco e rudere della mostra d'acqua in piedi; l'aspetto antico della mostra e dell'aula di Mecenate è ricostruito.
 
@@ -3552,7 +3607,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.minervamedica.data1] La costruzione risale probabilmente all'inizio del IV secolo. Il 320 è una data indicativa scelta per il modello.
 
-[scheda.minervamedica.data2-1828] Cade una parte della cupola.
+[scheda.minervamedica.data2-537] Se la sala era una fontana, dal 537, quando si tagliano gli acquedotti, resta senz'acqua; se era un padiglione di giardino, non sappiamo quando fu lasciata. Nel modello la sala è abbandonata dal 537 ma non crolla: la cupola regge fino al 1828.
+
+[scheda.minervamedica.data3-1828] Cade una parte della cupola.
 
 [scheda.minervamedica.certezza-A] In piedi, senza la cupola caduta nel 1828; la data di costruzione è approssimata.
 
@@ -3569,7 +3626,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.sessoriano.data2.quando] 271-275
 
-[scheda.sessoriano.data2] Le mura Aureliane chiudono le arcate dell'anfiteatro e tagliano il circo.
+[scheda.sessoriano.data2] Le mura Aureliane chiudono le arcate dell'anfiteatro e tagliano il circo. Da allora nel modello sono abbandonati, ma l'anfiteatro, murato nella cinta, resta in piedi.
 
 [scheda.sessoriano.data3-1570] L'obelisco, rotto in tre pezzi, viene trovato fuori porta Maggiore; dal 1822 sta sul Pincio.
 
@@ -3724,7 +3781,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 ### Chiese minori (solo i nomi)
 
-[chiese.nomi] San Marco · Santa Maria in Trastevere · San Lorenzo in Lucina · Santi Nereo e Achilleo · Sant'Anastasia · San Lorenzo in Damaso · Santa Susanna · San Crisogono · San Clemente · Santa Pudenziana · Santi Giovanni e Paolo · Santa Balbina · San Vitale · San Pietro in Vincoli · Santa Cecilia · Santi Quattro Coronati · Sant'Agata dei Goti · Santa Bibiana · Santa Prassede · San Martino ai Monti · Santa Maria in Cosmedin · Santa Maria Antiqua · Santi Apostoli · San Gregorio al Celio · San Teodoro · Santa Lucia in Selci · San Saba · Santa Maria in via Lata · Santa Maria in Domnica · Sant'Eustachio · Santa Maria in Aquiro · San Giorgio al Velabro · Santa Maria in Campo Marzio · Sant'Angelo in Pescheria · San Silvestro in Capite · Sant'Apollinare · San Vito · San Bonifacio · Santa Maria Domine Rose · Santa Maria Nova
+[chiese.nomi] San Marco · Santa Maria in Trastevere · San Lorenzo in Lucina · Santi Nereo e Achilleo · Sant'Anastasia · San Lorenzo in Damaso · Santa Susanna · San Crisogono · San Clemente · Santa Pudenziana · Santi Giovanni e Paolo · Santa Balbina · San Vitale · San Pietro in Vincoli · Santa Cecilia · Santi Quattro Coronati · Sant'Agata dei Goti · Santa Bibiana · Santa Prassede · San Martino ai Monti · Santa Maria in Cosmedin · Santa Maria Antiqua · Santi Apostoli · San Gregorio al Celio · San Teodoro · Santa Lucia in Selci · San Saba · Santa Maria in via Lata · Santa Maria in Domnica · Sant'Eustachio · Santa Maria in Aquiro · San Giorgio al Velabro · Santa Maria in Campo Marzio · Sant'Angelo in Pescheria · San Silvestro in Capite · Sant'Apollinare · San Vito · San Bonifacio · Santa Maria Domine Rose
 
 
 ## 7. Il percorso del pellegrino
@@ -4264,230 +4321,260 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.06-r64] posizione certa, forma ricostruita
 
-[ui.pagina.07-r65] danneggiato da un terremoto
+[ui.pagina.07-r65] abbandonato, ma in piedi
 
-[ui.pagina.08-r65] usato come cava
+[ui.pagina.08-r65] danneggiato da un terremoto
 
-[ui.pagina.09-r65] non ancora costruito
+[ui.pagina.09-r65] usato come cava
 
-[ui.pagina.10-r74] Mostra tutti i
+[ui.pagina.10-r65] non ancora costruito
 
-[ui.pagina.11-r74] Mostra meno
+[ui.pagina.11-r74] Mostra tutti i
 
-[ui.pagina.12-r155] · si legge sotto
+[ui.pagina.12-r74] Mostra meno
 
-[ui.pagina.13-r195] Voci di allora
+[ui.pagina.13-r162] Vai alla fine:
 
-[ui.pagina.14-r195] Una voce di allora
+[ui.pagina.14-r162] Vai all’ultima tappa,
 
-[ui.pagina.15-r240] Esci dallo schermo intero
+[ui.pagina.15-r162] Vai alla prima tappa,
 
-[ui.pagina.16-r240] Scena a tutto schermo
+[ui.pagina.16-r162] Vai alla fine
 
-[ui.pagina.17-r240] Tutto schermo
+[ui.pagina.17-r162] Vai all’ultima tappa
 
-[ui.pagina.18-r327] Leggi l’intermezzo ↓
+[ui.pagina.18-r162] Vai alla prima tappa
 
-[ui.pagina.19-r327] Leggi la tappa ↓
+[ui.pagina.19-r180] · si legge sotto
 
-[ui.pagina.20-r327] ↑ Torna alla carta e alla città
+[ui.pagina.20-r220] Voci di allora
 
-[ui.pagina.21-r355] Riduci l’avviso e guarda la scena
+[ui.pagina.21-r220] Una voce di allora
 
-[ui.pagina.22-r366] La carta e la città restano
+[ui.pagina.22-r267] Esci dallo schermo intero
 
-[ui.pagina.23-r367] Esci e leggi ↓
+[ui.pagina.23-r267] Scena a tutto schermo
 
-[ui.pagina.24-r401] voci di allora
+[ui.pagina.24-r267] Tutto schermo
 
-[ui.pagina.25-r402] Fra storia e leggenda
+[ui.pagina.25-r348] Leggi la fine
 
-[ui.pagina.26-r403] Gli storici discutono
+[ui.pagina.26-r348] Leggi l’intermezzo
 
-[ui.pagina.27-r405] Letture di questa tappa
+[ui.pagina.27-r348] Leggi la tappa
 
-[ui.pagina.28-r426] Ingrandisci l’immagine e vedi fonte e licenza
+[ui.pagina.28-r348] Leggi la fine, «
 
-[ui.pagina.29-r434] Immagine ingrandita
+[ui.pagina.29-r348] Leggi il testo della tappa
 
-[ui.pagina.30-r447] Il file su Wikimedia Commons
+[ui.pagina.30-r348] , sotto la linea del tempo
 
-[ui.pagina.31-r471] A Roma, in quest'anno
+[ui.pagina.31-r386] ↑ Torna alla carta e alla città
 
-[ui.pagina.32-r471] Guarda la città →
+[ui.pagina.32-r412] Riduci l’avviso e guarda la scena
+
+[ui.pagina.33-r424] La carta e la città restano
+
+[ui.pagina.34-r424] Si legge sotto.
+
+[ui.pagina.35-r424] L’intermezzo si legge sotto.
+
+[ui.pagina.36-r425] Esci e leggi ↓
+
+[ui.pagina.37-r425] Leggi la fine ↓
+
+[ui.pagina.38-r425] Leggi l’intermezzo ↓
+
+[ui.pagina.39-r459] voci di allora
+
+[ui.pagina.40-r460] Fra storia e leggenda
+
+[ui.pagina.41-r461] Gli storici discutono
+
+[ui.pagina.42-r463] Letture di questa tappa
+
+[ui.pagina.43-r484] Ingrandisci l’immagine e vedi fonte e licenza
+
+[ui.pagina.44-r492] Immagine ingrandita
+
+[ui.pagina.45-r505] Il file su Wikimedia Commons
+
+[ui.pagina.46-r529] A Roma, in quest'anno
+
+[ui.pagina.47-r529] Guarda la città →
 
 
 ### js/mappa.js
 
-[ui.mappa.01-r9] governo di Roma
+[ui.mappa.01-r10] governo di Roma
 
-[ui.mappa.02-r9] imperatore rivale
+[ui.mappa.02-r10] imperatore rivale
 
-[ui.mappa.03-r9] alleati per trattato
+[ui.mappa.03-r10] alleati per trattato
 
-[ui.mappa.04-r9] corte d'Oriente
+[ui.mappa.04-r10] corte d'Oriente
 
-[ui.mappa.05-r9] impero dei Franchi
+[ui.mappa.05-r10] impero dei Franchi
 
-[ui.mappa.06-r9] terre della Chiesa
+[ui.mappa.06-r10] terre della Chiesa
 
-[ui.mappa.07-r9] fuori dall'impero
+[ui.mappa.07-r10] fuori dall'impero
 
-[ui.mappa.08-r13] impero persiano
+[ui.mappa.08-r14] impero persiano
 
-[ui.mappa.09-r13] regno degli Svevi
+[ui.mappa.09-r14] regno degli Svevi
 
-[ui.mappa.10-r13] regno dei Vandali
+[ui.mappa.10-r14] regno dei Vandali
 
-[ui.mappa.11-r13] regno dei Visigoti
+[ui.mappa.11-r14] regno dei Visigoti
 
-[ui.mappa.12-r13] regno dei Burgundi
+[ui.mappa.12-r14] regno dei Burgundi
 
-[ui.mappa.13-r13] regni dei Franchi
+[ui.mappa.13-r14] regni dei Franchi
 
-[ui.mappa.14-r14] regno d'Italia
+[ui.mappa.14-r15] regno d'Italia
 
-[ui.mappa.15-r14] regno e ducati dei Longobardi
+[ui.mappa.15-r15] regno e ducati dei Longobardi
 
-[ui.mappa.16-r14] regni anglosassoni
+[ui.mappa.16-r15] regni anglosassoni
 
-[ui.mappa.17-r14] regno delle Asturie
+[ui.mappa.17-r15] regno delle Asturie
 
-[ui.mappa.18-r15] regni dei Britanni
+[ui.mappa.18-r16] regni dei Britanni
 
-[ui.mappa.19-r15] regno dei Turingi
+[ui.mappa.19-r16] regno dei Turingi
 
-[ui.mappa.20-r15] regno dei Gepidi
+[ui.mappa.20-r16] regno dei Gepidi
 
-[ui.mappa.21-r15] dominio degli Unni
+[ui.mappa.21-r16] dominio degli Unni
 
-[ui.mappa.22-r15] regno degli Avari
+[ui.mappa.22-r16] regno degli Avari
 
-[ui.mappa.23-r16] regno dei Bulgari
+[ui.mappa.23-r17] regno dei Bulgari
 
-[ui.mappa.24-r16] principato di Moravia
+[ui.mappa.24-r17] principato di Moravia
 
-[ui.mappa.25-r17] Mappa dell'Impero romano
+[ui.mappa.25-r18] Mappa dell'Impero romano
 
-[ui.mappa.26-r33] Asia Minore
+[ui.mappa.26-r28] Asia Minore
 
-[ui.mappa.27-r84] Carlo il Calvo, re
+[ui.mappa.27-r79] Carlo il Calvo, re
 
-[ui.mappa.28-r84] Lotario, imperatore
+[ui.mappa.28-r79] Lotario, imperatore
 
-[ui.mappa.29-r84] Ludovico il Germanico, re
+[ui.mappa.29-r79] Ludovico il Germanico, re
 
-[ui.mappa.30-r91] : mostra la sua parte
+[ui.mappa.30-r86] : mostra la sua parte
 
-[ui.mappa.31-r103] le terre a ovest. Sul confine restano a lui Reims, Laon, Amiens e Mâcon
+[ui.mappa.31-r98] le terre a ovest. Sul confine restano a lui Reims, Laon, Amiens e Mâcon
 
-[ui.mappa.32-r104] la fascia di mezzo, dal mare del Nord all'Italia, con Aquisgrana e Roma. Sul confine sono sue Arras, Cambrai, Verdun, Lione, Vienne e Arles, e sul Reno Colonia, Bonn, Coblenza e Strasburgo. Più chiare le terre della Chiesa, legate all'imperatore, e la Frisia, che la carta gli dà senza una fonte
+[ui.mappa.32-r99] la fascia di mezzo, dal mare del Nord all'Italia, con Aquisgrana e Roma. Sul confine sono sue Arras, Cambrai, Verdun, Lione, Vienne e Arles, e sul Reno Colonia, Bonn, Coblenza e Strasburgo. Più chiare le terre della Chiesa, legate all'imperatore, e la Frisia, che la carta gli dà senza una fonte
 
-[ui.mappa.33-r105] le terre a est del Reno e, sulla riva sinistra, Magonza, Worms e Spira. Rezia e Norico gli vanno sulla carta perché stanno a est: nessuna fonte letta lo dice
+[ui.mappa.33-r100] le terre a est del Reno e, sulla riva sinistra, Magonza, Worms e Spira. Rezia e Norico gli vanno sulla carta perché stanno a est: nessuna fonte letta lo dice
 
-[ui.mappa.34-r120] : mostra i territori che governa
+[ui.mappa.34-r115] : mostra i territori che governa
 
-[ui.mappa.35-r131] le Gallie al di là delle Alpi (Aurelio Vittore)
+[ui.mappa.35-r126] le Gallie al di là delle Alpi (Aurelio Vittore)
 
-[ui.mappa.36-r132] tutto il resto, cioè l’Oriente (Aurelio Vittore)
+[ui.mappa.36-r127] tutto il resto, cioè l’Oriente (Aurelio Vittore)
 
-[ui.mappa.37-r137] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
+[ui.mappa.37-r132] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
 
-[ui.mappa.38-r155] oltre il confine
+[ui.mappa.38-r150] oltre il confine
 
-[ui.mappa.39-r155] insediati nell'impero per accordo
+[ui.mappa.39-r150] insediati nell'impero per accordo
 
-[ui.mappa.40-r155] in armi dentro l'impero
+[ui.mappa.40-r150] in armi dentro l'impero
 
-[ui.mappa.41-r155] con un proprio regno (vedi il colore nella legenda)
+[ui.mappa.41-r150] con un proprio regno (vedi il colore nella legenda)
 
-[ui.mappa.42-r157] Regno dei Visigoti
+[ui.mappa.42-r152] Regno dei Visigoti
 
-[ui.mappa.43-r157] Regno degli Ostrogoti
+[ui.mappa.43-r152] Regno degli Ostrogoti
 
-[ui.mappa.44-r157] Regno dei Vandali
+[ui.mappa.44-r152] Regno dei Vandali
 
-[ui.mappa.45-r157] Regno degli Svevi
+[ui.mappa.45-r152] Regno degli Svevi
 
-[ui.mappa.46-r157] Regno dei Burgundi
+[ui.mappa.46-r152] Regno dei Burgundi
 
-[ui.mappa.47-r157] Regno dei Franchi
+[ui.mappa.47-r152] Regno dei Franchi
 
-[ui.mappa.48-r157] Regni anglosassoni
+[ui.mappa.48-r152] Regni anglosassoni
 
-[ui.mappa.49-r157] Regno dei Longobardi
+[ui.mappa.49-r152] Regno dei Longobardi
 
-[ui.mappa.50-r157] Regno degli Avari
+[ui.mappa.50-r152] Regno degli Avari
 
-[ui.mappa.51-r157] Regno dei Bulgari
+[ui.mappa.51-r152] Regno dei Bulgari
 
-[ui.mappa.52-r492] La scena passo per passo
+[ui.mappa.52-r488] La scena passo per passo
 
-[ui.mappa.53-r495] Passo per passo
+[ui.mappa.53-r491] Passo per passo
 
-[ui.mappa.54-r496] Rivedi la scena dall'inizio
+[ui.mappa.54-r492] Rivedi la scena dall'inizio
 
-[ui.mappa.55-r526] Chiudi la didascalia
+[ui.mappa.55-r522] Chiudi la didascalia
 
-[ui.mappa.56-r527] Mostra la didascalia
+[ui.mappa.56-r523] Mostra la didascalia
 
-[ui.mappa.57-r536] ▶ Guarda la scena
+[ui.mappa.57-r532] ▶ Guarda la scena
 
-[ui.mappa.58-r536] Guarda la scena di questa tappa sulla carta
+[ui.mappa.58-r532] Guarda la scena di questa tappa sulla carta
 
-[ui.mappa.59-r630] Regni dei Franchi
+[ui.mappa.59-r626] Regni dei Franchi
 
-[ui.mappa.60-r630] Impero dei Franchi
+[ui.mappa.60-r626] Impero dei Franchi
 
-[ui.mappa.61-r767] regno d'Italia di Odoacre
+[ui.mappa.61-r763] regno d'Italia di Odoacre
 
-[ui.mappa.62-r767] regno degli Ostrogoti
+[ui.mappa.62-r763] regno degli Ostrogoti
 
-[ui.mappa.63-r767] regno dei Franchi
+[ui.mappa.63-r763] regno dei Franchi
 
-[ui.mappa.64-r768] impero romano
+[ui.mappa.64-r764] impero romano
 
-[ui.mappa.65-r768] impero d'Occidente
+[ui.mappa.65-r764] impero d'Occidente
 
-[ui.mappa.66-r768] territorio con un imperatore rivale
+[ui.mappa.66-r764] territorio con un imperatore rivale
 
-[ui.mappa.67-r768] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.67-r764] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.68-r768] regione contesa in guerra
+[ui.mappa.68-r764] regione contesa in guerra
 
-[ui.mappa.69-r769] popoli insediati per trattato
+[ui.mappa.69-r765] popoli insediati per trattato
 
-[ui.mappa.70-r769] impero d'Oriente
+[ui.mappa.70-r765] impero d'Oriente
 
-[ui.mappa.71-r770] califfato ed emirati arabi
+[ui.mappa.71-r766] califfato ed emirati arabi
 
-[ui.mappa.72-r770] regni franchi dopo la divisione dell'843
+[ui.mappa.72-r766] regni franchi dopo la divisione dell'843
 
-[ui.mappa.73-r770] abbandonata da Roma
+[ui.mappa.73-r766] abbandonata da Roma
 
-[ui.mappa.74-r770] fuori dal controllo romano
+[ui.mappa.74-r766] fuori dal controllo romano
 
-[ui.mappa.75-r808] Mostra meno voci della legenda
+[ui.mappa.75-r804] Mostra meno voci della legenda
 
-[ui.mappa.76-r818] Mostra le altre
+[ui.mappa.76-r814] Mostra le altre
 
-[ui.mappa.77-r869] mai appartenuta all'impero
+[ui.mappa.77-r865] mai appartenuta all'impero
 
-[ui.mappa.78-r923] Carta a tutto schermo
+[ui.mappa.78-r914] Carta a tutto schermo
 
-[ui.mappa.79-r928] ⤢ Guarda la carta a tutto schermo
+[ui.mappa.79-r919] ⤢ Guarda la carta a tutto schermo
 
-[ui.mappa.80-r929] Non ora
+[ui.mappa.80-r920] Non ora
 
-[ui.mappa.81-r940] Tutto schermo
+[ui.mappa.81-r931] Tutto schermo
 
-[ui.mappa.82-r940] Esci dallo schermo intero
+[ui.mappa.82-r931] Esci dallo schermo intero
 
-[ui.mappa.83-r1033] Torna alla carta intera
+[ui.mappa.83-r1024] Torna alla carta intera
 
-[ui.mappa.84-r1035] La scena continua fuori dalla carta, verso
+[ui.mappa.84-r1026] La scena continua fuori dalla carta, verso
 
-[ui.mappa.85-r1035] : guardala tutta
+[ui.mappa.85-r1026] : guardala tutta
 
 
 ### js/atti.js
@@ -4510,9 +4597,9 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.atti.09-r123] Percentuale stimata di argento nella moneta
 
-[ui.atti.10-r188] Comincia l’atto
+[ui.atti.10-r189] Comincia l’atto
 
-[ui.atti.11-r191] Esplora la carta e confronta i dati all'inizio e alla fine dell'atto.
+[ui.atti.11-r192] Esplora la carta e confronta i dati all'inizio e alla fine dell'atto.
 
 
 ### js/cause.js
@@ -4551,4 +4638,15 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 [ui.eventi.02-r15] Mostra la didascalia dell'evento
 
 [ui.eventi.03-r15] Mostra la didascalia
+
+[ui.eventi.04-r40] Riduci la didascalia
+
+[ui.eventi.05-r40] Leggi tutta la didascalia
+
+
+### js/base.js
+
+[ui.base.01-r772] Qualità della città: automatica, bassa, telefono, media, alta, massima
+
+[ui.base.02-r838] fine prova
 

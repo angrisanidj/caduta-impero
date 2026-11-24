@@ -4,6 +4,7 @@
 'use strict';
 var G=window.RM_MAPPA, ospite=document.getElementById('mappa'); if(!G||!ospite) return;
 var NS='http://www.w3.org/2000/svg';
+var SPADA='M-1 2.1V-8L0-10.6L1-8V2.1ZM-3.4 2Q0 1.35 3.4 2V3.35Q0 2.75 -3.4 3.35ZM-.7 3.2H.7V5.9H-.7ZM0 5.65A1.4 1.4 0 1 1 0 8.45A1.4 1.4 0 1 1 0 5.65Z';      // una spada, punta in su: il segno di battaglia ne incrocia due (uguale a SPADA in js/infografiche.js)
 function el(tipo,attr,padre){ var e=document.createElementNS(NS,tipo); for(var k in attr) e.setAttribute(k,attr[k]); if(padre) padre.appendChild(e); return e; }
 
 var STATI=[['roma','governo di Roma'],['usurpatore','imperatore rivale'],['conteso','conteso'],['federati','alleati per trattato'],['regno:svevi',''],['regno:vandali',''],['regno:visigoti',''],['regno:burgundi',''],['regno:franchi',''],['regno:italia',''],['regno:longobardi',''],['regno:anglosassoni',''],['regno:asturie',''],['regno:britanni',''],['regno:turingi',''],['regno:gepidi',''],['regno:unni',''],['regno:avari',''],['regno:bulgari',''],['regno:moravi',''],['regno:persia',''],['oriente','corte d\'Oriente'],['califfato','califfato'],['carolingio','impero dei Franchi'],['chiesa','terre della Chiesa'],['perso','fuori dall\'impero']];
@@ -437,7 +438,8 @@ function disegnaScena(sc,kr,pos,fissi,k){
     r=[p[0]+prove[meglio][0],p[1]+prove[meglio][1],2*sw,2*sh,scontro?1:0]; metti(r); ost.push(r);
     var g=el('g',{'class':tipo,transform:'translate('+(r[0]-lc[0]*k).toFixed(1)+' '+(r[1]-lc[1]*k).toFixed(1)+')'},dove(e)), gi=el('g',{transform:'scale('+k+')'},g);
     g._alt=altriPosti(p,ox,oy,[lc[0]*k,lc[1]*k]); g._r=r; g._lc=[lc[0]*k,lc[1]*k];      // i posti di riserva, se poi una scritta finisce sotto (sistemaSegni)
-    if(scontro){ el('circle',{r:9.5,cy:-15,fill:'#FBF6EA',stroke:'#8E2A2A','stroke-width':1.6},gi); el('path',{d:'M-5.2 -20.2L5.2 -9.8M5.2 -20.2L-5.2 -9.8M-5.9 -12.9L-2.3 -9.3M5.9 -12.9L2.3 -9.3',fill:'none',stroke:'#8E2A2A','stroke-width':1.9,'stroke-linecap':'round'},gi); }
+    if(scontro){ el('circle',{r:9.5,cy:-15,fill:'#FBF6EA',stroke:'#8E2A2A','stroke-width':1.6},gi);      // due spade incrociate, piene, con l'alone del disco dove si incrociano (24 novembre 2026: lo stesso disegno di SPADA in js/infografiche.js)
+      var gs=el('g',{transform:'translate(0 -14.6) scale(.69)'},gi); [-45,45].forEach(function(a){ el('path',{d:SPADA,transform:'rotate('+a+')',fill:'#8E2A2A',stroke:'#FBF6EA','stroke-width':1.1,'stroke-linejoin':'round','paint-order':'stroke'},gs); }); }
     else el('path',{d:'M0 -24C5 -18 8 -14 6 -9C10 -11 9 -16 9 -16C13 -11 12 -4 6 -1C2 1 -3 1 -6 -1C-11 -4 -11 -11 -6 -15C-6 -11 -4 -10 -3 -11C-5 -16 -2 -20 0 -24Z',fill:'#E0672A',stroke:'#FBF6EA','stroke-width':1.1,'stroke-linejoin':'round'},gi);
   });
   scenaFatta={sc:quale,l:luoghiOra,ch:ch,fissi:nuovi,nuclei:nuclei,etichette:etichette};      // i nomi sulle frecce contano come scritte per sistemaSegni
