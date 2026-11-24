@@ -4260,24 +4260,24 @@ function scena536(p,defs,b,id){
     o(ombre,1-v); props.forEach(function(e){ o(e,1-v*.85); }); o(piatto,.5*v); o(foschia,.3*v); o(fantG,fa||0); if(br) fissa(br,'transform','rotate('+r1(-150*(al||0))+' 3.6 -21.5)'); }};
 }
 
-var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
-  moneta:{d:MONETA, disegna:disegnaMoneta, tappe:function(t){ return t.anno===284&&t.intermezzo; }},      // solo nell'intermezzo «La moneta» (23 novembre 2026, l'utente: «toglila dalla tappa del 274»)
+var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&t.intermezzo; }},
+  moneta:{d:MONETA, disegna:disegnaMoneta, tappe:function(t){ return t.anno===284&&t.intermezzo || t.anno===301&&!t.intermezzo; }},      // solo nell'intermezzo «La moneta» (23 novembre 2026, l'utente: «toglila dalla tappa del 274»)
   navi:{d:NAVI, disegna:disegnaNavi, tappe:function(t){ return t.anno===395&&t.intermezzo || t.anno===711&&!t.intermezzo; }},
   sacco:{d:SACCO, disegna:disegnaSacco, tappe:function(t){ return t.anno===410&&!t.intermezzo; }},
   governo:{d:GOVERNO, disegna:disegnaGoverno, tappe:function(t){ return !t.intermezzo && (t.anno===476||t.anno===568||t.anno===800); }},
   valeriano:{d:VALERIANO, disegna:disegnaValeriano, tappe:function(t){ return t.anno===260&&!t.intermezzo; }},
-  curia:{d:CURIA, disegna:disegnaCuria, tappe:function(t){ return t.anno===630&&!t.intermezzo; }},
+  curia:{d:CURIA, disegna:disegnaCuria, tappe:function(t){ return !t.intermezzo && (t.anno===593||t.anno===630); }},
   pantheon:{d:PANTHEON, disegna:disegnaPantheon, tappe:function(t){ return !t.intermezzo && (t.anno===609||t.anno===663); }, da:function(t){ return t&&t.anno===663?'663':null; }},      // anche nella tappa di Costante II (24 novembre 2026, l'utente: «inserire»); aperta dal 663 parte dal suo quadro
   milvio:{d:MILVIO, disegna:disegnaMilvio, tappe:function(t){ return t.anno===312&&!t.intermezzo; }},
   adrianopoli:{d:ADRIANOPOLI, disegna:disegnaAdrianopoli, tappe:function(t){ return t.anno===378&&!t.intermezzo; }},
   catalaunici:{d:CATALAUNICI, disegna:disegnaCatalaunici, tappe:function(t){ return t.anno===451&&!t.intermezzo; }},
   capobon:{d:CAPOBON, disegna:disegnaCapobon, tappe:function(t){ return t.anno===468&&!t.intermezzo; }},
   altare:{d:ALTARE, disegna:disegnaAltare, tappe:function(t){ return t.anno===384&&!t.intermezzo; }},
-  barbari:{d:BARBARI, disegna:disegnaBarbari, tappe:function(t){ return t.anno===439&&t.intermezzo; }},
+  barbari:{d:BARBARI, disegna:disegnaBarbari, tappe:function(t){ return t.anno===439&&t.intermezzo || t.anno===406&&!t.intermezzo; }},
   acquedotti:{d:ACQUEDOTTI, disegna:disegnaAcquedotti, tappe:function(t){ return !t.intermezzo && (t.anno===537||t.anno===780); }, da:function(t){ return t&&t.anno===780?'verso il 776':null; }},      // anche nel 780 (24 novembre 2026, l'utente: «inserire», non spostare); aperta dal 780 parte dai restauri di Adriano I
   sacchi:{d:SACCHI, disegna:disegnaSacchi, tappe:function(t){ return !t.intermezzo && (t.anno===455||t.anno===546); }},
   cristianesimo:{d:CRISTIANESIMO, disegna:disegnaCristianesimo, tappe:function(t){ return !t.intermezzo && (t.anno===330||t.anno===394||t.anno===756||t.anno===852); }, da:function(t){ return t&&t.anno===394?'380':t&&t.anno===756?'756':null; }},      // 24 novembre 2026; dal 394 parte dall'editto del 380, dal 756 dallo Stato della Chiesa
-  cielo:{d:CIELO, disegna:disegnaCielo, tappe:function(t){ return !t.intermezzo && (t.anno===542||t.anno===589||t.anno===801); }, da:function(t){ return t&&t.anno===589?'589':t&&t.anno===801?'801':null; }},      // 24 novembre 2026
+  cielo:{d:CIELO, disegna:disegnaCielo, tappe:function(t){ return !t.intermezzo && (t.anno===251||t.anno===542||t.anno===589||t.anno===791||t.anno===801); }, da:function(t){ return t&&t.anno===589?'589':t&&t.anno===791?'791':t&&t.anno===801?'801':null; }},      // 24 novembre 2026
   terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo); }} };      /* solo nell'intermezzo «L'esercito»: dalla tappa del 439 (Cartagine) l'utente l'ha fatta togliere il 24 novembre 2026 */
 /* Poitiers: accesa il 24 novembre 2026 sulla tappa del 711, dopo le prove a 393, 1280 e 812x375 e con ?fermo=1 (prima era scritta ma spenta) */
 INFO.poitiers={d:POITIERS, disegna:disegnaPoitiers, tappe:function(t){ return t.anno===711&&!t.intermezzo; }};
