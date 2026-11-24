@@ -24,16 +24,10 @@ el('rect',{'class':'m-mare',width:G.w,height:G.h,fill:'url(#g-mare)'},svg);
 (G.mari||[]).forEach(function(m){ el('text',{'class':'m-nome-mare',x:m[0],y:m[1]},svg).textContent=m[2]; });
 el('path',{'class':'m-terra',d:G.terra},svg);
 
-/* Tre prove, spente di norma, da accendere dall'indirizzo (24 novembre 2026, per decidere): ?carta=scritte (text-rendering:geometricPrecision sulle scritte, css/carta.css),
-   ?carta=cartellini (durante la rotella o le due dita cartellini e nomi si rifanno al più ogni 100 ms), ?carta=costa (colori delle regioni ritagliati sulla terra); combinabili con la virgola */
-var PROVA={}; try{ (new URLSearchParams(location.search).get('carta')||'').split(',').forEach(function(k){ if(k) PROVA[k]=true; }); }catch(e){}
-if(PROVA.scritte) svg.classList.add('prova-scritte');
-var padreRegioni=svg;
-if(PROVA.costa){ var rt=el('clipPath',{id:'ritaglio-terra'},defs); el('path',{d:G.terra},rt); padreRegioni=el('g',{'clip-path':'url(#ritaglio-terra)'},svg); }
 var regioni={}, nomi={}, NOMI={britannia:'Britannia',gallia:'Gallie',belgica:'Belgica',aquitania:'Aquitania',hispania:'Hispania',italia_nord:'Italia',africa:'Africa',mauretania:'Mauretanie',pannonia:'Pannonia',balcani:'Grecia',tracia:'Tracia',anatolia:'Asia Minore',dacia:'Dacia',levante:'Siria',egitto:'Egitto'};
 Object.keys(G.regioni).forEach(function(id){
   var r=G.regioni[id];
-  regioni[id]=el('path',{'class':'m-regione perso',d:r.d},padreRegioni);
+  regioni[id]=el('path',{'class':'m-regione perso',d:r.d},svg);
   el('title',{},regioni[id]).textContent=r.nome;
 });
 /* 843: le parti di Verdun (src/mappa/genera.mjs, VERDUN). Una velatura per fratello sopra il viola dei Franchi, sotto il rilievo: Carlo più chiaro, Ludovico più scuro, Lotario pieno.
@@ -885,12 +879,7 @@ var BASE=[95,55,810,518], vista={k:1,cx:500,cy:314,w:BASE[2],h:BASE[3]}, grandeS
 function larghezzaVista(){ return !grandeSi?BASE[2]:(vista.alto?BASE[2]:vista.w)/vista.k; }
 /* La larghezza della carta sullo schermo. A tutto schermo la decide adatta() e non cambia ingrandendo o trascinando: si misura una volta sola (24 novembre 2026).
    Misurarla dopo ogni cambio del viewBox costringeva il browser a rifare subito l'impaginazione di tutte le scritte (20 ms a ogni scatto della rotella) */
-var largoSvg=0, rifattiA=0, rifaDopo=0;
-function rifaiPopoli(){      // con ?carta=cartellini, a gesto avviato, al più ogni 100 ms; l'ultimo si fa sempre
-  clearTimeout(rifaDopo); var ora=Date.now(), manca=100-(ora-rifattiA);
-  if(PROVA.cartellini && ora-ultimoGesto<300 && manca>0){ rifaDopo=setTimeout(function(){ rifaDopo=0; if(grandeSi && ultimo&&ultimo[1]!=null && ingrandimento()!==ingr) rifaiPopoli(); },manca); return; }
-  rifattiA=ora; mostraPopoli(ultimo[1]);
-}
+var largoSvg=0;
 function larghezzaSvg(){ if(!grandeSi) return svg.getBoundingClientRect().width; if(!largoSvg) largoSvg=svg.getBoundingClientRect().width; return largoSvg; }
 function applicaVista(){
   if(!grandeSi){ svg.setAttribute('viewBox',BASE.join(' ')); return; }
@@ -899,7 +888,7 @@ function applicaVista(){
   if(vista.alto){ w=BASE[2]/vista.k; h=Math.min(G.h,w*vista.alto/vista.aw); ospite.style.height=Math.round(vista.aw*h/w)+'px'; largoSvg=0; }      // schermo alto e stretto: ingrandendo, il riquadro cresce in altezza finché c'è posto (e la larghezza si rimisura)
   vista.cx=Math.max(w/2,Math.min(G.w-w/2,vista.cx)); vista.cy=Math.max(h/2,Math.min(G.h-h/2,vista.cy));
   svg.setAttribute('viewBox',(vista.cx-w/2).toFixed(1)+' '+(vista.cy-h/2).toFixed(1)+' '+w.toFixed(1)+' '+h.toFixed(1));
-  if(!daRifare) daRifare=requestAnimationFrame(function(){ daRifare=0; if(ultimo&&ultimo[1]!=null && (ingrandimento()!==ingr || !largoSvg)) rifaiPopoli(); });      // trascinando la carta l'ingrandimento non cambia e cartellini, nomi e scena restano come sono: non si rifanno
+  if(!daRifare) daRifare=requestAnimationFrame(function(){ daRifare=0; if(ultimo&&ultimo[1]!=null && (ingrandimento()!==ingr || !largoSvg)) mostraPopoli(ultimo[1]); });      // trascinando la carta l'ingrandimento non cambia e cartellini, nomi e scena restano come sono: non si rifanno
 }
 /* misura del riquadro della carta: tutta la finestra meno la linea del tempo, che non copre mai la carta */
 function adatta(){
@@ -1072,7 +1061,7 @@ window.RM_mappa={
     return ok/tot*100;
   },
   /* superficie dell'Occidente intero sulla carta, in km²: la proiezione è conforme e fra Roma, Milano, Ravenna, Cartagine e Costantinopoli un'unità del disegno vale 5,20 km (misurato il 22 novembre 2026 sulle distanze reali
-     fra le città: quattro coppie, da 5,199 a 5,203), cioè 27,06 km² per unità quadrata. Fa circa 2,75 milioni di km², Agri Decumates e Mauretanie interne compresi */
+     fra le città: quattro coppie, da 5,199 a 5,203), cioè 27,06 km² per unità quadrata. Fa circa 2,72 milioni di km², Agri Decumates e Mauretanie interne compresi (2,75 prima del 24 novembre 2026, quando le regioni sbordavano sul mare) */
   kmqOvest:function(){ var tot=0; for(var id in G.regioni){ if(!G.regioni[id].est && !G.regioni[id].oltre) tot+=G.regioni[id].peso; } return tot*27.06; },
   /* territori governati dalla corte d'Oriente, fatto 100 l'Oriente del 395 (senza la Dacia, già perduta): con Giustiniano supera 100, perché riprende pezzi d'Occidente */
   territorioEst:function(stati){

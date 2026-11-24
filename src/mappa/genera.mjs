@@ -344,8 +344,9 @@ const POPOLI = {
 const out = { w: W, h: H, terra: tracciato(TERRA), regioni: {}, citta: {}, popoli: {} };
 for (const [id, q] of Object.entries(POPOLI)) out.popoli[id] = { nome: q.nome, poi: q.poi || [], peso: q.peso, fine: q.fine, t: q.t.map(v => { const p = proj([v[1], v[2]]), o = [v[0], f1(p[0]), f1(p[1]), v[3]]; if (v[4]) o.push(v[4].map(c => { const w = proj(c); return [f1(w[0]), f1(w[1])]; })); return o; }) };
 const FORME = {};
-for (const [id, r] of Object.entries(REGIONI)) {
-  const m = forma(r); FORME[id] = m;
+/* 24 novembre 2026: ogni regione si ritaglia sulla terraferma (TERRA, la costa disegnata). Le province dell'atlante hanno coste loro, più larghe:
+   sulla carta il colore sbordava sul mare fino a 8 km (12-14 pixel a ingrandimento 6). Il baricentro per il nome resta quello della forma intera (i nomi non si spostano) */
+function misura(m) {
   let area = 0, tot = 0, cx = 0, cy = 0;                // baricentro del pezzo più grande, per l'etichetta; la superficie pesa la quota di territorio
   for (const pol of m) {
     const a = pol[0]; let A = 0, x = 0, y = 0;
@@ -353,7 +354,15 @@ for (const [id, r] of Object.entries(REGIONI)) {
     tot += Math.abs(A) / 2;
     if (Math.abs(A) > area) { area = Math.abs(A); cx = x / (3 * A); cy = y / (3 * A); }
   }
-  out.regioni[id] = { nome: r.nome, peso: Math.round(tot), est: !!r.est, oltre: !!r.terra, d: tracciato(m), c: [f1(cx), f1(cy)] };
+  return { tot, cx, cy };
+}
+const RIQUADRO = [[[[0, 0], [W, 0], [W, H], [0, H], [0, 0]]]];      // TERRA finisce sul bordo della carta: fuori dal riquadro la regione resta com'era, perché il suo peso non cambi
+for (const [id, r] of Object.entries(REGIONI)) {
+  const intera = forma(r), isole = intera.filter(pol => !pc.intersection([pol], TERRA).length);      // isolette che la costa semplificata non ha: restano come sono, non spariscono
+  const m = r.terra ? intera : pc.union(pc.intersection(intera, TERRA), pc.difference(intera, RIQUADRO), ...isole.map(pol => [pol])); FORME[id] = m;      // le terre mai romane sono già ritagliate sulla terraferma
+  const mi = misura(intera), mt = misura(m);
+  if (mi.tot - mt.tot > 1 || m.length !== intera.length) console.log('costa', id.padEnd(11), 'pezzi', intera.length, '→', m.length, '· area', Math.round(mi.tot), '→', Math.round(mt.tot));
+  out.regioni[id] = { nome: r.nome, peso: Math.round(mt.tot), est: !!r.est, oltre: !!r.terra, d: tracciato(m), c: [f1(mi.cx), f1(mi.cy)] };
 }
 out.luoghi = {};
 for (const [id, c] of Object.entries(LUOGHI)) { const p = proj([c[0], c[1]]); out.luoghi[id] = { nome: c[2], x: f1(p[0]), y: f1(p[1]) }; }
@@ -427,7 +436,7 @@ const MARI = [[5.6, 39.2, 'Mare Nostrum'], [-8.3, 46.6, 'Oceano'], [18.6, 35.2, 
 const linea = l => 'M' + l.map(c => { const p = proj(c); return f1(p[0]) + ' ' + f1(p[1]); }).join('L');
 out.fiumi = [{ d: corso(FIUMI.altri), forte: false }, { d: corso(FIUMI.forti), forte: true }];
 out.mari = MARI.map(m => { const p = proj([m[0], m[1]]); return [f1(p[0]), f1(p[1]), m[2]]; });
-const dest = new URL('../../js/mappa-dati.js', import.meta.url);
+const dest = process.env.MAPPA_DEST || new URL('../../js/mappa-dati.js', import.meta.url);      // MAPPA_DEST: un altro file, per confrontare prima di sostituire
 fs.writeFileSync(dest, '/* Generato da src/mappa/genera.mjs: non modificare a mano. */\nwindow.RM_MAPPA=' + JSON.stringify(out) + ';\n');
 console.log('mappa-dati.js', Math.round(fs.statSync(dest).size / 1024) + ' kB,', Object.keys(out.regioni).length, 'regioni');
 for (const [id, r] of Object.entries(out.regioni)) console.log(' ', id.padEnd(11), String(r.d.length).padStart(6), 'car.', r.c.join(','));
