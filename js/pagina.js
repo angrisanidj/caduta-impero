@@ -423,7 +423,35 @@ function figuraLeggenda(t){
   cap.textContent=(f.did?f.did+' ':'');
   if(f.autore||f.licenza){ var cr=document.createElement(f.pagina?'a':'span'); if(f.pagina){ cr.href=f.pagina; cr.target='_blank'; cr.rel='noopener'; } cr.className='lg-credito'; cr.textContent='Foto: '+[f.autore,f.licenza].filter(Boolean).join(', '); cap.appendChild(cr); }
   img.onload=function(){ fig.hidden=false; }; img.onerror=function(){ if(fig.parentNode) fig.parentNode.removeChild(fig); };
-  fig.appendChild(img); fig.appendChild(cap); box.appendChild(fig); img.src=f.src;
+  var apri=document.createElement('button'); apri.type='button'; apri.className='lg-apri'; apri.setAttribute('aria-haspopup','dialog'); apri.setAttribute('aria-label','Ingrandisci l’immagine e vedi fonte e licenza'); apri.appendChild(img);
+  apri.addEventListener('click',function(){ vistaLeggenda(f,apri); });      // come i ritratti dei protagonisti: un tocco apre la vista grande
+  fig.appendChild(apri); fig.appendChild(cap); box.appendChild(fig); img.src=f.src;
+}
+/* la vista grande dell'immagine: lo stesso <dialog> dei ritratti (classi rit-* di css/ritratti.css, più lg-vista per un'immagine larga); si chiude con la ×, con Esc, toccando fuori e col tasto indietro */
+var lgVista=null, lgDa=null, lgStoria=false;
+function vistaLeggenda(f,da){
+  if(!lgVista){
+    lgVista=document.createElement('dialog'); lgVista.className='rit-vista lg-vista'; lgVista.setAttribute('aria-label','Immagine ingrandita');
+    lgVista.innerHTML='<button type="button" class="rit-chiudi" aria-label="Chiudi">✕</button><figure><div class="rit-grande"><img alt=""></div><figcaption><p class="rit-cosa"></p><p class="rit-credito"></p><p class="rit-link"></p></figcaption></figure>';
+    document.body.appendChild(lgVista);
+    lgVista.querySelector('.rit-chiudi').addEventListener('click',function(){ chiudiLg(); });
+    lgVista.addEventListener('click',function(e){ if(e.target===lgVista) chiudiLg(); });
+    lgVista.addEventListener('cancel',function(e){ e.preventDefault(); chiudiLg(); });
+    lgVista.addEventListener('keydown',function(e){ e.stopPropagation(); if(e.key==='Escape'){ e.preventDefault(); chiudiLg(); } });      // le frecce non cambiano tappa mentre la vista è aperta
+    window.addEventListener('popstate',function(){ if(lgStoria){ lgStoria=false; if(lgVista.open) chiudiLg(true); } });
+  }
+  if(typeof lgVista.showModal!=='function'){ if(f.pagina) window.open(f.pagina,'_blank','noopener'); return; }
+  lgDa=da; var im=lgVista.querySelector('img'); im.src=f.src; im.alt=f.alt||''; if(f.w&&f.h){ im.width=f.w; im.height=f.h; }
+  lgVista.querySelector('.rit-cosa').textContent=f.did||'';
+  lgVista.querySelector('.rit-credito').textContent='Foto: '+[f.autore,f.licenza].filter(Boolean).join(', ');
+  var l=lgVista.querySelector('.rit-link'); l.textContent=''; if(f.pagina){ var a=document.createElement('a'); a.href=f.pagina; a.target='_blank'; a.rel='noopener'; a.textContent='Il file su Wikimedia Commons'; l.appendChild(a); }
+  lgVista.showModal(); lgVista.querySelector('.rit-chiudi').focus();
+  try{ history.pushState({ritratto:1},''); lgStoria=true; }catch(e){}
+}
+function chiudiLg(daStoria){
+  if(!lgVista || !lgVista.open) return; lgVista.close();
+  if(!daStoria && lgStoria){ lgStoria=false; try{ if(history.state && history.state.ritratto) history.back(); }catch(e){} }
+  if(lgDa && document.contains(lgDa)) lgDa.focus(); lgDa=null;
 }
 
 /* «A Roma, in quest'anno» (23 novembre 2026): sul telefono la città non si apre da sola, e chi legge non sa che c'è qualcosa da vedere. Sotto il testo della tappa, se nell'anno

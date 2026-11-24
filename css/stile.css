@@ -846,5 +846,13 @@ body.roma-grande .riquadro.roma>.ia-avviso.piccolo{padding-top:calc(78px + env(s
 .lg-figura img{display:block;width:100%;height:auto;border-radius:6px;border:1px solid var(--line)}
 .lg-figura figcaption{margin-top:6px;font-family:var(--ui);font-size:12.5px;line-height:1.4;color:var(--muted)}
 .lg-credito{color:var(--muted);white-space:nowrap}
+.lg-apri{display:block;width:100%;margin:0;padding:0;border:0;background:none;cursor:zoom-in;border-radius:6px}
+.lg-apri:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* la vista grande (js/pagina.js, vistaLeggenda) usa il <dialog> dei ritratti; qui l'immagine è larga: una colonna sola, foto sopra e didascalia sotto */
+.rit-vista.lg-vista{max-width:min(1000px,calc(100vw - 32px))}
+.rit-vista.lg-vista figure{grid-template-columns:1fr}
+.rit-vista.lg-vista .rit-grande{padding:0;background:#2A231D}
+.rit-vista.lg-vista .rit-grande img{max-width:100%;max-height:calc(100vh - 190px);max-height:calc(100dvh - 190px)}
+.rit-vista.lg-vista .rit-cosa{margin:0 30px 0 0}
 /* il bottone fluttuante negli intermezzi: acceso (porpora) finché non si è scesi al testo */
 .salta-giu.acceso{background:var(--porpora);border-color:var(--gold2);color:#fff}
