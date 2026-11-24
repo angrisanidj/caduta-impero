@@ -123,8 +123,8 @@ function squarify(voci,x,y,w,hh){
 /* ======================================================================
    1. Roma si svuota
    La città di punti: ogni punto pieno vale 10.000 abitanti secondo la linea centrale delle stime (CURVE.popolazione), i cerchi vuoti arrivano fino alla stima più alta
-   (la «banda»). I punti stanno dentro il tracciato delle mura di Aureliano del modello (RM_TOPO, da OpenStreetMap), che si disegnano nel 271; l'ordine in cui si spengono è
-   casuale: dove si vivesse non è un dato di questo grafico. Accanto, la curva con la forchetta delle stime e le note sugli eventi delle tappe. */
+   (la «banda»). I punti stanno dentro il tracciato delle mura di Aureliano del modello (RM_TOPO, da OpenStreetMap), che si disegnano nel 271; sono isolati della città
+   in 3D e si spengono con il criterio di js/citta.js (vedi doveAbitanti, più sotto). Accanto, la curva con la forchetta delle stime e le note sugli eventi delle tappe. */
 var ROMA={ titolo:'Roma si svuota', sotto:'Gli abitanti di Roma dal 235 all\'852, secondo le stime',
   momenti:[[271,"Aureliano fa costruire le nuove mura: diciannove chilometri.","Le mura di Aureliano"],[410,"I Goti di Alarico saccheggiano Roma per tre giorni.","Il sacco dei Goti"],
     [419,"Le razioni di carne di maiale fanno stimare circa mezzo milione di abitanti.","Le razioni di carne"],
@@ -133,7 +133,52 @@ var ROMA={ titolo:'Roma si svuota', sotto:'Gli abitanti di Roma dal 235 all\'852
     [546,"Totila entra a Roma e la fa evacuare.","Totila fa evacuare Roma"],[590,"Peste e piena del Tevere: Gregorio Magno diventa papa.","Peste e piena del Tevere"],
     [663,"Costante II porta via il bronzo dei monumenti.","Via il bronzo dei monumenti"],
     [780,"Papa Adriano I fa riparare quattro acquedotti.","Riparati quattro acquedotti"],[846,"I Saraceni saccheggiano San Pietro, fuori dalle mura.","I Saraceni a San Pietro"]],
-  fonte:"Stime: Krautheimer, Durliat, il Companion to Rome del 2026 e gli altri studi citati in fondo alla pagina. La linea è una media fra le stime; la fascia chiara va dalla più bassa alla più alta. Prima del VI secolo i numeri vengono soprattutto dalle razioni di cibo; dopo, quasi solo dall'archeologia. Nella città ogni punto pieno vale 10.000 abitanti della linea centrale, i cerchi vuoti arrivano alla stima più alta; dove cadano i punti non ha significato." };
+  fonte:"Stime: Krautheimer, Durliat, il Companion to Rome del 2026 e gli altri studi citati in fondo alla pagina. La linea è una media fra le stime; la fascia chiara va dalla più bassa alla più alta. Prima del VI secolo i numeri vengono soprattutto dalle razioni di cibo; dopo, quasi solo dall'archeologia. Nella città ogni punto pieno vale 10.000 abitanti della linea centrale, i cerchi vuoti arrivano alla stima più alta. "+(window.RM&&RM.isolati&&RM.isolati.length
+    ? "I punti accesi stanno dove, nella Roma in 3D, le case sono ancora abitate in quell'anno. È una ricostruzione del modello, non una mappa degli scavi."
+    : window.RM&&RM.NUCLEI
+    ? "I punti accesi seguono lo stesso criterio della Roma in 3D (fino al VII secolo un po' in tutta la città, poi lungo il Tevere e attorno alle chiese), calcolato senza la città in 3D. È una ricostruzione del modello, non una mappa degli scavi."
+    : "Dove cadano i punti non ha significato.") };
+
+/* Dove restano gli abitanti (24 novembre 2026, l'utente: «dove effettivamente sono rimasti, non a caso»). I punti sono 120 isolati della città in 3D
+   (RM.isolati, js/citta.js), dentro le mura e lontani fra loro; a ogni anno si accendono per primi quelli che la città lascia per ultimi, con lo stesso rango
+   di js/citta.js: abitato sparso fino al VII secolo, poi nuclei sul Tevere e attorno alle chiese (fra il 640 e il 790). Così un punto pieno sta sempre su un
+   isolato che nella città, in quell'anno, è abitato (provato anno per anno dal 235 all'852). Restano fuori il Borgo (fuori dalle mura, nel modello non si svuota mai),
+   le case abbattute per un monumento e gli incendi dei sacchi. Senza la città in 3D: lo stesso calcolo sui nuclei di RM.NUCLEI, senza le quote dei colli;
+   senza nemmeno quelli, a caso come prima. La geografia dei due ranghi è un'ipotesi del modello: lo dice la fonte dell'infografica. */
+function doveAbitanti(muraP,fiume,n,seme,Q,Qi){
+  var X=window.RM||{}, I=X.isolati, sf=X.sfuma||function(a,b,t){ t=clamp((t-a)/(b-a),0,1); return t*t*(3-2*t); };
+  var R=caso(seme), pts=[], d, modo, A=0, i, j, m;
+  muraP.forEach(function(p,i){ var q=muraP[(i+1)%muraP.length]; A+=p[0]*q[1]-q[0]*p[1]; });
+  if(I && I.length && I[0].p1!=null){
+    modo='citta';
+    var cand=I.filter(function(b){ return b.dentro && !b.nasce && !b.via; }).map(function(b){ return {p:Q([b.x,b.z]),p1:b.p1,p2:b.p2}; });
+    for(i=cand.length-1;i>0;i--){ j=Math.floor(R()*(i+1)); m=cand[i]; cand[i]=cand[j]; cand[j]=m; }
+    d=Math.sqrt(Math.abs(A)/2/n)*0.98; var dUsato=d;
+    for(var giro=0; giro<14 && pts.length<n; giro++){
+      for(i=0;i<cand.length && pts.length<n;i++){ var c=cand[i]; if(c.preso) continue; var ok=true;
+        for(m=0;ok&&m<pts.length;m++){ var dx=pts[m].p[0]-c.p[0], dy=pts[m].p[1]-c.p[1]; if(dx*dx+dy*dy<d*d) ok=false; }
+        if(ok){ c.preso=true; pts.push(c); dUsato=d; } }
+      d*=0.93; }
+    d=dUsato;
+  } else {
+    var sem=semina(muraP,fiume,n,seme), NU=X.NUCLEI; d=sem.d;
+    if(NU && NU.length){
+      modo='nuclei';
+      var F=(window.RM_TOPO||{}).fiume||[];
+      var grezzi=sem.p.map(function(p){ var s=Qi(p), t2=0, t1=0, dF=1e9, k;
+        for(k=1;k<F.length;k++) dF=Math.min(dF,distSeg(s,F[k-1],F[k]));
+        NU.forEach(function(q){ var dd=Math.hypot(s[0]-q[0],s[1]-q[1]); t2=Math.max(t2,q[2]*Math.exp(-dd*dd/(q[3]*q[3]))); t1=Math.max(t1,(q[3]>15?.22:.4)*q[2]*Math.exp(-dd*dd/(q[3]>15?4900:169))); });
+        return {p:p,k:t2+.25*Math.exp(-dF/45)+(R()-.5)*.08,k1:t1+.2*Math.exp(-dF/45)-.22*sf(140,300,Math.hypot(s[0]-5,s[1]-5))+(R()-.5)*.8}; });
+      grezzi.slice().sort(function(a,b){ return a.k-b.k; }).forEach(function(o,i,tt){ o.p2=i/(tt.length-1); });
+      grezzi.slice().sort(function(a,b){ return a.k1-b.k1; }).forEach(function(o,i,tt){ o.p1=i/(tt.length-1); });
+      pts=grezzi;
+    } else { modo='caso'; pts=sem.p.map(function(p,i){ return {p:p,p1:1-i/n,p2:1-i/n}; }); }
+  }
+  /* ordine(anno): gli indici dei punti dal più tenace al meno, con il rango di js/citta.js in quell'anno: i primi sono le case che la città lascia per ultime */
+  return {p:pts.map(function(q){ return q.p; }), d:d, modo:modo,
+    ordine:function(anno){ var f=sf(640,790,anno);
+      return pts.map(function(q,i){ return {i:i,s:q.p1+(q.p2-q.p1)*f}; }).sort(function(a,b){ return b.s-a.s; }).map(function(x){ return x.i; }); }};
+}
 
 function disegnaRoma(svg,S,W,H){
   var C=(D.CURVE||{}).popolazione, TP=window.RM_TOPO; if(!C||!TP) return;
@@ -162,12 +207,14 @@ function disegnaRoma(svg,S,W,H){
   mura.style.strokeDasharray=lm+' '+lm; mura.setAttribute('stroke-dashoffset',lm);
   var nord=muraP.reduce(function(a,b){ return b[1]<a[1]?b:a; }), lMura=tx(gc,nord[0],nord[1]-7,'ig-leg-mura','mura di Aureliano','middle');
   var tv=fiume.filter(function(p){ return p[1]>cb[1]+s*0.2 && p[1]<cb[1]+s*0.34 && p[0]>cb[0]+20; })[0]; if(tv) tx(gc,tv[0]-7,tv[1],'ig-leg-tevere','Tevere','end');
-  var sem=semina(muraP,fiume,120,11), rr=Math.max(2.4,Math.min(5.5,sem.d*0.31));
-  var punti=sem.p.map(function(p){ return el('circle',{cx:r1(p[0]),cy:r1(p[1]),r:r1(rr),'class':'ig-ab'},gc); }), statoP=[];
+  var dove=doveAbitanti(muraP,fiume,120,11,Q,function(p){ return [(p[0]-ox)/k,(p[1]-oy)/k]; }), rr=Math.max(2.4,Math.min(5.5,dove.d*0.31)), annoP=null;
+  var punti=dove.p.map(function(p){ return el('circle',{cx:r1(p[0]),cy:r1(p[1]),r:r1(rr),'class':'ig-ab'},gc); }), statoP=[], posto=[];
   var lg=el('g',{'class':'ig-citta-leg'},gc), lx=oriz?cb[0]+12:cb[0]+s+6, ly=oriz?cb[1]+s-30:cb[1]+s-58;
   el('circle',{cx:lx+rr,cy:ly-4,r:rr,'class':'ig-ab pieno fisso'},lg); tx(lg,lx+rr*2+7,ly,'ig-leg','10.000 abitanti');
   el('circle',{cx:lx+rr,cy:ly+16,r:rr,'class':'ig-ab vuoto fisso'},lg);
   if(oriz) tx(lg,lx+rr*2+7,ly+20,'ig-leg','fino alla stima più alta'); else { tx(lg,lx+rr*2+7,ly+20,'ig-leg','fino alla stima'); tx(lg,lx+rr*2+7,ly+35,'ig-leg','più alta'); }
+  /* i posti dei punti sono una ricostruzione del modello: lo dice una riga della legenda (in orizzontale in alto a destra, perché in basso toccherebbe le mura) */
+  if(dove.modo!=='caso'){ if(oriz) tx(lg,cb[0]+s-12,cb[1]+20,'ig-leg ig-leg-dove','dove: come nella Roma in 3D','end'); else { tx(lg,lx,ly-40,'ig-leg ig-leg-dove','dove: come nella'); tx(lg,lx,ly-25,'ig-leg ig-leg-dove','Roma in 3D'); } }
 
   /* il contatore */
   var gk=el('g',{'class':'ig-conta'},svg), fsN, tA, tN, tL, tL2=null;
@@ -202,7 +249,9 @@ function disegnaRoma(svg,S,W,H){
     cls(gk,'vis',t>=T0); scrivi(tA,'ROMA · '+Math.round(a)); scrivi(tN,num(Math.round(v*ap/1000)*1000));
     if(tL2) scrivi(tL2,'le stime vanno da '+num(Math.round(valore(BASSO,a)/1e4)*1e4)+' a '+num(Math.round(valore(ALTO,a)/1e4)*1e4));
     var nC=Math.round(v/1e4), nH=Math.round(valore(ALTO,a)/1e4);
-    for(var i=0;i<punti.length;i++){ var st=t<T0+150+i*9?'':i<nC?'pieno':i<nH?'vuoto':''; if(statoP[i]!==st){ statoP[i]=st; punti[i].setAttribute('class','ig-ab '+st); } }
+    /* il posto di ogni punto nella fila dei più tenaci, ricalcolato quando cambia l'anno */
+    var ay=Math.round(a); if(ay!==annoP){ annoP=ay; dove.ordine(ay).forEach(function(i,j){ posto[i]=j; }); }
+    for(var i=0;i<punti.length;i++){ var j=posto[i], st=t<T0+150+i*9?'':j<nC?'pieno':j<nH?'vuoto':''; if(statoP[i]!==st){ statoP[i]=st; punti[i].setAttribute('class','ig-ab '+st); } }
     var fm=E.io(fase(t,tm.arrivi[0]-500,tm.arrivi[0]+1300)); fissa(mura,'stroke-dashoffset',r1(lm*(1-fm))); cls(mura,'vis',fm>0); cls(muraF,'vis',fm>=1); cls(lMura,'vis',fm>=1);
     c.vis(t>=T0+500); cls(lg,'vis',t>=T0+900); if(fN) cls(fN,'vis',a>=330);
     var xr=c.x(a), yr=c.y(v); fissa(rvR,'width',r1(Math.max(0,xr-c.L+6)));
@@ -511,49 +560,139 @@ function disegnaSacco(svg,S,W,H){
 
 /* ======================================================================
    5. Le navi scompaiono
-   Una flotta di cento navi da carico (schema di una nave con vela quadra e artemone) sul mare: restano quante ne dicono i relitti datati nel Mediterraneo, con il I secolo
-   uguale a 100 (CURVE.commerci: banca dati di Oxford, 2017; Robinson e Wilson 2011). Le navi spente restano come ombre; l'ordine in cui si spengono è casuale.
+   Una flotta di cento navi da carico sul mare: restano quante ne dicono i relitti datati nel Mediterraneo, con il I secolo uguale a 100 (CURVE.commerci: banca dati
+   di Oxford, 2017; Robinson e Wilson 2011). La nave è uno schema dell'oneraria delle raffigurazioni (scafo panciuto, collo di cigno a poppa, vela quadra con le cuciture,
+   artemone, due remi-timone), in tre grandezze per la profondità; le navi che mancano restano tratteggiate. L'ordine in cui si spengono è casuale.
+   Rifatta il 24 novembre 2026 (l'utente: «migliorare qualità grafica e navi»): file prospettiche che non si toccano, cento navi esatte, mare in profondità.
+   La nave che manca è un contorno tratteggiato e non un relitto: il dato conta proprio i relitti trovati, e un relitto disegnato farebbe leggere il contrario.
    I momenti vengono dalle tappe (439, 534, la conquista araba nei passi del 711). */
 var NAVI={ titolo:"Le navi scompaiono", sotto:"Relitti datati nel Mediterraneo: per ogni 100 del I secolo, quanti ne restano",
   momenti:[[235,"Nel III secolo i relitti sono già meno della metà di quelli del I secolo."],[439,"I Vandali prendono Cartagine, il grande porto del grano per Roma."],[534,"Belisario riprende l'Africa: il mare torna dell'impero, ma i traffici restano bassi."],
     [642,"Gli Arabi prendono Alessandria; nel 698 anche Cartagine."],[725,"Nell'VIII secolo i relitti sono pochissimi."]],
-  fonte:"Banca dati dei relitti di Strauss, Wilson e Flohr (Oxford Roman Economy Project, 2017) e Robinson e Wilson (2011). Si contano le navi trovate e datate, non le merci: navi più grandi, o meno naufragi, cambierebbero il quadro. Ogni nave disegnata vale un relitto su cento; l'ordine in cui si spengono è casuale." };
+  fonte:"Banca dati dei relitti di Strauss, Wilson e Flohr (Oxford Roman Economy Project, 2017) e Robinson e Wilson (2011). Si contano le navi trovate e datate, non le merci: navi più grandi, o meno naufragi, cambierebbero il quadro. Ogni nave disegnata vale un relitto su cento; le navi tratteggiate sono quelle che mancano rispetto al I secolo; la forma delle navi è uno schema; l'ordine in cui si spengono è casuale." };
+
+/* La nave oneraria, in tre grandezze per la profondità (v vicina, m media, l lontana: le lontane hanno meno dettagli e colori velati dalla foschia),
+   e la nave che manca (solo il contorno tratteggiato). Unità della nave: linea d'acqua a y=0, prua a destra; ingombro da x -25 a 29 e da y -38 a 7.
+   Schema dalle raffigurazioni delle navi da carico romane: scafo panciuto, poppa alta col collo di cigno (cheniscus), casotto a poppa, vela quadra
+   col suo pennone e le cuciture (sulla nave vicina anche i rinforzi orizzontali: la trama a quadri), l'artemone (albero inclinato a prua con la vela piccola),
+   due remi-timone ai lati della poppa. Non è una nave precisa. */
+function naviDefs(defs){
+  var P={v:{scafo:'#4A2E1E',fascia:'#7A5235',filo:'#B08A5E',scuro:'#2A1A12',casa:'#8A6040',vela:'#F1E7D2',ombra:'#D8C9AC',cuci:'rgba(120,92,58,.5)',art:'#E6D9BF',drappo:'#9A2F2A'},
+         m:{scafo:'#56402F',fascia:'#80634A',filo:'#A88C68',scuro:'#3A2A20',casa:'#8C6C50',vela:'#ECE4D3',ombra:'#D3C8B3',cuci:'rgba(120,98,70,.4)',art:'#E0D6C2',drappo:'#93473F'},
+         l:{scafo:'#5E5753',fascia:'#77706A',filo:'#8E8780',scuro:'#4C4744',casa:'#7E7670',vela:'#DEDCD1',ombra:'#C9C8BE',cuci:'rgba(110,104,92,.3)',art:'#D3D1C6',drappo:'#8A6260'}};
+  ['v','m','l'].forEach(function(q){
+    var c=P[q], g=el('g',{id:'ig-nave-'+q},defs), det=q!=='l';
+    /* l'ombra sull'acqua e, dietro lo scafo, il timone dell'altro lato */
+    el('ellipse',{cx:1,cy:2.4,rx:21,ry:2.1,fill:'rgba(8,26,32,.32)'},g);
+    if(det){ el('path',{d:'M-13.2 -8.6 L-18.6 3.4',stroke:c.scuro,'stroke-width':1.2,'stroke-linecap':'round'},g);
+      el('path',{d:'M-17.5 .4 L-19.9 5.2 L-18.3 5.9 L-16.2 1.2 Z',fill:c.scuro},g); }
+    /* lo scafo panciuto, le tavole alte più chiare, il cinto, il casotto di poppa */
+    el('path',{d:'M-21.5 -9.6 C-21 -3.6 -16 2.6 -7 3.2 L9 3.2 C15.5 3 19.6 -1.6 21.6 -8.3 L20 -8.7 C12 -6.6 -6 -6 -20 -10.1 Z',fill:c.scafo},g);
+    el('path',{d:'M-20.4 -9.2 C-6 -5.6 12 -6.1 20.6 -8.1 L20.2 -6.5 C12 -4.5 -6 -3.9 -20 -7.3 Z',fill:c.fascia},g);
+    el('path',{d:'M-19.4 -4.5 C-8 -1.5 9 -1.7 19.3 -4.3',fill:'none',stroke:c.filo,'stroke-width':.7,opacity:.85},g);
+    el('path',{d:'M-18.2 -9.7 L-18.2 -13.4 L-11.4 -12.4 L-11.4 -8.2 Z',fill:c.casa},g);
+    el('path',{d:'M-18.8 -13.6 L-10.9 -12.4',stroke:c.scuro,'stroke-width':.8,'stroke-linecap':'round'},g);
+    /* il collo di cigno a poppa e il timone di questo lato */
+    el('path',{d:'M-21.2 -9.8 C-24.6 -13.2 -24.9 -19.2 -21.3 -21 C-19.1 -22.1 -17.2 -20.6 -17.9 -18.7 L-16.2 -18.2',fill:'none',stroke:c.scuro,'stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'},g);
+    el('path',{d:'M-15.6 -9.4 L-20.9 3.7',stroke:c.scuro,'stroke-width':1.3,'stroke-linecap':'round'},g);
+    el('path',{d:'M-19.9 .9 L-22.4 5.9 L-20.6 6.6 L-18.5 1.7 Z',fill:c.scuro},g);
+    /* l'albero maestro, gli stralli (solo da vicino), la fiamma in cima */
+    el('path',{d:'M-1 -7 V-37.2',stroke:c.scuro,'stroke-width':1.4,'stroke-linecap':'round'},g);
+    if(q==='v') el('path',{d:'M-1 -36 L19.6 -9.2 M-1 -36 L-18.8 -11',stroke:'rgba(42,26,18,.5)','stroke-width':.5,fill:'none'},g);
+    el('path',{d:'M-1 -37.4 L5.2 -36.4 L-1 -35.4 Z',fill:c.drappo},g);
+    /* la vela quadra, gonfia, in due toni, con le cuciture verticali (dove corrono gli imbrogli) e, da vicino, i rinforzi orizzontali */
+    el('path',{d:'M-14 -33 Q-1 -34.6 12 -33 Q14.2 -22 12 -11.4 Q-1 -9.9 -14 -11.4 Q-16.1 -22 -14 -33 Z',fill:c.vela},g);
+    el('path',{d:'M-1 -34.2 Q5.5 -33.9 12 -33 Q14.2 -22 12 -11.4 Q5.5 -10.6 -1 -10.5 Z',fill:c.ombra},g);
+    if(det){ var cu='';
+      [-9.5,-5,3.5,8].forEach(function(x){ cu+='M'+x+' -33.7 Q'+(x-.8)+' -22 '+x+' -10.9 '; });
+      if(q==='v') [-27,-21.5,-16].forEach(function(y){ cu+='M-14.7 '+y+' Q-1 '+(y-1.3)+' 12.9 '+y+' '; });
+      el('path',{d:cu,fill:'none',stroke:c.cuci,'stroke-width':q==='v'?.5:.6},g); }
+    el('path',{d:'M-15 -33.2 Q-1 -35.1 13 -33.2',fill:'none',stroke:c.scuro,'stroke-width':1.3,'stroke-linecap':'round'},g);
+    /* l'artemone, inclinato in avanti, con la sua vela e il pennone */
+    el('path',{d:'M16.4 -7.6 L25.8 -20.8',stroke:c.scuro,'stroke-width':1.1,'stroke-linecap':'round'},g);
+    el('path',{d:'M21 -18.9 L28.2 -20.7 Q29.3 -16 28.1 -12.5 L21.8 -11.3 Q20.4 -15 21 -18.9 Z',fill:c.art},g);
+    if(det) el('path',{d:'M24.6 -19.8 Q25.5 -16 24.9 -11.9',fill:'none',stroke:c.cuci,'stroke-width':.45},g);
+    el('path',{d:'M20.4 -19.1 L28.9 -21.2',stroke:c.scuro,'stroke-width':.9,'stroke-linecap':'round'},g);
+    /* l'acqua che lambisce lo scafo e la schiuma a prua */
+    el('path',{d:'M-17 1.5 q2.5 -1.5 5 0 t5 0 t5 0 t5 0 t5 0 t5 0 t5 0',fill:'none',stroke:'rgba(226,240,240,.55)','stroke-width':q==='l'?.6:.8},g);
+    if(det) el('path',{d:'M17.5 .2 q3.5 -.6 7.5 1.3',fill:'none',stroke:'rgba(255,255,255,.6)','stroke-width':.8,'stroke-linecap':'round'},g);
+  });
+  /* la nave che manca: solo il contorno tratteggiato, come un posto vuoto sul mare */
+  var f=el('g',{id:'ig-assente'},defs);
+  el('path',{d:'M-21.5 -9.6 C-21 -3.6 -16 2.6 -7 3.2 L9 3.2 C15.5 3 19.6 -1.6 21.6 -8.3 C12 -6.4 -6 -5.8 -21.5 -9.6 Z M-14 -33 Q-1 -34.6 12 -33 Q14.2 -22 12 -11.4 Q-1 -9.9 -14 -11.4 Q-16.1 -22 -14 -33 Z M21 -18.9 L28.2 -20.7 Q29.3 -16 28.1 -12.5 L21.8 -11.3 Q20.4 -15 21 -18.9 Z',
+    fill:'rgba(214,232,234,.06)',stroke:'rgba(214,232,234,.34)','stroke-width':1,'stroke-dasharray':'2.6 2.4','stroke-linejoin':'round'},f);
+  el('path',{d:'M-1 -7 V-33.5 M-21.2 -9.8 C-24.6 -13.2 -24.9 -19.2 -21.3 -21',fill:'none',stroke:'rgba(214,232,234,.24)','stroke-width':.9,'stroke-dasharray':'2.6 2.4','stroke-linecap':'round'},f);
+}
+/* I posti delle navi, in file prospettiche: in fondo (in alto) file lunghe di navi piccole, davanti file corte di navi grandi, con la scala che cresce di 1,7 volte.
+   Si sceglie il numero di file che dà le navi più grandi senza che nessuna tocchi le altre: l'ingombro di ogni nave (54 x 45 unità, più 4 di aria) non si sovrappone
+   a quello delle vicine, né nella fila né fra una fila e l'altra (provato a 369 x 477, 369 x 560, 860 x 520, 540 x 250). Le navi in più si tolgono dalle file più piene.
+   Nei posti, x è il centro dell'ingombro spostato di 2 unità e y la linea d'acqua, 7 unità sopra il fondo dell'ingombro. */
+function postiFlotta(x0,y0,w,h,n){
+  var LW=58, LH=45, G=.7, best=null, R, k, s0, cnt, tot, sc;
+  for(R=3;R<=16;R++){
+    sc=[]; var sum=0; for(k=0;k<R;k++){ sc.push(1+G*(R>1?k/(R-1):1)); sum+=sc[k]; }
+    s0=h/(LH*sum); cnt=sc.map(function(f){ return Math.floor(w/(LW*s0*f)); }); tot=cnt.reduce(function(a,b){ return a+b; },0);
+    if(tot>=n && (!best||s0>best.s0)) best={R:R,s0:s0,sc:sc,cnt:cnt};
+  }
+  if(!best) return null;
+  var c=best.cnt.slice(); tot=c.reduce(function(a,b){ return a+b; },0);
+  while(tot>n){ var j=0, m=-1; c.forEach(function(v,i){ var pieno=v*LW*best.s0*best.sc[i]/w; if(pieno>m){ m=pieno; j=i; } }); c[j]--; tot--; }
+  var out=[], y=y0, R2=caso(41);
+  for(k=0;k<best.R;k++){
+    var s=best.s0*best.sc[k], passo=w/c[k], gioco=Math.max(0,passo-LW*s), sf=(k%2?.5:0)*Math.min(gioco,passo*.5);
+    y+=LH*s;
+    for(var i=0;i<c[k];i++){ var x=x0+(i+.5)*passo-sf/2+(k%2?sf:0)+(R2()-.5)*gioco*.5;
+      out.push({x:x-2*s, y:y-7*s, s:s, fila:k, prof:best.R>1?k/(best.R-1):1}); }
+  }
+  return {posti:out, file:best.R};
+}
+/* Il mare in prospettiva: in fondo onde brevi, fitte e tenui, davanti lunghe, rade e più marcate, ciascuna col suo cavo scuro; si fermano prima del bordo del mare */
+function mareProfondo(p,W,mh,yTop,R){
+  var g=el('g',{'class':'ig-onde'},p), y=yTop, k=0;
+  while(y<mh-4){
+    var f=(y-yTop)/Math.max(1,mh-yTop), L=7+f*26, A=.8+f*2.6, d='', x=-R()*L*2;
+    while(x<W+L){ var l=L*(.6+R()*.8); d+='M'+r1(x)+' '+r1(y+(R()-.5)*3*f)+' q'+r1(l/2)+' -'+r1(A)+' '+r1(l)+' 0 '; x+=l+L*(.5+R()*1.4); }
+    el('path',{d:d,'class':'ig-onda',style:'opacity:'+r1(.07+f*.16)+';stroke-width:'+r1(.6+f*.9)},g);
+    if(k%2===0) el('path',{d:d.replace(/M([\d.-]+) ([\d.-]+)/g,function(_,a,b){ return 'M'+r1(+a+L*.4)+' '+r1(+b+2+3*f); }),'class':'ig-onda scura',style:'stroke-width:'+r1(.6+f*.9)},g);
+    y+=4+f*f*16; k++;
+  }
+  return g;
+}
 function disegnaNavi(svg,S,W,H){
   var C=(D.CURVE||{}).commerci; if(!C) return; var P=C.punti;
-  var oriz=W/H>=1.15, pad=16, mh=Math.round(H*(oriz?0.68:0.64)), fsN=oriz?Math.min(64,W/12):Math.min(46,W/7.5), kh=oriz?fsN+44:fsN+30;
+  var oriz=W/H>=1.15, pad=16, mh=Math.round(H*(oriz?0.68:0.72)), fsN=oriz?Math.min(64,W/12):Math.min(46,W/7.5), kh=oriz?fsN+44:fsN+30;
   var defs=el('defs',null,svg);
-  var gm=el('linearGradient',{id:'ig-mare',x1:0,y1:0,x2:0,y2:1},defs); [[0,'#5A8590'],[.45,'#3B6570'],[1,'#22424B']].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1]},gm); });
-  var gl=el('radialGradient',{id:'ig-mare-luce',cx:'70%',cy:'0%',r:'80%'},defs); el('stop',{offset:0,'stop-color':'#F6E7C6','stop-opacity':.32},gl); el('stop',{offset:1,'stop-color':'#F6E7C6','stop-opacity':0},gl);
-  var nv=el('g',{id:'ig-nave'},defs);
-  el('ellipse',{cx:0,cy:3.6,rx:17,ry:1.8,fill:'rgba(255,255,255,.14)'},nv);
-  el('path',{d:'M-20 -6 Q-17 3 0 3 Q13 3 18 -5 L14 -5.2 Q0 -3.4 -16 -5.4 Z',fill:'#2A1C14'},nv);
-  el('path',{d:'M-17 -5.2 Q-23 -12 -18 -16 Q-15 -17.5 -14.6 -14',fill:'none',stroke:'#2A1C14','stroke-width':1.7,'stroke-linecap':'round'},nv);
-  el('path',{d:'M-1 -4 V-28 M13.5 -5 L21 -15',stroke:'#2A1C14','stroke-width':1.3,'stroke-linecap':'round'},nv);
-  el('path',{d:'M-12 -26 L10 -26 Q12.5 -16 10 -8 L-12 -8 Q-14.5 -16 -12 -26 Z',fill:'#F3EBDC'},nv);
-  el('path',{d:'M-12 -26 L10 -26 Q12.5 -16 10 -8 L-1 -8 L-1 -26 Z',fill:'#E2D6BF'},nv);
-  el('path',{d:'M-13.5 -26.5 H11.5',stroke:'#2A1C14','stroke-width':1.2,'stroke-linecap':'round'},nv);
-  el('path',{d:'M17.5 -14 L23.5 -12.6 L21.6 -7.6 L16.4 -8.6 Z',fill:'#EDE3CF'},nv);
-  /* il mare */
+  var gm=el('linearGradient',{id:'ig-mare',x1:0,y1:0,x2:0,y2:1},defs); [[0,'#5E8B94'],[.28,'#44717B'],[.68,'#2B5560'],[1,'#1B3841']].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1]},gm); });
+  var gl=el('radialGradient',{id:'ig-mare-luce',cx:'72%',cy:'0%',r:'85%'},defs); el('stop',{offset:0,'stop-color':'#F6E7C6','stop-opacity':.34},gl); el('stop',{offset:1,'stop-color':'#F6E7C6','stop-opacity':0},gl);
+  var gv=el('linearGradient',{id:'ig-mare-fondo',x1:0,y1:0,x2:0,y2:1},defs); el('stop',{offset:0,'stop-color':'#0B2229','stop-opacity':0},gv); el('stop',{offset:1,'stop-color':'#0B2229','stop-opacity':.38},gv);
+  naviDefs(defs);
+  /* il mare, con una striscia di riflessi sotto la luce */
   el('rect',{x:0,y:0,width:W,height:mh,fill:'url(#ig-mare)'},svg); el('rect',{x:0,y:0,width:W,height:mh,fill:'url(#ig-mare-luce)'},svg);
-  var onde=el('g',{'class':'ig-onde'},svg), R=caso(5);
-  for(var o=0;o<9;o++){ var yo=kh*0.6+o*(mh-kh*0.6)/9+R()*8, dd='M-10 '+r1(yo); for(var xo=-10;xo<W+40;xo+=40) dd+=' q10 -'+r1(2+R()*2)+' 20 0 t20 0'; el('path',{d:dd,'class':'ig-onda',style:'opacity:'+r1(.05+o*.012)},onde); }
-  /* la flotta: file più piccole in fondo, più grandi davanti */
-  var fx0=pad+6, fx1=W-pad-6, fy0=kh+14, fy1=mh-14, aw=fx1-fx0, ah=fy1-fy0, cols=Math.max(8,Math.round(Math.sqrt(100*aw/ah/1.25))), rows=Math.ceil(100/cols);
-  while(cols*(rows-1)>=100) rows--;
-  var flotta=el('g',{'class':'ig-flotta'},svg), navi=[], file=[], ordine=[], i;
+  var R=caso(5); mareProfondo(svg,W,mh,kh*.55,R);
+  var sx=W*.72, sl=el('g',{'class':'ig-scintille'},svg);
+  for(var z=0;z<26;z++){ var yy=kh*.6+Math.pow(R(),.8)*(mh-kh*.6-6), ww=3+yy/mh*16, xx=sx+(R()-.5)*(30+yy/mh*90); el('path',{d:'M'+r1(xx-ww/2)+' '+r1(yy)+' h'+r1(ww),'class':'ig-scintilla',style:'animation-delay:'+r1(-R()*3)+'s'},sl); }
+  el('rect',{x:0,y:mh*.55,width:W,height:mh*.45,fill:'url(#ig-mare-fondo)'},svg);
+  /* la flotta: file prospettiche che non si toccano, sotto il contatore; sui telefoni coricati (palco poco alto) a destra del contatore */
+  var basso=oriz&&H<360, prova=tx(svg,0,-50,'ig-k-lab','relitti datati, per ogni 100 del I secolo'), lk=largo(prova); prova.remove();
+  var fx0=basso?pad+lk+18:pad+4, fy0=basso?pad+6:pad+14+fsN*.86+(oriz?20:18)+8, fl=postiFlotta(fx0,fy0,W-fx0-pad-4,mh-fy0-24,100);
+  var fondali=el('g',{'class':'ig-fondali'},svg), flotta=el('g',{'class':'ig-flotta'},svg), navi=[], file=[], ordine=[], i;
   for(i=0;i<100;i++) ordine.push(i); var R2=caso(29); for(i=99;i>0;i--){ var j=Math.floor(R2()*(i+1)), tmp=ordine[i]; ordine[i]=ordine[j]; ordine[j]=tmp; }
-  for(var rw=0;rw<rows;rw++){ var fila=el('g',{'class':'ig-fila'},flotta); fila.style.animationDelay=(-rw*0.47)+'s'; fila.style.animationDuration=(3.1+rw*0.23)+'s'; file.push(fila); }
-  var cw=aw/cols, chh=ah/rows, base=Math.min(cw/46,chh/30)*1.0;
-  for(i=0;i<100;i++){ var rr=Math.floor(i/cols), cc=i%cols, prof=rows>1?rr/(rows-1):1, sc=base*(0.74+0.34*prof);
-    var x=fx0+(cc+.5+(rr%2?.25:-.25))*cw+(R()-.5)*cw*0.28, y=fy0+(rr+.78)*chh+(R()-.5)*chh*0.16;
-    var g=el('g',{transform:'translate('+r1(x)+','+r1(y)+') scale('+r1(sc*1000)/1000+')'},file[rr]), u=el('use',{'class':'ig-n'},g); u.setAttribute('href','#ig-nave'); u.setAttributeNS(XL,'xlink:href','#ig-nave');
-    var rank=ordine[i]; u.style.transitionDelay=(((rank*37)%23)*28)+'ms'; navi.push({u:u,rank:rank,st:null}); }
+  for(var rw=0;rw<fl.file;rw++){ var fila=el('g',{'class':'ig-fila'},flotta); fila.style.animationDelay=(-rw*0.47)+'s'; fila.style.animationDuration=(3.1+rw*0.23)+'s'; file.push(fila); }
+  fl.posti.forEach(function(q,i){
+    var tr='translate('+r1(q.x)+','+r1(q.y)+') scale('+r1(q.s*1000)/1000+')', tipo=q.prof<.3?'l':q.prof<.7?'m':'v';
+    var gr=el('g',{transform:tr},fondali), r=el('use',{'class':'ig-r'},gr); r.setAttribute('href','#ig-assente'); r.setAttributeNS(XL,'xlink:href','#ig-assente');
+    var g=el('g',{transform:tr},file[q.fila]), u=el('use',{'class':'ig-n'},g); u.setAttribute('href','#ig-nave-'+tipo); u.setAttributeNS(XL,'xlink:href','#ig-nave-'+tipo);
+    var rank=ordine[i]; u.style.transitionDelay=(((rank*37)%23)*28)+'ms'; navi.push({u:u,r:r,rank:rank,st:null}); });
+  /* che cosa sono le navi tratteggiate, in basso sul mare */
+  var lv=el('g',{'class':'ig-conta chiaro ig-leg-navi'},svg), ly=mh-9;
+  var ic=el('use',{transform:'translate('+r1(pad+11)+','+r1(ly-1)+') scale(.42)'},lv); ic.setAttribute('href','#ig-assente'); ic.setAttributeNS(XL,'xlink:href','#ig-assente');
+  tx(lv,pad+26,ly,'ig-k-leg','tratteggiate: quelle che mancano rispetto al I secolo');
   /* il contatore, sul mare */
   var gk=el('g',{'class':'ig-conta chiaro'},svg), tA=tx(gk,pad,pad+12,'ig-k-anno',''), tN=tx(gk,pad,pad+14+fsN*.86,'ig-k-num',''), tS=el('text',{x:pad,y:pad+14+fsN*.86,'class':'ig-k-su'},gk), tL=tx(gk,pad,pad+14+fsN*.86+20,'ig-k-lab','relitti datati, per ogni 100 del I secolo');
   tN.style.fontSize=fsN+'px'; if(!oriz){ tL.setAttribute('y',pad+14+fsN*.86+18); }
   var tPrima=el('text',{x:W-pad,y:pad+12,'class':'ig-k-prima','text-anchor':'end'},gk);
-  /* la striscia del tempo, sotto */
-  var sb=[pad,mh+14,W-2*pad,H-mh-14-4], c=grafico(svg,sb,{x0:235,x1:852,y0:0,y1:100,tx:sb[2]>520?[235,400,500,600,700,852]:[235,534,852],ty:[0,100],sopra:2,fy:function(v){ return v?'I secolo = 100':''; }});
+  /* la striscia del tempo, sotto: la scala arriva a 50, perché dal 235 i valori stanno sotto il 41 (il 100 del I secolo resta scritto nell'etichetta) */
+  var sb=[pad,mh+14,W-2*pad,H-mh-14-4], c=grafico(svg,sb,{x0:235,x1:852,y0:0,y1:50,tx:sb[2]>520?[235,400,500,600,700,852]:[235,534,852],ty:[0,25,50],sopra:2,fy:function(v){ return v===50?'50 (I secolo = 100)':v?String(v):''; }});
   var ga=el('linearGradient',{id:'ig-sotto',x1:0,y1:0,x2:0,y2:1},defs); el('stop',{offset:0,'stop-color':'#3B6570','stop-opacity':.38},ga); el('stop',{offset:1,'stop-color':'#3B6570','stop-opacity':.04},ga);
   var rv=el('clipPath',{id:'ig-rv'},defs), rvR=el('rect',{x:c.L-6,y:0,width:0,height:H},rv), gdd=el('g',{'clip-path':'url(#ig-rv)'},svg);
   var dl=P.map(function(p,i){ return (i?'L':'M')+xy([c.x(p[0]),c.y(p[1])]); }).join('');
@@ -566,8 +705,8 @@ function disegnaNavi(svg,S,W,H){
   S.passo=function(t){
     var a=tm.anno(t), prima=t<t0, v=prima?100:valore(P,a), nn=Math.round(v);
     if(!prima && t<t0+1300) nn=Math.round(lerp(100,valore(P,235),E.io(fase(t,t0,t0+1300))));
-    for(var i=0;i<100;i++){ var q=navi[i], st=t<T0+200+q.rank*11?'':q.rank<(prima?100:Math.round(v))?'su':'via'; if(q.st!==st){ q.st=st; q.u.setAttribute('class','ig-n '+st); } }
-    cls(gk,'vis',t>=T0+300); scrivi(tA,prima?'I SECOLO':'ANNO '+Math.round(a)); scrivi(tN,String(nn)); scrivi(tS,' su 100');
+    for(var i=0;i<100;i++){ var q=navi[i], st=t<T0+200+q.rank*11?'':q.rank<(prima?100:nn)?'su':'via'; if(q.st!==st){ q.st=st; q.u.setAttribute('class','ig-n '+st); q.r.setAttribute('class','ig-r '+st); } }
+    cls(gk,'vis',t>=T0+300); cls(lv,'vis',t>=t0+1300); scrivi(tA,prima?'I SECOLO':'ANNO '+Math.round(a)); scrivi(tN,String(nn)); scrivi(tS,' su 100');
     fissa(tS,'x',r1(pad+largo(tN)+6));
     scrivi(tPrima,t>=tFin?'nel I secolo erano 100':'');
     c.vis(t>=t0-400); fissa(rvR,'width',prima?'0':r1(Math.max(0,c.x(a)-c.L+6))); fissa(cur,'cx',r1(c.x(a))); fissa(cur,'cy',r1(c.y(valore(P,a)))); cls(cur,'vis',!prima&&t<tFin+2000);
@@ -601,15 +740,20 @@ function disegnaGoverno(svg,S,W,H){
   var m=M.miniatura(); m.svg.setAttribute('preserveAspectRatio','xMidYMid meet'); m.svg.setAttribute('class','m-mini ig-mini'); strato.appendChild(m.svg);
   var paths=[].slice.call(m.svg.querySelectorAll('.m-regione')); paths.forEach(function(p,i){ var id=ids[i]; p.style.transitionDelay=Math.round((G.regioni[id].c[0]-VB[0])/VB[2]*650)+'ms'; });
   var luce=el('path',{'class':'ig-mini-luce',d:''},m.svg), gn=el('g',{'class':'ig-regni'},m.svg), fs=(largo2?13:12.5)/kk;
+  /* dove stanno i nomi delle città della carta piccola (js/mappa.js, miniatura: corpo 25, Roma 28, in unità della carta) */
+  var CITTA_MINI=[].slice.call(m.svg.querySelectorAll('.m-mini-citta-nome')).map(function(t){ var fc=/roma/.test(t.getAttribute('class'))?28:25, x=+t.getAttribute('x'), y=+t.getAttribute('y'), w=t.textContent.length*fc*.46+8, fine=t.getAttribute('text-anchor')==='end';
+    return {fermo:true,x:fine?x-w/2:x+w/2,y:y-fc*.33,w:w,h:fc*1.15}; });
   /* i nomi dei regni: sulla regione più grande, spostati se si toccano */
-  var nomiF=FR.map(function(f,fi){
+  var sullaCarta=[], nomiF=FR.map(function(f,fi){
     var voci={}; (M.vociPresenti([f.stati],f.anno)||[]).forEach(function(v){ voci[v[2]]=v[1]; });
     var per={}; ids.forEach(function(id){ var st=f.stati[id]||'perso'; if(/^(perso|fuori|conteso|federati|usurpatore)$/.test(st)) return; var r=G.regioni[id], p=per[st]||(per[st]={tot:0,max:0,c:null}); p.tot+=r.peso; if(r.peso>p.max){ p.max=r.peso; p.c=r.c; } });
     var L=Object.keys(per).map(function(st){ return {st:st,nome:voci[st]||st,tot:per[st].tot,x:per[st].c[0],y:per[st].c[1]}; }).sort(function(a,b){ return b.tot-a.tot; }).slice(0,largo2?8:6);
     L.forEach(function(l){ l.w=l.nome.length*fs*0.55+fs*0.6; l.h=fs*1.35; });
+    var nR=L.length; CITTA_MINI.forEach(function(c){ L.push(c); });      // i nomi delle città della carta piccola: fermi, i regni li scansano
     for(var it=0;it<40;it++){ var mosso=false; for(var i=0;i<L.length;i++) for(var j=0;j<i;j++){ var A=L[i], Bq=L[j], ox=(A.w+Bq.w)/2-Math.abs(A.x-Bq.x), oy=(A.h+Bq.h)/2-Math.abs(A.y-Bq.y);
-      if(ox>0&&oy>0){ var sp=(oy+1)/2*(A.y>=Bq.y?1:-1); A.y+=sp; Bq.y-=sp; mosso=true; } }
-      L.forEach(function(l){ l.x=clamp(l.x,VB[0]+l.w/2+4,VB[0]+VB[2]-l.w/2-4); l.y=clamp(l.y,VB[1]+l.h,VB[1]+VB[3]-l.h*0.75); }); if(!mosso) break; }
+      if(ox>0&&oy>0&&!(A.fermo&&Bq.fermo)){ var sp=(oy+1)*(A.y>=Bq.y?1:-1); if(A.fermo) Bq.y-=sp; else if(Bq.fermo) A.y+=sp; else { A.y+=sp/2; Bq.y-=sp/2; } mosso=true; } }
+      L.forEach(function(l){ if(l.fermo) return; l.x=clamp(l.x,VB[0]+l.w/2+4,VB[0]+VB[2]-l.w/2-4); l.y=clamp(l.y,VB[1]+l.h,VB[1]+VB[3]-l.h*0.75); }); if(!mosso) break; }
+    L=L.slice(0,nR); sullaCarta[fi]=L.map(function(l){ return l.nome; });
     var g=el('g',{'class':'ig-regni-f'},gn);
     L.forEach(function(l,i){ var t=tx(g,l.x,l.y+fs*0.35,'ig-regno',l.nome,'middle'); t.style.fontSize=r1(fs)+'px'; t.style.strokeWidth=r1(3.2/kk)+'px'; t.style.transitionDelay=(500+i*170)+'ms'; });
     return g; });
@@ -624,7 +768,8 @@ function disegnaGoverno(svg,S,W,H){
   FR.forEach(function(f,i){ var c=h('figure','ig-q',null,quattro); c.style.transitionDelay=(i*220)+'ms'; var mm=M.miniatura(); mm.svg.setAttribute('preserveAspectRatio','xMidYMid meet'); mm.svg.setAttribute('class','m-mini ig-mini');
     c.appendChild(mm.svg); mm.mostra(f.stati,f.anno); var fc=h('figcaption',null,null,c); h('b',null,String(f.anno),fc); h('span',null,f.titolo,fc); });
   var T0=1250, tf=[1700,7900,14100,20300], tFin=26500, visto=-2;
-  function legenda(i){ pLeg.textContent=''; (M.vociPresenti([FR[i].stati],FR[i].anno)||[]).forEach(function(v){ if(v[2]==='perso') return; var c=h('span','ig-chip',null,pLeg); h('i',null,null,c).style.background=v[0]; h('span',null,v[1],c); }); }
+  function legenda(i){ pLeg.textContent=''; (M.vociPresenti([FR[i].stati],FR[i].anno)||[]).forEach(function(v){ if(v[2]==='perso') return; if(col&&!largo2&&sullaCarta[i].indexOf(v[1])>=0) return;      /* sul telefono in piedi: i regni col nome sulla carta non si ripetono */ var c=h('span','ig-chip',null,pLeg); h('i',null,null,c).style.background=v[0]; h('span',null,v[1],c); });
+    if(col&&!largo2){ pLeg.classList.remove('fitta'); if(pan.scrollHeight>pan.clientHeight+1) pLeg.classList.add('fitta'); } }      /* sul telefono in piedi, se la legenda non ci sta: due colonne, corpo più piccolo */
   m.mostra({},null);
   S.passo=function(t){
     var i=-1; tf.forEach(function(x,j){ if(t>=x) i=j; });
@@ -1511,7 +1656,7 @@ function disegnaCuria(svg,S,W,H){
   var tav=el('g',{'class':'ig-c-tavola'},svg); el('rect',{x:fb[0],y:fb[1],width:fb[2],height:fb[3],rx:12,fill:'url(#ig-c-cielo)','class':'ig-c-fondo'},tav);
   var dentro=el('g',{'clip-path':'url(#ig-c-clip)'},tav);
   /* la facciata, in metri (dal modello): larga 19, muri alti 24, frontone fino a 30; il terreno a quota 0 */
-  var s=Math.min(fb[2]/34,(fb[3]-20)/32.5), x0=fb[0]+fb[2]/2, y0=fb[1]+fb[3]-14, M=function(x,y){ return [x0+x*s,y0-y*s]; };
+  var s=Math.min(fb[2]/34,(fb[3]-20)/32.5), x0=fb[0]+fb[2]*(oriz?.5:.35), y0=fb[1]+fb[3]-14, M=function(x,y){ return [x0+x*s,y0-y*s]; };
   function R(p,x1,y1,x2,y2,cl){ var a=M(x1,y2), c=M(x2,y1); return el('rect',{x:r1(a[0]),y:r1(a[1]),width:r1(c[0]-a[0]),height:r1(c[1]-a[1]),'class':cl},p); }
   el('rect',{x:fb[0],y:r1(y0),width:fb[2],height:r1(fb[1]+fb[3]-y0),'class':'ig-c-suolo'},dentro);
   /* la Curia di prima, nel 283: solo un contorno (la sua forma non si disegna) */
@@ -1568,7 +1713,7 @@ function disegnaCuria(svg,S,W,H){
   function frac(x,y){ var p=M(x,y); return [(p[0]-fb[0])/fb[2],(p[1]-fb[1])/fb[3]]; }
   var F={zoccolo:[fumetto(svg,fb,'zoccolo di marmo','sx'),frac(-7,5)],stucco:[fumetto(svg,fb,'stucco a finti blocchi','sx'),frac(-7.5,20)],finestre:[fumetto(svg,fb,'tre finestre','dx'),frac(6.3,17)],
     porte:[fumetto(svg,fb,'porte di bronzo','dx'),frac(1.2,7)],portico:[fumetto(svg,fb,'portico: discusso','sx'),frac(-6.2,9)],statue:[fumetto(svg,fb,'statue: indicative','dx'),frac(9.6,26)],
-    croce:[fumetto(svg,fb,'croce: indicativa','dx'),frac(0,32)],misura:[fumetto(svg,fb,'27 × 18 m','dx'),frac(8,-1.6)]};
+    croce:[fumetto(svg,fb,'croce: indicativa','dx'),frac(0,32)],misura:[fumetto(svg,fb,'fronte: 19 m','dx'),frac(8,-1.6)]};
   /* le voci del 384 e del 593, sopra la tavola */
   function carta(x,y,w,q,chi,cl){ var g=el('g',{'class':'ig-c-voce '+(cl||'')},svg), t=el('text',{x:r1(x+14),y:r1(y+24),'class':'ig-c-voce-t'},g), n=avvolgi(t,q,w-28,20), hh=n*20+44;
     el('rect',{x:r1(x),y:r1(y),width:r1(w),height:r1(hh),rx:10,'class':'ig-c-voce-fondo'},g).parentNode.insertBefore(g.lastChild,g.firstChild); tx(g,x+14,y+24+n*20+6,'ig-c-voce-chi',chi); g._h=hh; return g; }
@@ -1593,15 +1738,19 @@ function disegnaCuria(svg,S,W,H){
   var gC=el('g',{'class':'ig-p-col-d'},svg), stretta=cb[2]<230, fsA=oriz?Math.min(60,cb[2]/4.4):Math.min(34,W/10.5), tA=tx(gC,cb[0],cb[1]+fsA*.82,'ig-p-anno',''), tSt=el('text',{x:r1(cb[0]),y:r1(cb[1]+fsA*.82+24),'class':'ig-p-stato'},gC);
   var STATI=['L\'AULA DEL SENATO','L\'INCENDIO','LA RICOSTRUZIONE','LA FACCIATA','VIA L\'ALTARE','L\'ALTARE TORNA','VIA DI NUOVO','LA RICHIESTA RESPINTA','IL SENATO SCOMPARE','SANT\'ADRIANO','LE PORTE DI BRONZO','ANCORA IN PIEDI'];
   /* l'altare della Vittoria: un altare qualsiasi, che entra ed esce */
-  var ay=cb[1]+fsA*.82+(oriz?64:48), ah=Math.min(oriz?92:62,cb[3]-(ay-cb[1])-30), gA=el('g',{'class':'ig-c-altare-box'},gC), mostraA=ah>=40&&!stretta, ayQ=ay, inTav=false;
-  if(!mostraA){ inTav=true; mostraA=true; ah=Math.min(54,fb[3]*0.2); ay=fb[1]+12; svg.appendChild(gA); el('rect',{x:r1(fb[0]+8),y:r1(ay-6),width:r1(Math.min(fb[2]-16,250)),height:r1(ah+12),rx:10,'class':'ig-c-altare-fondo'},gA); }
-  var aw=ah*0.62, ax=inTav?fb[0]+16:cb[0]+8, alt=el('g',{'class':'ig-c-altare'},gA), alGhost=el('g',{'class':'ig-c-altare-ombra'},gA);
+  var ay=cb[1]+fsA*.82+(oriz?64:48), ah=Math.min(oriz?92:62,cb[3]-(ay-cb[1])-30), gA=el('g',{'class':'ig-c-altare-box'},gC), mostraA=ah>=40&&!stretta, ayQ=ay, inTav=false, xL=0, wL=0, fondoA=null;
+  /* senza posto nella colonna (telefono in piedi) l'altare va nella tavola, a destra della facciata: prima stava in alto a sinistra e copriva il frontone */
+  if(!mostraA){ inTav=true; mostraA=true; xL=M(10.8,0)[0]+8; wL=fb[0]+fb[2]-8-xL; ah=Math.min(44,fb[3]*0.19); ay=fb[1]+16; svg.appendChild(gA); fondoA=el('rect',{x:r1(xL),y:r1(ay-8),width:r1(wL),rx:10,'class':'ig-c-altare-fondo'},gA); }
+  var aw=ah*0.62, ax=inTav?xL+10:cb[0]+8, alt=el('g',{'class':'ig-c-altare'},gA), alGhost=el('g',{'class':'ig-c-altare-ombra'},gA);
   function altare(p){ var P=function(x,y){ return xy([ax+x*aw,ay+y*ah]); };
     el('path',{d:'M'+P(.05,1)+' L'+P(.95,1)+' L'+P(.95,.9)+' L'+P(.85,.86)+' L'+P(.85,.32)+' L'+P(.95,.27)+' L'+P(.95,.18)+' L'+P(.05,.18)+' L'+P(.05,.27)+' L'+P(.15,.32)+' L'+P(.15,.86)+' L'+P(.05,.9)+' Z'},p);
     el('path',{d:'M'+P(.02,.18)+' Q'+P(.02,.06)+' '+P(.16,.08)+' L'+P(.84,.08)+' Q'+P(.98,.06)+' '+P(.98,.18)+' Z'},p); el('path',{d:'M'+P(.3,.45)+' Q'+P(.5,.38)+' '+P(.7,.45)+' L'+P(.7,.7)+' Q'+P(.5,.76)+' '+P(.3,.7)+' Z','class':'ig-c-altare-rilievo'},p); }
   altare(alt); altare(alGhost);
-  var aT=tx(gA,ax+aw+14,ay+ah*0.38,'ig-c-alt-tit','l\'altare della Vittoria'), aS=tx(gA,ax+aw+14,ay+ah*0.38+19,'ig-c-alt-st','');
-  if(ax+aw+14+largo(aT)>(inTav?fb[0]+Math.min(fb[2]-16,250):cb[0]+cb[2])){ aT.textContent='l\'altare'; }
+  var tX=ax+aw+(inTav?10:14), aT=el('text',{x:r1(tX),y:r1(ay+ah*(inTav?.3:.38)),'class':'ig-c-alt-tit'},gA), nT=1;
+  if(inTav) nT=avvolgi(aT,'l\'altare della Vittoria',xL+wL-10-tX,17); else { aT.textContent='l\'altare della Vittoria'; if(tX+largo(aT)>cb[0]+cb[2]) aT.textContent='l\'altare'; }
+  var sX=inTav?xL+10:tX, sY=inTav?Math.max(ay+ah,ay+ah*.3+(nT-1)*17)+18:ay+ah*0.38+19, wS=inTav?wL-20:cb[0]+cb[2]-tX, aS=el('text',{x:r1(sX),y:r1(sY),'class':'ig-c-alt-st'},gA);
+  function statoA(s0){ if(aS._s===s0) return; aS._s=s0; aS.textContent=''; aS.style.fontSize=''; if(inTav){ avvolgi(aS,s0,wS,15); return; } aS.textContent=s0; if(largo(aS)>wS) aS.style.fontSize='12px'; }
+  if(fondoA){ var nMax=1; ['nella Curia','tolto da Costanzo II','rimesso, probabilmente sotto Giuliano','tolto da Graziano','la richiesta di Simmaco è respinta'].forEach(function(s0){ aS.textContent=''; nMax=Math.max(nMax,avvolgi(aS,s0,wS,15)); }); aS.textContent=''; fondoA.setAttribute('height',r1(sY+(nMax-1)*15+12-(ay-8))); }
   var yQ=inTav?ayQ:ay+ah+22, gQ=el('g',{'class':'ig-p-cita'},gC), qVista=-2;
   var CQ={9:["«Fece la chiesa del beato Adriano ai Tre Fati, la dedicò e vi offrì molti doni.»","Liber Pontificalis, vita di Onorio I"]};
   var SCH={1:[['il fuoco','devasta il Foro']],2:[['aula','27 × 18 m'],['la rifà','Diocleziano'],['anni','284-305']],8:[['il Senato','attestato fino al 603']],10:[['porte di bronzo','qui fino al 1660'],['oggi','in San Giovanni in Laterano']],11:[['la Curia','ancora in piedi'],['chiesa','fino al Novecento']]};
@@ -1626,7 +1775,7 @@ function disegnaCuria(svg,S,W,H){
     var chiesa=i>=9, porteVia=i>=10;
     cls(portico,'vis',su>=1&&!chiesa); cls(statue,'vis',su>=1&&!chiesa); cls(croce,'vis',chiesa); cls(gradini,'via',chiesa); cls(gradChiesa,'vis',chiesa);
     var dp=E.io(fase(t,T[10]+500,T[10]+2200)); fissa(porte,'transform',dp>0?'translate('+r1(dp*fb[2]*0.7)+',0)':''); cls(porte,'via',dp>=1); cls(pVia,'vis',dp>0.15&&i===10);
-    cls(velo,'vis',i===8); cls(quota,'vis',i===2&&t>=T[2]+1600); cls(etS,'vis',t>=T[2]);
+    cls(velo,'vis',i===8); cls(quota,'vis',i===2&&t>=T[2]+1600); cls(etS,'vis',t>=T[2]&&!(i===2&&t>=T[2]+1600)&&!(fin&&fOk[1]&&fOk[2]));
     /* le fotografie della fine: prima e dopo */
     var vF=fin&&fOk[1]&&fOk[2]; cls(foto[2],'vis',vF); cls(foto[1],'vis',vF); var wp=fase(t,T[11]+1400,T[11]+5200), wx=fb[0]+fb[2]*(cW+0.2*Math.sin(wp*Math.PI*2)*(1-wp*0.4));
     fissa(cpWr,'width',r1(wx-fb[0])); fissa(lama,'transform','translate('+r1(wx)+',0)'); cls(lama,'vis',vF); cls(dW1,'vis',vF); cls(dW2,'vis',vF);
@@ -1638,8 +1787,7 @@ function disegnaCuria(svg,S,W,H){
     /* l'altare */
     var st=i<4||i===4&&t<T[4]+1500?'c':i===4?'via':i===5?'forse':'via2';
     cls(gA,'vis',mostraA&&i>=4&&i<8&&!(inTav&&i===7&&t>=T[7]+400)); cls(alt,'via',st==='via'||st==='via2'); cls(alt,'forse',st==='forse'); cls(alGhost,'vis',st!=='c');
-    scrivi(aS,st==='c'?'nella Curia':st==='via'?'tolto da Costanzo II':st==='forse'?'rimesso, probabilmente sotto Giuliano':i>=7?'la richiesta di Simmaco è respinta':'tolto da Graziano');
-    if(largo(aS)>cb[0]+cb[2]-(ax+aw+14)) aS.style.fontSize='12px'; else aS.style.fontSize='';
+    statoA(st==='c'?'nella Curia':st==='via'?'tolto da Costanzo II':st==='forse'?'rimesso, probabilmente sotto Giuliano':i>=7?'la richiesta di Simmaco è respinta':'tolto da Graziano');
     cls(simm,'vis',i===7&&t>=T[7]+500); cls(ambr,'vis',i===7&&t>=T[7]+2600); cls(dove,'vis',i===8&&t>=T[8]+300);
     /* il nastro */
     var anni=[250,283,284,300,357,370,382,384,593,630,1660,3000], a=lerp(anni[ii],anni[Math.min(11,ii+1)],E.io(fase(t,T[Math.min(11,ii+1)]-900,T[Math.min(11,ii+1)])));
@@ -2510,45 +2658,81 @@ function disegnaAltare(svg,S,W,H){
   else { s=(W-2*pad)/30; ab=[pad+2*s,pad+s,27*s,18*s]; rb=[pad,H-rib-2,W-2*pad,rib]; cb=[pad,ab[1]+19*s+30,W-2*pad,rb[1]-(ab[1]+19*s+30)-6]; }
   var M=function(x,y){ return [ab[0]+x*s,ab[1]+y*s]; };
   function R(p,x1,y1,x2,y2,cl,o){ var a=M(x1,y1), b=M(x2,y2), r=el('rect',{x:r1(a[0]),y:r1(a[1]),width:r1(b[0]-a[0]),height:r1(b[1]-a[1]),'class':cl},p); if(o) for(var k in o) r.setAttribute(k,o[k]); return r; }
-  /* il pavimento a intarsi: due mattonelle che si alternano (disegno nostro, nello spirito dell'opus sectile della Curia) */
-  var ps=Math.max(10,s*1.6), pt=el('pattern',{id:'ig-al-os',width:r1(ps*2),height:r1(ps*2),patternUnits:'userSpaceOnUse',x:r1(ab[0]),y:r1(ab[1])},defs);
-  el('rect',{width:r1(ps*2),height:r1(ps*2),fill:'#B39252'},pt);
-  [[0,0],[ps,ps]].forEach(function(q){ el('rect',{x:r1(q[0]+.6),y:r1(q[1]+.6),width:r1(ps-1.2),height:r1(ps-1.2),fill:'#DDC17E'},pt); el('circle',{cx:r1(q[0]+ps/2),cy:r1(q[1]+ps/2),r:r1(ps*.38),fill:'#46685A'},pt);
-    el('circle',{cx:r1(q[0]+ps/2),cy:r1(q[1]+ps/2),r:r1(ps*.32),fill:'#EEE5D3'},pt); el('circle',{cx:r1(q[0]+ps/2),cy:r1(q[1]+ps/2),r:r1(ps*.26),fill:'#86303A'},pt); });
-  [[ps,0],[0,ps]].forEach(function(q){ var x=q[0], y=q[1], c=[x+ps/2,y+ps/2], r=ps*.42; el('rect',{x:r1(x+.6),y:r1(y+.6),width:r1(ps-1.2),height:r1(ps-1.2),fill:'#D3B06A'},pt);
-    el('path',{d:'M'+xy([c[0],c[1]-r])+' L'+xy([c[0]+r,c[1]])+' L'+xy([c[0],c[1]+r])+' L'+xy([c[0]-r,c[1]])+' Z',fill:'#46685A'},pt);
-    el('path',{d:'M'+xy([c[0],c[1]-r*.62])+' L'+xy([c[0]+r*.62,c[1]])+' L'+xy([c[0],c[1]+r*.62])+' L'+xy([c[0]-r*.62,c[1]])+' Z',fill:'#EEE5D3'},pt); el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.12),fill:'#86303A'},pt); });
-  var luce=el('radialGradient',{id:'ig-al-luce',cx:'42%',cy:'38%',r:'72%'},defs); [[0,'#FFF8E8',.4],[.55,'#FFF8E8',0],[1,'#3A2614',.3]].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1],'stop-opacity':q[2]},luce); });
+  /* ---- l'aula ridisegnata: profondità con ombre e marmi, sullo stile della pianta della Curia di «Senato Roma» (filtro del marmo, ombre dei gradini, luce sulle figure) ---- */
+  function ombraLin(id,x1,y1,x2,y2,a){ var g=el('linearGradient',{id:id,x1:x1,y1:y1,x2:x2,y2:y2},defs); el('stop',{offset:0,'stop-color':'#3A2614','stop-opacity':a},g); el('stop',{offset:1,'stop-color':'#3A2614','stop-opacity':0},g); }
+  ombraLin('ig-al-sd',0,0,0,1,.34); ombraLin('ig-al-su',0,1,0,0,.34); ombraLin('ig-al-sl',1,0,0,0,.3);
+  var mf=el('filter',{id:'ig-al-marmo',x:0,y:0,width:'100%',height:'100%','color-interpolation-filters':'sRGB'},defs);
+  el('feTurbulence',{type:'turbulence',baseFrequency:'0.012 0.05',numOctaves:3,seed:11},mf); el('feColorMatrix',{type:'matrix',values:'0 0 0 0 .42  0 0 0 0 .36  0 0 0 0 .27  -2.2 0 0 0 .62'},mf);
+  var hi=el('radialGradient',{id:'ig-al-hi',cx:'34%',cy:'28%',r:'70%'},defs); [[0,'#fff',.6],[.5,'#fff',.06],[1,'#000',.14]].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1],'stop-opacity':q[2]},hi); });
+  var lg=el('linearGradient',{id:'ig-al-legno',x1:0,y1:0,x2:0,y2:1},defs); [[0,'#B48A55'],[.5,'#946638'],[1,'#6E4822']].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1]},lg); });
+  /* il pavimento a intarsi: mattonelle che entrano intere nel riquadro (prima la trama si tagliava sui bordi) */
+  var pa=M(1.15,4.45), pz=M(22.95,13.55), wP=pz[0]-pa[0], hP=pz[1]-pa[1], nX=Math.max(6,Math.round(wP/Math.max(14,s*1.6)/2)*2), tw=wP/nX, nY=Math.max(2,Math.round(hP/tw/2)*2), th=hP/nY, ps=Math.min(tw,th);
+  var pt=el('pattern',{id:'ig-al-os',width:r1(tw*2),height:r1(th*2),patternUnits:'userSpaceOnUse',x:r1(pa[0]),y:r1(pa[1])},defs);
+  el('rect',{width:r1(tw*2),height:r1(th*2),fill:'#A8883E'},pt);
+  [[0,0],[tw,th]].forEach(function(q){ var c=[q[0]+tw/2,q[1]+th/2]; el('rect',{x:r1(q[0]+.6),y:r1(q[1]+.6),width:r1(tw-1.2),height:r1(th-1.2),fill:'#DCBC74'},pt); el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.4),fill:'#3E6150'},pt);
+    el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.34),fill:'#EFE6D8'},pt); el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.28),fill:'#7E2530'},pt); el('circle',{cx:r1(c[0]-ps*.08),cy:r1(c[1]-ps*.08),r:r1(ps*.11),fill:'#9A3A44',opacity:.4},pt); el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.06),fill:'#EFE6D8'},pt); });
+  [[tw,0],[0,th]].forEach(function(q){ var c=[q[0]+tw/2,q[1]+th/2], r=ps*.44; el('rect',{x:r1(q[0]+.6),y:r1(q[1]+.6),width:r1(tw-1.2),height:r1(th-1.2),fill:'#D0AC62'},pt);
+    [1,.72,.5].forEach(function(k,j){ el('path',{d:'M'+xy([c[0],c[1]-r*k])+' L'+xy([c[0]+r*k,c[1]])+' L'+xy([c[0],c[1]+r*k])+' L'+xy([c[0]-r*k,c[1]])+' Z',fill:['#3E6150','#D0AC62','#EFE6D8'][j]},pt); });
+    el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.11),fill:'#7E2530'},pt); });
+  var luce=el('radialGradient',{id:'ig-al-luce',cx:'42%',cy:'38%',r:'72%'},defs); [[0,'#FFF8E8',.38],[.55,'#FFF8E8',0],[1,'#3A2614',.26]].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1],'stop-opacity':q[2]},luce); });
   var fia=el('radialGradient',{id:'ig-al-fiamma'},defs); [[0,'#FFF3D0',1],[.3,'#FFC85A',.9],[.7,'#E8622C',.35],[1,'#B8321A',0]].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1],'stop-opacity':q[2]},fia); });
   var brz=el('linearGradient',{id:'ig-al-bronzo',x1:0,y1:0,x2:1,y2:1},defs); [[0,'#8A6232'],[.5,'#5E3F1C'],[1,'#7A5528']].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1]},brz); });
   var tav=el('g',{'class':'ig-al-tavola'},svg);
   R(tav,-1,-1,28,19,'ig-al-muro');
   R(tav,0,0,27,18,'ig-al-fondo');
-  /* gradini dei seggi lungo i lati lunghi (tre per lato) e tribuna in fondo */
+  /* gradini dei seggi lungo i lati lunghi (tre per lato): il più alto contro il muro; ogni gradino fa ombra su quello sotto */
   [0,1,2].forEach(function(k){ R(tav,0,k*1.1,24,(k+1)*1.1,'ig-al-gradino g'+k); R(tav,0,18-(k+1)*1.1,24,18-k*1.1,'ig-al-gradino g'+k); });
-  R(tav,24,0,27,18,'ig-al-tribuna'); R(tav,24,0,24.5,18,'ig-al-gradino g2'); R(tav,24.5,0,25,18,'ig-al-gradino g1');
+  R(tav,0,0,24,3.3,'ig-al-venature'); R(tav,0,14.7,24,18,'ig-al-venature');
+  [1.1,2.2,3.3].forEach(function(y,k){ var hh=k<2?.42:.6; R(tav,0,y,24,y+hh,null,{fill:'url(#ig-al-sd)'}); R(tav,0,18-y-hh,24,18-y,null,{fill:'url(#ig-al-su)'}); });
+  var spig=''; [1.1,2.2,3.3].forEach(function(y){ var a=M(0,y), b=M(24,y), c=M(0,18-y); spig+='M'+xy(a)+' H'+r1(b[0])+' M'+xy(c)+' H'+r1(b[0])+' '; }); el('path',{d:spig,'class':'ig-al-spigolo'},tav);
+  /* la tribuna in fondo: due gradini e il piano, con i riquadri del marmo */
+  R(tav,24,0,27,18,'ig-al-tribuna'); R(tav,24,0,24.5,18,'ig-al-gradino g2'); R(tav,24.5,0,25,18,'ig-al-gradino g1'); R(tav,24,0,27,18,'ig-al-venature');
+  [[23.6,24],[24.15,24.5],[24.65,25]].forEach(function(q){ R(tav,q[0],0,q[1],18,null,{fill:'url(#ig-al-sl)'}); });
+  R(tav,25.6,1.3,26.6,7.4,'ig-al-riquadro'); R(tav,25.6,10.6,26.6,16.7,'ig-al-riquadro');
   /* il pavimento con le sue fasce */
   R(tav,.5,3.8,23.6,14.2,'ig-al-fascia1'); R(tav,.8,4.1,23.3,13.9,'ig-al-fascia2'); R(tav,1,4.3,23.1,13.7,'ig-al-fascia3'); R(tav,1.15,4.45,22.95,13.55,null,{fill:'url(#ig-al-os)'});
+  R(tav,.5,3.8,23.6,14.2,'ig-al-venature ig-al-v-pav');
   R(tav,0,0,27,18,null,{fill:'url(#ig-al-luce)','pointer-events':'none'});
-  /* le porte di bronzo sul lato corto */
+  R(tav,0,0,27,.5,null,{fill:'url(#ig-al-sd)'}); R(tav,0,17.5,27,18,null,{fill:'url(#ig-al-su)'});      // l'ombra dei muri
+  /* le porte di bronzo sul lato corto, con le formelle */
   R(tav,-1.05,6.9,0,11.1,'ig-al-soglia'); R(tav,-1.9,7,-1,11,null,{fill:'url(#ig-al-bronzo)'}); el('path',{d:'M'+xy(M(-1.9,9))+' H'+r1(M(-1,9)[0]),'class':'ig-al-porta-l'},tav);
-  /* i senatori: figure viste dall'alto sui gradini (non contate) */
-  var sen=[], Rs=caso(384), fila=[.55,1.65,2.75];
-  [0,1].forEach(function(lato){ fila.forEach(function(fy,k){ for(var x=1.6;x<23.4;x+=1.52){ if(Rs()<.12) continue; var y=lato?18-fy:fy, g=el('g',{'class':'ig-al-sen',transform:'translate('+xy(M(x+(k%2?.4:0),y))+')'},tav);
-      el('ellipse',{rx:r1(s*.6),ry:r1(s*.42),'class':'ig-al-toga'},g); el('circle',{cx:0,cy:r1((lato?1:-1)*s*.1),r:r1(Math.max(2,s*.27)),'class':'ig-al-testa'},g);
+  [[7.35,8.65],[9.35,10.65]].forEach(function(q){ R(tav,-1.72,q[0],-1.18,q[1],'ig-al-formella'); });
+  /* i senatori: figure sedute viste dall'alto, rivolte verso il pavimento (non contate); ognuna un po' diversa: grandezza, piega, capelli, qualche seggio vuoto */
+  var sen=[], Rs=caso(384), fila=[.55,1.65,2.75], CAPELLI=['#4E3320','#6B4A30','#86664A','#A89A88'];
+  function seggio(x,y,dir){ var a=M(x-.62,y-dir*.48), b=M(x+.62,y-dir*.08); el('rect',{x:r1(Math.min(a[0],b[0])),y:r1(Math.min(a[1],b[1])),width:r1(Math.abs(b[0]-a[0])),height:r1(Math.abs(b[1]-a[1])),rx:1.2,'class':'ig-al-seggio'},tav); }
+  [0,1].forEach(function(lato){ var dir=lato?-1:1; fila.forEach(function(fy,k){ for(var x=1.6;x<23.4;x+=1.52){ var xx=x+(k%2?.4:0), y=lato?18-fy:fy; seggio(xx,y,dir); if(Rs()<.1) continue;
+      xx+=(Rs()-.5)*.22; var q=M(xx,y), sc=s*(.9+Rs()*.16), u=function(n){ return r1(n*sc); }, w=function(n){ return r1(n*sc*dir); };
+      var g=el('g',{'class':'ig-al-sen',transform:'translate('+xy(q)+')'},tav);
+      el('ellipse',{cx:u(.09),cy:u(.12),rx:u(.5),ry:u(.4),'class':'ig-al-sen-ombra'},g);      // l'ombra: la luce viene sempre da sinistra in alto
+      var f=el('g',{transform:'rotate('+r1((Rs()-.5)*14)+')'},g), corpo='M'+u(-.42)+' '+w(-.1)+' C'+u(-.46)+' '+w(-.36)+' '+u(.46)+' '+w(-.36)+' '+u(.42)+' '+w(-.1)+' L'+u(.3)+' '+w(.3)+' Q0 '+w(.43)+' '+u(-.3)+' '+w(.3)+' Z';
+      el('path',{d:corpo,'class':'ig-al-toga'},f); el('path',{d:corpo,fill:'url(#ig-al-hi)','class':'ig-al-lucefig'},f);
+      var lp=Rs()<.5?1:-1; el('path',{d:'M'+u(-.33*lp)+' '+w(-.2)+' Q'+u(-.04*lp)+' '+w(.04)+' '+u(.2*lp)+' '+w(.3),'class':'ig-al-piega'},f);
+      var te=el('circle',{cx:0,cy:w(-.17),r:u(.155),'class':'ig-al-capo'},f); te.style.fill=CAPELLI[Math.floor(Rs()*CAPELLI.length)];
+      el('circle',{cx:u(-.05),cy:r1((-.17-.05)*sc*dir),r:u(.055),'class':'ig-al-capo-luce'},f);
       g.style.transitionDelay=(x/23*.9+k*.12).toFixed(2)+'s'; sen.push({g:g,cr:Rs()<.74,x:x}); } }); });
   /* l'altare (un altare qualsiasi; posizione indicativa) e la sua ombra quando manca */
   var AX=21.6, AY=9, ombra=el('g',{'class':'ig-al-ombra'},tav); R(ombra,AX-1.1,AY-.8,AX+1.1,AY+.8,'ig-al-ombra-r'); var qO=M(AX,AY), dubbio=tx(ombra,qO[0],qO[1]+5,'ig-al-dubbio','?','middle');
-  var alt=el('g',{'class':'ig-al-altare'},tav), alC=el('g',null,alt); el('circle',{r:r1(s*2.4),fill:'url(#ig-al-fiamma)','class':'ig-al-bagliore'},alC);
-  el('rect',{x:r1(-s*1.1),y:r1(-s*.8),width:r1(s*2.2),height:r1(s*1.6),rx:2,'class':'ig-al-blocco'},alC); el('rect',{x:r1(-s*.8),y:r1(-s*.52),width:r1(s*1.6),height:r1(s*1.04),rx:1.5,'class':'ig-al-piano'},alC);
-  el('path',{d:FIAMMA,transform:'scale('+r1(Math.max(.6,s/13)*100)/100+')','class':'ig-al-fuoco'},el('g',{'class':'ig-al-fuoco-a'},alC));
+  var alt=el('g',{'class':'ig-al-altare'},tav), alC=el('g',null,alt), v=function(n){ return r1(n*s); };
+  el('circle',{r:v(2.6),fill:'url(#ig-al-fiamma)','class':'ig-al-bagliore'},alC);
+  el('rect',{x:v(-1.05),y:v(-.8),width:v(2.1),height:v(1.6),rx:2,'class':'ig-al-zoccolo'},alC);      // il gradino, con la sua ombra (CSS)
+  el('rect',{x:v(-.85),y:v(-.6),width:v(1.7),height:v(1.2),rx:1.5,'class':'ig-al-blocco'},alC); el('rect',{x:v(-.85),y:v(-.6),width:v(1.7),height:v(1.2),rx:1.5,fill:'url(#ig-al-hi)'},alC);
+  [-1,1].forEach(function(sx){ el('rect',{x:v(sx<0?-.85:.6),y:v(-.6),width:v(.25),height:v(1.2),rx:v(.12),'class':'ig-al-pulvino'},alC); [-1,1].forEach(function(sy){ el('circle',{cx:v(sx*.725),cy:v(sy*.5),r:r1(Math.max(1.2,s*.1)),'class':'ig-al-rosetta'},alC); }); });
+  el('ellipse',{rx:v(.34),ry:v(.28),'class':'ig-al-focolare'},alC); [[-.12,.06],[.1,-.05],[.03,.12]].forEach(function(q){ el('circle',{cx:v(q[0]),cy:v(q[1]),r:r1(Math.max(1,s*.06)),'class':'ig-al-brace'},alC); });
+  var fsc=Math.max(.6,s/13), fg=el('g',{'class':'ig-al-fuoco-a'},alC);
+  el('path',{d:FIAMMA,transform:'scale('+r1(fsc*100)/100+')','class':'ig-al-fuoco'},fg);
+  el('path',{d:FIAMMA,transform:'translate(0,'+r1(fsc*3.2)+') scale('+r1(fsc*62)/100+')','class':'ig-al-fuoco2'},fg);
+  el('path',{d:FIAMMA,transform:'translate(0,'+r1(fsc*5.8)+') scale('+r1(fsc*32)/100+')','class':'ig-al-fuoco3'},fg);
+  for(var sp=0;sp<3;sp++){ el('circle',{cx:r1((sp-1)*s*.28),cy:r1(-fsc*10),r:1.3,'class':'ig-al-scintilla'},alC).style.animationDelay=(sp*.47)+'s'; }
   var asse=M(AX,AY), uscita=M(-3.2,AY);
   /* i portatori, quando l'altare si muove */
   var port=el('g',{'class':'ig-al-port'},alt); [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(function(q){ el('circle',{cx:r1(q[0]*s*1.05),cy:r1(q[1]*s*.8),r:r1(Math.max(1.8,s*.24)),'class':'ig-al-testa'},port); });
-  /* la scritta sopra la pianta e il bollo */
+  /* la scritta sopra la pianta e il bollo: piccolo, su due righe, accanto al posto vuoto dell'altare (prima copriva mezzo pavimento) */
   var sch=tx(svg,ab[0]+ab[2]+s,ab[1]+19*s+14,'ig-m-schema ig-f','pianta: uno schema','end');
-  var bollo=el('g',{'class':'ig-ca-bollo ig-al-bollo'},svg), bc=M(12,9), bt=tx(bollo,bc[0],bc[1]+6,'ig-ca-bollo-t','RICHIESTA RESPINTA','middle'); bt.style.fontSize=(piccolo||!oriz?13:17)+'px';
-  var bw=largo(bt)+28; el('rect',{x:r1(bc[0]-bw/2),y:r1(bc[1]-16),width:r1(bw),height:32,rx:5,'class':'ig-ca-bollo-r ig-al-bollo-r'},bollo); bollo.insertBefore(bollo.lastChild,bt);
+  var fsB=piccolo||!oriz?11:14, bollo=el('g',{'class':'ig-ca-bollo ig-al-bollo'},svg), bF=el('rect',{rx:4,'class':'ig-al-bollo-r'},bollo), bR1=el('rect',{rx:4,'class':'ig-ca-bollo-r'},bollo), bR2=el('rect',{rx:2.5,'class':'ig-al-bollo-r2'},bollo);
+  var bt1=tx(bollo,0,0,'ig-ca-bollo-t','RICHIESTA','middle'), bt2=tx(bollo,0,0,'ig-ca-bollo-t','RESPINTA','middle'); bt1.style.fontSize=bt2.style.fontSize=fsB+'px';
+  var bwB=Math.max(largo(bt1),largo(bt2))+20, bhB=fsB*2.3+14, bx=Math.max(ab[0]+4*s,M(AX-1.5,AY)[0]-bwB), by=M(AX,AY)[1]-bhB/2;
+  [[bF,0],[bR1,0],[bR2,3]].forEach(function(q){ q[0].setAttribute('x',r1(bx+q[1])); q[0].setAttribute('y',r1(by+q[1])); q[0].setAttribute('width',r1(bwB-2*q[1])); q[0].setAttribute('height',r1(bhB-2*q[1])); });
+  [bt1,bt2].forEach(function(t,j){ t.setAttribute('x',r1(bx+bwB/2)); t.setAttribute('y',r1(by+7+fsB*(j?2.05:.95))); });
   /* i fumetti della pianta: frazioni del riquadro dell'aula */
   var ba=[ab[0],ab[1],ab[2],ab[3]], fq=function(x,y){ return [x/27,y/18]; };
   var FU={porte:[fumetto(svg,ba,'porte di bronzo','dx'),fq(-1.4,9)],seggi:[fumetto(svg,ba,'i gradini dei seggi','dx'),fq(7,1.65)],tribuna:[fumetto(svg,ba,'la tribuna','sx'),fq(25.6,15.5)],
@@ -2573,9 +2757,11 @@ function disegnaAltare(svg,S,W,H){
   function scriviCol(ii){ gQ.textContent=''; colCit=null; var c=COL[ii]; if(!c) return; var hq=cb[1]+cb[3]-yQ; if(hq<34) return;
     if(c.q){ var fs=oriz?(piccolo?15:Math.min(19,cb[2]/18)):15.5, g=citazione(gQ,cb[0],yQ,cb[2],c.q[0],c.q[1],fs); if(g._h>hq){ gQ.textContent=''; } else colCit=g; return; }
     if(c.t){ var t0=el('text',{x:r1(cb[0]),y:r1(yQ+18),'class':'ig-al-fine'},gQ); t0.style.fontSize=(oriz&&!piccolo?21:16)+'px'; avvolgi(t0,c.t,cb[2],oriz&&!piccolo?27:21); return; }
-    var rh=stretta?40:(oriz&&!piccolo?34:28), wk=stretta?0:(oriz&&!piccolo?128:112), rr=c.r.slice(0,Math.max(0,Math.floor(hq/rh)));
-    rr.forEach(function(r,k){ var y=yQ+k*rh; el('line',{x1:r1(cb[0]),x2:r1(cb[0]+cb[2]),y1:r1(y),y2:r1(y),'class':'ig-p-sch-filo'},gQ); tx(gQ,cb[0],y+(stretta?14:rh*.64),'ig-p-sch-k',r[0].toUpperCase());
-      var v=tx(gQ,cb[0]+wk,y+(stretta?32:rh*.66),'ig-p-sch-v',r[1]); if(!oriz||piccolo) v.style.fontSize='15px'; var lim=cb[2]-wk; if(largo(v)>lim){ v.style.fontSize='13.5px'; } if(largo(v)>lim){ var s0=r[1]; v.textContent=''; avvolgi(v,s0,lim,15); v.setAttribute('y',r1(y+rh*.5)); } }); }
+    var rh=stretta?40:(oriz&&!piccolo?34:28), wk=stretta?0:(oriz&&!piccolo?128:112), y=yQ;
+    c.r.forEach(function(r){ if(y+rh>cb[1]+cb[3]+2) return; var g=el('g',null,gQ); el('line',{x1:r1(cb[0]),x2:r1(cb[0]+cb[2]),y1:r1(y),y2:r1(y),'class':'ig-p-sch-filo'},g); tx(g,cb[0],y+(stretta?14:rh*.64),'ig-p-sch-k',r[0].toUpperCase());
+      var v=tx(g,cb[0]+wk,y+(stretta?32:rh*.66),'ig-p-sch-v',r[1]), n=1; if(!oriz||piccolo) v.style.fontSize='15px'; var lim=cb[2]-wk; if(largo(v)>lim){ v.style.fontSize='13.5px'; }
+      if(largo(v)>lim){ var s0=r[1]; v.textContent=''; n=avvolgi(v,s0,lim,15); if(!stretta) v.setAttribute('y',r1(y+rh*.5)); }
+      var hh=stretta?Math.max(rh,24+n*15):Math.max(rh,rh*.5+n*15-4); if(y+hh>cb[1]+cb[3]+2){ g.remove(); y=1e9; return; } y+=hh; }); }
   /* il nastro: dove sta l'altare, dal 350 al 400 */
   var gR=el('g',{'class':'ig-p-nastro'},svg), n0=rb[0]+62, n1=rb[0]+rb[2]-4, A0=350, A1=400, X=function(a){ return n0+(a-A0)/(A1-A0)*(n1-n0); }, ny=rb[1]+18, nh=12;
   tx(gR,rb[0],ny+nh-2,'ig-p-n-et','L\'ALTARE');
@@ -2608,7 +2794,7 @@ function disegnaAltare(svg,S,W,H){
     cls(bollo,'vis',i===9&&t>=T[9]+700);
     /* i fumetti */
     function Fu(k,da,a){ var f=FU[k]; cls(f[0],'vis',t>=da&&t<a); f[0].metti(f[1]); }
-    var uno=!oriz||piccolo; Fu('seggi',T[0]+700,uno?T[0]+2200:T[1]-300); Fu('porte',uno?T[0]+2300:T[0]+1300,uno?T[0]+3700:T[1]-300); Fu('tribuna',uno?T[0]+3800:T[0]+1900,T[1]-300); Fu('altare',T[0]+2600,T[1]+400);
+    var uno=!oriz||piccolo; Fu('seggi',T[0]+700,uno?T[0]+1900:T[1]-300); Fu('porte',uno?T[0]+2000:T[0]+1300,uno?T[0]+3000:T[1]-300); Fu('tribuna',uno?T[0]+3100:T[0]+1900,uno?T[0]+4100:T[1]-300); Fu('altare',uno?T[0]+4200:T[0]+2600,T[1]+400);
     /* la colonna */
     cls(gC,'vis',t>=T[0]-300);
     if(i!==visto){ visto=i; scrivi(tA,i<0?'':fasi[ii][0]); var fa=fsA; tA.style.fontSize=fa+'px'; while(largo(tA)>cb[2]&&fa>18){ fa-=2; tA.style.fontSize=fa+'px'; } tSt.textContent=''; if(i>=0){ avvolgi(tSt,STATI[ii],cb[2],17); scriviCol(ii); } else gQ.textContent=''; }
@@ -2664,7 +2850,7 @@ function disegnaSacchi(svg,S,W,H){
   var gfu=el('radialGradient',{id:'ig-sc-fuoco'},defs); [[0,'#FFF3D0',1],[.25,'#FFC85A',.95],[.6,'#E8622C',.45],[1,'#B8321A',0]].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1],'stop-opacity':q[2]},gfu); });
   /* le tre schede */
   var SC=[{a:'410',chi:'Alarico e i Goti',giorno:'24 agosto'},{a:'455',chi:'Genserico e i Vandali',giorno:'2-16 giugno'},{a:'546',chi:'Totila e i Goti',giorno:'17 dicembre, di notte'}];
-  var box=[0,1,2].map(function(k){ if(righe){ var hh=(H-2*pad-2*gap)/3; return [pad,pad+k*(hh+gap),W-2*pad,hh]; } var ww=(W-2*pad-2*gap)/3; return [pad+k*(ww+gap),pad,ww,H-2*pad]; });
+  var PESO=[1,1,1.15], yB=pad, box=[0,1,2].map(function(k){ if(righe){ var hh=(H-2*pad-2*gap)*PESO[k]/3.15, b=[pad,yB,W-2*pad,hh]; yB+=hh+gap; return b; } var ww=(W-2*pad-2*gap)/3; return [pad+k*(ww+gap),pad,ww,H-2*pad]; });
   var gSch=el('g',{'class':'ig-sc-schede'},svg);
   SC.forEach(function(q,k){ var b=box[k], g=el('g',{'class':'ig-sc-scheda'},gSch); g.style.setProperty('--c',C3[k]); q.g=g; q.b=b;
     el('rect',{x:r1(b[0]),y:r1(b[1]),width:r1(b[2]),height:r1(b[3]),rx:12,'class':'ig-sc-fondo'},g); el('rect',{x:r1(b[0]),y:r1(b[1]),width:r1(righe?4:b[2]),height:r1(righe?b[3]:4),rx:2,'class':'ig-sc-filo'},g);
@@ -2708,14 +2894,15 @@ function disegnaSacchi(svg,S,W,H){
   var avvB=null; if(PI_[2].h>70){ var b2=SC[2].corpo; avvB=tx(SC[2].g,b2[0]+b2[2],b2[1]+PI_[2].h+(righe?-2:10),'ig-m-schema ig-f','tratti abbattuti: dove, uno schema','end'); if(largo(avvB)>b2[2]) avvB.textContent='brecce: schema'; }
   /* quanto durò: i quadratini dei giorni, uno per giorno */
   function areaSotto(q){ var c=q.corpo; return righe?c:[c[0],c[1]+q.pianta.h+(oriz?14:8),c[2],c[3]-q.pianta.h-(oriz?14:8)]; }
-  var DUR=[{n:6,piene:3,num:'3 o 6',et:'giorni',nota:'3 secondo Orosio, 6 secondo Marcellino Comes',corta:'Orosio 3, Marcellino Comes 6'},{n:14,piene:14,num:'14',et:'giorni',nota:'dal 2 al 16 giugno, secondo Prospero',corta:'dal 2 al 16 giugno'},{n:40,piene:0,num:'40',et:'giorni o più',nota:'la città deserta: non è la durata del saccheggio',corta:'deserta: non è la durata del sacco'}];
+  var DUR=[{n:6,piene:3,num:'3 o 6',et:'giorni',nota:'3 secondo Orosio, 6 secondo Marcellino Comes',corta:'Orosio 3, Marcellino Comes 6'},{n:14,piene:14,num:'14',et:'giorni',nota:'dal 2 al 16 giugno, secondo Prospero',corta:'dal 2 al 16 giugno'},{n:40,piene:0,num:'40',et:'giorni o più',nota:'la città deserta: non è la durata del saccheggio',corta:'città deserta: non la durata del sacco'}];
   var cw=Math.min.apply(null,SC.map(function(q){ return areaSotto(q)[2]; })), qd=clamp(Math.floor(cw/10)-3,9,righe?14:18), giorni=[];
   SC.forEach(function(q,k){ var a=areaSotto(q), g=el('g',{'class':'ig-sc-dur'},q.g), d=DUR[k], fn=righe?24:piccolo?24:34; q.dur=g;
     var tn=tx(g,a[0],a[1]+fn*.9,'ig-sc-num','0'); tn.style.fontSize=fn+'px'; var te=tx(g,a[0],a[1]+fn*.9,'ig-sc-num-t',d.et); q.tn=tn; q.te=te;
-    var y0=a[1]+fn*.9+10, cols=Math.max(1,Math.floor((a[2]+3)/(qd+3))), cel=[];
-    for(var j=0;j<d.n;j++){ var cx=a[0]+(j%cols)*(qd+3), cy=y0+Math.floor(j/cols)*(qd+3), r=el('rect',{x:r1(cx),y:r1(cy),width:qd,height:qd,rx:2.5,'class':'ig-sc-g '+(k===2?'vuoto':j<d.piene?'pieno':'forse')},g); cel.push(r); }
-    var yN=y0+Math.ceil(d.n/cols)*(qd+3)+14, tN=el('text',{x:r1(a[0]),y:r1(yN),'class':'ig-sc-nota'},g), nN=avvolgi(tN,d.nota,a[2],14);
-    if(yN+(nN-1)*14>a[1]+a[3]+4){ tN.textContent=''; nN=avvolgi(tN,d.corta,a[2],13); if(yN+(nN-1)*13>a[1]+a[3]+6){ tN.textContent=''; avvolgi(tN,d.corta,a[2]+40,13); } }
+    var qk=qd; for(var rg=1;rg<=4;rg++){ var qp=Math.min(qd,Math.floor((a[2]+3)/Math.ceil(d.n/rg))-3); if(qp>=Math.min(qd,11)){ qk=qp; break; } }      /* le file di quadratini più corte possibile: sul telefono 14 giorni in una fila e 40 in tre, a 1280 40 in due */
+    var y0=a[1]+fn*.9+10, cols=Math.max(1,Math.floor((a[2]+3)/(qk+3))), cel=[];
+    for(var j=0;j<d.n;j++){ var cx=a[0]+(j%cols)*(qk+3), cy=y0+Math.floor(j/cols)*(qk+3), r=el('rect',{x:r1(cx),y:r1(cy),width:qk,height:qk,rx:2.5,'class':'ig-sc-g '+(k===2?'vuoto':j<d.piene?'pieno':'forse')},g); cel.push(r); }
+    var yN=y0+Math.ceil(d.n/cols)*(qk+3)+14, tN=el('text',{x:r1(a[0]),y:r1(yN),'class':'ig-sc-nota'},g), nN=avvolgi(tN,d.nota,a[2],14);
+    if(yN+(nN-1)*14>a[1]+a[3]+4){ tN.textContent=''; nN=avvolgi(tN,d.corta,a[2],13); if(yN+(nN-1)*13>a[1]+a[3]+6){ tN.textContent=''; tN.style.fontSize='11px'; nN=avvolgi(tN,d.corta,a[2],12); var su=Math.min(14,yN+(nN-1)*12-(a[1]+a[3]+2)); if(su>0) g.setAttribute('transform','translate(0,'+r1(-su)+')'); } }      /* nelle colonne strette (812) la nota non esce più a destra: corpo 11 e, se serve, il blocco sale un poco */
     giorni.push(cel); });
   /* che cosa: le voci con un segno */
   var COSE=[[['fuoco','case vicino alla porta e casa di Sallustio'],['croce','rifugio rispettato a San Pietro e San Paolo'],['forse','la basilica Emilia, probabilmente']],
@@ -3016,7 +3203,7 @@ function disegnaBarbari(svg,S,W,H){
   var avvE=tx(FE.sopra,mb[0]+mb[2]-10,mb[1]+mb[3]-10,'ig-m-avverte su-carta','le tappe sono delle fonti, la strada è uno schema','end'); if(largo(avvE)>mb[2]-20) avvE.textContent='la strada: uno schema';
   var dE=data(FE,'409-455','la strada dei Vandali');
   /* F. i destini: una riga per popolo */
-  var gR=el('g',{'class':'ig-atto'},svg), fb=[pad+(oriz?6:0),pad,W-2*pad-(oriz?12:0),H-2*pad], cl=oriz?(piccolo?102:150):96, A0=350, A1=860, x0=fb[0]+cl, x1=fb[0]+fb[2]-6, X=function(a){ return x0+(a-A0)/(A1-A0)*(x1-x0); };
+  var gR=el('g',{'class':'ig-atto'},svg), fb=[pad+(oriz?6:0),pad,W-2*pad-(oriz?12:0),H-2*pad], cl=oriz?(piccolo?102:150):96, A0=350, A1=860, x0=fb[0]+cl, x1=fb[0]+fb[2]-28, X=function(a){ return x0+(a-A0)/(A1-A0)*(x1-x0); };
   var RIGHE=[['Goti (Visigoti)','goti',[[376,418,'mov'],[418,711,'regno']],[[376,'Danubio'],[418,'Aquitania'],[507,'Vouillé']],[711,'711']],
     ['Unni','unni',[[376,453,'mov']],[[451,'Campi Catalaunici']],[453,'453']],
     ['Vandali e Alani','vandali',[[406,439,'mov'],[439,534,'regno']],[[406,'Reno'],[429,'Africa']],[534,'534']],
@@ -3070,7 +3257,11 @@ function disegnaBarbari(svg,S,W,H){
     var big=hh>=110&&w>=200, tt=el('text',{x:r1(x+12),y:r1(y+(hh<60?36:big?56:48)),'class':'ig-bb-card-t'},g); if(hh<60) tt.style.fontSize='12.5px'; else if(big) tt.style.fontSize='20px'; var n=avvolgi(tt,t,w-24,hh<60?14:big?25:17); cards.push(g); return g; }
   var y1=pb[1]+30;
   if(tre){ var cw3=(pb[2]-2*12)/3; PATTI.forEach(function(p,j){ card(pb[0]+j*(cw3+12),y1,cw3,ch,p[0],p[1]); }); var cw2=(pb[2]-12)/2; RIC.forEach(function(p,j){ card(pb[0]+j*(cw2+12),y1+ch+14,cw2,ch,'ricevevano '+p[0],p[1],'ric'); }); }
-  else { var cwh=pb[2]; PATTI.forEach(function(p,j){ card(pb[0],y1+j*(ch+6),cwh,ch,p[0],p[1]); }); RIC.forEach(function(p,j){ card(pb[0],y1+(3+j)*(ch+6),cwh,ch,'ricevevano '+p[0],p[1],'ric'); }); }
+  else { var VOCI=PATTI.map(function(p){ return [p[0],p[1],'']; }).concat(RIC.map(function(p){ return ['ricevevano '+p[0],p[1],'ric']; })), fondoP=pb[1]+pb[3]-24;
+    function cardV(y,k,t,cl,fs){ var g=el('g',{'class':'ig-bb-card '+cl},gP), r=el('rect',{x:r1(pb[0]),y:r1(y),width:r1(pb[2]),rx:10,'class':'ig-bb-card-r'},g), lh=Math.round(fs*1.2);
+      tx(g,pb[0]+12,y+17,'ig-bb-card-k',k.toUpperCase()); var tt=el('text',{x:r1(pb[0]+12),y:r1(y+19+lh),'class':'ig-bb-card-t'},g); tt.style.fontSize=fs+'px';
+      var hh=19+lh*avvolgi(tt,t,pb[2]-24,lh)+9; r.setAttribute('height',r1(hh)); cards.push(g); return hh; }
+    [16,14.5,13].some(function(fs,f,L){ cards.forEach(function(c){ c.remove(); }); cards.length=0; var y=y1; VOCI.forEach(function(v){ y+=cardV(y,v[0],v[1],v[2],fs)+6; }); return y-6<=fondoP||f===L.length-1; }); }
   var tP=tx(gP,pb[0],pb[1]+pb[3]-2,'ig-m-avverte','Le fonti dell\'epoca sono brevi e si prestano a più letture.'); if(largo(tP)>pb[2]) tP.textContent='Le fonti si prestano a più letture.';
   /* la colonna accanto alle carte */
   var gK=el('g',{'class':'ig-p-col-d'},svg), fsA=oriz?Math.min(piccolo?26:44,cb[2]/5.2):Math.min(24,W/13), tA=tx(gK,cb[0],cb[1]+fsA*.82,'ig-p-anno',''), tSt=el('text',{x:r1(cb[0]),y:r1(cb[1]+fsA*1.08+(oriz?14:12)),'class':'ig-p-stato'},gK);

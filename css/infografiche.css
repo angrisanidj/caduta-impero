@@ -155,6 +155,7 @@
 .ig-leg-mura.vis{opacity:1}
 .ig-leg-tevere{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#4A6F7E}
 .ig-leg{font-family:var(--ui);font-size:12px;fill:var(--muted,#5F554B)}
+.ig-leg-dove{font-style:italic}
 .ig-ab{fill:var(--porpora,#7A1F2B);stroke:rgba(122,31,43,0);stroke-width:1.3;opacity:0;transform:scale(.1);transform-box:fill-box;transform-origin:center;
   transition:opacity .45s ease,transform .6s cubic-bezier(.3,1.5,.5,1),fill .5s ease,stroke .5s ease}
 .ig-ab.pieno{opacity:1;transform:none}
@@ -253,12 +254,20 @@
 .ig-oro-nota.vis{opacity:1}
 
 /* ---------- 5. la flotta ---------- */
-.ig-onda{fill:none;stroke:#fff;stroke-width:1}
+.ig-onda{fill:none;stroke:#fff;stroke-width:1;stroke-linecap:round}
+.ig-onda.scura{stroke:#0B2229;opacity:.2}
+.ig-scintilla{stroke:#FFF3D6;stroke-width:1.2;stroke-linecap:round;opacity:.35;animation:ig-scintilla 3.2s ease-in-out infinite alternate}
+@keyframes ig-scintilla{from{opacity:.08}to{opacity:.5}}
 .ig-fila{animation:ig-dondola 3.4s ease-in-out infinite alternate}
-@keyframes ig-dondola{from{transform:translateY(0)}to{transform:translateY(-2.2px)}}
+@keyframes ig-dondola{from{transform:translateY(0)}to{transform:translateY(-1.6px)}}
 .ig-n{opacity:0;transform:translateY(8px);transition:opacity .9s ease,transform 1.2s cubic-bezier(.4,0,.7,.2)}
 .ig-n.su{opacity:1;transform:none;transition:opacity .5s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-.ig-n.via{opacity:.1;transform:translateY(5px)}
+.ig-n.via{opacity:0;transform:translateY(6px)}
+.ig-r{opacity:0;transition:opacity 1.2s ease .6s}
+.ig-r.via{opacity:1}
+.ig-k-leg{font-family:var(--ui);font-size:12px;fill:#E7DDCB}
+.ig-fermo .ig-fila,.ig-fermo .ig-scintilla{animation:none}
+@media (prefers-reduced-motion:reduce){.ig-fila,.ig-scintilla{animation:none}}
 .ig-conta.chiaro .ig-k-anno{fill:#F1D99A}
 .ig-conta.chiaro .ig-k-num{fill:#FFF8EA}
 .ig-conta.chiaro .ig-k-lab{fill:#E7DDCB}
@@ -1423,3 +1432,41 @@ rect.ig-bb-leg-r{stroke:rgba(0,0,0,.2)}
 .ig-ca-raggi{fill:none;stroke:#2A1C10;stroke-width:.9}
 .ig-ca-timone{fill:none;stroke:#2A1C10;stroke-width:1.6;stroke-linecap:round}
 .ig-ca-drappo{fill:#7A1F2B;stroke:#C9A14A;stroke-width:.8}
+/* chi governa l'Occidente, telefono in piedi: niente si taglia (al più il pannello scorre), anno e titolo sulla stessa riga */
+.ig-pannello.sotto>*{flex:none}
+@media (max-width:600px){
+  .ig-pannello.sotto{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;align-content:start;column-gap:12px;row-gap:6px}
+  .ig-pannello.sotto .ig-p-anno{font-size:34px}
+  .ig-pannello.sotto .ig-p-titolo{font-size:15px;line-height:1.25}
+  .ig-pannello.sotto .ig-legenda{grid-column:1/-1;gap:4px 10px}
+  .ig-pannello.sotto .ig-chip{font-size:12px}
+}
+/* l'altare della Vittoria, ridisegno: marmi, ombre, figure sedute, altare con pulvini e fuoco, bollo piccolo */
+.ig-al-venature{filter:url(#ig-al-marmo);opacity:.32;pointer-events:none}
+.ig-al-v-pav{opacity:.2}
+.ig-al-spigolo{fill:none;stroke:#fff;stroke-opacity:.75;stroke-width:1}
+.ig-al-riquadro{fill:none;stroke:#C9B894;stroke-width:1}
+.ig-al-formella{fill:none;stroke:#C99A3A;stroke-width:.8}
+.ig-al-seggio{fill:url(#ig-al-legno);stroke:#4A2E14;stroke-width:.5;opacity:.85}
+.ig-al-sen-ombra{fill:#2A1A0C;fill-opacity:.28}
+.ig-al-lucefig{pointer-events:none}
+.ig-al-piega{fill:none;stroke:#FFFDF6;stroke-opacity:.75;stroke-width:1.1;stroke-linecap:round}
+.ig-al-sen.cristiano .ig-al-piega,.ig-al-sen.ignoto .ig-al-piega{stroke-opacity:.45}
+.ig-al-capo{stroke:rgba(40,25,12,.55);stroke-width:.6}
+.ig-al-capo-luce{fill:#fff;fill-opacity:.28}
+.ig-al-zoccolo{fill:#D8CBB0;stroke:#9C8460;stroke-width:1;filter:drop-shadow(1.5px 2.5px 2px rgba(40,25,10,.4))}
+.ig-al-pulvino{fill:#E9DDC2;stroke:#9C8460;stroke-width:.7}
+.ig-al-rosetta{fill:#C9A14A;stroke:#8C6420;stroke-width:.5}
+.ig-al-focolare{fill:#3B2216}
+.ig-al-brace{fill:#E8622C}
+.ig-al-fuoco2{fill:#FFB347}
+.ig-al-fuoco3{fill:#FFF3C4}
+.ig-al-scintilla{fill:#FFD36A;animation:ig-al-sale 1.4s ease-out infinite}
+@keyframes ig-al-sale{from{transform:translateY(0);opacity:1}to{transform:translateY(-16px);opacity:0}}
+.ig-al-bollo .ig-ca-bollo-t{font-family:var(--cap);font-weight:700;letter-spacing:.08em}
+.ig-al-bollo-r2{fill:none;stroke:#7A1F2B;stroke-width:.8}
+@media (prefers-reduced-motion:reduce){ .ig-al-scintilla{animation:none;opacity:0} }
+/* chi governa l'Occidente: legenda che non ci sta sotto la carta (telefono in piedi) */
+.ig-legenda.fitta{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px}
+.ig-legenda.fitta .ig-chip{font-size:11px;line-height:1.2;align-items:flex-start}
+.ig-legenda.fitta .ig-chip i{margin-top:1px;width:11px;height:11px}

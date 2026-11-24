@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 24/11/2026, 09:25:39.
+Generato da `src/testi.mjs` il 24/11/2026, 09:51:02.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 24/11/2026, ore 09:21
+[pagina.52] Versione del 24/11/2026, ore 09:27
 
 
 ## 2. Gli atti
@@ -3650,13 +3650,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.antoniniano.data1-212] Tra il 212 e il 213, come ricorda l'iscrizione di porta Tiburtina, Caracalla fa restaurare l'acquedotto della Marcia e vi aggiunge una sorgente. Fa anche portare l'acqua alle sue terme. Si discute però da quale acquedotto provenisse quell'acqua. I depositi minerali nel canale sopra l'arco rimandano agli acquedotti della Tepula e della Giulia.
 
-[scheda.antoniniano.data2-537] I Goti tagliano tutti gli acquedotti e le terme di Caracalla non riapriranno. Se e quando questo ramo abbia ripreso a portare acqua non si sa: qui si assume di sì, come per la Marcia.
+[scheda.antoniniano.data2-537] I Goti tagliano tutti gli acquedotti e le terme di Caracalla non riapriranno. Se e quando questo ramo abbia ripreso a portare acqua non si sa: nel modello resta in piedi, ma in rovina.
 
 [scheda.antoniniano.data3.quando] VIII-IX secolo
 
 [scheda.antoniniano.data3] L'Itinerario di Einsiedeln nomina alla porta Appia la «forma Iobia», che «viene dalla Marcia e corre fino alla riva».
 
-[scheda.antoniniano.data4-776] Verso il 776 papa Adriano I fa ricostruire «dalle fondamenta» un acquedotto fermo da vent'anni. Il Liber Pontificalis lo chiama forma Iobia. Per Lanciani e Duchesne si tratta del ramo che portava l'acqua alle terme di Caracalla. Secondo Ashby il nome indica invece l'intero acquedotto dell'Acqua Marcia, perché al tempo dei papi le terme avevano già perso la loro funzione. Il modello segue la prima interpretazione, la più diffusa.
+[scheda.antoniniano.data4-776] Verso il 776 papa Adriano I fa ricostruire «dalle fondamenta» un acquedotto fermo da vent'anni. Il Liber Pontificalis lo chiama forma Iobia. Per Lanciani e Duchesne si tratta del ramo che portava l'acqua alle terme di Caracalla. Secondo Platner e Ashby il nome indica invece l'intero acquedotto dell'Acqua Marcia, che lo prende da Diocleziano, e il restauro di Adriano I riguarda quell'acquedotto. Il modello segue Platner e Ashby: rifà la Marcia fino a porta Tiburtina e lascia questo ramo in rovina.
 
 [scheda.antoniniano.data5.quando] 844-867
 
@@ -3675,7 +3675,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.acquedotti.data2-554] Con la legge chiamata Prammatica Sanzione, Giustiniano conferma per Roma privilegi ed entrate destinati alla manutenzione di edifici pubblici, Foro, porto, acquedotti e letto del Tevere (capitolo 25). La legge indica quali risorse si potevano usare. Da sola non documenta l'esecuzione dei lavori. Nel gennaio 602 Gregorio Magno scrive che gli acquedotti sono così trascurati da rischiare la rovina completa in breve tempo (Registro, XII, 6).
 
-[scheda.acquedotti.data3-780] Secondo il Liber Pontificalis, papa Adriano I (772-795) fa riparare quattro acquedotti. La Sabbatina, l'antica Traiana, era interrotta da vent'anni e aveva cento arcate crollate. Dopo i lavori rifornisce di nuovo San Pietro e i mulini del Gianicolo. Anche la Iovia, forse un ramo della Marcia, era ferma da vent'anni. La Claudia riporta l'acqua al Laterano. L'acquedotto Vergine, che prima ne portava pochissima, torna a dissetare quasi tutta la città. La fonte non precisa gli anni dei lavori. La data del 776 circa è una stima degli studiosi.
+[scheda.acquedotti.data3-780] Secondo il Liber Pontificalis, papa Adriano I (772-795) fa riparare quattro acquedotti. La Sabbatina, l'antica Traiana, era interrotta da vent'anni e aveva cento arcate crollate. Dopo i lavori rifornisce di nuovo San Pietro e i mulini del Gianicolo. Anche la Iovia era ferma da vent'anni: per Platner e Ashby è l'acquedotto della Marcia, per altri il suo ramo per le terme di Caracalla. La Claudia riporta l'acqua al Laterano. L'acquedotto Vergine, che prima ne portava pochissima, torna a dissetare quasi tutta la città. La fonte non precisa gli anni dei lavori. La data del 776 circa è una stima degli studiosi.
 
 [scheda.acquedotti.certezza-B] Si conservano molte arcate dell'Acqua Claudia e del ramo costruito da Nerone. Degli acquedotti dell'Acqua Marcia, dell'Acqua Vergine e dell'Acqua Traiana conosciamo soltanto alcuni tratti. Gli altri percorsi e tutte le altezze indicate in questa ricostruzione sono stime.
 
@@ -4272,31 +4272,31 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.11-r74] Mostra meno
 
-[ui.pagina.12-r179] Voci di allora
+[ui.pagina.12-r193] Voci di allora
 
-[ui.pagina.13-r179] Una voce di allora
+[ui.pagina.13-r193] Una voce di allora
 
-[ui.pagina.14-r224] Esci dallo schermo intero
+[ui.pagina.14-r238] Esci dallo schermo intero
 
-[ui.pagina.15-r224] Scena a tutto schermo
+[ui.pagina.15-r238] Scena a tutto schermo
 
-[ui.pagina.16-r224] Tutto schermo
+[ui.pagina.16-r238] Tutto schermo
 
-[ui.pagina.17-r309] Leggi la tappa ↓
+[ui.pagina.17-r323] Leggi la tappa ↓
 
-[ui.pagina.18-r309] ↑ Torna alla carta e alla città
+[ui.pagina.18-r323] ↑ Torna alla carta e alla città
 
-[ui.pagina.19-r338] voci di allora
+[ui.pagina.19-r352] voci di allora
 
-[ui.pagina.20-r339] Fra storia e leggenda
+[ui.pagina.20-r353] Fra storia e leggenda
 
-[ui.pagina.21-r340] Gli storici discutono
+[ui.pagina.21-r354] Gli storici discutono
 
-[ui.pagina.22-r342] Letture di questa tappa
+[ui.pagina.22-r356] Letture di questa tappa
 
-[ui.pagina.23-r367] A Roma, in quest'anno
+[ui.pagina.23-r381] A Roma, in quest'anno
 
-[ui.pagina.24-r367] Guarda la città →
+[ui.pagina.24-r381] Guarda la città →
 
 
 ### js/mappa.js
@@ -4353,109 +4353,123 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.26-r27] Asia Minore
 
-[ui.mappa.27-r79] : mostra i territori che governa
+[ui.mappa.27-r78] Carlo il Calvo, re
 
-[ui.mappa.28-r90] le Gallie al di là delle Alpi (Aurelio Vittore)
+[ui.mappa.28-r78] Lotario, imperatore
 
-[ui.mappa.29-r91] tutto il resto, cioè l’Oriente (Aurelio Vittore)
+[ui.mappa.29-r78] Ludovico il Germanico, re
 
-[ui.mappa.30-r96] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
+[ui.mappa.30-r85] : mostra la sua parte
 
-[ui.mappa.31-r114] oltre il confine
+[ui.mappa.31-r97] le terre a ovest. Sul confine restano a lui Reims, Laon, Amiens e Mâcon
 
-[ui.mappa.32-r114] insediati nell'impero per accordo
+[ui.mappa.32-r98] la fascia di mezzo, dal mare del Nord all'Italia, con Aquisgrana e Roma. Sul confine sono sue Arras, Cambrai, Verdun, Lione, Vienne e Arles, e sul Reno Colonia, Bonn, Coblenza e Strasburgo. Più chiare le terre della Chiesa, legate all'imperatore, e la Frisia, che la carta gli dà senza una fonte
 
-[ui.mappa.33-r114] in armi dentro l'impero
+[ui.mappa.33-r99] le terre a est del Reno e, sulla riva sinistra, Magonza, Worms e Spira. Rezia e Norico gli vanno sulla carta perché stanno a est: nessuna fonte letta lo dice
 
-[ui.mappa.34-r114] con un proprio regno (vedi il colore nella legenda)
+[ui.mappa.34-r114] : mostra i territori che governa
 
-[ui.mappa.35-r116] Regno dei Visigoti
+[ui.mappa.35-r125] le Gallie al di là delle Alpi (Aurelio Vittore)
 
-[ui.mappa.36-r116] Regno degli Ostrogoti
+[ui.mappa.36-r126] tutto il resto, cioè l’Oriente (Aurelio Vittore)
 
-[ui.mappa.37-r116] Regno dei Vandali
+[ui.mappa.37-r131] I puntini delimitano le zone affidate ai quattro imperatori. L'impero resta unito e le stesse leggi valgono ovunque. I trattini indicano le regioni per cui si discute a chi spettasse il comando, come la penisola iberica e la Tracia. Tocca il nome di un imperatore, sulla carta o qui sopra, per vedere la sua zona.
 
-[ui.mappa.38-r116] Regno degli Svevi
+[ui.mappa.38-r149] oltre il confine
 
-[ui.mappa.39-r116] Regno dei Burgundi
+[ui.mappa.39-r149] insediati nell'impero per accordo
 
-[ui.mappa.40-r116] Regno dei Franchi
+[ui.mappa.40-r149] in armi dentro l'impero
 
-[ui.mappa.41-r116] Regni anglosassoni
+[ui.mappa.41-r149] con un proprio regno (vedi il colore nella legenda)
 
-[ui.mappa.42-r116] Regno dei Longobardi
+[ui.mappa.42-r151] Regno dei Visigoti
 
-[ui.mappa.43-r116] Regno degli Avari
+[ui.mappa.43-r151] Regno degli Ostrogoti
 
-[ui.mappa.44-r116] Regno dei Bulgari
+[ui.mappa.44-r151] Regno dei Vandali
 
-[ui.mappa.45-r438] La scena passo per passo
+[ui.mappa.45-r151] Regno degli Svevi
 
-[ui.mappa.46-r441] Passo per passo
+[ui.mappa.46-r151] Regno dei Burgundi
 
-[ui.mappa.47-r442] Rivedi la scena dall'inizio
+[ui.mappa.47-r151] Regno dei Franchi
 
-[ui.mappa.48-r472] Chiudi la didascalia
+[ui.mappa.48-r151] Regni anglosassoni
 
-[ui.mappa.49-r473] Mostra la didascalia
+[ui.mappa.49-r151] Regno dei Longobardi
 
-[ui.mappa.50-r482] ▶ Guarda la scena
+[ui.mappa.50-r151] Regno degli Avari
 
-[ui.mappa.51-r482] Guarda la scena di questa tappa sulla carta
+[ui.mappa.51-r151] Regno dei Bulgari
 
-[ui.mappa.52-r575] Regni dei Franchi
+[ui.mappa.52-r486] La scena passo per passo
 
-[ui.mappa.53-r575] Impero dei Franchi
+[ui.mappa.53-r489] Passo per passo
 
-[ui.mappa.54-r704] regno d'Italia di Odoacre
+[ui.mappa.54-r490] Rivedi la scena dall'inizio
 
-[ui.mappa.55-r704] regno degli Ostrogoti
+[ui.mappa.55-r520] Chiudi la didascalia
 
-[ui.mappa.56-r704] regno dei Franchi
+[ui.mappa.56-r521] Mostra la didascalia
 
-[ui.mappa.57-r705] impero romano
+[ui.mappa.57-r530] ▶ Guarda la scena
 
-[ui.mappa.58-r705] impero d'Occidente
+[ui.mappa.58-r530] Guarda la scena di questa tappa sulla carta
 
-[ui.mappa.59-r705] territorio con un imperatore rivale
+[ui.mappa.59-r624] Regni dei Franchi
 
-[ui.mappa.60-r705] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.60-r624] Impero dei Franchi
 
-[ui.mappa.61-r705] regione contesa in guerra
+[ui.mappa.61-r759] regno d'Italia di Odoacre
 
-[ui.mappa.62-r706] popoli insediati per trattato
+[ui.mappa.62-r759] regno degli Ostrogoti
 
-[ui.mappa.63-r706] impero d'Oriente
+[ui.mappa.63-r759] regno dei Franchi
 
-[ui.mappa.64-r707] califfato ed emirati arabi
+[ui.mappa.64-r760] impero romano
 
-[ui.mappa.65-r707] regni franchi dopo la divisione dell'843
+[ui.mappa.65-r760] impero d'Occidente
 
-[ui.mappa.66-r707] abbandonata da Roma
+[ui.mappa.66-r760] territorio con un imperatore rivale
 
-[ui.mappa.67-r707] fuori dal controllo romano
+[ui.mappa.67-r760] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.68-r739] Mostra meno voci della legenda
+[ui.mappa.68-r760] regione contesa in guerra
 
-[ui.mappa.69-r749] Mostra le altre
+[ui.mappa.69-r761] popoli insediati per trattato
 
-[ui.mappa.70-r799] mai appartenuta all'impero
+[ui.mappa.70-r761] impero d'Oriente
 
-[ui.mappa.71-r843] Carta a tutto schermo
+[ui.mappa.71-r762] califfato ed emirati arabi
 
-[ui.mappa.72-r848] ⤢ Guarda la carta a tutto schermo
+[ui.mappa.72-r762] regni franchi dopo la divisione dell'843
 
-[ui.mappa.73-r849] Non ora
+[ui.mappa.73-r762] abbandonata da Roma
 
-[ui.mappa.74-r860] Tutto schermo
+[ui.mappa.74-r762] fuori dal controllo romano
 
-[ui.mappa.75-r860] Esci dallo schermo intero
+[ui.mappa.75-r800] Mostra meno voci della legenda
 
-[ui.mappa.76-r951] Torna alla carta intera
+[ui.mappa.76-r810] Mostra le altre
 
-[ui.mappa.77-r953] La scena continua fuori dalla carta, verso
+[ui.mappa.77-r861] mai appartenuta all'impero
 
-[ui.mappa.78-r953] : guardala tutta
+[ui.mappa.78-r906] Carta a tutto schermo
+
+[ui.mappa.79-r911] ⤢ Guarda la carta a tutto schermo
+
+[ui.mappa.80-r912] Non ora
+
+[ui.mappa.81-r923] Tutto schermo
+
+[ui.mappa.82-r923] Esci dallo schermo intero
+
+[ui.mappa.83-r1014] Torna alla carta intera
+
+[ui.mappa.84-r1016] La scena continua fuori dalla carta, verso
+
+[ui.mappa.85-r1016] : guardala tutta
 
 
 ### js/atti.js
