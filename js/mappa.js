@@ -655,7 +655,7 @@ function migliorePop(v,prove,W,H,ost,segni){      // il primo posto libero, o qu
    dei luoghi; poi, popolo per popolo e sosta per sosta, vince il posto che costringe a meno eccezioni e, fra questi, sommato su tutte le tappe della sosta
    copre di meno (nomi, cartellini dei luoghi); a parità il primo della lista, che è il più vicino. In una tappa in cui quel posto copre un rombo, un segno
    della scena o un altro cartellino si accetta l'eccezione: lì il cartellino cerca il suo posto da solo. Cambiando misure (telefono, tutto schermo, ingrandimento) la pianta si rifà. */
-var piante={}, piantaDopo=0, piantaFatta=0, BORDO=[103,897,63,565];
+var piante={}, piantaDopo=0, piantaFatta=0, ultimoGesto=0, BORDO=[103,897,63,565];      // ultimoGesto: quando la rotella o le due dita hanno ingrandito l'ultima volta, a gesto già avviato (gesto(), più sotto)
 function tappeCarta(){ return ((window.RM_DATI||{}).TAPPE||[]).filter(function(t){ return t.regioni; }); }      // anche gli intermezzi (284, 395, 439, 476): la carta li mostra
 function chiaveTappa(anno,l,sc){ return anno+'|'+(l||[]).map(function(q){ return q[0]; }).join()+'|'+(sc?sc.length:0); }      // l'intermezzo del 395 e la tappa del 395 hanno lo stesso anno
 /* i nomi dei tetrarchi (293-305) come ingombri: i cartellini dei popoli e i nomi delle città li evitano (23 novembre 2026: «Costanzo» finiva sotto il cartellino degli Alamanni) */
@@ -705,18 +705,20 @@ function faiPianta(k){
 function piantaPer(k){
   if(piante[k]) return piante[k];
   var ks=Object.keys(piante);
-  if(!grandeSi || !ks.length || Date.now()-piantaFatta>600){ if(ks.length>8) piante={}; piante[k]=faiPianta(k); piantaFatta=Date.now(); return piante[k]; }      // si aspetta solo se l'ultima pianta è appena stata fatta: si sta ingrandendo
+  if(!grandeSi || !ks.length || (Date.now()-piantaFatta>600 && Date.now()-ultimoGesto>400)){ if(ks.length>8) piante={}; piante[k]=faiPianta(k); piantaFatta=Date.now(); return piante[k]; }      // si aspetta se l'ultima pianta è appena stata fatta o se la rotella o le due dita stanno ancora ingrandendo (24 novembre 2026: prima, in uno zoom lungo, la pianta intera si rifaceva ogni 0,6 secondi e lo zoom si fermava per 150-250 ms)
   clearTimeout(piantaDopo); piantaDopo=setTimeout(function(){ if(ingr===k && !piante[k]){ piante[k]=faiPianta(k); piantaFatta=Date.now(); if(annoVisto!=null) mostraPopoli(annoVisto); } },300);
   var vicina=ks.reduce(function(m,c){ return Math.abs(c-k)<Math.abs(m-k)?c:m; });
   return piante[vicina];
 }
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ piante={}; larghePop={}; larghiL={}; larghe={}; if(annoVisto!=null) mostraPopoli(annoVisto); });      // con i caratteri veri le misure cambiano
+/* su uno schermo stretto la carta rimpicciolisce: cartellini e punti si ingrandiscono per restare leggibili */
+/* a tutto schermo restano della stessa misura sullo schermo anche quando si ingrandisce la carta */
+function ingrandimento(){
+  var lw=larghezzaSvg(), ppu=lw>0?lw/larghezzaVista():1, k=lw<=0?1:grandeSi?Math.max(.4,Math.min(1.8,Math.max(10,Math.min(14,Math.min(window.innerWidth,window.innerHeight)/40))/11.5/ppu)):Math.max(1,Math.min(2.2,(window.innerWidth<=700?.85:.7)/ppu));      // a tutto schermo: scritte di 10-14 pixel
+  return Math.round(k*20)/20;
+}
 function mostraPopoli(anno){
-  var visti={}, id, i;
-  /* su uno schermo stretto la carta rimpicciolisce: cartellini e punti si ingrandiscono per restare leggibili */
-  /* a tutto schermo restano della stessa misura sullo schermo anche quando si ingrandisce la carta */
-  var lw=svg.getBoundingClientRect().width, ppu=lw>0?lw/larghezzaVista():1, k=lw<=0?1:grandeSi?Math.max(.4,Math.min(1.8,Math.max(10,Math.min(14,Math.min(window.innerWidth,window.innerHeight)/40))/11.5/ppu)):Math.max(1,Math.min(2.2,(window.innerWidth<=700?.85:.7)/ppu));      // a tutto schermo: scritte di 10-14 pixel
-  k=Math.round(k*20)/20;
+  var visti={}, id, i, k=ingrandimento();
   if(k!==ingr){ ingr=k; svg.style.setProperty('--pf',(11.5*k).toFixed(1)+'px'); for(id in popoli) popoli[id].punto.setAttribute('r',(4*k).toFixed(1)); }
   var pianta=piantaPer(k), sc=pianta?k/pianta.k:1;
   /* l'ordine conta: prima ciò che non si sposta (rombi), poi la scena (anelli, frecce, spade, fiamme), poi i cartellini dei popoli che hanno il posto della loro sosta,
@@ -875,18 +877,22 @@ spazioLegende();
    resta ferma, così sui telefoni la pagina scorre. */
 var BASE=[95,55,810,518], vista={k:1,cx:500,cy:314,w:BASE[2],h:BASE[3]}, grandeSi=false, daRifare=0;
 function larghezzaVista(){ return !grandeSi?BASE[2]:(vista.alto?BASE[2]:vista.w)/vista.k; }
+/* La larghezza della carta sullo schermo. A tutto schermo la decide adatta() e non cambia ingrandendo o trascinando: si misura una volta sola (24 novembre 2026).
+   Misurarla dopo ogni cambio del viewBox costringeva il browser a rifare subito l'impaginazione di tutte le scritte (20 ms a ogni scatto della rotella) */
+var largoSvg=0;
+function larghezzaSvg(){ if(!grandeSi) return svg.getBoundingClientRect().width; if(!largoSvg) largoSvg=svg.getBoundingClientRect().width; return largoSvg; }
 function applicaVista(){
   if(!grandeSi){ svg.setAttribute('viewBox',BASE.join(' ')); return; }
   if(vista.k<=1.001){ vista.k=1; vista.cx=500; vista.cy=314; }      // tornati all'ingrandimento 1 si rivede la carta intera, centrata come sempre: non resta spostata verso il punto che si stava guardando
   var w=vista.w/vista.k, h=vista.h/vista.k;
-  if(vista.alto){ w=BASE[2]/vista.k; h=Math.min(G.h,w*vista.alto/vista.aw); ospite.style.height=Math.round(vista.aw*h/w)+'px'; }      // schermo alto e stretto: ingrandendo, il riquadro cresce in altezza finché c'è posto
+  if(vista.alto){ w=BASE[2]/vista.k; h=Math.min(G.h,w*vista.alto/vista.aw); ospite.style.height=Math.round(vista.aw*h/w)+'px'; largoSvg=0; }      // schermo alto e stretto: ingrandendo, il riquadro cresce in altezza finché c'è posto (e la larghezza si rimisura)
   vista.cx=Math.max(w/2,Math.min(G.w-w/2,vista.cx)); vista.cy=Math.max(h/2,Math.min(G.h-h/2,vista.cy));
   svg.setAttribute('viewBox',(vista.cx-w/2).toFixed(1)+' '+(vista.cy-h/2).toFixed(1)+' '+w.toFixed(1)+' '+h.toFixed(1));
-  if(!daRifare) daRifare=requestAnimationFrame(function(){ daRifare=0; if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); });
+  if(!daRifare) daRifare=requestAnimationFrame(function(){ daRifare=0; if(ultimo&&ultimo[1]!=null && (ingrandimento()!==ingr || !largoSvg)) mostraPopoli(ultimo[1]); });      // trascinando la carta l'ingrandimento non cambia e cartellini, nomi e scena restano come sono: non si rifanno
 }
 /* misura del riquadro della carta: tutta la finestra meno la linea del tempo, che non copre mai la carta */
 function adatta(){
-  if(!grandeSi) return;
+  largoSvg=0; if(!grandeSi) return;      // misure nuove: la larghezza della carta si rimisura
   var tp=document.querySelector('.tempo'), H=window.innerHeight, ht=tp?tp.offsetHeight+(H<560?18:24):116, aw=window.innerWidth, ah=Math.max(120,H-ht);
   document.body.classList.remove('impero-largo');                       // le legende si misurano al loro posto, sotto la carta
   var legende=Math.max(legendeMax,legenda.offsetHeight+(legendaPopoli?legendaPopoli.offsetHeight:0))+8;      // lo spazio della tappa con più voci (spazioLegende)
@@ -930,10 +936,10 @@ function grande(si){
        il disegno non può più allungare il riquadro. Da riprovare su un telefono vero. */
     var rimetti=function(){ if(grandeSi || regia) return; svg.removeAttribute('viewBox'); svg.setAttribute('viewBox',BASE.join(' ')); };
     requestAnimationFrame(rimetti); setTimeout(rimetti,320); }
-  ingr=0; window.dispatchEvent(new Event('resize'));                    // il gestore qui sopra rifà misure, legende e cartellini
+  ingr=0; largoSvg=0; window.dispatchEvent(new Event('resize'));                    // il gestore qui sopra rifà misure, legende e cartellini
   if(si) setTimeout(function(){ if(grandeSi && vista.libera && annoVisto!=null && !regia) avviaRegia(luoghiRegia,scenaOra); },500);      // aperta la carta grande, la regia della tappa riparte lì
 }
-function unita(){ return larghezzaVista()/(svg.getBoundingClientRect().width||1); }      // unità della carta per pixel
+function unita(){ return larghezzaVista()/(larghezzaSvg()||1); }      // unità della carta per pixel
 function zoomSu(f,px,py){
   if(regia) fermaRegia(); vista.libera=false;
   var k0=vista.k, k1=Math.max(1,Math.min(6,k0*f)); if(k1===k0) return;
@@ -950,11 +956,13 @@ svg.addEventListener('pointerdown',function(e){ if(!grandeSi) return; if(e.isPri
 svg.addEventListener('pointermove',function(e){
   if(!grandeSi||!dita[e.pointerId]||!presa) return; dita[e.pointerId]=[e.clientX,e.clientY];
   if(presa.d==null){ var u=unita(); vista.cx=presa.cx-(e.clientX-presa.x)*u; vista.cy=presa.cy-(e.clientY-presa.y)*u; }
-  else vista.k=Math.max(1,Math.min(6,presa.k*distanza()/presa.d));
+  else { gesto(); vista.k=Math.max(1,Math.min(6,presa.k*distanza()/presa.d)); }
   applicaVista();
 });
 svg.addEventListener('pointerup',lascia); svg.addEventListener('pointercancel',lascia); svg.addEventListener('lostpointercapture',lascia);
-svg.addEventListener('wheel',function(e){ if(!grandeSi) return; e.preventDefault(); zoomSu(Math.exp(-e.deltaY*.0015),e.clientX,e.clientY); },{passive:false});
+var gestoPrima=0;
+function gesto(){ var ora=Date.now(); if(ora-gestoPrima<250) ultimoGesto=ora; gestoPrima=ora; }      // solo a gesto avviato: un solo scatto della rotella rifà subito la pianta dei cartellini, come prima
+svg.addEventListener('wheel',function(e){ if(!grandeSi) return; e.preventDefault(); gesto(); zoomSu(Math.exp(-e.deltaY*.0015),e.clientX,e.clientY); },{passive:false});
 bPiu.addEventListener('click',function(){ zoomSu(1.5); }); bMeno.addEventListener('click',function(){ zoomSu(1/1.5); });
 bGrande.addEventListener('click',function(){ grande(!grandeSi); });
 window.addEventListener('keydown',function(e){ if(e.key==='Escape'&&grandeSi) grande(false); });
