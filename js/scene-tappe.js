@@ -20,7 +20,19 @@ var C={ rosso:RM.col(0x9a2f2a), grigio:RM.col(0x7b7f86), ferro:RM.col(0xa9adb3),
         bianco:RM.col(0xeee8dc), cavalloB:RM.col(0x6b4a33), cavalloC:RM.col(0x9c8a74), folla:[RM.col(0xb5543e),RM.col(0x8c7a5b),RM.col(0xc9b48a),RM.col(0x6f7f6a),RM.col(0x9c6a48),RM.col(0xd8cdb6)] };
 
 /* quota su cui posano figure e oggetti delle scene: la più alta fra quella esatta e quella del terreno come è disegnato, così le figure (alte 1,85 m) non finiscono dentro il terreno */
-function H(x,z){ var a=RM.h(x,z); return RM.hSuolo?Math.max(a,RM.hSuolo(x,z)):a; }
+function H(x,z){ var a=RM.h(x,z); a=RM.hSuolo?Math.max(a,RM.hSuolo(x,z)):a; return Math.max(a,suStrada(x,z)); }
+/* Le strade sono un nastro 1 m sopra il terreno (RM.nastro(…,.1) in js/base.js): chi stava su una strada ci affondava fino al ginocchio, e i cavalli sembravano senza
+   gambe (24 novembre 2026, visto sulla Flaminia del 593). Se il punto cade dentro una strada, la quota è quella del nastro. Le strade: RM.STRADE, mezze larghezze in RM_TOPO.stradeLarghe. */
+var STRADE_BB=null;
+function suStrada(x,z){
+  var S=RM.STRADE, W=window.RM_TOPO&&RM_TOPO.stradeLarghe; if(!S||!W||!RM.hSuolo) return -1e9;
+  if(!STRADE_BB) STRADE_BB=S.map(function(L,i){ var b=[1e9,1e9,-1e9,-1e9]; L.forEach(function(p){ b[0]=Math.min(b[0],p[0]); b[1]=Math.min(b[1],p[1]); b[2]=Math.max(b[2],p[0]); b[3]=Math.max(b[3],p[1]); }); var w=W[i]||.5; return [b[0]-w,b[1]-w,b[2]+w,b[3]+w]; });
+  for(var i=0;i<S.length;i++){ var b=STRADE_BB[i]; if(x<b[0]||x>b[2]||z<b[1]||z>b[3]) continue;
+    var L=S[i], w=(W[i]||.5)*.95;
+    for(var k=0;k<L.length-1;k++){ var ax=L[k][0], az=L[k][1], dx=L[k+1][0]-ax, dz=L[k+1][1]-az, l2=dx*dx+dz*dz||1, t=Math.max(0,Math.min(1,((x-ax)*dx+(z-az)*dz)/l2));
+      if(Math.hypot(x-ax-dx*t,z-az-dz*t)<w) return RM.hSuolo(x,z)+.1; } }
+  return -1e9;
+}
 /* figure a blocchi, come le statue di js/monumenti.js (s=1: uomo alto 1,85 m, cavallo lungo 2,2 m) */
 function uomo(B,x,z,y,col,scudo,ry){
   B.dentro(x,y,z,ry||0,function(B){
@@ -273,18 +285,45 @@ var assedio472=(function(){
    Le fonti non dicono dove fosse il loro campo (Gregorio, Omelie su Ezechiele, prefazione al libro II e II 10, 24; Paolo Diacono IV 8): niente accampamento.
    Si vede ciò che Gregorio scrive di aver visto (Registrum V 36, giugno 595): Romani portati via «more canum in collis funibus», per essere venduti in Francia;
    qui una fila di prigionieri legati, con uomini a cavallo, sulla Flaminia verso nord (la strada è una scelta nostra), e casali che bruciano (i fuochi stanno in EVENTI). */
+/* 24 novembre 2026, l'utente: «non puoi mostrarmi la porta così, ma la strada dove si vedono chiaramente i prigionieri incatenati che vanno via». Rifatta: la colonna segue la Flaminia
+   com'è disegnata (RM_TOPO.strade[0], dalla porta del Popolo verso nord), comincia 35 m fuori porta e cammina verso nord; gruppi di dieci, uno dietro l'altro a passo d'uomo (1,7 m),
+   con un collare scuro al collo e la corda da un collo al seguente, tesa e appena calante, più grossa del vero (8 cm invece di 2-3) perché si legga anche sul telefono;
+   il primo di ogni gruppo è legato alla sella di un cavaliere. Ai lati le guardie longobarde a cavallo, con la lancia, e qualcuna a piedi. Uomini, donne e ragazzi in vesti
+   diverse. Gregorio dice solo «more canum in collis funibus ligatos»: numeri, ordine, guardie e il legame alla sella sono uno schema. */
+function fune(B,a,b,r,col){      // una corda diritta fra due punti [x,y,z], di sezione r
+  var dx=b[0]-a[0], dy=b[1]-a[1], dz=b[2]-a[2], L=Math.hypot(dx,dy,dz), g=new THREE.BoxGeometry(r,r,L);
+  g.applyMatrix4(new THREE.Matrix4().lookAt(new THREE.Vector3(0,0,0),new THREE.Vector3(dx,dy,dz),new THREE.Vector3(0,1,0)));
+  g.translate((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2); B.geo(g,col);
+}
 var prigionieri593=(function(){
-  var B=new RM.Costruttore(), A=[-75.6,-206], i, t, x, z, dx=-.29, dz=-.957;      // la Flaminia fuori porta: il primo tratto di RM_TOPO.strade[0], da porta Flaminia verso nord-ovest
-  /* 23 novembre 2026, l'utente: «mostra di più i prigionieri catturati come descritto». Ora sono molti di più, in due file, a gruppi di dieci legati alla stessa corda al collo
-     , uomini, donne e ragazzi; ai lati le guardie longobarde a cavallo e a piedi. Quanti fossero non è scritto: è uno schema */
-  var ry=Math.atan2(dx,dz), px=-dz, pz=dx, fila, k, y;
-  for(fila=-1;fila<=1;fila+=2) for(i=0;i<90;i++){ t=6+i*.32; x=A[0]+dx*t+px*fila*.16; z=A[1]+dz*t+pz*fila*.16; y=H(x,z);
-    var bimbo=i%7===3; B.dentro(x,y,z,ry,function(B){ var h=bimbo?.7:1; B.scatola(.05,.15*h,.035,0,0,0,C.folla[(i*3+fila+5)%C.folla.length]).scatola(.03,.035,.03,0,.15*h,0,C.pelle); });
-    if(i%10!==9){ var x2=A[0]+dx*(t+.32)+px*fila*.16, z2=A[1]+dz*(t+.32)+pz*fila*.16; B.scatola(.012,.012,.32,(x+x2)/2,(y+H(x2,z2))/2+.142,(z+z2)/2,RM.col(0x4a3a28),ry); } }      // la corda al collo, da un prigioniero al seguente
-  for(i=0;i<16;i++){ t=4+i*2; k=i%2?1:-1; x=A[0]+dx*t+px*k*.9; z=A[1]+dz*t+pz*k*.9; cavaliere(B,x,z,H(x,z),ry+Math.PI,C.cavalloB,C.ferro); }      // guardie a cavallo
-  for(i=0;i<14;i++){ t=5+i*2.2; k=i%2?-1:1; x=A[0]+dx*t+px*k*.5; z=A[1]+dz*t+pz*k*.5; y=H(x,z); uomo(B,x,z,y,C.ferro,C.cavalloB,ry+Math.PI); B.scatola(.008,.3,.008,x+.03,y,z,P.tronco); }      // guardie a piedi con la lancia
+  var r5=RM.casuale(593), B=new RM.Costruttore(), S=RM_TOPO.strade[0], PG=RM_TOPO.porte['Porta del Popolo']||[-77.1,-211.4], i, j, k, p, q;
+  var via=spezzata([PG,S[2],S[3]]), corda=RM.col(0x3a2a1a), lancia=P.tronco, VESTI=[C.folla[0],C.folla[1],C.folla[3],C.folla[4],RM.col(0x56677a),RM.col(0x7a4a5a),RM.col(0x8a6f3e)];      // vesti scure o colorate: le chiare si perdevano sulla strada
+  var COLLO=.142, PASSO=.17, s0=3.5, gruppi=8, prima=[];
+  function collo(pp){ return [pp.x,pp.y+COLLO*pp.h,pp.z]; }
+  for(j=0;j<gruppi;j++){
+    var lat=(j%2?.14:-.14), sg=s0+j*(PASSO*10+.75), lunga=via(0).lung, prec=null;
+    for(i=0;i<10;i++){
+      var s=sg+i*PASSO; p=via(s/lunga,lat+(r5()-.5)*.04); p.h=(i===4&&j%3===1)?.72:1;      // un ragazzo ogni tanto
+      var col=VESTI[(j*5+i*3)%VESTI.length], ry=p.ry+(r5()-.5)*.25;
+      B.dentro(p.x,p.y,p.z,ry,function(B){ var h=p.h; B.scatola(.05,.15*h,.035,0,0,0,col).scatola(.03,.035,.03,0,.15*h,0,C.pelle).scatola(.042,.016,.042,0,COLLO*h-.008,0,corda); });      // corpo, testa, collare
+      if(prec) fune(B,collo(prec),collo(p),.008,corda);
+      prec=p;
+    }
+    prima.push(prec);      // il primo del gruppo, quello più avanti
+  }
+  /* le guardie: un cavaliere davanti a ogni gruppo, con la corda legata alla sella; altri ai due lati, con la lancia alzata */
+  var lunghezza=via(0).lung;
+  prima.forEach(function(cp,j){ var s=s0+j*(PASSO*10+.75)+9*PASSO+.4; q=via(s/lunghezza,j%2?.14:-.14); cavaliere(B,q.x,q.z,q.y,q.ry,j%2?C.cavalloB:C.cavalloC,C.ferro);
+    fune(B,[q.x,q.y+.13,q.z],collo(cp),.008,corda); });
+  for(i=0;i<22;i++){ var sl=s0-1+i*1.0, la=(i%2?1:-1)*(.62+r5()*.15); q=via(sl/lunghezza,la);
+    if(i%4===3){ uomo(B,q.x,q.z,q.y,C.ferro,C.cavalloB,q.ry); B.scatola(.01,.28,.01,q.x+.035*Math.cos(q.ry),q.y,q.z-.035*Math.sin(q.ry),lancia); continue; }      // a piedi, con la lancia
+    cavaliere(B,q.x,q.z,q.y,q.ry+(r5()-.5)*.3,r5()<.5?C.cavalloB:C.cavalloC,C.ferro);
+    B.scatola(.01,.3,.01,q.x+.04*Math.cos(q.ry),q.y+.12,q.z-.04*Math.sin(q.ry),lancia); }      // la lancia, dritta accanto al cavaliere: da 1,2 a 4,2 m da terra
   var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
-  return {g:g, da:592.6, a:594};
+  /* la vista della regia: da fuori, a ovest della strada (verso il fiume, in piano), 13 m sopra il suolo, a una quarantina di metri dalla colonna, che viene verso chi guarda
+     di tre quarti; la porta e le mura restano sullo sfondo */
+  var vt=via(8.6/lunghezza,0), vc=via(12.1/lunghezza,-1.5);
+  return {g:g, da:592.6, a:594, vista:{g:[vt.x,vt.z], c:[vc.x,Math.max(vc.y,vt.y)+1.35,vc.z]}};      // g: il punto a terra da mettere al centro (mira, più sotto)
 })();
 
 /* ---------- aiuti per le cinque scene aggiunte il 23 novembre 2026 (274, 410, 455, 663, 852) ---------- */
@@ -443,7 +482,7 @@ var carlo800=(function(){
   function inquadra(t){ var p=via(Math.max(0,sC(t)-3)/LUN,0), y0=H(p.x,p.z)+1, f=F(); return {t:[p.x,y0,p.z], c:[p.x+18*f,y0+15*f,p.z-20*f]}; }      // da nord-est: il portico, a sud, non copre il corteo
   var o=sequenza({fine:FINE, attesa:1.8, disegna:disegna, visibile:function(){ return g.visible; },
     azioni:[[0,function(){ RM.segui(function(k){ return inquadra(k*VIAGGIO); },VIAGGIO); }],
-            [VIAGGIO,function(){ var v=RM.adatta({t:[-244,-107.5],c:[-231,9,-118]}); RM.volaA(v.t,v.c,2.5); }]]});
+            [VIAGGIO,function(){ var v=RM.adatta({t:[-244,-107.5],c:[-232.5,11.5,-120.5]}); RM.volaA(v.t,v.c,2.5); }]]});      // un poco più alta (24 novembre 2026): sul telefono, allontanata, la camera aveva un tetto del portico davanti
   var v0=inquadra(0);
   return {g:g, tutte:tutte, seq:o, da:799.6, a:801, vista:{t:[v0.t[0],v0.t[2]],c:[v0.t[0]+18,v0.t[1]+15,v0.t[2]-20]}};
 })();
@@ -597,22 +636,71 @@ var fortino552=(function(){
    Sei luoghi; le posizioni sono quelle dei monumenti, non delle singole fosse (il catalogo del 2004 non è stato letto), e il numero delle tombe disegnate è indicativo,
    tranne i 44 di Vigna Barberini. L'Athenaeum di piazza Venezia (dieci tombe, VIII secolo) sta in una sala coperta e non si vede dall'alto. */
 var TOMBE=[      // [x, z, raggio, numero, dal anno, nome]
-  [51,37,2.6,6,410,'valle del Colosseo'],[51,37,3.2,16,537,'valle del Colosseo'],
-  [-78,160,2.2,4,455,'via Marmorata e Porticus Aemilia'],[-78,160,2.8,10,568,'via Marmorata e Porticus Aemilia'],
-  [27,32,2.6,44,526,'Vigna Barberini, sul Palatino'],
-  [73,146,4,26,568,'recinto delle terme di Caracalla, lato est'],
+  [51,37,1.1,7,410,'valle del Colosseo'],[51,37,2,18,537,'valle del Colosseo'],      // raggi ristretti il 24 novembre 2026: prima le tombe stavano sparse su 50-60 m e non si vedevano
+  [-78,160,1,5,455,'via Marmorata e Porticus Aemilia'],[-78,160,1.7,12,568,'via Marmorata e Porticus Aemilia'],
+  [27,32,1.9,44,526,'Vigna Barberini, sul Palatino'],
+  [73,146,2.4,26,568,'recinto delle terme di Caracalla, lato est'],
   [10,11,1.2,6,593,'atrio di Santa Maria Antiqua e casa delle Vestali']];
-var tombe=TOMBE.map(function(t){
-  var B=new RM.Costruttore(), coppi=P.coppi||RM.col(0xa8553a), terra=RM.col(0x8a7a62), smossa=RM.col(0x6f6150), k=0, tent=0, hq=RM.hSuolo||RM.h;
-  /* sotto il gruppo una chiazza di terra smossa, irregolare, che si vede anche da lontano (23 novembre 2026, l'utente: «dove si vedono le tombe?»): le fosse sono in grandezza vera */
-  var n=14, j, pr=[]; for(j=0;j<n;j++){ var aj=j/n*6.283, rj=(t[2]+.5)*(.8+.35*rnd()); pr.push([t[0]+Math.cos(aj)*rj, t[1]+Math.sin(aj)*rj]); }
-  for(j=0;j<n;j++){ var p1=pr[j], p2=pr[(j+1)%n]; B.tri([t[0],hq(t[0],t[1])+.03,t[1]],[p2[0],hq(p2[0],p2[1])+.03,p2[1]],[p1[0],hq(p1[0],p1[1])+.03,p1[1]],smossa); }
-  while(k<t[3] && tent<t[3]*20){ tent++;
-    var a=rnd()*6.283, r=Math.sqrt(rnd())*t[2], x=t[0]+Math.cos(a)*r, z=t[1]+Math.sin(a)*r, ry=(rnd()-.5)*.6+(rnd()<.5?0:Math.PI/2), y=hq(x,z)+.03;
-    if(rnd()<.75) B.falde(.08,.045,.21,x,y,z,coppi,ry); else B.scatola(.08,.03,.21,x,y,z,terra,ry);      // a cappuccina (due file di tegole a tetto) o fossa coperta di terra
-    k++; }
-  var g=B.maglia(RM.matPietra()); g.visible=false; RM.scene.add(g); return {g:g, da:t[4]};
+/* 24 novembre 2026, l'utente: «di tombe non se ne vede nessuna» (la regia arrivava su una chiazza a spicchi con qualche segnetto arancione). Rifatte:
+   - le coperture a cappuccina avevano il colmo di traverso (80 cm di colmo, 2,1 m di falda): ora il colmo corre lungo il corpo, 2,1 m, larghe 75 cm, alte 40 cm,
+     su un piccolo rialzo di terra e con la fila di coppi scuri sul colmo; poi casse di mattoni chiuse da una lastra e, per i bambini, anfore spezzate coricate (Spera, p. 830);
+   - le tombe del V e del primo VI secolo sono sparse, quelle più tarde in file, dentro aree delimitate (Andrews, pp. 674-676): qui in file dal 526;
+   - la chiazza di terra smossa è una maglia ad anelli che segue il terreno (RM.hSuolo), con il contorno morbido e irregolare; l'anello esterno prende il colore del suolo
+     lì sotto (i colori dei vertici di RM.suolo), così il bordo sfuma. Un gruppo più tardi nello stesso luogo stende la sua chiazza un poco più in alto.
+   Misure, proporzioni fra i tipi e disposizione sono uno schema; la forma dei tipi viene da Spera. */
+var rT=RM.casuale(476), SEP=[50.25,36.55];      // dove si scava la fossa del 476 (più sotto)
+function coloreSuolo(cx,cz,R){      // i vertici del suolo vicini al gruppo, per sfumare il bordo
+  var g=RM.suolo&&RM.suolo.geometry, out=[]; if(!g||!g.attributes.color) return out;
+  var pos=g.attributes.position, col=g.attributes.color;
+  for(var i=0;i<pos.count;i++){ var x=pos.getX(i), z=pos.getZ(i); if(Math.abs(x-cx)<R && Math.abs(z-cz)<R) out.push([x,z,col.getX(i),col.getY(i),col.getZ(i)]); }
+  return out;
+}
+function triColori(B,p0,p1,p2,c0,c1,c2){ B.tri(p0,p1,p2,c0); var n=B.col.length; [c0,c1,c2].forEach(function(c,k){ B.col[n-9+k*3]=c.r; B.col[n-8+k*3]=c.g; B.col[n-7+k*3]=c.b; }); B.tip[B.tip.length-1]=B.tip[B.tip.length-2]=B.tip[B.tip.length-3]=2; }      // tipo 2: niente conci né crepe
+function tomba(B,x,y,z,ry,tipo){
+  var coppi=P.coppi, scuri=RM.col(0x7a3a26), rialzo=RM.col(0x6a5a46), mattone=P.mattone, lastra=RM.col(0xb8b2a6);
+  B.dentro(x,y,z,ry,function(B){
+    if(tipo===0){ B.scatola(.24,.022,.095,0,0,0,rialzo).falde(.21,.04,.075,0,.022,0,coppi,0,coppi).scatola(.212,.014,.016,0,.056,0,scuri); }      // a cappuccina: due file di tegole a tetto, i coppi sul colmo
+    else if(tipo===1){ B.scatola(.22,.032,.085,0,0,0,mattone).scatola(.2,.012,.068,0,.032,0,lastra); }                                          // cassa di mattoni chiusa da una lastra
+    else { B.scatola(.13,.014,.06,0,0,0,rialzo); var c=new THREE.CylinderGeometry(.019,.016,.1,8); c.rotateZ(Math.PI/2); c.translate(0,.03,0); B.geo(c,P.cocci); }      // un'anfora coricata, per un bambino
+  });
+}
+var tombe=TOMBE.map(function(t,it){
+  var B=new RM.Costruttore(), hq=RM.hSuolo||RM.h, smossa=RM.col(0x75644d), dopo=TOMBE.slice(0,it).some(function(u){ return u[0]===t[0]&&u[1]===t[1]; }), alza=dopo?.022:.012;
+  /* la chiazza: 48 spicchi, anelli a 0, 35, 65, 85 e 100 per cento del raggio; contorno con tre ondulazioni lente */
+  var R=t[2]+.35, NS=48, AN=[0,.35,.65,.85,1], f1=rT()*6.28, f2=rT()*6.28, f3=rT()*6.28, vic=coloreSuolo(t[0],t[1],R*1.3+1.5);
+  function bordo(a){ return R*(1+.12*Math.sin(2*a+f1)+.08*Math.sin(3*a+f2)+.05*Math.sin(5*a+f3)); }
+  function suolo(x,z){ if(!vic.length) return smossa; var m=1e9, c=null; vic.forEach(function(v){ var d=(v[0]-x)*(v[0]-x)+(v[1]-z)*(v[1]-z); if(d<m){ m=d; c=v; } }); return new THREE.Color(c[2],c[3],c[4]); }
+  var G=[]; for(var r=0;r<AN.length;r++){ var riga=[]; for(var j=0;j<NS;j++){ var a=j/NS*6.283, rr=bordo(a)*AN[r], x=t[0]+Math.cos(a)*rr, z=t[1]+Math.sin(a)*rr, c;
+      if(r<3) c=smossa; else if(r===3) c=smossa.clone().lerp(suolo(x,z),.35); else c=suolo(x,z);
+      riga.push({p:[x,hq(x,z)+(r<4?alza:alza*.3),z],c:c}); } G.push(riga); }
+  for(r=0;r<AN.length-1;r++) for(j=0;j<NS;j++){ var A0=G[r][j], A1=G[r][(j+1)%NS], B0=G[r+1][j], B1=G[r+1][(j+1)%NS];
+    if(r===0) triColori(B,A0.p,B1.p,B0.p,A0.c,B1.c,B0.c); else { triColori(B,A0.p,B1.p,B0.p,A0.c,B1.c,B0.c); triColori(B,A0.p,A1.p,B1.p,A0.c,A1.c,B1.c); } }
+  /* le tombe: sparse fino al 525, poi in file parallele; quasi tutte nello stesso verso */
+  var inFila=t[4]>=526, k=0, tent=0, ry0=rT()*Math.PI, posti=[];
+  while(k<t[3] && tent<t[3]*30){ tent++;
+    var x, z, ry;
+    if(inFila){ var per=Math.ceil(Math.sqrt(t[3]*2.2)), fila=Math.floor(k/per), col=k%per, ca=Math.cos(ry0), sa=Math.sin(ry0), lx=(col-(per-1)/2)*.13, lz=(fila-(Math.ceil(t[3]/per)-1)/2)*.32;
+      x=t[0]+lx*sa+lz*ca+(rT()-.5)*.03; z=t[1]+lx*ca-lz*sa+(rT()-.5)*.03; ry=ry0+(rT()-.5)*.08; }
+    else { var aa=rT()*6.283, rr2=Math.sqrt(rT())*t[2]*.8; x=t[0]+Math.cos(aa)*rr2; z=t[1]+Math.sin(aa)*rr2; ry=ry0+(rT()-.5)*.5; }
+    if(Math.hypot(x-t[0],z-t[1])>bordo(Math.atan2(z-t[1],x-t[0]))*.8) continue;
+    if(posti.some(function(q){ return Math.hypot(q[0]-x,q[1]-z)<.2; }) || Math.hypot(x-SEP[0],z-SEP[1])<.42) continue;      // lascia libero il posto della sepoltura del 476
+    posti.push([x,z]); var u=rT(); tomba(B,x,hq(x,z)+alza,z,ry,u<.6?0:u<.85?1:2); k++; }
+  var g=B.maglia(RM.matPietra()); g.visible=false; g.receiveShadow=true; RM.scene.add(g); return {g:g, da:t[4]};
 });
+/* 476: una sepoltura in corso nella valle del Colosseo (l'utente: «magari una fossa aperta con due persone»): la fossa scura, la terra ammucchiata accanto, il morto avvolto
+   nel lenzuolo e due uomini, uno con la pala. Solo nell'anno della tappa; è uno schema: le fonti dicono che si seppelliva lì, non come. */
+var sepoltura476=(function(){
+  var B=new RM.Costruttore(), x=SEP[0], z=SEP[1], ry=.35, y=(RM.hSuolo||RM.h)(x,z)+.02, buio=RM.col(0x2a2219), terra=RM.col(0x6a5a46);
+  B.dentro(x,y,z,ry,function(B){
+    B.scatola(.22,.006,.08,0,0,0,buio);                                                       // la fossa aperta
+    B.scatola(.16,.05,.1,0,0,.16,terra).scatola(.1,.03,.07,.02,.05,.16,terra);                // la terra scavata
+    B.scatola(.17,.03,.05,0,0,-.13,C.bianco);                                                 // il morto nel lenzuolo
+  });
+  uomo(B,x+.12,z-.24,y,C.tunica,null,ry+2.6); uomo(B,x-.16,z+.02,y,C.folla[1],null,ry+1.2);
+  B.scatola(.01,.17,.01,x-.12,y,z+.04,P.tronco);                                            // la pala
+  var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=true; RM.scene.add(g);
+  return {g:g, da:475.6, a:477};
+})();
 
 /* ---------- 756: i dintorni devastati ----------
    La didascalia (EVENTI assedio756 in js/dati.js) dice che i Longobardi di Astolfo «devastano i dintorni»; le fonti lette non dicono dove né come (24 novembre 2026, l'utente:
@@ -646,7 +734,7 @@ var macchie756=(function(){
 })();
 
 RM.moduli.push(function(anno){
-  [milvio,corteo,assedio472,prigionieri593,trionfo274,salaria410,vandali455,costante663,leone852,carlo800,saraceni846,totila546,casali756].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
+  [milvio,corteo,assedio472,prigionieri593,sepoltura476,trionfo274,salaria410,vandali455,costante663,leone852,carlo800,saraceni846,totila546,casali756].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
   [fuga312,carlo800].forEach(function(s){ var v=anno>=s.da&&anno<s.a; if(v&&!s.acceso&&s.seq.t==null) quadro(s.seq); s.acceso=v; s.tutte.forEach(function(m){ m.visible=v; }); });      // le scene animate: prima che partano, il quadro finale
   macchie756(RM.sfuma(755.6,756,anno)*(1-RM.sfuma(757,760,anno)));
   tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
@@ -659,15 +747,40 @@ var perId={}; (RM.MONUMENTI||[]).forEach(function(m){ perId[m.id]=m; });
 /* le due messe in scena hanno un'inquadratura fissa (punto guardato, posizione della camera): al ponte Milvio da sud, oltre il fiume, verso la riva dove fuggono;
    per il corteo da sud-est, sopra le case della via Lata */
 /* 24 novembre 2026: al ponte Milvio da nord, dietro la cavalleria di Costantino, verso i ponti e la città (prima da sud verso nord: dietro la scena c'era il bordo del disegno);
-   il corteo dell'800 parte dalla testata di ponte Elio sulla riva sinistra, e la vista lo segue (RM.segui); il 756 da sopra le mura del Castro Pretorio verso nord-est */
-var VISTE={ milvio:fuga312.vista, carlo800:carlo800.vista, assedio756:{t:[160,-282],c:[112,46,-150]}, fortino552:{t:[-163,-126],c:[-131,30,-90]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
+   il corteo dell'800 parte dalla testata di ponte Elio sulla riva sinistra, e la vista lo segue (RM.segui); il 756 da sopra le mura del Castro Pretorio verso nord-est (dal 24 novembre 2026 più vicino ai casali);
+   l'846 (24 novembre 2026) da est, oltre il fiume: le navi in primo piano, i cavalieri verso San Pietro, la basilica dietro (prima le navi restavano sotto l'inquadratura) */
+var VISTE={ milvio:fuga312.vista, carlo800:carlo800.vista, assedio756:{t:[158,-284],c:[124,36,-196]}, fortino552:{t:[-163,-126],c:[-131,30,-90]}, corteo:{t:corteo.carro,c:[corteo.carro[0]+20,24,corteo.carro[1]+24]},
   assedio472:{t:[-158,-109],c:[-122,44,-62]},      /* centrata sul mausoleo di Adriano e su ponte Elio, dove avviene lo scontro (23 novembre 2026, richiesta dell'utente); il campo resta a sinistra */
-  prigionieri593:{t:[-80,-219],c:[-74.5,3.2,-212]}, trionfo274:{t:[8,8],c:[44,26,44]}, saraceni846:{t:[-214,-104],c:[-182,34,-66]}, totila546:{t:[190,74],c:[218,16,96]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
+  prigionieri593:null, trionfo274:{t:[8,8],c:[44,26,44]}, saraceni846:{t:[-188,-93],c:[-147,26,-117]}, totila546:{t:[190,74],c:[218,16,96]} };      // il trionfo: dal Palatino verso il Campidoglio      // il campo vaticano e ponte Elio; la Flaminia fuori porta
+/* Inquadrature aggiunte il 24 novembre 2026 (l'utente: la camera non deve finire addosso a un muro, e la cosa raccontata deve stare al centro e abbastanza grande).
+   vicino(tx,tz,dx,dy,dz): punto guardato e camera spostata di dx, dz e alzata di dy sopra il suolo del punto guardato.
+   - tombe476: le tombe della valle del Colosseo da sud-est, a una trentina di metri, con l'arco di Costantino e la Meta Sudans dietro e il Colosseo di lato;
+   - pantheon609 (anche per il 663): dal lato del pronao, a nord-est, sopra la piazza: il portico, la croce sul frontone, la scritta sul fregio; l'aula a sud resta dietro la rotonda;
+   - leonina852: porta San Pellegrino dal campo fuori le mura, a nord, con il papa sopra la porta e il clero sul cammino di ronda. */
+function vicino(tx,tz,dx,dy,dz){ return {t:[tx,tz], c:[tx+dx, RM.h(tx,tz)+1+dy, tz+dz]}; }
+/* RM.volaA guarda un punto 10 m sopra il suolo (RM.h+1): da vicino una cosa a terra finiva in fondo allo schermo, o sotto. mira(gx,gz,c) mette al centro il punto a terra
+   [gx, gz]: il punto guardato si sposta, lungo la linea fra la camera e quel punto, fino alla quota che volaA gli darà. La camera deve stare più di 10 m sopra il suolo. */
+function mira(gx,gz,c){
+  var gy=H(gx,gz), x=gx, z=gz;
+  for(var k=0;k<3;k++){ var f=(c[1]-(RM.h(x,z)+1))/(c[1]-gy); x=c[0]+(gx-c[0])*f; z=c[2]+(gz-c[2])*f; }
+  return {t:[x,z], c:c};
+}
+function aTerra(gx,gz,dx,dy,dz){ return mira(gx,gz,[gx+dx, H(gx,gz)+dy, gz+dz]); }      // camera spostata di dx, dz e alta dy sopra il suolo del punto a terra
+VISTE.prigionieri593=mira(prigionieri593.vista.g[0],prigionieri593.vista.g[1],prigionieri593.vista.c);
+VISTE.tombe476=aTerra(51.1,37.2,2.4,1.6,3.3);
+VISTE.pantheon609=vicino(-70,-72.5,5.6,6.2,-11.4);
+VISTE.leonina852=aTerra(-233.3,-121,4,3.4,-6.2);
+/* Le viste date come [x, z, distanza] o come id di un monumento prima usavano RM.vola, che tiene la direzione da cui si guarda: la stessa tappa si vedeva da un lato o dall'altro
+   secondo la tappa di prima, e a volte la camera finiva dietro un edificio. Ora la direzione è fissa: da sud-sud-ovest, come la vista d'insieme, o quella data come quarto
+   elemento ('n', 'ne', 'e', 'se', 's', 'so', 'o', 'no': il lato da cui si guarda); quota e distanza sono quelle di prima. */
+var LATI={n:[0,-1],s:[0,1],e:[1,0],o:[-1,0],ne:[.6,-.8],no:[-.6,-.8],se:[.6,.8],so:[-.6,.8]}, LATO0=[-.395,.919];
+function fissa(x,z,d,lato){ var u=LATI[lato]||LATO0, y=RM.h(x,z)+1; return {t:[x,z], c:[x+u[0]*d*.82, y+d*.56, z+u[1]*d*.82]}; }
 var portata=false;                                                                      // la vista ce l'ha portata la regia
 function scena(){ var s=document.getElementById('scene'); return s?s.getAttribute('data-vista'):null; }
 function vista(v){
   if(v==='insieme'||v==null) return null;
-  if(typeof v==='string'){ if(VISTE[v]) return VISTE[v]; var m=perId[v]; return m?[m.x,m.z,Math.max(40,(m.raggio||6)*5)]:null; }
+  if(typeof v==='string'){ if(VISTE[v]) return VISTE[v]; var m=perId[v]; return m?fissa(m.x,m.z,Math.max(40,(m.raggio||6)*5)):null; }
+  if(Array.isArray(v)) return fissa(v[0],v[1],v[2],v[3]);
   return v;
 }
 if(window.RM_pagina) RM_pagina.quando(function(i,t){
@@ -683,8 +796,11 @@ function regia(t){
   var v=ev?vista(ev.vista):null;
   if(v&&v.t) v=RM.adatta(v);                                                             // sul telefono in piedi la camera si allontana
   anima(t);                                                                              // la scena animata parte con la regia: il suo tempo comincia dopo il volo
-  if(v&&v.t){ RM.volaA(v.t,v.c); portata=true; }
+  /* La distanza minima dei controlli (16 unità, 160 m: js/base.js) riportava indietro, lungo la stessa linea, ogni camera più vicina: nel 593 la regia chiedeva 90 m
+     e la camera finiva dentro la torre di porta Flaminia (24 novembre 2026). Per un'inquadratura più vicina la distanza minima scende finché si resta in quella tappa. */
+  var MIN=16;
+  if(v&&v.t){ var y0=RM.h(v.t[0],v.t[1])+1, d=Math.hypot(v.c[0]-v.t[0],v.c[1]-y0,v.c[2]-v.t[1]); if(RM.controlli) RM.controlli.minDistance=Math.min(MIN,d*.85); RM.volaA(v.t,v.c); portata=true; }
   else if(v){ RM.vola(v[0],v[1],v[2]); portata=true; }
-  else if(portata && RM.vistaInsieme){ RM.vistaInsieme(); portata=false; }
+  else if(portata && RM.vistaInsieme){ if(RM.controlli) RM.controlli.minDistance=MIN; RM.vistaInsieme(); portata=false; }
 }
 })();

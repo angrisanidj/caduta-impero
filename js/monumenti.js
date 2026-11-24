@@ -609,7 +609,7 @@ var M=[
     for(var gd=1;gd<=5;gd++) B.scatola(2.6,.13*(6-gd)/6,.06,0,0,5.2+gd*.06,P.travertino);                                          // i cinque gradini
     B.colonne(-1.64,zf,1.64,zf,8,1.415,.074,.13,P.granito);
     [zf-.48,zf-.96].forEach(function(z){ [-1.64,-.7,.7,1.64].forEach(function(x){ B.colonne(x,z,x,z,1,1.415,.074,.13,ROSA); }); });
-    B.scatola(3.42,.2,1.6,0,1.545,4.4,P.marmo).scatola(1.7,.07,.02,0,1.6,5.205,P.ombra);                                         // trabeazione; sul fregio l'iscrizione di Agrippa
+    B.scatola(3.42,.2,1.6,0,1.545,4.4,P.marmo);                                                                                     // trabeazione; le iscrizioni del fregio e dell'architrave stanno in fondo al file
     B.falde(1.64,.68,3.5,0,1.745,4.42,P.bronzo,PI/2,P.marmo);                                                                       // frontone e tetto, retto da capriate di bronzo
     B.vano(0,.13,3.66,1,0,.62,1.15);                                                                                                // la grande porta di bronzo
     [-1.17,1.17].forEach(function(x){ B.vano(x,.25,3.66,1,0,.4,.85); });                                                           // le due nicchie in fondo alle navate laterali
@@ -1280,6 +1280,33 @@ RM.moduli.push(function(anno){
       us.uSud.value=.2*RM.sfuma(523,800,anno)+.3*RM.sfuma(846.6,847,anno); us.uRovina.value*=.4; }      // il fronte sud: cava dal VI secolo; nell'847, secondo il Parco del Colosseo, cade quel che ne resta
   });
 });
+
+/* ---------- le iscrizioni e il timpano del Pantheon ----------
+   24 novembre 2026, l'utente: «verifica se sul Pantheon deve esserci la scritta sul timpano». Platner e Ashby, «Pantheon» (letto quel giorno): l'iscrizione di Agrippa,
+   «M. Agrippa L. f. cos. tertium fecit», sta sul fregio del pronao (CIL VI 896); sotto, sull'architrave, quella più piccola del restauro di Settimio Severo e Caracalla del 202;
+   nel timpano «were bronze decorations», di forma non detta. Qui: la scritta di Agrippa sul fregio, in lettere scure, disegnata su una tela (una lastra di due triangoli,
+   con le mipmap: da lontano sfuma invece di brulicare); le due righe dell'architrave sono solo un segno di scrittura minuta, non un testo; nel timpano un tondo di bronzo,
+   che indica la decorazione di forma ignota (qui fino al 663, quando Costante II porta via «omnia quae erant in aere ad ornatum civitatis», Liber Pontificalis, vita di
+   Vitaliano: che la decorazione fosse fra queste è un'ipotesi). Le lettere ci sono per tutto il periodo: se fossero di bronzo e quando sparirono non lo dice nessuna fonte letta. */
+(function(){
+  var o=M.filter(function(m){ return m.id==='pantheon'; })[0]; if(!o||!o.g||!document.createElement('canvas').getContext) return;
+  var cv=document.createElement('canvas'); cv.width=2048; cv.height=256; var cx=cv.getContext('2d'); if(!cx) return;
+  var LARGO=3.2, ALTO=.137, sx=(cv.width/LARGO)/(cv.height/ALTO);      // la tela è più schiacciata del vero: si scrive in un riferimento dove x e y hanno la stessa misura
+  cx.fillStyle='rgb(58,44,28)'; cx.textBaseline='alphabetic';
+  cx.setTransform(sx,0,0,1,0,0); cx.font='bold 150px Georgia, "Times New Roman", serif';
+  var T='M·AGRIPPA·L·F·COS·TERTIVM·FECIT', W=cv.width/sx, usa=W*.84, w0=0, k;
+  for(k=0;k<T.length;k++) w0+=cx.measureText(T[k]).width;
+  var spazio=(usa-w0)/(T.length-1), xx=(W-usa)/2;
+  for(k=0;k<T.length;k++){ cx.fillText(T[k],xx,150); xx+=cx.measureText(T[k]).width+spazio; }
+  var r=RM.casuale(202); cx.fillStyle='rgba(58,44,28,.8)';      // l'architrave: due righe di segni minuti, che da vicino si leggono come scrittura e non come testo
+  [205,240].forEach(function(y){ for(var x=W*.06;x<W*.94;){ var l=14+r()*22; if(r()<.12){ x+=30; continue; } cx.fillRect(x,y-22,l,22); x+=l+9; } });
+  var tx=new THREE.CanvasTexture(cv); tx.anisotropy=Math.min(8,RM.renderer.capabilities.getMaxAnisotropy());
+  var lastra=new THREE.Mesh(new THREE.PlaneGeometry(LARGO,ALTO),new THREE.MeshLambertMaterial({map:tx,transparent:true,alphaTest:.25,depthWrite:false}));
+  lastra.position.set(0,1.553+ALTO/2,5.207); o.g.add(lastra);      // il fronte della trabeazione sta a z 5,2 nel riferimento del Pantheon; il pronao guarda +z
+  var tondo=new THREE.Mesh(new THREE.CylinderGeometry(.11,.11,.014,20),new THREE.MeshLambertMaterial({color:P.bronzo}));
+  tondo.rotation.x=Math.PI/2; tondo.position.set(0,1.965,5.247); o.g.add(tondo);      // il timpano del pronao: triangolo a z 5,24, da quota 1,745 a 2,425
+  RM.moduli.push(function(anno){ tondo.visible=anno<663; });
+})();
 
 /* ---------- l'acqua della Meta Sudans ----------
    «Sudans described the appearance of the jets of water» (Platner e Ashby): l'acqua esce in cima e scende lungo il cono, a rivoli, fino alla vasca. Qui è una pelle trasparente
