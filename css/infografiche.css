@@ -1540,3 +1540,22 @@ rect.ig-bb-leg-r{stroke:rgba(0,0,0,.2)}
 .ig-po-lt.forte{font-weight:700;fill:#7A1F2B}
 .ig-po-sopr{font-family:var(--serif);font-style:italic;fill:#2A231D}
 @media (prefers-reduced-motion:reduce){ .ig-po-scint,.ig-po-cerca{animation:none} }
+/* Campi Catalaunici: il rogo di selle grande al centro del recinto, col suo cartellino (24 novembre 2026) */
+.ig-ca-rogo-ombra{fill:#000;opacity:.45}
+.ig-ca-et-rogo{opacity:0;transition:opacity .8s}
+.ig-ca-et-rogo.vis{opacity:1}
+.ig-ca-et-n.grande{font-size:17px;paint-order:stroke;stroke:#14100C;stroke-width:3px;stroke-linejoin:round}
+.ig-ca-et-sotto{font-family:var(--ui);font-size:11.5px;letter-spacing:.02em;fill:#E8D6B0;paint-order:stroke;stroke:#14100C;stroke-width:3px;stroke-linejoin:round}
+.ig-ca-filo{fill:none;stroke:#F1D99A;stroke-width:1;opacity:.75}
+.ig-ca-sella-c{fill:#94633A}
+.ig-ca-sella.sotto .ig-ca-sella-c{fill:#704829}
+/* finestre sulla carta: il bordo largo sotto le regioni, che riempie lo scarto fra regione e costa (24 novembre 2026) */
+.ig-fin-orlo{fill:none;stroke-width:6;stroke-opacity:.3;stroke-linejoin:round}
+/* il cursore «prima e dopo» sopra due fotogrammi (Curia): tutto il riquadro risponde al trascinamento in orizzontale; la maniglia, sopra la lama disegnata, prende il fuoco (24 novembre 2026) */
+.ig-strato.ig-pd{z-index:3;display:none;touch-action:pan-y;cursor:ew-resize;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.ig-strato.ig-pd.vis{display:block}
+.ig-pd-maniglia{position:absolute;top:50%;left:50%;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;touch-action:none;outline:none;cursor:grab}
+.ig-pd-maniglia:active{cursor:grabbing}
+.ig-pd-maniglia:focus-visible{box-shadow:0 0 0 3px #fff,0 0 0 6px #7A1F2B}
+.ig-po-ucciso{fill:#2F8A75}
+.ig-aq-nome.coperto{opacity:0}

@@ -724,7 +724,7 @@ function disegnaNavi(svg,S,W,H){
 var GOVERNO={ titolo:"Chi governa l'Occidente", sotto:"La carta in quattro momenti: 395, 476, 568, 800",
   fasi:[[395,"Nel 395 l'Occidente è ancora governato da Roma, da un imperatore che risiede a Milano."],[476,"Nel 476 Odoacre governa l'Italia; Visigoti, Franchi, Burgundi, Vandali e Svevi hanno i loro regni."],
     [568,"Nel 568 l'Italia e l'Africa sono dell'impero d'Oriente, dopo le guerre di Giustiniano; e i Longobardi entrano in Italia."],[800,"Nell'800 Carlo Magno, re dei Franchi, è incoronato imperatore a Roma; gran parte della Spagna e l'Africa sono degli Arabi."]],
-  fonte:"I colori sono quelli della carta di questa pagina nelle tappe del 395, 476, 568 e 800: confini e attribuzioni delle regioni sono approssimativi, come spiegato in fondo alla pagina. I nomi stanno sulla regione più grande di ciascun regno." };
+  fonte:"I colori sono quelli della carta di questa pagina nelle tappe del 395, 476, 568 e 800: confini e attribuzioni delle regioni sono approssimativi, come spiegato in fondo alla pagina. I nomi stanno sul pezzo più grande che si vede di ciascuno stato; uno stato che nel riquadro si vede appena, come la Persia, non ha né nome né voce in legenda." };
 var VB=[95,55,810,518];
 function disegnaGoverno(svg,S,W,H){
   var M=window.RM_mappa, G=window.RM_MAPPA; if(!M||!M.miniatura||!G) return;
@@ -742,18 +742,40 @@ function disegnaGoverno(svg,S,W,H){
   var luce=el('path',{'class':'ig-mini-luce',d:''},m.svg), gn=el('g',{'class':'ig-regni'},m.svg), fs=(largo2?13:12.5)/kk;
   /* dove stanno i nomi delle città della carta piccola (js/mappa.js, miniatura: corpo 25, Roma 28, in unità della carta) */
   var CITTA_MINI=[].slice.call(m.svg.querySelectorAll('.m-mini-citta-nome')).map(function(t){ var fc=/roma/.test(t.getAttribute('class'))?28:25, x=+t.getAttribute('x'), y=+t.getAttribute('y'), w=t.textContent.length*fc*.46+8, fine=t.getAttribute('text-anchor')==='end';
-    return {fermo:true,x:fine?x-w/2:x+w/2,y:y-fc*.33,w:w,h:fc*1.15}; });
-  /* i nomi dei regni: sulla regione più grande, spostati se si toccano */
+    return {fermo:true,x:fine?x-w/2+12:x+w/2-12,y:y-fc*.33,w:w+24,h:fc*1.15}; });      // il riquadro comprende anche il punto della città
+  /* che cosa si vede davvero nel riquadro: una griglia di punti (passo 9 unità) sopra le regioni; per ogni stato il pezzo visibile più grande e, dentro, il punto più lontano dai bordi.
+     Uno stato che nel riquadro non c'è, o è una scheggia, non ha nome sulla carta né voce in legenda (24 novembre 2026, cattura dell'utente: il nome della Persia, che sta fuori
+     dal riquadro, era tirato dentro e finiva sull'Anatolia; quello dell'Oriente sull'Egitto, al bordo) */
+  var PS=9, NX=Math.floor(VB[2]/PS), NY=Math.floor(VB[3]/PS), cella=[], prof=[], pt=m.svg.createSVGPoint(), bb=paths.map(function(p){ try{ return p.getBBox(); }catch(e){ return null; } }), xx, yy, ri;
+  for(yy=0;yy<NY;yy++) for(xx=0;xx<NX;xx++){ pt.x=VB[0]+(xx+.5)*PS; pt.y=VB[1]+(yy+.5)*PS; var dove=-1;
+    for(ri=paths.length-1;ri>=0;ri--){ var bq=bb[ri]; if(!bq||pt.x<bq.x||pt.x>bq.x+bq.width||pt.y<bq.y||pt.y>bq.y+bq.height) continue; try{ if(paths[ri].isPointInFill(pt)){ dove=ri; break; } }catch(e){} }
+    cella.push(dove); }
+  var SOGLIA=14;      // celle: sotto questa misura (circa 1.100 unità quadrate, un riquadro di 100 km di lato) uno stato è una scheggia
+  function profondita(st){      // per ogni cella dello stesso stato, quante celle mancano al bordo del pezzo (passate avanti e indietro, distanza a scacchiera)
+    var P=cella.map(function(r){ return r>=0&&st[r]?1e4:0; }), i, x, y;
+    for(y=0;y<NY;y++) for(x=0;x<NX;x++){ i=y*NX+x; if(!P[i]) continue; P[i]=Math.min(P[i],(x?P[i-1]:0)+1,(y?P[i-NX]:0)+1,(x&&y?P[i-NX-1]:0)+1,(y&&x<NX-1?P[i-NX+1]:0)+1); }
+    for(y=NY-1;y>=0;y--) for(x=NX-1;x>=0;x--){ i=y*NX+x; if(!P[i]) continue; P[i]=Math.min(P[i],(x<NX-1?P[i+1]:0)+1,(y<NY-1?P[i+NX]:0)+1,(x<NX-1&&y<NY-1?P[i+NX+1]:0)+1,(y<NY-1&&x?P[i+NX-1]:0)+1); }
+    return P; }
+  var visti=FR.map(function(f){ var c={}; cella.forEach(function(r){ if(r<0) return; var st=f.stati[ids[r]]||'perso'; c[st]=(c[st]||0)+1; }); return c; });
+  /* i nomi dei regni: sul pezzo visibile più grande del loro stato, spostati se si toccano */
   var sullaCarta=[], nomiF=FR.map(function(f,fi){
     var voci={}; (M.vociPresenti([f.stati],f.anno)||[]).forEach(function(v){ voci[v[2]]=v[1]; });
-    var per={}; ids.forEach(function(id){ var st=f.stati[id]||'perso'; if(/^(perso|fuori|conteso|federati|usurpatore)$/.test(st)) return; var r=G.regioni[id], p=per[st]||(per[st]={tot:0,max:0,c:null}); p.tot+=r.peso; if(r.peso>p.max){ p.max=r.peso; p.c=r.c; } });
-    var L=Object.keys(per).map(function(st){ return {st:st,nome:voci[st]||st,tot:per[st].tot,x:per[st].c[0],y:per[st].c[1]}; }).sort(function(a,b){ return b.tot-a.tot; }).slice(0,largo2?8:6);
-    L.forEach(function(l){ l.w=l.nome.length*fs*0.55+fs*0.6; l.h=fs*1.35; });
-    var nR=L.length; CITTA_MINI.forEach(function(c){ L.push(c); });      // i nomi delle città della carta piccola: fermi, i regni li scansano
-    for(var it=0;it<40;it++){ var mosso=false; for(var i=0;i<L.length;i++) for(var j=0;j<i;j++){ var A=L[i], Bq=L[j], ox=(A.w+Bq.w)/2-Math.abs(A.x-Bq.x), oy=(A.h+Bq.h)/2-Math.abs(A.y-Bq.y);
-      if(ox>0&&oy>0&&!(A.fermo&&Bq.fermo)){ var sp=(oy+1)*(A.y>=Bq.y?1:-1); if(A.fermo) Bq.y-=sp; else if(Bq.fermo) A.y+=sp; else { A.y+=sp/2; Bq.y-=sp/2; } mosso=true; } }
-      L.forEach(function(l){ if(l.fermo) return; l.x=clamp(l.x,VB[0]+l.w/2+4,VB[0]+VB[2]-l.w/2-4); l.y=clamp(l.y,VB[1]+l.h,VB[1]+VB[3]-l.h*0.75); }); if(!mosso) break; }
-    L=L.slice(0,nR); sullaCarta[fi]=L.map(function(l){ return l.nome; });
+    /* dal più grande al più piccolo, ogni nome prova i punti del suo stato dal più interno in giù (prima quelli della regione che si vede di più) e prende, fra quelli che non toccano
+       un nome già messo né le città, quello che sta di più sul suo colore (e poi il più interno). Se nessun punto va, resta sul più interno */
+    var L=Object.keys(visti[fi]).filter(function(st){ return !/^(perso|fuori|conteso|federati|usurpatore)$/.test(st)&&visti[fi][st]>=SOGLIA; })
+      .map(function(st){ return {st:st,nome:voci[st]||st,tot:visti[fi][st]}; }).sort(function(a,b){ return b.tot-a.tot; }).slice(0,largo2?8:6), messi=CITTA_MINI.slice();
+    function tocca(a,b){ return Math.abs(a.x-b.x)<(a.w+b.w)/2+3 && Math.abs(a.y-b.y)<(a.h+b.h)/2+2; }
+    L.forEach(function(l){ l.w=l.nome.length*fs*0.55+fs*0.6; l.h=fs*1.35;
+      var mio=ids.map(function(id){ return (f.stati[id]||'perso')===l.st; }), P=profondita(mio), conta={};
+      cella.forEach(function(r){ if(r>=0&&mio[r]) conta[r]=(conta[r]||0)+1; }); var rMax=+Object.keys(conta).sort(function(a,b){ return conta[b]-conta[a]; })[0];      // la regione dello stato che si vede di più
+      var cand=[]; cella.forEach(function(r,i){ if(r>=0&&mio[r]) cand.push(i); }); cand.sort(function(a,b){ return (cella[b]===rMax)-(cella[a]===rMax) || P[b]-P[a]; });
+      function quota(x,y){ var n=0, k=0; for(var dx=-2;dx<=2;dx++) for(var dy=-1;dy<=1;dy++){ var cx=Math.floor((x+dx*l.w/4-VB[0])/PS), cy=Math.floor((y+dy*l.h/2.4-VB[1])/PS); k++; if(cx>=0&&cy>=0&&cx<NX&&cy<NY&&cella[cy*NX+cx]>=0&&mio[cella[cy*NX+cx]]) n++; } return n/k; }
+      var scelto=null, meglio=-1;
+      for(var c=0;c<cand.length;c++){ var i=cand[c], x=clamp(VB[0]+(i%NX+.5)*PS,VB[0]+l.w/2+4,VB[0]+VB[2]-l.w/2-4), y=clamp(VB[1]+(Math.floor(i/NX)+.5)*PS,VB[1]+l.h,VB[1]+VB[3]-l.h*0.75), q={x:x,y:y,w:l.w,h:l.h};
+        if(messi.some(function(m2){ return tocca(q,m2); })) continue; var v=Math.min(quota(x,y),.75)*100+P[i]+(cella[i]===rMax?3:0); if(v>meglio){ meglio=v; scelto=q; } }      // quanto sta sul suo colore conta più di quanto è interno
+      if(!scelto){ var i0=cand[0]; scelto={x:clamp(VB[0]+(i0%NX+.5)*PS,VB[0]+l.w/2+4,VB[0]+VB[2]-l.w/2-4),y:clamp(VB[1]+(Math.floor(i0/NX)+.5)*PS,VB[1]+l.h,VB[1]+VB[3]-l.h*0.75)}; }
+      l.x=scelto.x; l.y=scelto.y; messi.push(l); });
+    sullaCarta[fi]=L.map(function(l){ return l.nome; });
     var g=el('g',{'class':'ig-regni-f'},gn);
     L.forEach(function(l,i){ var t=tx(g,l.x,l.y+fs*0.35,'ig-regno',l.nome,'middle'); t.style.fontSize=r1(fs)+'px'; t.style.strokeWidth=r1(3.2/kk)+'px'; t.style.transitionDelay=(500+i*170)+'ms'; });
     return g; });
@@ -768,7 +790,7 @@ function disegnaGoverno(svg,S,W,H){
   FR.forEach(function(f,i){ var c=h('figure','ig-q',null,quattro); c.style.transitionDelay=(i*220)+'ms'; var mm=M.miniatura(); mm.svg.setAttribute('preserveAspectRatio','xMidYMid meet'); mm.svg.setAttribute('class','m-mini ig-mini');
     c.appendChild(mm.svg); mm.mostra(f.stati,f.anno); var fc=h('figcaption',null,null,c); h('b',null,String(f.anno),fc); h('span',null,f.titolo,fc); });
   var T0=1250, tf=[1700,7900,14100,20300], tFin=26500, visto=-2;
-  function legenda(i){ pLeg.textContent=''; (M.vociPresenti([FR[i].stati],FR[i].anno)||[]).forEach(function(v){ if(v[2]==='perso') return; if(col&&!largo2&&sullaCarta[i].indexOf(v[1])>=0) return;      /* sul telefono in piedi: i regni col nome sulla carta non si ripetono */ var c=h('span','ig-chip',null,pLeg); h('i',null,null,c).style.background=v[0]; h('span',null,v[1],c); });
+  function legenda(i){ pLeg.textContent=''; (M.vociPresenti([FR[i].stati],FR[i].anno)||[]).forEach(function(v){ if(v[2]==='perso'||(visti[i][v[2]]||0)<SOGLIA) return; if(col&&!largo2&&sullaCarta[i].indexOf(v[1])>=0) return;      /* sul telefono in piedi: i regni col nome sulla carta non si ripetono */ var c=h('span','ig-chip',null,pLeg); h('i',null,null,c).style.background=v[0]; h('span',null,v[1],c); });
     if(col&&!largo2){ pLeg.classList.remove('fitta'); if(pan.scrollHeight>pan.clientHeight+1) pLeg.classList.add('fitta'); } }      /* sul telefono in piedi, se la legenda non ci sta: due colonne, corpo più piccolo */
   m.mostra({},null);
   S.passo=function(t){
@@ -786,7 +808,7 @@ function disegnaGoverno(svg,S,W,H){
   S.dura=tFin+4600;
   S.battute=FR.map(function(f,i){ return {t:tf[i],anno:f.anno,testo:GOVERNO.fasi[i][1]}; });
   /* con meno movimento: la legenda di tutte e quattro le carte, sotto l'elenco */
-  S.fermo=function(lato){ var l=h('div','ig-legenda fermo',null,lato); (M.vociPresenti(FR.map(function(f){ return f.stati; }),800)||[]).forEach(function(v){ if(v[2]==='perso') return; var c=h('span','ig-chip',null,l); h('i',null,null,c).style.background=v[0]; h('span',null,v[1],c); }); return l; };
+  S.fermo=function(lato){ var l=h('div','ig-legenda fermo',null,lato); (M.vociPresenti(FR.map(function(f){ return f.stati; }),800)||[]).forEach(function(v){ if(v[2]==='perso'||!visti.some(function(c){ return (c[v[2]]||0)>=SOGLIA; })) return; var c=h('span','ig-chip',null,l); h('i',null,null,c).style.background=v[0]; h('span',null,v[1],c); }); return l; };
 }
 
 /* ======================================================================
@@ -822,13 +844,13 @@ function disegnaValeriano(svg,S,W,H){
   var sopra=el('g',null,svg);
   function punto(p,nome,dx,dy,an){ var q=B(p), g=el('g',{'class':'ig-v-luogo',transform:'translate('+xy(q)+')'},sopra); el('circle',{r:4.2,'class':'ig-v-punto'},g);
     tx(g,dx,dy,'ig-v-nome',nome,an||'start'); return g; }
-  var pA=punto(AN,'Antiochia',-8,18,'end'), pE=punto(ED,'Edessa',-9,-9,'end'), pC=punto(CA,'Carre',13,-11,'start'), pN=NI?punto(NI,'Nisibi',8,-8,'start'):null;
+  var pA=punto(AN,'Antiochia',-8,18,'end'), pE=punto(ED,'Edessa',-14,-14,'end'), pC=punto(CA,'Carre',15,-14,'start'), pN=NI?punto(NI,'Nisibi',8,-8,'start'):null;      // i nomi stanno fuori dagli anelli dell'assedio (24 novembre 2026)
   var est=B([V[0]+V[2]-4,CA[1]+18]);
   /* frecce: si tracciano con stroke-dashoffset */
   function freccia(pts,cl){ var g=el('g',{'class':'ig-v-freccia '+cl},sopra), q=pts.map(B), d='M'+q.map(xy).join(' L'), p=el('path',{d:d,'class':'ig-v-linea'},g), l=p.getTotalLength?p.getTotalLength():300;
     p.style.strokeDasharray=l+' '+l; p.setAttribute('stroke-dashoffset',l); var a=q[q.length-2], b=q[q.length-1], ang=Math.atan2(b[1]-a[1],b[0]-a[0])*180/Math.PI;
     var pu=el('path',{d:'M0 0 L-11 -6 L-8 0 L-11 6 Z','class':'ig-v-punta',transform:'translate('+xy(b)+') rotate('+r1(ang)+')'},g); return {g:g,p:p,l:l,pu:pu}; }
-  var fR=freccia([AN,[(AN[0]+ED[0])/2,AN[1]-14],[ED[0]-3,ED[1]+5]],'roma'), fP=freccia([[V[0]+V[2]-2,CA[1]-6],NI||CA,[CA[0]+5,CA[1]-2]],'persia');
+  var fR=freccia([AN,[(AN[0]+ED[0])/2,AN[1]-14],[ED[0]-3,ED[1]+5]],'roma'), fP=freccia([[V[0]+V[2]-2,CA[1]-6],NI||CA,[CA[0]+52/k,CA[1]+4/k],[CA[0]+17/k,CA[1]+2/k]],'persia');      // da Nisibi la freccia scende a destra di Carre e arriva da est, sotto il nome (24 novembre 2026: la punta copriva «Carre»)
   var SC=[(ED[0]+CA[0])/2-4,(ED[1]+CA[1])/2+14];      // la battaglia «al di là di Carre e di Edessa»: il punto è uno schema, sotto le due città perché non ne copra i nomi
   var fV=freccia([SC,[CA[0]+20,CA[1]+10],[V[0]+V[2]-3,CA[1]+18]],'prigionieri');
   function anello(p){ var q=B(p), g=el('g',{'class':'ig-v-assedio',transform:'translate('+xy(q)+')'},sopra); el('circle',{r:13,'class':'ig-v-anello'},g); return g; }
@@ -981,16 +1003,23 @@ function scenaRecinto(tav,defs,tv,oz,oriz2,ST){
   var brace=el('ellipse',{cx:r1(cx),cy:r1(cy+ry*.05),rx:r1(rx*.78),ry:r1(ry*.95),fill:'url(#ig-ca-brace)','class':'ig-ca-brace',opacity:ST?.85:0},tav);
   var NC=24, cDietro=[], cDavanti=[]; for(i=0;i<NC;i++){ var a=i/NC*Math.PI*2, p=[cx+Math.cos(a)*rx,cy+Math.sin(a)*ry], d=Math.sin(a)<0; (d?cDietro:cDavanti).push({p:p,s:(.72+.28*(Math.sin(a)+1)/2)*Math.max(.7,rx/220),y:p[1]}); }
   cDietro.sort(function(a,b){ return a.y-b.y; }).forEach(function(c){ carroLato(tav,c.p,c.s,true); });
-  var sS=Math.max(.7,rx/(oriz2?260:170)), R=rogoSelle(tav,cx,cy+8*sS,sS*1.1);
+  var sS=Math.max(.7,rx/(oriz2?260:170)), sR=sS*(oriz2?1.55:1.4), yR=cy+(oriz2?14:12)*sS;      // il rogo grande, al centro del recinto (24 novembre 2026, l'utente: «il rogo delle selle deve essere visibile»)
+  el('ellipse',{cx:r1(cx),cy:r1(yR+2*sR),rx:r1(62*sR),ry:r1(9*sR),'class':'ig-ca-rogo-ombra'},tav);
+  var R=rogoSelle(tav,cx,yR,sR);
   /* Attila, a sinistra del rogo; il nome sopra la testa, dove nessuno lo copre */
-  var hA=Math.max(36,56*sS), xA=cx-58*sS*1.1-18*sS, attila=el('g',{'class':'ig-ca-attila'+(ST?' vis':''),transform:'translate('+r1(xA)+','+r1(cy+8*sS)+')'},tav);
+  var hA=Math.max(36,56*sS), xA=cx-52*sR-20*sS, attila=el('g',{'class':'ig-ca-attila'+(ST?' vis':''),transform:'translate('+r1(xA)+','+r1(yR)+')'},tav);
   guerriero(attila,hA,{cl:'notte oro',mantello:true,elmo:false}); tx(attila,0,-hA-8,'ig-ca-et-n vis','Attila','middle');
   /* gli arcieri, lungo i carri e lontani dal centro: tirano verso fuori */
   var arcieri=[]; [[-.8,-.18],[.78,-.22],[-.66,.42],[.62,.46],[.9,.16],[.12,.7]].forEach(function(q,ii){ var p=[cx+q[0]*rx,cy+q[1]*ry], v=q[0]<0?-1:1, g=el('g',{transform:'translate('+xy(p)+')'},tav);
     guerriero(g,Math.max(22,30*sS),{verso:v,cl:'notte',arco:true});
     var fr=el('line',{x1:r1(v*6*sS),y1:r1(-17*sS),x2:r1(v*24*sS),y2:r1(-23*sS),'class':'ig-ca-dardo'},g); fr.style.animationDelay=(-ii*.31).toFixed(2)+'s'; arcieri.push(g); });
   cDavanti.sort(function(a,b){ return a.y-b.y; }).forEach(function(c){ carroLato(tav,c.p,c.s,false); });
-  var tRogo=tx(tav,cx+12*sS,cy+8*sS-R.alto*sS*1.1-12,'ig-ca-et-n'+(ST?' vis':''),'rogo di selle: «si racconta»','middle');
+  /* il cartellino del rogo, a destra in alto, con il suo filo: «pronto, non acceso» (Giordane 213: construxisse pyram; nessuno lo accende) */
+  var tRogo=el('g',{'class':'ig-ca-et-rogo'+(ST?' vis':'')},tav), ya=yR-R.alto*sR, lato=oriz2, xe=cx+44*sR, ye=ya-10*sS;
+  var tR1=tx(tRogo,xe+5,ye,'ig-ca-et-n vis grande','il rogo di selle','start'), tR2=tx(tRogo,xe+5,ye+16,'ig-ca-et-sotto','pronto, non acceso · «si racconta»','start');
+  if(lato&&xe+5+Math.max(largo(tR1),largo(tR2))>tv[0]+tv[2]-12) lato=false;      // se a destra non c'è posto (telefono in piedi o coricato), sopra il rogo, centrato
+  if(!lato){ ye=ya-34; [tR1,tR2].forEach(function(t,j){ t.setAttribute('x',r1(cx)); t.setAttribute('y',r1(ye+j*16)); t.setAttribute('text-anchor','middle'); }); }
+  tRogo.insertBefore(el('path',{d:lato?'M'+r1(cx+24*sR)+' '+r1(ya+12*sR)+' L'+r1(xe)+' '+r1(ye+8):'M'+r1(cx)+' '+r1(ye+22)+' L'+r1(cx)+' '+r1(ya+6*sR),'class':'ig-ca-filo'},null),tR1);
   /* il corteo di Teodorico, in primo piano: sei uomini col mantello e la bara, due fiaccole */
   var corteo=el('g',{'class':'ig-ca-corteo'+(ST?' vis':'')},tav), ycort=tv[1]+tv[3]-(oriz2?22:18), hcort=Math.max(22,Math.min(34,tv[3]*.08)), xc0=tv[0]+tv[2]*(oriz2?.36:.6);
   el('path',{d:'M'+r1(xc0+hcort*.3)+' '+r1(ycort-hcort*.74)+' h'+r1(hcort*3.6)+' l'+r1(-hcort*.2)+' '+r1(hcort*.14)+' h'+r1(-hcort*3.2)+' Z','class':'ig-ca-bara'},corteo);
@@ -1473,6 +1502,25 @@ function fumetto(p,b,testo,lato){
    del monumento pantheon in js/monumenti.js (Platner e Ashby: tamburo di 56 m, 43,2 dentro, alto circa 31; occhio di 9 m; pronao di 34 x 13,6 m; otto colonne grigie in fronte e quattro rosa
    in ciascuna delle due file dietro; colonne di 14,15 m secondo Ziolkowski; tegole di bronzo, «tegulis aereis», dorate secondo Cinti: un'ipotesi; «chartis plumbeis», LP XCII 12).
    Schemi: la pianta (le file interne dietro la prima, la terza, la sesta e l'ottava colonna sono indicative, come nel modello), l'alzato, la croce sul frontone (indicativa nel modello). */
+/* un cursore «prima e dopo» vero, sopra due fotogrammi affiancati: si trascina col dito e col mouse (pointer events con cattura; sul telefono un gesto in verticale
+   fa ancora scorrere la finestra, la maniglia no), si muove con le frecce, Inizio e Fine; chi lo prende mette in pausa l'animazione, che da lì non lo muove più
+   (24 novembre 2026, l'utente: «rendi interattiva questa parte»). fb è il riquadro delle foto in pixel del palco; cambia(f) ridisegna con la lama a f (da 0 a 1) */
+function cursorePD(S,fb,etichetta,testo,cambia){
+  var d=S.strato('ig-pd'); d.style.left=fb[0]+'px'; d.style.top=fb[1]+'px'; d.style.width=fb[2]+'px'; d.style.height=fb[3]+'px';
+  var m=h('div','ig-pd-maniglia',null,d); m.tabIndex=0; m.setAttribute('role','slider'); m.setAttribute('aria-label',etichetta); m.setAttribute('aria-valuemin','0'); m.setAttribute('aria-valuemax','100'); m.setAttribute('aria-orientation','horizontal');
+  var o={f:.5,mano:false,vivo:false}, preso=null, x0=0, attivo=false;
+  function metti(f,daMano){ f=clamp(f,0,1); o.f=f; m.style.left=(f*100).toFixed(2)+'%'; var v=Math.round(f*100); if(m._v!==v){ m._v=v; m.setAttribute('aria-valuenow',v); m.setAttribute('aria-valuetext',testo(f)); }
+    if(daMano){ if(!o.mano){ o.mano=true; if(S.ferma) S.ferma(); } cambia(f); } }
+  function qui(e){ var r=d.getBoundingClientRect(); return (e.clientX-r.left)/(r.width||1); }
+  d.addEventListener('pointerdown',function(e){ if(!o.vivo||preso!=null) return; preso=e.pointerId; x0=e.clientX; attivo=e.pointerType==='mouse'||e.target===m; try{ d.setPointerCapture(e.pointerId); }catch(x){}
+    if(attivo){ metti(qui(e),true); e.preventDefault(); } });
+  d.addEventListener('pointermove',function(e){ if(preso!==e.pointerId) return; if(!attivo&&Math.abs(e.clientX-x0)>6) attivo=true; if(attivo){ metti(qui(e),true); e.preventDefault(); } });
+  function lascia(e,tocco){ if(preso!==e.pointerId) return; if(tocco&&!attivo) metti(qui(e),true); preso=null; attivo=false; try{ d.releasePointerCapture(e.pointerId); }catch(x){} if(tocco) try{ m.focus({preventScroll:true}); }catch(x){} }
+  d.addEventListener('pointerup',function(e){ lascia(e,true); }); d.addEventListener('pointercancel',function(e){ lascia(e,false); });      // un tocco senza trascinare porta lì la lama
+  m.addEventListener('keydown',function(e){ var k=e.key, p=k==='ArrowLeft'||k==='ArrowDown'?-.05:k==='ArrowRight'||k==='ArrowUp'?.05:k==='PageDown'?-.2:k==='PageUp'?.2:k==='Home'?-1:k==='End'?1:0;
+    if(!p) return; e.preventDefault(); e.stopPropagation(); metti(o.f+p,true); });      // le frecce non arrivano alla finestra (che cambierebbe momento) né alla pagina
+  o.metti=function(f){ metti(f,false); }; o.mostra=function(v){ v=!!v; if(o.vivo===v) return; o.vivo=v; cls(d,'vis',v); if(!v&&document.activeElement===m) try{ m.blur(); }catch(x){} }; o.libera=function(){ o.mano=false; };
+  return o; }
 var PANTHEON={ titolo:"Il Pantheon nel tempo", sotto:"Tempio, chiesa, tetto di piombo: perché è arrivato intero fino a noi",
   fasi:[["126","Ricostruito da Adriano e dedicato a tutti gli dèi, il Pantheon è completato nel 126. L'ingresso è a nord."],
     ["126","La sala rotonda misura 56 metri di diametro; in cima alla cupola si apre un occhio di 9 metri. Davanti, un portico di sedici colonne di granito: otto grigie in facciata, otto rosa dietro."],
@@ -1705,6 +1753,7 @@ function disegnaCuria(svg,S,W,H){
  
   var lama=el('g',{'class':'ig-c-lama'},dentro); el('line',{x1:0,x2:0,y1:fb[1],y2:fb[1]+fb[3]},lama); el('circle',{cx:0,cy:r1(fb[1]+fb[3]/2),r:13},lama); el('path',{d:'M-4 '+r1(fb[1]+fb[3]/2-5)+' l-5 5 l5 5 M4 '+r1(fb[1]+fb[3]/2-5)+' l5 5 l-5 5','class':'ig-c-lama-f'},lama);
   var dW1=tx(dentro,fb[0]+12,fb[1]+fb[3]-14,'ig-c-wipe-t','384 · la Curia','start'), dW2=tx(dentro,fb[0]+fb[2]-12,fb[1]+fb[3]-14,'ig-c-wipe-t','700 · Sant\'Adriano','end');
+  var pd=cursorePD(S,fb,'Prima e dopo: la Curia nel 384 e Sant\'Adriano nel 700',function(f){ return f<.15?'quasi tutto il 700, Sant\'Adriano':f>.85?'quasi tutto il 384, la Curia':'a sinistra il 384, a destra il 700'; },function(){ if(ultimoT!=null) S.passo(ultimoT); });
   var dida=el('g',{'class':'ig-p-dida-f'},dentro), didaR=el('rect',{x:fb[0]+10,y:fb[1]+fb[3]-30,height:20,rx:10,'class':'ig-p-dida-fondo'},dida), didaT=tx(dida,fb[0]+20,fb[1]+fb[3]-16,'ig-p-dida-t','La città di questa pagina, anno 300');
   fissa(didaR,'width',r1(largo(didaT)+20));
   var fCuria=fumetto(dentro,fb,'la Curia','dx');
@@ -1777,7 +1826,8 @@ function disegnaCuria(svg,S,W,H){
     var dp=E.io(fase(t,T[10]+500,T[10]+2200)); fissa(porte,'transform',dp>0?'translate('+r1(dp*fb[2]*0.7)+',0)':''); cls(porte,'via',dp>=1); cls(pVia,'vis',dp>0.15&&i===10);
     cls(velo,'vis',i===8); cls(quota,'vis',i===2&&t>=T[2]+1600); cls(etS,'vis',t>=T[2]&&!(i===2&&t>=T[2]+1600)&&!(fin&&fOk[1]&&fOk[2]));
     /* le fotografie della fine: prima e dopo */
-    var vF=fin&&fOk[1]&&fOk[2]; cls(foto[2],'vis',vF); cls(foto[1],'vis',vF); var wp=fase(t,T[11]+1400,T[11]+5200), wx=fb[0]+fb[2]*(cW+0.2*Math.sin(wp*Math.PI*2)*(1-wp*0.4));
+    var vF=fin&&fOk[1]&&fOk[2]; cls(foto[2],'vis',vF); cls(foto[1],'vis',vF); var wp=fase(t,T[11]+1400,T[11]+5200), fw=cW+0.2*Math.sin(wp*Math.PI*2)*(1-wp*0.4);
+    if(!fin) pd.libera(); if(pd.mano) fw=pd.f; else pd.metti(fw); pd.mostra(vF); var wx=fb[0]+fb[2]*fw;      // presa in mano, la lama sta dove la lascia chi guarda
     fissa(cpWr,'width',r1(wx-fb[0])); fissa(lama,'transform','translate('+r1(wx)+',0)'); cls(lama,'vis',vF); cls(dW1,'vis',vF); cls(dW2,'vis',vF);
     /* i fumetti */
     function Fu(k,da,a){ var f=F[k]; cls(f[0],'vis',t>=da&&t<a); f[0].metti(f[1]); }
@@ -1813,7 +1863,14 @@ function finestra(par,defs,id,V,b,o){
   var zoom=el('g',null,el('g',{'clip-path':'url(#'+id+')'},g));
   var carta=el('g',{transform:'translate('+r1(b[0]-V[0]*k)+','+r1(b[1]-V[1]*k)+') scale('+Math.round(k*1000)/1000+')'},zoom);
   el('rect',{x:V[0]-V[2],y:V[1]-V[3],width:V[2]*3,height:V[3]*3,'class':'ig-v-mare'},carta); var terra=el('path',{d:G.terra,'class':'ig-v-terra'},carta);
-  var reg={}; if(o.stati) Object.keys(G.regioni).forEach(function(r){ var c=COLORE_STATO[o.stati[r]]; if(c) reg[r]=el('path',{d:G.regioni[r].d,'class':'ig-fin-reg',style:'fill:'+c},carta); });
+  /* le regioni dell'atlante (province del DARE) non hanno lo stesso bordo della costa di Natural Earth: ingrandite, lasciavano strisce di terra chiara lungo la riva e sporgevano
+     sul mare (24 novembre 2026, cattura dell'utente su Capo Bon). Rimedio nel solo disegno, i dati restano come sono: le regioni si ritagliano sulla terra, e sotto di loro un bordo
+     largo dello stesso colore, mascherato dove la regione c'è già, riempie lo scarto fra regione e costa (fino a 3 unità della carta, circa 15 km) */
+  var reg={}; if(o.stati){ var nid=id.replace(/\W/g,''), cT=el('clipPath',{id:nid+'-terra'},defs); el('path',{d:G.terra},cT);
+    var mk=el('mask',{id:nid+'-fuori',maskUnits:'userSpaceOnUse',x:V[0]-V[2],y:V[1]-V[3],width:V[2]*3,height:V[3]*3},defs); el('rect',{x:V[0]-V[2],y:V[1]-V[3],width:V[2]*3,height:V[3]*3,fill:'#fff'},mk);
+    var gOrlo=el('g',{'clip-path':'url(#'+nid+'-terra)'},carta), orlo=el('g',{mask:'url(#'+nid+'-fuori)','class':'ig-fin-orli'},gOrlo), gReg=el('g',{'clip-path':'url(#'+nid+'-terra)'},carta);
+    Object.keys(G.regioni).forEach(function(r){ var c=COLORE_STATO[o.stati[r]]; if(!c) return; el('path',{d:G.regioni[r].d,fill:'#000'},mk);
+      reg[r]=el('path',{d:G.regioni[r].d,'class':'ig-fin-reg',style:'fill:'+c},gReg); reg[r]._orlo=el('path',{d:G.regioni[r].d,'class':'ig-fin-orlo',style:'stroke:'+c},orlo); }); }
   if(o.rilievo!==false) href(el('image',{x:0,y:0,width:G.w,height:G.h,preserveAspectRatio:'none','class':'ig-m-rilievo'},carta),'img/rilievo.jpg');
   (G.fiumi||[]).forEach(function(f){ if(f.d) el('path',{d:f.d,'class':'ig-v-fiume'+(f.forte?' forte':''),'vector-effect':'non-scaling-stroke'},carta); });
   el('path',{d:G.terra,'class':'ig-v-costa','vector-effect':'non-scaling-stroke'},carta);
@@ -1824,6 +1881,28 @@ function finestra(par,defs,id,V,b,o){
 /* un luogo sulla finestra: punto e nome */
 function luogo(par,q,nome,dx,dy,an,cl){ var g=el('g',{'class':'ig-v-luogo'+(cl?' '+cl:''),transform:'translate('+xy(q)+')'},par); el('circle',{r:cl&&/grande/.test(cl)?5:3.8,'class':'ig-v-punto'+(cl&&/roma/.test(cl)?' roma':'')},g);
   tx(g,dx,dy,'ig-v-nome'+(cl&&/roma/.test(cl)?' roma':''),nome,an||'start'); return g; }
+/* i nomi dei luoghi stanno sopra frecce, anelli e segni: ogni luogo (punto e nome, con l'alone del fondo) torna in cima al suo strato, dopo il disegno
+   (24 novembre 2026, l'utente: «i nomi delle città siano sempre visibili»; i segni fermi sono comunque spostati perché non tocchino i nomi) */
+function nomiInCima(p){ var gs=[].slice.call(p.querySelectorAll('.ig-v-luogo,.ig-sc-nome,.ig-nome-cima')); gs.forEach(function(g){ g.parentNode.appendChild(g); });
+  /* e i nomi anche sopra i punti delle altre città: il nome passa in un gruppo gemello in fondo allo strato, che copia classe, posizione e stile del luogo */
+  gs.forEach(function(g){ if(g.tagName!=='g') return; var ts=[].filter.call(g.childNodes,function(c){ return c.tagName==='text'; }); if(!ts.length) return;
+    var g2=g.cloneNode(false); ts.forEach(function(t){ g2.appendChild(t); }); g.parentNode.appendChild(g2);
+    function copia(){ ['class','transform','style','opacity'].forEach(function(a){ var v=g.getAttribute(a); if(v==null){ if(g2.hasAttribute(a)) g2.removeAttribute(a); } else if(g2.getAttribute(a)!==v) g2.setAttribute(a,v); }); }
+    if(window.MutationObserver) new MutationObserver(copia).observe(g,{attributes:true}); }); }
+/* il nome di una rotta (Abd al-Rahman, Carlo…) che tocca il nome o il punto di una città, o esce dalla carta, si sposta lungo la sua linea, a destra o a sinistra,
+   finché trova un posto libero; se non lo trova resta dov'era (24 novembre 2026: sul telefono «Carlo» copriva Metz e «Abd al-Rahman» Tolosa) */
+function scansaNomi(svg){
+  function R(e){ var r=e.getBoundingClientRect(); return [r.left,r.top,r.right,r.bottom]; }
+  function urta(a,b,m){ return a[0]<b[2]+m&&a[2]>b[0]-m&&a[1]<b[3]+m&&a[3]>b[1]-m; }
+  [].forEach.call(svg.querySelectorAll('.ig-rt-nome'),function(t){ var g=t.parentNode, p=g.querySelector('.ig-rt-l'), box=t.closest('.ig-fin')||t.closest('.ig-atto')||svg; if(!p) return;
+    var cor=box.querySelector('.ig-m-cornice'), B=cor?R(cor):R(svg), L=lungo(p);
+    var ost=[].slice.call(box.querySelectorAll('.ig-v-luogo text,.ig-v-luogo circle,.ig-rt-nome')).filter(function(e){ return e!==t; }).map(R).filter(function(r){ return r[2]-r[0]>0; });
+    function libero(){ var r=R(t); return r[0]>=B[0]+4&&r[2]<=B[2]-4&&r[1]>=B[1]+4&&r[3]<=B[3]-4&&!ost.some(function(o){ return urta(r,o,2); }); }
+    if(libero()) return;
+    var x0=t.getAttribute('x'), y0=t.getAttribute('y'), a0=t.getAttribute('text-anchor'), prove=[];
+    [.5,.62,.38,.74,.26,.86,.14,.94].forEach(function(f){ [[9,4,'start'],[-9,4,'end'],[0,-9,'middle'],[0,16,'middle']].forEach(function(s){ prove.push([f,s]); }); });
+    for(var i=0;i<prove.length;i++){ var q=puntoA(p,L*prove[i][0]), s=prove[i][1]; t.setAttribute('x',r1(q[0]+s[0])); t.setAttribute('y',r1(q[1]+s[1])); t.setAttribute('text-anchor',s[2]); if(libero()) return; }
+    t.setAttribute('x',x0); t.setAttribute('y',y0); t.setAttribute('text-anchor',a0||'middle'); }); }
 /* una rotta che si traccia, con la punta che segue la linea; o.schema la fa a trattini (si scopre con una maschera), o.c ne dà il colore */
 var NRT=0;
 function rotta(par,defs,pts,o){
@@ -2213,7 +2292,7 @@ var CATALAUNICI={ titolo:"Campi Catalaunici", sotto:"451: Ezio, Teodorico e Atti
     ["Teodorico","Il re Teodorico, mentre incita i suoi, cade da cavallo e muore calpestato. Altri dicono che lo uccise una lancia di Andagis, un Ostrogoto. Secondo i vecchi, il ruscello del campo si gonfiò di sangue."],
     ["La notte","I Visigoti si staccano dagli Alani e caricano gli Unni. Quasi uccidono Attila, che si chiude nel recinto dei suoi carri. Nel buio Torismondo finisce fra i carri nemici ed è ferito; Ezio passa la notte al riparo degli scudi."],
     ["Il giorno dopo","Attila resta chiuso nel cerchio dei carri, fra squilli di tromba, «come un leone» stretto dalle lance. Goti e Romani decidono di prenderlo per fame; i suoi arcieri tengono lontano chi si avvicina."],
-    ["Si racconta","Si racconta che Attila preparò un rogo di selle di cavallo, per gettarsi tra le fiamme se i nemici fossero entrati: nessuno doveva prenderlo vivo."],
+    ["Si racconta","Si racconta che Attila preparò un rogo di selle di cavallo, per gettarsi tra le fiamme se i nemici fossero entrati: nessuno doveva prenderlo vivo. Il rogo resta spento: Goti e Romani decidono di stancarlo con l'assedio."],
     ["Torismondo","I Visigoti trovano il corpo del re fra i cadaveri e lo portano via con i canti. Ezio consiglia a Torismondo di tornare a Tolosa a prendersi il regno: secondo Giordane temeva che, distrutti gli Unni, i Goti diventassero un pericolo per l'impero."],
     ["I morti","Giordane scrive di 165.000 morti, più 15.000 Franchi e Gepidi uccisi la notte prima. È la cifra della fonte, scritta un secolo dopo, e non è credibile come conto. Prospero, che scriveva in quegli anni, parla solo di «stragi incalcolabili»."]],
   fonte:"Giordane, Storia dei Goti 192-217, nel latino (The Latin Library); Gregorio di Tours, Storie II 7; Prospero d'Aquitania, Cronaca, anno 451, citato nella tappa. Giordane scrive verso il 551, un secolo dopo; Prospero chiude la sua cronaca nel 455. Il luogo della battaglia non è noto: la carta lo segna dove lo mette la tradizione, e le linee della marcia sono uno schema. Lo schieramento segue Giordane; l'orientamento del campo, le distanze e i reparti sono disegnati a schema, e su quale ala stessero Ostrogoti e Gepidi Giordane non è esplicito. Il ruscello di sangue è un racconto «dei vecchi», il rogo di selle un «si racconta»; i 165.000 morti sono la cifra di Giordane, non un conto credibile." };
@@ -2906,7 +2985,7 @@ function disegnaSacchi(svg,S,W,H){
     giorni.push(cel); });
   /* che cosa: le voci con un segno */
   var COSE=[[['fuoco','case vicino alla porta e casa di Sallustio'],['croce','rifugio rispettato a San Pietro e San Paolo'],['forse','la basilica Emilia, probabilmente']],
-    [['scudo','niente incendi, stragi e torture: lo ottiene papa Leone'],['tetto','metà del tetto dorato del tempio di Giove'],['gente','migliaia di prigionieri, con l\'imperatrice e le figlie'],['bronzo','il bronzo del palazzo imperiale'],['tesoro','i tesori del Tempio di Gerusalemme, secondo Procopio']],
+    [['scudo','niente incendi, stragi e torture: lo ottiene papa Leone'],['bronzo','il bronzo del palazzo imperiale'],['tetto','metà del tetto dorato del tempio di Giove'],['gente','migliaia di prigionieri, con l\'imperatrice e le figlie'],['tesoro','i tesori del Tempio di Gerusalemme, secondo Procopio']],
     [['mura','tratti delle mura abbattuti: «circa un terzo», forse esagerato'],['fuoco','una parte di Trastevere bruciata'],['gente','gli abitanti portati via'],['lettera','i monumenti salvi, per una lettera di Belisario']]];
   function icona(p,tipo,x,y){ var g=el('g',{'class':'ig-sc-ic '+tipo,transform:'translate('+r1(x)+','+r1(y)+')'},p);
     if(tipo==='fuoco'||tipo==='forse') el('path',{d:FIAMMA,transform:'scale(.62)'},g); else if(tipo==='croce') el('path',{d:'M0 -6 V6 M-4 -2 H4'},g); else if(tipo==='scudo') el('path',{d:'M0 -7 L6 -4.5 V0 Q6 5 0 7 Q-6 5 -6 0 V-4.5 Z'},g);
@@ -2914,7 +2993,7 @@ function disegnaSacchi(svg,S,W,H){
     else if(tipo==='gente'){ [[-4,0],[3,1]].forEach(function(q){ el('circle',{cx:q[0],cy:q[1]-4.5,r:2.2},g); el('path',{d:'M'+(q[0]-3)+' '+(q[1]+6)+' Q'+q[0]+' '+(q[1]-3)+' '+(q[0]+3)+' '+(q[1]+6)+' Z'},g); }); }
     else if(tipo==='tesoro') el('path',{d:'M-6 -1 H6 V6 H-6 Z M-6 -1 Q0 -8 6 -1'},g); else if(tipo==='mura') el('path',{d:'M-7 6 V-2 H-4 V-5 H-1 V-2 H1 V-5 H4 V-2 H7 V1 L3 6 Z'},g);
     else if(tipo==='lettera') el('path',{d:'M-7 -5 H7 V5 H-7 Z M-7 -5 L0 1 L7 -5'},g); return g; }
-  var maxV=righe?3:piccolo?3:5;
+  var maxV=righe?4:5;      /* le voci che non entrano nel riquadro si tolgono, più giù; il bronzo del palazzo viene subito dopo lo scudo, perché sul telefono non restasse fuori (24 novembre 2026) */
   SC.forEach(function(q,k){ var a=areaSotto(q), g=el('g',{'class':'ig-sc-cose'},q.g), y=a[1]+2, lh=righe?13.5:piccolo?12.5:15, fs=righe?11.5:piccolo?11:13; q.cose=[]; q.coseG=g;
     COSE[k].slice(0,maxV).forEach(function(c){ if(y+lh>a[1]+a[3]) return; var r=el('g',{'class':'ig-sc-cosa'},g); icona(r,c[0],a[0]+7,y+lh*.6); var t=el('text',{x:r1(a[0]+20),y:r1(y+lh*.88),'class':'ig-sc-cosa-t'},r); t.style.fontSize=fs+'px';
       var n=avvolgi(t,c[1],a[2]-22,lh); if(y+n*lh>a[1]+a[3]+2){ r.remove(); return; } q.cose.push(r); y+=n*lh+(righe?3:piccolo?3:6); }); });
@@ -2985,7 +3064,7 @@ function disegnaSacchi(svg,S,W,H){
    Schemi, detti nel disegno: i tracciati degli acquedotti, i punti dei tagli (le fonti non dicono dove), le posizioni dei campi, i mulini galleggianti (numero e forma), l'acqua che si
    svuota e torna. Che la Iovia sia il ramo di Caracalla (l'Antoniniano) è l'ipotesi del modello: è detto. Lasciato fuori perché la pagina non lo dice: che cosa fecero i Romani agli
    sbocchi degli acquedotti, quali acquedotti funzionassero fra il 538 e il 776, i nomi degli altri condotti. Le cifre (undici, quattordici per Procopio, diciannove coi rami) vengono dalla scheda degli acquedotti, messa d'accordo il 23 novembre 2026. */
-var ACQUEDOTTI={ titolo:"Gli acquedotti tagliati", sotto:"537: i Goti fermano l'acqua di Roma. Che cosa si spegne, che cosa torna",
+var ACQUEDOTTI={ titolo:"Gli acquedotti, tagliati e riparati", sotto:"537: i Goti fermano l'acqua di Roma. Verso il 776 papa Adriano I ne fa riparare quattro",      // titolo per le due tappe, 537 e 780 (24 novembre 2026)
   fasi:[["Prima","Gli acquedotti portano a Roma l'acqua per le terme, le fontane e i mulini. I grandi acquedotti sono undici; con i rami, un catalogo del IV secolo arriva a diciannove. Procopio ne conta quattordici."],
     ["493","Il re goto Teodorico, che governa l'Italia, vieta di deviare l'acqua degli acquedotti."],
     ["Marzo 537","Il re goto Vitige assedia Roma, difesa da Belisario. I Goti allestiscono sette accampamenti: sei davanti alle porte fra il nord e l'est, uno oltre il Tevere."],
@@ -3000,7 +3079,7 @@ var ACQUEDOTTI={ titolo:"Gli acquedotti tagliati", sotto:"537: i Goti fermano l'
     ["verso il 776","La Sabbatina, l'antica Traiana, era interrotta da vent'anni e aveva cento arcate crollate. Riparata, porta di nuovo l'acqua a San Pietro e ai mulini del Gianicolo."],
     ["verso il 776","La Claudia riporta l'acqua al Laterano. La Vergine torna a dissetare quasi tutta la città. Riprende anche la Iovia, forse un ramo della Marcia."],
     ["Dopo","Le grandi terme invece restano chiuse: nel VI e nel VII secolo, in alcune si seppelliscono i morti. I mulini sulle barche resteranno sul Tevere fino al 1870."]],
-  fonte:"Tappe del 493, del 537 e del 780 e intermezzo «La città» di questa pagina; schede degli acquedotti, dei mulini, della Meta Sudans e delle terme; Procopio, Guerre V 19 (i quattordici acquedotti, i mulini sulle barche); Prammatica Sanzione, capitolo 25; Gregorio Magno, Registro XII, 6; Liber Pontificalis, vita di Adriano I. Quanti fossero gli acquedotti, le cifre della pagina non coincidono: quattordici secondo Procopio, undici nella scheda. La pianta è quella del modello della città: i tracciati degli acquedotti e le loro quote sono una ricostruzione, i punti in cui i Goti li tagliarono non sono noti (i tagli sono segnati fuori dalle mura come schema), e così le posizioni dei sette campi. Che la Iovia sia il ramo costruito da Caracalla per le sue terme è l'ipotesi seguita dal modello. I mulini sulle barche sono disegnati come li descrive Procopio: numero, forma e posizione precisa sono ipotesi. Gli anni dei restauri di Adriano I sono una stima." };
+  fonte:"Tappe del 493, del 537 e del 780 e intermezzo «La città» di questa pagina; schede degli acquedotti, dei mulini, della Meta Sudans e delle terme; Procopio, Guerre V 19 (i quattordici acquedotti, i mulini sulle barche); Prammatica Sanzione, capitolo 25; Gregorio Magno, Registro XII, 6; Liber Pontificalis, vita di Adriano I. Quanti fossero gli acquedotti: undici i grandi; diciannove con i rami, in un catalogo del IV secolo; quattordici per Procopio, nel 537: il perché, le fonti lette non lo spiegano. La pianta è quella del modello della città: i tracciati degli acquedotti e le loro quote sono una ricostruzione, i punti in cui i Goti li tagliarono non sono noti (i tagli sono segnati fuori dalle mura come schema), e così le posizioni dei sette campi. Che la Iovia sia il ramo costruito da Caracalla per le sue terme è l'ipotesi seguita dal modello. I mulini sulle barche sono disegnati come li descrive Procopio: numero, forma e posizione precisa sono ipotesi. Gli anni dei restauri di Adriano I sono una stima." };
 function disegnaAcquedotti(svg,S,W,H){
   var TP=window.RM_TOPO; if(!TP||!TP.mura||!TP.quote) return;
   var oriz=W/H>=1.15, piccolo=oriz&&W<700, pad=oriz?16:10, defs=el('defs',null,svg), fasi=ACQUEDOTTI.fasi, i;
@@ -3040,7 +3119,7 @@ function disegnaAcquedotti(svg,S,W,H){
     var tq=B(l.taglio); l.x=el('g',{'class':'ig-aq-taglio',transform:'translate('+xy(tq)+')'},gL); el('circle',{r:8,'class':'ig-aq-taglio-c'},l.x); el('path',{d:'M-4 -4 L4 4 M4 -4 L-4 4','class':'ig-aq-taglio-x'},l.x); });
   /* i nomi degli acquedotti */
   var NOMI=[[0,[212,94],'Claudia','start'],[1,[166,-58],'Marcia','end'],[2,[-28,-150],'Vergine','end'],[3,[piccolo||!oriz?-282:-330,26],'Traiana','middle'],[4,[180,222],'Antoniniano','middle']];
-  var gN=el('g',{'class':'ig-aq-nomi'},carta); NOMI.forEach(function(n){ var q=B(n[1]); var t=tx(gN,q[0],q[1],'ig-aq-nome',n[2],n[3]); LINEE[n[0]].nome=t; });
+  var gN=el('g',{'class':'ig-aq-nomi ig-nome-cima'},carta); NOMI.forEach(function(n){ var q=B(n[1]); var t=tx(gN,q[0],q[1],'ig-aq-nome',n[2],n[3]); LINEE[n[0]].nome=t; });
   /* le terme, la fontana, i mulini, San Pietro e il Laterano */
   function terme(p,nome){ var q=B(p), g=el('g',{'class':'ig-aq-terme',transform:'translate('+xy(q)+')'},carta); el('rect',{x:-6,y:-4,width:12,height:8,rx:1.5,'class':'ig-aq-terme-r'},g);
     var vap=el('g',{'class':'ig-aq-vapore'},g); [-3,1,5].forEach(function(x,j){ var v=el('path',{d:'M'+x+' -6 q-2 -3 0 -6 t0 -6','class':'ig-aq-vap'},vap); v.style.animationDelay=(-j*.5)+'s'; }); g.nome=nome; return g; }
@@ -3071,6 +3150,7 @@ function disegnaAcquedotti(svg,S,W,H){
   var vt=tx(gV,vb[0]+10,vb[1]+vb[3]-10,'ig-aq-v-t','numero e forma: ipotesi'); el('rect',{x:r1(vb[0]),y:r1(vb[1]),width:r1(vb[2]),height:r1(vb[3]),rx:10,'class':'ig-aq-v-cornice'},gV);
   var vtit=tx(gV,vb[0]+10,vb[1]-8,'ig-aq-v-tit','I mulini sulle barche di Belisario');
   if(largo(vtit)>vb[2]+40) vtit.textContent='Mulini sulle barche';
+  var sottoV=NOMI.map(function(n){ var t=LINEE[n[0]].nome, b; try{ b=t.getBBox(); }catch(e){ return false; } return b.x<vb[0]+vb[2]&&b.x+b.width>vb[0]&&b.y<vb[1]+vb[3]&&b.y+b.height>vb[1]-24; });      // i nomi degli acquedotti che il riquadro dei mulini coprirebbe: mentre c'è, si nascondono (24 novembre 2026)
   /* la colonna: anno, stato, quadro di ciò che funziona */
   var gC=el('g',{'class':'ig-p-col-d'},svg), fsA=oriz?Math.min(piccolo?30:52,cb[2]/4.6):Math.min(28,W/12), tA=tx(gC,cb[0],cb[1]+fsA*.82,'ig-p-anno',''), tSt=el('text',{x:r1(cb[0]),y:r1(cb[1]+fsA*1.08+(oriz?14:12)),'class':'ig-p-stato'},gC);
   var STATI=['L\'ACQUA DI ROMA','UN DIVIETO','L\'ASSEDIO','I TAGLI','LE TERME A SECCO','I MULINI FERMI','I MULINI SULLE BARCHE','FINE DELL\'ASSEDIO','UNA LEGGE','L\'INCURIA','I RESTAURI','LA SABBATINA','TRE CONDOTTI','CIÒ CHE RESTA'];
@@ -3081,8 +3161,14 @@ function disegnaAcquedotti(svg,S,W,H){
     var tv=tx(g,oriz?cb[0]+18:cb[0]+cb[2],y+(oriz?(piccolo?30:36):rh*.66),'ig-aq-q-v','',oriz?'start':'end'); if(!oriz) tk.setAttribute('class','ig-p-sch-k'); quadro.push({g:g,v:tv,k:r[0]}); });
   var yLP=yQ+RIG.length*rh+16, gLP=el('g',null,gC), cit=null;
   if(oriz&&!piccolo&&cb[1]+cb[3]-yLP>90){ cit=citazione(gLP,cb[0],yLP,cb[2],'«Fece scorrere l\'acqua in abbondanza, come in antico, nell\'atrio del beato Pietro e anche dentro la città, cioè al Gianicolo, dove giravano le mole.»','Liber Pontificalis, vita di Adriano I',Math.min(16,cb[2]/22)); if(cit._h>cb[1]+cb[3]-yLP){ cit.remove(); cit=null; } }
-  var cit14=null; if(oriz&&!piccolo&&cb[1]+cb[3]-yLP>70){ var g14=el('g',{'class':'ig-ad-num'},gC), n1=tx(g14,cb[0],yLP+34,'ig-aq-num','14'), t1=tx(g14,cb[0]+largo(n1)+8,yLP+20,'ig-aq-num-t','secondo Procopio'); n1.style.fontSize='40px';
-    var n2=tx(g14,cb[0]+cb[2]*.5,yLP+34,'ig-aq-num','11'); n2.style.fontSize='40px'; tx(g14,cb[0]+cb[2]*.5+largo(n2)+8,yLP+20,'ig-aq-num-t','nella scheda'); tx(g14,cb[0],yLP+56,'ig-aq-num-n','gli acquedotti: le cifre della pagina non coincidono'); cit14=g14; }
+  /* le tre cifre della scheda degli acquedotti (messe d'accordo il 23 novembre 2026): il numero in alto, la sua etichetta sotto, mai sovrapposti (24 novembre 2026: prima l'etichetta
+     si misurava prima di ingrandire il numero e finiva sotto le cifre) */
+  var cit14=null; if(oriz&&!piccolo&&cb[1]+cb[3]-yLP>60){ var g14=el('g',{'class':'ig-ad-num'},gC), cw3=cb[2]/3, fsN=Math.min(36,cw3*.36), yE=yLP+fsN*.85+15, hMax=0, fondo=cb[1]+cb[3];
+    [['11','grandi acquedotti'],['19','con i rami, catalogo del IV secolo'],['14','secondo Procopio, nel 537']].forEach(function(c,j){ var x=cb[0]+j*cw3, n=tx(g14,x,yLP+fsN*.85,'ig-aq-num',c[0]); n.style.fontSize=r1(fsN)+'px';
+      var e=el('text',{x:r1(x),y:r1(yE),'class':'ig-aq-num-t'},g14); hMax=Math.max(hMax,avvolgi(e,c[1],cw3-12,13.5)); });
+    var nota=el('text',{x:r1(cb[0]),y:r1(yE+(hMax-1)*13.5+22),'class':'ig-aq-num-n'},g14), nN=avvolgi(nota,'Perché Procopio ne conti quattordici, le fonti lette non lo spiegano.',cb[2],16);
+    if(yE+(hMax-1)*13.5+22+(nN-1)*16+4>fondo) nota.remove();      // senza posto, la nota resta nelle avvertenze
+    if(yE+(hMax-1)*13.5+4>fondo) g14.remove(); else cit14=g14; }
   function stato(ii,t){ var c=ii>=3&&!(ii===3&&t<T[3]+2400);
     return {terme:ii<4&&!(ii===3&&t>=T[3]+2400)?['su','in funzione']:ii>=13?['mai','chiuse per sempre']:['giu','senz\'acqua'],
       citta:!c?['su','in funzione']:ii>=12?['su','torna con la Vergine']:['giu','si ferma'],
@@ -3104,7 +3190,7 @@ function disegnaAcquedotti(svg,S,W,H){
     cls(meta,'vis',t>=T[0]+300); cls(meta,'spente',asciutte&&!(i>=12&&false)); cls(mulG,'vis',t>=T[0]+300); cls(mulG,'fermo',i>=5&&i<11||(i===3||i===4)&&asciutte); cls(etMul,'vis',i===0||i===5||i===11);
     cls(pietro,'vis',i===11||i===0); cls(later,'vis',i===12);
     cls(gCa,'vis',i>=2&&i<8);
-    cls(barche,'vis',i>=6&&i<8||i>=13); cls(gV,'vis',i===6||i===7&&t<T[7]+1500);
+    var vV=i===6||i===7&&t<T[7]+1500; cls(barche,'vis',i>=6&&i<8||i>=13); cls(gV,'vis',vV); NOMI.forEach(function(n,j){ cls(LINEE[n[0]].nome,'coperto',vV&&sottoV[j]); });
     /* la colonna */
     cls(gC,'vis',t>=T[0]-300);
     if(i!==visto){ visto=i; scrivi(tA,i<0?'':fasi[ii][0]); var fa=fsA; tA.style.fontSize=fa+'px'; while(largo(tA)>cb[2]&&fa>16){ fa-=2; tA.style.fontSize=fa+'px'; } tSt.textContent=''; if(i>=0) avvolgi(tSt,STATI[ii],cb[2],17); }
@@ -3375,7 +3461,7 @@ function disegnaPoitiers(svg,S,W,H){
   var tPir=tx(sA,MP([281,331])[0],MP([281,331])[1],'ig-ad-zona-t ig-f',kk>=2.1?'monti dei Vasconi':'Pirenei','middle');
   var sCE=segnoCarta(sA,'assedio',CE,.8);
   var rMun=rotta(sA,defs,[CE,MP([321,328]),MP([338,337])],{c:CO.arabi,schema:true,nome:kk>=2.1?'al califfo, oltre il mare':'al califfo',dove:.98,dx:-4,dy:-11,an:'end'});
-  var rAb=rotta(sA,defs,[MP([244,339]),PA,MP([259,304]),MP([268,287]),BO],{c:CO.arabi,nome:'Abd al-Rahman',dove:.5,dx:-10,an:'end'});
+  var rAb=rotta(sA,defs,[MP([244,339]),PA,MP([259,304]),MP([268,287]),BO],{c:CO.arabi,nome:'Abd al-Rahman',dove:.6,dx:9,dy:4,an:'start'}); if(rAb.et) nelRiquadro(rAb.et,mb,8);      // il nome a destra della linea: a sinistra usciva dalla carta (24 novembre 2026)
   var GA=MP([290,264]), zGa=el('g',{'class':'ig-f'},sA); el('ellipse',{cx:r1(GA[0]),cy:r1(GA[1]),rx:r1(8*kk),ry:r1(5*kk),'class':'ig-ad-zona'},zGa);
   tx(zGa,GA[0]+8*kk+5,GA[1]+5,'ig-ad-zona-t',kk>=2.1?'oltre la Garonna e la Dordogna':'Garonna e Dordogna','start');
   var sGa=segnoCarta(sA,'scontro',GA,.8), sBO=segnoCarta(sA,'fuoco',BO,.7);
@@ -3484,10 +3570,10 @@ function disegnaPoitiers(svg,S,W,H){
   var tAc=tx(sc,Q(oriz?.79:.81,0)[0],oz-alto(.012)*.9-10,'ig-ad-et ig-ad-tag ig-po-et-ar',"l'accampamento degli Arabi",'middle');
   var tMu=tx(sc,X0+uFronte(.94)*TW-hM*.55,yb-12,'ig-ad-et ig-ad-tag','«come un muro»','middle');
   var tRe=tx(sc,qK[0],qK[1]-hK*1.05-8,'ig-ad-et ig-ad-tag','il re','middle');
-  var croce=el('g',{'class':'ig-ca-croce'},sc), rcr=Math.max(7,base*.11); el('circle',{r:r1(rcr),'class':'ig-po-croce-f'},croce); el('path',{d:'M0 '+r1(-rcr*.66)+' V'+r1(rcr*.66)+' M'+r1(-rcr*.42)+' '+r1(-rcr*.2)+' H'+r1(rcr*.42),'class':'ig-ca-croce-l'},croce);
-  var pCr=[qK[0]+hK*.5,qK[1]-hK*.32-rcr]; fissa(croce,'transform','translate('+xy(pCr)+')'); tx(croce,0,-rcr-6,'ig-ca-capo-t ig-po-verde','Abd al-Rahman','middle');
-  var tFu=tx(sc,lerp(A1[0],A2[0],.45),Math.min(A1[1],A2[1])-hFila-12,'ig-ad-tag notte','in silenzio, nella notte','middle');
-  var tIm=tx(sc,Q(oriz?.7:.72,.5)[0],Q(0,.5)[1],'ig-ad-et ig-ad-tag',"temono un'imboscata: non inseguono",'middle');
+  var croce=el('g',{'class':'ig-ca-croce'},sc), rcr=Math.max(7,base*.11); el('circle',{r:r1(rcr),'class':'ig-po-croce-f'},croce); el('circle',{r:r1(rcr*.34),'class':'ig-po-ucciso'},croce);      // il segno della morte senza croce: Abd al-Rahman è musulmano (24 novembre 2026)
+  var pCr=[qK[0]+hK*.5,qK[1]-hK*.32-rcr]; fissa(croce,'transform','translate('+xy(pCr)+')'); tx(croce,0,-rcr-6,'ig-ca-capo-t ig-po-verde','Abd al-Rahman, ucciso','middle');
+  var tFu=tx(sc,lerp(A1[0],A2[0],.45),oriz?Math.min(A1[1],A2[1])-hFila-12:Math.max(A1[1],A2[1])+16,'ig-ad-tag notte','in silenzio, nella notte','middle');
+  var tIm=tx(sc,oriz?Q(.7,.5)[0]:X0+TW-8,Q(0,.5)[1]-alto(.5)*1.3-6,'ig-ad-et ig-ad-tag',oriz?"temono un'imboscata: non inseguono":"temono un agguato",oriz?'middle':'end');      // sopra gli esploratori; sul telefono contro il bordo destro, lontano dal muro dei Franchi
   var tBo=tx(sc,Q(oriz?.47:.5,.97)[0],yb-12,'ig-ad-et ig-ad-tag','il bottino, diviso','middle');
   var cerchi=espl.slice(0,2).map(function(e){ var q=Q(e.u1,e.d); return el('ellipse',{cx:r1(q[0]),cy:r1(q[1]-alto(e.d)*.1),rx:r1(alto(e.d)*.95),ry:r1(alto(e.d)*.3),'class':'ig-po-cerca'},sc); });
   [tFr,tAc,tMu,tRe,tFu,tIm,tBo].forEach(function(t){ nelRiquadro(t,[X0,Y0,TW,TH],8); });
@@ -3614,19 +3700,19 @@ var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno==
   governo:{d:GOVERNO, disegna:disegnaGoverno, tappe:function(t){ return !t.intermezzo && (t.anno===476||t.anno===568||t.anno===800); }},
   valeriano:{d:VALERIANO, disegna:disegnaValeriano, tappe:function(t){ return t.anno===260&&!t.intermezzo; }},
   curia:{d:CURIA, disegna:disegnaCuria, tappe:function(t){ return t.anno===630&&!t.intermezzo; }},
-  pantheon:{d:PANTHEON, disegna:disegnaPantheon, tappe:function(t){ return t.anno===609&&!t.intermezzo; }},
+  pantheon:{d:PANTHEON, disegna:disegnaPantheon, tappe:function(t){ return !t.intermezzo && (t.anno===609||t.anno===663); }, da:function(t){ return t&&t.anno===663?'663':null; }},      // anche nella tappa di Costante II (24 novembre 2026, l'utente: «inserire»); aperta dal 663 parte dal suo quadro
   milvio:{d:MILVIO, disegna:disegnaMilvio, tappe:function(t){ return t.anno===312&&!t.intermezzo; }},
   adrianopoli:{d:ADRIANOPOLI, disegna:disegnaAdrianopoli, tappe:function(t){ return t.anno===378&&!t.intermezzo; }},
   catalaunici:{d:CATALAUNICI, disegna:disegnaCatalaunici, tappe:function(t){ return t.anno===451&&!t.intermezzo; }},
   capobon:{d:CAPOBON, disegna:disegnaCapobon, tappe:function(t){ return t.anno===468&&!t.intermezzo; }},
   altare:{d:ALTARE, disegna:disegnaAltare, tappe:function(t){ return t.anno===384&&!t.intermezzo; }},
   barbari:{d:BARBARI, disegna:disegnaBarbari, tappe:function(t){ return t.anno===439&&t.intermezzo; }},
-  acquedotti:{d:ACQUEDOTTI, disegna:disegnaAcquedotti, tappe:function(t){ return t.anno===537&&!t.intermezzo; }},
+  acquedotti:{d:ACQUEDOTTI, disegna:disegnaAcquedotti, tappe:function(t){ return !t.intermezzo && (t.anno===537||t.anno===780); }, da:function(t){ return t&&t.anno===780?'verso il 776':null; }},      // anche nel 780 (24 novembre 2026, l'utente: «inserire», non spostare); aperta dal 780 parte dai restauri di Adriano I
   sacchi:{d:SACCHI, disegna:disegnaSacchi, tappe:function(t){ return !t.intermezzo && (t.anno===455||t.anno===546); }},
   terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo); }} };      /* solo nell'intermezzo «L'esercito»: dalla tappa del 439 (Cartagine) l'utente l'ha fatta togliere il 24 novembre 2026 */
-/* Poitiers: scritta ma non ancora provata sulla pagina; per accenderla, dopo le catture: INFO.poitiers={d:POITIERS, disegna:disegnaPoitiers, tappe:function(t){ return t.anno===711&&!t.intermezzo; }};
-   e 'poitiers' in ORDINE fra 'curia' e 'roma' (24 novembre 2026) */
-var ORDINE=['valeriano','moneta','milvio','navi','adrianopoli','altare','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','pantheon','curia','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 395, 410, 439, 476, 609, 630; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
+/* Poitiers: accesa il 24 novembre 2026 sulla tappa del 711, dopo le prove a 393, 1280 e 812x375 e con ?fermo=1 (prima era scritta ma spenta) */
+INFO.poitiers={d:POITIERS, disegna:disegnaPoitiers, tappe:function(t){ return t.anno===711&&!t.intermezzo; }};
+var ORDINE=['valeriano','moneta','milvio','navi','adrianopoli','altare','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','pantheon','curia','poitiers','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 395, 410, 439, 476, 609, 630, 711; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
 var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
   pausa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',
   prima:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18 6.5v11l-8.5-5.5z" fill="currentColor"/></svg>',
@@ -3656,8 +3742,9 @@ GLIFI.poitiers='<path d="M4.5 5v8M10 5v8M15.5 5v8" stroke="currentColor" stroke-
 /* ---------- la finestra ---------- */
 var dlg=null, raf=0, sgancia=null, ctl=null;
 function bottone(c,ico,et,p){ var b=h('button',c,null,p); b.type='button'; b.innerHTML=ico; b.setAttribute('aria-label',et); b.title=et; return b; }
-function apri(chi){
+function apri(chi,tp){
   var I=INFO[chi]; if(!I) return; chiudi();
+  if(!tp&&window.RM_pagina&&RM_pagina.tappa) tp=(D.TAPPE||[])[RM_pagina.tappa()];      // la tappa da cui si apre: alcune infografiche partono da un altro punto (I.da)
   var ritorno=document.activeElement, n=ORDINE.indexOf(chi)+1;
   dlg=h('dialog','ig-finestra ig-'+chi+(I.d.notte?' ig-notte':'')+(POCO?' ig-fermo':''),null,document.body); dlg.setAttribute('aria-labelledby','igTitolo');
   var corpo=h('div','ig-corpo',null,dlg), testa=h('header','ig-testa',null,corpo), tt=h('div','ig-testa-t',null,testa);
@@ -3678,9 +3765,9 @@ function apri(chi){
   function costruisci(){
     svg.textContent=''; [].slice.call(dlg.querySelectorAll('.ig-strato,.ig-fuori')).forEach(function(x){ x.remove(); });
     var r=palco.getBoundingClientRect(); W=Math.max(200,Math.round(r.width)); H=Math.max(200,Math.round(r.height)); svg.setAttribute('viewBox','0 0 '+W+' '+H);
-    S={battute:[],dura:1000,passo:function(){},strato:function(c,sotto){ var d=h('div','ig-strato '+c); palco.insertBefore(d,sotto?svg:cop); return d; },
+    S={battute:[],dura:1000,passo:function(){},ferma:function(){ if(vivo) ferma(); },strato:function(c,sotto){ var d=h('div','ig-strato '+c); palco.insertBefore(d,sotto?svg:cop); return d; },
       fuori:function(c){ var d=h('div','ig-fuori '+c); lato.insertBefore(d,comandi.nextSibling); return d; }};      // fuori dal palco, nella colonna del testo
-    I.disegna(svg,S,W,H);
+    I.disegna(svg,S,W,H); nomiInCima(svg); scansaNomi(svg);
     tac.textContent=''; S.battute.forEach(function(b){ h('i',null,null,tac).style.left=(b.t/S.dura*100).toFixed(2)+'%'; });
   }
   function mostra(){
@@ -3715,7 +3802,8 @@ function apri(chi){
   if(POCO){ t=S.dura; subito(mostra); comandi.hidden=true; var ul=h('ol','ig-elenco',null,lato); lato.insertBefore(ul,fonte);
     S.battute.forEach(function(b){ var li=h('li',null,null,ul); h('b',null,String(b.anno),li); li.appendChild(document.createTextNode(' '+b.testo)); });
     if(S.fermo) lato.insertBefore(S.fermo(lato),fonte); frase.hidden=true; bx.focus(); }
-  else { mostra(); bP.focus(); raf=requestAnimationFrame(va); }
+  else { var da=I.da&&I.da(tp), bd=da&&S.battute.filter(function(x){ return x.anno===da; })[0]; if(bd) t=Math.max(0,bd.t-300);
+    mostra(); bP.focus(); raf=requestAnimationFrame(va); }
 }
 function chiudi(){ if(raf) cancelAnimationFrame(raf); raf=0; ctl=null; scattiTok++; if(dlg){ var d=dlg; dlg=null; try{ d.close(); }catch(e){} d.remove(); if(sgancia){ var s=sgancia; sgancia=null; s(); } } }
 
@@ -3727,10 +3815,10 @@ function inviti(i,t){
   ci.forEach(function(k){ var b=h('button','ig-invito ig-inv-'+k,null,box); b.type='button';
     var ic=h('span','ig-inv-icona',null,b); ic.innerHTML='<svg viewBox="0 0 28 28" aria-hidden="true" fill="currentColor">'+GLIFI[k]+'</svg>';
     var s=h('span','ig-testi',null,b); h('span','ig-inv-occh','Infografica animata',s); h('b',null,INFO[k].d.titolo,s); h('span','ig-inv-sotto','Guarda in un minuto',s);
-    h('span','ig-play',null,b).innerHTML=ICO.play; b.addEventListener('click',function(){ apri(k); }); });
+    h('span','ig-play',null,b).innerHTML=ICO.play; b.addEventListener('click',function(){ apri(k,t); }); });
 }
 if(window.RM_pagina && box){ RM_pagina.quando(inviti); var T0=(D.TAPPE||[])[RM_pagina.tappa()]; if(T0) inviti(RM_pagina.tappa(),T0); }      // anche la tappa aperta all'avvio
-/* per le prove: vai(f) ferma l'animazione aperta e la porta alla frazione f (da 0 a 1); ?info=<roma|terre|moneta|sacco|navi|governo|valeriano|milvio|pantheon|curia|adrianopoli|catalaunici|capobon|altare|sacchi|acquedotti|barbari>&infop=<0..1> la apre da sola */
+/* per le prove: vai(f) ferma l'animazione aperta e la porta alla frazione f (da 0 a 1); ?info=<roma|terre|moneta|sacco|navi|governo|valeriano|milvio|pantheon|curia|adrianopoli|catalaunici|capobon|altare|sacchi|acquedotti|barbari|poitiers>&infop=<0..1> la apre da sola */
 window.RM_infografiche={apri:apri, chiudi:chiudi, vai:function(f){ if(ctl) ctl.vai(f); }};
 (function(){ var q=/[?&]info=(\w+)/.exec(location.search), f=/[?&]infop=([\d.]+)/.exec(location.search); if(!q||!INFO[q[1]]) return;
   setTimeout(function(){ apri(q[1]); if(f) setTimeout(function(){ RM_infografiche.vai(+f[1]); },300); },900); })();
