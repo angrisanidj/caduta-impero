@@ -49,7 +49,7 @@ var campi=(function(){
 var fonti=[];                                 // {x,y,z,forza,ev,alto,chiaro}
 EV.forEach(function(ev){
   (ev.fuochi||[]).forEach(function(f){
-    for(var k=0;k<5;k++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*7*f[2], x=f[0]+Math.cos(a)*r, z=f[1]+Math.sin(a)*r; fonti.push({x:x,y:RM.h(x,z)+1.2,z:z,forza:f[2]*(.6+.6*rnd()),ev:ev,alto:38+14*rnd(),fiamma:true}); }
+    for(var k=0;k<5;k++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*7*f[2], x=f[0]+Math.cos(a)*r, z=f[1]+Math.sin(a)*r; fonti.push({x:x,y:RM.h(x,z)+1.2,z:z,forza:f[2]*(.6+.6*rnd()),ev:ev,alto:38+14*rnd(),fiamma:true,rit:f[3]}); }      // f[3]: dopo quanti secondi della messa in scena si accende (RM.tempoFuochi)
   });
   if(ev.campi) CAMPI.forEach(function(c){ fonti.push({x:c[0],y:RM.h(c[0],c[1])+.6,z:c[1],forza:.45,ev:ev,alto:14,fiamma:false}); });
 });
@@ -124,6 +124,11 @@ function pienaEVelo(){
 /* I fuochi della città seguono la carta (23 novembre 2026, l'utente: «l'incendio del sacco di Roma del 410 deve essere visibile solo quando "passo per passo" arriva al 410»):
    finché la regia della carta mostra un passo di un anno precedente a quello della tappa, fuoco e fumo restano spenti; poi salgono in un paio di secondi. js/mappa.js chiama RM.passoCarta */
 var fuocoCarta=1, fuocoMira=1;
+/* Fuochi che aspettano il loro momento nella messa in scena della tappa (24 novembre 2026, il 410 in tre tempi): un fuoco con un quarto valore in EVENTI si accende quei secondi
+   dopo l'inizio della scena; js/scene-tappe.js dice a che punto è (RM.tempoFuochi(id, secondi), o null quando la scena è al suo quadro finale: allora sono tutti accesi). */
+var tempiScena={};
+RM.tempoFuochi=function(id,t){ tempiScena[id]=t; };
+function ritardo(f){ var t=tempiScena[f.ev.id]; return (f.rit==null||t==null)?1:RM.sfuma(f.rit,f.rit+1.5,t); }
 RM.passoCarta=function(y,anno){ fuocoMira=(y!=null && anno!=null && y<Math.floor(anno))?0:1; };
 var acceso=false;
 RM.moduli.push(function(anno){
@@ -140,11 +145,11 @@ RM.frame.push(function(dt){
   for(var k=0;k<NF;k++){
     var f=fonti[(k/PER)|0], p=(fFase[k]+tempo*.05*(1+(k%4)*.15))%1, o=k*3;
     fPos[o]=f.x+p*f.alto*.9+Math.sin(tempo*.25+k)*1.2*p; fPos[o+1]=f.y+p*f.alto; fPos[o+2]=f.z+p*f.alto*.35+Math.cos(tempo*.2+k)*1.2*p;
-    fAlfa[k]=Math.sin(Math.PI*Math.pow(p,.6))*.62*f.forza*f.ev.q*fuocoCarta;
+    fAlfa[k]=Math.sin(Math.PI*Math.pow(p,.6))*.62*f.forza*f.ev.q*fuocoCarta*ritardo(f);
   }
   gFumo.attributes.position.needsUpdate=true; gFumo.attributes.alfa.needsUpdate=true;
   fiamme.forEach(function(f,j){
-    var l=fuocoCarta*f.ev.q*f.forza*(.65+.35*Math.sin(tempo*9+j*2.3)*Math.sin(tempo*5.3+j)), n=.5+.5*RM.notte;       // di notte il bagliore si vede di più
+    var l=fuocoCarta*f.ev.q*f.forza*ritardo(f)*(.65+.35*Math.sin(tempo*9+j*2.3)*Math.sin(tempo*5.3+j)), n=.5+.5*RM.notte;       // di notte il bagliore si vede di più
     bCol[j*3]=l*n; bCol[j*3+1]=l*.55*n; bCol[j*3+2]=l*.2*n;
   });
   gBagl.attributes.color.needsUpdate=true;

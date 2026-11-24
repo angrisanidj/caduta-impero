@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 24/11/2026, 10:02:07.
+Generato da `src/testi.mjs` il 24/11/2026, 15:16:51.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -117,7 +117,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.51] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.52] Versione del 24/11/2026, ore 09:51
+[pagina.52] Versione del 24/11/2026, ore 15:02
 
 
 ## 2. Gli atti
@@ -2148,7 +2148,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.legge458] 458 · L'imperatore Maggioriano vieta di demolire gli edifici pubblici per recuperarne i materiali. Nella legge denuncia un'abitudine diffusa a Roma. Per riparazioni di poco conto si smontano interi monumenti antichi.
 
-[evento.tombe476] Dal V secolo a Roma si cominciano a seppellire i morti anche dentro le mura. All'inizio accade di rado. Dalla seconda metà del VI secolo diventa la pratica abituale. Gli archeologi hanno individuato più di ottanta luoghi di sepoltura. Alcuni si trovano attorno al Colosseo e lungo la strada dei magazzini sul Tevere. Altri, più tardi, sul Palatino e nel recinto delle terme di Caracalla. Le tombe sono semplici fosse, spesso coperte di tegole.
+[evento.tombe476] Dal V secolo a Roma si cominciano a seppellire i morti anche dentro le mura. All'inizio accade di rado. Dalla seconda metà del VI secolo diventa la pratica abituale. Gli archeologi hanno individuato più di ottanta luoghi di sepoltura. Alcuni si trovano attorno al Colosseo e lungo la strada dei magazzini sul Tevere. Altri, più tardi, sul Palatino e nel recinto delle terme di Caracalla. Le tombe sono semplici fosse, spesso coperte di tegole. Qui, nella valle del Colosseo, si vedono le prime tombe e una sepoltura: numero e disposizione sono indicativi.
 
 [evento.milvio312] 28 ottobre 312 · A ponte Milvio Costantino sconfigge Massenzio, che annega nel Tevere durante la fuga. Dopo la vittoria Costantino scioglie il corpo dei pretoriani, i soldati della guardia imperiale. Sul colle del Celio viene demolita la caserma della guardia a cavallo. Al suo posto sorgerà la basilica del Laterano. Nella ricostruzione, in rosso i cavalieri di Costantino, in chiaro e in grigio i soldati di Massenzio in fuga. La battaglia si combatte più a nord, a Saxa Rubra: qui si vede la fuga verso il ponte. Le fonti non dicono lo stesso del ponte. Per Lattanzio è interrotto, per Eusebio è fatto di barche, per Zosimo è di travi e cede sotto i fuggiaschi. La scena segue Zosimo: forma e posto del passaggio, numeri e tempi sono ipotetici.
 
@@ -2162,7 +2162,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.onorio402] 401-403 · L'imperatore Onorio fa restaurare le mura di Roma, le porte e le torri. Secondo alcuni studiosi risale a questi anni anche il rialzamento delle mura. Altri lo collocano prima, sotto l'imperatore Massenzio.
 
-[evento.teodorico493] Sotto Teodorico si restaurano le mura e il teatro di Pompeo. Al Colosseo il pubblico assiste ancora a spettacoli di caccia agli animali.
+[evento.teodorico493] Sotto Teodorico si restaurano le mura e il teatro di Pompeo. Al Colosseo il pubblico assiste ancora a spettacoli di caccia agli animali. Nella ricostruzione il ponteggio sul teatro, la gru e il tratto di mura in restauro lungo il Tevere sono ipotesi: le fonti non dicono dove si lavorasse.
 
 [evento.agilulfo593] 593 · I Longobardi di re Agilulfo arrivano alle mura di Roma. Papa Gregorio racconta di aver visto prigionieri romani portati via «legati al collo come cani» per essere venduti nella terra dei Franchi. Le fonti non indicano dove si accampò l'esercito longobardo. È Gregorio stesso a trattare con il re.
 
@@ -2172,13 +2172,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.adriano780] Papa Adriano I fa riparare quattro acquedotti, le mura e i tetti delle basiliche.
 
-[evento.leonina852] 27 giugno 852 · Le nuove mura volute da papa Leone IV proteggono la basilica di San Pietro e il quartiere circostante. Dal nome del papa deriva quello di «città leonina».
+[evento.leonina852] 847-852 · Nell'847 un forte terremoto scuote Roma: lo ricorda il Liber Pontificalis, senza dire che cosa crollò. Che abbia fatto cadere ciò che restava del lato sud del Colosseo è un'ipotesi degli studiosi, e la ricostruzione la mostra come tale. Dall'848 papa Leone IV fa costruire nuove mura attorno a San Pietro e al quartiere vicino: nella scena i quattro anni di lavoro durano pochi secondi. Il 27 giugno 852 le mura sono finite e benedette, e il clero le percorre in processione. Dal nome del papa deriva quello di «città leonina».
 
 [evento.cantieremura] 271 · Comincia la costruzione delle nuove mura di Roma, lungo un percorso di diciannove chilometri. Lo storico Zosimo riferisce che i lavori finirono sotto l'imperatore Probo. L'ordine in cui furono costruiti i diversi tratti resta incerto.
 
-[evento.sacco410] 24 agosto 410 · I Goti di Alarico entrano da porta Salaria. Il saccheggio dura tre giorni secondo Orosio, sei secondo Marcellino Comes. Bruciano la casa di Sallustio e altre abitazioni vicino alla porta. Probabilmente risale a quei giorni anche l'incendio della basilica Emilia, nel Foro. Chi cerca rifugio a San Pietro e a San Paolo è rispettato.
+[evento.sacco410] 24 agosto 410 · Dopo un lungo assedio i Goti di Alarico, accampati davanti a porta Salaria, entrano in città. Non ci fu battaglia: la porta fu aperta da dentro. Procopio ne dà due versioni: trecento giovani goti uccidono le guardie e aprono, oppure la nobile Proba fa aprire di notte dai suoi servi. Subito bruciano le case vicino alla porta e la casa di Sallustio. Il saccheggio dura tre giorni secondo Orosio, sei secondo Marcellino Comes. Probabilmente risale a quei giorni anche l'incendio della basilica Emilia, nel Foro. Chi cerca rifugio a San Pietro e a San Paolo è rispettato. Nella ricostruzione campo, numeri e tempi sono uno schema.
 
-[evento.sacco455] 2-16 giugno 455 · I Vandali di Genserico saccheggiano Roma per quattordici giorni. Secondo Prospero d'Aquitania, papa Leone ottiene che siano risparmiati agli abitanti incendi, stragi e torture. I Vandali portano via sistematicamente i beni della città, compresa metà del tetto di bronzo dorato del tempio di Giove.
+[evento.sacco455] 2-16 giugno 455 · I Vandali di Genserico saccheggiano Roma per quattordici giorni. Secondo Prospero d'Aquitania, papa Leone ottiene che siano risparmiati agli abitanti incendi, stragi e torture. I Vandali portano via sistematicamente i beni della città. Dal palazzo imperiale, scrive Procopio, prendono l'oro e il tesoro senza risparmiare il bronzo né altro, e portano via prigioniere l'imperatrice Eudossia e le figlie. Dal tempio di Giove tolgono metà del tetto di bronzo dorato. Nella ricostruzione gli oggetti sono generici: Procopio non dice che cosa fosse quel bronzo.
 
 [evento.assedio472] Luglio 472 · Da mesi il generale Ricimero assedia l'imperatore Antemio a Roma. Blocca il Tevere per impedire ai rifornimenti di raggiungere la città. La ricostruzione colloca gli accampamenti sulla riva destra, ma la loro posizione precisa è incerta. Lo scontro decisivo avviene a ponte Elio, davanti al mausoleo di Adriano. Antemio, che durante l'assedio si trovava nel palazzo imperiale, viene ucciso a San Crisogono, in Trastevere. Un'iscrizione ricorda che durante la guerra civile scoppiò un incendio vicino alla Curia, la sede del Senato. Alcuni studiosi lo collocano nei giorni dell'assedio.
 
@@ -2254,7 +2254,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.colosseo.data9] Tra il VI e il VII secolo cominciano a cedere parti del lato sud del Colosseo, anche a causa dei terremoti. Vengono asportate le lastre di travertino del pavimento esterno, spesse 90 centimetri. Negli spazi così liberati si costruiscono ripari, stalle e recinti riutilizzando i materiali dell'anfiteatro. Gli scavi del Parco archeologico, condotti tra il 2021 e il 2024, non permettono di datare ogni fase. Almeno dal IX secolo alcune persone abitano stabilmente qui.
 
-[scheda.colosseo.data10-847] Il Parco archeologico del Colosseo attribuisce al terremoto di quest'anno il crollo di ciò che restava del lato sud, già in gran parte smontato. A terra si accumularono i blocchi di travertino. Il Liber Pontificalis riferisce che la scossa fu avvertita con forza in città, ma non descrive danni.
+[scheda.colosseo.data10-847] Il Parco archeologico del Colosseo attribuisce al terremoto di quest'anno il crollo di ciò che restava del lato sud, già in gran parte smontato. Lo scrivevano già Platner e Ashby nel 1929, senza dire su quale fonte. A terra si accumularono i blocchi di travertino. Il Liber Pontificalis riferisce che la scossa fu avvertita con forza in città, ma non descrive danni: il legame con il Colosseo resta un'ipotesi.
 
 [scheda.colosseo.data11-1349] La data tradizionale del crollo è il 1349, anno di un terremoto. Secondo l'archeologa R. Rea, che ha condotto scavi nel Colosseo, gran parte delle perdite si spiega con ciò che avvenne dopo la fine degli spettacoli. L'anfiteatro fu smontato a più riprese per recuperarne i materiali.
 
@@ -2494,7 +2494,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.pantheon.nome] Pantheon
 
-[scheda.pantheon.cosa] Ricostruito da Adriano e dedicato a tutti gli dèi, il Pantheon ha l'ingresso rivolto a nord. Davanti alla sala circolare si trova il portico d'ingresso con sedici colonne di granito, otto grigie in facciata e otto rosa alle loro spalle. In antico il portico si affacciava su una piazza circondata da colonnati. A sud, addossata al Pantheon, si trova l'aula chiamata basilica di Nettuno.
+[scheda.pantheon.cosa] Ricostruito da Adriano e dedicato a tutti gli dèi, il Pantheon ha l'ingresso rivolto a nord. Davanti alla sala circolare si trova il portico d'ingresso con sedici colonne di granito, otto grigie in facciata e otto rosa alle loro spalle. In antico il portico si affacciava su una piazza circondata da colonnati. A sud, addossata al Pantheon, si trova l'aula chiamata basilica di Nettuno. Sul fregio del portico si legge l'iscrizione di Agrippa, «M. Agrippa L. f. cos. tertium fecit». Sotto, sull'architrave, c'è quella più piccola del restauro di Settimio Severo e Caracalla, del 202. Nel timpano c'era una decorazione di bronzo. Non se ne conosce la forma, né quando fu tolta: nel modello è un tondo, che sparisce nel 663 con le tegole.
 
 [scheda.pantheon.data1-126] Completato sotto Adriano.
 

@@ -212,7 +212,7 @@ var fuga312=(function(){
   }
   var tutte=corpi.concat(cav,[ins,mass,nord,sud,fissa]);
   var o=sequenza({fine:14, attesa:1.8, disegna:disegna, visibile:function(){ return fissa.visible; },
-    azioni:[[6.3,function(){ var q=P2(AP+10,15), v=RM.adatta({t:P2(AP,2),c:[q[0],Hm(q[0],q[1])+7,q[1]]}); RM.volaA(v.t,v.c,2.2); }]]});      // da vicino, sulla passerella che sta per cedere
+    azioni:[[6.3,function(){ var q=P2(AP+10,15), v=alto(RM.adatta({t:P2(AP,2),c:[q[0],Hm(q[0],q[1])+7,q[1]]})); RM.volaA(v.t,v.c,2.2); }]]});      // da vicino, sulla passerella che sta per cedere
   /* la vista della regia: da nord, dietro la cavalleria di Costantino, verso i ponti e la città (prima guardava a nord, verso il bordo del disegno) */
   var vt=P2(-1.6,3), vc=P2(7,34);
   return {seq:o, tutte:tutte, da:311.6, a:313, vista:{t:vt,c:[vc[0],Hm(vc[0],vc[1])+19,vc[1]]}};
@@ -363,20 +363,70 @@ var trionfo274=(function(){
   return {g:maglia(B), da:273.6, a:275};
 })();
 
-/* ---------- 410: i Goti entrano da porta Salaria ----------
-   Procopio, Guerre III 2, 22-24 (Dewing, LacusCurtius, letto il 23 novembre 2026): Alaric «was holding them in readiness close by the Salarian Gate; for it happened that he had
-   encamped there at the beginning of the siege»; i giovani aprono la porta «and received Alaric and the army into the city»; bruciano le case vicino alla porta e la casa di Sallustio
-   (i fuochi stanno in EVENTI). Qui il campo fuori porta e la colonna che entra; grandezza del campo e numero degli uomini sono uno schema. */
-var salaria410=(function(){
-  var B=new RM.Costruttore(), G=RM_TOPO.porte['Porta Salaria'], i, s, w, x, z, o, la, dentro;
-  var fuori=[-.164,-.986], verso=[-.331,.944];      // la via Salaria di js/roma-topo.js: fuori porta verso nord, dentro verso il Quirinale
+/* ---------- 410: i Goti entrano da porta Salaria, in tre tempi ----------
+   Fonti (src/testi/scene-roma-fonti.md, sezione 5): Procopio, Guerre III 2, 14-27 (Dewing): un lungo assedio; Alarico «had encamped there at the beginning of the siege», presso
+   porta Salaria; i giovani goti «assailing the guards suddenly, put them to death; then they opened the gates»; oppure Proba «commanded her domestics … to open the gates by night»;
+   entrati, «they set fire to the houses which were next to the gate, among which was also the house of Sallust». Orosio VII 39: «facto quidem aliquantarum aedium incendio».
+   Sozomeno IX 9: presa «by treachery». Nessuna battaglia davanti alla porta: non si disegna.
+   Dal 24 novembre 2026 la scena è in tre tempi (l'utente: prima il fuori porta, poi l'ingresso, poi gli incendi), in 17 secondi:
+   (a) 0-4: il blocco. Il campo e i Goti fermi fuori porta, i battenti chiusi, quattro guardie romane dentro la porta;
+   (b) 4-8: la porta aperta da dentro: il gruppo di giovani alla porta, le guardie a terra, i battenti che si aprono verso la città;
+   (c) 8-17: la colonna entra (prima i cavalieri, poi i fanti) e scende verso il Quirinale; alle 9,5 si accendono le case presso la porta, alle 10,5 la casa di Sallustio, alle 13,5
+       il fuoco nel Foro (la basilica Emilia, «probabilmente»): i quarti valori dei fuochi in EVENTI (js/eventi.js, RM.tempoFuochi).
+   La luce resta quella del giorno: Procopio dà due versioni e solo quella di Proba dice «di notte». Campo, numeri, colori, tempi e percorso dentro la città sono uno schema.
+   Con meno animazioni la scena sta ferma all'ultimo tempo. */
+var S410=(function(){
+  var r4=RM.casuale(410), B=new RM.Costruttore(), G=RM_TOPO.porte['Porta Salaria'], i, s, w, x, z;
+  var fuori=[-.164,-.986], verso=[-.331,.944], laF=[-fuori[1],fuori[0]], laV=[-verso[1],verso[0]];      // la via Salaria di js/roma-topo.js: fuori porta verso nord, dentro verso il Quirinale
   campo(B,G[0]+fuori[0]*17+5,G[1]+fuori[1]*17,Math.atan2(fuori[0],fuori[1]),9,5);
-  for(i=0;i<520;i++){ s=-15+rnd()*29; o=s>=0?fuori:[-verso[0],-verso[1]]; la=[-o[1],o[0]]; dentro=Math.atan2(-o[0],-o[1]);
-    w=(rnd()-.5)*(s>-1&&s<1.5?.5:Math.min(3.4,.6+Math.abs(s)*.22)); x=G[0]+o[0]*s+la[0]*w; z=G[1]+o[1]*s+la[1]*w;      // s col segno: fuori porta lungo «fuori», dentro lungo «verso»
-    if(s>-1&&s<1.5){ uomo(B,x,z,H(x,z),C.grigio,C.cavalloB,dentro); continue; }
-    if(rnd()<.1) cavaliere(B,x,z,H(x,z),dentro,C.cavalloB,C.grigio); else uomo(B,x,z,H(x,z),rnd()<.6?C.grigio:C.tunica,C.cavalloB,dentro+(rnd()-.5)*.6); }
-  return {g:maglia(B), da:409.6, a:411};
+  var fisso=maglia(B);
+  /* dove sta un punto della via: s>0 fuori porta, s<0 dentro; w di lato */
+  function punto(s,w){ return s>=0?[G[0]+fuori[0]*s+laF[0]*w, G[1]+fuori[1]*s+laF[1]*w]:[G[0]-verso[0]*s+laV[0]*w, G[1]-verso[1]*s+laV[1]*w]; }
+  var VERSO_DENTRO=Math.atan2(verso[0],verso[1]), VERSO_PORTA=Math.atan2(-fuori[0],-fuori[1]);
+  /* i battenti, sulla porta com'è disegnata (RM.porte, js/mura.js): il passaggio largo 8,5 m al centro dell'istanza, che ruota di «ang» */
+  var po=(RM.porte||[]).reduce(function(m,q){ return !m||Math.hypot(q.x-G[0],q.z-G[1])<Math.hypot(m.x-G[0],m.z-G[1])?q:m; },null)||{x:G[0],z:G[1],y:H(G[0],G[1])-.3,ang:Math.atan2(-laF[1],laF[0])};
+  var zl=[Math.sin(po.ang),Math.cos(po.ang)], dentroZ=(zl[0]*verso[0]+zl[1]*verso[1])>0?1:-1;      // da che parte del riferimento della porta sta la città
+  var legno=RM.col(0x4a3524), batt=[-1,1].map(function(k){ var Bb=new RM.Costruttore(); Bb.scatola(.42,.95,.05,-k*.21,0,0,legno).scatola(.42,.04,.06,-k*.21,.25,0,RM.col(0x2e241b)).scatola(.42,.04,.06,-k*.21,.7,0,RM.col(0x2e241b));
+    var m=Bb.maglia(RM.matPietra()); m.castShadow=true; m.visible=false;
+    var piv=new THREE.Group(); piv.position.set(po.x,po.y+.3,po.z); piv.rotation.y=po.ang; m.position.set(k*.42,0,dentroZ*.585); piv.add(m); piv.userData={k:k}; RM.scene.add(piv); return piv; });      // i battenti sul fronte verso la città: il corpo della porta è pieno
+  /* le guardie romane: in piedi dentro la porta, poi a terra; i giovani che aprono */
+  var GU=[[-1.1,-.25],[-1.1,.25],[-1.6,-.3],[-1.6,.3]], gIn=new RM.Costruttore(), gGiu=new RM.Costruttore(), gio=new RM.Costruttore(), ROSSO=C.rosso;
+  GU.forEach(function(q){ var p=punto(q[0],q[1]), y=H(p[0],p[1]); uomo(gIn,p[0],p[1],y,ROSSO,C.ferro,VERSO_DENTRO+Math.PI);
+    gGiu.dentro(p[0],y+.02,p[1],r4()*6.28,function(B){ B.scatola(.15,.035,.05,0,0,0,ROSSO).scatola(.035,.03,.03,.09,0,0,C.pelle).scatola(.06,.012,.06,-.03,0,.07,C.ferro); }); });      // a terra, con lo scudo accanto
+  for(i=0;i<9;i++){ var pg=punto(-.55-r4()*.7,(r4()-.5)*.7); uomo(gio,pg[0],pg[1],H(pg[0],pg[1]),C.tunica,null,VERSO_DENTRO+Math.PI+(r4()-.5)*.8); }
+  var mIn=maglia(gIn), mGiu=maglia(gGiu), mGio=maglia(gio);
+  /* chi aspetta fuori e poi entra: fanti e cavalieri, a istanze */
+  var NF=RM.leggero?150:300, NC=RM.leggero?24:48, F=[], K=[];
+  var fanti=[istanze(function(B){ uomo(B,0,0,0,C.grigio,C.cavalloB,0); },NF), istanze(function(B){ uomo(B,0,0,0,C.tunica,C.cavalloB,0); },NF)];
+  var cav=istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,C.grigio); },NC);
+  for(i=0;i<NF;i++){ var s0=4.5+Math.pow(r4(),.8)*12, w0=(r4()-.5)*Math.min(6.4,1.6+s0*.4); F.push({s0:s0,w0:w0,s1:-2.5-r4()*12,v:1.3+r4()*.5,ts:8.6+(s0-4.5)*.42+r4()*.5,g:fanti[i&1],k:i>>1,ry:VERSO_PORTA+(r4()-.5)*.5}); }
+  for(i=0;i<NC;i++){ var sc=3.6+r4()*3, wc=(r4()-.5)*2.4; K.push({s0:sc,w0:wc,s1:-4-r4()*10,v:2.1,ts:8+r4()*.8,g:cav,k:i,ry:VERSO_PORTA}); }
+  fanti[0].count=Math.ceil(NF/2); fanti[1].count=Math.floor(NF/2);
+  function posa(f,t){
+    var s=f.s0, ry=f.ry;
+    if(t>f.ts){ s=Math.max(f.s1,f.s0-(t-f.ts)*f.v); ry=s>0?VERSO_PORTA:VERSO_DENTRO; }
+    var a=Math.abs(s), stretto=Math.min(1,Math.max(.1,(a-1)*.25)), p=punto(s,f.w0*stretto);
+    metti(f.g,f.k,p[0],H(p[0],p[1]),p[1],ry);
+  }
+  function disegna(t){
+    F.forEach(function(f){ posa(f,t); }); K.forEach(function(f){ posa(f,t); });
+    fanti.concat([cav]).forEach(function(g){ g.instanceMatrix.needsUpdate=true; });
+    var ap=RM.sfuma(5.2,7,t)*Math.PI*.48;      // i battenti si aprono verso la città
+    batt.forEach(function(pv){ pv.children[0].rotation.y=pv.userData.k*dentroZ*ap; });      // ogni battente gira attorno al suo cardine, sul lato del passaggio
+    mIn.visible=t<4.6; mGiu.visible=t>=4.6; mGio.visible=t>=4;
+    RM.tempoFuochi('sacco410',t);
+  }
+  var tutte=[fisso,mIn,mGiu,mGio,cav].concat(fanti,batt.map(function(pv){ return pv.children[0]; }));
+  /* le tre inquadrature: dentro la città, sopra le case, verso la porta e il campo; poi la porta da vicino; poi, più larga, la porta, la colonna e gli Horti Sallustiani */
+  var yG=H(G[0],G[1]);
+  var VA=mira(G[0]+fuori[0]*6,G[1]+fuori[1]*6,[G[0]+verso[0]*12+laV[0]*5,yG+7,G[1]+verso[1]*12+laV[1]*5]);
+  var VB=mira(G[0]+verso[0]*.8,G[1]+verso[1]*.8,[G[0]+verso[0]*5.5+laV[0]*2.2,yG+2.6,G[1]+verso[1]*5.5+laV[1]*2.2]);
+  var VC=mira(98,-193,[117,yG+10,-167]);
+  var o=sequenza({fine:17, attesa:1.8, disegna:disegna, visibile:function(){ return fisso.visible; },
+    azioni:[[3.6,function(){ var v=inquadra(VB); RM.volaA(v.t,v.c,1.6); }],[8.4,function(){ var v=inquadra(VC); RM.volaA(v.t,v.c,2.4); }]]});
+  return {seq:o, tutte:tutte, da:409.6, a:411, vista:VA, g:fisso};
 })();
+ANIMA[410]=function(){ avvia(S410.seq); };
 
 /* ---------- 455: i Vandali portano via il bottino ----------
    Procopio, Guerre III 5, 3-5 (Dewing, LacusCurtius, letto il 23 novembre 2026): Genserico carica sulle navi l'oro e il tesoro imperiale, «having spared neither bronze nor anything else
@@ -395,6 +445,53 @@ var vandali455=(function(){
   for(i=0;i<16;i++){ var s2=1+i*2.7; x=G[0]+d[0]*s2+la[0]*(i%2?.7:-.7); z=G[1]+d[1]*s2+la[1]*(i%2?.7:-.7); if(RM.distFiume(x,z)<6.3) continue; cavaliere(B,x,z,H(x,z),rv,C.cavalloB,C.grigio); }
   return {g:maglia(B), da:454.6, a:456};
 })();
+
+/* 493, il teatro di Pompeo in restauro (24 novembre 2026, l'utente: «metti in costruzione il teatro»). Cassiodoro, Variae IV 51 (Teodorico a Simmaco, The Latin Library): il teatro
+   «magna se mole solventem», le volte come «cryptas … excelsi montis»; va «roboranda», e il re paga «de nostro cubiculo». È il rinforzo di un edificio in piedi, non un cantiere da zero:
+   un ponteggio su un tratto della facciata curva, operai sui piani e a terra, blocchi di tufo e travi, una gru a ruota. Quale tratto, quanti uomini e la gru sono uno schema; la lettera
+   è degli anni 507-511 circa, la tappa è il 493: la scena sta nella tappa di Teodorico, come la didascalia. Le mura in restauro sono in js/mura.js. */
+var teatro493=(function(){
+  var r9=RM.casuale(493), B=new RM.Costruttore(), X0=-94.3, Z0=-30.8, RY=-Math.PI/2, cr=Math.cos(RY), sr=Math.sin(RY), i, k;
+  function W(lx,lz){ return [X0+lx*cr+lz*sr, Z0-lx*sr+lz*cr]; }      // dal riferimento del teatro (cavea verso +z) al mondo
+  var A0=.35, A1=1.15, NP=12, legno=P.tronco, tavola=RM.col(0x8a6a48), y0=H(X0,Z0)-.08;
+  for(i=0;i<=NP;i++){ var a=A0+(A1-A0)*i/NP; [8.22,8.55].forEach(function(r){ var p=W(r*Math.cos(a),r*Math.sin(a)); B.scatola(.022,2.85,.022,p[0],y0,p[1],legno); }); }      // i pali, due file
+  [.66,1.32,1.98,2.64].forEach(function(h){ for(i=0;i<NP;i++){ var a=A0+(A1-A0)*i/NP, b=A0+(A1-A0)*(i+1)/NP, rm=8.39, p=W(rm*Math.cos(a),rm*Math.sin(a)), q=W(rm*Math.cos(b),rm*Math.sin(b));
+    fune(B,[p[0],y0+h,p[1]],[q[0],y0+h,q[1]],.035,tavola); fune(B,[p[0],y0+h+.02,p[1]],[q[0],y0+h+.02,q[1]],.035,tavola); } });      // i piani di tavole
+  for(i=0;i<NP;i+=2){ var a2=A0+(A1-A0)*i/NP, b2=A0+(A1-A0)*(i+2)/NP, p2=W(8.6*Math.cos(a2),8.6*Math.sin(a2)), q2=W(8.6*Math.cos(b2),8.6*Math.sin(b2)); fune(B,[p2[0],y0,p2[1]],[q2[0],y0+1.32,q2[1]],.016,legno); }      // le diagonali
+  for(i=0;i<14;i++){ var a3=A0+r9()*(A1-A0), h3=[0,.66,1.32,1.98][(r9()*4)|0], r3=h3?8.39:8.9+r9()*.8, p3=W(r3*Math.cos(a3),r3*Math.sin(a3)); uomo(B,p3[0],p3[1],y0+h3+(h3?.035:0),C.tunica,null,RY+a3+(r9()-.5)); }      // gli operai
+  for(k=0;k<3;k++){ var a4=.5+k*.25, p4=W(10*Math.cos(a4),10*Math.sin(a4)); for(i=0;i<7;i++) B.scatola(.12,.06,.08,p4[0]+(r9()-.5)*.45,y0+(i>3?.06:0),p4[1]+(r9()-.5)*.45,P.tufo,r9()); }      // blocchi di tufo
+  var pt=W(10.2*Math.cos(1.05),10.2*Math.sin(1.05)); for(i=0;i<6;i++) B.scatola(.9,.025,.03,pt[0],y0+i*.025,pt[1]+(i%3)*.04,legno,.3);      // travi
+  /* la gru a ruota (un'ipotesi: ce n'erano nei cantieri romani; qui non è nella fonte) */
+  var pg=W(9.6*Math.cos(.75),9.6*Math.sin(.75)), rg=RY+.75;
+  B.dentro(pg[0],y0,pg[1],rg,function(B){ var ru=new THREE.CylinderGeometry(.3,.3,.08,16,1,true); ru.rotateX(Math.PI/2); ru.translate(0,.32,0); B.geo(ru,legno);
+    B.scatola(.03,.4,.03,0,0,-.06,legno).scatola(.03,.4,.03,0,0,.06,legno); });
+  fune(B,[pg[0],y0+.3,pg[1]],[W(8.4*Math.cos(.75),8.4*Math.sin(.75))[0],y0+3.1,W(8.4*Math.cos(.75),8.4*Math.sin(.75))[1]],.03,legno);      // il braccio, appoggiato sopra la facciata
+  var g=maglia(B), C0=W(8.4*Math.cos(.75),8.4*Math.sin(.75));
+  return {g:g, da:492.6, a:494, vista:mira(C0[0],C0[1],[C0[0]-8,H(X0,Z0)+5.5,C0[1]+9.5])};
+})();
+
+/* 455, il palazzo spogliato (24 novembre 2026, l'utente: «non si vede il bronzo trafugato dal palazzo imperiale»). Procopio, Guerre III 5, 1-5 (Dewing, letto il 24 novembre):
+   Genserico «took possession of the palace», carica sulle navi «an exceedingly great amount of gold and other imperial treasure», «having spared neither bronze nor anything
+   else whatsoever in the palace», e prende prigioniere Eudossia con le figlie Eudocia e Placidia. Nessun incendio (Prospero: il papa ottiene che si risparmino fuoco, stragi e torture).
+   Qui, sul Palatino davanti al palazzo: carri carichi di bronzo e d'oro, uomini che portano fuori pezzi di bronzo, un mucchio di bottino a terra, le tre prigioniere fra le guardie.
+   Che cosa fosse il bronzo Procopio non lo dice: statue, porte, arredi, tegole sono possibili, e le forme qui sono generiche; posto, numeri e colori sono uno schema.
+   La regia va dal palazzo al Campidoglio (il mezzo tetto di Giove) e poi alla fila verso Porto. */
+var palazzo455=(function(){
+  var r5=RM.casuale(455), B=new RM.Costruttore(), cx=18.5, cz=35.5, i, x, z, VAND=C.grigio;
+  for(i=0;i<6;i++){ x=cx-2.2+i*.75; z=cz+(i%2)*.5; carro(B,x,z,H(x,z),2.4+(r5()-.5)*.3,i%3===1?C.oro:P.bronzo); }      // i carri, verso la discesa al Foro
+  for(i=0;i<16;i++){ x=cx-2.6+r5()*5; z=cz-1.6+r5()*.9; B.scatola(.12+r5()*.12,.05+r5()*.12,.1+r5()*.14,x,H(x,z),z,r5()<.3?C.oro:P.bronzo,r5()*3); }      // il mucchio del bottino: pezzi di bronzo e d'oro, di forma generica
+  for(i=0;i<22;i++){ x=cx-3+r5()*6; z=cz-2.4+r5()*3.4; var y=H(x,z), ry=r5()*6.28, porta=i%2===0;
+    uomo(B,x,z,y,VAND,null,ry); if(porta) B.scatola(.09,.05,.07,x,y+.19,z,r5()<.25?C.oro:P.bronzo,ry); }      // chi porta fuori e chi carica: un pezzo sulle spalle
+  var pz=[cx+2.6,cz+1.4], prig=[[0,0,C.porpora],[.12,.06,C.bianco],[-.12,.06,C.bianco]];      // Eudossia e le figlie, fra quattro guardie
+  prig.forEach(function(q){ var xx=pz[0]+q[0], zz=pz[1]+q[1]; uomo(B,xx,zz,H(xx,zz),q[2],null,2.4); });
+  [[-.3,-.2],[.3,-.2],[-.3,.35],[.3,.35]].forEach(function(q){ var xx=pz[0]+q[0], zz=pz[1]+q[1]; uomo(B,xx,zz,H(xx,zz),VAND,C.cavalloB,2.4); B.scatola(.01,.28,.01,xx+.03,H(xx,zz),zz,P.tronco); });
+  var g=maglia(B);
+  var VP=mira(cx-1,cz+1.5,[cx+6.5,H(cx,cz)+3.2,cz-5]), VG=mira(-29,0,[-19,14,-9]), PP=RM_TOPO.porte['Porta Portese'], VR=mira(PP[0]-.838*9,PP[1]+.546*9,[PP[0]-.838*22-.546*7,H(PP[0],PP[1])+5,PP[1]+.546*22-.838*7]);
+  var o=sequenza({fine:15, attesa:1.8, disegna:function(){}, visibile:function(){ return g.visible; },
+    azioni:[[4.5,function(){ var v=inquadra(VG); RM.volaA(v.t,v.c,2.4); }],[10,function(){ var v=inquadra(VR); RM.volaA(v.t,v.c,2.6); }]]});
+  return {g:g, da:454.6, a:456, seq:o, vista:VP};
+})();
+ANIMA[455]=function(){ avvia(palazzo455.seq); };
 
 /* ---------- 663: Costante II porta via il bronzo ----------
    Liber Pontificalis, vita di Vitaliano (Duchesne I p. 343, letto sul testo il 23 novembre 2026): «Omnia quae erant in aere ad ornatum civitatis deposuit, sed et ecclesiam beatae Mariae
@@ -426,6 +523,49 @@ var leone852=(function(){
   for(i=0;i<300;i++){ var t=rnd(), q=via(t,(rnd()<.5?-1:1)*(1.2+rnd()*1.6)); if(RM.distFiume(q.x,q.z)<6.3) continue; uomo(B,q.x,q.z,q.y,C.folla[(rnd()*C.folla.length)|0],null,q.ry+(rnd()-.5)*2); }      // il popolo sotto le mura
   return {g:maglia(B), da:851.6, a:853};
 })();
+
+/* ---------- 852 in due tempi (24 novembre 2026, l'utente: prima il terremoto sul Colosseo, poi San Pietro e le mura che si costruiscono fino a chiudersi) ----------
+   (a) Il terremoto dell'847. Il Liber Pontificalis (vita di Leone IV) lo ricorda; che abbia fatto cadere ciò che restava del lato sud del Colosseo lo scrivono Platner e Ashby (1929,
+       senza dire su quale fonte) e oggi il Parco archeologico: un'ipotesi, che la didascalia dichiara. Qui la scossa (scuoti), il settore sud che cede (uSud nello shader del
+       Colosseo, da quanto era già smontato a quanto ne manca dopo l'847: js/monumenti.js), la polvere e i blocchi di travertino a terra, che restano.
+   (b) Il volo sul Borgo: le mura leonine salgono dal basso (uCant, come i cantieri dei monumenti), mentre in alto scorrono gli anni dal 848 al 852 (CANTIERI: «Leone IV avvia i lavori
+       nell'848»); i quattro anni durano otto secondi, e la scritta lo dice. Finite le mura, la processione del 27 giugno 852 che c'era già (leone852) e la vista su porta San Pellegrino.
+   Chi lavorasse alle mura non si vede: le fonti lette non lo dicono (Wikipedia, che cita Ward-Perkins e Gregorovius, parla di contadini delle tenute della Chiesa e di prigionieri
+   saraceni, ma il Liber Pontificalis non è stato riletto). Con meno animazioni: niente scossa, mura finite, vista su San Pietro. */
+var S852=(function(){
+  var col=(RM.MONUMENTI||[]).filter(function(m){ return m.id==='colosseo'; })[0], leo=(RM.MONUMENTI||[]).filter(function(m){ return m.id==='leonine'; })[0];
+  if(!col||!col.mat||!leo||!leo.mat) return null;
+  var rC=RM.casuale(847), B=new RM.Costruttore(), cr=Math.cos(col.ry), sr=Math.sin(col.ry), i;
+  function W(lx,lz){ return [col.x+lx*cr+lz*sr, col.z-lx*sr+lz*cr]; }
+  var dir=Math.atan2(.955,.296), y0=col.g.position.y;      // il settore sud nello shader: la direzione (0,296, 0,955) del riferimento del Colosseo
+  for(i=0;i<90;i++){ var sg=rC()<.5?-1:1, an=dir+sg*(.63+rC()*.95), rr=1.02+rC()*.22, p=W(9.4*rr*Math.cos(an),7.8*rr*Math.sin(an));      // fuori dall'anello, nel tratto che cade nell'847
+    B.scatola(.12+rC()*.14,.06+rC()*.08,.08+rC()*.1,p[0],y0+rC()*.1,p[1],P.travertino,rC()*3); }
+  var macerie=B.maglia(RM.matPietra()); macerie.visible=false; macerie.castShadow=true; RM.scene.add(macerie);
+  var mp=new THREE.MeshBasicMaterial({color:0xd6cbb6,transparent:true,opacity:0,depthWrite:false}), polvere=[];
+  for(i=0;i<8;i++){ var an2=dir+(i-3.5)*.3, q=W(9.6*Math.cos(an2),8*Math.sin(an2)), m=new THREE.Mesh(new THREE.SphereGeometry(.8,10,8),mp); m.position.set(q[0],y0+1.5,q[1]); m.visible=false; RM.scene.add(m); polvere.push(m); }
+  /* la scritta degli anni */
+  var riq=document.querySelector('.riquadro.roma'), anni=null;
+  if(riq){ anni=document.createElement('div'); anni.setAttribute('aria-hidden','true');
+    anni.style.cssText='position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:4;pointer-events:none;text-align:center;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.75);font-family:Cinzel,Georgia,serif;font-size:26px;line-height:1.15;display:none';
+    riq.appendChild(anni); }
+  var SUD0=.2, SUD1=.5, TC=.6, MURA0=7.6, MURA1=15.6, PROC=16;
+  function disegna(t){
+    var k=RM.sfuma(TC,TC+2.2,t), us=col.mat.userData.u;
+    us.uSud.value=SUD0+(SUD1-SUD0)*k; macerie.visible=k>.3;
+    var pv=t>TC+.3&&t<TC+6.5; mp.opacity=pv?.42*RM.sfuma(TC+.3,TC+1.2,t)*(1-RM.sfuma(TC+3.5,TC+6.5,t)):0;
+    polvere.forEach(function(m,j){ m.visible=pv; var g=.6+1.2*RM.sfuma(TC+.3,TC+4,t)+(j%3)*.2; m.scale.set(g,g*.7,g); m.position.y=y0+1.2+1.2*RM.sfuma(TC+.3,TC+5,t); });
+    var km=Math.max(.02,RM.sfuma(MURA0,MURA1,t)); leo.mat.userData.u.uCant.value=km>=1?1:km; leo.g.scale.y=1; leo.g.visible=true;
+    if(anni){ var su=t>MURA0-.6&&t<PROC+.6&&FERMA==null; anni.style.display=su?'block':'none';
+      if(su) anni.innerHTML=(848+Math.min(4,Math.floor(4.999*RM.sfuma(MURA0,MURA1,t))))+'<div style="font:500 12px/1.3 system-ui,sans-serif;margin-top:2px">le mura leonine salgono: quattro anni in pochi secondi</div>'; }
+    leone852.g.visible=t>=PROC;
+  }
+  var VC=mira(W(9.4*1.05*Math.cos(dir),7.8*1.05*Math.sin(dir))[0],W(9.4*1.05*Math.cos(dir),7.8*1.05*Math.sin(dir))[1],(function(){ var c=W(9.4*3.2*Math.cos(dir-.5),7.8*3.2*Math.sin(dir-.5)); return [c[0],y0+9,c[1]]; })());
+  var VB=mira(-232,-104,[-196,26,-62]);      // il Borgo da sud-est, alto: tutto il giro delle mura
+  var o=sequenza({fine:19, attesa:1.8, disegna:disegna, visibile:function(){ return leone852.g.visible||t852; },
+    azioni:[[TC,function(){ scuoti(0,3,.22); }],[5.6,function(){ var v=inquadra(VB); RM.volaA(v.t,v.c,2.4); }],[PROC,function(){ var v=inquadra(VISTE.leonina852); RM.volaA(v.t,v.c,2.4); }]]});
+  return {seq:o, vista:MENO?null:VC, macerie:macerie, anni:anni, col:col, leo:leo};
+})();
+var t852=false;      // vero nell'anno della tappa: la scena si vede anche quando la processione è ancora nascosta
 
 /* ---------- 800: Carlo arriva a San Pietro ----------
    Annali del regno dei Franchi, anno 800 (thelatinlibrary, letto il 23 novembre 2026): il papa gli va incontro a Mentana, «duodecimo ab urbe lapide»; il giorno dopo, 24 novembre,
@@ -482,11 +622,12 @@ var carlo800=(function(){
   function inquadra(t){ var p=via(Math.max(0,sC(t)-3)/LUN,0), y0=H(p.x,p.z)+1, f=F(); return {t:[p.x,y0,p.z], c:[p.x+18*f,y0+15*f,p.z-20*f]}; }      // da nord-est: il portico, a sud, non copre il corteo
   var o=sequenza({fine:FINE, attesa:1.8, disegna:disegna, visibile:function(){ return g.visible; },
     azioni:[[0,function(){ RM.segui(function(k){ return inquadra(k*VIAGGIO); },VIAGGIO); }],
-            [VIAGGIO,function(){ var v=RM.adatta({t:[-244,-107.5],c:[-232.5,11.5,-120.5]}); RM.volaA(v.t,v.c,2.5); }]]});      // un poco più alta (24 novembre 2026): sul telefono, allontanata, la camera aveva un tetto del portico davanti
+            [VIAGGIO,function(){ var v=alto(RM.adatta({t:[-244,-107.5],c:[-232.5,11.5,-120.5]})); RM.volaA(v.t,v.c,2.5); }]]});      // un poco più alta (24 novembre 2026): sul telefono, allontanata, la camera aveva un tetto del portico davanti
   var v0=inquadra(0);
   return {g:g, tutte:tutte, seq:o, da:799.6, a:801, vista:{t:[v0.t[0],v0.t[2]],c:[v0.t[0]+18,v0.t[1]+15,v0.t[2]-20]}};
 })();
 ANIMA[800]=function(){ avvia(carlo800.seq); };
+if(S852) ANIMA[852]=function(){ avvia(S852.seq); };
 
 /* ---------- 846: le navi saracene sotto San Pietro ----------
    Liber Pontificalis, vita di Sergio II, 44-47 (Duchesne II pp. 99-101, letto sul testo il 23 novembre 2026): la lettera del conte Adalberto parla di 73 navi con 500 cavalli;
@@ -542,7 +683,7 @@ var totila546=(function(){
 })();
 /* da porta Asinaria a Trastevere, che brucia: sette secondi dopo l'arrivo (dal 24 novembre 2026 è una sequenza, che parte con la regia) */
 var seq546=sequenza({fine:7.2, attesa:0, visibile:function(){ return totila546.g.visible; }, disegna:function(){},
-  azioni:[[7,function(){ var v=RM.adatta({t:[-118,50],c:[-84,34,90]}); RM.volaA(v.t,v.c); }]]});
+  azioni:[[7,function(){ var v=alto(RM.adatta({t:[-118,50],c:[-84,34,90]})); RM.volaA(v.t,v.c); }]]});
 ANIMA[546]=function(){ if(!document.body.classList.contains('roma-grande')) avvia(seq546); };
 
 /* ---------- 801: il terremoto e il tetto di San Paolo ----------
@@ -628,6 +769,50 @@ var fortino552=(function(){
     uomo(B2,xd,zd,H(xd,zd)+.62,GOTI,C.cavalloB,Math.atan2(xd-cx,zd-cz)); }      // i Goti sul muro, rivolti fuori
   var g2=B2.maglia(RM.matPietra()); g2.visible=false; g2.castShadow=true; RM.scene.add(g2);
   return {g:g, g2:g2, da:550, a:556, da2:551.6, a2:553};
+})();
+
+/* ---------- i giochi nel Colosseo, finché è in uso (24 novembre 2026, l'utente: «tutte le volte che il Colosseo è ancora in funzione mostra dentro i giochi») ----------
+   Che cosa: Platner e Ashby, «Amphitheatrum Flavium»: «the last gladiatorial combats occurred in 404» (Teodoreto V 26), «the last recorded venationes … took place in 523»
+   (Cassiodoro, Variae V 42). Quindi: fino al 403 coppie di gladiatori e una caccia; dal 404 al 523 solo la caccia, con gli orsi e gli attrezzi che descrive Cassiodoro (V 42:
+   l'asta di legno con cui si corre incontro alla belva, il salto sopra di lei, il muro portatile di canne in cui ci si chiude «ericii exemplo», le porte a grata dietro cui ci si
+   nasconde); dal 523 l'arena è vuota. Il pubblico siede sulle gradinate (js/monumenti.js: le tre fasce di sedili), prima nei posti più bassi, ed è più rado quando la città si spopola
+   (CURVE.popolazione: al massimo un posto su sei pieno, nel 235). Numeri, colori, posizioni e figure sono uno schema; le figure sono a grandezza vera, il pubblico è a istanze. */
+var giochi=(function(){
+  var col=(RM.MONUMENTI||[]).filter(function(m){ return m.id==='colosseo'; })[0]; if(!col||!col.g) return null;
+  var rG=RM.casuale(80), gruppo=new THREE.Group(); gruppo.position.copy(col.g.position); gruppo.rotation.y=col.ry; RM.scene.add(gruppo);
+  /* i posti: [x, y, z, rango]; an(r) è l'ellisse delle gradinate, raggi r e r-1,6 */
+  var FASCE=[[4.62,6.1,.52,1.75,10],[6.1,7.5,2.05,3.35,8],[7.75,8.4,3.78,4.2,3]], posti=[];
+  FASCE.forEach(function(f,fi){ for(var j=0;j<f[4];j++){ var ra=f[0]+(f[1]-f[0])*(j+.55)/f[4], y=f[2]+(f[3]-f[2])*(j+1)/f[4], per=Math.round(ra*6.283/.09);
+    for(var k=0;k<per;k++){ var a=(k+rG()*.6)/per*6.283; posti.push([ra*Math.cos(a), y, (ra-1.6)*Math.sin(a), fi*20+j+rG()*14]); } } });
+  posti.sort(function(p,q){ return p[3]-q[3]; });
+  var NMAX=RM.piccolo?300:1100, tinte=[C.bianco,C.folla[0],C.folla[1],C.folla[2],C.folla[4]], O=new THREE.Object3D();
+  var pub=tinte.map(function(t){ var B=new RM.Costruttore(); B.scatola(.045,.075,.045,0,0,0,t).scatola(.028,.03,.028,0,.075,0,C.pelle); var g=new THREE.InstancedMesh(B.geometria(),RM.matPietra(),Math.ceil(NMAX/tinte.length)); g.frustumCulled=false; g.count=0; gruppo.add(g); return g; });
+  var passo=Math.max(1,Math.floor(posti.length/(NMAX*1.2))), scelti=[];      // un posto ogni tanto, sparsi su tutto l'anello
+  for(var i=0;i<posti.length&&scelti.length<NMAX;i+=passo) scelti.push(posti[i]);
+  scelti.sort(function(p,q){ return p[3]-q[3]; });
+  scelti.forEach(function(p,j){ var g=pub[j%tinte.length], k=(j/tinte.length)|0; O.position.set(p[0],p[1],p[2]); O.rotation.set(0,Math.atan2(-p[0],-p[2]),0); O.scale.setScalar(1); O.updateMatrix(); g.setMatrixAt(k,O.matrix); });
+  pub.forEach(function(g){ g.instanceMatrix.needsUpdate=true; });
+  /* l'arena: y 0,12, raggi 4,3 e 2,7 */
+  var Y=.12, orso=RM.col(0x5b4128), leone=RM.col(0xb08a4a), canne=RM.col(0xb9a46a);
+  function belva(B,x,z,ry,colore,lungo){ B.dentro(x,Y,z,ry,function(B){ B.scatola(.07,.08,lungo||.2,0,.04,0,colore).scatola(.05,.05,.06,0,.07,(lungo||.2)/2+.02,colore); [[-.025,-.06],[.025,-.06],[-.025,.06],[.025,.06]].forEach(function(q){ B.scatola(.02,.04,.02,q[0],0,q[1],colore); }); }); }
+  var A=new RM.Costruttore(), Bv=new RM.Costruttore();
+  /* fino al 403: quattro coppie di gladiatori al centro e, di lato, un leone con due cacciatori */
+  [[-1.1,-.3],[-.3,.5],[.6,-.4],[1.3,.4]].forEach(function(q){ var ry=rG()*6.28; uomo(A,q[0]-.09*Math.sin(ry),q[1]-.09*Math.cos(ry),Y,C.ferro,C.rosso,ry); uomo(A,q[0]+.09*Math.sin(ry),q[1]+.09*Math.cos(ry),Y,C.tunica,P.bronzo,ry+Math.PI); });
+  belva(A,-2.6,.4,1.2,leone,.22); uomo(A,-2.25,.65,Y,C.tunica,null,-2); uomo(A,-2.9,.05,Y,C.tunica,null,.6); A.scatola(.01,.3,.01,-2.22,Y,.6,P.tronco);
+  /* dal 404 al 523: la caccia agli orsi di Variae V 42 */
+  [[-1.4,.2,.4],[.2,-.6,2.2],[1.5,.5,3.6]].forEach(function(q){ belva(Bv,q[0],q[1],q[2],orso,.22); });
+  uomo(Bv,-1.05,.42,Y,C.tunica,null,-1.9); fune(Bv,[-1.12,Y+.02,.5],[-1.0,Y+.22,.36],.012,P.tronco);      // chi corre incontro alla belva con l'asta di legno
+  uomo(Bv,.24,-.62,Y+.16,C.bianco,null,.4);                                                       // chi salta sopra l'orso
+  Bv.dentro(1.05,Y,.7,0,function(B){ for(var k=0;k<14;k++){ var a=k/14*6.283; B.scatola(.012,.17,.012,.09*Math.cos(a),0,.09*Math.sin(a),canne); } B.scatola(.03,.02,.03,0,.17,0,C.pelle); });      // il muro di canne, con chi ci sta chiuso dentro
+  [[2.2,-.9],[-2.4,-.7],[0,1.6]].forEach(function(q){ Bv.dentro(q[0],Y,q[1],Math.atan2(q[0],q[1]),function(B){ B.scatola(.3,.24,.015,0,0,0,P.tronco); for(var k=-2;k<=2;k++) B.scatola(.012,.24,.02,k*.06,0,0,RM.col(0x3a2e22)); }); });      // le porte a grata
+  uomo(Bv,2.25,-.82,Y,C.tunica,null,0); uomo(Bv,-2.35,-.6,Y,C.tunica,null,0);
+  var mA=A.maglia(RM.matPietra()), mB=Bv.maglia(RM.matPietra()); [mA,mB].forEach(function(m){ m.castShadow=true; m.visible=false; gruppo.add(m); });
+  var pop=(D.CURVE&&D.CURVE.popolazione&&D.CURVE.popolazione.punti)||[[0,900000]];
+  return {gruppo:gruppo, aggiorna:function(anno){
+    var in_uso=anno>=235&&anno<523&&!RM.senzaGiochi, n=in_uso?Math.round(scelti.length*Math.max(.12,Math.min(1,D.interp(pop,anno)/900000))):0;
+    pub.forEach(function(g,k){ g.count=Math.max(0,Math.ceil((n-k)/tinte.length)); g.visible=n>0; });
+    mA.visible=in_uso&&anno<404; mB.visible=in_uso&&anno>=404;
+  }};
 })();
 
 /* ---------- tombe dentro le mura ----------
@@ -734,15 +919,27 @@ var macchie756=(function(){
 })();
 
 RM.moduli.push(function(anno){
-  [milvio,corteo,assedio472,prigionieri593,sepoltura476,trionfo274,salaria410,vandali455,costante663,leone852,carlo800,saraceni846,totila546,casali756].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
-  [fuga312,carlo800].forEach(function(s){ var v=anno>=s.da&&anno<s.a; if(v&&!s.acceso&&s.seq.t==null) quadro(s.seq); s.acceso=v; s.tutte.forEach(function(m){ m.visible=v; }); });      // le scene animate: prima che partano, il quadro finale
+  [milvio,corteo,assedio472,prigionieri593,sepoltura476,trionfo274,palazzo455,teatro493,vandali455,costante663,leone852,carlo800,saraceni846,totila546,casali756].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
+  [fuga312,carlo800,S410].forEach(function(s){ var v=anno>=s.da&&anno<s.a; if(v&&!s.acceso&&s.seq.t==null) quadro(s.seq); s.acceso=v; s.tutte.forEach(function(m){ m.visible=v; }); });      // le scene animate: prima che partano, il quadro finale
   macchie756(RM.sfuma(755.6,756,anno)*(1-RM.sfuma(757,760,anno)));
   tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
-  if(terremoto801){ terremoto801.detriti.visible=anno>=801&&anno<806; applicaScossa(); }      // le travi restano a terra fino ai restauri; durante la sequenza la scossa comanda
+  if(giochi) giochi.aggiorna(anno);      // RM.senzaGiochi=true li spegne (per le prove di peso)
+  if(terremoto801){ terremoto801.detriti.visible=anno>=801&&anno<806; applicaScossa(); }
+  if(S852){ t852=anno>=851.6&&anno<853; if(!t852) S852.macerie.visible=anno>=846.95; if(S852.anni&&!t852) S852.anni.style.display='none';
+    if(!t852 && S852.attiva){ S852.leo.mat.userData.u.uCant.value=1; S852.attiva=false; } if(t852 && !S852.attiva){ S852.attiva=true; if(S852.seq.t==null) quadro(S852.seq); } }      // le macerie del Colosseo restano dopo l'847      // le travi restano a terra fino ai restauri; durante la sequenza la scossa comanda
   fortino552.g.visible=anno>=fortino552.da&&anno<fortino552.a; fortino552.g2.visible=anno>=fortino552.da2&&anno<fortino552.a2;
 });
 
 /* ---------- regia: la vista va sul luogo dell'evento della tappa ---------- */
+/* Sul telefono in verticale la didascalia dell'evento copre la metà bassa della scena (24 novembre 2026): lì la camera guarda un poco più in basso, così ciò che si racconta
+   sale a circa un terzo dall'alto. Il punto guardato si sposta verso la camera lungo il suolo, la camera resta dov'è. */
+function alto(v){
+  var cam=RM.camera, a=cam&&cam.aspect||1; if(!v||!v.t||a>=.85) return v;
+  var yT=RM.h(v.t[0],v.t[1])+1, dx=v.t[0]-v.c[0], dz=v.t[1]-v.c[2], oriz=Math.hypot(dx,dz), alt=v.c[1]-yT; if(oriz<.01||alt<=.05) return v;
+  var giu=Math.atan2(alt,oriz)+Math.atan(.42*Math.tan(cam.fov*Math.PI/360)), d=alt/Math.tan(Math.min(1.45,giu));
+  return {t:[v.c[0]+dx/oriz*d, v.c[2]+dz/oriz*d], c:v.c};
+}
+function inquadra(v){ return alto(RM.adatta(v)); }
 var perId={}; (RM.MONUMENTI||[]).forEach(function(m){ perId[m.id]=m; });
 /* le due messe in scena hanno un'inquadratura fissa (punto guardato, posizione della camera): al ponte Milvio da sud, oltre il fiume, verso la riva dove fuggono;
    per il corteo da sud-est, sopra le case della via Lata */
@@ -766,10 +963,14 @@ function mira(gx,gz,c){
   return {t:[x,z], c:c};
 }
 function aTerra(gx,gz,dx,dy,dz){ return mira(gx,gz,[gx+dx, H(gx,gz)+dy, gz+dz]); }      // camera spostata di dx, dz e alta dy sopra il suolo del punto a terra
+VISTE.sacco410=S410.vista;
+VISTE.sacco455=palazzo455.vista;
+VISTE.teodorico493=teatro493.vista;
 VISTE.prigionieri593=mira(prigionieri593.vista.g[0],prigionieri593.vista.g[1],prigionieri593.vista.c);
 VISTE.tombe476=aTerra(51.1,37.2,2.4,1.6,3.3);
 VISTE.pantheon609=vicino(-70,-72.5,5.6,6.2,-11.4);
 VISTE.leonina852=aTerra(-233.3,-121,4,3.4,-6.2);
+VISTE.colosseo852=S852&&S852.vista||VISTE.leonina852;      // 852: prima il Colosseo (con meno animazioni direttamente San Pietro)
 /* Le viste date come [x, z, distanza] o come id di un monumento prima usavano RM.vola, che tiene la direzione da cui si guarda: la stessa tappa si vedeva da un lato o dall'altro
    secondo la tappa di prima, e a volte la camera finiva dietro un edificio. Ora la direzione è fissa: da sud-sud-ovest, come la vista d'insieme, o quella data come quarto
    elemento ('n', 'ne', 'e', 'se', 's', 'so', 'o', 'no': il lato da cui si guarda); quota e distanza sono quelle di prima. */
@@ -794,7 +995,7 @@ RM.regiaTappa=function(t){ regia(t); };
 function regia(t){
   var ev=null; (D.EVENTI||[]).forEach(function(e){ if(!ev && Math.floor(e.da)===t.anno && !t.intermezzo) ev=e; });
   var v=ev?vista(ev.vista):null;
-  if(v&&v.t) v=RM.adatta(v);                                                             // sul telefono in piedi la camera si allontana
+  if(v&&v.t) v=inquadra(v);                                                              // sul telefono in piedi la camera si allontana, e guarda un poco più in basso
   anima(t);                                                                              // la scena animata parte con la regia: il suo tempo comincia dopo il volo
   /* La distanza minima dei controlli (16 unità, 160 m: js/base.js) riportava indietro, lungo la stessa linea, ogni camera più vicina: nel 593 la regia chiedeva 90 m
      e la camera finiva dentro la torre di porta Flaminia (24 novembre 2026). Per un'inquadratura più vicina la distanza minima scende finché si resta in quella tappa. */

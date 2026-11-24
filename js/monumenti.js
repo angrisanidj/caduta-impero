@@ -256,8 +256,8 @@ var LEO=(function(){ var L=[[-163,-120],[-233.3,-121],[-250,-124],[-272,-127],[-
 
 /* dal mondo al riferimento locale del gruppo dei Fori (origine 3,-8; rotazione -.35): così gli edifici si scrivono con le loro coordinate di scena reali */
 function LF(x,z){ var dx=x-3, dz=z+8, c=Math.cos(-.35), s=Math.sin(-.35); return [dx*c-dz*s, dx*s+dz*c]; }
-function curiaAula(B,tetto){      // l'aula della Curia: corpo intonacato, frontone, tre finestre, porta con i battenti di bronzo
-  B.scatola(1.9,2.4,2.7,0,0,0,P.intonaco).falde(2.7,.6,2,0,2.4,0,tetto,PI/2,P.intonaco);
+function curiaAula(B,tetto,corpo){      // l'aula della Curia: corpo intonacato (o di mattoni, corpo), frontone, tre finestre, porta con i battenti di bronzo
+  B.scatola(1.9,2.4,2.7,0,0,0,corpo||P.intonaco).falde(2.7,.6,2,0,2.4,0,tetto,PI/2,corpo||P.intonaco);
   B.vano(0,.25,1.37,1,0,.46,1.05,true).aperture(-.72,1.37,.72,1.37,3,1.55,.42,.2);
   B.scatola(.2,1.02,.03,-.11,.25,1.355,P.bronzo).scatola(.2,1.02,.03,.11,.25,1.355,P.bronzo);      // i due battenti, appena dentro il vano
 }
@@ -737,7 +737,11 @@ var M=[
     B.scatola(.12,.34,.12,0,3.0,1.25,P.bronzo).scatola(.1,.26,.1,-.88,2.4,1.25,P.bronzo).scatola(.1,.26,.1,.88,2.4,1.25,P.bronzo);      // statue di bronzo sul frontone
  }},
  {id:'santadriano', nome:"Sant'Adriano (la Curia)", etichetta:"Sant'Adriano", x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
-    curiaAula(B,P.coppi);
+    /* 24 novembre 2026 (segnalato nelle prove delle infografiche: nel 700 era «una scatola bianca senza dettagli»). È la stessa aula della Curia: la facciata di mattoni, qui senza lo
+       stucco a finti blocchi, che non si sa quanto restasse; la cornice, l'architrave della porta e i battenti di bronzo, che dal 1660 stanno in San Giovanni in Laterano e quindi
+       c'erano ancora nella chiesa. Niente statue sul frontone e niente portichetto; tetto di coppi e la croce. Quanto stucco e quanto marmo restassero non è detto dalle fonti lette. */
+    curiaAula(B,P.coppi,P.mattone);
+    B.scatola(2.0,.1,2.76,0,2.32,0,P.travertino).scatola(.5,.12,.05,0,1.32,1.37,P.marmo);                                              // la cornice tutt'attorno e l'architrave della porta
     B.scatola(1.0,.18,.4,0,0,1.55,P.travertino);                                                                                    // i gradini davanti alla porta
     B.scatola(.07,.5,.07,0,2.95,1.3,P.oro).scatola(.28,.07,.07,0,3.27,1.3,P.oro);                                                    // la croce sul frontone
  }},
@@ -1275,6 +1279,7 @@ RM.moduli.push(function(anno){
     o.mat.color.copy(TINTA[q.s0]).lerp(TINTA[q.s1],q.t);
     o.presenza=p; o.g.visible=p>.01; o.g.scale.y=cant?1:Math.max(p,.001); o.mat.userData.u.uCant.value=cant?q.t:1; ponteggio(o,cant?q.t:0);
     var rv=RM.rovina(o.id,anno); o.mat.userData.u.uRovina.value=rv.r; o.mat.userData.u.uSpoglio.value=rv.s; o.mat.userData.u.uCrepe.value=rv.c;
+    if(o.id==='pompeo' && anno>=493){ o.mat.userData.u.uCrepe.value*=.55; o.mat.userData.u.uRovina.value*=.5; }      // restaurato sotto Teodorico (Cassiodoro, Variae IV 51: «roboranda», a spese del re): crepe e crolli arretrano; di quanto è una resa
     if(o.id==='pantheon'){ o.mat.userData.u.uSpoglio.value=RM.sfuma(662.6,663.3,anno)*(1-RM.sfuma(734,736,anno)); o.mat.userData.u.uPiombo.value=RM.sfuma(734,736,anno); }   // la chiesa resta in uso: cambia solo il tetto. Bronzo tolto da Costante II (LP LXXVIII 3), piombo di Gregorio III (LP XCII 12)
     if(o.id==='colosseo'){ var us=o.mat.userData.u; us.uSudDir.value.set(-Math.sin(o.ry),Math.cos(o.ry)); us.uSudR.value.set(9.4,7.8);
       us.uSud.value=.2*RM.sfuma(523,800,anno)+.3*RM.sfuma(846.6,847,anno); us.uRovina.value*=.4; }      // il fronte sud: cava dal VI secolo; nell'847, secondo il Parco del Colosseo, cade quel che ne resta

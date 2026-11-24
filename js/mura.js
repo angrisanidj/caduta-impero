@@ -47,11 +47,15 @@ var mura=(function(){
   var S=new RM.Costruttore(); [-.42,-.14,.14,.42].forEach(function(x){ S.scatola(.014,1.14,.03,x,0,.3,P.tronco); }); [.3,.62,.94].forEach(function(y){ S.scatola(1,.02,.1,0,y,.27,P.tronco); });
   var ponteggi=istanze(S.geometria(),RM.matPietra(),passi.length); ponteggi.visible=false; ponteggi.receiveShadow=false;
   /* Dicembre 791: il Tevere «portam quae dicitur Flamminea … a fundamenta evellens» (LP, Adriano I 94). Quando sia stata rifatta non è scritto: qui resta abbattuta. */
-  var ultima=-1, ultimaBr=-1, ultimoCant=-1, ultimo791=-1, ultimaFlam=-1;      // alla tappa del 791 la porta Flaminia è già a terra, come dicono testo e didascalia
+  /* 493 (24 novembre 2026, l'utente: «anche le mura restaurate da Teodorico vanno fatte vedere»). Anonimo Valesiano 66-67, citato nella tappa: «per la riparazione delle mura della città
+     si dessero ogni anno duecento libbre». Quale tratto si riparasse non è detto: qui, per ipotesi, i tre passi di cortina più vicini al teatro di Pompeo, lungo il Tevere, con il ponteggio,
+     solo nell'anno della tappa, così si vedono nella stessa inquadratura del teatro in restauro. */
+  var TEOD=(function(){ var d=passi.map(function(p,j){ return [Math.hypot(p.x+94.3,p.z+30.8),j]; }).sort(function(a,b){ return a[0]-b[0]; }); return d.slice(0,3).map(function(q){ return q[1]; }); })();
+  var ultima=-1, ultimaBr=-1, ultimoCant=-1, ultimo791=-1, ultimaFlam=-1, ultimoTeod=-1;      // alla tappa del 791 la porta Flaminia è già a terra, come dicono testo e didascalia
   return function(alt,br,anno,cant){
-    var r791=anno>=790.9&&anno<795?1:0, rialzo=alt>1.004&&alt<1.496, inCantiere=(cant>0&&cant<1)||rialzo, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
+    var r791=anno>=790.9&&anno<795?1:0, rialzo=alt>1.004&&alt<1.496, teod=anno>=492.6&&anno<494?1:0, inCantiere=(cant>0&&cant<1)||rialzo||teod, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
     var flamGiu=anno>=790.9?1:0;
-    if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01 && Math.abs(cant-ultimoCant)<.002 && r791===ultimo791 && flamGiu===ultimaFlam) return; ultima=alt; ultimaBr=br; ultimoCant=cant; ultimo791=r791; ultimaFlam=flamGiu;
+    if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01 && Math.abs(cant-ultimoCant)<.002 && r791===ultimo791 && flamGiu===ultimaFlam && teod===ultimoTeod) return; ultima=alt; ultimaBr=br; ultimoCant=cant; ultimo791=r791; ultimaFlam=flamGiu; ultimoTeod=teod;
     posti.forEach(function(o,j){ var sy=o.flaminia&&flamGiu?0:porteSu; d.position.set(o.x,o.y,o.z); d.rotation.set(0,o.ang,0); if(sy>.01) d.scale.set(1,sy,1); else d.scale.set(0,0,0); d.updateMatrix(); magliaPorte.setMatrixAt(j,d.matrix); });
     magliaPorte.instanceMatrix.needsUpdate=true;
     passi.forEach(function(p,j){
@@ -61,7 +65,7 @@ var mura=(function(){
       d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix(); tratti.setMatrixAt(j,d.matrix);
       d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.z=0; d.scale.set(1,sy,1); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);      // una torre a ogni passo
       if(inCantiere){      // ponteggio sui tratti che stanno salendo, un poco più alto del muro
-        if(rialzo||(c>.1&&c<1)){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);
+        if(rialzo||(c>.1&&c<1)||(teod&&TEOD.indexOf(j)>=0)){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);
         d.updateMatrix(); ponteggi.setMatrixAt(j,d.matrix);
       }
     });
