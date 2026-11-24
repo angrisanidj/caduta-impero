@@ -15,27 +15,29 @@ var mura=(function(){
   }
   /* tratto: cortina, cammino di ronda, merli. Spessa circa 3,5 m («about 12 feet thick», Platner); alta 7 m sul terreno nella prima fase («not more than 25 feet»), poi rialzata */
   var T=new RM.Costruttore().scatola(1,1,.34,0,0,0,P.mattone);
-  for(k=0;k<4;k++) T.scatola(.13,.14,.1,-.375+k*.25,1,.12,P.mattone);
+  for(k=0;k<4;k++) T.scatola(.13,.14,.1,-.375+k*.25,1,-.12,P.mattone);      // i merli stanno sul filo esterno
   /* torre quadrata, sporgente circa 3 m dalla cortina («project about 10 feet», Platner); la larghezza, 7,5 m, è indicativa */
-  var W=new RM.Costruttore().scatola(.75,1.42,.66,0,0,.18,P.mattone).scatola(.75,.06,.66,0,1.42,.18,P.tufo);
-  [[-.25,-.08],[.25,-.08],[-.25,.45],[.25,.45]].forEach(function(p){ W.scatola(.18,.16,.12,p[0],1.48,p[1],P.mattone); });
+  /* Le torri sporgono verso l'esterno (24 novembre 2026): prima, su 96 lati della cinta su 99, sporgevano verso la città. Il lato esterno è il -z locale dei tratti. */
+  var W=new RM.Costruttore().scatola(.75,1.42,.66,0,0,-.18,P.mattone).scatola(.75,.06,.66,0,1.42,-.18,P.tufo);
+  [[-.25,.08],[.25,.08],[-.25,-.45],[.25,-.45]].forEach(function(p){ W.scatola(.18,.16,.12,p[0],1.48,p[1],P.mattone); });
   var mat=RM.matPietra(classe('mura')), tratti=istanze(T.geometria(),mat,passi.length), torri=istanze(W.geometria(),mat,passi.length);
 
   /* porte dove le vie attraversano la cinta */
-  var G=new RM.Costruttore(), GF=new RM.Costruttore(), porte=0;      // GF: porta Flaminia, a parte perché la piena del 791 la porta via
+  /* Dal 24 novembre 2026 ogni porta è un'istanza con la sua base: prima erano una maglia sola, scalata in altezza attorno al livello del fiume, e così le porte sui colli
+     si staccavano da terra dopo il rialzo del 403 (porta Salaria di 49 m) e sprofondavano durante il cantiere. Sono tutte uguali: la forma è uno schema. */
+  var GP=new RM.Costruttore(), posti=[];
+  GP.scatola(3,1.25,1.1,0,0,0,P.travertino).aperture(-.8,.56,.8,.56,1,0,.85,1).aperture(.8,-.56,-.8,-.56,1,0,.85,1);
+  [-1,1].forEach(function(k){ GP.cilindro(1,1.7,k*2,0,-.3,P.mattone,null,14).cilindro(1.08,.12,k*2,1.7,-.3,P.tufo,null,14); });
   RM.STRADE.forEach(function(s){
     for(var i=0;i<s.length-1;i++) for(var j=0;j<M.length;j++){
       var p=s[i], r=[s[i+1][0]-p[0],s[i+1][1]-p[1]], q=M[j], w=M[(j+1)%M.length], sv=[w[0]-q[0],w[1]-q[1]], den=r[0]*sv[1]-r[1]*sv[0]; if(Math.abs(den)<1e-6) continue;
       var t=((q[0]-p[0])*sv[1]-(q[1]-p[1])*sv[0])/den, u=((q[0]-p[0])*r[1]-(q[1]-p[1])*r[0])/den; if(t<0||t>1||u<0||u>1) continue;
-      var x=p[0]+r[0]*t, z=p[1]+r[1]*t; porte++;
-      (Math.hypot(x+74,z+211)<15?GF:G).dentro(x,RM.h(x,z)-.3,z,Math.atan2(-sv[1],sv[0]),function(B){
-        B.scatola(3,1.25,1.1,0,0,0,P.travertino).aperture(-.8,.56,.8,.56,1,0,.85,1).aperture(.8,-.56,-.8,-.56,1,0,.85,1);
-        [-1,1].forEach(function(k){ B.cilindro(1,1.7,k*2,0,.3,P.mattone,null,14).cilindro(1.08,.12,k*2,1.7,.3,P.tufo,null,14); });
-      });
+      var x=p[0]+r[0]*t, z=p[1]+r[1]*t; if(posti.some(function(o){ return Math.hypot(o.x-x,o.z-z)<3; })) continue;      // una strada che taglia la cinta su uno spigolo darebbe due porte
+      posti.push({x:x, z:z, y:RM.h(x,z)-.3, ang:Math.atan2(-sv[1],sv[0]), flaminia:Math.hypot(x+74,z+211)<15});      // la Flaminia a parte: la piena del 791 la porta via
     }
   });
-  var magliaPorte=G.maglia(mat), flaminia=GF.pos.length?GF.maglia(mat):null; RM.scene.add(magliaPorte); if(flaminia) RM.scene.add(flaminia);
-  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'}]).concat(flaminia?[{maglia:flaminia,id:'mura'}]:[]);
+  var magliaPorte=istanze(GP.geometria(),mat,Math.max(1,posti.length)); RM.porte=posti;
+  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'}]);
   passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; p.riva791=Math.hypot(p.x+115.3,p.z+3.3)<1.3; });      // riva791: il tratto di mura sul Tevere presso ponte Sisto che la piena del dicembre 791 abbatte («usque ad pontem Antonini, ipsum evertens murum», Liber Pontificalis, Adriano I 95; ponte Sisto per Duchesne). Lunghezza indicativa; rifatto qui nel 795, anno ignoto     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
   /* Il cantiere. «Rome, which before had no walls, was now surrounded with them. This work was begun in the reign of Aurelianus, and was finished by Probus» (Zosimo I 49,
      letto il 22 novembre 2026 nella traduzione del 1814, tertullian.org). L'anno della fine non è scritto: nel modello il 280, a metà del regno di Probo (276-282); che il grosso
@@ -45,12 +47,13 @@ var mura=(function(){
   var S=new RM.Costruttore(); [-.42,-.14,.14,.42].forEach(function(x){ S.scatola(.014,1.14,.03,x,0,.3,P.tronco); }); [.3,.62,.94].forEach(function(y){ S.scatola(1,.02,.1,0,y,.27,P.tronco); });
   var ponteggi=istanze(S.geometria(),RM.matPietra(),passi.length); ponteggi.visible=false; ponteggi.receiveShadow=false;
   /* Dicembre 791: il Tevere «portam quae dicitur Flamminea … a fundamenta evellens» (LP, Adriano I 94). Quando sia stata rifatta non è scritto: qui resta abbattuta. */
-  function vistaFlaminia(alt,anno){ if(flaminia){ flaminia.visible=alt>.01&&!(anno>=790.9);      /* alla tappa del 791 la porta è già a terra, come dicono testo e didascalia */ flaminia.scale.y=Math.max(alt,.0001); } }
-  var ultima=-1, ultimaBr=-1, ultimoCant=-1, ultimo791=-1;
+  var ultima=-1, ultimaBr=-1, ultimoCant=-1, ultimo791=-1, ultimaFlam=-1;      // alla tappa del 791 la porta Flaminia è già a terra, come dicono testo e didascalia
   return function(alt,br,anno,cant){
     var r791=anno>=790.9&&anno<795?1:0, rialzo=alt>1.004&&alt<1.496, inCantiere=(cant>0&&cant<1)||rialzo, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
-    vistaFlaminia(porteSu,anno);
-    if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01 && Math.abs(cant-ultimoCant)<.002 && r791===ultimo791) return; ultima=alt; ultimaBr=br; ultimoCant=cant; ultimo791=r791;
+    var flamGiu=anno>=790.9?1:0;
+    if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01 && Math.abs(cant-ultimoCant)<.002 && r791===ultimo791 && flamGiu===ultimaFlam) return; ultima=alt; ultimaBr=br; ultimoCant=cant; ultimo791=r791; ultimaFlam=flamGiu;
+    posti.forEach(function(o,j){ var sy=o.flaminia&&flamGiu?0:porteSu; d.position.set(o.x,o.y,o.z); d.rotation.set(0,o.ang,0); if(sy>.01) d.scale.set(1,sy,1); else d.scale.set(0,0,0); d.updateMatrix(); magliaPorte.setMatrixAt(j,d.matrix); });
+    magliaPorte.instanceMatrix.needsUpdate=true;
     passi.forEach(function(p,j){
       if(p.y==null){ var cx=Math.cos(p.ang)*p.len/2, cz=-Math.sin(p.ang)*p.len/2, ya=RM.h(p.x-cx,p.z-cz), yb=RM.h(p.x+cx,p.z+cz); p.y=(ya+yb)/2-.3; p.yt=ya-.3; p.pend=Math.atan2(yb-ya,p.len); }   // sui pendii la cortina segue il terreno invece di salire a gradoni
       var c=cant>=1?1:cant<=0?0:Math.max(.1,Math.min(1,(cant-p.turno*.55)/.45));      // quanto è alto questo tratto: 0,1 sono i primi filari sopra la fondazione, lungo tutto il tracciato
@@ -64,7 +67,7 @@ var mura=(function(){
     });
     tratti.instanceMatrix.needsUpdate=true; torri.instanceMatrix.needsUpdate=true;
     ponteggi.visible=inCantiere; if(inCantiere) ponteggi.instanceMatrix.needsUpdate=true;
-    tratti.visible=torri.visible=alt>.01&&cant>0; magliaPorte.visible=porteSu>.01; magliaPorte.scale.y=Math.max(porteSu,.0001);
+    tratti.visible=torri.visible=alt>.01&&cant>0; magliaPorte.visible=porteSu>.01&&posti.length>0;
   };
 })();
 
@@ -173,9 +176,12 @@ var acque=(function(){
     [-4.4,-1.5,1.5,4.4].forEach(function(x){ B.scatola(.7,parti==='pile'?.6:.9,1.5,x,0,0,P.travertino); });
     if(parti!=='pile') B.scatola(2,.9,1.3,-6.6,0,0,P.travertino).scatola(2,.9,1.3,6.6,0,0,P.travertino);
   }
-  [[-157,-104,'A'],[-120,1,'B',0,772],[-66,28,'A'],[-52,38,'A'],[-84,97,'C',280],[-152,-479,'A'],[-173.5,-92.6,'C',0,null,300]].forEach(function(p){     // Elio, Aurelio (ponte Sisto), isola Tiberina, Emilio, Probo, Milvio, Neroniano
+  [[-156.1,-104.37,'A',0,null,null,1.63],[-120,1,'B',0,772],[-66,28,'A'],[-52,38,'A'],[-84,97,'C',280],[-152,-479,'A'],[-173.5,-92.6,'C',0,null,300]].forEach(function(p){     // Elio, Aurelio (ponte Sisto), isola Tiberina, Emilio, Probo, Milvio, Neroniano
     var m=1e9, tm=0, i, q; for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); var dd=Math.hypot(q.x-p[0],q.z-p[1]); if(dd<m){ m=dd; tm=i/2400; } }
     q=curva.getPoint(tm); var tg=curva.getTangent(tm), rot=Math.atan2(-tg.x,-tg.z);            // l'asse x locale attraversa il fiume
+    /* Ponte Elio (24 novembre 2026): centro e asse sono quelli di ponte Sant'Angelo su OpenStreetMap (way 25752465: 3,65 gradi da nord verso ovest), non la perpendicolare al fiume
+       del modello, che lo girava di 8,4 gradi e lo faceva arrivare 15 m a ovest della porta del mausoleo. */
+    if(p[6]!=null){ q=new THREE.Vector3(p[0],q.y,p[1]); rot=p[6]; RM.ponteElio={x:p[0], z:p[1], asse:[Math.cos(rot),-Math.sin(rot)]}; }
     if(!p[3] && !p[4] && !p[5]){ PC[p[2]].dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,'tutto',q,rot); }); return; }      // i ponti che non cambiano restano nella maglia comune
     var mat=RM.matPietra(p[2]), fa=function(parti){ var C=new RM.Costruttore(); C.dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,parti,q,rot); }); var g=C.maglia(mat); g.visible=false; RM.scene.add(g); return g; };
     storie.push({dal:p[3]||0, rotto:p[4], pile:p[5], intero:fa('tutto'), mezzo:p[4]?fa('rotto'):null, resti:p[5]?fa('pile'):null});
@@ -192,17 +198,17 @@ var acque=(function(){
   (function(){
     var m=1e9, tm=0, i, q, L=curva.getLength(), sx=[], dx=[], N=14, W=3.35, MEZZA=13.45, monte=curva.getPoint(0).z<curva.getPoint(1).z?-1:1;      // il fiume scende da nord: da che parte della curva sta il monte
     for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); var dd=Math.hypot(q.x+66,q.z-28); if(dd<m){ m=dd; tm=i/2400; } }
-    tm+=monte*3.2/L;      /* i due ponti non stanno a metà dell'isola ma verso valle: il centro va 32 m a monte, così il capo a valle resta prima del ponte Emilio (posizione dei capi indicativa) */
+    var tmPonte=tm; tm+=monte*3.2/L;      /* i due ponti non stanno a metà dell'isola ma verso valle: il centro va 32 m a monte, così il capo a valle resta prima del ponte Emilio (posizione dei capi indicativa) */
     for(i=0;i<=N*2;i++){ var u=i/N-1, c=curva.getPoint(tm+u*MEZZA/L), tg=curva.getTangent(tm+u*MEZZA/L), n=Math.hypot(tg.x,tg.z)||1, w=W*Math.pow(1-Math.pow(Math.abs(u),u*monte<0?1.7:2.6),.75);
       sx.push([c.x-tg.z/n*w,c.z+tg.x/n*w,c.x-tg.z/n*w*.9,c.z+tg.x/n*w*.9]); dx.push([c.x+tg.z/n*w,c.z-tg.x/n*w,c.x+tg.z/n*w*.9,c.z-tg.x/n*w*.9]); }
     for(i=0;i<N*2;i++){ var a=sx[i], b=sx[i+1], e=dx[i], f=dx[i+1];
       B.quad([a[0],-.5,a[1]],[b[0],-.5,b[1]],[b[2],.35,b[3]],[a[2],.35,a[3]],P.travertino).quad([f[0],-.5,f[1]],[e[0],-.5,e[1]],[e[2],.35,e[3]],[f[2],.35,f[3]],P.travertino);      // le fiancate di travertino
       B.quad([a[2],.35,a[3]],[b[2],.35,b[3]],[f[2],.35,f[3]],[e[2],.35,e[3]],P.selce); }                                                                                           // il piano dell'isola
-    q=curva.getPoint(tm); var t0=curva.getTangent(tm);
-    B.dentro(q.x,.35,q.z,Math.atan2(t0.x,t0.z),function(B){
-      B.tempio(1.6,2.6,1.1,0,6.2,0,{fronte:4,podio:.25});
-      B.scatola(2.4,.9,2.6,.3,0,-5.2,P.intonaco).falde(2.6,.5,2.6,.3,.9,-5.2,P.coppi); B.scatola(1.8,.7,3,-.4,0,-8.6,P.intonaco).falde(3,.4,2,-.4,.7,-8.6,P.coppi,Math.PI/2);
-      B.scatola(.3,.3,.3,0,0,1.6,P.marmo).cilindro(.1,1.4,0,.3,1.6,P.granito,.05,4); });      // l'obelisco, l'albero della nave
+    q=curva.getPoint(tm); var t0=curva.getTangent(tm), pb=curva.getPoint(tmPonte), nn=Math.hypot(t0.x,t0.z)||1, zb=((pb.x-q.x)*t0.x+(pb.z-q.z)*t0.z)/nn, sg=zb<0?-1:1;      // zb: dove il ponte attraversa l'isola, lungo il suo asse
+    B.dentro(q.x,.35,q.z,Math.atan2(t0.x,t0.z),function(B){      /* tempio e case stanno dalla parte lunga dell'isola, lontano dal ponte; l'obelisco dall'altra (24 novembre 2026: una casa finiva sotto l'impalcato) */
+      B.tempio(1.6,2.6,1.1,0,zb-sg*5.4,0,{fronte:4,podio:.25});
+      B.scatola(2.2,.9,2.2,.2,0,zb-sg*9.3,P.intonaco).falde(2.4,.5,2.2,.2,.9,zb-sg*9.3,P.coppi); B.scatola(1.5,.7,2.2,-.1,0,zb-sg*12.2,P.intonaco).falde(2.2,.4,1.7,-.1,.7,zb-sg*12.2,P.coppi,Math.PI/2);
+      B.scatola(.3,.3,.3,0,0,zb+sg*2.4,P.marmo).cilindro(.1,1.4,0,.3,zb+sg*2.4,P.granito,.05,4); });      // l'obelisco, l'albero della nave
   })();
   ['A','B','C'].forEach(function(k){ RM.scene.add(PC[k].maglia(RM.matPietra(k))); });
 })();

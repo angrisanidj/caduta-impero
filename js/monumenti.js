@@ -665,7 +665,7 @@ var M=[
     [1,-1].forEach(function(q){ [-.58,-.38,.38,.58].forEach(function(x){ B.scatola(.13,.2,.1,x,0,q*.27,P.marmo); }); B.colonne(-.58,q*.27,.58,q*.27,2,.8,.05,.2).colonne(-.38,q*.27,.38,q*.27,2,.8,.05,.2);
       B.scatola(.7,.28,.02,0,1.18,q*.24,P.travertino); });                                                                                        // i piedistalli, le colonne, la lastra dell'iscrizione
  }},
- {id:'adriano', nome:'Mausoleo di Adriano', x:-157,z:-118, ry:.1, zone:[[0,0,10]], et:1, fa:function(B){
+ {id:'adriano', nome:'Mausoleo di Adriano', x:-156.97,z:-118, ry:.064,      /* sull'asse di ponte Sant'Angelo (OpenStreetMap): il ponte arriva alla porta (24 novembre 2026; prima x -157, ry 0,1) */ zone:[[0,0,10]], et:1, fa:function(B){
     /* basamento quadrato di circa 84 m di lato e 10 di altezza, tamburo di 64 m di diametro e 21 di altezza, sopra un giardino (Platner) */
     B.scatola(8.4,1,8.4,0,0,0,P.marmo).scatola(8.55,.12,8.55,0,1,0,P.marmo).cilindro(3.2,2.1,0,1.12,0,P.travertino,null,40).cilindro(3.27,.1,0,3.12,0,P.marmo,null,40).cilindro(3,.3,0,3.22,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.4,0,P.marmo).scatola(1.6,.1,1.6,0,5.1,0,P.marmo);
     B.vano(0,0,4.23,1,0,.7,.85);                                                                                 // l'ingresso, verso il ponte
@@ -678,7 +678,7 @@ var M=[
     si ispessisce per reggerli). Numero, misure e forma sono indicativi.
     La quadriga in cima: Platner e Ashby la riferiscono a Giovanni di Antiochia (una «colossal quadriga on the summit») e riportano il dubbio di Hülsen; è un'ipotesi, dichiarata nella scheda.
     Quando sia sparita non lo dice nessuna fonte letta: qui scompare con le statue, e anche questo è un'ipotesi. */
- {id:'adrianostatue', x:-157,z:-118, ry:.1, come:'adriano', fa:function(B){
+ {id:'adrianostatue', x:-156.97,z:-118, ry:.064, come:'adriano', fa:function(B){
     for(var st=0;st<20;st++) if(st%5) uomo(B,3.05*Math.cos(st*PI/10),3.22,3.05*Math.sin(st*PI/10),2.2,P.marmo);
     [-3.95,3.95].forEach(function(x){ [-3.95,3.95].forEach(function(z){ var ry=Math.atan2(x,z);      // ogni gruppo guarda in fuori, lungo la diagonale
       B.scatola(.62,.08,.62,x,1.12,z,P.marmo); cavallo(B,x,1.2,z,ry,2.2,P.marmo); uomo(B,x+.2*Math.cos(ry),1.2,z-.2*Math.sin(ry),2.2,P.marmo); }); });
@@ -1165,10 +1165,10 @@ var M=[
  /* Archi della via Lata. Arco di Claudio (51-52), sull'acqua Vergine dove passa la via Lata, «in ruins as early as the eighth century» (Platner e Ashby, Arcus Claudii); posizione da it.wikipedia
     (41,89932 N, 12,48110 E): l'acquedotto del modello, interpolato, passa una quarantina di metri più a nord. Arco di Portogallo, «close to the Ara Pacis», di età incerta, con rilievi di Adriano;
     demolito nel 1662 (Platner e Ashby, Arco di Portogallo); posizione da it.wikipedia (41,90310 N, 12,47960 E). Misure di entrambi indicative; i fornici guardano lungo la strada. */
- {id:'archivialata', nome:'Archi della via Lata', x:-41,z:-96.8, ry:0, zone:[[6.19,21.01,.9],[-6.24,-21,.8]], fa:function(B){
+ {id:'archivialata', nome:'Archi della via Lata', x:-41,z:-96.8, ry:0, zone:[[6.19,21.01,.9],[-7,-21,.8]], fa:function(B){
     var X=-41, Z=-96.8;
     luogo(B,X,Z,-34.81,-75.79,.285,.7,function(B){ arcoUno(B,1.4,.55,1.3,.6,.85,0,0,0,0,P.travertino); });
-    luogo(B,X,Z,-47.24,-117.8,.285,.5,function(B){ arcoUno(B,1,.5,1.15,.45,.75,0,0,0,0,P.marmo); });
+    luogo(B,X,Z,-48,-117.8,.285,.5,function(B){ arcoUno(B,1,.5,1.15,.45,.75,0,0,0,0,P.marmo); });      /* arco di Portogallo: 8 m più a ovest, sull'asse della via del Corso (24 novembre 2026). Il punto di it.wikipedia, per un arco demolito nel 1662, è meno sicuro del tracciato della strada, e che l'arco la scavalcasse è il dato della fonte */
  }},
  /* Arcus Novus sulla via Lata, per Diocleziano e Massimiano: «fu eretto nel 293» per i decennali e demolito nel 1491 (it.wikipedia «Arcus Novus», dove sta anche la posizione:
     41,89818 N, 12,48153 E). Misure indicative. */
@@ -1203,6 +1203,9 @@ M.forEach(function(o){
   (o.zone||[]).forEach(function(q){ var p=globale(o,q[0],q[1]); RM.zone.push({x:p[0],z:p[1],r:q[2],h:h,dal:dal}); });
   if(o.lunga){ var n=Math.ceil(o.lunga[0]/o.lunga[1]); for(var i=0;i<n;i++){ var p=globale(o,((i+.5)/n-.5)*o.lunga[0],0); RM.zone.push({x:p[0],z:p[1],r:o.lunga[1],h:h}); } }
 });
+/* dove una strada passa sotto un arco si stringe alla luce del fornice: [x, z, raggio, mezza larghezza] (24 novembre 2026: con strade larghe 16 m e fornici di 5 o 6, anche un arco
+   ben centrato sembrava stare «accanto» alla strada) */
+RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.21],[27.2,20.15,1.6,.25],[44.47,30.43,2.4,.3],[81.86,76.56,1.4,.19]];      // Claudio, Portogallo, Arcus Novus, Gallieno, Tito, Costantino, Dolabella
 RM.posa();
 var perId={};
 M.forEach(function(o){

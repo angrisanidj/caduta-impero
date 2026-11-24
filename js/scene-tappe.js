@@ -117,6 +117,7 @@ var assedio472=(function(){
   (function(){      // lungo l'asse vero del ponte (perpendicolare al fiume) e sulla riva davanti al mausoleo
     var m2=1e9, t2=0, k, qq; for(k=0;k<=2400;k++){ qq=curva.getPoint(k/2400); var d2=Math.hypot(qq.x+157,qq.z+104); if(d2<m2){ m2=d2; t2=k/2400; } }
     var c2=curva.getPoint(t2), tg2=curva.getTangent(t2), ax=[-tg2.z,tg2.x], lat=[tg2.x,tg2.z], mz=[-157-c2.x,-118-c2.z];
+    if(RM.ponteElio){ c2={x:RM.ponteElio.x,z:RM.ponteElio.z}; ax=RM.ponteElio.asse.slice(); lat=[-ax[1],ax[0]]; mz=[-157-c2.x,-118-c2.z]; }      // l'asse del ponte com'è disegnato (js/mura.js)
     if(ax[0]*mz[0]+ax[1]*mz[1]<0) ax=[-ax[0],-ax[1]];      // ax punta verso il mausoleo
     for(k=0;k<240;k++){
       var s=(rnd()-.4)*15, w=(rnd()-.5)*(Math.abs(s)>7.4?6:1.1), x=c2.x+ax[0]*s+lat[0]*w, z=c2.z+ax[1]*s+lat[1]*w, sul=Math.abs(s)<=7.4;

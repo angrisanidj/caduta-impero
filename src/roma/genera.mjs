@@ -70,19 +70,22 @@ mura=mura.map(p=>[r1(p[0]),r1(p[1])]).filter((p,i,a)=>!i||Math.hypot(p[0]-a[i-1]
    Non è un rilievo delle strade antiche: è il loro erede moderno, che in città può scostarsi di qualche decina di metri. */
 const VIE=[
   {nome:'via Lata e Flaminia', p:[[-22,-37],[-77,-211],[-110,-330],[-152,-478],[-165,-600]], vie:['Via del Corso','Via Flaminia','Ponte Milvio']},
-  {nome:'Appia', p:[[35,61],[43,96],[126,172],[134,211],[200,330],[294,448],[420,560]], vie:['Via di San Gregorio','Via di Porta San Sebastiano','Via Appia Antica']},
-  {nome:'Ostiense', p:[[-36,42],[-42,62],[-58,84],[-70,106],[-55,150],[-32,176],[-42,280],[-48,320],[-58,376],[-100,560]], vie:['Via Marmorata','Via Ostiense'], fissi:[[-32.1,176.1,12]]},
-  {nome:'Aurelia', p:[[-50,36],[-110,45],[-198,46],[-300,40],[-458,28]], vie:['Via della Lungaretta','Via Aurelia Antica'], fissi:[[-198,45.5,12]]},
-  {nome:'Argileto, clivo Suburano e Tiburtina', p:[[-1,-1],[3,-5],[21,-20],[39,-22],[132,-36],[210,-56],[282,-98],[619,-250]], vie:['Argiletum','Via della Madonna dei Monti','Via Leonina','Via in Selci','Via di San Vito','Via Tiburtina Antica','Via Tiburtina'], fissi:[[207.1,-55.3,10]]},
+  {nome:'Appia', p:[[42,25.9],[44.47,30.43],[43.87,35.04],[35,61],[43,96],[126,172],[134,211],[200,330],[294,448],[420,560]], vie:['Via di San Gregorio','Via di Porta San Sebastiano','Via Appia Antica'], fissi:[[44.47,30.43,1]]},      /* dal 24 novembre 2026 comincia dalla valle del Colosseo e passa sotto l'arco di Costantino (contorno dell'arco su OpenStreetMap, way 23590989): prima cominciava 320 m più a sud e l'arco restava senza strada */
+  {nome:'Ostiense', p:[[-36,42],[-42,62],[-58,84],[-70,106],[-55,150],[-32,176],[-42,280],[-48,320],[-58,376],[-100,560]], vie:['Via Marmorata','Via Ostiense'], fissi:[[-32.1,176.1,12],[-32.3,173.13,2],[-32.79,178.1,2]]},
+  {nome:'Aurelia', p:[[-69.1,34.8],[-110,45],[-198,46],[-300,40],[-458,28]], vie:['Via della Lungaretta','Via Aurelia Antica'], fissi:[[-198,45.5,12],[-196.17,47.2,2],[-199.85,43.81,2]]},      /* parte dalla testa di Trastevere del ponte dell'isola: prima partiva a metà del ponte Emilio e correva per cento metri sull'acqua (24 novembre 2026) */
+  {nome:'Argileto, clivo Suburano e Tiburtina', p:[[-1,-1],[3,-5],[21,-20],[39,-22],[132,-36],[210,-56],[282,-98],[619,-250]], vie:['Argiletum','Via della Madonna dei Monti','Via Leonina','Via in Selci','Via di San Vito','Via Tiburtina Antica','Via Tiburtina'], fissi:[[207.1,-55.3,10],[205.42,-54.24,2],[209.95,-56.36,2]]},
   {nome:'Labicana e Prenestina', p:[[72,22],[249,12],[400,30],[619,50]], vie:['Via Labicana','Via Prenestina']},
-  {nome:'Alta Semita e Nomentana', p:[[24,-78],[80,-128],[139,-179],[270,-326],[420,-500]], vie:['Via del Quirinale','Via Venti Settembre','Via Nomentana'], fissi:[[139.5,-178.5,28]]},
-  {nome:'via Recta, ponte Elio, verso San Pietro', p:[[-44,-94],[-100,-89],[-150,-90],[-157,-104],[-157,-111],[-166,-112],[-185,-112],[-215,-110],[-247,-108]], vie:['Via delle Coppelle','Via dei Coronari'], fino:108, fermo:true},
+  {nome:'Alta Semita e Nomentana', p:[[24,-78],[80,-128],[139,-179],[270,-326],[420,-500]], vie:['Via del Quirinale','Via Venti Settembre','Via Nomentana'], fissi:[[139.5,-178.5,28],[137.34,-177.27,2],[141.68,-179.76,2]]},
+  {nome:'via Recta, ponte Elio, verso San Pietro', p:[[-40.8,-94.5],[-46.5,-94.4],[-100,-89],[-150,-90],[-155.5,-95.4],[-156.1,-104.37],[-156.7,-113.3],[-161.84,-110.84],[-201.75,-108.1],[-246.64,-105.02]], vie:['Via delle Coppelle','Via dei Coronari'], fino:111, fermo:true},
+  /* via Recta, 24 novembre 2026: comincia sull'asse della via Lata (prima restava staccata di 24 m) e passa a nord del piedistallo della colonna di Marco Aurelio; entra diritta sul ponte Elio
+     lungo l'asse di ponte Sant'Angelo (OpenStreetMap, way 25752465: 3,65 gradi da nord verso ovest) e finisce davanti alla porta del mausoleo; da lì piega e segue l'asse del portico dei
+     pellegrini, che era la strada coperta per San Pietro (prima girava a ovest 27 m prima dell'ingresso e attraversava la Meta Romuli). Il tracciato nel Borgo resta un'ipotesi. */
   {nome:'Vicus Longus', p:[[13,-20],[50,-60],[85,-88]], vie:[]},
   {nome:'Latina', p:[[126,172],[142,178],[370,361]], vie:['Via di Porta Latina','Via Latina'], innesto:1},
   {nome:'Portuense', p:[[-50,36],[-94,96],[-210,250],[-300,400]], vie:['Via Portuense']},
-  {nome:'via Settimiana', p:[[-110,45],[-147,3],[-185,-50],[-196,-87]], vie:['Via della Lungara']},
+  {nome:'via Settimiana', p:[[-110,45],[-147,3],[-185,-50],[-196,-87]], vie:['Via della Lungara'], fissi:[[-145.63,5.32,2],[-146.09,0.34,2]]},
   {nome:'Salaria', p:[[80,-128],[106,-203],[120,-330],[130,-500]], vie:['Via Salaria'], fissi:[[106.4,-203.3,10]]},
-  {nome:'verso il Laterano e porta Asinaria', p:[[66,34],[120,60],[194,76],[330,170]], vie:['Via dei Santi Quattro']},
+  {nome:'verso il Laterano e porta Asinaria', p:[[66,34],[120,60],[194,76],[330,170]], vie:['Via dei Santi Quattro'], fissi:[[193.42,73.99,2],[195.45,78.56,2]]},      /* le coppie di punti fissi a 25 m dentro e fuori di una porta (qui e nelle altre vie) fanno entrare la strada diritta nel fornice (24 novembre 2026) */
   /* vie del centro antico (strette): nel Foro e sul Palatino sono i basolati antichi rilevati da OSM con il loro nome; fuori, la via moderna che li ricalca */
   {nome:'via Sacra e clivo Capitolino', stretta:true, p:[[43,26],[31,22],[27,20],[17,9],[4,1],[-1,-1],[-7,-1],[-10,-2],[-12,1],[-17,6],[-19,5]], vie:['Via Sacra','Clivus Capitolinus'],
      fissi:[[28.3,20.65,1.5],[26.1,19.65,1.5],[24.6,17.2,2]]},      /* il passaggio sotto l'Arco di Tito, lungo il suo asse (contorno dell'arco su OpenStreetMap, way 23913953; 23 novembre 2026): la via moderna gira subito verso nord */

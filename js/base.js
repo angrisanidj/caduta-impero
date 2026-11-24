@@ -326,10 +326,11 @@ function posaSuolo(){
 
 /* nastro steso sul terreno lungo una linea */
 RM.nastro=function(linea,larga,materiale,alza,quotaFissa){
-  var punti=linea.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); });
+  var punti=linea.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); }), piena=larga, STR=quotaFissa==null?(RM.strozzature||[]):[];
   var curva=new THREE.CatmullRomCurve3(punti,false,'catmullrom',.35), n=Math.max(20,Math.round(curva.getLength()/(larga<.5?1:3))), v=[], uv=[], idx=[], k, p, t, nx, nz, y1, y2;
   for(k=0;k<=n;k++){
-    p=curva.getPointAt(k/n); t=curva.getTangentAt(k/n); nx=-t.z; nz=t.x;      // a passo costante lungo la via: con getPoint i tratti lunghi restavano radi e il terreno copriva la strada
+    p=curva.getPointAt(k/n); t=curva.getTangentAt(k/n); nx=-t.z; nz=t.x;
+    larga=piena; for(var q=0;q<STR.length;q++){ var dq=Math.hypot(p.x-STR[q][0],p.z-STR[q][1]); if(dq<STR[q][2]) larga=Math.min(larga,STR[q][3]+(piena-STR[q][3])*RM.sfuma(STR[q][2]*.35,STR[q][2],dq)); }      // sotto un arco la strada si stringe alla luce del fornice      // a passo costante lungo la via: con getPoint i tratti lunghi restavano radi e il terreno copriva la strada
     var hq=RM.hSuolo||RM.h; y1=quotaFissa!=null?quotaFissa:hq(p.x+nx*larga,p.z+nz*larga)+alza; y2=quotaFissa!=null?quotaFissa:hq(p.x-nx*larga,p.z-nz*larga)+alza;
     v.push(p.x+nx*larga,y1,p.z+nz*larga, p.x-nx*larga,y2,p.z-nz*larga); uv.push(0,k/2,1,k/2);
     if(k<n){ var a=k*2; idx.push(a,a+2,a+1, a+1,a+2,a+3); }
@@ -360,7 +361,10 @@ RM.frame.push(function(dt){ RM.tempoAcqua.value+=dt; });
 RM.posa=function(){
   if(RM.suolo) return;
   posaSuolo();
-  RM.STRADE.forEach(function(s,i){ RM.nastro(s,TOPO.stradeLarghe[i],matStrada,.1); });
+  /* Le strade si disegnano sul loro tracciato (24 novembre 2026). La curva che le liscia, dove un tratto corto confina con uno lungo, sbordava dalla linea dei dati fino a 38 m e faceva
+     cappi: ma porte, case e passanti si calcolano sulla linea, e così la strada passava accanto all'arco di Gallieno invece che sotto. Con un punto ogni 30 m lo scarto resta sotto i 3. */
+  function fitta(l){ var o=[l[0]], k, a, b, n, j; for(k=0;k<l.length-1;k++){ a=l[k]; b=l[k+1]; n=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/3)); for(j=1;j<=n;j++) o.push([a[0]+(b[0]-a[0])*j/n,a[1]+(b[1]-a[1])*j/n]); } return o; }
+  RM.STRADE.forEach(function(s,i){ RM.nastro(fitta(s),TOPO.stradeLarghe[i],matStrada,.1); });
   RM.curvaFiume=RM.nastro(RM.FIUME,5.6,RM.matFiume,0,-.5).userData.curva;
 };
 
