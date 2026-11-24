@@ -165,9 +165,23 @@ window.addEventListener('pointerup',function(){ if(!premuto) return; var k=mira;
 window.addEventListener('pointercancel',function(){ if(premuto) smetti(); });      // il dito è andato in verticale: la pagina scorre e non si cambia tappa
 
 /* ---------- tappa ---------- */
+/* Telefono (24 novembre 2026, l'utente: «Ricorda sempre di tornare su Impero ogni volta che cambi tappa»): a ogni tappa nuova la scheda torna all'Impero, che è ciò che cambia a ogni tappa.
+   Resta su Roma quando chi guarda sta usando la città: a tutto schermo, con una scheda di monumento aperta, con «Prima e dopo» o con il percorso del pellegrino.
+   Se la scena è già uscita di sopra (si sta leggendo la tappa) il testo resta dov'era. Per andare a Roma c'è la riga «A Roma, in quest'anno… Guarda la città». */
+function tornaImpero(){
+  var sc=$('scene'), b=document.querySelector('.schede button[data-vista="impero"]'), B=document.body.classList, pel=$('btnPellegrino');
+  if(!sc || !b || sc.getAttribute('data-vista')!=='roma') return;
+  if(getComputedStyle(b.parentNode).display==='none') return;      // sul PC le due scene stanno insieme
+  if(B.contains('roma-grande') || schedaDi || document.querySelector('.riquadro.roma.confronto-attivo') || (pel&&pel.getAttribute('aria-pressed')==='true')) return;
+  var tit=$('tAtto'), y0=tit?tit.getBoundingClientRect().top:0, sopra=sc.getBoundingClientRect().bottom<0;
+  b.click();
+  if(sopra && tit) window.scrollBy(0,tit.getBoundingClientRect().top-y0);
+}
 function vai(i,subito){
+  var cambia=Math.max(0,Math.min(T.length-1,i))!==idx;
   idx=Math.max(0,Math.min(T.length-1,i));
   var t=T[idx], a=D.ATTI[Math.min(t.atto,D.ATTI.length-1)];
+  if(cambia) tornaImpero();      // prima di ridisegnare la carta: così si ridisegna già visibile, alla misura giusta
   meta=t.anno; vel=Math.max(8,Math.abs(meta-anno))/1.7; if(subito) anno=meta;
   $('tAtto').innerHTML=(t.intermezzo?'':'<b>'+t.anno+'</b>')+(t.intermezzo?'Intermezzo':t.epilogo?'Epilogo':'Atto '+a.n+' · '+a.nome)+'<button type="button" class="as-apri" aria-controls="attoScheda">L’atto in breve</button>';
   $('tTitolo').textContent=t.titolo; $('tTesto').textContent=t.testo;

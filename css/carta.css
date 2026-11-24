@@ -16,6 +16,12 @@ body.impero-largo .legenda-luoghi[hidden]{display:none}
 body.impero-grande .m-didascalia{left:50%;right:auto;transform:translateX(-50%);width:max-content;max-width:min(560px,calc(100% - 24px));bottom:12px}
 body.impero-grande .m-didascalia:not(.in-alto):has(~.m-passi:not([hidden])){bottom:54px}
 body.impero-grande .m-didascalia.in-alto{top:12px;bottom:auto}
+/* a tutto schermo i comandi − + ✕ sono fissi in alto a destra (css/stile.css): 144 punti più 12 di margine sul telefono, 126 più 12 sul PC.
+   La didascalia in alto resta centrata e non ci passa sotto (24 novembre 2026, cattura dell'utente sul 711: la × della didascalia stava sotto il ✕ del tutto schermo) */
+body.impero-grande .m-didascalia.in-alto{--cm:138px;max-width:min(560px,calc(100% - 24px),calc(100vw - 2*var(--cm) - 16px))}
+@media (max-width:700px){ body.impero-grande .m-didascalia.in-alto{--cm:156px} }
+/* telefono in piedi: così sarebbe troppo stretta; scende sotto i comandi e prende tutta la larghezza */
+@media (max-width:640px){ body.impero-grande .m-didascalia.in-alto{top:calc(64px + env(safe-area-inset-top,0px));max-width:calc(100% - 24px)} }
 body.impero-largo.carta-in-regia .legenda-luoghi{opacity:0;pointer-events:none}
 @media (max-width:700px){ .m-didascalia{font-size:12px;padding:6px 9px;right:60px} }
 /* la scena dell'evento sulla carta (js/mappa.js, disegnaScena): le marce si tracciano, poi compaiono la punta della freccia e i segni di scontro, assedio e sacco */
@@ -175,3 +181,16 @@ body.carta-in-regia .m-fuori{display:none}
 .m-invita button{all:unset;cursor:pointer;display:inline-flex;align-items:center;min-height:30px;padding:0 4px}
 .m-invita .no{width:28px;justify-content:center;border-radius:50%;font-size:17px;color:#D9CBB4}
 .m-invita button:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+
+/* Telefono, carta in pagina (24 novembre 2026, l'utente: «La mappa dell'impero deve essere più visibile da mobile»): da bordo a bordo, senza i 16 punti di margine né il bordo ai lati;
+   legende più basse (due righe gli stati, una i popoli: «+N» apre le altre; la nota dei popoli su una riga); i passi su una riga che scorre; nomi più grandi */
+@media (max-width:700px){
+  body:not(.impero-grande) .riquadro.impero{margin-left:-16px;margin-right:-16px;border-left:0;border-right:0;border-radius:0}
+  body:not(.impero-grande) .legenda-mappa{max-height:70px}
+  body:not(.impero-grande) #legendaPopoli{max-height:39px}
+  body:not(.impero-grande) .legenda-nota{-webkit-line-clamp:1}
+  body:not(.impero-grande) .m-passi{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  body:not(.impero-grande) .m-passi button{flex:none}
+  body:not(.impero-grande) .m-nome{font-size:14px;letter-spacing:.08em}
+  body:not(.impero-grande) .m-citta text{font-size:15px}
+}

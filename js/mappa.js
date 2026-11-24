@@ -52,7 +52,7 @@ Object.keys(G.regioni).forEach(function(id){
   var r=G.regioni[id]; if(!NOMI[id]) return;                                    // solo le regioni abbastanza grandi hanno il nome scritto sopra
   var yn=r.c[1]+(id==='italia_nord'?-14:id==='belgica'?-6:0);
   nomi[id]=el('text',{'class':'m-nome',x:r.c[0],y:yn},svg); nomi[id].textContent=NOMI[id];
-  nomiPos.push({id:id,x:r.c[0],y:yn,w:NOMI[id].length*8.6+6,ox:0,oy:0});
+  nomiPos.push({id:id,x:r.c[0],y:yn,w:NOMI[id].length*(window.matchMedia&&matchMedia('(max-width:700px)').matches?10.2:8.6)+6,ox:0,oy:0});
 });
 /* Ingombri sulla carta, in unità del disegno: [x del centro, y del centro, larghezza, altezza], oppure un cerchio [x, y, diametro, diametro, 1].
    copre() dice quanto due ingombri si sovrappongono: 0 se restano staccati di almeno un'unità e mezza */
@@ -541,7 +541,8 @@ function avviaRegia(l,sc,da,forza){
   function inizia(n){
     var f=foto[n]; r.n=n; scriviDidascalia(f); didascalia.classList.add('viva'); document.body.classList.add('carta-in-regia');      // a tutto schermo, sulla carta larga, la riga dei luoghi in alto si nasconde
     /* la didascalia copre il fondo della carta: l'inquadratura scende di metà della sua altezza, così la scena sta nella parte libera (al più 55 unità: il margine del riquadro è di 65 unità per lato nei passi, 85 altrove) */
-    var hs=svg.getBoundingClientRect().height, c=hs>0?Math.min(.45,(didascalia.offsetHeight+12)/hs):0; var sp=Math.min(55,c*f.a[3]/2), y0=Math.max(0,Math.min(G.h-f.a[3],f.a[1]+sp)), alto=c>0 && f.y1>y0+f.a[3]*(1-c)-30;      // anche così la scena finirebbe sotto la didascalia (la costa d'Africa), o ci starebbe a meno di 30 unità, che servono al nome sotto la freccia: la didascalia va in alto
+    var sotto=grandeSi&&window.innerWidth<=640?comandi.offsetHeight+8:0;      // in piedi, a tutto schermo, la didascalia in alto scende sotto i comandi (css/carta.css): la fascia coperta è più alta
+    var hs=svg.getBoundingClientRect().height, c=hs>0?Math.min(.45,(didascalia.offsetHeight+12+sotto)/hs):0; var sp=Math.min(55,c*f.a[3]/2), y0=Math.max(0,Math.min(G.h-f.a[3],f.a[1]+sp)), alto=c>0 && f.y1>y0+f.a[3]*(1-c)-30;      // anche così la scena finirebbe sotto la didascalia (la costa d'Africa), o ci starebbe a meno di 30 unità, che servono al nome sotto la freccia: la didascalia va in alto
     didascalia.classList.toggle('in-alto',alto); if(c>0) f.a=[f.a[0],alto?Math.max(0,Math.min(G.h-f.a[3],f.a[1]-sp)):y0,f.a[2],f.a[3]];
     var sn=scalaDi(f.a), tm=testoDi(f.a); if(Math.abs(sn-scalaScena)>.02 || Math.abs(tm-testoMin)>.02){ scalaScena=sn; testoMin=tm; if(annoVisto!=null) mostraPopoli(annoVisto); svg.getBoundingClientRect(); }      // ridisegnata col passo di prima: il nuovo poi si traccia
     if(f.i!=null){ segnalaPasso(f.i); svg.classList.add('in-passi'); passoOra=f.i; classiPassi(f.i); segnaPasso(f.i); coloraRegioni(statiPasso(f.i)); ricolorata=true; }
@@ -660,7 +661,7 @@ function mostraPopoli(anno){
   var visti={}, id, i;
   /* su uno schermo stretto la carta rimpicciolisce: cartellini e punti si ingrandiscono per restare leggibili */
   /* a tutto schermo restano della stessa misura sullo schermo anche quando si ingrandisce la carta */
-  var lw=svg.getBoundingClientRect().width, ppu=lw>0?lw/larghezzaVista():1, k=lw<=0?1:grandeSi?Math.max(.4,Math.min(1.8,Math.max(10,Math.min(14,Math.min(window.innerWidth,window.innerHeight)/40))/11.5/ppu)):Math.max(1,Math.min(1.8,.7/ppu));      // a tutto schermo: scritte di 10-14 pixel
+  var lw=svg.getBoundingClientRect().width, ppu=lw>0?lw/larghezzaVista():1, k=lw<=0?1:grandeSi?Math.max(.4,Math.min(1.8,Math.max(10,Math.min(14,Math.min(window.innerWidth,window.innerHeight)/40))/11.5/ppu)):Math.max(1,Math.min(2.2,(window.innerWidth<=700?.85:.7)/ppu));      // a tutto schermo: scritte di 10-14 pixel
   k=Math.round(k*20)/20;
   if(k!==ingr){ ingr=k; svg.style.setProperty('--pf',(11.5*k).toFixed(1)+'px'); for(id in popoli) popoli[id].punto.setAttribute('r',(4*k).toFixed(1)); }
   var pianta=piantaPer(k), sc=pianta?k/pianta.k:1;
@@ -804,7 +805,8 @@ svg.addEventListener('click',function(e){
 });
 /* Su Safari per iPhone, scorrendo, la barra degli indirizzi entra ed esce e la finestra cambia di continuo la sola altezza: in pagina le legende non dipendono
    dall'altezza, quindi non si rimisurano (prima ogni volta si rifacevano tutte, una per tappa, e la pagina poteva dare scatti mentre si legge). A tutto schermo sì. */
-var attesa=0, largPrima=window.innerWidth; window.addEventListener('resize',function(){ var w=window.innerWidth, soloAltezza=w===largPrima; largPrima=w; if(grandeSi && regia) fermaRegia(); adatta(); if(soloAltezza && !grandeSi) return; clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); segnaFuori(); },200); });
+/* riappare: sul telefono la carta torna visibile dopo essere stata nascosta dalla scheda «Roma»; va ridisegnata, perché da nascosta i cartellini si misurano su una larghezza zero (24 novembre 2026) */
+var attesa=0, largPrima=window.innerWidth, svgPrima=1; window.addEventListener('resize',function(){ var w=window.innerWidth, soloAltezza=w===largPrima, ls=svg.getBoundingClientRect().width, riappare=ls>0&&!svgPrima; largPrima=w; svgPrima=ls; if(grandeSi && regia) fermaRegia(); adatta(); if(soloAltezza && !grandeSi && !riappare) return; clearTimeout(attesa); attesa=setTimeout(function(){ spazioLegende(); if(ultimo&&ultimo[1]!=null) mostraPopoli(ultimo[1]); segnaFuori(); },200); });
 spazioLegende();
 
 /* A tutto schermo la carta riempie la finestra e si può ingrandire e trascinare (rotella, due dita, i bottoni + e −). La finestra sulla carta (viewBox) prende
