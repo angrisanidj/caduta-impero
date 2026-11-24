@@ -220,3 +220,4 @@ body.carta-in-regia .m-fuori{display:none}
 .legenda-luoghi span.fratello:hover{border-color:var(--gold2)}
 .legenda-luoghi span.fratello[aria-pressed="true"]{background:#F4E6C8;border-color:var(--gold2)}
 .legenda-luoghi span.fratello:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+#mappa svg.prova-scritte text{text-rendering:geometricPrecision}      /* solo con ?carta=scritte (js/mappa.js, PROVA): prova del 24 novembre 2026, spenta di norma */
