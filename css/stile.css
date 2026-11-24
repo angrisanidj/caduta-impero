@@ -799,3 +799,52 @@ body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visib
 .salta-giu{right:auto;left:50%;transform:translateX(-50%);white-space:nowrap}
 /* Telefoni stretti (360 punti, molti Android): l'occhiello «Infografica interattiva · 235-852» andava su due righe con «852» da solo; spaziatura un po' più stretta */
 @media (max-width:374px){ .apertura .occhiello{letter-spacing:.12em} }
+
+/* Intermezzi (24 novembre 2026, js/pagina.js): carta e città non cambiano. Su ciascuna scena un velo chiaro (sotto i comandi, che restano nitidi) e al centro un avviso
+   che porta al testo; con la × diventa una pastiglia in alto e il velo se ne va. Sulla carta l'avviso copre solo il disegno, non le legende sotto. */
+.ia-velo{position:absolute;inset:0;z-index:1;pointer-events:none;background:rgba(246,244,239,.5)}
+.ia-avviso{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:12px;pointer-events:none}
+.riquadro.impero>.ia-velo,.riquadro.impero>.ia-avviso{bottom:auto;aspect-ratio:1000/640}
+.ia-velo[hidden],.ia-avviso[hidden]{display:none}
+.ia-carta{position:relative;pointer-events:auto;max-width:min(340px,100%);background:rgba(255,255,255,.97);border:1px solid var(--line);border-top:3px solid var(--porpora);border-radius:6px 6px 12px 12px;
+  box-shadow:0 14px 32px -16px rgba(34,28,24,.55);animation:ia-entra .3s ease both}
+.ia-leggi{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;margin:0;padding:13px 36px 14px;font:inherit;text-align:center;color:var(--ink);background:none;border:0;border-radius:inherit;cursor:pointer}
+.ia-occhio{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--oro-t)}
+.ia-frase{font-family:var(--ui);font-size:14.5px;line-height:1.35;color:var(--ink)}
+.ia-vai{margin-top:5px;display:inline-flex;align-items:center;min-height:38px;padding:0 18px;border-radius:999px;font-family:var(--ui);font-size:14px;font-weight:600;color:#F6E4B0;background:var(--porpora)}
+.ia-leggi:hover .ia-vai{background:#621822;color:#fff}
+.ia-leggi:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ia-chiudi{position:absolute;top:3px;right:3px;width:34px;height:34px;padding:0;border:0;border-radius:50%;background:none;color:var(--muted);font:400 22px/1 var(--ui);cursor:pointer}
+.ia-chiudi:hover,.ia-chiudi:focus-visible{color:var(--porpora);background:rgba(122,31,43,.07)}
+/* ridotto: una pastiglia in alto al centro, «Intermezzo · La moneta  Leggi ↓» */
+.ia-avviso.piccolo{place-items:start center;padding-top:10px}
+.ia-avviso.piccolo .ia-carta{border-top-width:1px;border-left:3px solid var(--porpora);border-radius:4px 999px 999px 4px;animation:none}
+.ia-avviso.piccolo .ia-leggi{flex-direction:row;gap:10px;padding:4px 5px 4px 12px}
+.ia-avviso.piccolo .ia-frase,.ia-avviso.piccolo .ia-chiudi{display:none}
+.ia-avviso.piccolo .ia-vai{margin:0;min-height:32px;padding:0 13px;font-size:13px}
+/* a tutto schermo l'avviso sta sopra la finestra, non dentro la carta che scorre; e sopra la linea del tempo */
+body.impero-grande .riquadro.impero>.ia-velo,body.impero-grande .riquadro.impero>.ia-avviso{position:fixed;inset:0;aspect-ratio:auto}
+body.impero-grande .ia-avviso,body.roma-grande .ia-avviso{padding-bottom:calc(var(--tempo,92px) + 20px + env(safe-area-inset-bottom,0px))}
+body.impero-grande .ia-avviso.piccolo{padding-top:calc(68px + env(safe-area-inset-top,0px))}      /* sotto i comandi della carta, che a tutto schermo stanno in alto a destra */
+.riquadro.roma>.ia-avviso.piccolo{padding-top:74px}      /* nella città sta sotto il numero degli abitanti, che è in alto a sinistra, e sotto «Strumenti» */
+body.roma-grande .riquadro.roma>.ia-avviso.piccolo{padding-top:calc(78px + env(safe-area-inset-top,0px))}
+#tAtto{scroll-margin-top:14px}      /* «Leggi» porta al testo con un po' d'aria sopra */
+@keyframes ia-entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .ia-carta{animation:none} }
+@media (max-width:520px){ .ia-leggi{padding:11px 30px 12px} .ia-frase{font-size:14px} }
+@media (max-height:559px) and (orientation:landscape){ .ia-leggi{padding:9px 30px 10px;gap:3px} .ia-vai{min-height:34px}
+  body:not(.impero-grande):not(.roma-grande) .ia-avviso:not(.piccolo){place-items:start center;padding-top:62px} }      /* telefono coricato, scene nella pagina: la carta è più alta dello schermo e al centro l'avviso finiva sotto la linea del tempo incollata; sta in alto, sotto l'invito al tutto schermo */
+@media print{ .ia-velo,.ia-avviso{display:none} }
+/* linea del tempo: l'intermezzo è una tacca più bassa e tonda, non un rettangolo come le tappe; il fumetto aggiunge «si legge sotto» */
+.linea button.intermezzo{align-self:center;height:12px;border-radius:999px}
+.linea button.intermezzo[aria-current="true"]{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--porpora)}
+@media (max-height:559px) and (orientation:landscape){ .linea button.intermezzo,body.impero-grande .tempo .linea button.intermezzo,body.roma-grande .tempo .linea button.intermezzo{height:11px} }
+.fumetto i{font-style:normal;color:#E6D6C0}
+/* l'immagine del riquadro «Fra storia e leggenda» (js/pagina.js, figuraLeggenda): entra solo a immagine caricata */
+.lg-figura{margin:12px 0 2px}
+.lg-figura[hidden]{display:none}
+.lg-figura img{display:block;width:100%;height:auto;border-radius:6px;border:1px solid var(--line)}
+.lg-figura figcaption{margin-top:6px;font-family:var(--ui);font-size:12.5px;line-height:1.4;color:var(--muted)}
+.lg-credito{color:var(--muted);white-space:nowrap}
+/* il bottone fluttuante negli intermezzi: acceso (porpora) finché non si è scesi al testo */
+.salta-giu.acceso{background:var(--porpora);border-color:var(--gold2);color:#fff}

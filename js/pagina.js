@@ -137,7 +137,7 @@ var bottoni=[], gruppi=D.ATTI.map(function(a,k){
 });
 T.forEach(function(t,i){
   var b=document.createElement('button'); b.type='button'; if(t.intermezzo) b.className='intermezzo';
-  b.setAttribute('aria-label',(t.intermezzo?'Intermezzo: ':t.anno+' · ')+t.titolo);
+  b.setAttribute('aria-label',(t.intermezzo?'Intermezzo: ':t.anno+' · ')+t.titolo+(t.intermezzo?' (carta e città non cambiano, il testo è sotto)':''));
   b.addEventListener('click',function(){ ferma(); vai(i); });
   var g=gruppi[Math.min(t.atto,gruppi.length-1)]; g.riga.appendChild(b); g.n++; bottoni.push(b);
 });
@@ -152,6 +152,8 @@ function punta(x){
   if(k!==mira){
     if(mira>=0) bottoni[mira].classList.remove('mira'); mira=k; bottoni[k].classList.add('mira');
     var t=T[k], b=document.createElement('b'); b.textContent=t.intermezzo?'Intermezzo':t.anno; fumetto.textContent=''; fumetto.appendChild(b); fumetto.appendChild(document.createTextNode(t.titolo));
+    if(t.intermezzo){ var n=document.createElement('i'); n.textContent=' · si legge sotto'; fumetto.appendChild(n); }      // l'intermezzo non cambia carta e città: il fumetto lo dice prima del rilascio
+    fumetto.classList.toggle('intermezzo',!!t.intermezzo);
   }
   fumetto.hidden=false; var r=cassa.getBoundingClientRect(), m=fumetto.offsetWidth/2+4; fumetto.style.left=Math.max(m,Math.min(r.width-m,centri[k]-r.left))+'px';
 }
@@ -186,7 +188,7 @@ function vai(i,subito){
   $('tAtto').innerHTML=(t.intermezzo?'':'<b>'+t.anno+'</b>')+(t.intermezzo?'Intermezzo':t.epilogo?'Epilogo':'Atto '+a.n+' · '+a.nome)+'<button type="button" class="as-apri" aria-controls="attoScheda">L’atto in breve</button>';
   $('tTitolo').textContent=t.titolo; $('tTesto').textContent=t.testo;
   $('tStorici').hidden=!t.storici; $('tStoriciTesto').textContent=t.storici||'';
-  $('tLeggenda').hidden=!t.leggenda; $('tLeggendaTesto').textContent=t.leggenda||'';      // dove una leggenda nasce da questa tappa: che cosa dicono le fonti e che cosa viene dopo
+  $('tLeggenda').hidden=!t.leggenda; $('tLeggendaTesto').textContent=t.leggenda||''; figuraLeggenda(t);      // dove una leggenda nasce da questa tappa: che cosa dicono le fonti e che cosa viene dopo
   var chi=t.protagonisti||[], bc=$('tChiElenco'); $('tChi').hidden=!chi.length; bc.textContent='';      // chi c'è in questa tappa: [nome, date, una riga]
   if(window.RM_protagonisti) RM_protagonisti.elenco(bc,chi,t.anno);      // con i ritratti (js/protagonisti.js); senza, l'elenco di solo testo qui sotto
   else chi.forEach(function(p){ var li=document.createElement('li'), b=document.createElement('b'); b.textContent=p[0]; li.appendChild(b); var d=document.createElement('span'); d.className='date'; d.textContent=p[1]||''; li.appendChild(d);      /* anche senza date: lo span porta lo stacco e il punto fra nome e riga (prima «Cniva» restava attaccato al testo) */ li.appendChild(document.createTextNode(p[2])); bc.appendChild(li); });
@@ -319,8 +321,10 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
     if(B.contains('tempo-attesa')){ b.hidden=true; return; }      // in cima alla pagina, prima di scorrere, non c'è (come la linea del tempo)
     var ca=$('cause'), pi=document.querySelector('.piede'); if((ca&&ca.getBoundingClientRect().top<H-60) || (pi&&pi.getBoundingClientRect().top<H)){ b.hidden=true; return; }      // su «Perché cadde» e sul piede copriva le righe (proposta dell'audit del design, fatta il 23 novembre 2026)
     var r=tit.getBoundingClientRect(), s=sc.getBoundingClientRect(), dove=r.top>H*.85 && s.bottom>0 ? 'giu' : s.bottom<0 && r.top<H*.6 ? 'su' : '';
+    if(dove==='giu' && T[idx].intermezzo && [].some.call(document.querySelectorAll('.ia-avviso:not([hidden]):not(.piccolo) .ia-carta'),function(c){ var q=c.getBoundingClientRect(); return q.width>0 && q.top>=0 && q.bottom<=H; })) dove='';      // l'avviso dell'intermezzo si vede tutto: dice già «Leggi l'intermezzo», due bottoni uguali uno sotto l'altro confondevano
     b.hidden=!dove; if(!dove) return;
-    if(b.dataset.dove!==dove){ b.dataset.dove=dove; b.textContent=dove==='giu'?'Leggi la tappa ↓':'↑ Torna alla carta e alla città'; }
+    var inter=!!T[idx].intermezzo, chiave=dove+(inter?'-i':'');      // negli intermezzi (24 novembre 2026) dice «Leggi l'intermezzo» e resta acceso finché non si è scesi: carta e città lì non cambiano
+    if(b.dataset.chiave!==chiave){ b.dataset.chiave=chiave; b.dataset.dove=dove; b.textContent=dove==='giu'?(inter?'Leggi l’intermezzo ↓':'Leggi la tappa ↓'):'↑ Torna alla carta e alla città'; b.classList.toggle('acceso',inter&&dove==='giu'); }
     var t=tp?tp.getBoundingClientRect():null; b.style.bottom=Math.max(14,t&&t.top<H&&t.bottom>H-70?H-t.top+10:14)+'px';      // H-70 e non H-4: la linea incollata sta a 8 punti dal fondo (bottom:8px), e con H-4 il bottone finiva sopra le tacche degli ultimi atti; 70 = bottone 40 + 14 di margine + aria, così sale anche quando la linea, al suo posto nella pagina, passa nella sua fascia
   }
   function presto(){ if(!raf) raf=requestAnimationFrame(function(){ raf=0; aggiorna(); }); }
@@ -328,6 +332,51 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
   ascolto.push(function(){ setTimeout(function(){ aggiorna(); if(b.hidden||b.dataset.dove!=='giu') return; b.classList.remove('pulsa'); void b.offsetWidth; b.classList.add('pulsa'); },250); });      // tappa nuova: «Leggi la tappa» pulsa, per dire che il racconto è sotto
   b.addEventListener('click',function(){ var ridotto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
     (b.dataset.dove==='giu'?tit:sc).scrollIntoView({behavior:ridotto?'auto':'smooth',block:'start'}); });
+})();
+/* Intermezzi (24 novembre 2026, l'utente: «fare in modo che quando ci si muove su una voce di intermezzo sia ben chiaro che bisogna leggere sotto perché le mappe sopra non cambiano»).
+   Un intermezzo non ha un anno suo: carta e città restano com'erano. Per tutta la sua durata ciascuna delle due scene ha un velo chiaro e, al centro, un avviso
+   («Intermezzo · La moneta. La carta e la città restano al 284…») che al tocco porta al testo; a tutto schermo, dove il testo non si vede, prima chiude lo schermo intero.
+   La × riduce l'avviso a una pastiglia in alto e toglie il velo, per guardare la scena; alla tappa seguente si rimette. Sul telefono, scegliendo un intermezzo, la pagina
+   scende da sola al testo (non durante «Riproduci» né a tutto schermo); sul PC no, per scelta: un salto non chiesto dà fastidio, basta l'avviso. Stili in fondo a css/stile.css. */
+(function(){
+  var tit=$('tAtto'), rq=[document.querySelector('.riquadro.impero'),document.querySelector('.riquadro.roma')].filter(Boolean), avvisi=[], piccolo=false, ultima=idx, scritto='';
+  if(!tit||!rq.length) return;
+  function ridotto(){ return !!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches); }
+  function al(a){ return (/^(8|11)/.test(String(a))?'all’':'al ')+a; }      // «al 284», «all'852»
+  var voce=document.createElement('p'); voce.className='sr'; voce.setAttribute('aria-live','polite'); document.body.appendChild(voce);      // per i lettori di schermo, una frase sola
+  function aTesto(){
+    var B=document.body.classList; if(B.contains('roma-grande')) grande(false); if(B.contains('impero-grande') && MAPPA && MAPPA.grande) MAPPA.grande(false);
+    setTimeout(function(){ tit.scrollIntoView({behavior:ridotto()?'auto':'smooth',block:'start'}); try{ tit.setAttribute('tabindex','-1'); tit.focus({preventScroll:true}); }catch(e){} },60);      // anche il fuoco va al testo, per chi usa la tastiera
+  }
+  rq.forEach(function(r){
+    var v=document.createElement('div'), box=document.createElement('div'), carta=document.createElement('div'), leggi=document.createElement('button'), chiudi=document.createElement('button');
+    v.className='ia-velo'; v.setAttribute('aria-hidden','true'); v.hidden=true; box.className='ia-avviso'; box.hidden=true; carta.className='ia-carta';
+    leggi.type='button'; leggi.className='ia-leggi'; leggi.innerHTML='<span class="ia-occhio"></span><span class="ia-frase"></span><span class="ia-vai"></span>';
+    chiudi.type='button'; chiudi.className='ia-chiudi'; chiudi.setAttribute('aria-label','Riduci l’avviso e guarda la scena'); chiudi.title='Riduci'; chiudi.textContent='×';
+    carta.appendChild(leggi); carta.appendChild(chiudi); box.appendChild(carta); r.appendChild(v); r.appendChild(box);
+    leggi.addEventListener('click',aTesto); chiudi.addEventListener('click',function(){ piccolo=true; scrivi(); leggi.focus(); });
+    avvisi.push({v:v,box:box,occhio:leggi.children[0],frase:leggi.children[1],vai:leggi.children[2]});
+  });
+  function scrivi(){
+    var t=T[idx], si=!!t.intermezzo, B=document.body.classList, tutto=B.contains('roma-grande')||B.contains('impero-grande'), k=si?idx+'|'+piccolo+'|'+tutto:'';
+    if(k===scritto) return; scritto=k; B.toggle('in-intermezzo',si);
+    avvisi.forEach(function(a){
+      a.box.hidden=!si; a.v.hidden=!si||piccolo; a.box.classList.toggle('piccolo',piccolo); if(!si) return;
+      a.occhio.textContent='Intermezzo · '+t.titolo;
+      a.frase.textContent='La carta e la città restano '+al(t.anno)+'. L’intermezzo si legge sotto.';
+      a.vai.textContent=tutto?'Esci e leggi ↓':piccolo?'Leggi ↓':'Leggi l’intermezzo ↓';
+    });
+    window.dispatchEvent(new Event('scroll-tempo'));      // il bottone fluttuante si rimisura (si nasconde mentre l'avviso intero è sullo schermo)
+  }
+  ascolto.push(function(i,t){
+    var nuova=i!==ultima; ultima=i; if(nuova) piccolo=false; scrivi(); if(!nuova) return;
+    voce.textContent=t.intermezzo?'Intermezzo: '+t.titolo+'. La carta e la città restano '+al(t.anno)+'; il testo è sotto.':'';
+    var B=document.body.classList;
+    if(t.intermezzo && !coda && !B.contains('roma-grande') && !B.contains('impero-grande') && window.matchMedia && matchMedia('(max-width:1000px)').matches)
+      setTimeout(function(){ var y=tit.getBoundingClientRect().top; if(y>window.innerHeight*.35 || y<0) tit.scrollIntoView({behavior:ridotto()?'auto':'smooth',block:'start'}); },320);      // dopo tornaImpero e il ridisegno della carta
+  });
+  if(window.MutationObserver) new MutationObserver(scrivi).observe(document.body,{attributes:true,attributeFilter:['class']});      // aperto o chiuso lo schermo intero: cambia la scritta del bottone
+  scrivi();
 })();
 window.RM_pagina={vai:vai, ferma:ferma, spie:SPIE, quando:function(f){ ascolto.push(f); }, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
 })();
@@ -362,6 +411,19 @@ function daLeggere(t){
     b.addEventListener('click',function(){ var r=$(x.id); if(!r) return; var basso=matchMedia('(prefers-reduced-motion: reduce)').matches; r.scrollIntoView({behavior:basso?'auto':'smooth',block:'center'});
       r.classList.remove('risalta'); void r.offsetWidth; r.classList.add('risalta'); });
   });
+}
+
+/* Un'immagine nel riquadro «Fra storia e leggenda» (24 novembre 2026, pronta per il rilievo delle spoglie dell'arco di Tito nella tappa del 534). Campo della tappa in js/dati.js:
+   leggendaImmagine:{src, w, h, alt, did, autore, licenza, pagina}. La figura entra in pagina solo quando l'immagine si è caricata: senza il campo, o se il file manca, non resta nessun buco. */
+function figuraLeggenda(t){
+  var box=document.getElementById('tLeggenda'), f=t.leggendaImmagine; if(!box) return;
+  var vecchia=box.querySelector('.lg-figura'); if(vecchia) box.removeChild(vecchia); if(!f||!f.src) return;
+  var fig=document.createElement('figure'), img=new Image(), cap=document.createElement('figcaption');
+  fig.className='lg-figura'; fig.hidden=true; img.alt=f.alt||''; img.decoding='async'; if(f.w&&f.h){ img.width=f.w; img.height=f.h; }
+  cap.textContent=(f.did?f.did+' ':'');
+  if(f.autore||f.licenza){ var cr=document.createElement(f.pagina?'a':'span'); if(f.pagina){ cr.href=f.pagina; cr.target='_blank'; cr.rel='noopener'; } cr.className='lg-credito'; cr.textContent='Foto: '+[f.autore,f.licenza].filter(Boolean).join(', '); cap.appendChild(cr); }
+  img.onload=function(){ fig.hidden=false; }; img.onerror=function(){ if(fig.parentNode) fig.parentNode.removeChild(fig); };
+  fig.appendChild(img); fig.appendChild(cap); box.appendChild(fig); img.src=f.src;
 }
 
 /* «A Roma, in quest'anno» (23 novembre 2026): sul telefono la città non si apre da sola, e chi legge non sa che c'è qualcosa da vedere. Sotto il testo della tappa, se nell'anno
