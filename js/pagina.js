@@ -309,29 +309,28 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
     var q=RM.h(x,z)+1; RM.controlli.target.set(x,q,z); RM.camera.position.set(x+dir[0]*d*.82,q+d*.56,z+dir[1]*d*.82); RM.controlli.update(); },400);
 })();
 [].forEach.call(document.querySelectorAll('.menu a'),function(a){ a.addEventListener('click',function(e){ var el=document.getElementById(a.getAttribute('href').slice(1)); if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth',block:'start'}); } }); });
-/* Telefono (richiesta dell'utente, 23 novembre 2026): un bottone che porta dalla scena al racconto della tappa e ritorno.
-   Finché si guarda la scena e il titolo della tappa sta sotto lo schermo dice «Leggi la tappa»; quando la scena è uscita di sopra dice «Carta e città».
-   Sta sopra la linea del tempo quando questa è incollata in fondo. Sul PC e a tutto schermo non c'è. */
+/* Un bottone che porta dalla scena al racconto della tappa e ritorno (richiesta dell'utente, 23 novembre 2026; dallo stesso giorno anche sul PC; a tutto schermo no).
+   24 novembre 2026, l'utente dall'iPhone: il bottone «traballava» e copriva la legenda, il titolo e «L'atto in breve». Causa: stava fisso sulla finestra e la sua quota
+   si ricalcolava a ogni scorrimento dalla posizione della linea del tempo (sopra di lei quando era incollata, a 14 punti dal fondo quando si staccava, su e giù attorno alla soglia),
+   mentre l'invito dell'atto spostava il contenuto. Ora «Leggi la tappa ↓» è un comando della linea del tempo, accanto a ‹ ▶ ›: si muove con lei, non copre nulla e non fa calcoli.
+   Resta fluttuante solo «↑ Torna alla carta e alla città», quando la scena è uscita di sopra (lì la linea del tempo non c'è più): sempre alla stessa quota, acceso e spento
+   da un IntersectionObserver, non a ogni scorrimento; sparisce su «Perché cadde» e sul piede. Stili in fondo a css/stile.css (.leggi-tappa, .salta-giu). */
 (function(){
-  var b=document.createElement('button'), tit=$('tAtto')||$('tTitolo'), sc=$('scene'), tp=document.querySelector('.tempo'), raf=0; if(!tit||!sc) return;
-  b.type='button'; b.className='salta-giu'; b.hidden=true; document.body.appendChild(b);
-  function aggiorna(){
-    var B=document.body.classList, H=window.innerHeight;
-    if(B.contains('roma-grande') || B.contains('impero-grande')){ b.hidden=true; return; }      // dal 23 novembre 2026 anche sul PC (prima solo fino a 1000 punti)
-    if(B.contains('tempo-attesa')){ b.hidden=true; return; }      // in cima alla pagina, prima di scorrere, non c'è (come la linea del tempo)
-    var ca=$('cause'), pi=document.querySelector('.piede'); if((ca&&ca.getBoundingClientRect().top<H-60) || (pi&&pi.getBoundingClientRect().top<H)){ b.hidden=true; return; }      // su «Perché cadde» e sul piede copriva le righe (proposta dell'audit del design, fatta il 23 novembre 2026)
-    var r=tit.getBoundingClientRect(), s=sc.getBoundingClientRect(), dove=r.top>H*.85 && s.bottom>0 ? 'giu' : s.bottom<0 && r.top<H*.6 ? 'su' : '';
-    if(dove==='giu' && T[idx].intermezzo && [].some.call(document.querySelectorAll('.ia-avviso:not([hidden]):not(.piccolo) .ia-carta'),function(c){ var q=c.getBoundingClientRect(); return q.width>0 && q.top>=0 && q.bottom<=H; })) dove='';      // l'avviso dell'intermezzo si vede tutto: dice già «Leggi l'intermezzo», due bottoni uguali uno sotto l'altro confondevano
-    b.hidden=!dove; if(!dove) return;
-    var inter=!!T[idx].intermezzo, chiave=dove+(inter?'-i':'');      // negli intermezzi (24 novembre 2026) dice «Leggi l'intermezzo» e resta acceso finché non si è scesi: carta e città lì non cambiano
-    if(b.dataset.chiave!==chiave){ b.dataset.chiave=chiave; b.dataset.dove=dove; b.textContent=dove==='giu'?(inter?'Leggi l’intermezzo ↓':'Leggi la tappa ↓'):'↑ Torna alla carta e alla città'; b.classList.toggle('acceso',inter&&dove==='giu'); }
-    var t=tp?tp.getBoundingClientRect():null; b.style.bottom=Math.max(14,t&&t.top<H&&t.bottom>H-70?H-t.top+10:14)+'px';      // H-70 e non H-4: la linea incollata sta a 8 punti dal fondo (bottom:8px), e con H-4 il bottone finiva sopra le tacche degli ultimi atti; 70 = bottone 40 + 14 di margine + aria, così sale anche quando la linea, al suo posto nella pagina, passa nella sua fascia
-  }
-  function presto(){ if(!raf) raf=requestAnimationFrame(function(){ raf=0; aggiorna(); }); }
-  window.addEventListener('scroll',presto,{passive:true}); window.addEventListener('resize',presto); window.addEventListener('scroll-tempo',presto); ascolto.push(presto); aggiorna();
-  ascolto.push(function(){ setTimeout(function(){ aggiorna(); if(b.hidden||b.dataset.dove!=='giu') return; b.classList.remove('pulsa'); void b.offsetWidth; b.classList.add('pulsa'); },250); });      // tappa nuova: «Leggi la tappa» pulsa, per dire che il racconto è sotto
-  b.addEventListener('click',function(){ var ridotto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-    (b.dataset.dove==='giu'?tit:sc).scrollIntoView({behavior:ridotto?'auto':'smooth',block:'start'}); });
+  var tit=$('tAtto')||$('tTitolo'), co=document.querySelector('.tempo .comandi'); if(!tit||!co) return;
+  var l=document.createElement('button'); l.type='button'; l.className='leggi-tappa'; l.innerHTML='<span class="lt-lungo">Leggi la tappa</span><span class="lt-corto">Leggi</span> ↓'; co.appendChild(l);
+  function scrivi(){ var inter=!!T[idx].intermezzo; l.querySelector('.lt-lungo').textContent=inter?'Leggi l’intermezzo':'Leggi la tappa'; l.classList.toggle('acceso',inter); l.setAttribute('aria-label',inter?'Leggi l’intermezzo, sotto la linea del tempo':'Leggi il testo della tappa, sotto la linea del tempo'); }
+  l.addEventListener('click',function(){ var ridotto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches; tit.scrollIntoView({behavior:ridotto?'auto':'smooth',block:'start'}); });
+  ascolto.push(function(){ scrivi(); setTimeout(function(){ l.classList.remove('pulsa'); void l.offsetWidth; l.classList.add('pulsa'); },250); });      // tappa nuova: pulsa due volte, per dire che il racconto è sotto
+  scrivi();
+})();
+(function(){
+  var b=document.createElement('button'), sc=$('scene'), ca=$('cause'), pi=document.querySelector('.piede'), sopra=false, fine={}; if(!sc||!window.IntersectionObserver) return;
+  b.type='button'; b.className='salta-giu'; b.hidden=true; b.textContent='↑ Torna alla carta e alla città'; document.body.appendChild(b);
+  function metti(){ b.hidden=!(sopra && !fine.cause && !fine.piede); }
+  new IntersectionObserver(function(v){ var e=v[v.length-1]; sopra=!e.isIntersecting && e.boundingClientRect.bottom<=0; metti(); }).observe(sc);      // la scena è uscita di sopra
+  if(ca) new IntersectionObserver(function(v){ fine.cause=v[v.length-1].isIntersecting; metti(); },{rootMargin:'0px 0px -60px 0px'}).observe(ca);
+  if(pi) new IntersectionObserver(function(v){ fine.piede=v[v.length-1].isIntersecting; metti(); }).observe(pi);
+  b.addEventListener('click',function(){ var ridotto=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches; sc.scrollIntoView({behavior:ridotto?'auto':'smooth',block:'start'}); });
 })();
 /* Intermezzi (24 novembre 2026, l'utente: «fare in modo che quando ci si muove su una voce di intermezzo sia ben chiaro che bisogna leggere sotto perché le mappe sopra non cambiano»).
    Un intermezzo non ha un anno suo: carta e città restano com'erano. Per tutta la sua durata ciascuna delle due scene ha un velo chiaro e, al centro, un avviso
@@ -366,7 +365,6 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
       a.frase.textContent='La carta e la città restano '+al(t.anno)+'. L’intermezzo si legge sotto.';
       a.vai.textContent=tutto?'Esci e leggi ↓':piccolo?'Leggi ↓':'Leggi l’intermezzo ↓';
     });
-    window.dispatchEvent(new Event('scroll-tempo'));      // il bottone fluttuante si rimisura (si nasconde mentre l'avviso intero è sullo schermo)
   }
   ascolto.push(function(i,t){
     var nuova=i!==ultima; ultima=i; if(nuova) piccolo=false; scrivi(); if(!nuova) return;
