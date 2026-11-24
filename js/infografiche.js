@@ -3941,7 +3941,7 @@ var CIELO={ titolo:"Il cielo, il fiume, la malattia", sotto:"Epidemie, piene del
     ["847","La scossa è avvertita con forza in città, ma il Liber Pontificalis non descrive danni. Il crollo del lato sud del Colosseo, già smontato in gran parte, gli viene attribuito: è un'ipotesi."]],
   copertina:function(cop){ var sv=document.createElementNS(NS,'svg'); sv.setAttribute('viewBox','0 0 220 52'); sv.setAttribute('class','ig-ci-cop'); sv.setAttribute('aria-hidden','true');
     ['cielo','fiume','terra','malattia'].forEach(function(f,j){ var g=el('g',{transform:'translate('+(26+j*56)+',26)'},sv); el('circle',{r:21,'class':'ig-ci-ev-c '+f},g); glifo(g,f,13,true); }); cop.insertBefore(sv,cop.firstChild); },      // la copertina: i quattro segni
-  fonte:"Tappe del 251, 537, 542, 589 e 801 di questa pagina, con le loro voci (Cipriano, Cassiodoro, Procopio, Gregorio di Tours, Annali del regno dei Franchi) e il riquadro «Fra storia e leggenda» del 589; scheda del Colosseo; didascalie della città per il 536, il 589 e il 791. Il peso delle epidemie è discusso, e qui non si danno numeri di morti. Schema: i disegni del 251, del 536 e del 542 (il profilo della città, il sole, le figure); i sette cortei del 590, che la pagina non nomina, partono da punti indicativi e la meta è segnata su Santa Maria Maggiore; il fronte della piena che scende da monte è una resa, come nella città in 3D; l'estensione delle piene è quella indicativa del modello della città (le zone più basse e vicine al fiume, non una ricostruzione idraulica) ed è la stessa per tutte le piene; le posizioni dei segni sono indicative; la curva chiara è la stima degli abitanti di Roma di questa pagina, con la sua fascia di incertezza, e non dice che cosa li fece calare." };
+  fonte:"Tappe del 251, 537, 542, 589 e 801 di questa pagina, con le loro voci (Cipriano, Cassiodoro, Procopio, Gregorio di Tours, Annali del regno dei Franchi) e il riquadro «Fra storia e leggenda» del 589; scheda del Colosseo; didascalie della città per il 536, il 589 e il 791. Il peso delle epidemie è discusso, e qui non si danno numeri di morti. Schema: i disegni del 251 e del 542 (il segno della malattia); il mezzogiorno del 536, cioè il profilo di Roma (solo edifici in piedi allora: Pantheon, colonna di Traiano, Colosseo, case), le figure, il posto del sole e il «prima», un mezzogiorno qualunque; Cassiodoro scrive dell'Italia, non solo di Roma, e le fonti descrivono il sole, non una causa; i sette cortei del 590, che la pagina non nomina, partono da punti indicativi e la meta è segnata su Santa Maria Maggiore; il fronte della piena che scende da monte è una resa, come nella città in 3D; l'estensione delle piene è quella indicativa del modello della città (le zone più basse e vicine al fiume, non una ricostruzione idraulica) ed è la stessa per tutte le piene; le posizioni dei segni sono indicative; la curva chiara è la stima degli abitanti di Roma di questa pagina, con la sua fascia di incertezza, e non dice che cosa li fece calare." };
 function disegnaCielo(svg,S,W,H){
   var TP=window.RM_TOPO, C=(D.CURVE||{}).popolazione; if(!TP||!TP.mura||!TP.fiume||!C) return;
   var oriz=W/H>=1.15, piccolo=oriz&&W<700, pad=oriz?14:8, defs=el('defs',null,svg), fasi=CIELO.fasi, i, RMx=window.RM;
@@ -3991,60 +3991,87 @@ function disegnaCielo(svg,S,W,H){
   /* ---------- i disegni dei quadri senza un luogo a Roma (schemi, dalle parole già in pagina) ---------- */
   var gD=el('g',{'class':'ig-ci-disegni'},dentro), DIS={};
   function pannello(cl){ var g=el('g',{'class':'ig-ci-dis '+cl},gD); el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),'class':'ig-ci-dis-fondo '+cl},g); return g; }
-  function parole(g,q,chi,y0){ var w=pb[2]-56, fs=clamp(pb[2]/16,17,30), t=el('text',{x:r1(pb[0]+28),y:r1(y0),'class':'ig-ci-dis-q'},g); t.style.fontSize=fs+'px'; var n=avvolgi(t,q,w,fs*1.22);
-    tx(g,pb[0]+28,y0+(n-1)*fs*1.22+fs*.9+6,'ig-ci-dis-chi',chi); return n*fs*1.22; }
-  /* 251 e 542: le parole della fonte, in grande, sul segno della malattia sbiadito */
+  /* il blocco si misura (24 novembre 2026, l'utente sull'iPhone: «occhio al quasi overflow»): il segno piccolo in cima, non dietro le parole; righe a capo al 92% della larghezza
+     (sull'iPhone le scritte risultano più larghe che in Edge); margine vero sopra e sotto la fonte; se non ci sta, il carattere scende. Le righe si contano sul dispositivo */
+  function parole(g,q,chi){ var mx=clamp(pb[2]*.07,16,28), my=clamp(pb[3]*.08,16,30), w=(pb[2]-2*mx)*.92, x=pb[0]+mx, fs=clamp(pb[2]/16,15,30), b=null;
+    for(;;){ if(b) b.remove(); b=el('g',null,g);
+      var sg=Math.round(clamp(fs*.8,12,20)), lh=fs*1.22, cg=el('g',{'class':'ig-ci-dis-segno'},b); glifo(cg,'malattia',sg*.7);
+      var t=el('text',{x:r1(x),y:0,'class':'ig-ci-dis-q'},b); t.style.fontSize=fs+'px'; var n=avvolgi(t,q,w,lh);
+      var c=el('text',{x:r1(x),y:0,'class':'ig-ci-dis-chi'},b), nc=avvolgi(c,chi,w,15);
+      var yT=sg*1.5+10+fs*.82, yC=yT+(n-1)*lh+fs*.3+16, alto=yC+(nc-1)*15+5;      // dal segno in cima alle discendenti dell'ultima riga della fonte
+      if(alto<=pb[3]-2*my||fs<=12){ var y0=pb[1]+Math.max(my,(pb[3]-alto)/2); cg.setAttribute('transform','translate('+r1(x+sg*.7)+','+r1(y0+sg*.75)+')'); t.setAttribute('y',r1(y0+yT)); c.setAttribute('y',r1(y0+yC)); return; }
+      fs-=1; } }
+  /* 251 e 542: le parole della fonte, in grande, col segno della malattia sopra */
   [[0,"«Che ora il ventre, sciolto in un flusso, svuoti le forze del corpo […]: tutto questo giova a dare prova della fede.»","Cipriano, La mortalità, 14 · Cartagine, verso il 252"],
    [4,"«In quel tempo non era facile vedere qualcuno per le strade di Bisanzio: chi aveva la fortuna di essere sano stava in casa, a curare i malati o a piangere i morti.»","Procopio, Guerre II, 23 · Costantinopoli, 542"]].forEach(function(q){
-    var g=pannello('malattia'), cg=el('g',{transform:'translate('+r1(pb[0]+pb[2]*.78)+','+r1(pb[1]+pb[3]*.3)+')','class':'ig-ci-dis-segno'},g); glifo(cg,'malattia',Math.min(pb[2],pb[3])*.16);
-    parole(g,q[1],q[2],pb[1]+pb[3]*(oriz?.42:.34)); DIS[q[0]]=g; });
-  /* 536: il cielo sopra un profilo di città, il sole pallido, le figure senza ombra a mezzogiorno (Cassiodoro) */
-  (function(){ var g=pannello('cielo'), x0=pb[0], y0=pb[1], w=pb[2], hh=pb[3], oz=y0+hh*.74;
-    grad(defs,'ig-ci-cielo536',[[0,'#B9BFC2'],[.7,'#D6D3C8'],[1,'#E2DCCB']]); el('rect',{x:r1(x0),y:r1(y0),width:r1(w),height:r1(hh),fill:'url(#ig-ci-cielo536)'},g);
-    var sx=x0+w*.62, sy=y0+hh*.22, sr=Math.min(w,hh)*.085; el('circle',{cx:r1(sx),cy:r1(sy),r:r1(sr*2.6),'class':'ig-ci-536-alone'},g); el('circle',{cx:r1(sx),cy:r1(sy),r:r1(sr),'class':'ig-ci-536-sole'},g);
-    for(i=0;i<5;i++) el('rect',{x:r1(x0),y:r1(sy-sr*1.6+i*sr*.8),width:r1(w),height:r1(sr*.45),'class':'ig-ci-536-velo'},g);
-    var R=caso(536), d='M'+r1(x0)+' '+r1(oz); for(var x=x0;x<=x0+w;x+=w/26){ var hgt=hh*(.05+R()*.09); d+=' V'+r1(oz-hgt)+' H'+r1(Math.min(x0+w,x+w/26)); } d+=' V'+r1(oz)+' Z';
-    el('path',{d:d,'class':'ig-ci-536-citta'},g); var cx=x0+w*.3, cr=hh*.08; el('path',{d:'M'+r1(cx-cr)+' '+r1(oz-hh*.1)+' A'+r1(cr)+' '+r1(cr*.8)+' 0 0 1 '+r1(cx+cr)+' '+r1(oz-hh*.1)+' Z','class':'ig-ci-536-citta'},g);
-    el('rect',{x:r1(x0),y:r1(oz),width:r1(w),height:r1(y0+hh-oz),'class':'ig-ci-536-suolo'},g);
-    [.2,.42,.6,.8].forEach(function(f,j){ var gg=el('g',{transform:'translate('+r1(x0+w*f)+','+r1(oz+(y0+hh-oz)*.55)+')'},g); omino(gg,hh*.12,'ig-ci-536-om'); });
-    var t=tx(g,x0+w/2,oz+(y0+hh-oz)*.88,'ig-ci-536-t','a mezzogiorno, i corpi senza ombra','middle'); if(largo(t)>w-20) t.textContent='i corpi senza ombra';
+    var g=pannello('malattia'); parole(g,q[1],q[2]); DIS[q[0]]=g; });
+  /* 536: lo stesso mezzogiorno su Roma, prima limpido e poi velato (scena536, più sotto); le parole delle fonti compaiono quando il velo è sceso, in un biglietto
+     in alto a sinistra che si misura e non scende mai sugli edifici (24 novembre 2026, l'utente: «migliora anche la parte con il cielo oscurato») */
+  var Q536=null;
+  (function(){ var g=pannello('cielo'), sc=scena536(g,defs,pb,'m',true), x0=pb[0], y0=pb[1], w=pb[2], hh=pb[3], bx=x0+10, by=y0+10, wMax=sc.alto?w-20:Math.min(w*.56,sc.sole[0]-sc.sole[2]*2.6-bx-8);      // nei riquadri alti il biglietto prende tutta la larghezza e il sole sta più in basso
+    function limite(xa,xb){ var m=y0+hh; sc.alti.forEach(function(a){ if(a[0]<xb+4&&a[1]>xa-4) m=Math.min(m,a[2]); }); return m-10; }
+    function biglietto(testo,chi,corsivo){ var gg=el('g',{'class':'ig-c5-bg'},g), fs=clamp(w/22,13,20), pd=clamp(w/40,7,12), lim=limite(bx,bx+wMax);
+      for(;;){ gg.textContent=''; var f=el('rect',{x:r1(bx),y:r1(by),rx:10,'class':'ig-c5-bg-f'},gg), bar=el('rect',{x:r1(bx+pd),y:r1(by+pd),width:2.5,rx:1.2,'class':'ig-c5-bar'},gg);
+        var x1=bx+pd+9, wt=(wMax-pd*2-9)*.92, lh=fs*1.2, y1=by+pd+fs*.82, t=el('text',{x:r1(x1),y:r1(y1),'class':corsivo?'ig-c5-q':'ig-c5-n'},gg); t.style.fontSize=fs+'px';
+        var n=avvolgi(t,testo,wt,lh), yc=y1+(n-1)*lh+fs*.28+15, c=chi?el('text',{x:r1(x1),y:r1(yc),'class':'ig-c5-chi'},gg):null, nc=c?avvolgi(c,chi,wt,13):0;
+        var alto=(c?yc+(nc-1)*13+3:y1+(n-1)*lh+fs*.28)+pd-by, lw=0; [].forEach.call(gg.querySelectorAll('tspan'),function(s){ lw=Math.max(lw,largo(s)); });
+        if(by+alto<=lim||fs<=12){ f.setAttribute('width',r1(Math.min(wMax,lw*1.08+pd*2+9))); f.setAttribute('height',r1(alto)); bar.setAttribute('height',r1(alto-pd*2)); return gg; }      // largo quanto le righe, con il margine dell'iPhone
+        fs-=1; } }
+    /* «schema» nell'angolo in basso dove non c'è nessuna figura (a destra se si può); se non c'è un angolo libero, in alto a destra */
+    var lib=function(xa,xb){ return !sc.gente.some(function(fx){ return fx>xa-9*sc.u&&fx<xb+9*sc.u; }); }, sT;
+    if(lib(x0+w-62,x0+w)) sT=tx(g,x0+w-10,y0+hh-8,'ig-c5-schema','schema','end'); else if(lib(x0,x0+62)) sT=tx(g,x0+10,y0+hh-8,'ig-c5-schema','schema'); else sT=tx(g,x0+w-10,y0+16,'ig-c5-schema','schema','end');
+    Q536={sc:sc, b:[biglietto("Prima: un mezzogiorno qualunque, sole pieno e ombre nette",null,false),
+      biglietto("Procopio paragona la luce del sole a quella della luna","Procopio, Guerre IV, 14",false),
+      biglietto("«Tutti vediamo ancora il sole come azzurrognolo»","Cassiodoro, Variae XII, 25",true),
+      biglietto("«Ci stupiamo che a mezzogiorno i corpi non facciano ombra»","Cassiodoro, Variae XII, 25",true)]};
     DIS[3]=g; })();
+  /* la versione ferma: il «dopo», con un riquadro piccolo del «prima», e le parole delle fonti sotto */
+  S.fermo=function(lato){ var d=h('div','ig-c5-fermo'), sv=el('svg',{viewBox:'0 0 330 200',role:'img','aria-label':'Il mezzogiorno del 536 a Roma, col sole velato e senza ombre; nel riquadro, un mezzogiorno qualunque. Schema.'},d), df=el('defs',null,sv);
+    var c1=el('clipPath',{id:'ig-c5-fc'},df); el('rect',{width:330,height:200,rx:12},c1); var c2=el('clipPath',{id:'ig-c5-fi'},df); el('rect',{x:10,y:10,width:118,height:72,rx:7},c2);
+    scena536(el('g',{'clip-path':'url(#ig-c5-fc)'},sv),df,[0,0,330,200],'f').metti(1,0,1); scena536(el('g',{'clip-path':'url(#ig-c5-fi)'},sv),df,[10,10,118,72],'fp').metti(0,0,0);
+    el('rect',{x:10,y:10,width:118,height:72,rx:7,'class':'ig-c5-riq'},sv); tx(sv,12,98,'ig-c5-schema','prima · schema');
+    h('p','ig-c5-did',"536: lo stesso mezzogiorno col sole velato, senza ombre. Nel riquadro, un mezzogiorno qualunque. Il profilo di Roma, le figure e il sole sono uno schema.",d);
+    h('p','ig-c5-cit',"«Tutti vediamo ancora il sole come azzurrognolo; ci stupiamo che a mezzogiorno i corpi non facciano ombra.» Cassiodoro, Variae XII, 25",d);
+    h('p','ig-c5-cit',"Procopio paragona la luce del sole a quella della luna (Guerre IV, 14).",d); return d; };
   el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),rx:14,'class':'ig-m-cornice'},tav);
   /* ---------- l'anno, il filo, la voce ---------- */
   var FILO=['malattia','terra','terra','cielo','malattia','fiume','malattia','malattia','leggenda','fiume','fiume','terra','terra'], NOMEF={malattia:'la malattia',fiume:'il fiume',terra:'la terra',cielo:'il cielo',leggenda:'fra storia e leggenda'};
   var gK=el('g',{'class':'ig-ci-col'},svg), fsA=oriz?Math.min(piccolo?34:56,cb[2]/5.2):Math.min(30,W/12), tA=tx(gK,cb[0],cb[1]+fsA*.82,'ig-p-anno',''), tF=tx(gK,cb[0]+2,cb[1]+fsA*.82+20,'ig-p-stato','');
   tA.style.fontSize=fsA+'px'; var gQ=el('g',null,gK), yQ=cb[1]+fsA*.82+32;
   var VOCI={0:["Le interpretazioni degli storici","Per Kyle Harper fu una delle cause della crisi; per altri le testimonianze sono troppo scarse per dire quanto incise.",1],1:["scheda del Colosseo","Un terremoto lo danneggia, nel 442 secondo Paolo Diacono; seguono restauri."],
-    3:["Cassiodoro, Variae XII, 25","«Tutti vediamo ancora il sole come azzurrognolo; ci stupiamo che a mezzogiorno i corpi non facciano ombra.»"],4:["Le interpretazioni degli storici","Per Harper uccise una parte grande della popolazione; per Mordechai ed Eisenberg le fonti la esagerano.",1],
+    3:["Cassiodoro, Variae XII, 25","«Abbiamo avuto un inverno senza tempeste, una primavera senza mitezza, un'estate senza calura.»"],4:["Le interpretazioni degli storici","Per Harper uccise una parte grande della popolazione; per Mordechai ed Eisenberg le fonti la esagerano.",1],
     5:["Gregorio di Tours, Storie X, 1","«Il Tevere aveva coperto Roma con una piena tale che gli edifici antichi crollavano.»"],6:["Gregorio di Tours, Storie X, 1","«Seguì subito l'epidemia che chiamano inguinale.»"],
     8:["Fra storia e leggenda","L'angelo compare solo nella Legenda aurea, verso il 1260; il legame del luogo con san Michele è già nel X secolo, in Liutprando.",1],
     11:["Annali del regno dei Franchi, 801","«Il tetto della basilica del beato Paolo apostolo cadde in gran parte, con le sue travi.»"],12:["scheda del Colosseo","Il legame fra il terremoto e il crollo del lato sud «resta un'ipotesi».",1]};
-  function scriviVoce(j){ gQ.textContent=''; var v=VOCI[j]; if(!v) return; var h0=cb[1]+cb[3]-yQ-4; if(h0<30) return; var fs=oriz&&!piccolo?16:13.5, g=citazione(gQ,cb[0],yQ,cb[2],v[1],v[0],fs); if(g._h>h0+4){ g.remove(); g=citazione(gQ,cb[0],yQ,cb[2],v[1],v[0],fs-2); if(g._h>h0+4) g.remove(); } if(g.parentNode) g.classList.add('vis'); }
+  /* la voce sta dentro la colonna con un margine vero sopra la legenda dei fili; righe a capo al 93% (sull'iPhone le scritte sono più larghe) */
+  function voce(q,chi){ var h0=cb[1]+cb[3]-yQ-10; if(h0<30) return null; var fs=oriz&&!piccolo?16:13.5, g=citazione(gQ,cb[0],yQ,cb[2]*.93,q,chi,fs); if(g._h>h0){ g.remove(); g=citazione(gQ,cb[0],yQ,cb[2]*.93,q,chi,fs-2); if(g._h>h0){ g.remove(); return null; } } g.classList.add('vis'); return g; }
+  function scriviVoce(j){ gQ.textContent=''; var v=VOCI[j]; if(v) voce(v[1],v[0]); }
   /* ---------- i quattro fili, sopra la stima degli abitanti ---------- */
   var FILI=[['malattia','la malattia'],['fiume','il fiume'],['terra','la terra'],['cielo','il cielo']], A0=235, A1=852;
-  var lw=lb[2]<300?84:96, gF=el('g',{'class':'ig-ci-fili'},svg), top=lb[1]+18, bot=lb[1]+lb[3]-18, rh=(bot-top)/4, X=function(a){ return lb[0]+lw+14+(a-A0)/(A1-A0)*(lb[2]-lw-28); }, Y=function(v){ return bot-v/1200000*(bot-top); };
+  var lw=lb[2]<300?84:96, gF=el('g',{'class':'ig-ci-fili'},svg), top=lb[1]+26, bot=lb[1]+lb[3]-18, rh=(bot-top)/4, X=function(a){ return lb[0]+lw+14+(a-A0)/(A1-A0)*(lb[2]-lw-28); }, Y=function(v){ return bot-v/1200000*(bot-top); };      // top: sopra la prima fascia, la riga della legenda e l'aria per gli anni (24 novembre 2026)
   FILI.forEach(function(f,j){ var y=top+rh*j; el('rect',{x:r1(lb[0]+lw),y:r1(y+1),width:r1(lb[2]-lw),height:r1(rh-2),rx:8,'class':'ig-ci-banda '+f[0]},gF); var g=el('g',{transform:'translate('+r1(lb[0]+7)+','+r1(y+rh/2)+')'},gF); glifo(g,f[0],5.5);
     var tn=tx(gF,lb[0]+17,y+rh/2+4,'ig-ci-filo-t '+f[0],f[1]); if(lw<90) tn.style.fontSize='9.5px'; });      // i nomi dei fili in una colonna a sinistra, anche col telefono coricato
   var fascia=C.banda.map(function(b){ return xy([X(b[0]),Y(b[2])]); }).join(' L')+' L'+C.banda.slice().reverse().map(function(b){ return xy([X(b[0]),Y(b[1])]); }).join(' L');
   el('path',{d:'M'+fascia+' Z','class':'ig-ci-pop-f'},gF); el('path',{d:'M'+C.punti.map(function(p){ return xy([X(p[0]),Y(p[1])]); }).join(' L'),'class':'ig-ci-pop'},gF);
   var gl=el('g',null,gF); el('rect',{x:r1(lb[0]+lb[2]-14),y:r1(lb[1]+4),width:14,height:8,rx:2,'class':'ig-ci-pop-f'},gl); var tPop=tx(gl,lb[0]+lb[2]-20,lb[1]+12,'ig-ci-pop-t','abitanti di Roma, stima: non dice le cause','end'); if(largo(tPop)>lb[2]-30) tPop.textContent='abitanti, stima: non dice le cause';
-  [251,400,542,700,852].forEach(function(a,j){ tx(gF,X(a),bot+13,'ig-ci-anno-p',String(a),j?j===4?'end':'middle':'start'); });
+  var assi=[251,400,542,700,852].map(function(a,j){ return tx(gF,X(a),bot+13,'ig-ci-anno-p',String(a),j?j===4?'end':'middle':'start'); });      // anche questi contano in annota()
   var EV=[[251,0,'malattia','251',1],[443,2,'terra','443',-1],[484,2,'terra','484 o 508',1],[536,3,'cielo','536',1],[542,0,'malattia','542',-1],[589,1,'fiume','589',1],[590,0,'malattia','590',1],[716.5,1,'fiume','716',-1],[791,1,'fiume','791',1],[801,2,'terra','801',-1],[847,2,'terra','847',1]];      // [anno, filo, segno, etichetta, sopra o sotto]
   var cur=el('line',{y1:r1(top),y2:r1(bot),'class':'ig-ci-cur'},gF);      /* sotto i segni e gli anni */
   var rS=clamp(rh*.2,6,10), punti=EV.map(function(e){ var y=top+rh*(e[1]+.62), g=el('g',{'class':'ig-ci-ev',transform:'translate('+r1(X(e[0]))+','+r1(y)+')'},gF);
     if(e[0]===484) el('rect',{x:0,y:-2,width:r1(X(508)-X(484)),height:4,rx:2,'class':'ig-ci-oppure'},g);
     el('circle',{r:r1(rS),'class':'ig-ci-ev-c '+e[2]},g); glifo(g,e[2],rS*.62,true); var t=tx(g,0,e[4]>0?-rS-3:rS+10,'ig-ci-ev-a',e[3],'middle'); return {g:g,a:e[0],t:t,x:X(e[0]),y:y}; });
   /* gli anni non si toccano mai (24 novembre 2026): prima l'anno dell'evento in corso, poi gli altri da sinistra; uno che toccherebbe un anno già messo o un segno resta nascosto */
-  function annota(){ var tenuti=[], segni=punti.filter(function(p){ return p.g.classList.contains('vis'); }).map(function(p){ return [p.x-rS-1,p.y-rS-1,p.x+rS+1,p.y+rS+1,p]; });
+  function annota(){ var tenuti=[]; [gl].concat(assi).forEach(function(e){ var q=null; try{ q=e.getBBox(); }catch(er){} if(q&&q.width) tenuti.push([q.x-3,q.y-2,q.x+q.width+3,q.y+q.height+2]); }); var segni=punti.filter(function(p){ return p.g.classList.contains('vis'); }).map(function(p){ return [p.x-rS-1,p.y-rS-1,p.x+rS+1,p.y+rS+1,p]; });      // la riga della legenda e gli anni dell'asse contano come anni già messi: gli anni dei segni non li toccano
     var ord=punti.slice().sort(function(a,b){ return (b.g.classList.contains('ora')-a.g.classList.contains('ora'))||(a.x-b.x); });
     ord.forEach(function(p){ cls(p.t,'nascosto',false); if(!p.g.classList.contains('vis')) return; var b; try{ b=p.t.getBBox(); }catch(e){ return; } var r=[p.x+b.x-3,p.y+b.y-2,p.x+b.x+b.width+3,p.y+b.y+b.height+2];      /* un margine: le scritte non si sfiorano */
       function tocca(q){ return r[0]<q[2]&&r[2]>q[0]&&r[1]<q[3]&&r[3]>q[1]; }
       function urta(){ return tenuti.some(tocca)||segni.some(function(q){ return q[4]!==p&&tocca(q); })||r[0]<lb[0]+lw||r[2]>lb[0]+lb[2]; }
-      if(p.y0==null) p.y0=+p.t.getAttribute('y'); p.t.setAttribute('y',p.y0);
-      if(urta()&&p.g.classList.contains('ora')){ var ny=p.y0<0?rS+13:-rS-4; p.t.setAttribute('y',ny); try{ b=p.t.getBBox(); }catch(e){} r=[p.x+b.x-3,p.y+b.y-2,p.x+b.x+b.width+3,p.y+b.y+b.height+2]; }      /* l'anno in corso prova anche l'altro lato del segno */
-      if(urta()){ p.t.setAttribute('y',p.y0); cls(p.t,'nascosto',true); } else tenuti.push(r); }); }
+      if(p.y0==null) p.y0=+p.t.getAttribute('y'); function posa(x,y,an){ p.t.setAttribute('x',x); p.t.setAttribute('y',y); p.t.setAttribute('text-anchor',an); try{ b=p.t.getBBox(); }catch(e){} r=[p.x+b.x-3,p.y+b.y-2,p.x+b.x+b.width+3,p.y+b.y+b.height+2]; }
+      posa(0,p.y0,'middle');
+      if(urta()&&p.g.classList.contains('ora')){ var alt=[[0,p.y0<0?rS+13:-rS-4,'middle'],[rS+4,5,'start'],[-rS-4,5,'end']]; for(var ka=0;ka<alt.length&&urta();ka++) posa(alt[ka][0],alt[ka][1],alt[ka][2]); }      /* l'anno in corso prova l'altro lato del segno, poi a destra e a sinistra */
+      if(urta()){ posa(0,p.y0,'middle'); cls(p.t,'nascosto',true); } else tenuti.push(r); }); }
   /* ---------- la regia ---------- */
-  var ANNI=[251,443,484,536,542,589,590,590.3,590.6,716.5,791,801,847], tm=Tempo(235,ANNI.map(function(a,j){ return {anno:a,sosta:j===5||j===7?6200:4800}; }),{inizio:1500,vel:3,min:600}), tFine=tm.fine+300, tFin=tFine+6500, visto=-2;
+  var ANNI=[251,443,484,536,542,589,590,590.3,590.6,716.5,791,801,847], tm=Tempo(235,ANNI.map(function(a,j){ return {anno:a,sosta:j===3?12800:j===5||j===7?6200:4800}; }),{inizio:1500,vel:3,min:600}), tFine=tm.fine+300, tFin=tFine+6500, visto=-2;
   var DIDA=['','il Colosseo','il Colosseo','','','l\'acqua scende da monte verso valle','l\'epidemia «inguinale»: muore Pelagio II, è eletto Gregorio','sette cortei verso la basilica di Santa Maria: ottanta morti in un\'ora','il mausoleo di Adriano: la leggenda','l\'acqua in città per sette giorni','porta Flaminia e le mura presso ponte Sisto','San Paolo fuori le mura','il Colosseo: un\'ipotesi'];
   S.passo=function(t){
     var a=tm.anno(t), i2=-1; tm.arrivi.forEach(function(x,j){ if(t>=x) i2=j; }); var ii=Math.max(0,i2), fin=t>=tFine, t0=i2>=0?tm.arrivi[ii]:0;
@@ -4065,9 +4092,11 @@ function disegnaCielo(svg,S,W,H){
     cortei.forEach(function(c,j){ var f=i2===7?E.io(fase(t,t0+400+j*150,t0+2600+j*150)):0; traccia(c.p,f); cls(c.g,'vis',i2===7); });
     var su=i2===11; if(dida._su!==su){ dida._su=su; fissa(didaR,'y',r1(su?pb[1]+8:pb[1]+pb[3]-30)); fissa(didaT,'y',r1(su?pb[1]+23:pb[1]+pb[3]-15)); }      // in basso; in alto solo quando in basso c'è San Paolo
     scriviDida(fin?'':i2>=0?DIDA[ii]:'');
-    cls(schT,'vis',!fin&&(i2===5||i2===7||i2===9||i2===10||i2===3||i2===0||i2===4));
+    cls(schT,'vis',!fin&&(i2===5||i2===7||i2===9||i2===10||i2===0||i2===4));      // nel 536 la scritta «schema» sta in basso, nella scena
     var q=fin?99:i2; if(q!==visto){ visto=q; annota(); scrivi(tA,i2<0?'':fin?'251 · 847':fasi[ii][0]); var fa=fsA; tA.style.fontSize=fa+'px'; while(largo(tA)>cb[2]&&fa>16){ fa-=2; tA.style.fontSize=fa+'px'; }
-      scrivi(tF,i2<0?'':fin?'TUTTI INSIEME':NOMEF[FILO[ii]].toUpperCase()); if(fin){ gQ.textContent=''; var g=citazione(gQ,cb[0],yQ,cb[2],"Quanto ciascun disastro abbia pesato sul calo degli abitanti è discusso: il disegno non lo dice.","",oriz&&!piccolo?16:13.5); g.classList.add('vis'); } else scriviVoce(i2); }
+      scrivi(tF,i2<0?'':fin?'TUTTI INSIEME':NOMEF[FILO[ii]].toUpperCase()); if(fin){ gQ.textContent=''; voce("Quanto ciascun disastro abbia pesato sul calo degli abitanti è discusso: il disegno non lo dice.",""); } else scriviVoce(i2); }
+    /* il mezzogiorno del 536: il velo scende in tre secondi e mezzo, poi Procopio, poi Cassiodoro; chi indica il sole alza il braccio; dove c'erano le ombre resta un tratteggio */
+    if(i2===3&&!fin&&Q536){ var tl=t-t0, nb=tl<2200?0:tl<3800?-1:tl<6600?1:tl<9200?2:3; Q536.sc.metti(E.io(fase(tl,2200,5600)),fase(tl,9200,9900)*.9,E.io(fase(tl,6200,7400))); Q536.b.forEach(function(b,j){ cls(b,'vis',j===nb); }); }
   };
   S.dura=tFin;
   S.battute=fasi.map(function(f,j){ return {t:tm.arrivi[j],anno:f[0],testo:f[1]}; }).concat([{t:tFine,anno:'Tutti insieme',testo:"Gli eventi accesi insieme, sopra la stima degli abitanti di Roma. Quanto ciascuno abbia pesato sul calo è discusso: il disegno non lo dice."}]);
@@ -4079,6 +4108,86 @@ function glifo(g,tipo,s,chiaro){ var c='ig-ci-g'+(chiaro?' chiaro':'')+' '+tipo;
   else if(tipo==='terra') el('path',{d:'M'+r1(-s)+' '+r1(s*.2)+' L'+r1(-s*.4)+' '+r1(-s*.5)+' L'+r1(0)+' '+r1(s*.5)+' L'+r1(s*.4)+' '+r1(-s*.5)+' L'+r1(s)+' '+r1(s*.2),'class':c+' linea'},g);
   else if(tipo==='cielo'){ el('circle',{r:r1(s*.7),'class':c},g); el('path',{d:'M'+r1(-s)+' '+r1(-s*.1)+' H'+r1(s)+' M'+r1(-s)+' '+r1(s*.3)+' H'+r1(s),'class':'ig-ci-velo'},g); }
   else { el('path',{d:'M0 '+r1(-s)+' C'+r1(s*.9)+' '+r1(-s*.6)+' '+r1(s*.9)+' '+r1(s*.6)+' 0 '+r1(s)+' C'+r1(-s*.9)+' '+r1(s*.6)+' '+r1(-s*.9)+' '+r1(-s*.6)+' 0 '+r1(-s),'class':c+' linea tratteggio'},g); }
+}
+/* Il mezzogiorno del 536 (24 novembre 2026, l'utente: «migliora anche la parte con il cielo oscurato»): lo stesso mezzogiorno su Roma, limpido e poi velato.
+   Solo dalle frasi della pagina: Cassiodoro, Variae XII 25 (voce della tappa del 537: «Tutti vediamo ancora il sole come azzurrognolo; ci stupiamo che a mezzogiorno
+   i corpi non facciano ombra […] per quasi un anno intero»); EVENTI velo536 (il sole velato per circa un anno, la luce che scalda poco) e assedio537 («Procopio paragona
+   la sua luce a quella della luna»; Procopio, Guerre IV 14, nel commento). Nessuna causa disegnata: niente vulcani né cenere, le fonti descrivono il sole senza forza.
+   Schema, detto in pagina: il profilo di Roma (solo edifici in piedi nel 536: il Pantheon con le tegole di bronzo, tolte solo nel 663; la colonna di Traiano, senza la statua,
+   di cui la pagina non dice; il Colosseo; case), le figure, il posto del sole, il «prima» (un mezzogiorno qualunque). Cassiodoro scrive dell'Italia, non solo di Roma.
+   b=[x,y,w,h]; restituisce {alti:[[xa,xb,cima]], sole:[x,y,r], metti(v,fantasmi,braccio)}: v da 0 (limpido) a 1 (velato) */
+function persona(p,x,y,s,c,tipo){ var g=el('g',{transform:'translate('+r1(x)+','+r1(y)+') scale('+(Math.round(s*1000)/1000)+')'},p), br=null;
+  el('path',{d:'M-2.2 0 L-1.6 -10 M2.2 0 L1.4 -10','class':'ig-c5-gambe'},g);
+  el('path',{d:'M-5.6 -8.5 L-3.9 -22.5 Q0 -25 3.9 -22.5 L5.6 -8.5 Q0 -7.4 -5.6 -8.5 Z',fill:c},g);
+  el('path',{d:'M-3.6 -21.5 L-5.4 -12.5','class':'ig-c5-braccio'},g);
+  if(tipo==='indica') br=el('path',{d:'M3.6 -21.5 L5.4 -12.5','class':'ig-c5-braccio'},g);      // il braccio che si alza verso il sole
+  else if(tipo==='anfora'){ el('path',{d:'M3.6 -21.5 L4.6 -27 L3.2 -32','class':'ig-c5-braccio'},g); el('path',{d:'M-1.2 -31.2 Q-4.4 -33.6 -2.6 -36.8 L-1 -37.6 L-1 -39.2 L1 -39.2 L1 -37.6 L2.6 -36.8 Q4.4 -33.6 1.2 -31.2 Z','class':'ig-c5-anfora'},g); }      // la brocca sulla testa, tenuta con una mano
+  else if(tipo==='bastone'){ el('path',{d:'M3.6 -21.5 L7 -15','class':'ig-c5-braccio'},g); el('path',{d:'M7.6 0 L7 -29','class':'ig-c5-bastone'},g); }
+  else el('path',{d:'M3.6 -21.5 L5.4 -12.5','class':'ig-c5-braccio'},g);
+  el('circle',{cx:0,cy:-27.6,r:3.4,'class':'ig-c5-testa'},g); return br; }
+function scena536(p,defs,b,id){
+  /* nei riquadri alti e stretti (telefono coricato, colonna del PC) la scena non rimpicciolisce: si allarga oltre i bordi e se ne vede il centro (Wv); il sole scende a metà cielo */
+  var x0=b[0], y0=b[1], w=b[2], hh=b[3], alto=hh>w*.9, u=Math.min(Math.max(w/330,hh/(alto?270:330)),hh/190), Wv=Math.max(w,330*u), oz=y0+hh-Math.max(hh*.24,52*u), g=el('g',{'class':'ig-c5'},p), alti=[], sil='', omb='', props=[], i, j;
+  function X(f){ return x0+w/2+(f-.5)*Wv; } function U(v){ return r1(v*u); }
+  function ret(xa,ya,ww,hg,c,pp){ return el('rect',{x:r1(xa),y:r1(ya),width:r1(ww),height:r1(hg),'class':c},pp||gC); }
+  function blocco(xa,xb,cima){ alti.push([xa,xb,cima]); omb+='M'+r1(xa)+' '+r1(oz)+'H'+r1(xb)+'L'+r1(xb-7*u)+' '+r1(oz+5*u)+'H'+r1(xa-7*u)+'Z'; }      // l'ombra portata, corta: è mezzogiorno
+  function rsil(xa,ya,ww,hg){ sil+='M'+r1(xa)+' '+r1(ya)+'h'+r1(ww)+'v'+r1(hg)+'h'+r1(-ww)+'Z'; }
+  grad(defs,'ig-c5-cl'+id,[[0,'#3D7DB4'],[.55,'#8FBFDC'],[1,'#F2E4BF']]); grad(defs,'ig-c5-ve'+id,[[0,'#8D979B'],[.55,'#B2B8B5'],[1,'#CBC5B4']]);
+  grad(defs,'ig-c5-te'+id,[[0,'#D8BD86'],[1,'#C3A169']]); grad(defs,'ig-c5-hz'+id,[[0,'#CDD1CD',0],[.5,'#CDD1CD',.5],[1,'#CDD1CD',0]]);
+  grad(defs,'ig-c5-gl'+id,[[0,'#FFF8DD',1],[.28,'#FFF0B8',.7],[1,'#FFE9A6',0]],{cx:.5,cy:.5,r:.5});
+  grad(defs,'ig-c5-co'+id,[[0,'#B08A55'],[.38,'#EAD3A4'],[.72,'#E6CD9C'],[1,'#AC8650']],{x1:0,y1:0,x2:1,y2:0});
+  grad(defs,'ig-c5-br'+id,[[0,'#8C7244'],[.45,'#D9BE7E'],[1,'#9C8150']],{x1:0,y1:0,x2:1,y2:0});
+  /* il cielo, limpido e velato */
+  el('rect',{x:r1(x0),y:r1(y0),width:r1(w),height:r1(hh),fill:'url(#ig-c5-cl'+id+')'},g);
+  var cieloV=el('rect',{x:r1(x0),y:r1(y0),width:r1(w),height:r1(hh),fill:'url(#ig-c5-ve'+id+')',opacity:0},g);
+  /* il sole pieno di mezzogiorno, alto */
+  var sx=x0+w*.78, sy=alto?y0+(oz-y0)*.52:y0+Math.max(40*u,hh*.13), sr=clamp(12*u,8,30), soleL=el('g',null,g), dr='';
+  alti.push([sx-sr*2.6,sx+sr*2.6,sy-sr*2.6]);      // il sole con i raggi: il biglietto delle parole non ci scende sopra
+  el('circle',{cx:r1(sx),cy:r1(sy),r:r1(sr*4.2),fill:'url(#ig-c5-gl'+id+')'},soleL);
+  for(i=0;i<16;i++){ var a=i*Math.PI/8+.1, ra=sr*1.45, rb=sr*(i%2?1.95:2.45); dr+='M'+r1(sx+Math.cos(a)*ra)+' '+r1(sy+Math.sin(a)*ra)+'L'+r1(sx+Math.cos(a)*rb)+' '+r1(sy+Math.sin(a)*rb); }
+  el('path',{d:dr,'class':'ig-c5-raggi','stroke-width':r1(Math.max(1.1,1.5*u))},soleL); el('circle',{cx:r1(sx),cy:r1(sy),r:r1(sr),'class':'ig-c5-sole'},soleL);
+  /* i tetti lontani e il suolo */
+  var R=caso(5361), d='M'+r1(x0)+' '+r1(oz); for(var xx=x0;xx<x0+w;xx+=14*u){ var hz=(8+R()*12)*u; d+='V'+r1(oz-hz)+'L'+r1(xx+7*u)+' '+r1(oz-hz-3*u)+'L'+r1(Math.min(x0+w,xx+14*u))+' '+r1(oz-hz); } d+='V'+r1(oz)+'Z';
+  el('path',{d:d,'class':'ig-c5-lontano'},g); el('rect',{x:r1(x0),y:r1(oz),width:r1(w),height:r1(y0+hh-oz),fill:'url(#ig-c5-te'+id+')'},g);
+  var gC=el('g',null,g), cx, k;
+  /* le case basse */
+  [[-.02,.075,20],[.31,.37,16],[.37,.45,22],[.6,.67,19],[.925,1.02,21]].forEach(function(c){ var xa=X(c[0]), xb=X(c[1]), cima=oz-c[2]*u; ret(xa,cima,xb-xa,oz-cima,'ig-c5-muro');
+    el('path',{d:'M'+r1(xa-1.5*u)+' '+r1(cima)+'L'+r1((xa+xb)/2)+' '+r1(cima-5*u)+'L'+r1(xb+1.5*u)+' '+r1(cima)+'Z','class':'ig-c5-tetto'},gC);
+    for(var wx=xa+4*u;wx<xb-5*u;wx+=7*u) ret(wx,cima+5*u,2.6*u,3.6*u,'ig-c5-buio');
+    props.push(ret(xa,cima,(xb-xa)*.28,oz-cima,'ig-c5-propria')); rsil(xa,cima,xb-xa,oz-cima); blocco(xa,xb,cima-5*u); });
+  /* il Pantheon: il tamburo, la cupola di tegole di bronzo, il portico con otto colonne e il timpano */
+  cx=X(.19); ret(cx-30*u,oz-26*u,60*u,26*u,'ig-c5-muro'); el('path',{d:'M'+r1(cx-28*u)+' '+r1(oz-26*u)+'A'+U(28)+' '+U(20)+' 0 0 1 '+r1(cx+28*u)+' '+r1(oz-26*u)+'Z',fill:'url(#ig-c5-br'+id+')'},gC);
+  ret(cx-29*u,oz-27.4*u,58*u,1.6*u,'ig-c5-cornice'); props.push(ret(cx-30*u,oz-26*u,16*u,26*u,'ig-c5-propria'));
+  ret(cx-21*u,oz-20*u,42*u,20*u,'ig-c5-buio'); for(j=0;j<8;j++) ret(cx-20.5*u+j*5.6*u,oz-20*u,2.6*u,20*u,'ig-c5-colonna');
+  ret(cx-23*u,oz-23.5*u,46*u,3.5*u,'ig-c5-muro'); el('path',{d:'M'+r1(cx-23.5*u)+' '+r1(oz-23.5*u)+'L'+r1(cx)+' '+r1(oz-31*u)+'L'+r1(cx+23.5*u)+' '+r1(oz-23.5*u)+'Z','class':'ig-c5-muro'},gC);
+  rsil(cx-30*u,oz-26*u,60*u,26*u); sil+='M'+r1(cx-28*u)+' '+r1(oz-26*u)+'A'+U(28)+' '+U(20)+' 0 0 1 '+r1(cx+28*u)+' '+r1(oz-26*u)+'Z'; blocco(cx-30*u,cx+30*u,oz-46*u);
+  /* la colonna di Traiano, senza statua */
+  cx=X(.54); ret(cx-6*u,oz-9*u,12*u,9*u,'ig-c5-muro'); ret(cx-2.9*u,oz-62*u,5.8*u,53*u,'ig-c5-colonna');
+  var sp=''; for(var yy=oz-12*u;yy>oz-60*u;yy-=5*u) sp+='M'+r1(cx-2.9*u)+' '+r1(yy)+'L'+r1(cx+2.9*u)+' '+r1(yy-2.6*u); el('path',{d:sp,'class':'ig-c5-spirale','stroke-width':r1(Math.max(.6,.8*u))},gC);
+  ret(cx-4.4*u,oz-64.5*u,8.8*u,2.5*u,'ig-c5-muro'); ret(cx-2*u,oz-68*u,4*u,3.5*u,'ig-c5-muro'); props.push(ret(cx-2.9*u,oz-62*u,2.2*u,53*u,'ig-c5-propria'));
+  rsil(cx-6*u,oz-9*u,12*u,9*u); rsil(cx-2.9*u,oz-62*u,5.8*u,53*u); rsil(cx-4.4*u,oz-68*u,8.8*u,6*u); blocco(cx-6*u,cx+6*u,oz-68*u);
+  /* il Colosseo: tre ordini di arcate e l'attico, visti in curva */
+  cx=X(.785); var hw=56*u, buchi='', fin='', cor='';
+  el('rect',{x:r1(cx-hw),y:r1(oz-48*u),width:r1(2*hw),height:U(48),fill:'url(#ig-c5-co'+id+')'},gC);
+  for(k=0;k<3;k++){ var yb=oz-k*12*u-1.2*u, ah=8.6*u; for(j=0;j<13;j++){ var th=-1.3+j*2.6/12, ax=cx+hw*.96*Math.sin(th), aw=6.2*u*Math.cos(th);
+      buchi+='M'+r1(ax-aw/2)+' '+r1(yb)+'V'+r1(yb-ah+aw/2)+'A'+r1(aw/2)+' '+r1(aw/2)+' 0 0 1 '+r1(ax+aw/2)+' '+r1(yb-ah+aw/2)+'V'+r1(yb)+'Z';
+      if(k===0&&j%2) fin+='M'+r1(ax-aw*.18)+' '+r1(oz-43*u)+'h'+r1(aw*.36)+'v'+U(3.4)+'h'+r1(-aw*.36)+'Z'; } }
+  el('path',{d:buchi+fin,'class':'ig-c5-buio'},gC);
+  [12,24,36,47.4].forEach(function(q){ cor+='M'+r1(cx-hw)+' '+r1(oz-q*u)+'H'+r1(cx+hw); }); el('path',{d:cor,'class':'ig-c5-cornici','stroke-width':r1(Math.max(.7,u))},gC);
+  rsil(cx-hw,oz-48*u,2*hw,48*u); blocco(cx-hw,cx+hw,oz-48*u);
+  /* le ombre portate e le figure: tre persone e un bambino; dove c'era l'ombra, alla fine, un tratteggio */
+  var fy=Math.min(y0+hh-7*u,oz+40*u), gente=(alto?[.4,.52,.58,.76]:[.1,.45,.5,.7]).map(function(f,j){ return [alto?.5+(f-.5)*w/Wv:f,['#8C3B2A','#4F6475','#B58A3C','#6E5A7A'][j],['anfora','indica','','bastone'][j],j===2?.72:1]; }), fant='', br=null;
+  gente.forEach(function(q){ var fx=X(q[0]), s=u*q[3], e='M'+r1(fx-4*s-7.5*s)+' '+r1(fy+.6*s)+'a'+r1(7.5*s)+' '+r1(1.9*s)+' 0 1 0 '+r1(15*s)+' 0a'+r1(7.5*s)+' '+r1(1.9*s)+' 0 1 0 '+r1(-15*s)+' 0Z'; omb+=e; fant+=e; });
+  var ombre=el('path',{d:omb,'class':'ig-c5-ombra'},g), gF=el('g',null,g);
+  gente.forEach(function(q){ var b2=persona(gF,X(q[0]),fy,u*q[3],q[1],q[2]); if(b2) br=b2; });
+  var fantG=el('path',{d:fant,'class':'ig-c5-fant',opacity:0,'stroke-width':r1(Math.max(.9,1.2*u))},g);
+  /* il velo: i colori si appiattiscono e si raffreddano, il sole si fa pallido e azzurrognolo, le fasce di foschia scendono dall'alto */
+  var piatto=el('path',{d:sil,'class':'ig-c5-piatto',opacity:0},g), foschia=el('rect',{x:r1(x0),y:r1(y0),width:r1(w),height:r1(hh),'class':'ig-c5-foschia',opacity:0},g);
+  var soleV=el('g',{opacity:0},g); el('circle',{cx:r1(sx),cy:r1(sy),r:r1(sr*1.9),'class':'ig-c5-alonev'},soleV); el('circle',{cx:r1(sx),cy:r1(sy),r:r1(sr),'class':'ig-c5-solev','stroke-width':r1(Math.max(.8,1.2*u))},soleV);
+  var veli=el('g',{opacity:0},g), cie=oz-y0; [[-.05,.4],[.22,.42],[.52,.5]].forEach(function(f){ el('rect',{x:r1(x0),y:r1(y0+cie*f[0]),width:r1(w),height:r1(cie*f[1]),fill:'url(#ig-c5-hz'+id+')'},veli); });
+  function o(e,v){ fissa(e,'opacity',String(Math.round(v*100)/100)); }
+  return {alti:alti, sole:[sx,sy,sr], alto:alto, u:u, gente:gente.map(function(q){ return X(q[0]); }), metti:function(v,fa,al){ o(cieloV,v); o(soleL,1-v); o(soleV,v); o(veli,v); fissa(veli,'transform','translate(0,'+r1(-(1-v)*cie*.45)+')');
+    o(ombre,1-v); props.forEach(function(e){ o(e,1-v*.85); }); o(piatto,.5*v); o(foschia,.3*v); o(fantG,fa||0); if(br) fissa(br,'transform','rotate('+r1(-150*(al||0))+' 3.6 -21.5)'); }};
 }
 
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},

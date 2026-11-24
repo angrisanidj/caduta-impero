@@ -1759,16 +1759,45 @@ rect.ig-bb-leg-r{stroke:rgba(0,0,0,.2)}
 .ig-ci-disegni .ig-ci-dis.vis{opacity:1}
 .ig-ci-dis-fondo{fill:#F4ECDD}
 .ig-ci-dis-fondo.malattia{fill:#F3E7E2}
-.ig-ci-dis-segno{opacity:.18}
+.ig-ci-dis-segno{opacity:.55}
 .ig-ci-dis-q{font-family:var(--serif);font-style:italic;fill:#2A231D}
 .ig-ci-dis-chi{font-family:var(--ui);font-size:12px;fill:#6B5F53}
-.ig-ci-536-alone{fill:#EDEBE2;opacity:.6}
-.ig-ci-536-sole{fill:#D8E0E4;stroke:#B7C3C9;stroke-width:1.5}
-.ig-ci-536-velo{fill:#C9C8BF;opacity:.45}
-.ig-ci-536-citta{fill:#8E8573}
-.ig-ci-536-suolo{fill:#BFB49A}
-.ig-ci-536-om .ig-omino,.ig-ci-536-om{fill:#4A3F35;stroke:#4A3F35}
-.ig-ci-536-t{font-family:var(--serif);font-style:italic;font-size:15px;fill:#3E352D}
+/* il mezzogiorno del 536 (scena536 in js/infografiche.js; 24 novembre 2026): le opacità che cambiano col velo stanno negli attributi, qui solo colori e fill-opacity */
+.ig-c5-raggi{stroke:#FFF3CC;stroke-linecap:round;fill:none}
+.ig-c5-sole{fill:#FFFBEA}
+.ig-c5-solev{fill:#D2DDE3;stroke:#A6BAC4}
+.ig-c5-alonev{fill:#E6ECEA;fill-opacity:.5}
+.ig-c5-lontano{fill:#D3BF98}
+.ig-c5-muro{fill:#E6CEA0}
+.ig-c5-colonna{fill:#EDDCB8}
+.ig-c5-tetto{fill:#B5704A}
+.ig-c5-buio{fill:#6A4B2F}
+.ig-c5-cornice{fill:#C9AB78}
+.ig-c5-cornici{stroke:#C4A472;fill:none}
+.ig-c5-spirale{stroke:#B89466;fill:none}
+.ig-c5-propria{fill:#4E3520;fill-opacity:.3}
+.ig-c5-ombra{fill:#4A321B;fill-opacity:.42}
+.ig-c5-fant{fill:none;stroke:#3E3A35;stroke-dasharray:3 2.5}
+.ig-c5-piatto{fill:#A7A394}
+.ig-c5-foschia{fill:#A9B3B7}
+.ig-c5-gambe{stroke:#5A4030;stroke-width:2.2;stroke-linecap:round;fill:none}
+.ig-c5-braccio{stroke:#B98259;stroke-width:2;stroke-linecap:round;fill:none}
+.ig-c5-bastone{stroke:#6A4B2F;stroke-width:1.2;stroke-linecap:round;fill:none}
+.ig-c5-testa{fill:#B98259}
+.ig-c5-anfora{fill:#B5704A}
+.ig-c5-bg{opacity:0;transition:opacity .7s}
+.ig-c5-bg.vis{opacity:1}
+.ig-c5-bg-f{fill:rgba(251,247,238,.92);stroke:rgba(90,70,50,.18)}
+.ig-c5-bar{fill:#B8A04A}
+.ig-c5-q{font-family:var(--serif);font-style:italic;fill:#2A231D}
+.ig-c5-n{font-family:var(--ui);fill:#2A231D}
+.ig-c5-chi{font-family:var(--ui);font-size:11px;fill:#5F554B}
+.ig-c5-schema{font-family:var(--ui);font-size:10px;letter-spacing:.12em;text-transform:uppercase;fill:#4F4030}
+.ig-c5-fermo{margin:14px 0 6px}
+.ig-c5-fermo svg{display:block;width:100%;height:auto;max-width:520px;border-radius:12px}
+.ig-c5-riq{fill:none;stroke:#FBF6EA;stroke-width:2}
+.ig-c5-did{font-family:var(--ui);font-size:13px;line-height:1.45;color:#5F554B;margin:8px 0 6px}
+.ig-c5-cit{font-family:var(--serif);font-size:16px;line-height:1.4;color:#2A231D;margin:0 0 6px}
 .ig-ci-banda{fill:#F6F0E4;stroke:#E8DDC8}
 .ig-ci-banda.malattia{fill:#F6ECE6} .ig-ci-banda.fiume{fill:#EAF0F0} .ig-ci-banda.terra{fill:#F3ECE0} .ig-ci-banda.cielo{fill:#F2F0E2}
 .ig-ci-filo-t{font-size:11px}
