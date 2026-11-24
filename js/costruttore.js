@@ -243,7 +243,7 @@ var TAGLIO=[
   '}',
   /* smontaggio da un lato solo (il fronte sud del Colosseo): sparisce l'anello esterno con l'attico e la parte alta della cavea, a partire dal punto più a sud e allargandosi; resta il secondo anello, più basso */
   'if(uSud>0.001){ vec2 qs=vLoc.xz/uSudR; float ro=length(qs); if(ro>0.94 || (ro>0.74 && vLoc.y>3.09)){ float an=acos(clamp(dot(qs/ro,uSudDir),-1.0,1.0)); if(an<3.1416*uSud*(0.9+0.2*rmH(vec3(floor(vLoc.xz*0.9),6.0)))) discard; } }'].join(NL);
-var DICHIARA=[SAP_DICH,'uniform float uRovina; uniform float uCant; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR;',LOD_FD,
+var DICHIARA=[SAP_DICH,'uniform float uVesteR; uniform sampler2D tMacchieR;','uniform float uRovina; uniform float uCant; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR;',LOD_FD,
   'float rmH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
   'vec2 rmH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',
   'float rmN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f);',
@@ -265,13 +265,16 @@ var COLORA=[
   'if(vTipo<0.5 && uCrepe>0.01){',
   '  vec3 an=abs(vNor); bool piano=an.y>0.7;',
   '  vec2 cp=piano?vLoc.xz:vec2(an.x>an.z?vLoc.z:vLoc.x,vLoc.y);',
-  '  float e=rmCrepa(cp*1.1+3.7); float fw=fwidth(e)+0.0001; float largo=max(0.03,fw*0.7);',
+  '  float fw=max(fwidth(cp.x),fwidth(cp.y))*1.8+0.0001; float largo=max(0.03,fw*0.7);',      // (24 novembre 2026) la larghezza del pixel si stima dalle coordinate, non dalla crepa: così la crepa si calcola solo dove può comparire
   '  float zona=rmN(vec3(cp*0.45+1.3,5.0));',
-  '  float riga=(1.0-smoothstep(largo*0.5,largo,e))*clamp(0.4/fw,0.0,1.0)*smoothstep(0.0,0.1,0.12+uCrepe*0.48-zona)*smoothstep(0.3,0.5,rmN(vec3(cp*2.3,7.0)));',
+  '  float kz=clamp(0.4/fw,0.0,1.0)*smoothstep(0.0,0.1,0.12+uCrepe*0.48-zona); float riga=0.0;',
+  '  if(kz>0.0){ float e=rmCrepa(cp*1.1+3.7); riga=(1.0-smoothstep(largo*0.5,largo,e))*kz*smoothstep(0.3,0.5,rmN(vec3(cp*2.3,7.0))); }',      // il diagramma delle celle (nove prove) solo nelle zone crepate: prima si pagava su tutti i muri degradati
   '  diffuseColor.rgb*=1.0-0.52*riga;',
   '  if(piano){',
   '    float kE=1.0-smoothstep(0.015,0.045,fwidth(vLoc.x)+fwidth(vLoc.z));',                                                                                // la grana fine dell'erba sfuma da lontano (24 novembre 2026)
-  '    if(rq2<0.4) diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.27,0.3,0.14)*(0.85+0.3*mix(0.5,rmN(vec3(vLoc.xz*9.0,8.0)),kE)),uCrepe*0.85*smoothstep(0.4,0.7,0.55*rmN(vec3(vLoc.xz*1.8,9.0))+0.3*rmN(vec3(vLoc.xz*5.3,9.5))+0.15*mix(0.5,rmN(vec3(vLoc.xz*14.0,9.7)),kE)+0.3*riga));',      // erba fra le lastre: chiazze a più grane, dal bordo sfrangiato (prima erano macchie larghe e nette, da tela mimetica)
+  '    if(rq2<0.4 && uVesteR>0.5){ vec4 mg=texture2D(tMacchieR,vLoc.xz/7.0+0.17); vec4 mg2=texture2D(tMacchieR,vLoc.xz/2.2+0.61); float mE=0.5*mg.r+0.3*mg2.g+0.2*mg2.b+0.25*riga;',      // veste del PC: chiazze morbide da una trama (prima il rumore a celle disegnava una tela mimetica a poligoni), erba verde e secca
+  '      diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.19,0.25,0.08),vec3(0.33,0.3,0.12),smoothstep(0.35,0.7,mg2.r))*(0.82+0.32*mg.b),uCrepe*0.88*smoothstep(0.36,0.6,mE)); }',
+  '    else if(rq2<0.4) diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.27,0.3,0.14),vec3(0.19,0.25,0.08),uVesteR)*(0.85+0.3*mix(0.5,rmN(vec3(vLoc.xz*9.0,8.0)),kE)),uCrepe*0.85*smoothstep(0.4,0.7,0.55*rmN(vec3(vLoc.xz*1.8,9.0))+0.3*rmN(vec3(vLoc.xz*5.3,9.5))+0.15*mix(0.5,rmN(vec3(vLoc.xz*14.0,9.7)),kE)+0.3*riga));',      // erba fra le lastre: chiazze a più grane, dal bordo sfrangiato (prima erano macchie larghe e nette, da tela mimetica)
   '    else diffuseColor.rgb*=1.0-0.55*clamp((uRovina*2.0+uCrepe*uCrepe*0.2)*3.0,0.0,1.0);',                                                           // sotto i tetti sfondati si vede il buio
   '  } else diffuseColor.rgb*=1.0-0.34*uCrepe*smoothstep(0.5,0.8,rmN(vec3(cp.x*4.0,vLoc.y*0.45,3.0)));',                                              // colature
   '}',
@@ -283,7 +286,7 @@ var COLORA=[
   '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.36,0.34,0.17)*(0.8+0.5*pb),clamp(uCrepe*1.1,0.0,0.85)*smoothstep(0.25,0.65,pa+0.3*pb)); }',                // lasciato a sé stesso ingiallisce e si fa incolto
   'if(vTipo<1.5) diffuseColor.rgb*=mix(0.74,1.0,smoothstep(0.0,0.2,rq2));'].join(NL);      // ombra d'appoggio al piede
 function innesta(sh,u,colore){
-  sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol;
+  sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol; sh.uniforms.uVesteR=RM.vesteU||{value:0}; sh.uniforms.tMacchieR={value:RM.VESTE?RM.trameVeste().macchie:null};      // veste del PC: l'erba fra le lastre prende il verde dell'erba del suolo
   sh.uniforms.uRovina=u.uRovina; sh.uniforms.uCant=u.uCant; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uPiombo=u.uPiombo; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe; sh.uniforms.uSud=u.uSud; sh.uniforms.uSudDir=u.uSudDir; sh.uniforms.uSudR=u.uSudR;
   lodUniformi(sh); lodVertice(sh);
   var SCEGLI=LOD_SCEGLI.replace('dpxL<uSogliaCol','dpxL<uSogliaCol*(1.0-step(0.02,uRovina))');      // in rovina niente fascia: il portico è senza tetto e senza muri, e fra i monconi si vede il prato, non l'ombra

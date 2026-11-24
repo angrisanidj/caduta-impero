@@ -250,10 +250,31 @@ var matMuri=new THREE.MeshStandardMaterial({map:texMuri,roughness:.95,side:THREE
 var matTetti=new THREE.MeshStandardMaterial({map:texCoppi,roughness:.9,side:THREE.DoubleSide});
 var matCorte=new THREE.MeshStandardMaterial({color:RM.col(0x8f7f6a),roughness:1});
 /* ombra d'appoggio: le pareti si scuriscono verso il suolo, così le case sembrano posate e non incollate */
-function appoggio(mat){ var A=String.fromCharCode(10); mat.onBeforeCompile=function(sh){
+function appoggio(mat,mattoni){ var A=String.fromCharCode(10), f=function(sh){
   sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying float vAlto;').replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vAlto=position.y;');
-  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying float vAlto;').replace('#include <color_fragment>','#include <color_fragment>'+A+'diffuseColor.rgb*=mix(0.6,1.0,smoothstep(0.0,0.5,vAlto));'); }; return mat; }
-appoggio(matMuri);
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying float vAlto;').replace('#include <color_fragment>','#include <color_fragment>'+A+'diffuseColor.rgb*=mix(0.6,1.0,smoothstep(0.0,0.5,vAlto));'); };
+  mat.onBeforeCompile=mattoni&&RM.VESTE?function(sh){ f(sh); vesteMuri(sh); }:f; return mat; }      // due testi diversi: three riconosce i programmi dal testo di onBeforeCompile
+/* Veste del PC (24 novembre 2026): una parte delle insulae ha la facciata di mattoni a vista, come a Ostia, dove le cortine laterizie dei caseggiati restavano per lo più senza intonaco;
+   le altre sono intonacate nelle tinte di prima. Quante fossero a Roma, e dove, non si sa: qui circa due su cinque, a caso. Il tipo si sceglie dal posto dell'istanza, non da rnd. */
+function hashIstanza(sh){ var A=String.fromCharCode(10);
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying float vHi; varying vec2 vUvR;').replace('#include <begin_vertex>',['#include <begin_vertex>','vUvR=uv; vHi=0.5;',
+    '#ifdef USE_INSTANCING','vHi=fract(sin(dot(instanceMatrix[3].xz,vec2(12.9898,78.233)))*43758.5453);','#endif'].join(A));
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying float vHi; varying vec2 vUvR; uniform float uVeste;');
+  sh.uniforms.uVeste=RM.vesteU; }
+function vesteMuri(sh){ hashIstanza(sh);
+  sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',
+    'if(uVeste>0.5 && vHi<0.42){ float lm=dot(diffuseColor.rgb,vec3(0.3,0.59,0.11)); vec3 mt=vec3(0.62,0.33,0.2)*(0.82+0.36*fract(vHi*17.3));',      // cortina di mattoni: le finestre (scure) restano scure
+    '  diffuseColor.rgb=mt*smoothstep(0.02,0.5,lm)*1.15; }'].join(String.fromCharCode(10))); }
+/* tetti con la veste: il coppo meno arancione e più cotto; da un tetto all'altro tinte diverse (nuovo, bruno, sbiadito dal sole, ingrigito dai licheni) e la gronda più sporca */
+function vesteTetti(mat){ if(!RM.VESTE) return mat; mat.onBeforeCompile=function(sh){ hashIstanza(sh);
+  sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',
+    'if(uVeste>0.5){ vec3 c=diffuseColor.rgb; float l=dot(c,vec3(0.3,0.59,0.11)); c=mix(vec3(l),c,0.78); float h=vHi;',
+    '  c*=h<0.38?vec3(1.0,0.9,0.86):h<0.62?vec3(0.78,0.68,0.62):h<0.84?vec3(1.04,0.97,0.93):vec3(0.86,0.83,0.8);',
+    '  if(h>0.84) c=mix(c,vec3(dot(c,vec3(0.33))),0.38);',
+    '  c*=(0.86+0.24*fract(h*13.7))*(1.0-0.16*smoothstep(0.35,0.0,vUvR.y));',
+    '  diffuseColor.rgb=c; }'].join(String.fromCharCode(10))); }; return mat; }
+vesteTetti(matTetti);
+appoggio(matMuri,true);
 var matBasse=appoggio(new THREE.MeshStandardMaterial({map:texBasse,roughness:.95,side:THREE.DoubleSide,emissive:new THREE.Color(0xffffff),emissiveMap:texLumiB,emissiveIntensity:0}));
 var matDomus=appoggio(new THREE.MeshStandardMaterial({map:texDomus,roughness:.95,side:THREE.DoubleSide}));
 var matGiardino=new THREE.MeshStandardMaterial({color:RM.col(0x7f9a56),roughness:1}), matVasca=new THREE.MeshStandardMaterial({color:RM.col(0x6d9aa0),roughness:.3}), matColonne=new THREE.MeshStandardMaterial({color:RM.col(0xece4d2),roughness:.9,side:THREE.DoubleSide});
@@ -280,6 +301,11 @@ var macerie=pacco(geoMacerie,RM.tingi(new THREE.MeshStandardMaterial({roughness:
 var sterpi=pacco(geoSterpi,RM.matPietra(),N); sterpi.maglia.castShadow=false;
 var geoPiano=new THREE.PlaneGeometry(1,1); geoPiano.rotateX(-Math.PI/2);
 var incolti=pacco(geoPiano,new THREE.MeshStandardMaterial({map:texIncolto,roughness:1,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}),N); incolti.maglia.castShadow=false;
+/* Veste del PC: l'incolto non è più un quadrato col bordo netto (da lontano erano «macchie a spicchi»): sfuma nel suolo con un orlo irregolare, e prende il verde dell'erba nuova */
+if(RM.VESTE){ incolti.maglia.material.transparent=true; incolti.maglia.material.depthWrite=false; incolti.maglia.material.onBeforeCompile=function(sh){ hashIstanza(sh);
+  sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',
+    'if(uVeste>0.5){ vec2 bq=min(vUvR,1.0-vUvR); float orlo=min(bq.x,bq.y)+(texture2D(map,vUvR*0.37+vHi).g-0.5)*0.22;',
+    '  diffuseColor.a*=smoothstep(0.0,0.2,orlo); diffuseColor.rgb*=vec3(0.86,0.95,0.78); }'].join(String.fromCharCode(10))); }; }
 var geoOrto=new THREE.PlaneGeometry(1,1); geoOrto.rotateX(-Math.PI/2);
 var orti=pacco(geoOrto,new THREE.MeshStandardMaterial({map:texOrto,roughness:1,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}),N); orti.maglia.castShadow=false;
 

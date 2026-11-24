@@ -116,6 +116,10 @@ var GL2=!!window.WebGL2RenderingContext;
 try{ renderer=new THREE.WebGLRenderer({antialias:!GL2}); }
 catch(e){ document.getElementById('errore').hidden=false; RM.guasto=true; return; }
 var piccolo=Math.min(window.innerWidth,window.innerHeight)<700; RM.piccolo=piccolo;
+/* La «veste» del PC (24 novembre 2026, fase 2; l'utente: «dobbiamo fare in modo davvero che migliori l'aspetto di Roma almeno da pc»): suolo, erba, luce, occlusione, acqua, tetti e muri.
+   Il codice nuovo degli shader si compila solo dove può servire (RM.VESTE: non sui telefoni né sugli schermi al tocco, che restano identici a prima); sul PC si accende e si spegne
+   col gradino della qualità (RM.vesteU: 0 in «bassa», che torna l'aspetto di prima, 1 dagli altri gradini). */
+RM.VESTE=!piccolo && !((navigator.maxTouchPoints>0) || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches)); RM.vesteU={value:RM.VESTE?1:0};
 renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,piccolo?1.5:2));
 renderer.outputEncoding=THREE.sRGBEncoding;
 renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.07;
@@ -276,6 +280,68 @@ function coloreSuolo(x,z,c){
   c.multiplyScalar(.88+.24*RM.rumore(x/7,z/7));
   return urbano;
 }
+/* Il suolo con la veste del PC (24 novembre 2026). A: la terra battuta della città più bruna e meno sabbia, a chiazze di polvere; prato negli horti dei colli;
+   l'erba che invade la città abbandonata a chiazze verdi e secche. C (dentro il blocco dei campi): campi più distinti fra loro, siepi più verdi.
+   B: dove il suolo è verde, cespi scuri e macchie di paglia a più scale; da vicino le trame d'erba e di terra (filtrate dai mipmap: nessun brulichio). */
+var VESTE_SUOLO_A=['vec4 mcA=vec4(0.5); vec4 mcB=vec4(0.5); float hoV=0.0;',
+  'if(uVeste>0.5){ mcA=texture2D(tMacchie,vXZ/80.0); mcB=texture2D(tMacchie,mat2(0.8,-0.6,0.6,0.8)*vXZ/13.0+0.41);',
+  '  diffuseColor.rgb*=mix(vec3(1.0),vec3(0.76,0.76,0.8)*(0.84+0.3*mcA.g)*(0.9+0.2*mcB.b),vUrb.x);',
+  '  hoV=vHo;',
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.15,0.22,0.07)*(0.8+0.4*mcB.r)*(0.9+0.2*mcA.b),hoV*0.8);',
+  '  verdeV=mix(vec3(0.19,0.25,0.075),vec3(0.34,0.31,0.12),smoothstep(0.3,0.75,mcB.g*0.6+mcA.r*0.4)); }'].join(String.fromCharCode(10));
+var VESTE_SUOLO_C=['  if(uVeste>0.5){ int ic=int(hc*9.0); vec3 rc=vec3(1.0); for(int k=0;k<9;k++){ if(k==ic) rc=uCampi[k]; }',
+  '    diffuseColor.rgb*=mix(vec3(1.0),mix(vec3(1.0),rc,0.75)*(0.92+0.16*mcB.g),camp); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(dot(diffuseColor.rgb,vec3(0.3,0.59,0.11))),0.18*camp);',      // un poco meno saturi: con la curva della passata finale la scacchiera dei campi da lontano gridava
+  '    diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.07,0.1,0.035),camp*siepe*0.55); }'].join(String.fromCharCode(10));
+var VESTE_SUOLO_B=['if(uVeste>0.5){',
+  '  float ve=clamp((diffuseColor.g-diffuseColor.r*0.9)*10.0+0.6*hoV,0.0,1.0);',
+  '  float sc=smoothstep(0.55,0.8,mcB.r); float se=smoothstep(0.6,0.85,mcB.g*0.7+mcA.b*0.3);',
+  '  vec3 cv=diffuseColor.rgb*(0.9+0.2*mcA.r)*(1.0-0.2*sc)*mix(vec3(1.0),vec3(1.2,1.07,0.7),0.55*se*(1.0-sc));',
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,cv,ve);',
+  '  float fwV=max(fwidth(vXZ.x),fwidth(vXZ.y));',
+  '  if(fwV<0.9){ float kE=1.0-smoothstep(0.35,0.9,fwV);',      // la camera non scende sotto i 160 m dal punto guardato: un pixel copre 10-30 cm, e dell'erba si leggono i cespi (da mezzo metro a tre), non i fili
+  '    vec3 de=vec3(1.0); vec3 dt=vec3(1.0);',
+  '    if(ve>0.02){ de=pow(texture2D(tErba,mat2(0.8,-0.6,0.6,0.8)*vXZ/7.5+0.37).rgb,vec3(2.2))/uMediaE; float wP=1.0-smoothstep(0.22,0.4,fwV); if(wP>0.0) de*=mix(vec3(1.0),pow(texture2D(tErba,vXZ/2.4).rgb,vec3(2.2))/uMediaE,wP); }',      // il prodotto delle due scale (non la media, che spegneva il contrasto): cespi piccoli dentro chiazze più grandi; la piccola solo dove si legge
+  '    if(ve<0.98) dt=pow(texture2D(tTerra,vXZ/2.1+0.11).rgb,vec3(2.2))/uMediaT;',
+  '    diffuseColor.rgb*=mix(vec3(1.0),clamp(mix(dt,de,ve),0.35,1.8),kE*0.85); } }'].join(String.fromCharCode(10));
+/* Trame della veste del PC (solo con RM.VESTE), disegnate una volta su tela e ripetute senza giunte:
+   - erba: vista dall'alto, cespi più scuri, fili chiari e secchi, terra fra i cespi (piastrelle di 24 e 75 m: si leggono i cespi da mezzo metro a tre, da lontano la media);
+   - terra: terra battuta con sassi, ghiaia e qualche solco (piastrella di 21 m);
+   - macchie: tre rumori morbidi indipendenti nei tre canali (4, 8 e 16 macchie per lato), per variare erba e terra su scale da pochi metri a qualche centinaio.
+   Le prime due si usano divise per la loro media: da lontano i mipmap le riducono a 1 e non cambiano il colore, né sfarfallano. */
+function trameVeste(){
+  function onda(W,H,disegna){ var c=document.createElement('canvas'); c.width=W; c.height=H; var g=c.getContext('2d'); disegna(g,W,H);
+    var d=g.getImageData(0,0,W,H).data, m=[0,0,0], k, lin=function(v){ return Math.pow(v/255,2.2); };      // three r128 non decodifica le trame passate come uniformi: lo shader le porta in lineare con la potenza 2,2, e la media si fa allo stesso modo
+    for(k=0;k<W*H;k++){ m[0]+=lin(d[k*4]); m[1]+=lin(d[k*4+1]); m[2]+=lin(d[k*4+2]); }
+    var t=new THREE.CanvasTexture(c); t.encoding=THREE.sRGBEncoding; t.wrapS=t.wrapT=THREE.RepeatWrapping; t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+    return {t:t, media:new THREE.Vector3(m[0]/(W*H),m[1]/(W*H),m[2]/(W*H))}; }
+  function giro(g,W,H,x,y,r,f){ for(var ox=-1;ox<=1;ox++) for(var oy=-1;oy<=1;oy++){ var X=x+ox*W, Y=y+oy*H; if(X>-r&&X<W+r&&Y>-r&&Y<H+r) f(X,Y); } }      // disegna anche le copie oltre i bordi: la piastrella si ripete senza giunte
+  var r=RM.casuale(1717);
+  var E=onda(256,256,function(g,W,H){ var k, x, y, a, l, c, rr;
+    g.fillStyle='#66703f'; g.fillRect(0,0,W,H);
+    for(k=0;k<70;k++){ x=r()*W; y=r()*H; rr=5+r()*14; c=r()<.55?'rgba(104,88,58,.5)':'rgba(140,134,82,.5)'; giro(g,W,H,x,y,rr*1.6,function(X,Y){ g.fillStyle=c; g.beginPath(); g.ellipse(X,Y,rr,rr*.7,0,0,6.3); g.fill(); }); }      // terra e paglia fra i cespi
+    for(k=0;k<110;k++){ x=r()*W; y=r()*H; rr=4+r()*9; giro(g,W,H,x,y,rr*1.6,function(X,Y){ g.fillStyle='rgba(44,58,26,.62)'; g.beginPath(); g.ellipse(X,Y,rr,rr*.8,0,0,6.3); g.fill(); }); }      // cespi, più scuri
+    for(k=0;k<5200;k++){ x=r()*W; y=r()*H; a=r()*6.283; l=2+r()*5; var t=r();
+      c=t<.5?[78+r()*36,98+r()*36,44+r()*18]:t<.84?[112+r()*36,124+r()*30,62+r()*20]:[158+r()*40,148+r()*30,92+r()*26];      // fili verdi, verde chiaro, secchi
+      g.strokeStyle='rgba('+(c[0]|0)+','+(c[1]|0)+','+(c[2]|0)+',.78)'; g.lineWidth=.7+r()*.7;
+      giro(g,W,H,x,y,l+2,function(X,Y){ g.beginPath(); g.moveTo(X,Y); g.lineTo(X+Math.cos(a)*l,Y+Math.sin(a)*l); g.stroke(); }); }
+  });
+  var T=onda(256,256,function(g,W,H){ var k, x, y, rr, c;
+    g.fillStyle='#8f7d62'; g.fillRect(0,0,W,H);
+    for(k=0;k<60;k++){ x=r()*W; y=r()*H; rr=8+r()*22; c=r()<.5?'rgba(120,104,80,.35)':'rgba(96,82,62,.35)'; var ro=r()*3; giro(g,W,H,x,y,rr*1.6,function(X,Y){ g.fillStyle=c; g.beginPath(); g.ellipse(X,Y,rr,rr*.6,ro,0,6.3); g.fill(); }); }      // chiazze di polvere e di terra più scura
+    for(k=0;k<1400;k++){ x=r()*W; y=r()*H; rr=.6+r()*1.8; c=r()<.6?'rgba(168,156,136,.8)':'rgba(70,60,48,.7)'; giro(g,W,H,x,y,rr+1,function(X,Y){ g.fillStyle=c; g.beginPath(); g.arc(X,Y,rr,0,6.3); g.fill(); }); }      // sassi e ghiaia
+    for(k=0;k<6;k++){ y=r()*H; c='rgba(70,58,44,.22)'; for(x=0;x<W;x+=2){ g.fillStyle=c; g.fillRect(x,(y+Math.sin(x*.05+k)*3+H)%H,2,2); } }      // solchi di ruote
+  });
+  /* macchie: rumore a valori su una griglia periodica, interpolato in modo morbido; due ottave per canale */
+  var M=256, cv=document.createElement('canvas'); cv.width=cv.height=M; var gm=cv.getContext('2d'), im=gm.createImageData(M,M);
+  function rumoreP(n,seme){ var v=[], i, rr=RM.casuale(seme); for(i=0;i<n*n;i++) v.push(rr()); return function(x,y){ var X=x*n, Y=y*n, ix=Math.floor(X), iy=Math.floor(Y), fx=X-ix, fy=Y-iy; fx=fx*fx*(3-2*fx); fy=fy*fy*(3-2*fy);
+    var a=v[(iy%n)*n+ix%n], b=v[(iy%n)*n+(ix+1)%n], c=v[((iy+1)%n)*n+ix%n], d=v[((iy+1)%n)*n+(ix+1)%n]; return (a*(1-fx)+b*fx)*(1-fy)+(c*(1-fx)+d*fx)*fy; }; }
+  var CH=[[rumoreP(4,11),rumoreP(8,12)],[rumoreP(8,13),rumoreP(16,14)],[rumoreP(16,15),rumoreP(32,16)]], i, j, k2;
+  for(j=0;j<M;j++) for(i=0;i<M;i++) for(k2=0;k2<3;k2++){ var vv=CH[k2][0](i/M,j/M)*.68+CH[k2][1](i/M,j/M)*.32; im.data[(j*M+i)*4+k2]=Math.max(0,Math.min(255,Math.round((vv-.5)*1.7*255+127.5))); im.data[(j*M+i)*4+3]=255; }
+  gm.putImageData(im,0,0);
+  var tM=new THREE.CanvasTexture(cv); tM.wrapS=tM.wrapT=THREE.RepeatWrapping;
+  return {erba:E.t, mediaE:E.media, terra:T.t, mediaT:T.media, macchie:tM};
+}
+var TVc=null; RM.trameVeste=function(){ return TVc||(TVc=trameVeste()); };      // una volta sola: le usano suolo, strade, fiume, case
 function nucleo(x,z){ var t=0; RM.NUCLEI.forEach(function(n){ var d=Math.hypot(x-n[0],z-n[1]); t=Math.max(t,n[2]*Math.exp(-(d*d)/(n[3]*n[3]))); }); return Math.min(1,t+.25*Math.exp(-RM.distFiume(x,z)/45)); }
 function posaSuolo(){
   var S=piccolo?220:300, geo=new THREE.PlaneGeometry(2,2,S,S); geo.rotateX(-Math.PI/2);
@@ -294,33 +360,47 @@ function posaSuolo(){
   });
   var matSuolo=new THREE.MeshStandardMaterial({vertexColors:true,map:granaTerra,roughness:1,metalness:0}), A=String.fromCharCode(10);
   RM.erba={value:0}; RM.pratoU=RM.pratoU||{value:1};                       // 0…1: quanta parte della città è lasciata da abbastanza tempo perché ci cresca l'erba
+  var TV=RM.VESTE?RM.trameVeste():null;
+  /* la veste ricolora i campi (stesso indice della scacchiera di coloreSuolo): pascoli più verdi, stoppie dorate, un campo arato color terra; rapporti fra il colore nuovo e quello di prima */
+  if(TV) TV.campi=[0x86a05a,0x6f8c4c,0xc4ad68,0x9c9a5c,0x6a8a4e,0xc9b06f,0x9a8060,0x82955a,0xa89a62].map(function(h,i){ var n=RM.col(h), c=CAMPI[i]; return new THREE.Vector3(n.r/c.r,n.g/c.g,n.b/c.b); });
   matSuolo.onBeforeCompile=function(sh){
     sh.uniforms.uErba=RM.erba; sh.uniforms.uVerde={value:RM.col(0x8e9163)}; sh.uniforms.uPrato=RM.pratoU;
-    sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute vec2 urb;','varying vec2 vUrb;','varying vec2 vXZ;','varying float vPend;'].join(A))
-      .replace('#include <begin_vertex>',['#include <begin_vertex>','vUrb=urb; vXZ=position.xz; vPend=1.0-normal.y;'].join(A));
-    sh.fragmentShader=sh.fragmentShader.replace('#include <common>',['#include <common>','uniform float uErba; uniform vec3 uVerde; uniform float uPrato;','varying vec2 vUrb;','varying vec2 vXZ;','varying float vPend;'].join(A))
+    if(TV){ sh.uniforms.tErba={value:TV.erba}; sh.uniforms.tTerra={value:TV.terra}; sh.uniforms.tMacchie={value:TV.macchie}; sh.uniforms.uMediaE={value:TV.mediaE}; sh.uniforms.uMediaT={value:TV.mediaT}; sh.uniforms.uVeste=RM.vesteU;
+      sh.uniforms.uCampi={value:TV.campi}; sh.uniforms.uHorti={value:RM.HORTI.map(function(h){ return new THREE.Vector3(h[0],h[1],h[2]); })}; }
+    sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute vec2 urb;','varying vec2 vUrb;','varying vec2 vXZ;','varying float vPend;',TV?'uniform vec3 uHorti[8]; varying float vHo;':''].join(A))
+      .replace('#include <begin_vertex>',['#include <begin_vertex>','vUrb=urb; vXZ=position.xz; vPend=1.0-normal.y;',
+        TV?'vHo=0.0; for(int k=0;k<8;k++){ vec3 hq=uHorti[k]; vHo=max(vHo,1.0-smoothstep(hq.z*0.7,hq.z*1.1,length(position.xz-hq.xy))); }':''].join(A));      // gli horti nel vertice: nel frammento il giro costava a ogni pixel
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>',['#include <common>','uniform float uErba; uniform vec3 uVerde; uniform float uPrato;','varying vec2 vUrb;','varying vec2 vXZ;','varying float vPend;',
+        TV?'uniform sampler2D tErba; uniform sampler2D tTerra; uniform sampler2D tMacchie; uniform vec3 uMediaE; uniform vec3 uMediaT; uniform float uVeste; uniform vec3 uCampi[9]; varying float vHo;':''].join(A))
       .replace('#include <color_fragment>',['#include <color_fragment>',
         'float pe=sin(vXZ.x*0.21+sin(vXZ.y*0.13)*2.0)*sin(vXZ.y*0.19+sin(vXZ.x*0.11)*2.0)*0.5+0.5;',
         'float gr=dot(diffuseColor.rgb,vec3(0.34))/0.42;',
-        'diffuseColor.rgb=mix(diffuseColor.rgb,uVerde*(0.72+0.4*pe)*clamp(gr,0.7,1.25),vUrb.x*smoothstep(0.1,0.5,uErba-vUrb.y*0.95)*(0.6+0.4*pe));',
+        'vec3 verdeV=uVerde;',
+        TV?VESTE_SUOLO_A:'',
+        'diffuseColor.rgb=mix(diffuseColor.rgb,verdeV*(0.72+0.4*pe)*clamp(gr,0.7,1.25),vUrb.x*smoothstep(0.1,0.5,uErba-vUrb.y*0.95)*(0.6+0.4*pe));',
         /* campagna: i confini fra i campi (siepi, fossi) e i solchi, ogni campo col suo verso e il suo passo; solo fuori città. La scacchiera è la stessa di coloreSuolo */
         'float camp=1.0-smoothstep(0.0,0.25,vUrb.x);',
         'if(camp>0.0){ vec2 fq=vec2(dot(vXZ,vec2(0.82,0.57))/26.0,dot(vXZ,vec2(-0.57,0.82))/19.0); float hc=fract(sin(dot(floor(fq),vec2(127.1,311.7)))*43758.5453);',
         '  float lungo=hc>0.5?fq.x*26.0:fq.y*19.0; float passoC=0.7+1.1*fract(hc*7.3); float fwC=fwidth(lungo)/passoC;',
         '  float solco=sin(lungo/passoC*6.2832)*(1.0-smoothstep(0.12,0.4,fwC))*step(0.25,hc);',
         '  vec2 bc=abs(fract(fq)-0.5); float fwB=max(fwidth(fq.x),fwidth(fq.y)); float siepe=smoothstep(0.5-0.012-fwB,0.5-0.006,max(bc.x,bc.y))*(1.0-smoothstep(0.01,0.05,fwB));',
-        '  diffuseColor.rgb*=1.0+camp*(0.07*solco-0.22*siepe); }',
+        '  diffuseColor.rgb*=1.0+camp*(0.07*solco-0.22*siepe);',
+        TV?VESTE_SUOLO_C:'',
+        '}',
         /* Prati (24 novembre 2026; l'utente: «l'erba inesistente»). Dove il suolo è verde (campagna, prati, città abbandonata all'erba) il colore varia su tre scale, leggendo
            la stessa trama di rumore molto ingrandita (filtrata dai mipmap, quindi ferma quando la camera si muove): chiazze larghe più verdi e più spente (una trentina di metri),
            macchie che seccano verso il color paglia (una decina), cespi più scuri (due o tre metri). Peso: RM.QUALITA.prato (0 sui telefoni e in «bassa») */
         'float verde=clamp((diffuseColor.g-diffuseColor.r*0.92)*9.0+0.25*vUrb.x*uErba,0.0,1.0)*uPrato;',
+        TV?'verde*=1.0-uVeste;':'',      // con la veste le chiazze dei prati le fa il blocco B, con le trame morbide: tre letture in meno per pixel
         'if(verde>0.0){ float n1=(texture2D(map,vXZ/900.0).r-0.8)*5.0; float n2=(texture2D(map,vXZ/260.0+0.31).r-0.8)*5.0; float n3=(texture2D(map,vXZ/61.0+0.67).r-0.8)*5.0;',
         '  vec3 c0=diffuseColor.rgb*(0.84+0.3*n1)*mix(vec3(1.0),vec3(1.14,1.02,0.66),smoothstep(0.5,0.85,n2)*0.55)*(1.0-0.3*smoothstep(0.55,0.95,n3));',
         '  diffuseColor.rgb=mix(diffuseColor.rgb,c0,verde); }',
+        TV?VESTE_SUOLO_B:'',
         'diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.27,0.25,0.15)*(0.8+0.4*pe),smoothstep(0.025,0.2,vPend)*0.8);',
         /* da vicino il terreno prende una grana più fine (ciuffi, sassi), che sfuma quando ci si allontana e non sfarfalla */
         /* 24 novembre 2026: la grana più fine (g2, passo di 5 cm) si spegne prima dell'altra e il contrasto è più basso: da vicino era una puntinatura dura */
         'float fwS=max(fwidth(vXZ.x),fwidth(vXZ.y)); float vic=1.0-smoothstep(0.03,0.14,fwS); float vic2=1.0-smoothstep(0.015,0.06,fwS);',
+        TV?'vic*=1.0-uVeste; vic2*=1.0-uVeste;':'',      // con la veste la grana da vicino la danno le trame d'erba e di terra: due letture in meno
         'if(vic>0.0){ float g1=texture2D(map,vUv*9.0).r; float g2=texture2D(map,vUv*31.0+0.37).r; float ch=sin(vXZ.x*3.1+sin(vXZ.y*2.3)*1.9)*sin(vXZ.y*2.7+sin(vXZ.x*1.9)*2.1);',
         '  diffuseColor.rgb*=1.0+vic*((g1-0.9)*1.35+0.06*ch)+vic2*(g2-0.9)*0.8; }',
         /* lontano dalla città il terreno diventa una carta antica: fondo color pergamena, tratteggio a inchiostro */
@@ -359,6 +439,26 @@ RM.nastro=function(linea,larga,materiale,alza,quotaFissa){
 };
 /* strade (le vie strette del centro prendono la quota ogni 10 m, le altre ogni 30: con 30 m sulla Velia il nastro affondava nel terreno e la via Sacra sembrava a pezzi; 23 novembre 2026) */
 var matStrada=new THREE.MeshStandardMaterial({color:RM.col(0xcdbfa3),roughness:1,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
+/* Veste del PC: le strade non sono più nastri color crema ma lastricate di basalto («silex»), grigie e scurite dove passano le ruote, con i margini di terra e polvere più chiari;
+   da vicino i poligoni del basolato, ognuno col suo tono; nella città che si svuota l'erba le invade a chiazze (dove la gente resta, nei nuclei, la scena non lo sa: è una media).
+   I marciapiedi rialzati e le crepidini lungo le vie consolari sono resi solo col colore: uno schema. */
+if(RM.VESTE) matStrada.onBeforeCompile=function(sh){ var A=String.fromCharCode(10), TVs=RM.trameVeste();
+  sh.uniforms.uVeste=RM.vesteU; sh.uniforms.tMacchie={value:TVs.macchie}; sh.uniforms.uErbaS=RM.erba||{value:0};
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying vec2 vXZs; varying vec2 vUvS;').replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vXZs=position.xz; vUvS=uv;');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying vec2 vXZs; varying vec2 vUvS; uniform float uVeste; uniform sampler2D tMacchie; uniform float uErbaS;'+A+
+      'vec2 bH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }')
+    .replace('#include <color_fragment>',['#include <color_fragment>',
+      'if(uVeste>0.5){ float bx=abs(vUvS.x-0.5)*2.0; vec4 mS=texture2D(tMacchie,vXZs/9.0); vec4 mL=texture2D(tMacchie,vXZs/70.0+0.3);',
+      '  vec3 sel=vec3(0.175,0.168,0.152)*(0.88+0.24*mS.b)*(1.0-0.1*smoothstep(0.25,0.0,abs(bx-0.38)));',      // basolato, più scuro nei solchi delle ruote
+      '  vec3 marg=vec3(0.3,0.26,0.19)*(0.9+0.2*mS.g);',
+      '  diffuseColor.rgb=mix(sel,marg,smoothstep(0.72,0.86,bx));',
+      '  float fwS=max(fwidth(vXZs.x),fwidth(vXZs.y));',
+      '  if(fwS<0.03){ vec2 pq=vXZs/0.075; vec2 n=floor(pq); vec2 f=fract(pq); float d1=8.0; float d2=8.0; vec2 idv=vec2(0.0);',
+      '    for(int j=-1;j<=1;j++){ for(int i=-1;i<=1;i++){ vec2 g=vec2(float(i),float(j)); vec2 o=bH2(n+g); float dd=length(g+o-f); if(dd<d1){ d2=d1; d1=dd; idv=n+g; } else if(dd<d2) d2=dd; } }',
+      '    float kv=1.0-smoothstep(0.012,0.03,fwS); float giunto=1.0-smoothstep(0.03,0.09+fwS*8.0,d2-d1);',
+      '    diffuseColor.rgb*=1.0+kv*(1.0-smoothstep(0.72,0.86,bx))*((bH2(idv).x-0.5)*0.22-0.25*giunto); }',
+      '  float erbaS=uErbaS*smoothstep(0.42,0.72,mL.r*0.6+mS.g*0.4)*(0.55+0.45*smoothstep(0.5,1.0,bx));',
+      '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.2,0.24,0.09)*(0.85+0.3*mS.r),erbaS*0.8); }'].join(A)); };
 
 /* Tevere */
 /* Il Tevere è torbido: «flavus», biondo, per i poeti latini. Fino al 23 novembre 2026 era turchese, più bello che vero; ora è un verde-grigio scuro: il giallo fango, provato, dall'alto non si leggeva più come un fiume. L'acqua limpida resta quella degli acquedotti (fontane, vasche). */
@@ -374,7 +474,36 @@ RM.matFiume.onBeforeCompile=function(sh){                       // corrente che 
     'float fwA=fwidth(vRiva.y); float vicA=1.0-smoothstep(0.02,0.12,fwA);',
     'diffuseColor.rgb*=1.0+vicA*0.07*sin(vRiva.y*37.0-uTempo*2.1+sin(vRiva.x*23.0+uTempo*0.9)*2.0)*sin(vRiva.x*19.0+vRiva.y*11.0+uTempo*0.6);',
     'diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*2.2+0.08,smoothstep(0.8,0.97,bordo)*(0.35+0.4*onda));'].join(A));
+  if(RM.VESTE) fiumeVeste(sh);
 };
+/* Il Tevere con la veste del PC (24 novembre 2026): acqua torbida di fiume di pianura, più bruna e opaca al centro, più chiara e gialla sulle secche lungo le rive (senza la schiuma
+   bianca di prima); la superficie ha increspature lente che scendono con la corrente (si spengono quando diventano più piccole di un pixel: niente sfarfallio) e strisce di
+   torbida più chiara; riflette il cielo secondo l'angolo di vista (Fresnel): quasi nulla guardando dall'alto, di più radente, come un fiume vero. Niente specchio. */
+function fiumeVeste(sh){ var A=String.fromCharCode(10), TVf=RM.trameVeste();
+  sh.uniforms.uVeste=RM.vesteU; sh.uniforms.tMacchie={value:TVf.macchie}; sh.uniforms.uCieloA=cielo.material.uniforms.alto; sh.uniforms.uCieloB=cielo.material.uniforms.basso;
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying vec3 vWf;').replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vWf=(modelMatrix*vec4(transformed,1.0)).xyz;');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying vec3 vWf; uniform float uVeste; uniform sampler2D tMacchie; uniform vec3 uCieloA; uniform vec3 uCieloB; vec3 nFiume=vec3(0.0,1.0,0.0);')
+    .replace('float bordo=abs(vRiva.x-0.5)*2.0;','float bordo=abs(vRiva.x-0.5)*2.0; vec3 base0=diffuseColor.rgb;')
+    .replace('#include <normal_fragment_maps>',['#include <normal_fragment_maps>',
+      'if(uVeste>0.5){',
+      '  float bw=abs(vRiva.x-0.5)*2.0; vec4 mf=texture2D(tMacchie,vec2(vRiva.x*0.35,vRiva.y*0.045-uTempo*0.006));',
+      '  diffuseColor.rgb=base0*vec3(1.08,0.9,0.78)*(0.94+0.12*mf.g)*(1.0-0.12*(1.0-bw));',      // torbida: bruna, un poco più scura al centro, a strisce
+      '  diffuseColor.rgb=mix(diffuseColor.rgb,base0*vec3(1.75,1.55,1.05),smoothstep(0.78,0.98,bw)*0.7);',      // secche e fango lungo le rive
+      '  float filo=smoothstep(0.62,0.8,texture2D(tMacchie,vec2(vRiva.x*1.3+0.2,vRiva.y*0.012-uTempo*0.004)).b);',      // filoni di torbida più chiara, lunghi, che scendono con la corrente
+      '  diffuseColor.rgb*=1.0+0.16*filo*(1.0-bw);',
+      '  vec2 p=vWf.xz; float fw=max(fwidth(p.x),fwidth(p.y)); vec2 g=vec2(0.0);',
+      '  vec2 d1=vec2(0.6,0.8); vec2 d2=vec2(-0.83,0.55); vec2 d3=vec2(0.2,-0.98);',
+      '  float am=0.4+1.2*mf.b;',      // le increspature vanno e vengono a chiazze: onde regolari dappertutto facevano righe
+      '  g+=d1*cos(dot(p,d1)*9.0-uTempo*1.1+mf.r*4.0)*0.045*am*(1.0-smoothstep(0.6,1.6,fw*9.0));',      // ogni onda si spegne prima di stare in meno di quattro pixel
+      '  g+=d2*cos(dot(p,d2)*15.0+uTempo*1.5)*0.03*am*(1.0-smoothstep(0.6,1.6,fw*15.0));',
+      '  g+=d3*cos(dot(p,d3)*27.0-uTempo*2.0+sin(p.x*3.0))*0.022*am*(1.0-smoothstep(0.6,1.6,fw*27.0));',
+      '  g+=(mf.rb-0.5)*0.1;',
+      '  nFiume=normalize(vec3(-g.x,1.0,-g.y)); normal=normalize((viewMatrix*vec4(nFiume,0.0)).xyz);',
+      '}'].join(A))
+    .replace('#include <emissivemap_fragment>',['#include <emissivemap_fragment>',
+      'if(uVeste>0.5){ vec3 Vf=normalize(cameraPosition-vWf); vec3 Rf=reflect(-Vf,nFiume); vec3 cie=mix(uCieloB,uCieloA,pow(clamp(Rf.y*1.6,0.0,1.0),0.55));',
+      '  float Ff=0.02+0.98*pow(1.0-max(dot(nFiume,Vf),0.0),5.0); totalEmissiveRadiance+=cie*Ff*0.85*(1.0-0.6*smoothstep(0.8,1.0,abs(vRiva.x-0.5)*2.0)); }'].join(A));
+}
 RM.frame.push(function(dt){ RM.tempoAcqua.value+=dt; });
 RM.posa=function(){
   if(RM.suolo) return;
@@ -393,7 +522,12 @@ var fiumeG=RM.col(0x5a6c53), fiumeN=RM.col(0x10160f);
 RM.velo=0;
 var VELO={ alto:RM.col(0xa9b2ba), basso:RM.col(0xcfc9ba), sole:RM.col(0xc4d0e6) };
 RM.applicaVelo=function(v){ if(Math.abs(v-RM.velo)<.004) return; RM.velo=v; RM.applicaLuce(RM.notte); };
+/* La luce della veste del PC (24 novembre 2026): sole più caldo e un poco più forte, cielo più azzurro che riempie le ombre con una tinta fredda, la terra che rimanda
+   un riflesso caldo; orizzonte meno giallo, perché la foschia della distanza (negli effetti a tutto schermo) è azzurrina. La notte resta quella di prima. */
+var G2={ alto:RM.col(0x89abcc), basso:RM.col(0xe6e2d6), emiSu:RM.col(0xb4cbeb), emiGiu:RM.col(0x7c6b55), sole:RM.col(0xffd9a6), iSole:3.2, iEmi:.46, esp:.9 }, G1=G; RM.luceVeste=G2;
+RM.hazeU={value:new THREE.Color(0xc9d3da)}; var HAZE_G=new THREE.Color(0xc9d3da), HAZE_N=new THREE.Color(0x1a2236);      // colore della foschia, già in sRGB: si mescola nella passata dei contorni
 RM.applicaLuce=function(n){
+  G=RM.vesteU.value>.5?G2:G1; RM.hazeU.value.copy(HAZE_G).lerp(HAZE_N,n); renderer.toneMappingExposure=RM.vesteU.value>.5?G2.esp:1.07;
   RM.notte=n; var v=RM.velo*(1-n);
   cielo.material.uniforms.alto.value.copy(G.alto).lerp(N.alto,n).lerp(VELO.alto,v*.85); cielo.material.uniforms.basso.value.copy(G.basso).lerp(N.basso,n).lerp(VELO.basso,v*.85);
   scene.fog.color.copy(cielo.material.uniforms.basso.value);
@@ -411,6 +545,12 @@ RM.applicaLuce(0);
    Con una passata sola i contorni si disegnavano dopo l'antialias e restavano a scalini, e i bordi degli edifici erano solo ammorbiditi. L'antialias a più campioni (MSAA)
    su questa tela è stato provato e scartato: con la profondità da riportare a un campione raddoppiava il tempo di ogni fotogramma.
    Serve WebGL2; altrimenti si disegna direttamente, con l'antialias della tela. */
+/* nella passata dei contorni, con la veste: l'occlusione (quattro letture che coprono la scacchiera 2x2 della mezza risoluzione) e la foschia della distanza (non sul cielo) */
+var VESTE_POST_C=['  if(uVeste>0.5){',
+  '    if(uAO>0.0){ float ao=0.25*(texture2D(tAO,vUv+px).r+texture2D(tAO,vUv-px).r+texture2D(tAO,vUv+vec2(px.x,-px.y)).r+texture2D(tAO,vUv+vec2(-px.x,px.y)).r);',
+  '      c*=mix(1.0,ao,uAO*(1.0-0.5*notte)*(1.0-0.35*smoothstep(250.0,700.0,p))); }',      // da lontano più leggera: dalla vista d'insieme scuriva i vicoli fino a sporcare la città
+  '    float hz=(1.0-exp(-max(0.0,p-120.0)*0.0005))*0.36*step(p,3000.0);',
+  '    c=mix(c,uHaze,hz); contorno*=1.0-min(1.0,hz*1.5); }'].join(String.fromCharCode(10));
 var post=null, ALTA=1;      // ALTA: quante volte i pixel dello schermo ha la tela degli effetti (1; 1,25 o 1,5 con l'«alta qualità», più sotto)
 /* Per i colonnati che da lontano diventano una fascia (js/costruttore.js): dov'è l'occhio e quanti pixel fa un'unità a distanza 1. Si aggiornano a ogni disegno,
    anche per l'ombra, che così sceglie colonne o fascia come le vede la camera e non come le vede il sole (24 novembre 2026) */
@@ -432,6 +572,7 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
     vertexShader:VS,
     fragmentShader:[
       'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; uniform float sfoca; uniform float scala; varying vec2 vUv;',
+      RM.VESTE?'uniform sampler2D tAO; uniform float uAO; uniform vec3 uHaze; uniform float uVeste;':'',
       'float prof(vec2 uv){ float z=texture2D(tProf,uv).x*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',
       'void main(){',
       '  vec3 c=texture2D(tCol,vUv).rgb;',
@@ -443,15 +584,43 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
       '  float p=prof(vUv), pa=prof(vUv+vec2(q.x,0.0)), pb=prof(vUv-vec2(q.x,0.0)), pc=prof(vUv+vec2(0.0,q.y)), pd=prof(vUv-vec2(0.0,q.y));',
       '  float salto=max(0.0,4.0*p-pa-pb-pc-pd)/p, pv=min(p,min(min(pa,pb),min(pc,pd)));',
       '  float contorno=smoothstep(0.006,0.03,salto)*(1.0-fuoco)*(1.0-smoothstep(500.0,1400.0,pv));',
+      RM.VESTE?VESTE_POST_C:'',
       '  c=mix(c,c*vec3(0.34,0.25,0.18),contorno*0.5*(1.0-0.6*notte));',
       '  gl_FragColor=vec4(c,1.0);',
       '}'].join(NL) });
+  /* Veste del PC: occlusione d'ambiente (quanto un punto è chiuso dalle cose vicine: piedi dei muri, vicoli, cortili, attorno alle colonne) a metà risoluzione, letta dalla sola
+     profondità. Otto prove in un disco il cui raggio nel mondo cresce con la distanza (3 m sui Fori da vicino, una quarantina di metri dalla vista d'insieme), ruotato a scacchiera 2x2
+     e riunito nella passata dei contorni con quattro letture bilineari che coprono la scacchiera: il risultato è fermo sullo schermo, non brulica. Poi la foschia della distanza,
+     azzurrina, che dà profondità alla vista d'insieme senza fare nebbia. Peso dell'occlusione: RM.QUALITA.ao (0 in «bassa»). */
+  var telaAO=null, matAO=null, uAO={value:0}, uNAO={value:8}, uTan={value:new THREE.Vector2(1,1)}, uPxS={value:1000};
+  if(RM.VESTE){
+    telaAO=new THREE.WebGLRenderTarget(4,4,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat,depthBuffer:false,stencilBuffer:false}); telaAO.texture.generateMipmaps=false;
+    matC.uniforms.tAO={value:telaAO.texture}; matC.uniforms.uAO=uAO; matC.uniforms.uHaze=RM.hazeU; matC.uniforms.uVeste=RM.vesteU;
+    matAO=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
+      uniforms:{ tProf:{value:tela.depthTexture}, px:uPx, vicino:{value:camera.near}, lontano:{value:camera.far}, uTan:uTan, uPxS:uPxS, uNAO:uNAO },
+      vertexShader:VS,
+      fragmentShader:[
+        'uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform vec2 uTan; uniform float uPxS; uniform float uNAO; varying vec2 vUv;',
+        'float prof(vec2 uv){ float z=textureLod(tProf,uv,0.0).x*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',      // textureLod: nel giro delle prove la lettura non chiede derivate (WebGL2, come tutta questa passata)
+        'vec3 posV(vec2 uv,float d){ return vec3((uv*2.0-1.0)*uTan*d,-d); }',
+        'void main(){',
+        '  float d=prof(vUv); if(d>3000.0){ gl_FragColor=vec4(1.0); return; }',
+        '  vec3 P=posV(vUv,d); vec3 N=normalize(cross(dFdx(P),dFdy(P)));',
+        '  float R=0.16+d*0.0042; float rpx=min(R*uPxS/d,70.0);',                                    // raggio nel mondo e sullo schermo (pixel della tela piena)
+        '  vec2 sc=mod(floor(gl_FragCoord.xy),2.0); float a0=(sc.x*2.0+sc.y)*0.3927; float ca=cos(a0); float sa=sin(a0); mat2 ro=mat2(ca,sa,-sa,ca);',
+        '  float s=0.0; float R2=R*R;',
+        '  for(int i=0;i<12;i++){ if(float(i)>=uNAO) break; float t=(float(i)+0.6)/uNAO; float a=float(i)*2.39996; vec2 o=ro*vec2(cos(a),sin(a))*sqrt(t)*rpx*px; vec2 uv=vUv+o;',      // quante prove: RM.QUALITA.aoN
+        '    vec3 v=posV(uv,prof(uv))-P; float vv=dot(v,v); s+=max(0.0,dot(v,N)*inversesqrt(vv+1e-6)-0.08)*(1.0-smoothstep(R2,R2*4.0,vv)); }',
+        '  float ao=clamp(1.0-s*1.68/uNAO,0.0,1.0); gl_FragColor=vec4(ao,ao,ao,1.0);',
+        '}'].join(NL) });
+  }
   /* FXAA nella forma breve di Timothy Lottes (nove letture): cerca la direzione del bordo dai quattro angoli e media lungo quella */
   var mat=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
     uniforms:{ tCol:{value:tela2.texture}, px:uPx, sfoca:uSfoca, dens:uDens, notte:uNotte, scala:uScala },
     vertexShader:VS,
     fragmentShader:[
       'uniform sampler2D tCol; uniform vec2 px; uniform float sfoca; uniform float dens; uniform float scala; varying vec2 vUv;',
+      RM.VESTE?'uniform float uVeste; uniform float uGrado;':'',
       'float lum(vec3 c){ return dot(c,vec3(0.299,0.587,0.114)); }',
       'void main(){',
       '  vec3 c;',
@@ -472,18 +641,24 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
       '    c=(c*2.0+texture2D(tCol,vUv+vec2(r.x,0.0)).rgb+texture2D(tCol,vUv-vec2(r.x,0.0)).rgb+texture2D(tCol,vUv+vec2(0.0,r.y)).rgb+texture2D(tCol,vUv-vec2(0.0,r.y)).rgb',
       '      +texture2D(tCol,vUv+r*0.7).rgb+texture2D(tCol,vUv-r*0.7).rgb+texture2D(tCol,vUv+vec2(r.x,-r.y)*0.7).rgb+texture2D(tCol,vUv+vec2(-r.x,r.y)*0.7).rgb)/10.0; }',
       '  float g=lum(c); c=mix(vec3(g),c,1.1);',
+      RM.VESTE?'  if(uVeste>0.5){ c=clamp(c,0.0,1.0); c=mix(c,c*c*(3.0-2.0*c),uGrado); }':'',      // veste: una curva a S leggera, più contrasto nei toni medi
       '  gl_FragColor=vec4(c,1.0);',
       '}'].join(NL) });
+  if(RM.VESTE){ mat.uniforms.uVeste=RM.vesteU; mat.uniforms.uGrado=RM.gradoU={value:.32}; }
   var quadro=new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat); quadro.frustumCulled=false;
   var scena2=new THREE.Scene(), camera2=new THREE.OrthographicCamera(-1,1,1,-1,0,1); scena2.add(quadro);
   post={ tela:tela, mat:mat, scena:scena2, camera:camera2, attivo:true, dens:uDens,
     /* misure in pixel veri delle due tele */
-    misura:function(W,H){ tela.setSize(W,H); tela2.setSize(W,H); uPx.value.set(1/W,1/H); },
+    misura:function(W,H){ tela.setSize(W,H); tela2.setSize(W,H); uPx.value.set(1/W,1/H); if(telaAO) telaAO.setSize(Math.max(2,W>>1),Math.max(2,H>>1)); },
+    ao:uAO, aoN:uNAO,
     /* la scena e le due passate, sulla tela della pagina. Chi disegna fuori dal ciclo (i fotogrammi delle infografiche, le prove) passa di qui */
     disegna:function(sc,cam){
       uScala.value=Math.max(1,tela.width/Math.max(1,renderer.domElement.width));
       if(cam.isPerspectiveCamera) RM.occhio(cam,tela.height/uScala.value);      // in pixel dello schermo: la soglia dei colonnati non cambia con la tela
       renderer.setRenderTarget(tela); renderer.render(sc,cam);
+      if(telaAO && uAO.value>0 && cam.isPerspectiveCamera){ var ty=Math.tan(cam.fov*Math.PI/360)/(cam.zoom||1); uTan.value.set(ty*cam.aspect,ty); uPxS.value=tela.height/(2*ty);
+        if(RM.q===1) uNAO.value=tela.width*tela.height>1.6e6?4:RM.QUALITA.aoN[1];      // «media» su uno schermo grande (1920x1080): quattro prove invece di sei, perché il gradino non costi di più dove i pixel sono più del doppio
+        quadro.material=matAO; renderer.setRenderTarget(telaAO); renderer.render(scena2,camera2); }
       quadro.material=matC; renderer.setRenderTarget(tela2); renderer.render(scena2,camera2);
       quadro.material=mat; renderer.setRenderTarget(null); renderer.render(scena2,camera2);
     } };
@@ -545,7 +720,10 @@ function regola(media){
    ?qualita=bassa|media|alta|massima fissa un gradino (per le prove, non ricordato); ?qualita=fissa spegne i regolatori e tiene il gradino di partenza.
    RM.regolatore.alta per le prove: stato(), passo(dt,lavoro,ora,calmo) per simulare i tempi, azzera(). */
 var NOMI_Q=['bassa','media','alta','massima'];
-RM.QUALITA={ ris:[1,1,1.25,1.5], ombra:[1536,2048,4096,4096], prato:[0,1,1,1] };
+RM.QUALITA={ ris:[1,1,1.25,1.5], ombra:[1536,2048,4096,4096], prato:[0,1,1,1],
+  veste:[0,1,1,1],      // la veste del PC (suolo, erba, luce, acqua, tetti): 0 in «bassa», che resta com'era
+  ao:[0,.75,.8,.8],      // peso dell'occlusione d'ambiente negli effetti a tutto schermo
+  aoN:[0,6,8,12] };      // quante prove per pixel dell'occlusione (in «media» quattro sopra 1,6 milioni di pixel)
 var TOCCO_Q=(navigator.maxTouchPoints>0) || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
 var Q0=(piccolo||TOCCO_Q)?0:1, qScelta=null, qUrl=(/[?&]qualita=(bassa|media|alta|massima)/.exec(location.search)||[])[1];
 try{ var qMem=localStorage.getItem('rm-qualita'); if(NOMI_Q.indexOf(qMem)>=0) qScelta=qMem; }catch(e){}
@@ -558,6 +736,8 @@ RM.qp=function(nome){ var v=RM.QUALITA[nome]; return v?v[RM.q]:undefined; };
 function risQ(){ return alta.calmo||!altaAdatta?RM.QUALITA.ris[alta.g]:1; }
 function applicaQ(){
   RM.q=alta.g; var L=RM.QUALITA.ombra[alta.g]; RM.pratoU=RM.pratoU||{value:1}; RM.pratoU.value=RM.QUALITA.prato[alta.g];
+  var ve=RM.VESTE?RM.QUALITA.veste[alta.g]:0; if(ve!==RM.vesteU.value){ RM.vesteU.value=ve; RM.applicaLuce(RM.notte); }
+  if(post){ post.ao.value=RM.VESTE?RM.QUALITA.ao[alta.g]:0; post.aoN.value=RM.QUALITA.aoN[alta.g]||8; }
   if(sole.shadow.mapSize.x!==L){ sole.shadow.mapSize.set(L,L); if(sole.shadow.map){ sole.shadow.map.dispose(); sole.shadow.map=null; } renderer.shadowMap.needsUpdate=true; }
   var r=risQ(); if(r!==ALTA){ ALTA=r; misura(); }
   alta.ascoltatori.forEach(function(fn){ try{ fn(alta.g); }catch(e){} });
