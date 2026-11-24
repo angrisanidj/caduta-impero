@@ -1705,3 +1705,83 @@ rect.ig-bb-leg-r{stroke:rgba(0,0,0,.2)}
   .ig-b.ig-b-testo{padding:0 8px 0 5px;font-size:12.5px;gap:2px} .ig-b.ig-b-testo.fine{padding:0 5px 0 8px} .ig-comandi{gap:3px} .ig-lato{overflow-x:hidden}
   .ig-scorri{margin-bottom:0}
 }
+/* «Il cielo, il fiume, la malattia» (24 novembre 2026) */
+.ig-ci-tavola,.ig-ci-fili,.ig-ci-col{opacity:0;transition:opacity .8s}
+.ig-ci-tavola.vis,.ig-ci-fili.vis,.ig-ci-col.vis{opacity:1}
+.ig-ci-acqua{opacity:0;transition:opacity 1.2s}
+.ig-ci-acqua.vis{opacity:1}
+.ig-ci-acqua.leggera.vis{opacity:.45}
+.ig-ci-piena{fill:#6E9FB3;opacity:.55}
+.ig-ci-s{opacity:0;transition:opacity .6s}
+.ig-ci-s.vis{opacity:1}
+.ig-ci-s-fondo{fill:#FFFDF8;stroke:#5F554B;stroke-width:1.2}
+.ig-ci-s.terra .ig-ci-s-fondo{stroke:#8A5A2B} .ig-ci-s.fiume .ig-ci-s-fondo{stroke:#3E6F86} .ig-ci-s.leggenda .ig-ci-s-fondo{stroke:#9E8BB0;stroke-dasharray:3 2}
+.ig-ci-g{fill:#5F554B;stroke:none}
+.ig-ci-g.linea{fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ig-ci-g.malattia{fill:#9A2F2A} .ig-ci-g.fiume{stroke:#3E6F86} .ig-ci-g.terra{stroke:#8A5A2B} .ig-ci-g.cielo{fill:#B8A04A} .ig-ci-g.leggenda{stroke:#7A6A8E;fill:none}
+.ig-ci-g.chiaro.malattia{fill:#FFF8EA} .ig-ci-g.chiaro.fiume,.ig-ci-g.chiaro.terra{stroke:#FFF8EA} .ig-ci-g.chiaro.cielo{fill:#FFF8EA}
+.ig-ci-velo{stroke:#9E9583;stroke-width:1.4;opacity:.8}
+.ig-ci-pop-f{fill:#E6DCCB;opacity:.75}
+.ig-ci-pop{fill:none;stroke:#C2B49B;stroke-width:1.6}
+.ig-ci-pop-t{font-family:var(--ui);font-size:10.5px;fill:#8E8270}
+.ig-ci-filo{stroke:#DCCFB8;stroke-width:1.2}
+.ig-ci-filo-t{font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.ig-ci-filo-t.malattia{fill:#9A2F2A} .ig-ci-filo-t.fiume{fill:#3E6F86} .ig-ci-filo-t.terra{fill:#8A5A2B} .ig-ci-filo-t.cielo{fill:#8A7A2E}
+.ig-ci-anno-p{font-family:var(--ui);font-size:10.5px;fill:#7B6E61}
+.ig-ci-ev{opacity:0;transition:opacity .5s}
+.ig-ci-ev.vis{opacity:1}
+.ig-ci-ev-c{stroke:#FFF8EA;stroke-width:1.5}
+.ig-ci-ev-c.malattia{fill:#9A2F2A} .ig-ci-ev-c.fiume{fill:#3E6F86} .ig-ci-ev-c.terra{fill:#8A5A2B} .ig-ci-ev-c.cielo{fill:#B8A04A}
+.ig-ci-ev.ora .ig-ci-ev-c{stroke:#2A231D;stroke-width:2.5}
+.ig-ci-durata{opacity:.55} .ig-ci-durata.malattia{fill:#9A2F2A} .ig-ci-durata.terra{fill:none;stroke:#8A5A2B;stroke-width:1.5;stroke-dasharray:3 3}
+.ig-ci-cur{stroke:#2A231D;stroke-width:1.2;opacity:.5}
+.ig-ci-nome{font-size:12px}
+/* «Il cielo, il fiume, la malattia», seconda veste (24 novembre 2026) */
+.ig-ci-pianta{transition:opacity .6s}
+.ig-ci-pianta.spenta{opacity:0}
+.ig-ci-acqua{opacity:0;transition:opacity 1s}
+.ig-ci-acqua.vis{opacity:.78}
+.ig-ci-acqua.cala.vis{opacity:.35}
+.ig-ci-fascia{display:none}
+.ig-ci-fascia.vis{display:inline}
+.ig-ci-mura{fill:rgba(251,246,234,.18)}
+.ig-ci-corteo{opacity:0;transition:opacity .5s}
+.ig-ci-corteo.vis{opacity:1}
+.ig-ci-corteo path{fill:none;stroke:#7A1F2B;stroke-width:2.2;stroke-linecap:round;stroke-dasharray:1 0}
+.ig-ci-corteo-p{fill:#FFF8EA;stroke:#7A1F2B;stroke-width:1.5}
+.ig-ci-mal{opacity:0;transition:opacity .8s,transform .8s}
+.ig-ci-mal.vis{opacity:.9}
+.ig-ci-mal.piccolo.vis{opacity:.35}
+.ig-ci-mal-a{fill:#9A2F2A;opacity:.12}
+.ig-ci-dida{opacity:0;transition:opacity .5s}
+.ig-ci-dida.vis{opacity:1}
+.ig-ci-disegni .ig-ci-dis{opacity:0;transition:opacity .7s}
+.ig-ci-disegni .ig-ci-dis.vis{opacity:1}
+.ig-ci-dis-fondo{fill:#F4ECDD}
+.ig-ci-dis-fondo.malattia{fill:#F3E7E2}
+.ig-ci-dis-segno{opacity:.18}
+.ig-ci-dis-q{font-family:var(--serif);font-style:italic;fill:#2A231D}
+.ig-ci-dis-chi{font-family:var(--ui);font-size:12px;fill:#6B5F53}
+.ig-ci-536-alone{fill:#EDEBE2;opacity:.6}
+.ig-ci-536-sole{fill:#D8E0E4;stroke:#B7C3C9;stroke-width:1.5}
+.ig-ci-536-velo{fill:#C9C8BF;opacity:.45}
+.ig-ci-536-citta{fill:#8E8573}
+.ig-ci-536-suolo{fill:#BFB49A}
+.ig-ci-536-om .ig-omino,.ig-ci-536-om{fill:#4A3F35;stroke:#4A3F35}
+.ig-ci-536-t{font-family:var(--serif);font-style:italic;font-size:15px;fill:#3E352D}
+.ig-ci-banda{fill:#F6F0E4;stroke:#E8DDC8}
+.ig-ci-banda.malattia{fill:#F6ECE6} .ig-ci-banda.fiume{fill:#EAF0F0} .ig-ci-banda.terra{fill:#F3ECE0} .ig-ci-banda.cielo{fill:#F2F0E2}
+.ig-ci-filo-t{font-size:11px}
+.ig-ci-pop-f{fill:#D9CDB7;opacity:.55}
+.ig-ci-pop{stroke:#B3A486;stroke-width:1.8}
+.ig-ci-pop-t{font-size:11px;fill:#6B5F53}
+.ig-ci-ev-a{font-family:var(--ui);font-size:10.5px;font-weight:700;fill:#5F554B}
+.ig-ci-ev.ora .ig-ci-ev-a{font-size:14px;fill:#2A231D}
+.ig-ci-ev.ora .ig-ci-ev-c{stroke:#2A231D;stroke-width:2.5}
+.ig-ci-ev .ig-ci-ev-c{transition:r .3s}
+.ig-ci-oppure{fill:none;stroke:#8A5A2B;stroke-width:1.4;stroke-dasharray:3 3}
+.ig-ci-cur.via{opacity:0}
+.ig-ci-cop{width:220px;height:52px;margin-bottom:14px}
+.ig-copertina.gira>.ig-ci-cop{animation:ig-su .8s cubic-bezier(.2,.8,.2,1) both}
+.ig-ci-ev-a.nascosto{display:none}
+.ig-ci-ev-a{paint-order:stroke;stroke:#FBF6EA;stroke-width:3px;stroke-linejoin:round}

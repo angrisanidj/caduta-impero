@@ -3910,6 +3910,177 @@ function disegnaCristianesimo(svg,S,W,H){
   S.battute=fasi.map(function(f,j){ return {t:tm.arrivi[j],anno:f[0],testo:f[1]}; }).concat([{t:tFine,anno:'303 e 852',testo:"Nella pianta grande la Roma dell'852; nel 303 c'erano i templi aperti e nessuna basilica. Le posizioni sono quelle del modello."}]);
 }
 
+/* ======================================================================
+   Il cielo, il fiume, la malattia (251-847)
+   Aggiunta il 24 novembre 2026 (l'utente: «Procedi come proposto»; «Manteniamo la fedeltà con i veri racconti»). Quattro fili su una linea del tempo, la malattia, il fiume,
+   la terra e il cielo, con la stima degli abitanti di Roma in chiaro come sfondo, e la pianta di Roma con i luoghi toccati. Nessuna fonte nuova: tutto viene dalla pagina.
+   - tappa del 251 (l'epidemia «dura più di dieci anni»; Cipriano, La mortalità 14; Harper e gli altri studiosi);
+   - scheda del Colosseo (443: un terremoto, «nel 442, secondo Paolo Diacono», poi i restauri; «484 o 508»: un altro terremoto, il restauro pagato da Decio Mario Venanzio Basilio;
+     847: il crollo del lato sud attribuito al terremoto dal Parco archeologico, ma il Liber Pontificalis «non descrive danni: il legame con il Colosseo resta un'ipotesi»);
+   - EVENTI velo536 e la voce di Cassiodoro, Variae XII 25 (tappa del 537); la causa del velo non è nella pagina: si dice solo che le ricostruzioni moderne la cercano altrove;
+   - tappa del 542 (dall'Egitto nel 541, Costantinopoli nel 542, l'Italia nel 543, «a ondate per due secoli»; Harper contro Mordechai ed Eisenberg; il DNA delle tombe; la voce
+     di Procopio II 23, di cui non si riportano le cifre);
+   - tappa del 589 (la piena, i granai, la peste, Pelagio II e Gregorio; il 716 o 717; il 791), la voce di Gregorio di Tours X 1 e il riquadro «Fra storia e leggenda» (i sette cortei,
+     gli ottanta morti in un'ora, nessun angelo nelle fonti antiche, la Legenda aurea verso il 1260, Liutprando nel X secolo);
+   - EVENTI piena589 e piena791 (porta Flaminia, la via Lata, il muro presso ponte Sisto); tappa e EVENTI del 801 (il tetto di San Paolo, gli Annali del regno dei Franchi).
+   Schemi, detti in pagina nelle avvertenze: l'estensione delle piene è quella indicativa del modello della città (js/eventi.js: le zone più basse e vicine al fiume, non una
+   ricostruzione idraulica), uguale per le tre piene; le posizioni dei segni; la curva degli abitanti è la stima della pagina, con la sua fascia, e non dice le cause; i segni dei fili. */
+var CIELO={ titolo:"Il cielo, il fiume, la malattia", sotto:"Epidemie, piene del Tevere, terremoti e il sole velato: che cosa raccontano le fonti, dal 251 all'847",
+  fasi:[["251","Un'epidemia si diffonde nell'impero e dura più di dieci anni. Il vescovo Cipriano la descrive ai fedeli di Cartagine. Quanto pesò sulla crisi è discusso: per Harper fu una delle cause, per altri le testimonianze sono troppo scarse."],
+    ["443","Un terremoto danneggia il Colosseo: nel 442, secondo Paolo Diacono. Seguono i restauri."],
+    ["484 o 508","Dopo un altro terremoto il senatore Decio Mario Venanzio Basilio paga il restauro del Colosseo."],
+    ["536","Per circa un anno il sole appare velato, e la sua luce scalda poco. Le fonti descrivono il sole senza forza, non una causa: la causa la cercano gli studiosi moderni."],
+    ["542-543","La peste bubbonica arriva dall'Egitto: Costantinopoli nel 542, l'Italia nel 543. Tornerà a ondate per due secoli. Quanto pesò è discusso: per Harper uccise una parte grande della popolazione, per Mordechai ed Eisenberg le fonti esagerano."],
+    ["589","Nel nono mese, probabilmente a novembre, il Tevere supera le mura e inonda i quartieri più bassi. Crollano edifici antichi; i granai della Chiesa sono abbattuti, e vanno perdute alcune migliaia di moggi di grano."],
+    ["590","Segue subito l'epidemia «che chiamano inguinale». Muore papa Pelagio II; al suo posto è eletto Gregorio."],
+    ["590","Gregorio organizza una processione: sette cortei partono da sette chiese verso la basilica di Santa Maria. In una sola ora, racconta Gregorio di Tours, muoiono ottanta persone."],
+    ["Leggenda","Nessuna fonte antica parla di un angelo. Verso il 1260 la Legenda aurea racconta di un angelo sul mausoleo di Adriano, che ripone la spada: da qui il nome di Castel Sant'Angelo."],
+    ["716 o 717","L'acqua resta in città per sette giorni; sulla via Lata arriva a una volta e mezzo l'altezza di un uomo."],
+    ["791","In dicembre il Tevere travolge porta Flaminia e la trascina lungo la via Lata. Tornando verso il letto, la corrente abbatte un tratto delle mura vicino all'attuale ponte Sisto."],
+    ["801","La sera del 30 aprile un terremoto fa crollare gran parte del tetto di San Paolo fuori le mura, con le sue travi. Papa Leone III lo fa ricostruire."],
+    ["847","La scossa è avvertita con forza in città, ma il Liber Pontificalis non descrive danni. Il crollo del lato sud del Colosseo, già smontato in gran parte, gli viene attribuito: è un'ipotesi."]],
+  copertina:function(cop){ var sv=document.createElementNS(NS,'svg'); sv.setAttribute('viewBox','0 0 220 52'); sv.setAttribute('class','ig-ci-cop'); sv.setAttribute('aria-hidden','true');
+    ['cielo','fiume','terra','malattia'].forEach(function(f,j){ var g=el('g',{transform:'translate('+(26+j*56)+',26)'},sv); el('circle',{r:21,'class':'ig-ci-ev-c '+f},g); glifo(g,f,13,true); }); cop.insertBefore(sv,cop.firstChild); },      // la copertina: i quattro segni
+  fonte:"Tappe del 251, 537, 542, 589 e 801 di questa pagina, con le loro voci (Cipriano, Cassiodoro, Procopio, Gregorio di Tours, Annali del regno dei Franchi) e il riquadro «Fra storia e leggenda» del 589; scheda del Colosseo; didascalie della città per il 536, il 589 e il 791. Il peso delle epidemie è discusso, e qui non si danno numeri di morti. Schema: i disegni del 251, del 536 e del 542 (il profilo della città, il sole, le figure); i sette cortei del 590, che la pagina non nomina, partono da punti indicativi e la meta è segnata su Santa Maria Maggiore; il fronte della piena che scende da monte è una resa, come nella città in 3D; l'estensione delle piene è quella indicativa del modello della città (le zone più basse e vicine al fiume, non una ricostruzione idraulica) ed è la stessa per tutte le piene; le posizioni dei segni sono indicative; la curva chiara è la stima degli abitanti di Roma di questa pagina, con la sua fascia di incertezza, e non dice che cosa li fece calare." };
+function disegnaCielo(svg,S,W,H){
+  var TP=window.RM_TOPO, C=(D.CURVE||{}).popolazione; if(!TP||!TP.mura||!TP.fiume||!C) return;
+  var oriz=W/H>=1.15, piccolo=oriz&&W<700, pad=oriz?14:8, defs=el('defs',null,svg), fasi=CIELO.fasi, i, RMx=window.RM;
+  /* le misure: il riquadro grande (pianta o disegno) a sinistra, sul telefono in alto; accanto l'anno, la voce e i quattro fili */
+  var pb, cb, lb;
+  if(oriz){ var pw=Math.min(H-2*pad,W*(piccolo?.4:.46)); pb=[pad,pad,pw,H-2*pad]; var xr=pad+pw+(piccolo?12:24), wr=W-xr-pad, hc=piccolo?H*.34:H*.36; cb=[xr,pad,wr,hc]; lb=[xr,pad+hc,wr,H-2*pad-hc]; }
+  else { var ph=Math.min(H*.43,W*.62); pb=[pad,pad,W-2*pad,ph]; cb=[pad,pad+ph+8,W-2*pad,H*.19]; lb=[pad,cb[1]+cb[3],W-2*pad,H-(cb[1]+cb[3])-4]; }
+  var EXT=[-300,-250,320,400], ew=EXT[2]-EXT[0], eh=EXT[3]-EXT[1], k=Math.min(pb[2]/ew,pb[3]/eh), ox=pb[0]+(pb[2]-ew*k)/2, oy=pb[1]+(pb[3]-eh*k)/2;
+  var B=function(p){ return [ox+(p[0]-EXT[0])*k, oy+(p[1]-EXT[1])*k]; }, LL=function(lat,lon){ return B([(lon-12.4853)*8287,-(lat-41.8925)*11113.2]); };
+  /* ---------- il riquadro grande ---------- */
+  var tav=el('g',{'class':'ig-ci-tavola'},svg), cp=el('clipPath',{id:'ig-ci-clip'},defs); el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),rx:14},cp);
+  var dentro=el('g',{'clip-path':'url(#ig-ci-clip)'},tav), carta=el('g',{'class':'ig-ci-pianta'},dentro);
+  el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),'class':'ig-aq-fondo'},carta); ombraColli(carta,TP,EXT,[ox,oy,ew*k,eh*k]);
+  /* l'acqua delle piene: le celle basse del modello (RM.h e RM.distFiume, come in js/eventi.js), in fasce lungo il fiume perché il fronte scenda da monte; contorno morbido con un filtro */
+  var fl=el('filter',{id:'ig-ci-morbido',x:'-5%',y:'-5%',width:'110%',height:'110%'},defs); el('feGaussianBlur',{stdDeviation:r1(Math.max(2,4.5*k*3)),result:'b'},fl); el('feColorMatrix',{'in':'b',type:'matrix',values:'0 0 0 0 0.31  0 0 0 0 0.55  0 0 0 0 0.69  0 0 0 22 -9'},fl);
+  var acqua=el('g',{'class':'ig-ci-acqua',filter:'url(#ig-ci-morbido)'},carta), NB=24, fasce=[], acquaFatta=false;
+  for(i=0;i<NB;i++) fasce.push(el('g',{'class':'ig-ci-fascia'},acqua));
+  var FL=TP.fiume, arcoF=[0]; for(i=1;i<FL.length;i++) arcoF.push(arcoF[i-1]+Math.hypot(FL[i][0]-FL[i-1][0],FL[i][1]-FL[i-1][1]));
+  function lungo(x,z){ var m=1e12, s=0; for(var j=0;j<FL.length;j+=1){ var d=(FL[j][0]-x)*(FL[j][0]-x)+(FL[j][1]-z)*(FL[j][1]-z); if(d<m){ m=d; s=arcoF[j]; } } return s/arcoF[arcoF.length-1]; }
+  var l0=lungo(EXT[0],EXT[1]-200), l1=lungo(EXT[2],EXT[3]+200);
+  function faiAcqua(){ RMx=window.RM; if(acquaFatta||!(RMx&&RMx.h&&RMx.distFiume)) return; acquaFatta=true; var passo=6, r=r1(passo*k*.95), dd=fasce.map(function(){ return ''; });
+    try{ for(var z=EXT[1];z<EXT[3];z+=passo) for(var x=EXT[0];x<EXT[2];x+=passo){ var xc=x+passo/2, zc=z+passo/2, y=RMx.h(xc,zc), sg=y+Math.max(0,RMx.distFiume(xc,zc)-90)*.012; if(sg<2.85){ var q=B([xc,zc]), f=clamp((lungo(xc,zc)-l0)/((l1-l0)||1),0,.999); dd[Math.floor(f*NB)]+='M'+r1(q[0]-r)+' '+r1(q[1])+'a'+r+' '+r+' 0 1 0 '+r1(2*r)+' 0a'+r+' '+r+' 0 1 0 '+r1(-2*r)+' 0'; } }
+      dd.forEach(function(d,j){ if(d) el('path',{d:d},fasce[j]); }); }catch(err){} }
+  faiAcqua();
+  el('polyline',{points:TP.fiume.map(B).map(xy).join(' '),'class':'ig-aq-tevere-a'},carta); el('polyline',{points:TP.fiume.map(B).map(xy).join(' '),'class':'ig-aq-tevere'},carta);
+  el('path',{d:'M'+TP.mura.map(B).map(xy).join('L')+'Z','class':'ig-aq-mura ig-ci-mura'},carta);
+  /* i luoghi che la pagina nomina */
+  var sS=clamp(k*28,11,17);
+  function segno(p,tipo){ var g=el('g',{'class':'ig-ci-s '+tipo,transform:'translate('+xy(p)+')'},carta); el('circle',{r:r1(sS*.8),'class':'ig-ci-s-fondo'},g); glifo(g,tipo,sS*.6); return g; }
+  function nome(p,s,dx,dy,an){ var g=el('g',{'class':'ig-v-luogo ig-ci-luogo',transform:'translate('+xy(p)+')'},carta), t=tx(g,dx,dy,'ig-v-nome ig-ci-nome',s,an||'start'), b;
+    try{ b=t.getBBox(); }catch(e){ b=null; } if(b){ if(p[0]+b.x+b.width>pb[0]+pb[2]-5){ t.setAttribute('x',r1(-Math.abs(dx))); t.setAttribute('text-anchor','end'); } else if(p[0]+b.x<pb[0]+5){ t.setAttribute('x',r1(Math.abs(dx))); t.setAttribute('text-anchor','start'); } }
+    return g; }
+  var PF=TP.porte['Porta del Popolo'], pMM=B([109,-57]), corto=pb[2]<330;
+  var L={colosseo:segno(B([57,26]),'terra'),paolo:segno(B([-70.1,375.7]),'terra'),flaminia:PF?segno(B(PF),'fiume'):null,sisto:segno(LL(41.8924,12.4705),'fiume'),adriano:segno(B([-156.97,-118]),'leggenda'),meta:segno(pMM,'malattia')};
+  var N={colosseo:nome(B([57,26]),'Colosseo',sS,4,'start'),paolo:nome(B([-70.1,375.7]),corto?'San Paolo':'San Paolo fuori le mura',sS,4,'start'),flaminia:PF?nome(B(PF),'porta Flaminia',sS,4,'start'):null,
+    sisto:nome(LL(41.8924,12.4705),corto?'ponte Sisto':'mura presso ponte Sisto',-sS,4,'end'),adriano:nome(B([-156.97,-118]),'mausoleo di Adriano',-sS,-sS*.6,'end'),
+    basse:nome(B([-60,-30]),'le zone basse',0,0,'middle'),lata:nome(B([-40,-83]),'via Lata',8,-6,'start'),meta:nome(pMM,corto?'Santa Maria':'basilica di Santa Maria',sS,4,'start')};
+  /* i sette cortei del 590: sette linee che convergono sulla meta; punti di partenza schematici (la pagina non li nomina) */
+  var cortei=[0,1,2,3,4,5,6].map(function(j){ var a=(j/7)*Math.PI*2+.4, rr=Math.min(ew,eh)*k*(.26+.06*(j%3)), p0=[pMM[0]+Math.cos(a)*rr,pMM[1]+Math.sin(a)*rr*.9], g=el('g',{'class':'ig-ci-corteo'},carta);
+    var pth=el('path',{d:'M'+xy(p0)+' Q'+r1((p0[0]+pMM[0])/2+Math.sin(a)*14)+' '+r1((p0[1]+pMM[1])/2-Math.cos(a)*14)+' '+xy(pMM)},g); scopri(pth); el('circle',{cx:r1(p0[0]),cy:r1(p0[1]),r:3.5,'class':'ig-ci-corteo-p'},g); return {g:g,p:pth}; });
+  /* il segno della malattia sulla città (590): non una carta del contagio, un segno solo */
+  var cM=B([60,-40]), malG=el('g',{'class':'ig-ci-mal',transform:'translate('+xy(cM)+')'},carta); el('circle',{r:r1(sS*2.2),'class':'ig-ci-mal-a'},malG); glifo(malG,'malattia',sS*1.3);
+  /* la riga sotto la pianta: che cosa si vede */
+  var dida=el('g',{'class':'ig-ci-dida'},dentro), didaR=el('rect',{x:r1(pb[0]+8),y:r1(pb[1]+8),height:22,rx:11,'class':'ig-p-dida-fondo'},dida), didaT=tx(dida,pb[0]+18,pb[1]+23,'ig-p-dida-t','');      // in alto: in basso ci sono San Paolo e le piene
+  function scriviDida(s){ if(didaT._s===s) return; didaT._s=s; didaT.textContent=s; var f=12; didaT.style.fontSize=''; while(largo(didaT)>pb[2]-36&&f>8.5){ f-=.5; didaT.style.fontSize=f+'px'; } if(largo(didaT)>pb[2]-36&&s.indexOf(':')>0){ didaT.textContent=s.split(':')[0]; }      /* troppo lunga: resta la prima parte (la frase intera è sotto) */ fissa(didaR,'width',r1(largo(didaT)+20)); cls(dida,'vis',!!s); }
+  var schT=tx(dentro,pb[0]+pb[2]-10,pb[1]+16,'ig-m-schema ig-f','schema','end');
+  /* ---------- i disegni dei quadri senza un luogo a Roma (schemi, dalle parole già in pagina) ---------- */
+  var gD=el('g',{'class':'ig-ci-disegni'},dentro), DIS={};
+  function pannello(cl){ var g=el('g',{'class':'ig-ci-dis '+cl},gD); el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),'class':'ig-ci-dis-fondo '+cl},g); return g; }
+  function parole(g,q,chi,y0){ var w=pb[2]-56, fs=clamp(pb[2]/16,17,30), t=el('text',{x:r1(pb[0]+28),y:r1(y0),'class':'ig-ci-dis-q'},g); t.style.fontSize=fs+'px'; var n=avvolgi(t,q,w,fs*1.22);
+    tx(g,pb[0]+28,y0+(n-1)*fs*1.22+fs*.9+6,'ig-ci-dis-chi',chi); return n*fs*1.22; }
+  /* 251 e 542: le parole della fonte, in grande, sul segno della malattia sbiadito */
+  [[0,"«Che ora il ventre, sciolto in un flusso, svuoti le forze del corpo […]: tutto questo giova a dare prova della fede.»","Cipriano, La mortalità, 14 · Cartagine, verso il 252"],
+   [4,"«In quel tempo non era facile vedere qualcuno per le strade di Bisanzio: chi aveva la fortuna di essere sano stava in casa, a curare i malati o a piangere i morti.»","Procopio, Guerre II, 23 · Costantinopoli, 542"]].forEach(function(q){
+    var g=pannello('malattia'), cg=el('g',{transform:'translate('+r1(pb[0]+pb[2]*.78)+','+r1(pb[1]+pb[3]*.3)+')','class':'ig-ci-dis-segno'},g); glifo(cg,'malattia',Math.min(pb[2],pb[3])*.16);
+    parole(g,q[1],q[2],pb[1]+pb[3]*(oriz?.42:.34)); DIS[q[0]]=g; });
+  /* 536: il cielo sopra un profilo di città, il sole pallido, le figure senza ombra a mezzogiorno (Cassiodoro) */
+  (function(){ var g=pannello('cielo'), x0=pb[0], y0=pb[1], w=pb[2], hh=pb[3], oz=y0+hh*.74;
+    grad(defs,'ig-ci-cielo536',[[0,'#B9BFC2'],[.7,'#D6D3C8'],[1,'#E2DCCB']]); el('rect',{x:r1(x0),y:r1(y0),width:r1(w),height:r1(hh),fill:'url(#ig-ci-cielo536)'},g);
+    var sx=x0+w*.62, sy=y0+hh*.22, sr=Math.min(w,hh)*.085; el('circle',{cx:r1(sx),cy:r1(sy),r:r1(sr*2.6),'class':'ig-ci-536-alone'},g); el('circle',{cx:r1(sx),cy:r1(sy),r:r1(sr),'class':'ig-ci-536-sole'},g);
+    for(i=0;i<5;i++) el('rect',{x:r1(x0),y:r1(sy-sr*1.6+i*sr*.8),width:r1(w),height:r1(sr*.45),'class':'ig-ci-536-velo'},g);
+    var R=caso(536), d='M'+r1(x0)+' '+r1(oz); for(var x=x0;x<=x0+w;x+=w/26){ var hgt=hh*(.05+R()*.09); d+=' V'+r1(oz-hgt)+' H'+r1(Math.min(x0+w,x+w/26)); } d+=' V'+r1(oz)+' Z';
+    el('path',{d:d,'class':'ig-ci-536-citta'},g); var cx=x0+w*.3, cr=hh*.08; el('path',{d:'M'+r1(cx-cr)+' '+r1(oz-hh*.1)+' A'+r1(cr)+' '+r1(cr*.8)+' 0 0 1 '+r1(cx+cr)+' '+r1(oz-hh*.1)+' Z','class':'ig-ci-536-citta'},g);
+    el('rect',{x:r1(x0),y:r1(oz),width:r1(w),height:r1(y0+hh-oz),'class':'ig-ci-536-suolo'},g);
+    [.2,.42,.6,.8].forEach(function(f,j){ var gg=el('g',{transform:'translate('+r1(x0+w*f)+','+r1(oz+(y0+hh-oz)*.55)+')'},g); omino(gg,hh*.12,'ig-ci-536-om'); });
+    var t=tx(g,x0+w/2,oz+(y0+hh-oz)*.88,'ig-ci-536-t','a mezzogiorno, i corpi senza ombra','middle'); if(largo(t)>w-20) t.textContent='i corpi senza ombra';
+    DIS[3]=g; })();
+  el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),rx:14,'class':'ig-m-cornice'},tav);
+  /* ---------- l'anno, il filo, la voce ---------- */
+  var FILO=['malattia','terra','terra','cielo','malattia','fiume','malattia','malattia','leggenda','fiume','fiume','terra','terra'], NOMEF={malattia:'la malattia',fiume:'il fiume',terra:'la terra',cielo:'il cielo',leggenda:'fra storia e leggenda'};
+  var gK=el('g',{'class':'ig-ci-col'},svg), fsA=oriz?Math.min(piccolo?34:56,cb[2]/5.2):Math.min(30,W/12), tA=tx(gK,cb[0],cb[1]+fsA*.82,'ig-p-anno',''), tF=tx(gK,cb[0]+2,cb[1]+fsA*.82+20,'ig-p-stato','');
+  tA.style.fontSize=fsA+'px'; var gQ=el('g',null,gK), yQ=cb[1]+fsA*.82+32;
+  var VOCI={0:["Le interpretazioni degli storici","Per Kyle Harper fu una delle cause della crisi; per altri le testimonianze sono troppo scarse per dire quanto incise.",1],1:["scheda del Colosseo","Un terremoto lo danneggia, nel 442 secondo Paolo Diacono; seguono restauri."],
+    3:["Cassiodoro, Variae XII, 25","«Tutti vediamo ancora il sole come azzurrognolo; ci stupiamo che a mezzogiorno i corpi non facciano ombra.»"],4:["Le interpretazioni degli storici","Per Harper uccise una parte grande della popolazione; per Mordechai ed Eisenberg le fonti la esagerano.",1],
+    5:["Gregorio di Tours, Storie X, 1","«Il Tevere aveva coperto Roma con una piena tale che gli edifici antichi crollavano.»"],6:["Gregorio di Tours, Storie X, 1","«Seguì subito l'epidemia che chiamano inguinale.»"],
+    8:["Fra storia e leggenda","L'angelo compare solo nella Legenda aurea, verso il 1260; il legame del luogo con san Michele è già nel X secolo, in Liutprando.",1],
+    11:["Annali del regno dei Franchi, 801","«Il tetto della basilica del beato Paolo apostolo cadde in gran parte, con le sue travi.»"],12:["scheda del Colosseo","Il legame fra il terremoto e il crollo del lato sud «resta un'ipotesi».",1]};
+  function scriviVoce(j){ gQ.textContent=''; var v=VOCI[j]; if(!v) return; var h0=cb[1]+cb[3]-yQ-4; if(h0<30) return; var fs=oriz&&!piccolo?16:13.5, g=citazione(gQ,cb[0],yQ,cb[2],v[1],v[0],fs); if(g._h>h0+4){ g.remove(); g=citazione(gQ,cb[0],yQ,cb[2],v[1],v[0],fs-2); if(g._h>h0+4) g.remove(); } if(g.parentNode) g.classList.add('vis'); }
+  /* ---------- i quattro fili, sopra la stima degli abitanti ---------- */
+  var FILI=[['malattia','la malattia'],['fiume','il fiume'],['terra','la terra'],['cielo','il cielo']], A0=235, A1=852;
+  var lw=lb[2]<300?84:96, gF=el('g',{'class':'ig-ci-fili'},svg), top=lb[1]+18, bot=lb[1]+lb[3]-18, rh=(bot-top)/4, X=function(a){ return lb[0]+lw+14+(a-A0)/(A1-A0)*(lb[2]-lw-28); }, Y=function(v){ return bot-v/1200000*(bot-top); };
+  FILI.forEach(function(f,j){ var y=top+rh*j; el('rect',{x:r1(lb[0]+lw),y:r1(y+1),width:r1(lb[2]-lw),height:r1(rh-2),rx:8,'class':'ig-ci-banda '+f[0]},gF); var g=el('g',{transform:'translate('+r1(lb[0]+7)+','+r1(y+rh/2)+')'},gF); glifo(g,f[0],5.5);
+    var tn=tx(gF,lb[0]+17,y+rh/2+4,'ig-ci-filo-t '+f[0],f[1]); if(lw<90) tn.style.fontSize='9.5px'; });      // i nomi dei fili in una colonna a sinistra, anche col telefono coricato
+  var fascia=C.banda.map(function(b){ return xy([X(b[0]),Y(b[2])]); }).join(' L')+' L'+C.banda.slice().reverse().map(function(b){ return xy([X(b[0]),Y(b[1])]); }).join(' L');
+  el('path',{d:'M'+fascia+' Z','class':'ig-ci-pop-f'},gF); el('path',{d:'M'+C.punti.map(function(p){ return xy([X(p[0]),Y(p[1])]); }).join(' L'),'class':'ig-ci-pop'},gF);
+  var gl=el('g',null,gF); el('rect',{x:r1(lb[0]+lb[2]-14),y:r1(lb[1]+4),width:14,height:8,rx:2,'class':'ig-ci-pop-f'},gl); var tPop=tx(gl,lb[0]+lb[2]-20,lb[1]+12,'ig-ci-pop-t','abitanti di Roma, stima: non dice le cause','end'); if(largo(tPop)>lb[2]-30) tPop.textContent='abitanti, stima: non dice le cause';
+  [251,400,542,700,852].forEach(function(a,j){ tx(gF,X(a),bot+13,'ig-ci-anno-p',String(a),j?j===4?'end':'middle':'start'); });
+  var EV=[[251,0,'malattia','251',1],[443,2,'terra','443',-1],[484,2,'terra','484 o 508',1],[536,3,'cielo','536',1],[542,0,'malattia','542',-1],[589,1,'fiume','589',1],[590,0,'malattia','590',1],[716.5,1,'fiume','716',-1],[791,1,'fiume','791',1],[801,2,'terra','801',-1],[847,2,'terra','847',1]];      // [anno, filo, segno, etichetta, sopra o sotto]
+  var cur=el('line',{y1:r1(top),y2:r1(bot),'class':'ig-ci-cur'},gF);      /* sotto i segni e gli anni */
+  var rS=clamp(rh*.2,6,10), punti=EV.map(function(e){ var y=top+rh*(e[1]+.62), g=el('g',{'class':'ig-ci-ev',transform:'translate('+r1(X(e[0]))+','+r1(y)+')'},gF);
+    if(e[0]===484) el('rect',{x:0,y:-2,width:r1(X(508)-X(484)),height:4,rx:2,'class':'ig-ci-oppure'},g);
+    el('circle',{r:r1(rS),'class':'ig-ci-ev-c '+e[2]},g); glifo(g,e[2],rS*.62,true); var t=tx(g,0,e[4]>0?-rS-3:rS+10,'ig-ci-ev-a',e[3],'middle'); return {g:g,a:e[0],t:t,x:X(e[0]),y:y}; });
+  /* gli anni non si toccano mai (24 novembre 2026): prima l'anno dell'evento in corso, poi gli altri da sinistra; uno che toccherebbe un anno già messo o un segno resta nascosto */
+  function annota(){ var tenuti=[], segni=punti.filter(function(p){ return p.g.classList.contains('vis'); }).map(function(p){ return [p.x-rS-1,p.y-rS-1,p.x+rS+1,p.y+rS+1,p]; });
+    var ord=punti.slice().sort(function(a,b){ return (b.g.classList.contains('ora')-a.g.classList.contains('ora'))||(a.x-b.x); });
+    ord.forEach(function(p){ cls(p.t,'nascosto',false); if(!p.g.classList.contains('vis')) return; var b; try{ b=p.t.getBBox(); }catch(e){ return; } var r=[p.x+b.x-3,p.y+b.y-2,p.x+b.x+b.width+3,p.y+b.y+b.height+2];      /* un margine: le scritte non si sfiorano */
+      function tocca(q){ return r[0]<q[2]&&r[2]>q[0]&&r[1]<q[3]&&r[3]>q[1]; }
+      function urta(){ return tenuti.some(tocca)||segni.some(function(q){ return q[4]!==p&&tocca(q); })||r[0]<lb[0]+lw||r[2]>lb[0]+lb[2]; }
+      if(p.y0==null) p.y0=+p.t.getAttribute('y'); p.t.setAttribute('y',p.y0);
+      if(urta()&&p.g.classList.contains('ora')){ var ny=p.y0<0?rS+13:-rS-4; p.t.setAttribute('y',ny); try{ b=p.t.getBBox(); }catch(e){} r=[p.x+b.x-3,p.y+b.y-2,p.x+b.x+b.width+3,p.y+b.y+b.height+2]; }      /* l'anno in corso prova anche l'altro lato del segno */
+      if(urta()){ p.t.setAttribute('y',p.y0); cls(p.t,'nascosto',true); } else tenuti.push(r); }); }
+  /* ---------- la regia ---------- */
+  var ANNI=[251,443,484,536,542,589,590,590.3,590.6,716.5,791,801,847], tm=Tempo(235,ANNI.map(function(a,j){ return {anno:a,sosta:j===5||j===7?6200:4800}; }),{inizio:1500,vel:3,min:600}), tFine=tm.fine+300, tFin=tFine+6500, visto=-2;
+  var DIDA=['','il Colosseo','il Colosseo','','','l\'acqua scende da monte verso valle','l\'epidemia «inguinale»: muore Pelagio II, è eletto Gregorio','sette cortei verso la basilica di Santa Maria: ottanta morti in un\'ora','il mausoleo di Adriano: la leggenda','l\'acqua in città per sette giorni','porta Flaminia e le mura presso ponte Sisto','San Paolo fuori le mura','il Colosseo: un\'ipotesi'];
+  S.passo=function(t){
+    var a=tm.anno(t), i2=-1; tm.arrivi.forEach(function(x,j){ if(t>=x) i2=j; }); var ii=Math.max(0,i2), fin=t>=tFine, t0=i2>=0?tm.arrivi[ii]:0;
+    if(!acquaFatta) faiAcqua();
+    cls(tav,'vis',t>=200); cls(gF,'vis',t>=400); cls(gK,'vis',t>=600);
+    fissa(cur,'x1',r1(X(fin?A1:a))); fissa(cur,'x2',r1(X(fin?A1:a))); cls(cur,'via',fin);
+    var EVQ=[0,1,2,3,4,5,6,6,6,7,8,9,10]; punti.forEach(function(p,jp){ var ora=!fin&&i2>=0&&EVQ[ii]===jp;      /* l'evento del quadro, uno solo */ cls(p.g,'vis',fin||a>=p.a-.5); cls(p.g,'ora',ora); });
+    /* il disegno o la pianta */
+    var dq=fin?-1:i2; for(var kd in DIS) cls(DIS[kd],'vis',+kd===dq); cls(carta,'spenta',DIS[dq]!=null);
+    /* l'acqua: il fronte scende, poi l'acqua resta; nel 590 cala */
+    var pq=!fin&&(i2===5||i2===9||i2===10), fr=pq?E.io(fase(t,t0+300,t0+3800)):fin?1:i2===6?1:0;
+    fasce.forEach(function(g,j){ cls(g,'vis',fr*NB>j+.2); }); cls(acqua,'vis',pq||fin||i2===6); cls(acqua,'cala',i2===6||fin);
+    var op=i2===6?String(r1((1-.75*E.io(fase(t,t0,t0+2500)))*.6*100)/100):''; if(acqua.style.opacity!==op) acqua.style.opacity=op;      // nel 590 l'acqua cala
+    function acc(n,s,noNome){ if(L[n]) cls(L[n],'vis',!!s); if(N[n]) cls(N[n],'vis',!!s&&!noNome); }
+    acc('colosseo',i2===1||i2===2||i2===12||fin); acc('paolo',i2===11||fin); acc('flaminia',i2===10||fin); acc('sisto',i2===10||fin,fin); acc('adriano',i2===8); acc('meta',i2===7);
+    cls(N.basse,'vis',i2===5&&fr>.6); cls(N.lata,'vis',i2===9&&fr>.6);
+    cls(malG,'vis',i2===6||i2===7); cls(malG,'piccolo',i2===7);
+    cortei.forEach(function(c,j){ var f=i2===7?E.io(fase(t,t0+400+j*150,t0+2600+j*150)):0; traccia(c.p,f); cls(c.g,'vis',i2===7); });
+    var su=i2===11; if(dida._su!==su){ dida._su=su; fissa(didaR,'y',r1(su?pb[1]+8:pb[1]+pb[3]-30)); fissa(didaT,'y',r1(su?pb[1]+23:pb[1]+pb[3]-15)); }      // in basso; in alto solo quando in basso c'è San Paolo
+    scriviDida(fin?'':i2>=0?DIDA[ii]:'');
+    cls(schT,'vis',!fin&&(i2===5||i2===7||i2===9||i2===10||i2===3||i2===0||i2===4));
+    var q=fin?99:i2; if(q!==visto){ visto=q; annota(); scrivi(tA,i2<0?'':fin?'251 · 847':fasi[ii][0]); var fa=fsA; tA.style.fontSize=fa+'px'; while(largo(tA)>cb[2]&&fa>16){ fa-=2; tA.style.fontSize=fa+'px'; }
+      scrivi(tF,i2<0?'':fin?'TUTTI INSIEME':NOMEF[FILO[ii]].toUpperCase()); if(fin){ gQ.textContent=''; var g=citazione(gQ,cb[0],yQ,cb[2],"Quanto ciascun disastro abbia pesato sul calo degli abitanti è discusso: il disegno non lo dice.","",oriz&&!piccolo?16:13.5); g.classList.add('vis'); } else scriviVoce(i2); }
+  };
+  S.dura=tFin;
+  S.battute=fasi.map(function(f,j){ return {t:tm.arrivi[j],anno:f[0],testo:f[1]}; }).concat([{t:tFine,anno:'Tutti insieme',testo:"Gli eventi accesi insieme, sopra la stima degli abitanti di Roma. Quanto ciascuno abbia pesato sul calo è discusso: il disegno non lo dice."}]);
+}
+/* i segni dei quattro fili */
+function glifo(g,tipo,s,chiaro){ var c='ig-ci-g'+(chiaro?' chiaro':'')+' '+tipo;
+  if(tipo==='malattia'){ el('circle',{r:r1(s*.55),'class':c},g); [0,1,2,3,4,5].forEach(function(j){ var a=j*Math.PI/3; el('circle',{cx:r1(Math.cos(a)*s*.85),cy:r1(Math.sin(a)*s*.85),r:r1(s*.16),'class':c},g); }); }
+  else if(tipo==='fiume') el('path',{d:'M'+r1(-s)+' '+r1(-s*.25)+' q'+r1(s*.5)+' '+r1(-s*.45)+' '+r1(s)+' 0 t'+r1(s)+' 0 M'+r1(-s)+' '+r1(s*.4)+' q'+r1(s*.5)+' '+r1(-s*.45)+' '+r1(s)+' 0 t'+r1(s)+' 0','class':c+' linea'},g);
+  else if(tipo==='terra') el('path',{d:'M'+r1(-s)+' '+r1(s*.2)+' L'+r1(-s*.4)+' '+r1(-s*.5)+' L'+r1(0)+' '+r1(s*.5)+' L'+r1(s*.4)+' '+r1(-s*.5)+' L'+r1(s)+' '+r1(s*.2),'class':c+' linea'},g);
+  else if(tipo==='cielo'){ el('circle',{r:r1(s*.7),'class':c},g); el('path',{d:'M'+r1(-s)+' '+r1(-s*.1)+' H'+r1(s)+' M'+r1(-s)+' '+r1(s*.3)+' H'+r1(s),'class':'ig-ci-velo'},g); }
+  else { el('path',{d:'M0 '+r1(-s)+' C'+r1(s*.9)+' '+r1(-s*.6)+' '+r1(s*.9)+' '+r1(s*.6)+' 0 '+r1(s)+' C'+r1(-s*.9)+' '+r1(s*.6)+' '+r1(-s*.9)+' '+r1(-s*.6)+' 0 '+r1(-s),'class':c+' linea tratteggio'},g); }
+}
+
 var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno===590&&t.intermezzo || t.anno===852&&!t.intermezzo; }},
   moneta:{d:MONETA, disegna:disegnaMoneta, tappe:function(t){ return t.anno===284&&t.intermezzo; }},      // solo nell'intermezzo «La moneta» (23 novembre 2026, l'utente: «toglila dalla tappa del 274»)
   navi:{d:NAVI, disegna:disegnaNavi, tappe:function(t){ return t.anno===395&&t.intermezzo || t.anno===711&&!t.intermezzo; }},
@@ -3927,10 +4098,11 @@ var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno==
   acquedotti:{d:ACQUEDOTTI, disegna:disegnaAcquedotti, tappe:function(t){ return !t.intermezzo && (t.anno===537||t.anno===780); }, da:function(t){ return t&&t.anno===780?'verso il 776':null; }},      // anche nel 780 (24 novembre 2026, l'utente: «inserire», non spostare); aperta dal 780 parte dai restauri di Adriano I
   sacchi:{d:SACCHI, disegna:disegnaSacchi, tappe:function(t){ return !t.intermezzo && (t.anno===455||t.anno===546); }},
   cristianesimo:{d:CRISTIANESIMO, disegna:disegnaCristianesimo, tappe:function(t){ return !t.intermezzo && (t.anno===330||t.anno===394||t.anno===756||t.anno===852); }, da:function(t){ return t&&t.anno===394?'380':t&&t.anno===756?'756':null; }},      // 24 novembre 2026; dal 394 parte dall'editto del 380, dal 756 dallo Stato della Chiesa
+  cielo:{d:CIELO, disegna:disegnaCielo, tappe:function(t){ return !t.intermezzo && (t.anno===542||t.anno===589||t.anno===801); }, da:function(t){ return t&&t.anno===589?'589':t&&t.anno===801?'801':null; }},      // 24 novembre 2026
   terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo); }} };      /* solo nell'intermezzo «L'esercito»: dalla tappa del 439 (Cartagine) l'utente l'ha fatta togliere il 24 novembre 2026 */
 /* Poitiers: accesa il 24 novembre 2026 sulla tappa del 711, dopo le prove a 393, 1280 e 812x375 e con ?fermo=1 (prima era scritta ma spenta) */
 INFO.poitiers={d:POITIERS, disegna:disegnaPoitiers, tappe:function(t){ return t.anno===711&&!t.intermezzo; }};
-var ORDINE=['valeriano','moneta','milvio','cristianesimo','navi','adrianopoli','altare','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','pantheon','curia','poitiers','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 330, 395, 410, 439, 476, 609, 630, 711; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
+var ORDINE=['valeriano','moneta','milvio','cristianesimo','navi','adrianopoli','altare','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','cielo','pantheon','curia','poitiers','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 330, 395, 410, 439, 476, 542, 609, 630, 711; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
 var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
   pausa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',
   prima:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18 6.5v11l-8.5-5.5z" fill="currentColor"/></svg>',
@@ -3958,6 +4130,7 @@ var GLIFI={ valeriano:'<path d="M7 12l2.2-5 2.6 3 2.2-4 2.2 4 2.6-3 2.2 5z"/><re
   acquedotti:'<path d="M2 9h24v3H2z"/><path d="M4 12v11h3v-5a3 3 0 0 1 6 0v5h2v-5a3 3 0 0 1 6 0v5h3V12z" opacity=".8"/><path d="M2 7.2h24" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2.5 2"/>',
   governo:'<path d="M4 8l6-3 8 3 6-3v15l-6 3-8-3-6 3z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 5v15M18 8v15" stroke="currentColor" stroke-width="1.2" opacity=".6"/>' };
 GLIFI.cristianesimo='<path d="M14 3v22M8.5 9.5h11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M3 25h22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><rect x="4" y="18" width="5" height="7" rx=".6" opacity=".45"/><rect x="19" y="16" width="5" height="9" rx=".6" opacity=".45"/>';      /* la croce che sale fra due edifici */
+GLIFI.cielo='<circle cx="9" cy="8" r="4"/><path d="M3 10.5h12M3 13h12" stroke="currentColor" stroke-width="1.2" opacity=".6"/><path d="M3 19q3-3 6 0t6 0 6 0 6 0M3 24q3-3 6 0t6 0 6 0 6 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M17 4l3 5-3 2 3 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>';      /* il sole velato, il fiume, la crepa */
 GLIFI.poitiers='<path d="M4.5 5v8M10 5v8M15.5 5v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="4.5" cy="15.5" r="3.4"/><circle cx="10" cy="15.5" r="3.4"/><circle cx="15.5" cy="15.5" r="3.4" opacity=".8"/><path d="M18.5 23.5l4.2-9 4.2 9z" opacity=".6"/><path d="M21.6 23.5l1.1-2.6 1.1 2.6z" fill="#fff" opacity=".7"/><path d="M2 23.8h24" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>';      /* il muro di scudi e una tenda vuota */
 
 /* ---------- la finestra ---------- */
@@ -3974,6 +4147,7 @@ function apri(chi,tp){
   var palco=h('div','ig-palco',null,corpo), svg=el('svg',{'class':'ig-grafico',role:'img','aria-label':I.d.titolo+'. '+I.d.sotto},palco);
   var cop=h('div','ig-copertina gira',null,palco); cop.setAttribute('aria-hidden','true');
   h('span','ig-cop-occh','Infografica '+n+' di '+ORDINE.length,cop); h('span','ig-cop-tit',I.d.titolo,cop); h('span','ig-cop-filo',null,cop); h('span','ig-cop-sotto',I.d.sotto,cop);
+  if(I.d.copertina) I.d.copertina(cop);      // una copertina con un suo disegno, se l'infografica ce l'ha
   var lato=h('div','ig-lato',null,corpo), frase=h('p','ig-frase',null,lato); frase.setAttribute('aria-live','polite');
   var fA=h('span','ig-frase-anno','',frase), fT=h('span','ig-frase-testo',I.d.sotto,frase);
   /* i comandi (24 novembre 2026, l'utente: «un modo chiaro per andare alla fine o tornare all'inizio»): riproduci, «Inizio», indietro, avanti, «Fine»; il cursore
