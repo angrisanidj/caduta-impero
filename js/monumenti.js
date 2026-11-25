@@ -287,6 +287,7 @@ function uomo(B,x,y,z,s,col,ry){ return B.dentro(x,y,z,ry||0,function(){
   arto(B,[0,15.4*u,0],[0,16.6*u,0],.85*u,.8*u,col,6,false); palla(B,1.25*u,0,17.5*u,.1*u,col,1,1.15,1.08);        // collo e testa
 }); }
 RM.cavalloStatua=cavallo;      // per le figure delle scene (RM.figura.cavaliere in js/vita.js)
+RM.pelle=pelle;      // per i protagonisti delle scene (ritratto in js/scene-tappe.js)
 function casa(B,y,lx,lz,w,d,h,ry){ B.scatola(w,h+.3,d,lx,y-.3,lz,P.mattone,ry).falde(w+.2,.45,d+.2,lx,y+h,lz,P.coppi,ry,P.mattone); }
 
 /* tracciato delle mura leonine (848-852): dal mausoleo di Adriano attorno al colle Vaticano, fino al Tevere. Coordinate relative a (-215,-92).

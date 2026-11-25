@@ -75,42 +75,71 @@ var gente=new THREE.Points(gGente,matGente); gente.frustumCulled=false; gente.us
    (dal 24 novembre 2026, sera: anche sui telefoni, che prima non ne avevano); senza figure le maglie restano spente e non si disegnano nemmeno. */
 RM.QUALITA.figure=[0,400,700,1200,150];      // quante figure vicine al massimo, per gradino (bassa, media, alta, massima, telefono; misura del 24 novembre 2026: 400 figure costano meno di mezzo millesimo sulla Radeon integrata)
 var PELLE=[0xc9946c,0xb07a55,0xd8a882,0x9c6a48].map(RM.col), CAPELLI=[0x2c2018,0x3e2a1c,0x1e1712,0x6a5440].map(RM.col), LANA=RM.col(0x6b5a44), BIANCO=RM.col(0xefe9da), SANDALO=RM.col(0x4a3424), VELO=RM.col(0xe2d6bc);
-function Parti(){ this.p=[]; this.n=[]; this.c=[]; this.o=[]; this.f=[]; }
-Parti.prototype.metti=function(g,colore,osc,fisso){ var q=g.index?g.toNonIndexed():g, P=q.attributes.position.array, N=q.attributes.normal.array, i;
-  for(i=0;i<P.length;i+=3){ this.p.push(P[i]*.1,P[i+1]*.1,P[i+2]*.1); this.n.push(N[i],N[i+1],N[i+2]); this.c.push(colore.r,colore.g,colore.b); this.o.push(osc||0); this.f.push(fisso?1:0); }
+function Parti(){ this.p=[]; this.n=[]; this.c=[]; this.o=[]; this.f=[]; this.s=[]; }
+Parti.prototype.metti=function(g,colore,osc,fisso){ var q=g.index?g.toNonIndexed():g, P=q.attributes.position.array, N=q.attributes.normal.array, S=q.attributes.ombra?q.attributes.ombra.array:null, i;
+  for(i=0;i<P.length;i+=3){ this.p.push(P[i]*.1,P[i+1]*.1,P[i+2]*.1); this.n.push(N[i],N[i+1],N[i+2]); this.c.push(colore.r,colore.g,colore.b); this.o.push(osc||0); this.f.push(fisso?1:0); this.s.push(S?S[i/3]:1); }
   return this; };
 var SU=new THREE.Vector3(0,1,0);
 function tratto(a,b,r0,r1,lati){ var d=new THREE.Vector3(b[0]-a[0],b[1]-a[1],b[2]-a[2]), L=d.length(), g=new THREE.CylinderGeometry(r1,r0,L,lati,1,true);      // un tronco di cono fra due punti, in metri
   g.applyMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(SU,d.normalize()))); g.translate((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2); return g; }
-function girato(prof,lati,sx,sz){ var g=new THREE.LatheGeometry(prof.map(function(q){ return new THREE.Vector2(q[0],q[1]); }),lati); g.scale(sx||1,1,sz||1); return g; }      // un profilo girato attorno all'asse, schiacciato in pianta
-/* Una figura in metri, i piedi a y=0, lo sguardo verso +z. foggia: 0 tunica, 1 mantello, 2 donna, 3 toga. Le parti «fisse» tengono il loro colore, le altre prendono quello della veste.
-   d: lati dei pezzi tondi (6 per le figure dei passanti; le scene possono chiederne meno). */
+/* Un profilo [[r, y]] girato attorno all'asse e schiacciato in pianta. f(φ, y) → [moltiplicatore del raggio, spostamento in y, ombra]: le pieghe, l'orlo in diagonale, la parte
+   davanti di un manto nascosta dentro il corpo (così il manto resta aperto sul davanti senza buchi); l'ombra va nell'attributo «ombra» (cuoci, più sotto). */
+function girato(prof,lati,sx,sz,f){
+  var g=new THREE.LatheGeometry(prof.map(function(q){ return new THREE.Vector2(q[0],q[1]); }),lati), p=g.attributes.position, om=new Float32Array(p.count).fill(1), k;
+  if(f) for(k=0;k<p.count;k++){ var x=p.getX(k), y=p.getY(k), z=p.getZ(k), r=f(Math.atan2(x,z),y); p.setXYZ(k,x*r[0],y+r[1],z*r[0]); om[k]=r[2]; }
+  g.scale(sx||1,1,sz||1); g.computeVertexNormals(); g.setAttribute('ombra',new THREE.BufferAttribute(om,1)); return g; }
+/* le pieghe di una veste a n lati pari: le colonne di vertici vanno alternate in fuori e in dentro, di più verso l'orlo (n/2 pieghe), con il fondo più scuro; incl: l'orlo
+   in diagonale (sale a destra, scende a sinistra); davanti: l'arco davanti che rientra nel corpo (manti aperti) */
+function pieghe(ytop,yorlo,n,amp,incl,davanti){
+  return function(fi,y){ var w=Math.max(0,Math.min(1,(ytop-y)/(ytop-yorlo))), c=Math.cos(n*fi), m=1+amp*w*c;
+    if(davanti && Math.abs(fi)<davanti) m*=.5;
+    return [m,(incl||0)*Math.sin(fi)*w*w,(1+.2*c*w)*(1-.16*w)]; }; }
+/* Una figura in metri, i piedi a y=0, lo sguardo verso +z. foggia: 0 tunica corta, 1 tunica e mantello, 2 donna, 3 veste lunga e toga (o il clero), 4 a cavallo. Le parti «fisse»
+   tengono il loro colore, le altre prendono quello della veste. d: lati dei pezzi tondi (6 per le figure dei passanti; le scene possono chiederne meno).
+   Rifatta il 25 novembre 2026, sera (l'utente: «Le figure non sembrano ancora dei lego?»): prima la testa era una palla larga, le spalle un ripiano orizzontale e la veste un tubo.
+   Ora: circa sette teste e mezza (1,72 m), testa ovale più stretta, collo, spalle spioventi con la spalla tonda, braccia affusolate, mani; la veste a campana dalla vita all'orlo,
+   con le pieghe che si aprono verso il basso e il fondo delle pieghe più scuro; sotto la tunica corta si vedono polpacci e caviglie. Il mantello di lana ha l'orlo in diagonale,
+   la palla delle donne copre il capo e ricade sulla schiena lasciando libero il volto, la toga (o la veste del clero) scende al polpaccio sopra la veste lunga.
+   I tagli sono semplificati e indicativi (Sebesta e Bonfante, per sommi capi, come prima). Le convenzioni lette da js/scene-tappe.js (personaGeo) restano: spalle a 1,38 m,
+   anche a 0,92 m, ginocchio a 0,5 m, le mani in MANO (RM.figuraMani), i colori BIANCO, LANA, VELO, SANDALO per riconoscere le parti. */
+var MANO={'-1':[-.21,.81,.095],'1':[.206,.815,.135]};      // dove stanno le mani (m): js/scene-tappe.js le cerca qui (RM.figuraMani)
 function corpo(foggia,k,d){
-  var B=new Parti(), pel=PELLE[k%PELLE.length], cap=CAPELLI[(k>>1)%CAPELLI.length], L=d||6, lunga=foggia===2, seduto=foggia===4, orlo=lunga?.04:seduto?.84:foggia===0?.56:.5, man=foggia===1||foggia===3;
+  var B=new Parti(), pel=PELLE[k%PELLE.length], cap=CAPELLI[(k>>1)%CAPELLI.length], L=d||6, LL=(L+2)+((L+2)&1), n2=LL/2, LS=L>=5?12:LL, seduto=foggia===4, lunga=foggia===2||foggia===3, S, U;
+  U=lunga?[[.153,.9],[.165,1.15],[.17,1.33],[.135,1.41],[.085,1.45],[.045,1.47]]:[[.153,.9],[.163,1.12],[.17,1.33],[.135,1.41],[.085,1.45],[.045,1.47]];      // dalla vita in su: il petto, le spalle spioventi
+  if(seduto) S=[[.2,.84],[.17,.9],[.155,.97]];                                                                                          // dalla vita in giù, a campana
+  else if(lunga) S=[[.215,.02],[.19,.4],[.16,.82],[.153,.97]];
+  else if(foggia===1) S=[[.19,.36],[.176,.6],[.155,.88],[.153,.97]];
+  else S=[[.2,.52],[.18,.7],[.155,.9],[.153,.97]];
+  B.metti(girato(S,LS,1,.72,pieghe(.97,S[0][1],LS/2,.075,0)),BIANCO,0,false).metti(girato(U,LL,1,.72),BIANCO,0,false);                  // la veste: le pieghe si aprono verso l'orlo
+  if(foggia===0) B.metti(girato([[.157,.93],[.159,.985]],LL,1,.73),SANDALO,0,true);                                                     // la cintura
+  if(foggia===1) B.metti(girato([[.245,.6],[.232,.76],[.212,1.0],[.2,1.2],[.205,1.32],[.165,1.42],[.1,1.465],[.05,1.485]],LL,1,.8,pieghe(1.3,.6,n2,.07,.09)),LANA,0,true);      // il mantello di lana, l'orlo in diagonale
+  if(foggia===3) B.metti(girato([[.235,.3],[.212,.5],[.186,.8],[.176,1.0],[.183,1.2],[.18,1.33],[.13,1.43],[.05,1.48]],LL,1,.78,pieghe(1.25,.3,n2,.08,.12)),BIANCO,0,true);      // la toga (o la veste di sopra del clero), al polpaccio
+  if(foggia===2) B.metti(girato([[0,1.738],[.075,1.708],[.094,1.62],[.1,1.5],[.19,1.42],[.215,1.25],[.218,.9],[.225,.6]],LL,1,.85,pieghe(1.35,.6,n2,.06,.1,.3*Math.PI)),VELO,0,true);      // la palla: sopra il capo, ricade sulla schiena, il volto libero
   [-1,1].forEach(function(s){
     if(seduto){ B.metti(tratto([s*.1,.95,0],[s*.17,.9,.34],.075,.06,L),BIANCO,s,false).metti(tratto([s*.17,.9,.34],[s*.18,.48,.3],.055,.045,L),pel,s,true);      // a cavallo: le cosce in avanti, le gambe giù lungo i fianchi
-      B.metti(new THREE.BoxGeometry(.09,.05,.2).translate(s*.18,.45,.36),SANDALO,s,true); return; }
-    if(!lunga) B.metti(tratto([s*.085,.06,0],[s*.095,.9,0],.052,.072,L),pel,s,true);                                                      // le gambe nude sotto la tunica
-    B.metti(new THREE.BoxGeometry(.09,.05,.22).translate(s*.085,.025,.04),SANDALO,s,true); });                                            // i sandali
-  B.metti(girato([[.15,orlo],[.175,orlo+.03],[.16,(orlo+.95)/2],[.15,.95],[.16,1.18],[.19,1.36],[.12,1.45],[.06,1.47]],L+2,1,.72),BIANCO,0,false);      // la veste, dall'orlo alle spalle
-  if(!lunga) B.metti(girato([[.158,.93],[.158,.98]],L+2,1,.73),SANDALO,0,true);                                                           // la cintura
-  if(foggia===1) B.metti(girato([[.2,.6],[.215,.66],[.2,1.0],[.2,1.3],[.2,1.4],[.12,1.47]],L+2,1,.8),LANA,0,true);                         // il mantello di lana, fino al ginocchio
-  if(foggia===3) B.metti(girato([[.19,.12],[.21,.2],[.2,.8],[.2,1.3],[.21,1.4],[.12,1.47]],L+2,1,.78),BIANCO,0,true);                      // la toga bianca, fino ai piedi
-  if(lunga) B.metti(girato([[.2,1.0],[.2,1.3],[.21,1.42],[.1,1.52],[.11,1.66],[.06,1.73]],L+2,1,.85),VELO,0,true);                          // la palla, dalle spalle sopra il capo
-  [-1,1].forEach(function(s){ var sp=[s*.2,1.38,0], gom=[s*.23,1.1,.02], ma=[s*.22,.84,.06];
-    B.metti(tratto(sp,gom,.048,.042,L),man?LANA:BIANCO,2*s,man);                                                                         // il braccio, nella manica o sotto il mantello
-    B.metti(tratto(gom,ma,.04,.034,L),pel,2*s,true).metti(new THREE.SphereGeometry(.04,5,3).translate(ma[0],ma[1]-.03,ma[2]),pel,2*s,true); });      // l'avambraccio nudo e la mano
-  B.metti(tratto([0,1.42,0],[0,1.52,.005],.05,.045,L),pel,0,true);                                                                       // il collo
-  B.metti(new THREE.SphereGeometry(.1,L+2,L).scale(.9,1.12,1).translate(0,1.6,.01),pel,0,true);                                          // la testa
-  if(!lunga) B.metti(new THREE.SphereGeometry(.106,L+2,4,0,Math.PI*2,0,Math.PI*.55).scale(.92,1.05,1.02).rotateX(-.35).translate(0,1.61,-.005),cap,0,true);      // i capelli, corti
+      B.metti(new THREE.BoxGeometry(.08,.05,.2).translate(s*.18,.45,.36),SANDALO,s,true); }
+    else {
+      if(!lunga) B.metti(tratto([s*.088,.07,0],[s*.09,.33,-.012],.034,.05,L),pel,s,true).metti(tratto([s*.09,.33,-.012],[s*.088,.64,0],.05,.056,L),pel,s,true);      // caviglia, polpaccio e ginocchio sotto la tunica
+      B.metti(new THREE.BoxGeometry(.075,.045,.2).translate(s*.088,.022,.045),SANDALO,s,true); }                                        // i sandali
+    var man=foggia===1?LANA:BIANCO, fis=foggia===1, nudo=foggia===0||seduto;
+    var M=MANO[s], gz=s>0?.035:.015, LA=Math.max(4,L);      // la sinistra un poco più avanti della destra: niente braccia di soldatino
+    B.metti(new THREE.SphereGeometry(1,5,3).scale(L<5?.04:.048,L<5?.042:.05,L<5?.046:.052).translate(s*(L<5?.172:.176),1.355,0),man,2*s,fis).metti(tratto([s*.186,1.35,0],[s*.198,1.1,gz],.048,.041,LA),man,2*s,fis);      // la spalla tonda e il braccio, nella manica
+    B.metti(tratto([s*.199,1.13,gz-.004],[M[0]*1.01,M[1]+.06,M[2]-.02],.04,.03,LA),nudo?pel:man,2*s,nudo||fis);                         // l'avambraccio, appena piegato in avanti: nudo con la tunica corta, nella manica con le vesti lunghe
+    B.metti(new THREE.SphereGeometry(1,5,4).scale(.024,.042,.03).translate(M[0],M[1],M[2]),pel,2*s,true); });                        // la mano
+  B.metti(tratto([0,1.42,0],[0,1.53,.008],.045,.042,L),pel,0,true);                                                                      // il collo
+  B.metti(girato([[0,1.49],[.05,1.505],[.074,1.57],[.07,1.665],[.04,1.706],[0,1.716]],LL,.92,1.12).translate(0,0,.008),pel,0,true);      // la testa: ovale, il mento più stretto della fronte
+  if(foggia!==2) B.metti(new THREE.SphereGeometry(.087,LL,3,0,Math.PI*2,0,Math.PI*.56).scale(.95,1,1.1).rotateX(-.42).translate(0,1.63,-.006),cap,0,true);      // i capelli, corti
   var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(B.p,3)); g.setAttribute('normal',new THREE.Float32BufferAttribute(B.n,3)); g.setAttribute('color',new THREE.Float32BufferAttribute(B.c,3));
-  g.setAttribute('oscilla',new THREE.Float32BufferAttribute(B.o,1)); g.setAttribute('fisso',new THREE.Float32BufferAttribute(B.f,1)); return g;
+  g.setAttribute('oscilla',new THREE.Float32BufferAttribute(B.o,1)); g.setAttribute('fisso',new THREE.Float32BufferAttribute(B.f,1)); g.setAttribute('ombra',new THREE.Float32BufferAttribute(B.s,1)); return g;
 }
-RM.figuraGeo=corpo;
+/* l'ombra nelle pieghe dentro i colori (per chi non riconosce le parti dal colore: le figure dei passanti, le figure del Costruttore) */
+function cuoci(g){ var c=g.attributes.color.array, s=g.attributes.ombra.array, i; for(i=0;i<s.length;i++){ c[i*3]*=s[i]; c[i*3+1]*=s[i]; c[i*3+2]*=s[i]; } g.deleteAttribute('ombra'); return g; }
+RM.figuraMani=MANO; RM.figuraGeo=corpo;      // con l'attributo «ombra» a parte: js/scene-tappe.js riconosce le parti dal colore e poi lo moltiplica
 /* Le stesse figure, ferme, per chi costruisce scene con il Costruttore (js/scene-tappe.js): stessi argomenti delle sue figure a blocchi, così basta che le sue uomo e cavaliere
-   chiamino queste. Cinque lati invece di sei (le scene ne mettono a centinaia): un uomo sono 351 triangoli (391 con lo scudo), un cavaliere 1255 (il cavallo è quello delle statue). Le pose sono ferme e indicative. */
+   chiamino queste. Cinque lati invece di sei (le scene ne mettono a centinaia): un uomo sono 351 triangoli (391 con lo scudo), un cavaliere 1255 (il cavallo è quello delle statue). Le pose sono ferme e indicative.
+   Dal 25 novembre 2026, sera, con la figura nuova: circa un quinto di triangoli in più (cinque figure a sei lati, una per foggia: 2204 prima, 2672 dopo). */
 var CACHE_F={};
-function figuraTinta(foggia,k,col){ var ch=foggia+'|'+(k&3), g=CACHE_F[ch]||(CACHE_F[ch]=corpo(foggia,k&3,5)), q=g.clone(), c=q.attributes.color.array, f=q.attributes.fisso.array, i;
+function figuraTinta(foggia,k,col){ var ch=foggia+'|'+(k&3), g=CACHE_F[ch]||(CACHE_F[ch]=cuoci(corpo(foggia,k&3,5))), q=g.clone(), c=q.attributes.color.array, f=q.attributes.fisso.array, i;
   if(col) for(i=0;i<f.length;i++) if(!f[i]){ c[i*3]*=col.r; c[i*3+1]*=col.g; c[i*3+2]*=col.b; }
   q.deleteAttribute('oscilla'); q.deleteAttribute('fisso'); return q; }
 var contaF=0;
@@ -133,7 +162,7 @@ function matFigure(){ var m=new THREE.MeshLambertMaterial({vertexColors:true}), 
 var figure=[], ombraFig, MAXF=Math.max.apply(null,RM.QUALITA.figure);
 if(MAXF){
   var matF=matFigure();
-  [0,1,2,3].forEach(function(f){ var g=corpo(f,f*3+1); g.setAttribute('fase',new THREE.InstancedBufferAttribute(new Float32Array(MAXF),1)); g.setAttribute('moto',new THREE.InstancedBufferAttribute(new Float32Array(MAXF),1));
+  [0,1,2,3].forEach(function(f){ var g=cuoci(corpo(f,f*3+1)); g.setAttribute('fase',new THREE.InstancedBufferAttribute(new Float32Array(MAXF),1)); g.setAttribute('moto',new THREE.InstancedBufferAttribute(new Float32Array(MAXF),1));
     var m=new THREE.InstancedMesh(g,matF,MAXF); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(MAXF*3),3); m.instanceColor.setUsage(THREE.DynamicDrawUsage);
     m.count=0; m.visible=false; m.frustumCulled=false; m.receiveShadow=true; m.userData.gruppo='vita'; RM.scene.add(m); figure.push(m); });
   var texOmbra=RM.tela(32,32,function(g){ var q=g.createRadialGradient(16,16,0,16,16,16); q.addColorStop(0,'rgba(0,0,0,.55)'); q.addColorStop(.6,'rgba(0,0,0,.25)'); q.addColorStop(1,'rgba(0,0,0,0)'); g.fillStyle=q; g.fillRect(0,0,32,32); },false);
