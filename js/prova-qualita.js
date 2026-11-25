@@ -11,6 +11,8 @@
 'use strict';
 var RM=window.RM, PG=window.RM_pagina; if(!RM || RM.guasto || !RM.qualita || !RM.qualita.forza || !RM.camera) return;
 var ANNO=852;      // un anno pesante: la città in rovina, le chiese, le mura leonine
+/* sul PC (25 novembre 2026) il giudizio usa le soglie dell'automatica del PC (js/base.js, RM.qualita.soglie): regge chi tiene 35 al secondo, non 55; così tabella, verdetto e automatica dicono la stessa cosa */
+var SOGLIE=RM.qualita.soglie?RM.qualita.soglie():{pc:false}, PC=!!SOGLIE.pc, CHI=PC?'Questo PC':'Questo telefono';
 /* Le righe della prova: i cinque gradini alla densità di disegno di base (1,5 pixel per punto sui telefoni) e, se lo schermo è più denso, «massima» ai passi della densità
    che l'automatica può raggiungere (2 e la densità piena dello schermo, al più 3; 25 novembre 2026). Ogni riga è una chiave: il nome del gradino, o «massima@2». */
 var DENS=RM.qualita.densita?RM.qualita.densita():{base:RM.renderer.getPixelRatio(), passi:[RM.renderer.getPixelRatio()], piena:RM.renderer.getPixelRatio()};
@@ -60,7 +62,7 @@ var css=$('style'); css.textContent=[
 var stop=false, corso=null;
 function pannelloCorso(){
   corso=$('div','pq pq-corso'); corso.setAttribute('role','status'); corso.setAttribute('aria-live','polite');
-  var h=$('h2',null,'Prova della qualità'), r=$('p','pq-riga','Preparo la città…'), s=$('p','pq-sotto','Tieni il telefono fermo e lo schermo acceso: ci vuole circa un minuto.'), b=$('div','pq-barra'), i=$('i'), x=$('button',null,'Interrompi');
+  var h=$('h2',null,'Prova della qualità'), r=$('p','pq-riga','Preparo la città…'), s=$('p','pq-sotto',PC?'Non toccare la città e non cambiare finestra: ci vuole circa un minuto.':'Tieni il telefono fermo e lo schermo acceso: ci vuole circa un minuto.'), b=$('div','pq-barra'), i=$('i'), x=$('button',null,'Interrompi');
   b.appendChild(i); x.type='button'; x.addEventListener('click',function(){ stop=true; x.disabled=true; x.textContent='Mi fermo…'; });
   corso.appendChild(h); corso.appendChild(r); corso.appendChild(s); corso.appendChild(b); corso.appendChild(x); document.body.appendChild(corso);
   return {riga:r, sotto:s, barra:i};
@@ -112,10 +114,15 @@ function somma(lista){
   lista.forEach(function(r){ t.n+=r.n; t.s+=r.s; if(r.peg>t.peg) t.peg=r.peg; t.o20+=r.o20; t.o34+=r.o34; t.intoppi+=r.intoppi; t.l+=r.lavoro*r.n; t.nl+=r.n; t.nascosta=t.nascosta||r.nascosta; });
   return {n:t.n, s:t.s, fps:t.s?1000*t.n/t.s:0, peg:t.peg, o20:t.o20, o34:t.o34, intoppi:t.intoppi, lavoro:t.nl?t.l/t.nl:0, nascosta:t.nascosta};
 }
-/* il giudizio: «regge» se tiene il ritmo pieno (almeno il 92% di 60, o della frequenza dello schermo se è più bassa) con pochi salti */
+/* il giudizio: «regge» se tiene il ritmo pieno (almeno il 92% di 60, o della frequenza dello schermo se è più bassa) con pochi salti.
+   Sul PC: almeno 35 al secondo (la soglia sotto cui l'automatica scende) e al più uno su venti oltre 34 millesimi (a 60 Hz, quelli da 50); «al limite» da 30, con al più uno su otto */
 function giudica(r,meta){
   if(!r || !r.n) return {k:'salto', t:'non provato'};
   var q20=r.o20/r.n, q34=r.o34/r.n;
+  if(PC){ var sp=Math.min(SOGLIE.regge,meta*.92);
+    if(r.fps>=sp && q34<=.05) return {k:'si', t:'✓ regge'};
+    if(r.fps>=sp*.86 && q34<=.125) return {k:'forse', t:'≈ al limite'};
+    return {k:'no', t:'✗ lento'}; }
   if(r.fps>=meta*.92 && q20<=.05 && q34<=.01) return {k:'si', t:'✓ regge'};
   if(r.fps>=meta*.75 && q34<=.04) return {k:'forse', t:'≈ al limite'};
   return {k:'no', t:'✗ lento'};
@@ -174,7 +181,7 @@ async function prova(){
       perVeduta.volo=rv; parti.push(rv); fatti++;
     }
     if(parti.length){ var tot=somma(parti); esiti[g]={tot:tot, viste:perVeduta, giudizio:giudica(tot,meta), parziale:parti.length<VEDUTE.length+1, px:px};
-      if(tot.fps<meta*.66 && !stop){ for(var k=i+1;k<GRADINI.length;k++) esiti[GRADINI[k]]={salto:true}; break; } }      // già troppo lento: i gradini sopra costano di più
+      if(tot.fps<(PC?Math.min(SOGLIE.regge,meta*.92)*.8:meta*.66) && !stop){ for(var k=i+1;k<GRADINI.length;k++) esiti[GRADINI[k]]={salto:true}; break; } }      // già troppo lento: i gradini sopra costano di più
   }
   RM.qualita.rilascia(); chiudiCitta();
   if(corso){ corso.remove(); corso=null; }
@@ -188,12 +195,13 @@ function risultato(esiti,info,meta,auto){
   var fuori=$('div','pq pq-fine'), carta=$('div','pq-carta'); fuori.appendChild(carta);
   carta.appendChild($('h2',null,stop?'Prova interrotta':'Risultato della prova'));
   var v=$('p','pq-verdetto');
-  if(buono){ v.appendChild(document.createTextNode('Questo telefono regge bene fino a: ')); v.appendChild($('b',null,nomeVerdetto(buono))); v.appendChild(document.createTextNode('.')); }
-  else if(Object.keys(esiti).length) v.textContent='Questo telefono fatica già col gradino più basso.';
+  if(buono){ v.appendChild(document.createTextNode(CHI+' regge bene fino a: ')); v.appendChild($('b',null,nomeVerdetto(buono))); v.appendChild(document.createTextNode('.')); }
+  else if(Object.keys(esiti).length) v.textContent=CHI+' fatica già col gradino più basso.';
   else v.textContent='La prova si è fermata prima di misurare.';
   carta.appendChild(v);
   var nota=[];
   if(info.hz<=33) nota.push('Lo schermo batte solo 30 volte al secondo: forse è acceso il risparmio energetico. Spegnilo e rifai la prova.');
+  else if(PC) nota.push('Sul PC la soglia è '+Math.round(Math.min(SOGLIE.regge,meta*.92))+' al secondo (sul telefono '+Math.round(meta*.92)+'): «regge» vuol dire almeno '+Math.round(Math.min(SOGLIE.regge,meta*.92))+' fotogrammi al secondo e al più uno su venti oltre 34 millesimi. È la stessa soglia della qualità automatica, che sale di un gradino quando quello di prima ne tiene '+SOGLIE.sale+'. Lo schermo batte '+info.hz+' volte al secondo.');
   else nota.push('«Regge» vuol dire almeno '+Math.round(meta*.92)+' fotogrammi al secondo e quasi nessun salto. Lo schermo batte '+info.hz+' volte al secondo.');
   nota.push('Un intoppo isolato in una veduta (oltre un decimo di secondo) non conta nel giudizio: si vede in «Peggiore».');
   if(Object.keys(esiti).some(function(k){ return esiti[k].tot && esiti[k].tot.nascosta; })) nota.push('Durante la prova la pagina è stata nascosta: i numeri di quel gradino non valgono.');
@@ -244,7 +252,7 @@ function testoCopia(esiti,info,buono,meta,auto){
   GRADINI.forEach(function(g){ var e=esiti[g]; if(!e || !e.viste) return;
     r.push(g+': '+Object.keys(e.viste).map(function(k){ var t=e.viste[k]; return NV[k]+' '+t.fps.toFixed(1)+'/'+t.peg.toFixed(0)+'/'+t.o20+'/'+t.o34+'/'+t.lavoro.toFixed(1); }).join(' · ')); });
   r.push('');
-  r.push('Verdetto: '+(buono?'regge bene fino a '+nomeVerdetto(buono):'fatica anche in bassa')+' (soglia: '+Math.round(meta*.92)+' al secondo, al più 5% oltre 20 ms e 1% oltre 34 ms)');
+  r.push('Verdetto: '+(buono?'regge bene fino a '+nomeVerdetto(buono):'fatica anche in bassa')+(PC?' (sul PC la soglia è '+Math.round(Math.min(SOGLIE.regge,meta*.92))+' al secondo, al più 5% oltre 34 ms; l\'automatica sale da '+SOGLIE.sale+')':' (soglia: '+Math.round(meta*.92)+' al secondo, al più 5% oltre 20 ms e 1% oltre 34 ms)'));
   return r.join('\n');
 }
 function misure(m){ return m?m[0]+'×'+m[1]:'?'; }

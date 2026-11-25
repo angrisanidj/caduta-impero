@@ -81,10 +81,15 @@ RM.hGrezza = function(x,z){
 /* terreno con le terrazze: sotto ogni grande monumento il suolo è spianato alla quota del suo centro (zone con h) */
 /* Dove due terrazze si sfiorano le loro quote si fondono, pesate con l'ottava potenza della vicinanza: prima vinceva la più vicina e fra la terrazza di Venere e Roma e quella
    della basilica di Massenzio il suolo saltava di 20 m di colpo, e la via Sacra restava sospesa (23 novembre 2026). Nel nucleo di una terrazza l'altra pesa meno dell'1%. */
+/* Dal 25 novembre 2026 una zona può avere t, la larghezza della sfumatura (senza: 7, cioè 70 m come prima), e può essere un rettangolo: a e b le mezze misure, c e s coseno e seno
+   della rotazione del monumento, r zero (RM.dZona dà la distanza dal bordo). Serve alle piattaforme con muri di sostegno (tempio di Claudio, Venere e Roma, terme di Traiano):
+   il pendio di terra di 70 m le faceva sembrare posate su un cumulo. */
+RM.dZona = function(q,x,z){ var dx=x-q.x, dz=z-q.z; if(!q.a) return Math.hypot(dx,dz);
+  return Math.hypot(Math.max(Math.abs(dx*q.c-dz*q.s)-q.a,0),Math.max(Math.abs(dx*q.s+dz*q.c)-q.b,0)); };
 RM.h = function(x,z){
-  var y=RM.hGrezza(x,z), i, q, d, w, p, meglio=0, sp=0, sh=0;
-  for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(q.h==null) continue; d=Math.abs(x-q.x)+Math.abs(z-q.z); if(d>(q.r+7)*1.5) continue;
-    d=Math.hypot(x-q.x,z-q.z); if(d<q.r+7){ w=1-RM.sfuma(q.r,q.r+7,d); if(w<=0) continue; if(w>meglio) meglio=w; p=w*w; p*=p; p*=p; sp+=p; sh+=p*q.h; } }
+  var y=RM.hGrezza(x,z), i, q, d, w, p, t, meglio=0, sp=0, sh=0;
+  for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(q.h==null) continue; t=q.t||7; d=Math.abs(x-q.x)+Math.abs(z-q.z); if(d>(q.r+(q.R||0)+t)*1.5) continue;
+    d=RM.dZona(q,x,z); if(d<q.r+t){ w=1-RM.sfuma(q.r,q.r+t,d); if(w<=0) continue; if(w>meglio) meglio=w; p=w*w; p*=p; p*=p; sp+=p; sh+=p*q.h; } }
   return meglio?y*(1-meglio)+sh/sp*meglio:y;
 };
 /* quota letta da una griglia riempita al bisogno: per ciò che si muove a ogni fotogramma (passanti, fumo), dove RM.h costerebbe troppo */
@@ -726,7 +731,8 @@ function regola(media){
    dai moduli restano valide; l'ordine della scala è SCALA. Le file a quattro si completano da sole (completaQ: il valore di TEL_Q, o quello di «bassa»).
    Ogni gradino è solo una fila di numeri (RM.QUALITA): risoluzione della tela degli effetti, lato della mappa delle ombre, e quelli che i moduli aggiungono
    (le figure vicine in js/vita.js, i ciuffi d'erba, gli alberi…), letti con RM.qp(nome). Chi deve rifare qualcosa al cambio si iscrive con RM.qualita.quando(fn).
-   «Automatica» (la norma; ricordata nel browser come le scelte a mano) vale allo stesso modo su PC e telefoni, e non riconosce i modelli dal nome: misura.
+   «Automatica» (la norma; ricordata nel browser come le scelte a mano) non riconosce i modelli dal nome: misura. Sui telefoni pretende i 60 al secondo pieni (qui sotto);
+   sul PC ha soglie sue (si veda «Sul PC», più sotto).
    - Misura d'avvio (24 novembre 2026, sera; l'utente: «una qualità automatica che faccia un controllo sulla capacità di ogni telefono»): la prima volta che la città è sullo
      schermo, a scena tranquilla, si contano gli intervalli fra un fotogramma e l'altro (requestAnimationFrame è agganciato allo schermo, 60 o 120 volte al secondo: non si
      misurano i millesimi sotto il tetto ma quanti fotogrammi saltano) e il lavoro del processore, per poco più di un secondo; se è lento si scende di un gradino e si riprova;
@@ -746,6 +752,25 @@ function regola(media){
      più pixel; la passata finale riduce la tela con quattro letture bilineari per pixel) vale solo a scena tranquilla: nei voli, nei cambi d'anno e negli spostamenti veloci
      la tela torna a 1, senza contarlo come ritorno. Cambiano solo le due tele intermedie, e solo ai passi. In automatica non si va oltre 2,25 pixel di tela per punto (risQ).
    Sotto «bassa» resta il regolatore di prima (risoluzione sotto 1, ombre, passanti): in automatica conta solo in «bassa», con una scelta a mano dove la tela è a 1.
+   - Sul PC (25 novembre 2026). L'utente, col suo PC in «automatica (bassa)»: «Perché da pc mi va in qualità automatica (bassa) quando riesco a gestire comunque quella
+     massima?», e dopo la prova: «stiamo parlando di un PC secondo me non possiamo fare gli stessi calcoli di un telefonino». La sua prova (grafica Intel integrata, finestra
+     1528 x 794, densità 1,25, 60 Hz) dava bassa 59,4, telefono 58,6, media 56,9, alta 47,7, massima 39,6 al secondo (nei voli 39,1), 11 fotogrammi su 342 oltre 34 millesimi
+     in «massima», il processore a 5-7 millesimi: il freno è la scheda grafica, e con la regola dei telefoni (scendere appena la media supera 18,2 millesimi) finiva in «bassa».
+     Su un telefono i 60 pieni servono (calore, batteria, il dito che trascina la città); su un PC a schermo grande chi guarda preferisce il dettaglio, e 40 al secondo
+     gli sembrano fluidi. PC vuol dire nessun tocco (TOCCO_Q) e uno schermo di almeno 700 punti sul lato corto (PC_Q); sui dispositivi al tocco, anche i portatili col vetro
+     sensibile, e sugli schermi piccoli resta tutto come sopra. Sul PC:
+     · sale di un gradino se, a scena tranquilla, nei novanta fotogrammi il gradino attuale tiene almeno 42 al secondo (23,8 millesimi), con al più un fotogramma da 50
+       millesimi e il processore sotto i 10,5;
+     · scende se due finestre di novanta fotogrammi di fila stanno sotto i 35 al secondo (28,6 millesimi; il più lungo non conta), o se uno su otto dura 50 millesimi o più.
+       Fra 42 e 35 c'è l'isteresi: a 60 Hz i fotogrammi durano 16,7, 33,3 o 50 millesimi, e un gradino da 40 al secondo è metà dell'uno e metà dell'altro; la media di venti
+       balla di quattro millesimi, quella di novanta di uno, e due finestre di fila tolgono il caso (in mezz'ora simulata, con venti sequenze diverse, il PC dell'utente resta
+       sempre in «massima»). «Lungo», sul PC, vuol dire 50 millesimi (PC_LUNGO, 45): oltre 20 lo è metà dei fotogrammi di un gradino che va benissimo a 40;
+     · un gradino da cui si è scesi non si riprova per la visita (alta.tetto): una prova sola, niente altalena fra «media» e «alta»;
+     · non scende sotto «media» se non quando «media» sta sotto i 24 al secondo (PC_PAVIMENTO: una macchina davvero debole); sotto, le soglie di sopra (35 e 42);
+     · la misura d'avvio parte da «media» con le stesse soglie (pulita da 42, lenta sotto i 24);
+     · il gradino ricordato porta nella firma la versione della regola (PC_REGOLA): quelli trovati con la regola dei telefoni si buttano e si rimisura. Le scelte a mano restano.
+     Con uno schermo che batte più piano (risparmio, periodoV) le soglie si allargano come sopra. La densità oltre «massima» (solo con più di 2 pixel per punto) vuole
+     ancora i 60 pieni. Prova senza schermo: node src/prove/automatica-pc.js (anche --semi=20, e con un'altra copia del file per confrontare le decisioni).
    ?qualita=bassa|telefono|media|alta|massima fissa un gradino (per le prove, non ricordato); ?qualita=fissa spegne i regolatori e tiene il gradino di partenza.
    ?prova=qualita carica js/prova-qualita.js, che prova i gradini uno dopo l'altro e dà una tabella (RM.qualita.forza e rilascia).
    RM.regolatore.alta per le prove: stato(), passo(dt,lavoro,ora,calmo) per simulare i tempi, azzera(). */
@@ -771,9 +796,12 @@ var TEL_Q={figScena:52000};      // il «telefono» nelle file a quattro gradini
 function completaQ(){ for(var k in RM.QUALITA){ var v=RM.QUALITA[k]; if(Array.isArray(v) && v.length<5) v[4]=(k in TEL_Q)?TEL_Q[k]:v[0]; } }
 var COSTO=[.95,1,1.15,1.5,1.9];      // costo di un fotogramma per gradino, nell'ordine della scala, rispetto al «telefono»: sulla Radeon a 393 x 852 (densità 3) 0,95 / 1 / 1,05 / 1,2 / 1,35, con la scena che pesa quasi tutto il fotogramma; qui alzati per le schede che pagano soprattutto i pixel (alta 1,56 e massima 2,25 volte i pixel)
 var TOCCO_Q=(navigator.maxTouchPoints>0) || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+var LATO_SCH=0; try{ LATO_SCH=Math.min(screen.width,screen.height)||0; }catch(e){}
+var PC_Q=!TOCCO_Q && LATO_SCH>=700;      // il PC (25 novembre 2026, si veda in testa al blocco): nessun tocco e uno schermo non piccolo; conta lo schermo, non la finestra (un portatile a 1366 x 768 ha meno di 700 punti d'altezza dentro il browser)
+var PC_SALE=1/42, PC_SCENDE=1/35, PC_PAVIMENTO=1/24, PC_LUNGO=.045, PC_N=90, PC_REGOLA='pc2';      // le soglie del PC, in secondi per fotogramma (si veda in testa al blocco); PC_LUNGO: un fotogramma da 50 millesimi a 60 Hz; PC_N: i fotogrammi guardati per scendere (tutta la finestra, più di due secondi a 40 al secondo: con venti, fra 16,7 e 33,3 millesimi mescolati, la media balla di 4 millesimi e un gradino da 39 al secondo scenderebbe per caso); PC_REGOLA: la versione della regola, nella firma del gradino ricordato
 var SENZA_AO=/[?&]ao=0/.test(location.search), FIRMA='';      // ?ao=0 spegne l'occlusione d'ambiente (per le prove: le righe orizzontali dell'iPhone, 25 novembre 2026)
-try{ FIRMA=[screen.width,screen.height,Math.round((window.devicePixelRatio||1)*100)].join('x'); }catch(e){}
-var P_DEF=(piccolo||TOCCO_Q)?1:2, qScelta=null, qUrl=(/[?&]qualita=(bassa|telefono|media|alta|massima)/.exec(location.search)||[])[1], memAuto=null;      // senza misura: «telefono» sui dispositivi al tocco e sugli schermi piccoli, «media» sul PC
+try{ FIRMA=[screen.width,screen.height,Math.round((window.devicePixelRatio||1)*100)].join('x')+(PC_Q?'-'+PC_REGOLA:''); }catch(e){}      // sul PC la firma porta la versione della regola: i gradini ricordati con la regola dei telefoni (fino al 25 novembre 2026) non valgono più
+var P_DEF=PC_Q?2:(piccolo||TOCCO_Q)?1:2, qScelta=null, qUrl=(/[?&]qualita=(bassa|telefono|media|alta|massima)/.exec(location.search)||[])[1], memAuto=null;      // senza misura: «telefono» sui dispositivi al tocco e sugli schermi piccoli, «media» sul PC
 try{ var qMem=localStorage.getItem('rm-qualita'); if(NOMI_Q.indexOf(qMem)>=0){ qScelta=qMem; var dm=+localStorage.getItem('rm-qualita-dens'); if(dm>0) densMano=dm; }
   var ma=JSON.parse(localStorage.getItem('rm-qualita-auto')||'null'), et=ma?Date.now()-ma.t:-1; if(ma && NOMI_Q.indexOf(ma.g)>=0 && ma.s===FIRMA && et>=0 && et<7*864e5) memAuto=ma; }catch(e){}
 if(qUrl){ qScelta=qUrl; var dU=+((/[?&]dens=([\d.]+)/.exec(location.search)||[])[1]); densMano=dU>0?dU:null; }      // ?qualita=massima&dens=2 per le prove
@@ -834,10 +862,11 @@ function misuraAvvio(dt,lavoro,ora,calmo,T){
   if(!calmo && !pazienza){ a.f.length=0; a.calma=0; return; }
   a.calma+=dt; if(a.calma<.8) return;
   a.f.push(dt,lavoro); if(a.f.length<144) return;
-  var n=a.f.length/2, s=0, l=0, lunghi=0, mx=0, k; for(k=0;k<a.f.length;k+=2){ s+=a.f[k]; l+=a.f[k+1]; if(a.f[k]>T*1.25) lunghi++; if(a.f[k]>mx) mx=a.f[k]; }      // lungo: oltre 20,8 millesimi a 60 al secondo
-  if(mx>.1){ s-=mx; n--; lunghi--; }      // un intoppo isolato (la memoria che si libera, un'altra app) non dice nulla del gradino
+  var n=a.f.length/2, s=0, l=0, lunghi=0, l50=0, mx=0, k; for(k=0;k<a.f.length;k+=2){ s+=a.f[k]; l+=a.f[k+1]; if(a.f[k]>T*1.25) lunghi++; if(a.f[k]>PC_LUNGO) l50++; if(a.f[k]>mx) mx=a.f[k]; }      // lungo: oltre 20,8 millesimi a 60 al secondo; sul PC conta anche quelli da 50 (l50)
+  if(mx>.1){ s-=mx; n--; lunghi--; l50--; }      // un intoppo isolato (la memoria che si libera, un'altra app) non dice nulla del gradino
   s/=n; l/=n+(mx>.1?1:0); a.f.length=0; a.calma=0;
   var pulito=s<T*1.05 && lunghi<=n*.04 && l<T*.63, lento=s>T*1.12 || lunghi>n*.12;
+  if(PC_Q){ pulito=s<suPC(T) && l50<=n*.02 && l<T*.63; lento=s>giuPC(T) || (alta.p!==P_MEDIA && l50>n*.13); }      // sul PC le soglie del PC: si parte da «media», che scende solo sotto i 24 al secondo (il pavimento)
   a.ultima={media:+(s*1000).toFixed(1), lunghi:lunghi, lavoro:+(l*1000).toFixed(1), carico:a.carico, gradino:nomeQ()};
   if(a.carico===0){
     if(lento && alta.p>0 && a.scese<2){ a.scese++; mettiAlta(alta.p-1,'misura'); return; }      // lento: un gradino sotto, e si riprova
@@ -848,6 +877,16 @@ function misuraAvvio(dt,lavoro,ora,calmo,T){
   while(p<SCALA.length-1 && COSTO[p+1]<=c0*m) p++;
   fineAvvio(p);
 }
+/* le soglie del PC per fotogramma, col periodo di riferimento T (più larghe se lo schermo batte più piano): sale sotto i 42 al secondo, scende sopra i 35, a «media» solo sopra i 24 */
+var P_MEDIA=posDi('media');
+function suPC(T){ return Math.max(PC_SALE,T*1.05); }
+function giuPC(T){ return alta.p===P_MEDIA?Math.max(PC_PAVIMENTO,T*1.09):Math.max(PC_SCENDE,T*1.09); }
+/* sul PC si scende solo se due finestre di novanta fotogrammi di fila, una dopo l'altra e senza sovrapporsi, sono lente: con 16,7 e 33,3 millesimi mescolati una finestra
+   sola di un gradino da 39 al secondo esce lenta per caso circa una volta su mille, e in mezz'ora di finestre ce ne sono ottocento (la simulazione di src/prove/automatica-pc.js) */
+function lentoPC(lento,n){
+  if(n<PC_N){ alta.contaPC=PC_N-1; alta.lentiPC=0; return false; }      // la finestra si sta riempiendo (dopo un cambio, un volo, uno scorrimento): la prima si giudica appena è piena
+  if(++alta.contaPC<PC_N) return false;
+  alta.contaPC=0; alta.lentiPC=lento?(alta.lentiPC||0)+1:0; return alta.lentiPC>=2; }
 function fineAvvio(p){ avvio.fatta=true; avvio.carico=0; alta.partenza=p; avvio.esito=NOMI_Q[SCALA[p]]; mettiAlta(p,'misura'); alta.blocco=performance.now()+4000; salvaSubito(); }
 /* Isteresi (25 novembre 2026; sull'iPhone il gradino andava avanti e indietro fra «alta» e «massima»): non contano i fotogrammi del secondo dopo uno scorrimento della pagina,
    un cambio di misura (la barra degli indirizzi di Safari che entra ed esce), il ritorno della scheda in primo piano, e del secondo e mezzo dopo un cambio d'anno
@@ -867,13 +906,15 @@ function giudica(dt,lavoro,ora,calmo){
   var T=TQ(), f=alta.f, k, n, s=0, l=0; f.push(dt,lavoro); if(f.length>180) f.splice(0,2);
   if(!avvio.fatta){ misuraAvvio(dt,lavoro,ora,calmo,T); return; }
   if(alta.verifica && f.length>=80){ var v=alta.verifica; alta.verifica=null; for(k=0;k<f.length;k+=2) s+=f[k]; s/=f.length/2;      // una discesa a scena tranquilla che non ha migliorato il ritmo: il freno è altrove, si torna su e non si scende più
-    if(s>v.prima*.93 && s>T*1.09){ mettiAlta(alta.p+1,'inutile'); alta.partenza=alta.p; alta.giuFermo=true; alta.spenta=true; return; } s=0; }
+    if(s>v.prima*.93 && s>(PC_Q?giuPC(T):T*1.09)){ mettiAlta(alta.p+1,'inutile'); alta.partenza=alta.p; alta.giuFermo=true; alta.spenta=true; return; } s=0; }
   if(alta.p>0 && !alta.giuFermo && !alta.verifica && (calmo || alta.p>alta.partenza)){      // con una verifica in corso non si scende ancora: prima si vede se la discesa è servita
-    var mx=0; n=Math.min(20,f.length/2); for(k=0;k<n;k++){ var fk=f[f.length-2-2*k]; s+=fk; if(fk>mx) mx=fk; if(fk>T*1.09) l++; }
-    if(n>=12 && (s-mx)/(n-1)>T*1.09 && l>=4){      // lento davvero: media alta anche senza il fotogramma più lungo, e almeno quattro lunghi, perché un singolo inciampo (la memoria che si libera, la barra di Safari) non basti
+    var mx=0; n=Math.min(PC_Q?PC_N:20,f.length/2); for(k=0;k<n;k++){ var fk=f[f.length-2-2*k]; s+=fk; if(fk>mx) mx=fk; if(fk>(PC_Q?PC_LUNGO:T*1.09)) l++; }
+    var giu=PC_Q?lentoPC((s-mx)/(n-1)>giuPC(T) || (alta.p>P_MEDIA && l>=n*.13),n):(n>=12 && (s-mx)/(n-1)>T*1.09 && l>=4);      // sul PC: novanta fotogrammi sotto i 35 al secondo di media (a «media» sotto i 24) o, sopra «media», uno su otto da 50 millesimi o più, due volte di fila
+    if(giu){      // lento davvero: media alta anche senza il fotogramma più lungo, e almeno quattro lunghi, perché un singolo inciampo (la memoria che si libera, la barra di Safari) non basti
       var tenuto=ora-alta.cambio, prima=s/n, sotto=alta.p<=alta.partenza, dalla=alta.p>NS-1;
       if(dalla){ mettiAlta(calmo?alta.p-1:NS-2,'lento'); alta.densFerma=true; alta.blocco=ora+90000; return; }      // la densità alta scende per prima e non si riprova; nei voli non è accesa: è «massima» stessa a non reggere
       mettiAlta(alta.p-1,'lento'); if(ora-alta.discesa>3000) alta.ritorni++; alta.discesa=ora; alta.blocco=ora+90000; if(alta.ritorni>=2) alta.spenta=true;      // due discese di fila (da «massima» a «media») sono un ritorno solo
+      if(PC_Q) alta.tetto=Math.min(alta.tetto||1e9,alta.p+1);      // sul PC un gradino che non ha retto non si riprova per tutta la visita: una prova sola, niente altalena
       if(tenuto>45000){ alta.spenta=true; alta.calore=true; alta.motivo='calore'; }      // dopo tre quarti di minuto senza inciampi: il telefono si scalda o risparmia; si scende e non si risale
       if(sotto){ alta.partenza=alta.p; alta.verifica={prima:prima}; }
       return; }
@@ -881,12 +922,13 @@ function giudica(dt,lavoro,ora,calmo){
   }
   ricorda(ora);
   var suDens=alta.p>=NS-1;      // il passo seguente è la densità: più prudenza
-  if(alta.spenta || !calmo || RM.livello>0 || alta.p>=TOP || ora<alta.blocco || (suDens && (alta.densFerma || !alta.calmoD))){ alta.calma=0; return; }      // spenta: scende ancora se serve, ma non sale più
+  if(alta.spenta || !calmo || RM.livello>0 || alta.p>=TOP || ora<alta.blocco || (suDens && (alta.densFerma || !alta.calmoD)) || (PC_Q && alta.p+1>=(alta.tetto||1e9))){ alta.calma=0; return; }      // spenta: scende ancora se serve, ma non sale più
   alta.calma+=dt; if(alta.calma<(suDens?5:2.5) || f.length<180) return;
-  var lunghi=0; n=f.length/2; for(k=0;k<f.length;k+=2){ s+=f[k]; l+=f[k+1]; if((suDens || k>=f.length-40) && f[k]>T*1.09) lunghi++; }
+  var lunghi=0, l50=0; n=f.length/2; for(k=0;k<f.length;k+=2){ s+=f[k]; l+=f[k+1]; if((suDens || k>=f.length-40) && f[k]>T*1.09) lunghi++; if(f[k]>PC_LUNGO) l50++; }
+  if(PC_Q && !suDens){ if(s/n<suPC(T) && l/n<T*.63 && l50<=1) mettiAlta(alta.p+1,'margine'); return; }      // sul PC: almeno 42 al secondo nei novanta fotogrammi, al più uno da 50 millesimi; verso la densità valgono le soglie piene, qui sotto
   if(suDens?(s/n<T*1.03 && l/n<T*.55 && !lunghi):(s/n<T*1.05 && l/n<T*.63 && !lunghi)) mettiAlta(alta.p+1,'margine');      // verso la densità: media più bassa, meno lavoro e nessun fotogramma lungo in tutti i novanta
 }
-function riparti(){ alta.ritorni=0; alta.spenta=false; alta.calore=false; alta.giuFermo=false; alta.verifica=null; alta.blocco=0; alta.discesa=-1e9; alta.densFerma=false; }
+function riparti(){ alta.tetto=1e9; alta.ritorni=0; alta.spenta=false; alta.calore=false; alta.giuFermo=false; alta.verifica=null; alta.blocco=0; alta.discesa=-1e9; alta.densFerma=false; }
 RM.qualita={ nomi:NOMI_Q, scala:SCALA.map(function(g){ return NOMI_Q[g]; }), gradino:function(){ return alta.g; }, nome:nomeQ, automatica:function(){ return !qScelta; },
   quando:function(fn){ alta.ascoltatori.push(fn); },
   /* scegli(nome, densità): un gradino a mano; la densità (dalla prova, «Usa questo gradino») è facoltativa, senza vale il tetto del gradino (RM.QUALITA.dens) */
@@ -901,10 +943,12 @@ RM.qualita={ nomi:NOMI_Q, scala:SCALA.map(function(g){ return NOMI_Q[g]; }), gra
   /* la densità: quella di base, i passi dell'automatica, quella piena dello schermo, quella che si userebbe con d (dopo il tetto dei pixel) */
   densita:function(){ return {base:PR0, passi:DPASSI.slice(), piena:DPIENA, schermo:DPR, tetto:TETTO, ora:renderer.getPixelRatio(), voluta:limita(densQ(true))}; },
   limita:function(d){ return limita(d); },
+  /* le soglie dell'automatica in fotogrammi al secondo (per la prova: js/prova-qualita.js giudica con le stesse): sul PC sale da 42, regge da 35, «media» scende sotto 24 */
+  soglie:function(){ return PC_Q?{pc:true, sale:Math.round(1/PC_SALE), regge:Math.round(1/PC_SCENDE), pavimento:Math.round(1/PC_PAVIMENTO), lungo:Math.round(PC_LUNGO*1000)}:{pc:false}; },
   rimisura:function(){ try{ localStorage.removeItem('rm-qualita-auto'); }catch(e){} memAuto=null; if(!qScelta) RM.qualita.scegli(null); },
   stato:function(){ var cv=renderer.domElement; return {gradino:nomeQ(), passoDens:dpDi(alta.p), dens:renderer.getPixelRatio(), densAdesso:limita(densQ()), densMano:densMano, tela:[cv.width,cv.height], effetti:post?[post.tela.width,post.tela.height]:null, occl:(post&&post.telaAO)?[post.telaAO.width,post.telaAO.height]:null, densFerma:alta.densFerma,
     automatica:!qScelta, prova:!!provaQ, partenza:NOMI_Q[SCALA[alta.partenza]], misura:{fatta:avvio.fatta, carico:avvio.carico, esito:avvio.esito||null, ultima:avvio.ultima||null},
-    ricordato:memAuto?memAuto.g+(memAuto.d?' a densità '+String(DPASSI[Math.min(memAuto.d,ND)]).replace('.',','):''):null, periodo:+(TQ()*1000).toFixed(2), schermo:periodoV?+(periodoV*1000).toFixed(2):null, ris:ALTA, pr:renderer.getPixelRatio(), ritorni:alta.ritorni, spenta:alta.spenta, calore:alta.calore, motivo:alta.motivo, livello:RM.livello}; } };
+    ricordato:memAuto?memAuto.g+(memAuto.d?' a densità '+String(DPASSI[Math.min(memAuto.d,ND)]).replace('.',','):''):null, periodo:+(TQ()*1000).toFixed(2), schermo:periodoV?+(periodoV*1000).toFixed(2):null, ris:ALTA, pr:renderer.getPixelRatio(), ritorni:alta.ritorni, spenta:alta.spenta, calore:alta.calore, motivo:alta.motivo, livello:RM.livello, regola:PC_Q?'PC':'telefono', tetto:(alta.tetto||1e9)<NS?NOMI_Q[SCALA[alta.tetto]]:null}; } };
 /* il bottone nel menu «Strumenti» (index.html): a ogni tocco il gradino seguente, automatica → bassa → telefono → media → alta → massima → automatica */
 (function(){ var b=document.getElementById('btnQualita'); if(!b) return;
   b.addEventListener('click',function(){ var i=qScelta?posDi(qScelta)+1:0; RM.qualita.scegli(i<SCALA.length?NOMI_Q[SCALA[i]]:null); }); })();
