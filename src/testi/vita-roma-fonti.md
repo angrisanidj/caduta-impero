@@ -479,6 +479,156 @@ In quanto tempo l'erba lascia il posto agli arbusti e agli alberi: per i **muri*
 
 Nota: Procopio dà 500 uomini rimasti nel 546 (VII 20, 19), molto sotto la curva del 550. È un momento, non una media.
 
+## Abitare a Roma: insulae, domus, horti (quarta parte, 25 novembre 2026, sera)
+
+Per due lavori: rendere riconoscibili nel modello i tre modi di abitare, e l'infografica della tappa del 235 «Come si abitava a Roma». Lette con lo strumento di lettura in rete: dove non c'è il testo latino o greco, la citazione è della traduzione indicata; dove scrivo «parafrasi» ho visto solo un riassunto della pagina.
+
+Lette per questa sezione:
+
+- *Notitia* e *Curiosum*, testo latino dell'edizione di H. Jordan, *Topographie der Stadt Rom im Alterthum* II, 1871, pp. 543-571, con traduzione inglese a fronte: https://www.tertullian.org/fathers/chronography_of_354_14_regions_of_rome.htm
+- Platner e Ashby (LacusCurtius, `PLATOP*/`): «Insulae», «domus» (elenco intero), «horti», «Horti Sallustiani», «Horti Lamiani», «Horti Maecenatis», «Horti Aciliorum».
+- G. R. Storey, *Regionaries-type insulae 1: Architectural/residential units at Ostia*, AJA 105 (2001), 389-401: **solo il riassunto** (archivio dell'Università dello Iowa, `iro.uiowa.edu`). Il testo intero è a pagamento.
+- Strabone V 3, 7 (traduzione di H. L. Jones, LacusCurtius `Strabo/5C*.html`).
+- *Epitome de Caesaribus* 13, 12-13 (traduzione inglese di T. M. Banchich, 2009, su ToposText: https://topostext.org/work/745). Il testo latino non si è aperto (siti irraggiungibili).
+- Tacito, *Annali* XV 43 (traduzione di J. Jackson, LacusCurtius `Tacitus/Annals/15B*.html`).
+- Giovenale III 164-166, 190-202, 223-225, 232-238, 268-277 (latino): https://www.thelatinlibrary.com/juvenal/3.shtml
+- Marziale I 108 e I 117 (latino): https://www.thelatinlibrary.com/martial/mart1.shtml
+- Gellio XV 1, 2-3 (latino, LacusCurtius `L/Roman/Texts/Gellius/15*.html`).
+- Tertulliano, *Adversus Valentinianos* 7 (latino e inglese, Bibliothek der Kirchenväter): https://bkv.unifr.ch/works/cpl-16/compare/against-the-valentinians/8/adversus-valentinianos
+- *Digesto* IX 3 (latino): https://www.thelatinlibrary.com/justinian/digest9.shtml
+- *Codice Teodosiano* XV 1 (latino): https://www.thelatinlibrary.com/theodosius/theod15.shtml
+- Vitruvio VI 3 e VI 5 (traduzione inglese di Gwilt, LacusCurtius `Vitruvius/6*.html`).
+- Smith, *Dictionary of Greek and Roman Antiquities*, voce Domus (LacusCurtius `secondary/SMIGRA*/Domus.html`), riletta.
+- Ostia, Caseggiato di Diana (I III 3-4): https://www.ostia-antica.org/regio1/3/3-3.htm (scheda di J. T. Bakker dagli scavi di Calza e Marinucci).
+- Insula dell'Ara Coeli: scheda di Turismo Roma (Roma Capitale), https://turismoroma.it/it/luoghi/insula-dellara-coeli. Fonte divulgativa: la uso solo per i piani e il numero di abitanti.
+- Cassio Dione LXXIII 5, 3 (traduzione di Cary, LacusCurtius) e Fozio, *Biblioteca*, codice 80 (Olimpiodoro; Freese, tertullian.org), riletto nel passo sulle case.
+
+### I cataloghi delle regioni (IV secolo)
+
+Due redazioni dello stesso elenco: la *Notitia* e il *Curiosum*, che è posteriore al 357 perché nomina l'obelisco di Costanzo II (Wikipedia come indice). Numeri della *Notitia*; fra parentesi il *Curiosum* quando è diverso (edizione Jordan, pagina sopra).
+
+| Regione | insulae | domus | horrea | balnea | lacus | pistrina |
+|---|---|---|---|---|---|---|
+| I Porta Capena | 3.250 | 120 | 16 | 86 | 81 (87) | 20 |
+| II Caelimontium | 3.600 | 127 | 27 | 85 | 65 | 15 |
+| III Isis et Serapis | 2.757 | 60 (160) | 18 (17) | 80 | 65 | 16 |
+| IV Templum Pacis | 2.757 | 88 | 18 | 65 (75) | 71 (78) | 15 |
+| V Esquiliae | 3.850 | 180 | 22 | 75 | 74 | 15 |
+| VI Alta Semita | 3.403 | 146 | 18 | 75 | 73 | 16 |
+| VII Via Lata | 3.805 | 120 | 25 | 75 | 76 | 15 |
+| VIII Forum Romanum | 3.480 | 130 | 18 | 86 (85) | 120 | 20 |
+| IX Circus Flaminius | 2.777 | 140 | 25 | 63 | 120 | 20 |
+| X Palatium | 2.742 (2.642) | 89 | 48 | 44 | 90 (89) | 20 |
+| XI Circus Maximus | 2.500 (2.600) | 88 (89) | 16 | 15 | 20 | 16 |
+| XII Piscina Publica | 2.487 | 113 | 27 | 63 | 80 (81) | 25 |
+| XIII Aventinus | 2.487 | 130 | 35 | 44 (60) | 89 | 20 |
+| XIV Trans Tiberim | 4.405 | 150 | 22 | 86 | 180 | 24 |
+| **Somma delle regioni** (calcolo mio, *Notitia*) | **44.300** | **1.681** | 335 | 942 | 1.204 | 257 |
+| **Breviario finale** (*Notitia* e *Curiosum* uguali) | **46.602** | **1.790** | 290 | 856 | 1.352 | 254 |
+
+- Le somme delle regioni non danno i totali del breviario: 44.300 contro 46.602 insulae (lo nota anche Platner e Ashby, «Insulae»), 1.681 contro 1.790 domus (1.782 coi numeri del *Curiosum*). I numeri sono stati copiati a mano per secoli: vanno dati come ordini di grandezza.
+- Per ogni domus, circa 26 insulae (46.602 / 1.790; calcolo mio).
+
+**Che cosa vuol dire «insula» nei cataloghi.** Platner e Ashby danno la lettura corrente, «a house containing a number of apartments», ma segnalano studi contrari («contrast Hermes, 1885, 91-100; Mem. Acad. Inscr. B.-L. 1915, 279-335»: non letti); riferiscono anche il calcolo di Calza, 40 persone per insula, circa 1.800.000 abitanti sotto Costantino, molto sopra la curva della pagina. Storey (2001, riassunto) conclude dagli isolati di Ostia che nei cataloghi la parola indica «a separate apartment-like unit», un'unità d'abitazione separata, non un palazzo intero. Quindi 46.602 non vanno detti «palazzi»: sono unità d'affitto, forse; i palazzi erano meno.
+
+### L'insula
+
+| Che cosa | Fonte (passo e indirizzo) | Che cosa dice |
+|---|---|---|
+| Che cos'è | Platner e Ashby, «Insulae»; Smith, Domus (cita Festo) | Una casa con molti appartamenti; per Smith (da Festo) una casa non unita alle vicine da un muro comune, con «several separate houses, or at least separate apartments or shops». |
+| Limite di Augusto | Strabone V 3, 7 (C 235), trad. Jones | Crolli, incendi e vendite continue; Augusto crea una milizia di liberti contro gli incendi e vieta che un edificio «on the public streets should rise as high as seventy feet»: 70 piedi, 20,7 m, sulle vie pubbliche. |
+| Limite di Traiano | *Epitome de Caesaribus* 13, 13, trad. Banchich | Dopo una piena del Tevere, un terremoto e incendi (13, 12), Traiano decreta «that the height of houses not exceed sixty feet on account of proneness to collapse»: 60 piedi, 17,8 m, per i crolli. L'*Epitome* è della fine del IV secolo, tre secoli dopo. Non so se nel 235 la legge valesse ancora. |
+| Dopo l'incendio del 64 | Tacito, *Annali* XV 43, trad. Jackson | Vie larghe e misurate, «buildings of restricted height» (la cifra non c'è), cortili aperti, «colonnades were added as a protection to the front of the tenement-blocks», parti in pietra gabina o albana senza travi, niente muri in comune: ogni edificio coi suoi muri. Alcuni rimpiangevano le vie strette e le case alte, più in ombra. |
+| Puntelli e crepe | Giovenale III 193-196 | Roma sta in piedi «tenui tibicine fultam magna parte sui», retta in gran parte da puntelli sottili; l'amministratore tappa la crepa e dice di dormire tranquilli sotto il crollo che pende. |
+| Incendio dal basso, poveri in alto | Giovenale III 197-202 | «tabulata tibi iam tertia fumant: tu nescis»: il tuo terzo piano già fuma e non lo sai; se l'allarme parte dal fondo delle scale, l'ultimo a bruciare sarà chi ha solo le tegole a ripararlo dalla pioggia, dove le colombe fanno le uova. Smith ne ricava che i piani più alti erano dei poveri. |
+| Le scale | Marziale I 117, 7 | «scalis habito tribus, sed altis»: abito a tre rampe di scale, ma alte (abita «ad Pirum», al Pero; dove fosse il passo non lo dice). In I 108 chiama le sue stanze «cenacula». |
+| Che cosa sono i cenacula | Smith, Domus (da Varrone V 162 e Festo; Livio XXXIX 14; *Digesto* IX 3, 1, 7) | Tutte le stanze sopra il piano terra; Festo: «ad quae scalis ascenditur», ci si sale per scale; in Livio una scala sale direttamente dalla strada (passo di Livio non letto da me). Il *Digesto* IX 3, 1, 7 e 5, 1 parla di chi prende in affitto un cenacolo e di chi subaffitta («cenaculariam exercens»). |
+| Affitto caro | Giovenale III 166 e 223-225 | «magno hospitium miserabile»: un alloggio misero, pagato caro; con l'affitto di un anno di un buco buio a Roma, a Sora o a Frosinone si compra una casa ottima. |
+| Rendita e rischio | Gellio XV 1, 2-3 | Sul Cispio un'insula «multis arduisque tabulatis editam», alta di molti piani, brucia e il fuoco prende tutto attorno; un amico dice: «magni reditus urbanorum praediorum, sed pericula sunt longe maxima», e vorrebbe un rimedio perché a Roma le case non brucino così spesso. |
+| Finestre e strada | Giovenale III 268-275; *Digesto* IX 3, 1 pr. e 5, 6 | Di notte cadono dalle finestre cocci e vasi rotti, tante finestre aperte e vegliano; il pretore punisce chi getta o versa sulla via e vieta di tenere oggetti «in suggrunda protectove», sulla gronda o su una sporgenza, sopra il passaggio. |
+| Un'insula famosa per l'altezza | Tertulliano, *Adv. Valentinianos* 7; Platner e Ashby, «Insulae» | Tertulliano deride i cieli a piani degli eretici: «Insulam Feliculam credas tanta tabulata caelorum», e il dio abita in soffitta salendo per tante scale. Platner la legge come l'*insula Felicles* della regione IX, «famous for its height», forse presso il Circo Flaminio. La traduzione inglese della BKV intende invece «isola felice»: la lettura come edificio è degli studiosi. |
+| Balconi (*maeniana*) | *Codice Teodosiano* XV 1 (tutto il titolo); *Digesto* IX 3 | Nessuna legge del titolo XV 1 usa *maenianum*. Le leggi su costruzioni private addossate a portici e edifici pubblici (XV 1, 39 del 398, «parapetasia»; 45-46 del 406, quindici piedi fra pubblico e privato) sono date a Costantinopoli e rivolte al prefetto di quella città. Il *Digesto* parla solo di «protectum», sporgenza. **Balconi a Roma: nessuna fonte letta.** |
+| Balconi a Ostia | Caseggiato di Diana, Ostia (scheda Bakker, da Calza) | Metà del II secolo (Calza; per Marinucci età di Adriano): al primo piano «a narrow balcony», trovato crollato sulla strada sopra i detriti; botteghe con retrobottega, «mezzanine-windows» sopra le porte delle botteghe, scala in travertino con la prima rampa di 16 gradini, cortile interno con fontana, latrina con molti posti, cisterna; muri del piano terra spessi 0,90-1,00 m, segno di molti piani. Ostia, non Roma. |
+| Un'insula a Roma | Insula dell'Ara Coeli (Turismo Roma; studi di Packer 1968-69 e Priester 2002 non letti) | II secolo; «almeno cinque piani in parte ancora oggi conservati»; botteghe al piano terra coi gestori nel mezzanino; sopra, «appartamenti piccoli e angusti»; circa 400 persone. Colini e Packer la ricostruiscono attorno a un cortile; Priester con un vicolo coperto ad archi (solo da Wikipedia come indice). |
+
+### La domus
+
+| Che cosa | Fonte (passo e indirizzo) | Che cosa dice |
+|---|---|---|
+| Chi ha bisogno di che cosa | Vitruvio VI 5, 1-2 | Nelle stanze private non entra nessuno se non invitato; vestiboli, cavedi (atri) e peristili sono comuni, ci entra chiunque anche senza invito. A chi è «of middling condition» non servono vestiboli grandiosi, tablini, atri; ai nobili servono «lofty atria, and spacious peristylia», biblioteche, pinacoteche e basiliche, per gli affari pubblici e privati (parafrasi). |
+| Proporzioni dell'atrio | Vitruvio VI 3, 3-4 | Tre modi: lunghezza e larghezza 5 a 3, 3 a 2, oppure larghezza = lato di un quadrato e lunghezza = la sua diagonale; altezza fino alle travi = tre quarti della lunghezza. |
+| Tablino e peristilio | Vitruvio VI 3, 5 e 7 | Il tablino, se l'atrio è largo 20 piedi, è largo due terzi; il peristilio è un terzo più lungo di traverso che in profondità. |
+| Atrio col compluvio | Smith, Domus (da Varrone e Festo) | Il tetto dell'atrio pende verso l'apertura (*compluvium*) e la pioggia cade nella vasca (*impluvium*). |
+| Peristilio a giardino | Smith, Domus (da Vitruvio VI 4) | «a court open to the sky in the middle», «frequently decorated with flowers and shrubs». Nella casa di Pansa a Pompei il giardino è un terzo della lunghezza. |
+| Fronte sulla strada | Smith, Domus | «Very few houses in Pompeii have windows on the ground-floor opening into the street»; botteghe sul fronte date in affitto dal padrone; il vestibolo, spazio vuoto davanti alla porta (Gellio XVI 5, Macrobio VI 8). Sono case di Pompei, non di Roma. |
+| Piani | Smith, Domus | All'origine un piano solo; poi più piani. |
+| Quante e dove | Platner e Ashby, «domus» (elenco intero) | Circa 250 voci, circa 200 vere (conteggio approssimativo dello strumento di lettura). Le più frequenti: Quirinale ed Esquilino (circa 25 ciascuno), Celio (circa 20), Palatino (circa 16), Aventino (circa 14), Viminale (circa 10). Molte voci poggiano su una sola iscrizione del CIL XV (dove fosse la casa è dedotto dal luogo del ritrovamento). |
+| Domus del III secolo | stessa voce | Fabio Cilone sull'Aventino presso Santa Balbina (203); Mario Pudente Corneliano sull'Aventino presso Santa Prisca (222); Opellio Macrino sul Celio presso il Laterano (217-218); Spurio Massimo sul Quirinale sotto palazzo Barberini (età dei Severi); Aelia Athenais sull'Esquilino (metà del III secolo). |
+| Domus del IV-V secolo | stessa voce | Fausta al Laterano (313); Simmaco sul Celio e una casa sul Tevere, bruciata nel 367 (Ammiano XXVII 3, 4, citato da Platner); Pretestato presso porta Esquilina (367); Lampadio sul Viminale presso le terme di Costantino (366); Turcii nel Campo Marzio (363); Anicii presso il Circo Flaminio (408-423); Petronio Massimo sull'Oppio (V secolo); Asello sul Campidoglio (469); la casa sotto i Santi Giovanni e Paolo sul Celio. |
+
+### Gli horti
+
+| Che cosa | Fonte (passo e indirizzo) | Che cosa dice |
+|---|---|---|
+| Che cosa sono | Platner e Ashby, «horti» | La voce non dà una definizione: è un elenco di oltre cinquanta proprietà con giardino, molte sulla riva destra del Tevere (quasi tutte nominate da Cicerone) e sull'Esquilino. |
+| Sallustiani | «Horti Sallustiani» | Regione VI, fra Quirinale e Pincio; di Sallustio; imperiali da Tiberio; Vespasiano ci stava volentieri (Dione), Nerva ci morì; ancora un luogo di soggiorno nel IV secolo; dentro un ippodromo nella valle fra Pincio e Quirinale, un tempio di Venere, un ninfeo, tre piscine, un obelisco (Ammiano XVII 4, 16); resti visibili: un ninfeo e un edificio di quattro piani (parafrasi). Saccheggiati dai Goti nel 410 (Procopio). Il portico Miliarense di Aureliano è della sola *Storia Augusta*: Domaszewski lo crede un'invenzione. |
+| Lamiani | «Horti Lamiani» | A sud-est di piazza Vittorio; probabilmente di L. Elio Lamia (console nel 3 d.C.), lasciati a Tiberio; imperiali (CIL VI 8668); vi furono bruciati i resti di Caligola (Svetonio, *Cal.* 59). Nulla sul III-IV secolo. |
+| Di Mecenate | «Horti Maecenatis» | Sull'Esquilino, sull'aggere serviano e sulla vecchia necropoli (Orazio, *Sat.* I 8, 14); una torre (Svetonio, *Nero* 38); imperiali dopo Mecenate; Tiberio ci abitò; Nerone li unì al Palatino (Tacito XV 39). Nulla sul III-IV secolo. |
+| Degli Acilii | «Horti Aciliorum» | Sul Pincio, dalla Trinità dei Monti verso villa Borghese; degli Acilii Glabrioni nel II secolo; muri di sostegno ad alte arcate lungo il pendio, che Aureliano incluse nelle mura (il Muro Torto ne è un contrafforte); nel IV secolo dei Pincii, poi di Anicia Faltonia Proba e Petronio Probo (CIL VI 1751); poi imperiali (domus Pinciana). |
+| Altri del III-IV secolo | «horti» | Liciniani dell'imperatore Gallieno, sull'Esquilino (luogo incerto; *Storia Augusta*); Pallantiani sull'Esquilino, «existing in the fourth century» (*Notitia*, regione V); horti Domitiae sulla riva destra col mausoleo di Adriano, ancora chiamati così sotto Aureliano (*Storia Augusta*); horti Spei Veteris sotto Elagabalo (*Storia Augusta*). |
+| Ville sulle consolari | Cassio Dione LXXIII 5, 3 | Commodo uccide i due Quintili, ricchi e famosi. La villa sull'Appia non è nominata: che fosse loro lo dicono gli studiosi (non letti). Villa di Massenzio: nessuna fonte letta. |
+
+### Che cosa succede dopo
+
+- **Domus.** Nel IV secolo e fino a metà del V le grandi case sono ancora abitate dai senatori (elenco di Platner sopra). Olimpiodoro, riassunto da Fozio: ogni grande casa di Roma ha in sé tutto ciò che ha una città, ippodromo, fori, templi, fontane, terme, e «One house is a town; a city has ten thousand towns» (Fozio, codice 80, trad. Freese). Nel VI secolo la casa di Gregorio sul Celio diventa monastero (Platner, «domus», circa 580; letta solo la riga).
+- **Horti.** I Sallustiani saccheggiati nel 410; gli horti degli Acilii passano a famiglie senatorie nel IV secolo e poi all'imperatore; dopo, nelle fonti lette, nulla.
+- **Insulae.** Nel IV secolo i cataloghi ne contano ancora 46.602; per l'abbandono dal V secolo valgono le sezioni sopra («Il disabitato e l'incolto», «Orti, vigne, pascoli e rovine»).
+
+### Per chi disegna
+
+| Tipo | Dall'alto | Dalla strada | Misure |
+|---|---|---|---|
+| **Insula** | Blocco alto a più piani, staccato dai vicini (muri propri: Tacito XV 43; Smith da Festo); a volte con cortile interno (Ostia, Diana). | Botteghe al piano terra, con le finestre del mezzanino sopra le porte (Ostia, Diana; Ara Coeli); portico davanti al fronte (Tacito XV 43); molte finestre ai piani (Giovenale III 270-275); scala che sale dalla strada (Festo e Livio in Smith). Il balcone stretto al primo piano è attestato a Ostia, non a Roma. | Al massimo 70 piedi, 20,7 m (Augusto); 60 piedi, 17,8 m (Traiano). Almeno cinque piani all'Ara Coeli. Muri del piano terra 0,9-1 m (Ostia). L'altezza dei singoli piani non l'ho trovata. |
+| **Domus** | Tetto a falde verso un'apertura quadra sopra la vasca (atrio); dietro, un cortile scoperto con colonne e verde (peristilio); uno o due piani (Smith). Quanto spazio occupi una domus a Roma non l'ho trovato. | Muro quasi cieco, porta con vestibolo, botteghe in affitto ai lati (Smith, ma su Pompei). | Atrio 5:3, 3:2 o 1:1,41; atrio di 20 piedi (5,9 m) con tablino di due terzi; peristilio un terzo più largo che profondo (Vitruvio VI 3). |
+| **Horti** | Grandi aree verdi ai margini, su Pincio, Quirinale nord ed Esquilino, con edifici, un tempio, un ninfeo, vasche, un ippodromo e un obelisco (Sallustiani); sul Pincio terrazze su muri ad arcate (Acilii). | Muri di sostegno alti; dopo il 271 alcuni stanno nelle mura di Aureliano (Acilii). | Nessuna misura dell'insieme nelle fonti lette. |
+
+### Per l'infografica (tappa del 235)
+
+Undici fatti sicuri (se ne servono dieci, il 2 è un calcolo e si può togliere):
+
+1. Nel IV secolo i cataloghi contano a Roma **46.602 insulae** e **1.790 domus** (*Notitia* e *Curiosum*, breviario).
+2. Circa **26 insulae per ogni domus** (calcolo dai due totali).
+3. «Insula» lì vuol dire probabilmente un'unità d'affitto, non un palazzo intero (Storey 2001; Platner e Ashby segnalano la discussione).
+4. Augusto vieta sulle vie pubbliche case alte **70 piedi, circa 21 m** (Strabone V 3, 7).
+5. Traiano scende a **60 piedi, circa 18 m**, «per i crolli» (*Epitome de Caesaribus* 13, 13).
+6. Dopo l'incendio del 64: vie larghe, portici davanti alle insulae, muri propri, pietra senza travi (Tacito, *Annali* XV 43).
+7. Al piano terra le botteghe, sopra di loro il mezzanino dei bottegai, poi gli appartamenti (Ara Coeli; Ostia).
+8. Più si sale, più si è poveri: sotto le tegole stanno le colombe e chi brucia per ultimo (Giovenale III 199-202).
+9. L'affitto di un anno a Roma basta per comprare una casa a Sora o a Frosinone (Giovenale III 223-225).
+10. La domus si apre all'interno: atrio con la vasca, poi il cortile a colonne; servono a ricevere, e solo ai potenti (Vitruvio VI 5, 1-2).
+11. Gli horti, grandi giardini sui colli, nel III secolo sono in buona parte dell'imperatore (Sallustiani, Lamiani, di Mecenate: Platner e Ashby).
+
+Citazioni brevi (traduzione mia dal testo letto):
+
+- «Abitiamo una città retta in gran parte da puntelli sottili» — *nos urbem colimus tenui tibicine fultam magna parte sui* (Giovenale III 193-194).
+- «Il tuo terzo piano già fuma, e tu non lo sai» — *tabulata tibi iam tertia fumant: tu nescis* (Giovenale III 199-200).
+- «Brucerà per ultimo chi ha solo le tegole a ripararlo dalla pioggia, dove le colombe fanno le uova» — *ultimus ardebit quem tegula sola tuetur a pluvia, molles ubi reddunt ova columbae* (Giovenale III 201-202).
+- «Abito a tre rampe di scale, ma alte» — *scalis habito tribus, sed altis* (Marziale I 117, 7).
+- «Le case in città rendono molto, ma i rischi sono di gran lunga più grandi» — *magni reditus urbanorum praediorum, sed pericula sunt longe maxima* (Gellio XV 1, 3).
+- «Una casa è una città; la città contiene diecimila città» (Olimpiodoro in Fozio, codice 80, dall'inglese di Freese; il greco non l'ho letto).
+- Augusto vietò che sulle vie pubbliche un edificio arrivasse a settanta piedi (Strabone V 3, 7, dall'inglese di Jones; il greco non l'ho letto).
+
+### Discusso o non trovato
+
+- **Che cosa conti «insula».** Unità d'affitto (Storey, dal riassunto) o palazzo (lettura tradizionale). Gli articoli contrari citati da Platner (Hermes 1885; Mém. Acad. Inscr. 1915) e la seconda parte di Storey (AJA 106, 2002) non li ho letti.
+- **I totali non tornano** con le somme delle regioni (44.300 contro 46.602).
+- **Limite di Traiano.** Ora c'è una fonte letta (*Epitome* 13, 13), ma tarda e in traduzione; il latino non si è aperto.
+- **Balconi a Roma.** Nessun testo letto; a Ostia uno, dagli scavi. Il Codice Teodosiano non ha *maeniana* e le sue leggi sui fabbricati privati riguardano Costantinopoli.
+- **Altezza dei piani, larghezza del fronte di un'insula, misure dell'Ara Coeli.** Non trovate in fonti aperte (Packer 1968-69 e Priester 2002 non letti; il PDF della Sovrintendenza non si è potuto leggere).
+- **Acqua e latrine nelle insulae di Roma.** Nessuna fonte letta su Roma; a Ostia, Diana, latrina comune e cisterna. I 1.352 *lacus* dei cataloghi sono le fontane pubbliche.
+- **Le domus di Roma come quelle di Pompei.** Fronte cieco e botteghe ai lati sono in Smith per Pompei; per Roma nessuna pianta letta (la *Forma Urbis* marmorea non l'ho aperta).
+- **Ville dei Quintili e di Massenzio.** Nessuna fonte letta che le descriva.
+
 ---
 
 ## Che cosa NON disegnare (le fonti lette non lo sostengono)
@@ -507,6 +657,12 @@ Nota: Procopio dà 500 uomini rimasti nel 546 (VII 20, 19), molto sotto la curva
 - **Monaci di Roma in nero o in bianco.** La *Regola di Benedetto* lascia colore e stoffa a ciò che si trova; per Roma nessuna fonte letta dà il colore. Il nero dei monaci è solo in Girolamo (384), in un ritratto satirico.
 - **Il fante franco dell'immagine 22 come milizia romana.** Non è Roma, e l'attribuzione al Salterio di Stoccarda va controllata.
 - **Lampade accese per le strade di notte.** Vedi sopra: nessuna fonte.
+- **Insulae più alte di 70 piedi (20,7 m).** Contro Augusto (Strabone V 3, 7); dopo Traiano 60 piedi (17,8 m).
+- **Balconi sulle insulae di Roma come cosa certa.** Nessun testo letto su Roma; uno solo a Ostia, dagli scavi (Caseggiato di Diana).
+- **Domus con grandi finestre sulla strada.** Le fonti lette (Smith, su Pompei) danno fronti quasi ciechi.
+- **«46.602 palazzi».** Nei cataloghi «insula» è forse un'unità d'affitto (Storey 2001); e i totali non tornano con le somme delle regioni.
+- **Il portico Miliarense di Aureliano negli horti Sallustiani.** Solo *Storia Augusta*, ritenuto un'invenzione da Domaszewski.
+- **Una Roma di 1.800.000 abitanti (Calza).** È un calcolo di 40 persone per insula, citato da Platner; la curva della pagina dice circa 800.000-900.000.
 
 ## Domande aperte per l'utente
 
@@ -522,3 +678,7 @@ Restano:
 6. **Piante delle rovine.** Va bene usare, come confronto dichiarato con la flora del Colosseo del 1855, erba, cappero, edera, valeriana rossa, rovi e sambuco nano sui muri, e pochi fichi e olmi, con gli arbusti della macchia (lentisco, terebinto, lentaggine) in cima ai muri?
 7. **Roma vuota nel 547.** Marcellino dà «quaranta giorni o più» con le sole bestie: lo diciamo nella tappa del 546 (che ha già Procopio)?
 8. **Immagine 22** (fante franco): la controllo sul manoscritto digitalizzato di Stoccarda o la scarto?
+9. **Limite d'altezza delle insulae nel modello del 235.** 70 piedi (20,7 m: Augusto, in Strabone, fonte del suo tempo) o 60 piedi (17,8 m: Traiano, nella sola *Epitome* della fine del IV secolo)? Oggi il modello si ferma a 20,7 m.
+10. **Balconi.** Attestati solo a Ostia (Caseggiato di Diana). Li mettiamo su qualche insula di Roma, dichiarati come confronto con Ostia, o niente balconi?
+11. **Portici davanti alle insulae** (Tacito XV 43, dopo il 64). Li mettiamo lungo le vie principali? Quali vie, le fonti lette non lo dicono.
+12. **Nell'infografica, «46.602 insulae».** Lo diciamo così, spiegando che forse sono unità d'affitto e non palazzi, e che le somme delle regioni danno 44.300?
