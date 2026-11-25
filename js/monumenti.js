@@ -1303,9 +1303,13 @@ var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5,
    (sporco, crepe, erba, coppi mancanti: uCrepe) ma niente crolli (uRovina resta a zero), finché un evento non li porta (terremoto, incendio, cava). Uno «spogliato»
    che viene dopo toglie i bronzi senza far cadere nulla.
    Dal 25 novembre 2026, sera, anche v (verde: erba, muschio, umido) e i (intonaco caduto, crepe grandi), per lo shader del degrado (DEGRADO in js/costruttore.js):
-   crescono con gli anni d'abbandono, poco dopo qualche decennio (nel 600 le terme di Diocleziano sono a un terzo), tutto dopo trecento anni. Meno sul Pantheon fino al 609
-   (chiuso ma integro: sporco ed erba sul tetto, non un rudere), sui templi del Foro Boario, sulla Meta Sudans e sull'arco di Gallieno. Le misure sono una resa, non una fonte. */
-var MISURA_V={pantheon:.3, foroboario:.45, metasudans:.5, esquilino:.7}, MISURA_I={pantheon:.22, foroboario:.4, metasudans:.6, esquilino:.6};
+   crescono con gli anni d'abbandono, poco dopo qualche decennio (nel 600 le terme di Diocleziano sono a un terzo), tutto dopo trecento anni. Meno sui templi del Foro Boario,
+   sulla Meta Sudans e sull'arco di Gallieno. Le misure sono una resa, non una fonte.
+   Il Pantheon (25 novembre 2026, l'utente: nel 600 «quasi invariato»): prima aveva un terzo del verde e un quinto dell'intonaco caduto e non si vedeva nulla; ora quasi
+   come gli altri (erba sui gradoni e sulle cornici, muschio e umido sulla rotonda, intonaco caduto a chiazze, dal 609 tutto via perché è chiesa), ma niente crolli
+   e niente tegole cadute (uCoppi a zero: le tegole di bronzo ci sono fino al 663, quando le toglie Costante II; la scheda: «nel 609 il papa riceve un edificio intero»).
+   Prima nel 500 e nel 600 la calotta mostrava buchi dove mancavano le tegole: un crollo che le fonti non dicono. */
+var MISURA_V={pantheon:.9, foroboario:.45, metasudans:.5, esquilino:.7}, MISURA_I={pantheon:.9, foroboario:.4, metasudans:.6, esquilino:.6};
 RM.rovina=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, da=null, dc=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
   for(k=0;k<st.length;k++){
@@ -1346,7 +1350,7 @@ RM.moduli.push(function(anno){
     o.presenza=p; o.g.visible=p>.01; o.g.scale.y=cant?1:Math.max(p,.001); o.mat.userData.u.uCant.value=cant?q.t:1; ponteggio(o,cant?q.t:0);
     var rv=RM.rovina(o.id,anno); o.mat.userData.u.uRovina.value=rv.r; o.mat.userData.u.uSpoglio.value=rv.s; o.mat.userData.u.uCrepe.value=rv.c; o.mat.userData.u.uVerde.value=rv.v; o.mat.userData.u.uIntonaco.value=rv.i;
     if(o.id==='pompeo' && anno>=493){ var tPo=1-RM.sfuma(546,640,anno); o.mat.userData.u.uCrepe.value*=1-.45*tPo; o.mat.userData.u.uRovina.value*=1-.5*tPo; }      // restaurato sotto Teodorico (Cassiodoro, Variae IV 51: «roboranda», a spese del re): crepe e crolli arretrano; di quanto è una resa. Abbandonato dal 546 (25 novembre 2026): l'effetto del restauro svanisce in un secolo
-    if(o.id==='pantheon'){ o.mat.userData.u.uSpoglio.value=RM.sfuma(662.6,663.3,anno)*(1-RM.sfuma(734,736,anno)); o.mat.userData.u.uPiombo.value=RM.sfuma(734,736,anno); }   // la chiesa resta in uso: cambia solo il tetto. Bronzo tolto da Costante II (LP LXXVIII 3), piombo di Gregorio III (LP XCII 12)
+    if(o.id==='pantheon'){ o.mat.userData.u.uCoppi.value=0; o.mat.userData.u.uSpoglio.value=RM.sfuma(662.6,663.3,anno)*(1-RM.sfuma(734,736,anno)); o.mat.userData.u.uPiombo.value=RM.sfuma(734,736,anno); }   // la chiesa resta in uso: cambia solo il tetto. Bronzo tolto da Costante II (LP LXXVIII 3), piombo di Gregorio III (LP XCII 12)
     if(o.id==='colosseo'){ var us=o.mat.userData.u; us.uSudDir.value.set(-Math.sin(o.ry),Math.cos(o.ry)); us.uSudR.value.set(9.4,7.8);
       us.uSud.value=.2*RM.sfuma(523,800,anno)+.3*RM.sfuma(846.6,847,anno); us.uRovina.value*=.4; }      // il fronte sud: cava dal VI secolo; nell'847, secondo il Parco del Colosseo, cade quel che ne resta
   });
