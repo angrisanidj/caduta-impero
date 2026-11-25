@@ -1,0 +1,1279 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-25T14:38:36Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 1572825942,
+  "lat": 41.8785014,
+  "lon": 12.4774658,
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housenumber": "29",
+    "addr:postcode": "00153",
+    "addr:street": "Via Mastro Giorgio",
+    "amenity": "restaurant",
+    "check_date": "2026-11-02",
+    "contact:facebook": "https://www.facebook.com/FeliceatestaccioRM/",
+    "contact:instagram": "https://www.instagram.com/feliceatestaccio/",
+    "contact:linkedin": "https://www.linkedin.com/company/feliceatestaccio/",
+    "cuisine": "italian",
+    "name": "Felice a Testaccio",
+    "name:ja": "フェリーチェ・ア・テスタッチョ",
+    "opening_hours": "Mo-Su 12:30-15:30, 19:00-23:30",
+    "outdoor_seating": "yes",
+    "payment:cash": "yes",
+    "payment:credit_cards": "yes",
+    "payment:debit_cards": "yes",
+    "phone": "+39 06 574 6800",
+    "reservation": "recommended",
+    "start_date": "1936",
+    "website": "https://www.feliceatestaccio.com/",
+    "wheelchair": "no"
+  }
+},
+{
+  "type": "node",
+  "id": 3578040335,
+  "lat": 41.8778419,
+  "lon": 12.4786190,
+  "tags": {
+    "name": "B&B A casa a Testaccio",
+    "tourism": "hostel",
+    "website": "http://www.acasaatestaccio.com"
+  }
+},
+{
+  "type": "node",
+  "id": 5323482011,
+  "lat": 41.8761242,
+  "lon": 12.4739511,
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housenumber": "33",
+    "addr:postcode": "00153",
+    "addr:street": "Via di Monte Testaccio",
+    "amenity": "pub",
+    "live_music": "yes",
+    "name": "Trentatré Testaccio",
+    "outdoor_seating": "no",
+    "smoking": "outside"
+  }
+},
+{
+  "type": "node",
+  "id": 9366038185,
+  "lat": 41.8772652,
+  "lon": 12.4759801,
+  "tags": {
+    "board_type": "history",
+    "information": "board",
+    "name": "Monte Testaccio",
+    "operator": "Il Museo diffuso del Rione Testaccio",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 9366038186,
+  "lat": 41.8773236,
+  "lon": 12.4758449,
+  "tags": {
+    "board_type": "history",
+    "information": "board",
+    "name": "Il Rione Testaccio nel Tempo",
+    "operator": "Il Museo diffuso del Rione Testaccio",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 9366038187,
+  "lat": 41.8768228,
+  "lon": 12.4737715,
+  "tags": {
+    "board_type": "history",
+    "information": "board",
+    "name": "Nuovo Mercato Testaccio",
+    "operator": "Il Museo diffuso del Rione Testaccio",
+    "tourism": "information"
+  }
+},
+{
+  "type": "node",
+  "id": 9366038191,
+  "lat": 41.8764731,
+  "lon": 12.4732417,
+  "tags": {
+    "access": "yes",
+    "addr:city": "Roma",
+    "addr:housenumber": "4a",
+    "addr:postcode": "00153",
+    "addr:street": "Piazza Orazio Giustiniani",
+    "amenity": "music_school",
+    "contact:facebook": "https://www.facebook.com/scuolamusicatestaccio/",
+    "contact:instagram": "https://www.instagram.com/scuola_musica_testaccio/",
+    "contact:youtube": "https://www.youtube.com/channel/UCefvikj01vUPKuPjXwakScA",
+    "email": "info@scuolamusicatestaccio.it",
+    "name": "Scuola Popolare di Musica di Testaccio",
+    "phone": "+39 06 575 9846",
+    "website": "https://www.scuolamusicatestaccio.it/",
+    "wikidata": "Q3953223",
+    "wikimedia_commons": "Category:Scuola popolare di musica di Testaccio",
+    "wikipedia": "it:Scuola popolare di musica di Testaccio"
+  }
+},
+{
+  "type": "node",
+  "id": 11846399239,
+  "lat": 41.8785199,
+  "lon": 12.4737352,
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housenumber": "84/86",
+    "addr:postcode": "00153",
+    "addr:street": "Via Giovanni Battista Bodoni",
+    "amenity": "restaurant",
+    "cuisine": "italian;pizza;mediterranean",
+    "name": "La Botticella a Testaccio",
+    "opening_hours": "Mo off; Tu-Sa 12:00-15:30,19:00-24:00; Su off",
+    "phone": "+39 06 5309 4705",
+    "takeaway": "yes"
+  }
+},
+{
+  "type": "node",
+  "id": 12715311401,
+  "lat": 41.8776351,
+  "lon": 12.4735610,
+  "tags": {
+    "addr:housenumber": "66F",
+    "addr:postcode": "00153",
+    "addr:street": "Via Aldo Manuzio",
+    "amenity": "fast_food",
+    "cuisine": "pizza",
+    "name": "Da Teo a Testaccio",
+    "opening_hours": "Mo-Sa 09:00-15:00"
+  }
+},
+{
+  "type": "node",
+  "id": 13551425997,
+  "lat": 41.8751139,
+  "lon": 12.4734209,
+  "tags": {
+    "amenity": "restaurant",
+    "contact:instagram": "c.g.testaccio_hub",
+    "name": "Collettivo Gastronomico Testaccio"
+  }
+},
+{
+  "type": "way",
+  "id": 23266153,
+  "bounds": {
+    "minlat": 41.8766552,
+    "minlon": 12.4738282,
+    "maxlat": 41.8774374,
+    "maxlon": 12.4759551
+  },
+  "geometry": [
+    { "lat": 41.8766563, "lon": 12.4738282 },
+    { "lat": 41.8766552, "lon": 12.4738453 },
+    { "lat": 41.8766560, "lon": 12.4738627 },
+    { "lat": 41.8766590, "lon": 12.4738741 },
+    { "lat": 41.8766666, "lon": 12.4738984 },
+    { "lat": 41.8770246, "lon": 12.4748612 },
+    { "lat": 41.8772421, "lon": 12.4754246 },
+    { "lat": 41.8774076, "lon": 12.4758643 },
+    { "lat": 41.8774374, "lon": 12.4759551 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23266535,
+  "bounds": {
+    "minlat": 41.8768638,
+    "minlon": 12.4761411,
+    "maxlat": 41.8771509,
+    "maxlon": 12.4762411
+  },
+  "geometry": [
+    { "lat": 41.8771509, "lon": 12.4761411 },
+    { "lat": 41.8768638, "lon": 12.4762411 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Nicola Zabaglia",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23275674,
+  "bounds": {
+    "minlat": 41.8779526,
+    "minlon": 12.4744472,
+    "maxlat": 41.8796219,
+    "maxlon": 12.4756043
+  },
+  "geometry": [
+    { "lat": 41.8796219, "lon": 12.4744472 },
+    { "lat": 41.8795607, "lon": 12.4744871 },
+    { "lat": 41.8790456, "lon": 12.4748392 },
+    { "lat": 41.8789932, "lon": 12.4748772 },
+    { "lat": 41.8787619, "lon": 12.4750391 },
+    { "lat": 41.8785427, "lon": 12.4751958 },
+    { "lat": 41.8784882, "lon": 12.4752347 },
+    { "lat": 41.8784341, "lon": 12.4752722 },
+    { "lat": 41.8780085, "lon": 12.4755657 },
+    { "lat": 41.8779526, "lon": 12.4756043 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Nicola Zabaglia",
+    "sidewalk": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23321760,
+  "bounds": {
+    "minlat": 41.8747709,
+    "minlon": 12.4763529,
+    "maxlat": 41.8768937,
+    "maxlon": 12.4778999
+  },
+  "geometry": [
+    { "lat": 41.8747709, "lon": 12.4778999 },
+    { "lat": 41.8748511, "lon": 12.4778098 },
+    { "lat": 41.8748726, "lon": 12.4777838 },
+    { "lat": 41.8748944, "lon": 12.4777590 },
+    { "lat": 41.8749111, "lon": 12.4777429 },
+    { "lat": 41.8749447, "lon": 12.4777162 },
+    { "lat": 41.8755659, "lon": 12.4772774 },
+    { "lat": 41.8756178, "lon": 12.4772406 },
+    { "lat": 41.8757172, "lon": 12.4771732 },
+    { "lat": 41.8765577, "lon": 12.4766018 },
+    { "lat": 41.8766669, "lon": 12.4765264 },
+    { "lat": 41.8768238, "lon": 12.4764075 },
+    { "lat": 41.8768937, "lon": 12.4763529 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Nicola Zabaglia",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23921018,
+  "bounds": {
+    "minlat": 41.8745651,
+    "minlon": 12.4738733,
+    "maxlat": 41.8773284,
+    "maxlon": 12.4765088
+  },
+  "geometry": [
+    { "lat": 41.8761738, "lon": 12.4738733 },
+    { "lat": 41.8760199, "lon": 12.4738789 },
+    { "lat": 41.8758496, "lon": 12.4738955 },
+    { "lat": 41.8757026, "lon": 12.4739850 },
+    { "lat": 41.8755357, "lon": 12.4741022 },
+    { "lat": 41.8754226, "lon": 12.4742175 },
+    { "lat": 41.8752914, "lon": 12.4743909 },
+    { "lat": 41.8752419, "lon": 12.4744992 },
+    { "lat": 41.8752217, "lon": 12.4746120 },
+    { "lat": 41.8751258, "lon": 12.4749192 },
+    { "lat": 41.8748697, "lon": 12.4751702 },
+    { "lat": 41.8746300, "lon": 12.4753863 },
+    { "lat": 41.8745651, "lon": 12.4755765 },
+    { "lat": 41.8745878, "lon": 12.4757758 },
+    { "lat": 41.8746369, "lon": 12.4759733 },
+    { "lat": 41.8747307, "lon": 12.4761524 },
+    { "lat": 41.8748724, "lon": 12.4762983 },
+    { "lat": 41.8752156, "lon": 12.4764911 },
+    { "lat": 41.8753527, "lon": 12.4765088 },
+    { "lat": 41.8755834, "lon": 12.4764643 },
+    { "lat": 41.8757583, "lon": 12.4763648 },
+    { "lat": 41.8760889, "lon": 12.4762206 },
+    { "lat": 41.8760797, "lon": 12.4761585 },
+    { "lat": 41.8762948, "lon": 12.4761079 },
+    { "lat": 41.8764974, "lon": 12.4760335 },
+    { "lat": 41.8766546, "lon": 12.4760137 },
+    { "lat": 41.8768193, "lon": 12.4760830 },
+    { "lat": 41.8771071, "lon": 12.4760046 },
+    { "lat": 41.8772846, "lon": 12.4758847 },
+    { "lat": 41.8773284, "lon": 12.4758592 },
+    { "lat": 41.8765323, "lon": 12.4738983 },
+    { "lat": 41.8763879, "lon": 12.4738739 },
+    { "lat": 41.8761738, "lon": 12.4738733 }
+  ],
+  "tags": {
+    "alt_name": "Monte de' Cocci",
+    "area": "yes",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Monte Testaccio",
+    "website": "https://www.sovraintendenzaroma.it/i_luoghi/roma_antica/monumenti/monte_testaccio",
+    "wikidata": "Q781595",
+    "wikimedia_commons": "Category:Monte Testaccio",
+    "wikipedia": "en:Monte Testaccio"
+  }
+},
+{
+  "type": "way",
+  "id": 29017104,
+  "bounds": {
+    "minlat": 41.8751726,
+    "minlon": 12.4744050,
+    "maxlat": 41.8752757,
+    "maxlon": 12.4748027
+  },
+  "geometry": [
+    { "lat": 41.8752757, "lon": 12.4744050 },
+    { "lat": 41.8752390, "lon": 12.4744939 },
+    { "lat": 41.8752130, "lon": 12.4746055 },
+    { "lat": 41.8751881, "lon": 12.4747249 },
+    { "lat": 41.8751726, "lon": 12.4748027 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "source": "survey",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 29017105,
+  "bounds": {
+    "minlat": 41.8744965,
+    "minlon": 12.4748027,
+    "maxlat": 41.8767813,
+    "maxlon": 12.4766767
+  },
+  "geometry": [
+    { "lat": 41.8751726, "lon": 12.4748027 },
+    { "lat": 41.8751534, "lon": 12.4748655 },
+    { "lat": 41.8751299, "lon": 12.4749173 },
+    { "lat": 41.8750991, "lon": 12.4749670 },
+    { "lat": 41.8750611, "lon": 12.4750130 },
+    { "lat": 41.8749912, "lon": 12.4750951 },
+    { "lat": 41.8749120, "lon": 12.4751737 },
+    { "lat": 41.8748349, "lon": 12.4752445 },
+    { "lat": 41.8747873, "lon": 12.4752857 },
+    { "lat": 41.8747409, "lon": 12.4753238 },
+    { "lat": 41.8746810, "lon": 12.4753765 },
+    { "lat": 41.8746485, "lon": 12.4754048 },
+    { "lat": 41.8746223, "lon": 12.4754316 },
+    { "lat": 41.8745908, "lon": 12.4754766 },
+    { "lat": 41.8745755, "lon": 12.4755066 },
+    { "lat": 41.8745575, "lon": 12.4755482 },
+    { "lat": 41.8745433, "lon": 12.4755869 },
+    { "lat": 41.8745305, "lon": 12.4756182 },
+    { "lat": 41.8745206, "lon": 12.4756511 },
+    { "lat": 41.8745061, "lon": 12.4757105 },
+    { "lat": 41.8744993, "lon": 12.4757518 },
+    { "lat": 41.8744965, "lon": 12.4757954 },
+    { "lat": 41.8744965, "lon": 12.4758275 },
+    { "lat": 41.8744993, "lon": 12.4758681 },
+    { "lat": 41.8745055, "lon": 12.4759179 },
+    { "lat": 41.8745190, "lon": 12.4759874 },
+    { "lat": 41.8745367, "lon": 12.4760502 },
+    { "lat": 41.8745581, "lon": 12.4761010 },
+    { "lat": 41.8745879, "lon": 12.4761497 },
+    { "lat": 41.8746239, "lon": 12.4762017 },
+    { "lat": 41.8746585, "lon": 12.4762470 },
+    { "lat": 41.8746880, "lon": 12.4762833 },
+    { "lat": 41.8747218, "lon": 12.4763237 },
+    { "lat": 41.8747446, "lon": 12.4763496 },
+    { "lat": 41.8747812, "lon": 12.4763934 },
+    { "lat": 41.8748471, "lon": 12.4764588 },
+    { "lat": 41.8749290, "lon": 12.4765347 },
+    { "lat": 41.8749796, "lon": 12.4765707 },
+    { "lat": 41.8750586, "lon": 12.4766242 },
+    { "lat": 41.8751423, "lon": 12.4766530 },
+    { "lat": 41.8752315, "lon": 12.4766712 },
+    { "lat": 41.8753054, "lon": 12.4766753 },
+    { "lat": 41.8753428, "lon": 12.4766767 },
+    { "lat": 41.8753848, "lon": 12.4766733 },
+    { "lat": 41.8754193, "lon": 12.4766679 },
+    { "lat": 41.8754373, "lon": 12.4766656 },
+    { "lat": 41.8754566, "lon": 12.4766622 },
+    { "lat": 41.8754738, "lon": 12.4766589 },
+    { "lat": 41.8754946, "lon": 12.4766525 },
+    { "lat": 41.8755106, "lon": 12.4766464 },
+    { "lat": 41.8755265, "lon": 12.4766398 },
+    { "lat": 41.8755557, "lon": 12.4766285 },
+    { "lat": 41.8755902, "lon": 12.4766159 },
+    { "lat": 41.8756444, "lon": 12.4765936 },
+    { "lat": 41.8762373, "lon": 12.4763017 },
+    { "lat": 41.8763644, "lon": 12.4762490 },
+    { "lat": 41.8764944, "lon": 12.4762061 },
+    { "lat": 41.8766690, "lon": 12.4761644 },
+    { "lat": 41.8766998, "lon": 12.4761618 },
+    { "lat": 41.8767291, "lon": 12.4761700 },
+    { "lat": 41.8767490, "lon": 12.4761850 },
+    { "lat": 41.8767630, "lon": 12.4762087 },
+    { "lat": 41.8767731, "lon": 12.4762353 },
+    { "lat": 41.8767813, "lon": 12.4762788 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "source": "survey"
+  }
+},
+{
+  "type": "way",
+  "id": 29017106,
+  "bounds": {
+    "minlat": 41.8752757,
+    "minlon": 12.4741579,
+    "maxlat": 41.8754686,
+    "maxlon": 12.4744050
+  },
+  "geometry": [
+    { "lat": 41.8754686, "lon": 12.4741579 },
+    { "lat": 41.8754051, "lon": 12.4742290 },
+    { "lat": 41.8753379, "lon": 12.4743034 },
+    { "lat": 41.8752757, "lon": 12.4744050 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 29017107,
+  "bounds": {
+    "minlat": 41.8750310,
+    "minlon": 12.4744536,
+    "maxlat": 41.8751726,
+    "maxlon": 12.4748027
+  },
+  "geometry": [
+    { "lat": 41.8750310, "lon": 12.4744536 },
+    { "lat": 41.8751726, "lon": 12.4748027 }
+  ],
+  "tags": {
+    "highway": "service",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "source": "survey",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 29017108,
+  "bounds": {
+    "minlat": 41.8750310,
+    "minlon": 12.4741579,
+    "maxlat": 41.8754686,
+    "maxlon": 12.4744536
+  },
+  "geometry": [
+    { "lat": 41.8754686, "lon": 12.4741579 },
+    { "lat": 41.8754097, "lon": 12.4741781 },
+    { "lat": 41.8750310, "lon": 12.4744536 }
+  ],
+  "tags": {
+    "highway": "service",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 29017110,
+  "bounds": {
+    "minlat": 41.8747682,
+    "minlon": 12.4744536,
+    "maxlat": 41.8750310,
+    "maxlon": 12.4746349
+  },
+  "geometry": [
+    { "lat": 41.8750310, "lon": 12.4744536 },
+    { "lat": 41.8747682, "lon": 12.4746349 }
+  ],
+  "tags": {
+    "highway": "service",
+    "name": "Via di Monte Testaccio",
+    "source": "survey",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 96849342,
+  "bounds": {
+    "minlat": 41.8765577,
+    "minlon": 12.4763183,
+    "maxlat": 41.8767002,
+    "maxlon": 12.4766018
+  },
+  "geometry": [
+    { "lat": 41.8765577, "lon": 12.4766018 },
+    { "lat": 41.8765799, "lon": 12.4765511 },
+    { "lat": 41.8765950, "lon": 12.4765293 },
+    { "lat": 41.8766200, "lon": 12.4765023 },
+    { "lat": 41.8766503, "lon": 12.4764742 },
+    { "lat": 41.8766624, "lon": 12.4764635 },
+    { "lat": 41.8766765, "lon": 12.4764454 },
+    { "lat": 41.8766912, "lon": 12.4764199 },
+    { "lat": 41.8766992, "lon": 12.4763911 },
+    { "lat": 41.8767002, "lon": 12.4763622 },
+    { "lat": 41.8766965, "lon": 12.4763183 }
+  ],
+  "tags": {
+    "highway": "unclassified",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Nicola Zabaglia",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 103775337,
+  "bounds": {
+    "minlat": 41.8786261,
+    "minlon": 12.4789950,
+    "maxlat": 41.8786514,
+    "maxlon": 12.4790558
+  },
+  "geometry": [
+    { "lat": 41.8786514, "lon": 12.4790558 },
+    { "lat": 41.8786261, "lon": 12.4789950 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 103775348,
+  "bounds": {
+    "minlat": 41.8785203,
+    "minlon": 12.4787237,
+    "maxlat": 41.8785289,
+    "maxlon": 12.4788000
+  },
+  "geometry": [
+    { "lat": 41.8785203, "lon": 12.4787237 },
+    { "lat": 41.8785289, "lon": 12.4788000 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 124214103,
+  "bounds": {
+    "minlat": 41.8774374,
+    "minlon": 12.4759551,
+    "maxlat": 41.8774666,
+    "maxlon": 12.4760453
+  },
+  "geometry": [
+    { "lat": 41.8774374, "lon": 12.4759551 },
+    { "lat": 41.8774666, "lon": 12.4760453 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 124214113,
+  "bounds": {
+    "minlat": 41.8773858,
+    "minlon": 12.4759551,
+    "maxlat": 41.8774374,
+    "maxlon": 12.4759876
+  },
+  "geometry": [
+    { "lat": 41.8774374, "lon": 12.4759551 },
+    { "lat": 41.8773858, "lon": 12.4759876 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Nicola Zabaglia",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 190028514,
+  "bounds": {
+    "minlat": 41.8754686,
+    "minlon": 12.4738643,
+    "maxlat": 41.8759043,
+    "maxlon": 12.4741579
+  },
+  "geometry": [
+    { "lat": 41.8759043, "lon": 12.4738643 },
+    { "lat": 41.8758639, "lon": 12.4738761 },
+    { "lat": 41.8758098, "lon": 12.4738998 },
+    { "lat": 41.8756862, "lon": 12.4739863 },
+    { "lat": 41.8755332, "lon": 12.4741044 },
+    { "lat": 41.8754686, "lon": 12.4741579 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via di Monte Testaccio",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 190994645,
+  "bounds": {
+    "minlat": 41.8746485,
+    "minlon": 12.4741168,
+    "maxlat": 41.8771101,
+    "maxlon": 12.4762127
+  },
+  "geometry": [
+    { "lat": 41.8759278, "lon": 12.4741507 },
+    { "lat": 41.8760935, "lon": 12.4741168 },
+    { "lat": 41.8763781, "lon": 12.4741624 },
+    { "lat": 41.8765012, "lon": 12.4742831 },
+    { "lat": 41.8764805, "lon": 12.4743450 },
+    { "lat": 41.8764895, "lon": 12.4743886 },
+    { "lat": 41.8765431, "lon": 12.4744160 },
+    { "lat": 41.8766010, "lon": 12.4745211 },
+    { "lat": 41.8766243, "lon": 12.4746249 },
+    { "lat": 41.8766422, "lon": 12.4746789 },
+    { "lat": 41.8766795, "lon": 12.4746649 },
+    { "lat": 41.8767484, "lon": 12.4748762 },
+    { "lat": 41.8769690, "lon": 12.4754589 },
+    { "lat": 41.8770228, "lon": 12.4754586 },
+    { "lat": 41.8770634, "lon": 12.4755387 },
+    { "lat": 41.8770955, "lon": 12.4755632 },
+    { "lat": 41.8771101, "lon": 12.4756033 },
+    { "lat": 41.8770741, "lon": 12.4756902 },
+    { "lat": 41.8770124, "lon": 12.4757196 },
+    { "lat": 41.8769115, "lon": 12.4758040 },
+    { "lat": 41.8767960, "lon": 12.4758065 },
+    { "lat": 41.8767793, "lon": 12.4757439 },
+    { "lat": 41.8766713, "lon": 12.4757714 },
+    { "lat": 41.8766657, "lon": 12.4759090 },
+    { "lat": 41.8763500, "lon": 12.4758987 },
+    { "lat": 41.8758503, "lon": 12.4759998 },
+    { "lat": 41.8756139, "lon": 12.4760769 },
+    { "lat": 41.8754606, "lon": 12.4761567 },
+    { "lat": 41.8752958, "lon": 12.4762127 },
+    { "lat": 41.8751289, "lon": 12.4761899 },
+    { "lat": 41.8750163, "lon": 12.4761655 },
+    { "lat": 41.8749442, "lon": 12.4760686 },
+    { "lat": 41.8748766, "lon": 12.4760467 },
+    { "lat": 41.8748277, "lon": 12.4760342 },
+    { "lat": 41.8747788, "lon": 12.4759466 },
+    { "lat": 41.8747090, "lon": 12.4759279 },
+    { "lat": 41.8746950, "lon": 12.4758779 },
+    { "lat": 41.8747020, "lon": 12.4757653 },
+    { "lat": 41.8746485, "lon": 12.4756871 },
+    { "lat": 41.8746624, "lon": 12.4756371 },
+    { "lat": 41.8747416, "lon": 12.4756465 },
+    { "lat": 41.8748230, "lon": 12.4756275 },
+    { "lat": 41.8749404, "lon": 12.4755009 },
+    { "lat": 41.8750053, "lon": 12.4752996 },
+    { "lat": 41.8753051, "lon": 12.4748929 },
+    { "lat": 41.8753962, "lon": 12.4747684 },
+    { "lat": 41.8754488, "lon": 12.4747165 },
+    { "lat": 41.8754075, "lon": 12.4746021 },
+    { "lat": 41.8754075, "lon": 12.4745427 },
+    { "lat": 41.8754494, "lon": 12.4744895 },
+    { "lat": 41.8755379, "lon": 12.4744051 },
+    { "lat": 41.8755379, "lon": 12.4743551 },
+    { "lat": 41.8755867, "lon": 12.4742957 },
+    { "lat": 41.8756496, "lon": 12.4742144 },
+    { "lat": 41.8756892, "lon": 12.4741737 },
+    { "lat": 41.8757311, "lon": 12.4741894 },
+    { "lat": 41.8758706, "lon": 12.4741417 },
+    { "lat": 41.8759278, "lon": 12.4741507 }
+  ],
+  "tags": {
+    "leisure": "park",
+    "loc_name": "Monte de' Cocci",
+    "name": "Parco Testaccio",
+    "note:it": "Anche detto Monte de' Cocci (cfr. Monte Testaccio, area archeologica, altro oggetto)"
+  }
+},
+{
+  "type": "way",
+  "id": 200237677,
+  "bounds": {
+    "minlat": 41.8783776,
+    "minlon": 12.4783323,
+    "maxlat": 41.8785203,
+    "maxlon": 12.4787237
+  },
+  "geometry": [
+    { "lat": 41.8783776, "lon": 12.4783323 },
+    { "lat": 41.8784325, "lon": 12.4784779 },
+    { "lat": 41.8785203, "lon": 12.4787237 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393124,
+  "bounds": {
+    "minlat": 41.8775688,
+    "minlon": 12.4763114,
+    "maxlat": 41.8777708,
+    "maxlon": 12.4768032
+  },
+  "geometry": [
+    { "lat": 41.8775688, "lon": 12.4763114 },
+    { "lat": 41.8777439, "lon": 12.4767359 },
+    { "lat": 41.8777708, "lon": 12.4768032 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393125,
+  "bounds": {
+    "minlat": 41.8777708,
+    "minlon": 12.4768032,
+    "maxlat": 41.8783776,
+    "maxlon": 12.4783323
+  },
+  "geometry": [
+    { "lat": 41.8777708, "lon": 12.4768032 },
+    { "lat": 41.8780920, "lon": 12.4776056 },
+    { "lat": 41.8782350, "lon": 12.4779647 },
+    { "lat": 41.8782734, "lon": 12.4780611 },
+    { "lat": 41.8783606, "lon": 12.4782880 },
+    { "lat": 41.8783776, "lon": 12.4783323 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393126,
+  "bounds": {
+    "minlat": 41.8785289,
+    "minlon": 12.4788000,
+    "maxlat": 41.8786261,
+    "maxlon": 12.4789950
+  },
+  "geometry": [
+    { "lat": 41.8785289, "lon": 12.4788000 },
+    { "lat": 41.8785837, "lon": 12.4789408 },
+    { "lat": 41.8786261, "lon": 12.4789950 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393127,
+  "bounds": {
+    "minlat": 41.8785203,
+    "minlon": 12.4787237,
+    "maxlat": 41.8786261,
+    "maxlon": 12.4789950
+  },
+  "geometry": [
+    { "lat": 41.8786261, "lon": 12.4789950 },
+    { "lat": 41.8786221, "lon": 12.4789170 },
+    { "lat": 41.8785657, "lon": 12.4787783 },
+    { "lat": 41.8785203, "lon": 12.4787237 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 232393128,
+  "bounds": {
+    "minlat": 41.8774666,
+    "minlon": 12.4760453,
+    "maxlat": 41.8775688,
+    "maxlon": 12.4763114
+  },
+  "geometry": [
+    { "lat": 41.8775688, "lon": 12.4763114 },
+    { "lat": 41.8775659, "lon": 12.4762329 },
+    { "lat": 41.8775069, "lon": 12.4760827 },
+    { "lat": 41.8774666, "lon": 12.4760453 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393129,
+  "bounds": {
+    "minlat": 41.8774659,
+    "minlon": 12.4760453,
+    "maxlat": 41.8775688,
+    "maxlon": 12.4763114
+  },
+  "geometry": [
+    { "lat": 41.8774666, "lon": 12.4760453 },
+    { "lat": 41.8774659, "lon": 12.4761102 },
+    { "lat": 41.8774778, "lon": 12.4761409 },
+    { "lat": 41.8775249, "lon": 12.4762626 },
+    { "lat": 41.8775688, "lon": 12.4763114 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393130,
+  "bounds": {
+    "minlat": 41.8784672,
+    "minlon": 12.4788000,
+    "maxlat": 41.8785289,
+    "maxlon": 12.4791796
+  },
+  "geometry": [
+    { "lat": 41.8785289, "lon": 12.4788000 },
+    { "lat": 41.8785233, "lon": 12.4788604 },
+    { "lat": 41.8785149, "lon": 12.4789391 },
+    { "lat": 41.8784907, "lon": 12.4790937 },
+    { "lat": 41.8784806, "lon": 12.4791348 },
+    { "lat": 41.8784672, "lon": 12.4791796 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Galvani",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393136,
+  "bounds": {
+    "minlat": 41.8778927,
+    "minlon": 12.4756043,
+    "maxlat": 41.8779526,
+    "maxlon": 12.4756416
+  },
+  "geometry": [
+    { "lat": 41.8779526, "lon": 12.4756043 },
+    { "lat": 41.8778927, "lon": 12.4756416 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Nicola Zabaglia",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393137,
+  "bounds": {
+    "minlat": 41.8774374,
+    "minlon": 12.4758306,
+    "maxlat": 41.8776206,
+    "maxlon": 12.4759551
+  },
+  "geometry": [
+    { "lat": 41.8776206, "lon": 12.4758306 },
+    { "lat": 41.8775087, "lon": 12.4759083 },
+    { "lat": 41.8774374, "lon": 12.4759551 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via Nicola Zabaglia"
+  }
+},
+{
+  "type": "way",
+  "id": 232393138,
+  "bounds": {
+    "minlat": 41.8771509,
+    "minlon": 12.4759876,
+    "maxlat": 41.8773858,
+    "maxlon": 12.4761411
+  },
+  "geometry": [
+    { "lat": 41.8773858, "lon": 12.4759876 },
+    { "lat": 41.8773344, "lon": 12.4760204 },
+    { "lat": 41.8771509, "lon": 12.4761411 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Nicola Zabaglia",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393139,
+  "bounds": {
+    "minlat": 41.8776206,
+    "minlon": 12.4756416,
+    "maxlat": 41.8778927,
+    "maxlon": 12.4758306
+  },
+  "geometry": [
+    { "lat": 41.8778927, "lon": 12.4756416 },
+    { "lat": 41.8777869, "lon": 12.4756707 },
+    { "lat": 41.8776613, "lon": 12.4757555 },
+    { "lat": 41.8776206, "lon": 12.4758306 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Nicola Zabaglia",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393140,
+  "bounds": {
+    "minlat": 41.8776206,
+    "minlon": 12.4756416,
+    "maxlat": 41.8778927,
+    "maxlon": 12.4758306
+  },
+  "geometry": [
+    { "lat": 41.8776206, "lon": 12.4758306 },
+    { "lat": 41.8776886, "lon": 12.4758268 },
+    { "lat": 41.8777148, "lon": 12.4758097 },
+    { "lat": 41.8778152, "lon": 12.4757358 },
+    { "lat": 41.8778927, "lon": 12.4756416 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via Nicola Zabaglia",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393630,
+  "bounds": {
+    "minlat": 41.8768937,
+    "minlon": 12.4761411,
+    "maxlat": 41.8771509,
+    "maxlon": 12.4763529
+  },
+  "geometry": [
+    { "lat": 41.8768937, "lon": 12.4763529 },
+    { "lat": 41.8771509, "lon": 12.4761411 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Nicola Zabaglia",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 232393631,
+  "bounds": {
+    "minlat": 41.8746394,
+    "minlon": 12.4762411,
+    "maxlat": 41.8768638,
+    "maxlon": 12.4776800
+  },
+  "geometry": [
+    { "lat": 41.8768638, "lon": 12.4762411 },
+    { "lat": 41.8767813, "lon": 12.4762788 },
+    { "lat": 41.8766965, "lon": 12.4763183 },
+    { "lat": 41.8766123, "lon": 12.4763590 },
+    { "lat": 41.8764919, "lon": 12.4764273 },
+    { "lat": 41.8763918, "lon": 12.4764969 },
+    { "lat": 41.8762946, "lon": 12.4765675 },
+    { "lat": 41.8756591, "lon": 12.4770133 },
+    { "lat": 41.8755049, "lon": 12.4771093 },
+    { "lat": 41.8748634, "lon": 12.4775550 },
+    { "lat": 41.8748303, "lon": 12.4775776 },
+    { "lat": 41.8747969, "lon": 12.4776023 },
+    { "lat": 41.8747612, "lon": 12.4776238 },
+    { "lat": 41.8747098, "lon": 12.4776492 },
+    { "lat": 41.8746394, "lon": 12.4776800 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Nicola Zabaglia",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1215120632,
+  "bounds": {
+    "minlat": 41.8757037,
+    "minlon": 12.4768853,
+    "maxlat": 41.8771498,
+    "maxlon": 12.4788543
+  },
+  "geometry": [
+    { "lat": 41.8771498, "lon": 12.4785329 },
+    { "lat": 41.8770611, "lon": 12.4783226 },
+    { "lat": 41.8766344, "lon": 12.4773113 },
+    { "lat": 41.8765751, "lon": 12.4772962 },
+    { "lat": 41.8765462, "lon": 12.4773068 },
+    { "lat": 41.8763886, "lon": 12.4768853 },
+    { "lat": 41.8757037, "lon": 12.4773179 },
+    { "lat": 41.8762410, "lon": 12.4786909 },
+    { "lat": 41.8764779, "lon": 12.4785172 },
+    { "lat": 41.8765279, "lon": 12.4786489 },
+    { "lat": 41.8766280, "lon": 12.4788543 },
+    { "lat": 41.8768558, "lon": 12.4786927 },
+    { "lat": 41.8771498, "lon": 12.4785329 }
+  ],
+  "tags": {
+    "landuse": "brownfield",
+    "name": "Campo Testaccio",
+    "sport": "soccer",
+    "was:leisure": "pitch",
+    "wikidata": "Q3654634",
+    "wikimedia_commons": "Category:Campo Testaccio",
+    "wikipedia": "it:Campo Testaccio"
+  }
+},
+{
+  "type": "relation",
+  "id": 2573007,
+  "bounds": {
+    "minlat": 41.8766552,
+    "minlon": 12.4707386,
+    "maxlat": 41.8826453,
+    "maxlon": 12.4790807
+  },
+  "tags": {
+    "area": "yes",
+    "boundary": "limited_traffic_zone",
+    "car_sharing": "yes",
+    "emergency": "yes",
+    "motorcar:conditional": "private @ (Fr 23:00-24:00; Sa 00:00-03:00,23:00-24:00; Su 00:00-03:00)",
+    "name": "ZTL Notturna Testaccio",
+    "psv": "yes",
+    "taxi": "yes",
+    "type": "boundary"
+  }
+},
+{
+  "type": "relation",
+  "id": 5454344,
+  "bounds": {
+    "minlat": 41.8726714,
+    "minlon": 12.4698603,
+    "maxlat": 41.8833891,
+    "maxlon": 12.4811645
+  },
+  "tags": {
+    "boundary": "place",
+    "name": "Testaccio",
+    "official_name": "Rione XX Testaccio",
+    "place": "quarter",
+    "ref": "R. XX",
+    "type": "boundary",
+    "wikidata": "Q1751443",
+    "wikimedia_commons": "Category:Rione XX - Testaccio",
+    "wikipedia": "it:Testaccio"
+  }
+},
+{
+  "type": "relation",
+  "id": 13593496,
+  "bounds": {
+    "minlat": 41.8749606,
+    "minlon": 12.4710904,
+    "maxlat": 41.8828115,
+    "maxlon": 12.4809976
+  },
+  "tags": {
+    "name": "Museo diffuso del Rione Testaccio",
+    "site": "museum",
+    "tourism": "museum",
+    "type": "site",
+    "website": "http://testaccio.romearcheomedia.it/italiano/index.html"
+  }
+},
+{
+  "type": "relation",
+  "id": 15258037,
+  "bounds": {
+    "minlat": 41.8772006,
+    "minlon": 12.4732323,
+    "maxlat": 41.8779952,
+    "maxlon": 12.4744601
+  },
+  "tags": {
+    "amenity": "marketplace",
+    "building": "market",
+    "building:levels": "1",
+    "check_date:opening_hours": "2022-10-16",
+    "contact:facebook": "https://www.facebook.com/mercatoditestaccio/",
+    "contact:instagram": "https://www.instagram.com/mercatoditestaccio/",
+    "email": "info@mercatoditestaccio.it",
+    "indoor": "yes",
+    "layer": "1",
+    "name": "Nuovo Mercato Testaccio",
+    "opening_hours": "Mo-Sa 07:00-15:30, Su closed",
+    "type": "multipolygon",
+    "website": "https://www.mercatoditestaccio.it/"
+  }
+}
+
+  ]
+}

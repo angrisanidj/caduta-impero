@@ -1,0 +1,7 @@
+[out:json][timeout:90];
+(
+  nwr["name"~"Testaccio|Monte dei Cocci"]["highway"!~"."](41.8735,12.4715,41.8790,12.4790);
+  way(23921018);
+  way["highway"]["name"~"^(Via Nicola Zabaglia|Via Galvani|Via di Monte Testaccio)$"](41.8735,12.4715,41.8790,12.4790);
+);
+out tags geom;

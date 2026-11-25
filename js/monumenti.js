@@ -311,8 +311,12 @@ function curiaAula(B,tetto,corpo){      // l'aula della Curia: corpo intonacato 
   B.scatola(.2,1.02,.03,-.11,.25,1.355,P.bronzo).scatola(.2,1.02,.03,.11,.25,1.355,P.bronzo);      // i due battenti, appena dentro il vano
 }
 function inForo(B,x,z,ry,fn){ var p=LF(x,z); return B.dentro(p[0],0,p[1],ry||0,fn); }
-/* Monte Testaccio: contorno reale (OpenStreetMap, way 23921018), in coordinate relative al centro (-84,184). */
-var TESTACCIO=[[-94.7,181.4],[-94.6,183.1],[-94.5,185],[-93.8,186.7],[-92.8,188.5],[-91.8,189.8],[-90.4,191.2],[-89.5,191.8],[-88.6,192],[-86,193.1],[-83.9,195.9],[-82.1,198.6],[-80.6,199.3],[-78.9,199.1],[-77.3,198.5],[-75.8,197.5],[-74.6,195.9],[-73,192.1],[-72.8,190.6],[-73.2,188],[-74,186.1],[-75.2,182.4],[-76.2,180.1],[-76.8,177.8],[-76.9,176.1],[-76.4,174.3],[-77,171.1],[-78,169.1],[-78.2,168.6],[-94.5,177.4],[-94.7,179.1]].map(function(p){ return [p[0]+84,p[1]-184]; });
+/* Monte Testaccio: il piede del monte com'è oggi, cioè il recinto del Parco Testaccio, «Monte de' Cocci» (OpenStreetMap, way 190994645; scaricato il 25 novembre 2026 con
+   src/roma/grezzi/q15.txt, risultato in osm-testaccio.json), sfoltito a 12 punti (tolti i denti del recinto, sotto i 7 m), in coordinate relative al centro (-83.3,184.4).
+   Prima si usava l'area archeologica (way 23921018: 4,3 ettari, 830 m di giro), che comprende anche le strade e le cantine attorno al monte. Arrotondato nel blocco del
+   testaccio fa 2,75 ettari e 675 m di giro: più delle fonti (circa 2 ettari, 22.000 m² per il CEIPAC) e meno del «chilometro» di giro di Remesal e di Platner e Ashby;
+   i due numeri delle fonti non stanno insieme (un triangolo di 2 ettari ha circa 650 m di giro). Forma triangolare come nella pianta a curve di livello di Remesal (p. 138). */
+var TESTACCIO=[[-9.4,-2.1],[-8,-6.6],[1.7,-11.8],[2.6,-13.2],[3.7,-13],[5.5,-8.4],[6.2,.6],[8,6.8],[6.5,12],[3.6,14],[2.1,10.7],[-8.6,2.9]];
 /* ---------- aiuti per i monumenti dell'inventario del 22 novembre 2026 (quelli che mancavano) ---------- */
 function piede(x,z,r){ r=r||.8; return Math.min(RM.h(x,z),RM.h(x+r,z),RM.h(x-r,z),RM.h(x,z+r),RM.h(x,z-r)); }
 /* un pezzo di un gruppo che segue il pendio (PENDIO): (X,Z) è l'origine della voce, (x,z) il punto reale in coordinate di scena, r il raggio dell'impronta */
@@ -1081,48 +1085,78 @@ var M=[
     B.scatola(47,1.5,1,0,-1.75,-13.7,P.travertino);                                                                                         // muro di banchina
     for(k=-4;k<=4;k++) B.scatola(1.8,1.15,1.2,k*5.2,-1.75,-14.6,P.travertino);                                                             // scale e rampe verso l'acqua
  }},
- {id:'testaccio', nome:'Monte Testaccio', x:-84,z:184, ry:0, zone:[[4,-10,6],[0,-3,10.5],[1,5,11],[4,11,6]], et:1, fa:function(B){       // collina di cocci d'anfora: 35 m sul piano, qui 1,8 volte tanto come gli altri rilievi
-    /* Rifatto il 25 novembre 2026 sulle fonti lette (src/testi/topografia-fonti.md, sezione «Monte Testaccio»). Il contorno, quello di oggi, è arrotondato tagliando gli spigoli due volte.
+ {id:'testaccio', nome:'Monte Testaccio', x:-83.3,z:184.4, ry:0, zone:[[-1.5,-1.3,8],[-2.8,-1.5,7],[-.5,-3.3,7],[.8,2.5,6.4],[3.3,6.5,4.8],[1.5,-7.5,4.3],[4.5,10.5,2.7],[2.8,-10.8,2.3],[4,12.5,1.5]], et:1, fa:function(B){       // collina di cocci d'anfora: 35 m sul piano, qui 1,8 volte tanto come gli altri rilievi; le zone (cerchi scelti per coprire il contorno con poco avanzo) tengono le case fuori dal monte
+    /* Rifatto il 25 novembre 2026 sulle fonti lette (src/testi/topografia-fonti.md, sezione «Monte Testaccio»); contorno e gradoni rifatti la sera dello stesso giorno.
+       Il contorno (TESTACCIO, più sopra: il piede di oggi da OpenStreetMap) è arrotondato tagliando gli spigoli due volte e ricampionato a passo costante.
        Da fonte: un monte «a gradoni» («una piràmide escalonada», Remesal 1994, p. 136) i cui gradoni sono file di anfore intere riempite di cocci, ogni fila «una mica reculada»
-       rispetto alla prima, così che il fianco è una scarpata (p. 137); tutto di cocci di Dressel 20, color terracotta (p. 135); calce sparsa sui cocci (Archaeology 2009; Turismo Roma);
-       una rampa (Turismo Roma: «una prima rampa e due stradelle»); le anfore salivano intere «al llom de cavalleries», secondo l'opinione degli scavatori (Remesal, p. 138),
-       fino al 265, l'ultima data consolare trovata (Archaeology 2009, dalla bocca di Remesal).
-       Schema dichiarato nella scheda: numero e larghezza dei gradoni (sei, di 10 m l'uno; le fonti dicono «almeno quattro serie»), luogo e percorso della rampa (qui a tornanti
-       sul lato ovest, verso il porto), le due piattaforme non distinte, quante bestie e come caricate, la fila d'anfore in cima, il verde dopo l'abbandono.
-       La superficie è fatta di tasselli inclinati a caso, ognuno col suo tono di coccio o di calce: da vicino un cumulo di frammenti, da lontano un rosso mattone screziato.
+       rispetto alla prima, così che il fianco è una scarpata (p. 137); due piattaforme affiancate, la prima allungata da nord a sud, la seconda sul suo lato ovest (p. 136);
+       tutto di cocci di Dressel 20, color terracotta (p. 135); calce sparsa sui cocci (Archaeology 2009; Turismo Roma); una rampa (Turismo Roma: «una prima rampa e due
+       stradelle»); le anfore salivano intere «al llom de cavalleries», secondo l'opinione degli scavatori (Remesal, p. 138), fino al 265, l'ultima data consolare trovata
+       (Archaeology 2009, dalla bocca di Remesal).
+       Schema dichiarato nella scheda: numero, altezza e larghezza dei gradoni (sei, diversi l'uno dall'altro e diversi lungo il giro: dove la fila di un gradone è arretrata poco,
+       due gradoni si fondono in una scarpata sola; le fonti dicono «almeno quattro serie»), le due piattaforme rese solo con un avvallamento fra loro (alla stessa quota: le fonti
+       lette non danno la sezione), luogo e percorso della rampa (qui a tornanti sul lato nord-ovest, verso l'Emporio), quante bestie e come caricate, la fila d'anfore in cima,
+       il verde dopo l'abbandono.
+       La maglia è una griglia sola (anelli per raggi dal centro): nessun pezzo aggiunto, quindi niente buchi né facce rovesce. Prima la rampa era fatta di pezzi incassati nella
+       scarpata, e dove li tagliava restavano piccoli triangoli neri (fessure fra i pezzi e testate girate al contrario); ora la rampa è la scarpata stessa, scavata.
+       Il colore di base è uno solo, screziato per vertice (più sotto): le fasce alterne di prima facevano da lontano una pila di dischi.
        Tutta la maglia è di tipo 3 (in fondo): niente conci, crepe e crolli dello shader del degrado, che sono cose da muro; il verde lo mettono lo shader del prato e il modulo qui sotto. */
-    var H=6.3, N=6, R=RM.piccolo?2:4, k, i, r, j, prof=TESTACCIO, seme=11, ROSSI=[0x8c644d,0x936a52,0x88604a,0x997158].map(RM.col), CALCE=RM.col(0xb59a80), STRADA=RM.col(0xb38a66);
-    for(k=0;k<2;k++) prof=prof.map(function(p,i,L){ var q=L[(i+1)%L.length]; return [[p[0]*.75+q[0]*.25,p[1]*.75+q[1]*.25],[p[0]*.25+q[0]*.75,p[1]*.25+q[1]*.75]]; }).reduce(function(a,b){ return a.concat(b); },[]);
-    var n=prof.length, U=prof.map(function(p){ var m=Math.hypot(p[0],p[1])||1; return [p[0]/m,p[1]/m]; }), perim=0;
-    for(i=0;i<n;i++) perim+=Math.hypot(prof[(i+1)%n][0]-prof[i][0],prof[(i+1)%n][1]-prof[i][1]);
+    var H=6.3, N=6, picc=RM.piccolo, n=picc?48:96, k, i, j, r, seme=11, ROSSI=[0x8c644d,0x936a52,0x88604a,0x997158].map(RM.col), CALCE=RM.col(0xb59a80), STRADA=RM.col(0xb38a66);
     function rnd(){ seme=(seme*16807)%2147483647; return (seme-1)/2147483646; }
     function hs(a,b){ var s=Math.sin(a*12.9898+b*78.233)*43758.5453; return s-Math.floor(s); }
-    function tono(calce,banda){ return ROSSI[1].clone().multiplyScalar(banda||1); }      // il tono di base; la screziatura e la calce si danno ai vertici, più sotto
-    var hT=(H+.15)/N, SCARPA=.062, RIPIANO=.052, S=[], Y=[], A=[];      // per gradone: scala del piede, quota del piede; la scarpata rientra di SCARPA, il ripiano di RIPIANO
-    for(k=0;k<N;k++){ S.push(1-k*(SCARPA+RIPIANO)); Y.push(-.15+k*hT); }
     function idx(i){ return ((i%n)+n)%n; }
-    for(k=0;k<N;k++){ A.push([]); for(r=0;r<=R;r++){ var s=S[k]-r/R*SCARPA, yy=Y[k]+r/R*hT, q=k*10+r; A[k].push(prof.map(function(p,i){ var g=(hs(i,q)-.5)*.03;      // anelli della scarpata, con un tremito che fa i tasselli
-      return [p[0]*s+U[i][0]*g, yy+(hs(i+.5,q+.3)-.5)*.02, p[1]*s+U[i][1]*g]; })); } }
-    function fascia(L0,L1,calce,banda){ for(var i=0;i<n;i++){ var j=(i+1)%n; B.tri(L0[i],L0[j],L1[j],tono(calce,banda)).tri(L0[i],L1[j],L1[i],tono(calce,banda)); } }
-    for(k=0;k<N;k++){
-      for(r=0;r<R;r++) fascia(A[k][r],A[k][r+1],.01,r%2?.92:1);                    // la scarpata: file d'anfore e cocci, a fasce
-      if(k<N-1) fascia(A[k][R],A[k+1][0],.06,1.04);                                  // il ripiano: cocci più minuti e calce
-    }
-    var cima=A[N-1][R], m1=cima.map(function(p,i){ return [p[0]*.66,H+.06+(hs(i,77)-.5)*.03,p[2]*.66]; }), m2=cima.map(function(p,i){ return [p[0]*.33,H+.11+(hs(i,78)-.5)*.03,p[2]*.33]; });
-    fascia(cima,m1,.06,1.04); fascia(m1,m2,.06,1.04);
-    for(i=0;i<n;i+=2) B.tri(m2[i],m2[(i+1)%n],[0,H+.14,0],tono(.06,1.04)).tri(m2[(i+1)%n],m2[(i+2)%n],[0,H+.14,0],tono(.06,1.04));
-    /* la rampa: un tratto per gradone, appoggiato alla scarpata e incassato in lei, che sale dal ripiano di sotto a quello di sopra; i tratti vanno avanti e indietro (tornanti)
-       sul lato ovest, verso il porto e l'Emporio; luogo, larghezza (4 m) e pendenza sono uno schema */
-    var iN=0, iW=0; for(i=1;i<n;i++){ if(prof[i][1]<prof[iN][1]) iN=i; if(prof[i][0]<prof[iW][0]) iW=i; }
-    var d=prof[idx(iW+1)][1]<prof[idx(iW-1)][1]?1:-1, p0=iW-2*d, W=.4, passo=perim/n, tratti=[];
-    for(k=0;k<N;k++){
-      var L=Math.max(6,Math.round(5.5/(passo*S[k]))), dk=k%2?-d:d, pr=null, tr=[];
-      for(j=0;j<=L;j++){ var f=j/L, ii=idx(p0+dk*j), s=S[k]-f*SCARPA-.006, u=U[ii], I=[prof[ii][0]*s,0,prof[ii][1]*s], O=[I[0]+u[0]*W,0,I[2]+u[1]*W], yy=Y[k]+f*hT+.04;
-        var c={I:[I[0],yy,I[2]],O:[O[0],yy,O[2]],Ob:[O[0],Y[k],O[2]],Ib:[I[0],Y[k],I[2]]}; tr.push(c);
-        if(pr){ var cs=STRADA.clone().multiplyScalar(.9+.2*rnd()); B.quad(pr.I,pr.O,c.O,c.I,cs).quad(pr.Ob,c.Ob,c.O,pr.O,tono(.05,.9)); }
-        pr=c; }
-      B.quad(pr.Ib,pr.Ob,pr.O,pr.I,tono(.05,.9));                                     // la testata in cima al tratto
-      tratti.push(tr); p0=p0+dk*L; }
+    var prof=TESTACCIO; for(k=0;k<2;k++) prof=prof.map(function(p,i,L){ var q=L[(i+1)%L.length]; return [[p[0]*.75+q[0]*.25,p[1]*.75+q[1]*.25],[p[0]*.25+q[0]*.75,p[1]*.25+q[1]*.75]]; }).reduce(function(a,b){ return a.concat(b); },[]);
+    var m0=prof.length, cum=[0], P=[], sg=0;
+    for(i=0;i<m0;i++){ var q0=prof[i], q1=prof[(i+1)%m0]; cum.push(cum[i]+Math.hypot(q1[0]-q0[0],q1[1]-q0[1])); sg+=q0[0]*q1[1]-q1[0]*q0[1]; }
+    for(i=0,j=0;i<n;i++){ var sa=i/n*cum[m0]; while(cum[j+1]<sa) j++; var fa=(sa-cum[j])/(cum[j+1]-cum[j]), a=prof[j], b=prof[(j+1)%m0]; P.push([a[0]+(b[0]-a[0])*fa,a[1]+(b[1]-a[1])*fa]); }
+    var Lr=P.map(function(p){ return Math.hypot(p[0],p[1]); });      // il monte si stringe verso il baricentro del contorno (il centro del monumento), raggio per raggio
+    /* come un cumulo vero, l'altezza dipende dalla distanza dal piede: il fianco finisce dove si è a D dal bordo (54 m: con la quota 1,8 volte, sono circa 32 gradi veri); dove il monte è stretto (le punte, lo sperone a sud-est)
+       quella distanza non si raggiunge e il fianco resta più basso, con la stessa pendenza. Per ogni raggio: SS = larghezza del fianco lungo il raggio, HH = altezza raggiunta */
+    function dBordo(x,z){ var m=1e9; for(var q=0;q<m0;q++){ var a=prof[q], b=prof[(q+1)%m0], dx=b[0]-a[0], dz=b[1]-a[1], t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dz)/(dx*dx+dz*dz)));
+      m=Math.min(m,Math.hypot(x-a[0]-t*dx,z-a[1]-t*dz)); } return m; }
+    var D=5.4, SS=[], HH=[];
+    for(i=0;i<n;i++){ var Li=Lr[i], sm=0, dm=0; for(var s0=.1;s0<Li*.9;s0+=.1){ var d0=dBordo(P[i][0]*(1-s0/Li),P[i][1]*(1-s0/Li)); if(d0>dm){ dm=d0; sm=s0; } if(d0>=D){ dm=D; sm=s0; break; } }
+      SS.push(sm); HH.push(Math.min(1,dm/D)); }
+    for(k=0;k<3;k++){ SS=SS.map(function(v,i){ return (SS[idx(i-1)]+2*v+SS[idx(i+1)])/4; }); HH=HH.map(function(v,i){ return (HH[idx(i-1)]+2*v+HH[idx(i+1)])/4; }); }      // senza scalini fra un raggio e l'altro
+    /* onde lente lungo il giro, una per gradone e per misura: sono periodiche, quindi il giro si chiude senza salti */
+    function onda(){ var a=2+Math.floor(rnd()*2), b=4+Math.floor(rnd()*4), c=9+Math.floor(rnd()*5), fa=rnd()*6.283, fb=rnd()*6.283, fc=rnd()*6.283;
+      return function(i){ var t=i/n*6.283; return .55*Math.sin(a*t+fa)+.3*Math.sin(b*t+fb)+.15*Math.sin(c*t+fc); }; }
+    var LARG=[.2,.17,.18,.16,.15,.14], ALTO=[1.14,.9,1.06,.86,1.05,.99], oL=[], oA=[], oR=[], oF=[], oT=onda();      // larghezze e altezze di base dei sei gradoni: diverse apposta (schema)
+    for(k=0;k<N;k++){ oL.push(onda()); oA.push(onda()); oR.push(onda()); oF.push(onda()); }
+    /* la rampa: a tornanti sul lato nord-ovest, un tratto per gradone, avanti e indietro dentro la stessa finestra di J raggi; il tratto è scavato nella scarpata */
+    var iA=0, J=picc?4:8; for(i=1;i<n;i++) if(Math.hypot(P[i][0]+5.6,P[i][1]+7.9)<Math.hypot(P[iA][0]+5.6,P[iA][1]+7.9)) iA=i;
+    var i0=idx(iA-J/2);
+    function inRampa(i,mg){ var d=idx(i-i0); return d<=J+mg || d>=n-mg; }
+    function posRampa(i){ return idx(i-i0); }
+    var V=[], T=[], RO=[], RI=[], RS=[], RE=[], rowE, PL=picc?2:4;       // V[riga][raggio] = punto; T = che cosa è la fascia che finisce su quella riga (0 scarpata, 1 ripiano, 2 strada)
+    for(i=0;i<n;i++){
+      var L=Lr[i], S=SS[i], rows=[], s=.035*S, y=.08, wl=[], hl=[], sw=0, sh=0, ramp=inRampa(i,3), rr=inRampa(i,0), hT=.08+(H-.33+.08*oT(i))*HH[i];
+      rows.push([0,-.15,0],[s,y,0]);                                                                                    // il piede: cocci scivolati, appena sopra il piano
+      for(k=0;k<N;k++){ wl.push(LARG[k]*(1+.36*oL[k](i))); hl.push(ALTO[k]*(1+.34*oA[k](i))); sw+=wl[k]; sh+=hl[k]; }
+      for(k=0;k<N;k++){ var w=wl[k]/sw*S*.965, h=hl[k]/sh*(hT-.08), rf=.68+.1*oR[k](i), mf=RM.sfuma(.15,.55,oF[k](i)), tf=(1-rf)*(1-.9*mf), e1=.3, e2=.7;      // la scarpata prende due terzi del gradone: è un pendio di file arretrate, non un muro
+        if(ramp){ tf=.14; e1=.24; e2=.68; }                                                                              // nella finestra della rampa i gradoni restano distinti e la scarpata è più larga
+        var wr=w*(1-tf), hr=h*.93, y1=y+e1*e1*1.4*hr, y2=y+(e2-.12)*hr;      // profilo concavo: ripido sotto la fila in cima, più dolce verso il piede, dove i cocci scivolano
+        var dR=posRampa(i), wR=dR<=J?1:dR<=J+3?1-(dR-J)/3.5:dR>=n-3?1-(n-dR)/3.5:0;      // la strada: piana di traverso, sale lungo il giro; ai due capi la scarpata la raggiunge per gradi (prima finiva di colpo, con facce quasi verticali che in ombra sembravano buchi neri)
+        if(wR>0){ var f=dR<=J?dR/J:dR<=J+3?1:0, yr; if(k%2) f=1-f; yr=y+f*hr; y1+=(yr-y1)*wR*(dR<=J?1:wR); y2+=(yr-y2)*wR; }      // fuori dalla finestra il ciglio esterno scende prima: niente lame di terra sottili
+        RO[k]=rows.length; rows.push([s+e1*wr,y1,0]); RI[k]=rows.length; rows.push([s+e2*wr,y2,rr?2:0]); rows.push([s+wr,y+hr,0]);
+        RS[k]=rows.length-1; if(!picc) rows.push([s+wr+w*tf*.5,y+hr+.035*h,1]); rows.push([s+wr+w*tf,y+h,1]); RE[k]=rows.length-1;
+        s+=w; y+=h; }
+      rowE=rows.length-1;
+      var rT=1-s/L;                                                                                                       // il ripiano di cima: dal bordo verso il centro sale ancora un poco
+      for(j=PL;j>=1;j--){ var rho=rT*j/(PL+1); rows.push([L*(1-rho),y+(H-y)*Math.pow(1-rho/rT,.7),1]); }
+      for(r=0;r<rows.length;r++){ var u=1-rows[r][0]/L, x=P[i][0]*u, z=P[i][1]*u, yy=rows[r][1];
+        if(r>=rowE+1) yy-=sella(x,z);
+        if(r>0 && rows[r][2]!==2 && !(rr&&RO.indexOf(r)>=0)) yy+=(hs(i,r*7.1)-.5)*.035;                                    // un tremito: i tasselli del cumulo
+        (V[r]=V[r]||[])[i]=[x,yy,z]; (T[r]=T[r]||[])[i]=rows[r][2]; } }
+    /* le due piattaforme (Remesal, p. 136: la prima da nord a sud, la seconda sul suo lato ovest; fra loro un muro di anfore): qui solo un avvallamento largo una ventina di metri
+       lungo il confine, uno schema; quale delle due fosse più alta le fonti lette non lo dicono */
+    function sella(x,z){ return .32*Math.exp(-Math.pow((x+1.3-.08*z)/.9,2)); }
+    var cen=[0,H+.05-sella(0,0),0], R=V.length;
+    function faccia(a,b,c,col){ if(sg>0) B.tri(a,c,b,col); else B.tri(a,b,c,col); }
+    for(r=0;r<R-1;r++) for(i=0;i<n;i++){ j=(i+1)%n; var tp=T[r+1][i]===2&&T[r+1][j]===2?2:T[r+1][i]===1?1:0;
+      var col=tp===2?STRADA.clone().multiplyScalar(.9+.2*rnd()):ROSSI[1].clone().multiplyScalar(tp===1?1.02:1);
+      faccia(V[r][i],V[r][j],V[r+1][j],col); faccia(V[r][i],V[r+1][j],V[r+1][i],col); }
+    for(i=0;i<n;i++) faccia(V[R-1][i],V[R-1][(i+1)%n],cen,ROSSI[1].clone().multiplyScalar(1.02));
     /* screziatura per vertice, che dipende solo dal posto: i tasselli vicini sfumano l'uno nell'altro invece di fare un mosaico; qua e là la calce */
     for(i=0;i<B.pos.length;i+=3){ var vx=B.pos[i], vy=B.pos[i+1], vz=B.pos[i+2], h1=hs(Math.round(vx*97)+Math.round(vz*13),Math.round(vy*101)), h2=hs(Math.round(vz*89),Math.round(vx*7+vy*53)), cr=ROSSI[Math.floor(h1*3.99)], mv=.93+.14*h2;
       B.col[i]*=cr.r/ROSSI[1].r*mv; B.col[i+1]*=cr.g/ROSSI[1].g*mv; B.col[i+2]*=cr.b/ROSSI[1].b*mv;
@@ -1137,19 +1171,20 @@ var M=[
       arto(Bv,[0,.11,.06],[0,.155,.1],.017,.013,MULO,5,false); palla(Bv,.021,0,.155,.118,MULO,.8,.8,1.5,5);      // collo e testa
       [-1,1].forEach(function(a){ palla(Bv,.03,a*.058,.1,-.01,ANF[0],1,1.2,1,6); });              // un'anfora vuota per fianco (Dressel 20, una trentina di chili: Remesal, p. 138)
     }); }
-    [[0,.3],[0,.75],[1,.5],[2,.45],[3,.6]].forEach(function(m){ var tr=tratti[m[0]], a=Math.min(tr.length-2,Math.floor(m[1]*(tr.length-1))), c=tr[a], e=tr[a+1];
-      mulo((c.I[0]+c.O[0])/2,c.I[1],(c.I[2]+c.O[2])/2,Math.atan2(e.I[0]-c.I[0],e.I[2]-c.I[2])); });
-    var sT=S[N-1]-SCARPA-.004, fila=RM.piccolo?6:12;
-    for(i=iW-fila;i<iW+fila;i++){ var a0=prof[idx(i)], a1=prof[idx(i+1)], lg=Math.hypot(a1[0]-a0[0],a1[1]-a0[1])*sT, m=Math.max(1,Math.floor(lg/.066)), ru=Math.atan2(U[idx(i)][0],U[idx(i)][1]);
-      for(j=0;j<m;j++){ var f=(j+.5)/m; Bv.dentro((a0[0]+(a1[0]-a0[0])*f)*sT,H+.028,(a0[1]+(a1[1]-a0[1])*f)*sT,ru,function(){ Bv.geo(new THREE.SphereGeometry(.03,5,3).scale(1,1,1.25),ANF[(i+j)%2]); }); } }
+    function suStrada(k,fi){ var a=Math.floor(fi), t=fi-a, p0=V[RO[k]][idx(a)], p1=V[RI[k]][idx(a)], q0=V[RO[k]][idx(a+1)], q1=V[RI[k]][idx(a+1)];      // il mezzo della strada al raggio fi (con la virgola)
+      return [0,1,2].map(function(c){ return ((p0[c]+p1[c])*(1-t)+(q0[c]+q1[c])*t)/2; }); }
+    [[0,.3],[0,.75],[1,.5],[2,.45],[3,.6]].forEach(function(m){ var k=m[0], e=k%2?-1:1, fi=i0+(k%2?1-m[1]:m[1])*J, c=suStrada(k,fi), d=suStrada(k,fi+e*.5);
+      mulo(c[0],c[1],c[2],Math.atan2(d[0]-c[0],d[2]-c[2])); });
+    var iW=0, fila=picc?3:6; for(i=1;i<n;i++) if(P[i][0]<P[iW][0]) iW=i;
+    for(i=iW-fila;i<iW+fila;i++){ var a0=V[rowE][idx(i)], a1=V[rowE][idx(i+1)], lg=Math.hypot(a1[0]-a0[0],a1[2]-a0[2]), m=Math.max(1,Math.floor(lg/.066)), ru=Math.atan2(P[idx(i)][0],P[idx(i)][1]);
+      for(j=0;j<m;j++){ var f=(j+.5)/m; Bv.dentro(a0[0]+(a1[0]-a0[0])*f,a0[1]+(a1[1]-a0[1])*f+.028,a0[2]+(a1[2]-a0[2])*f,ru,function(){ Bv.geo(new THREE.SphereGeometry(.03,5,3).scale(1,1,1.25),ANF[(i+j)%2]); }); } }
     var vivo=Bv.maglia(RM.matPietra()); vivo.receiveShadow=true; vivo.castShadow=!RM.piccolo;
     /* Dopo l'abbandono: nessuna fonte letta dice che cosa ci fosse sul monte fra il 265 e il Medioevo. Come per gli altri ruderi (RM.rovina): nudo per qualche decennio, poi
        erba sui ripiani e, meno, sulle scarpate, e qualche arbusto; tutto dopo trecento anni. Niente alberi d'alto fusto né piante venute dopo. È una resa, non una misura. */
     var Bc=new RM.Costruttore(), cespi=[], ncs=RM.piccolo?40:110;
     Bc.geo(new THREE.SphereGeometry(.14,RM.piccolo?5:6,RM.piccolo?2:3).scale(1.3,.75,1.1).translate(0,.04,0),RM.col(0x4c5a30));
-    for(i=0;i<ncs;i++){ var kk=Math.floor(rnd()*N), ii=Math.floor(rnd()*n), t=.15+.7*rnd(), p, yb;
-      if(kk<N-1){ var e0=A[kk][R][ii], e1=A[kk+1][0][ii]; p=[e0[0]+(e1[0]-e0[0])*t,0,e0[2]+(e1[2]-e0[2])*t]; yb=Y[kk]+hT; } else { p=[cima[ii][0]*t,0,cima[ii][2]*t]; yb=H+.05; }
-      cespi.push({x:p[0],y:yb,z:p[2],soglia:rnd(),sc:.5+.7*rnd(),ry:rnd()*6.28,q:rnd()}); }
+    for(i=0;i<ncs;i++){ var kk=Math.floor(rnd()*(N+1)), ii=Math.floor(rnd()*n), t=.15+.7*rnd(), e0=kk<N?V[RS[kk]][ii]:V[rowE][ii], e1=kk<N?V[RE[kk]][ii]:cen;      // sui ripiani e in cima
+      cespi.push({x:e0[0]+(e1[0]-e0[0])*t,y:e0[1]+(e1[1]-e0[1])*t,z:e0[2]+(e1[2]-e0[2])*t,soglia:rnd(),sc:.5+.7*rnd(),ry:rnd()*6.28,q:rnd()}); }
     var mc=new THREE.InstancedMesh(Bc.geometria(),RM.matPietra(),ncs); mc.castShadow=!RM.piccolo; mc.receiveShadow=true; mc.frustumCulled=false; mc.count=0; mc.visible=false;
     var dm=new THREE.Object3D(), o=null, ultimo=-1, qU=-1;
     function verde(anno){ var ea=anno-265; return ea<=0?0:(.1+.9*RM.sfuma(0,300,ea))*RM.sfuma(0,30,ea); }
