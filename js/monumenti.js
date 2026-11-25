@@ -1082,14 +1082,107 @@ var M=[
     for(k=-4;k<=4;k++) B.scatola(1.8,1.15,1.2,k*5.2,-1.75,-14.6,P.travertino);                                                             // scale e rampe verso l'acqua
  }},
  {id:'testaccio', nome:'Monte Testaccio', x:-84,z:184, ry:0, zone:[[4,-10,6],[0,-3,10.5],[1,5,11],[4,11,6]], et:1, fa:function(B){       // collina di cocci d'anfora: 35 m sul piano, qui 1,8 volte tanto come gli altri rilievi
-    /* A terrazze, come dice la scheda («i cocci disposti a terrazze»): scarpate ripide e ripiani, sei gradoni (il numero è indicativo). Il contorno, quello di oggi, è arrotondato
-       tagliando gli spigoli due volte: prima la collina era una tenda a spicchi (23 novembre 2026). */
-    var H=6.3, k, sc=1, y=-.15, N=6, chiaro=P.cocci.clone().multiplyScalar(1.16), profilo=TESTACCIO;
-    for(k=0;k<2;k++) profilo=profilo.map(function(p,i,L){ var q=L[(i+1)%L.length]; return [[p[0]*.75+q[0]*.25,p[1]*.75+q[1]*.25],[p[0]*.25+q[0]*.75,p[1]*.25+q[1]*.75]]; }).reduce(function(a,b){ return a.concat(b); },[]);
-    function giro(s){ return profilo.map(function(p){ return [p[0]*s,p[1]*s]; }); }
-    for(k=0;k<N;k++){ var y1=k===N-1?H:y+(H+.15)/N, s1=sc-.04, s2=sc-.092;
-      B.striscia(giro(sc),y,giro(s1),y1,P.cocci); if(k<N-1) B.striscia(giro(s1),y1,giro(s2),y1+.03,chiaro); sc=k<N-1?s2:s1; y=y1+.03; }
-    B.striscia(giro(sc),H,profilo.map(function(){ return [0,0]; }),H+.14,chiaro);
+    /* Rifatto il 25 novembre 2026 sulle fonti lette (src/testi/topografia-fonti.md, sezione «Monte Testaccio»). Il contorno, quello di oggi, è arrotondato tagliando gli spigoli due volte.
+       Da fonte: un monte «a gradoni» («una piràmide escalonada», Remesal 1994, p. 136) i cui gradoni sono file di anfore intere riempite di cocci, ogni fila «una mica reculada»
+       rispetto alla prima, così che il fianco è una scarpata (p. 137); tutto di cocci di Dressel 20, color terracotta (p. 135); calce sparsa sui cocci (Archaeology 2009; Turismo Roma);
+       una rampa (Turismo Roma: «una prima rampa e due stradelle»); le anfore salivano intere «al llom de cavalleries», secondo l'opinione degli scavatori (Remesal, p. 138),
+       fino al 265, l'ultima data consolare trovata (Archaeology 2009, dalla bocca di Remesal).
+       Schema dichiarato nella scheda: numero e larghezza dei gradoni (sei, di 10 m l'uno; le fonti dicono «almeno quattro serie»), luogo e percorso della rampa (qui a tornanti
+       sul lato ovest, verso il porto), le due piattaforme non distinte, quante bestie e come caricate, la fila d'anfore in cima, il verde dopo l'abbandono.
+       La superficie è fatta di tasselli inclinati a caso, ognuno col suo tono di coccio o di calce: da vicino un cumulo di frammenti, da lontano un rosso mattone screziato.
+       Tutta la maglia è di tipo 3 (in fondo): niente conci, crepe e crolli dello shader del degrado, che sono cose da muro; il verde lo mettono lo shader del prato e il modulo qui sotto. */
+    var H=6.3, N=6, R=RM.piccolo?2:4, k, i, r, j, prof=TESTACCIO, seme=11, ROSSI=[0x8c644d,0x936a52,0x88604a,0x997158].map(RM.col), CALCE=RM.col(0xb59a80), STRADA=RM.col(0xb38a66);
+    for(k=0;k<2;k++) prof=prof.map(function(p,i,L){ var q=L[(i+1)%L.length]; return [[p[0]*.75+q[0]*.25,p[1]*.75+q[1]*.25],[p[0]*.25+q[0]*.75,p[1]*.25+q[1]*.75]]; }).reduce(function(a,b){ return a.concat(b); },[]);
+    var n=prof.length, U=prof.map(function(p){ var m=Math.hypot(p[0],p[1])||1; return [p[0]/m,p[1]/m]; }), perim=0;
+    for(i=0;i<n;i++) perim+=Math.hypot(prof[(i+1)%n][0]-prof[i][0],prof[(i+1)%n][1]-prof[i][1]);
+    function rnd(){ seme=(seme*16807)%2147483647; return (seme-1)/2147483646; }
+    function hs(a,b){ var s=Math.sin(a*12.9898+b*78.233)*43758.5453; return s-Math.floor(s); }
+    function tono(calce,banda){ return ROSSI[1].clone().multiplyScalar(banda||1); }      // il tono di base; la screziatura e la calce si danno ai vertici, più sotto
+    var hT=(H+.15)/N, SCARPA=.062, RIPIANO=.052, S=[], Y=[], A=[];      // per gradone: scala del piede, quota del piede; la scarpata rientra di SCARPA, il ripiano di RIPIANO
+    for(k=0;k<N;k++){ S.push(1-k*(SCARPA+RIPIANO)); Y.push(-.15+k*hT); }
+    function idx(i){ return ((i%n)+n)%n; }
+    for(k=0;k<N;k++){ A.push([]); for(r=0;r<=R;r++){ var s=S[k]-r/R*SCARPA, yy=Y[k]+r/R*hT, q=k*10+r; A[k].push(prof.map(function(p,i){ var g=(hs(i,q)-.5)*.03;      // anelli della scarpata, con un tremito che fa i tasselli
+      return [p[0]*s+U[i][0]*g, yy+(hs(i+.5,q+.3)-.5)*.02, p[1]*s+U[i][1]*g]; })); } }
+    function fascia(L0,L1,calce,banda){ for(var i=0;i<n;i++){ var j=(i+1)%n; B.tri(L0[i],L0[j],L1[j],tono(calce,banda)).tri(L0[i],L1[j],L1[i],tono(calce,banda)); } }
+    for(k=0;k<N;k++){
+      for(r=0;r<R;r++) fascia(A[k][r],A[k][r+1],.01,r%2?.92:1);                    // la scarpata: file d'anfore e cocci, a fasce
+      if(k<N-1) fascia(A[k][R],A[k+1][0],.06,1.04);                                  // il ripiano: cocci più minuti e calce
+    }
+    var cima=A[N-1][R], m1=cima.map(function(p,i){ return [p[0]*.66,H+.06+(hs(i,77)-.5)*.03,p[2]*.66]; }), m2=cima.map(function(p,i){ return [p[0]*.33,H+.11+(hs(i,78)-.5)*.03,p[2]*.33]; });
+    fascia(cima,m1,.06,1.04); fascia(m1,m2,.06,1.04);
+    for(i=0;i<n;i+=2) B.tri(m2[i],m2[(i+1)%n],[0,H+.14,0],tono(.06,1.04)).tri(m2[(i+1)%n],m2[(i+2)%n],[0,H+.14,0],tono(.06,1.04));
+    /* la rampa: un tratto per gradone, appoggiato alla scarpata e incassato in lei, che sale dal ripiano di sotto a quello di sopra; i tratti vanno avanti e indietro (tornanti)
+       sul lato ovest, verso il porto e l'Emporio; luogo, larghezza (4 m) e pendenza sono uno schema */
+    var iN=0, iW=0; for(i=1;i<n;i++){ if(prof[i][1]<prof[iN][1]) iN=i; if(prof[i][0]<prof[iW][0]) iW=i; }
+    var d=prof[idx(iW+1)][1]<prof[idx(iW-1)][1]?1:-1, p0=iW-2*d, W=.4, passo=perim/n, tratti=[];
+    for(k=0;k<N;k++){
+      var L=Math.max(6,Math.round(5.5/(passo*S[k]))), dk=k%2?-d:d, pr=null, tr=[];
+      for(j=0;j<=L;j++){ var f=j/L, ii=idx(p0+dk*j), s=S[k]-f*SCARPA-.006, u=U[ii], I=[prof[ii][0]*s,0,prof[ii][1]*s], O=[I[0]+u[0]*W,0,I[2]+u[1]*W], yy=Y[k]+f*hT+.04;
+        var c={I:[I[0],yy,I[2]],O:[O[0],yy,O[2]],Ob:[O[0],Y[k],O[2]],Ib:[I[0],Y[k],I[2]]}; tr.push(c);
+        if(pr){ var cs=STRADA.clone().multiplyScalar(.9+.2*rnd()); B.quad(pr.I,pr.O,c.O,c.I,cs).quad(pr.Ob,c.Ob,c.O,pr.O,tono(.05,.9)); }
+        pr=c; }
+      B.quad(pr.Ib,pr.Ob,pr.O,pr.I,tono(.05,.9));                                     // la testata in cima al tratto
+      tratti.push(tr); p0=p0+dk*L; }
+    /* screziatura per vertice, che dipende solo dal posto: i tasselli vicini sfumano l'uno nell'altro invece di fare un mosaico; qua e là la calce */
+    for(i=0;i<B.pos.length;i+=3){ var vx=B.pos[i], vy=B.pos[i+1], vz=B.pos[i+2], h1=hs(Math.round(vx*97)+Math.round(vz*13),Math.round(vy*101)), h2=hs(Math.round(vz*89),Math.round(vx*7+vy*53)), cr=ROSSI[Math.floor(h1*3.99)], mv=.93+.14*h2;
+      B.col[i]*=cr.r/ROSSI[1].r*mv; B.col[i+1]*=cr.g/ROSSI[1].g*mv; B.col[i+2]*=cr.b/ROSSI[1].b*mv;
+      if(h2>.9){ var kc=(h2-.9)*6; B.col[i]+=(CALCE.r-B.col[i])*kc; B.col[i+1]+=(CALCE.g-B.col[i+1])*kc; B.col[i+2]+=(CALCE.b-B.col[i+2])*kc; } }
+    for(i=0;i<B.tip.length;i++) B.tip[i]=3;      // tipo 3, come i prati: la grana fine dello shader (fino a 60 cm, la misura di un coccio) e, lasciato a sé, l'erba incolta a chiazze (uCrepe)
+    /* Gli anni dello scarico (fino al 265): bestie da soma con un'anfora per fianco sulla rampa e, in cima, verso ovest (la piattaforma che cresce per ultima), la fila d'anfore
+       intere che chiude lo scarico. Quante bestie, come caricate e dove stia la fila è uno schema; persone niente: le fonti non le nominano. */
+    var Bv=new RM.Costruttore(), MULO=RM.col(0x5a4838), ANF=[RM.col(0xb7764e),RM.col(0xa86a45)];
+    function mulo(x,y,z,ry){ Bv.dentro(x,y,z,ry,function(){
+      palla(Bv,.04,0,.1,0,MULO,.85,.9,1.9,6);                                                    // tronco, lungo un metro e mezzo
+      [-1,1].forEach(function(a){ [-1,1].forEach(function(b){ arto(Bv,[a*.022,.07,b*.055],[a*.022,0,b*.058],.009,.008,MULO,4,false); }); });
+      arto(Bv,[0,.11,.06],[0,.155,.1],.017,.013,MULO,5,false); palla(Bv,.021,0,.155,.118,MULO,.8,.8,1.5,5);      // collo e testa
+      [-1,1].forEach(function(a){ palla(Bv,.03,a*.058,.1,-.01,ANF[0],1,1.2,1,6); });              // un'anfora vuota per fianco (Dressel 20, una trentina di chili: Remesal, p. 138)
+    }); }
+    [[0,.3],[0,.75],[1,.5],[2,.45],[3,.6]].forEach(function(m){ var tr=tratti[m[0]], a=Math.min(tr.length-2,Math.floor(m[1]*(tr.length-1))), c=tr[a], e=tr[a+1];
+      mulo((c.I[0]+c.O[0])/2,c.I[1],(c.I[2]+c.O[2])/2,Math.atan2(e.I[0]-c.I[0],e.I[2]-c.I[2])); });
+    var sT=S[N-1]-SCARPA-.004, fila=RM.piccolo?6:12;
+    for(i=iW-fila;i<iW+fila;i++){ var a0=prof[idx(i)], a1=prof[idx(i+1)], lg=Math.hypot(a1[0]-a0[0],a1[1]-a0[1])*sT, m=Math.max(1,Math.floor(lg/.066)), ru=Math.atan2(U[idx(i)][0],U[idx(i)][1]);
+      for(j=0;j<m;j++){ var f=(j+.5)/m; Bv.dentro((a0[0]+(a1[0]-a0[0])*f)*sT,H+.028,(a0[1]+(a1[1]-a0[1])*f)*sT,ru,function(){ Bv.geo(new THREE.SphereGeometry(.03,5,3).scale(1,1,1.25),ANF[(i+j)%2]); }); } }
+    var vivo=Bv.maglia(RM.matPietra()); vivo.receiveShadow=true; vivo.castShadow=!RM.piccolo;
+    /* Dopo l'abbandono: nessuna fonte letta dice che cosa ci fosse sul monte fra il 265 e il Medioevo. Come per gli altri ruderi (RM.rovina): nudo per qualche decennio, poi
+       erba sui ripiani e, meno, sulle scarpate, e qualche arbusto; tutto dopo trecento anni. Niente alberi d'alto fusto né piante venute dopo. È una resa, non una misura. */
+    var Bc=new RM.Costruttore(), cespi=[], ncs=RM.piccolo?40:110;
+    Bc.geo(new THREE.SphereGeometry(.14,RM.piccolo?5:6,RM.piccolo?2:3).scale(1.3,.75,1.1).translate(0,.04,0),RM.col(0x4c5a30));
+    for(i=0;i<ncs;i++){ var kk=Math.floor(rnd()*N), ii=Math.floor(rnd()*n), t=.15+.7*rnd(), p, yb;
+      if(kk<N-1){ var e0=A[kk][R][ii], e1=A[kk+1][0][ii]; p=[e0[0]+(e1[0]-e0[0])*t,0,e0[2]+(e1[2]-e0[2])*t]; yb=Y[kk]+hT; } else { p=[cima[ii][0]*t,0,cima[ii][2]*t]; yb=H+.05; }
+      cespi.push({x:p[0],y:yb,z:p[2],soglia:rnd(),sc:.5+.7*rnd(),ry:rnd()*6.28,q:rnd()}); }
+    var mc=new THREE.InstancedMesh(Bc.geometria(),RM.matPietra(),ncs); mc.castShadow=!RM.piccolo; mc.receiveShadow=true; mc.frustumCulled=false; mc.count=0; mc.visible=false;
+    var dm=new THREE.Object3D(), o=null, ultimo=-1, qU=-1;
+    function verde(anno){ var ea=anno-265; return ea<=0?0:(.1+.9*RM.sfuma(0,300,ea))*RM.sfuma(0,30,ea); }
+    RM.moduli.push(function(anno){
+      if(!o){ o=(RM.MONUMENTI||[]).filter(function(m){ return m.id==='testaccio'; })[0]; if(!o||!o.g) { o=null; return; }
+        o.g.add(vivo); o.g.add(mc);
+        /* dopo il modulo dei monumenti (che qui si aggiunge in coda): la tinta dello stato «abbandonato» scurirebbe i cocci come un muro sporco, e l'erba incolta dello shader
+           del prato (uCrepe; con uVerde scura come i rovi dei recinti) seguirebbe i tempi degli edifici. Qui: cocci appena più spenti col tempo, e l'erba incolta dello shader
+           (chiazze larghe, uCrepe) che cresce secondo il verde del monte: per i tre quarti trecento anni dopo; le scarpate restano in parte scoperte dove le chiazze non arrivano */
+        RM.moduli.push(function(a){ var u=o.mat.userData.u; o.mat.color.setScalar(1-.12*RM.sfuma(265,450,a)); u.uVerde.value=verde(a)>0?.002:0; u.uCrepe.value=.7*verde(a); /* uVerde appena sopra zero: nello shader del prato sceglie l'erba scura incolta invece della paglia chiara (che sui cocci sembrava calce); sul tipo 3 non accende altro */ }); var no=o.g.geometry.attributes.normal;
+        /* la trama dei cocci, da vicino: una tela di 256 punti con circa quattrocento frammenti (da 6 a 20 cm) su un fondo scuro, e qualche scaglia bianca di calce; un riquadro
+           copre 2,5 m. Da lontano le mipmap la riducono a un tono medio, più scuro di un quarto: la screziatura per vertice fa il resto. Disegno generico, non un rilievo */
+        var cv=document.createElement('canvas'); cv.width=cv.height=256; var cx=cv.getContext('2d'), sm=5, q, v, ox, oy;
+        function rn(){ sm=(sm*16807)%2147483647; return (sm-1)/2147483646; }
+        cx.fillStyle='#6b5a50'; cx.fillRect(0,0,256,256);
+        for(q=0;q<420;q++){ var x0=rn()*256, y0=rn()*256, rr=6+rn()*14, a0=rn()*6.28, l=Math.round(195+rn()*60), pts=[];
+          for(v=0;v<4+Math.floor(rn()*2);v++){ var an=a0+v*1.4+(rn()-.5)*.8, rv=rr*(.6+.5*rn()); pts.push([Math.cos(an)*rv,Math.sin(an)*rv*.75]); }
+          cx.fillStyle=rn()<.06?'rgb(250,246,236)':'rgb('+l+','+Math.round(l*(.88+.08*rn()))+','+Math.round(l*(.8+.1*rn()))+')';
+          for(ox=-256;ox<=256;ox+=256) for(oy=-256;oy<=256;oy+=256){ cx.beginPath(); pts.forEach(function(p,k){ cx[k?'lineTo':'moveTo'](x0+ox+p[0],y0+oy+p[1]); }); cx.closePath(); cx.fill(); } }
+        var tx=new THREE.CanvasTexture(cv); tx.wrapS=tx.wrapT=THREE.RepeatWrapping; tx.encoding=THREE.sRGBEncoding; tx.anisotropy=4;
+        var po=o.g.geometry.attributes.position.array, uv=new Float32Array(po.length/3*2), TT=.25;
+        for(q=0;q<po.length/3;q++){ var px=po[q*3], py=po[q*3+1], pz=po[q*3+2], f3=Math.floor(q/3)*9, nx=no.array[f3], ny=no.array[f3+1], nz=no.array[f3+2], lh=Math.hypot(nx,nz)||1;      // per faccia: i ripiani in pianta, le scarpate lungo il fianco (se no la trama si stira a strisce)
+          if(Math.abs(ny)>.75){ uv[q*2]=(px*.8+pz*.6)/TT; uv[q*2+1]=(pz*.8-px*.6)/TT; } else { uv[q*2]=(-px*nz+pz*nx)/lh/TT; uv[q*2+1]=(py*1.25+(px*nx+pz*nz)/lh*.3)/TT; } }
+        o.g.geometry.setAttribute('uv',new THREE.BufferAttribute(uv,2)); o.mat.map=tx; o.mat.needsUpdate=true; }
+      var tq=RM.QUALITA&&RM.QUALITA.verde, fr=tq&&tq[RM.q]!=null?tq[RM.q]:1;
+      vivo.visible=anno<265.5;
+      if(Math.abs(anno-ultimo)<.05 && fr===qU) return; ultimo=anno; qU=fr;
+      var v=verde(anno);
+      var nn=0; cespi.forEach(function(e){ var w=Math.max(0,Math.min(1,(v-.3-.6*e.soglia)*4)); if(w<=0||e.q>=fr) return;
+        dm.position.set(e.x,e.y,e.z); dm.rotation.set(0,e.ry,0); var sc=e.sc*(.35+.65*w); dm.scale.set(sc,sc,sc); dm.updateMatrix(); mc.setMatrixAt(nn++,dm.matrix); });
+      mc.count=nn; mc.visible=nn>0; mc.instanceMatrix.needsUpdate=true;
+    });
+    RM.testaccio={vivo:vivo, cespugli:mc, verde:verde};      // per le prove
  }},
  /* ======== Inventario del 22 novembre 2026: i monumenti che mancavano, al loro posto antico. Fonti lette: Platner e Ashby (LacusCurtius), it.wikipedia, OpenStreetMap (Overpass,
     Nominatim, API), annotate voce per voce; ciò che è detto «indicativo» non viene da una fonte. Le misure in metri delle fonti stanno nei commenti; nel modello 1 unità = 10 m. ======== */
