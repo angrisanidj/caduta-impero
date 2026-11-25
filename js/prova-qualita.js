@@ -11,8 +11,16 @@
 'use strict';
 var RM=window.RM, PG=window.RM_pagina; if(!RM || RM.guasto || !RM.qualita || !RM.qualita.forza || !RM.camera) return;
 var ANNO=852;      // un anno pesante: la città in rovina, le chiese, le mura leonine
-var GRADINI=RM.qualita.scala.slice();      // bassa, telefono, media, alta, massima
+/* Le righe della prova: i cinque gradini alla densità di disegno di base (1,5 pixel per punto sui telefoni) e, se lo schermo è più denso, «massima» ai passi della densità
+   che l'automatica può raggiungere (2 e la densità piena dello schermo, al più 3; 25 novembre 2026). Ogni riga è una chiave: il nome del gradino, o «massima@2». */
+var DENS=RM.qualita.densita?RM.qualita.densita():{base:RM.renderer.getPixelRatio(), passi:[RM.renderer.getPixelRatio()], piena:RM.renderer.getPixelRatio()};
+var RIGHE=RM.qualita.scala.map(function(g){ return {k:g, g:g, d:DENS.base}; });
+DENS.passi.slice(1).forEach(function(d){ RIGHE.push({k:'massima@'+d, g:'massima', d:d, piena:d>=DENS.piena-.01}); });
+var GRADINI=RIGHE.map(function(r){ return r.k; });      // bassa, telefono, media, alta, massima, e le righe della densità
+var RIGA={}; RIGHE.forEach(function(r){ RIGA[r.k]=r; });
 var NOMI={bassa:'bassa',telefono:'telefono',media:'media',alta:'alta',massima:'massima'};
+RIGHE.forEach(function(r){ if(r.d>DENS.base+.001) NOMI[r.k]='massima a densità '+(r.piena?'piena ('+cifra(r.d,2).replace(/,?0+$/,'')+')':cifra(r.d,2).replace(/,?0+$/,'')); });
+function nomeVerdetto(k){ var r=RIGA[k]; return r && r.d>DENS.base+.001?(r.piena?'massima, a piena definizione':'massima, a densità '+cifra(r.d,2).replace(/,?0+$/,'')):NOMI[k]; }
 function dorme(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
 function $(t,c,testo){ var e=document.createElement(t); if(c) e.className=c; if(testo!=null) e.textContent=testo; return e; }
 function cifra(v,d){ return (+v).toFixed(d==null?1:d).replace('.',','); }
@@ -38,7 +46,7 @@ var css=$('style'); css.textContent=[
   '.pq th{font-weight:600;font-size:12px;color:var(--muted,#5F554B);text-align:right;padding:6px 4px;border-bottom:1px solid var(--line,#E3DDD2);line-height:1.2;}',
   '.pq td{text-align:right;padding:9px 4px;border-bottom:1px solid var(--line,#E3DDD2);white-space:nowrap;}',
   '.pq th:first-child,.pq td:first-child{text-align:left;}',
-  '.pq td.g{font-weight:600;}',
+  '.pq td.g{font-weight:600;white-space:normal;min-width:5.5em;}',
   '.pq td.esito{text-align:left;padding-left:8px;}',
   '.pq .si{color:#2f6b3a;} .pq .forse{color:#8a5a12;} .pq .no{color:#9A2F2A;} .pq .salto{color:var(--muted,#5F554B);}',
   '.pq dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;margin:0 0 16px;}',
@@ -115,9 +123,15 @@ function giudica(r,meta){
 
 /* ---- i dati del dispositivo ---- */
 function scheda(){ try{ var gl=RM.renderer.getContext(), e=gl.getExtension('WEBGL_debug_renderer_info'); return String(e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER)); }catch(x){ return 'non detta dal browser'; } }
+/* la precisione vera dei numeri negli shader dei pixel: su molte schede grafiche (Apple comprese) «mediump» è a 16 bit, sul PC quasi sempre a 32 come «highp» */
+function precisione(){ try{ var gl=RM.renderer.getContext(), f=gl.FRAGMENT_SHADER;
+  function p(t){ var x=gl.getShaderPrecisionFormat(f,t); return x?x.precision+' bit (±2^'+x.rangeMax+')':'?'; }
+  return 'mediump '+p(gl.MEDIUM_FLOAT)+', highp '+p(gl.HIGH_FLOAT)+', lowp '+p(gl.LOW_FLOAT); }catch(e){ return 'non letta'; } }
 function dati(hz){
   var c=RM.renderer.domElement;
-  return { schermo:screen.width+' × '+screen.height+' punti', finestra:window.innerWidth+' × '+window.innerHeight+' punti', densita:cifra(window.devicePixelRatio||1,2).replace(/,00$/,''),
+  return { precisione:precisione(), occlusione:/[?&]ao=0/.test(location.search)?'spenta (?ao=0)':'accesa da «media» in su',
+    densitaPassi:DENS.passi.map(function(d){ return cifra(d,2).replace(/,?0+$/,''); }).join(' → ')+' (base '+cifra(DENS.base,2).replace(/,?0+$/,'')+', tetto '+cifra((DENS.tetto||0)/1e6,1)+' milioni di pixel)',
+    schermo:screen.width+' × '+screen.height+' punti', finestra:window.innerWidth+' × '+window.innerHeight+' punti', densita:cifra(window.devicePixelRatio||1,2).replace(/,00$/,''),
     tela:c.width+' × '+c.height+' pixel (densità di disegno '+cifra(RM.renderer.getPixelRatio(),2).replace(/,00$/,'')+')', hz:hz, scheda:scheda(), versione:RM.versione||'(senza versione)',
     browser:navigator.userAgent, data:new Date().toLocaleString('it-IT'), webgl:RM.renderer.capabilities.isWebGL2?'WebGL 2':'WebGL 1', veste:RM.VESTE?'sì':'no' };
 }
@@ -137,14 +151,15 @@ async function prova(){
   info=dati(hz);
   /* riscaldamento: un giro delle vedute e un volo in «media», senza misurare. La prima volta che un edificio o un effetto entra nell'inquadratura il browser ne prepara
      il programma per la scheda grafica, e quel fotogramma dura mezzo secondo: va pagato prima, se no pesa sul primo gradino che lo incontra */
-  if(!stop){ P.riga.textContent='Preparo la città…'; P.sotto.textContent='Un giro senza misurare.'; RM.qualita.forza('media');
+  if(!stop){ P.riga.textContent='Preparo la città…'; P.sotto.textContent='Un giro senza misurare.'; RM.qualita.forza('media',DENS.base);
     for(j=0;j<VEDUTE.length && !stop;j++){ vista(VEDUTE[j].v.t,VEDUTE[j].v.c); await dorme(800); }
     vista(VEDUTE[0].v.t,VEDUTE[0].v.c); await dorme(300); var d0=RM.adatta?RM.adatta(VEDUTE[2].v):VEDUTE[2].v; RM.volaA(d0.t,d0.c,2.6); await dorme(2800); }
   for(i=0;i<GRADINI.length && !stop;i++){
     var g=GRADINI[i], parti=[], perVeduta={};
-    RM.qualita.forza(g);
+    RM.qualita.forza(RIGA[g].g,RIGA[g].d);
     P.riga.textContent='Provo: '+NOMI[g]+' · '+(i+1)+' di '+GRADINI.length; P.sotto.textContent='Preparo il gradino…';
     vista(VEDUTE[0].v.t,VEDUTE[0].v.c); await dorme(1200);
+    var st=RM.qualita.stato(), px={tela:st.tela, effetti:st.effetti, occl:st.occl, dens:st.dens};      // i pixel disegnati davvero: la tela della pagina, quella degli effetti (la scena), quella dell'occlusione
     for(j=0;j<VEDUTE.length && !stop;j++){
       var V=VEDUTE[j]; P.sotto.textContent='Veduta: '+V.nome+' ('+(j+1)+' di '+(VEDUTE.length+1)+')';
       vista(V.v.t,V.v.c); await dorme(500);      // l'ombra si rifà al primo fotogramma della veduta nuova: non si conta
@@ -158,7 +173,7 @@ async function prova(){
       var rv=riassumi(await misura(2600,function(k){ P.barra.style.width=(100*(fatti+Math.min(1,k))/passi)+'%'; }));
       perVeduta.volo=rv; parti.push(rv); fatti++;
     }
-    if(parti.length){ var tot=somma(parti); esiti[g]={tot:tot, viste:perVeduta, giudizio:giudica(tot,meta), parziale:parti.length<VEDUTE.length+1};
+    if(parti.length){ var tot=somma(parti); esiti[g]={tot:tot, viste:perVeduta, giudizio:giudica(tot,meta), parziale:parti.length<VEDUTE.length+1, px:px};
       if(tot.fps<meta*.66 && !stop){ for(var k=i+1;k<GRADINI.length;k++) esiti[GRADINI[k]]={salto:true}; break; } }      // già troppo lento: i gradini sopra costano di più
   }
   RM.qualita.rilascia(); chiudiCitta();
@@ -173,7 +188,7 @@ function risultato(esiti,info,meta,auto){
   var fuori=$('div','pq pq-fine'), carta=$('div','pq-carta'); fuori.appendChild(carta);
   carta.appendChild($('h2',null,stop?'Prova interrotta':'Risultato della prova'));
   var v=$('p','pq-verdetto');
-  if(buono){ v.appendChild(document.createTextNode('Questo telefono regge bene fino a: ')); v.appendChild($('b',null,NOMI[buono])); v.appendChild(document.createTextNode('.')); }
+  if(buono){ v.appendChild(document.createTextNode('Questo telefono regge bene fino a: ')); v.appendChild($('b',null,nomeVerdetto(buono))); v.appendChild(document.createTextNode('.')); }
   else if(Object.keys(esiti).length) v.textContent='Questo telefono fatica già col gradino più basso.';
   else v.textContent='La prova si è fermata prima di misurare.';
   carta.appendChild(v);
@@ -186,22 +201,22 @@ function risultato(esiti,info,meta,auto){
   else if(GRADINI.some(function(k){ return esiti[k] && esiti[k].salto; })) nota.push('I gradini più alti non si provano quando uno sotto è già troppo lento: costano di più.');
   carta.appendChild($('p','pq-nota',nota.join(' ')));
   var tb=$('table'), th=$('tr');
-  ['Gradino','Al secondo','Peggiore','Oltre 20 ms','Oltre 34 ms',''].forEach(function(t){ th.appendChild($('th',null,t)); });
+  ['Gradino','Al secondo','Peggiore','Oltre 20 ms','Oltre 34 ms','Milioni di pixel · densità',''].forEach(function(t){ th.appendChild($('th',null,t)); });
   var thead=$('thead'); thead.appendChild(th); tb.appendChild(thead); var tbody=$('tbody'); tb.appendChild(tbody);
   GRADINI.forEach(function(g){ var e=esiti[g], tr=$('tr'); tr.appendChild($('td','g',NOMI[g]));
-    if(!e || e.salto || !e.tot){ var np=$('td','esito salto','non provato'); np.colSpan=5; np.style.textAlign='center'; tr.appendChild(np); }
+    if(!e || e.salto || !e.tot){ var np=$('td','esito salto','non provato'); np.colSpan=6; np.style.textAlign='center'; tr.appendChild(np); }
     else { var t=e.tot; tr.appendChild($('td',null,cifra(t.fps,0))); tr.appendChild($('td',null,cifra(t.peg,0)+' ms')); tr.appendChild($('td',null,String(t.o20))); tr.appendChild($('td',null,String(t.o34)));
-      tr.appendChild($('td','esito '+e.giudizio.k,e.giudizio.t)); }
+      tr.appendChild($('td',null,pxTesto(e))); tr.appendChild($('td','esito '+e.giudizio.k,e.giudizio.t)); }
     tbody.appendChild(tr); });
-  carta.appendChild(tb);
-  var dl=$('dl'); [['Schermo',info.schermo+', densità '+info.densita],['Disegno',info.tela],['Frequenza',info.hz+' volte al secondo (misurata)'],['Scheda grafica',info.scheda],['Versione',info.versione],
-    ['Automatica',auto.ricordato?'aveva ricordato «'+auto.ricordato+'»':(auto.misura&&auto.misura.esito?'aveva scelto «'+auto.misura.esito+'»':'non aveva ancora misurato')]].forEach(function(r){ dl.appendChild($('dt',null,r[0])); dl.appendChild($('dd',null,r[1])); });
+  var scorre=$('div'); scorre.style.overflowX='auto'; scorre.appendChild(tb); carta.appendChild(scorre);      // sul telefono la tabella, se è più larga, scorre da sola
+  var dl=$('dl'); [['Schermo',info.schermo+', densità '+info.densita],['Disegno',info.tela],['Densità della scala',info.densitaPassi],['Frequenza',info.hz+' volte al secondo (misurata)'],['Scheda grafica',info.scheda],['Precisione',info.precisione],['Versione',info.versione],
+    ['Prima della prova',autoTesto(auto)]].forEach(function(r){ dl.appendChild($('dt',null,r[0])); dl.appendChild($('dd',null,r[1])); });
   carta.appendChild(dl);
   var testo=testoCopia(esiti,info,buono,meta,auto), det=$('details'), sm=$('summary',null,'Tutti i numeri, veduta per veduta'), pre=$('pre',null,testo); det.appendChild(sm); det.appendChild(pre); carta.appendChild(det);
-  var bt=$('div','pq-bottoni'), copia=$('button','pq-primo','Copia il risultato'), usa=$('button',null,buono?'Usa questo gradino ('+NOMI[buono]+')':'Usa il gradino «bassa»'), rifai=$('button',null,'Rifai la prova'), esci=$('button',null,'Torna alla pagina'), avv=$('p','pq-avviso');
+  var bt=$('div','pq-bottoni'), copia=$('button','pq-primo','Copia il risultato'), usa=$('button',null,buono?'Usa questo gradino ('+nomeVerdetto(buono)+')':'Usa il gradino «bassa»'), rifai=$('button',null,'Rifai la prova'), esci=$('button',null,'Torna alla pagina'), avv=$('p','pq-avviso');
   [copia,usa,rifai,esci].forEach(function(b){ b.type='button'; bt.appendChild(b); });
   copia.addEventListener('click',function(){ copiaTesto(testo,avv,carta); });
-  usa.addEventListener('click',function(){ RM.qualita.scegli(buono||'bassa'); avv.textContent='Scelto: '+NOMI[buono||'bassa']+'. Si cambia dal bottone «Qualità» nel menu Strumenti della città.'; });
+  usa.addEventListener('click',function(){ var r=RIGA[buono||'bassa']; RM.qualita.scegli(r.g,r.d); avv.textContent='Scelto: '+nomeVerdetto(buono||'bassa')+'. Si cambia dal bottone «Qualità» nel menu Strumenti della città (l’ultimo tocco torna ad «automatica»).'; });      // il gradino e la sua densità
   rifai.addEventListener('click',function(){ location.reload(); });
   esci.addEventListener('click',function(){ location.href=location.pathname+location.hash; });
   carta.appendChild(bt); carta.appendChild(avv);
@@ -215,20 +230,31 @@ function testoCopia(esiti,info,buono,meta,auto){
   r.push('Schermo: '+info.schermo+', densità '+info.densita+'; finestra '+info.finestra+'; disegno '+info.tela);
   r.push('Frequenza dello schermo: '+info.hz+' Hz (misurata) · '+info.webgl+' · scheda grafica: '+info.scheda);
   r.push('Browser: '+info.browser);
-  r.push('Anno della città: '+ANNO+' · automatica prima della prova: '+(auto.ricordato?'ricordato '+auto.ricordato:auto.misura&&auto.misura.esito?'misurato '+auto.misura.esito:'non misurato')+' (gradino '+auto.gradino+', periodo '+auto.periodo+' ms)');
+  r.push('Precisione negli shader dei pixel: '+info.precisione+' · occlusione '+info.occlusione);
+  r.push('Densità della scala: '+info.densitaPassi);
+  r.push('Anno della città: '+ANNO+' · prima della prova: '+autoTesto(auto)+' (periodo '+auto.periodo+' ms)');
   r.push('');
-  r.push('gradino | al secondo | peggiore ms | >20 ms | >34 ms | intoppi tolti | fotogrammi | lavoro ms | giudizio');
+  r.push('gradino | al secondo | peggiore ms | >20 ms | >34 ms | intoppi tolti | fotogrammi | lavoro ms | giudizio | densità | tela pagina | tela scena | occlusione');
   GRADINI.forEach(function(g){ var e=esiti[g];
     if(!e || !e.tot){ r.push(g+' | non provato'); return; }
-    var t=e.tot; r.push([g,t.fps.toFixed(1),t.peg.toFixed(0),t.o20,t.o34,t.intoppi,t.n,t.lavoro.toFixed(1),e.giudizio.t.replace(/^\S+ /,'')+(e.parziale?' (parziale)':'')].join(' | ')); });
+    var t=e.tot, x=e.px||{}; r.push([g,t.fps.toFixed(1),t.peg.toFixed(0),t.o20,t.o34,t.intoppi,t.n,t.lavoro.toFixed(1),e.giudizio.t.replace(/^\S+ /,'')+(e.parziale?' (parziale)':''),
+      x.dens!=null?(+x.dens).toFixed(2):'?',misure(x.tela),misure(x.effetti),misure(x.occl)].join(' | ')); });
   r.push('');
   r.push('Per veduta (al secondo / peggiore ms / >20 / >34 / lavoro ms):');
   GRADINI.forEach(function(g){ var e=esiti[g]; if(!e || !e.viste) return;
     r.push(g+': '+Object.keys(e.viste).map(function(k){ var t=e.viste[k]; return NV[k]+' '+t.fps.toFixed(1)+'/'+t.peg.toFixed(0)+'/'+t.o20+'/'+t.o34+'/'+t.lavoro.toFixed(1); }).join(' · ')); });
   r.push('');
-  r.push('Verdetto: '+(buono?'regge bene fino a '+buono:'fatica anche in bassa')+' (soglia: '+Math.round(meta*.92)+' al secondo, al più 5% oltre 20 ms e 1% oltre 34 ms)');
+  r.push('Verdetto: '+(buono?'regge bene fino a '+nomeVerdetto(buono):'fatica anche in bassa')+' (soglia: '+Math.round(meta*.92)+' al secondo, al più 5% oltre 20 ms e 1% oltre 34 ms)');
   return r.join('\n');
 }
+function misure(m){ return m?m[0]+'×'+m[1]:'?'; }
+function pxTesto(e){ var x=e.px; if(!x || !x.effetti) return '?'; return cifra(x.effetti[0]*x.effetti[1]/1e6,1)+' · '+cifra(x.dens,2).replace(/,?0+$/,''); }      // i pixel della scena (tela degli effetti) e la densità della tela della pagina
+/* com'era la qualità prima della prova (25 novembre 2026: prima una scelta a mano compariva come «non misurato (gradino massima)») */
+function autoTesto(a){
+  if(!a.automatica) return 'scelta a mano «'+a.gradino+'»'+(a.densMano?' a densità '+cifra(a.densMano,2).replace(/,?0+$/,''):'')+' (dal bottone «Qualità» o da «Usa questo gradino»)';
+  if(a.ricordato) return 'automatica, ricordava «'+a.ricordato+'»';
+  if(a.misura && a.misura.esito) return 'automatica, aveva misurato «'+a.misura.esito+'»';
+  return 'automatica, non ancora misurata (la misura si fa alla prima apertura normale della città; ora «'+a.gradino+'»)'; }
 function copiaTesto(t,avv,carta){
   function aMano(){ avv.textContent='Non riesco a copiare da solo: tieni il dito sul testo qui sotto, «Seleziona tutto» e «Copia».'; var ta=$('textarea'); ta.value=t; ta.readOnly=true; carta.appendChild(ta); ta.focus(); ta.select(); }
   function vecchio(){ try{ var ta=$('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0,t.length); var ok=document.execCommand('copy'); ta.remove(); if(ok) avv.textContent='Copiato. Ora incollalo nel messaggio.'; else aMano(); }catch(e){ aMano(); } }
