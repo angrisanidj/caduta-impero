@@ -414,7 +414,7 @@ function posaSuolo(){
   suolo.receiveShadow=true; suolo.userData.gruppo='suolo'; scene.add(suolo); RM.suolo=suolo;
   /* la quota del terreno come è disegnato (triangolo per triangolo): fra un vertice e l'altro della maglia RM.h, più fine, può uscirne di qualche metro sui bordi delle terrazze.
      Le strade la seguono, così non galleggiano e non affondano (23 novembre 2026) */
-  var N=S+1, inv=function(v){ var s=v<0?-1:1, a=Math.min(1,Math.abs(v)/3400), t=a; for(var k=0;k<8;k++) var t2=t*t, t6=t2*t2*t2; t-=(.2*t+.05*t2*t+.75*t6*t-a)/(.2+.15*t2+5.25*t6); return s*t; };
+  var N=S+1, inv=function(v){ var s=v<0?-1:1, a=Math.min(1,Math.abs(v)/3400), t=a; for(var k=0;k<12;k++){ var t2=t*t, t6=t2*t2*t2; t-=(.2*t+.05*t2*t+.75*t6*t-a)/(.2+.15*t2+5.25*t6); if(t>1) t=1; } return s*t; };      // (25 novembre 2026) il ciclo non aveva le graffe e faceva un passo solo: oltre 1,5 km dal Foro la cella cercata era sbagliata (fino a 130 celle) e strade, rampe dei ponti e figure prendevano la quota di un altro punto (Flaminia a ponte Milvio 105 m sotto terra); col tetto a 1 dodici passi bastano ovunque (scarto sotto un milionesimo di cella)
   RM.hSuolo=function(x,z){
     var tx=(inv(x)+1)*S/2, tz=(inv(z)+1)*S/2, ix=Math.max(0,Math.min(S-1,Math.floor(tx))), iz=Math.max(0,Math.min(S-1,Math.floor(tz)));
     var x0=curva(ix*2/S-1), x1=curva((ix+1)*2/S-1), z0=curva(iz*2/S-1), z1=curva((iz+1)*2/S-1), fx=(x-x0)/(x1-x0), fz=(z-z0)/(z1-z0);
@@ -666,6 +666,7 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
     disegna:function(sc,cam){
       uScala.value=Math.max(1,tela.width/Math.max(1,renderer.domElement.width));
       if(cam.isPerspectiveCamera) RM.occhio(cam,tela.height/uScala.value);      // in pixel dello schermo: la soglia dei colonnati non cambia con la tela
+      if(cam.isPerspectiveCamera && matC.uniforms.vicino.value!==cam.near){ matC.uniforms.vicino.value=cam.near; if(matAO) matAO.uniforms.vicino.value=cam.near; }      // il piano vicino può scendere per i primi piani (800, js/scene-tappe.js): le passate leggono la profondità con quello vero
       renderer.setRenderTarget(tela); renderer.render(sc,cam);
       if(telaAO && uAO.value>0 && cam.isPerspectiveCamera){ var ty=Math.tan(cam.fov*Math.PI/360)/(cam.zoom||1); uTan.value.set(ty*cam.aspect,ty); uPxS.value=tela.height/(2*ty);
         if(RM.q===1) uNAO.value=tela.width*tela.height>1.6e6?4:RM.QUALITA.aoN[1];      // «media» su uno schermo grande (1920x1080): quattro prove invece di sei, perché il gradino non costi di più dove i pixel sono più del doppio
