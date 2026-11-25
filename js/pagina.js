@@ -69,12 +69,61 @@ var voci=(RM.MONUMENTI||[]).map(function(m){
 });
 if(!voci.length) document.querySelector('.stato-roma').hidden=true;
 /* sui telefoni l'elenco è lungo: si apre per intero solo a richiesta (il bottone si vede solo lì, css/stile.css) */
-var contaElenco=0, contaMonumenti=function(){};
-(function(){ var sr=document.querySelector('.stato-roma'), bm=$('btnMonumenti'); if(!bm) return;
-  function scrivi(){ var c=sr.classList.contains('corto'); bm.setAttribute('aria-expanded',c?'false':'true'); bm.textContent=c?'Mostra tutti i '+contaElenco+' monumenti':'Mostra meno'; bm.hidden=contaElenco<=20; }      // venti stanno nelle due colonne dell'elenco corto
-  sr.classList.add('corto'); bm.addEventListener('click',function(){ sr.classList.toggle('corto'); scrivi();
+/* Sul PC (25 novembre 2026, l'utente: «Riesci a fare in modo che si eviti lo spazio bianco sotto e che la grandezza della finestra "monumenti di Roma" dipenda da quella
+   affianco e se manca qualcosa c'è da cliccare "mostra altri"?») il riquadro finisce dove finisce la colonna del testo. Come si misura: con tutte le voci visibili si leggono
+   le altezze delle righe, poi si riempiono le colonne dell'elenco in ordine (come fa il browser, che non spezza una voce) finché si sta nello spazio che va dal capo
+   dell'elenco al fondo del testo, tolto il posto del bottone. Le voci che non ci stanno prendono «hidden» (niente fuoco da tastiera, mai una riga tagliata a metà); almeno
+   otto righe anche accanto a un testo cortissimo. Si rimisura quando cambia la colonna del testo (ResizeObserver; senza, ridimensionamento e immagini caricate), quando
+   cambia l'elenco e a ogni tappa, che lo richiude. */
+var contaElenco=0, contaMonumenti=function(){}, mostraVoce=function(){};
+(function(){ var sr=document.querySelector('.stato-roma'), bm=$('btnMonumenti'), ul=$('elencoMonumenti'), tp=document.querySelector('.tappa'), co=document.querySelector('.colonne'); if(!bm) return;
+  var pc=matchMedia('(min-width:1001px)'), aperto=false, taglia=false, nascoste=0, tagliato=false;
+  function scrivi(){
+    if(pc.matches){ bm.setAttribute('aria-expanded',aperto?'true':'false'); bm.textContent=aperto?'Mostra meno':'Mostra altri ('+nascoste+')'; bm.hidden=!taglia; return; }
+    var c=sr.classList.contains('corto'); bm.setAttribute('aria-expanded',c?'false':'true'); bm.textContent=c?'Mostra tutti i '+contaElenco+' monumenti':'Mostra meno'; bm.hidden=contaElenco<=20;      // venti stanno nelle due colonne dell'elenco corto
+  }
+  function quante(h,col,H){ var c=1, s=0; for(var i=0;i<h.length;i++){ if(s>0 && s+h[i]>H){ c++; s=0; } if(c>col || h[i]>H) return i; s+=h[i]; } return h.length; }      // quante voci, in fila, stanno in «col» colonne alte H
+  function nascondi(vis){ var da=vis.length-nascoste, fu=document.activeElement, perso=false;
+    vis.forEach(function(v,i){ var h=taglia && !aperto && i>=da; if(h && v.li===fu) perso=true; v.li.hidden=h; });
+    if(perso && !bm.hidden) bm.focus(); }      // una voce col fuoco che sparisce lo passa al bottone
+  function misura(){
+    var vis=voci.filter(function(v){ return v.st && v.st!=='assente'; });
+    if(!pc.matches || !vis.length || sr.hidden){      // telefono e schermi medi: com'era (il bottone dei telefoni, css/stile.css)
+      if(tagliato){ voci.forEach(function(v){ v.li.hidden=v.st==='assente'; }); tagliato=false; }
+      taglia=false; aperto=false; nascoste=0; sr.classList.remove('taglia'); scrivi(); return;
+    }
+    var nx=co && co.nextElementSibling, an=nx && co.getBoundingClientRect().bottom<0 ? nx.getBoundingClientRect().top : null;      // chi legge più sotto non deve vedere la pagina saltare
+    vis.forEach(function(v){ v.li.hidden=false; }); sr.classList.remove('taglia');
+    var fondo=tp.getBoundingClientRect().bottom, rU=ul.getBoundingClientRect(), sotto=sr.getBoundingClientRect().bottom-rU.bottom;
+    taglia=false; nascoste=0;
+    if(rU.bottom+sotto>fondo+1){
+      sr.classList.add('taglia'); bm.hidden=false; bm.textContent='Mostra altri ('+vis.length+')';      // il bottone, per misurare il suo posto
+      var sottoB=sr.getBoundingClientRect().bottom-ul.getBoundingClientRect().bottom, col=parseInt(getComputedStyle(ul).columnCount,10)||1;
+      var alte=vis.map(function(v){ return v.li.getBoundingClientRect().height; });
+      var k=Math.max(quante(alte,col,fondo-rU.top-sottoB),8*col);
+      if(k<vis.length){ taglia=true; nascoste=vis.length-k; } else sr.classList.remove('taglia');
+    }
+    if(!taglia) aperto=false;
+    tagliato=true; scrivi(); nascondi(vis);
+    if(an!=null){ var d=nx.getBoundingClientRect().top-an; if(Math.abs(d)>.5) window.scrollBy(0,d); }
+  }
+  sr.classList.add('corto'); bm.addEventListener('click',function(){
+    if(pc.matches){      // PC: si apre sotto, il bottone scende; chiudendo, il bottone resta dov'era sullo schermo (la pagina non salta)
+      var y=bm.getBoundingClientRect().top; aperto=!aperto; scrivi(); nascondi(voci.filter(function(v){ return v.st && v.st!=='assente'; }));
+      if(!aperto){ var d=bm.getBoundingClientRect().top-y; if(Math.abs(d)>.5) window.scrollBy(0,d); }
+      return;
+    }
+    sr.classList.toggle('corto'); scrivi();
     if(sr.classList.contains('corto') && sr.getBoundingClientRect().top<0) sr.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'}); });      // chiudendo l'elenco lungo si torna al suo inizio, non in mezzo alla pagina
-  contaMonumenti=function(n){ contaElenco=n; scrivi(); };
+  contaMonumenti=function(n){ contaElenco=n; misura(); };
+  mostraVoce=function(m){ if(!pc.matches || !taglia || aperto) return; var v=voci.filter(function(w){ return w.m===m; })[0]; if(v && v.li.hidden && v.st!=='assente'){ aperto=true; scrivi(); nascondi(voci.filter(function(w){ return w.st && w.st!=='assente'; })); } };      // il nome evidenziato da un clic sulla scena dev'essere visibile
+  ascolto.push(function(){ aperto=false; misura(); });      // a ogni tappa l'elenco torna chiuso
+  var attesa=0; function poi(){ if(!attesa) attesa=setTimeout(function(){ attesa=0; misura(); },60); }      // setTimeout, non requestAnimationFrame: gira anche quando la scheda non disegna
+  if(window.ResizeObserver && tp){ var ro=new ResizeObserver(function(){ misura(); }); ro.observe(tp); if($('cruscotto')) ro.observe($('cruscotto')); }      // anche le spie sopra l'elenco, che cambiano con l'anno
+  else if(tp) tp.addEventListener('load',poi,true);      // senza ResizeObserver: i ritratti che arrivano allungano il testo
+  window.addEventListener('resize',poi);
+  if(pc.addEventListener) pc.addEventListener('change',misura); else if(pc.addListener) pc.addListener(misura);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(poi);
 })();
 /* scheda di un monumento: che cos'è, in che stato è nell'anno corrente, le date che contano */
 var schedaDi=null, schedaChiave='';
@@ -101,7 +150,7 @@ function scostaScena(){
 }
 function apriScheda(m){
   schedaDi=m; schedaChiave=''; scriviScheda(); $('scheda').hidden=false; document.querySelector('.riquadro.roma').classList.add('con-scheda');
-  voci.forEach(function(v){ v.li.classList.toggle('scelto',v.m===m); });
+  voci.forEach(function(v){ v.li.classList.toggle('scelto',v.m===m); }); mostraVoce(m);
   if($('scene').getAttribute('data-vista')!=='roma'){ var b=document.querySelector('.schede button[data-vista="roma"]'); if(b) b.click(); }
   var r=document.querySelector('.riquadro.roma').getBoundingClientRect(); if(r.top<0||r.bottom>window.innerHeight+40) document.querySelector('.riquadro.roma').scrollIntoView({behavior:'smooth',block:'start'});
   if(RM.vola&&m.x!=null) RM.vola(m.x,m.z,Math.max(46,(m.raggio||6)*6));

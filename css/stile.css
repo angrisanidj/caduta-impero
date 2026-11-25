@@ -546,6 +546,15 @@ body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.9
 .monumenti li.assente>span{color:#7B7064}
 .monumenti li[hidden],.st[hidden],.tutti[hidden]{display:none}
 .tutti{display:none}
+/* Sul PC il riquadro dei monumenti è alto quanto il testo accanto; le voci che non ci stanno si aprono con «Mostra altri (N)» (js/pagina.js, cerca «mostraVoce»).
+   25 novembre 2026, l'utente: «Riesci a fare in modo che si eviti lo spazio bianco sotto e che la grandezza della finestra "monumenti di Roma" dipenda da quella affianco
+   e se manca qualcosa c'è da cliccare "mostra altri"?». Stessa veste del bottone dei telefoni. */
+@media (min-width:1001px){
+  .stato-roma.taglia .tutti:not([hidden]){display:block;width:100%;min-height:40px;margin:10px 0 0;padding:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink);background:var(--carta);border:1px solid var(--line);border-radius:8px;cursor:pointer}
+  .stato-roma.taglia .tutti:hover{border-color:var(--gold2)}
+  .stato-roma.taglia .tutti:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+}
 
 /* ---------- perché cadde, con la colonna per condividere ---------- */
 /* la colonna sta subito a destra del testo, quanto che sia largo (la larghezza della sezione la decide .cause) */
