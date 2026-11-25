@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 25/11/2026, 00:51:08.
+Generato da `src/testi.mjs` il 25/11/2026, 02:04:48.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -119,7 +119,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.52] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.53] Versione del 25/11/2026, ore 00:45
+[pagina.53] Versione del 25/11/2026, ore 01:25
 
 
 ## 2. Gli atti
@@ -2210,7 +2210,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.assedio756] Gennaio-marzo 756 · I Longobardi di Astolfo assediano Roma per tre mesi e devastano i dintorni. Il papa chiama i Franchi. Nella ricostruzione, i casali bruciati e i campi anneriti fuori dalle porte sono una scelta del modello: le fonti non dicono dove furono i danni. Due acquedotti restano rotti per vent'anni, forse proprio da questo assedio.
 
-[evento.natale800] 24 novembre e 25 dicembre 800 · La scena ha due tempi. Il 24 novembre Carlo, re dei Franchi, arriva a San Pietro: le bandiere della città gli vanno incontro e gruppi di pellegrini e di cittadini cantano le sue lodi. Carlo scende da cavallo e sale i gradini, dove lo aspetta papa Leone III. Il giorno di Natale, alla messa, Carlo si alza dalla preghiera davanti alla tomba di Pietro e il papa gli posa la corona sul capo. I Romani gridano tre volte: «A Carlo augusto, incoronato da Dio, grande e pacifico imperatore dei Romani, vita e vittoria!». Poi il papa gli rende omaggio e unge re il figlio Carlo. Così raccontano gli Annali dei Franchi e il Liber Pontificalis. Nella ricostruzione la strada del corteo, numeri, colori e posti sono nostri. L'interno è uno spaccato: navate, colonne, arco e abside seguono la pianta nota; altezze, altare, la forma della corona e il gesto dell'omaggio sono ipotetici.
+[evento.natale800] 24 novembre e 25 dicembre 800 · La scena ha due tempi. Il 24 novembre Carlo, re dei Franchi, arriva a San Pietro: le bandiere della città gli vanno incontro e gruppi di pellegrini e di cittadini cantano le sue lodi. Carlo scende da cavallo e sale i gradini, dove lo aspetta papa Leone III. Il giorno di Natale, alla messa, Carlo si alza dalla preghiera davanti alla tomba di Pietro e il papa gli posa la corona sul capo. I Romani gridano tre volte: «A Carlo augusto, incoronato da Dio, grande e pacifico imperatore dei Romani, vita e vittoria!». Poi il papa gli rende omaggio e unge re il figlio Carlo. Così raccontano gli Annali dei Franchi e il Liber Pontificalis. Nella ricostruzione la strada del corteo, numeri, colori e posti sono nostri. L'interno è uno spaccato: navate, colonne, arco e abside seguono la pianta nota; altezze, altare, lampade e candele, la forma della corona e il gesto dell'omaggio sono ipotetici. La luce d'inverno viene dalle date: che tempo facesse in quei giorni non si sa.
 
 [evento.terremoto801] 30 aprile 801, di sera · Un terremoto scuote l'Italia centrale. A Roma crolla gran parte del tetto di San Paolo fuori le mura, con le sue travi.
 
@@ -2681,6 +2681,23 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.adriano.data3-537] Secondo Procopio, durante l'assedio dei Goti i difensori del mausoleo fanno a pezzi gran parte delle statue e lanciano i blocchi di marmo sugli assalitori. Non sappiamo quando sia scomparsa la quadriga, il carro a quattro cavalli. Nella ricostruzione scompare insieme alle statue.
 
 [scheda.adriano.certezza-A] Il basamento e il corpo cilindrico della tomba sono conservati dentro Castel Sant'Angelo. La parte superiore è ricostruita.
+
+
+### Teatro di Pompeo
+
+[scheda.pompeo.nome] Teatro di Pompeo
+
+[scheda.pompeo.cosa] Il teatro e i portici di Pompeo. Sotto Teodorico il teatro viene ancora restaurato.
+
+[scheda.pompeo.data1.quando] 507-511
+
+[scheda.pompeo.data1] Teodorico affida a Simmaco il restauro del teatro e paga lui i lavori (Cassiodoro, Variae IV 51). È l'ultimo restauro di cui si ha notizia. Nella scena del 493 il ponteggio e la gru sono un'ipotesi: le fonti non dicono dove si lavorasse.
+
+[scheda.pompeo.data2-546] Quando il teatro smise di servire nessuna fonte lo dice. Nel modello è abbandonato da quest'anno, con la guerra gotica: resta in piedi, senza crolli. È una scelta.
+
+[scheda.pompeo.data3-663] Nel modello Costante II porta via marmi e bronzi. Che ce ne fossero ancora non si sa: anche questa è una scelta.
+
+[scheda.pompeo.certezza-B] La curva delle antiche gradinate si riconosce ancora nell'andamento delle strade e nelle cantine degli edifici attuali. Il portico compare anche nell'antica pianta di Roma incisa nel marmo. Il modello propone un possibile aspetto delle strutture che si alzavano sopra il suolo.
 
 
 ### Teatro di Marcello
@@ -3749,11 +3766,6 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.augusto.certezza-B] Restano gli anelli inferiori; la forma della parte alta è discussa.
 
 
-### pompeo
-
-[scheda.pompeo.certezza-B] La curva delle antiche gradinate si riconosce ancora nell'andamento delle strade e nelle cantine degli edifici attuali. Il portico compare anche nell'antica pianta di Roma incisa nel marmo. Il modello propone un possibile aspetto delle strutture che si alzavano sopra il suolo.
-
-
 ### tegolepietro
 
 [scheda.tegolepietro.certezza-B] Le tegole di bronzo sono attestate dal Liber Pontificalis; il loro aspetto è ricostruito.
@@ -4646,7 +4658,9 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/base.js
 
-[ui.base.01-r772] Qualità della città: automatica, bassa, telefono, media, alta, massima
+[ui.base.01-r807] , piena definizione
 
-[ui.base.02-r838] fine prova
+[ui.base.02-r817] Qualità della città: automatica, bassa, telefono, media, alta, massima
+
+[ui.base.03-r899] fine prova
 

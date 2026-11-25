@@ -53,7 +53,7 @@ function pedinaCav(B,x,z,y,ry,colC,colU){
    legate davanti per i prigionieri, veste lunga fino ai piedi per il clero (scalzo nell'852: «nudis pedibus», vita di Leone IV, 72), il mantello di lana per chi lo portava;
    il cavallo è quello delle statue (RM.cavalloStatua, js/monumenti.js). Fogge, pose e colori sono indicativi: lana grezza, bruni, ocra, bianchi sporchi; la porpora solo
    a chi la portava (gli imperatori sul carro, Massenzio, l'imperatrice Eudossia). Carlo senza corona; la tunica blu è quella che la scena gli dava già (colori di comodo),
-   il mantello è di lana di colore sobrio (il mantello blu della Vita Karoli di Eginardo, 23, è un ricordo non riletto sul testo: da verificare prima di metterlo).
+   il mantello è di lana di colore sobrio (Eginardo, Vita Karoli 23, riletto il 25 novembre 2026: «sago veneto amictus» è il suo abito comune, ma a Roma due volte vestì alla romana, e quali giorni non è detto: il colore resta sobrio).
    Il peso: una persona sono da 350 a 400 triangoli (la pedina 24), un cavaliere circa 1250 (la pedina 84). Perciò:
    - nel gradino «bassa» (i telefoni e i dispositivi al tocco partono da lì) c'è un tetto piccolo, speso solo dalle parti segnate «tel» (le più importanti: i prigionieri
      e le guardie del 593, il papa e il clero sulle mura nell'852, Carlo, il papa e il clero sui gradini nell'800, le prigioniere del 455, chi apre la porta nel 410);
@@ -79,6 +79,17 @@ function cavaliere(B,x,z,y,ry,colC,colU,solo,ruolo){
   if(DETT){ cavaliereVero(B,x,z,y,ry,colC,colU,solo,ruolo); return; }
   voce(B,x,y,z,function(Q){ cavaliereVero(Q,x,z,y,ry,colC,colU,solo,ruolo); },function(Q){ pedinaCav(Q,x,z,y,ry,colC,colU); },1);
 }
+/* in ginocchio (800, la preghiera di Carlo davanti alla confessione e l'omaggio del papa): la persona con le gambe piegate; la pedina più bassa */
+function inGinocchio(B,x,z,y,col,ry,ruolo){
+  if(DETT){ var o=opzioni(col,null,ruolo,contaP++); o.ginocchio=true; emetti(B,chiaveP(o),function(){ return personaGeo(o); },locale(x,y,z,ry),o.veste); return; }
+  B.dentro(x,y,z,ry||0,function(B){ B.scatola(.05,.105,.035,0,0,0,col).scatola(.03,.035,.03,0,.105,0,C.pelle).scatola(.04,.012,.06,0,0,-.035,col); });
+}
+/* il papa col gesto della corona (800): le braccia tese in avanti; la pedina con due braccia avanti */
+function aBracciaTese(B,col,ruolo){
+  if(DETT){ var o=opzioni(col,null,ruolo,contaP++); o.braccia=2; emetti(B,chiaveP(o),function(){ return personaGeo(o); },locale(0,0,0,0),o.veste); return; }
+  B.scatola(.05,.15,.035,0,0,0,col).scatola(.03,.035,.03,0,.15,0,C.pelle).scatola(.012,.012,.07,.02,.125,.04,col).scatola(.012,.012,.07,-.02,.125,.04,col);
+}
+var INVERNO=false;      // mentre si costruiscono le scene dell'800: la folla col mantello (dicembre e fine novembre)
 /* una voce: d disegna la persona, s la pedina; fuori da una raccolta (o sul telefono) si disegna subito la pedina */
 function voce(B,x,y,z,d,s,peso){
   if(!VIC||VIC.B!==B){ s(B); return; }
@@ -142,14 +153,15 @@ function opzioni(col,scudo,ruolo,k){
   var h=((k*2654435761)>>>0)%100, o={f:0, k:(h&1)?3:0, veste:col||C.tunica, scudo:scudo||null, s:1};      // due carnagioni e due capigliature (js/vita.js), non quattro: meno maglie da disegnare
   if(ruolo==='clero' || ruolo==='papa'){ o.f=3; o.sopra=col; if(ruolo==='papa') o.veste=C.bianco; }
   else if(ruolo==='scalzo'){ o.f=3; o.sopra=col; o.scalzo=true; }
-  else if(ruolo==='carlo'){ o.f=1; o.sopra=RM.col(0x5a4a3a); }      // la tunica nel colore della scena, il mantello di lana sobrio (il blu di Eginardo è da verificare)
+  else if(ruolo==='carlo'){ o.f=1; o.sopra=RM.col(0x5a4a3a); }      // la tunica nel colore della scena, il mantello di lana sobrio (Eginardo 23: blu l'abito comune, a Roma due volte alla romana; i giorni non sono detti)
   else if(ruolo==='donna') o.f=2;
   else if(ruolo==='folla'){ if(h<32) o.f=2; else if(h<52) o.f=1; if(h>=92){ o.f=0; o.s=.7; } }      // donne, uomini col mantello, ragazzi
   else if(h<28) o.f=1;
   if(o.f===2 && h%3===1) o.velo=RM.col(0xb3a487);
+  if(INVERNO && o.f===0 && ruolo!=='carlo'){ o.f=1; o.s=1; }      // d'inverno il mantello (25 novembre 2026)
   return o;
 }
-function chiaveP(o){ return ['p',o.f,o.k,hex(o.sopra),hex(o.velo),o.chino||0,o.legato?1:0,o.collare?1:0,hex(o.scudo),o.s,o.scalzo?1:0].join('|'); }
+function chiaveP(o){ return ['p',o.f,o.k,hex(o.sopra),hex(o.velo),o.chino||0,o.legato?1:0,o.collare?1:0,hex(o.scudo),o.s,o.scalzo?1:0,o.ginocchio?1:0,o.braccia||0].join('|'); }
 function persona(dest,x,z,y,col,scudo,ry,ruolo){ var o=opzioni(col,scudo,ruolo,contaP++); emetti(dest,chiaveP(o),function(){ return personaGeo(o); },locale(x,y,z,ry),o.veste); }
 function cavaliereVero(dest,x,z,y,ry,colC,colU,solo,ruolo){
   var k=contaP++, m=locale(x,y,z,ry), cc=colC||C.cavalloB;
@@ -182,9 +194,10 @@ function personaGeo(o){
   function uguale(c,q){ return Math.abs(c[0]-q.r)+Math.abs(c[1]-q.g)+Math.abs(c[2]-q.b)<.01; }
   function rgb(q){ return [q.r,q.g,q.b]; }
   function ruota(p,asse,ang,cy,cz,cx){ var q=p.clone(); q.x-=cx||0; q.y-=cy||0; q.z-=cz||0; q.applyAxisAngle(asse,ang); q.x+=cx||0; q.y+=cy||0; q.z+=cz||0; return q; }
-  var X=new THREE.Vector3(1,0,0), Z=new THREE.Vector3(0,0,1);
+  var X=new THREE.Vector3(1,0,0), Z=new THREE.Vector3(0,0,1), GIN=.05;      // GIN: l'altezza del ginocchio (50 cm)
   function braccio(p,nn,s){ var a=-.3*s, b=-.45; p.copy(ruota(ruota(p,Z,a,.138,0,s*.02),X,b,.138,0,0)); if(nn){ nn.applyAxisAngle(Z,a).applyAxisAngle(X,b); } }
   function testa(p,nn){ p.copy(ruota(p,X,o.chino,.143,0,0)); if(nn) nn.applyAxisAngle(X,o.chino); }
+  function alza(p,nn,s){ var a=(o.braccia===1?.3:-.06)*s, b=o.braccia===1?-2.6:-1.4; p.copy(ruota(ruota(p,Z,a,.138,0,s*.02),X,b,.138,0,0)); if(nn){ nn.applyAxisAngle(Z,a).applyAxisAngle(X,b); } }
   function mano(i){ var j=i*3, s=pa[j]>0?1:-1; return Math.hypot(pa[j]-s*.022,pa[j+1]-.081,pa[j+2]-.006)<.0042; }      // un vertice della sfera della mano (js/vita.js)
   for(i=0;i<n;i++){
     if(LEGGERA && i%3===0 && Math.abs(oa[i])>1.5 && mano(i) && mano(i+1) && mano(i+2)){ i+=2; continue; }      // la persona leggera non ha le mani
@@ -195,8 +208,10 @@ function personaGeo(o){
     else if(uguale(c,V_LANA)) c=rgb(o.sopra||V_LANA);                                       // il mantello e le maniche
     else if(uguale(c,V_VELO)) c=rgb(o.velo||V_VELO);                                        // la palla delle donne
     else if(o.scalzo && uguale(c,V_SANDALO) && v.y<.012) c=rgb(V_PELLE);                    // a piedi nudi
-    if(o.legato && Math.abs(os)>1.5) braccio(v,w,os>0?1:-1);
+    if(o.braccia && Math.abs(os)>1.5) alza(v,w,os>0?1:-1);      // 800: le braccia alzate dell'acclamazione (1) o tese in avanti, col gesto della corona e dell'unzione (2)
+    else if(o.legato && Math.abs(os)>1.5) braccio(v,w,os>0?1:-1);
     else if(o.chino && Math.abs(os)<.5 && v.y>.143 && Math.abs(v.x)<.13) testa(v,w);
+    if(o.ginocchio){ if(v.y<GIN){ v.copy(ruota(v,X,Math.PI/2,GIN,0,0)); w.applyAxisAngle(X,Math.PI/2); } v.y-=GIN-.008; }      // in ginocchio (800): le gambe sotto il ginocchio piegate all'indietro, il corpo abbassato
     Pp.push(v.x,v.y,v.z); Nn.push(w.x,w.y,w.z); Cc.push(c[0],c[1],c[2]); Ff.push(fis?1:0);
   }
   function aggiungi(q,col,chino){ var t=q.index?q.toNonIndexed():q, P2=t.attributes.position.array, N2=t.attributes.normal.array;
@@ -261,9 +276,9 @@ RM.frame.push(function(dt){
   var o=corrente; if(!o||!o.righe||MENO||FERMA!=null||o.t==null){ if(rigaEl&&rigaEl.style.display!=='none'&&(!o||o.t==null)) riga(null); return; }
   if(!o.visibile()){ riga(null); return; }
   if(o.t>=o.fine){ dopo+=dt; if(dopo>4){ riga(null); corrente=null; } return; }
-  var r=null; o.righe.forEach(function(q){ if(o.t>=q[0]) r=q[1]; }); riga(r);
+  var r=null, st=window.innerWidth<700; o.righe.forEach(function(q){ if(o.t>=q[0]) r=(st&&q[2])||q[1]; }); riga(r);      // q[2]: la riga corta per il telefono (la frase intera resta nella didascalia)
 });
-function quadro(o){ o.disegna(FERMA!=null?Math.min(o.fine,FERMA):o.fine); }      // la scena ferma, prima che parta o dopo
+function quadro(o){ o.disegna(FERMA!=null?Math.min(o.fine,FERMA):o.quadroT!=null?o.quadroT:o.fine); }      // la scena ferma, prima che parta o dopo (quadroT: un altro istante, se la fine non è il quadro giusto: l'800)
 RM.frame.push(function(dt){
   SEQ.forEach(function(o){
     if(o.t==null || FERMA!=null || o.t>=o.fine || !o.visibile()) return;
@@ -418,16 +433,17 @@ var fuga312=(function(){
     var bm=Math.max(2.8,12-t*1.15), am=AP+.4*Math.min(1,t/4), pm, ym;      // Massenzio arriva sul mezzo della passerella quando cede
     if(t<TC){ pm=P2(am,bm); ym=bm>10.4?Hm(pm[0],pm[1]):quota(am,bm,true); }
     else { var rr=7.8-bm, yy=.5-rr*Math.sin(ANG*cadi(t)), b3=bm*(1-.25*cadi(t)); pm=P2(am+.3*Math.max(0,t-TC-.6),b3); ym=Math.max(-.645,yy); }
-    metti(mass,0,pm[0],ym,pm[1],SUD,t>TC+3?Math.max(0,1-(t-TC-3)):1);      // annega
+    var sm=t>TC+3?Math.max(0,1-(t-TC-3)):1; metti(mass,0,pm[0],ym,pm[1],SUD,sm);      // annega
+    posM=sm>.2?[pm[0],ym+.1,pm[1]]:null; var c4=INS[4], b4=Math.max(c4.stop,c4.b0-t*1.1), q4=P2(c4.a,b4); posK=[q4[0],Hm(q4[0],q4[1]),q4[1]];      // per i nomi sulla scena
     var ks=(t-TC-.25)/1.5; mSpr.opacity=ks>0&&ks<1?.75*(1-ks):0; spr.forEach(function(sm,j){ sm.visible=ks>0&&ks<1; var g=.4+1.6*Math.sqrt(Math.max(0,ks))+(j%3)*.2; sm.scale.set(g,g*.55,g); });
     corpi.concat(cav,[ins,mass]).forEach(function(g){ g.instanceMatrix.needsUpdate=true; });
   }
-  var tutte=corpi.concat(cav,[ins,mass,nord,sud,fissa]);
+  var tutte=corpi.concat(cav,[ins,mass,nord,sud,fissa]), posM=null, posK=null;
   var o=sequenza({fine:14, attesa:1.8, disegna:disegna, visibile:function(){ return fissa.visible; }, righe:[[0,'1 · La fuga verso il Tevere, a ponte Milvio'],[7.6,'2 · Il ponte di travi cede (versione di Zosimo)']],
     azioni:[[6.3,function(){ var q=P2(AP+10,15), v=alto(RM.adatta({t:P2(AP,2),c:[q[0],Hm(q[0],q[1])+7,q[1]]})); RM.volaA(v.t,v.c,2.2); }]]});      // da vicino, sulla passerella che sta per cedere
   /* la vista della regia: da nord, dietro la cavalleria di Costantino, verso i ponti e la città (prima guardava a nord, verso il bordo del disegno) */
   var vt=P2(-1.6,3), vc=P2(7,34);
-  return {seq:o, tutte:tutte, da:311.6, a:313, vista:{t:vt,c:[vc[0],Hm(vc[0],vc[1])+19,vc[1]]}};
+  return {seq:o, tutte:tutte, da:311.6, a:313, vista:{t:vt,c:[vc[0],Hm(vc[0],vc[1])+19,vc[1]]}, massenzio:function(){ return posM; }, cavalieri:function(){ return posK; }};
 })();
 ANIMA[312]=function(){ avvia(fuga312.seq); };
 
@@ -597,7 +613,8 @@ var trionfo274=(function(){
   for(i=0;i<60;i++){ p=via(.06+rnd()*.25,(rnd()-.5)*.5); cavaliere(B,p.x,p.z,p.y,p.ry,C.cavalloB,C.ferro); }                       // i cavalieri corazzati, in coda
   for(i=0;i<900;i++){ var lat=(rnd()<.5?-1:1)*(.85+rnd()*.6); p=via(rnd(),lat); uomo(B,p.x,p.z,p.y,C.folla[(rnd()*C.folla.length)|0],null,p.ry+(lat>0?-1:1)*Math.PI/2+(rnd()-.5),'folla'); }
   });
-  return {g:maglia(B), da:273.6, a:275};
+  var pT=via(.665,-.08), pZ=via(.665,.08);
+  return {g:maglia(B), da:273.6, a:275, capi:{aureliano:[pc.x,pc.y+.07,pc.z], tetrico:[pT.x,pT.y,pT.z], zenobia:[pZ.x,pZ.y,pZ.z]}};
 })();
 
 /* ---------- 410: i Goti entrano da porta Salaria, in tre tempi ----------
@@ -670,7 +687,8 @@ var S410=(function(){
   var o=sequenza({fine:17, attesa:1.8, disegna:disegna, visibile:function(){ return fisso.visible; },
     righe:[[0,'1 · Il campo dei Goti davanti a porta Salaria'],[4,'2 · Di notte la porta si apre da dentro'],[8.4,'3 · I Goti entrano, le case bruciano']],
     azioni:[[3.6,function(){ var v=inquadra(VB); RM.volaA(v.t,v.c,1.6); }],[8.4,function(){ var v=inquadra(VC); RM.volaA(v.t,v.c,2.4); }]]});
-  return {seq:o, tutte:tutte, da:409.6, a:411, vista:VA, g:fisso};
+  var cC=[G[0]+fuori[0]*17+5,G[1]+fuori[1]*17];
+  return {seq:o, tutte:tutte, da:409.6, a:411, vista:VA, g:fisso, campo:[cC[0],H(cC[0],cC[1]),cC[1]]};
 })();
 /* la luce della notte: quella del comando «Notte» (RM.applicaLuce di js/base.js), solo mentre la scena del 410 è in vista; uscendo torna quella scelta da chi guarda */
 var notteScena=false;
@@ -767,11 +785,11 @@ var palazzo455=(function(){
   [[-.3,-.2],[.3,-.2],[-.3,.35],[.3,.35]].forEach(function(q){ var xx=pz[0]+q[0], zz=pz[1]+q[1]; uomo(B,xx,zz,H(xx,zz),VAND,C.cavalloB,2.4); B.scatola(.01,.28,.01,xx+.03,H(xx,zz),zz,P.tronco); });
   },0);
   var g=maglia(B);
-  var VP=mira(cx-1,cz+2,[cx+12,H(cx,cz)+8,cz-11]), VG=mira(-29,0,[-13,22,-15]);      // più larghe (24 novembre 2026): il palazzo intero, il tempio intero
+  var stretto=window.innerWidth<700, VP=stretto?mira(cx+1.2,cz+2.7,[cx+14.2,H(cx,cz)+8,cz-10.3]):mira(cx+3.2,cz+3.4,[cx+16.2,H(cx,cz)+8,cz-9.6]), VG=mira(-29,0,[-13,22,-15]);      // più larghe (24 novembre 2026): il palazzo intero, il tempio intero; VP spostata il 25 novembre di 4 unità perché Eudossia e le figlie non finiscano sotto la didascalia
   var o=sequenza({fine:16, attesa:1.8, disegna:function(){}, visibile:function(){ return g.visible; },
     righe:[[0,'1 · Il palazzo imperiale spogliato'],[4.5,'2 · Il tetto di Giove Capitolino'],[10,'3 · Il bottino scende alle navi']],
     azioni:[[4.5,function(){ var v=inquadra(VG); RM.volaA(v.t,v.c,2.4); }],[10,function(){ var v=inquadra(vandali455.vista); RM.volaA(v.t,v.c,2.6); }]]});
-  return {g:g, da:454.6, a:456, seq:o, vista:VP};
+  return {g:g, da:454.6, a:456, seq:o, vista:VP, eudossia:[pz[0],H(pz[0],pz[1]),pz[1]]};
 })();
 ANIMA[455]=function(){ avvia(palazzo455.seq); };
 
@@ -847,7 +865,12 @@ var S852=(function(){
   if(riq){ anni=document.createElement('div'); anni.setAttribute('aria-hidden','true');
     anni.style.cssText='position:absolute;left:50%;top:'+(window.innerWidth<700?104:50)+'px;transform:translateX(-50%);z-index:4;pointer-events:none;text-align:center;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.75);font-family:Cinzel,Georgia,serif;font-size:26px;line-height:1.15;display:none';
     riq.appendChild(anni); }
-  var SUD0=.2, SUD1=.5, TC=.6, MURA0=7.6, MURA1=15.6, PROC=16;
+  /* 25 novembre 2026: fra il Colosseo e le mura, un tempo sopra Santa Maria Nova (santamarianova in js/monumenti.js), che Leone IV costruisce fra le rovine del tempio di Venere e Roma
+     (Platner e Ashby, «in its ruins»; Liber Pontificalis, vita di Benedetto III: «iuxta via Sacra»): nell'ordine degli anni (847 il terremoto, dall'848 la chiesa e le mura) e dei luoghi
+     (la chiesa sta a trecento metri dal Colosseo). Vista da sud-ovest, a una quarantina di unità: la chiesa sul podio del tempio, il Colosseo dietro. */
+  var SUD0=.2, SUD1=.5, TC=.6, SMN=5.6, BORGO=10, MURA0=12, MURA1=20, PROC=20.4;
+  var smn=(RM.MONUMENTI||[]).filter(function(m){ return m.id==='santamarianova'; })[0]||{x:30.41,z:15.17}, ySmn=H(smn.x,smn.z);
+  var VS=mira(smn.x,smn.z,[smn.x-22,ySmn+24,smn.z+22]);
   function disegna(t){
     var k=RM.sfuma(TC,TC+2.2,t), us=col.mat.userData.u;
     us.uSud.value=SUD0+(SUD1-SUD0)*k; macerie.visible=k>.3;
@@ -860,9 +883,9 @@ var S852=(function(){
   }
   var VC=mira(W(9.4*1.05*Math.cos(dir),7.8*1.05*Math.sin(dir))[0],W(9.4*1.05*Math.cos(dir),7.8*1.05*Math.sin(dir))[1],(function(){ var c=W(9.4*4.3*Math.cos(dir-.5),7.8*4.3*Math.sin(dir-.5)); return [c[0],y0+13,c[1]]; })());
   var VB=mira(-246,-106,[-196,34,-50]);      // il Borgo da sud-est, alto: tutto il giro delle mura attorno a San Pietro
-  var o=sequenza({fine:21, attesa:1.8, disegna:disegna, visibile:function(){ return leone852.g.visible||t852; },
-    righe:[[0,'1 · 847: il terremoto, e il Colosseo (un’ipotesi)'],[5.6,'2 · 848-852: si costruiscono le mura leonine'],[16,'3 · 27 giugno 852: il clero percorre le mura in processione']],
-    azioni:[[TC,function(){ scuoti(0,3,.22); }],[5.6,function(){ var v=inquadra(VB); RM.volaA(v.t,v.c,2.4); }],[PROC,function(){ var v=inquadra(VISTE.leonina852); RM.volaA(v.t,v.c,2.4); }]]});
+  var o=sequenza({fine:25.4, attesa:1.8, disegna:disegna, visibile:function(){ return leone852.g.visible||t852; },
+    righe:[[0,'1 · 847: il terremoto, e il Colosseo (un’ipotesi)'],[SMN,'2 · Santa Maria Nova fra le rovine del tempio'],[BORGO,'3 · 848-852: si costruiscono le mura leonine'],[PROC,'4 · 27 giugno 852: il clero percorre le mura in processione']],
+    azioni:[[TC,function(){ scuoti(0,3,.22); }],[SMN,function(){ var v=inquadra(VS); RM.volaA(v.t,v.c,2.2); }],[BORGO,function(){ var v=inquadra(VB); RM.volaA(v.t,v.c,2.4); }],[PROC,function(){ var v=inquadra(VISTE.leonina852); RM.volaA(v.t,v.c,2.4); }]]});
   return {seq:o, vista:MENO?null:VC, macerie:macerie, anni:anni, col:col, leo:leo};
 })();
 var t852=false;      // vero nell'anno della tappa: la scena si vede anche quando la processione è ancora nascosta
@@ -893,8 +916,243 @@ function quotaSu(id,x,z,alto){
   o.g.updateMatrixWorld(true); RAGGIO.set(new THREE.Vector3(x,y0+(alto||.6),z),GIU); RAGGIO.far=(alto||.6)+1;
   var h=RAGGIO.intersectObject(o.g,true)[0]; return h?Math.max(y0,h.point.y):y0;
 }
+/* ---------- 800, secondo tempo: il 25 dicembre dentro San Pietro (25 novembre 2026, approvato dall'utente: la scena in due tempi, con le date) ----------
+   Fonti lette il 25 novembre 2026 (src/testi/scene-roma-fonti.md, sezione 12):
+   - Annali del regno dei Franchi, anno 801 (The Latin Library): «Ipsa die sacratissima natalis Domini, cum rex ad missam ante confessionem beati Petri apostoli ab oratione surgeret,
+     Leo papa coronam capiti eius imposuit, et a cuncto Romanorum populo adclamatum est: Carolo augusto, a Deo coronato magno et pacifico imperatori Romanorum, vita et victoria!
+     Et post laudes ab apostolico more antiquorum principum adoratus est».
+   - Liber Pontificalis, vita di Leone III, XXIII-XXIV (Duchesne II p. 7, archive.org): il papa «manibus suis propriis pretiosissima corona coronavit eum»; i Romani gridano
+     «unanimiter altisona voce»; «ante sacram confessionem beati Petri apostoli … ter dictum est»; «Ilico … unxit oleo sancto Karolo, excellentissimo filio eius, rege».
+   - Eginardo, Vita Karoli 28 (The Latin Library): Carlo disse che quel giorno non sarebbe entrato in chiesa «si pontificis consilium praescire potuisset» (nella didascalia, non nella scena).
+   Dopo la cerimonia nessuna fonte letta lo fa uscire sui gradini con la corona: la scena finisce dentro, e il tetto torna (l'utente: «se non è previsto che lui esca, lascia perdere»).
+   La basilica (it.wikipedia, «Antica basilica di San Pietro in Vaticano», da Krautheimer e altri; en.wikipedia, «Old St. Peter's Basilica»): cinque navate, quattro file di colonne
+   (22 per fila per la voce italiana, 21 per quella inglese: qui 22), il corpo di 87 x 64 m, il transetto alto come la navata, l'arco trionfale sull'asse, l'abside a ovest,
+   la memoria di Pietro alla corda dell'abside, chiusa da una pergula di colonne tortili; undici finestre per lato nella navata (en.wikipedia). Le misure sono quelle del guscio
+   (sanPietro in js/monumenti.js).
+   Schema, detto nella didascalia e nella scheda: le altezze, il piano rialzato e l'altare, le sei colonne della pergula (lisce, non tortili), dove stanno tutti, i colori, il numero delle persone,
+   il gesto dell'omaggio del papa (gli Annali non lo descrivono: qui il papa si inginocchia), la corona (forma ignota: un cerchio d'oro semplice, un poco più grande del vero perché si legga).
+   Lo spaccato: i tetti e i muri della basilica si dissolvono dall'alto (due piani di taglio sul materiale di San Pietro e delle sue tegole: sopra una quota che scende, e solo a ovest della
+   facciata), e resta l'interno, fatto qui, con i muri tagliati più bassi dal lato da cui si guarda (sud), come nei disegni in sezione. Si accende solo in quel momento. */
+var interno800=(function(){
+  var pie=(RM.MONUMENTI||[]).filter(function(m){ return m.id==='pietro'; })[0]; if(!pie||!pie.g||!pie.mat) return null;
+  var gy=pie.g.position.y, X0=pie.x, Z0=pie.z, teg=null, i, j;
+  RM.scene.children.forEach(function(c){ if(c!==pie.g && c.userData.gruppo==='monumenti' && Math.abs(c.position.x-X0)<.01 && Math.abs(c.position.z-Z0)<.01) teg=c; });      // le tegole di Onorio I (tegolepietro): stessa posizione
+  /* il piano dell'interno: sopra il terreno in ogni punto della pianta */
+  var f=.08; for(i=-6.5;i<=5.6;i+=.5) for(j=-4.4;j<=4.4;j+=.5){ if(i>-3.95 && Math.abs(j)>3.1) continue; f=Math.max(f,H(X0+i,Z0+j)-gy+.012); }
+  var B=new RM.Costruttore(), lastra=[RM.col(0xbfb39b),RM.col(0xaa9d84),RM.col(0xb5a78c)], porfido=RM.col(0x8f6656), muro=RM.col(0xd3c4a5), marmo=P.marmo, scuro=RM.col(0x2a2420), abside=RM.col(0xc4a35e), franco=RM.col(0x3e5f7a);
+  var BL=new RM.Costruttore(), luce=RM.col(0xfff1cf);      // BL: le finestre alte, accese (materiale senza ombre)
+  B.dentro(X0,gy,Z0,0,function(B){
+    /* il pavimento a grandi lastre, con una fascia scura sull'asse della navata (misure, colori e fascia sono schema) */
+    for(i=0;i<16;i++) for(j=0;j<10;j++){ var x0=-3.95+i*.6, z0=-3.1+j*.62; B.quad([x0,f,z0],[x0,f,z0+.62],[x0+.6,f,z0+.62],[x0+.6,f,z0],(j===4||j===5)&&i%4===1?porfido:lastra[(i+j*2)%3]); }
+    for(i=0;i<3;i++) for(j=0;j<14;j++){ var x1=-5.72+i*.59, z1=-4.42+j*.63; B.quad([x1,f,z1],[x1,f,z1+.63],[x1+.59,f,z1+.63],[x1+.59,f,z1],lastra[(i*2+j)%3]); }
+    B.cilindro(.84,.02,-5.75,f-.02,0,lastra[1],null,14);
+    /* i muri esterni, tagliati: a nord alti, a sud bassi (da sud si guarda) */
+    B.scatola(9.6,1.2,.08,.85,f,-3.12,muro).scatola(9.6,.5,.08,.85,f,3.12,muro);
+    B.scatola(.08,1.4,3.58,-5.72,f,-2.63,muro).scatola(.08,.55,3.58,-5.72,f,2.63,muro);                      // il fondo del transetto, ai due lati dell'abside
+    B.scatola(1.74,1.4,.08,-4.85,f,-4.42,muro).scatola(1.74,.55,.08,-4.85,f,4.42,muro);                       // le testate del transetto
+    B.scatola(.08,1.4,1.3,-3.98,f,-3.77,muro).scatola(.08,.55,1.3,-3.98,f,3.77,muro);
+    var ab=new THREE.CylinderGeometry(.84,.84,1.4,16,1,true,Math.PI,Math.PI); ab.translate(-5.75,f+.7,0); B.geo(ab,abside);      // l'abside, color oro scuro (il mosaico di Cristo fra Pietro e Paolo, it.wikipedia: qui solo il colore)
+    /* le quattro file di colonne: la navata con l'architrave, le navatelle con gli archi (qui una fascia di muro); sopra le file della navata il muro alto con le undici finestre,
+       a nord intero fino al taglio, a sud tagliato a metà delle finestre */
+    [-1,1].forEach(function(s){
+      B.colonne(-3.75,s*1.2,5.45,s*1.2,22,.92,.05,f,marmo).scatola(9.6,.12,.14,.85,f+.92,s*1.2,marmo);
+      B.colonne(-3.75,s*2.2,5.45,s*2.2,22,.6,.035,f,marmo).scatola(9.6,s<0?.26:.1,.08,.85,f+.6,s*2.2,muro);
+    });
+    B.scatola(9.6,1.0,.1,.85,f+1.04,-1.2,muro).scatola(9.6,.46,.1,.85,f+1.04,1.2,muro);
+  });
+  BL.dentro(X0,gy,Z0,0,function(B){ for(i=0;i<11;i++){ B.scatola(.3,.42,.012,-3.3+i*.85,f+1.35,-1.144,luce); B.scatola(.3,.15,.012,-3.3+i*.85,f+1.35,1.144,luce); } });      // le finestre: la luce del giorno
+  B.dentro(X0,gy,Z0,0,function(B){
+    /* l'arco trionfale: due piloni e il muro con l'arco, tagliato in alto */
+    var xa=-3.95, rA=1.0, yA=f+1.05, top=f+2.3;
+    B.scatola(.2,top-f,.2,xa,f,-1.1,muro).scatola(.2,top-f,.2,xa,f,1.1,muro);
+    for(i=0;i<10;i++){ var a0=Math.PI*i/10, a1=Math.PI*(i+1)/10, z0=rA*Math.cos(a0), z1=rA*Math.cos(a1), y0=yA+rA*Math.sin(a0), y1=yA+rA*Math.sin(a1);
+      [-.1,.1].forEach(function(dx){ B.quad([xa+dx,y0,z0],[xa+dx,y1,z1],[xa+dx,top,z1],[xa+dx,top,z0],muro); });
+      B.quad([xa-.1,y0,z0],[xa+.1,y0,z0],[xa+.1,y1,z1],[xa-.1,y1,z1],muro); }
+    /* il presbiterio alla corda dell'abside: il piano rialzato, l'altare sopra la tomba, la finestrella della confessione, la pergula di sei colonne (schema) */
+    B.scatola(.9,.05,1.9,-5.82,f,0,RM.col(0xa99f8d)).scatola(.12,.1,.22,-5.58,f+.05,0,RM.col(0xe6dfcf)).scatola(.012,.06,.11,-5.515,f+.055,0,scuro).scatola(.014,.012,.13,-5.514,f+.115,0,P.bronzo);      // la finestrella della confessione, con la cornice (misure schema)
+    B.colonne(-5.3,-.75,-5.3,.75,6,.45,.022,f+.05,marmo).scatola(.05,.04,1.56,-5.3,f+.5,0,marmo);
+  });
+  /* le persone ferme: il clero nel presbiterio, i Franchi nel transetto dietro Carlo, il popolo romano nella navata, nelle navatelle e nelle ali del transetto */
+  var r8=RM.casuale(801), CX=X0-4.98, CZ=Z0, Y=gy+f;
+  function W(lx,lz){ return [X0+lx,Z0+lz]; }
+  function verso(x,z){ return Math.atan2(X0-5.4-x,Z0-z); }      // rivolti verso la confessione
+  INVERNO=true;
+  vicine(B,'800i',[CX,CZ],function(){
+    [-1,1].forEach(function(s){ for(var a=0;a<4;a++) for(var b=0;b<3;b++){ var p=W(-6.05+a*.2,s*(.5+b*.17)); uomo(B,p[0],p[1],Y+.05,(a+b)%3?C.bianco:C.oro,null,s>0?Math.PI:0,'clero'); } });
+  },0,true);
+  vicine(B,'800i',[CX,CZ],function(){
+    for(var a=0;a<4;a++) for(var b=-6;b<=6;b++){ if(a===0 && Math.abs(b)<3) continue; var p=W(-4.62+a*.18+(r8()-.5)*.04,b*.2+(r8()-.5)*.05); uomo(B,p[0],p[1],Y,a%2?C.ferro:franco,null,-Math.PI/2+(r8()-.5)*.3); }
+  },1);
+  INVERNO=false;
+  var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=false; g.receiveShadow=true; RM.scene.add(g);      // i muri tagliati non fanno ombra: nello spaccato navata e transetto restavano in ombra piena (25 novembre 2026)
+  /* la luce dipinta nei colori dei vertici: più calda e chiara verso la confessione e l'abside, appena più spenta verso la facciata (schema della luce, non una misura) */
+  (function(){ var ca=g.geometry.attributes.color, pa=g.geometry.attributes.position, k, x, z, d2, gl, e;
+    for(k=0;k<pa.count;k++){ x=pa.getX(k); z=pa.getZ(k); d2=(x-X0+5.45)*(x-X0+5.45)+(z-Z0)*(z-Z0); gl=Math.exp(-d2/6); e=.2*RM.sfuma(-1,5.6,x-X0)+.14*RM.sfuma(1.25,3.1,Math.abs(z-Z0))*(x-X0>-3.95?1:0);      // la facciata e le navatelle più in penombra
+      var m=.94-e+.26*gl; ca.setXYZ(k,Math.min(1,ca.getX(k)*m*(1+.06*gl)),Math.min(1,ca.getY(k)*m),Math.min(1,ca.getZ(k)*m*(1-.18*gl))); }
+    ca.needsUpdate=true; })();
+  var finestre=BL.maglia(new THREE.MeshBasicMaterial({vertexColors:true})); finestre.visible=false; RM.scene.add(finestre);
+  /* Il popolo romano (Annali: «a cuncto Romanorum populo adclamatum est»): persone a istanze nella navata, nelle navatelle e nelle ali del transetto, d'inverno col mantello
+     o con la palla; due pose, ferme e con le braccia alzate per l'acclamazione, a ondate dalla confessione verso la facciata, tre volte (Liber Pontificalis: «ter dictum est»).
+     Quante, il gesto delle braccia e il ritmo delle ondate sono schema. Quante se ne vedono dipende dal gradino della qualità. */
+  var POSTI=[], lx, lz;
+  for(lx=-3.55;lx<5.4;lx+=.19) for(lz=-1.0;lz<=1.01;lz+=.2){ if(r8()<.1) continue; POSTI.push({x:X0+lx+(r8()-.5)*.07, z:Z0+lz+(r8()-.5)*.07, ry:-Math.PI/2+(r8()-.5)*.5}); }
+  for(i=0;i<230;i++){ var s1=r8()<.5?-1:1, x2=X0-3.6+r8()*9, z2=Z0+s1*(1.35+r8()*1.7); if(Math.abs(Math.abs(z2-Z0)-2.2)<.09) continue; POSTI.push({x:x2,z:z2,ry:-Math.PI/2+(r8()-.5)*.8}); }
+  for(i=0;i<80;i++){ var s2=r8()<.5?-1:1, x3=X0-5.5+r8()*1.4, z3=Z0+s2*(1.5+r8()*2.7); POSTI.push({x:x3,z:z3,ry:verso(x3,z3)}); }
+  for(i=POSTI.length-1;i>0;i--){ j=(r8()*(i+1))|0; var tmp=POSTI[i]; POSTI[i]=POSTI[j]; POSTI[j]=tmp; }      // in ordine sparso: con meno persone la folla si dirada in modo uniforme
+  var LANA=[0x6b5a44,0x8a4a33,0x5f6a4e,0x7a6a52,0x5b5f66,0xa58f6a,0x4a5a72,0x9a7a4a].map(RM.col), FOGGE=[{f:1,k:0},{f:2,k:3},{f:1,k:3},{f:2,k:0}], folla=[], NP=POSTI.length;
+  if(VERE) folla=FOGGE.map(function(fo,q){ var cap=Math.max(1,Math.ceil((NP-q)/4));
+    function mk(br){ var m=new THREE.InstancedMesh(personaGeo({f:fo.f,k:fo.k,s:1,braccia:br}),matPersone(),cap); m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(cap*3),3);
+      m.frustumCulled=false; m.castShadow=false; m.receiveShadow=true; m.visible=false; m.count=0; RM.scene.add(m); return m; }
+    return {giu:mk(0), su:mk(1)}; });
+  POSTI.forEach(function(p,n){ p.q=n%4; p.k=(n/4)|0; p.su=null; p.no=r8()<.12; p.rit=(p.x-X0+5.5)*.06+r8()*.15; var c=LANA[(r8()*LANA.length)|0];
+    if(folla.length){ folla[p.q].giu.instanceColor.setXYZ(p.k,c.r,c.g,c.b); folla[p.q].su.instanceColor.setXYZ(p.k,c.r,c.g,c.b); } });
+  var NQ=LEGGERA?[70,110,150,190]:[110,260,430,NP];      // persone del popolo per gradino («bassa», «media», «alta», «massima»)
+  var ONDE=[19.4,21.2,23.0];
+  function popolo(u,forza){
+    if(!folla.length) return; var n=Math.min(NP,NQ[RM.q]||NQ[1]), cambiato=forza;
+    folla.forEach(function(F,q){ var c=Math.max(0,Math.ceil((n-q)/4)); if(F.giu.count!==c){ F.giu.count=F.su.count=c; cambiato=true; } });
+    for(var k=0;k<n;k++){ var p=POSTI[k], su=false;
+      if(!p.no) for(var w=0;w<3;w++){ var a=ONDE[w]+p.rit; if(u>=a && u<a+1.15){ su=true; break; } }
+      if(su===p.su && !forza) continue; p.su=su; cambiato=true; var F2=folla[p.q];
+      metti(F2.giu,p.k,p.x,Y,p.z,p.ry,su?0:1); metti(F2.su,p.k,p.x,Y,p.z,p.ry,su?1:0); }
+    if(cambiato) folla.forEach(function(F){ F.giu.instanceMatrix.needsUpdate=F.su.instanceMatrix.needsUpdate=true; if(forza){ F.giu.instanceColor.needsUpdate=F.su.instanceColor.needsUpdate=true; } });
+  }
+  /* chi si muove: Carlo in ginocchio e in piedi, il papa in piedi, col gesto della corona e in ginocchio, il figlio Carlo */
+  var cIn=istanze(function(B){ inGinocchio(B,0,0,0,franco,0,'carlo'); },1,'800i','capi',0,null,true);
+  var cSu=istanze(function(B){ uomo(B,0,0,0,franco,null,0,'carlo'); },1,'800i','capi',0,null,true);
+  var pSu=istanze(function(B){ uomo(B,0,0,0,C.oro,null,0,'papa'); },1,'800i','capi',0,null,true);
+  var pTe=istanze(function(B){ aBracciaTese(B,C.oro,'papa'); },1,'800i','capi',0,null,true);
+  var pIn=istanze(function(B){ inGinocchio(B,0,0,0,C.oro,0,'papa'); },1,'800i','capi',0,null,true);
+  var fig=istanze(function(B){ uomo(B,0,0,0,RM.col(0x7a5a3a),null,0,'carlo'); },1,'800i','capi',0,null,true);
+  /* la corona: un cerchio d'oro (la forma non è nota), un poco più grande del vero; brilla (materiale emissivo e un alone) */
+  var corona=new THREE.Mesh(new THREE.TorusGeometry(.018,.005,8,24).rotateX(Math.PI/2),new THREE.MeshStandardMaterial({color:0xf0c75a,metalness:.6,roughness:.25,emissive:0xb07a18,emissiveIntensity:.8}));
+  corona.visible=false; corona.castShadow=true; RM.scene.add(corona);
+  var mobili=[cIn,cSu,pSu,pTe,pIn,fig];
+  /* il taglio: piani sul materiale di San Pietro e delle tegole (renderer.localClippingEnabled); a k=0 il piano orizzontale sta lontano e non taglia nulla */
+  if(RM.renderer) RM.renderer.localClippingEnabled=true;
+  var pA=new THREE.Plane(new THREE.Vector3(0,-1,0),1e5), pB=new THREE.Plane(new THREE.Vector3(1,0,0),-(X0+5.66)), mats=[pie.mat].concat(teg?[teg.material]:[]);
+  mats.forEach(function(m){ m.clippingPlanes=[pA,pB]; m.clipIntersection=true; m.clipShadows=false; m.needsUpdate=true; });
+  var ombraPie=pie.g.castShadow, ombraTeg=teg?teg.castShadow:false, kT=0, acceso=false, giroPrima=false;
+  function taglio(k){
+    k=Math.max(0,Math.min(1,k)); if(k===kT) return; kT=k;
+    pA.constant=k<=0?1e5:gy+4.45-k*4.6;
+    var om=k>0?false:ombraPie; if(pie.g.castShadow!==om){ pie.g.castShadow=om; if(teg) teg.castShadow=k>0?false:ombraTeg; if(RM.renderer) RM.renderer.shadowMap.needsUpdate=true; }      // senza tetto niente ombra della basilica sull'interno; la mappa delle ombre si rifà solo quando cambia (il taglio non tocca le ombre)
+  }
+  /* ---- la luce di una messa di Natale (25 novembre 2026, l'utente: «la scena deve essere spettacolare»). Tutto schema, detto nella didascalia: nessuna fonte letta descrive
+     lampade, candele o luce di quel giorno. Senza luci nuove (cambierebbero tutti i materiali della città): la conca dell'abside d'oro che brilla da sé, le finestre alte accese,
+     i raggi che ne scendono (lastre trasparenti che si sommano alla scena), lampade appese sulla navata e candele sulla pergula e attorno all'altare come punti di luce con l'alone,
+     un bagliore caldo sul gruppo davanti alla confessione, e un poco di luce propria dei muri (emissivo) perché niente resti al buio. */
+  var cupola=new THREE.Mesh(new THREE.SphereGeometry(.84,20,8,-Math.PI/2,Math.PI,0,Math.PI/2),new THREE.MeshStandardMaterial({color:0xd9b153,emissive:0x8a5e18,emissiveIntensity:.5,metalness:.35,roughness:.45,side:THREE.DoubleSide}));
+  cupola.position.set(X0-5.75,Y+1.4,Z0); cupola.visible=false; RM.scene.add(cupola);      // la conca dell'abside, dorata come i mosaici a fondo d'oro
+  var alone=RM.tela(64,64,function(c){ var q=c.createRadialGradient(32,32,0,32,32,32); q.addColorStop(0,'rgba(255,255,255,1)'); q.addColorStop(.25,'rgba(255,255,255,.55)'); q.addColorStop(1,'rgba(255,255,255,0)'); c.fillStyle=q; c.fillRect(0,0,64,64); },false);
+  function lumi(P3,sz,col){ var gq=new THREE.BufferGeometry(); gq.setAttribute('position',new THREE.Float32BufferAttribute(P3,3));
+    var m=new THREE.Points(gq,new THREE.PointsMaterial({size:sz,map:alone,color:col,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true,opacity:0}));
+    m.frustumCulled=false; m.visible=false; RM.scene.add(m); return m; }
+  var pL=[], pC=[];
+  for(i=0;i<13;i++) [-.62,.62].forEach(function(s){ pL.push(X0-3.4+i*.7,Y+.98,Z0+s); });      // le lampade appese sulla navata
+  [-3.3,-2.4,2.4,3.3].forEach(function(s){ pL.push(X0-4.85,Y+.95,Z0+s); });                      // e nel transetto
+  for(i=0;i<6;i++) pC.push(X0-5.3,Y+.565,Z0-.75+i*.3);                                            // candele sulla pergula
+  pC.push(X0-5.58,Y+.19,Z0-.08, X0-5.58,Y+.19,Z0+.08);                                             // sull'altare
+  [-1,1].forEach(function(s){ for(i=0;i<4;i++) pC.push(X0-6.15+i*.28,Y+.32,Z0+s*1.02); });          // candelabri attorno al presbiterio
+  var lampade=lumi(pL,.3,0xffb85e), candele=lumi(pC,.17,0xffc870), fiamme=lumi(pL.concat(pC),.05,0xfff2c8);
+  /* i raggi: da ogni finestra della navata, nella direzione del sole della scena (js/base.js: da ovest-nord-ovest, alto 28 gradi), fino al pavimento */
+  var RP=[], RC=[], D3=[.86,-.47,.24];
+  for(i=0;i<11;i++){ var wx=X0-3.3+i*.85, wy=Y+1.5, wz=Z0-1.1, L=1.5/.47, bx=wx+D3[0]*L, bz=wz+D3[2]*L;
+    [[.15,0],[0,.2]].forEach(function(w){ var a=[wx-w[0],wy-w[1],wz], b=[wx+w[0],wy+w[1],wz], c=[bx+w[0]*1.6,Y+w[1]*1.6,bz], d=[bx-w[0]*1.6,Y-w[1]*1.6+.01,bz];
+      RP.push.apply(RP,a.concat(b,c,a,c,d)); var t=[.5,.38,.2], o=[0,0,0]; RC.push.apply(RC,t.concat(t,o,t,o,o)); }); }
+  var gR=new THREE.BufferGeometry(); gR.setAttribute('position',new THREE.Float32BufferAttribute(RP,3)); gR.setAttribute('color',new THREE.Float32BufferAttribute(RC,3));
+  var raggi=new THREE.Mesh(gR,new THREE.MeshBasicMaterial({vertexColors:true,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide,fog:false}));
+  raggi.frustumCulled=false; raggi.visible=false; RM.scene.add(raggi);
+  var bagliore=new THREE.Sprite(new THREE.SpriteMaterial({map:alone,color:0xffcf78,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
+  bagliore.position.set(X0-5.35,Y+.45,Z0); bagliore.scale.set(2.6,2.6,1); bagliore.visible=false; RM.scene.add(bagliore);
+  var pozza=new THREE.Mesh(new THREE.PlaneGeometry(3.4,3.4).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({map:alone,color:0xffd58a,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
+  pozza.position.set(X0-5.05,Y+.014,Z0+.1); pozza.visible=false; RM.scene.add(pozza);      // la luce sul gruppo davanti alla confessione
+  var luccichio=new THREE.Sprite(new THREE.SpriteMaterial({map:alone,color:0xffe7a0,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
+  luccichio.scale.set(.16,.16,1); luccichio.visible=false; RM.scene.add(luccichio);      // l'alone della corona
+  /* il soffitto a capriate: travi di legno sotto i tetti, che si vedono quando i tetti sono spariti e si dissolvono per ultime (misure e passo sono schema) */
+  var BT=new RM.Costruttore(), legno=RM.col(0x6e4c30);
+  for(i=0;i<22;i++){ var xc=X0-3.75+i*.44, yb=gy+3.3; fune(BT,[xc,yb,Z0-1.25],[xc,yb,Z0+1.25],.06,legno); fune(BT,[xc,yb,Z0-1.25],[xc,gy+3.98,Z0],.05,legno); fune(BT,[xc,yb,Z0+1.25],[xc,gy+3.98,Z0],.05,legno); fune(BT,[xc,yb,Z0],[xc,gy+3.98,Z0],.035,legno); }
+  fune(BT,[X0-3.8,gy+3.98,Z0],[X0+5.6,gy+3.98,Z0],.05,legno);
+  var capriate=BT.maglia(new THREE.MeshStandardMaterial({vertexColors:true,roughness:.9,transparent:true,opacity:1})); capriate.visible=false; RM.scene.add(capriate);
+  var effetti=[finestre,cupola,lampade,candele,fiamme,raggi,bagliore,pozza,luccichio,capriate];
+  /* la scritta dell'acclamazione, in sovrimpressione: entra ed esce col ritmo, in alto (sopra la navata, non sui volti) */
+  var scritta=null;
+  function sovra(testo,a){
+    if(!scritta){ var riq=document.querySelector('.riquadro.roma'); if(!riq) return; scritta=document.createElement('div'); scritta.setAttribute('aria-live','polite');
+      var tl=window.innerWidth<700;
+      scritta.style.cssText='position:absolute;left:50%;top:'+(tl?'64px':'9%')+';transform:translateX(-50%);z-index:4;pointer-events:none;width:'+(tl?'88%':'72%')+';text-align:center;'+
+        'font-family:"EB Garamond",Garamond,Georgia,serif;font-style:italic;font-size:'+(tl?'21px':'31px')+';line-height:1.25;color:#fff3d2;letter-spacing:.01em;'+
+        'text-shadow:0 2px 10px rgba(30,15,5,.95),0 0 26px rgba(30,15,5,.75);opacity:0;transition:opacity .25s linear';
+      riq.appendChild(scritta); }
+    if(scritta.textContent!==testo) scritta.textContent=testo; scritta.style.opacity=String(Math.max(0,Math.min(1,a)));
+  }
+  var minPrima=16;
+  function mostra(on){
+    if(on===acceso) return; acceso=on; g.visible=on; corona.visible=on; mobili.forEach(function(m){ m.visible=on; }); effetti.forEach(function(m){ m.visible=on; });
+    folla.forEach(function(F){ F.giu.visible=F.su.visible=on; }); if(on) popolo(0,true);
+    if(on){ giroPrima=!!RM.senzaGiro; RM.senzaGiro=true; if(RM.controlli){ RM.controlli.autoRotate=false; minPrima=RM.controlli.minDistance; RM.controlli.minDistance=.4; } }      // da vicino il dondolio lento della città (js/base.js) sposterebbe l'inquadratura: fermo finché si sta dentro
+    else { RM.senzaGiro=giroPrima; if(RM.controlli) RM.controlli.minDistance=Math.max(RM.controlli.minDistance,minPrima); if(scritta) scritta.style.opacity='0'; }
+    if(RM.renderer) RM.renderer.shadowMap.needsUpdate=true;
+  }
+  function liscio(a,b,u){ return RM.sfuma(a,b,u); }
+  var pos={carlo:[CX,Y,CZ], papa:[X0-5.17,Y,CZ], figlio:[X0-4.92,Y,CZ+.42]}, GIU=.05-.008, tel0=window.innerWidth<700;
+  /* u: secondi dentro il secondo tempo (la regia in carlo800). Le azioni, dalle fonti: Carlo prega davanti alla confessione e si alza (Annali), il papa gli posa la corona
+     con le sue mani (Annali, Liber Pontificalis), i Romani acclamano tre volte (Liber Pontificalis), il papa gli rende omaggio (Annali: il gesto non è descritto, qui in ginocchio),
+     il papa unge re il figlio (Liber Pontificalis). Tempi e pose sono schema. */
+  function posa(u){
+    var su=liscio(13.3,14.6,u), avanti=liscio(14.6,15.4,u), alFiglio=liscio(28.2,28.8,u), ingin=u>=26.4&&u<28.0, tese=(u>=14.6&&u<17.1)||(u>=28.9&&u<30.3);
+    metti(cIn,0,CX,Y,CZ,-Math.PI/2,u<13.3?1:0); metti(cSu,0,CX,Y-GIU*(1-su),CZ,-Math.PI/2,u<13.3?0:1);
+    var px=X0-5.17+.08*avanti*(1-alFiglio)+.1*alFiglio, pz=CZ+.42*alFiglio; pos.papa=[px,Y,pz];
+    metti(pSu,0,px,Y,pz,Math.PI/2,(ingin||tese)?0:1); metti(pTe,0,px,Y,pz,Math.PI/2,tese&&!ingin?1:0); metti(pIn,0,px,Y,pz,Math.PI/2,ingin?1:0);
+    metti(fig,0,pos.figlio[0],Y,pos.figlio[2],-Math.PI/2,1);
+    mobili.forEach(function(m){ m.instanceMatrix.needsUpdate=true; });
+    /* la corona: nelle mani del papa; alzata sopra il capo di Carlo (14,6-15,6), scende piano (15,6-16,9), resta un attimo sospesa e brilla */
+    var su1=liscio(14.6,15.6,u), giu1=liscio(15.6,16.9,u), mano=[px+.04,Y+.1,CZ], alto=[CX,Y+.25,CZ], capo=[CX,Y+.174,CZ];
+    var cp=u<15.6?[mano[0]+(alto[0]-mano[0])*su1,mano[1]+(alto[1]-mano[1])*su1,CZ]:[alto[0],alto[1]+(capo[1]-alto[1])*giu1,CZ];
+    if(u<14.6) cp=[px+.035,Y+.095,CZ];
+    corona.position.set(cp[0],cp[1],cp[2]); corona.rotation.y=u*.4;
+    pos.carlo=[CX,Y-GIU*(1-su),CZ];
+    popolo(u,false);
+    /* la luce: si accende quando il tetto si apre; il bagliore sul gruppo cresce nel momento della corona */
+    var k=kT, cal=liscio(.15,.6,k), pic=liscio(14.6,16.9,u)*(1-liscio(19,21,u));
+    g.material.emissive.setRGB(.06,.042,.02).multiplyScalar(cal); cupola.material.emissiveIntensity=.25+.75*cal;
+    lampade.material.opacity=.85*cal; candele.material.opacity=cal; fiamme.material.opacity=cal; raggi.material.opacity=.42*cal;
+    bagliore.material.opacity=cal*(.1+.2*pic); pozza.material.opacity=cal*(.14+.22*pic);
+    var luc=liscio(16.6,17.2,u)*(1-liscio(18.4,19.6,u)); luccichio.visible=luc>.01; luccichio.material.opacity=luc*(.8+.2*Math.sin(u*9)); luccichio.position.copy(corona.position); luccichio.scale.setScalar(.12+.1*luc);
+    capriate.material.opacity=1-liscio(.55,.85,k); capriate.visible=capriate.material.opacity>.02; capriate.material.depthWrite=capriate.material.opacity>.98;
+    /* l'acclamazione in sovrimpressione: prima la frase intera, poi «tre volte» */
+    var a1=liscio(18.2,18.9,u)*(1-liscio(22.0,22.6,u)), a2=liscio(22.6,23.2,u)*(1-liscio(24.6,25.1,u));
+    if(a1>.001) sovra(tel0?'«A Carlo augusto, incoronato da Dio… vita e vittoria!»':'«A Carlo augusto, incoronato da Dio, grande e pacifico imperatore dei Romani, vita e vittoria!»',a1);
+    else if(a2>.001) sovra('«…vita e vittoria!» — tre volte',a2); else if(scritta) scritta.style.opacity='0';
+  }
+  /* ---- la regia dentro la basilica: inquadrature in coordinate locali (x verso la facciata, z verso sud) e quota sul pavimento; [camera, punto guardato] ----
+     sul telefono in piedi le inquadrature vicine e larghe si allontanano lungo la stessa linea (RM.fattoreVista) e guardano un poco più in basso: il soggetto sale nella metà alta.
+     Le chiavi della navata no: allontanate, finirebbero dietro la facciata. */
+  function W3(q){ return [X0+q[0],Y+q[1],Z0+q[2]]; }
+  function adatta(c,t,lontano){ var a=RM.camera&&RM.camera.aspect||1; if(a>=.85) return [c,t];
+    var k=lontano?RM.fattoreVista():1, c2=[t[0]+(c[0]-t[0])*k,t[1]+(c[1]-t[1])*k,t[2]+(c[2]-t[2])*k], d=Math.hypot(c2[0]-t[0],c2[1]-t[1],c2[2]-t[2]);
+    return [c2,[t[0],t[1]-d*.16,t[2]]]; }
+  /* Il piano vicino della camera sta a 2 unità (20 m, js/base.js): ogni inquadratura tiene il pavimento in basso nel quadro oltre quella distanza, se no lo si vede bucato */
+  var K={a:[[4.8,4.3,2.6],[-2,.5,0]], b:[[3.2,1.55,.15],[-3.4,.6,0]], c:[[-2.4,1.7,1.0],[-5,.35,.1]], d:[[-4.34,2.15,2.87],[-5.04,.16,.12]], d2:[[-4.42,2.05,2.62],[-5.04,.16,.12]],
+         m1:[[-5.1,3.0,2.9],[-4,.3,0]], e:[[-5.55,2.65,1.55],[1.5,.35,-.2]], et:[[-5.45,3.9,1.2],[1.5,.6,-.2]], m2:[[-5.0,2.8,3.0],[-4.6,.2,.2]], f:[[-4.3,2.2,2.95],[-5.0,.17,.22]]};      // et: il campo largo sul telefono, più alto e non allontanato (allontanato, l'arco trionfale copriva la navata)
+  function chiave(n,lontano){ var q=K[n], t=q[1].slice();
+    if(n==='d'||n==='d2'||n==='f') t[0]-=(RM.camera&&RM.camera.aspect<.85)?.1:.42;      // il gruppo un poco a destra del centro: a sinistra, in basso, c'è la didascalia dell'evento
+    var r=adatta(W3(q[0]),W3(t),lontano); return {c:r[0],t:r[1]}; }
+  function cammino(nomi,dur,lontani){      // da dove si è ora, lungo una curva liscia per le chiavi date
+    var C0=RM.camera.position, T0=RM.controlli?RM.controlli.target:new THREE.Vector3(), PC=[C0.clone()], PT=[T0.clone()];
+    nomi.forEach(function(n,i){ var q=chiave(n,lontani&&lontani[i]); PC.push(new THREE.Vector3(q.c[0],q.c[1],q.c[2])); PT.push(new THREE.Vector3(q.t[0],q.t[1],q.t[2])); });
+    var cc=new THREE.CatmullRomCurve3(PC,false,'centripetal'), ct=new THREE.CatmullRomCurve3(PT,false,'centripetal'), v1=new THREE.Vector3(), v2=new THREE.Vector3();
+    RM.segui(function(k){ var s=k*k*(3-2*k); cc.getPoint(s,v1); ct.getPoint(s,v2); return {c:[v1.x,v1.y,v1.z], t:[v2.x,v2.y,v2.z]}; },dur);
+  }
+  function fermo(n,lontano){ var q=chiave(n,lontano); RM.segui(function(){ return q; },.05); }      // senza movimento (meno animazioni)
+  var VE=mira(X0-1,Z0,[X0+20,gy+24,Z0+24]);      // da sud-est, sopra la basilica: il tetto, poi l'interno che si scopre
+  var regia={ discesa:function(){ cammino(['a','b','c','d'],7.8,[0,0,0,1]); }, avvicina:function(){ cammino(['d2'],5.2,[1]); }, largo:function(){ var tl=RM.camera&&RM.camera.aspect<.85; cammino(['m1',tl?'et':'e'],2.2,[1,tl?0:1]); },
+              medio:function(){ cammino(['m2','f'],1.6,[1,1]); }, fermo:fermo };
+  return {mostra:mostra, taglio:taglio, posa:posa, VE:VE, regia:regia, pos:pos, Y:Y, attivo:function(){ return acceso; }, k:function(){ return kT; }};
+})();
 var carlo800=(function(){
   var B=new RM.Costruttore(), i, x, z, e=Math.PI/2, Z=-108.1, franco=RM.col(0x3e5f7a), zA=V800.zAsse, CO=V800.CORSIA;      // e: rivolti a est, verso chi arriva
+  INVERNO=true;      // 24 novembre: la folla col mantello
   /* le persone (24 novembre 2026): prima il papa e il clero sui gradini, poi Carlo, le bandiere e i capi, poi il seguito, poi i gruppi lungo il portico.
      I gradini (24 novembre 2026, sanPietro in js/monumenti.js): tre gradini larghi 3 m davanti ai fornici dell'atrio, da x -247,28 a -246,38, alti 3, 2 e 1 m, sopra il sagrato
      lastricato (70 cm). Prima il clero stava fra x -247,9 e -247,24, cioè per tre quarti dentro il muro dei fornici, e a 70 cm sopra il suolo: si vedevano le teste. Ora le quattro
@@ -919,7 +1177,7 @@ var carlo800=(function(){
   },4);
   var g=maglia(B);
   /* il corteo, a istanze; via(t,lat) dà punto e verso lungo il percorso. Carlo nella tunica blu che la scena gli dava, a piedi con un mantello di lana di colore sobrio
-     (il mantello blu di Eginardo, Vita Karoli 23, è da verificare sul testo), a capo scoperto: niente corona il 24 novembre */
+     (Eginardo, Vita Karoli 23, riletto il 25 novembre 2026: il mantello blu è l'abito comune, ma in quale giorno a Roma vestisse alla romana non è detto), a capo scoperto: niente corona il 24 novembre */
   var via=spezzata(V800.L), LUN=via(0).lung, D=108.8, FINE=24, VIAGGIO=20;
   var cav=[istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,C.ferro); },35,'800','seguito',3), istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloC,C.ferro); },35,'800','seguito',3)];
   var capi=istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,franco); },8,'800','capi',2);      // qualche cavaliere dei Franchi in blu, come prima
@@ -931,24 +1189,61 @@ var carlo800=(function(){
   function y(p){ var d=RM.distFiume(p.x,p.z); return d<7.5?.66:Math.max(p.y,.66-(d-7.5)*.33,sulSagrato(p.x,p.z)); }      // sul piano di ponte Elio (0,65, js/mura.js), poi giù per la rampa; in fondo sopra il sagrato
   function sC(t){ var k=Math.min(1,t/VIAGGIO); return LUN+D*(k*k*(3-2*k)-1); }      // dove sta Carlo lungo il percorso
   function posa(gm,k,s,lat,ry){ var p=via(Math.max(0,s)/LUN,lat); metti(gm,k,p.x,y(p),p.z,ry==null?p.ry:ry); return p; }
-  function disegna(t){
+  var posC=[-245.8,0,-108.1];      // dov'è Carlo (per il suo nome sulla scena)
+  function arrivo(t){
     var s=sC(t), scende=t>=VIAGGIO+.3, apre=RM.sfuma(VIAGGIO-2.5,VIAGGIO,t), i, nb=[0,0,0,0], pf=via(1,0);
     for(i=0;i<70;i++){ var row=i>>1, gm=(i%9===4)?capi:cav[i&1], kk=gm===capi?(i/9)|0:(i>>1); posa(gm,kk,s-1-row*.42,(i&1)?.13:-.13); }
     for(i=0;i<6;i++){ var c=i%4, sb=Math.min(s+1.3+(i>>1)*.5,LUN-.4-(i>>1)*.5); posa(band[c],nb[c]++,sb,((i&1)?1:-1)*(.13+.8*apre)); }
-    if(!scende){ posa(re,0,s,0); metti(cavallo,0,0,-50,0,0,0); metti(aPiedi,0,0,-50,0,0,0); }
+    if(!scende){ var pr=posa(re,0,s,0); posC=[pr.x,y(pr)+.1,pr.z]; metti(cavallo,0,0,-50,0,0,0); metti(aPiedi,0,0,-50,0,0,0); }
     else { metti(re,0,0,-50,0,0,0); metti(cavallo,0,pf.x,Math.max(H(pf.x,pf.z),sulSagrato(pf.x,pf.z)),pf.z,pf.ry);      // sceso da cavallo, sale i gradini fino al papa
-      var ks=RM.sfuma(VIAGGIO+1,FINE,t), xa=-245.8+(-246.8+245.8)*ks; metti(aPiedi,0,xa,salita(xa),-108.1-.3*(1-ks),-Math.PI/2); }      // gradino per gradino (quotaSu)
+      var ks=RM.sfuma(VIAGGIO+1,FINE,t), xa=-245.8+(-246.8+245.8)*ks; metti(aPiedi,0,xa,salita(xa),-108.1-.3*(1-ks),-Math.PI/2); posC=[xa,salita(xa),-108.1-.3*(1-ks)]; }      // gradino per gradino (quotaSu)
     cav.concat([capi,re,cavallo,aPiedi],band).forEach(function(m){ m.instanceMatrix.needsUpdate=true; });
   }
   var tutte=[g].concat(cav,[capi,re,cavallo,aPiedi],band), F=function(){ return RM.fattoreVista(); };
+  /* Il secondo tempo (25 novembre 2026): il 25 dicembre dentro San Pietro (interno800, più sopra). T2 è il suo inizio; u=t-T2:
+     0 la vista sopra la basilica; 2,4-4,6 tetti e muri si dissolvono; 4 la vista scende nella navata; 7 Carlo si alza dalla preghiera; 7,8-9,2 il papa gli posa la corona;
+     9,6-13,6 l'acclamazione (tre volte, Liber Pontificalis); 13,9-15,8 l'omaggio del papa (Annali); 16-18,8 l'unzione del figlio (Liber Pontificalis); 19 la vista risale e il tetto torna.
+     Il corteo del 24 novembre non c'è più: è passato un mese. Prima che la scena parta (e dopo, al cambio di tappa) si vede il quadro dell'arrivo (quadroT). */
+  /* 25 novembre 2026, sera (l'utente: «la scena deve essere spettacolare»): il secondo tempo dura 34 secondi. u=t-T2:
+     0 la vista sopra la basilica; 2,4-5,4 tetti e muri si dissolvono, le capriate per ultime, i lumi si accendono; 4,8-12,6 la discesa lungo la navata fino alla confessione;
+     12,6-17,8 il primo piano: Carlo prega, si alza (13,3), il papa alza la corona e la posa (14,6-16,9), un attimo di sospensione; 17,8 campo largo dall'abside sulla navata piena,
+     l'acclamazione (le braccia a tre ondate); 25 a metà, l'omaggio (26,4-28); l'unzione del figlio (28,2-30,3); 30,6 la vista risale, il tetto torna. */
+  var T2=FINE+3, FINE2=T2+34.2, I=interno800;
+  function disegna(t){
+    var dentro=I && t>=T2 && t<FINE2-.05, prima=t<T2;
+    arrivo(Math.min(t,FINE));
+    tutte.forEach(function(m){ m.visible=prima; });
+    if(!I) return;
+    var u=t-T2; I.mostra(!!dentro); I.taglio(dentro?RM.sfuma(2.4,5.4,u)*(1-RM.sfuma(31.2,33.6,u)):0);
+    if(dentro) I.posa(u);
+  }
   function inquadra(t){ var p=via(Math.max(0,sC(t)-3)/LUN,0), y0=H(p.x,p.z)+1, f=F(); return {t:[p.x,y0,p.z], c:[p.x+18*f,y0+15*f,p.z-20*f]}; }      // da nord-est: il portico, a sud, non copre il corteo
-  var o=sequenza({fine:FINE, attesa:1.8, disegna:disegna, visibile:function(){ return g.visible; }, righe:[[0,'1 · Il corteo di Carlo passa il Tevere'],[VIAGGIO,'2 · Il papa lo accoglie sui gradini di San Pietro']],
+  function vai(v,dur){ var w=alto(RM.adatta(v)), y0=RM.h(w.t[0],w.t[1])+1, d=Math.hypot(w.c[0]-w.t[0],w.c[1]-y0,w.c[2]-w.t[1]); if(RM.controlli) RM.controlli.minDistance=Math.min(RM.controlli.minDistance,d*.85); RM.volaA(w.t,w.c,dur); }
+  var R2='2 · 25 dicembre: ';
+  var o=sequenza({fine:I?FINE2:FINE, quadroT:FINE, attesa:1.8, disegna:disegna, visibile:function(){ return !!(carlo800&&carlo800.acceso); },
+    righe:[[0,'1 · 24 novembre: l’arrivo'],[VIAGGIO,'1 · 24 novembre: il papa lo accoglie sui gradini di San Pietro','1 · 24 novembre: il papa lo accoglie']].concat(I?[[T2,R2+'Natale, a San Pietro'],[T2+2.4,R2+'la messa, dentro la basilica','2 · Dentro la basilica'],
+      [T2+12.6,R2+'Carlo prega davanti alla confessione','2 · Carlo prega'],[T2+13.3,R2+'Carlo si alza dalla preghiera','2 · Carlo si alza'],[T2+14.6,R2+'Leone III gli posa la corona sul capo','2 · Leone III lo incorona'],
+      [T2+17.8,''],[T2+25,R2+'il papa gli rende omaggio, come agli antichi imperatori','2 · L’omaggio del papa'],[T2+28.2,R2+'il papa unge re il figlio Carlo','2 · Il papa unge re il figlio'],[T2+30.6,'2 · 25 dicembre 800: l’incoronazione','2 · 25 dicembre 800']]:[]),
     azioni:[[0,function(){ RM.segui(function(k){ return inquadra(k*VIAGGIO); },VIAGGIO); }],
-            [VIAGGIO,function(){ var v=alto(RM.adatta({t:[-244,-107.5],c:[-232.5,11.5,-120.5]})); RM.volaA(v.t,v.c,2.5); }]]});      // un poco più alta (24 novembre 2026): sul telefono, allontanata, la camera aveva un tetto del portico davanti
+            [VIAGGIO,function(){ var v=alto(RM.adatta({t:[-244,-107.5],c:[-232.5,11.5,-120.5]})); RM.volaA(v.t,v.c,2.5); }]]      // un poco più alta (24 novembre 2026): sul telefono, allontanata, la camera aveva un tetto del portico davanti
+      .concat(I?[[T2,function(){ vai(I.VE,2.4); }],[T2+4.8,function(){ I.regia.discesa(); }],[T2+12.6,function(){ I.regia.avvicina(); }],[T2+17.8,function(){ I.regia.largo(); }],
+                 [T2+25,function(){ I.regia.medio(); }],[T2+30.6,function(){ vai(I.VE,2.6); }]]:[])});      // la discesa nella navata, il primo piano sulla corona, il campo largo per l'acclamazione, a metà per l'omaggio e l'unzione
+  INVERNO=false;
   var v0=inquadra(0);
-  return {g:g, tutte:tutte, seq:o, da:799.6, a:801, vista:{t:[v0.t[0],v0.t[2]],c:[v0.t[0]+18,v0.t[1]+15,v0.t[2]-20]}};
+  return {g:g, tutte:tutte, seq:o, da:799.6, a:801, vista:{t:[v0.t[0],v0.t[2]],c:[v0.t[0]+18,v0.t[1]+15,v0.t[2]-20]}, carlo:function(){ return posC; }, T2:T2, FINE:FINE};
 })();
-ANIMA[800]=function(){ avvia(carlo800.seq); };
+/* Con meno animazioni (24 novembre 2026, poi 25 per il secondo tempo): tre viste ferme, l'arrivo, dopo otto secondi la corona in primo piano, dopo sedici la navata */
+var meno800=null;
+ANIMA[800]=function(){
+  if(MENO && interno800){ fermaTutte(); carlo800.seq.disegna(carlo800.FINE); meno800={t:0}; return; }
+  avvia(carlo800.seq);
+};
+RM.frame.push(function(dt){
+  if(!meno800 || !carlo800.acceso) return; meno800.t+=dt;
+  if(!meno800.gradini && meno800.t>.05){ meno800.gradini=true; var g=alto(RM.adatta({t:[-244,-107.5],c:[-232.5,11.5,-120.5]})); RM.volaA(g.t,g.c,.05); }      // la prima vista: i gradini, dove il corteo è già arrivato
+  if(meno800.t>=8 && !meno800.corona){ meno800.corona=true; carlo800.seq.disegna(carlo800.T2+17.4); interno800.regia.fermo('d2',true); }      // la corona in primo piano
+  if(meno800.t>=16){ meno800=null; carlo800.seq.disegna(carlo800.T2+21.9); var tl=RM.camera&&RM.camera.aspect<.85; interno800.regia.fermo(tl?'et':'e',!tl); }                           // la navata, le braccia alzate
+});
 if(S852) ANIMA[852]=function(){ avvia(S852.seq); };
 
 /* ---------- 846: le navi saracene sotto San Pietro ----------
@@ -1250,17 +1545,116 @@ var macchie756=(function(){
   };
 })();
 
+/* ---------- 800: l'inverno (25 novembre 2026, l'utente: «Se è Natale vuoi mostrare anche che sia inverno?») ----------
+   Le date vengono dalle fonti (24 novembre e 25 dicembre), il tempo che faceva no: niente neve, gelo o pioggia. Si vede la stagione: la luce un poco più fredda (la stessa leva
+   della notte del 410, RM.applicaLuce, a un decimo), i prati e i campi più spenti e bruni (i colori dei vertici del suolo, come le macchie del 756), la folla col mantello.
+   Il sole della scena è già basso (js/base.js: 28 gradi, quasi quello di mezzogiorno a fine dicembre), ma viene da ovest-nord-ovest e non da sud: per spostarlo serve un aggancio
+   in js/base.js. Gli alberi caducifogli (i pioppi di js/citta.js) restano verdi: le loro maglie non sono raggiungibili da qui. La didascalia lo dice in mezza riga. */
+var inverno800=(function(){
+  var col=null, orig=null, idx=[], ultimo=0;
+  function prepara(){ var gq=RM.suolo.geometry; col=gq.attributes.color; orig=col.array.slice();
+    for(var i=0;i<col.count;i++){ var r=orig[i*3], g=orig[i*3+1], b=orig[i*3+2]; if(g>r*.96 && g>b*1.05) idx.push(i); } }      // solo i vertici verdi: prati, campi, rive
+  return function(k){
+    if(!RM.suolo || k===ultimo) return; if(!orig) prepara(); ultimo=k; var a=col.array;
+    idx.forEach(function(i){ var o=i*3, r=orig[o], g=orig[o+1], b=orig[o+2], l=.3*r+.55*g+.15*b;
+      a[o]=r+((l*1.06)*.92-r)*.55*k; a[o+1]=g+((l*.98)*.9-g)*.55*k; a[o+2]=b+((l*.8)*.88-b)*.55*k; });
+    col.needsUpdate=true;
+  };
+})();
 RM.moduli.push(function(anno){
   [milvio,corteo,assedio472,prigionieri593,sepoltura476,trionfo274,palazzo455,teatro493,vandali455,costante663,leone852,carlo800,saraceni846,totila546,casali756].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
   [fuga312,carlo800,S410].forEach(function(s){ var v=anno>=s.da&&anno<s.a; if(v&&!s.acceso&&s.seq.t==null) quadro(s.seq); s.acceso=v; s.tutte.forEach(function(m){ m.visible=v; }); });      // le scene animate: prima che partano, il quadro finale
+  if(interno800 && !carlo800.acceso){ interno800.mostra(false); interno800.taglio(0); meno800=null; }      // fuori dall'800 San Pietro torna intera
   macchie756(RM.sfuma(755.6,756,anno)*(1-RM.sfuma(757,760,anno)));
   tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
   if(!(anno>=409.6&&anno<411)) giornoDiNuovo();      // la notte del 410 non resta accesa nelle altre tappe
+  var inv=carlo800.acceso?1:0; inverno800(inv); if(inv) notte(.1);      // 800: la luce d'inverno, un poco più fredda (giornoDiNuovo la toglie nelle altre tappe)
   if(giochi) giochi.aggiorna(anno);      // RM.senzaGiochi=true li spegne (per le prove di peso)
   if(terremoto801){ terremoto801.detriti.visible=anno>=801&&anno<806; applicaScossa(); }
   if(S852){ t852=anno>=851.6&&anno<853; if(!t852) S852.macerie.visible=anno>=846.95; if(S852.anni&&!t852) S852.anni.style.display='none';
     if(!t852 && S852.attiva){ S852.leo.mat.userData.u.uCant.value=1; S852.attiva=false; } if(t852 && !S852.attiva){ S852.attiva=true; if(S852.seq.t==null) quadro(S852.seq); } }      // le macerie del Colosseo restano dopo l'847      // le travi restano a terra fino ai restauri; durante la sequenza la scossa comanda
   fortino552.g.visible=anno>=fortino552.da&&anno<fortino552.a; fortino552.g2.visible=anno>=fortino552.da2&&anno<fortino552.a2;
+});
+
+/* ---------- i nomi dei protagonisti sulla scena (25 novembre 2026, l'utente: «rendere riconoscibili i capi tipo Carlo Magno») ----------
+   A quella scala il volto non si vede: chi è lo dicono il nome, il posto e ciò che la fonte gli mette attorno (il carro, la scorta, la croce, il seguito). Un cartellino segue la figura,
+   nello stile dei nomi dei monumenti ma in oro (in bianco i nomi di gruppo o di luogo); toccato, dice in una riga che cosa fa e da quale fonte. Solo per chi la scena mostra davvero:
+   Costantino, Alarico, Genserico, Teodorico, Totila, Narsete, papa Gregorio e Costante II nelle scene non ci sono e non si aggiungono (per Costantino, Alarico, Totila e Narsete
+   c'è il nome del gruppo o del luogo che la fonte lega a loro). I cartellini non coprono i nomi dei monumenti né si coprono fra loro: se non c'è posto salgono, poi si nascondono.
+   Sul telefono il nome corto e al massimo due alla volta. */
+var quotaLeone3=null;
+function dentro800(){ return !!(interno800 && interno800.attivo() && interno800.k()>.85); }
+var CAPI=[
+  {nome:'Aureliano', riga:'Sul carro del trionfo; davanti al carro sfilano Tetrico e Zenobia (Eutropio IX 13).', vis:function(){ return trionfo274.g.visible; }, p:function(){ return trionfo274.capi.aureliano; }, su:.2},
+  {nome:'Zenobia', riga:'La regina di Palmira, prigioniera davanti al carro (Eutropio IX 13; le catene d’oro sono della Storia Augusta, fonte poco sicura).', vis:function(){ return trionfo274.g.visible; }, p:function(){ return trionfo274.capi.zenobia; }},
+  {nome:'Tetrico', riga:'L’imperatore delle Gallie, prigioniero davanti al carro (Eutropio IX 13).', vis:function(){ return trionfo274.g.visible; }, p:function(){ return trionfo274.capi.tetrico; }},
+  {nome:'Massenzio', riga:'In fuga verso il ponte, finisce nel Tevere (Lattanzio 44, 9). Che fosse a cavallo è una scelta della ricostruzione.', vis:function(){ return !!fuga312.acceso; }, p:function(){ return fuga312.massenzio(); }},
+  {nome:'Cavalieri di Costantino', corto:'Costantino', gruppo:true, riga:'Incalzano da nord; Costantino stesso non si vede. Il rosso è un colore di comodo.', vis:function(){ return !!fuga312.acceso; }, p:function(){ return fuga312.cavalieri(); }},
+  {nome:'Costanzo II', riga:'Seduto solo sul carro d’oro, fra i draghi di porpora sulle aste e la doppia fila di armati (Ammiano XVI 10).', vis:function(){ return corteo.g.visible; }, p:function(){ return [corteo.carro[0],H(corteo.carro[0],corteo.carro[1])+.07,corteo.carro[1]]; }, su:.22},
+  {nome:'Campo di Alarico', corto:'Alarico', gruppo:true, riga:'Procopio: Alarico si era accampato qui, davanti a porta Salaria, all’inizio dell’assedio. Forma e misure del campo sono uno schema.', vis:function(){ return !!S410.acceso; }, p:function(){ return S410.campo; }, su:.5},
+  {nome:'Eudossia', riga:'L’imperatrice, portata via prigioniera con le figlie Eudocia e Placidia (Procopio III 5).', vis:function(){ return palazzo455.g.visible; }, p:function(){ return palazzo455.eudossia; }},
+  {nome:'Goti di Totila', corto:'Totila', gruppo:true, riga:'Entrano di notte da porta Asinaria, aperta da quattro soldati isauri (Procopio VII 20).', vis:function(){ return totila546.g.visible; }, p:function(){ var x=193.8-.93*6, z=75.8-.36*6; return [x,H(x,z),z]; }, su:.35},
+  {nome:'Esercito di Narsete', corto:'Narsete', gruppo:true, riga:'Davanti al forte dei Goti attorno al mausoleo di Adriano (Procopio VIII 33). Lo schieramento è uno schema.', vis:function(){ return fortino552.g2.visible; }, p:function(){ var x=-164.5, z=-127.3; return [x,H(x,z),z]; }, su:.4},
+  {nome:'Carlo, re dei Franchi', corto:'Carlo', riga:'24 novembre: arriva a cavallo, scende e sale i gradini; il papa lo accoglie col clero (Annali dei Franchi, 800).', vis:function(){ return !!carlo800.acceso && carlo800.g.visible; }, p:function(){ return carlo800.carlo(); }, su:.26},
+  {nome:'Leone III', corto:'Leone III', riga:'Il papa, sui gradini di San Pietro con il clero e i vescovi (Annali dei Franchi, 800).', vis:function(){ return !!carlo800.acceso && carlo800.g.visible; },
+    p:function(){ if(quotaLeone3==null) quotaLeone3=quotaSu('pietro',-247.1,-108.1); return [-247.1,quotaLeone3,-108.1]; }},
+  {nome:'Carlo', riga:'25 dicembre: davanti alla confessione di Pietro si alza dalla preghiera, e Leone III gli posa la corona sul capo (Annali dei Franchi, 801).', vis:dentro800, p:function(){ return interno800.pos.carlo; }, lontano:30, su:.2},
+  {nome:'Leone III', riga:'Lo incorona «con le sue mani» (Liber Pontificalis), poi gli rende omaggio come agli antichi imperatori (Annali dei Franchi).', vis:dentro800, p:function(){ return interno800.pos.papa; }, lontano:30, su:.2},
+  {nome:'Carlo il Giovane', corto:'Il figlio', riga:'Il figlio di Carlo: quel giorno il papa lo unge re (Liber Pontificalis, vita di Leone III).', vis:dentro800, p:function(){ return [interno800.pos.figlio[0],interno800.Y,interno800.pos.figlio[2]]; }, lontano:30, su:.2},
+  {nome:'Leone IV', riga:'Sopra la porta che guarda a San Pellegrino recita la prima preghiera; il clero gira le mura scalzo (vita di Leone IV, 72-73).', vis:function(){ return leone852.g.visible; }, p:function(){ var q=leone852.porta; return [q[0],RM.h(q[0],q[1])+1.05,q[1]]; }}
+];
+var capiEl=null, vC=new THREE.Vector3(), contaF=0, rettM=[];
+function capiPrepara(){
+  var riq=document.querySelector('.riquadro.roma'); if(!riq) return false;
+  capiEl=document.createElement('div'); capiEl.className='capi3d'; capiEl.style.cssText='position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3'; riq.appendChild(capiEl);
+  CAPI.forEach(function(c){
+    var s=document.createElement('span'), r=document.createElement('i'), n=document.createElement('b'), st=document.createElement('div'), oro=c.gruppo?'rgba(239,232,218,.8)':'rgba(244,210,124,.95)';
+    s.setAttribute('role','button'); s.tabIndex=0; s.setAttribute('aria-expanded','false');
+    s.style.cssText='position:absolute;left:0;top:0;display:none;text-align:center;pointer-events:auto;cursor:pointer;outline-offset:2px';
+    r.style.cssText='display:none;width:max-content;max-width:230px;margin:0 auto 3px;padding:5px 8px;font:400 12.5px/1.3 system-ui,-apple-system,sans-serif;font-style:normal;color:#fff;background:rgba(40,22,26,.88);border-radius:6px;white-space:normal;text-align:left';
+    /* 25 novembre 2026, «ritocca»: più grandi e su una pastiglia scura con il bordo, perché si leggano anche su suolo chiaro, sui tetti e di notte (i nomi dei monumenti
+       sono solo scritte bianche: questi, che sono persone, si distinguono); il filo più spesso con un punto sulla figura; sul telefono la pastiglia è alta almeno 30 punti, da toccare */
+    var tl=window.innerWidth<700, punto=document.createElement('div');
+    n.style.cssText='display:inline-block;box-sizing:border-box;white-space:nowrap;font-family:var(--cap),Cinzel,Georgia,serif;font-weight:700;font-size:'+(tl?'12.5px':'13.5px')+';line-height:1.2;letter-spacing:.08em;text-transform:uppercase;'+
+      'color:'+(c.gruppo?'#f3ede0':'#f7da8c')+';background:rgba(28,16,10,.8);border:1.5px solid '+oro+';border-radius:999px;padding:'+(tl?'7px 11px':'3px 10px')+';min-height:'+(tl?'30px':'0')+';box-shadow:0 1px 5px rgba(0,0,0,.45)';
+    st.style.cssText='width:2px;height:10px;margin:0 auto;background:'+oro+';box-shadow:0 0 2px rgba(0,0,0,.8)';
+    punto.style.cssText='width:7px;height:7px;margin:-1px auto 0;border-radius:50%;background:'+oro+';box-shadow:0 0 0 1.5px rgba(28,16,10,.85)';
+    r.textContent=c.riga; s.appendChild(r); s.appendChild(n); s.appendChild(st); s.appendChild(punto);
+    function tocca(ev){ ev.stopPropagation(); ev.preventDefault(); c.aperto=!c.aperto; r.style.display=c.aperto?'block':'none'; s.setAttribute('aria-expanded',c.aperto?'true':'false'); c.lw=null; }
+    s.addEventListener('click',tocca); s.addEventListener('pointerdown',function(ev){ ev.stopPropagation(); });
+    s.addEventListener('keydown',function(ev){ if(ev.key==='Enter'||ev.key===' ') tocca(ev); });
+    c.el=s; c.n=n; c.r=r; c.st=st; capiEl.appendChild(s);
+  });
+  return true;
+}
+function tocca2(a,b){ return a[0]<b[2]&&a[2]>b[0]&&a[1]<b[3]&&a[3]>b[1]; }
+RM.frame.push(function(){
+  if(!capiEl && !capiPrepara()) return;
+  var w=capiEl.clientWidth, h=capiEl.clientHeight, tel=window.innerWidth<700, messi=[], quanti=0; if(!w||!h) return;
+  if((contaF++)%6===0){ rettM=[]; var rq=capiEl.getBoundingClientRect();      // i nomi dei monumenti visibili (js/monumenti.js), letti ogni sei fotogrammi
+    var et=document.querySelectorAll('.etichette3d span'); for(var i=0;i<et.length;i++){ if(et[i].style.visibility!=='visible') continue; var b=et[i].getBoundingClientRect(); if(b.width) rettM.push([b.left-rq.left-2,b.top-rq.top-2,b.right-rq.left+2,b.bottom-rq.top+2]); }
+    var sopra=document.querySelectorAll('.riquadro.roma .evento, .riquadro.roma .riga-tempo');      // la didascalia dell'evento e la riga dei tempi: i nomi non ci vanno sopra
+    for(i=0;i<sopra.length;i++){ var s2=getComputedStyle(sopra[i]); if(s2.display==='none'||+s2.opacity<.05) continue; var b2=sopra[i].getBoundingClientRect(); if(b2.width) rettM.push([b2.left-rq.left-4,b2.top-rq.top-4,b2.right-rq.left+4,b2.bottom-rq.top+4].concat([1])); } }
+  CAPI.forEach(function(c){
+    var p=null, ok=false;
+    try{ p=c.vis()&&c.p(); }catch(e){ p=null; }
+    if(p && (!tel||quanti<2)){
+      vC.set(p[0],p[1],p[2]);
+      if(vC.distanceTo(RM.camera.position)<(c.lontano||75)){
+        vC.applyMatrix4(RM.camera.matrixWorldInverse);
+        if(vC.z<-RM.camera.near-.1){ vC.set(p[0],p[1]+(c.su||.24),p[2]).project(RM.camera);      // davanti al piano vicino della camera: più vicino la figura non si disegna, e il nome finirebbe a caso sullo schermo
+          if(vC.z<1 && Math.abs(vC.x)<.94 && Math.abs(vC.y)<.94){
+            var px=(vC.x+1)*w/2, py=(1-vC.y)*h/2, testo=tel&&c.corto?c.corto:c.nome;
+            if(c.n.textContent!==testo){ c.n.textContent=testo; c.lw=null; }
+            if(c.el.style.display==='none'){ c.el.style.display='block'; }
+            if(!c.lw){ c.lw=c.el.offsetWidth; c.lh=c.el.offsetHeight-c.st.offsetHeight-6; }
+            for(var alza=0;alza<4 && !ok;alza++){ var y1=py-16-alza*(c.lh+4), r=[px-c.lw/2-3,y1-c.lh-2,px+c.lw/2+3,y1], rF=[r[0],r[1],r[2],py];      // rF: col filo fino alla figura
+              ok=!messi.some(function(q){ return tocca2(r,q); }) && !rettM.some(function(q){ return (q[4] || !c.aperto) && tocca2(q[4]?rF:r,q); });      // aperto, scavalca i nomi dei monumenti ma non la didascalia (né col nome né col filo)
+              if(ok){ messi.push(r); c.st.style.height=(10+alza*(c.lh+4))+'px'; } }
+            if(ok){ quanti++; c.el.style.transform='translate(-50%,-100%) translate('+px.toFixed(1)+'px,'+py.toFixed(1)+'px)'; }
+          } } } }
+    if(!ok && c.el.style.display!=='none') c.el.style.display='none';
+  });
 });
 
 /* ---------- regia: la vista va sul luogo dell'evento della tappa ---------- */
