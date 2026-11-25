@@ -3983,7 +3983,9 @@ function disegnaCristianesimo(svg,S,W,H){
      di Procopio II 23, di cui non si riportano le cifre);
    - tappa del 589 (la piena, i granai, la peste, Pelagio II e Gregorio; il 716 o 717; il 791), la voce di Gregorio di Tours X 1 e il riquadro «Fra storia e leggenda» (i sette cortei,
      gli ottanta morti in un'ora, nessun angelo nelle fonti antiche, la Legenda aurea verso il 1260, Liutprando nel X secolo);
-   - EVENTI piena589 e piena791 (porta Flaminia, la via Lata, il muro presso ponte Sisto); tappa e EVENTI del 801 (il tetto di San Paolo, gli Annali del regno dei Franchi).
+   - EVENTI piena589 e piena791 (porta Flaminia, la via Lata, il muro presso ponte Sisto); tappa e EVENTI del 801 (il tetto di San Paolo, gli Annali del regno dei Franchi);
+   - la piena del 22 novembre 844 (25 novembre 2026, l'utente: «in modo leggero»): Liber Pontificalis, vita di Sergio II, c. XXII, letto sulle immagini di Duchesne II, pp. 91-92
+     (src/testi/vita-roma-fonti.md, «Dopo le piene»); nessun morto nominato; i tre luoghi non hanno un segno sulla pianta, si accende solo il nome «via Lata».
    Schemi, detti in pagina nelle avvertenze: l'estensione delle piene è quella indicativa del modello della città (js/eventi.js: le zone più basse e vicine al fiume, non una
    ricostruzione idraulica), uguale per le tre piene; le posizioni dei segni; la curva degli abitanti è la stima della pagina, con la sua fascia, e non dice le cause; i segni dei fili. */
 var CIELO={ titolo:"Il cielo, il fiume, la malattia", sotto:"Epidemie, piene del Tevere, terremoti e il sole velato: che cosa raccontano le fonti, dal 251 all'847",
@@ -3999,10 +4001,11 @@ var CIELO={ titolo:"Il cielo, il fiume, la malattia", sotto:"Epidemie, piene del
     ["716 o 717","L'acqua resta in città per sette giorni; sulla via Lata arriva a una volta e mezzo l'altezza di un uomo."],
     ["791","In dicembre il Tevere travolge porta Flaminia e la trascina lungo la via Lata. Tornando verso il letto, la corrente abbatte un tratto delle mura vicino all'attuale ponte Sisto."],
     ["801","La sera del 30 aprile un terremoto fa crollare gran parte del tetto di San Paolo fuori le mura, con le sue travi. Papa Leone III lo fa ricostruire."],
+    ["844","Il 22 novembre, alla prima ora del giorno, il Tevere entra in città dalla posterula di Sant'Agata e in alcuni punti passa sopra le mura. Arriva fino a San Lorenzo in Lucina, a Santa Maria in via Lata e a San Marco, devasta i campi e sradica gli alberi. Nella notte si ritira. Il Liber Pontificalis non nomina morti."],
     ["847","La scossa è avvertita con forza in città, ma il Liber Pontificalis non descrive danni. Il crollo del lato sud del Colosseo, già smontato in gran parte, gli viene attribuito: è un'ipotesi."]],
   copertina:function(cop){ var sv=document.createElementNS(NS,'svg'); sv.setAttribute('viewBox','0 0 220 52'); sv.setAttribute('class','ig-ci-cop'); sv.setAttribute('aria-hidden','true');
     ['cielo','fiume','terra','malattia'].forEach(function(f,j){ var g=el('g',{transform:'translate('+(26+j*56)+',26)'},sv); el('circle',{r:21,'class':'ig-ci-ev-c '+f},g); glifo(g,f,13,true); }); cop.insertBefore(sv,cop.firstChild); },      // la copertina: i quattro segni
-  fonte:"Tappe del 251, 537, 542, 589 e 801 di questa pagina, con le loro voci (Cipriano, Cassiodoro, Procopio, Gregorio di Tours, Annali del regno dei Franchi) e il riquadro «Fra storia e leggenda» del 589; scheda del Colosseo; didascalie della città per il 536, il 589 e il 791. Il peso delle epidemie è discusso, e qui non si danno numeri di morti. Schema: i disegni del 251 e del 542 (il segno della malattia); il mezzogiorno del 536, cioè il profilo di Roma (solo edifici in piedi allora: Pantheon, colonna di Traiano, Colosseo, case), le figure, il posto del sole e il «prima», un mezzogiorno qualunque; Cassiodoro scrive dell'Italia, non solo di Roma, e le fonti descrivono il sole, non una causa; i sette cortei del 590, che la pagina non nomina, partono da punti indicativi e la meta è segnata su Santa Maria Maggiore; il fronte della piena che scende da monte è una resa, come nella città in 3D; l'estensione delle piene è quella indicativa del modello della città (le zone più basse e vicine al fiume, non una ricostruzione idraulica) ed è la stessa per tutte le piene; le posizioni dei segni sono indicative; la curva chiara è la stima degli abitanti di Roma di questa pagina, con la sua fascia di incertezza, e non dice che cosa li fece calare." };
+  fonte:"Tappe del 251, 537, 542, 589 e 801 di questa pagina, con le loro voci (Cipriano, Cassiodoro, Procopio, Gregorio di Tours, Annali del regno dei Franchi) e il riquadro «Fra storia e leggenda» del 589; per la piena dell'844, il Liber Pontificalis, vita di Sergio II, 22; scheda del Colosseo; didascalie della città per il 536, il 589 e il 791. Il peso delle epidemie è discusso, e qui non si danno numeri di morti. Schema: i disegni del 251 e del 542 (il segno della malattia); il mezzogiorno del 536, cioè il profilo di Roma (solo edifici in piedi allora: Pantheon, colonna di Traiano, Colosseo, case), le figure, il posto del sole e il «prima», un mezzogiorno qualunque; Cassiodoro scrive dell'Italia, non solo di Roma, e le fonti descrivono il sole, non una causa; i sette cortei del 590, che la pagina non nomina, partono da punti indicativi e la meta è segnata su Santa Maria Maggiore; il fronte della piena che scende da monte è una resa, come nella città in 3D; l'estensione delle piene è quella indicativa del modello della città (le zone più basse e vicine al fiume, non una ricostruzione idraulica) ed è la stessa per tutte le piene; le posizioni dei segni sono indicative; la curva chiara è la stima degli abitanti di Roma di questa pagina, con la sua fascia di incertezza, e non dice che cosa li fece calare." };
 function disegnaCielo(svg,S,W,H){
   var TP=window.RM_TOPO, C=(D.CURVE||{}).popolazione; if(!TP||!TP.mura||!TP.fiume||!C) return;
   var oriz=W/H>=1.15, piccolo=oriz&&W<700, pad=oriz?14:8, defs=el('defs',null,svg), fasi=CIELO.fasi, i, RMx=window.RM;
@@ -4096,14 +4099,15 @@ function disegnaCielo(svg,S,W,H){
     h('p','ig-c5-cit',"Procopio paragona la luce del sole a quella della luna (Guerre IV, 14).",d); return d; };
   el('rect',{x:r1(pb[0]),y:r1(pb[1]),width:r1(pb[2]),height:r1(pb[3]),rx:14,'class':'ig-m-cornice'},tav);
   /* ---------- l'anno, il filo, la voce ---------- */
-  var FILO=['malattia','terra','terra','cielo','malattia','fiume','malattia','malattia','leggenda','fiume','fiume','terra','terra'], NOMEF={malattia:'la malattia',fiume:'il fiume',terra:'la terra',cielo:'il cielo',leggenda:'fra storia e leggenda'};
+  var FILO=['malattia','terra','terra','cielo','malattia','fiume','malattia','malattia','leggenda','fiume','fiume','terra','fiume','terra'], NOMEF={malattia:'la malattia',fiume:'il fiume',terra:'la terra',cielo:'il cielo',leggenda:'fra storia e leggenda'};
   var gK=el('g',{'class':'ig-ci-col'},svg), fsA=oriz?Math.min(piccolo?34:56,cb[2]/5.2):Math.min(30,W/12), tA=tx(gK,cb[0],cb[1]+fsA*.82,'ig-p-anno',''), tF=tx(gK,cb[0]+2,cb[1]+fsA*.82+20,'ig-p-stato','');
   tA.style.fontSize=fsA+'px'; var gQ=el('g',null,gK), yQ=cb[1]+fsA*.82+32;
   var VOCI={0:["Le interpretazioni degli storici","Per Kyle Harper fu una delle cause della crisi; per altri le testimonianze sono troppo scarse per dire quanto incise.",1],1:["scheda del Colosseo","Un terremoto lo danneggia, nel 442 secondo Paolo Diacono; seguono restauri."],
     3:["Cassiodoro, Variae XII, 25","«Abbiamo avuto un inverno senza tempeste, una primavera senza mitezza, un'estate senza calura.»"],4:["Le interpretazioni degli storici","Per Harper uccise una parte grande della popolazione; per Mordechai ed Eisenberg le fonti la esagerano.",1],
     5:["Gregorio di Tours, Storie X, 1","«Il Tevere aveva coperto Roma con una piena tale che gli edifici antichi crollavano.»"],6:["Gregorio di Tours, Storie X, 1","«Seguì subito l'epidemia che chiamano inguinale.»"],
     8:["Fra storia e leggenda","L'angelo compare solo nella Legenda aurea, verso il 1260; il legame del luogo con san Michele è già nel X secolo, in Liutprando.",1],
-    11:["Annali del regno dei Franchi, 801","«Il tetto della basilica del beato Paolo apostolo cadde in gran parte, con le sue travi.»"],12:["scheda del Colosseo","Il legame fra il terremoto e il crollo del lato sud «resta un'ipotesi».",1]};
+    11:["Annali del regno dei Franchi, 801","«Il tetto della basilica del beato Paolo apostolo cadde in gran parte, con le sue travi.»"],12:["Liber Pontificalis, vita di Sergio II, 22","«Si stese per le piazze, devastò i campi, sradicando gli alberi.»"],      /* «Per plateas se extendit, agros desertavit, eradicans arbusta» (Duchesne II, p. 92) */
+    13:["scheda del Colosseo","Il legame fra il terremoto e il crollo del lato sud «resta un'ipotesi».",1]};
   /* la voce sta dentro la colonna con un margine vero sopra la legenda dei fili; righe a capo al 93% (sull'iPhone le scritte sono più larghe) */
   function voce(q,chi){ var h0=cb[1]+cb[3]-yQ-10; if(h0<30) return null; var fs=oriz&&!piccolo?16:13.5, g=citazione(gQ,cb[0],yQ,cb[2]*.93,q,chi,fs); if(g._h>h0){ g.remove(); g=citazione(gQ,cb[0],yQ,cb[2]*.93,q,chi,fs-2); if(g._h>h0){ g.remove(); return null; } } g.classList.add('vis'); return g; }
   function scriviVoce(j){ gQ.textContent=''; var v=VOCI[j]; if(v) voce(v[1],v[0]); }
@@ -4116,7 +4120,7 @@ function disegnaCielo(svg,S,W,H){
   el('path',{d:'M'+fascia+' Z','class':'ig-ci-pop-f'},gF); el('path',{d:'M'+C.punti.map(function(p){ return xy([X(p[0]),Y(p[1])]); }).join(' L'),'class':'ig-ci-pop'},gF);
   var gl=el('g',null,gF); el('rect',{x:r1(lb[0]+lb[2]-14),y:r1(lb[1]+4),width:14,height:8,rx:2,'class':'ig-ci-pop-f'},gl); var tPop=tx(gl,lb[0]+lb[2]-20,lb[1]+12,'ig-ci-pop-t','abitanti di Roma, stima: non dice le cause','end'); if(largo(tPop)>lb[2]-30) tPop.textContent='abitanti, stima: non dice le cause';
   var assi=[251,400,542,700,852].map(function(a,j){ return tx(gF,X(a),bot+13,'ig-ci-anno-p',String(a),j?j===4?'end':'middle':'start'); });      // anche questi contano in annota()
-  var EV=[[251,0,'malattia','251',1],[443,2,'terra','443',-1],[484,2,'terra','484 o 508',1],[536,3,'cielo','536',1],[542,0,'malattia','542',-1],[589,1,'fiume','589',1],[590,0,'malattia','590',1],[716.5,1,'fiume','716',-1],[791,1,'fiume','791',1],[801,2,'terra','801',-1],[847,2,'terra','847',1]];      // [anno, filo, segno, etichetta, sopra o sotto]
+  var EV=[[251,0,'malattia','251',1],[443,2,'terra','443',-1],[484,2,'terra','484 o 508',1],[536,3,'cielo','536',1],[542,0,'malattia','542',-1],[589,1,'fiume','589',1],[590,0,'malattia','590',1],[716.5,1,'fiume','716',-1],[791,1,'fiume','791',1],[801,2,'terra','801',-1],[844,1,'fiume','844',1],[847,2,'terra','847',1]];      // [anno, filo, segno, etichetta, sopra o sotto]
   var cur=el('line',{y1:r1(top),y2:r1(bot),'class':'ig-ci-cur'},gF);      /* sotto i segni e gli anni */
   var rS=clamp(rh*.2,6,10), punti=EV.map(function(e){ var y=top+rh*(e[1]+.62), g=el('g',{'class':'ig-ci-ev',transform:'translate('+r1(X(e[0]))+','+r1(y)+')'},gF);
     if(e[0]===484) el('rect',{x:0,y:-2,width:r1(X(508)-X(484)),height:4,rx:2,'class':'ig-ci-oppure'},g);
@@ -4132,28 +4136,28 @@ function disegnaCielo(svg,S,W,H){
       if(urta()&&p.g.classList.contains('ora')){ var alt=[[0,p.y0<0?rS+13:-rS-4,'middle'],[rS+4,5,'start'],[-rS-4,5,'end']]; for(var ka=0;ka<alt.length&&urta();ka++) posa(alt[ka][0],alt[ka][1],alt[ka][2]); }      /* l'anno in corso prova l'altro lato del segno, poi a destra e a sinistra */
       if(urta()){ posa(0,p.y0,'middle'); cls(p.t,'nascosto',true); } else tenuti.push(r); }); }
   /* ---------- la regia ---------- */
-  var ANNI=[251,443,484,536,542,589,590,590.3,590.6,716.5,791,801,847], tm=Tempo(235,ANNI.map(function(a,j){ return {anno:a,sosta:j===3?12800:j===5||j===7?6200:4800}; }),{inizio:1500,vel:3,min:600}), tFine=tm.fine+300, tFin=tFine+6500, visto=-2;
-  var DIDA=['','il Colosseo','il Colosseo','','','l\'acqua scende da monte verso valle','l\'epidemia «inguinale»: muore Pelagio II, è eletto Gregorio','sette cortei verso la basilica di Santa Maria: ottanta morti in un\'ora','il mausoleo di Adriano: la leggenda','l\'acqua in città per sette giorni','porta Flaminia e le mura presso ponte Sisto','San Paolo fuori le mura','il Colosseo: un\'ipotesi'];
+  var ANNI=[251,443,484,536,542,589,590,590.3,590.6,716.5,791,801,844,847], tm=Tempo(235,ANNI.map(function(a,j){ return {anno:a,sosta:j===3?12800:j===5||j===7?6200:4800}; }),{inizio:1500,vel:3,min:600}), tFine=tm.fine+300, tFin=tFine+6500, visto=-2;
+  var DIDA=['','il Colosseo','il Colosseo','','','l\'acqua scende da monte verso valle','l\'epidemia «inguinale»: muore Pelagio II, è eletto Gregorio','sette cortei verso la basilica di Santa Maria: ottanta morti in un\'ora','il mausoleo di Adriano: la leggenda','l\'acqua in città per sette giorni','porta Flaminia e le mura presso ponte Sisto','San Paolo fuori le mura','l\'acqua arriva a Santa Maria in via Lata e a San Marco: nella notte si ritira','il Colosseo: un\'ipotesi'];
   S.passo=function(t){
     var a=tm.anno(t), i2=-1; tm.arrivi.forEach(function(x,j){ if(t>=x) i2=j; }); var ii=Math.max(0,i2), fin=t>=tFine, t0=i2>=0?tm.arrivi[ii]:0;
     if(!acquaFatta) faiAcqua();
     cls(tav,'vis',t>=200); cls(gF,'vis',t>=400); cls(gK,'vis',t>=600);
     fissa(cur,'x1',r1(X(fin?A1:a))); fissa(cur,'x2',r1(X(fin?A1:a))); cls(cur,'via',fin);
-    var EVQ=[0,1,2,3,4,5,6,6,6,7,8,9,10]; punti.forEach(function(p,jp){ var ora=!fin&&i2>=0&&EVQ[ii]===jp;      /* l'evento del quadro, uno solo */ cls(p.g,'vis',fin||a>=p.a-.5); cls(p.g,'ora',ora); });
+    var EVQ=[0,1,2,3,4,5,6,6,6,7,8,9,10,11]; punti.forEach(function(p,jp){ var ora=!fin&&i2>=0&&EVQ[ii]===jp;      /* l'evento del quadro, uno solo */ cls(p.g,'vis',fin||a>=p.a-.5); cls(p.g,'ora',ora); });
     /* il disegno o la pianta */
     var dq=fin?-1:i2; for(var kd in DIS) cls(DIS[kd],'vis',+kd===dq); cls(carta,'spenta',DIS[dq]!=null);
     /* l'acqua: il fronte scende, poi l'acqua resta; nel 590 cala */
-    var pq=!fin&&(i2===5||i2===9||i2===10), fr=pq?E.io(fase(t,t0+300,t0+3800)):fin?1:i2===6?1:0;
+    var pq=!fin&&(i2===5||i2===9||i2===10||i2===12), fr=pq?E.io(fase(t,t0+300,t0+3800)):fin?1:i2===6?1:0;
     fasce.forEach(function(g,j){ cls(g,'vis',fr*NB>j+.2); }); cls(acqua,'vis',pq||fin||i2===6); cls(acqua,'cala',i2===6||fin);
     var op=i2===6?String(r1((1-.75*E.io(fase(t,t0,t0+2500)))*.6*100)/100):''; if(acqua.style.opacity!==op) acqua.style.opacity=op;      // nel 590 l'acqua cala
     function acc(n,s,noNome){ if(L[n]) cls(L[n],'vis',!!s); if(N[n]) cls(N[n],'vis',!!s&&!noNome); }
-    acc('colosseo',i2===1||i2===2||i2===12||fin); acc('paolo',i2===11||fin); acc('flaminia',i2===10||fin); acc('sisto',i2===10||fin,fin); acc('adriano',i2===8); acc('meta',i2===7);
-    cls(N.basse,'vis',i2===5&&fr>.6); cls(N.lata,'vis',i2===9&&fr>.6);
+    acc('colosseo',i2===1||i2===2||i2===13||fin); acc('paolo',i2===11||fin); acc('flaminia',i2===10||fin); acc('sisto',i2===10||fin,fin); acc('adriano',i2===8); acc('meta',i2===7);
+    cls(N.basse,'vis',i2===5&&fr>.6); cls(N.lata,'vis',(i2===9||i2===12)&&fr>.6);
     cls(malG,'vis',i2===6||i2===7); cls(malG,'piccolo',i2===7);
     cortei.forEach(function(c,j){ var f=i2===7?E.io(fase(t,t0+400+j*150,t0+2600+j*150)):0; traccia(c.p,f); cls(c.g,'vis',i2===7); });
     var su=i2===11; if(dida._su!==su){ dida._su=su; fissa(didaR,'y',r1(su?pb[1]+8:pb[1]+pb[3]-30)); fissa(didaT,'y',r1(su?pb[1]+23:pb[1]+pb[3]-15)); }      // in basso; in alto solo quando in basso c'è San Paolo
     scriviDida(fin?'':i2>=0?DIDA[ii]:'');
-    cls(schT,'vis',!fin&&(i2===5||i2===7||i2===9||i2===10||i2===0||i2===4));      // nel 536 la scritta «schema» sta in basso, nella scena
+    cls(schT,'vis',!fin&&(i2===5||i2===7||i2===9||i2===10||i2===12||i2===0||i2===4));      // nel 536 la scritta «schema» sta in basso, nella scena
     var q=fin?99:i2; if(q!==visto){ visto=q; annota(); scrivi(tA,i2<0?'':fin?'251 · 847':fasi[ii][0]); var fa=fsA; tA.style.fontSize=fa+'px'; while(largo(tA)>cb[2]&&fa>16){ fa-=2; tA.style.fontSize=fa+'px'; }
       scrivi(tF,i2<0?'':fin?'TUTTI INSIEME':NOMEF[FILO[ii]].toUpperCase()); if(fin){ gQ.textContent=''; voce("Quanto ciascun disastro abbia pesato sul calo degli abitanti è discusso: il disegno non lo dice.",""); } else scriviVoce(i2); }
     /* il mezzogiorno del 536: il velo scende in tre secondi e mezzo, poi Procopio, poi Cassiodoro; chi indica il sole alza il braccio; dove c'erano le ombre resta un tratteggio */

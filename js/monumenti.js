@@ -1017,6 +1017,15 @@ var M=[
     });
     casa(B,y(-32,12.5),-32,12.5,3.2,2.6,1.4);                                                 // Santo Stefano Minore, a sud presso le rotonde (seconda metà dell'VIII secolo)
  }},
+ /* L'ospizio di Leone III «in loco qui Naumachia dicitur» (Liber Pontificalis, vita di Leone III, c. XC; Duchesne II, p. 28 e nota 115): case per poveri e pellegrini e una chiesa di San Pietro.
+    Posto: la chiesa di San Pellegrino in Vaticano (OpenStreetMap, 41.90497 N, 12.45702 E), che per Duchesne ne segna il sito; per Platner e Ashby la Naumachia stava poco a nord-ovest
+    di Castel Sant'Angelo. Ipotesi fra le due, detta nella scheda. Fuori dalle mura leonine (il Passetto passa 17 unità più a sud); case e chiesa sono uno schema, come le scholae. */
+ {id:'ospizionaumachia', nome:'Ospizio della Naumachia (Leone III)', etichetta:'Ospizio della Naumachia', x:-234.3,z:-138.5, ry:0, zone:[[.4,0,5.2]], fa:function(B){
+    var y=suTerreno(-234.3,-138.5,0), q;
+    q=y(-1.2,0); casa(B,q,-1.2,0,3.6,2.2,1.1);                 // le case dell'ospizio
+    q=y(1.5,2.3); casa(B,q,1.5,2.3,1.6,2.8,.9,PI/2);
+    q=y(2.7,-1.4); B.scatola(1.2,1.6,2.4,2.7,q-.3,-1.4,P.mattone).falde(2.4,.4,1.4,2.7,q+1.3,-1.4,P.coppi,PI/2,P.mattone).cilindro(.46,1.25,2.7,q-.3,-2.7,P.mattone,null,10);      // la chiesa di San Pietro, con l'abside a nord
+ }},
  /* Procopio (Guerra gotica I 19): «Just below the bridge» legato alle mura, dove la corrente esce dall'arcata, due barche «side by side and two feet apart», con «two mills on either boat»
     e la ruota appesa in mezzo; sotto, altre coppie in fila «for a great distance». Qui cinque coppie, subito a valle di ponte Aurelio; misure delle barche e della ruota indicative. */
  {id:'mulini', nome:'Mulini sul Tevere', x:-111.7,z:4.6, ry:-.37, fa:function(B){
@@ -1321,7 +1330,7 @@ var riquadro=document.getElementById('scena').parentNode;
 var etichette=document.createElement('div'); etichette.className='etichette3d'; riquadro.appendChild(etichette);
 function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return [o.x+lx*c+lz*s, o.z-lx*s+lz*c]; }
 /* prima le zone: sotto ogni monumento il terreno si spiana alla quota del suo centro; poi si posa il suolo */
-var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1};        // complessi che seguono il pendio: niente terrazza
+var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1,ospizionaumachia:1};        // complessi che seguono il pendio: niente terrazza
 ['orologio','castrapretorio','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
@@ -1366,7 +1375,7 @@ RM.statoMonumento=function(id,anno){
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Fino al 23 novembre 2026 alla chiusura toglieva subito un poco di cima a ogni tratto: sul tetto di Giove Capitolino il colmo si spezzava a blocchi e il tempio sembrava spaccato (l'utente: «fai delle crepe, non che si spacchi a metà»).
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, mulini:0, casenerva:0, foca:.4, focastatua:.4, fiaccola357:.4, curiastatue:.5, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
+var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, ospizionaumachia:0, mulini:0, casenerva:0, foca:.4, focastatua:.4, fiaccola357:.4, curiastatue:.5, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
 /* «abbandonato» (25 novembre 2026, l'utente: «Ok» alla proposta della verifica degli anacronismi, src/testi/audit-anacronismi.md): non più in uso, ma la struttura regge
    per secoli (la cupola di Minerva Medica fino al 1828, il Pantheon fra il 392 e il 609, i templi del Foro Boario diventati chiese). Prende l'incuria della chiusura
    (sporco, crepe, erba, coppi mancanti: uCrepe) ma niente crolli (uRovina resta a zero), finché un evento non li porta (terremoto, incendio, cava). Uno «spogliato»
@@ -1443,7 +1452,7 @@ RM.rovina=function(id,anno){
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
-var SENZA_CANTIERE={curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1};
+var SENZA_CANTIERE={curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};
 function ponteggio(o,t){
   if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
   if(!o.pont){
