@@ -1,0 +1,5307 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-07-15T15:22:01Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 4951306,
+  "bounds": {
+    "minlat": 41.8908561,
+    "minlon": 12.4779864,
+    "maxlat": 41.8912955,
+    "maxlon": 12.4785028
+  },
+  "geometry": [
+    { "lat": 41.8908561, "lon": 12.4779864 },
+    { "lat": 41.8908715, "lon": 12.4780106 },
+    { "lat": 41.8908884, "lon": 12.4780320 },
+    { "lat": 41.8909645, "lon": 12.4781263 },
+    { "lat": 41.8911210, "lon": 12.4783005 },
+    { "lat": 41.8912443, "lon": 12.4784378 },
+    { "lat": 41.8912546, "lon": 12.4784496 },
+    { "lat": 41.8912818, "lon": 12.4784836 },
+    { "lat": 41.8912955, "lon": 12.4785028 }
+  ],
+  "tags": {
+    "alt_name": "Ponte di Quattro Capi",
+    "bicycle": "yes",
+    "bridge": "yes",
+    "foot": "yes",
+    "highway": "pedestrian",
+    "layer": "1",
+    "lit": "yes",
+    "name": "Ponte Fabricio",
+    "name:etymology:wikidata": "Q944688",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 10140484,
+  "bounds": {
+    "minlat": 41.8934114,
+    "minlon": 12.4816090,
+    "maxlat": 41.8937508,
+    "maxlon": 12.4818559
+  },
+  "geometry": [
+    { "lat": 41.8937508, "lon": 12.4818559 },
+    { "lat": 41.8936945, "lon": 12.4818435 },
+    { "lat": 41.8936528, "lon": 12.4818315 },
+    { "lat": 41.8936216, "lon": 12.4818153 },
+    { "lat": 41.8936014, "lon": 12.4818004 },
+    { "lat": 41.8935796, "lon": 12.4817816 },
+    { "lat": 41.8935581, "lon": 12.4817612 },
+    { "lat": 41.8934483, "lon": 12.4816462 },
+    { "lat": 41.8934114, "lon": 12.4816090 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "foot": "yes",
+    "highway": "tertiary",
+    "lanes": "6",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "no",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 10140555,
+  "bounds": {
+    "minlat": 41.8863447,
+    "minlon": 12.4797551,
+    "maxlat": 41.8864452,
+    "maxlon": 12.4800847
+  },
+  "geometry": [
+    { "lat": 41.8863447, "lon": 12.4797551 },
+    { "lat": 41.8863823, "lon": 12.4798784 },
+    { "lat": 41.8864452, "lon": 12.4800847 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "foot": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via di Santa Maria in Cosmedin",
+    "name:etymology:wikidata": "Q928300",
+    "oneway": "yes",
+    "shoulder": "no",
+    "sidewalk": "no",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 11350613,
+  "bounds": {
+    "minlat": 41.8876371,
+    "minlon": 12.4758430,
+    "maxlat": 41.8880700,
+    "maxlon": 12.4772838
+  },
+  "geometry": [
+    { "lat": 41.8876371, "lon": 12.4772838 },
+    { "lat": 41.8877635, "lon": 12.4768606 },
+    { "lat": 41.8879088, "lon": 12.4763733 },
+    { "lat": 41.8880271, "lon": 12.4759780 },
+    { "lat": 41.8880700, "lon": 12.4758430 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via dei Genovesi",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 22894027,
+  "bounds": {
+    "minlat": 41.8934386,
+    "minlon": 12.4757088,
+    "maxlat": 41.8936253,
+    "maxlon": 12.4762052
+  },
+  "geometry": [
+    { "lat": 41.8936201, "lon": 12.4757088 },
+    { "lat": 41.8936243, "lon": 12.4757296 },
+    { "lat": 41.8936253, "lon": 12.4757451 },
+    { "lat": 41.8936237, "lon": 12.4757605 },
+    { "lat": 41.8936198, "lon": 12.4757755 },
+    { "lat": 41.8935784, "lon": 12.4758737 },
+    { "lat": 41.8934386, "lon": 12.4762052 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Via di Santa Maria del Pianto",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 22951250,
+  "bounds": {
+    "minlat": 41.8871939,
+    "minlon": 12.4819509,
+    "maxlat": 41.8874177,
+    "maxlon": 12.4822503
+  },
+  "geometry": [
+    { "lat": 41.8871939, "lon": 12.4822503 },
+    { "lat": 41.8872093, "lon": 12.4822306 },
+    { "lat": 41.8872340, "lon": 12.4821990 },
+    { "lat": 41.8872868, "lon": 12.4821351 },
+    { "lat": 41.8873198, "lon": 12.4820889 },
+    { "lat": 41.8874177, "lon": 12.4819509 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "secondary",
+    "lanes": "6",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via della Greca",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 22951313,
+  "bounds": {
+    "minlat": 41.8880191,
+    "minlon": 12.4811755,
+    "maxlat": 41.8881268,
+    "maxlon": 12.4812305
+  },
+  "geometry": [
+    { "lat": 41.8880191, "lon": 12.4811755 },
+    { "lat": 41.8880628, "lon": 12.4811949 },
+    { "lat": 41.8881268, "lon": 12.4812305 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "secondary",
+    "lanes": "6",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza della Bocca della Verità",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 22951432,
+  "bounds": {
+    "minlat": 41.8893962,
+    "minlon": 12.4743986,
+    "maxlat": 41.8894520,
+    "maxlon": 12.4749830
+  },
+  "geometry": [
+    { "lat": 41.8893962, "lon": 12.4749830 },
+    { "lat": 41.8894275, "lon": 12.4746595 },
+    { "lat": 41.8894520, "lon": 12.4743986 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via della Lungaretta",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 22956135,
+  "bounds": {
+    "minlat": 41.8836184,
+    "minlon": 12.4747100,
+    "maxlat": 41.8836514,
+    "maxlon": 12.4747204
+  },
+  "geometry": [
+    { "lat": 41.8836514, "lon": 12.4747100 },
+    { "lat": 41.8836323, "lon": 12.4747127 },
+    { "lat": 41.8836184, "lon": 12.4747204 }
+  ],
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 22979083,
+  "bounds": {
+    "minlat": 41.8940360,
+    "minlon": 12.4814966,
+    "maxlat": 41.8941584,
+    "maxlon": 12.4819580
+  },
+  "geometry": [
+    { "lat": 41.8940681, "lon": 12.4814966 },
+    { "lat": 41.8940541, "lon": 12.4815537 },
+    { "lat": 41.8940455, "lon": 12.4816007 },
+    { "lat": 41.8940382, "lon": 12.4816678 },
+    { "lat": 41.8940360, "lon": 12.4817271 },
+    { "lat": 41.8940406, "lon": 12.4817736 },
+    { "lat": 41.8940495, "lon": 12.4818107 },
+    { "lat": 41.8940718, "lon": 12.4818511 },
+    { "lat": 41.8941042, "lon": 12.4818964 },
+    { "lat": 41.8941317, "lon": 12.4819297 },
+    { "lat": 41.8941584, "lon": 12.4819580 }
+  ],
+  "tags": {
+    "foot": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 22979111,
+  "bounds": {
+    "minlat": 41.8949191,
+    "minlon": 12.4817802,
+    "maxlat": 41.8953046,
+    "maxlon": 12.4820859
+  },
+  "geometry": [
+    { "lat": 41.8949191, "lon": 12.4820859 },
+    { "lat": 41.8949975, "lon": 12.4820524 },
+    { "lat": 41.8950169, "lon": 12.4820441 },
+    { "lat": 41.8950982, "lon": 12.4820103 },
+    { "lat": 41.8951903, "lon": 12.4819648 },
+    { "lat": 41.8952132, "lon": 12.4819520 },
+    { "lat": 41.8952231, "lon": 12.4819450 },
+    { "lat": 41.8952413, "lon": 12.4819322 },
+    { "lat": 41.8952537, "lon": 12.4819165 },
+    { "lat": 41.8952702, "lon": 12.4818900 },
+    { "lat": 41.8952776, "lon": 12.4818678 },
+    { "lat": 41.8952840, "lon": 12.4818401 },
+    { "lat": 41.8953046, "lon": 12.4817802 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 22979121,
+  "bounds": {
+    "minlat": 41.8937508,
+    "minlon": 12.4818559,
+    "maxlat": 41.8941584,
+    "maxlon": 12.4819580
+  },
+  "geometry": [
+    { "lat": 41.8937508, "lon": 12.4818559 },
+    { "lat": 41.8938039, "lon": 12.4818669 },
+    { "lat": 41.8938638, "lon": 12.4818814 },
+    { "lat": 41.8939155, "lon": 12.4818949 },
+    { "lat": 41.8939673, "lon": 12.4819092 },
+    { "lat": 41.8941584, "lon": 12.4819580 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 23266158,
+  "bounds": {
+    "minlat": 41.8824956,
+    "minlon": 12.4754530,
+    "maxlat": 41.8826453,
+    "maxlon": 12.4762442
+  },
+  "geometry": [
+    { "lat": 41.8826453, "lon": 12.4754530 },
+    { "lat": 41.8826137, "lon": 12.4756180 },
+    { "lat": 41.8825749, "lon": 12.4758239 },
+    { "lat": 41.8825132, "lon": 12.4761509 },
+    { "lat": 41.8824956, "lon": 12.4762442 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24567600,
+  "bounds": {
+    "minlat": 41.8889801,
+    "minlon": 12.4784330,
+    "maxlat": 41.8891041,
+    "maxlon": 12.4802250
+  },
+  "geometry": [
+    { "lat": 41.8889801, "lon": 12.4802250 },
+    { "lat": 41.8890115, "lon": 12.4797715 },
+    { "lat": 41.8890418, "lon": 12.4793300 },
+    { "lat": 41.8891041, "lon": 12.4784330 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "bridge": "yes",
+    "footway": "sidewalk",
+    "highway": "footway",
+    "lanes": "1",
+    "layer": "1",
+    "lit": "yes",
+    "segregated": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24609537,
+  "bounds": {
+    "minlat": 41.8957311,
+    "minlon": 12.4655370,
+    "maxlat": 41.8963881,
+    "maxlon": 12.4664687
+  },
+  "geometry": [
+    { "lat": 41.8957311, "lon": 12.4655370 },
+    { "lat": 41.8963881, "lon": 12.4664687 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "cycleway:both": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxweight:signed": "no",
+    "name": "Ponte Giuseppe Mazzini",
+    "name:etymology:wikidata": "Q187336",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24609539,
+  "bounds": {
+    "minlat": 41.8920379,
+    "minlon": 12.4703145,
+    "maxlat": 41.8926548,
+    "maxlon": 12.4712260
+  },
+  "geometry": [
+    { "lat": 41.8920379, "lon": 12.4703145 },
+    { "lat": 41.8926548, "lon": 12.4712260 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "highway": "pedestrian",
+    "layer": "1",
+    "lit": "yes",
+    "name": "Ponte Sisto",
+    "name:etymology:wikidata": "Q586329",
+    "smoothness": "intermediate",
+    "start_date": "1479",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 24694985,
+  "bounds": {
+    "minlat": 41.8828622,
+    "minlon": 12.4756835,
+    "maxlat": 41.8828655,
+    "maxlon": 12.4756881
+  },
+  "geometry": [
+    { "lat": 41.8828655, "lon": 12.4756835 },
+    { "lat": 41.8828622, "lon": 12.4756881 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "highway": "primary",
+    "lanes": "2",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Ponte Sublicio",
+    "name:etymology:wikidata": "Q1466700",
+    "nat_name": "Ponte Aventino",
+    "oneway": "yes",
+    "oneway:bicycle": "no",
+    "sidewalk:right:bicycle": "designated",
+    "source:maxspeed": "IT:urban",
+    "start_date": "1918",
+    "surface": "asphalt",
+    "wikidata": "Q1466700",
+    "wikimedia_commons": "Category:Pons Sublicius",
+    "wikipedia": "it:Ponte Sublicio"
+  }
+},
+{
+  "type": "way",
+  "id": 24694986,
+  "bounds": {
+    "minlat": 41.8829437,
+    "minlon": 12.4747204,
+    "maxlat": 41.8836184,
+    "maxlon": 12.4755830
+  },
+  "geometry": [
+    { "lat": 41.8836184, "lon": 12.4747204 },
+    { "lat": 41.8829437, "lon": 12.4755830 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "highway": "primary",
+    "lanes": "2",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Ponte Sublicio",
+    "name:etymology:wikidata": "Q1466700",
+    "nat_name": "Ponte Aventino",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "start_date": "1918",
+    "surface": "asphalt",
+    "wikidata": "Q1466700",
+    "wikimedia_commons": "Category:Pons Sublicius",
+    "wikipedia": "it:Ponte Sublicio"
+  }
+},
+{
+  "type": "way",
+  "id": 24695045,
+  "bounds": {
+    "minlat": 41.8890667,
+    "minlon": 12.4782241,
+    "maxlat": 41.8892087,
+    "maxlon": 12.4801853
+  },
+  "geometry": [
+    { "lat": 41.8892087, "lon": 12.4782241 },
+    { "lat": 41.8890667, "lon": 12.4801853 }
+  ],
+  "tags": {
+    "alt_name": "Ponte Inglese",
+    "bridge": "yes",
+    "highway": "secondary",
+    "lanes": "1",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxweight": "3.5",
+    "name": "Ponte Palatino",
+    "name:etymology:wikidata": "Q3908007",
+    "oneway": "yes",
+    "shoulder": "no",
+    "source:maxspeed": "IT:urban",
+    "start_date": "1890",
+    "surface": "asphalt",
+    "wikidata": "Q3908007",
+    "wikimedia_commons": "Category:Ponte Palatino (Rome)",
+    "wikipedia": "it:Ponte Palatino"
+  }
+},
+{
+  "type": "way",
+  "id": 25752804,
+  "bounds": {
+    "minlat": 41.8905273,
+    "minlon": 12.4743889,
+    "maxlat": 41.8916273,
+    "maxlon": 12.4744934
+  },
+  "geometry": [
+    { "lat": 41.8916273, "lon": 12.4744934 },
+    { "lat": 41.8913837, "lon": 12.4744720 },
+    { "lat": 41.8905273, "lon": 12.4743889 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "cycleway:right": "no",
+    "foot": "yes",
+    "highway": "secondary",
+    "lanes": "2",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Ponte Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "oneway": "yes",
+    "shoulder": "no",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "start_date": "1888",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 25752820,
+  "bounds": {
+    "minlat": 41.8905134,
+    "minlon": 12.4745355,
+    "maxlat": 41.8916240,
+    "maxlon": 12.4746457
+  },
+  "geometry": [
+    { "lat": 41.8905134, "lon": 12.4745355 },
+    { "lat": 41.8905819, "lon": 12.4745445 },
+    { "lat": 41.8916240, "lon": 12.4746457 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "highway": "secondary",
+    "lanes": "2",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Ponte Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "oneway": "yes",
+    "shoulder": "no",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "smoothness": "good",
+    "source:maxspeed": "IT:urban",
+    "start_date": "1888",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 26172814,
+  "bounds": {
+    "minlat": 41.8828352,
+    "minlon": 12.4757262,
+    "maxlat": 41.8828540,
+    "maxlon": 12.4757508
+  },
+  "geometry": [
+    { "lat": 41.8828352, "lon": 12.4757262 },
+    { "lat": 41.8828540, "lon": 12.4757508 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 26172815,
+  "bounds": {
+    "minlat": 41.8824956,
+    "minlon": 12.4757262,
+    "maxlat": 41.8828352,
+    "maxlon": 12.4762442
+  },
+  "geometry": [
+    { "lat": 41.8828352, "lon": 12.4757262 },
+    { "lat": 41.8827820, "lon": 12.4758004 },
+    { "lat": 41.8824956, "lon": 12.4762442 }
+  ],
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 26295479,
+  "bounds": {
+    "minlat": 41.8890152,
+    "minlon": 12.4783885,
+    "maxlat": 41.8891417,
+    "maxlon": 12.4802101
+  },
+  "geometry": [
+    { "lat": 41.8890152, "lon": 12.4802101 },
+    { "lat": 41.8891414, "lon": 12.4784474 },
+    { "lat": 41.8891417, "lon": 12.4784302 },
+    { "lat": 41.8891412, "lon": 12.4784095 },
+    { "lat": 41.8891388, "lon": 12.4783986 },
+    { "lat": 41.8891340, "lon": 12.4783885 }
+  ],
+  "tags": {
+    "alt_name": "Ponte Inglese",
+    "bridge": "yes",
+    "highway": "secondary",
+    "lanes": "1",
+    "layer": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "maxweight:signed": "no",
+    "name": "Ponte Palatino",
+    "name:etymology:wikidata": "Q3908007",
+    "oneway": "yes",
+    "shoulder": "no",
+    "source:maxspeed": "IT:urban",
+    "start_date": "1890",
+    "surface": "asphalt",
+    "wikidata": "Q3908007",
+    "wikimedia_commons": "Category:Ponte Palatino (Rome)",
+    "wikipedia": "it:Ponte Palatino"
+  }
+},
+{
+  "type": "way",
+  "id": 27312745,
+  "bounds": {
+    "minlat": 41.8929058,
+    "minlon": 12.4768601,
+    "maxlat": 41.8931418,
+    "maxlon": 12.4774890
+  },
+  "geometry": [
+    { "lat": 41.8931418, "lon": 12.4768601 },
+    { "lat": 41.8931327, "lon": 12.4768827 },
+    { "lat": 41.8930123, "lon": 12.4772165 },
+    { "lat": 41.8929546, "lon": 12.4773634 },
+    { "lat": 41.8929275, "lon": 12.4774354 },
+    { "lat": 41.8929058, "lon": 12.4774890 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via del Portico d'Ottavia",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 27350837,
+  "bounds": {
+    "minlat": 41.8875790,
+    "minlon": 12.4647908,
+    "maxlat": 41.8886735,
+    "maxlon": 12.4667131
+  },
+  "geometry": [
+    { "lat": 41.8886735, "lon": 12.4647908 },
+    { "lat": 41.8885321, "lon": 12.4654787 },
+    { "lat": 41.8884835, "lon": 12.4657152 },
+    { "lat": 41.8884072, "lon": 12.4661492 },
+    { "lat": 41.8883870, "lon": 12.4662800 },
+    { "lat": 41.8883621, "lon": 12.4663944 },
+    { "lat": 41.8883532, "lon": 12.4664430 },
+    { "lat": 41.8883420, "lon": 12.4664913 },
+    { "lat": 41.8883340, "lon": 12.4665231 },
+    { "lat": 41.8883277, "lon": 12.4665524 },
+    { "lat": 41.8883187, "lon": 12.4665773 },
+    { "lat": 41.8883027, "lon": 12.4666039 },
+    { "lat": 41.8882863, "lon": 12.4666306 },
+    { "lat": 41.8882644, "lon": 12.4666619 },
+    { "lat": 41.8882243, "lon": 12.4666897 },
+    { "lat": 41.8881943, "lon": 12.4667034 },
+    { "lat": 41.8881721, "lon": 12.4667099 },
+    { "lat": 41.8881457, "lon": 12.4667131 },
+    { "lat": 41.8881195, "lon": 12.4667105 },
+    { "lat": 41.8881004, "lon": 12.4667032 },
+    { "lat": 41.8880700, "lon": 12.4666950 },
+    { "lat": 41.8880387, "lon": 12.4666810 },
+    { "lat": 41.8880205, "lon": 12.4666688 },
+    { "lat": 41.8879997, "lon": 12.4666531 },
+    { "lat": 41.8879856, "lon": 12.4666358 },
+    { "lat": 41.8879672, "lon": 12.4666068 },
+    { "lat": 41.8879564, "lon": 12.4665881 },
+    { "lat": 41.8879447, "lon": 12.4665635 },
+    { "lat": 41.8879276, "lon": 12.4665181 },
+    { "lat": 41.8879139, "lon": 12.4664705 },
+    { "lat": 41.8878961, "lon": 12.4663947 },
+    { "lat": 41.8878796, "lon": 12.4663044 },
+    { "lat": 41.8878624, "lon": 12.4661866 },
+    { "lat": 41.8877791, "lon": 12.4656258 },
+    { "lat": 41.8877569, "lon": 12.4654993 },
+    { "lat": 41.8877373, "lon": 12.4654043 },
+    { "lat": 41.8877226, "lon": 12.4653506 },
+    { "lat": 41.8877167, "lon": 12.4653309 },
+    { "lat": 41.8877081, "lon": 12.4653101 },
+    { "lat": 41.8876953, "lon": 12.4652890 },
+    { "lat": 41.8876851, "lon": 12.4652794 },
+    { "lat": 41.8876679, "lon": 12.4652709 },
+    { "lat": 41.8876538, "lon": 12.4652670 },
+    { "lat": 41.8876352, "lon": 12.4652715 },
+    { "lat": 41.8876214, "lon": 12.4652825 },
+    { "lat": 41.8876006, "lon": 12.4653115 },
+    { "lat": 41.8875906, "lon": 12.4653377 },
+    { "lat": 41.8875822, "lon": 12.4653792 },
+    { "lat": 41.8875797, "lon": 12.4654065 },
+    { "lat": 41.8875790, "lon": 12.4654325 },
+    { "lat": 41.8875806, "lon": 12.4654756 },
+    { "lat": 41.8875831, "lon": 12.4655117 },
+    { "lat": 41.8875877, "lon": 12.4655962 },
+    { "lat": 41.8876093, "lon": 12.4658199 },
+    { "lat": 41.8876467, "lon": 12.4661343 }
+  ],
+  "tags": {
+    "addr:postcode": "00153",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 27350842,
+  "bounds": {
+    "minlat": 41.8898434,
+    "minlon": 12.4658948,
+    "maxlat": 41.8919983,
+    "maxlon": 12.4677471
+  },
+  "geometry": [
+    { "lat": 41.8919983, "lon": 12.4677471 },
+    { "lat": 41.8919686, "lon": 12.4676692 },
+    { "lat": 41.8919528, "lon": 12.4676309 },
+    { "lat": 41.8919369, "lon": 12.4675966 },
+    { "lat": 41.8919122, "lon": 12.4675548 },
+    { "lat": 41.8918855, "lon": 12.4675172 },
+    { "lat": 41.8918626, "lon": 12.4674905 },
+    { "lat": 41.8918379, "lon": 12.4674653 },
+    { "lat": 41.8911323, "lon": 12.4668464 },
+    { "lat": 41.8910480, "lon": 12.4667718 },
+    { "lat": 41.8903257, "lon": 12.4661315 },
+    { "lat": 41.8901178, "lon": 12.4659601 },
+    { "lat": 41.8900806, "lon": 12.4659392 },
+    { "lat": 41.8900344, "lon": 12.4659163 },
+    { "lat": 41.8899889, "lon": 12.4659034 },
+    { "lat": 41.8899418, "lon": 12.4658966 },
+    { "lat": 41.8899134, "lon": 12.4658948 },
+    { "lat": 41.8898881, "lon": 12.4658991 },
+    { "lat": 41.8898635, "lon": 12.4659084 },
+    { "lat": 41.8898434, "lon": 12.4659178 }
+  ],
+  "tags": {
+    "addr:postcode": "00153",
+    "cycleway:both": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 27350857,
+  "bounds": {
+    "minlat": 41.8884346,
+    "minlon": 12.4617894,
+    "maxlat": 41.8889077,
+    "maxlon": 12.4636208
+  },
+  "geometry": [
+    { "lat": 41.8884346, "lon": 12.4617894 },
+    { "lat": 41.8884780, "lon": 12.4618859 },
+    { "lat": 41.8884894, "lon": 12.4619407 },
+    { "lat": 41.8884967, "lon": 12.4619865 },
+    { "lat": 41.8886159, "lon": 12.4628593 },
+    { "lat": 41.8886257, "lon": 12.4629160 },
+    { "lat": 41.8886312, "lon": 12.4629404 },
+    { "lat": 41.8886382, "lon": 12.4629647 },
+    { "lat": 41.8886507, "lon": 12.4629971 },
+    { "lat": 41.8888008, "lon": 12.4633614 },
+    { "lat": 41.8889077, "lon": 12.4636208 }
+  ],
+  "tags": {
+    "addr:postcode": "00153",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 27805632,
+  "bounds": {
+    "minlat": 41.8896014,
+    "minlon": 12.4710662,
+    "maxlat": 41.8896884,
+    "maxlon": 12.4722579
+  },
+  "geometry": [
+    { "lat": 41.8896884, "lon": 12.4710662 },
+    { "lat": 41.8896758, "lon": 12.4711093 },
+    { "lat": 41.8896494, "lon": 12.4715169 },
+    { "lat": 41.8896014, "lon": 12.4722579 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via della Lungaretta",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 27805655,
+  "bounds": {
+    "minlat": 41.8904181,
+    "minlon": 12.4701571,
+    "maxlat": 41.8913618,
+    "maxlon": 12.4709010
+  },
+  "geometry": [
+    { "lat": 41.8913618, "lon": 12.4701571 },
+    { "lat": 41.8910268, "lon": 12.4704112 },
+    { "lat": 41.8908327, "lon": 12.4705964 },
+    { "lat": 41.8906190, "lon": 12.4707517 },
+    { "lat": 41.8904494, "lon": 12.4708752 },
+    { "lat": 41.8904181, "lon": 12.4709010 }
+  ],
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Moro",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 27806401,
+  "bounds": {
+    "minlat": 41.8880700,
+    "minlon": 12.4758430,
+    "maxlat": 41.8886161,
+    "maxlon": 12.4761931
+  },
+  "geometry": [
+    { "lat": 41.8880700, "lon": 12.4758430 },
+    { "lat": 41.8886161, "lon": 12.4761931 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via Anicia",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 27806527,
+  "bounds": {
+    "minlat": 41.8860962,
+    "minlon": 12.4761719,
+    "maxlat": 41.8870119,
+    "maxlon": 12.4767909
+  },
+  "geometry": [
+    { "lat": 41.8870119, "lon": 12.4767909 },
+    { "lat": 41.8869921, "lon": 12.4767763 },
+    { "lat": 41.8865842, "lon": 12.4764982 },
+    { "lat": 41.8865243, "lon": 12.4764574 },
+    { "lat": 41.8860962, "lon": 12.4761719 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via di San Michele",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 27806618,
+  "bounds": {
+    "minlat": 41.8884709,
+    "minlon": 12.4781051,
+    "maxlat": 41.8887890,
+    "maxlon": 12.4785272
+  },
+  "geometry": [
+    { "lat": 41.8887890, "lon": 12.4785272 },
+    { "lat": 41.8887579, "lon": 12.4783819 },
+    { "lat": 41.8887439, "lon": 12.4783455 },
+    { "lat": 41.8887265, "lon": 12.4783180 },
+    { "lat": 41.8886153, "lon": 12.4782282 },
+    { "lat": 41.8885210, "lon": 12.4781521 },
+    { "lat": 41.8884709, "lon": 12.4781051 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via dei Vascellari",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 28213811,
+  "bounds": {
+    "minlat": 41.8960589,
+    "minlon": 12.4632179,
+    "maxlat": 41.8982351,
+    "maxlon": 12.4648650
+  },
+  "geometry": [
+    { "lat": 41.8960589, "lon": 12.4648650 },
+    { "lat": 41.8966154, "lon": 12.4644270 },
+    { "lat": 41.8980412, "lon": 12.4633341 },
+    { "lat": 41.8982026, "lon": 12.4632179 },
+    { "lat": 41.8982238, "lon": 12.4632205 },
+    { "lat": 41.8982351, "lon": 12.4632217 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via della Lungara",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 28214195,
+  "bounds": {
+    "minlat": 41.8917602,
+    "minlon": 12.4746548,
+    "maxlat": 41.8923732,
+    "maxlon": 12.4748732
+  },
+  "geometry": [
+    { "lat": 41.8917602, "lon": 12.4746548 },
+    { "lat": 41.8918122, "lon": 12.4746567 },
+    { "lat": 41.8918699, "lon": 12.4746630 },
+    { "lat": 41.8918941, "lon": 12.4746672 },
+    { "lat": 41.8919257, "lon": 12.4746738 },
+    { "lat": 41.8919534, "lon": 12.4746801 },
+    { "lat": 41.8919829, "lon": 12.4746874 },
+    { "lat": 41.8920052, "lon": 12.4746932 },
+    { "lat": 41.8920349, "lon": 12.4747028 },
+    { "lat": 41.8920658, "lon": 12.4747142 },
+    { "lat": 41.8920924, "lon": 12.4747260 },
+    { "lat": 41.8921202, "lon": 12.4747396 },
+    { "lat": 41.8922331, "lon": 12.4748008 },
+    { "lat": 41.8923732, "lon": 12.4748732 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "hgv:conditional": "no @ (Mo-Su 07:00-20:00)",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Arenula",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "smoothness": "excellent",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 28867513,
+  "bounds": {
+    "minlat": 41.8939179,
+    "minlon": 12.4725701,
+    "maxlat": 41.8951862,
+    "maxlon": 12.4752370
+  },
+  "geometry": [
+    { "lat": 41.8951862, "lon": 12.4725701 },
+    { "lat": 41.8950919, "lon": 12.4726930 },
+    { "lat": 41.8948188, "lon": 12.4730490 },
+    { "lat": 41.8946779, "lon": 12.4732647 },
+    { "lat": 41.8945695, "lon": 12.4734455 },
+    { "lat": 41.8944890, "lon": 12.4735792 },
+    { "lat": 41.8944839, "lon": 12.4735891 },
+    { "lat": 41.8944211, "lon": 12.4737299 },
+    { "lat": 41.8943289, "lon": 12.4740162 },
+    { "lat": 41.8942664, "lon": 12.4742410 },
+    { "lat": 41.8941013, "lon": 12.4747631 },
+    { "lat": 41.8940681, "lon": 12.4748657 },
+    { "lat": 41.8939622, "lon": 12.4751782 },
+    { "lat": 41.8939498, "lon": 12.4752054 },
+    { "lat": 41.8939338, "lon": 12.4752262 },
+    { "lat": 41.8939179, "lon": 12.4752370 }
+  ],
+  "tags": {
+    "foot": "yes",
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Via dei Giubbonari",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 30657662,
+  "bounds": {
+    "minlat": 41.8840555,
+    "minlon": 12.4739406,
+    "maxlat": 41.8842669,
+    "maxlon": 12.4742737
+  },
+  "geometry": [
+    { "lat": 41.8840555, "lon": 12.4742737 },
+    { "lat": 41.8841431, "lon": 12.4741636 },
+    { "lat": 41.8841609, "lon": 12.4741385 },
+    { "lat": 41.8841847, "lon": 12.4741012 },
+    { "lat": 41.8842057, "lon": 12.4740668 },
+    { "lat": 41.8842191, "lon": 12.4740435 },
+    { "lat": 41.8842376, "lon": 12.4740095 },
+    { "lat": 41.8842523, "lon": 12.4739791 },
+    { "lat": 41.8842669, "lon": 12.4739406 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 32454741,
+  "bounds": {
+    "minlat": 41.8943457,
+    "minlon": 12.4819420,
+    "maxlat": 41.8945197,
+    "maxlon": 12.4820311
+  },
+  "geometry": [
+    { "lat": 41.8943457, "lon": 12.4820311 },
+    { "lat": 41.8943680, "lon": 12.4820265 },
+    { "lat": 41.8944105, "lon": 12.4820076 },
+    { "lat": 41.8944529, "lon": 12.4819843 },
+    { "lat": 41.8944904, "lon": 12.4819619 },
+    { "lat": 41.8945197, "lon": 12.4819420 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 33654622,
+  "bounds": {
+    "minlat": 41.8918817,
+    "minlon": 12.4691166,
+    "maxlat": 41.8919321,
+    "maxlon": 12.4696714
+  },
+  "geometry": [
+    { "lat": 41.8918817, "lon": 12.4696714 },
+    { "lat": 41.8919321, "lon": 12.4691166 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via di Ponte Sisto",
+    "name:etymology:wikidata": "Q586329",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 33654862,
+  "bounds": {
+    "minlat": 41.8895222,
+    "minlon": 12.4731541,
+    "maxlat": 41.8895306,
+    "maxlon": 12.4733293
+  },
+  "geometry": [
+    { "lat": 41.8895306, "lon": 12.4731541 },
+    { "lat": 41.8895222, "lon": 12.4733293 }
+  ],
+  "tags": {
+    "highway": "service",
+    "lanes": "1",
+    "name": "Via della Lungaretta",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 33654867,
+  "bounds": {
+    "minlat": 41.8895157,
+    "minlon": 12.4733293,
+    "maxlat": 41.8895222,
+    "maxlon": 12.4734352
+  },
+  "geometry": [
+    { "lat": 41.8895222, "lon": 12.4733293 },
+    { "lat": 41.8895157, "lon": 12.4734352 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via della Lungaretta",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 33654872,
+  "bounds": {
+    "minlat": 41.8895935,
+    "minlon": 12.4722579,
+    "maxlat": 41.8896014,
+    "maxlon": 12.4723549
+  },
+  "geometry": [
+    { "lat": 41.8896014, "lon": 12.4722579 },
+    { "lat": 41.8895935, "lon": 12.4723549 }
+  ],
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "name": "Via della Lungaretta",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 33684471,
+  "bounds": {
+    "minlat": 41.8893129,
+    "minlon": 12.4755645,
+    "maxlat": 41.8893725,
+    "maxlon": 12.4762664
+  },
+  "geometry": [
+    { "lat": 41.8893150, "lon": 12.4762664 },
+    { "lat": 41.8893281, "lon": 12.4761111 },
+    { "lat": 41.8893129, "lon": 12.4759137 },
+    { "lat": 41.8893503, "lon": 12.4757151 },
+    { "lat": 41.8893725, "lon": 12.4755645 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via della Lungaretta",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett",
+    "zone:maxspeed": "IT:30"
+  }
+},
+{
+  "type": "way",
+  "id": 33684472,
+  "bounds": {
+    "minlat": 41.8893725,
+    "minlon": 12.4749830,
+    "maxlat": 41.8893962,
+    "maxlon": 12.4755645
+  },
+  "geometry": [
+    { "lat": 41.8893725, "lon": 12.4755645 },
+    { "lat": 41.8893962, "lon": 12.4749830 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via della Lungaretta",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 33684892,
+  "bounds": {
+    "minlat": 41.8881033,
+    "minlon": 12.4772066,
+    "maxlat": 41.8883378,
+    "maxlon": 12.4777610
+  },
+  "geometry": [
+    { "lat": 41.8881033, "lon": 12.4777610 },
+    { "lat": 41.8883378, "lon": 12.4772066 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle": "private",
+    "name": "Via dei Salumi",
+    "oneway:motor_vehicle": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 33686042,
+  "bounds": {
+    "minlat": 41.8880700,
+    "minlon": 12.4748844,
+    "maxlat": 41.8882976,
+    "maxlon": 12.4758430
+  },
+  "geometry": [
+    { "lat": 41.8880700, "lon": 12.4758430 },
+    { "lat": 41.8882976, "lon": 12.4748844 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via dei Genovesi",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 33686043,
+  "bounds": {
+    "minlat": 41.8883378,
+    "minlon": 12.4761931,
+    "maxlat": 41.8886161,
+    "maxlon": 12.4772066
+  },
+  "geometry": [
+    { "lat": 41.8883378, "lon": 12.4772066 },
+    { "lat": 41.8884041, "lon": 12.4769994 },
+    { "lat": 41.8884459, "lon": 12.4768310 },
+    { "lat": 41.8885333, "lon": 12.4764605 },
+    { "lat": 41.8886161, "lon": 12.4761931 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via dei Salumi",
+    "sidewalk": "left",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 33686378,
+  "bounds": {
+    "minlat": 41.8842669,
+    "minlon": 12.4739059,
+    "maxlat": 41.8860962,
+    "maxlon": 12.4761719
+  },
+  "geometry": [
+    { "lat": 41.8842669, "lon": 12.4739406 },
+    { "lat": 41.8843027, "lon": 12.4739163 },
+    { "lat": 41.8843173, "lon": 12.4739089 },
+    { "lat": 41.8843346, "lon": 12.4739059 },
+    { "lat": 41.8843525, "lon": 12.4739074 },
+    { "lat": 41.8843679, "lon": 12.4739132 },
+    { "lat": 41.8843845, "lon": 12.4739265 },
+    { "lat": 41.8843973, "lon": 12.4739407 },
+    { "lat": 41.8844113, "lon": 12.4739596 },
+    { "lat": 41.8848249, "lon": 12.4745393 },
+    { "lat": 41.8853776, "lon": 12.4752796 },
+    { "lat": 41.8860962, "lon": 12.4761719 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via di San Michele",
+    "oneway": "yes",
+    "sidewalk": "left",
+    "surface": "sett",
+    "zone:maxspeed": "IT:30"
+  }
+},
+{
+  "type": "way",
+  "id": 33686520,
+  "bounds": {
+    "minlat": 41.8853824,
+    "minlon": 12.4732530,
+    "maxlat": 41.8866604,
+    "maxlon": 12.4748751
+  },
+  "geometry": [
+    { "lat": 41.8866604, "lon": 12.4748751 },
+    { "lat": 41.8861180, "lon": 12.4741864 },
+    { "lat": 41.8860747, "lon": 12.4741353 },
+    { "lat": 41.8854125, "lon": 12.4732913 },
+    { "lat": 41.8853824, "lon": 12.4732530 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via Anicia",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 34860256,
+  "bounds": {
+    "minlat": 41.8936201,
+    "minlon": 12.4757088,
+    "maxlat": 41.8940270,
+    "maxlon": 12.4760349
+  },
+  "geometry": [
+    { "lat": 41.8936201, "lon": 12.4757088 },
+    { "lat": 41.8937008, "lon": 12.4757760 },
+    { "lat": 41.8938979, "lon": 12.4759324 },
+    { "lat": 41.8940270, "lon": 12.4760349 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Arenula",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 43675696,
+  "bounds": {
+    "minlat": 41.8892585,
+    "minlon": 12.4803429,
+    "maxlat": 41.8895998,
+    "maxlon": 12.4810919
+  },
+  "geometry": [
+    { "lat": 41.8892585, "lon": 12.4803429 },
+    { "lat": 41.8893179, "lon": 12.4804001 },
+    { "lat": 41.8893811, "lon": 12.4804667 },
+    { "lat": 41.8894320, "lon": 12.4805303 },
+    { "lat": 41.8894618, "lon": 12.4805832 },
+    { "lat": 41.8894859, "lon": 12.4806403 },
+    { "lat": 41.8895095, "lon": 12.4807171 },
+    { "lat": 41.8895278, "lon": 12.4807825 },
+    { "lat": 41.8895462, "lon": 12.4808586 },
+    { "lat": 41.8895599, "lon": 12.4809156 },
+    { "lat": 41.8895998, "lon": 12.4810919 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Via di Ponte Rotto",
+    "name:etymology:wikidata": "Q640092",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 48520536,
+  "bounds": {
+    "minlat": 41.8949191,
+    "minlon": 12.4820789,
+    "maxlat": 41.8954927,
+    "maxlon": 12.4823054
+  },
+  "geometry": [
+    { "lat": 41.8949191, "lon": 12.4820859 },
+    { "lat": 41.8949952, "lon": 12.4820808 },
+    { "lat": 41.8950228, "lon": 12.4820789 },
+    { "lat": 41.8951051, "lon": 12.4820828 },
+    { "lat": 41.8951655, "lon": 12.4820946 },
+    { "lat": 41.8952081, "lon": 12.4821107 },
+    { "lat": 41.8952475, "lon": 12.4821318 },
+    { "lat": 41.8952829, "lon": 12.4821593 },
+    { "lat": 41.8953187, "lon": 12.4821862 },
+    { "lat": 41.8953818, "lon": 12.4822436 },
+    { "lat": 41.8954927, "lon": 12.4823054 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 48520537,
+  "bounds": {
+    "minlat": 41.8941584,
+    "minlon": 12.4819580,
+    "maxlat": 41.8943457,
+    "maxlon": 12.4820311
+  },
+  "geometry": [
+    { "lat": 41.8941584, "lon": 12.4819580 },
+    { "lat": 41.8942391, "lon": 12.4819905 },
+    { "lat": 41.8943457, "lon": 12.4820311 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 52938659,
+  "bounds": {
+    "minlat": 41.8892952,
+    "minlon": 12.4821647,
+    "maxlat": 41.8895321,
+    "maxlon": 12.4837452
+  },
+  "geometry": [
+    { "lat": 41.8894702, "lon": 12.4821647 },
+    { "lat": 41.8894883, "lon": 12.4828926 },
+    { "lat": 41.8892952, "lon": 12.4829886 },
+    { "lat": 41.8893757, "lon": 12.4833078 },
+    { "lat": 41.8893996, "lon": 12.4833383 },
+    { "lat": 41.8894370, "lon": 12.4833770 },
+    { "lat": 41.8894499, "lon": 12.4833920 },
+    { "lat": 41.8894612, "lon": 12.4834111 },
+    { "lat": 41.8895321, "lon": 12.4837452 }
+  ],
+  "tags": {
+    "highway": "service",
+    "name": "Via del Velabro",
+    "service": "alley"
+  }
+},
+{
+  "type": "way",
+  "id": 52957649,
+  "bounds": {
+    "minlat": 41.8945672,
+    "minlon": 12.4657860,
+    "maxlat": 41.8949075,
+    "maxlon": 12.4660471
+  },
+  "geometry": [
+    { "lat": 41.8945672, "lon": 12.4660471 },
+    { "lat": 41.8949075, "lon": 12.4657860 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via della Lungara",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 95513279,
+  "bounds": {
+    "minlat": 41.8913615,
+    "minlon": 12.4786495,
+    "maxlat": 41.8915265,
+    "maxlon": 12.4795416
+  },
+  "geometry": [
+    { "lat": 41.8915265, "lon": 12.4786495 },
+    { "lat": 41.8915082, "lon": 12.4787203 },
+    { "lat": 41.8914982, "lon": 12.4787642 },
+    { "lat": 41.8914593, "lon": 12.4789359 },
+    { "lat": 41.8914355, "lon": 12.4790479 },
+    { "lat": 41.8914086, "lon": 12.4791841 },
+    { "lat": 41.8913837, "lon": 12.4793078 },
+    { "lat": 41.8913688, "lon": 12.4793989 },
+    { "lat": 41.8913615, "lon": 12.4794682 },
+    { "lat": 41.8913619, "lon": 12.4795242 },
+    { "lat": 41.8913700, "lon": 12.4795416 },
+    { "lat": 41.8913827, "lon": 12.4795399 },
+    { "lat": 41.8913925, "lon": 12.4795242 },
+    { "lat": 41.8913995, "lon": 12.4794908 }
+  ],
+  "tags": {
+    "highway": "service",
+    "name": "Via di Monte Savello",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 95513393,
+  "bounds": {
+    "minlat": 41.8903817,
+    "minlon": 12.4774599,
+    "maxlat": 41.8905003,
+    "maxlon": 12.4775620
+  },
+  "geometry": [
+    { "lat": 41.8903817, "lon": 12.4774599 },
+    { "lat": 41.8904107, "lon": 12.4774784 },
+    { "lat": 41.8904355, "lon": 12.4774972 },
+    { "lat": 41.8905003, "lon": 12.4775620 }
+  ],
+  "tags": {
+    "access": "destination",
+    "emergency": "yes",
+    "foot": "yes",
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Piazza di San Bartolomeo all'Isola",
+    "name:etymology:wikidata": "Q1755418",
+    "smoothness": "intermediate",
+    "surface": "sett",
+    "taxi": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 97165960,
+  "bounds": {
+    "minlat": 41.8823756,
+    "minlon": 12.4765034,
+    "maxlat": 41.8824856,
+    "maxlon": 12.4766189
+  },
+  "geometry": [
+    { "lat": 41.8823756, "lon": 12.4766189 },
+    { "lat": 41.8824311, "lon": 12.4765588 },
+    { "lat": 41.8824599, "lon": 12.4765292 },
+    { "lat": 41.8824856, "lon": 12.4765034 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 97165974,
+  "bounds": {
+    "minlat": 41.8824856,
+    "minlon": 12.4765034,
+    "maxlat": 41.8826228,
+    "maxlon": 12.4765959
+  },
+  "geometry": [
+    { "lat": 41.8826228, "lon": 12.4765959 },
+    { "lat": 41.8825472, "lon": 12.4765499 },
+    { "lat": 41.8824856, "lon": 12.4765034 }
+  ],
+  "tags": {
+    "access": "no",
+    "foot": "yes",
+    "highway": "service",
+    "lanes:psv": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 97165981,
+  "bounds": {
+    "minlat": 41.8906622,
+    "minlon": 12.4791483,
+    "maxlat": 41.8910566,
+    "maxlon": 12.4794371
+  },
+  "geometry": [
+    { "lat": 41.8906622, "lon": 12.4794180 },
+    { "lat": 41.8907162, "lon": 12.4794355 },
+    { "lat": 41.8907516, "lon": 12.4794371 },
+    { "lat": 41.8907773, "lon": 12.4794316 },
+    { "lat": 41.8908159, "lon": 12.4794090 },
+    { "lat": 41.8908470, "lon": 12.4793753 },
+    { "lat": 41.8910566, "lon": 12.4791483 }
+  ],
+  "tags": {
+    "access": "no",
+    "bus": "designated",
+    "highway": "service",
+    "lanes": "1",
+    "name": "Piazza di Monte Savello",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 104973425,
+  "bounds": {
+    "minlat": 41.8952646,
+    "minlon": 12.4654552,
+    "maxlat": 41.8953296,
+    "maxlon": 12.4655111
+  },
+  "geometry": [
+    { "lat": 41.8952646, "lon": 12.4655111 },
+    { "lat": 41.8953296, "lon": 12.4654552 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via della Lungara",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 104973428,
+  "bounds": {
+    "minlat": 41.8949075,
+    "minlon": 12.4655111,
+    "maxlat": 41.8952646,
+    "maxlon": 12.4657860
+  },
+  "geometry": [
+    { "lat": 41.8949075, "lon": 12.4657860 },
+    { "lat": 41.8951186, "lon": 12.4656377 },
+    { "lat": 41.8952646, "lon": 12.4655111 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via della Lungara",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 106205315,
+  "bounds": {
+    "minlat": 41.8869396,
+    "minlon": 12.4805104,
+    "maxlat": 41.8877877,
+    "maxlon": 12.4810830
+  },
+  "geometry": [
+    { "lat": 41.8869396, "lon": 12.4805104 },
+    { "lat": 41.8873222, "lon": 12.4807819 },
+    { "lat": 41.8876567, "lon": 12.4810010 },
+    { "lat": 41.8877190, "lon": 12.4810424 },
+    { "lat": 41.8877877, "lon": 12.4810830 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "5",
+    "lanes:backward": "1",
+    "lanes:forward": "4",
+    "lanes:psv:backward": "1",
+    "lanes:psv:forward": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "motor_vehicle:backward": "no",
+    "motor_vehicle:lanes:forward": "no|yes|yes|yes",
+    "name": "Via di Santa Maria in Cosmedin",
+    "name:etymology:wikidata": "Q928300",
+    "oneway": "yes",
+    "psv:backward": "designated",
+    "psv:lanes:forward": "designated|yes|yes|yes",
+    "smoothness": "good",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt",
+    "turn:lanes:forward": "through|through|slight_right|slight_right"
+  }
+},
+{
+  "type": "way",
+  "id": 107293135,
+  "bounds": {
+    "minlat": 41.8946562,
+    "minlon": 12.4818264,
+    "maxlat": 41.8948748,
+    "maxlon": 12.4818667
+  },
+  "geometry": [
+    { "lat": 41.8946562, "lon": 12.4818265 },
+    { "lat": 41.8946909, "lon": 12.4818264 },
+    { "lat": 41.8947247, "lon": 12.4818292 },
+    { "lat": 41.8947635, "lon": 12.4818345 },
+    { "lat": 41.8948055, "lon": 12.4818449 },
+    { "lat": 41.8948748, "lon": 12.4818667 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 107293136,
+  "bounds": {
+    "minlat": 41.8943457,
+    "minlon": 12.4820311,
+    "maxlat": 41.8949191,
+    "maxlon": 12.4821087
+  },
+  "geometry": [
+    { "lat": 41.8943457, "lon": 12.4820311 },
+    { "lat": 41.8944060, "lon": 12.4820606 },
+    { "lat": 41.8944525, "lon": 12.4820796 },
+    { "lat": 41.8945130, "lon": 12.4820946 },
+    { "lat": 41.8945623, "lon": 12.4821018 },
+    { "lat": 41.8946415, "lon": 12.4821087 },
+    { "lat": 41.8947087, "lon": 12.4821078 },
+    { "lat": 41.8947974, "lon": 12.4821026 },
+    { "lat": 41.8949191, "lon": 12.4820859 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "4",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "sidewalk:right:surface": "paving_stones",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 107293137,
+  "bounds": {
+    "minlat": 41.8947313,
+    "minlon": 12.4817768,
+    "maxlat": 41.8949676,
+    "maxlon": 12.4818213
+  },
+  "geometry": [
+    { "lat": 41.8947313, "lon": 12.4817792 },
+    { "lat": 41.8947667, "lon": 12.4817768 },
+    { "lat": 41.8947969, "lon": 12.4817779 },
+    { "lat": 41.8948278, "lon": 12.4817831 },
+    { "lat": 41.8948636, "lon": 12.4817902 },
+    { "lat": 41.8949040, "lon": 12.4818015 },
+    { "lat": 41.8949676, "lon": 12.4818213 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 107293138,
+  "bounds": {
+    "minlat": 41.8945197,
+    "minlon": 12.4819362,
+    "maxlat": 41.8946965,
+    "maxlon": 12.4819625
+  },
+  "geometry": [
+    { "lat": 41.8945197, "lon": 12.4819420 },
+    { "lat": 41.8945561, "lon": 12.4819362 },
+    { "lat": 41.8945945, "lon": 12.4819381 },
+    { "lat": 41.8946341, "lon": 12.4819434 },
+    { "lat": 41.8946965, "lon": 12.4819625 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 107293140,
+  "bounds": {
+    "minlat": 41.8945842,
+    "minlon": 12.4818774,
+    "maxlat": 41.8947920,
+    "maxlon": 12.4819161
+  },
+  "geometry": [
+    { "lat": 41.8945842, "lon": 12.4818855 },
+    { "lat": 41.8946132, "lon": 12.4818798 },
+    { "lat": 41.8946432, "lon": 12.4818774 },
+    { "lat": 41.8946722, "lon": 12.4818793 },
+    { "lat": 41.8946971, "lon": 12.4818865 },
+    { "lat": 41.8947220, "lon": 12.4818951 },
+    { "lat": 41.8947920, "lon": 12.4819161 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 121033225,
+  "bounds": {
+    "minlat": 41.8892827,
+    "minlon": 12.4762664,
+    "maxlat": 41.8893150,
+    "maxlon": 12.4770401
+  },
+  "geometry": [
+    { "lat": 41.8893022, "lon": 12.4770401 },
+    { "lat": 41.8892827, "lon": 12.4769444 },
+    { "lat": 41.8892904, "lon": 12.4765409 },
+    { "lat": 41.8893002, "lon": 12.4764172 },
+    { "lat": 41.8893150, "lon": 12.4762664 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Piazza in Piscinula",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett",
+    "zone:maxspeed": "IT:30"
+  }
+},
+{
+  "type": "way",
+  "id": 121395873,
+  "bounds": {
+    "minlat": 41.8824856,
+    "minlon": 12.4763604,
+    "maxlat": 41.8833679,
+    "maxlon": 12.4765034
+  },
+  "geometry": [
+    { "lat": 41.8824856, "lon": 12.4765034 },
+    { "lat": 41.8825251, "lon": 12.4764705 },
+    { "lat": 41.8825535, "lon": 12.4764519 },
+    { "lat": 41.8825868, "lon": 12.4764306 },
+    { "lat": 41.8826235, "lon": 12.4764139 },
+    { "lat": 41.8826531, "lon": 12.4764039 },
+    { "lat": 41.8827240, "lon": 12.4763861 },
+    { "lat": 41.8828106, "lon": 12.4763715 },
+    { "lat": 41.8828747, "lon": 12.4763630 },
+    { "lat": 41.8829559, "lon": 12.4763604 },
+    { "lat": 41.8830157, "lon": 12.4763619 },
+    { "lat": 41.8830487, "lon": 12.4763649 },
+    { "lat": 41.8830986, "lon": 12.4763729 },
+    { "lat": 41.8831431, "lon": 12.4763837 },
+    { "lat": 41.8832299, "lon": 12.4764106 },
+    { "lat": 41.8832802, "lon": 12.4764242 },
+    { "lat": 41.8832951, "lon": 12.4764274 },
+    { "lat": 41.8833121, "lon": 12.4764281 },
+    { "lat": 41.8833331, "lon": 12.4764270 },
+    { "lat": 41.8833679, "lon": 12.4764193 }
+  ],
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 121396713,
+  "bounds": {
+    "minlat": 41.8823062,
+    "minlon": 12.4764014,
+    "maxlat": 41.8823897,
+    "maxlon": 12.4765053
+  },
+  "geometry": [
+    { "lat": 41.8823897, "lon": 12.4764014 },
+    { "lat": 41.8823495, "lon": 12.4764532 },
+    { "lat": 41.8823062, "lon": 12.4765053 }
+  ],
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 121897308,
+  "bounds": {
+    "minlat": 41.8824303,
+    "minlon": 12.4764501,
+    "maxlat": 41.8824856,
+    "maxlon": 12.4765034
+  },
+  "geometry": [
+    { "lat": 41.8824303, "lon": 12.4764501 },
+    { "lat": 41.8824423, "lon": 12.4764616 },
+    { "lat": 41.8824856, "lon": 12.4765034 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv:backward": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 121897327,
+  "bounds": {
+    "minlat": 41.8864452,
+    "minlon": 12.4800847,
+    "maxlat": 41.8869396,
+    "maxlon": 12.4805104
+  },
+  "geometry": [
+    { "lat": 41.8864452, "lon": 12.4800847 },
+    { "lat": 41.8866048, "lon": 12.4802388 },
+    { "lat": 41.8866855, "lon": 12.4803127 },
+    { "lat": 41.8867762, "lon": 12.4803893 },
+    { "lat": 41.8869396, "lon": 12.4805104 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "3",
+    "lanes:backward": "1",
+    "lanes:forward": "2",
+    "lanes:psv:backward": "1",
+    "lanes:psv:forward": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "motor_vehicle:backward": "no",
+    "name": "Via di Santa Maria in Cosmedin",
+    "name:etymology:wikidata": "Q928300",
+    "oneway": "yes",
+    "psv:backward": "designated",
+    "sidewalk": "right",
+    "smoothness": "good",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 122106655,
+  "bounds": {
+    "minlat": 41.8823897,
+    "minlon": 12.4764014,
+    "maxlat": 41.8824303,
+    "maxlon": 12.4764501
+  },
+  "geometry": [
+    { "lat": 41.8823897, "lon": 12.4764014 },
+    { "lat": 41.8824068, "lon": 12.4764221 },
+    { "lat": 41.8824303, "lon": 12.4764501 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv:backward": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 122106671,
+  "bounds": {
+    "minlat": 41.8823236,
+    "minlon": 12.4764501,
+    "maxlat": 41.8824303,
+    "maxlon": 12.4765564
+  },
+  "geometry": [
+    { "lat": 41.8824303, "lon": 12.4764501 },
+    { "lat": 41.8823834, "lon": 12.4764971 },
+    { "lat": 41.8823236, "lon": 12.4765564 }
+  ],
+  "tags": {
+    "access": "no",
+    "highway": "service",
+    "name": "Piazza dell'Emporio",
+    "oneway": "no",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 123817451,
+  "bounds": {
+    "minlat": 41.8920294,
+    "minlon": 12.4830712,
+    "maxlat": 41.8920455,
+    "maxlon": 12.4830979
+  },
+  "geometry": [
+    { "lat": 41.8920294, "lon": 12.4830979 },
+    { "lat": 41.8920455, "lon": 12.4830712 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "handrail": "no",
+    "highway": "steps",
+    "layer": "1",
+    "name": "Clivus Capitolinus"
+  }
+},
+{
+  "type": "way",
+  "id": 123971346,
+  "bounds": {
+    "minlat": 41.8889098,
+    "minlon": 12.4812400,
+    "maxlat": 41.8892808,
+    "maxlon": 12.4821331
+  },
+  "geometry": [
+    { "lat": 41.8889098, "lon": 12.4821331 },
+    { "lat": 41.8889388, "lon": 12.4820818 },
+    { "lat": 41.8891049, "lon": 12.4816736 },
+    { "lat": 41.8891464, "lon": 12.4815681 },
+    { "lat": 41.8891816, "lon": 12.4814860 },
+    { "lat": 41.8892277, "lon": 12.4813663 },
+    { "lat": 41.8892508, "lon": 12.4813063 },
+    { "lat": 41.8892808, "lon": 12.4812400 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza della Bocca della Verità",
+    "oneway": "yes",
+    "sidewalk": "left",
+    "source:maxspeed": "IT:urban",
+    "surface": "cobblestone",
+    "wikidata": "Q3902429",
+    "wikipedia": "it:Piazza della Bocca della Verità"
+  }
+},
+{
+  "type": "way",
+  "id": 123971357,
+  "bounds": {
+    "minlat": 41.8874177,
+    "minlon": 12.4810830,
+    "maxlat": 41.8877877,
+    "maxlon": 12.4819509
+  },
+  "geometry": [
+    { "lat": 41.8877877, "lon": 12.4810830 },
+    { "lat": 41.8877611, "lon": 12.4811739 },
+    { "lat": 41.8877357, "lon": 12.4812585 },
+    { "lat": 41.8877027, "lon": 12.4813554 },
+    { "lat": 41.8876644, "lon": 12.4814546 },
+    { "lat": 41.8876240, "lon": 12.4815471 },
+    { "lat": 41.8875817, "lon": 12.4816342 },
+    { "lat": 41.8874177, "lon": 12.4819509 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "secondary",
+    "lanes": "3",
+    "lanes:backward": "1",
+    "lanes:forward": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via della Greca",
+    "oneway": "no",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 123971360,
+  "bounds": {
+    "minlat": 41.8889388,
+    "minlon": 12.4820118,
+    "maxlat": 41.8906798,
+    "maxlon": 12.4820880
+  },
+  "geometry": [
+    { "lat": 41.8889388, "lon": 12.4820818 },
+    { "lat": 41.8891069, "lon": 12.4820837 },
+    { "lat": 41.8892213, "lon": 12.4820843 },
+    { "lat": 41.8893022, "lon": 12.4820847 },
+    { "lat": 41.8894037, "lon": 12.4820880 },
+    { "lat": 41.8894465, "lon": 12.4820871 },
+    { "lat": 41.8895499, "lon": 12.4820841 },
+    { "lat": 41.8900157, "lon": 12.4820408 },
+    { "lat": 41.8902514, "lon": 12.4820182 },
+    { "lat": 41.8904043, "lon": 12.4820118 },
+    { "lat": 41.8905868, "lon": 12.4820145 },
+    { "lat": 41.8906798, "lon": 12.4820162 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "maxspeed": "40",
+    "maxspeed:type": "sign",
+    "name": "Via di San Giovanni Decollato",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 124053214,
+  "bounds": {
+    "minlat": 41.8874177,
+    "minlon": 12.4811755,
+    "maxlat": 41.8880191,
+    "maxlon": 12.4819509
+  },
+  "geometry": [
+    { "lat": 41.8874177, "lon": 12.4819509 },
+    { "lat": 41.8874777, "lon": 12.4819094 },
+    { "lat": 41.8875334, "lon": 12.4818641 },
+    { "lat": 41.8875525, "lon": 12.4818478 },
+    { "lat": 41.8875887, "lon": 12.4818138 },
+    { "lat": 41.8876303, "lon": 12.4817691 },
+    { "lat": 41.8876638, "lon": 12.4817293 },
+    { "lat": 41.8876979, "lon": 12.4816834 },
+    { "lat": 41.8877412, "lon": 12.4816181 },
+    { "lat": 41.8877961, "lon": 12.4815317 },
+    { "lat": 41.8879440, "lon": 12.4812898 },
+    { "lat": 41.8880191, "lon": 12.4811755 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via della Greca",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 125151692,
+  "bounds": {
+    "minlat": 41.8915966,
+    "minlon": 12.4802813,
+    "maxlat": 41.8924056,
+    "maxlon": 12.4805128
+  },
+  "geometry": [
+    { "lat": 41.8924056, "lon": 12.4805128 },
+    { "lat": 41.8923587, "lon": 12.4804942 },
+    { "lat": 41.8920468, "lon": 12.4803703 },
+    { "lat": 41.8919184, "lon": 12.4803187 },
+    { "lat": 41.8918673, "lon": 12.4803014 },
+    { "lat": 41.8918243, "lon": 12.4802922 },
+    { "lat": 41.8917825, "lon": 12.4802852 },
+    { "lat": 41.8917499, "lon": 12.4802813 },
+    { "lat": 41.8917084, "lon": 12.4802830 },
+    { "lat": 41.8915966, "lon": 12.4802992 }
+  ],
+  "tags": {
+    "cycleway": "no",
+    "foot": "yes",
+    "highway": "tertiary",
+    "lanes": "6",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "sidewalk": "both",
+    "sidewalk:both:surface": "paving_stones",
+    "smoothness": "good",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 125374931,
+  "bounds": {
+    "minlat": 41.8915265,
+    "minlon": 12.4774890,
+    "maxlat": 41.8929058,
+    "maxlon": 12.4786560
+  },
+  "geometry": [
+    { "lat": 41.8929058, "lon": 12.4774890 },
+    { "lat": 41.8928679, "lon": 12.4775867 },
+    { "lat": 41.8928647, "lon": 12.4775947 },
+    { "lat": 41.8926186, "lon": 12.4781979 },
+    { "lat": 41.8925892, "lon": 12.4782581 },
+    { "lat": 41.8925694, "lon": 12.4782829 },
+    { "lat": 41.8925503, "lon": 12.4783006 },
+    { "lat": 41.8925243, "lon": 12.4783198 },
+    { "lat": 41.8924874, "lon": 12.4783429 },
+    { "lat": 41.8923774, "lon": 12.4783778 },
+    { "lat": 41.8922049, "lon": 12.4784342 },
+    { "lat": 41.8920769, "lon": 12.4784770 },
+    { "lat": 41.8920476, "lon": 12.4784878 },
+    { "lat": 41.8920130, "lon": 12.4785004 },
+    { "lat": 41.8915553, "lon": 12.4786560 },
+    { "lat": 41.8915265, "lon": 12.4786495 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Via del Portico d'Ottavia",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 125374933,
+  "bounds": {
+    "minlat": 41.8931418,
+    "minlon": 12.4762052,
+    "maxlat": 41.8934386,
+    "maxlon": 12.4768601
+  },
+  "geometry": [
+    { "lat": 41.8934386, "lon": 12.4762052 },
+    { "lat": 41.8932047, "lon": 12.4767075 },
+    { "lat": 41.8931660, "lon": 12.4767907 },
+    { "lat": 41.8931418, "lon": 12.4768601 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via di Santa Maria del Pianto",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 126146476,
+  "bounds": {
+    "minlat": 41.8905798,
+    "minlon": 12.4776590,
+    "maxlat": 41.8908561,
+    "maxlon": 12.4779864
+  },
+  "geometry": [
+    { "lat": 41.8905798, "lon": 12.4776590 },
+    { "lat": 41.8908561, "lon": 12.4779864 }
+  ],
+  "tags": {
+    "highway": "living_street",
+    "name": "Via di Ponte Quattro Capi",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 126146495,
+  "bounds": {
+    "minlat": 41.8902703,
+    "minlon": 12.4774972,
+    "maxlat": 41.8904355,
+    "maxlon": 12.4779746
+  },
+  "geometry": [
+    { "lat": 41.8904355, "lon": 12.4774972 },
+    { "lat": 41.8904131, "lon": 12.4775352 },
+    { "lat": 41.8903951, "lon": 12.4775714 },
+    { "lat": 41.8903770, "lon": 12.4776079 },
+    { "lat": 41.8903684, "lon": 12.4776269 },
+    { "lat": 41.8902840, "lon": 12.4778697 },
+    { "lat": 41.8902739, "lon": 12.4779040 },
+    { "lat": 41.8902703, "lon": 12.4779336 },
+    { "lat": 41.8902746, "lon": 12.4779508 },
+    { "lat": 41.8902904, "lon": 12.4779686 },
+    { "lat": 41.8903082, "lon": 12.4779746 },
+    { "lat": 41.8903398, "lon": 12.4779670 },
+    { "lat": 41.8904109, "lon": 12.4779352 }
+  ],
+  "tags": {
+    "highway": "service",
+    "name": "Piazza di San Bartolomeo all'Isola",
+    "name:etymology:wikidata": "Q1755418",
+    "service": "driveway",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 127586118,
+  "bounds": {
+    "minlat": 41.8930686,
+    "minlon": 12.4717498,
+    "maxlat": 41.8937402,
+    "maxlon": 12.4726540
+  },
+  "geometry": [
+    { "lat": 41.8930686, "lon": 12.4717498 },
+    { "lat": 41.8937212, "lon": 12.4726298 },
+    { "lat": 41.8937402, "lon": 12.4726540 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via dei Pettinari",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 128862124,
+  "bounds": {
+    "minlat": 41.8881268,
+    "minlon": 12.4812305,
+    "maxlat": 41.8889361,
+    "maxlon": 12.4814508
+  },
+  "geometry": [
+    { "lat": 41.8881268, "lon": 12.4812305 },
+    { "lat": 41.8881831, "lon": 12.4812731 },
+    { "lat": 41.8882914, "lon": 12.4813447 },
+    { "lat": 41.8883733, "lon": 12.4813901 },
+    { "lat": 41.8883965, "lon": 12.4814050 },
+    { "lat": 41.8884456, "lon": 12.4814264 },
+    { "lat": 41.8884970, "lon": 12.4814414 },
+    { "lat": 41.8885188, "lon": 12.4814449 },
+    { "lat": 41.8885549, "lon": 12.4814506 },
+    { "lat": 41.8886201, "lon": 12.4814508 },
+    { "lat": 41.8886894, "lon": 12.4814451 },
+    { "lat": 41.8887264, "lon": 12.4814392 },
+    { "lat": 41.8887825, "lon": 12.4814278 },
+    { "lat": 41.8888293, "lon": 12.4814134 },
+    { "lat": 41.8888650, "lon": 12.4814026 },
+    { "lat": 41.8889361, "lon": 12.4813786 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "5",
+    "lanes:backward": "4",
+    "lanes:forward": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza della Bocca della Verità",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett",
+    "turn:lanes:backward": "slight_left|slight_left|slight_left|through;slight_right",
+    "wikidata": "Q3902429",
+    "wikipedia": "it:Piazza della Bocca della Verità"
+  }
+},
+{
+  "type": "way",
+  "id": 129170807,
+  "bounds": {
+    "minlat": 41.8824303,
+    "minlon": 12.4757944,
+    "maxlat": 41.8828869,
+    "maxlon": 12.4764501
+  },
+  "geometry": [
+    { "lat": 41.8824303, "lon": 12.4764501 },
+    { "lat": 41.8828383, "lon": 12.4758766 },
+    { "lat": 41.8828869, "lon": 12.4757944 }
+  ],
+  "tags": {
+    "access": "no",
+    "highway": "service",
+    "lanes:psv": "1",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 135343588,
+  "bounds": {
+    "minlat": 41.8910566,
+    "minlon": 12.4787868,
+    "maxlat": 41.8912003,
+    "maxlon": 12.4791483
+  },
+  "geometry": [
+    { "lat": 41.8910566, "lon": 12.4791483 },
+    { "lat": 41.8911261, "lon": 12.4790559 },
+    { "lat": 41.8911506, "lon": 12.4790220 },
+    { "lat": 41.8911711, "lon": 12.4789880 },
+    { "lat": 41.8911865, "lon": 12.4789606 },
+    { "lat": 41.8911930, "lon": 12.4789449 },
+    { "lat": 41.8911995, "lon": 12.4789205 },
+    { "lat": 41.8912003, "lon": 12.4788897 },
+    { "lat": 41.8911982, "lon": 12.4788589 },
+    { "lat": 41.8911888, "lon": 12.4787868 }
+  ],
+  "tags": {
+    "access": "no",
+    "bus": "designated",
+    "highway": "service",
+    "lanes": "1",
+    "name": "Piazza di Monte Savello",
+    "oneway": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 135417817,
+  "bounds": {
+    "minlat": 41.8948748,
+    "minlon": 12.4818667,
+    "maxlat": 41.8950406,
+    "maxlon": 12.4819147
+  },
+  "geometry": [
+    { "lat": 41.8948748, "lon": 12.4818667 },
+    { "lat": 41.8949487, "lon": 12.4818901 },
+    { "lat": 41.8949950, "lon": 12.4819034 },
+    { "lat": 41.8950207, "lon": 12.4819100 },
+    { "lat": 41.8950406, "lon": 12.4819147 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 135417821,
+  "bounds": {
+    "minlat": 41.8950406,
+    "minlon": 12.4818755,
+    "maxlat": 41.8951377,
+    "maxlon": 12.4819147
+  },
+  "geometry": [
+    { "lat": 41.8950406, "lon": 12.4819147 },
+    { "lat": 41.8951107, "lon": 12.4818886 },
+    { "lat": 41.8951377, "lon": 12.4818755 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 135417823,
+  "bounds": {
+    "minlat": 41.8951377,
+    "minlon": 12.4817802,
+    "maxlat": 41.8953046,
+    "maxlon": 12.4818755
+  },
+  "geometry": [
+    { "lat": 41.8951377, "lon": 12.4818755 },
+    { "lat": 41.8951644, "lon": 12.4818646 },
+    { "lat": 41.8952049, "lon": 12.4818467 },
+    { "lat": 41.8952388, "lon": 12.4818273 },
+    { "lat": 41.8952511, "lon": 12.4818180 },
+    { "lat": 41.8952705, "lon": 12.4818033 },
+    { "lat": 41.8953046, "lon": 12.4817802 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 135417827,
+  "bounds": {
+    "minlat": 41.8946562,
+    "minlon": 12.4817792,
+    "maxlat": 41.8947313,
+    "maxlon": 12.4818265
+  },
+  "geometry": [
+    { "lat": 41.8946562, "lon": 12.4818265 },
+    { "lat": 41.8947313, "lon": 12.4817792 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 140435812,
+  "bounds": {
+    "minlat": 41.8919092,
+    "minlon": 12.4700648,
+    "maxlat": 41.8920598,
+    "maxlon": 12.4702547
+  },
+  "geometry": [
+    { "lat": 41.8920598, "lon": 12.4700648 },
+    { "lat": 41.8919092, "lon": 12.4702547 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "primary",
+    "is_in:city": "Roma",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza Trilussa",
+    "name:etymology:wikidata": "Q1378908",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 140435814,
+  "bounds": {
+    "minlat": 41.8866604,
+    "minlon": 12.4748751,
+    "maxlat": 41.8880700,
+    "maxlon": 12.4758430
+  },
+  "geometry": [
+    { "lat": 41.8880700, "lon": 12.4758430 },
+    { "lat": 41.8876136, "lon": 12.4754202 },
+    { "lat": 41.8874786, "lon": 12.4752718 },
+    { "lat": 41.8872436, "lon": 12.4752488 },
+    { "lat": 41.8870512, "lon": 12.4751387 },
+    { "lat": 41.8869398, "lon": 12.4750727 },
+    { "lat": 41.8868155, "lon": 12.4749914 },
+    { "lat": 41.8867251, "lon": 12.4749253 },
+    { "lat": 41.8866604, "lon": 12.4748751 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via Anicia",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 142947154,
+  "bounds": {
+    "minlat": 41.8919882,
+    "minlon": 12.4699756,
+    "maxlat": 41.8920598,
+    "maxlon": 12.4700648
+  },
+  "geometry": [
+    { "lat": 41.8920598, "lon": 12.4700648 },
+    { "lat": 41.8919882, "lon": 12.4699756 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Piazza Trilussa",
+    "name:etymology:wikidata": "Q1378908",
+    "oneway": "yes",
+    "sidewalk": "left",
+    "sidewalk:left:surface": "sett",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 142947155,
+  "bounds": {
+    "minlat": 41.8914927,
+    "minlon": 12.4700619,
+    "maxlat": 41.8918473,
+    "maxlon": 12.4703316
+  },
+  "geometry": [
+    { "lat": 41.8914927, "lon": 12.4700619 },
+    { "lat": 41.8915171, "lon": 12.4700633 },
+    { "lat": 41.8916478, "lon": 12.4700680 },
+    { "lat": 41.8916598, "lon": 12.4700718 },
+    { "lat": 41.8916709, "lon": 12.4700802 },
+    { "lat": 41.8918473, "lon": 12.4703316 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Piazza Trilussa",
+    "name:etymology:wikidata": "Q1378908",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "sidewalk:left:surface": "sett",
+    "sidewalk:right:surface": "paving_stones",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 147124636,
+  "bounds": {
+    "minlat": 41.8909842,
+    "minlon": 12.4804251,
+    "maxlat": 41.8914113,
+    "maxlon": 12.4805763
+  },
+  "geometry": [
+    { "lat": 41.8909842, "lon": 12.4805763 },
+    { "lat": 41.8910528, "lon": 12.4805430 },
+    { "lat": 41.8910671, "lon": 12.4805370 },
+    { "lat": 41.8912707, "lon": 12.4804546 },
+    { "lat": 41.8913205, "lon": 12.4804343 },
+    { "lat": 41.8914113, "lon": 12.4804251 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "foot": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 147124637,
+  "bounds": {
+    "minlat": 41.8908966,
+    "minlon": 12.4802893,
+    "maxlat": 41.8915966,
+    "maxlon": 12.4805457
+  },
+  "geometry": [
+    { "lat": 41.8915966, "lon": 12.4802992 },
+    { "lat": 41.8914961, "lon": 12.4802893 },
+    { "lat": 41.8914517, "lon": 12.4802921 },
+    { "lat": 41.8913880, "lon": 12.4803032 },
+    { "lat": 41.8910785, "lon": 12.4804261 },
+    { "lat": 41.8910436, "lon": 12.4804401 },
+    { "lat": 41.8909679, "lon": 12.4804700 },
+    { "lat": 41.8909342, "lon": 12.4805011 },
+    { "lat": 41.8908966, "lon": 12.4805457 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "sidewalk:right:surface": "asphalt",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 147124638,
+  "bounds": {
+    "minlat": 41.8908966,
+    "minlon": 12.4805457,
+    "maxlat": 41.8909842,
+    "maxlon": 12.4805763
+  },
+  "geometry": [
+    { "lat": 41.8908966, "lon": 12.4805457 },
+    { "lat": 41.8909424, "lon": 12.4805637 },
+    { "lat": 41.8909842, "lon": 12.4805763 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "foot": "no",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 147125121,
+  "bounds": {
+    "minlat": 41.8909842,
+    "minlon": 12.4804251,
+    "maxlat": 41.8914113,
+    "maxlon": 12.4805952
+  },
+  "geometry": [
+    { "lat": 41.8909842, "lon": 12.4805763 },
+    { "lat": 41.8910574, "lon": 12.4805952 },
+    { "lat": 41.8910789, "lon": 12.4805861 },
+    { "lat": 41.8912797, "lon": 12.4805052 },
+    { "lat": 41.8913307, "lon": 12.4804845 },
+    { "lat": 41.8914113, "lon": 12.4804251 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 151214187,
+  "bounds": {
+    "minlat": 41.8877236,
+    "minlon": 12.4666621,
+    "maxlat": 41.8892508,
+    "maxlon": 12.4673255
+  },
+  "geometry": [
+    { "lat": 41.8877236, "lon": 12.4666621 },
+    { "lat": 41.8877325, "lon": 12.4666927 },
+    { "lat": 41.8877444, "lon": 12.4667381 },
+    { "lat": 41.8877649, "lon": 12.4667973 },
+    { "lat": 41.8877829, "lon": 12.4668330 },
+    { "lat": 41.8878015, "lon": 12.4668632 },
+    { "lat": 41.8878270, "lon": 12.4668957 },
+    { "lat": 41.8878559, "lon": 12.4669219 },
+    { "lat": 41.8878848, "lon": 12.4669457 },
+    { "lat": 41.8879206, "lon": 12.4669702 },
+    { "lat": 41.8879551, "lon": 12.4669865 },
+    { "lat": 41.8879849, "lon": 12.4669984 },
+    { "lat": 41.8881514, "lon": 12.4670595 },
+    { "lat": 41.8886334, "lon": 12.4672436 },
+    { "lat": 41.8887745, "lon": 12.4672996 },
+    { "lat": 41.8888142, "lon": 12.4673123 },
+    { "lat": 41.8888549, "lon": 12.4673215 },
+    { "lat": 41.8888830, "lon": 12.4673255 },
+    { "lat": 41.8889079, "lon": 12.4673239 },
+    { "lat": 41.8889277, "lon": 12.4673170 },
+    { "lat": 41.8889567, "lon": 12.4673010 },
+    { "lat": 41.8889795, "lon": 12.4672836 },
+    { "lat": 41.8889962, "lon": 12.4672666 },
+    { "lat": 41.8890125, "lon": 12.4672473 },
+    { "lat": 41.8891309, "lon": 12.4670663 },
+    { "lat": 41.8891992, "lon": 12.4669587 },
+    { "lat": 41.8892508, "lon": 12.4668731 }
+  ],
+  "tags": {
+    "addr:postcode": "00153",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 151214188,
+  "bounds": {
+    "minlat": 41.8876467,
+    "minlon": 12.4661343,
+    "maxlat": 41.8877325,
+    "maxlon": 12.4666621
+  },
+  "geometry": [
+    { "lat": 41.8877236, "lon": 12.4666621 },
+    { "lat": 41.8877325, "lon": 12.4666364 },
+    { "lat": 41.8877224, "lon": 12.4665568 },
+    { "lat": 41.8877220, "lon": 12.4665452 },
+    { "lat": 41.8877187, "lon": 12.4665091 },
+    { "lat": 41.8877072, "lon": 12.4664234 },
+    { "lat": 41.8876935, "lon": 12.4663143 },
+    { "lat": 41.8876863, "lon": 12.4662687 },
+    { "lat": 41.8876760, "lon": 12.4662252 },
+    { "lat": 41.8876648, "lon": 12.4661910 },
+    { "lat": 41.8876467, "lon": 12.4661343 }
+  ],
+  "tags": {
+    "addr:postcode": "00153",
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 151214190,
+  "bounds": {
+    "minlat": 41.8876401,
+    "minlon": 12.4661343,
+    "maxlat": 41.8877236,
+    "maxlon": 12.4666621
+  },
+  "geometry": [
+    { "lat": 41.8876467, "lon": 12.4661343 },
+    { "lat": 41.8876421, "lon": 12.4661703 },
+    { "lat": 41.8876401, "lon": 12.4662005 },
+    { "lat": 41.8876420, "lon": 12.4662430 },
+    { "lat": 41.8876465, "lon": 12.4662761 },
+    { "lat": 41.8876654, "lon": 12.4664362 },
+    { "lat": 41.8876761, "lon": 12.4664868 },
+    { "lat": 41.8876874, "lon": 12.4665700 },
+    { "lat": 41.8876914, "lon": 12.4665823 },
+    { "lat": 41.8877079, "lon": 12.4666429 },
+    { "lat": 41.8877236, "lon": 12.4666621 }
+  ],
+  "tags": {
+    "addr:postcode": "00153",
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 157166019,
+  "bounds": {
+    "minlat": 41.8949676,
+    "minlon": 12.4818213,
+    "maxlat": 41.8951377,
+    "maxlon": 12.4818755
+  },
+  "geometry": [
+    { "lat": 41.8949676, "lon": 12.4818213 },
+    { "lat": 41.8950418, "lon": 12.4818419 },
+    { "lat": 41.8950879, "lon": 12.4818645 },
+    { "lat": 41.8951377, "lon": 12.4818755 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 157166021,
+  "bounds": {
+    "minlat": 41.8947920,
+    "minlon": 12.4819161,
+    "maxlat": 41.8949303,
+    "maxlon": 12.4819478
+  },
+  "geometry": [
+    { "lat": 41.8947920, "lon": 12.4819161 },
+    { "lat": 41.8948430, "lon": 12.4819306 },
+    { "lat": 41.8948735, "lon": 12.4819387 },
+    { "lat": 41.8948966, "lon": 12.4819439 },
+    { "lat": 41.8949116, "lon": 12.4819467 },
+    { "lat": 41.8949303, "lon": 12.4819478 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 157166025,
+  "bounds": {
+    "minlat": 41.8950420,
+    "minlon": 12.4817452,
+    "maxlat": 41.8953046,
+    "maxlon": 12.4817905
+  },
+  "geometry": [
+    { "lat": 41.8950420, "lon": 12.4817452 },
+    { "lat": 41.8950761, "lon": 12.4817590 },
+    { "lat": 41.8951064, "lon": 12.4817697 },
+    { "lat": 41.8951388, "lon": 12.4817796 },
+    { "lat": 41.8951887, "lon": 12.4817876 },
+    { "lat": 41.8952298, "lon": 12.4817905 },
+    { "lat": 41.8952421, "lon": 12.4817902 },
+    { "lat": 41.8952625, "lon": 12.4817896 },
+    { "lat": 41.8953046, "lon": 12.4817802 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 157166030,
+  "bounds": {
+    "minlat": 41.8946965,
+    "minlon": 12.4819478,
+    "maxlat": 41.8949303,
+    "maxlon": 12.4819841
+  },
+  "geometry": [
+    { "lat": 41.8946965, "lon": 12.4819625 },
+    { "lat": 41.8947528, "lon": 12.4819802 },
+    { "lat": 41.8947846, "lon": 12.4819841 },
+    { "lat": 41.8948216, "lon": 12.4819822 },
+    { "lat": 41.8948675, "lon": 12.4819711 },
+    { "lat": 41.8949303, "lon": 12.4819478 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 159090816,
+  "bounds": {
+    "minlat": 41.8842669,
+    "minlon": 12.4735743,
+    "maxlat": 41.8843027,
+    "maxlon": 12.4739406
+  },
+  "geometry": [
+    { "lat": 41.8842669, "lon": 12.4739406 },
+    { "lat": 41.8842840, "lon": 12.4738869 },
+    { "lat": 41.8842897, "lon": 12.4738630 },
+    { "lat": 41.8842951, "lon": 12.4738317 },
+    { "lat": 41.8842994, "lon": 12.4738010 },
+    { "lat": 41.8843019, "lon": 12.4737706 },
+    { "lat": 41.8843027, "lon": 12.4737366 },
+    { "lat": 41.8843017, "lon": 12.4736991 },
+    { "lat": 41.8842982, "lon": 12.4736617 },
+    { "lat": 41.8842915, "lon": 12.4736181 },
+    { "lat": 41.8842837, "lon": 12.4735743 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 159090818,
+  "bounds": {
+    "minlat": 41.8839093,
+    "minlon": 12.4736029,
+    "maxlat": 41.8842745,
+    "maxlon": 12.4742239
+  },
+  "geometry": [
+    { "lat": 41.8842745, "lon": 12.4736029 },
+    { "lat": 41.8842695, "lon": 12.4736259 },
+    { "lat": 41.8842650, "lon": 12.4736451 },
+    { "lat": 41.8842573, "lon": 12.4736732 },
+    { "lat": 41.8842500, "lon": 12.4736967 },
+    { "lat": 41.8842406, "lon": 12.4737242 },
+    { "lat": 41.8842313, "lon": 12.4737497 },
+    { "lat": 41.8842220, "lon": 12.4737712 },
+    { "lat": 41.8842093, "lon": 12.4737963 },
+    { "lat": 41.8841746, "lon": 12.4738560 },
+    { "lat": 41.8841419, "lon": 12.4739077 },
+    { "lat": 41.8840305, "lon": 12.4740502 },
+    { "lat": 41.8839948, "lon": 12.4740986 },
+    { "lat": 41.8839630, "lon": 12.4741403 },
+    { "lat": 41.8839364, "lon": 12.4741775 },
+    { "lat": 41.8839211, "lon": 12.4742018 },
+    { "lat": 41.8839093, "lon": 12.4742239 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 172492033,
+  "bounds": {
+    "minlat": 41.8903825,
+    "minlon": 12.4779786,
+    "maxlat": 41.8904393,
+    "maxlon": 12.4780769
+  },
+  "geometry": [
+    { "lat": 41.8903825, "lon": 12.4780769 },
+    { "lat": 41.8904393, "lon": 12.4779786 }
+  ],
+  "tags": {
+    "highway": "footway",
+    "name": "Piazza di San Bartolomeo all'Isola",
+    "name:etymology:wikidata": "Q1755418",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 172492034,
+  "bounds": {
+    "minlat": 41.8904094,
+    "minlon": 12.4776518,
+    "maxlat": 41.8904642,
+    "maxlon": 12.4777723
+  },
+  "geometry": [
+    { "lat": 41.8904094, "lon": 12.4776518 },
+    { "lat": 41.8904218, "lon": 12.4776603 },
+    { "lat": 41.8904290, "lon": 12.4776705 },
+    { "lat": 41.8904642, "lon": 12.4777723 }
+  ],
+  "tags": {
+    "highway": "path",
+    "name": "Piazza di San Bartolomeo all'Isola",
+    "name:etymology:wikidata": "Q1755418",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 172492036,
+  "bounds": {
+    "minlat": 41.8905315,
+    "minlon": 12.4776590,
+    "maxlat": 41.8905798,
+    "maxlon": 12.4777843
+  },
+  "geometry": [
+    { "lat": 41.8905315, "lon": 12.4777843 },
+    { "lat": 41.8905566, "lon": 12.4777163 },
+    { "lat": 41.8905798, "lon": 12.4776590 }
+  ],
+  "tags": {
+    "highway": "service",
+    "name": "Piazza di San Bartolomeo all'Isola",
+    "name:etymology:wikidata": "Q1755418",
+    "service": "driveway",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 172492037,
+  "bounds": {
+    "minlat": 41.8904023,
+    "minlon": 12.4777680,
+    "maxlat": 41.8905730,
+    "maxlon": 12.4779983
+  },
+  "geometry": [
+    { "lat": 41.8904393, "lon": 12.4779786 },
+    { "lat": 41.8904641, "lon": 12.4779940 },
+    { "lat": 41.8904912, "lon": 12.4779983 },
+    { "lat": 41.8905180, "lon": 12.4779909 },
+    { "lat": 41.8905416, "lon": 12.4779725 },
+    { "lat": 41.8905598, "lon": 12.4779451 },
+    { "lat": 41.8905706, "lon": 12.4779114 },
+    { "lat": 41.8905730, "lon": 12.4778749 },
+    { "lat": 41.8905667, "lon": 12.4778392 },
+    { "lat": 41.8905524, "lon": 12.4778079 },
+    { "lat": 41.8905315, "lon": 12.4777843 },
+    { "lat": 41.8905102, "lon": 12.4777721 },
+    { "lat": 41.8904872, "lon": 12.4777680 },
+    { "lat": 41.8904642, "lon": 12.4777723 },
+    { "lat": 41.8904413, "lon": 12.4777861 },
+    { "lat": 41.8904223, "lon": 12.4778083 },
+    { "lat": 41.8904089, "lon": 12.4778369 },
+    { "lat": 41.8904023, "lon": 12.4778694 },
+    { "lat": 41.8904030, "lon": 12.4779032 },
+    { "lat": 41.8904109, "lon": 12.4779352 },
+    { "lat": 41.8904231, "lon": 12.4779593 },
+    { "lat": 41.8904393, "lon": 12.4779786 }
+  ],
+  "tags": {
+    "highway": "service",
+    "name": "Piazza di San Bartolomeo all'Isola",
+    "name:etymology:wikidata": "Q1755418",
+    "service": "driveway",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 190344601,
+  "bounds": {
+    "minlat": 41.8837856,
+    "minlon": 12.4741605,
+    "maxlat": 41.8838427,
+    "maxlon": 12.4743509
+  },
+  "geometry": [
+    { "lat": 41.8837856, "lon": 12.4741605 },
+    { "lat": 41.8837965, "lon": 12.4741783 },
+    { "lat": 41.8838033, "lon": 12.4741908 },
+    { "lat": 41.8838150, "lon": 12.4742167 },
+    { "lat": 41.8838252, "lon": 12.4742398 },
+    { "lat": 41.8838301, "lon": 12.4742536 },
+    { "lat": 41.8838346, "lon": 12.4742690 },
+    { "lat": 41.8838390, "lon": 12.4742893 },
+    { "lat": 41.8838411, "lon": 12.4743061 },
+    { "lat": 41.8838422, "lon": 12.4743226 },
+    { "lat": 41.8838427, "lon": 12.4743363 },
+    { "lat": 41.8838416, "lon": 12.4743509 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "source:restriction": "https://www.mapillary.com/app/?pKey=81gcarJBwlLDo_hthE5cAw&focus=photo"
+  }
+},
+{
+  "type": "way",
+  "id": 190598717,
+  "bounds": {
+    "minlat": 41.8883760,
+    "minlon": 12.4780225,
+    "maxlat": 41.8884709,
+    "maxlon": 12.4781051
+  },
+  "geometry": [
+    { "lat": 41.8884709, "lon": 12.4781051 },
+    { "lat": 41.8883760, "lon": 12.4780225 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via dei Vascellari",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 190639859,
+  "bounds": {
+    "minlat": 41.8823897,
+    "minlon": 12.4762442,
+    "maxlat": 41.8824956,
+    "maxlon": 12.4764014
+  },
+  "geometry": [
+    { "lat": 41.8824956, "lon": 12.4762442 },
+    { "lat": 41.8824401, "lon": 12.4763245 },
+    { "lat": 41.8823897, "lon": 12.4764014 }
+  ],
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200237031,
+  "bounds": {
+    "minlat": 41.8823154,
+    "minlon": 12.4765959,
+    "maxlat": 41.8826228,
+    "maxlon": 12.4766779
+  },
+  "geometry": [
+    { "lat": 41.8823154, "lon": 12.4766779 },
+    { "lat": 41.8824094, "lon": 12.4766706 },
+    { "lat": 41.8824551, "lon": 12.4766591 },
+    { "lat": 41.8824988, "lon": 12.4766464 },
+    { "lat": 41.8825657, "lon": 12.4766245 },
+    { "lat": 41.8826010, "lon": 12.4766085 },
+    { "lat": 41.8826228, "lon": 12.4765959 }
+  ],
+  "tags": {
+    "access": "no",
+    "foot": "yes",
+    "highway": "service",
+    "lanes:psv": "1",
+    "lit": "yes",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200237033,
+  "bounds": {
+    "minlat": 41.8826228,
+    "minlon": 12.4765127,
+    "maxlat": 41.8834589,
+    "maxlon": 12.4766776
+  },
+  "geometry": [
+    { "lat": 41.8834589, "lon": 12.4766776 },
+    { "lat": 41.8833207, "lon": 12.4765997 },
+    { "lat": 41.8832825, "lon": 12.4765826 },
+    { "lat": 41.8832378, "lon": 12.4765637 },
+    { "lat": 41.8831841, "lon": 12.4765441 },
+    { "lat": 41.8831114, "lon": 12.4765280 },
+    { "lat": 41.8830381, "lon": 12.4765160 },
+    { "lat": 41.8829550, "lon": 12.4765127 },
+    { "lat": 41.8828748, "lon": 12.4765185 },
+    { "lat": 41.8828219, "lon": 12.4765296 },
+    { "lat": 41.8827438, "lon": 12.4765508 },
+    { "lat": 41.8826228, "lon": 12.4765959 }
+  ],
+  "tags": {
+    "access": "no",
+    "bus": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "lanes:psv": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "psv": "yes",
+    "service": "bus",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200237038,
+  "bounds": {
+    "minlat": 41.8928043,
+    "minlon": 12.4713866,
+    "maxlat": 41.8930686,
+    "maxlon": 12.4717498
+  },
+  "geometry": [
+    { "lat": 41.8928043, "lon": 12.4713866 },
+    { "lat": 41.8928474, "lon": 12.4714418 },
+    { "lat": 41.8928529, "lon": 12.4714489 },
+    { "lat": 41.8930686, "lon": 12.4717498 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Via dei Pettinari",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 200237249,
+  "bounds": {
+    "minlat": 41.8823236,
+    "minlon": 12.4764014,
+    "maxlat": 41.8823897,
+    "maxlon": 12.4765564
+  },
+  "geometry": [
+    { "lat": 41.8823897, "lon": 12.4764014 },
+    { "lat": 41.8823595, "lon": 12.4764663 },
+    { "lat": 41.8823475, "lon": 12.4764949 },
+    { "lat": 41.8823236, "lon": 12.4765564 }
+  ],
+  "tags": {
+    "access": "no",
+    "highway": "service",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "psv": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 200307283,
+  "bounds": {
+    "minlat": 41.8892457,
+    "minlon": 12.4763703,
+    "maxlat": 41.8893002,
+    "maxlon": 12.4764172
+  },
+  "geometry": [
+    { "lat": 41.8892457, "lon": 12.4763703 },
+    { "lat": 41.8893002, "lon": 12.4764172 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Piazza in Piscinula",
+    "sidewalk": "no",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 200307284,
+  "bounds": {
+    "minlat": 41.8891872,
+    "minlon": 12.4763186,
+    "maxlat": 41.8892457,
+    "maxlon": 12.4763703
+  },
+  "geometry": [
+    { "lat": 41.8891872, "lon": 12.4763186 },
+    { "lat": 41.8892457, "lon": 12.4763703 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Piazza in Piscinula",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 200307285,
+  "bounds": {
+    "minlat": 41.8888927,
+    "minlon": 12.4763703,
+    "maxlat": 41.8892457,
+    "maxlon": 12.4770669
+  },
+  "geometry": [
+    { "lat": 41.8892457, "lon": 12.4763703 },
+    { "lat": 41.8890996, "lon": 12.4769760 },
+    { "lat": 41.8888927, "lon": 12.4770669 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Piazza in Piscinula",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 202151048,
+  "bounds": {
+    "minlat": 41.8923973,
+    "minlon": 12.4786708,
+    "maxlat": 41.8924757,
+    "maxlon": 12.4787212
+  },
+  "geometry": [
+    { "lat": 41.8924757, "lon": 12.4787212 },
+    { "lat": 41.8923973, "lon": 12.4786708 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "highway": "footway",
+    "layer": "1",
+    "lit": "yes",
+    "surface": "wood"
+  }
+},
+{
+  "type": "way",
+  "id": 202550146,
+  "bounds": {
+    "minlat": 41.8914113,
+    "minlon": 12.4802992,
+    "maxlat": 41.8915966,
+    "maxlon": 12.4804251
+  },
+  "geometry": [
+    { "lat": 41.8914113, "lon": 12.4804251 },
+    { "lat": 41.8915081, "lon": 12.4803679 },
+    { "lat": 41.8915966, "lon": 12.4802992 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "foot": "yes",
+    "highway": "tertiary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 203181633,
+  "bounds": {
+    "minlat": 41.8923732,
+    "minlon": 12.4748732,
+    "maxlat": 41.8936201,
+    "maxlon": 12.4757088
+  },
+  "geometry": [
+    { "lat": 41.8923732, "lon": 12.4748732 },
+    { "lat": 41.8926627, "lon": 12.4750194 },
+    { "lat": 41.8927988, "lon": 12.4750949 },
+    { "lat": 41.8928140, "lon": 12.4751053 },
+    { "lat": 41.8928542, "lon": 12.4751324 },
+    { "lat": 41.8928804, "lon": 12.4751520 },
+    { "lat": 41.8929114, "lon": 12.4751766 },
+    { "lat": 41.8929521, "lon": 12.4752124 },
+    { "lat": 41.8929778, "lon": 12.4752317 },
+    { "lat": 41.8930324, "lon": 12.4752688 },
+    { "lat": 41.8930925, "lon": 12.4753101 },
+    { "lat": 41.8931976, "lon": 12.4753738 },
+    { "lat": 41.8932264, "lon": 12.4753940 },
+    { "lat": 41.8932927, "lon": 12.4754405 },
+    { "lat": 41.8933247, "lon": 12.4754628 },
+    { "lat": 41.8933941, "lon": 12.4755187 },
+    { "lat": 41.8935648, "lon": 12.4756641 },
+    { "lat": 41.8936201, "lon": 12.4757088 }
+  ],
+  "tags": {
+    "hgv:conditional": "no @ (Mo-Su 07:00-20:00)",
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Arenula",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 203753492,
+  "bounds": {
+    "minlat": 41.8895592,
+    "minlon": 12.4723549,
+    "maxlat": 41.8895935,
+    "maxlon": 12.4728168
+  },
+  "geometry": [
+    { "lat": 41.8895935, "lon": 12.4723549 },
+    { "lat": 41.8895739, "lon": 12.4725967 },
+    { "lat": 41.8895592, "lon": 12.4728168 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via della Lungaretta",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 204149303,
+  "bounds": {
+    "minlat": 41.8922396,
+    "minlon": 12.4660471,
+    "maxlat": 41.8945672,
+    "maxlon": 12.4676041
+  },
+  "geometry": [
+    { "lat": 41.8922396, "lon": 12.4676041 },
+    { "lat": 41.8927475, "lon": 12.4673220 },
+    { "lat": 41.8932312, "lon": 12.4670155 },
+    { "lat": 41.8937149, "lon": 12.4666956 },
+    { "lat": 41.8939004, "lon": 12.4665511 },
+    { "lat": 41.8943961, "lon": 12.4661771 },
+    { "lat": 41.8944212, "lon": 12.4661579 },
+    { "lat": 41.8945672, "lon": 12.4660471 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via della Lungara",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 236814735,
+  "bounds": {
+    "minlat": 41.8900874,
+    "minlon": 12.4709010,
+    "maxlat": 41.8904181,
+    "maxlon": 12.4710127
+  },
+  "geometry": [
+    { "lat": 41.8904181, "lon": 12.4709010 },
+    { "lat": 41.8902422, "lon": 12.4709608 },
+    { "lat": 41.8900874, "lon": 12.4710127 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "motor_vehicle": "private",
+    "name": "Via del Moro",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 236877086,
+  "bounds": {
+    "minlat": 41.8876371,
+    "minlon": 12.4772838,
+    "maxlat": 41.8881033,
+    "maxlon": 12.4777610
+  },
+  "geometry": [
+    { "lat": 41.8881033, "lon": 12.4777610 },
+    { "lat": 41.8878640, "lon": 12.4775112 },
+    { "lat": 41.8876371, "lon": 12.4772838 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle": "private",
+    "name": "Via dei Vascellari",
+    "oneway:motor_vehicle": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 243931702,
+  "bounds": {
+    "minlat": 41.8949303,
+    "minlon": 12.4819147,
+    "maxlat": 41.8950406,
+    "maxlon": 12.4819478
+  },
+  "geometry": [
+    { "lat": 41.8949303, "lon": 12.4819478 },
+    { "lat": 41.8950406, "lon": 12.4819147 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 243931703,
+  "bounds": {
+    "minlat": 41.8945197,
+    "minlon": 12.4818855,
+    "maxlat": 41.8945842,
+    "maxlon": 12.4819420
+  },
+  "geometry": [
+    { "lat": 41.8945197, "lon": 12.4819420 },
+    { "lat": 41.8945538, "lon": 12.4819148 },
+    { "lat": 41.8945842, "lon": 12.4818855 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 243931704,
+  "bounds": {
+    "minlat": 41.8945842,
+    "minlon": 12.4818265,
+    "maxlat": 41.8946562,
+    "maxlon": 12.4818855
+  },
+  "geometry": [
+    { "lat": 41.8945842, "lon": 12.4818855 },
+    { "lat": 41.8946175, "lon": 12.4818555 },
+    { "lat": 41.8946562, "lon": 12.4818265 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 243931705,
+  "bounds": {
+    "minlat": 41.8947313,
+    "minlon": 12.4817182,
+    "maxlat": 41.8950420,
+    "maxlon": 12.4817792
+  },
+  "geometry": [
+    { "lat": 41.8947313, "lon": 12.4817792 },
+    { "lat": 41.8947770, "lon": 12.4817547 },
+    { "lat": 41.8948214, "lon": 12.4817368 },
+    { "lat": 41.8948742, "lon": 12.4817224 },
+    { "lat": 41.8949077, "lon": 12.4817182 },
+    { "lat": 41.8949482, "lon": 12.4817200 },
+    { "lat": 41.8949917, "lon": 12.4817284 },
+    { "lat": 41.8950420, "lon": 12.4817452 }
+  ],
+  "tags": {
+    "bus": "designated",
+    "emergency": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 248095763,
+  "bounds": {
+    "minlat": 41.8940270,
+    "minlon": 12.4760349,
+    "maxlat": 41.8942657,
+    "maxlon": 12.4762225
+  },
+  "geometry": [
+    { "lat": 41.8940270, "lon": 12.4760349 },
+    { "lat": 41.8942657, "lon": 12.4762225 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Arenula",
+    "oneway": "yes",
+    "sidewalk": "right",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 296568984,
+  "bounds": {
+    "minlat": 41.8886161,
+    "minlon": 12.4755329,
+    "maxlat": 41.8889070,
+    "maxlon": 12.4761931
+  },
+  "geometry": [
+    { "lat": 41.8886161, "lon": 12.4761931 },
+    { "lat": 41.8888606, "lon": 12.4755992 },
+    { "lat": 41.8889070, "lon": 12.4755329 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via dei Salumi",
+    "oneway": "yes",
+    "sidewalk": "no",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 296568985,
+  "bounds": {
+    "minlat": 41.8881033,
+    "minlon": 12.4777610,
+    "maxlat": 41.8883760,
+    "maxlon": 12.4780225
+  },
+  "geometry": [
+    { "lat": 41.8883760, "lon": 12.4780225 },
+    { "lat": 41.8883405, "lon": 12.4779875 },
+    { "lat": 41.8882758, "lon": 12.4779295 },
+    { "lat": 41.8882323, "lon": 12.4778886 },
+    { "lat": 41.8881033, "lon": 12.4777610 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle": "private",
+    "name": "Via dei Vascellari",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 303405560,
+  "bounds": {
+    "minlat": 41.8924056,
+    "minlon": 12.4805128,
+    "maxlat": 41.8929449,
+    "maxlon": 12.4810208
+  },
+  "geometry": [
+    { "lat": 41.8929449, "lon": 12.4810208 },
+    { "lat": 41.8928324, "lon": 12.4808621 },
+    { "lat": 41.8927519, "lon": 12.4807634 },
+    { "lat": 41.8926979, "lon": 12.4807087 },
+    { "lat": 41.8926275, "lon": 12.4806468 },
+    { "lat": 41.8925698, "lon": 12.4806049 },
+    { "lat": 41.8924784, "lon": 12.4805494 },
+    { "lat": 41.8924056, "lon": 12.4805128 }
+  ],
+  "tags": {
+    "cycleway": "no",
+    "highway": "tertiary",
+    "lanes": "6",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "sidewalk": "both",
+    "sidewalk:both:surface": "asphalt",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 347756696,
+  "bounds": {
+    "minlat": 41.8783978,
+    "minlon": 12.4684888,
+    "maxlat": 41.8811395,
+    "maxlon": 12.4706043
+  },
+  "geometry": [
+    { "lat": 41.8783978, "lon": 12.4684888 },
+    { "lat": 41.8787777, "lon": 12.4686877 },
+    { "lat": 41.8788285, "lon": 12.4687184 },
+    { "lat": 41.8788744, "lon": 12.4687491 },
+    { "lat": 41.8789319, "lon": 12.4687875 },
+    { "lat": 41.8789815, "lon": 12.4688219 },
+    { "lat": 41.8791556, "lon": 12.4689508 },
+    { "lat": 41.8792171, "lon": 12.4689938 },
+    { "lat": 41.8793769, "lon": 12.4691065 },
+    { "lat": 41.8804189, "lon": 12.4698859 },
+    { "lat": 41.8804886, "lon": 12.4699407 },
+    { "lat": 41.8805424, "lon": 12.4699830 },
+    { "lat": 41.8805868, "lon": 12.4700165 },
+    { "lat": 41.8806297, "lon": 12.4700507 },
+    { "lat": 41.8806660, "lon": 12.4700782 },
+    { "lat": 41.8807009, "lon": 12.4701085 },
+    { "lat": 41.8807337, "lon": 12.4701381 },
+    { "lat": 41.8807804, "lon": 12.4701815 },
+    { "lat": 41.8808187, "lon": 12.4702179 },
+    { "lat": 41.8808510, "lon": 12.4702511 },
+    { "lat": 41.8808987, "lon": 12.4703022 },
+    { "lat": 41.8809485, "lon": 12.4703597 },
+    { "lat": 41.8810441, "lon": 12.4704824 },
+    { "lat": 41.8811395, "lon": 12.4706043 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Portuense",
+    "name:etymology:wikidata": "Q1057246",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt",
+    "vehicle:conditional": "no @ (Su 03:00-20:00)"
+  }
+},
+{
+  "type": "way",
+  "id": 381223151,
+  "bounds": {
+    "minlat": 41.8897031,
+    "minlon": 12.4771778,
+    "maxlat": 41.8903817,
+    "maxlon": 12.4774599
+  },
+  "geometry": [
+    { "lat": 41.8897031, "lon": 12.4771778 },
+    { "lat": 41.8901409, "lon": 12.4773553 },
+    { "lat": 41.8902207, "lon": 12.4773917 },
+    { "lat": 41.8903817, "lon": 12.4774599 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "emergency": "yes",
+    "highway": "residential",
+    "lanes": "2",
+    "layer": "1",
+    "lit": "yes",
+    "motor_vehicle": "destination",
+    "name": "Ponte Cestio",
+    "name:etymology:wikidata": "Q734903",
+    "old_name": "Ponte di San Bartolomeo",
+    "sidewalk:both": "separate",
+    "smoothness": "intermediate",
+    "surface": "sett",
+    "taxi": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 443690067,
+  "bounds": {
+    "minlat": 41.8811395,
+    "minlon": 12.4706043,
+    "maxlat": 41.8831504,
+    "maxlon": 12.4730922
+  },
+  "geometry": [
+    { "lat": 41.8811395, "lon": 12.4706043 },
+    { "lat": 41.8813055, "lon": 12.4707975 },
+    { "lat": 41.8814449, "lon": 12.4709638 },
+    { "lat": 41.8815190, "lon": 12.4710587 },
+    { "lat": 41.8815887, "lon": 12.4711442 },
+    { "lat": 41.8818175, "lon": 12.4714290 },
+    { "lat": 41.8820626, "lon": 12.4717339 },
+    { "lat": 41.8828905, "lon": 12.4727688 },
+    { "lat": 41.8830588, "lon": 12.4729788 },
+    { "lat": 41.8831504, "lon": 12.4730922 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Portuense",
+    "name:etymology:wikidata": "Q1057246",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt",
+    "vehicle:conditional": "no @ (Su 03:00-20:00)"
+  }
+},
+{
+  "type": "way",
+  "id": 482670983,
+  "bounds": {
+    "minlat": 41.8902704,
+    "minlon": 12.4776318,
+    "maxlat": 41.8906956,
+    "maxlon": 12.4781777
+  },
+  "geometry": [
+    { "lat": 41.8906956, "lon": 12.4778451 },
+    { "lat": 41.8906104, "lon": 12.4777586 },
+    { "lat": 41.8905566, "lon": 12.4777163 },
+    { "lat": 41.8904922, "lon": 12.4776591 },
+    { "lat": 41.8904160, "lon": 12.4776318 },
+    { "lat": 41.8904094, "lon": 12.4776518 },
+    { "lat": 41.8904037, "lon": 12.4776692 },
+    { "lat": 41.8903709, "lon": 12.4776496 },
+    { "lat": 41.8902914, "lon": 12.4778898 },
+    { "lat": 41.8902746, "lon": 12.4779508 },
+    { "lat": 41.8902704, "lon": 12.4779694 },
+    { "lat": 41.8902761, "lon": 12.4779946 },
+    { "lat": 41.8902813, "lon": 12.4780092 },
+    { "lat": 41.8902978, "lon": 12.4780103 },
+    { "lat": 41.8903825, "lon": 12.4780769 },
+    { "lat": 41.8904543, "lon": 12.4781337 },
+    { "lat": 41.8904466, "lon": 12.4781511 },
+    { "lat": 41.8904774, "lon": 12.4781777 },
+    { "lat": 41.8905332, "lon": 12.4780926 },
+    { "lat": 41.8905945, "lon": 12.4779992 },
+    { "lat": 41.8906344, "lon": 12.4779384 },
+    { "lat": 41.8906956, "lon": 12.4778451 }
+  ],
+  "tags": {
+    "area": "yes",
+    "highway": "pedestrian",
+    "name": "Piazza di San Bartolomeo all'Isola",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 603411412,
+  "bounds": {
+    "minlat": 41.8889361,
+    "minlon": 12.4812400,
+    "maxlat": 41.8892808,
+    "maxlon": 12.4813786
+  },
+  "geometry": [
+    { "lat": 41.8889361, "lon": 12.4813786 },
+    { "lat": 41.8892808, "lon": 12.4812400 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "5",
+    "lanes:backward": "3",
+    "lanes:forward": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza della Bocca della Verità",
+    "source:maxspeed": "IT:urban",
+    "wikidata": "Q3902429",
+    "wikipedia": "it:Piazza della Bocca della Verità"
+  }
+},
+{
+  "type": "way",
+  "id": 777223439,
+  "bounds": {
+    "minlat": 41.8933320,
+    "minlon": 12.4852353,
+    "maxlat": 41.8935353,
+    "maxlon": 12.4855797
+  },
+  "geometry": [
+    { "lat": 41.8934668, "lon": 12.4852353 },
+    { "lat": 41.8935353, "lon": 12.4853400 },
+    { "lat": 41.8933320, "lon": 12.4855797 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "highway": "footway",
+    "layer": "1"
+  }
+},
+{
+  "type": "way",
+  "id": 778278771,
+  "bounds": {
+    "minlat": 41.8829922,
+    "minlon": 12.4749000,
+    "maxlat": 41.8835825,
+    "maxlon": 12.4756526
+  },
+  "geometry": [
+    { "lat": 41.8829922, "lon": 12.4756526 },
+    { "lat": 41.8835825, "lon": 12.4749000 }
+  ],
+  "tags": {
+    "access": "no",
+    "bridge": "yes",
+    "electrified": "contact_line",
+    "frequency": "0",
+    "gauge": "1445",
+    "highway": "service",
+    "layer": "1",
+    "oneway": "yes",
+    "operator": "ATAC",
+    "psv": "yes",
+    "railway": "tram",
+    "tracks": "1",
+    "voltage": "600"
+  }
+},
+{
+  "type": "way",
+  "id": 778870185,
+  "bounds": {
+    "minlat": 41.8887601,
+    "minlon": 12.4801373,
+    "maxlat": 41.8888967,
+    "maxlon": 12.4801660
+  },
+  "geometry": [
+    { "lat": 41.8887601, "lon": 12.4801660 },
+    { "lat": 41.8888967, "lon": 12.4801373 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "bridge": "yes",
+    "foot": "yes",
+    "highway": "path",
+    "layer": "1",
+    "note": "lower footway at height tevere",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 834012189,
+  "bounds": {
+    "minlat": 41.8891054,
+    "minlon": 12.4782142,
+    "maxlat": 41.8892429,
+    "maxlon": 12.4801950
+  },
+  "geometry": [
+    { "lat": 41.8892429, "lon": 12.4782142 },
+    { "lat": 41.8891054, "lon": 12.4801950 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "footway": "sidewalk",
+    "highway": "footway",
+    "layer": "1",
+    "lit": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 835565670,
+  "bounds": {
+    "minlat": 41.8918473,
+    "minlon": 12.4702547,
+    "maxlat": 41.8919092,
+    "maxlon": 12.4703316
+  },
+  "geometry": [
+    { "lat": 41.8919092, "lon": 12.4702547 },
+    { "lat": 41.8918473, "lon": 12.4703316 }
+  ],
+  "tags": {
+    "highway": "primary",
+    "is_in:city": "Roma",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza Trilussa",
+    "name:etymology:wikidata": "Q1378908",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 835565674,
+  "bounds": {
+    "minlat": 41.8918793,
+    "minlon": 12.4696714,
+    "maxlat": 41.8919882,
+    "maxlon": 12.4699756
+  },
+  "geometry": [
+    { "lat": 41.8919882, "lon": 12.4699756 },
+    { "lat": 41.8919391, "lon": 12.4699110 },
+    { "lat": 41.8919202, "lon": 12.4698860 },
+    { "lat": 41.8918913, "lon": 12.4698426 },
+    { "lat": 41.8918831, "lon": 12.4698170 },
+    { "lat": 41.8918793, "lon": 12.4697868 },
+    { "lat": 41.8918817, "lon": 12.4696714 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Piazza Trilussa",
+    "name:etymology:wikidata": "Q1378908",
+    "oneway": "yes",
+    "sidewalk": "left",
+    "sidewalk:left:surface": "sett",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 835565681,
+  "bounds": {
+    "minlat": 41.8892508,
+    "minlon": 12.4659178,
+    "maxlat": 41.8898434,
+    "maxlon": 12.4668731
+  },
+  "geometry": [
+    { "lat": 41.8898434, "lon": 12.4659178 },
+    { "lat": 41.8898148, "lon": 12.4659499 },
+    { "lat": 41.8897907, "lon": 12.4659821 },
+    { "lat": 41.8897012, "lon": 12.4661320 },
+    { "lat": 41.8895109, "lon": 12.4664270 },
+    { "lat": 41.8894523, "lon": 12.4665178 },
+    { "lat": 41.8893018, "lon": 12.4667833 },
+    { "lat": 41.8892508, "lon": 12.4668731 }
+  ],
+  "tags": {
+    "addr:postcode": "00153",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 885909162,
+  "bounds": {
+    "minlat": 41.8831504,
+    "minlon": 12.4730922,
+    "maxlat": 41.8837322,
+    "maxlon": 12.4738214
+  },
+  "geometry": [
+    { "lat": 41.8837322, "lon": 12.4738214 },
+    { "lat": 41.8831504, "lon": 12.4730922 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Portuense",
+    "name:etymology:wikidata": "Q1057246",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt",
+    "vehicle:conditional": "no @ (Su 03:00-20:00)"
+  }
+},
+{
+  "type": "way",
+  "id": 888672891,
+  "bounds": {
+    "minlat": 41.8894702,
+    "minlon": 12.4820691,
+    "maxlat": 41.8902871,
+    "maxlon": 12.4821647
+  },
+  "geometry": [
+    { "lat": 41.8902871, "lon": 12.4820691 },
+    { "lat": 41.8900546, "lon": 12.4821008 },
+    { "lat": 41.8899189, "lon": 12.4821168 },
+    { "lat": 41.8894702, "lon": 12.4821647 }
+  ],
+  "tags": {
+    "highway": "footway",
+    "name": "Via del Velabro"
+  }
+},
+{
+  "type": "way",
+  "id": 892469697,
+  "bounds": {
+    "minlat": 41.8836755,
+    "minlon": 12.4747163,
+    "maxlat": 41.8837104,
+    "maxlon": 12.4747369
+  },
+  "geometry": [
+    { "lat": 41.8837104, "lon": 12.4747369 },
+    { "lat": 41.8836936, "lon": 12.4747248 },
+    { "lat": 41.8836755, "lon": 12.4747163 }
+  ],
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 906605906,
+  "bounds": {
+    "minlat": 41.8837879,
+    "minlon": 12.4744969,
+    "maxlat": 41.8838687,
+    "maxlon": 12.4745994
+  },
+  "geometry": [
+    { "lat": 41.8837879, "lon": 12.4745994 },
+    { "lat": 41.8838687, "lon": 12.4744969 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 906605907,
+  "bounds": {
+    "minlat": 41.8836184,
+    "minlon": 12.4742239,
+    "maxlat": 41.8839093,
+    "maxlon": 12.4747204
+  },
+  "geometry": [
+    { "lat": 41.8839093, "lon": 12.4742239 },
+    { "lat": 41.8838833, "lon": 12.4742768 },
+    { "lat": 41.8838614, "lon": 12.4743172 },
+    { "lat": 41.8838416, "lon": 12.4743509 },
+    { "lat": 41.8838035, "lon": 12.4744124 },
+    { "lat": 41.8836512, "lon": 12.4746383 },
+    { "lat": 41.8836184, "lon": 12.4747204 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 906605908,
+  "bounds": {
+    "minlat": 41.8838687,
+    "minlon": 12.4742239,
+    "maxlat": 41.8839093,
+    "maxlon": 12.4744969
+  },
+  "geometry": [
+    { "lat": 41.8838687, "lon": 12.4744969 },
+    { "lat": 41.8838843, "lon": 12.4743994 },
+    { "lat": 41.8839093, "lon": 12.4742239 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 949395741,
+  "bounds": {
+    "minlat": 41.8838687,
+    "minlon": 12.4742737,
+    "maxlat": 41.8840555,
+    "maxlon": 12.4744969
+  },
+  "geometry": [
+    { "lat": 41.8838687, "lon": 12.4744969 },
+    { "lat": 41.8840012, "lon": 12.4743427 },
+    { "lat": 41.8840555, "lon": 12.4742737 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 949395743,
+  "bounds": {
+    "minlat": 41.8838717,
+    "minlon": 12.4740261,
+    "maxlat": 41.8839136,
+    "maxlon": 12.4742239
+  },
+  "geometry": [
+    { "lat": 41.8839093, "lon": 12.4742239 },
+    { "lat": 41.8839120, "lon": 12.4741933 },
+    { "lat": 41.8839136, "lon": 12.4741677 },
+    { "lat": 41.8839135, "lon": 12.4741523 },
+    { "lat": 41.8839125, "lon": 12.4741383 },
+    { "lat": 41.8839103, "lon": 12.4741231 },
+    { "lat": 41.8839061, "lon": 12.4741048 },
+    { "lat": 41.8838988, "lon": 12.4740824 },
+    { "lat": 41.8838904, "lon": 12.4740616 },
+    { "lat": 41.8838809, "lon": 12.4740417 },
+    { "lat": 41.8838717, "lon": 12.4740261 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 973345414,
+  "bounds": {
+    "minlat": 41.8830236,
+    "minlon": 12.4748680,
+    "maxlat": 41.8836636,
+    "maxlon": 12.4756969
+  },
+  "geometry": [
+    { "lat": 41.8830236, "lon": 12.4756969 },
+    { "lat": 41.8836636, "lon": 12.4748680 }
+  ],
+  "tags": {
+    "bicycle": "designated",
+    "bridge": "yes",
+    "foot": "designated",
+    "highway": "cycleway",
+    "layer": "1",
+    "lit": "yes",
+    "oneway": "no",
+    "segregated": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 973345417,
+  "bounds": {
+    "minlat": 41.8829263,
+    "minlon": 12.4747301,
+    "maxlat": 41.8835614,
+    "maxlon": 12.4755503
+  },
+  "geometry": [
+    { "lat": 41.8829263, "lon": 12.4755503 },
+    { "lat": 41.8835614, "lon": 12.4747301 }
+  ],
+  "tags": {
+    "bicycle": "designated",
+    "bridge": "yes",
+    "foot": "designated",
+    "highway": "cycleway",
+    "layer": "1",
+    "lit": "yes",
+    "oneway": "no",
+    "segregated": "no",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 995027476,
+  "bounds": {
+    "minlat": 41.8949788,
+    "minlon": 12.4847415,
+    "maxlat": 41.8953102,
+    "maxlon": 12.4852543
+  },
+  "geometry": [
+    { "lat": 41.8953102, "lon": 12.4852543 },
+    { "lat": 41.8949852, "lon": 12.4847494 },
+    { "lat": 41.8949788, "lon": 12.4847415 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "bridge": "yes",
+    "highway": "footway",
+    "layer": "1",
+    "name": "Foro Traiano",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 995413508,
+  "bounds": {
+    "minlat": 41.8932386,
+    "minlon": 12.4859733,
+    "maxlat": 41.8932523,
+    "maxlon": 12.4859914
+  },
+  "geometry": [
+    { "lat": 41.8932386, "lon": 12.4859914 },
+    { "lat": 41.8932523, "lon": 12.4859733 }
+  ],
+  "tags": {
+    "access": "yes",
+    "bridge": "yes",
+    "highway": "footway",
+    "layer": "1",
+    "surface": "metal"
+  }
+},
+{
+  "type": "way",
+  "id": 1008081248,
+  "bounds": {
+    "minlat": 41.8918070,
+    "minlon": 12.4703316,
+    "maxlat": 41.8918473,
+    "maxlon": 12.4703859
+  },
+  "geometry": [
+    { "lat": 41.8918473, "lon": 12.4703316 },
+    { "lat": 41.8918070, "lon": 12.4703859 }
+  ],
+  "tags": {
+    "highway": "primary",
+    "is_in:city": "Roma",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza Trilussa",
+    "name:etymology:wikidata": "Q1378908",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1015248385,
+  "bounds": {
+    "minlat": 41.8828680,
+    "minlon": 12.4757699,
+    "maxlat": 41.8828869,
+    "maxlon": 12.4757944
+  },
+  "geometry": [
+    { "lat": 41.8828680, "lon": 12.4757699 },
+    { "lat": 41.8828869, "lon": 12.4757944 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "oneway:psv": "no",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1015444846,
+  "bounds": {
+    "minlat": 41.8828540,
+    "minlon": 12.4757508,
+    "maxlat": 41.8828680,
+    "maxlon": 12.4757699
+  },
+  "geometry": [
+    { "lat": 41.8828540, "lon": 12.4757508 },
+    { "lat": 41.8828680, "lon": 12.4757699 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Emporio",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1015444849,
+  "bounds": {
+    "minlat": 41.8836514,
+    "minlon": 12.4747100,
+    "maxlat": 41.8836755,
+    "maxlon": 12.4747163
+  },
+  "geometry": [
+    { "lat": 41.8836755, "lon": 12.4747163 },
+    { "lat": 41.8836614, "lon": 12.4747118 },
+    { "lat": 41.8836514, "lon": 12.4747100 }
+  ],
+  "tags": {
+    "highway": "primary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban"
+  }
+},
+{
+  "type": "way",
+  "id": 1075798900,
+  "bounds": {
+    "minlat": 41.8953296,
+    "minlon": 12.4648650,
+    "maxlat": 41.8960589,
+    "maxlon": 12.4654552
+  },
+  "geometry": [
+    { "lat": 41.8953296, "lon": 12.4654552 },
+    { "lat": 41.8957840, "lon": 12.4650874 },
+    { "lat": 41.8960589, "lon": 12.4648650 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via della Lungara",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1101819942,
+  "bounds": {
+    "minlat": 41.8917472,
+    "minlon": 12.4814833,
+    "maxlat": 41.8917870,
+    "maxlon": 12.4815435
+  },
+  "geometry": [
+    { "lat": 41.8917472, "lon": 12.4814833 },
+    { "lat": 41.8917870, "lon": 12.4815435 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "highway": "footway",
+    "layer": "1",
+    "level": "1",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1101836685,
+  "bounds": {
+    "minlat": 41.8919870,
+    "minlon": 12.4830979,
+    "maxlat": 41.8920294,
+    "maxlon": 12.4831961
+  },
+  "geometry": [
+    { "lat": 41.8919870, "lon": 12.4831961 },
+    { "lat": 41.8920294, "lon": 12.4830979 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "highway": "footway",
+    "layer": "1",
+    "name": "Clivus Capitolinus"
+  }
+},
+{
+  "type": "way",
+  "id": 1137253421,
+  "bounds": {
+    "minlat": 41.8905003,
+    "minlon": 12.4775620,
+    "maxlat": 41.8905798,
+    "maxlon": 12.4776590
+  },
+  "geometry": [
+    { "lat": 41.8905003, "lon": 12.4775620 },
+    { "lat": 41.8905614, "lon": 12.4776366 },
+    { "lat": 41.8905798, "lon": 12.4776590 }
+  ],
+  "tags": {
+    "access": "destination",
+    "emergency": "yes",
+    "foot": "yes",
+    "highway": "living_street",
+    "lanes": "2",
+    "lit": "yes",
+    "name": "Piazza di San Bartolomeo all'Isola",
+    "name:etymology:wikidata": "Q1755418",
+    "smoothness": "intermediate",
+    "surface": "sett",
+    "taxi": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1137253422,
+  "bounds": {
+    "minlat": 41.8896967,
+    "minlon": 12.4771264,
+    "maxlat": 41.8903968,
+    "maxlon": 12.4774093
+  },
+  "geometry": [
+    { "lat": 41.8903968, "lon": 12.4774093 },
+    { "lat": 41.8902545, "lon": 12.4773576 },
+    { "lat": 41.8900536, "lon": 12.4772780 },
+    { "lat": 41.8896967, "lon": 12.4771264 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "footway": "sidewalk",
+    "highway": "footway",
+    "layer": "1",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 1137377798,
+  "bounds": {
+    "minlat": 41.8896678,
+    "minlon": 12.4772098,
+    "maxlat": 41.8903591,
+    "maxlon": 12.4775267
+  },
+  "geometry": [
+    { "lat": 41.8896678, "lon": 12.4772098 },
+    { "lat": 41.8901291, "lon": 12.4773979 },
+    { "lat": 41.8901655, "lon": 12.4774146 },
+    { "lat": 41.8902107, "lon": 12.4774424 },
+    { "lat": 41.8903591, "lon": 12.4775267 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "footway": "sidewalk",
+    "highway": "footway",
+    "layer": "1",
+    "lit": "yes",
+    "smoothness": "good",
+    "surface": "paving_stones"
+  }
+},
+{
+  "type": "way",
+  "id": 1144658541,
+  "bounds": {
+    "minlat": 41.8905097,
+    "minlon": 12.4745854,
+    "maxlat": 41.8916242,
+    "maxlon": 12.4746978
+  },
+  "geometry": [
+    { "lat": 41.8916242, "lon": 12.4746978 },
+    { "lat": 41.8905097, "lon": 12.4745854 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "footway": "sidewalk",
+    "highway": "footway",
+    "layer": "1",
+    "smoothness": "excellent",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1144658542,
+  "bounds": {
+    "minlat": 41.8905316,
+    "minlon": 12.4743471,
+    "maxlat": 41.8916296,
+    "maxlon": 12.4744482
+  },
+  "geometry": [
+    { "lat": 41.8905316, "lon": 12.4743471 },
+    { "lat": 41.8916296, "lon": 12.4744482 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "footway": "sidewalk",
+    "highway": "footway",
+    "layer": "1",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1277932731,
+  "bounds": {
+    "minlat": 41.8955194,
+    "minlon": 12.4771701,
+    "maxlat": 41.8955209,
+    "maxlon": 12.4771954
+  },
+  "geometry": [
+    { "lat": 41.8955194, "lon": 12.4771701 },
+    { "lat": 41.8955209, "lon": 12.4771954 }
+  ],
+  "tags": {
+    "access": "customers",
+    "bridge": "boardwalk",
+    "highway": "footway",
+    "surface": "wood"
+  }
+},
+{
+  "type": "way",
+  "id": 1277932734,
+  "bounds": {
+    "minlat": 41.8953711,
+    "minlon": 12.4770606,
+    "maxlat": 41.8953794,
+    "maxlon": 12.4771869
+  },
+  "geometry": [
+    { "lat": 41.8953711, "lon": 12.4770606 },
+    { "lat": 41.8953794, "lon": 12.4771869 }
+  ],
+  "tags": {
+    "access": "customers",
+    "bridge": "boardwalk",
+    "highway": "footway",
+    "surface": "wood",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1277932735,
+  "bounds": {
+    "minlat": 41.8954393,
+    "minlon": 12.4770536,
+    "maxlat": 41.8954447,
+    "maxlon": 12.4771790
+  },
+  "geometry": [
+    { "lat": 41.8954393, "lon": 12.4770536 },
+    { "lat": 41.8954447, "lon": 12.4771790 }
+  ],
+  "tags": {
+    "access": "customers",
+    "bridge": "boardwalk",
+    "highway": "footway",
+    "surface": "wood",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1277932736,
+  "bounds": {
+    "minlat": 41.8952187,
+    "minlon": 12.4770419,
+    "maxlat": 41.8955595,
+    "maxlon": 12.4772052
+  },
+  "geometry": [
+    { "lat": 41.8952187, "lon": 12.4770764 },
+    { "lat": 41.8952266, "lon": 12.4772052 },
+    { "lat": 41.8953794, "lon": 12.4771869 },
+    { "lat": 41.8954447, "lon": 12.4771790 },
+    { "lat": 41.8955194, "lon": 12.4771701 },
+    { "lat": 41.8955595, "lon": 12.4771653 },
+    { "lat": 41.8955527, "lon": 12.4770419 }
+  ],
+  "tags": {
+    "access": "customers",
+    "bridge": "boardwalk",
+    "highway": "footway",
+    "surface": "wood",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1277932737,
+  "bounds": {
+    "minlat": 41.8950814,
+    "minlon": 12.4770228,
+    "maxlat": 41.8957382,
+    "maxlon": 12.4770905
+  },
+  "geometry": [
+    { "lat": 41.8950814, "lon": 12.4770905 },
+    { "lat": 41.8952187, "lon": 12.4770764 },
+    { "lat": 41.8953711, "lon": 12.4770606 },
+    { "lat": 41.8954393, "lon": 12.4770536 },
+    { "lat": 41.8955527, "lon": 12.4770419 },
+    { "lat": 41.8957382, "lon": 12.4770228 }
+  ],
+  "tags": {
+    "access": "customers",
+    "bridge": "boardwalk",
+    "highway": "footway",
+    "surface": "wood",
+    "wheelchair": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 1391561219,
+  "bounds": {
+    "minlat": 41.8956821,
+    "minlon": 12.4655877,
+    "maxlat": 41.8963450,
+    "maxlon": 12.4665254
+  },
+  "geometry": [
+    { "lat": 41.8956821, "lon": 12.4655877 },
+    { "lat": 41.8963450, "lon": 12.4665254 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "footway": "sidewalk",
+    "highway": "footway",
+    "layer": "1"
+  }
+},
+{
+  "type": "way",
+  "id": 1393890966,
+  "bounds": {
+    "minlat": 41.8929449,
+    "minlon": 12.4810208,
+    "maxlat": 41.8934114,
+    "maxlon": 12.4816090
+  },
+  "geometry": [
+    { "lat": 41.8934114, "lon": 12.4816090 },
+    { "lat": 41.8933605, "lon": 12.4815531 },
+    { "lat": 41.8932311, "lon": 12.4814005 },
+    { "lat": 41.8931315, "lon": 12.4812784 },
+    { "lat": 41.8930257, "lon": 12.4811347 },
+    { "lat": 41.8929449, "lon": 12.4810208 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "tertiary",
+    "lanes": "6",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Via del Teatro di Marcello",
+    "oneway": "no",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:zone30",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 1414286057,
+  "bounds": {
+    "minlat": 41.8842745,
+    "minlon": 12.4735743,
+    "maxlat": 41.8842837,
+    "maxlon": 12.4736029
+  },
+  "geometry": [
+    { "lat": 41.8842837, "lon": 12.4735743 },
+    { "lat": 41.8842745, "lon": 12.4736029 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Porta Portese",
+    "name:etymology:wikidata": "Q2266816",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 1415694049,
+  "bounds": {
+    "minlat": 41.8886735,
+    "minlon": 12.4636208,
+    "maxlat": 41.8890019,
+    "maxlon": 12.4647908
+  },
+  "geometry": [
+    { "lat": 41.8889077, "lon": 12.4636208 },
+    { "lat": 41.8889529, "lon": 12.4638210 },
+    { "lat": 41.8889695, "lon": 12.4639055 },
+    { "lat": 41.8889920, "lon": 12.4640336 },
+    { "lat": 41.8889964, "lon": 12.4640710 },
+    { "lat": 41.8889998, "lon": 12.4641127 },
+    { "lat": 41.8890019, "lon": 12.4641564 },
+    { "lat": 41.8890017, "lon": 12.4642053 },
+    { "lat": 41.8889983, "lon": 12.4642507 },
+    { "lat": 41.8889924, "lon": 12.4642971 },
+    { "lat": 41.8889831, "lon": 12.4643361 },
+    { "lat": 41.8889714, "lon": 12.4643696 },
+    { "lat": 41.8889544, "lon": 12.4644060 },
+    { "lat": 41.8889333, "lon": 12.4644365 },
+    { "lat": 41.8887689, "lon": 12.4645888 },
+    { "lat": 41.8887464, "lon": 12.4646166 },
+    { "lat": 41.8887267, "lon": 12.4646446 },
+    { "lat": 41.8887080, "lon": 12.4646766 },
+    { "lat": 41.8886902, "lon": 12.4647311 },
+    { "lat": 41.8886735, "lon": 12.4647908 }
+  ],
+  "tags": {
+    "addr:postcode": "00153",
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Garibaldi",
+    "name:etymology:wikidata": "Q539",
+    "sidewalk:left": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 1429880832,
+  "bounds": {
+    "minlat": 41.8957749,
+    "minlon": 12.4654772,
+    "maxlat": 41.8964417,
+    "maxlon": 12.4664044
+  },
+  "geometry": [
+    { "lat": 41.8957749, "lon": 12.4654772 },
+    { "lat": 41.8962031, "lon": 12.4660734 },
+    { "lat": 41.8964417, "lon": 12.4664044 }
+  ],
+  "tags": {
+    "bridge": "yes",
+    "footway": "sidewalk",
+    "highway": "footway",
+    "layer": "1"
+  }
+},
+{
+  "type": "way",
+  "id": 1452948063,
+  "bounds": {
+    "minlat": 41.8894520,
+    "minlon": 12.4742106,
+    "maxlat": 41.8894649,
+    "maxlon": 12.4743986
+  },
+  "geometry": [
+    { "lat": 41.8894520, "lon": 12.4743986 },
+    { "lat": 41.8894567, "lon": 12.4743299 },
+    { "lat": 41.8894620, "lon": 12.4742522 },
+    { "lat": 41.8894649, "lon": 12.4742106 }
+  ],
+  "tags": {
+    "crossing": "traffic_signals",
+    "crossing:markings": "zebra",
+    "footway": "crossing",
+    "highway": "footway",
+    "lit": "yes",
+    "name": "Via della Lungaretta",
+    "surface": "sett"
+  }
+}
+
+  ]
+}

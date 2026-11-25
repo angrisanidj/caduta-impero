@@ -1,0 +1,6 @@
+[out:json][timeout:90];
+(
+  way["highway"]["name"~"^(Via di Ponte Sisto|Via dei Pettinari|Piazza Trilussa|Via di Monte Savello|Piazza di Monte Savello|Via del Teatro di Marcello|Via di Ponte Quattro Capi|Piazza di San Bartolomeo all'Isola|Via Petroselli|Piazza della Bocca della Verità|Via della Greca|Via del Velabro|Via di San Giovanni Decollato|Piazza dell'Emporio|Piazza di Porta Portese|Via Portuense|Via della Lungaretta|Piazza in Piscinula|Via Anicia|Via di San Michele|Via dei Vascellari|Via del Moro|Via della Lungara|Via Garibaldi|Via dei Salumi|Via di Ponte Rotto|Via dei Genovesi|Via di Santa Maria del Pianto|Via del Portico d'Ottavia|Via Arenula|Via dei Giubbonari|Via di Santa Maria in Cosmedin)$"](41.880,12.462,41.898,12.488);
+  way["highway"]["bridge"](41.882,12.462,41.896,12.486);
+);
+out tags geom;

@@ -14,7 +14,14 @@ B.scatola(.9,.9,1.6,1.75,0,0,P.mattone).scatola(1,.08,1.7,1.75,.9,0,P.coppi);   
 B.aperture(-1,.63,1,.63,4,.95,.35,.18).aperture(1,-.63,-1,-.63,4,.95,.35,.18);
 var maglia=new THREE.InstancedMesh(B.geometria(),RM.matPietra(((window.RM_DATI.CERTEZZA||{}).chiese||['B'])[0]),elenco.length), d=new THREE.Object3D();
 maglia.castShadow=maglia.receiveShadow=true; maglia.frustumCulled=false; maglia.userData.gruppo='citta'; RM.scene.add(maglia);
-elenco.forEach(function(c,i){ c.y=RM.h(c.x,c.z)-.1; c.ry=(RM.grana(i,3)-.5)*.9+(RM.grana(i,5)<.5?0:PI); });
+/* La quota dal terreno come è disegnato (RM.hSuolo), non da RM.h (25 novembre 2026): la maglia del suolo è più rada della funzione, e sui pendii Sant'Anastasia stava 10 m
+   sotto terra e Santi Giovanni e Paolo 4 m sopra. Sui pendii si scende a metà fra la quota del centro e quella dello spigolo più basso della navata: la chiesa entra un poco
+   nel monte e dal lato a valle non resta sospesa più di qualche metro (lo zoccolo è uno schema, non c'è). */
+/* Sui pendii forti la chiesa si gira di un quarto di giro se così la navata segue di più le curve di livello (l'orientamento è comunque schematico: «contano la posizione e la data»). */
+elenco.forEach(function(c,i){ var hq=RM.hSuolo||RM.h, y0=hq(c.x,c.z), r0=(RM.grana(i,3)-.5)*.9+(RM.grana(i,5)<.5?0:PI);
+  function spigoli(ry){ var ca=Math.cos(ry), sa=Math.sin(ry); return [[-2,-.7],[2,-.7],[-2,.7],[2,.7]].map(function(q){ var lx=q[0]*1.25, lz=q[1]*1.25; return hq(c.x+lx*ca+lz*sa,c.z-lx*sa+lz*ca); }); }
+  var a=spigoli(r0), b=spigoli(r0+PI/2), da=Math.max.apply(0,a)-Math.min.apply(0,a), db=Math.max.apply(0,b)-Math.min.apply(0,b), giro=da>.6&&db<da*.6;
+  c.ry=giro?r0+PI/2:r0; c.y=(y0+Math.min(y0,Math.min.apply(0,giro?b:a)))/2-.1; });
 RM.CHIESE=elenco;
 RM.moduli.push(function(anno){
   var mosso=false;

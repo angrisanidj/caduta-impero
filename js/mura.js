@@ -9,7 +9,12 @@ function istanze(geo,mat,quante){ var m=new THREE.InstancedMesh(geo,mat,quante);
 /* ---------- mura: 271-275, rialzate nel 401-403 ---------- */
 var mura=(function(){
   var passi=[], M=RM.MURA, i, a, b, L, n, k;
+  /* I lati della cinta che attraversano il Tevere non si disegnano (25 novembre 2026): il poligono di src/roma/genera.mjs è chiuso, e due suoi lati passavano sull'acqua, sotto il ponte
+     Aurelio e poco a valle del ponte di Probo, con merli e torri sul fiume. Nessuna fonte letta parla di un muro sull'acqua: al ponte Aurelio le due cinte si univano col ponte
+     (Procopio, Guerra gotica I 19, 6-10); presso il ponte di Probo come si chiudesse la cinta non è detto. Il poligono resta chiuso per dire che cosa sta dentro le mura. */
+  function sulFiume(j){ var p=M[j], q=M[(j+1)%M.length]; return RM.distFiume((p[0]+q[0])/2,(p[1]+q[1])/2)<2.5; }
   for(i=0;i<M.length;i++){
+    if(sulFiume(i)) continue;
     a=M[i]; b=M[(i+1)%M.length]; L=Math.hypot(b[0]-a[0],b[1]-a[1]); n=Math.max(1,Math.round(L/3));      // un passo ogni 30 m circa: tante sono le torri («every 100 feet», Platner)
     for(k=0;k<n;k++) passi.push({x:a[0]+(b[0]-a[0])*(k+.5)/n, z:a[1]+(b[1]-a[1])*(k+.5)/n, ang:Math.atan2(-(b[1]-a[1]),b[0]-a[0]), len:L/n});
   }
@@ -30,15 +35,16 @@ var mura=(function(){
   [-1,1].forEach(function(k){ GP.cilindro(1,1.7,k*2,0,-.3,P.mattone,null,14).cilindro(1.08,.12,k*2,1.7,-.3,P.tufo,null,14); });
   RM.STRADE.forEach(function(s){
     for(var i=0;i<s.length-1;i++) for(var j=0;j<M.length;j++){
+      if(sulFiume(j)) continue;
       var p=s[i], r=[s[i+1][0]-p[0],s[i+1][1]-p[1]], q=M[j], w=M[(j+1)%M.length], sv=[w[0]-q[0],w[1]-q[1]], den=r[0]*sv[1]-r[1]*sv[0]; if(Math.abs(den)<1e-6) continue;
       var t=((q[0]-p[0])*sv[1]-(q[1]-p[1])*sv[0])/den, u=((q[0]-p[0])*r[1]-(q[1]-p[1])*r[0])/den; if(t<0||t>1||u<0||u>1) continue;
-      var x=p[0]+r[0]*t, z=p[1]+r[1]*t; if(posti.some(function(o){ return Math.hypot(o.x-x,o.z-z)<3; })) continue;      // una strada che taglia la cinta su uno spigolo darebbe due porte
+      var x=p[0]+r[0]*t, z=p[1]+r[1]*t; if(posti.some(function(o){ return Math.hypot(o.x-x,o.z-z)<6; })) continue;      // una strada che taglia la cinta su uno spigolo darebbe due porte (25 novembre 2026: da 3 a 6 unità; la Portuense, che ora parte dal ponte Emilio, a porta Portese corre quasi lungo il muro e lo tagliava due volte a 5 m)
       posti.push({x:x, z:z, y:RM.h(x,z)-.3, ang:Math.atan2(-sv[1],sv[0]), flaminia:Math.hypot(x+74,z+211)<15});      // la Flaminia a parte: la piena del 791 la porta via
     }
   });
   var magliaPorte=istanze(GP.geometria(),mat,Math.max(1,posti.length)); RM.porte=posti;
   RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'}]);
-  passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; p.riva791=Math.hypot(p.x+115.3,p.z+3.3)<1.3; });      // riva791: il tratto di mura sul Tevere presso ponte Sisto che la piena del dicembre 791 abbatte («usque ad pontem Antonini, ipsum evertens murum», Liber Pontificalis, Adriano I 95; ponte Sisto per Duchesne). Lunghezza indicativa; rifatto qui nel 795, anno ignoto     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
+  passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; p.riva791=Math.hypot(p.x+117.4,p.z+7.4)<2.4; });      /* 25 novembre 2026: la cinta di riva ora parte dalla testata del ponte (prima 50 m più a valle): il tratto del 791 sono i suoi primi due passi */      // riva791: il tratto di mura sul Tevere presso ponte Sisto che la piena del dicembre 791 abbatte («usque ad pontem Antonini, ipsum evertens murum», Liber Pontificalis, Adriano I 95; ponte Sisto per Duchesne). Lunghezza indicativa; rifatto qui nel 795, anno ignoto     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
   /* Il cantiere. «Rome, which before had no walls, was now surrounded with them. This work was begun in the reign of Aurelianus, and was finished by Probus» (Zosimo I 49,
      letto il 22 novembre 2026 nella traduzione del 1814, tertullian.org). L'anno della fine non è scritto: nel modello il 280, a metà del regno di Probo (276-282); che il grosso
      fosse in piedi alla morte di Aureliano (275) è l'opinione corrente, non un dato. In che ordine salissero i tratti non si sa: qui a blocchi di circa 240 m, in ordine casuale.
@@ -232,69 +238,168 @@ var acque=(function(){
      il Neroniano, subito sotto ponte Vittorio Emanuele, era in rovina «probably in the fourth [century], as it is not mentioned in Not.»: qui intero fino al 300 e poi le sole pile (l'anno
      è un'ipotesi); posizione dalla via OpenStreetMap 226257804. Il ponte di Agrippa (noto da un cippo di Claudio) e il Sublicio, di legno, «standing as late as the fifth century»
      ma in un punto discusso, non si disegnano. */
-  var PC={A:new RM.Costruttore(),B:new RM.Costruttore(),C:new RM.Costruttore()}, B, curva=RM.curvaFiume, storie=[];
+  /* 25 novembre 2026: ogni ponte con nome ha una scheda (SCHEDE in js/dati.js) e si apre col clic; l'isola ha due ponti, il Fabricio e il Cestio, con le misure di Platner e Ashby,
+     al posto di un ponte di 150 m che la scavalcava; c'è il Sublicio, di legno, fino al V secolo; i cantieri attestati (Aurelio 365-366, Cestio finito nel 369, Probo-Teodosio 384-387)
+     hanno i ponteggi; le testate finiscono nelle strade (VIE in src/roma/genera.mjs). Fonti e ipotesi accanto a ciascuno, più sotto, e in src/testi/scene-roma-fonti.md, «Ponti e isola Tiberina». */
+  var PC={A:new RM.Costruttore(),B:new RM.Costruttore(),C:new RM.Costruttore()}, B, curva=RM.curvaFiume, storie=[], cantieri=[], dati=[];
+  RM.ponti=[];
+  function vicino(x,z){ var m=1e9, tm=0, i, q; for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); var dd=Math.hypot(q.x-x,q.z-z); if(dd<m){ m=dd; tm=i/2400; } } return tm; }
+  /* d unità lungo il fiume, misurate sulla curva (a valle se d>0): la curva non va a passo costante, e presso il ponte Emilio un tratto di parametro vale la metà che altrove */
+  function avanza(t,d){ var s=0, a=curva.getPoint(t), b, dt=(d<0?-1:1)*2e-5; while(s<Math.abs(d)){ t+=dt; b=curva.getPoint(t); s+=Math.hypot(b.x-a.x,b.z-a.z); a=b; } return t; }
+  function asse(t){ var q=curva.getPoint(t), g=curva.getTangent(t), n=Math.hypot(g.x,g.z)||1; return {q:q, tg:[g.x/n,g.z/n], dx:[-g.z/n,g.x/n], rot:Math.atan2(-g.x,-g.z)}; }      // dx: verso la riva destra; è l'asse x locale dei ponti
+  /* l'isola: il contorno (riempito più sotto), per sapere dove il terreno è il suo piano (0,35) e non il letto del fiume */
+  var isolaBordo=[];
+  function sullIsola(x,z){ var p=isolaBordo, d=false; for(var i=0,j=p.length-1;i<p.length;j=i++){ if((p[i][1]>z)!==(p[j][1]>z) && x<(p[j][0]-p[i][0])*(z-p[i][1])/(p[j][1]-p[i][1])+p[i][0]) d=!d; } return d; }
+  function suolo(x,z){ return sullIsola(x,z)?.35:(RM.hSuolo||RM.h)(x,z); }
+  /* ponteggio di un cantiere: pali e correnti sui due fianchi dell'impalcato. La forma è uno schema, come quella dei ponteggi dei monumenti */
+  function impalcatura(B,mezzo,larga,alto){ var x; for(x=-mezzo;x<=mezzo+.01;x+=.75){ B.scatola(.05,alto,.05,x,0,larga+.12,P.tronco).scatola(.05,alto,.05,x,0,-larga-.12,P.tronco); }
+    [.35,.7,1].forEach(function(f){ B.scatola(2*mezzo,.04,.06,0,alto*f-.04,larga+.12,P.tronco).scatola(2*mezzo,.04,.06,0,alto*f-.04,-larga-.12,P.tronco); }); }
   /* un'arcata fra due pile: i due fianchi sotto l'impalcato e l'intradosso, a mezzo ovale (23 novembre 2026: prima i ponti erano tavole posate su quattro blocchi).
      Il numero delle arcate è lo stesso per tutti e non è quello di ciascun ponte vero. */
   function arcata(B,x0,x1,ys,yc,w,col){ var N=8, k, xa, xb, ya, yb;
     for(k=0;k<N;k++){ xa=x0+(x1-x0)*k/N; xb=x0+(x1-x0)*(k+1)/N; ya=ys+(yc-ys)*Math.sin(Math.PI*k/N); yb=ys+(yc-ys)*Math.sin(Math.PI*(k+1)/N);
       B.quad([xa,ya,w],[xb,yb,w],[xb,yc,w],[xa,yc,w],col).quad([xb,yb,-w],[xa,ya,-w],[xa,yc,-w],[xb,yc,-w],col).quad([xa,ya,-w],[xb,yb,-w],[xb,yb,w],[xa,ya,w],col); } }
-  function ponte(B,parti,q,rot){      // parti: 'tutto', 'rotto' (senza un'arcata), 'pile'
+  function ponte(B,parti,q,rot){      // parti: 'tutto', 'rotto' (senza un'arcata), 'pile'. Restituisce i piedi delle rampe
+    var piedi=null;
     [-4.4,-1.5,1.5,4.4].forEach(function(x){ B.scatola(.5,parti==='pile'?.45:.6,.5,x,0,.75,P.travertino,Math.PI/4).scatola(.5,parti==='pile'?.45:.6,.5,x,0,-.75,P.travertino,Math.PI/4); });      // i rostri delle pile
     if(parti!=='pile') (parti==='rotto'?[[-5.6,-4.75],[-4.05,-1.85],[4.75,5.6]]:[[-5.6,-4.75],[-4.05,-1.85],[-1.15,1.15],[1.85,4.05],[4.75,5.6]]).forEach(function(c){ arcata(B,c[0],c[1],.25,.87,.65,P.travertino); });
-    if(parti!=='pile'){ rampe(B,q,rot,7.5,1.15,.65,P.travertino);
+    if(parti!=='pile'){ piedi=rampe(B,q,rot,7.5,1.15,.65,P.travertino,suolo);
       if(parti==='rotto'){ B.scatola(6.8,.3,1.3,-4.1,.85,0,P.travertino).scatola(5.2,.3,1.3,4.9,.85,0,P.travertino); }      // manca il tratto fra le due pile centrali
       else B.scatola(15,.3,1.3,0,.85,0,P.travertino).scatola(15,.16,.12,0,1.15,.6,P.travertino).scatola(15,.16,.12,0,1.15,-.6,P.travertino);
     }
     [-4.4,-1.5,1.5,4.4].forEach(function(x){ B.scatola(.7,parti==='pile'?.6:.9,1.5,x,0,0,P.travertino); });
     if(parti!=='pile') B.scatola(2,.9,1.3,-6.6,0,0,P.travertino).scatola(2,.9,1.3,6.6,0,0,P.travertino);
+    return piedi;
   }
-  [[-156.1,-104.37,'A',0,null,null,1.63],[-120,1,'B',0,772],[-66,28,'A'],[-52,38,'A'],[-84,97,'C',280],[-152,-479,'A'],[-173.5,-92.6,'C',0,null,300]].forEach(function(p){     // Elio, Aurelio (ponte Sisto), isola Tiberina, Emilio, Probo, Milvio, Neroniano
-    var m=1e9, tm=0, i, q; for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); var dd=Math.hypot(q.x-p[0],q.z-p[1]); if(dd<m){ m=dd; tm=i/2400; } }
-    q=curva.getPoint(tm); var tg=curva.getTangent(tm), rot=Math.atan2(-tg.x,-tg.z);            // l'asse x locale attraversa il fiume
-    /* Ponte Elio (24 novembre 2026): centro e asse sono quelli di ponte Sant'Angelo su OpenStreetMap (way 25752465: 3,65 gradi da nord verso ovest), non la perpendicolare al fiume
-       del modello, che lo girava di 8,4 gradi e lo faceva arrivare 15 m a ovest della porta del mausoleo. */
-    if(p[6]!=null){ q=new THREE.Vector3(p[0],q.y,p[1]); rot=p[6]; RM.ponteElio={x:p[0], z:p[1], asse:[Math.cos(rot),-Math.sin(rot)]}; }
-    if(!p[3] && !p[4] && !p[5]){ PC[p[2]].dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,'tutto',q,rot); }); return; }      // i ponti che non cambiano restano nella maglia comune
-    var mat=RM.matPietra(p[2]), fa=function(parti){ var C=new RM.Costruttore(); C.dentro(q.x,-.5,q.z,rot,function(B){ ponte(B,parti,q,rot); }); var g=C.maglia(mat); g.visible=false; RM.scene.add(g); return g; };
-    storie.push({dal:p[3]||0, rotto:p[4], pile:p[5], intero:fa('tutto'), mezzo:p[4]?fa('rotto'):null, resti:p[5]?fa('pile'):null});
-  });
-  RM.moduli.push(function(anno){ storie.forEach(function(s){
-    var su=anno>=s.dal, r=s.rotto&&anno>=s.rotto, pi=s.pile&&anno>=s.pile;
-    s.intero.visible=su&&!r&&!pi; if(s.mezzo) s.mezzo.visible=su&&r; if(s.resti) s.resti.visible=pi; }); });
+  /* Un ponte con le arcate misurate (il Fabricio e il Cestio): parti è la fila, da sinistra a destra, di [larghezza, freccia dell'arco] (freccia 0: muratura piena dal fiume
+     all'impalcato); db: intradosso dell'impalcato, yTop: il piano; coordinate locali, origine a -0,5 (il pelo dell'acqua). Restituisce la metà della lunghezza */
+  function misurato(B,parti,larga,db,yTop,col){ var tot=parti.reduce(function(a,p){ return a+p[0]; },0), x=-tot/2;
+    parti.forEach(function(p){ var x1=x+p[0]; if(p[1]) arcata(B,x,x1,db-p[1],db,larga,col); else B.scatola(p[0],db,2*larga,(x+x1)/2,0,0,col); x=x1; });
+    B.scatola(tot,yTop-db,2*larga,0,db,0,col).scatola(tot,.14,.1,0,yTop,larga-.05,col).scatola(tot,.14,.1,0,yTop,-larga+.05,col);      // impalcato e parapetti
+    return tot/2; }
+  /* il Sublicio, di legno: stilate di due pali con la traversa, ogni undici metri, e l'impalcato di tavole. Forma, passo e misure sono uno schema: la fonte dice solo che era di legno */
+  function legname(B,mezzo,larga,yTop){ var x;
+    for(x=-mezzo+.5;x<mezzo;x+=1.1){ B.scatola(.12,yTop-.1,.12,x,0,larga-.08,P.tronco).scatola(.12,yTop-.1,.12,x,0,-larga+.08,P.tronco).scatola(.14,.1,2*larga+.24,x,yTop-.32,0,P.tronco); }
+    B.scatola(2*mezzo,.1,2*larga,0,yTop-.1,0,P.tronco).scatola(2*mezzo,.08,.06,0,yTop+.12,larga-.03,P.tronco).scatola(2*mezzo,.08,.06,0,yTop+.12,-larga+.03,P.tronco);
+    for(x=-mezzo;x<=mezzo+.01;x+=.8){ B.scatola(.05,.2,.05,x,yTop,larga-.03,P.tronco).scatola(.05,.2,.05,x,yTop,-larga+.03,P.tronco); } }
   /* Isola Tiberina. «The present length of the island is 269 metres, and its greatest width 67 metres»; «the island itself was made to resemble a ship. A stone platform was built
      round it, and upon this a wall was erected which in shape reproduced exactly the sides of a Roman ship»; l'obelisco «is thought to have represented the mast» (Platner e Ashby,
      Insula Tiberina, letto il 23 novembre 2026). Quale capo fosse la prua la voce non lo dice in modo univoco (poppa a est nel testo, prua a est in una nota): qui i due capi sono
      a punta, quello a valle di più. Prima l'isola era un ovale di 46 x 132 m. Segue la curva del fiume; il fiume del modello è largo 112 m dappertutto, quindi i due rami
-     restano più stretti del vero. Il tempio di Esculapio c'era, ma a quale capo la voce non lo dice: tempio e case sono indicativi. */
+     restano più stretti del vero. Dal 25 novembre 2026 la lunghezza si misura lungo la curva (prima era in passi di parametro, e l'isola veniva più corta del vero).
+     Il fiume del modello, preso dalla linea del Tevere di OpenStreetMap, qui corre nel ramo di Trastevere: l'isola vera sta 70-80 m più a nord del suo centro e il ponte Fabricio vero
+     140 m a nord di quello disegnato. I due ponti stanno quindi dove li mette il fiume del modello, nell'ordine vero: il Cestio dove c'è il ponte Cestio, il Fabricio una ventina di metri
+     a valle, come ponte Fabricio rispetto a ponte Cestio su OpenStreetMap (relazioni 5676411 e 5676410). */
+  var tC=vicino(-66,28), tIs=avanza(tC,-3.2), MEZZA=13.45, NI=14, WI=3.35, isS=[], isD=[];      // il centro dell'isola 32 m a monte del Cestio: il capo a valle resta prima del ponte Emilio
+  (function(){ for(var i=0;i<=NI*2;i++){ var u=i/NI-1, A=asse(avanza(tIs,u*MEZZA)), w=WI*Math.pow(1-Math.pow(Math.abs(u),u<0?2.6:1.7),.75), c=A.q, n=A.dx;
+      isS.push([c.x-n[0]*w,c.z-n[1]*w,c.x-n[0]*w*.9,c.z-n[1]*w*.9]); isD.push([c.x+n[0]*w,c.z+n[1]*w,c.x+n[0]*w*.9,c.z+n[1]*w*.9]); }
+    isolaBordo=isS.map(function(p){ return [p[0],p[1]]; }).concat(isD.slice().reverse().map(function(p){ return [p[0],p[1]]; })); })();
+  RM.isolaTiberina={bordo:isolaBordo, dentro:sullIsola, piano:.35};      // per le scene e le prove
+  var GENERICI=[      // [x, z, classe, dal, rotto, pile, rotazione fissa, id, nome, cantiere [da, a]]
+    [-156.1,-104.37,'A',0,null,null,1.63,'ponteelio','Ponte Elio'],
+    [-120,1,'B',0,772,null,null,'ponteaurelio','Ponte Aurelio',[364.6,367]],      // «rebuilding of arch and bridge by Valentinian I in 365-366» (Platner e Ashby, Pons Aurelius, letto il 25 novembre 2026)
+    [-52,38,'A',0,null,null,null,'ponteemilio','Ponte Emilio'],
+    [-84,97,'C',280,null,null,null,'ponteprobo','Ponte di Probo',[383,388]],      // i lavori del ponte di Teodosio: cominciati prima del 384, non finiti nel 387 (lettere di Simmaco, in Platner e Ashby, Pons Probi). Inizio e fine nel modello sono ipotesi
+    [-152,-479,'A',0,null,null,null,'pontemilvio','Ponte Milvio'],
+    [-173.5,-92.6,'C',0,null,300,null,'ponteneroniano','Ponte Neroniano']];
+  GENERICI.forEach(function(p){     // Elio, Aurelio (ponte Sisto), Emilio, Probo, Milvio, Neroniano
+    var q, A=asse(vicino(p[0],p[1])), rot=A.rot; q=A.q;            // l'asse x locale attraversa il fiume
+    /* Ponte Elio (24 novembre 2026): centro e asse sono quelli di ponte Sant'Angelo su OpenStreetMap (way 25752465: 3,65 gradi da nord verso ovest), non la perpendicolare al fiume
+       del modello, che lo girava di 8,4 gradi e lo faceva arrivare 15 m a ovest della porta del mausoleo. */
+    if(p[6]!=null){ q=new THREE.Vector3(p[0],q.y,p[1]); rot=p[6]; RM.ponteElio={x:p[0], z:p[1], asse:[Math.cos(rot),-Math.sin(rot)]}; }
+    var piedi=null, info={id:p[7], nome:p[8], x:q.x, z:q.z, rot:rot, mezzo:7.5, larga:.65, yTop:.65, classe:p[2]};
+    if(!p[3] && !p[4] && !p[5]){ PC[p[2]].dentro(q.x,-.5,q.z,rot,function(B){ piedi=ponte(B,'tutto',q,rot); }); info.comune=p[2]; }      // i ponti che non cambiano restano nella maglia comune
+    else { var mat=RM.matPietra(p[2]), fa=function(parti){ var C=new RM.Costruttore(); C.dentro(q.x,-.5,q.z,rot,function(B){ var pp=ponte(B,parti,q,rot); if(pp) piedi=pp; }); var g=C.maglia(mat); g.visible=false; RM.scene.add(g); return g; };
+      var s={dal:p[3]||0, rotto:p[4], pile:p[5], intero:fa('tutto'), mezzo:p[4]?fa('rotto'):null, resti:p[5]?fa('pile'):null}; storie.push(s);
+      RM.cliccabili=(RM.cliccabili||[]).concat([s.intero,s.mezzo,s.resti].filter(Boolean).map(function(g){ return {maglia:g, id:p[7]}; })); }
+    if(p[9]) cantieri.push({da:p[9][0], a:p[9][1], g:scaffale(q,rot,7.5,.65,1.15)});
+    info.piedi=piedi; RM.ponti.push(info);
+  });
+  function scaffale(q,rot,mezzo,larga,yTop){ var C=new RM.Costruttore(); C.dentro(q.x,-.5,q.z,rot,function(B){ impalcatura(B,mezzo,larga,yTop+.35); }); var g=C.maglia(RM.matPietra()); g.visible=false; g.receiveShadow=false; RM.scene.add(g); return g; }
+  /* I due ponti dell'isola (Platner e Ashby, Pons Fabricius e Pons Cestius, letti il 25 novembre 2026).
+     Fabricio: del 62 a.C., «between the left bank of the river and the island», lungo 62 m, due arcate di circa 24,25 e 24,50 m con un'arcata piccola fra loro, tufo e peperino
+     rivestiti di travertino; «the best preserved bridge in Rome, being practically the original structure»: intero per tutto il periodo. La larghezza (6 m), le spalle e la luce
+     dell'arcata piccola (4 m) non sono nella voce: schema.
+     Cestio: «the first stone bridge from the island to the right bank»; sostituito da «what was practically a new structure, which the Emperors Valentinian I, Valens and Gratian
+     finished in 369», dedicato nel 370 come pons Gratiani: «48 metres long and 8.20 wide», un'arcata centrale di 23,65 m e una piccola per lato di 5,80. Si disegna il ponte di
+     Graziano, il solo di cui si sappiano le misure; com'era il ponte di prima la voce non lo dice. Il cantiere ha i ponteggi dal 367 al 369: la fine è della fonte, l'inizio è
+     un'ipotesi (Graziano è augusto dall'agosto 367). Le pile e le spalle (4 m e 2,5 m) sono schema.
+     Le arcate sono a tutto sesto e partono dal pelo dell'acqua del modello: l'impalcato sta così a 8,5 m, due metri sopra quello degli altri ponti; scende al piano dell'isola
+     e alle rive con le rampe. */
+  var A=asse(tC), F=asse(avanza(tC,2.1)), DB=1.24, YT=1.35;
+  function dueSponde(Ax,lat,mezzo,larga,parti,id,nome){
+    var q={x:Ax.q.x+Ax.dx[0]*lat, z:Ax.q.z+Ax.dx[1]*lat}, piedi=null;
+    PC.A.dentro(q.x,-.5,q.z,Ax.rot,function(B){ misurato(B,parti,larga,DB,YT,P.travertino); piedi=rampe(B,q,Ax.rot,mezzo,YT,larga,P.travertino,suolo); });
+    RM.ponti.push({id:id, nome:nome, x:q.x, z:q.z, rot:Ax.rot, mezzo:mezzo, larga:larga, yTop:YT-.5, classe:'A', comune:'A', piedi:piedi}); return q; }
+  /* il capo sull'isola sta sull'orlo di travertino; il resto, più lungo del ramo del fiume del modello (22 m), finisce sulla riva */
+  function orlo(d){ var u=d/MEZZA; return WI*Math.pow(1-Math.pow(Math.abs(u),u<0?2.6:1.7),.75); }      // mezza larghezza dell'isola a d unità dal suo centro
+  var qF=dueSponde(F,-(orlo(5.3)+3.11-.15),3.11,.3,[[.27,0],[2.425,1.21],[.2,0],[.4,.2],[.2,0],[2.45,1.22],[.275,0]],'pontefabricio','Ponte Fabricio');      // dalla riva sinistra (-x) all'isola
+  var qC=dueSponde(A,orlo(3.2)+2.42-.15,2.42,.41,[[.26,0],[.58,.29],[.4,0],[2.365,1.18],[.4,0],[.58,.29],[.255,0]],'pontecestio','Ponte Cestio');           // dall'isola a Trastevere (+x)
+  cantieri.push({da:367,a:369.9,g:scaffale(qC,A.rot,2.42,.41,YT)});
+  /* Il Sublicio, di legno: «The strongest evidence indicates that it crossed from the forum Boarium just below the later pons Aemilius»; «constructed of wood without metal of any sort
+     whatsoever»; «the bridge was always repaired and was standing as late as the fifth century» (Platner e Ashby, Pons Sublicius, letto il 25 novembre 2026; la posizione «has been the
+     subject of much dispute»). Qui 150 m a valle del ponte Emilio, dove la riva sinistra arriva all'inizio della via Ostiense (più a monte la rampa cadeva sul tempio rotondo), fino al 500: dopo il V secolo le fonti lette tacciono, e l'anno della fine è un'ipotesi. Lunghezza, larghezza, stilate
+     e altezza dell'impalcato (4,5 m) sono schema. */
+  var S=asse(avanza(vicino(-52,38),15)), sub=new RM.Costruttore(), subPiedi=null;
+  sub.dentro(S.q.x,-.5,S.q.z,S.rot,function(B){ legname(B,6.6,.3,.95); subPiedi=rampe(B,S.q,S.rot,6.6,.95,.3,P.tronco,suolo); });
+  var gSub=sub.maglia(RM.matPietra('C')); RM.scene.add(gSub); storie.push({dal:0, fino:500, intero:gSub});
+  RM.ponti.push({id:'pontesublicio', nome:'Ponte Sublicio', x:S.q.x, z:S.q.z, rot:S.rot, mezzo:6.6, larga:.3, yTop:.45, classe:'C', piedi:subPiedi});
+  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:gSub, id:'pontesublicio'}]);
+  RM.moduli.push(function(anno){ storie.forEach(function(s){
+    var su=anno>=s.dal&&!(s.fino&&anno>=s.fino), r=s.rotto&&anno>=s.rotto, pi=s.pile&&anno>=s.pile;
+    s.intero.visible=su&&!r&&!pi; if(s.mezzo) s.mezzo.visible=su&&r; if(s.resti) s.resti.visible=pi; });
+    cantieri.forEach(function(c){ c.g.visible=anno>=c.da&&anno<c.a; }); });
+  /* l'isola: fiancate di travertino e piano */
   B=PC.A;
-  (function(){
-    var m=1e9, tm=0, i, q, L=curva.getLength(), sx=[], dx=[], N=14, W=3.35, MEZZA=13.45, monte=curva.getPoint(0).z<curva.getPoint(1).z?-1:1;      // il fiume scende da nord: da che parte della curva sta il monte
-    for(i=0;i<=2400;i++){ q=curva.getPoint(i/2400); var dd=Math.hypot(q.x+66,q.z-28); if(dd<m){ m=dd; tm=i/2400; } }
-    var tmPonte=tm; tm+=monte*3.2/L;      /* i due ponti non stanno a metà dell'isola ma verso valle: il centro va 32 m a monte, così il capo a valle resta prima del ponte Emilio (posizione dei capi indicativa) */
-    for(i=0;i<=N*2;i++){ var u=i/N-1, c=curva.getPoint(tm+u*MEZZA/L), tg=curva.getTangent(tm+u*MEZZA/L), n=Math.hypot(tg.x,tg.z)||1, w=W*Math.pow(1-Math.pow(Math.abs(u),u*monte<0?1.7:2.6),.75);
-      sx.push([c.x-tg.z/n*w,c.z+tg.x/n*w,c.x-tg.z/n*w*.9,c.z+tg.x/n*w*.9]); dx.push([c.x+tg.z/n*w,c.z-tg.x/n*w,c.x+tg.z/n*w*.9,c.z-tg.x/n*w*.9]); }
-    for(i=0;i<N*2;i++){ var a=sx[i], b=sx[i+1], e=dx[i], f=dx[i+1];
-      B.quad([a[0],-.5,a[1]],[b[0],-.5,b[1]],[b[2],.35,b[3]],[a[2],.35,a[3]],P.travertino).quad([f[0],-.5,f[1]],[e[0],-.5,e[1]],[e[2],.35,e[3]],[f[2],.35,f[3]],P.travertino);      // le fiancate di travertino
-      B.quad([a[2],.35,a[3]],[b[2],.35,b[3]],[f[2],.35,f[3]],[e[2],.35,e[3]],P.selce); }                                                                                           // il piano dell'isola
-    q=curva.getPoint(tm); var t0=curva.getTangent(tm), pb=curva.getPoint(tmPonte), nn=Math.hypot(t0.x,t0.z)||1, zb=((pb.x-q.x)*t0.x+(pb.z-q.z)*t0.z)/nn, sg=zb<0?-1:1;      // zb: dove il ponte attraversa l'isola, lungo il suo asse
-    B.dentro(q.x,.35,q.z,Math.atan2(t0.x,t0.z),function(B){      /* tempio e case stanno dalla parte lunga dell'isola, lontano dal ponte; l'obelisco dall'altra (24 novembre 2026: una casa finiva sotto l'impalcato) */
-      B.tempio(1.6,2.6,1.1,0,zb-sg*5.4,0,{fronte:4,podio:.25});
-      B.scatola(2.2,.9,2.2,.2,0,zb-sg*9.3,P.intonaco).falde(2.4,.5,2.2,.2,.9,zb-sg*9.3,P.coppi); B.scatola(1.5,.7,2.2,-.1,0,zb-sg*12.2,P.intonaco).falde(2.2,.4,1.7,-.1,.7,zb-sg*12.2,P.coppi,Math.PI/2);
-      B.scatola(.3,.3,.3,0,0,zb+sg*2.4,P.marmo).cilindro(.1,1.4,0,.3,zb+sg*2.4,P.granito,.05,4); });      // l'obelisco, l'albero della nave
+  (function(){ var i;
+    for(i=0;i<NI*2;i++){ var a=isS[i], b=isS[i+1], e=isD[i], f=isD[i+1];
+      B.quad([b[0],-.5,b[1]],[a[0],-.5,a[1]],[a[2],.35,a[3]],[b[2],.35,b[3]],P.travertino).quad([e[0],-.5,e[1]],[f[0],-.5,f[1]],[f[2],.35,f[3]],[e[2],.35,e[3]],P.travertino);      // le fiancate di travertino
+      B.quad([b[2],.35,b[3]],[a[2],.35,a[3]],[e[2],.35,e[3]],[f[2],.35,f[3]],P.selce); }                                                                                           // il piano dell'isola
+    /* la strada fra le due teste, sul piano dell'isola: oggi via di Ponte Quattro Capi e piazza di San Bartolomeo (OpenStreetMap); in antico il tracciato non è noto */
+    var pf=(RM.ponti.filter(function(p){ return p.id==='pontefabricio'; })[0].piedi||[])[1], pc=(RM.ponti.filter(function(p){ return p.id==='pontecestio'; })[0].piedi||[])[0];
+    if(pf&&pc){ var dx=pc.x-pf.x, dz=pc.z-pf.z, l=Math.hypot(dx,dz)||1, nx=-dz/l*.32, nz=dx/l*.32, via=RM.col(0x6e685d);
+      B.quad([pf.x+nx,.37,pf.z+nz],[pc.x+nx,.37,pc.z+nz],[pc.x-nx,.37,pc.z-nz],[pf.x-nx,.37,pf.z-nz],via); }
+    /* l'obelisco, l'albero della nave, a metà dell'isola; due case a monte (indicative) */
+    var M0=asse(tIs);
+    B.dentro(M0.q.x,.35,M0.q.z,Math.atan2(M0.tg[0],M0.tg[1]),function(B){
+      B.scatola(.3,.3,.3,0,0,0,P.marmo).cilindro(.1,1.4,0,.3,0,P.granito,.05,4);
+      B.scatola(2.2,.9,2.2,.2,0,-4.2,P.intonaco).falde(2.4,.5,2.2,.2,.9,-4.2,P.coppi); B.scatola(1.5,.7,2.2,-.1,0,-7.3,P.intonaco).falde(2.2,.4,1.7,-.1,.7,-7.3,P.coppi,Math.PI/2); });
   })();
-  ['A','B','C'].forEach(function(k){ RM.scene.add(PC[k].maglia(RM.matPietra(k))); });
+  /* Il tempio di Esculapio: «probably occupied the site of the present church of S. Bartolomeo» (Platner e Ashby, Aedes Aesculapii, letto il 25 novembre 2026), che sta «toward the E end,
+     or prow, of the island» (Insula Tiberina): qui a valle dei ponti, con la fronte verso di loro, come la chiesa di oggi sulla sua piazza. Forma e misure non sono nella voce
+     («There are no certain remains of this temple»): il tempio è uno schema. Ha una sua maglia per avere lo stato (MONUMENTI.esculapio in js/dati.js): chiuso al culto nel 392
+     come gli altri templi (scelta del modello, src/testi/audit-anacronismi.md), poi abbandonato ma in piedi, perché nessuna fonte letta dice quando cadde. */
+  (function(){ var T=asse(avanza(tC,5.6)), C=new RM.Costruttore(); C.tempio(1.6,2.6,1.1,0,0,0,{fronte:4,podio:.25});
+    var g=C.maglia(RM.matPietra()); g.geometry.computeBoundingBox(); var mt=RM.matRovina(g.geometry.boundingBox.max.y); g.material=mt; g.customDepthMaterial=mt.userData.ombra;
+    g.position.set(T.q.x,.35,T.q.z); g.rotation.y=Math.atan2(-T.tg[0],-T.tg[1]); g.userData.gruppo='monumenti'; RM.scene.add(g);      // la fronte (+z locale) guarda a monte
+    RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:g, id:'esculapio'}]);
+    RM.MONUMENTI.push({id:'esculapio', nome:'Tempio di Esculapio (isola Tiberina)', x:T.q.x, z:T.q.z, raggio:5, alto:1.5});
+    RM.moduli.push(function(anno){ var q=RM.statoMonumento('esculapio',anno), rv=RM.rovina('esculapio',anno), u=mt.userData.u, TN=RM.TINTA;
+      mt.color.copy(TN[q.s0]||TN.uso).lerp(TN[q.s1]||TN.uso,q.t); u.uRovina.value=rv.r; u.uSpoglio.value=rv.s; u.uCrepe.value=rv.c; u.uVerde.value=rv.v; u.uIntonaco.value=rv.i; u.uPulito.value=rv.pulito||0; });
+  })();
+  ['A','B','C'].forEach(function(k){ var g=PC[k].maglia(RM.matPietra(k)); RM.scene.add(g);
+    /* un clic sui ponti della maglia comune apre la scheda del ponte più vicino; sull'isola quella del tempio */
+    RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:g, id:function(h){ var x=h.point.x, z=h.point.z, m=1e9, id=null; if(k==='A'&&sullIsola(x,z)) return 'esculapio';
+      RM.ponti.forEach(function(p){ if(p.comune!==k) return; var d=Math.hypot(p.x-x,p.z-z); if(d<m){ m=d; id=p.id; } }); return id; }}]); });
+  RM.ponti.forEach(function(p){ RM.MONUMENTI.push({id:p.id, nome:p.nome, x:p.x, z:p.z, raggio:8, alto:1}); });
 })();
 
 /* Le testate dei ponti scendono (o salgono) fino al terreno con una rampa: prima l'impalcato finiva di colpo sopra la riva o dentro (23 novembre 2026, l'utente: «sembra che i ponti
    siano sospesi senza finire»). q, rot: centro del ponte e rotazione; mezzo: metà lunghezza; yTop: piano dell'impalcato in coordinate locali (origine a -0,5); larga: metà larghezza */
-function rampe(B,q,rot,mezzo,yTop,larga,colore){
-  [-1,1].forEach(function(s){
-    var c=Math.cos(rot), sn=Math.sin(rot), hq=RM.hSuolo||RM.h, x0=s*mezzo, k, yg=yTop;
-    for(k=1;k<=12;k++){ var xl=s*(mezzo+k*.5); yg=hq(q.x+xl*c,q.z-xl*sn)+.5; if(Math.abs(yg-yTop)<.08) break; }      // il terreno lungo l'asse, mezzo metro alla volta
-    var dy=yg-yTop; if(Math.abs(dy)<.05) return;
-    var L=Math.min(6,Math.max(1.2,Math.abs(dy)*3)), x1=s*(mezzo+L), y1=hq(q.x+x1*c,q.z-x1*sn)+.5+.04, fondo=Math.min(yTop,y1)-.4;
+/* suolo: la quota del terreno (nel mondo) da usare; per i ponti dell'isola è il piano dell'isola. Restituisce i due piedi, [lato -x, lato +x], in coordinate del mondo (25 novembre 2026: servono a far cominciare le strade lì) */
+function rampe(B,q,rot,mezzo,yTop,larga,colore,suolo){
+  var c=Math.cos(rot), sn=Math.sin(rot), hq=suolo||RM.hSuolo||RM.h;
+  return [-1,1].map(function(s){
+    /* il terreno lungo l'asse, mezzo metro alla volta. Se arriva all'altezza dell'impalcato, la rampa (quasi piana) va fin lì; se no si prende il punto più alto trovato
+       (sull'isola, oltre il suo piano, c'è di nuovo il letto del fiume) e la pendenza decide la lunghezza. Prima, quando il terreno raggiungeva l'impalcato più in là,
+       la rampa non si faceva e l'impalcato finiva in aria (25 novembre 2026, ponte Sublicio) */
+    var x0=s*mezzo, k, yg=-1e9, Lf=0, g0=hq(q.x+x0*c,q.z-x0*sn)+.5;
+    for(k=1;k<=12;k++){ var xl=s*(mezzo+k*.5), yk=hq(q.x+xl*c,q.z-xl*sn)+.5; if(yk>=yTop-.08){ Lf=k*.5; break; } yg=Math.max(yg,yk); }
+    var dy=Lf?0:yg-yTop; if(!Lf&&Math.abs(dy)<.05) return {x:q.x+x0*c, z:q.z-x0*sn, y:yTop-.5};
+    var L=Lf||Math.min(6,Math.max(1.2,Math.abs(dy)*3)), x1=s*(mezzo+L), y1=hq(q.x+x1*c,q.z-x1*sn)+.5+.04, fondo=Math.min(yTop,y1,g0)-.4;      // i fianchi scendono fino al terreno sotto la testata
     B.quad([x0,yTop,larga],[x1,y1,larga],[x1,y1,-larga],[x0,yTop,-larga],colore);      // il piano della rampa
     B.quad([x0,fondo,larga],[x1,fondo,larga],[x1,y1,larga],[x0,yTop,larga],colore).quad([x0,yTop,-larga],[x1,y1,-larga],[x1,fondo,-larga],[x0,fondo,-larga],colore);      // i fianchi
+    return {x:q.x+x1*c, z:q.z-x1*sn, y:y1-.5};
   });
 }
 /* 312: il ponte provvisorio di Massenzio accanto al ponte Milvio. Zosimo II 15-16 (traduzione del 1814): un ponte di travi in due metà, unite al centro da ferri da togliere, che cede

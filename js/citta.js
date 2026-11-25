@@ -45,7 +45,7 @@ function tenutaSparsa(x,z){
 function libero(x,z,margine){
   if(RM.distFiume(x,z)<9.5 || RM.distStrade(x,z)<2.5) return 0;
   var i, q, fino=1;
-  for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(Math.hypot(x-q.x,z-q.z)<q.r+margine){ if(!(q.dal>0)) return 0; fino=fino>1?Math.min(fino,q.dal):q.dal; } }
+  for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(RM.dZona(q,x,z)<q.r+(q.a?q.t||0:0)+margine){ if(!(q.dal>0)) return 0; fino=fino>1?Math.min(fino,q.dal):q.dal; } }      // un rettangolo (RM.dZona, js/base.js) arriva fino al bordo della sua sfumatura, cioè al muro della piattaforma
   for(i=0;i<RM.HORTI.length;i++){ q=RM.HORTI[i]; if(Math.hypot(x-q[0],z-q[1])<q[2]+1) return 0; }
   for(i=0;i<RM.campateAcquedotti.length;i++){ q=RM.campateAcquedotti[i]; if(Math.abs(x-q.x)<6 && Math.hypot(x-q.x,z-q.z)<3.5+q.len*.25) return 0; }   // né sotto le arcate degli acquedotti
   return fino;

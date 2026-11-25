@@ -51,6 +51,24 @@ function portico(B,w,d,x,y,z,h,suolo){
   trave([xe0,ze],[xe1,ze],yo-ht,nE,function(q){ return num(4,q); },0);
   B.scatola(w,h+.27,.14,x,y,z-d/2,P.tufo).scatola(.14,h+.27,d,x-w/2,y,z,P.tufo).scatola(.14,h+.27,d,x+w/2,y,z,P.tufo);
 }
+/* Muri di sostegno attorno a un rettangolo, da y0 a y1 (25 novembre 2026): dove il terreno scende oltre il bordo di una terrazza si vede il muro, non il vuoto sotto l'edificio */
+function zoccolo(B,x0,x1,z0,z1,y0,y1,colore,s){ var h=y1-y0, c=colore||P.mattone; s=s||.3;
+  return B.scatola(x1-x0,h,s,(x0+x1)/2,y0,z0+s/2,c).scatola(x1-x0,h,s,(x0+x1)/2,y0,z1-s/2,c).scatola(s,h,z1-z0-2*s,x0+s/2,y0,(z0+z1)/2,c).scatola(s,h,z1-z0-2*s,x1-s/2,y0,(z0+z1)/2,c); }
+/* Un portico dritto, con le proporzioni di portico() (25 novembre 2026, per la piazza del Pantheon): lungo L sull'asse x, la fila di colonne su z=0, profondo prof verso -z,
+   aperto verso +z. muro: un muro di fondo col tetto a una falda; altrimenti una seconda fila di colonne e il tetto a due falde (un colonnato che si attraversa).
+   Architrave e tetto sono a pezzi, uno per colonna, col numero della colonna: in rovina cadono con lei (come in portico()). */
+function porticoDritto(B,L,prof,h,muro){
+  var a=.1, he=h*.18, hc=h-he, r=hc/20, ia=r*6.5, X0=-L/2+.2, X1=L/2-.2, n=Math.max(3,Math.round((X1-X0)/ia)+1), ht=he*.45, t=r*2.7, yl=a+hc+ht, yo=a+h+.17, q, f0, f1, xa, xb, id, id2=0;
+  B.scatola(L,.1,prof+.15,0,0,-prof/2,P.selce);
+  B.colonne(X0,0,X1,0,n,hc,r,a); id=B.ultimaFila;
+  if(muro) B.scatola(L,h+.27,.14,0,0,-prof,P.tufo); else { B.colonne(X0,-prof,X1,-prof,n,hc,r,a); id2=B.ultimaFila; }
+  for(q=0;q<n;q++){ f0=q?(q-.5)/(n-1):-.02; f1=q<n-1?(q+.5)/(n-1):1.02; xa=X0+(X1-X0)*f0; xb=X0+(X1-X0)*f1;
+    B.fc=id?id+q+1:0; B.scatola(xb-xa,ht,t,(xa+xb)/2,a+hc,0,P.marmo);
+    if(muro) B.quad([xb,yo,-prof-.07],[xa,yo,-prof-.07],[xa,yl,r*1.4],[xb,yl,r*1.4],P.coppi);
+    else { B.quad([xb,yo,-prof/2],[xa,yo,-prof/2],[xa,yl,r*1.4],[xb,yl,r*1.4],P.coppi);
+      B.fc=id2?id2+q+1:0; B.scatola(xb-xa,ht,t,(xa+xb)/2,a+hc,-prof,P.marmo).quad([xa,yo,-prof/2],[xb,yo,-prof/2],[xb,yl,-prof-r*1.4],[xa,yl,-prof-r*1.4],P.coppi); } }
+  B.fc=0;
+}
 function circo(B,L,W,h,spina){                           // circo o stadio: gradinate, fornici, pista
   var pr=function(w){ return RM.stadio(L-(W-w),w,26,14); }, est=pr(W), cima=pr(W-1.3), pista=pr(W*.62);
   var asse=pista.map(function(p){ return [Math.max(-L/2+4,Math.min(L/2-W/2,p[0])),0]; });
@@ -620,7 +638,7 @@ var M=[
     B.scatola(9,2.9,.5,10.5,-.4,9.2,P.marmo);
     [0,1,2].forEach(function(l){ var yy=-.4+l*.97; B.colonne(6.3,9.95,14.7,9.95,12,.82,.055,yy).scatola(9,.13,.95,10.5,yy+.82,9.62,P.marmo); if(l<2) [-3,0,3].forEach(function(x){ B.vano(10.5+x,yy+.02,9.47,1,0,1.5,.78); }); });
  }},
- {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6],[0,11.5,5],[0,-3.7,3.5]], et:1, fa:function(B){
+ {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6],[0,11.5,5],[0,-3.7,3.5],[0,11.1,[3.4,6.6],.5]], et:1, fa:function(B){      // l'ultima zona è la piazza porticata (pantheonpiazza), fino al colonnato nord
     /* La rotonda: tamburo di 56 m di diametro (43,2 dentro e muri di 6,2: Platner), alto circa 31, diviso in tre fasce da cornici; sopra, sette gradoni, il primo
        ancora rivestito di marmo, gli altri e la calotta coperti di tegole di bronzo (dorato secondo Cinti, ripreso da it.wikipedia; il Liber Pontificalis dice solo
        «tegulis aereis»): le toglie Costante II nel 663, Gregorio III (731-741) rifà il tetto «chartis plumbeis» (LP XCII 12). Il cambio di copertura sta nel modulo in fondo. */
@@ -635,7 +653,7 @@ var M=[
        Che le file interne stiano dietro la prima, la terza, la sesta e l'ottava colonna, formando tre navate, è detto a memoria. */
     var ROSA=RM.col(0xa98272), zf=5.1;
     B.scatola(3.42,.13,1.58,0,0,4.41,P.travertino);
-    for(var gd=1;gd<=5;gd++) B.scatola(2.6,.13*(6-gd)/6,.06,0,0,5.2+gd*.06,P.travertino);                                          // i cinque gradini
+    for(var gd=1;gd<=7;gd++) B.scatola(2.6,.13*(8-gd)/8,.06,0,0,5.2+gd*.06,P.travertino);                                          // i sette gradini, 1,30 m in tutto sopra il lastricato della piazza (Marder e Wilson Jones 2015, p. 59, ripreso da en.wikipedia «Pantheon, Rome»); prima erano cinque
     B.colonne(-1.64,zf,1.64,zf,8,1.415,.074,.13,P.granito);
     [zf-.48,zf-.96].forEach(function(z){ [-1.64,-.7,.7,1.64].forEach(function(x){ B.colonne(x,z,x,z,1,1.415,.074,.13,ROSA); }); });
     B.scatola(3.42,.2,1.6,0,1.545,4.4,P.marmo);                                                                                     // trabeazione; le iscrizioni del fregio e dell'architrave stanno in fondo al file
@@ -644,17 +662,35 @@ var M=[
     [-1.17,1.17].forEach(function(x){ B.vano(x,.25,3.66,1,0,.4,.85); });                                                           // le due nicchie in fondo alle navate laterali
  }},
  /* La piazza e l'aula a sud stanno in una maglia a parte, perché il cambio di copertura del Pantheon (663, 735) non tocchi i loro tetti di coppi */
+ /* La piazza davanti al pronao (rifatta il 25 novembre 2026; prima era un recinto murato su tre lati, staccato di 6 m dai gradini e cieco a nord: chi arrivava dal Campo Marzio
+    vedeva un muro). Fonti lette: «In front of it was an open space surrounded by colonnades» (Platner e Ashby, Pantheon); il pronao stava sette gradini, 1,30 m, sopra il
+    lastricato (Marder e Wilson Jones 2015, p. 59, da en.wikipedia); il lastricato adrianeo di travertino si è ritrovato in piazza della Rotonda e la piazza antica era
+    «molto più grande» di oggi verso nord (Soprintendenza Speciale di Roma, 2020, in Turismo Roma). Nessuna fonte letta dice di un muro o di una demolizione nel 609.
+    Ipotesi, dette nella scheda del Pantheon: larga 66 m come la piazza di oggi (OpenStreetMap, way 1295329514), lunga 120 m, fino all'altezza della Maddalena; portici a una navata
+    sui lati lunghi, col muro verso l'esterno; sul lato nord un colonnato a due file, senza muro, che si attraversa. L'«arcus Pietatis» che i testi medievali (Mirabilia) mettono
+    a nord del Pantheon, «perhaps in the line of the enclosing porticus» (Platner e Ashby, arcus), non si disegna: posto e data non si conoscono. */
  {id:'pantheonpiazza', x:-70,z:-68, ry:PI, come:'pantheon', fa:function(B){
-    B.dentro(0,0,9.2,PI,function(B){ portico(B,7,6.2,0,0,0,.9,P.selce); });                                                         // piazza porticata su tre lati, chiusa sul lato nord
+    var W=6.6, Z0=4.4, Z1=17.65, PN=.6, L=Z1-PN-Z0, ZC=(Z0+Z1-PN)/2;
+    B.scatola(W,.12,Z1-5.65,0,-.1,(5.65+Z1)/2,P.selce);                                                                                // il lastricato, alla quota del piede dei gradini
+    [-1,1].forEach(function(q){ B.dentro(q*(W/2-.65),0,ZC,-q*PI/2,function(B){ porticoDritto(B,L,.65,.9,true); }); });             // i portici dei lati lunghi, aperti verso la piazza, dal fianco del pronao al lato nord
+    B.dentro(0,0,Z1-PN,PI,function(B){ porticoDritto(B,W,PN,.9,false); });                                                           // il colonnato del lato nord, a due file
     /* A sud, addossata alla rotonda, l'aula detta basilica di Nettuno: 45 x 19 m, con un'abside di 9 m nel muro nord (Platner, Thermae Agrippae). Altezza e tetto sono ricostruiti. */
     B.scatola(4.5,2,1.9,0,0,-3.7,P.mattone).falde(4.6,.5,2,0,2,-3.7,P.coppi,0,P.mattone);
  }},
  {id:'domiziano', nome:'Stadio di Domiziano', x:-101,z:-74, ry:PI/2, lunga:[28,7.5], fa:function(B){ stadio(B,27.5,10.6,1.9); }},      // circa 275 x 106 m, la curva a nord: è piazza Navona. Ordini di arcate e altezza della facciata sono ricostruiti
- {id:'traiano', nome:'Terme di Traiano', x:97.4,z:3.7, ry:-.62, zone:[[0,0,23]], fa:function(B){ terme(B,31,32,{pc:21,zc:-3.8}); }},      /* posizione: il centro della relazione OpenStreetMap 13162787 «Thermae Traianae» (Nominatim, 23 novembre 2026); prima stava circa 95 m più a ovest */
+ {id:'traiano', nome:'Terme di Traiano', x:97.4,z:3.7, ry:-.62, zone:[[0,0,[12,12.5],3.5],[0,17,2.4,1.5]], fa:function(B){ terme(B,31,32,{pc:21,zc:-3.8});      /* posizione: il centro della relazione OpenStreetMap 13162787 «Thermae Traianae» (Nominatim, 23 novembre 2026); prima stava circa 95 m più a ovest */
+    /* La terrazza (25 novembre 2026): le terme stanno su un piano artificiale, fondato dentro le sale della domus Aurea riempite («This exedra was built over part of the domus Aurea»,
+       muri aggiunti «to provide sufficiently strong foundations», Platner e Ashby, Thermae Traiani). Verso la valle del Colosseo (+z) il piano sta circa 35 m sopra il terreno: lì e sugli
+       altri lati dove il colle scende si vedono muri di mattoni. Prima la zona sfumava su 70 m e la terrazza stava su un cumulo, staccata da terra fino a 15 m. Forma dei muri: una resa. */
+    zoccolo(B,-15.85,15.85,-16.35,16.35,-3.75,.02,P.mattone,.7);
+    var esT=RM.ellisse(31*.15,31*.12,16,0,PI).map(function(p){ return [p[0],p[1]+16]; }); B.striscia(esT,-3.75,esT,.02,P.mattone,false).striscia(esT.slice().reverse(),-3.75,esT.slice().reverse(),.02,P.mattone,false);      // sotto l'esedra del lato verso il Colosseo
+ }},
  /* Terme di Tito: «just west of the later thermae Traianae on the edge of the slope overhanging the Colosseum, with the same orientation as the domus Aurea … about 105 by 120 metres.
     The façade and principal entrance were on the north side … a caldarium projecting out from the south side» (Platner e Ashby, Thermae Titi). Oggi quasi nulla resta (it.wikipedia: fra via Nicola Salvi,
     via delle Terme di Tito e viale del Monte Oppio). Centro e orientamento sono stimati da queste vie; corpo unico senza recinto, caldario verso il Colosseo. */
- {id:'tito', nome:'Terme di Tito', x:68,z:10, ry:0, zone:[[0,0,5]], fa:function(B){ terme(B,10.5,12,{recinto:false,lc:10.5,pc:8.5,zc:-.5,rc:.9}); }},      // corpo centrale di circa 190 x 212 m, verso il lato nord del recinto (it.wikipedia, da Caruso e Volpe); il caldarium tondo è schematico
+ {id:'tito', nome:'Terme di Tito', x:68,z:10, ry:0, zone:[[0,-.2,[4,3.3],1.6],[0,4.35,.9,.8]], fa:function(B){ terme(B,10.5,12,{recinto:false,lc:10.5,pc:8.5,zc:-.5,rc:.9});      // zone a misura dell'edificio (25 novembre 2026: prima un cerchio di 50 m sotto un corpo di 105 x 102, che restava in parte sepolto e in parte sospeso)
+    zoccolo(B,-5.25,5.25,-4.75,3.75,-1,.02,P.mattone,.25); B.cilindro(.9,1.02,0,-1,4.35,P.mattone,null,16);      // lo zoccolo dove il bordo dell'Oppio scende, «on the edge of the slope overhanging the Colosseum» (Platner e Ashby)
+ }},      // corpo centrale di circa 190 x 212 m, verso il lato nord del recinto (it.wikipedia, da Caruso e Volpe); il caldarium tondo è schematico
  {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ terme(B,33.7,32.8,{rc:1.75,stadio:true,esedreLati:true}); }},      // il caldarium rotondo, al centro del lato sud-ovest, ha una cupola di 35 m; sul fondo del recinto la gradinata e le cisterne, sui fianchi le due esedre (Platner)
  {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36,{lc:28,pc:16,caldarium:'rettangolo',tepidarium:'tondo',rotonde:true}); }},      // corpo centrale di 280 x 160 m, caldarium rettangolare che sporge a sud-ovest, tepidarium circolare, grande esedra al centro del lato sud-ovest, due sale rotonde agli angoli ovest e sud (Platner)
  {id:'massenzio', nome:'Basilica di Massenzio', x:25,z:7, ry:-.35, zone:[[0,0,7.5]], fa:function(B){
@@ -668,14 +704,19 @@ var M=[
     B.colonne(-1,3.75,1,3.75,4,1.5,.09,0).scatola(2.6,.14,.8,0,1.5,3.7,P.marmo);                                  // il portico d'ingresso sul fianco sud
     B.cilindro(1,2.4,0,0,-3.3,P.mattone,null,16).cupola(1,0,2.4,-3.3,P.intonaco,.6);                               // l'abside nord, la sala del tribunale
  }},
- {id:'venere', nome:'Tempio di Venere e Roma', x:36.3,z:17.8, ry:-.42, zone:[[0,0,9.5]], fa:function(B){                            // tempio di Venere e Roma
+ {id:'venere', nome:'Tempio di Venere e Roma', x:36.3,z:17.8, ry:-.42, zone:[[0,0,[3.75,1.5],3.5],[-9,4.5,4.5,6]], fa:function(B){      // tempio di Venere e Roma. Zone (25 novembre 2026): il podio, spianato fino ai suoi muri; il colmo della Velia verso il Foro, dove stanno l'arco di Tito e la via Sacra
     /* Posizione e orientamento dal contorno della piattaforma su OpenStreetMap (relazione 1841091, 23 novembre 2026): i lati lunghi corrono a circa 24° a sud dell'est, lungo la via Sacra,
        che passa libera fra il podio e il Palatino. Prima era girato di 7° di meno e copriva la strada a est dell'Arco di Tito.
        Podio di 145 x 100 m rivestito di travertino; tempio decastilo e pseudodiptero, con colonne di 1,8 m di diametro e due celle schiena contro schiena, ciascuna con quattro colonne fra le ante;
        sui lati lunghi del recinto, portici di colonne di granito grigio (Platner e Ashby). La cella di Roma guarda il Foro (-x), quella di Venere il Colosseo (+x).
        Non lette: il numero delle colonne sui fianchi (qui 22) e le altezze. Le tegole erano di bronzo dorato: le porta via papa Onorio I verso il 630. */
-    B.scatola(14.5,.7,10,0,0,0,P.travertino);
-    for(var g=0;g<3;g++){ var hg=.7*(3-g)/4; B.scatola(.26,hg,6,-7.38-g*.26,0,0,P.travertino); [-1,1].forEach(function(q){ B.scatola(.26,hg,1.7,7.38+g*.26,0,q*3.9,P.travertino); }); }      // la scalinata verso il Foro e le due rampe verso il Colosseo
+    /* Il podio scende fino al piede della Velia (25 novembre 2026): prima era alto 7 m e sotto c'era un pendio di terra di 70 m. Verso il Colosseo è più alto, per il pendio, e dentro
+       ha le camere «for the storage of the machinery and apparatus of the amphitheatre»; verso il Foro «a wide flight of steps», verso il Colosseo «only two small flights» (Platner e Ashby).
+       Le due scale piccole scendono lungo il muro, perché fra il podio e il Colosseo non c'è spazio per una scala diritta: è una resa, come il numero dei gradini e delle camere. */
+    B.scatola(14.5,3.3,10,0,-2.6,0,P.travertino).scatola(14.56,.08,10.06,0,.62,0,P.marmo);
+    for(var g=0;g<8;g++) B.scatola(.12,.7*(8-g)/8,6,-7.31-g*.12,0,0,P.travertino);                                                  // la scalinata larga verso il Foro
+    B.aperture(7.25,4.6,7.25,-4.6,10,-1.75,.8,.55);                                                                                   // le camere nel podio, verso il Colosseo
+    [-1,1].forEach(function(q){ for(var gk=0;gk<12;gk++){ var top=.7-(gk+1)*2.4/12; B.scatola(.55,top+1.9,.31,7.53,-1.9,q*(1.25+(gk+.5)*.31),P.travertino); } });      // le due rampe verso il Colosseo, lungo il muro
     [-1,1].forEach(function(q){ B.colonne(-6.9,q*4.7,6.9,q*4.7,22,1.25,.09,.7,P.granito).scatola(14,.1,.5,0,1.95,q*4.7,P.coppi); });
     B.scatola(10.9,.3,5.2,0,.7,0,P.marmo);
     [-1,1].forEach(function(q){
@@ -797,6 +838,10 @@ var M=[
     B.scatola(2.0,.1,2.76,0,2.32,0,P.travertino).scatola(.5,.12,.05,0,1.32,1.37,P.marmo);                                              // la cornice tutt'attorno e l'architrave della porta
     B.scatola(1.0,.18,.4,0,0,1.55,P.travertino);                                                                                    // i gradini davanti alla porta
     B.scatola(.07,.5,.07,0,2.95,1.3,P.oro).scatola(.28,.07,.07,0,3.27,1.3,P.oro);                                                    // la croce sul frontone
+    /* L'abside: la chiesa «was founded in the curia by Honorius I (625‑638; LP LXXII.6), who added the apse» (Platner e Ashby, Curia Iulia, riletta il 25 novembre 2026). Il passo
+       non dice su quale muro né quanto fosse grande, né se sporgesse fuori dall'aula: qui sta sul muro di fondo, di fronte alla porta che resta in uso, e sporge (raggio di 5 m,
+       alta 16): scelta dichiarata nella scheda. Fino al 630 l'aula è la Curia, senza abside. */
+    B.cilindro(.5,1.6,0,0,-1.38,P.mattone,null,16).cupola(.52,0,1.6,-1.38,P.coppi,.55);
  }},
  {id:'pietro', nome:'San Pietro', x:-259,z:-108, ry:0, zone:[[0,0,9],[10,0,7]], et:1, fa:function(B){
     sanPietro(B);
@@ -831,10 +876,15 @@ var M=[
       [-.9,-.7,.7,.9].forEach(function(x){ disco(B,.085,.02,x,.98,z,ry,P.travertino); });                                                         // i tondi
       B.scatola(.5,.1,.02,-.8,1.16,z,P.travertino).scatola(.5,.1,.02,.8,1.16,z,P.travertino); });                                                 // il fregio basso sopra i fornici laterali
  }},
- {id:'termecostantino', nome:'Terme di Costantino', x:21.5,z:-65.9, ry:-.2, sc:.45, zone:[[0,0,9]], fa:function(B){      // senza peribolo: il corpo occupa tutto lo spazio fra le strade, davanti si apre un'area chiusa a nord da una linea curva (Platner). Misure schematiche
+ {id:'termecostantino', nome:'Terme di Costantino', x:21.5,z:-65.9, ry:-.2, sc:.45, zone:[[0,.33,[2,2.9],2.8]], fa:function(B){      // senza peribolo: il corpo occupa tutto lo spazio fra le strade, davanti si apre un'area chiusa a nord da una linea curva (Platner). Misure schematiche
+    /* «Because the baths were built on a side-hill, it was necessary to make an artificial level» (Platner e Ashby, Thermae Constantinianae, letta il 25 novembre 2026): qui un piano
+       murato che scende fino al pendio a est e a sud; prima la zona sfumava su 70 m e le terme stavano su un cumulo. La scala che dal lato ovest scendeva verso il Campo Marzio
+       («a magnificent flight of steps») non c'è: nel modello il lato ovest sta alla quota della cima del colle. Le misure del piano sono quelle dell'edificio (qui si conta in unità
+       scalate di 1/0,45). */
+    B.scatola(21.4,7.96,25.6,0,-7.8,.7,P.mattone).scatola(21.5,.1,25.7,0,.06,.7,P.selce);
     terme(B,33,32,{recinto:false,pc:14,zc:2});
     var cv=RM.ellisse(10,6,16,PI,2*PI).map(function(p){ return [p[0],p[1]-6]; });
-    B.scatola(20,.08,6,0,0,-8,P.selce).striscia(cv,0,cv,1.2,P.mattone,false);
+    B.striscia(cv,.16,cv,1.2,P.mattone,false);
  }},
  {id:'croce', nome:'Santa Croce in Gerusalemme', x:253.3,z:47.6, ry:2.72, zone:[[0,0,4]], fa:function(B){
     var L=3.65, W=2.2, H=2.2;                                                                  // l'aula del palazzo Sessoriano: un vano solo di 36 x 22 m, alto quanto largo, non una basilica a navate
@@ -892,9 +942,9 @@ var M=[
     Rivolta al contrario della basilica di Teodosio: abside a ovest, sulla tomba, ingresso dalla via Ostiense. Misure ipotetiche. */
  {id:'paolocostantino', nome:'San Paolo di Costantino', x:-63.4,z:376.8, ry:-.162, zone:[[0,0,2.6]], fa:function(B){ chiesa(B,4,2.2,false,{strette:true,atrio:false}); }},
  /* Santa Sabina: «tre navate, divise da dodici colonne doppie» e un nartece che era un braccio del quadriportico (it.wikipedia). Le navatelle larghe metà della navata sono il rapporto consueto, non una misura letta. */
- {id:'sabina', nome:'Santa Sabina', x:-46,z:89, ry:.785, sc:.62, zone:[[0,0,6]], fa:function(B){ chiesa(B,10,6,false,{strette:true}); }},
+ {id:'sabina', nome:'Santa Sabina', x:-46,z:89, ry:.785, sc:.62, zone:[[0,0,6],[8.6,0,1.6,1.5]], fa:function(B){ chiesa(B,10,6,false,{strette:true}); }},      // la seconda zona: uno spiazzo libero davanti all'atrio (25 novembre 2026: prima c'era una casa davanti all'ingresso)
  /* Santa Maria Maggiore di Sisto III: «tre navate, divise da 21 colonne» per lato, con 21 finestre per lato nella navata (it.wikipedia). Navatelle: come a Santa Sabina, proporzione consueta. */
- {id:'mariamaggiore', nome:'Santa Maria Maggiore', x:109,z:-57, ry:-.5, sc:.82, zone:[[0,0,8]], fa:function(B){ chiesa(B,10,6,false,{strette:true,finestre:21}); }},
+ {id:'mariamaggiore', nome:'Santa Maria Maggiore', x:109,z:-57, ry:-.5, sc:.82, zone:[[0,0,8],[10.4,0,1.8,1.5]], fa:function(B){ chiesa(B,10,6,false,{strette:true,finestre:21}); }},      // la seconda zona: uno spiazzo libero davanti all'atrio (25 novembre 2026: prima c'era una casa davanti all'ingresso)
  {id:'stefano', nome:'Santo Stefano Rotondo', x:94.5,z:88, ry:0, zone:[[0,0,5.5]], fa:function(B){
     /* tre cerchi: tamburo (22 m di diametro e 22 di altezza), ambulacro (42 m), anello esterno (66 m). Nell'anello esterno quattro bracci più alti disegnano una croce:
        stanno sulle diagonali (quello di nord-est sopravvive, è la cappella dei Santi Primo e Feliciano); fra un braccio e l'altro, un corridoio basso lungo il muro e un cortile. */
@@ -1063,7 +1113,10 @@ var M=[
  /* Castra Praetoria (21-23): rettangolo di 440 x 380 m; mura alte 4,73 m; dentro, lungo le mura, una fila di camere alte 3 m con un camminamento sopra; porta ovest a 190 m dal lato nord
     (Platner e Ashby, Castra Praetoria). Aureliano fa entrare nella sua cinta il lato nord, quello est e metà del lato sud (in js/mura.js, da OpenStreetMap); qui c'è il resto, che Costantino
     smantella nel 312 quando scioglie i pretoriani (Zosimo II 17, citato da Platner). Spessore dei muri, larghezza delle camere e torri della porta indicativi. */
- {id:'castrapretorio', nome:'Castra Praetoria', x:179,z:-156.5, ry:0, zone:CASTRA.zone, fa:function(B){
+ /* Niente insulae dentro il campo (25 novembre 2026; prima ce n'erano 33 nel 300, quando era una caserma). Dentro c'erano gli alloggi lungo le mura, le vie, i sacelli e l'armeria
+    (Platner e Ashby); dopo il 312 Costantino «dismantled their barracks», e nel campo si è trovato un cimitero cristiano dell'inizio del VI secolo: case non ne dice nessuno,
+    e il recinto resta vuoto in ogni anno. La zona è il rettangolo dei quattro spigoli, girato come il campo (0,348 rad). */
+ {id:'castrapretorio', nome:'Castra Praetoria', x:179,z:-156.5, ry:0, zone:CASTRA.zone.concat([[0,0,[16.4,19.1],0,.348]]), fa:function(B){
     var X=CASTRA.C[0], Z=CASTRA.C[1];
     CASTRA.muri.forEach(function(p){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ B.scatola(p.len+.1,.52,.3,0,-.05,0,P.mattone).scatola(p.len+.1,.06,.36,0,.47,0,P.tufo); }); });
     CASTRA.camere.forEach(function(p){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ B.scatola(p.len+.05,.33,.4,0,-.03,0,P.intonaco); }); });
@@ -1090,11 +1143,22 @@ var M=[
  /* Tempio del Divo Claudio sul Celio (iniziato nel 54, rifatto da Vespasiano): piattaforma di 180 x 200 m su muri alti fino a 15 m; tempio esastilo, con tre colonne di profondità nel pronao,
     rivolto verso il Palatino (it.wikipedia «Tempio del Divo Claudio»). Centro da it.wikipedia; il lato est è parallelo a via Claudia (OpenStreetMap, way 129115593), dove resta la facciata a nicchie
     della mostra d'acqua. Le misure del tempio sono indicative. */
- {id:'tempioclaudio', nome:'Tempio di Claudio', x:64.72,z:50.57, ry:-1.21, zone:[[-6.5,-4.5,4.5],[0,-4.5,4.5],[6.5,-4.5,4.5],[-6.5,4.5,4.5],[0,4.5,4.5],[6.5,4.5,4.5]], fa:function(B){
+ {id:'tempioclaudio', nome:'Tempio di Claudio', x:64.72,z:50.57, ry:-1.21, zone:[[0,0,[6,5],4]], fa:function(B){      // la zona spiana solo sotto la piattaforma e finisce ai suoi muri (25 novembre 2026; prima sei cerchi sfumati su 70 m facevano un cumulo di terra)
     /* La piattaforma sale di 8,5 m sopra la spianata (23 novembre 2026): prima il suo piano era a filo del terreno, e a sud-est il pendio del Celio, più alto, ne copriva un angolo.
-       Dal vero la terrazza dominava la valle del Colosseo con le sue sostruzioni e verso il colle arrivava alla quota della cima; l'altezza qui è indicativa. */
-    B.scatola(20,3.45,18,0,-2.55,0,P.tufo).scatola(19.6,.06,17.6,0,.87,0,P.prato);                // la piattaforma, a giardino
-    B.aperture(10,-9,-10,-9,14,-1.9,1.2,.7);                                                         // le nicchie sul lato di via Claudia
+       Dal vero la terrazza dominava la valle del Colosseo con le sue sostruzioni e verso il colle arrivava alla quota della cima; l'altezza qui è indicativa.
+       Dal 25 novembre 2026 i muri di sostegno scendono fino al piede del colle e ciascun lato ha la sua sostruzione (Platner e Ashby, Templum Claudii, letta quel giorno): a ovest
+       «double rows of travertine arches with engaged columns and entablature» (due ordini di arcate: it.wikipedia «Tempio del Divo Claudio», in basso piatte, in alto ad arco);
+       a nord «what seem to be reservoirs for water», una fila di stanze a volta; a est, il ninfeo di Nerone, «alternately square and semicircular recesses»; a sud, il lato meno
+       elaborato (it.wikipedia). Qui +z è l'ovest, -x il nord, -z l'est, +x il sud. Numero e misura dei vani sono indicativi. Scale: it.wikipedia dice di una scalinata che saliva
+       al complesso passando sopra una strada, ma non dove; non c'è. Il tempio guarda verso il Palatino (it.wikipedia); Platner lo dice «fronting towards the north» da una sua
+       lettura della Forma Urbis: le due fonti non concordano, e l'orientamento resta com'era. */
+    B.scatola(20,3.97,18,0,-3.07,0,P.tufo).scatola(19.6,.06,17.6,0,.87,0,P.prato);                // la piattaforma, a giardino, coi muri fino al piede del colle
+    B.scatola(20.06,.12,18.06,0,.78,0,P.travertino);                                                // la cornice in cima ai muri
+    B.scatola(20.04,3.9,.04,0,-3.07,9,P.travertino);                                               // ovest: la fronte di travertino
+    B.aperture(-10,9,10,9,18,-2.75,1.05,.62,true).aperture(-10,9,10,9,18,-1.45,1.4,.62);          // le due file di arcate, piatte sotto e ad arco sopra
+    B.colonne(-8.89,9.06,8.89,9.06,17,2.6,.07,-2.95,P.travertino);                                 // le semicolonne fra un'arcata e l'altra
+    B.aperture(-10,-9,-10,9,16,-2.95,.95,.7);                                                      // nord: le stanze a volta delle cisterne
+    for(var nc=0;nc<14;nc++) B.vano(10-(nc+.5)*20/14,-2.5,-9.075,-1,0,.75,1.3,nc%2===0);        // est: le nicchie del ninfeo, quadre e a semicerchio alternate
     B.dentro(0,.85,0,0,function(B){ tempietto(B,2.2,3.8,.35,1.4,6,0,0,0,false); });
  }},
  /* Arco di Dolabella e Silano (10 d.C.), in travertino, poi sotto gli archi neroniani dell'acqua Claudia (Platner e Ashby, arcus). Contorno e orientamento: OpenStreetMap, way 135618677.
@@ -1103,7 +1167,8 @@ var M=[
  /* Ludus Magnus, la caserma dei gladiatori accanto al Colosseo (Domiziano, rifatta sotto Traiano): celle su tre piani attorno a un cortile con un'arena ellittica e piccole gradinate
     (it.wikipedia «Ludus Magnus»). Orientamento e lunghezza (86 m) dalla parte scavata (OpenStreetMap, relazione 1894844), che è la metà nord; larghezza (circa 72 m) e arena (circa 62 x 45)
     a memoria, indicative. */
- {id:'ludusmagnus', nome:'Ludus Magnus', x:79.6,z:27.8, ry:-.296, zone:[[0,0,5]], fa:function(B){
+ {id:'ludusmagnus', nome:'Ludus Magnus', x:79.6,z:27.8, ry:-.296, zone:[[0,0,[3,2.3],1.4]], fa:function(B){      // zona a misura del recinto (25 novembre 2026: prima un cerchio di 50 m, e la terra del Celio sovrastava il lato sud)
+    zoccolo(B,-4.35,4.35,-3.65,3.65,-.9,.02,P.mattone,.25);
     [-3,3].forEach(function(z){ B.scatola(8.6,.95,1.2,0,0,z,P.mattone).falde(8.6,.3,1.3,0,.95,z,P.coppi,0,P.mattone); });
     [-3.7,3.7].forEach(function(x){ B.scatola(1.2,.95,4.8,x,0,0,P.mattone).falde(4.8,.3,1.3,x,.95,0,P.coppi,PI/2,P.mattone); });
     B.aperture(-4.2,3.6,4.2,3.6,12,.15,.3).aperture(4.2,-3.6,-4.2,-3.6,12,.15,.3);
@@ -1172,8 +1237,8 @@ var M=[
     Posizione secondo Gatti: fra il Pantheon e le terme di Agrippa a ovest e l'Iseo a est, da via del Seminario verso sud (via del Plebiscito chiude l'isolato; lì, lungo il portico sud, il Diribitorium,
     che non si disegna). Platner e Ashby (1929) lo mettevano invece lungo la via Lata: la scheda lo dice. «No reference has been found to it in the Middle Ages»: dopo il V secolo non lo
     nominano più; qui chiude nel 450 (ipotesi). Misure dalle vie di oggi, alzati indicativi. */
- {id:'saepta', nome:'Saepta Iulia', x:-59.25,z:-58.5, ry:0, zone:[[0,-9,4.6],[0,0,4.6],[0,9,4.6]], fa:function(B){
-    var W=9.5, L=29;
+ {id:'saepta', nome:'Saepta Iulia', x:-59.5,z:-58.5, ry:0, zone:[[0,-9,4.6],[0,0,4.6],[0,9,4.6]], fa:function(B){      // 25 novembre 2026: il lato est finisce a x -55, dove comincia il recinto dell'Iseo (qui sotto); prima i due muri si sovrapponevano per 5 m. Il lato ovest resta dov'era
+    var W=9, L=29;
     B.scatola(W-.4,.04,L-.4,0,0,0,P.selce);                                                             // la grande piazza
     [-1,1].forEach(function(q){ var x=q*(W/2-.7);                                                      // i due portici lunghi, a ovest e a est
       B.scatola(.2,1.3,L,q*(W/2-.1),0,0,P.intonaco).colonne(x-q*.6,-L/2+.6,x-q*.6,L/2-.6,Math.round((L-1.2)/.374)+1,1.15,.0575,0).falde(L,.32,1.4,x,1.15,0,P.coppi,PI/2,P.intonaco); });      // colonne con le proporzioni dei portici (in portico(), qui sopra): prima erano 24 per lato, a 12 m l'una dall'altra
@@ -1260,7 +1325,10 @@ var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonin
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
   var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?(D.CANTIERI&&D.CANTIERI[o.id]?D.CANTIERI[o.id]-1:st[1][0]-8):0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)
-  (o.zone||[]).forEach(function(q){ var p=globale(o,q[0],q[1]); RM.zone.push({x:p[0],z:p[1],r:q[2],h:h,dal:dal}); });
+  (o.zone||[]).forEach(function(q){ var p=globale(o,q[0],q[1]), z={x:p[0],z:p[1],r:q[2],h:h,dal:dal};
+    if(q[3]!=null) z.t=q[3];                                                                     // [x, z, raggio, sfumatura]: la sfumatura sottile per le piattaforme murate (RM.h in js/base.js)
+    if(q[2] instanceof Array){ var gz=(o.ry||0)+(q[4]||0); z.r=0; z.a=q[2][0]; z.b=q[2][1]; z.c=Math.cos(gz); z.s=Math.sin(gz); z.R=Math.hypot(z.a,z.b); }      // [x, z, [mezza larghezza, mezza profondità], sfumatura, rotazione in più]: un rettangolo girato col monumento
+    RM.zone.push(z); });
   if(o.lunga){ var n=Math.ceil(o.lunga[0]/o.lunga[1]); for(var i=0;i<n;i++){ var p=globale(o,((i+.5)/n-.5)*o.lunga[0],0); RM.zone.push({x:p[0],z:p[1],r:o.lunga[1],h:h}); } }
 });
 /* dove una strada passa sotto un arco si stringe alla luce del fornice: [x, z, raggio, mezza larghezza] (24 novembre 2026: con strade larghe 16 m e fornici di 5 o 6, anche un arco

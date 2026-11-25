@@ -58,9 +58,14 @@ superstiti=semplifica(catena,1.4);
 const fine=superstiti[superstiti.length-1], inizio=superstiti[0];
 const ponteSublicio=[X(12.4752),Z(41.8838)], ponteSisto=[X(12.4708),Z(41.8924)];
 const testaccio=riva(ponteSublicio[1],fine[1]+25,7).filter(p=>p[1]<fine[1]+12).reverse();              // dal capo sud delle mura su per la riva fino al ponte Sublicio
-const trastevere=[[X(12.4722),Z(41.8822)],porte['Porta Portese'],[X(12.4655),Z(41.8850)],[X(12.4614),Z(41.8884)],[X(12.4640),Z(41.8905)],porte['Porta Settimiana'],[ponteSisto[0]-7,ponteSisto[1]]];
+/* Al ponte Aurelio (ponte Sisto) le due cinte si attaccano al ponte: per Procopio (Guerra gotica I 19, 6-10, traduzione Loeb su LacusCurtius, letta il 25 novembre 2026) i Romani
+   cinsero di mura il colle oltre il fiume e le unirono alla cinta con un ponte, che la nota dell'editore identifica col pons Aurelius; sulla riva sinistra il muro corre «along the river from near
+   the porta Flaminia to the pons Aurelius» (Platner e Ashby, Muri Aureliani, stesso giorno). Fino al 25 novembre 2026 la cinta finiva 50 m a monte e 50 m a valle del ponte e un
+   tratto merlato attraversava il fiume sotto l'impalcato. Ora i due capi stanno sul fianco a monte delle due testate del ponte del modello (7 unità dall'asse del fiume,
+   una a monte dell'asse del ponte: js/mura.js lo calcola dalla curva del fiume); il lato che chiude il poligono passa sull'acqua e js/mura.js non lo disegna. */
+const trastevere=[[X(12.4722),Z(41.8822)],porte['Porta Portese'],[X(12.4655),Z(41.8850)],[X(12.4614),Z(41.8884)],[X(12.4640),Z(41.8905)],porte['Porta Settimiana'],[-126.1,5.8]];
 const campoMarzio=riva(inizio[1]-8,ponteSisto[1],7).reverse();                                           // da ponte Sisto su per l'ansa fino all'altezza di porta del Popolo
-let mura=superstiti.concat(testaccio,trastevere,[[ponteSisto[0]+7,ponteSisto[1]]],semplifica(campoMarzio,1.5));
+let mura=superstiti.concat(testaccio,trastevere,semplifica(campoMarzio,1.5));
 mura=mura.map(p=>[r1(p[0]),r1(p[1])]).filter((p,i,a)=>!i||Math.hypot(p[0]-a[i-1][0],p[1]-a[i-1][1])>1.5);
 
 /* ---------- strade ----------
@@ -71,8 +76,11 @@ mura=mura.map(p=>[r1(p[0]),r1(p[1])]).filter((p,i,a)=>!i||Math.hypot(p[0]-a[i-1]
 const VIE=[
   {nome:'via Lata e Flaminia', p:[[-22,-37],[-77,-211],[-110,-330],[-152,-478],[-165,-600]], vie:['Via del Corso','Via Flaminia','Ponte Milvio']},
   {nome:'Appia', p:[[42,25.9],[44.47,30.43],[43.87,35.04],[35,61],[43,96],[126,172],[134,211],[200,330],[294,448],[420,560]], vie:['Via di San Gregorio','Via di Porta San Sebastiano','Via Appia Antica'], fissi:[[44.47,30.43,1]]},      /* dal 24 novembre 2026 comincia dalla valle del Colosseo e passa sotto l'arco di Costantino (contorno dell'arco su OpenStreetMap, way 23590989): prima cominciava 320 m più a sud e l'arco restava senza strada */
-  {nome:'Ostiense', p:[[-36,42],[-42,62],[-58,84],[-70,106],[-55,150],[-32,176],[-42,280],[-48,320],[-58,376],[-100,560]], vie:['Via Marmorata','Via Ostiense'], fissi:[[-32.1,176.1,12],[-32.3,173.13,2],[-32.79,178.1,2]]},
-  {nome:'Aurelia', p:[[-69.1,34.8],[-110,45],[-198,46],[-300,40],[-458,28]], vie:['Via della Lungaretta','Via Aurelia Antica'], fissi:[[-198,45.5,12],[-196.17,47.2,2],[-199.85,43.81,2]]},      /* parte dalla testa di Trastevere del ponte dell'isola: prima partiva a metà del ponte Emilio e correva per cento metri sull'acqua (24 novembre 2026) */
+  {nome:'Ostiense', p:[[-31.4,40.4],[-35.1,53.5],[-42,62],[-58,84],[-70,106],[-55,150],[-32,176],[-42,280],[-48,320],[-58,376],[-100,560]], vie:['Via Marmorata','Via Ostiense'], fissi:[[-32.1,176.1,12],[-32.3,173.13,2],[-32.79,178.1,2],[-35.1,53.5,1.5]]},      // dal 25 novembre 2026 comincia sulla strada del Foro Boario (prima sul tempio rotondo) e passa dal piede del ponte Sublicio
+  {nome:'Aurelia', p:[[-58.9,44.3],[-70.2,37.4],[-110,45],[-198,46],[-300,40],[-458,28]], vie:['Via della Lungaretta','Via Aurelia Antica'], fissi:[[-58.9,44.3,1.5],[-70.2,37.4,2],[-198,45.5,12],[-196.17,47.2,2],[-199.85,43.81,2]]},      /* parte dalla testa di Trastevere del ponte dell'isola: prima partiva a metà del ponte Emilio e correva per cento metri sull'acqua (24 novembre 2026).
+     Dal 25 novembre 2026 comincia al piede della rampa del ponte Emilio e passa dal piede di quella del ponte Cestio (le due coordinate vengono da RM.ponti di js/mura.js): «For a
+     viaduct on the road leading from the bridge to the Janiculum, cf. Via Aurelia» (Platner e Ashby, Pons Aemilius, letto il 25 novembre 2026). Il tratto fra i due ponti è un'ipotesi:
+     oggi lo stesso giro fanno lungotevere e piazza in Piscinula, da dove parte via della Lungaretta. */
   {nome:'Argileto, clivo Suburano e Tiburtina', p:[[-1,-1],[3,-5],[21,-20],[39,-22],[132,-36],[210,-56],[282,-98],[619,-250]], vie:['Argiletum','Via della Madonna dei Monti','Via Leonina','Via in Selci','Via di San Vito','Via Tiburtina Antica','Via Tiburtina'], fissi:[[207.1,-55.3,10],[205.42,-54.24,2],[209.95,-56.36,2]]},
   {nome:'Labicana e Prenestina', p:[[72,22],[249,12],[400,30],[619,50]], vie:['Via Labicana','Via Prenestina']},
   {nome:'Alta Semita e Nomentana', p:[[24,-78],[80,-128],[139,-179],[270,-326],[420,-500]], vie:['Via del Quirinale','Via Venti Settembre','Via Nomentana'], fissi:[[139.5,-178.5,28],[137.34,-177.27,2],[141.68,-179.76,2]]},
@@ -82,7 +90,7 @@ const VIE=[
      pellegrini, che era la strada coperta per San Pietro (prima girava a ovest 27 m prima dell'ingresso e attraversava la Meta Romuli). Il tracciato nel Borgo resta un'ipotesi. */
   {nome:'Vicus Longus', p:[[13,-20],[50,-60],[85,-88]], vie:[]},
   {nome:'Latina', p:[[126,172],[142,178],[370,361]], vie:['Via di Porta Latina','Via Latina'], innesto:1},
-  {nome:'Portuense', p:[[-50,36],[-94,96],[-210,250],[-300,400]], vie:['Via Portuense']},
+  {nome:'Portuense', p:[[-58.9,44.3],[-94,96],[-210,250],[-300,400]], vie:['Via Portuense'], fissi:[[-58.9,44.3,1.5]]},      /* dal 25 novembre 2026 comincia al piede della rampa del ponte Emilio, sulla riva di Trastevere (prima a metà del ponte, sull'acqua). Dentro le mura il tracciato è un'ipotesi: oggi via dei Vascellari e via di San Michele vanno dal ponte verso porta Portese */
   {nome:'via Settimiana', p:[[-110,45],[-147,3],[-185,-50],[-196,-87]], vie:['Via della Lungara'], fissi:[[-145.63,5.32,2],[-146.09,0.34,2]]},
   {nome:'Salaria', p:[[80,-128],[106,-203],[120,-330],[130,-500]], vie:['Via Salaria'], fissi:[[106.4,-203.3,10]]},
   {nome:'verso il Laterano e porta Asinaria', p:[[66,34],[120,60],[194,76],[330,170]], vie:['Via dei Santi Quattro'], fissi:[[193.42,73.99,2],[195.45,78.56,2]]},      /* le coppie di punti fissi a 25 m dentro e fuori di una porta (qui e nelle altre vie) fanno entrare la strada diritta nel fornice (24 novembre 2026) */
@@ -95,7 +103,20 @@ const VIE=[
   {nome:'clivo Argentario', stretta:true, p:[[-3,-4],[-6,-11],[-9,-18],[-22,-37]], vie:['Clivo Argentario']},
   {nome:'via Nova', stretta:true, p:[[26.4,20.2],[25,22],[17,18],[12,16],[6,13]], vie:['Via Nova'], fissi:[[26.4,20.2,.5]]},      /* parte dalla via Sacra, appena a ovest dell'Arco di Tito (23 novembre 2026: prima finiva nel vuoto con una piega) */
   {nome:'clivo di Scauro e via Celimontana', stretta:true, tol:14, p:[[40,66],[59,69],[85,70],[125,68],[163,62]], vie:['Clivo di Scauro','Via di San Paolo della Croce','Via di Santo Stefano Rotondo']},
-  {nome:"vico Capo d'Africa", stretta:true, p:[[70,38],[103,47]], vie:["Via Capo d'Africa"]}
+  {nome:"vico Capo d'Africa", stretta:true, p:[[70,38],[103,47]], vie:["Via Capo d'Africa"]},
+  /* Strade dei ponti (25 novembre 2026). Prima i ponti Aurelio, dell'isola (lato sinistro), Emilio (lato del Foro Boario) e di Probo finivano su un prato: ora ogni testata, al piede
+     della rampa (le coordinate dei piedi vengono da RM.ponti di js/mura.js), ha la sua strada. Le fonti lette (Platner e Ashby, il 25 novembre 2026) dicono quali luoghi i ponti univano,
+     non il tracciato: il pons Aemilius «crossed the river from the forum Boarium»; il vicus Tuscus era «the principal artery of communication between the forum and the forum Boarium»;
+     per il vicus Iugarius, «part of the original trade route which led to the river», le vie da nord e da est «all reached the crossing over the Tiber just below the island».
+     Dove la fonte tace (ponte Aurelio, ponte di Probo) il tracciato è quello della via moderna erede, presa da OpenStreetMap (grezzi/osm-ponti.json, query in grezzi/q13.txt),
+     scostato dove passerebbe dentro un monumento del modello (teatro di Pompeo, Portico d'Ottavia, teatro di Marcello). Tutti i tracciati sono ipotesi. */
+  {nome:'foro Boario, dal vico Tusco al ponte Emilio', stretta:true, p:[[-44.4,31.4],[-39.6,33.3],[-35,32.4],[-32.6,36.6],[-31.4,40.4],[-23.5,42.4],[-14.2,43]], vie:[]},      // oggi via di Ponte Rotto (a nord del tempio di Portuno), piazza della Bocca della Verità, via della Greca verso il Velabro
+  {nome:'dal ponte Aurelio al ponte Fabricio e al vico Iugario', stretta:true, p:[[-111.5,-8.6],[-104.8,-13.8],[-95,-14.5],[-84,-13.5],[-79.5,-12.4],[-75.4,-10.4],[-69.9,-7.1],[-64.7,-4.5],[-62.3,4],[-61.2,13],[-59.7,17.9],[-55,19.8],[-50,19.6],[-44,18.7],[-39,18]], vie:[]},      // oggi via dei Pettinari, via dei Giubbonari (qui più a sud, fuori dal teatro di Pompeo), via di Santa Maria del Pianto, via del Portico d'Ottavia; poi lungo la riva fino al ponte Fabricio e, a sud del teatro di Marcello, fino alla porta Carmentale, dove finisce il vico Iugario
+  {nome:'dal ponte Aurelio a porta Settimiana', stretta:true, p:[[-130.1,9.5],[-134.1,7.6],[-142.7,8.6]], vie:[]},      // oggi piazza Trilussa e via di Ponte Sisto; si innesta nella via Settimiana dentro la porta
+  {nome:'ponte di Probo, riva sinistra', stretta:true, p:[[-75.1,106.05],[-70.2,106.5]], vie:[]},      // oggi piazza dell'Emporio, fino alla via Marmorata (Ostiense)
+  {nome:'ponte di Probo, riva destra', stretta:true, p:[[-87.7,92.75],[-91.9,92.7]], vie:[]},      // oggi piazza di Porta Portese, fino alla via Portuense
+  {nome:'ponte Sublicio, riva destra', stretta:true, p:[[-55.1,49.3],[-60,46]], vie:[]},      // fino alla Portuense; sulla riva sinistra il ponte arriva sulla via Ostiense
+  {nome:'ponte Milvio, riva sinistra', stretta:true, p:[[-149.35,-470],[-152.2,-470.4]], vie:[]}      // la Flaminia di OpenStreetMap arriva al piazzale di sbieco e passava 28 m a ovest della testata sud; spostarla avrebbe staccato le piste della scena del 312 (js/scene-tappe.js)
 ];
 const osmStrade=JSON.parse(fs.readFileSync(qui('./grezzi/osm-strade.json'),'utf8')).elements.concat(JSON.parse(fs.readFileSync(qui('./grezzi/osm-vie.json'),'utf8')).elements.filter(w=>w.tags&&w.tags.name&&w.geometry));   // query in grezzi/q2.txt e q3.txt
 /* ascissa lungo lo scheletro, scarto laterale con segno */
