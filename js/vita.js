@@ -1,24 +1,51 @@
-/* La vita della città: gente lungo le vie (chi abita un isolato cammina sulla strada più vicina) e nelle piazze lastricate, fumo dai tetti e dalle terme, barche sul Tevere.
+/* La vita della città: gente lungo le vie (chi abita un isolato cammina sulla strada più vicina) e nei luoghi affollati di ogni epoca, carri e muli, il mercato dell'Emporio,
+   le ronde dei vigili nelle notti del III secolo, fumo dai tetti e dalle terme, barche sul Tevere. Aggancio per le scene degli assedi: RM.vitaAnno(anno), RM.vitaFattore, RM.vitaEvita.
    Tutto dipende dagli stessi dati della scena: quando un isolato si svuota, la sua gente e il suo fumo scompaiono. */
 (function(){
 'use strict';
 var RM=window.RM; if(!RM||RM.guasto||!RM.isolati) return;
 var D=window.RM_DATI, P=RM.P, rnd=RM.casuale(1453), isolati=RM.isolati, N=isolati.length, annoOra=235, quotaGente=1, tempo=0;
 
-/* ---------- gente ---------- */
-var PER_ISOLATO=RM.piccolo?1:2, NR=N*PER_ISOLATO, NV=RM.piccolo?600:1500, NZ=RM.piccolo?350:700, NG=RM.piccolo?200:360, NP=NR+NV+NZ+NG, quotaPellegrini=0;
-var pos=new Float32Array(NP*3), col=new Float32Array(NP*3), giro=new Float32Array(NP), passo=new Float32Array(NP), piedi=new Float32Array(NP);      // piedi: la quota del suolo sotto ciascuno (le figure vicine stanno lì)
-var ABITI=[0xfaf6ec,0x7a4a2e,0x8a5a3a,0x9c3b2e,0x4a5a6c,0x5f5a3c,0x3c342c,0xb5803f].map(RM.col), i, c;
-for(i=0;i<NP;i++){
-  c=ABITI[(rnd()*ABITI.length)|0]; col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
-  giro[i]=rnd()*4; passo[i]=(rnd()<.5?-1:1)*(.05+.09*rnd());
+/* ---------- gente ----------
+   La vita per strada (25 novembre 2026, notte; l'utente: «la città reale doveva essere un po' caotica, gente in giro… riesci a fare carri, gente che cammina… di notte invece
+   poca gente»; «molta più gente nell'epoca imperiale, molta meno in quella alto medioevale»; «andrebbero disegnati anche dei mercati… fai una ipotesi di vita reale nelle varie fasi»).
+   Unica fonte: src/testi/vita-roma-fonti.md, letto per intero; accanto a ogni riga la sua voce. Dalle fonti: dove la gente si raccoglieva e fino a quando (i fori; le terme fino
+   al 537, Procopio V 19; l'Emporio, «mercato sul fiume», finché il modello lo tiene in uso; i mendicanti davanti a San Pietro sotto Teodorico, Procopio, Storia segreta 26; la casa
+   dei poveri di Leone III ai gradini di San Pietro; lo xenodochio di Belisario sulla via Lata; le diaconie), i carri tirati da buoi o da bestie da soma (Tabula Heracleensis),
+   le ronde dei vigili nel III secolo (Digesto I 15, 3), gli anni d'assedio e la città vuota del 546-547 (VITA_ANNI, più sotto).
+   Ipotesi, dette nel piede della pagina: quanta gente (una figura per molte persone, in proporzione a CURVE.popolazione), dove cammina (sulle vie principali e vicino alle case
+   abitate), quanti carri e bestie e la loro forma, i banchi dell'Emporio, chi stava davanti alle diaconie; che il divieto dei carri di giorno valesse ancora (la pagina lo dice).
+   Mercati attestati ma non disegnati, perché il modello non ha la piazza: foro Suario (case al suo posto), mercato di Livia, mercato grande del Celio, foro Olitorio (coperto di case);
+   i gradini del pane (Codice Teodosiano XIV 17) non hanno un luogo nelle fonti lette. */
+var MENO_MOTO=!!(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) && !/[?&]moto=1/.test(location.search);      // con meno animazioni la gente c'è ma sta ferma
+RM.QUALITA.gente=[.35,1,1.3,1.6,.5];      // quanta gente per gradino (bassa, media, alta, massima, telefono), rispetto a «media»: poca nei gradini leggeri, distribuita allo stesso modo
+var GMAX=1.6, rndV=RM.casuale(2604);      // rndV: i numeri a caso della vita nuova (rnd resta quello di prima per fumo e barche)
+var PER_ISOLATO=RM.piccolo?2:3, NR=N*PER_ISOLATO, NV0=RM.piccolo?900:1800, NV=Math.round(NV0*GMAX), NG0=RM.piccolo?200:360, NG=Math.round(NG0*GMAX), quotaPellegrini=0;
+/* Gli anni in cui la vita di tutti i giorni si ferma o si dirada: [da, a, quanta gente resta (1 = la curva della popolazione), carri e bestie (0 = nessuno)]. Fonti in src/testi/vita-roma-fonti.md, «Assedi e fame».
+   Solo il fondo: i gesti degli assedi (fame, sepolture, guardie sulle mura) li mette in scena js/scene-tappe.js, che legge questa tabella con RM.vitaAnno(anno). */
+var VITA_ANNI=[
+  [408.7,410.6,.55,.2,'Alarico chiude le porte e il Tevere; fame, poi peste (Zosimo V 39-40)'],
+  [471.8,472.6,.6,.2,'Ricimero chiude la zona del Tevere e affama chi sta dentro (Giovanni di Antiochia, fr. 209)'],
+  [536.9,538.4,.5,0,'assedio dei Goti: donne, bambini e servi mandati a Napoli; mancano i viveri anche per gli animali (Procopio V 19 e 25)'],
+  [545,545.6,.35,0,'fame: un medimno di grano a sette monete d\'oro; chi può esce dalla città (Procopio VII 17)'],
+  [545.6,547.5,0,0,'Totila manda via gli abitanti: Roma resta vuota «quadraginta aut amplius dies» (Procopio VII 22; Marcellino Conte, 547)'],
+  [592.8,593.6,.7,.3,'Agilulfo sotto le mura; le veglie di guardia (Gregorio Magno, Registrum V 36)']];
+function vitaAnno(anno){
+  var q=1, cb=1, nota='', k, r;
+  for(k=0;k<VITA_ANNI.length;k++){ r=VITA_ANNI[k]; if(anno>=r[0]-.4 && anno<r[1]+.4){ var w=RM.sfuma(r[0]-.4,r[0],anno)*(1-RM.sfuma(r[1],r[1]+.4,anno)); q=Math.min(q,1-(1-r[2])*w); cb=Math.min(cb,1-(1-r[3])*w); if(w>.5) nota=r[4]; } }
+  return {quota:q, carri:cb, assedio:q<.95, nota:nota};
 }
+RM.vitaAnno=vitaAnno;      // per js/scene-tappe.js: {quota, carri, assedio, nota} dell'anno
+RM.vitaFattore=1;          // un altro modulo può diradare la gente per un momento (1 = nessun effetto)
+RM.vitaEvita=[];           // e tenerla lontana da un luogo: {x, z, r} in unità della scena (oltre alle scene accese, che la vita evita da sola)
+
 /* Le strade sono un nastro 1 m sopra il terreno disegnato (RM.nastro(…,.1) in js/base.js): chi cammina su una strada sta su quel nastro, se no ci affonda (24 novembre 2026) */
 function hVia(x,z){ var a=RM.hRapida(x,z); return RM.hSuolo?Math.max(a,RM.hSuolo(x,z)+.1):a; }
-/* vie campionate a passo costante */
+/* vie campionate a passo costante, con la quota del nastro in ogni punto: a ogni fotogramma basta un'interpolazione (prima due quote per persona, per fotogramma) */
 var vie=RM.STRADE.map(function(s,i){
-  var cv=new THREE.CatmullRomCurve3(s.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); }),false,'catmullrom',.35), L=cv.getLength();
-  return {p:cv.getSpacedPoints(Math.max(2,Math.round(L/2))), L:L, larga:((window.RM_TOPO||{}).stradeLarghe||[])[i]||.6};
+  var cv=new THREE.CatmullRomCurve3(s.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); }),false,'catmullrom',.35), L=cv.getLength(), p=cv.getSpacedPoints(Math.max(2,Math.round(L/2))), y=new Float32Array(p.length), k;
+  for(k=0;k<p.length;k++) y[k]=hVia(p[k].x,p[k].z);
+  return {p:p, y:y, L:L, larga:((window.RM_TOPO||{}).stradeLarghe||[])[i]||.6};
 });
 /* A ogni isolato la via più vicina (entro 120 metri): la sua gente cammina lì. Le vie disegnate sono solo le principali: dove le case abitate sono fitte
    ci sono anche i vicoli fra l'una e l'altra, e lì si gira attorno a casa; attorno a una casa sola in mezzo agli orti non cammina nessuno. */
@@ -37,17 +64,102 @@ var vie=RM.STRADE.map(function(s,i){
   });
 })();
 function vicoli(){ isolati.forEach(function(b){ var n=0, k; for(k=0;k<b.vicini.length;k++) if(isolati[b.vicini[k]].a0>.5) n++; b.vicoli=n>=3; }); }      // tre vicini abitati: fra le case ci sono vicoli
-var lunghezza=vie.reduce(function(a,v){ return a+v.L; },0), viandanti=[];
-for(i=0;i<NV;i++){
-  var r=rnd()*lunghezza, k=0; while(r>vie[k].L){ r-=vie[k].L; k++; }
-  var dentro=rnd()<.8;                                  // quasi tutti in città, pochi sulle vie consolari
-  viandanti.push({v:k, s:dentro?rnd()*Math.min(1,230/vie[k].L):rnd(), vel:(rnd()<.5?-1:1)*(.9+rnd()*.9)/vie[k].L, lato:(rnd()-.5)*1.5});      // lato: frazione della mezza larghezza della via
+
+/* ---------- i luoghi dove la gente si raccoglie ----------
+   Per ogni luogo: centro e semiassi (unità della scena), n = quante figure al pieno (gradino «media», PC), anni, e se il numero segue la popolazione (di norma sì) o resta fisso
+   (i poveri e i pellegrini, che crescono mentre la città cala). anello: si sta solo nella corona esterna. mon: il luogo vive finché il monumento è «in uso».
+   I quattro di prima (fidato) sono piazze lastricate senza ostacoli; per gli altri i posti si provano uno per uno (liberoQui, più sotto): niente figure dentro un edificio. */
+var LUOGHI=[
+  {id:'foro', x:-1.2,z:1.6,ax:5.5,az:2.2, n:240, fidato:true},                         // il Foro Romano (era già nel modello)
+  {id:'foroTraiano', x:-1.3,z:-27.8,ax:4.5,az:3.5, n:150, fidato:true},                // il foro di Traiano
+  {id:'colosseo', x:57,z:26,ax:13.5,az:12, anello:.82, n:200, fidato:true},             // la spianata attorno al Colosseo
+  {id:'pantheon', x:-70,z:-77,ax:4,az:3, n:80, fidato:true},                           // la piazza davanti al Pantheon
+  {id:'caracalla', x:59,z:150,ax:18,az:18, anello:.4, n:70, mon:'caracalla', a:537},    // terme: i nobili «con circa cinquanta servi» (Ammiano XXVIII 4, 9); i ladri di vesti nelle terme (Digesto I 15, 3, 5); chiuse dal 537 (Procopio V 19, 27)
+  {id:'diocleziano', x:101,z:-122,ax:19,az:19, anello:.4, n:70, mon:'diocleziano', a:537},
+  {id:'termeTraiano', x:97,z:4,ax:17,az:17, anello:.4, n:60, mon:'traiano', a:537},
+  {id:'emporio', x:-102,z:131,ax:15,az:15, porto:true, n:110, mon:'emporio'},            // «mercati sul fiume»: banchine, magazzini di Galba «vino et oleo» (Platner, Emporium e Horrea Galbae); in uso finché il modello lo tiene (430)
+  {id:'pietro493', x:-240.5,z:-108,ax:2.2,az:2.6, n:24, da:493, a:540, fisso:true},     // Teodorico dava ogni anno grano ai mendicanti presso San Pietro, tolto verso il 540 (Procopio, Storia segreta 26, 29-30); la forma della distribuzione non è detta: si vede solo la gente
+  {id:'pietro800', x:-241,z:-112.5,ax:1.6,az:1.4, n:18, da:800, a:853, fisso:true},     // Leone III: casa e bagno «pro subsidiis Christi pauperum atque peregrinorum» a destra dei gradini dell'atrio (Liber Pontificalis, Leone III, c. LXXXIX); la casa non è nel modello
+  {id:'trivio', x:-12.4,z:-92.2,ax:1.7,az:1.7, anello:.4, n:8, da:537, a:800, fisso:true}      // «fecit autem Belisarius xenodochium in via Lata» (Liber Pontificalis, Vigilio 2, in Platner, Xenodochia), presso Santa Maria in Trivio; fino a quando non è detto
+];
+(D.CHIESE||[]).forEach(function(c){ if(c[4]!=='diaconia') return; var p=RM.ll(c[1],c[2]);      // le diaconie (Liber Pontificalis, vita di Leone III: doni a San Giorgio, San Teodoro, Santa Maria in Cosmedin…): chi stava davanti è IPOTESI, poche figure
+  LUOGHI.push({id:'diaconia '+c[0], x:p[0], z:p[1], ax:1.8, az:1.8, anello:.45, n:6, da:Math.max(600,c[3]), a:853, fisso:true}); });
+var SCALA_L=RM.piccolo?.55:1, NL=0;
+LUOGHI.forEach(function(L,k){ L.max=Math.ceil(L.n*SCALA_L*GMAX); L.i0=NL; NL+=L.max; L.da=L.da||0; L.a=L.a||9999; L.vis=0; L.ok=null; L.annoOk=-1e9; L.seme=901+k*37; });
+/* carri e bestie da soma: quanti al massimo (gli strumenti a istanze più sotto) e chi li guida (una persona per ciascuno, tra la gente) */
+var CARRI0=RM.piccolo?8:14, MULI0=RM.piccolo?16:30, NCAR=Math.round(CARRI0*GMAX*1.6)+12, NMUL=Math.round(MULI0*GMAX), NC=NCAR+NMUL, NRD=14;      // NRD: due ronde di sette vigili
+var I_V=NR, I_L=I_V+NV, I_G=I_L+NL, I_C=I_G+NG, I_R=I_C+NC, NP=I_R+NRD;      // dove comincia ogni gruppo nella fila delle persone
+var pos=new Float32Array(NP*3), col=new Float32Array(NP*3), giro=new Float32Array(NP), passo=new Float32Array(NP), piedi=new Float32Array(NP), forza=new Uint8Array(NP);      // piedi: la quota del suolo sotto ciascuno (le figure vicine stanno lì); forza: 1 = portatore (la veste col sacco in spalla)
+var i, c;
+for(i=0;i<NP;i++){ giro[i]=rnd()*4; passo[i]=(rnd()<.5?-1:1)*(.02+.035*rnd()); pos[i*3+1]=-60; }      // passo: il giro attorno all'isolato, lento come chi cammina (prima era tre volte più svelto)
+function hh(j,s){ return (((j+(s||0)*7919)*2654435761)>>>0)/4294967296; }      // un numero fisso fra 0 e 1 per ogni persona
+
+/* I viandanti: ognuno ha un tratto di via suo (centro e lunghezza) e lo percorre avanti e indietro a passo d'uomo; uno su tre sta fermo, a coppie, a parlare.
+   Il tratto si sceglie a caso, con un peso: vie larghe più delle strette, dentro le mura molto più che fuori, case abitate vicine, i luoghi affollati dell'epoca.
+   Si sceglie di nuovo quando cambiano gli anni (scegliVie): chi cammina dove la città si svuota passa dove si vive ancora. */
+var CAMP=[]; vie.forEach(function(v,k){ var w0=Math.pow(v.larga/.6,1.6); v.p.forEach(function(q,i){ CAMP.push(k,i,w0*(RM.dentroMura(q.x,q.z)?1:.12)); }); });      // per ogni punto: via, indice, peso fisso
+var NCAMP=CAMP.length/3, cumC=new Float32Array(NCAMP), annoVie=-1e9;
+var wV=new Uint16Array(NV), wC=new Float32Array(NV), wR=new Float32Array(NV), wT=new Float32Array(NV), wVel=new Float32Array(NV), wLato=new Float32Array(NV), wFermo=new Uint8Array(NV);
+for(i=0;i<NV;i++){ wR[i]=3+rndV()*9; wT[i]=(rndV()*2-1); wVel[i]=(rndV()<.5?-1:1)*(.055+.035*rndV()); wLato[i]=(rndV()-.5)*1.5; wFermo[i]=(i%6<2)?1:0; }      // wR: mezzo tratto in punti (da 60 a 240 m); wVel: punti al secondo (un punto ogni due unità: da 1,1 a 1,8 m/s)
+var GX=-450, GZ=-700, GC=10, GNX=90, GNZ=140, abit=new Float32Array(GNX*GNZ);      // la griglia delle case abitate (celle di 100 m)
+function pesoLuoghi(x,z){ var s=0, k, L, d2, r; for(k=0;k<LUOGHI.length;k++){ L=LUOGHI[k]; if(!L.vis || L.fisso) continue; r=Math.max(L.ax,L.az)+6; d2=(x-L.x)*(x-L.x)+(z-L.z)*(z-L.z); if(d2<9*r*r) s+=1.6*(L.n/120)*Math.exp(-d2/(r*r)); } return s; }
+function scegliVie(anno){
+  annoVie=anno; abit.fill(0);
+  isolati.forEach(function(b){ if(b.a0<=.5) return; var i=Math.floor((b.x-GX)/GC), k=Math.floor((b.z-GZ)/GC); if(i>=0&&k>=0&&i<GNX&&k<GNZ) abit[k*GNX+i]+=1; });
+  var tot=0, j, a, b2, x, z, gi, gk, s;
+  for(j=0;j<NCAMP;j++){ var q=vie[CAMP[j*3]].p[CAMP[j*3+1]]; x=q.x; z=q.z; gi=Math.floor((x-GX)/GC); gk=Math.floor((z-GZ)/GC); s=0;
+    for(a=-1;a<=1;a++) for(b2=-1;b2<=1;b2++){ var ii=gi+a, kk=gk+b2; if(ii>=0&&kk>=0&&ii<GNX&&kk<GNZ) s+=abit[kk*GNX+ii]; }
+    tot+=CAMP[j*3+2]*(.04+Math.min(1,s/7)+pesoLuoghi(x,z)); cumC[j]=tot; }      // quasi nessuno dove non abita più nessuno
+  for(j=0;j<NV;j++){ var u=hh(j,3)*tot, lo=0, hi=NCAMP-1; while(lo<hi){ var m=(lo+hi)>>1; if(cumC[m]<u) lo=m+1; else hi=m; }
+    var v=CAMP[lo*3], ci=CAMP[lo*3+1], np=vie[v].p.length; wV[j]=v; wC[j]=Math.max(1,Math.min(np-2,ci)); }
 }
-/* piazze lastricate dove la folla si vede: Foro, foro di Traiano, la spianata attorno al Colosseo, la piazza davanti al Pantheon */
-var PIAZZE=[[-1.2,1.6,5.5,2.2],[-1.3,-27.8,4.5,3.5],[57,26,13.5,12],[-70,-77,4,3]], folla=[];
-for(i=0;i<NZ;i++){ var pz=PIAZZE[i%PIAZZE.length], an=rnd()*6.283, rr=(pz===PIAZZE[2]?.82+.18*rnd():Math.sqrt(rnd())); folla.push({p:pz,a:an,r:rr,vel:(rnd()-.5)*.12}); }
+
+/* ---------- posti liberi: niente figure dentro un edificio, un muro, il fiume ----------
+   Un posto è libero se non cade nel Tevere, su un isolato, sotto un'arcata d'acquedotto, sulle mura, e se un raggio dall'alto non incontra un monumento più alto di 2,2 m
+   sopra il terreno (il lastricato e i gradini bassi vanno bene: lì la figura sta sulla pietra). Si prova al bisogno, pochi posti per fotogramma (sono i monumenti di quell'anno). */
+var IDX_VITA=RM.scene.children.length;      // tutto ciò che è stato messo in scena prima della vita (terreno, monumenti, mura, case); le scene delle tappe vengono dopo
+var ray=new THREE.Raycaster(), GIU=new THREE.Vector3(0,-1,0), ORIG=new THREE.Vector3(), ost=null, ostAnno=-1e9;
+function ostacoli(anno){      // i monumenti visibili di quell'anno, con la loro scatola in pianta
+  if(ost && Math.abs(anno-ostAnno)<1) return ost; ostAnno=anno; ost=[];
+  for(var k=0;k<IDX_VITA;k++){ var c=RM.scene.children[k], g=c.userData.gruppo; if(!c.visible||!c.isMesh||c.isInstancedMesh||g==='suolo'||g==='strade'||g==='vita'||!c.geometry) continue;
+    if(!c.userData.scatolaVita){ if(!c.geometry.boundingBox) c.geometry.computeBoundingBox(); c.updateMatrixWorld(true); c.userData.scatolaVita=c.geometry.boundingBox.clone().applyMatrix4(c.matrixWorld); }
+    var b=c.userData.scatolaVita; if(b.max.x-b.min.x>150 && b.max.z-b.min.z>150) continue;      // le maglie che coprono mezza città (acquedotti): le arcate si provano da RM.campateAcquedotti
+    ost.push(c); }
+  return ost; }
+var grigliaIs={}; isolati.forEach(function(b,n){ var c=Math.floor(b.x/8)+','+Math.floor(b.z/8); (grigliaIs[c]||(grigliaIs[c]=[])).push(n); });
+function suIsolato(x,z){ var cx=Math.floor(x/8), cz=Math.floor(z/8), i, j, k, q, b, dx, dz, ca, sa;
+  for(i=-1;i<=1;i++) for(j=-1;j<=1;j++){ q=grigliaIs[(cx+i)+','+(cz+j)]; if(!q) continue;
+    for(k=0;k<q.length;k++){ b=isolati[q[k]]; if((b.nasce && annoOra<b.nasce) || (b.via && annoOra>=b.via-1)) continue;      // ogni isolato è casa, rovina o orto murato; il Borgo solo da quando nasce; le case demolite per un monumento (via) non ci sono più
+      ca=Math.cos(b.ry); sa=Math.sin(b.ry); dx=x-b.x; dz=z-b.z; if(Math.abs(dx*ca-dz*sa)<b.w/2+.25 && Math.abs(dx*sa+dz*ca)<b.d/2+.25) return true; } }
+  return false; }
+function liberoQui(x,z,anno){      // la quota dove stare, o NaN
+  if(RM.distFiume(x,z)<3.3 || suIsolato(x,z)) return NaN;
+  if(RM.MURA && RM.distLinea(x,z,RM.MURA,true)<.7) return NaN;
+  var k, q; for(k=0;k<RM.campateAcquedotti.length;k++){ q=RM.campateAcquedotti[k]; if(Math.abs(x-q.x)<6 && Math.hypot(x-q.x,z-q.z)<1.2+q.len*.25) return NaN; }
+  var h=RM.hSuolo?RM.hSuolo(x,z):RM.h(x,z), O=ostacoli(anno), alto=h;
+  for(k=0;k<O.length;k++){ var b=O[k].userData.scatolaVita; if(x<b.min.x-.1||x>b.max.x+.1||z<b.min.z-.1||z>b.max.z+.1) continue;
+    ORIG.set(x,b.max.y+5,z); ray.set(ORIG,GIU); ray.far=b.max.y+20; var hit=ray.intersectObject(O[k],false);
+    if(hit.length){ var y=hit[0].point.y; if(y>h+.22) return NaN; if(y>alto) alto=y; } }
+  return alto; }
+/* i posti di un luogo: candidati fissi (stesso seme a ogni visita), provati a gruppi nei fotogrammi (provaLuoghi) e tenuti per trent'anni */
+function stessaRiva(x0,z0,x1,z1){ for(var t=0;t<=1;t+=.05) if(RM.distFiume(x0+(x1-x0)*t,z0+(z1-z0)*t)<2.6) return false; return RM.dentroMura(x0,z0)===RM.dentroMura(x1,z1); }      // senza passare il fiume né le mura
+function candidati(L){ var r=RM.casuale(L.seme), out=[], tent=0, S=Math.min(300,L.max+40);
+  while(out.length<S && tent<S*25){ tent++; var a=r()*6.2832, q=L.anello?Math.sqrt(L.anello*L.anello+(1-L.anello*L.anello)*r()):Math.sqrt(r()), x=L.x+Math.cos(a)*q*L.ax, z=L.z+Math.sin(a)*q*L.az;
+    if(L.porto){ var df=RM.distFiume(x,z); if(df<3.5||df>11 || !stessaRiva(L.x,L.z,x,z)) continue; }      // l'Emporio: la striscia fra la banchina e il portico, sulla riva sinistra
+    out.push(x,z); }
+  return out; }
+function provaLuoghi(anno,budget){
+  var t0=performance.now(), k, L;
+  for(k=0;k<LUOGHI.length;k++){ L=LUOGHI[k]; if(!L.vis) continue;
+    if(L.fidato){ if(!L.ok){ L.ok=candidati(L); L.okY=null; L.nOk=L.ok.length/2; } continue; }
+    if(L.ok && Math.abs(anno-L.annoOk)<30 && !L.prova) continue;
+    if(!L.prova){ L.prova={c:candidati(L), j:0, ok:[], y:[]}; }
+    var P=L.prova;
+    while(P.j<P.c.length/2){ var x=P.c[P.j*2], z=P.c[P.j*2+1], y=liberoQui(x,z,anno); P.j++; if(y===y){ P.ok.push(x,z); P.y.push(y); } if(performance.now()-t0>budget) return; }
+    L.ok=P.ok; L.okY=P.y; L.nOk=P.ok.length/2; L.annoOk=anno; L.prova=null; posaBanchi(L); }
+}
 /* pellegrini a San Pietro: metà nell'atrio e sul sagrato, metà in cammino lungo il portico da ponte Elio. Crescono mentre la città cala */
-var pellegrini=[]; for(i=0;i<NG;i++) pellegrini.push({s:rnd(), a:rnd()*6.283, r:Math.sqrt(rnd()), vel:(rnd()<.5?-1:1)*(.012+.02*rnd()), lato:(rnd()-.5)*1.6});
+var pellegrini=[]; for(i=0;i<NG;i++) pellegrini.push({s:rnd(), a:rnd()*6.283, r:Math.sqrt(rnd()), vel:(rnd()<.5?-1:1)*(.0018+.001*rnd()), lato:(rnd()-.5)*1.6});      // a passo d'uomo (prima andavano a sei-dieci metri al secondo)
 /* la via che dal ponte Elio porta a San Pietro: i pellegrini in cammino la seguono, oppure stanno sotto il portico che le corre accanto */
 var viaPietro=(function(){
   var meglio=-1, m=1e9; vie.forEach(function(v,k){ var a=1e9, b=1e9; v.p.forEach(function(q){ a=Math.min(a,Math.hypot(q.x+172,q.z+110)); b=Math.min(b,Math.hypot(q.x+236,q.z+108)); }); if(a+b<m){ m=a+b; meglio=k; } });
@@ -56,6 +168,8 @@ var viaPietro=(function(){
   return {v:meglio, ia:ia, ib:ib};
 })();
 var PELLEGRINI_NEL_TEMPO=[[320,0],[400,.22],[500,.42],[700,.75],[800,1],[852,1]];
+/* i portatori dell'Emporio: tre su cinque della sua gente, con la veste del lavoratore e il sacco in spalla */
+LUOGHI.forEach(function(L){ if(!L.porto) return; for(var n=0;n<L.max;n++) if(n%5<3) forza[I_L+L.i0+n]=1; });
 /* da lontano un punto, da vicino una figura: testa e mantello, con i piedi al centro del punto (che sta all'altezza del suolo) */
 var texPunto=RM.tela(32,32,function(g){ g.fillStyle='#fff'; g.beginPath(); g.ellipse(16,4,2.3,2.8,0,0,6.3); g.fill(); g.fillRect(15.1,6.2,1.8,1.4);      // 25 novembre 2026, sera: una sagoma, non un birillo (testa piccola, collo, spalle spioventi, braccia, la veste che si allarga); stessa altezza e stessi piedi di prima
   g.beginPath(); [[14.2,7.2],[17.8,7.2],[20.2,9],[20.8,13],[19.9,13.4],[20.7,20],[11.3,20],[12.1,13.4],[11.2,13],[11.8,9]].forEach(function(p,i){ if(i) g.lineTo(p[0],p[1]); else g.moveTo(p[0],p[1]); }); g.closePath(); g.fill(); },false);
@@ -139,14 +253,18 @@ var VESTI={
   tunica7:{orlo:.47, maniche:'lunghe', cintura:true, barba:true, tinte:[LT.crema,LT.grigio,LT.bruno,LT.brunoS]},      // IPOTESI intera (i poveri): una forma neutra
   donna7:{orlo:.02, maniche:'lunghe', velo:{t:'bianco', col:ATT.veloBianco}, fasce:true, tinte:[ATT.brunoRossa,ATT.biancoGrigia,LT.crema,LT.bruno]},      // Silvia (Giovanni Diacono IV 83) e Teodora (Santa Prassede, 817-824): velo bianco sul capo e attorno al viso, veste lunga con due fasce, bruno-rossa o bianco-grigia
   clero7:{orlo:.02, maniche:'lunghe', dalmatica:{col:ATT.bianca, clavi:ATT.clavi}, manto:{t:'planeta', col:ATT.castagna}, tinte:[ATT.bianca]},      // IPOTESI per il prete: come il vescovo senza pallio, «planeta» castagna (Gregorio, Giovanni Diacono IV 84) sulla dalmatica bianca coi clavi rossi (mosaici del IX secolo)
-  soldato7:{orlo:.55, maniche:'lunghe', cintura:true, manto:{t:'corto', col:LT.bruno}, scudo:{r:.4}, lancia:true, barba:true, tinte:[LT.crema,LT.grigio,LT.bruno]}      // IPOTESI intera: della milizia romana nessuna fonte dice la veste; tunica, mantello, scudo e lancia, niente elmo
+  soldato7:{orlo:.55, maniche:'lunghe', cintura:true, manto:{t:'corto', col:LT.bruno}, scudo:{r:.4}, lancia:true, barba:true, tinte:[LT.crema,LT.grigio,LT.bruno]},      // IPOTESI intera: della milizia romana nessuna fonte dice la veste; tunica, mantello, scudo e lancia, niente elmo
+  /* i portatori dell'Emporio (25 novembre 2026, notte): il lavoratore del fossore dei Santi Marcellino e Pietro (tunica corta sopra il ginocchio stretta in vita, gambe nude,
+     il carico in spalla; data dell'immagine non detta) con un sacco sulla spalla sinistra; lana non tinta */
+  portatore3:{orlo:.56, maniche:'lunghe', cintura:true, carico:true, tinte:[LT.crema,LT.grigio,LT.bruno,LT.bianco]},
+  portatore4:{orlo:.56, maniche:'corte', cintura:true, carico:true, tinte:[LT.crema,LT.grigio,LT.bruno,LT.brunoS]}
 };
 var VECCHIE=[{orlo:.52, maniche:'corte', cintura:true},{orlo:.36, maniche:'lunghe', manto:{t:'vecchio', col:LANA}},{orlo:.02, maniche:'lunghe', velo:{t:'palla', col:VELO}},{orlo:.02, maniche:'lunghe', manto:{t:'toga3', col:BIANCO}},{seduto:true, maniche:'corte'}];      // le cinque fogge di prima (0-4), coi colori che js/scene-tappe.js riconosce
 function epoca(anno){ return anno<=330?0:anno<=600?1:2; }      // III secolo; IV-VI; VII-IX
 /* i passanti di ogni epoca: [veste, quota su cento, statura] (le quote sono di comodo, come prima) */
 var EPOCHE=[
-  [['uomo3',26],['uomo3b',16],['tunica3',14],['tunica3',8,.62],['toga3',4],['donna3',32]],
-  [['uomo4',20],['uomo4b',14],['tunica4',12],['tunica4',8,.62],['schiavo4',8],['donna4',18],['donna4b',14],['clero4',6]],
+  [['uomo3',26],['uomo3b',16],['tunica3',14],['tunica3',8,.62],['toga3',4],['donna3',32],['portatore3',0]],
+  [['uomo4',20],['uomo4b',14],['tunica4',12],['tunica4',8,.62],['schiavo4',8],['donna4',18],['donna4b',14],['clero4',6],['portatore4',0]],
   [['uomo7',14],['uomo7b',10],['uomo7c',16],['tunica7',12],['tunica7',8,.62],['donna7',32],['clero7',8]]];
 function gau(a,s){ return Math.exp(-a*a/(s*s)); }
 function sm(a,b,x){ var t=Math.max(0,Math.min(1,(x-a)/(b-a))); return t*t*(3-2*t); }
@@ -195,6 +313,7 @@ function corpo(v,k,d){
   if(mt==='planeta') B.metti(girato([[.3,.46],[.282,.62],[.25,.86],[.215,1.1],[.207,1.31],[.168,1.415],[.1,1.462],[.05,1.484]],LL,1,.82,piegheM(1.2,.46,n2,.05,0,.2)),mc,0,true);      // la «planeta» a campana, fino al ginocchio, sollevata sulle braccia
   if(mt==='corto'||mt==='polpaccio'){ var po=mt==='corto'?[[.222,.74],[.21,.95],[.202,1.15],[.206,1.31],[.168,1.415],[.1,1.462],[.05,1.482]]:[[.24,.32],[.23,.55],[.215,.85],[.204,1.1],[.206,1.31],[.168,1.415],[.1,1.462],[.05,1.482]];
     B.metti(girato(po,LL,1,.8,pieghe(1.3,po[0][1],n2,.06,.05,.3*Math.PI)),mc,0,true); }      // il mantello del soldato, sulle spalle e sulla schiena, aperto davanti
+  if(v.carico) B.metti(new THREE.SphereGeometry(1,LS,5).scale(.13,.11,.27).rotateZ(-.35).translate(.13,1.5,-.03),RM.col(0xb9a98a),0,true);      // il sacco sulla spalla sinistra (i portatori)
   if(v.cappuccio) B.metti(new THREE.SphereGeometry(1,LS,4).scale(.1,.065,.075).translate(0,1.445,-.1),mc,0,true);      // il cappuccio abbassato sulla nuca
   var ve=v.velo;
   if(ve && (ve.t==='palla'||ve.t==='scuro')) B.metti(girato([[0,1.738],[.075,1.708],[.094,1.62],[.1,1.5],[.19,1.42],[.215,1.25],[.218,.9],[.225,.6]],LL,1,.85,pieghe(1.35,.6,n2,.06,.1,.3*Math.PI)),ve.col,0,true);      // la palla: sopra il capo, ricade sulla schiena, il volto libero
@@ -282,7 +401,8 @@ function tabella(ep){ if(TAB[ep]) return TAB[ep]; var L=EPOCHE[ep], nomi=[], t=[
   L.forEach(function(q){ if(nomi.indexOf(q[0])<0) nomi.push(q[0]); });
   for(i=0;i<L.length;i++) for(j=0;j<L[i][1];j++) t.push({f:nomi.indexOf(L[i][0]), s:L[i][2]||1, v:VESTI[L[i][0]]});
   while(t.length<100) t.push(t[t.length-1]);
-  return (TAB[ep]={nomi:nomi, t:t}); }
+  var pf=nomi.indexOf(ep===0?'portatore3':'portatore4');      // la veste di chi la porta per forza (forza[i]=1: i portatori); nel VII-IX secolo non serve
+  return (TAB[ep]={nomi:nomi, t:t, fz:pf<0?null:{f:pf, s:1, v:VESTI[nomi[pf]]}}); }
 function maglieEpoca(ep){
   if(SET[ep]) return SET[ep];
   SET[ep]=tabella(ep).nomi.map(function(nome,q){ var g=cuoci(corpo(nome,q*3+1)); g.setAttribute('fase',new THREE.InstancedBufferAttribute(new Float32Array(MAXF),1)); g.setAttribute('moto',new THREE.InstancedBufferAttribute(new Float32Array(MAXF),1));
@@ -291,8 +411,8 @@ function maglieEpoca(ep){
     m.count=0; m.visible=false; m.frustumCulled=false; m.receiveShadow=true; m.userData.gruppo='vita'; RM.scene.add(m); figure.push(m); return m; });
   return SET[ep]; }
 function vestiEpoca(anno){      // le tinte di tutti, per l'epoca dell'anno
-  var ep=epoca(anno); if(ep===EP) return; EP=ep; var T=tabella(ep).t, i;
-  for(i=0;i<NP;i++){ var h=((i*2654435761)>>>0)%100, v=T[h].v, ti=v.tinte, c=ti[((i*7919)>>>0)%ti.length], k=.9+((i*.371)%1)*.2, cp=(v.manto&&v.manto.col)||(v.velo&&v.velo.col)||c;
+  var ep=epoca(anno); if(ep===EP) return; EP=ep; var TB=tabella(ep), T=TB.t, i;
+  for(i=0;i<NP;i++){ var h=((i*2654435761)>>>0)%100, v=(forza[i]&&TB.fz)?TB.fz.v:T[h].v, ti=v.tinte, c=ti[((i*7919)>>>0)%ti.length], k=.9+((i*.371)%1)*.2, cp=(v.manto&&v.manto.col)||(v.velo&&v.velo.col)||c;
     colT[i*3]=c.r*k; colT[i*3+1]=c.g*k; colT[i*3+2]=c.b*k; k*=.8; col[i*3]=cp.r*k; col[i*3+1]=cp.g*k; col[i*3+2]=cp.b*k; }      // il punto lontano non ha luce né ombra: un poco più scuro, come la figura illuminata
   if(gGente) gGente.attributes.color.needsUpdate=true;
   figure.forEach(function(m){ m.count=0; m.visible=false; }); }
@@ -306,13 +426,13 @@ function figureVicine(n){
   var max=MAXF?(RM.QUALITA.figure[RM.q]||0):0, i, k;
   if(!max){ if(MAXF && (figure.some(function(m){ return m.count; })||ombraFig.count||ombraFig.visible)){ figure.forEach(function(m){ m.count=0; m.visible=false; }); ombraFig.count=0; ombraFig.visible=false; } return; }      // spente: in «bassa» non si compilano né si disegnano
   if(EP<0) vestiEpoca(annoOra);
-  var cam=RM.camera.position, lim=.165*RM.vistaU.uPxScala.value/12, lim2=lim*lim, M=null, T=tabella(EP).t, conta=null, tot=0, cx=cam.x, cy=cam.y, cz=cam.z;      // vicina: alta più di dodici pixel sullo schermo
+  var cam=RM.camera.position, lim=.165*RM.vistaU.uPxScala.value/12, lim2=lim*lim, M=null, TB=tabella(EP), T=TB.t, conta=null, tot=0, cx=cam.x, cy=cam.y, cz=cam.z;      // vicina: alta più di dodici pixel sullo schermo
   for(i=0;i<n;i++){ var o=i*3, y=pos[o+1]; if(y<-50) continue;
     var dx=pos[o]-cx, dz=pos[o+2]-cz, dy=y-cy, d2=dx*dx+dy*dy+dz*dz, mx=pos[o]-prima[i*2], mz=pos[o+2]-prima[i*2+1], mv=mx*mx+mz*mz;
     if(mv>1e-8 && mv<1) dirF[i]=Math.atan2(mx,mz); prima[i*2]=pos[o]; prima[i*2+1]=pos[o+2];
     if(d2>lim2 || tot>=max) continue;
     if(!M){ M=maglieEpoca(EP); conta=M.map(function(){ return 0; }); }
-    var fg=T[((i*2654435761)>>>0)%100], m=M[fg.f], c=conta[fg.f]++, ps=posaDi(i,false), mo=mv>1e-8&&mv<1?1:0; tot++;
+    var fz=forza[i]&&TB.fz, fg=fz?TB.fz:T[((i*2654435761)>>>0)%100], m=M[fg.f], c=conta[fg.f]++, ps=fz?{yaw:0,braccio:1,anca:0}:posaDi(i,false), mo=mv>1e-8&&mv<1?1:0; tot++;
     eF.set(0,dirF[i],0); qF.setFromEuler(eF); vF.set(pos[o],piedi[i],pos[o+2]); sF.set(fg.s,fg.s,fg.s); mF.compose(vF,qF,sF); m.setMatrixAt(c,mF);
     m.instanceColor.setXYZ(c,colT[o],colT[o+1],colT[o+2]); m.geometry.attributes.fase.array[c]=(i*.618034%1)*6.283; m.geometry.attributes.moto.array[c]=mo;
     m.geometry.attributes.posa.array[c*3]=ps.yaw*(mo?.6:1); m.geometry.attributes.posa.array[c*3+1]=ps.braccio; m.geometry.attributes.posa.array[c*3+2]=mo?0:(((i>>3)%3)-1)*.0035;      // chi cammina gira meno la testa; chi sta fermo sposta il peso su una gamba
@@ -324,54 +444,260 @@ function figureVicine(n){
   ombraFig.count=tot; ombraFig.visible=tot>0; if(tot) ombraFig.instanceMatrix.needsUpdate=true;
 }
 
+/* ---------- carri, bestie da soma, banchi dell'Emporio, ronde (25 novembre 2026, notte) ----------
+   Le forme sono generiche e dichiarate: nessuna fonte letta descrive un carro, un mulo o un banco di Roma. Un carro a due ruote piene tirato da una coppia di buoi
+   (la Tabula Heracleensis nomina carri tirati da buoi o da bestie da soma), un mulo col basto, un banco con la tenda di tela non tinta. In metri, poi in unità (×0,1).
+   Le zampe oscillano nello shader (perno: la quota dell'anca; zampa: la fase), come le gambe della gente. */
+function Pz(){ this.p=[]; this.n=[]; this.c=[]; this.pe=[]; this.za=[]; this.pa=[]; this.parte=0; }      // parte: le varianti nella stessa maglia (si vede solo quella dell'istanza, attributo tipo)
+Pz.prototype.metti=function(g,colore,perno,zampa){ var q=g.index?g.toNonIndexed():g, P=q.attributes.position.array, Nn=q.attributes.normal.array, i;
+  for(i=0;i<P.length;i+=3){ this.p.push(P[i]*.1,P[i+1]*.1,P[i+2]*.1); this.n.push(Nn[i],Nn[i+1],Nn[i+2]); this.c.push(colore.r,colore.g,colore.b); this.pe.push((perno||0)*.1); this.za.push(zampa||0); this.pa.push(this.parte); }
+  return this; };
+Pz.prototype.geometria=function(nIst){ var g=new THREE.BufferGeometry();
+  g.setAttribute('position',new THREE.Float32BufferAttribute(this.p,3)); g.setAttribute('normal',new THREE.Float32BufferAttribute(this.n,3)); g.setAttribute('color',new THREE.Float32BufferAttribute(this.c,3));
+  g.setAttribute('perno',new THREE.Float32BufferAttribute(this.pe,1)); g.setAttribute('zampa',new THREE.Float32BufferAttribute(this.za,1)); g.setAttribute('parte',new THREE.Float32BufferAttribute(this.pa,1)); g.setAttribute('tipo',new THREE.InstancedBufferAttribute(new Float32Array(nIst),1));
+  g.setAttribute('fase',new THREE.InstancedBufferAttribute(new Float32Array(nIst),1)); g.setAttribute('moto',new THREE.InstancedBufferAttribute(new Float32Array(nIst),1)); return g; };
+function scat(w,h,d,x,y,z){ return new THREE.BoxGeometry(w,h,d).translate(x,y,z); }
+function palla(rx,ry,rz,x,y,z,lati){ return new THREE.SphereGeometry(1,lati||8,5).scale(rx,ry,rz).translate(x,y,z); }
+var C_BUE=RM.col(0x948a7c), C_MULO=RM.col(0x5e4e40), C_CORNA=RM.col(0xcfc4ae), C_ZOCCOLO=RM.col(0x2e2620), C_TUFO=RM.col(0xb09a72), C_SACCO=RM.col(0xb9a98a), C_TERRA=RM.col(0xa35f3c), C_CESTO=RM.col(0x8a6b40);
+function bue(B,x0,z0){      // un bue, la testa verso +z
+  B.metti(palla(.4,.43,1.02,x0,1.05,z0,10),C_BUE).metti(palla(.3,.3,.4,x0,1.22,z0+.55,8),C_BUE);                                  // il corpo e il garrese
+  B.metti(tratto([x0,1.2,z0+.8],[x0,1.12,z0+1.18],.22,.16,6),C_BUE).metti(palla(.14,.17,.29,x0,1.08,z0+1.33,6),C_BUE);              // il collo e la testa
+  [-1,1].forEach(function(s){ B.metti(new THREE.ConeGeometry(.03,.2,4).rotateZ(-s*1.1).translate(x0+s*.17,1.27,z0+1.24),C_CORNA); });
+  B.metti(tratto([x0,1.2,z0-1],[x0,.5,z0-1.1],.03,.02,4),C_BUE);                                                                    // la coda
+  [[-1,1,0],[1,1,Math.PI],[-1,-1,Math.PI],[1,-1,0]].forEach(function(g){ var x=x0+g[0]*.2, z=z0+g[1]*.62;                           // le zampe, a passo diagonale
+    B.metti(tratto([x,.8,z],[x,.08,z],.08,.055,6),C_BUE,.8,g[2]).metti(scat(.1,.08,.12,x,.04,z+.02),C_ZOCCOLO,.8,g[2]); });
+}
+function geoCarro(){ var B=new Pz();      // una maglia sola: il carro vuoto (tipo 1), con i blocchi (2), con i sacchi (3)
+  bue(B,-.46,1.45); bue(B,.46,1.45);
+  B.metti(scat(1.35,.09,.12,0,1.42,2.15),LEGNO).metti(tratto([0,.98,-.42],[0,1.38,2.15],.055,.05,5),LEGNO);                         // il giogo sul collo e il timone
+  B.metti(scat(1.35,.09,2.1,0,.93,-1.5),LEGNO);                                                                                      // il pianale
+  [-1,1].forEach(function(s){ B.metti(scat(.06,.32,2.1,s*.65,1.12,-1.5),LEGNO).metti(new THREE.CylinderGeometry(.56,.56,.13,12).rotateZ(Math.PI/2).translate(s*.79,.56,-1.5),LEGNO.clone().multiplyScalar(.8)); });      // le sponde e le ruote piene
+  B.metti(scat(1.35,.32,.06,0,1.12,-.47),LEGNO).metti(scat(1.35,.32,.06,0,1.12,-2.53),LEGNO);
+  B.parte=2; { B.metti(scat(.55,.38,.5,-.3,1.17,-1),C_TUFO).metti(scat(.55,.38,.55,.3,1.17,-1.1),C_TUFO).metti(scat(.6,.36,.5,0,1.17,-1.9),C_TUFO).metti(scat(.5,.32,.45,0,1.52,-1.4),C_TUFO); }      // blocchi per un cantiere
+  B.parte=3; { [[-.32,-.85],[.32,-.9],[-.3,-1.6],[.32,-1.65],[0,-2.2]].forEach(function(q,k){ B.metti(palla(.27,.17,.38,q[0],1.15,q[1]),C_SACCO.clone().multiplyScalar(.9+.05*(k%3))); }); B.metti(palla(.27,.17,.38,0,1.43,-1.3),C_SACCO); }      // sacchi
+  B.parte=0; return B.geometria(NCAR); }
+function geoMulo(){ var B=new Pz();      // un mulo col basto
+  B.metti(palla(.25,.3,.62,0,.98,0,8),C_MULO).metti(tratto([0,1.08,.45],[0,1.34,.72],.13,.085,6),C_MULO).metti(new THREE.SphereGeometry(1,6,5).scale(.085,.105,.25).rotateX(.5).translate(0,1.34,.88),C_MULO);
+  [-1,1].forEach(function(s){ B.metti(new THREE.ConeGeometry(.03,.19,4).rotateZ(-s*.25).translate(s*.05,1.5,.75),C_MULO); });       // le orecchie lunghe
+  B.metti(tratto([0,1.1,-.6],[0,.55,-.7],.025,.02,4),C_MULO.clone().multiplyScalar(.6));
+  [[-1,1,0],[1,1,Math.PI],[-1,-1,Math.PI],[1,-1,0]].forEach(function(g){ var x=g[0]*.14, z=g[1]*.42; B.metti(tratto([x,.72,z],[x,.06,z],.055,.035,5),C_MULO,.72,g[2]).metti(scat(.07,.06,.08,x,.03,z),C_ZOCCOLO,.72,g[2]); });
+  B.metti(scat(.5,.07,.55,0,1.29,0),CUOIO);                                                                                        // il basto
+  [-1,1].forEach(function(s){ B.metti(scat(.22,.36,.52,s*.34,1.04,0),C_SACCO.clone().multiplyScalar(.85)); });                       // i due carichi ai fianchi
+  return B.geometria(NMUL); }
+function banco(B){      // un banco: tavola, quattro pali, una tenda di tela; sopra ceste e vasi
+  B.metti(scat(2,.08,.85,0,.85,0),LEGNO);
+  [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(function(q){ B.metti(scat(.07,.85,.07,q[0]*.9,.42,q[1]*.36),LEGNO).metti(scat(.06,2.25,.06,q[0]*.95,1.12,q[1]*.4),LEGNO); });
+  B.metti(new THREE.BoxGeometry(2.3,.04,1.3).rotateX(.16).translate(0,2.22,0),LT.crema);      // tela non tinta: il colore delle tende non è nelle fonti
+  [-.6,0,.6].forEach(function(x,k){ B.metti(new THREE.CylinderGeometry(.2,.16,.16,8).translate(x,.97,-.1),C_CESTO).metti(palla(.17,.07,.17,x,1.06,-.1,6),k===1?LT.bruno:RM.col(0x7d7a45)); });
+  B.metti(palla(.12,.2,.12,-.3,1.08,.25,6),C_TERRA).metti(palla(.12,.2,.12,.35,1.08,.25,6),C_TERRA); }
+function anfora(B,x,z,inclina,ry){ var g=new THREE.LatheGeometry([[0,0],[.05,.06],[.13,.3],[.17,.55],[.15,.75],[.06,.86],[.055,.98],[.07,1.0],[0,1.0]].map(function(q){ return new THREE.Vector2(q[0],q[1]); }),7);
+  g.rotateX(inclina||0).rotateY(ry||0).translate(x,.02,z); B.metti(g,C_TERRA.clone().multiplyScalar(.9+.1*Math.cos(x*9+z*7))); }
+function anfore(B){ for(var k=0;k<10;k++) anfora(B,(k%4-1.5)*.36,(Math.floor(k/4)-1)*.36,.12*Math.sin(k*2.1),k); }      // vino e olio dei magazzini (Porfirione in Platner, Horrea Galbae): anfore in piedi a file
+function sacchi(B){ [[-.3,0,.2],[.3,0,.25],[0,0,-.3],[-.3,.3,-.35],[.32,.3,-.32],[0,.3,.4],[0,.58,0]].forEach(function(q,k){ B.metti(new THREE.SphereGeometry(1,8,5).scale(.3,.17,.42).rotateY(k).translate(q[0],.17+q[1],q[2]),C_SACCO.clone().multiplyScalar(.88+.04*(k%3))); }); }
+function geoMercato(){ var B=new Pz(); B.parte=1; banco(B); B.parte=2; anfore(B); B.parte=3; sacchi(B); B.parte=0; return B.geometria(28); }      // banco (tipo 1), anfore (2), sacchi (3) in una maglia sola: un disegno      // il grano dell'annona in sacchi
+function matAnimali(){ var m=new THREE.MeshLambertMaterial({vertexColors:true}), A=String.fromCharCode(10);
+  m.onBeforeCompile=function(sh){ sh.uniforms.uPasso=uPasso;
+    sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute float perno; attribute float zampa; attribute float parte; attribute float tipo; attribute float fase; attribute float moto; uniform float uPasso;'].join(A))
+      .replace('#include <begin_vertex>',['#include <begin_vertex>','if(parte>0.5 && abs(parte-tipo)>0.5) transformed=vec3(0.0);','if(perno>0.0){ float an=sin(uPasso*3.6+fase+zampa)*0.3*moto; vec3 q=transformed; q.y-=perno; float ca=cos(an), sa=sin(an); transformed=vec3(q.x,q.y*ca-q.z*sa,q.y*sa+q.z*ca); transformed.y+=perno; }'].join(A));
+  }; return m; }
+var matAn=matAnimali();
+function istanze(geo,n,ombra){ var m=new THREE.InstancedMesh(geo,matAn,n); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(n*3).fill(1),3);
+  m.count=0; m.visible=false; m.frustumCulled=false; m.castShadow=!!ombra; m.receiveShadow=true; m.userData.gruppo='vita'; RM.scene.add(m); return m; }
+var mCarri=istanze(geoCarro(),NCAR,true), mMuli=istanze(geoMulo(),NMUL,false), mMerc=istanze(geoMercato(),28,false);      // tre disegni in tutto; muli e banchi senza ombra (piccoli: costerebbero un disegno e migliaia di triangoli in più)
+mMerc.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+var oT=new THREE.Object3D();
+/* i banchi dell'Emporio sui posti liberi della striscia: banchi verso il portico, anfore e sacchi verso la banchina; i venditori dietro i banchi */
+function posaBanchi(L){
+  if(!L.porto) return; var riva=[], terra=[], k, x, z, df;
+  for(k=0;k<L.nOk;k++){ x=L.ok[k*2]; z=L.ok[k*2+1]; df=RM.distFiume(x,z); (df<6?riva:terra).push(k); }
+  var presi=[], usati={};
+  function distanti(k,dmin){ for(var q=0;q<presi.length;q++){ var p=presi[q]; if(Math.hypot(L.ok[k*2]-L.ok[p*2],L.ok[k*2+1]-L.ok[p*2+1])<dmin) return false; } return true; }
+  var tot=0, T=mMerc.geometry.attributes.tipo;
+  function scegli(lista,quanti,dmin,tipo){ var n=0; for(var q=0;q<lista.length && n<quanti && tot<28;q++){ var s=lista[q]; if(usati[s]||!distanti(s,dmin)) continue; presi.push(s); usati[s]=1;
+      oT.position.set(L.ok[s*2],L.okY[s],L.ok[s*2+1]); oT.rotation.set(0,Math.atan2(L.x-L.ok[s*2],L.z-L.ok[s*2+1])+(tipo===1?0:s),0); oT.scale.setScalar(1); oT.updateMatrix(); mMerc.setMatrixAt(tot,oT.matrix); T.array[tot]=tipo; tot++; n++; }
+    return n; }
+  L.banchi=[]; var nb=scegli(terra,12,1.1,1); for(k=0;k<nb;k++) L.banchi.push(presi[k]);
+  scegli(riva.concat(terra),8,.9,2); scegli(riva.concat(terra),8,.9,3);
+  mMerc.count=tot; mMerc.instanceMatrix.needsUpdate=true; T.needsUpdate=true;
+  L.riva=riva.filter(function(s){ return !usati[s]; }); L.terra=terra.filter(function(s){ return !usati[s]; });
+  if(!L.riva.length) L.riva=L.terra.slice(); if(!L.terra.length) L.terra=L.riva.slice();
+}
+function banchiVisibili(on){ mMerc.visible=on && mMerc.count>0; }
+
+/* I carri. Di giorno pochi (la Tabula Heracleensis li vieta in città «post solem ortum neve ante horam X», salvo i materiali per i templi e le opere pubbliche, le macerie,
+   i carri vuoti o del letame; che valesse ancora dopo il II secolo non è attestato, e la pagina lo dice), di notte un poco di più. Accanto ai cantieri aperti in quell'anno
+   due carri di blocchi ciascuno (l'eccezione delle opere pubbliche; i cantieri sono quelli dei monumenti, CANTIERI in js/dati.js, e delle mura di Aureliano, 271-280, Zosimo I 49).
+   Nessun carro negli assedi, quando mancavano i viveri anche per gli animali (Procopio V 19). Ogni carro e ogni mulo ha chi lo guida, a piedi. */
+var CANT=[]; (RM.MONUMENTI||[]).forEach(function(m){ var st=D.MONUMENTI&&D.MONUMENTI[m.id]; if(m.x==null||!st||st[0][1]!=='assente'||!st[1]) return;
+  CANT.push({x:m.x, z:m.z, da:(D.CANTIERI&&D.CANTIERI[m.id])||st[1][0]-6, a:st[1][0]}); });
+(function(){ if(!RM.MURA) return; var k, q; for(k=0;k<RM.MURA.length;k+=Math.max(1,Math.floor(RM.MURA.length/4))){ q=RM.MURA[k]; CANT.push({x:q[0], z:q[1], da:271, a:280, mura:true}); } })();      // quattro tratti delle mura di Aureliano
+function puntoVicino(x,z,dmax){ var m=dmax*dmax, r=-1, j, q, d; for(j=0;j<NCAMP;j++){ q=vie[CAMP[j*3]].p[CAMP[j*3+1]]; d=(q.x-x)*(q.x-x)+(q.z-z)*(q.z-z); if(d<m){ m=d; r=j; } } return r; }
+CANT.forEach(function(c){ c.j=puntoVicino(c.x,c.z,30); });
+var cV=new Uint16Array(NC), cC=new Float32Array(NC), cR=new Float32Array(NC), cT=new Float32Array(NC), cVel=new Float32Array(NC), cDir=new Float32Array(NC), cVira=new Float32Array(NC), cTipo=new Uint8Array(NC), nCar=0, nMul=0;
+for(i=0;i<NC;i++){ cR[i]=8+rndV()*22; cT[i]=(rndV()*2-1)*cR[i]; cVel[i]=(i<NCAR?.045:.06)*(.85+.3*rndV()); cDir[i]=rndV()<.5?-1:1; }      // carri a passo di bue (circa 0,9 m/s), muli un poco più svelti
+function scegliCarri(anno){
+  var tot=cumC[NCAMP-1]||1, k=0, j;
+  CANT.forEach(function(c){ if(c.j<0 || anno<c.da || anno>=c.a) return; for(var q=0;q<2 && k<NCAR;q++,k++){ cV[k]=CAMP[c.j*3]; cC[k]=CAMP[c.j*3+1]; cR[k]=6; cTipo[k]=1; } });      // i carri dei cantieri
+  RM.vitaCantieri=k/2;
+  for(j=k;j<NC;j++){ var u=hh(j,11)*tot, lo=0, hi=NCAMP-1; while(lo<hi){ var m=(lo+hi)>>1; if(cumC[m]<u) lo=m+1; else hi=m; }
+    cV[j]=CAMP[lo*3]; cC[j]=CAMP[lo*3+1]; if(j<NCAR){ cTipo[j]=hh(j,12)<.45?0:2; cR[j]=8+hh(j,13)*22; } }      // vuoti o con sacchi
+  nCarCant=k; }
+var nCarCant=0;
+/* Le ronde dei vigili (Digesto I 15, 3: sette coorti, una ogni due regioni; il prefetto «per totam noctem vigilare»; graffiti di un posto di guardia in Trastevere dal 215 al 245,
+   Platner, Cohortium Vigilum Stationes). Solo di notte e solo nel III secolo: dopo, le fonti lette non descrivono ronde per le vie di Roma. Vesti e attrezzi non sono descritti:
+   la stessa veste di lana non tinta della gente comune, niente lanterne (nessuna fonte le dà). */
+var RONDE=[]; (function(){ var lista=[]; vie.forEach(function(v,k){ if(v.larga<.75) return; var d=0; v.p.forEach(function(q){ if(RM.dentroMura(q.x,q.z)) d++; }); if(d>30) lista.push([k,d]); });
+  lista.sort(function(a,b){ return b[1]-a[1]; }); [0,1].forEach(function(g){ var L=lista[g]; if(!L) return; var v=vie[L[0]], ci=0, n=0; v.p.forEach(function(q,i){ if(RM.dentroMura(q.x,q.z)){ ci+=i; n++; } });
+    RONDE.push({v:L[0], c:ci/n, r:Math.min(40,n/2-2), t:0, vel:.05*(g?1:-1)}); }); })();
+
+/* ---------- le scene hanno la precedenza ----------
+   Le messe in scena delle tappe (js/scene-tappe.js) e gli eventi stanno dopo la vita fra i figli della scena: quelle accese segnano una griglia di celle di 20 m (i loro vertici e
+   le loro figure, con un margine di 15 m), e lì la gente di tutti i giorni non c'è. Si rifà quando cambia ciò che è acceso, e ogni tre secondi se una scena si muove.
+   Altri moduli possono aggiungere un luogo da tenere libero in RM.vitaEvita ({x, z, r}). */
+var OX=-450, OZ=-700, OC=2, ONX=450, ONZ=700, occ=new Uint8Array(ONX*ONZ), occN=0, occFirma='', occT=0, mT=new THREE.Matrix4(), vT=new THREE.Vector3(), bT=new THREE.Box3();
+function segna(x,z,r){ var i0=Math.max(0,Math.floor((x-r-OX)/OC)), i1=Math.min(ONX-1,Math.floor((x+r-OX)/OC)), k0=Math.max(0,Math.floor((z-r-OZ)/OC)), k1=Math.min(ONZ-1,Math.floor((z+r-OZ)/OC)), i, k;
+  for(k=k0;k<=k1;k++) for(i=i0;i<=i1;i++) occ[k*ONX+i]=1; occN++; }
+function occupato(x,z){ if(!occN) return false; var i=Math.floor((x-OX)/OC), k=Math.floor((z-OZ)/OC); return i>=0&&k>=0&&i<ONX&&k<ONZ&&occ[k*ONX+i]===1; }
+function segnaOggetto(o){ if(!o.visible) return;
+  var g=o.geometry, P=g&&g.attributes&&g.attributes.position, j, st;
+  if(P && (o.isMesh||o.isLine)){
+    if(o.isInstancedMesh){ st=Math.max(1,Math.floor(o.count/1500)); for(j=0;j<o.count;j+=st){ o.getMatrixAt(j,mT); vT.setFromMatrixPosition(mT).applyMatrix4(o.matrixWorld); segna(vT.x,vT.z,1.5); } }
+    else { st=Math.max(1,Math.floor(P.count/1500)); for(j=0;j<P.count;j+=st){ vT.fromBufferAttribute(P,j).applyMatrix4(o.matrixWorld); segna(vT.x,vT.z,1.5); } } }
+  for(j=0;j<o.children.length;j++) segnaOggetto(o.children[j]); }
+function zoneScene(forza){
+  var ch=RM.scene.children, firma='', k, c;
+  for(k=IDX_VITA;k<ch.length;k++){ c=ch[k]; if(c.visible && c.userData.gruppo!=='vita' && !c.isPoints) firma+=k+','; }
+  firma+='|'+RM.vitaEvita.length;
+  if(firma===occFirma && !forza) return; occFirma=firma; occ.fill(0); occN=0;
+  for(k=IDX_VITA;k<ch.length;k++){ c=ch[k]; if(!c.visible || c.userData.gruppo==='vita' || c.isPoints || c.isSprite || c.isLight) continue;
+    c.updateMatrixWorld(true); bT.setFromObject(c); if(bT.isEmpty() || (bT.max.x-bT.min.x>200 && bT.max.z-bT.min.z>200)) continue;      // la piena e il velo coprono tutto: non sono scene
+    segnaOggetto(c); }
+  RM.vitaEvita.forEach(function(e){ if(e && e.x!=null) segna(e.x,e.z,e.r||2); });
+}
+
+/* ---------- a ogni fotogramma ---------- */
+var VA={quota:1,carri:1,assedio:false,nota:''}, vieDaRifare=true, zoneDaRifare=true;
+function sulla(v,t,lat,o,j){      // mette la persona j sulla via v al punto t (in punti), spostata di lat unità verso destra
+  var np=v.p.length; if(t<0) t=0; if(t>np-1.001) t=np-1.001; var i0=t|0, pa=v.p[i0], pb=v.p[i0+1], f=t-i0, ex=pb.x-pa.x, ez=pb.z-pa.z, el=Math.hypot(ex,ez)||1;
+  tX=ex/el; tZ=ez/el; pos[o]=pa.x+ex*f-tZ*lat; pos[o+2]=pa.z+ez*f+tX*lat; piedi[j]=v.y[i0]+(v.y[i0+1]-v.y[i0])*f; pos[o+1]=piedi[j]+.2; }
+var tX=0, tZ=1;      // la direzione della via nell'ultimo punto (sulla)
+/* Chi è lontano dalla camera (più di 450 m) si muove un fotogramma su tre, con un passo tre volte più lungo: a quella distanza non si vede, e il lavoro per fotogramma
+   cala di quasi due terzi. lontano(o,j): 1 vicino, 3 lontano e tocca a lui, 0 lontano e non tocca a lui (la posizione resta quella di prima). */
+var FC=0, CX=0, CZ=0, CY2=0;
+function lontano(o,j){ var dx=pos[o]-CX, dz=pos[o+2]-CZ; if(dx*dx+dz*dz+CY2<2025) return 1; return (j+FC)%3?0:3; }
 function muoviGente(dt){
-  var j=0, n, b, s, o, vp, tt, i0, pa, pb, fr, ex, ez, el, lat, lato, f, hs, lx, lz, ca, sa;
+  var j=0, n, b, s, o, vp, tt, f, hs, lx, lz, ca, sa, lato, k, L;
+  var fr=RM.QUALITA.gente[RM.q]||1, nt=RM.notte||0, F=(RM.vitaFattore==null?1:RM.vitaFattore)*VA.quota, dtm=MENO_MOTO?0:dt;
+  var fracRes=(.1+.9*Math.pow(quotaGente,.7))*(1-.88*nt)*F, d3;      // nelle case di una città piena escono in tanti, in quella vuota dell'VIII secolo pochi
+  FC++; CX=RM.camera.position.x; CZ=RM.camera.position.z; CY2=RM.camera.position.y*RM.camera.position.y;
+  /* chi abita un isolato: avanti e indietro sulla via di casa, o attorno all'isolato nei vicoli; di notte quasi tutti in casa */
   for(n=0;n<N;n++){
     b=isolati[n];
     for(var q=0;q<PER_ISOLATO;q++,j++){
       o=j*3;
-      if(b.a0<.5 || (b.vv<0 && !b.vicoli)){ pos[o+1]=-60; continue; }
-      s=giro[j]=(giro[j]+passo[j]*dt+4)%4;
-      if(b.vv<0 || (q===1 && b.vicoli)){                                                 // nei vicoli, attorno all'isolato
+      if(b.a0<.5 || (b.vv<0 && !b.vicoli) || (q>0 && fr<.8) || hh(j,1)>=fracRes){ pos[o+1]=-60; continue; }
+      if(pos[o+1]>-50 && (d3=lontano(o,j))===0) continue;      // lontano: si muove un fotogramma su tre
+      s=giro[j]=(giro[j]+passo[j]*dtm*(d3||1)+4)%4;
+      if(b.vv<0 || (q%2===1 && b.vicoli)){                                                 // nei vicoli, attorno all'isolato
         ca=Math.cos(b.ry); sa=Math.sin(b.ry); lato=s|0; f=s-lato; hs=b.w/2+.45;
         if(lato===0){ lx=-hs+2*hs*f; lz=hs; } else if(lato===1){ lx=hs; lz=hs-2*hs*f; } else if(lato===2){ lx=hs-2*hs*f; lz=-hs; } else { lx=-hs; lz=-hs+2*hs*f; }
-        pos[o]=b.x+lx*ca+lz*sa; pos[o+1]=b.y+.16; piedi[j]=b.y; pos[o+2]=b.z-lx*sa+lz*ca; continue;
+        pos[o]=b.x+lx*ca+lz*sa; pos[o+1]=b.y+.16; piedi[j]=b.y; pos[o+2]=b.z-lx*sa+lz*ca;
+      } else {
+        vp=vie[b.vv]; tt=b.vi+(3+2*q+(q>1?3:0))*(Math.abs(s-2)-1);                                 // avanti e indietro lungo la via di casa, per una sessantina di metri
+        sulla(vp,tt,((j*.618034)%1-.5)*1.5*vp.larga,o,j);
       }
-      vp=vie[b.vv];
-      tt=Math.max(0,Math.min(vp.p.length-1.001,b.vi+(3+2*q)*(Math.abs(s-2)-1)));       // avanti e indietro lungo la via di casa, per una sessantina di metri
-      i0=tt|0; pa=vp.p[i0]; pb=vp.p[i0+1]; fr=tt-i0; ex=pb.x-pa.x; ez=pb.z-pa.z; el=Math.hypot(ex,ez)||1; lat=((j*.618034)%1-.5)*1.5*vp.larga;
-      pos[o]=pa.x+ex*fr-ez/el*lat; pos[o+2]=pa.z+ez*fr+ex/el*lat; piedi[j]=hVia(pos[o],pos[o+2]); pos[o+1]=piedi[j]+.2;
+      if(occupato(pos[o],pos[o+2])) pos[o+1]=-60;
     }
   }
-  var visibili=Math.round(NV*quotaGente);
+  /* i viandanti */
+  var nV=Math.min(NV,Math.round(NV0*fr*quotaGente*(1-.88*nt)*F));
   for(n=0;n<NV;n++,j++){
-    o=j*3; var w=viandanti[n];
-    if(n>=visibili){ pos[o+1]=-60; continue; }
-    w.s+=w.vel*dt; if(w.s>1||w.s<0){ w.vel=-w.vel; w.s=Math.max(0,Math.min(1,w.s)); }
-    var pp=vie[w.v].p, t=w.s*(pp.length-1), k0=Math.min(pp.length-2,t|0), a=pp[k0], bb=pp[k0+1], g=t-k0, dx=bb.x-a.x, dz=bb.z-a.z, L=Math.hypot(dx,dz)||1;
-    var fuori=w.lato*vie[w.v].larga; pos[o]=a.x+dx*g-dz/L*fuori; pos[o+2]=a.z+dz*g+dx/L*fuori; piedi[j]=hVia(pos[o],pos[o+2]); pos[o+1]=piedi[j]+.2;
+    o=j*3;
+    if(n>=nV){ pos[o+1]=-60; continue; }
+    if(pos[o+1]>-50 && (d3=lontano(o,j))===0) continue;
+    vp=vie[wV[n]];
+    if(!wFermo[n]){ wT[n]+=wVel[n]*dtm*(d3||1); if(wT[n]>wR[n]||wT[n]<-wR[n]){ wVel[n]=-wVel[n]; wT[n]=Math.max(-wR[n],Math.min(wR[n],wT[n])); } }
+    var pr=wFermo[n]&&(n%6===1), lat=(pr?wLato[n-1]:wLato[n])*vp.larga, t0=pr?wC[n-1]+wT[n-1]:wC[n]+wT[n], sg=(lat+.14>vp.larga*.75)?-1:1;
+    if(pr) lat+=sg*.14;                                                                      // il compagno, a un metro e mezzo
+    sulla(vp,t0,lat,o,j);
+    if(wFermo[n]){ var d=pr?-sg:sg; dirF[j]=Math.atan2(-tZ*d,tX*d); }                         // fermi a coppie, l'uno davanti all'altro
+    if(occupato(pos[o],pos[o+2])) pos[o+1]=-60;
   }
-  var inPiazza=Math.round(NZ*quotaGente);
-  for(n=0;n<NZ;n++,j++){
-    o=j*3; var u=folla[n];
-    if(n>=inPiazza){ pos[o+1]=-60; continue; }
-    u.a+=u.vel*dt; pos[o]=u.p[0]+Math.cos(u.a)*u.r*u.p[2]; pos[o+2]=u.p[1]+Math.sin(u.a)*u.r*u.p[3]; piedi[j]=RM.hRapida(pos[o],pos[o+2])+.1; pos[o+1]=piedi[j]+.2;
+  /* i luoghi affollati */
+  for(k=0;k<LUOGHI.length;k++){ L=LUOGHI[k];
+    var nL=0; if(L.vis && L.ok && L.nOk) nL=Math.min(L.max,Math.round(L.n*SCALA_L*fr*(L.fisso?1:quotaGente)*(1-.92*nt)*F));
+    if(!L.fidato && nL) nL=Math.min(nL,L.nOk+(L.porto&&L.riva&&L.riva.length?20:0));      // non più gente che posti liberi
+    for(n=0;n<L.max;n++){ j=I_L+L.i0+n; o=j*3;
+      if(n>=nL){ pos[o+1]=-60; continue; }
+      var A, B2, x, z, y, u=0;
+      if(L.porto && L.riva){
+        if(forza[j]){ A=L.riva[(n*7)%L.riva.length]; B2=L.terra[(n*11+3)%L.terra.length]; }      // i portatori: dalla banchina ai magazzini e ritorno
+        else if(L.banchi.length && n%4<2){ var bi=L.banchi[(n>>1)%L.banchi.length]; A=B2=bi; }  // venditori e compratori ai banchi
+        else { A=B2=L.terra[(n*5+1)%L.terra.length]; }
+      } else { A=(n*7+3)%L.nOk; B2=(n%3===0)?(n*13+5)%L.nOk:A; }                          // uno su tre va da un posto all'altro
+      var xa=L.ok[A*2], za=L.ok[A*2+1], xb=L.ok[B2*2], zb=L.ok[B2*2+1];
+      if(A!==B2){ var dd=Math.hypot(xb-xa,zb-za)||1; giro[j]=(giro[j]+Math.abs(passo[j])*2.4*dtm/dd)%2; u=giro[j]<1?giro[j]:2-giro[j]; x=xa+(xb-xa)*u; z=za+(zb-za)*u; }
+      else { var ang=hh(j,5)*6.2832, rr=(L.porto&&L.banchi&&L.banchi.indexOf(A)>=0)?.15+.05*(n%3):.06*hh(j,6); x=xa+Math.cos(ang)*rr; z=za+Math.sin(ang)*rr; dirF[j]=Math.atan2(xa-x,za-z)+(rr<.08?ang:0); }
+      y=L.okY?(A!==B2?L.okY[A]+(L.okY[B2]-L.okY[A])*u:L.okY[A]):RM.hRapida(x,z)+.1;
+      pos[o]=x; pos[o+2]=z; piedi[j]=y; pos[o+1]=y+.2;
+      if(occupato(x,z)) pos[o+1]=-60;
+    }
   }
-  var arrivati=Math.round(NG*quotaPellegrini);
+  j=I_G;
+  var arrivati=Math.round(NG0*Math.min(GMAX,fr)*quotaPellegrini*(1-.75*nt)*F);
   for(n=0;n<NG;n++,j++){
     o=j*3; var pg=pellegrini[n];
     if(n>=arrivati){ pos[o+1]=-60; continue; }
-    if(n%2){ pg.a+=pg.vel*dt*3; pos[o]=-246.6+Math.cos(pg.a)*pg.r*3.5; pos[o+2]=-108+Math.sin(pg.a)*pg.r*2.9; }                     // nel cortile dell'atrio e sul sagrato lastricato davanti
+    if(n%2){ pg.a+=pg.vel*dtm*3; pos[o]=-246.6+Math.cos(pg.a)*pg.r*3.5; pos[o+2]=-108+Math.sin(pg.a)*pg.r*2.9; }                     // nel cortile dell'atrio e sul sagrato lastricato davanti
     else{
-      pg.s+=pg.vel*dt; if(pg.s>1||pg.s<0){ pg.vel=-pg.vel; pg.s=Math.max(0,Math.min(1,pg.s)); }
+      pg.s+=pg.vel*dtm; if(pg.s>1||pg.s<0){ pg.vel=-pg.vel; pg.s=Math.max(0,Math.min(1,pg.s)); }
       if(n%4===0 || !viaPietro){ pos[o]=-180.1-66.8*pg.s; pos[o+2]=-109+4*pg.s+pg.lato*.55; }                                        // sotto il portico, lungo il suo asse
-      else{ var vq=vie[viaPietro.v], tq=viaPietro.ia+(viaPietro.ib-viaPietro.ia)*pg.s, kq=Math.max(0,Math.min(vq.p.length-2,tq|0)), qa=vq.p[kq], qb=vq.p[kq+1], gq=tq-kq, qx=qb.x-qa.x, qz=qb.z-qa.z, ql=Math.hypot(qx,qz)||1, qf=pg.lato*vq.larga;
-        pos[o]=qa.x+qx*gq-qz/ql*qf; pos[o+2]=qa.z+qz*gq+qx/ql*qf; piedi[j]=hVia(pos[o],pos[o+2]); pos[o+1]=piedi[j]+.3; continue; }                      // sulla via, dal ponte alla basilica
+      else{ var vq=vie[viaPietro.v]; sulla(vq,viaPietro.ia+(viaPietro.ib-viaPietro.ia)*pg.s,pg.lato*vq.larga,o,j); pos[o+1]+=.1; if(occupato(pos[o],pos[o+2])) pos[o+1]=-60; continue; }                      // sulla via, dal ponte alla basilica
     }
     piedi[j]=RM.hRapida(pos[o],pos[o+2])+.1; pos[o+1]=piedi[j]+.2;
+    if(occupato(pos[o],pos[o+2])) pos[o+1]=-60;
   }
-  figureVicine(j);
+  muoviCarri(dtm,fr,nt);
+  muoviRonde(dtm,nt);
+  figureVicine(NP);
   gGente.attributes.position.needsUpdate=true;
+}
+/* carri e muli: avanti e indietro sul loro tratto, tenendo la destra; in fondo al tratto girano sul posto in tre secondi */
+function muoviCarri(dt,fr,nt){
+  var giorno=1-nt, k, o, j, v, np, t, i0, f, pa, pb, ex, ez, el, x, z, y, ang, lat;
+  var nCg=Math.round(CARRI0*fr*quotaGente*(giorno+1.6*nt)*VA.carri*F_());      // pochi di giorno, un poco di più di notte
+  var nMu=Math.round(MULI0*fr*quotaGente*(1-.6*nt)*VA.carri*F_());
+  var cm=0, cc=0;
+  for(k=0;k<NC;k++){ j=I_C+k; o=j*3;
+    var mulo=k>=NCAR, on=mulo?(k-NCAR<nMu):(k<nCarCant?VA.carri>.5:(k-nCarCant<nCg));
+    if(!on){ pos[o+1]=-60; continue; }
+    v=vie[cV[k]]; np=v.p.length;
+    if(cVira[k]>0){ cVira[k]=Math.max(0,cVira[k]-dt/3); }
+    else { cT[k]+=cDir[k]*cVel[k]*dt; if(cT[k]>cR[k]||cT[k]<-cR[k]){ cT[k]=Math.max(-cR[k],Math.min(cR[k],cT[k])); cDir[k]=-cDir[k]; cVira[k]=1; } }
+    t=Math.max(0,Math.min(np-1.001,cC[k]+cT[k])); i0=t|0; f=t-i0; pa=v.p[i0]; pb=v.p[i0+1]; ex=pb.x-pa.x; ez=pb.z-pa.z; el=Math.hypot(ex,ez)||1;
+    lat=cDir[k]*(.12+.25*v.larga);                                                       // tiene la destra
+    x=pa.x+ex*f-ez/el*lat; z=pa.z+ez*f+ex/el*lat; y=v.y[i0]+(v.y[i0+1]-v.y[i0])*f;
+    ang=Math.atan2(ex,ez)+(cDir[k]<0?Math.PI:0)+(cVira[k]>0?Math.PI*cVira[k]*cVira[k]*(3-2*cVira[k]):0);
+    if(occupato(x,z)){ pos[o+1]=-60; continue; }
+    oT.position.set(x,y-.08,z); oT.rotation.set(0,ang,0); oT.scale.setScalar(1); oT.updateMatrix();
+    var m=mulo?mMuli:mCarri, c=mulo?cm++:cc++;
+    m.setMatrixAt(c,oT.matrix); m.geometry.attributes.tipo.array[c]=mulo?0:cTipo[k]+1; m.geometry.attributes.fase.array[c]=k*1.7; m.geometry.attributes.moto.array[c]=(MENO_MOTO||cVira[k]>0)?0:1; var tn=.88+.24*hh(k,8); m.instanceColor.setXYZ(c,tn,tn,tn);
+    /* chi guida: accanto ai buoi, o davanti al mulo con la cavezza */
+    var sx=Math.sin(ang), sz=Math.cos(ang), av=mulo?.13:.16, la=mulo?.03:-.11;
+    pos[o]=x+sx*av+sz*la; pos[o+2]=z+sz*av-sx*la; piedi[j]=y; pos[o+1]=y+.2; if(cVira[k]>0) dirF[j]=ang;
+  }
+  [[mCarri,cc],[mMuli,cm]].forEach(function(q){ var m=q[0], n=q[1]; m.count=n; m.visible=n>0; if(n){ m.instanceMatrix.needsUpdate=true; m.instanceColor.needsUpdate=true; var A=m.geometry.attributes; A.fase.needsUpdate=true; A.moto.needsUpdate=true; A.tipo.needsUpdate=true; } });
+}
+function F_(){ return RM.vitaFattore==null?1:RM.vitaFattore; }
+function muoviRonde(dt,nt){
+  var on=annoOra>=235 && annoOra<330 && nt>.35, g, m, j, o;
+  for(g=0;g<2;g++){ var R=RONDE[g];
+    for(m=0;m<7;m++){ j=I_R+g*7+m; o=j*3;
+      if(!on || !R){ pos[o+1]=-60; continue; }
+      if(m===0){ R.t+=R.vel*dt; if(R.t>R.r||R.t<-R.r){ R.vel=-R.vel; R.t=Math.max(-R.r,Math.min(R.r,R.t)); } }
+      var v=vie[R.v], dir=R.vel>0?1:-1, t=R.c+R.t-dir*(m?(.35+Math.floor((m-1)/2)*.32):0), lat=m?((m%2)?-.07:.07):0;      // il primo davanti, gli altri a due a due dietro
+      sulla(v,t,lat,o,j); if(occupato(pos[o],pos[o+2])) pos[o+1]=-60;
+    } }
 }
 
 /* ---------- fumo ---------- */
@@ -440,17 +766,30 @@ function muoviBarche(dt){
 
 RM.moduli.push(function(anno){
   annoOra=anno; vestiEpoca(anno);
-  quotaGente=Math.min(1,D.interp(D.CURVE.popolazione.punti,anno)/900000)*(1-RM.sfuma(545.6,546,anno)*(1-RM.sfuma(546.3,547.5,anno)));      // 546: Totila porta via gli abitanti e la città resta deserta «quadraginta aut amplius dies» (Marcellino Comes): alla tappa le strade sono vuote
+  VA=vitaAnno(anno);      // assedi e città vuota (VITA_ANNI): il 546 di prima ora sta lì
+  quotaGente=Math.min(1,D.interp(D.CURVE.popolazione.punti,anno)/900000);      // una figura ogni tante persone: la stessa proporzione in ogni secolo
   quotaBarche=Math.max(Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60), RM.sfuma(845.5,846,anno)*(1-RM.sfuma(846.4,847.4,anno)));   // nell'846 il fiume si riempie delle navi saracene
   quotaPellegrini=D.interp(PELLEGRINI_NEL_TEMPO,anno);
+  LUOGHI.forEach(function(L){ var on=anno>=L.da && anno<L.a; if(on && L.mon){ var q=RM.statoMonumento(L.mon,anno); on=q.s0==='uso' && !(q.s1!=='uso' && q.t>.5); } L.vis=on?1:0; if(L.porto) banchiVisibili(on && !!L.ok); });
+  if(Math.abs(anno-annoVie)>=2) vieDaRifare=true;
+  zoneDaRifare=true;
   FONTI.forEach(function(f){ if(f.id){ var q=RM.statoMonumento(f.id,anno), s=f.stato||'uso'; f.vivo=(q.s0===s?1-q.t:0)+(q.s1===s?q.t:0); } });
   mostraForni(); vicoli();
-  matGente.opacity=1-.8*RM.notte;
 });
 RM.frame.push(function(dt){
-  tempo+=dt; uPasso.value=tempo;
-  if(RM.leggero){ if(gente.visible){ gente.visible=false; fumo.visible=false; figure.forEach(function(m){ m.visible=false; }); if(ombraFig) ombraFig.visible=false; } }       // regolatore al terzo grado: si rinuncia a passanti e fumo
-  else { muoviGente(dt); muoviFumo(); }
+  tempo+=dt; if(!MENO_MOTO) uPasso.value=tempo;
+  if(vieDaRifare){ vieDaRifare=false; scegliVie(annoOra); scegliCarri(annoOra); }
+  if(zoneDaRifare || (occN && tempo-occT>3)){ occT=tempo; zoneScene(!zoneDaRifare); zoneDaRifare=false; }      // le scene accese tengono libero il loro posto (e se si muovono, ogni tre secondi)
+  provaLuoghi(annoOra,1.5);      // i posti liberi dei luoghi affollati, al più un millesimo e mezzo per fotogramma
+  LUOGHI.forEach(function(L){ if(L.porto) banchiVisibili(L.vis && !!L.ok && !!L.banchi); });
+  matGente.opacity=1-.8*RM.notte;
+  if(RM.leggero){ if(gente.visible){ gente.visible=false; fumo.visible=false; figure.forEach(function(m){ m.visible=false; }); if(ombraFig) ombraFig.visible=false; mCarri.visible=false; mMuli.visible=false; } }       // regolatore al terzo grado: si rinuncia a passanti e fumo
+  else { if(!gente.visible){ gente.visible=true; fumo.visible=true; } muoviGente(dt); muoviFumo(); }
   muoviBarche(dt);
 });
+/* per le prove: ?notte=1 accende la notte all'avvio (le catture senza finestra non possono premere «Notte») */
+if(/[?&]notte=1/.test(location.search)) setTimeout(function(){ if(RM.applicaLuce) RM.applicaLuce(1); },1500);
+RM.vitaProve={luoghi:LUOGHI, ronde:RONDE, vie:vie, libero:liberoQui, suIsolato:suIsolato, ostacoli:ostacoli, occupato:occupato};      // per le prove
+RM.vitaConta=function(){ var c={persone:0, carri:mCarri.count, muli:mMuli.count, mercato:mMerc.visible?mMerc.count:0}, k; for(k=0;k<NP;k++) if(pos[k*3+1]>-50) c.persone++;
+  figure.forEach(function(m){ c.persone+=m.count; }); c.luoghi={}; LUOGHI.forEach(function(L){ if(L.vis) c.luoghi[L.id]=L.nOk||0; }); return c; };      // quante figure ci sono ora (per le prove e per il rapporto)
 })();

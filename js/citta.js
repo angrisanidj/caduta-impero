@@ -1,7 +1,9 @@
 /* Tessuto abitato: isolati disposti per quartieri, ciascuno con la sua griglia di strade.
    Ogni isolato ha una "tenuta": chi ce l'ha bassa viene abbandonato per primo.
-   Abbandonato, l'isolato non scompare: perde il tetto, resta un guscio di muri, poi crolla a tratti e si copre di sterpi.
-   Ogni isolato ha un destino (guscio alto, rudere basso, orto fra i monconi) e un'età contata dall'anno in cui è stato lasciato.
+   Abbandonato, l'isolato non scompare: resta in piedi qualche decennio e si guasta (intonaco, coppi, finestre, crepe, erba), perde il tetto e i piani alti,
+   poi resta un guscio di muri che crolla a tratti, fra cumuli di macerie, e si copre di rovi, edera e alberelli (26 novembre 2026: si veda aggiorna e «case abbandonate»).
+   Ogni isolato ha un destino (guscio alto, rudere basso, rudere molto basso con a volte un orto) e un'età contata dall'anno in cui è stato lasciato.
+   Le rovine restano fino all'852, sempre più basse: le fonti parlano di case e chiese «in rovina», non di una città tornata campagna (l'utente, 26 novembre 2026).
 
    Tre specie di case (23 novembre 2026, l'utente: «distinguendo tra le insulae della Suburra e le ville dei ricchi»):
    - insulae, i caseggiati d'affitto a più piani con le botteghe al piano terra: «An insula… generally contained several separate houses, or at least separate apartments or shops,
@@ -109,10 +111,30 @@ var N=RM.N_ISOLATI=isolati.length; RM.isolati=isolati;
   var soglie=[], y; for(y=200;y<=852;y++) soglie.push(1-D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,y)));
   isolati.forEach(function(b){
     b.lasciato=9999; for(var k=0;k<soglie.length;k++) if(rango(b,200+k)<soglie[k]){ b.lasciato=200+k; break; }
-    b.fato=b.dentro?(b.sorte<.34?0:b.sorte<.8?1:2):(b.sorte<.3?1:2);          // 0 guscio alto, 1 rudere basso, 2 orto fra i monconi
-    b.hFin=b.fato===0?.5+.38*b.tono:b.fato===1?b.rudere:.07+.1*b.tono;        // quanto resta in piedi, in quota dell'altezza
+    b.fato=b.dentro?(b.sorte<.34?0:b.sorte<.8?1:2):(b.sorte<.3?1:2);          // 0 guscio alto, 1 rudere basso, 2 rudere molto basso (fra i suoi monconi, a volte, un orto)
+    b.hFin=b.fato===0?.5+.38*b.tono:b.fato===1?b.rudere+.06:.12+.1*b.tono;    // quanto resta in piedi, in quota dell'altezza (26 novembre 2026: rovine basse un po' più alte, perché restino leggibili)
     b.giro=(b.sorte*977)|0;                                                   // quarti di giro: quattro profili di rovina diversi
+    b.orto=b.dentro?(b.fato===2 && b.tono<.6):b.fato===2;                    // orto o vigna fra i monconi, come ipotesi: dentro le mura circa un isolato su otto (prima uno su cinque, e dopo due-tre secoli quasi tutti i ruderi bassi)
+    b.vigna=b.orto && RM.grana(Math.round(b.x*4.1)+3,Math.round(b.z*6.7)+11)<.4;
+    /* Gli stadi dell'abbandono di una casa (26 novembre 2026; l'utente: «mostrare i danni anche alle case normali abbandonate. Le insulae e le ville»):
+       1, abbandonata ma in piedi, fino a t1 (12-34 anni): cade l'intonaco, mancano coppi e si vedono le travi, finestre vuote e buie, crepe, erba al piede e sul tetto;
+       2, fino a t2 (altri 22-52 anni): il tetto sfonda, i piani alti cadono a tronconi, i muri si spezzano; 3, la rovina (geoRudere), che si abbassa e si copre di verde.
+       Negli orti tutto va più in fretta (si sgombra). I tempi sono una resa: nessuna fonte letta dice quanto resta in piedi una casa lasciata. */
+    var fr=b.fato===2?.65:1; b.t1=(12+22*b.sfasa)*fr; b.t2=b.t1+(22+30*b.tono)*fr;
+    b.bassa0=1-.42*RM.sfuma(470,720,b.lasciato+b.sfasa*12);                   // l'altezza della casa quando fu lasciata: le case a più piani lasciano il posto a case basse (si veda aggiorna)
+    b.anello=!sullaVia({x:b.x,z:b.z,ry:b.ry,w:b.w*1.24,d:b.d*1.24});          // c'è posto per i rovi fuori dai muri senza toccare una strada
   });
+  /* Orti e vigne attestati dentro le mura, accanto alle case abitate (src/testi/vita-roma-fonti.md, «Orti, vigne, pascoli e rovine dentro le mura»): dall'anno della fonte,
+     su una parte dei lotti in rovina attorno al luogo. [x, z, raggio, anno, quota dei lotti, vigna]:
+     presso le terme di Agrippa, Campo Marzio (Gregorio Magno, Registrum IX 138, maggio 599); davanti ai gradini di Santa Sabina, Aventino (indice del Registrum, 598-599);
+     attorno a Santa Susanna, Quirinale: case con orto e «hortus vineatus» (carta di Sergio I, 687-701, edita da De Rossi). Quanti lotti e quali è una scelta del modello. */
+  var SS=RM.ll(41.9042,12.4937);
+  var ORTI_FONTI=[[-69,-49,13,599,.5,0],[-46,89,11,598,.5,0],[SS[0]!=null?SS[0]:SS.x,SS[1]!=null?SS[1]:SS.z,14,687,.55,1]];      // il quarto, l'orto del Borgo presso il portico di San Pietro (Leone IV), ha un posto suo: si veda più sotto, ortoBorgo
+  RM.ORTI_FONTI=ORTI_FONTI;
+  isolati.forEach(function(b){ ORTI_FONTI.forEach(function(o){ if(Math.hypot(b.x-o[0],b.z-o[1])<o[2] && RM.grana(Math.round(b.x*5.3)+29,Math.round(b.z*3.9)-13)<o[4]){ b.ortoDal=Math.min(b.ortoDal||9999,o[3]); if(o[5]) b.vigna=true; } }); });
+  /* spoglio: vicino ai monumenti usati come cava (dove js/vita.js accende le calcare) anche i ruderi delle case finiscono nei forni da calce e si abbassano di più */
+  var CAVE=[]; (RM.MONUMENTI||[]).forEach(function(m){ var st=(D.MONUMENTI||{})[m.id]||[]; st.forEach(function(q){ if(q[1]==='cava' && m.x!=null) CAVE.push([m.x,m.z,(m.raggio||6)+22,q[0]]); }); });
+  isolati.forEach(function(b){ CAVE.forEach(function(c){ if(Math.hypot(b.x-c[0],b.z-c[1])<c[2]) b.cava=Math.min(b.cava||9999,c[3]); }); });
   /* incendi dei sacchi: attorno a ogni fuoco una parte degli isolati brucia e resta un guscio annerito per qualche decennio */
   (D.EVENTI||[]).forEach(function(ev){ if(!ev.bruciati) return; ev.fuochi.forEach(function(f){ isolati.forEach(function(b){
     var dd=Math.hypot(b.x-f[0],b.z-f[1])/(ev.bruciati*f[2]);
@@ -165,9 +187,9 @@ var texRudere=RM.tela(64,64,function(g,W,H){                     // muro scrosta
   g.fillStyle='#3a2d24'; [[12,8],[42,8],[12,36],[42,36]].forEach(function(f){ g.fillRect(f[0],f[1],9,12); });
   g.fillStyle='rgba(60,50,40,.35)'; g.fillRect(0,58,W,6);
 });
-var texIncolto=RM.tela(64,64,function(g,W,H){                    // erba secca, terra, cespi
-  g.fillStyle='#a09c70'; g.fillRect(0,0,W,H);
-  for(var i=0;i<220;i++){ g.fillStyle=['rgba(95,115,65,.4)','rgba(175,160,110,.4)','rgba(130,112,84,.35)','rgba(70,95,55,.35)'][(rf()*4)|0]; g.beginPath(); g.arc(rf()*W,rf()*H,1.5+rf()*4.5,0,6.3); g.fill(); }
+var texIncolto=RM.tela(64,64,function(g,W,H){                    // il suolo fra le rovine (26 novembre 2026): terra e calcinacci grigio-bruni, sassi e cocci, erba secca e ciuffi verdi a chiazze; prima era un prato giallo-verde
+  g.fillStyle='#9a9278'; g.fillRect(0,0,W,H);
+  for(var i=0;i<260;i++){ g.fillStyle=['rgba(95,110,62,.4)','rgba(170,158,112,.4)','rgba(120,104,86,.5)','rgba(150,140,128,.5)','rgba(105,96,84,.45)','rgba(165,110,80,.35)'][(rf()*6)|0]; g.beginPath(); g.arc(rf()*W,rf()*H,1+rf()*4,0,6.3); g.fill(); }
 });
 var texOrto=RM.tela(64,64,function(g,W,H){
   g.fillStyle='#93956a'; g.fillRect(0,0,W,H);
@@ -246,12 +268,30 @@ var geoMacerie=(function(){ var f=new Forma(), r=RM.casuale(99);                
     for(k=0;k<n;k++){ j=(k+1)%n; f.t(0,est[k],int[k],est[j]).t(0,est[j],int[k],int[j]).t(0,int[k],[c[0],alto*.85,c[1]],int[j]); }
   });
   return f.fine(); })();
-/* sterpi e alberelli cresciuti fra i muri */
-var geoSterpi=(function(){ var B=new RM.Costruttore(), secco=RM.col(0x8a8a5c), rovo=RM.col(0x66744a);
-  /* macchie di rovi e arbusti, larghe e basse: prima erano sfere a quattro spicchi, cioè piramidi verdi (23 novembre 2026). Sui telefoni restano più semplici. */
-  var sg=RM.piccolo?[5,2]:[7,3];
-  [[-.3,-.26,.15,rovo,1.5,.5,1.1],[.3,.32,.17,P.chioma2,1.1,.8,1.3],[.12,-.42,.12,secco,1.6,.45,1],[-.38,.3,.13,secco,1,.55,1.5]].forEach(function(c,i){
-    B.geo(new THREE.SphereGeometry(c[2],sg[0],sg[1]).scale(c[4],c[5],c[6]).rotateY(i*1.1).translate(c[0],c[2]*c[5]*.55,c[1]),c[3]); });
+/* L'incolto fra le rovine (26 novembre 2026; l'utente: «più vegetazione incolta nella zona della città abbandonata… come realisticamente dovrebbe apparire»).
+   Nessuna fonte antica elenca le piante delle rovine di Roma: dicono «erba», «arbusta», «dumi et vepres», cioè cespugli e rovi (vite di Adriano I e di Gregorio II nel Liber Pontificalis).
+   Le specie vengono, come confronto dichiarato, dalla flora del Colosseo di Deakin (1855): rovo, lentisco, sambuco nano (erba alta a ombrelle bianche), valeriana rossa,
+   e sui muri edera e cappero; fra gli alberi fichi e olmi, pochi (src/testi/vita-roma-fonti.md, «Le piante dell'incolto»). Niente ailanto, robinia, fico d'India, agave: arrivati dopo.
+   Due macchie per isolato: dentro i muri (si vede quando il tetto è caduto) e un anello stretto fuori, contro i muri, solo dove non tocca una strada (b.anello).
+   La pianta è a misura dell'isolato (x e z dell'istanza), l'altezza in unità vere (y dell'istanza: la crescita). Tre dettagli (RM.QUALITA.incolto): 0 nessuna macchia («bassa»),
+   1 poche e più semplici («telefono»), 2 tutte. In quanto tempo crescano è un'ipotesi per analogia coi campi abbandonati (Bonet e Pausas 2004): erba nei primi anni,
+   rovi e arbusti entro venti-trent'anni, alberelli dopo qualche decennio. */
+RM.QUALITA.incolto=[0,2,2,2,1];      // bassa, media, alta, massima, telefono
+var PIANTE={rovo:RM.col(0x47552f), lentisco:RM.col(0x3a4d2c), sambuco:RM.col(0x7c8650), fiori:RM.col(0xe6e2cc), valeriana:RM.col(0xa64a58), secco:RM.col(0x9b9361), edera:RM.col(0x2f4424)};
+function macchiaGeo(fuori,det){ var B=new RM.Costruttore(), sg=det>1?[5,2]:[4,2], L;      // circa 170 triangoli per isolato col dettaglio 2 (i rovi di prima ne avevano 144), 60 col dettaglio 1
+  if(det<1) return B.geo(new THREE.PlaneGeometry(.001,.001),PIANTE.secco).geometria();
+  /* [x, z, raggio in pianta (frazione dell'isolato), altezza in unità, specie] */
+  L=fuori?[[-.56,-.3,.06,.17,'rovo'],[.56,.18,.06,.15,'lentisco'],[.1,.56,.07,.16,'rovo'],[-.28,-.56,.05,.09,'sambuco'],[.42,-.56,.04,.07,'valeriana']]
+         :[[-.36,-.36,.09,.2,'rovo'],[.36,.38,.08,.18,'lentisco'],[.36,-.34,.06,.1,'sambuco'],[-.38,.34,.07,.16,'rovo'],[.02,.36,.05,.07,'valeriana'],[.4,.02,.05,.14,'lentisco']];
+  if(det<2) L=L.filter(function(p,i){ return i%2===0; });
+  L.forEach(function(p,i){ var g=new THREE.SphereGeometry(1,sg[0],sg[1],0,6.283,0,1.75).scale(p[2],p[3],p[2]*(.8+.4*((i*7)%3)/2)).rotateY(i*1.3).translate(p[0],-.01,p[1]);
+    B.geo(g,PIANTE[p[4]]);
+    if(p[4]==='sambuco' && det>1) B.geo(new THREE.CircleGeometry(p[2]*.8,5).rotateX(-Math.PI/2).translate(p[0],p[3]*.92,p[1]),PIANTE.fiori); });      // le ombrelle bianche del sambuco nano
+  return B.geometria(); }
+var detIncolto=RM.QUALITA.incolto[RM.q]||0;
+/* Vigna: quattro filari bassi su pali (l'«hortus vineatus» della carta di Santa Susanna); misure indicative */
+var geoVigna=(function(){ var B=new RM.Costruttore(), VITE=RM.col(0x5f7238), PALO=RM.col(0x6a5640);
+  for(var k=0;k<4;k++){ var z=-.33+k*.22; B.geo(new THREE.BoxGeometry(.8,.05,.03).translate(0,.075,z),VITE); B.geo(new THREE.BoxGeometry(.012,.1,.012).translate(-.4,.05,z),PALO).geo(new THREE.BoxGeometry(.012,.1,.012).translate(.4,.05,z),PALO); }
   return B.geometria(); })();
 
 /* ---------- maglie ---------- */
@@ -290,24 +330,189 @@ var matGiardino=new THREE.MeshStandardMaterial({color:RM.col(0x7f9a56),roughness
 function istanze(geo,mat,quante){ var m=new THREE.InstancedMesh(geo,mat,quante); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.castShadow=m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='citta'; RM.scene.add(m); return m; }
 /* Pacco di istanze compattato: le istanze a scala zero (case sparite, rovine non ancora nate) non vengono inviate alla scheda grafica.
    Si scrive per indice come su una InstancedMesh; stringi() ricopia in testa solo quelle vive e aggiorna il conteggio. */
-function pacco(geo,mat,quante){
-  var m=istanze(geo,mat,quante), M=new Float32Array(quante*16), C=new Float32Array(quante*3), vivo=new Uint8Array(quante);
+function pacco(geo,mat,quante,conDeg){
+  var m=istanze(geo,mat,quante), M=new Float32Array(quante*16), C=new Float32Array(quante*3), vivo=new Uint8Array(quante), G=conDeg?new Float32Array(quante*4):null, aG=null;
   m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(quante*3),3); m.instanceColor.setUsage(THREE.DynamicDrawUsage); m.count=0;
+  if(G){ aG=new THREE.InstancedBufferAttribute(new Float32Array(quante*4),4); aG.setUsage(THREE.DynamicDrawUsage); geo.setAttribute('aDeg',aG); }      // il degrado di ogni istanza (si veda CASA_V): ogni geometria appartiene a un solo pacco
   return { maglia:m,
     setMatrixAt:function(i,mat){ var e=mat.elements, o=i*16; for(var j=0;j<16;j++) M[o+j]=e[j]; vivo[i]=(e[0]*e[0]+e[1]*e[1]+e[2]*e[2])>1e-10?1:0; },
     setColorAt:function(i,c){ C[i*3]=c.r; C[i*3+1]=c.g; C[i*3+2]=c.b; },
-    stringi:function(){ var k=0, a=m.instanceMatrix.array, ca=m.instanceColor.array, i, j, o, t;
-      for(i=0;i<quante;i++) if(vivo[i]){ o=i*16; t=k*16; for(j=0;j<16;j++) a[t+j]=M[o+j]; ca[k*3]=C[i*3]; ca[k*3+1]=C[i*3+1]; ca[k*3+2]=C[i*3+2]; k++; }
-      m.count=k; m.instanceMatrix.needsUpdate=true; m.instanceColor.needsUpdate=true; } };
+    setDegAt:function(i,x,y,z,w){ G[i*4]=x; G[i*4+1]=y; G[i*4+2]=z; G[i*4+3]=w; },
+    stringi:function(){ var k=0, a=m.instanceMatrix.array, ca=m.instanceColor.array, ga=aG?aG.array:null, i, j, o, t;
+      for(i=0;i<quante;i++) if(vivo[i]){ o=i*16; t=k*16; for(j=0;j<16;j++) a[t+j]=M[o+j]; ca[k*3]=C[i*3]; ca[k*3+1]=C[i*3+1]; ca[k*3+2]=C[i*3+2]; if(ga){ for(j=0;j<4;j++) ga[k*4+j]=G[i*4+j]; } k++; }
+      m.count=k; m.instanceMatrix.needsUpdate=true; m.instanceColor.needsUpdate=true; if(aG) aG.needsUpdate=true; } };
 }
+/* ---------- case abbandonate: il degrado per istanza (26 novembre 2026) ----------
+   Le case sono centinaia di migliaia di triangoli in poche maglie a istanze: il degrado non può stare in materiali diversi. Ogni istanza porta quattro numeri (aDeg):
+   x, lo stadio 1 (0-1: intonaco che cade, coppi che mancano, finestre buie, crepe, erba); y, lo stadio 2 (0-1: il tetto sfonda); z, la quota dove i muri sono spezzati,
+   in frazioni dell'altezza della casa (1: interi); w, un numero del posto, perché due case vicine non si guastino uguali. Per una casa abitata x è zero e lo shader non fa nulla.
+   Le idee vengono dallo shader dei monumenti (DEGRADO, orditura e taglio in js/costruttore.js): chiazze d'intonaco caduto con sotto il mattone, prese dalla trama delle macchie
+   della veste (ferma da lontano); sotto i coppi caduti l'orditura di legno, listelli, travicelli e arcarecci, che regge più a lungo nel mezzo delle chiazze vecchie;
+   il taglio dei muri «a tronconi», per piani interi (un rumore a tre gradini) con l'orlo frastagliato. Lo stesso taglio vale per l'ombra (CASA_OMBRA).
+   In «bassa» e sul «telefono» (RM.QUALITA.degradoCase 0) restano colore, finestre buie, tetti bucati e muri spezzati: niente intonaco, crepe ed erba disegnati. */
+RM.QUALITA.degradoCase=[0,1,1,1,0];      // bassa, media, alta, massima, telefono
+var uDegC={value:RM.QUALITA.degradoCase[RM.q]||0}, NLc=String.fromCharCode(10), TEXC=!!RM.VESTE;
+var CASA_RUM=['float cH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
+  'vec2 cH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',
+  'float cN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(mix(cH(i),cH(i+vec3(1.0,0.0,0.0)),f.x),mix(cH(i+vec3(0.0,1.0,0.0)),cH(i+vec3(1.0,1.0,0.0)),f.x),f.y),mix(mix(cH(i+vec3(0.0,0.0,1.0)),cH(i+vec3(1.0,0.0,1.0)),f.x),mix(cH(i+vec3(0.0,1.0,1.0)),cH(i+vec3(1.0,1.0,1.0)),f.x),f.y),f.z); }',
+  'float cTaglio(){ float hT=vDeg.z; if(hT>0.999) return 9.0; float A=min(0.42,(1.0-hT)*1.2); float q1=floor(cN(vec3(vLC.xz*0.55+vDeg.w*17.0,1.0))*3.0)*0.5; float q2=cN(vec3(vLC.xz*2.6+vDeg.w*5.0,2.0)); return hT+A*(q1-0.5)+0.25*A*(q2-0.5); }',      // piani interi che cadono (tre gradini) e l'orlo spezzato
+  'float cBuco(){ return vDeg.x*0.3+vDeg.y*1.9-(0.5+1.35*(0.6*cN(vec3(vLC.xz*1.1+vDeg.w*9.0,2.0))+0.4*cN(vec3(vLC.xz*4.3,2.5))-0.5)); }'].join(NLc);      // coppi caduti: positivo dentro la chiazza
+var CASA_VD='attribute vec4 aDeg; varying vec4 vDeg; varying vec3 vLC; varying vec3 vNC; varying float vYC;';
+var CASA_V=['vDeg=aDeg; vYC=position.y; vec3 scC=vec3(1.0);','#ifdef USE_INSTANCING','scC=vec3(length(instanceMatrix[0].xyz),length(instanceMatrix[1].xyz),length(instanceMatrix[2].xyz));','#endif',
+  'vLC=position*scC; vNC=normal/max(scC,vec3(0.0001));'].join(NLc);      // in unità della scena, nell'orientamento della casa
+function vertCasa(sh){ sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+NLc+CASA_VD).replace('#include <begin_vertex>','#include <begin_vertex>'+NLc+CASA_V); }
+var CASA_FD=['varying vec4 vDeg; varying vec3 vLC; varying vec3 vNC; varying float vYC; uniform float uDegC;',TEXC?'#define CASA_TEX'+NLc+'uniform sampler2D tMacC;':'',CASA_RUM].join(NLc);
+var CASA_STR='float cStr(float x,float p,float w){ float f=max(fwidth(x),0.00001)/p; float y0=x/p+0.5*w/p-0.5*f; float y1=y0+f; float k=w/p; return clamp((floor(y1)*k+min(fract(y1),k)-floor(y0)*k-min(fract(y0),k))/f,0.0,1.0); }';
+var CASA_TETTO=[
+  '  float dC=cBuco(); float orC=1.0-smoothstep(0.0,0.03,-dC);',
+  '  if(dC>0.0){ vec3 nT=normalize(vNC); vec3 rT=cross(nT,vec3(0.0,1.0,0.0)); float lT=length(rT); rT=lT>0.2?rT/lT:vec3(1.0,0.0,0.0); vec3 sT=normalize(cross(rT,nT));',      // rT lungo il colmo, sT lungo la pendenza
+  '    float uT=dot(vLC,rT); float wT=dot(vLC,sT); float hR=cH(vec3(floor(uT/0.12),floor(wT/0.4),5.0)); float hA=cH(vec3(floor(wT/0.4),9.0,5.0));',
+  '    float vL=step(dC,0.035); float vR=step(dC,0.08+0.14*hR); float vA=step(dC,0.16+0.2*hA); if(vL+vR+vA<0.5) discard;',      // listelli, travicelli, arcarecci; nel mezzo il vuoto
+  '    float cLg=max(cStr(wT,0.4,0.05)*vA,max(cStr(uT,0.12,0.03)*vR,cStr(wT,0.045,0.016)*vL)); float kV=step(0.015,max(fwidth(uT),fwidth(wT))); if(kV<0.5 && cLg<0.5) discard;',
+  '    cLeg=1.0; cLegC=mix(vec3(0.03,0.026,0.022),vec3(0.2,0.135,0.085)*(0.8+0.35*hR)*(1.0-0.3*s1),kV<0.5?1.0:cLg); }',
+  '  diffuseColor.rgb*=1.0-0.3*orC; float lT2=dot(diffuseColor.rgb,vec3(0.3,0.59,0.11)); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(lT2)*vec3(0.86,0.85,0.78),0.45*s1)*(1.0-0.18*s1);',      // coppi smossi sull'orlo; scoloriti e anneriti
+  '  #ifdef CASA_TEX',
+  '  if(uDegC>0.5){ vec4 mT=texture2D(tMacC,vLC.xz/0.7+vDeg.w*2.1); float gT=smoothstep(0.7,0.8,mT.r+0.08*s1+0.08*s2)*min(1.0,s1*2.0);',      // ciuffi d'erba sui coppi, piccoli e radi (chiazze larghe facevano la tuta mimetica)
+  '    diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.7,0.5),gT*0.7); }',
+  '  #endif',
+  '  if(cLeg>0.5) diffuseColor.rgb=cLegC;'].join(NLc);
+var CASA_MURO=[
+  '  vec3 nA=abs(normalize(vNC)); vec2 cA=nA.x>nA.z?vec2(vLC.z,vLC.y):vec2(vLC.x,vLC.y);',
+  '  float lu=dot(diffuseColor.rgb,vec3(0.3,0.59,0.11)); float fin=(1.0-smoothstep(0.1,0.2,lu))*step(nA.y,0.5);',      // finestre, porte e botteghe: scure nella trama
+  '  float intC=clamp(s1*0.8+s2*0.7,0.0,1.0);',
+  '  diffuseColor.rgb*=mix(1.0,0.28,fin*min(1.0,s1*4.0))*(1.0-0.14*s1);',      // finestre vuote e buie (imposte e infissi portati via); sporco
+  '  if(!gl_FrontFacing) diffuseColor.rgb=mix(diffuseColor.rgb*0.55,vec3(0.34,0.24,0.17),0.6*intC);',      // dentro: muri spogli, dove il tetto e i piani alti sono caduti
+  '  #ifdef CASA_TEX',
+  '  else if(uDegC>0.5){ vec4 mA=texture2D(tMacC,cA/2.4+vDeg.w*3.7); vec4 mB=texture2D(tMacC,cA/0.8+vDeg.w*1.3);',
+  '    float fwA=max(fwidth(cA.x),fwidth(cA.y))+0.0001; float kF=1.0-smoothstep(0.006,0.025,fwA);',      // dettagli fini solo da vicino
+  '    float nI=0.62*mA.g+0.38*mB.b; float eI=fwidth(nI)+0.006; float tI=0.86-0.52*intC;',
+  '    float cI=smoothstep(tI-eI,tI+eI,nI)*(1.0-fin); float bI=(1.0-smoothstep(0.0,0.02+eI,tI-nI))*step(nI,tI)*(1.0-fin);',      // intonaco caduto e il suo orlo
+  '    vec3 mI=mix(vec3(0.6,0.35,0.23),vec3(0.64,0.55,0.4),smoothstep(0.55,0.7,mA.r))*(0.74+0.3*mB.r);',      // mattone, a tratti tufo
+  '    if(kF>0.0) mI*=1.0-0.2*kF*smoothstep(0.35,0.5,abs(fract(vLC.y*28.0)-0.5));',      // filari, da vicino
+  '    diffuseColor.rgb=mix(diffuseColor.rgb,mI,cI*0.92*step(0.001,intC)); diffuseColor.rgb*=1.0-0.2*bI*smoothstep(0.0,0.2,intC);',
+  '    float cU=smoothstep(0.55,0.75,texture2D(tMacC,vec2(cA.x/0.5,vLC.y/5.0)+0.53).b); diffuseColor.rgb*=1.0-0.3*cU*s1*smoothstep(0.3,1.0,vYC);',      // colature sotto la gronda
+  '    if(kF>0.0 && s1>0.3){ vec2 pC=vec2(cA.x*2.2,cA.y*0.8)+vDeg.w*31.0; vec2 nC=floor(pC); vec2 fC=fract(pC); float d1=8.0; float d2=8.0;',      // crepe lunghe, quasi verticali
+  '      for(int j=-1;j<=1;j++){ for(int i=-1;i<=1;i++){ vec2 g=vec2(float(i),float(j)); float d=length(g+cH2(nC+g)-fC); if(d<d1){ d2=d1; d1=d; } else if(d<d2){ d2=d; } } }',
+  '      float lC=(1.0-smoothstep(0.012,0.03,d2-d1))*smoothstep(0.5,0.7,mA.b)*kF; diffuseColor.rgb*=1.0-0.6*lC*min(1.0,(s1-0.3)*2.0); }',
+  '    float gP=1.0-smoothstep(0.0,0.05,vLC.y-0.15-(0.05+0.12*mA.r)*s1); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.2,0.24,0.11)*(0.8+0.4*mB.g),gP*min(1.0,s1*2.0)*0.85); }',      // erba al piede dei muri (la base della casa sta 1,5 m sotto il suolo)
+  '  #endif'].join(NLc);
+var CASA_ALTRO={
+  corte:'  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.32,0.17)*(0.75+0.45*cN(vec3(vLC.xz*3.0,4.0))),min(1.0,s1*1.5)*0.8);',      // cortili e pavimenti: erba e terra
+  giardino:'  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.19,0.24,0.11)*(0.8+0.4*cN(vec3(vLC.xz*4.0,5.0))),min(1.0,s1*1.5));',      // il giardino del peristilio inselvatichito
+  vasca:'  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.24,0.25,0.16),min(1.0,s1*3.0));',      // la vasca dell'atrio, asciutta e piena di foglie e terra
+  colonna:'  diffuseColor.rgb*=1.0-0.25*s1;'};
+function degradaCasa(mat,tipo){
+  var prima=mat.onBeforeCompile, sua=mat.hasOwnProperty('onBeforeCompile');
+  mat.onBeforeCompile=function(sh,r){ if(sua) prima.call(mat,sh,r);
+    vertCasa(sh); sh.uniforms.uDegC=uDegC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NLc+CASA_FD+(tipo==='tetto'||tipo==='muro'?NLc+CASA_STR:''))
+      .replace('#include <alphamap_fragment>',['float cLeg=0.0; vec3 cLegC=vec3(0.0);','if(vDeg.x>0.0){ float s1=vDeg.x; float s2=vDeg.y;','  if(vYC>cTaglio()) discard;',
+        tipo==='tetto'?CASA_TETTO:tipo==='muro'?CASA_MURO:CASA_ALTRO[tipo],'}','#include <alphamap_fragment>'].join(NLc))
+      .replace('#include <emissivemap_fragment>','#include <emissivemap_fragment>'+NLc+'totalEmissiveRadiance*=1.0-step(0.0005,vDeg.x);'); };      // nelle case lasciate niente lumi la notte
+  mat.userData.chiaveCasa='casa|'+tipo+'|'+(sua?prima.toString():'');
+  return mat; }
+/* l'ombra: gli stessi tagli (muri spezzati, coppi caduti oltre le travi); nella maglia le falde si riconoscono dalla normale inclinata */
+var CASA_OMBRA=['if(vDeg.x>0.0){ if(vYC>cTaglio()) discard; vec3 nT=normalize(vNC);',
+  '  if(abs(nT.y)>0.25 && abs(nT.y)<0.97 && vYC>0.55){ float dC=cBuco(); if(dC>0.0){ vec3 rT=cross(nT,vec3(0.0,1.0,0.0)); float lT=length(rT); rT=lT>0.2?rT/lT:vec3(1.0,0.0,0.0); vec3 sT=normalize(cross(rT,nT));',
+  '    float uT=dot(vLC,rT); float wT=dot(vLC,sT); float hR=cH(vec3(floor(uT/0.12),floor(wT/0.4),5.0)); float hA=cH(vec3(floor(wT/0.4),9.0,5.0));',
+  '    float vL=step(dC,0.035); float vR=step(dC,0.08+0.14*hR); float vA=step(dC,0.16+0.2*hA);',
+  '    if(abs(fract(wT/0.045+0.5)-0.5)*0.045>0.008*vL && abs(fract(uT/0.12+0.5)-0.5)*0.12>0.015*vR && abs(fract(wT/0.4+0.5)-0.5)*0.4>0.025*vA) discard; } } }'].join(NLc);
+function ombraCasa(){ var m=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking,side:THREE.DoubleSide});
+  m.onBeforeCompile=function(sh){ vertCasa(sh); sh.uniforms.uDegC=uDegC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NLc+CASA_FD).replace('#include <clipping_planes_fragment>',CASA_OMBRA+NLc+'#include <clipping_planes_fragment>'); };
+  return m; }
+/* rovine: l'edera sale dal piede dei muri a lingue (x: quanta, w: il posto), e i muri anneriscono (y); macerie: rovi e erba sui cumuli, dove guardano in su (x) */
+var RUDERE_F=['if(vDeg.x>0.0){ vec3 nA=abs(normalize(vNC)); vec2 cA=nA.x>nA.z?vec2(vLC.z,vLC.y):vec2(vLC.x,vLC.y);',
+  '  float nE=cN(vec3(cA*1.3+vDeg.w*7.0,6.0))*0.7+0.3*cN(vec3(cA*4.0,6.5)); float hE=vDeg.x*(0.12+0.75*nE)+0.15;',
+  '  float iv=(1.0-smoothstep(hE-0.05,hE,vLC.y))*smoothstep(0.38,0.5,nE+0.25*vDeg.x);',
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.13,0.19,0.08)*(0.75+0.5*cN(vec3(cA*9.0,7.0))),iv*0.9)*(1.0-0.12*vDeg.y); }'].join(NLc);
+var MACERIE_F=['if(vDeg.x>0.0){ vec3 nV=normalize(cross(dFdx(vViewPosition),dFdy(vViewPosition))); float su=clamp((nV*mat3(viewMatrix)).y,0.0,1.0);',
+  '  float nM=cN(vec3(vLC*1.6+vDeg.w*11.0)); float gM=smoothstep(0.48,0.64,nM+0.34*vDeg.x+0.12*su-0.3);',
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.19,0.24,0.11),vec3(0.36,0.34,0.2),cN(vec3(vLC*5.0+3.0)))*(0.8+0.3*su),gM*0.9); }'].join(NLc);
+function verdeRovina(mat,corpo,nome){ var prima=mat.onBeforeCompile, sua=mat.hasOwnProperty('onBeforeCompile');
+  mat.onBeforeCompile=function(sh,r){ if(sua) prima.call(mat,sh,r); vertCasa(sh); sh.uniforms.uDegC=uDegC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NLc+CASA_FD).replace('#include <alphamap_fragment>',corpo+NLc+'#include <alphamap_fragment>'); };
+  mat.userData.chiaveCasa='rovina|'+nome+'|'+(sua?prima.toString():''); return mat; }
+function chiaveCasa(mat){ var k=mat.customProgramCacheKey, sua=mat.hasOwnProperty('customProgramCacheKey'); mat.customProgramCacheKey=function(){ return mat.userData.chiaveCasa+'|'+(sua?k.call(mat):''); }; }
+[[matMuri,'muro'],[matBasse,'muro'],[matDomus,'muro'],[matTetti,'tetto'],[matCorte,'corte'],[matGiardino,'giardino'],[matVasca,'vasca'],[matColonne,'colonna']].forEach(function(q){ degradaCasa(q[0],q[1]); });
 [matMuri,matTetti,matBasse,matDomus].forEach(function(m){ RM.tingi(m,'C'); });      // «che cosa sappiamo davvero»: le case sono ipotesi
+[matMuri,matTetti,matBasse,matDomus,matCorte,matGiardino,matVasca,matColonne].forEach(chiaveCasa);      // un programma per specie di materiale: three li riconosce dal testo di onBeforeCompile, che qui è lo stesso
 var conta=[0,0,0,0,0,0]; isolati.forEach(function(b){ b.ti=conta[b.tipo]++; }); RM.contaCase=conta;
 var MAT_INS=[matMuri,matTetti,matCorte], MAT_BAS=[matBasse,matTetti,matCorte], MATERIALI=[MAT_INS,MAT_INS,MAT_INS,[matDomus,matTetti,matCorte,matGiardino,matVasca,matColonne],MAT_BAS,MAT_BAS];
-var vivi=FORME.map(function(g,k){ return pacco(g,MATERIALI[k],Math.max(1,conta[k])); });
-var ruderi=pacco(geoRudere,RM.tingi(appoggio(new THREE.MeshStandardMaterial({map:texRudere,roughness:1,side:THREE.DoubleSide})),'C'),N);
+FORME[4]=FORME[0].clone(); FORME[5]=FORME[2].clone();      // le case basse prendono una copia delle forme delle insulae: l'attributo del degrado sta sulla geometria, una per pacco
+var ombraC=ombraCasa(), vivi=FORME.map(function(g,k){ var p=pacco(g,MATERIALI[k],Math.max(1,conta[k]),true); p.maglia.customDepthMaterial=ombraC; return p; });
+var matRuderi=verdeRovina(appoggio(new THREE.MeshStandardMaterial({map:texRudere,roughness:1,side:THREE.DoubleSide})),RUDERE_F,'muri'); RM.tingi(matRuderi,'C'); chiaveCasa(matRuderi);
+var ruderi=pacco(geoRudere,matRuderi,N,true);
 var tettiRotti=pacco(geoTettoRotto,RM.tingi(new THREE.MeshStandardMaterial({map:texCoppi,roughness:1,side:THREE.DoubleSide}),'C'),N);
-var macerie=pacco(geoMacerie,RM.tingi(new THREE.MeshStandardMaterial({roughness:1,side:THREE.DoubleSide,flatShading:true}),'C'),N);
-var sterpi=pacco(geoSterpi,RM.matPietra(),N); sterpi.maglia.castShadow=false;
+var matMacerie=verdeRovina(new THREE.MeshStandardMaterial({roughness:1,side:THREE.DoubleSide,flatShading:true}),MACERIE_F,'macerie'); RM.tingi(matMacerie,'C'); chiaveCasa(matMacerie);
+var macerie=pacco(geoMacerie,matMacerie,N,true);
+var matMacchia=RM.matPietra(), macchiaD=pacco(macchiaGeo(false,detIncolto),matMacchia,N), macchiaF=pacco(macchiaGeo(true,detIncolto),matMacchia,N); macchiaD.maglia.castShadow=macchiaF.maglia.castShadow=false;
+var vigne=pacco(geoVigna,RM.matPietra(),N); vigne.maglia.castShadow=false;
+/* Strade nei quartieri vuoti (26 novembre 2026): le vie strette (larghe 9 m nel modello) diventano sentieri, erba ai lati e terra battuta nel mezzo; sulle vie larghe l'erba
+   cresce solo ai margini, così il lastricato e le messe in scena restano libere. Un pezzo di nastro ogni 24 m, acceso quando le case attorno (entro 70 m) sono lasciate da
+   qualche decennio; niente vicino ai monumenti. Quanto in fretta l'erba prenda le vie è un'ipotesi; che le vie si coprissero d'erba e di macerie non lo misura nessuna fonte letta. */
+RM.QUALITA.vieErba=[0,1,1,1,1];      // bassa, media, alta, massima, telefono
+var texSentiero=RM.tela(32,64,function(g,W,H){ g.fillStyle='#7f8553'; g.fillRect(0,0,W,H);
+  for(var i=0;i<90;i++){ g.fillStyle=['rgba(60,80,40,.5)','rgba(160,150,100,.45)','rgba(95,105,60,.5)'][(rf()*3)|0]; g.fillRect(rf()*W,rf()*H,2+rf()*3,3+rf()*6); }
+  for(var y=0;y<H;y+=2){ var c=16+4*Math.sin(y*.11), w=4+1.5*Math.sin(y*.37+1); g.fillStyle='#a1937a'; g.fillRect(c-w,y,2*w,2); }      // la traccia battuta, un po' storta
+  for(i=0;i<25;i++){ g.fillStyle='rgba(130,120,95,.6)'; g.fillRect(10+rf()*12,rf()*H,1+rf()*2,1+rf()*2); } });
+var texCiglio=RM.tela(32,64,function(g,W,H){ g.clearRect(0,0,W,H);
+  for(var y=0;y<H;y+=2){ var a=4+2.5*Math.sin(y*.29)+1.5*Math.sin(y*.83+2), b2=4+2.5*Math.sin(y*.23+1)+1.5*Math.sin(y*.71); g.fillStyle='#7c8450'; g.fillRect(0,y,a,2); g.fillRect(W-b2,y,b2,2); }
+  for(var i=0;i<60;i++){ g.fillStyle='rgba(55,75,38,.7)'; g.fillRect(rf()<.5?rf()*5:W-rf()*5,rf()*H,2,3); } });
+var VIE_ERBA=[], vieMin=null, vieMag=null;
+(function(){ var griglia={}, Q=8; isolati.forEach(function(b,i){ var k=Math.floor(b.x/Q)+','+Math.floor(b.z/Q); (griglia[k]||(griglia[k]=[])).push(i); });
+  RM.STRADE.forEach(function(s,iv){ var lw=((window.RM_TOPO||{}).stradeLarghe||[])[iv]||.6, resto=0, passo=2.4;
+    for(var k=0;k<s.length-1;k++){ var a=s[k], e=s[k+1], L=Math.hypot(e[0]-a[0],e[1]-a[1]), t; if(L<.01) continue; var dx=(e[0]-a[0])/L, dz=(e[1]-a[1])/L;
+      for(t=resto;t<L;t+=passo){ var x=a[0]+dx*t, z=a[1]+dz*t, vic=[], gx=Math.floor(x/Q), gz=Math.floor(z/Q), i, j, n;
+        for(i=-1;i<=1;i++) for(j=-1;j<=1;j++) (griglia[(gx+i)+','+(gz+j)]||[]).forEach(function(n){ var b=isolati[n]; if(!b.nasce && Math.hypot(b.x-x,b.z-z)<7) vic.push(n); });
+        if(vic.length<2) continue;
+        var vicino=false; for(n=0;n<RM.zone.length;n++){ var q=RM.zone[n]; if(!(q.dal>0) && RM.dZona(q,x,z)<q.r+(q.a?q.t||0:0)+1.5){ vicino=true; break; } }      // niente erba davanti agli ingressi dei monumenti
+        if(vicino) continue;
+        var hq=RM.hSuolo||RM.h, y=Math.max(hq(x-dz*lw,z+dx*lw),hq(x+dz*lw,z-dx*lw),hq(x,z))+.115;
+        VIE_ERBA.push({x:x,z:z,y:y,ry:Math.atan2(dx,dz),lw:lw,minore:lw<.5,vic:vic,g:RM.grana(Math.round(x*3.3),Math.round(z*2.9)),q0:-1}); }
+      resto=t-L; } });
+  var geo=new THREE.PlaneGeometry(1,1); geo.rotateX(-Math.PI/2);
+  function mat(tex){ return new THREE.MeshStandardMaterial({map:tex,roughness:1,alphaTest:.5,polygonOffset:true,polygonOffsetFactor:-4,polygonOffsetUnits:-4}); }
+  var nMin=VIE_ERBA.filter(function(p){ return p.minore; }).length;
+  vieMin=pacco(geo,mat(texSentiero),Math.max(1,nMin)); vieMag=pacco(geo.clone(),mat(texCiglio),Math.max(1,VIE_ERBA.length-nMin)); vieMin.maglia.castShadow=vieMag.maglia.castShadow=false;
+  var a1=0, a2=0; VIE_ERBA.forEach(function(p){ p.k=p.minore?a1++:a2++; });
+})();
+function aggiornaVie(){ var on=RM.QUALITA.vieErba[RM.q]?1:0, mosso=false;
+  VIE_ERBA.forEach(function(p){ var g=0; p.vic.forEach(function(n){ g+=isolati[n].gv||0; }); g=on*g/p.vic.length; var acceso=g>(p.minore?.5:.4)+.15*p.g?1:0;
+    if(acceso===p.q0) return; p.q0=acceso; mosso=true; var P=p.minore?vieMin:vieMag;
+    d.position.set(p.x,p.y,p.z); d.rotation.set(0,p.ry,0); d.scale.set(acceso?p.lw*2.04:0,1,acceso?2.6:0); d.updateMatrix(); P.setMatrixAt(p.k,d.matrix); P.setColorAt(p.k,c.copy(bianco).multiplyScalar(.85+.3*p.g)); });
+  if(mosso){ vieMin.stringi(); vieMag.stringi(); } }
+if(RM.qualita) RM.qualita.quando(function(){ aggiornaVie(); });
+/* L'atrio di San Paolo prima di Adriano I: «antea nimis desolatum existebat, ubi boves atque caballi ingrediebantur ad pabulandum propter herbam quae ibidem nascebatur»
+   (Liber Pontificalis, vita di Adriano I, c. XLVII; Duchesne I, p. 499); il papa lo fa lastricare di marmo. Quando cominciasse l'abbandono la fonte non lo dice: qui dal 715
+   (sotto Gregorio II i monasteri di San Paolo sono «ad solitudinem deducta», stessa raccolta) fino al 771, prima del pontificato di Adriano (772-795), perché l'anno
+   del lastricato non si sa. Erba nel quadriportico, due buoi e due cavalli; forme indicative. L'atrio sta dove lo mette js/monumenti.js (basilica a +x, ry 2,98). */
+(function(){ var cx=-70.1, cz=375.7, ry=2.98, lx=8.65, X=cx+lx*Math.cos(ry), Z=cz-lx*Math.sin(ry), B=new RM.Costruttore(), BUE=RM.col(0xc9c1b0), CAV=RM.col(0x6a4a33), ERBA=RM.col(0x6c7a40), SECCO=RM.col(0x8f8a58);
+  B.geo(new THREE.PlaneGeometry(4.3,4.3,1,1).rotateX(-Math.PI/2).translate(0,.025,0),ERBA);
+  [[-1.4,-1.2],[1.2,-1.5],[-1.6,1.3],[.4,1.7],[1.7,.6],[-.3,-.2]].forEach(function(p,i){ B.geo(new THREE.SphereGeometry(1,5,2,0,6.283,0,1.6).scale(.25+.08*(i%3),.05+.02*(i%2),.2).translate(p[0],.02,p[1]),i%2?SECCO:ERBA); });
+  function bestia(x,z,a,col,cav){ var g=[], L=cav?.2:.22, H=cav?.15:.13;      // corpo, quattro zampe, collo e testa
+    g.push(new THREE.BoxGeometry(L,.09,.08).translate(0,H,0));
+    [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(function(q){ g.push(new THREE.BoxGeometry(.018,H-.03,.018).translate(q[0]*L*.4,(H-.03)/2,q[1]*.028)); });
+    g.push(cav?new THREE.BoxGeometry(.05,.1,.04).rotateZ(-.6).translate(L*.55,H+.07,0):new THREE.BoxGeometry(.06,.05,.05).translate(L*.56,H-.01,0));
+    g.push(new THREE.BoxGeometry(.07,.035,.035).rotateZ(cav?.9:.5).translate(L*(cav?.72:.66),cav?H+.07:H-.05,0));      // la testa: il bue la tiene bassa sull'erba
+    g.forEach(function(q){ B.geo(q.rotateY(a).translate(x,.025,z),col); }); }
+  bestia(-.8,.6,.4,BUE,false); bestia(-.3,1.0,.1,BUE,false); bestia(1.1,-.7,2.3,CAV,true); bestia(.6,-1.3,1.9,CAV,true);
+  var m=new THREE.Mesh(B.geometria(),RM.matPietra()); m.position.set(X,RM.h(X,Z)+.05,Z); m.rotation.y=ry; m.castShadow=m.receiveShadow=true; m.visible=false; m.userData.gruppo='citta'; RM.scene.add(m);
+  RM.moduli.push(function(anno){ m.visible=anno>=715 && anno<772; });
+})();
+/* L'orto della diaconia di Santa Maria «in capo de portico», nel Borgo, verso il Tevere (diploma di Leone IV, 847-855, citato da Duchesne): le case del Borgo non si
+   lasciano, quindi l'orto ha un posto suo, libero, fra la testa del portico di San Pietro e il fiume; dal 847. Posto e misura sono una scelta del modello. */
+(function(){ var best=null, k, x, z;
+  for(k=0;k<400 && !best;k++){ var r=k*.08, a=k*2.4; x=-186+r*Math.cos(a); z=-99+r*Math.sin(a);
+    if([[0,0],[2.6,1.8],[-2.6,1.8],[2.6,-1.8],[-2.6,-1.8]].every(function(p){ return libero(x+p[0],z+p[1],.8)===1; }) && isolati.every(function(b){ return Math.hypot(b.x-x,b.z-z)>6; })) best=[x,z]; }
+  if(!best) return; RM.ortoBorgo=best;
+  var g=new THREE.PlaneGeometry(5,3.4); g.rotateX(-Math.PI/2);
+  var m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({map:texOrto,roughness:1,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}));
+  m.position.set(best[0],(RM.hSuolo||RM.h)(best[0],best[1])+.06,best[1]); m.receiveShadow=true; m.visible=false; m.userData.gruppo='citta'; RM.scene.add(m);
+  RM.moduli.push(function(anno){ m.visible=anno>=847; });
+})();
+if(RM.qualita) RM.qualita.quando(function(g){ var d=RM.QUALITA.incolto[g]||0; uDegC.value=RM.QUALITA.degradoCase[g]||0; if(d===detIncolto) return; detIncolto=d;      // al cambio di gradino cambia solo la forma delle macchie
+  [[macchiaD,false],[macchiaF,true]].forEach(function(q){ var v=q[0].maglia.geometry; q[0].maglia.geometry=macchiaGeo(q[1],d); v.dispose(); }); });
 var geoPiano=new THREE.PlaneGeometry(1,1); geoPiano.rotateX(-Math.PI/2);
 var incolti=pacco(geoPiano,new THREE.MeshStandardMaterial({map:texIncolto,roughness:1,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}),N); incolti.maglia.castShadow=false;
 /* Veste del PC: l'incolto non è più un quadrato col bordo netto (da lontano erano «macchie a spicchi»): sfuma nel suolo con un orlo irregolare, e prende il verde dell'erba nuova */
@@ -315,7 +520,7 @@ if(RM.VESTE){ var trasparenteIncolti=function(){ var si=RM.vesteU.value>.5, m=in
   trasparenteIncolti(); if(RM.qualita) RM.qualita.quando(trasparenteIncolti); incolti.maglia.material.onBeforeCompile=function(sh){ hashIstanza(sh);
   sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',
     'if(uVeste>0.5){ vec2 bq=min(vUvR,1.0-vUvR); float orlo=min(bq.x,bq.y)+(texture2D(map,vUvR*0.37+vHi).g-0.5)*0.22;',
-    '  diffuseColor.a*=smoothstep(0.0,0.2,orlo); diffuseColor.rgb*=vec3(0.86,0.95,0.78); }'].join(String.fromCharCode(10))); }; }
+    '  diffuseColor.a*=smoothstep(0.0,0.2,orlo); diffuseColor.rgb*=vec3(0.95,0.96,0.9); }'].join(String.fromCharCode(10))); }; }
 var geoOrto=new THREE.PlaneGeometry(1,1); geoOrto.rotateX(-Math.PI/2);
 var orti=pacco(geoOrto,new THREE.MeshStandardMaterial({map:texOrto,roughness:1,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}),N); orti.maglia.castShadow=false;
 
@@ -329,7 +534,7 @@ var orti=pacco(geoOrto,new THREE.MeshStandardMaterial({map:texOrto,roughness:1,p
    (chiome a più ciuffi). Forme e proporzioni sono indicative. Dal 24 novembre 2026, sera, valgono anche sui telefoni che reggono «media» e oltre. */
 RM.QUALITA.alberi=[0,2,2,2,0];      // bassa, media, alta, massima, telefono; i dettagli 1 e 2 costano uguale sulla Radeon integrata (misura del 24 novembre 2026): da «media» le chiome a ciuffi
 var matAlbero=RM.matPietra();
-var VERDI=[0x2f4a26,0x4a6330,0x7c8b5e,0x3d5631,0x6e8a4c].map(RM.col), CORTECCIA=RM.col(0x5e4e3e);
+var VERDI=[0x2f4a26,0x4a6330,0x7c8b5e,0x3d5631,0x6e8a4c,0x55743a,0x44602f].map(RM.col), CORTECCIA=RM.col(0x5e4e3e);
 function chioma(B,prof,lati,col,seme,irr,x,y,z){                                                    // un profilo girato, col contorno mosso e il colore che scurisce in basso
   var g=new THREE.LatheGeometry(prof.map(function(q){ return new THREE.Vector2(q[0],q[1]); }),lati), p=g.attributes.position, n=p.count, i, y0=1e9, y1=-1e9, c=[];
   for(i=0;i<n;i++){ var px=p.getX(i), py=p.getY(i), pz=p.getZ(i), a=Math.atan2(pz,px), f=1+irr*(.13*Math.sin(a*3+seme)+.08*Math.sin(a*5+seme*2.3)+.06*Math.sin(py*9+seme)); p.setXYZ(i,px*f,py,pz*f); y0=Math.min(y0,py); y1=Math.max(y1,py); }
@@ -339,7 +544,7 @@ function chioma(B,prof,lati,col,seme,irr,x,y,z){                                
 }
 function fusto(B,a,b,r0,r1,lati){ var d=new THREE.Vector3(b[0]-a[0],b[1]-a[1],b[2]-a[2]), L=d.length(), g=new THREE.CylinderGeometry(r1,r0,L,lati||5,1,true);
   g.applyMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize()))); g.translate((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2); return B.geo(g,CORTECCIA); }
-var SPECIE=['cipresso','pino','ulivo','leccio','pioppo'];
+var SPECIE=['cipresso','pino','ulivo','leccio','pioppo','fico','olmo'];      // fico e olmo (26 novembre 2026): gli alberi che crescono da soli sulle rovine nella flora del Colosseo di Deakin (1855), confronto dichiarato
 function alberoGeo(sp,det){
   var B=new RM.Costruttore(), V=VERDI[sp], L=det>1?11:8;
   if(det===0){                                                                                        // i solidi di prima
@@ -354,17 +559,22 @@ function alberoGeo(sp,det){
     if(det>1) chioma(B,[[0,.48],[.18,.53],[.22,.63],[.16,.72],[0,.76]],6,V,5.5,1.2,.02,0,-.2); }
   else if(sp===3){ fusto(B,[0,0,0],[.02,.6,0],.07,.05); chioma(B,[[0,.48],[.4,.6],[.56,.9],[.5,1.2],[.3,1.38],[0,1.42]],L,V,1.7,1.1);                       // leccio: chioma tonda e scura
     if(det>1){ chioma(B,[[0,.8],[.22,.86],[.3,1.0],[.22,1.14],[0,1.18]],7,V,6.1,1,.42,0,.12); } }
-  else { fusto(B,[0,0,0],[0,.55,0],.055,.04); chioma(B,[[0,.42],[.24,.7],[.33,1.2],[.28,1.7],[.15,2.0],[0,2.12]],L,V,2.7,.8); }                             // pioppo bianco: chioma alta e ovale, più chiara
+  else if(sp===4){ fusto(B,[0,0,0],[0,.55,0],.055,.04); chioma(B,[[0,.42],[.24,.7],[.33,1.2],[.28,1.7],[.15,2.0],[0,2.12]],L,V,2.7,.8); }                             // pioppo bianco: chioma alta e ovale, più chiara
+  else if(sp===5){ fusto(B,[0,0,0],[.1,.34,.03],.055,.035); fusto(B,[0,0,0],[-.09,.3,-.06],.045,.03);                                                                 // fico: più fusti bassi da una ceppaia, chioma larga e bassa, verde chiaro
+    chioma(B,[[0,.22],[.36,.28],[.5,.42],[.46,.6],[.26,.72],[0,.75]],L,V,.9,1.2); }
+  else { fusto(B,[0,0,0],[.07,.5,.02],.06,.045); fusto(B,[.07,.5,.02],[-.03,.92,.04],.045,.03);                                                                     // olmo campestre: «the trunk mostly crooked» (Deakin), chioma ovale
+    chioma(B,[[0,.62],[.3,.74],[.42,1.02],[.38,1.32],[.22,1.52],[0,1.58]],L,V,3.3,1); }
   return B.geometria();
 }
 var alberi=[[],[]];
-isolati.forEach(function(b,i){ var rnd=RM.casuale(b.seme^0x5BD1E995); if(rnd()<(b.fato===2?.4:.2)) alberi[rnd()<(b.fato===2?.45:.15)?0:1].push({x:b.x+(rnd()-.5)*3,z:b.z+(rnd()-.5)*3,s:.7+rnd()*.7,r:rnd()*6.283,b:i}); });   // negli orti, e selvatici fra le rovine
+isolati.forEach(function(b,i){ var rnd=RM.casuale(b.seme^0x5BD1E995); if(rnd()<(b.fato===2?.4:.24)) alberi[rnd()<(b.orto?.45:0)?0:1].push({x:b.x+(rnd()-.5)*3,z:b.z+(rnd()-.5)*3,s:.7+rnd()*.7,r:rnd()*6.283,b:i}); });   // negli orti, e selvatici fra le rovine
 RM.HORTI.forEach(function(h){ var rnd=RM.casuale(semePosto(Math.round(h[0]*10),Math.round(h[1]*10),Math.round(h[2]*10),71)); for(var k=0;k<h[2]*h[2]/9;k++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*h[2]; alberi[rnd()<.4?0:1].push({x:h[0]+r*Math.cos(a),z:h[1]+r*Math.sin(a),s:.8+rnd()*.7,r:rnd()*6.283,b:-1}); } });
 (function(){ var rnd=RM.casuale(478); for(var f=0;f<260;f++){ var t=rnd(), pf=RM.curvaFiume.getPoint(.12+t*.76), lato=rnd()<.5?-1:1, tg=RM.curvaFiume.getTangent(.12+t*.76); alberi[1].push({x:pf.x-tg.z*lato*(9+rnd()*4),z:pf.z+tg.x*lato*(9+rnd()*4),s:.6+rnd()*.5,r:rnd()*6.283,b:-2}); } })();   // rive: una fila a sé, che dipende solo dal fiume
-/* dalle due liste di prima alle cinque specie, per posto: lungo il fiume pioppi; negli horti pini e lecci; negli orti ulivi, pini e lecci; fra le rovine lecci e pini */
-alberi=(function(){ var L=[alberi[0],[],[],[],[]];
+/* dalle due liste di prima alle sette specie, per posto: lungo il fiume pioppi; negli horti pini e lecci; negli orti ulivi, pini e lecci; fra le rovine fichi e olmi
+   (fino al 25 novembre 2026 lecci e pini: ma sui muri di Roma gli alberi autoctoni come il leccio sono sempre stati scarsi, Celesti-Grapow e Ricotta 2021) */
+alberi=(function(){ var L=[alberi[0],[],[],[],[],[],[]];
   alberi[1].forEach(function(a){ var g=RM.grana(Math.floor(a.x*3.1),Math.floor(a.z*2.7)), sp;
-    if(a.b===-2) sp=4; else if(a.b===-1) sp=g<.62?1:3; else if(isolati[a.b].fato===2) sp=g<.5?2:g<.72?1:3; else sp=g<.55?3:1;
+    if(a.b===-2) sp=4; else if(a.b===-1) sp=g<.62?1:3; else if(isolati[a.b].orto) sp=g<.5?2:g<.72?1:3; else sp=g<.55?5:6;
     L[sp].push(a); });
   return L; })();
 var detAlberi=RM.QUALITA.alberi[RM.q]||0;
@@ -403,11 +613,18 @@ var luci=new THREE.Points(gLuci,new THREE.PointsMaterial({size:11,map:texAlone,v
 luci.visible=false; luci.frustumCulled=false; RM.scene.add(luci);
 
 var INTONACI=[0xf0dfb8,0xe6c79c,0xf2e9d2,0xe3b89c,0xf6efde,0xe8d2a6].map(RM.col), CAMPI=[0xf2f0e0,0xe6dcae,0xd3dcae,0xd6c896,0xc9c2a0].map(RM.col);
-var MURO_VECCHIO=[0xb48f72,0xa98a70,0x9d9278,0xb89a7c].map(RM.col), MACERIA=RM.col(0xa58c74), MACERIA_VECCHIA=RM.col(0x8f8468), ERBE=[0xffffff,0xe9e6c8,0xd6e0b8,0xf0e2c0].map(RM.col), COPPI_ROTTI=RM.col(0xb8a898);
+var MURO_VECCHIO=[0xa47e62,0x9a7a60,0x8e8470,0xa88a6c].map(RM.col), MACERIA=RM.col(0x8e7b68), MACERIA_VECCHIA=RM.col(0x7f786a), ERBE=[0xf2ebe0,0xe6dccb,0xdcd8c2,0xeadcc4].map(RM.col), COPPI_ROTTI=RM.col(0xb8a898);
 var d=new THREE.Object3D(), c=new THREE.Color(), bianco=new THREE.Color(1,1,1);
 
 /* ---------- aggiornamento: si riscrivono solo gli isolati che cambiano ---------- */
 var ultimaBassa=-1;
+/* quanto resta in piedi di una rovina (in frazioni dell'altezza della casa) dopo eta anni: i muri crollano nei primi decenni fino a b.hFin, poi nei secoli si abbassano
+   ancora di un quarto (prima di due quinti); vicino alle cave dei monumenti, dove si cuoce la calce, anche i ruderi delle case vengono spogliati. Una resa, non una misura. */
+function altezzaRovina(b,eta,anno){ var cr=b.fato===2?RM.sfuma(5,60,eta):RM.sfuma(8,95,eta), sp=b.cava&&anno>b.cava?RM.sfuma(b.cava,b.cava+120,anno):0;
+  return (1-(1-b.hFin)*cr)*(1-.25*RM.sfuma(150,450,eta))*(1-.45*sp); }
+/* l'altezza dei muri della rovina dalla base dell'istanza, che sta 1,5 m sotto il suolo (come le case): almeno un metro fuori terra. Fino al 25 novembre 2026 i ruderi bassi
+   finivano quasi sotto terra (hm senza quel metro e mezzo): da lontano restava il prato */
+function altezzaMuri(b,eta,anno){ return .15+Math.max(.1,b.alt*(b.nasce?1:b.bassa0)*altezzaRovina(b,eta,anno)); }
 function aggiorna(anno){
   var fr=D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno)), soglia=1-fr, numVivi=0, toccati=false, i, b, a, q, eta, v, crollo, H, hm, m;
   var bassa=1-.42*RM.sfuma(470,720,anno), forza=Math.abs(bassa-ultimaBassa)>.01; if(forza) ultimaBassa=bassa;      // le case a più piani lasciano il posto a case basse, a uno o due piani
@@ -425,26 +642,41 @@ function aggiorna(anno){
     eta=a>.999?0:b.nasce?(arso>0?Math.max(0,anno-b.fuoco):0):Math.max(0,anno-da0);          // anni passati dall'abbandono (o dall'incendio)
     if(!(forza&&a>.01) && Math.abs(a-b.a0)<.002 && (a>.999 || Math.abs(eta-b.e0)<1.5 || (eta>430&&b.e0>430))) continue;
     b.a0=a; b.e0=eta; toccati=true; v=b.nasce?arso:(1-a)*(1-dm);
-    crollo=b.fato===2?RM.sfuma(5,60,eta):RM.sfuma(8,95,eta); H=(1-(1-b.hFin)*crollo)*(1-.4*RM.sfuma(140,420,eta));   // nei secoli anche i gusci si abbassano
-    q=(b.fato===2?RM.sfuma(50,120,eta):b.fato===1&&b.tono>.45?RM.sfuma(200,330,eta):0)*v; b.q0=q;   // 1 = ormai orto o vigna (dal VII secolo anche fra i ruderi bassi)
-    b.alb=Math.max(q,b.fato===2?0:RM.sfuma(70,160,eta)*v);             // alberi: coltivati negli orti, selvatici altrove
+    var sventrata=b.fuoco!=null && anno>b.fuoco-.4 && b.fuoco<=da0+.01;                       // lasciata per un incendio: niente stadio in piedi, resta subito il guscio bruciato
+    var inPiedi=!b.nasce && !sventrata && dm<.001 && v>.001 && eta<b.t2; b.gv=v*RM.sfuma(15,70,eta);      // gv: quanto l'erba prende le vie attorno (aggiornaVie)                     // stadi 1 e 2: la casa abbandonata, ancora in piedi (si veda in testa)
+    crollo=b.fato===2?RM.sfuma(5,60,eta):RM.sfuma(8,95,eta); H=altezzaRovina(b,eta,anno);
+    /* Orti e vigne (26 novembre 2026): come ipotesi solo sui lotti b.orto (circa uno su otto dentro le mura), fra i monconi che restano; attestati dall'anno della fonte (ORTI_FONTI).
+       Fino al 25 novembre 2026 anche gran parte dei ruderi bassi diventava orto dopo due-tre secoli: nell'852 la città sembrava campagna (l'utente: «il resto della città era in rovina, non era scomparso»). */
+    var qF=b.ortoDal && anno>=b.ortoDal && eta>15?1:0;
+    q=Math.max(b.orto?RM.sfuma(50,120,eta):0,qF)*v; b.q0=q;
+    b.alb=b.orto?q:Math.max(.8*qF*v,RM.sfuma(15,30,eta)*(.15+.85*RM.sfuma(20,300,eta))*v);   // negli orti alberi coltivati; altrove fichi e olmi nati da soli, più alti quanto più vecchio è l'abbandono (ipotesi)
+    var Y=b.alt*(b.nasce?1:a>.5?bassa:b.bassa0)+.15, s1=0, s2=0, hT=1;
+    if(inPiedi){ s1=RM.sfuma(0,b.t1,eta); s2=RM.sfuma(b.t1,b.t2,eta);
+      var hFine=Math.min(1,altezzaMuri(b,b.t2,anno)*.85/Y);                                  // dove arrivano i muri spezzati alla fine: l'altezza della rovina che prende il suo posto
+      hT=1-(1-hFine)*RM.sfuma(b.t1+.3*(b.t2-b.t1),b.t2,eta); }
     d.rotation.set(0,b.ry,0);
-    d.position.set(b.x,b.y-.15,b.z); d.scale.set(b.w,a>.01?b.alt*a*(b.nasce?1:bassa)+.15:0,b.d); if(a<=.01) d.scale.set(0,0,0); d.updateMatrix();
-    vivi[b.tipo].setMatrixAt(b.ti,d.matrix); vivi[b.tipo].setColorAt(b.ti,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar(.86+.28*b.sfasa));
-    /* muri: appena lasciati hanno il colore dell'intonaco, poi resta il mattone */
-    hm=v*b.alt*H; d.rotation.set(0,b.ry+b.giro*Math.PI/2,0);
+    d.position.set(b.x,b.y-.15,b.z); if(inPiedi) d.scale.set(b.w,Y,b.d); else if(a>.01) d.scale.set(b.w,b.alt*a*(b.nasce?1:bassa)+.15,b.d); else d.scale.set(0,0,0); d.updateMatrix();
+    vivi[b.tipo].setMatrixAt(b.ti,d.matrix); vivi[b.tipo].setColorAt(b.ti,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar((.86+.28*b.sfasa)*(1-.1*s1)));
+    vivi[b.tipo].setDegAt(b.ti,inPiedi?Math.max(s1,a<.5?.001:0):0,s2,hT,b.sfasa);
+    /* rovina: dopo lo stadio 2 (o subito, se è bruciata); appena lasciata ha il colore dell'intonaco, poi resta il mattone */
+    hm=inPiedi?0:v*altezzaMuri(b,eta,anno); if(q>0) hm=Math.min(hm,hm*(1-q)+q*(.27+.05*b.tono));      // attorno a un orto i monconi si abbassano a muretti (1-2 m fuori terra)
+    d.rotation.set(0,b.ry+b.giro*Math.PI/2,0);
     d.scale.set(hm>.01?b.w:0,hm,hm>.01?b.d:0); d.updateMatrix(); ruderi.setMatrixAt(i,d.matrix);
     ruderi.setColorAt(i,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar(.9).lerp(MURO_VECCHIO[(b.sfasa*MURO_VECCHIO.length)|0],RM.sfuma(3,70,eta)).multiplyScalar((.82+.3*b.tono)*(1-.55*arso*(1-RM.sfuma(0,30,eta)))));    // annerito se è bruciato da poco
-    /* il tetto cede nei primi trent'anni */
-    m=v*(1-RM.sfuma(10,34,eta))*(1-arso); d.scale.set(m>.02?b.w:0,b.alt*(.35+.65*m),m>.02?b.d:0); d.updateMatrix(); tettiRotti.setMatrixAt(i,d.matrix);
+    ruderi.setDegAt(i,v*RM.sfuma(25,250,eta)*(b.tono>.2?1:.4),RM.sfuma(20,200,eta),1,b.sfasa);      // edera e sporco
+    /* il tetto bruciato cede nei primi trent'anni (solo le case sventrate da un incendio: le altre perdono il tetto nello shader) */
+    m=sventrata?v*(1-RM.sfuma(10,34,eta))*(1-arso):0; d.scale.set(m>.02?b.w:0,b.alt*(.35+.65*m),m>.02?b.d:0); d.updateMatrix(); tettiRotti.setMatrixAt(i,d.matrix);
     tettiRotti.setColorAt(i,c.copy(bianco).lerp(COPPI_ROTTI,RM.sfuma(0,25,eta)).multiplyScalar(.8+.25*b.tono));
-    /* macerie: crescono mentre i muri scendono; negli orti vengono sgombrate */
-    m=v*crollo*(1-.85*q); d.rotation.set(0,b.ry+b.sfasa*6,0); d.scale.set(m>.02?b.w*1.05:0,m*(.16+.2*b.alt*(1-b.hFin)),m>.02?b.d*1.05:0); d.updateMatrix(); macerie.setMatrixAt(i,d.matrix);
+    /* macerie: crescono mentre i muri scendono e restano (nessuno le porta via, se non per farci un orto), coperte via via da rovi ed erba */
+    m=v*crollo*(1-.85*q)*(inPiedi?s2:1); d.rotation.set(0,b.ry+b.sfasa*6,0); d.position.y=b.y-.06; d.scale.set(m>.02?b.w*1.05:0,m*Math.min(.6,.24+.28*b.alt*(1-b.hFin)),m>.02?b.d*1.05:0); d.updateMatrix(); macerie.setMatrixAt(i,d.matrix);
     macerie.setColorAt(i,c.copy(MACERIA).lerp(MACERIA_VECCHIA,RM.sfuma(30,150,eta)).multiplyScalar(.8+.35*b.tono));
-    /* sterpi fra i muri */
-    m=(b.tono>.3?1:0)*v*RM.sfuma(25,130,eta)*(1-q); d.rotation.set(0,b.ry+b.giro*Math.PI/2,0); d.position.y=b.y; d.scale.set(m>.02?b.w*1.05:0,b.w*(.3+.7*m),m>.02?b.d*1.05:0); d.updateMatrix(); sterpi.setMatrixAt(i,d.matrix);
-    sterpi.setColorAt(i,c.copy(bianco).multiplyScalar(.7+.35*b.sfasa));
-    /* suolo: erba sulle strade e nei cortili, poi (per alcuni) filari */
+    macerie.setDegAt(i,v*RM.sfuma(15,170,eta),0,1,b.sfasa);
+    /* rovi, lentisco, sambuco nano, valeriana: dentro i muri dopo il tetto, fuori contro i muri presto */
+    d.rotation.set(0,b.ry,0); d.position.y=b.y-.02;
+    m=v*RM.sfuma(b.t1,b.t1+45,eta)*(1-.85*q); d.scale.set(m>.02?b.w:0,.3+.7*m,m>.02?b.d:0); d.updateMatrix(); macchiaD.setMatrixAt(i,d.matrix); macchiaD.setColorAt(i,c.copy(bianco).multiplyScalar(.8+.3*b.sfasa));
+    m=(b.anello?1:0)*v*RM.sfuma(5,40,eta)*(1-.6*q); d.scale.set(m>.02?b.w:0,.3+.7*m,m>.02?b.d:0); d.updateMatrix(); macchiaF.setMatrixAt(i,d.matrix); macchiaF.setColorAt(i,c.copy(bianco).multiplyScalar(.75+.35*b.tono));
+    m=b.vigna?q:0; d.position.y=b.y+.02; d.scale.set(m>.02?b.w*.95:0,m,m>.02?b.d*.95:0); d.updateMatrix(); vigne.setMatrixAt(i,d.matrix); vigne.setColorAt(i,c.copy(bianco).multiplyScalar(.85+.25*b.tono));
+    /* suolo: terra, calcinacci ed erba fra le rovine, poi (per alcuni) filari */
     m=v*RM.sfuma(10,55,eta); d.rotation.set(0,b.ry,0); d.position.y=b.y+.04; d.scale.set(PASSO*1.04*m,1,PASSO*1.04*m); d.updateMatrix(); incolti.setMatrixAt(i,d.matrix);
     incolti.setColorAt(i,c.copy(ERBE[(b.sfasa*ERBE.length)|0]).multiplyScalar(.8+.3*b.tono));
     d.position.y=b.y+.08; d.scale.set(PASSO*1.02*q,1,PASSO*1.02*q); d.updateMatrix(); orti.setMatrixAt(i,d.matrix);
@@ -460,12 +692,12 @@ function aggiorna(anno){
     if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;
   });
   if(toccati){
-    vivi.concat([ruderi,tettiRotti,macerie,sterpi,incolti,orti]).forEach(function(p){ p.stringi(); });
-    gLuci.attributes.color.needsUpdate=true;
+    vivi.concat([ruderi,tettiRotti,macerie,macchiaD,macchiaF,vigne,incolti,orti]).forEach(function(p){ p.stringi(); });
+    gLuci.attributes.color.needsUpdate=true; aggiornaVie();
   }
   matMuri.emissiveIntensity=matBasse.emissiveIntensity=RM.notte*2.2; luci.material.opacity=RM.notte; luci.visible=RM.notte>.02;
   RM.quotaAbitati=numVivi/N;
-  if(RM.erba) RM.erba.value=1-D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno-30));   // l'erba arriva una trentina d'anni dopo
+  if(RM.erba) RM.erba.value=.6*(1-D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno-30)));   // l'erba arriva una trentina d'anni dopo; dal 26 novembre 2026 meno piena: fra le rovine il suolo è terra e calcinacci (gli isolati), non un prato
 }
 RM.moduli.push(aggiorna);
 })();
