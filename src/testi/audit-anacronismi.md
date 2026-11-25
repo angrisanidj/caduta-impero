@@ -69,3 +69,71 @@ La didascalia `leonina852` ora nomina Santa Maria Nova. Perché la vista ci pass
 - `node --check js/dati.js` e `js/monumenti.js`: in ordine. `MONUMENTI` 97 voci (96 più `santamarianova`), `EVENTI` 37, `TAPPE` 59, `CHIESE` 39 (40 meno Santa Maria Nova).
 - Santa Maria Nova: assente nell'846, cantiere a metà nell'849, finita nell'852; nome «Santa Maria Nova» sulla scena; la scheda si apre.
 - Nella pagina, il 25 novembre, `js/infografiche.js` dava un errore di sintassi (riga 1876, «missing ) after argument list»): file di un altro lavoro in corso, non toccato qui.
+
+## Applicate il 25 novembre 2026, dopo il sì dell'utente alle tre proposte
+
+### 1. Lo stato «abbandonato»
+
+Nuovo stato in `MONUMENTI` (`js/dati.js`) e in `RM.rovina` (`js/monumenti.js`): l'edificio non è più in uso e prende l'incuria della chiusura (crepe, sporco, erba, una parte dei coppi), ma `uRovina` resta a zero: niente cime spezzate, niente colonne mancanti, niente crolli, finché un terremoto, un incendio o la cava non li portano. Uno «spogliato» che viene dopo scurisce i bronzi senza far cadere nulla. Tinta propria in `TINTA`, poco più chiara di `chiuso`. Nessuna modifica allo shader.
+
+Applicato a (con la frase nella scheda):
+- Minerva Medica, dal 537: la cupola regge fino al 1828 (scheda).
+- Arco di Gallieno e Trofei di Mario (`esquilino`), dal 537: l'arco è in piedi ancora oggi.
+- Foro Boario, dal 392: il tempio rettangolare diventa Santa Maria Egiziaca nell'872 (Platner e Ashby, «Aedes Matris Matutae», letto il 25 novembre: la data 872 è data lì senza riserve); il tempio rotondo è chiesa di Santo Stefano Rotondo nel 1140 (Platner e Ashby, «Portunium», letto lo stesso giorno).
+- Pantheon, dal 392 al 609: con `chiuso` la cupola si sbriciolava fra il 392 e il 609 e tornava intera con la chiesa (catture N5, «pantheon 600»).
+- Meta Sudans, dal 537: il cono di mattoni resta in piedi fino al 1936.
+- Basilica di Massenzio, dal 600 al terremoto dell'847: volte e muri reggono fino a lì (Platner e Ashby, nella scheda).
+- Anfiteatro Castrense e circo Variano (`sessoriano`), dal 275: l'anfiteatro, murato nella cinta, resta in piedi.
+
+Restano `chiuso` (proposta: decidere con l'utente) le terme di Diocleziano e di Caracalla, i cui muri e alcune volte reggono a lungo (l'aula di Santa Maria degli Angeli), e il teatro di Pompeo: cambierebbero molto l'aspetto della città.
+
+### 2. Bronzi e dorature
+
+- Statue di bronzo sul frontone della Curia: monumento a parte `curiastatue`, via nel 455 con il sacco dei Vandali (Procopio, Guerre III 5). Scelta dichiarata nella scheda dei Fori: le statue stesse sono un'ipotesi tratta dalle monete.
+- Statua di Foca in bronzo dorato: monumento a parte `focastatua`, via nel 663. Platner e Ashby danno la statua, non la sua fine; Foca è ucciso nel 610. Scelta dichiarata nella scheda.
+- Fiaccola dorata dell'obelisco di Costanzo II (Ammiano XVII 4, 15): `fiaccola357`, via nel 663, scelta dichiarata.
+- Cupola del tempio del Sole: era bronzo dorato senza fonte; ora `spogliato` nel 663 e la scheda dice che il bronzo stesso è un'ipotesi.
+- Fori: `spogliato` nel 663 (tetto di bronzo della basilica Ulpia e delle esedre); scheda: «se ci fosse ancora non si sa».
+- Basilica di Massenzio: `spogliato` nel 663 (le tegole di bronzo, forse quelle di Onorio I del 630: la scheda lo dice).
+- Colosseo, scudi di bronzo dell'attico: già scuriti dal 523 dalla cava; ora la scheda lo dichiara.
+
+Per tutte le date 663 la fonte è il Liber Pontificalis, vita di Vitaliano: Costante II porta via «omnia quae erant in aere ad ornatum civitatis». Che quei singoli bronzi ci fossero ancora non lo dice nessuno: è una scelta.
+
+Restano (proposte): la punta dorata dell'obelisco di Augusto e i coni dorati delle mete nel Circo Massimo (`circo`, fino all'852) e la statua equestre di Traiano nel suo foro. Le tegole dorate di Venere e Roma erano già a posto: vanno via con lo `spogliato` del 630 (Onorio I).
+
+### Fuori da questi file (da fare altrove)
+
+- `js/pagina.js`, riga 65, `NOMI_STATO`: aggiungere `abbandonato:'abbandonato, ma in piedi'` (senza, scheda ed elenco scrivono «undefined»).
+- `index.html`, riga 150, legenda degli stati: aggiungere `<span class="st abbandonato">abbandonato, in piedi</span>` dopo «in disuso».
+- `css/stile.css`, righe 160, 167, 207: il colore di `.abbandonato`, `.legenda .abbandonato::before`, `.st.abbandonato::before` (per esempio `#B3A58C`, fra «in disuso» e «in uso»; da provare con `src/prove/daltonismo.mjs`).
+- `js/infografiche.js`, «Il Pantheon nel tempo»: la banda 392-609 si chiama ancora «chiuso»; va bene, ma si può dire «abbandonato».
+- `MONUMENTI` ora ha 100 voci: 96 + `santamarianova` + i tre pezzi `curiastatue`, `focastatua`, `fiaccola357` (senza nome: non compaiono nell'elenco).
+
+Foglio: `N5-abbandonato-e-bronzi.jpg` (prima e dopo, 600 e 852).
+
+### 3. Terme di Diocleziano, terme di Caracalla, teatro di Pompeo (25 novembre 2026, sera)
+
+Lette tre voci di Platner e Ashby:
+- **Thermae Diocletiani**: le guerre gotiche, tagliando gli acquedotti, le rendono inutilizzabili; nel 625 un registro della Chiesa le nomina ancora; l'aula centrale deve la sua «excellent preservation» alla trasformazione nella chiesa di Santa Maria degli Angeli e conserva la volta a crociera; le grandi demolizioni vengono con Sisto V. Nessun terremoto o crollo datato prima dell'852.
+- **Thermae Antoninianae**: restauro sotto Teodorico; l'uso diventa impossibile con il taglio degli acquedotti del 537 (deduzione della voce); «evidence has been found here too of the harm wrought by the earthquake of 847» (una colonna del cortile poggia su un cumulo di macerie); le rovine soffrirono meno di molti altri edifici.
+- **Theatrum Pompei**: restauri fino a quello di Simmaco per Teodorico (507-511, Cassiodoro); poi solo i nomi medievali (Santa Maria de Crypta Pinta, piazza di Grottapinta). Nessun crollo datato.
+
+Applicato: Diocleziano `abbandonato` dal 537, `spogliato` nel 663 (scelta); Caracalla `abbandonato` dal 537, `spogliato` nel 663 (scelta), `crollato` nell'847 (Platner e Ashby); Pompeo `abbandonato` dal 546 (data che il modello aveva già), `spogliato` nel 663 (scelta). Il teatro non ha nome né scheda: la scelta è dichiarata nel commento in `js/monumenti.js` (proposta: dargli un nome e una scheda). L'effetto del restauro di Teodorico nella scena del 493 resta e svanisce in un secolo dopo il 546.
+
+### 4. Il verde sui ruderi abbandonati
+
+L'utente: «Ok fai vedere erba e crepe però». Lo shader del degrado mette l'erba solo sui piani bassi (meno del 40% dell'altezza) e il muschio solo in proporzione ai crolli (`uRovina`); con `uRovina` a zero un edificio abbandonato restava quasi solo più scuro (foglio N5). Senza toccare lo shader, in `js/monumenti.js` («il verde sui ruderi abbandonati»): cespugli sui piani alti (cornici, cime dei muri, volte, gradinate; mai sui coppi, che lo shader fa cadere) e macchie d'edera appese ai muri, per i monumenti che hanno lo stato `abbandonato`. Crescono dall'abbandono: un terzo dopo sessant'anni, tutti dopo trecento; meno sul Pantheon (fino al 609), sui templi del Foro Boario, sulla Meta Sudans e sull'arco di Gallieno. Dove un terremoto fa cadere le cime restano solo quelli più bassi. Circa 2.300 istanze sul PC (un terzo sui telefoni), circa 110.000 triangoli in più nel caso peggiore: il tempo di un fotogramma non l'ho potuto misurare in modo affidabile (Edge senza finestra, disegno via software). Quanti e quali arbusti è una resa, non una fonte.
+
+Foglio: `N6-terme-teatro-verde.jpg`.
+
+### 5. L'abbandono nello shader del degrado (25 novembre 2026, notte)
+
+Fatto in `js/costruttore.js` (blocco `DEGRADO`) e `js/monumenti.js` (`RM.rovina`, il verde sui ruderi):
+1. **Tetti bianchi** (difetto del foglio N6): lo stato `spogliato` portava i coppi verso un grigio chiaro (0,3 lineare: bianco al sole); sulle terme abbandonate e spogliate nel 663 i tetti, senza crolli che li bucassero, diventavano bianchi. Ora, sugli edifici abbandonati, lo spoglio scopre solo le coperture di metallo (bronzo, oro); i coppi restano coppi, anneriti e invasi dal verde. Altrove (cava, incendi) resta com'era.
+2. `uVerde` (0-1): erba e muschio sui piani a ogni altezza (terrazze, cime dei muri, cima delle volte), coppi anneriti, sporco, colature d'umido a gruppi, umido di risalita al piede, muschio sui muri; sui tetti abbandonati mancano più coppi.
+3. `uIntonaco` (0-1): l'intonaco cade a chiazze dal bordo in ombra sui muri chiari (intonaco, marmo, travertino) e sotto compare il mattone, a tratti il tufo; da vicino i filari; crepe grandi, quasi verticali.
+4. Crescita (`RM.rovina`, campi `v` e `i`): un quarto subito dopo l'abbandono, tutto dopo trecento anni; misura ridotta per il Pantheon fino al 609, i templi del Foro Boario, la Meta Sudans, l'arco di Gallieno (`MISURA_V`, `MISURA_I`). Nessun crollo: restano a `uRovina`.
+5. Scala (`RM.QUALITA.degrado`, `RM.degradoQ`): «bassa» niente; «telefono» erba sui piani, coppi anneriti, sporco e umido al piede, una sola lettura della trama; da «media» tutto. Il verde a cespugli si disegna solo dove c'è (`m.count`), anche nei cortili, e ne resta il 45% in «bassa» e il 70% sul «telefono» (`RM.QUALITA.verde`).
+6. Il teatro di Pompeo ha nome e scheda (`SCHEDE.pompeo`).
+
+Da fare ancora: le coperture di metallo spogliate (Giove Capitolino, i Fori) restano grigio chiaro; travi e vuoti sotto i coppi mancanti non ci sono (si vede il buio dell'interno); quanto intonaco cada e dove è una resa, non una fonte. Fogli: scratchpad `AN2/R1…R4`.

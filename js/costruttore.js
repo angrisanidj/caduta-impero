@@ -175,6 +175,9 @@ RM.Costruttore=C;
    (A: posizione e forma certe; B: posizione certa, forma ricostruita; C: ipotesi). RM.sapere.q va da 0 (colori veri) a 1 (tinta piena);
    resta la luminosità di ciò che c'è sotto, così si leggono ancora volumi, ombre e rovine. */
 RM.sapere={q:{value:0}, COL:{A:RM.col(0x9a3f2f), B:RM.col(0xe2b254), C:RM.col(0xd6d1c6)}};
+RM.degradoQ={value:1};      // dettaglio dell'abbandono nello shader del degrado (si veda DEGRADO); lo aggiorna js/monumenti.js col gradino
+if(RM.QUALITA && !RM.QUALITA.degrado) RM.QUALITA.degrado=[0,1,1,1,.5];      // per gradino, nell'ordine delle file (bassa, media, alta, massima, telefono)
+if(RM.QUALITA && !RM.QUALITA.verde) RM.QUALITA.verde=[.45,1,1,1,.7];      // quota dei cespugli sui ruderi abbandonati (js/monumenti.js)
 var SAP_DICH='uniform float uSapQ; uniform vec3 uSapCol;', SAP_TINTA='diffuseColor.rgb=mix(diffuseColor.rgb,uSapCol*(0.42+0.8*dot(diffuseColor.rgb,vec3(0.3,0.59,0.11))),uSapQ);';
 /* Da vicino la muratura mostra i conci: filari sfalsati e una lieve differenza di tono fra un blocco e l'altro. Sfuma con la distanza (fwidth), così da lontano non sfarfalla. */
 var CONCI=[
@@ -239,11 +242,11 @@ var TAGLIO=[
   '  float rn=rmH(vec3(floor(vLoc.xz*1.6+0.37),1.0));',
   '  float rq=clamp(vLoc.y/uAlt,0.0,1.0);',
   '  if(rq>1.0-uRovina*(0.25+1.7*rn)) discard;',
-  '  if(vTipo>0.5 && 0.55*rmN(vec3(vLoc.xz*1.1,2.0))+0.45*rmH(vec3(floor(vLoc.xz*5.0+0.19),2.0))<uRovina*2.0+uCrepe*uCrepe*0.2) discard;',   // coppi caduti: chiazze irregolari
+  '  if(vTipo>0.5 && 0.55*rmN(vec3(vLoc.xz*1.1,2.0))+0.45*rmH(vec3(floor(vLoc.xz*5.0+0.19),2.0))<uRovina*2.0+uCrepe*uCrepe*0.2+uVerde*0.14) discard;',   // coppi caduti: chiazze irregolari; sui tetti abbandonati (uVerde) ne mancano di più
   '}',
   /* smontaggio da un lato solo (il fronte sud del Colosseo): sparisce l'anello esterno con l'attico e la parte alta della cavea, a partire dal punto più a sud e allargandosi; resta il secondo anello, più basso */
   'if(uSud>0.001){ vec2 qs=vLoc.xz/uSudR; float ro=length(qs); if(ro>0.94 || (ro>0.74 && vLoc.y>3.09)){ float an=acos(clamp(dot(qs/ro,uSudDir),-1.0,1.0)); if(an<3.1416*uSud*(0.9+0.2*rmH(vec3(floor(vLoc.xz*0.9),6.0)))) discard; } }'].join(NL);
-var DICHIARA=[SAP_DICH,'uniform float uVesteR; uniform sampler2D tMacchieR;','uniform float uRovina; uniform float uCant; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR;',LOD_FD,
+var DICHIARA=[SAP_DICH,'uniform float uVesteR; uniform sampler2D tMacchieR;','uniform float uRovina; uniform float uCant; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR; uniform float uVerde; uniform float uIntonaco; uniform float uDegQ;',LOD_FD,
   'float rmH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
   'vec2 rmH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',
   'float rmN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f);',
@@ -279,24 +282,69 @@ var COLORA=[
   '  } else diffuseColor.rgb*=1.0-0.34*uCrepe*smoothstep(0.5,0.8,rmN(vec3(cp.x*4.0,vLoc.y*0.45,3.0)));',                                              // colature
   '}',
   'if(vTipo<1.5 && uRovina*2.4+uCrepe*0.5>0.0){ float rm=smoothstep(0.35,0.72,rmN(vLoc*2.3+0.11)); diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.5,0.56,0.38),clamp((uRovina*2.4+uCrepe*0.5)*rm*(1.15-rq2),0.0,1.0)); }',
-  'if(vTipo>0.5 && vTipo<1.5){ if(uCrepe>0.0) diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.2,0.215,0.235),uPiombo); }',      // uPiombo: coperture rifatte in lastre di piombo (il Pantheon dopo Gregorio III)
+  'if(vTipo>0.5 && vTipo<1.5){ if(uCrepe>0.0) diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*0.75*rmN(vec3(vLoc.xz*1.4,4.0))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio*mix(1.0,smoothstep(0.4,0.5,vColor.g/max(vColor.r,0.001)),step(0.0001,uVerde))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.2,0.215,0.235),uPiombo); }',      // sugli edifici abbandonati (uVerde) lo spoglio toglie solo le coperture di metallo (bronzo, oro: verde su rosso sopra 0,5) e i coppi restano coppi (25 novembre 2026: prima diventavano grigio chiaro, bianchi al sole, sulle terme spogliate nel 663); altrove resta com'era (con la cava le coperture si tolgono davvero) // uPiombo: coperture rifatte in lastre di piombo (il Pantheon dopo Gregorio III)
   'if(vTipo>2.5){ float pa=rmN(vec3(vLoc.xz*0.9,11.0)); float pb=rmN(vec3(vLoc.xz*4.3,12.0)); float pc=rmN(vec3(vLoc.xz*17.0,13.0));',                    // prato: chiazze larghe, ciuffi, filo d'erba
   '  float fwP=fwidth(vLoc.x)+fwidth(vLoc.z); float kcP=1.0-smoothstep(0.012,0.035,fwP); float kbP=1.0-smoothstep(0.05,0.14,fwP);',                       // ciuffi e fili si spengono quando il loro passo scende sotto i tre pixel: da lontano brulicavano (24 novembre 2026)
   '  diffuseColor.rgb*=0.82+0.22*pa+0.12*kbP*(pb-0.5)+0.1*kcP*(pc-0.5);',
   '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.36,0.34,0.17)*(0.8+0.5*pb),clamp(uCrepe*1.1,0.0,0.85)*smoothstep(0.25,0.65,pa+0.3*pb)); }',                // lasciato a sé stesso ingiallisce e si fa incolto
   'if(vTipo<1.5) diffuseColor.rgb*=mix(0.74,1.0,smoothstep(0.0,0.2,rq2));'].join(NL);      // ombra d'appoggio al piede
+/* abbandono (25 novembre 2026; l'utente sullo stato «abbandonato»: «Ok fai vedere erba e crepe però»): un edificio che nessuno cura più, ma che non crolla.
+   uVerde (0-1): erba e muschio su tutti i piani, a ogni altezza (cime dei muri, terrazze, volte, tetti), muschio a chiazze sui muri, colature scure d'umido che scendono
+   dall'alto e umido di risalita al piede; sui tetti, coppi anneriti e invasi dal verde (ne mancano di più: si veda TAGLIO).
+   uIntonaco (0-1): l'intonaco e il rivestimento cadono a chiazze dal bordo scuro e sotto compare la muratura (mattone, a tratti tufo); con lui le crepe grandi, lunghe
+   e verticali. Nessuno dei due toglie muratura: i crolli restano a uRovina. I valori li calcola RM.rovina (js/monumenti.js) dagli anni d'abbandono.
+   Quanta parte dei muri perda l'intonaco, e dove, è una resa: nessuna fonte lo misura.
+   Contro lo sfarfallio: le chiazze vengono dalla trama delle macchie della veste (RM.trameVeste, filtrata dai mipmap: da lontano sfuma invece di brulicare); i bordi
+   sfrangiati e le crepe grandi, calcolati, si spengono quando il loro passo scende sotto pochi pixel (kF). Dove non c'è la veste (WebGL1) il ramo si salta.
+   Scala della qualità (uDegQ, RM.QUALITA.degrado): 0 in «bassa» (il ramo si salta tutto), 0,5 sul «telefono» (erba sui piani, coppi anneriti, sporco e umido al piede, da una lettura sola della trama), 1 da «media» in su (anche seconda grana, colature, muschio,
+   intonaco caduto, bordi sfrangiati, filari e crepe grandi).
+   Costo misurato (scheda grafica, 1280 x 800, 852, terme di Diocleziano che riempiono lo schermo): circa un millesimo di secondo in «media»; nella vista d'insieme non si misura. */
+var DEGRADO=[
+  'if(vTipo<1.5 && uDegQ>0.0 && uVesteR>0.5 && uVerde+uIntonaco>0.001){',
+  '  vec3 anA=abs(vNor); bool pianoA=anA.y>0.7;',
+  '  vec2 cA=pianoA?vLoc.xz:vec2(anA.x>anA.z?vLoc.z:vLoc.x,vLoc.y);',
+  '  float fwA=max(fwidth(cA.x),fwidth(cA.y))+0.0001; float kF=(1.0-smoothstep(0.008,0.03,fwA))*step(0.75,uDegQ);',
+  '  vec4 mA=texture2D(tMacchieR,cA/6.0+0.37); vec4 mB=mA.gbar; if(uDegQ>0.75) mB=texture2D(tMacchieR,cA/2.1+0.81);',      // macchie da diciotto a tre metri; sul «telefono» una lettura sola
+  '  float fr=0.0; if(kF>0.0) fr=kF*(rmN(vec3(cA*11.0,23.0))-0.5);',      // bordo sfrangiato, solo da vicino (il rumore si calcola solo lì)
+  '  if(pianoA){',      // erba e muschio sui piani, a ogni altezza: terrazze e cime dei muri piene, le volte e le cupole solo in cima, i tetti meno
+  '    float mV=0.4*mA.r+0.35*mB.g+0.25*mB.b+0.25*fr; float tV=0.84-0.33*uVerde; float wP=smoothstep(0.9,0.99,anA.y)*(vTipo>0.5?0.6:1.0);',
+  '    float cV=smoothstep(tV-0.05,tV+0.17,mV)*wP*min(1.0,uVerde*1.6);',      // bordo morbido, a più grane: niente sagome ritagliate
+  '    vec3 gV=mix(vec3(0.12,0.165,0.05),vec3(0.25,0.23,0.1),smoothstep(0.35,0.7,mB.r))*(0.8+0.3*mA.b);',      // verde scuro e paglia
+  '    if(vTipo>0.5) diffuseColor.rgb*=1.0-0.25*uVerde;',      // coppi anneriti
+  '    diffuseColor.rgb=mix(diffuseColor.rgb,gV,cV*0.85);',
+  '  } else if(vTipo<0.5){',
+  '    diffuseColor.rgb*=1.0-0.1*uVerde;',      // sporco
+  '    if(uDegQ>0.75){ vec4 sA=texture2D(tMacchieR,vec2(cA.x/1.3,vLoc.y/14.0)+0.53);',      // colature d'umido (da «media» in su): la trama stirata in verticale, strisce larghe un metro e lunghe otto
+  '      float cU=smoothstep(0.58,0.76,0.7*sA.b+0.3*sA.g)*smoothstep(0.42,0.62,mA.r)*(anA.y<0.3?1.0:0.4);',      // a gruppi, non su tutto il muro; poche sulle volte
+  '      diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.55,0.57,0.52),uVerde*cU*0.85); }',
+  '    diffuseColor.rgb*=1.0-0.22*uVerde*(1.0-smoothstep(0.0,0.12,vLoc.y-0.06-0.18*mA.g));',      // umido di risalita al piede, a orlo irregolare
+  '    if(uDegQ>0.75){',      // sul «telefono» i muri prendono solo sporco e umido al piede: il resto da «media» in su
+  '    diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.7,0.78,0.6),uVerde*0.4*smoothstep(0.62,0.78,mA.g+0.1*fr)*(1.0-0.5*rq2));',      // muschio, più in basso
+  '    float lI=smoothstep(0.38,0.55,dot(vColor,vec3(0.3,0.59,0.11)));',      // l'intonaco cade dai muri chiari (intonaco, marmo, travertino), non dal mattone a vista
+  '    float nI=0.62*mA.g+0.38*mB.b+0.2*fr; float eI=fwidth(nI)+0.006; float fwY=fwidth(vLoc.y);',      // le derivate fuori dai rami
+  '    if(lI>0.0){ float tI=0.86-0.26*uIntonaco;',      // intonaco caduto: poche chiazze grandi, dal bordo netto
+  '      float cI=smoothstep(tI-eI,tI+eI,nI)*lI; float bI=(1.0-smoothstep(0.0,0.02+eI,tI-nI))*step(nI,tI)*lI;',      // bI: l'orlo dell'intonaco rimasto, in ombra
+  '      float lw=dot(diffuseColor.rgb,vec3(0.3,0.59,0.11)); vec3 mI=mix(vec3(0.95,0.5,0.34),vec3(0.9,0.78,0.58),smoothstep(0.55,0.7,mA.r))*lw*(0.62+0.3*mB.r);',      // mattone, a tratti tufo: tinta relativa al muro (che lo stato del monumento già scurisce), più scura di lui
+  '      float kB=(1.0-smoothstep(0.003,0.008,fwY))*kF; if(kB>0.0) mI*=1.0-0.22*kB*smoothstep(0.35,0.5,abs(fract(vLoc.y*28.0)-0.5));',      // da vicino i filari (corsi di circa 35 cm: più grossi del vero, perché si leggano)
+  '      diffuseColor.rgb=mix(diffuseColor.rgb,mI,cI*0.9); diffuseColor.rgb*=1.0-0.35*bI*smoothstep(0.0,0.2,uIntonaco); }',
+  '    if(kF>0.0 && uIntonaco>0.15){ float eC=rmCrepa(vec2(cA.x*0.9,cA.y*0.3)+11.0); float wC=max(0.012,fwA*0.7);',      // crepe grandi, quasi verticali, a tratti
+  '      float lC=(1.0-smoothstep(wC*0.5,wC,eC))*smoothstep(0.55,0.7,mA.b)*kF; diffuseColor.rgb*=1.0-0.6*lC*min(1.0,uIntonaco*1.4); }',
+  '    }',
+  '  }',
+  '}'].join(NL);
 function innesta(sh,u,colore){
   sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol; sh.uniforms.uVesteR=RM.vesteU||{value:0}; sh.uniforms.tMacchieR={value:RM.VESTE?RM.trameVeste().macchie:null};      // veste del PC: l'erba fra le lastre prende il verde dell'erba del suolo
   sh.uniforms.uRovina=u.uRovina; sh.uniforms.uCant=u.uCant; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uPiombo=u.uPiombo; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe; sh.uniforms.uSud=u.uSud; sh.uniforms.uSudDir=u.uSudDir; sh.uniforms.uSudR=u.uSudR;
+  sh.uniforms.uVerde=u.uVerde; sh.uniforms.uIntonaco=u.uIntonaco; sh.uniforms.uDegQ=RM.degradoQ;
   lodUniformi(sh); lodVertice(sh);
   var SCEGLI=LOD_SCEGLI.replace('dpxL<uSogliaCol','dpxL<uSogliaCol*(1.0-step(0.02,uRovina))');      // in rovina niente fascia: il portico è senza tetto e senza muri, e fra i monconi si vede il prato, non l'ombra
   SCEGLI+=NL+MANCA;      // le colonne che mancano, e i rocchi a terra
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA);
-  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,TAGLIO,LOD_COLORE,CONCI,COLORA,SAP_TINTA].join(NL));
+  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,TAGLIO,LOD_COLORE,CONCI,COLORA,DEGRADO,SAP_TINTA].join(NL));
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',[SCEGLI,LOD_OMBRA,TAGLIO,'#include <clipping_planes_fragment>'].join(NL));
 }
 RM.matRovina=function(alt){
-  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)}};
+  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)},uVerde:{value:0},uIntonaco:{value:0}};
   var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
   m.onBeforeCompile=function(sh){ innesta(sh,u,true); };
   m.userData.u=u;
