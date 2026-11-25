@@ -257,9 +257,20 @@ var oc=sole.shadow.camera; oc.left=-420; oc.right=420; oc.top=420; oc.bottom=-42
 sole.shadow.bias=-.0007; sole.shadow.normalBias=.5;
 /* Ombre da vicino. La mappa delle ombre copre tutta la città, e da vicino è sgranata: quando ci si avvicina il riquadro si stringe attorno a ciò che si guarda
    e si ridisegna solo quando lo sguardo si è spostato abbastanza; da lontano torna a coprire tutto. */
-var ombra={x:10,z:0,s:420};
+var ombra={x:10,z:0,s:420}, ombraFissa=null;
+/* Un riquadro fermo per le scene animate (25 novembre 2026; l'utente, sull'iPhone, nella scena dell'800: «evitando che l'ombra faccia effetto flash»). Mentre la camera
+   seguiva il corteo il riquadro si rispostava a ogni quinto del suo lato: la mappa si rifaceva (tutta la città, a 4096 pixel in «massima»: un fotogramma lungo) e le ombre
+   saltavano di colpo. RM.ombraFissa({x, z, s}) tiene il riquadro dove dice la scena e rifà la mappa una volta sola; RM.ombraFissa(null) torna a seguire la camera.
+   s: metà del lato, in unità; se manca, quello che dà circa dieci centimetri per pixel della mappa (bordi morbidi, non a scalini), mai sotto t (il minimo che serve). */
+RM.ombraFissa=function(o){
+  ombraFissa=o||null; if(!o){ ombra.s=-1; return; }
+  var L=o.s||Math.max(o.t||7,sole.shadow.mapSize.x*.005);
+  ombra.x=o.x; ombra.z=o.z; ombra.s=L;
+  sole.target.position.set(o.x,0,o.z); sole.position.set(o.x-610,330,o.z-170); sole.target.updateMatrixWorld();
+  oc.left=-L; oc.right=L; oc.top=L; oc.bottom=-L; oc.updateProjectionMatrix(); sole.shadow.normalBias=o.s?Math.max(.14,.5*L/420):Math.max(.012,5*L/sole.shadow.mapSize.x);      // un riquadro grande come quello che segue la camera; uno stretto: due pixel e mezzo della mappa
+  renderer.shadowMap.needsUpdate=true; };
 RM.frame.push(function(){
-  if(!sole.castShadow) return;
+  if(!sole.castShadow || ombraFissa) return;
   var dist=camera.position.distanceTo(controlli.target), lato=Math.max(70,Math.min(420,dist*1.25)), x=lato>=420?10:controlli.target.x, z=lato>=420?0:controlli.target.z;
   if(Math.abs(lato-ombra.s)<ombra.s*.2 && Math.hypot(x-ombra.x,z-ombra.z)<ombra.s*.22) return;
   ombra.x=x; ombra.z=z; ombra.s=lato;
@@ -657,6 +668,7 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
       '      +texture2D(tCol,vUv+r*0.7).rgb+texture2D(tCol,vUv-r*0.7).rgb+texture2D(tCol,vUv+vec2(r.x,-r.y)*0.7).rgb+texture2D(tCol,vUv+vec2(-r.x,r.y)*0.7).rgb)/10.0; }',
       '  float g=lum(c); c=mix(vec3(g),c,1.1);',
       RM.VESTE?'  if(uVeste>0.5){ c=clamp(c,0.0,1.0); c=mix(c,c*c*(3.0-2.0*c),uGrado); }':'',      // veste: una curva a S leggera, più contrasto nei toni medi
+      '  c+=(fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(0.06711056,0.00583715))))-0.5)/255.0;',      // un filo di retino (mezzo gradino degli 8 bit, fermo sullo schermo): nelle penombre (l'interno di San Pietro nell'800) le sfumature scure non fanno più scalini di colore sugli schermi OLED (25 novembre 2026)
       '  gl_FragColor=vec4(c,1.0);',
       '}'].join(NL) });
   if(RM.VESTE){ mat.uniforms.uVeste=RM.vesteU; mat.uniforms.uGrado=RM.gradoU={value:.32}; }
@@ -898,18 +910,25 @@ var disturbo=-1e9;
 document.addEventListener('visibilitychange',function(){ disturbo=performance.now(); });
 var oraPasso=0;      // l'ora del fotogramma che si sta giudicando (le prove simulate la danno loro): i cambi decisi qui partono da lì
 function passoAlta(dt,lavoro,ora,calmo){ oraPasso=ora; try{ giudica(dt,lavoro,ora,calmo); } finally { oraPasso=0; } }
+/* Durante una scena animata (RM.scenaInCorso, da js/scene-tappe.js; 25 novembre 2026, l'utente dall'iPhone sull'800: scatti e «effetto flash») la qualità sta ferma:
+   la camera si muove quasi sempre, e la densità alta che cadeva a ogni volo e tornava a ogni pausa rifaceva la tela della pagina (un fotogramma lungo, e la nitidezza che cambia),
+   mentre un cambio di gradino accendeva o spegneva veste, occlusione e figure e rifaceva la mappa delle ombre a un'altra misura. In scena: densità e tela come a scena
+   tranquilla, nessuna salita, la misura d'avvio rimandata; si scende solo se la scena proprio non regge (media oltre 1,25 volte il periodo, almeno otto fotogrammi lunghi su venti). */
+function inScena(){ return !!(RM.scenaInCorso && RM.scenaInCorso()); }
 function giudica(dt,lavoro,ora,calmo){
+  var sc=inScena(); if(sc) calmo=true;
   if(calmo!==alta.calmo){ alta.calmo=calmo; alta.calmoDa=ora; if(!calmo) alta.calmoD=false; if(aggiornaMisura()) alta.f.length=0; }      // nei voli la tela degli effetti e la densità tornano alla base, a scena tranquilla risalgono
   if(calmo && !alta.calmoD && ora-alta.calmoDa>700){ alta.calmoD=true; if(aggiornaMisura()){ alta.f.length=0; alta.assesta=ora+500; } }      // la densità alta torna dopo 0,7 secondi di calma: un tocco breve non rifà la tela due volte
   if(!altaAdatta || ora<(alta.assesta||0)) return;
   if(ora-disturbo<1000 || ora-ultimoAnno<1500){ alta.f.length=0; alta.calma=0; return; }
   var T=TQ(), f=alta.f, k, n, s=0, l=0; f.push(dt,lavoro); if(f.length>180) f.splice(0,2);
-  if(!avvio.fatta){ misuraAvvio(dt,lavoro,ora,calmo,T); return; }
+  if(!avvio.fatta){ if(!sc) misuraAvvio(dt,lavoro,ora,calmo,T); return; }      // in scena la misura aspetta (disegnerebbe la scena due o tre volte per fotogramma)
   if(alta.verifica && f.length>=80){ var v=alta.verifica; alta.verifica=null; for(k=0;k<f.length;k+=2) s+=f[k]; s/=f.length/2;      // una discesa a scena tranquilla che non ha migliorato il ritmo: il freno è altrove, si torna su e non si scende più
     if(s>v.prima*.93 && s>(PC_Q?giuPC(T):T*1.09)){ mettiAlta(alta.p+1,'inutile'); alta.partenza=alta.p; alta.giuFermo=true; alta.spenta=true; return; } s=0; }
   if(alta.p>0 && !alta.giuFermo && !alta.verifica && (calmo || alta.p>alta.partenza)){      // con una verifica in corso non si scende ancora: prima si vede se la discesa è servita
     var mx=0; n=Math.min(PC_Q?PC_N:20,f.length/2); for(k=0;k<n;k++){ var fk=f[f.length-2-2*k]; s+=fk; if(fk>mx) mx=fk; if(fk>(PC_Q?PC_LUNGO:T*1.09)) l++; }
-    var giu=PC_Q?lentoPC((s-mx)/(n-1)>giuPC(T) || (alta.p>P_MEDIA && l>=n*.13),n):(n>=12 && (s-mx)/(n-1)>T*1.09 && l>=4);      // sul PC: novanta fotogrammi sotto i 35 al secondo di media (a «media» sotto i 24) o, sopra «media», uno su otto da 50 millesimi o più, due volte di fila
+    var giu=PC_Q?lentoPC((s-mx)/(n-1)>giuPC(T) || (alta.p>P_MEDIA && l>=n*.13),n):(n>=12 && (s-mx)/(n-1)>T*1.09 && l>=4);
+    if(sc) giu=n>=20 && (s-mx)/(n-1)>T*1.25 && l>=8;      // in scena: solo se proprio non regge      // sul PC: novanta fotogrammi sotto i 35 al secondo di media (a «media» sotto i 24) o, sopra «media», uno su otto da 50 millesimi o più, due volte di fila
     if(giu){      // lento davvero: media alta anche senza il fotogramma più lungo, e almeno quattro lunghi, perché un singolo inciampo (la memoria che si libera, la barra di Safari) non basti
       var tenuto=ora-alta.cambio, prima=s/n, sotto=alta.p<=alta.partenza, dalla=alta.p>NS-1;
       if(dalla){ mettiAlta(calmo?alta.p-1:NS-2,'lento'); alta.densFerma=true; alta.blocco=ora+90000; return; }      // la densità alta scende per prima e non si riprova; nei voli non è accesa: è «massima» stessa a non reggere
@@ -922,7 +941,7 @@ function giudica(dt,lavoro,ora,calmo){
   }
   ricorda(ora);
   var suDens=alta.p>=NS-1;      // il passo seguente è la densità: più prudenza
-  if(alta.spenta || !calmo || RM.livello>0 || alta.p>=TOP || ora<alta.blocco || (suDens && (alta.densFerma || !alta.calmoD)) || (PC_Q && alta.p+1>=(alta.tetto||1e9))){ alta.calma=0; return; }      // spenta: scende ancora se serve, ma non sale più
+  if(sc || alta.spenta || !calmo || RM.livello>0 || alta.p>=TOP || ora<alta.blocco || (suDens && (alta.densFerma || !alta.calmoD)) || (PC_Q && alta.p+1>=(alta.tetto||1e9))){ alta.calma=0; return; }      // spenta: scende ancora se serve, ma non sale più
   alta.calma+=dt; if(alta.calma<(suDens?5:2.5) || f.length<180) return;
   var lunghi=0, l50=0; n=f.length/2; for(k=0;k<f.length;k+=2){ s+=f[k]; l+=f[k+1]; if((suDens || k>=f.length-40) && f[k]>T*1.09) lunghi++; if(f[k]>PC_LUNGO) l50++; }
   if(PC_Q && !suDens){ if(s/n<suPC(T) && l/n<T*.63 && l50<=1) mettiAlta(alta.p+1,'margine'); return; }      // sul PC: almeno 42 al secondo nei novanta fotogrammi, al più uno da 50 millesimi; verso la densità valgono le soglie piene, qui sotto
@@ -971,7 +990,7 @@ var tsPrima=0;
     return; }
   var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1), ora=performance.now();
   if(!document.hidden && grezzo<.4 && ora-ultimoAnno>400){      // le pause (scheda nascosta, caricamento) e il viaggio fra due tappe non contano
-    if(scalda>0) scalda--; else if(!provaQ && avvio.fatta && ALTA===1 && DENS<=PR0+.001 && (altaAdatta?alta.p===0:true)){ somma+=grezzo; quanti++; }      // il regolatore di prima: in automatica solo in «bassa» (sopra, il ritmo lo guarda la scala della qualità), con una scelta a mano dove la tela è a 1
+    if(scalda>0) scalda--; else if(!provaQ && !inScena() && avvio.fatta && ALTA===1 && DENS<=PR0+.001 && (altaAdatta?alta.p===0:true)){ somma+=grezzo; quanti++; }      // il regolatore di prima: in automatica solo in «bassa» (sopra, il ritmo lo guarda la scala della qualità), con una scelta a mano dove la tela è a 1
     if(quanti>=50){ regola(somma/quanti); somma=0; quanti=0; }
   }
   for(var i=0;i<RM.frame.length;i++) RM.frame[i](dt);
@@ -994,7 +1013,7 @@ var tsPrima=0;
 })();
 /* ?prova=qualita: la prova dei gradini sul telefono (js/prova-qualita.js), caricata solo a richiesta, con la versione di questo file */
 (function(){ var sc=document.currentScript, v=sc && /\?v=[^&#]+/.exec(sc.src||''); RM.versione=v?v[0].slice(3):'';
-  if(!/[?&]prova=qualita/.test(location.search)) return;
-  window.addEventListener('load',function(){ var s=document.createElement('script'); s.src='js/prova-qualita.js'+(v?v[0]:''); document.body.appendChild(s); }); })();
+  var pr=/[?&]prova=(qualita|scena)/.exec(location.search); if(!pr) return;      // ?prova=scena&anno=800: la prova di una scena animata (js/prova-scena.js)
+  window.addEventListener('load',function(){ var s=document.createElement('script'); s.src='js/prova-'+pr[1]+'.js'+(v?v[0]:''); document.body.appendChild(s); }); })();
 
 })();

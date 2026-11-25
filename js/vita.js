@@ -566,10 +566,10 @@ function segnaOggetto(o){ if(!o.visible) return;
   for(j=0;j<o.children.length;j++) segnaOggetto(o.children[j]); }
 function zoneScene(forza){
   var ch=RM.scene.children, firma='', k, c;
-  for(k=IDX_VITA;k<ch.length;k++){ c=ch[k]; if(c.visible && c.userData.gruppo!=='vita' && !c.isPoints) firma+=k+','; }
+  for(k=IDX_VITA;k<ch.length;k++){ c=ch[k]; if(c.visible && c.userData.gruppo!=='vita' && !c.isPoints && !c.userData.noZona) firma+=k+','; }      // noZona: ciò che sta dentro un edificio (l'interno di San Pietro nell'800) non toglie posto a nessuno, e si muove a ogni fotogramma
   firma+='|'+RM.vitaEvita.length;
   if(firma===occFirma && !forza) return; occFirma=firma; occ.fill(0); occN=0;
-  for(k=IDX_VITA;k<ch.length;k++){ c=ch[k]; if(!c.visible || c.userData.gruppo==='vita' || c.isPoints || c.isSprite || c.isLight) continue;
+  for(k=IDX_VITA;k<ch.length;k++){ c=ch[k]; if(!c.visible || c.userData.gruppo==='vita' || c.isPoints || c.isSprite || c.isLight || c.userData.noZona) continue;
     c.updateMatrixWorld(true); bT.setFromObject(c); if(bT.isEmpty() || (bT.max.x-bT.min.x>200 && bT.max.z-bT.min.z>200)) continue;      // la piena e il velo coprono tutto: non sono scene
     segnaOggetto(c); }
   RM.vitaEvita.forEach(function(e){ if(e && e.x!=null) segna(e.x,e.z,e.r||2); });
@@ -584,7 +584,7 @@ var tX=0, tZ=1;      // la direzione della via nell'ultimo punto (sulla)
 /* Chi è lontano dalla camera (più di 450 m) si muove un fotogramma su tre, con un passo tre volte più lungo: a quella distanza non si vede, e il lavoro per fotogramma
    cala di quasi due terzi. lontano(o,j): 1 vicino, 3 lontano e tocca a lui, 0 lontano e non tocca a lui (la posizione resta quella di prima). */
 var FC=0, CX=0, CZ=0, CY2=0;
-function lontano(o,j){ var dx=pos[o]-CX, dz=pos[o+2]-CZ; if(dx*dx+dz*dz+CY2<2025) return 1; return (j+FC)%3?0:3; }
+function lontano(o,j){ var dx=pos[o]-CX, dz=pos[o+2]-CZ, d2=dx*dx+dz*dz+CY2; if(d2<2025) return 1; if(d2<8100) return (j+FC)%3?0:3; return (j+FC)%6?0:6; }      // oltre 900 m un fotogramma su sei (25 novembre 2026: nel 300, con la città piena, la gente costava 6 millesimi per fotogramma; i più sono lontani)
 function muoviGente(dt){
   var j=0, n, b, s, o, vp, tt, f, hs, lx, lz, ca, sa, lato, k, L;
   var fr=RM.QUALITA.gente[RM.q]||1, nt=RM.notte||0, F=(RM.vitaFattore==null?1:RM.vitaFattore)*VA.quota, dtm=MENO_MOTO?0:dt;

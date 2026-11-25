@@ -216,6 +216,35 @@ document.querySelector('.tempo').addEventListener('keydown',function(ev){      /
   if(ev.altKey||ev.ctrlKey||ev.metaKey||ev.shiftKey) return;
   if(ev.key==='Home'||ev.key==='End'){ ev.preventDefault(); ferma(); vai(ev.key==='Home'?0:T.length-1); var c=capi[ev.key==='Home'?1:0]; if(c && document.activeElement && document.activeElement.disabled) c.focus(); }
 });
+/* Tacche tutte uguali (25 novembre 2026, l'utente con una cattura dell'iPhone: «la parte iniziale ha barre più grandi?»). Prima ogni atto cresceva col numero delle sue tappe
+   ma aveva un minimo per la pastiglia del capo, e il primo atto, di cinque tacche, le aveva larghe il doppio. Ora si calcola una sola larghezza di tacca per tutta la linea; un atto
+   è largo quanto le sue tacche, ma mai meno di quanto serve al suo anno (e alla pastiglia «235» o «852»), misurati con un margine del 10% per le scritte più larghe dell'iPhone.
+   Dove l'atto deve restare più largo delle sue tacche, le tacche restano della stessa larghezza e si allarga lo spazio fra loro (stili .linea.tacche-uguali in fondo a css/stile.css). */
+function tacche(){
+  var linea=$('linea'), W=linea.clientWidth; if(!W) return;
+  var gi=parseFloat(getComputedStyle(gruppi[0].riga).columnGap)||0, ge=parseFloat(getComputedStyle(linea).columnGap)||0, G=gruppi.length;
+  var mins=gruppi.map(function(g,k){ var p=g.g.querySelector('p'), m=0; if(!p || getComputedStyle(p).display==='none') return 0;
+    var anno=p.querySelector('b:not(.fine)'), aw=anno&&getComputedStyle(anno).display!=='none'?anno.getBoundingClientRect().width:0;
+    var capo=k===0?capi[0]:k===G-1?capi[1]:null, cw=capo?capo.getBoundingClientRect().width:0;
+    m=aw*1.1+(cw?cw*1.1+(aw?10:2):0)+4; return m; });
+  var fisso=gruppi.map(function(){ return false; }), w=0;
+  for(var giro=0;giro<G;giro++){
+    var resto=W-(G-1)*ge, nl=0, cambia=false;
+    gruppi.forEach(function(g,k){ if(fisso[k]) resto-=mins[k]; else { resto-=(g.n-1)*gi; nl+=g.n; } });
+    w=nl?resto/nl:0;
+    gruppi.forEach(function(g,k){ if(!fisso[k] && g.n*w+(g.n-1)*gi<mins[k]){ fisso[k]=true; cambia=true; } });
+    if(!cambia) break; }
+  w=Math.max(2,Math.floor(w*100)/100);
+  gruppi.forEach(function(g,k){ var larg=fisso[k]?mins[k]:g.n*w+(g.n-1)*gi;
+    g.g.style.flex='0 0 '+larg.toFixed(2)+'px'; g.g.style.minWidth='0'; g.g.classList.toggle('largo',fisso[k]); });
+  linea.style.setProperty('--tacca',w+'px'); linea.classList.add('tacche-uguali');
+  /* il nome dell'ultimo atto si ferma prima della pastiglia «852», qualunque sia la sua larghezza (con le scritte dell'iPhone era più larga dei 52 punti fissati) */
+  var pf=gruppi[G-1].g.querySelector('p'); if(pf && capi[1]){ pf.style.paddingRight=''; var pr=parseFloat(getComputedStyle(pf).paddingRight)||0, cw1=capi[1].getBoundingClientRect().width; if(pr && cw1+8>pr) pf.style.paddingRight=Math.ceil(cw1+8)+'px'; }
+  centri=null;      // le posizioni delle tacche per il dito si rifanno
+}
+if(window.ResizeObserver){ new ResizeObserver(function(){ tacche(); }).observe($('linea')); }
+window.addEventListener('resize',function(){ tacche(); });
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ tacche(); });
 /* Il dito (o il mouse) scorre sulla linea: un fumetto dice anno e titolo della tappa che ha sotto, e al rilascio ci si va.
    Sui telefoni le tappe sono larghe pochi punti e non si toccano una per una; i tasti di ogni tappa restano per la tastiera. */
 var fumetto=document.createElement('p'), barra=$('linea'), cassa=barra.parentNode, mira=-1, premuto=false, centri=null;
@@ -325,6 +354,7 @@ function grande(si){
 function compatto(){ return window.getComputedStyle($('btnStrumenti')).display!=='none'; }
 function chiudiStrumenti(){ $('strumenti').classList.remove('aperto'); $('btnStrumenti').setAttribute('aria-expanded','false'); }
 function segnaStrumenti(){ var n=$('vociStrumenti').querySelectorAll('[aria-pressed="true"]').length; $('btnStrumenti').classList.toggle('attivo',n>0); $('btnStrumenti').textContent=n?'Strumenti · '+n:'Strumenti'; }
+RM.segnaStrumenti=segnaStrumenti;      // js/regioni.js lo chiama quando uno strumento torna acceso dalla visita
 $('btnStrumenti').addEventListener('click',function(){ var a=!$('strumenti').classList.contains('aperto'); $('strumenti').classList.toggle('aperto',a); this.setAttribute('aria-expanded',a?'true':'false'); });
 $('vociStrumenti').addEventListener('click',function(){ setTimeout(function(){ segnaStrumenti(); if(compatto()) chiudiStrumenti(); },0); });
 $('btnPiu').addEventListener('click',function(){ if(RM.zoom) RM.zoom(.62); });
