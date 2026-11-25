@@ -1306,15 +1306,30 @@ var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5,
    crescono con gli anni d'abbandono, poco dopo qualche decennio (nel 600 le terme di Diocleziano sono a un terzo), tutto dopo trecento anni. Meno sui templi del Foro Boario,
    sulla Meta Sudans e sull'arco di Gallieno. Le misure sono una resa, non una fonte.
    Il Pantheon (25 novembre 2026, l'utente: nel 600 «quasi invariato»): prima aveva un terzo del verde e un quinto dell'intonaco caduto e non si vedeva nulla; ora quasi
-   come gli altri (erba sui gradoni e sulle cornici, muschio e umido sulla rotonda, intonaco caduto a chiazze, dal 609 tutto via perché è chiesa), ma niente crolli
+   come gli altri (erba sui gradoni e sulle cornici, muschio e umido sulla rotonda, intonaco caduto a chiazze; dal 609 ripulito per gradi, con una parte dei segni che resta: si veda RIUSO), ma niente crolli
    e niente tegole cadute (uCoppi a zero: le tegole di bronzo ci sono fino al 663, quando le toglie Costante II; la scheda: «nel 609 il papa riceve un edificio intero»).
    Prima nel 500 e nel 600 la calotta mostrava buchi dove mancavano le tegole: un crollo che le fonti non dicono. */
 var MISURA_V={pantheon:.9, foroboario:.45, metasudans:.5, esquilino:.7}, MISURA_I={pantheon:.9, foroboario:.4, metasudans:.6, esquilino:.6};
-RM.rovina=function(id,anno){
-  var st=D.MONUMENTI[id]||COMPARSA, da=null, dc=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y;
+/* Quale parte cade, dove una fonte letta lo dice (26 novembre 2026; lo shader in taglio e rmCrollo, js/costruttore.js). zona: [dx, dz, da, a] in coordinate del monumento,
+   il piano che divide la parte che regge (prima di «da») da quella che cade (dopo «a»); peso: [chi regge, chi cade]; base: taglio fisso in più nella parte che cade,
+   in frazioni dell'altezza, che arriva col crollo; muri: 0 se cadde solo il tetto. Gli altri monumenti crollano col campo continuo, uguale ovunque. */
+var CROLLI={
+  massenzio:{zona:[0,1,-1.45,-1.25], peso:[.05,1.3], base:.45},      // Platner e Ashby, Basilica Constantini (letta il 26 novembre 2026): «The south aisle and the roof of the nave probably collapsed in the earthquake of Leo IV in 847»; «the north wall and the north aisle … are still standing». Qui -z è il nord e la navata nord va da z -3,3 a -1,3: regge lei, con il muro nord e l'abside nord; cade tutto ciò che nella navata centrale e in quella sud sta sopra le volte laterali (base 0,45: sopra 2,4 unità su 4,4, l'imposta delle volte), cioè la volta e le pareti alte della navata, e la navata sud scende ancora, per campate. Che con la volta cadessero anche le pareti alte e quanto in basso arrivi la rottura è una resa; «probably» è di Platner e Ashby
+  paolo:{zona:[0,0,-2,-1], peso:[1,1], muri:0}      // Annali del regno dei Franchi, 801: «tectum basilicae beati Pauli apostoli magna ex parte cum suis trabibus decidit»: cade il tetto, non i muri
+};
+/* La quota del taglio di rmCrollo (js/costruttore.js) rifatta qui, con le ottave fini al loro valore medio: serve a posare macerie e verde dove la cima è caduta davvero.
+   rv: il risultato di RM.rovina; muri: per le murature vale il peso dei muri. */
+function crolloJS(o,lx,lz,rv,muri){
+  var cr=CROLLI[o.id]||{zona:[0,0,-2,-1],peso:[1,1]}, t=Math.min(1,Math.max(0,(lx*cr.zona[0]+lz*cr.zona[1]-cr.zona[2])/(cr.zona[3]-cr.zona[2]))), zs=t*t*(3-2*t), m=cr.peso[0]+(cr.peso[1]-cr.peso[0])*zs;
+  var kl=.5+.2*Math.sin(lx*.37+lz*.21+1.3)+.16*Math.sin(-lx*.19+lz*.43+4.1)+.1*Math.sin(lx*.71-lz*.53+2.2), k=.55*kl+.225;
+  return ((rv.r||0)*(.1+2*Math.min(1,Math.max(0,(k-.3)/.42)))*m+(cr.base||0)*(rv.k||0)*zs)*(muri&&cr.muri!=null?cr.muri:1);
+}
+function grezza(id,anno){      // il degrado senza i ritorni in uso graduali (si veda RM.rovina, più sotto)
+  var st=D.MONUMENTI[id]||COMPARSA, da=null, dc=null, spoglio=0, fuoco=0, crollo=0, scavo=0, rinato=false, k, cura=CURA[id]==null?1:CURA[id], q, y, dk=null;
   for(k=0;k<st.length;k++){
     q=st[k][1]; y=st[k][0];
-    if(q==='uso'){ if(k>0 && st[k-1][1]!=='assente' && anno>=y){ da=null; dc=null; spoglio=0; fuoco=0; crollo=0; scavo=0; rinato=true; } continue; }   // riaperto e restaurato (il Pantheon chiesa, gli acquedotti)
+    if(q==='uso'){ if(k>0 && st[k-1][1]!=='assente' && anno>=y){ da=null; dc=null; spoglio=0; fuoco=0; crollo=0; scavo=0; dk=null; rinato=true; } continue; }   // riaperto: qui si azzera; quanto resta dei segni lo decide RM.rovina (RIUSO)
+    if(q!=='assente' && anno>=y-3 && dk==null) dk=y;      // il primo cambio dopo l'ultimo uso: da qui si contano gli anni d'abbandono
     if(anno>=y-3 && q==='abbandonato' && dc==null) dc=y;
     if(anno>=y-3 && (q==='chiuso'||q==='bruciato'||(q==='spogliato'&&dc==null)) && da==null) da=y;
     if(q==='spogliato'||q==='bruciato') spoglio=Math.max(spoglio,RM.sfuma(y-.4,y+.3,anno));
@@ -1325,7 +1340,36 @@ RM.rovina=function(id,anno){
   var d0=da==null?dc:(dc==null?da:Math.min(da,dc)), chiuso=d0==null?0:RM.sfuma(0,70,anno-d0), eta=da==null?0:anno-da, regge=da==null&&dc!=null;      // regge: abbandonato, la struttura resta in piedi
   var ea=dc==null?0:anno-dc, mv=MISURA_V[id]==null?1:MISURA_V[id], mi=MISURA_I[id]==null?1:MISURA_I[id];      // anni d'abbandono
   return {v:dc==null?0:mv*(.25+.75*RM.sfuma(0,300,ea))*RM.sfuma(0,25,ea), i:dc==null?0:mi*(.25+.75*RM.sfuma(20,260,ea))*RM.sfuma(5,40,ea), r:(da==null?0:.15*RM.sfuma(20,120,eta)+.04*RM.sfuma(120,320,eta))+(regge?0:.07*spoglio)+.2*fuoco+.2*crollo+.1*scavo, s:spoglio,
-          c:Math.min(1,Math.max(.45*crollo,cura*(rinato?.35:1)*(.62*RM.sfuma(390,570,anno)+.45*chiuso+.2*spoglio+.5*fuoco+.3*scavo)))};
+          c:Math.min(1,Math.max(.45*crollo,cura*(rinato?.35:1)*(.62*RM.sfuma(390,570,anno)+.45*chiuso+.2*spoglio+.5*fuoco+.3*scavo))), k:crollo, dk:dk, dv:dc};
+}
+/* Ritorno in uso (26 novembre 2026; l'utente: il Pantheon nel 610 «più nuovo che nel 390» non è credibile; e sulla regola generale: «Ok a meno che le fonti non dicano altro»).
+   Fino al 25 novembre l'uso che seguiva un abbandono azzerava tutto in un istante: erba, muschio, intonaco caduto, crepe, bronzo brunito. Ora, caso di base:
+   - la pulizia comincia mezzo anno prima della data del ritorno e dura tre anni e mezzo (p, da 0 a 1);
+   - via l'erba, il muschio, i cespugli e l'edera (uPulito nello shader, crescita del verde più sotto);
+   - resta una parte dei segni, tanto più grande quanto più lungo è stato l'abbandono: dal 25% (pochi anni) al 50% (trecento anni) del verde-sporco (colature, umido,
+     bronzo brunito), delle crepe e dell'incuria; dell'intonaco caduto ne resta il 60% di quella parte (è la cosa che si ripara per prima); i crolli si riparano (un
+     edificio che si usa ha il tetto), gli spogli no (ciò che è stato portato via non torna). La tinta dello stato si schiarisce, ma un poco della vecchia resta.
+   - il degrado dell'edificio in uso continua sopra questi resti (si prende il più alto dei due).
+   Quanto si pulisca e in quanti anni è una resa, uguale per tutti, finché una fonte letta non dica altro: allora la voce di RIUSO la scavalca, con la fonte accanto.
+   Campi: da (anni dal ritorno all'inizio dei lavori), durata, resta (quota dei segni che restano, al posto di quella calcolata), intonaco (quota dell'intonaco caduto
+   che resta, fra i segni), ripara (quota dei crolli riparati), da_chi (il monumento di cui eredita i segni, se è un altro oggetto del modello: la stessa fabbrica). */
+var RIUSO={
+  pantheon:{},      // regola di base. Liber Pontificalis, vita di Bonifacio IV (LXVIIII nell'ed. Duchesne, I p. 317; LXVIII 2 per Platner e Ashby): «petiit a Focate principe templum qui appellatur Pantheum, in quo fecit ecclesiam beatae Mariae semper virginis et omnium martyrum; in qua ecclesia princeps dona multa optulit». Nessun lavoro nominato; Platner e Ashby (voce Pantheon) neppure
+  paolo:{da:-2.5, durata:2.5},      // regola di base per i segni; il tetto (il solo crollo) si ricostruisce: la scheda (dati.js) «papa Leone III lo ricostruisce», dal Liber Pontificalis, che qui non è stato riletto. L'806 del modello è la riapertura, quindi i lavori finiscono lì e non dopo: due anni e mezzo è una resa
+  santadriano:{da_chi:'curia'}      // la Curia diventata chiesa (Liber Pontificalis, vita di Onorio I, dalla scheda: «vi fa la chiesa del beato Adriano»; anno ignoto): eredita i segni della Curia e li perde per la regola di base. La Curia nel modello non fu abbandonata: restano poche crepe
+};
+RM.rovina=function(id,anno){
+  var b=grezza(id,anno), tb=RIUSO[id], st=D.MONUMENTI[id]||COMPARSA, yr=null, prima=null, k, da=(tb&&tb.da!=null)?tb.da:-.5;
+  for(k=1;k<st.length;k++){
+    if(st[k][1]==='uso' && st[k-1][1]!=='assente' && anno>=st[k][0]+da){ yr=st[k][0]; prima=st[k-1][1]; }
+    if(st[k][1]==='uso' && st[k-1][1]==='assente' && tb && tb.da_chi && anno>=st[k][0]+da){ yr=st[k][0]; prima='uso'; }
+  }
+  if(yr==null) return b;
+  var pre=grezza(tb&&tb.da_chi||id,yr-.001), p=RM.sfuma(yr+da,yr+da+(tb&&tb.durata!=null?tb.durata:3.5),anno);
+  var anni=pre.dk==null?0:yr-pre.dk, resta=(tb&&tb.resta!=null)?tb.resta:.25+.25*RM.sfuma(0,300,anni), ri=(tb&&tb.intonaco!=null)?tb.intonaco:.6, rp=(tb&&tb.ripara!=null)?tb.ripara:1;
+  function verso(a,z){ return a+(z-a)*p; }
+  return {v:Math.max(b.v,verso(pre.v,pre.v*resta)), i:Math.max(b.i,verso(pre.i,pre.i*resta*ri)), c:Math.min(1,Math.max(b.c,verso(pre.c,pre.c*resta))), r:Math.max(b.r,verso(pre.r,pre.r*(1-rp))),
+          s:Math.max(b.s,pre.s), k:verso(pre.k,pre.k*(1-rp)), dk:b.dk, dv:b.dv, pulito:p, prima:prima, tinta:1-p*(1-.3*resta), resta:resta, ritorno:yr};      // tinta: quanto resta della tinta dello stato di prima
 };
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
@@ -1349,6 +1393,9 @@ RM.moduli.push(function(anno){
     o.mat.color.copy(TINTA[q.s0]).lerp(TINTA[q.s1],q.t);
     o.presenza=p; o.g.visible=p>.01; o.g.scale.y=cant?1:Math.max(p,.001); o.mat.userData.u.uCant.value=cant?q.t:1; ponteggio(o,cant?q.t:0);
     var rv=RM.rovina(o.id,anno); o.mat.userData.u.uRovina.value=rv.r; o.mat.userData.u.uSpoglio.value=rv.s; o.mat.userData.u.uCrepe.value=rv.c; o.mat.userData.u.uVerde.value=rv.v; o.mat.userData.u.uIntonaco.value=rv.i;
+    o.mat.userData.u.uPulito.value=rv.pulito||0; if(rv.prima) o.mat.color.copy(TINTA.uso).lerp(TINTA[rv.prima]||TINTA.uso,rv.tinta);      // tornato in uso: si ripulisce per gradi (RIUSO)
+    else if(q.s1==='uso' && q.s0!=='uso' && q.s0!=='assente') o.mat.color.copy(TINTA[q.s0]);      // e non schiarisce nei sei anni prima, come faceva la sfumatura degli stati
+    var cr=CROLLI[o.id]; if(cr){ var uz=o.mat.userData.u; uz.uCrZona.value.set(cr.zona[0],cr.zona[1],cr.zona[2],cr.zona[3]); uz.uCrPeso.value.set(cr.peso[0],cr.peso[1],(cr.base||0)*(rv.k||0),cr.muri==null?1:cr.muri); }
     if(o.id==='pompeo' && anno>=493){ var tPo=1-RM.sfuma(546,640,anno); o.mat.userData.u.uCrepe.value*=1-.45*tPo; o.mat.userData.u.uRovina.value*=1-.5*tPo; }      // restaurato sotto Teodorico (Cassiodoro, Variae IV 51: «roboranda», a spese del re): crepe e crolli arretrano; di quanto è una resa. Abbandonato dal 546 (25 novembre 2026): l'effetto del restauro svanisce in un secolo
     if(o.id==='pantheon'){ o.mat.userData.u.uCoppi.value=0; o.mat.userData.u.uSpoglio.value=RM.sfuma(662.6,663.3,anno)*(1-RM.sfuma(734,736,anno)); o.mat.userData.u.uPiombo.value=RM.sfuma(734,736,anno); }   // la chiesa resta in uso: cambia solo il tetto. Bronzo tolto da Costante II (LP LXXVIII 3), piombo di Gregorio III (LP XCII 12)
     if(o.id==='colosseo'){ var us=o.mat.userData.u; us.uSudDir.value.set(-Math.sin(o.ry),Math.cos(o.ry)); us.uSudR.value.set(9.4,7.8);
@@ -1385,10 +1432,10 @@ RM.moduli.push(function(anno){
     var n=Math.round((QUANTI[o.id]||40)*quota), k, c=Math.cos(o.g.rotation.y), s=Math.sin(o.g.rotation.y);
     function mondo(p){ return [o.g.position.x+p[0]*c+p[2]*s, o.g.position.y+p[1], o.g.position.z-p[0]*s+p[2]*c]; }
     var kS=Math.min(1,.5+(o.raggio||5)/10);      // sui monumenti piccoli (Minerva Medica) arbusti più piccoli: prima facevano un cappello di palle
-    if(alti.length) for(k=0;k<n;k++){ var p=punto(pesca(alti,at)[1]); cespi.push({o:o, p:mondo(p), y:p[1], soglia:rnd(), sc:(.7+rnd()*1.2)*kS, ry:rnd()*6.28, q:rnd()}); }
-    if(corti.length) for(k=0;k<Math.round(n*.3);k++){ var pc=punto(pesca(corti,ac)[1]); cespi.push({o:o, p:mondo(pc), y:pc[1], soglia:rnd(), sc:1+rnd()*1.4, ry:rnd()*6.28, q:rnd()}); }      // nei cortili gli arbusti si fanno più grandi
+    if(alti.length) for(k=0;k<n;k++){ var p=punto(pesca(alti,at)[1]); cespi.push({o:o, p:mondo(p), l:[p[0],p[2]], y:p[1], soglia:rnd(), sc:(.7+rnd()*1.2)*kS, ry:rnd()*6.28, q:rnd()}); }
+    if(corti.length) for(k=0;k<Math.round(n*.3);k++){ var pc=punto(pesca(corti,ac)[1]); cespi.push({o:o, p:mondo(pc), l:[pc[0],pc[2]], y:pc[1], soglia:rnd(), sc:1+rnd()*1.4, ry:rnd()*6.28, q:rnd()}); }      // nei cortili gli arbusti si fanno più grandi
     if(muri.length) for(k=0;k<Math.round(n*.5);k++){ var w=pesca(muri,am), j=w[1], top=Math.max(P0[j+1],P0[j+4],P0[j+7]), q=punto(j), h=.3+rnd()*.6;
-      q[1]=Math.min(q[1]+h*.6,top)-h*.5; viti.push({o:o, p:mondo([q[0]+w[2]*.012,q[1],q[2]+w[3]*.012]), y:q[1]+h*.5, soglia:rnd(), h:h, ry:Math.atan2(w[2]*c+w[3]*s,-w[2]*s+w[3]*c), q:rnd()}); }
+      q[1]=Math.min(q[1]+h*.6,top)-h*.5; viti.push({o:o, p:mondo([q[0]+w[2]*.012,q[1],q[2]+w[3]*.012]), l:[q[0],q[2]], y:q[1]+h*.5, soglia:rnd(), h:h, ry:Math.atan2(w[2]*c+w[3]*s,-w[2]*s+w[3]*c), q:rnd()}); }
   });
   if(!cespi.length&&!viti.length) return;
   var Bc=new RM.Costruttore(), Bv=new RM.Costruttore(), sg=tel?[5,2]:[6,3], rovo=RM.col(0x4c5a30), secco=RM.col(0x75744a), edera=RM.col(0x3a4f2a);
@@ -1398,14 +1445,15 @@ RM.moduli.push(function(anno){
   function maglia(B,N,ombra){ var m=new THREE.InstancedMesh(B.geometria(),RM.matPietra(),Math.max(1,N)); m.castShadow=ombra; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='monumenti'; RM.scene.add(m); return m; }
   var mc=maglia(Bc,cespi.length,!tel), mv=maglia(Bv,viti.length,false), d=new THREE.Object3D(), ultimo=-1;
   /* quanto verde c'è in quell'anno: da zero all'abbandono a pieno trecento anni dopo; zero se l'edificio torna in uso (il Pantheon chiesa) */
-  function crescita(o,anno){ var st=D.MONUMENTI[o.id], dc=null, k; for(k=0;k<st.length;k++){ if(anno<st[k][0]) break; if(st[k][1]==='uso') dc=null; else if(st[k][1]==='abbandonato'&&dc==null) dc=st[k][0]; }
-    return dc==null||!o.g.visible?0:(MISURA[o.id]||1)*(.15+.85*RM.sfuma(0,300,anno-dc))*RM.sfuma(0,25,anno-dc); }
+  function crescita(o,anno){ var rv=RM.rovina(o.id,anno), a=rv.ritorno!=null?Math.min(anno,rv.ritorno-.01):anno, st=D.MONUMENTI[o.id], dc=null, k;      // tornato in uso (RIUSO): il verde di quel momento, tolto via via che si pulisce (26 novembre 2026: prima spariva in un istante)
+    for(k=0;k<st.length;k++){ if(a<st[k][0]) break; if(st[k][1]==='uso') dc=null; else if(st[k][1]==='abbandonato'&&dc==null) dc=st[k][0]; }
+    return dc==null||!o.g.visible?0:(MISURA[o.id]||1)*(.15+.85*RM.sfuma(0,300,a-dc))*RM.sfuma(0,25,a-dc)*(1-(rv.pulito||0)); }
   /* Si disegnano solo le istanze che si vedono, in fila (m.count): prima si disegnavano tutte, anche quelle a grandezza zero (circa 110.000 triangoli nel caso peggiore).
      Il gradino della qualità ne tiene una parte (RM.QUALITA.verde: 45% in «bassa», 70% sul «telefono»), scelta a caso una volta per tutte (campo q). */
   function posa(m,el,anno,alto,fr){
     var g={}, rc={}, j=0; el.forEach(function(e){
-      var o=e.o; if(g[o.id]==null){ g[o.id]=crescita(o,anno); var rv=RM.rovina(o.id,anno); rc[o.id]=1-rv.r*1.95; }      // sopra questa quota lo shader può aver fatto cadere la cima: lì niente verde
-      var v=Math.max(0,Math.min(1,(g[o.id]-e.soglia)*5)); if(e.y>o.alto*rc[o.id] || e.q>=fr) v=0; if(v<=0) return;
+      var o=e.o; if(g[o.id]==null){ g[o.id]=crescita(o,anno); rc[o.id]=RM.rovina(o.id,anno); }
+      var v=Math.max(0,Math.min(1,(g[o.id]-e.soglia)*5)); if(e.y>o.alto*(1-crolloJS(o,e.l[0],e.l[1],rc[o.id])) || e.q>=fr) v=0; if(v<=0) return;      // sopra la quota del taglio dello shader la cima è caduta: lì niente verde
       d.position.set(e.p[0],e.p[1],e.p[2]); d.rotation.set(0,e.ry,0); var sc=(alto?e.h:e.sc)*(.35+.65*v); d.scale.set(sc,sc,sc); d.updateMatrix(); m.setMatrixAt(j++,d.matrix); });
     m.count=j; m.visible=j>0; m.instanceMatrix.needsUpdate=true; }
   var qUltimo=-1;
@@ -1414,6 +1462,45 @@ RM.moduli.push(function(anno){
   RM.frame.push(function(){ var t=RM.QUALITA&&RM.QUALITA.degrado, dq=t&&t[RM.q]!=null?t[RM.q]:1; if(dq!==RM.degradoQ.value) RM.degradoQ.value=dq;      // il dettaglio dello shader dell'abbandono segue il gradino
     if(quotaQ()!==qUltimo && ultimo>=0){ qUltimo=quotaQ(); posa(mc,cespi,ultimo,false,qUltimo); posa(mv,viti,ultimo,true,qUltimo); RM.renderer.shadowMap.needsUpdate=true; } });
   RM.verdeRuderi={cespugli:mc, rampicanti:mv, quanti:cespi.length+viti.length};      // per le prove: nasconderli mostra lo stato «abbandonato» senza il verde
+})();
+
+/* ---------- le macerie dei crolli ----------
+   26 novembre 2026, insieme ai crolli continui (rmCrollo in js/costruttore.js): dove un terremoto fa cadere volte e muri (stato «crollato»: Massenzio, terme di Caracalla,
+   Venere e Roma nell'847) le macerie restano al piede e dentro le navate: cumuli bassi e sformati, posati dove il taglio è più profondo (crolloJS), sul piano più alto che
+   resta sotto la rottura (il pavimento della navata, una terrazza, il suolo fuori). Per Caracalla Platner e Ashby (Thermae Antoninianae) dicono di una colonna del cortile
+   che poggia su un cumulo di macerie dell'847; per gli altri è la conseguenza del crollo, non una notizia. Forma, numero e grandezza dei cumuli sono una resa.
+   San Paolo no: nell'801 cade il tetto e le sue travi stanno nella scena della tappa (js/scene-tappe.js). Poche decine di istanze per monumento, una sola maglia. */
+(function(){
+  var cad=M.filter(function(o){ var st=D.MONUMENTI[o.id], cr=CROLLI[o.id]; return o.g&&st&&!(cr&&cr.muri===0)&&st.some(function(q){ return q[1]==='crollato'; }); });
+  if(!cad.length) return;
+  var tel=RM.piccolo, el=[], seme=11;
+  function rnd(){ seme=(seme*16807)%2147483647; return (seme-1)/2147483646; }
+  cad.forEach(function(o){
+    var st=D.MONUMENTI[o.id], yc=st.filter(function(q){ return q[1]==='crollato'; })[0][0], rv=RM.rovina(o.id,yc+1), g=o.g.geometry, P0=g.attributes.position.array, bb=g.boundingBox, piani=[], i;
+    for(i=0;i<P0.length;i+=9){ var ux=P0[i+3]-P0[i],uy=P0[i+4]-P0[i+1],uz=P0[i+5]-P0[i+2],vx=P0[i+6]-P0[i],vy=P0[i+7]-P0[i+1],vz=P0[i+8]-P0[i+2], nx=uy*vz-uz*vy, ny=uz*vx-ux*vz, nz=ux*vy-uy*vx, a2=Math.hypot(nx,ny,nz);
+      if(a2>1e-6 && Math.abs(ny)/a2>.9) piani.push(i); }      // i piani orizzontali, dove un cumulo può posarsi
+    function suolo(x,z,sopra){ var y=-1, j; for(j=0;j<piani.length;j++){ var i=piani[j], ax=P0[i],az=P0[i+2],bx=P0[i+3],bz=P0[i+5],cx=P0[i+6],cz=P0[i+8], yy=(P0[i+1]+P0[i+4]+P0[i+7])/3; if(yy<=y||yy>sopra) continue;
+        var d=(bz-cz)*(ax-cx)+(cx-bx)*(az-cz); if(Math.abs(d)<1e-9) continue; var l1=((bz-cz)*(x-cx)+(cx-bx)*(z-cz))/d, l2=((cz-az)*(x-cx)+(ax-cx)*(z-cz))/d; if(l1>=0&&l2>=0&&l1+l2<=1) y=yy; }
+      return y; }      // -1: nessun piano del monumento sotto il punto (fuori dalla pianta)
+    var passo=Math.min(.7,Math.max(.35,o.raggio/12)), cand=[], x, z;      // cumuli da quattro a quindici metri, anche sulle terme grandi
+    for(x=bb.min.x-.4;x<=bb.max.x+.4;x+=passo) for(z=bb.min.z-.4;z<=bb.max.z+.4;z+=passo){ var xx=x+(rnd()-.5)*passo, zz=z+(rnd()-.5)*passo, dd=crolloJS(o,xx,zz,rv,true); if(dd>.3) cand.push([dd+rnd()*.15,xx,zz,dd]); }
+    cand.sort(function(a,b){ return b[0]-a[0]; });
+    var n=tel?30:70, c=Math.cos(o.g.rotation.y), s=Math.sin(o.g.rotation.y), presi=0;
+    for(i=0;i<cand.length&&presi<n&&i<n*4;i++){ var q=cand[i], y=suolo(q[1],q[2],o.alto*(1-q[3])-.05), w=passo*(1.3+.9*rnd())*(.7+q[3]); if(y<0) continue; presi++;      // solo sopra i piani del monumento (fuori, sulla strada, no); al più quattro prove per cumulo, perché suolo scorre tutti i piani
+      el.push({o:o, yc:yc, p:[o.g.position.x+q[1]*c+q[2]*s, o.g.position.y+y, o.g.position.z-q[1]*s+q[2]*c], w:w, h:w*(.22+.2*rnd())*Math.min(1,.4+q[3]), ry:rnd()*6.28, t:rnd()}); }
+  });
+  if(!el.length) return;
+  var B=new RM.Costruttore(), ico=new THREE.IcosahedronGeometry(.5,1), pa=ico.attributes.position, k, r2=RM.casuale?RM.casuale(5):rnd;
+  for(k=0;k<pa.count;k++){ var f=.75+.5*r2(); pa.setXYZ(k,pa.getX(k)*f,Math.max(0,pa.getY(k))*f,pa.getZ(k)*f); }      // sformato e con la base piatta
+  ico.computeVertexNormals(); B.geo(ico,P.selce);
+  var m=new THREE.InstancedMesh(B.geometria(),RM.matPietra(),el.length); m.castShadow=!tel; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='monumenti'; RM.scene.add(m);
+  var NUC=RM.col(0xc9bca6), MAT=RM.col(0xc49478), cc=new THREE.Color(), d=new THREE.Object3D(), ultimo=-1;
+  el.forEach(function(e,j){ e.col=new THREE.Color().copy(NUC).lerp(MAT,e.t*.6); m.setColorAt(j,e.col); });      // calcestruzzo e mattone: il nucleo e il paramento dei muri caduti (i colori ci sono prima del primo disegno: three r128 non rifà il programma se arrivano dopo)
+  RM.moduli.push(function(anno){ if(Math.abs(anno-ultimo)<.05) return; ultimo=anno; var j=0;
+    el.forEach(function(e){ var v=e.o.g.visible?RM.sfuma(e.yc-.4,e.yc+.1,anno):0; if(v<=0) return;      // arrivano con il crollo
+      d.position.set(e.p[0],e.p[1],e.p[2]); d.rotation.set(0,e.ry,0); d.scale.set(e.w*v,e.h*v,e.w*.8*v); d.updateMatrix(); m.setColorAt(j,cc.copy(e.col).multiply(e.o.mat.color)); m.setMatrixAt(j++,d.matrix); });
+    m.count=j; m.visible=j>0; m.instanceMatrix.needsUpdate=true; if(m.instanceColor) m.instanceColor.needsUpdate=true; });
+  RM.macerieCrolli={maglia:m, quante:el.length};      // per le prove
 })();
 
 /* ---------- le iscrizioni e il timpano del Pantheon ----------

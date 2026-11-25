@@ -232,7 +232,7 @@ RM.tingi=function(mat,classe){
 };
 RM.matPietra=function(classe){ var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide}); return classe?RM.tingi(conConci(m),classe):soloLod(m); };      // gli edifici (quelli con una classe) mostrano i conci da vicino; barche, alberi e sterpi no
 /* Pietra che va in rovina. Lo shader lavora in coordinate locali del monumento:
-   ogni "colonna" di muratura (cella in pianta) viene troncata a un'altezza casuale, più bassa quanto più alto è uRovina,
+   la muratura viene troncata sotto una quota che varia in pianta senza salti (rmCrollo; fino al 25 novembre 2026 a celle di sei metri), più bassa quanto più alto è uRovina,
    così i crolli partono dall'alto e non restano pezzi sospesi; le coperture si bucano; la pietra si macchia di muschio. */
 var NL=String.fromCharCode(10);
 /* Sotto i coppi caduti (25 novembre 2026, l'utente: sotto i coppi mancanti «non si vedono le travi»). Prima il pixel del coppo spariva e si vedeva ciò che stava sotto
@@ -259,14 +259,25 @@ function orditura(colore){
   '    if(abs(fract(wT/0.045+0.5)-0.5)*0.045>0.008*vL && abs(fract(uT/0.12+0.5)-0.5)*0.12>0.015*vR && abs(fract(wT/0.4+0.5)-0.5)*0.4>0.025*vA) discard;'      // nell'ombra: le travi piene
   ].join(NL);
 }
+/* Crolli (26 novembre 2026, l'utente: la basilica di Massenzio nell'850 era «una scacchiera di blocchi verdi e bruni», una tuta mimetica e non una rovina).
+   Prima ogni cella di sei metri in pianta veniva troncata a un'altezza a caso (rmH su floor(vLoc.xz*1.6)): dadi alternati, con lo scalino netto fra una cella e l'altra.
+   Ora la quota del taglio è un campo continuo (rmCrollo in DICHIARA): zone larghe venti-trenta metri, quanto una campata (tre onde lente, che il JavaScript sa rifare
+   uguali per posare le macerie), un'ottava di undici metri, e l'orlo frastagliato di tre metri e di un metro. Il taglio scende così per campate intere e la cima dei muri
+   è un profilo spezzato ma continuo, senza scalini. uCrZona e uCrPeso (CROLLI in js/monumenti.js) dicono, dove una fonte lo sa, quale parte cadde e quale restò:
+   un piano in pianta (direzione, da, a) divide la parte che regge (peso x) da quella che cade (peso y); z aggiunge un taglio fisso alla parte che cade (la volta
+   della navata di Massenzio, tutta), w moltiplica il taglio dei muri (0 a San Paolo, dove cadde solo il tetto). Senza voce: un solo peso, 1.
+   Dove il taglio apre un solido se ne vede l'interno (facce rovesciate, rmRotto). Nel modello i solidi grandi sono sale (la navata, le campate): le pareti interne restano
+   pareti, col loro paramento; il fondo, che prima prendeva l'erba come una terrazza, si dipinge del colore del nucleo dei muri caduti (calcestruzzo con scaglie di tufo
+   e di mattone): il pavimento coperto di macerie, e nei muri sottili la rottura. Provata e tolta lo stesso giorno: la rottura illuminata come un piano rivolto in alto
+   (le sale senza volta diventavano lastre scure). Restano fuori il fronte sud del Colosseo (uSud) e i cantieri (uCant), che non cambiano. */
 function taglio(colore){ return [
-  'float rmLegno=0.0; vec3 rmLegnoC=vec3(0.0); float rmOrlo=0.0;',
+  'float rmLegno=0.0; vec3 rmLegnoC=vec3(0.0); float rmOrlo=0.0; float rmRotto=0.0;',
   /* cantiere (uCant da 0 a 1): la muratura c'è solo fino a una certa quota, diversa da un tratto all'altro (celle di venti metri in pianta); tetti e parti alte arrivano per ultimi */
   'if(uCant<0.999){ float cn=rmH(vec3(floor(vLoc.xz*0.5+0.21),3.0)); if(vLoc.y>uAlt*uCant*(0.7+0.6*cn)+0.04) discard; }',
   'if(vTipo<1.5 && uRovina*2.0+uCrepe*uCrepe*0.2>0.0){',      // (24 novembre 2026) le prove si fanno solo se c'è degrado: su un edificio intatto il pixel non paga il rumore
-  '  float rn=rmH(vec3(floor(vLoc.xz*1.6+0.37),1.0));',
   '  float rq=clamp(vLoc.y/uAlt,0.0,1.0);',
-  '  if(rq>1.0-uRovina*(0.25+1.7*rn)) discard;',
+  '  float zC=0.0; if(uRovina+uCrPeso.z>0.0){ zC=rmCrollo(vLoc.xz)*(vTipo<0.5?uCrPeso.w:1.0); if(rq>1.0-zC) discard; }',      // il taglio dei crolli: campo continuo, non più a celle
+  colore?'  if(!gl_FrontFacing && vTipo<0.5 && zC>0.01 && uSud<0.001 && uCant>0.999) rmRotto=1.0;':'',      // la superficie di rottura: l'interno del solido che il taglio ha aperto
   '  if(vTipo>0.5 && uCoppi>0.0){ float dC=(uRovina*2.0+uCrepe*uCrepe*0.2+uVerde*0.14)*uCoppi-(0.5+1.35*(0.6*rmN(vec3(vLoc.xz*1.1,2.0))+0.4*rmN(vec3(vLoc.xz*4.3,2.5))-0.5));',   // coppi caduti: chiazze irregolari (prima a quadretti di due metri, da tuta mimetica digitale); sui tetti abbandonati (uVerde) ne mancano di più
   '    rmOrlo=1.0-smoothstep(0.0,0.03,-dC);',      // i coppi sull'orlo della chiazza, smossi e sporchi
   '    if(dC>0.0){',
@@ -277,12 +288,19 @@ function taglio(colore){ return [
   'if(uSud>0.001){ vec2 qs=vLoc.xz/uSudR; float ro=length(qs); if(ro>0.94 || (ro>0.74 && vLoc.y>3.09)){ float an=acos(clamp(dot(qs/ro,uSudDir),-1.0,1.0)); if(an<3.1416*uSud*(0.9+0.2*rmH(vec3(floor(vLoc.xz*0.9),6.0)))) discard; } }'].join(NL); }
 /* quota del pixel coperta da strisce larghe w ogni p (integrale della fila di strisce su una finestra larga un pixel); solo nel colore, dove ci sono le derivate */
 var STRISCE='float rmStr(float x,float p,float w){ float f=max(fwidth(x),0.00001)/p; float y0=x/p+0.5*w/p-0.5*f; float y1=y0+f; float k=w/p; return clamp((floor(y1)*k+min(fract(y1),k)-floor(y0)*k-min(fract(y0),k))/f,0.0,1.0); }';
-var DICHIARA=[SAP_DICH,'uniform float uVesteR; uniform sampler2D tMacchieR;','uniform float uRovina; uniform float uCant; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR; uniform float uVerde; uniform float uIntonaco; uniform float uDegQ; uniform float uCoppi;',LOD_FD,
+var DICHIARA=[SAP_DICH,'uniform float uVesteR; uniform sampler2D tMacchieR;','uniform float uRovina; uniform float uCant; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR; uniform float uVerde; uniform float uIntonaco; uniform float uDegQ; uniform float uCoppi; uniform float uPulito; uniform vec4 uCrZona; uniform vec4 uCrPeso;',LOD_FD,
   'float rmH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
   'vec2 rmH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',
   'float rmN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f);',
   '  return mix(mix(mix(rmH(i),rmH(i+vec3(1.0,0.0,0.0)),f.x),mix(rmH(i+vec3(0.0,1.0,0.0)),rmH(i+vec3(1.0,1.0,0.0)),f.x),f.y),',
   '             mix(mix(rmH(i+vec3(0.0,0.0,1.0)),rmH(i+vec3(1.0,0.0,1.0)),f.x),mix(rmH(i+vec3(0.0,1.0,1.0)),rmH(i+vec3(1.0,1.0,1.0)),f.x),f.y),f.z); }',
+  /* quanto della cima manca (in frazioni dell'altezza del monumento) nel punto p della pianta: si veda taglio. Le tre onde lente sono le stesse di crolloJS in js/monumenti.js */
+  'float rmCrollo(vec2 p){ float zs=smoothstep(uCrZona.z,uCrZona.w,dot(p,uCrZona.xy)); float m=mix(uCrPeso.x,uCrPeso.y,zs);',
+  '  float kl=0.5+0.2*sin(dot(p,vec2(0.37,0.21))+1.3)+0.16*sin(dot(p,vec2(-0.19,0.43))+4.1)+0.1*sin(dot(p,vec2(0.71,-0.53))+2.2);',      // zone larghe venti-trenta metri: campate intere
+  '  float k=0.55*kl+0.25*rmN(vec3(p*0.9+0.37,1.0))+0.1; float pxC=uPxScala/max(0.5,length(vMondo-uOcchio));',      // undici metri; pxC: pixel per unità in quel punto
+  '  float w3=smoothstep(1.5,4.0,0.32*pxC); if(w3>0.0) k+=0.13*w3*(rmN(vec3(p*3.1,1.7))-0.5);',      // tre metri e un metro, l'orlo spezzato: solo dove la loro onda supera un pixel e mezzo (da lontano costerebbero e brulicherebbero)
+  '  float w9=smoothstep(1.5,4.0,0.11*pxC); if(w9>0.0) k+=0.07*w9*(rmN(vec3(p*9.0,1.9))-0.5);',
+  '  return uRovina*(0.1+2.0*clamp((k-0.3)/0.42,0.0,1.0))*m+uCrPeso.z*zs; }',
   /* distanza dal confine fra due celle: dove è quasi zero passa una crepa, che si dirama come quelle vere */
   'float rmCrepa(vec2 p){ vec2 n=floor(p); vec2 f=fract(p); float d1=8.0; float d2=8.0;',
   '  for(int j=-1;j<=1;j++){ for(int i=-1;i<=1;i++){ vec2 g=vec2(float(i),float(j)); float d=length(g+rmH2(n+g)-f); if(d<d1){ d2=d1; d1=d; } else if(d<d2){ d2=d; } } }',
@@ -307,20 +325,20 @@ var COLORA=[
   '  if(piano){',
   '    float kE=1.0-smoothstep(0.015,0.045,fwidth(vLoc.x)+fwidth(vLoc.z));',                                                                                // la grana fine dell'erba sfuma da lontano (24 novembre 2026)
   '    if(rq2<0.4 && uVesteR>0.5){ vec4 mg=texture2D(tMacchieR,vLoc.xz/7.0+0.17); vec4 mg2=texture2D(tMacchieR,vLoc.xz/2.2+0.61); float mE=0.5*mg.r+0.3*mg2.g+0.2*mg2.b+0.25*riga;',      // veste del PC: chiazze morbide da una trama (prima il rumore a celle disegnava una tela mimetica a poligoni), erba verde e secca
-  '      diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.17,0.2,0.08),vec3(0.31,0.28,0.14),smoothstep(0.35,0.7,mg2.r))*(0.82+0.32*mg.b),uCrepe*0.8*smoothstep(0.36,0.6,mE)); }',      // (25 novembre 2026) verde meno saturo e meno coprente: sul lastricato bianco le chiazze scure facevano una tuta mimetica
-  '    else if(rq2<0.4) diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.27,0.3,0.14),vec3(0.19,0.25,0.08),uVesteR)*(0.85+0.3*mix(0.5,rmN(vec3(vLoc.xz*9.0,8.0)),kE)),uCrepe*0.85*smoothstep(0.4,0.7,0.55*rmN(vec3(vLoc.xz*1.8,9.0))+0.3*rmN(vec3(vLoc.xz*5.3,9.5))+0.15*mix(0.5,rmN(vec3(vLoc.xz*14.0,9.7)),kE)+0.3*riga));',      // erba fra le lastre: chiazze a più grane, dal bordo sfrangiato (prima erano macchie larghe e nette, da tela mimetica)
+  '      diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.17,0.2,0.08),vec3(0.31,0.28,0.14),smoothstep(0.35,0.7,mg2.r))*(0.82+0.32*mg.b),uCrepe*0.8*(1.0-uPulito)*smoothstep(0.36,0.6,mE)); }',      // (25 novembre 2026) verde meno saturo e meno coprente: sul lastricato bianco le chiazze scure facevano una tuta mimetica
+  '    else if(rq2<0.4) diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.27,0.3,0.14),vec3(0.19,0.25,0.08),uVesteR)*(0.85+0.3*mix(0.5,rmN(vec3(vLoc.xz*9.0,8.0)),kE)),uCrepe*0.85*(1.0-uPulito)*smoothstep(0.4,0.7,0.55*rmN(vec3(vLoc.xz*1.8,9.0))+0.3*rmN(vec3(vLoc.xz*5.3,9.5))+0.15*mix(0.5,rmN(vec3(vLoc.xz*14.0,9.7)),kE)+0.3*riga));',      // erba fra le lastre: chiazze a più grane, dal bordo sfrangiato (prima erano macchie larghe e nette, da tela mimetica)
   '    else diffuseColor.rgb*=1.0-0.55*clamp((uRovina*2.0+uCrepe*uCrepe*0.2)*3.0,0.0,1.0);',                                                           // sotto i tetti sfondati si vede il buio
   '  } else diffuseColor.rgb*=1.0-0.34*uCrepe*smoothstep(0.5,0.8,rmN(vec3(cp.x*4.0,vLoc.y*0.45,3.0)));',                                              // colature
   '}',
   'if(vTipo<1.5 && uRovina*2.4+uCrepe*0.5>0.0){ float rm=smoothstep(0.35,0.72,rmN(vLoc*2.3+0.11)); float kAb=step(0.001,uVerde)*step(0.5,uVesteR)*step(0.1,uDegQ);',      // sugli abbandonati (dove c'è lo shader DEGRADO) le macchie a caso sono deboli e grigie: il verde vero lo mette DEGRADO dove si ferma l'acqua (25 novembre 2026: queste macchie olivastre su tutte le superfici facevano la tuta mimetica)
-  '  diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*mix(vec3(0.5,0.56,0.38),vec3(0.7,0.7,0.64),kAb),clamp((uRovina*2.4+uCrepe*0.5)*rm*(1.15-rq2)*(1.0-0.55*kAb),0.0,1.0)); }',
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*mix(vec3(0.5,0.56,0.38),vec3(0.7,0.7,0.64),kAb),clamp((uRovina*2.4+uCrepe*0.5)*rm*(1.15-rq2)*(1.0-0.55*kAb)*(1.0-0.7*uPulito),0.0,1.0)); }',
   'if(vTipo>0.5 && vTipo<1.5 && rmLegno<0.5){ diffuseColor.rgb*=1.0-0.3*rmOrlo;',      // l'orlo della chiazza dei coppi caduti: coppi smossi, più scuri
   '  if(uCrepe>0.0) diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.62,0.66,0.6)+0.015,uCrepe*(0.3+0.3*rmN(vec3(vLoc.xz*0.7,4.0))));',      // coppi scoloriti: un velo quasi uniforme (25 novembre 2026: prima chiazze nette, che con le macchie del verde facevano la tuta mimetica)
   '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.3,0.27,0.23),uSpoglio*mix(1.0,smoothstep(0.4,0.5,vColor.g/max(vColor.r,0.001)),step(0.0001,uVerde))); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.2,0.215,0.235),uPiombo); }',      // sugli edifici abbandonati (uVerde) lo spoglio toglie solo le coperture di metallo (bronzo, oro: verde su rosso sopra 0,5) e i coppi restano coppi (25 novembre 2026: prima diventavano grigio chiaro, bianchi al sole, sulle terme spogliate nel 663); altrove resta com'era (con la cava le coperture si tolgono davvero); uPiombo: coperture rifatte in lastre di piombo (il Pantheon dopo Gregorio III)
   'if(vTipo>2.5){ float pa=rmN(vec3(vLoc.xz*0.9,11.0)); float pb=rmN(vec3(vLoc.xz*4.3,12.0)); float pc=rmN(vec3(vLoc.xz*17.0,13.0));',                    // prato: chiazze larghe, ciuffi, filo d'erba
   '  float fwP=fwidth(vLoc.x)+fwidth(vLoc.z); float kcP=1.0-smoothstep(0.012,0.035,fwP); float kbP=1.0-smoothstep(0.05,0.14,fwP);',                       // ciuffi e fili si spengono quando il loro passo scende sotto i tre pixel: da lontano brulicavano (24 novembre 2026)
   '  diffuseColor.rgb*=0.82+0.22*pa+0.12*kbP*(pb-0.5)+0.1*kcP*(pc-0.5);',
-  '  diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.36,0.34,0.17),vec3(0.2,0.21,0.1),step(0.001,uVerde))*(0.8+0.5*pb),clamp(uCrepe*1.1,0.0,0.85)*smoothstep(0.25,0.65,pa+0.3*pb)); }',                // lasciato a sé stesso ingiallisce e si fa incolto; nei recinti abbandonati (uVerde) erba alta e rovi, più scuri: prima paglia chiara a chiazze sul verde (25 novembre 2026)
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.36,0.34,0.17),vec3(0.2,0.21,0.1),step(0.001,uVerde))*(0.8+0.5*pb),clamp(uCrepe*1.1,0.0,0.85)*(1.0-uPulito)*smoothstep(0.25,0.65,pa+0.3*pb)); }',                // lasciato a sé stesso ingiallisce e si fa incolto; nei recinti abbandonati (uVerde) erba alta e rovi, più scuri: prima paglia chiara a chiazze sul verde (25 novembre 2026)
   'if(vTipo<1.5) diffuseColor.rgb*=mix(0.74,1.0,smoothstep(0.0,0.2,rq2));'].join(NL);      // ombra d'appoggio al piede
 /* abbandono (25 novembre 2026; l'utente sullo stato «abbandonato»: «Ok fai vedere erba e crepe però»): un edificio che nessuno cura più, ma che non crolla.
    uVerde (0-1): erba e muschio dove si fermano l'acqua e la terra: la coltre segue quanto la superficie guarda in su (normale nel mondo, dal lato che si vede),
@@ -348,11 +366,11 @@ var DEGRADO=[
   '  float su=clamp(nW.y,0.0,1.0); float nord=smoothstep(0.0,0.8,-nW.z)*(1.0-su);',      // quanto guarda in su; quanto guarda a nord (z va a sud), dove il sole non asciuga
   '  float nV=0.2*(mA.r-0.5)+0.38*(mB.g-0.5);',      // macchie, in media zero: rompono solo l'orlo della coltre; da lontano i mipmap le spengono e resta la forma
   '  float sV=(vTipo>0.5?smoothstep(0.97,0.995,su):su)+nV+0.12*fr+0.08*nord; float tV=1.0-0.4*uVerde;',      // sui coppi solo dove il piano è orizzontale (gradoni, cornici); le falde e le cupole di tegole no
-  '  float cV=smoothstep(tV-0.1,tV+0.1,sV)*min(1.0,uVerde*2.5);',      // orlo morbido: sui fianchi delle volte la coltre si dirada, non si spezza in macchie
+  '  float cV=smoothstep(tV-0.1,tV+0.1,sV)*min(1.0,uVerde*2.5)*(1.0-uPulito);',      // orlo morbido: sui fianchi delle volte la coltre si dirada, non si spezza in macchie
   '  vec3 gV=mix(vec3(0.1,0.13,0.05),vec3(0.2,0.18,0.09),smoothstep(0.5,0.8,mA.r))*(0.85+0.25*mB.b);',      // verde oliva spento, a zone secco
   '  if(vTipo>0.5){ float lT=dot(diffuseColor.rgb,vec3(0.3,0.59,0.11)); float mT=smoothstep(0.4,0.5,vColor.g/max(vColor.r,0.001));',      // coperture: coppi (mT 0) o metallo (bronzo, oro: mT 1)
   '    diffuseColor.rgb=mix(diffuseColor.rgb,vec3(lT)*vec3(0.92,0.9,0.8),0.4*uVerde)*mix(vec3(1.0),vec3(0.74,0.77,0.68)*(0.9+0.2*mA.g),0.7*uVerde);',      // coppi scoloriti, anneriti e velati di licheni e muschio, in modo uniforme
-  '    diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.16,0.15,0.09)*(0.8+0.4*mA.r),mT*uVerde*(0.45+0.25*smoothstep(0.4,0.7,mB.g))); }',      // il bronzo lasciato alle piogge si brunisce e perde la doratura, a velature larghe
+  '    diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.16,0.15,0.09)*(0.8+0.4*mA.r),mT*min(1.0,uVerde*(1.0+1.5*uPulito))*(0.45+0.25*smoothstep(0.4,0.7,mB.g))); }',      // la pulizia di un edificio tornato in uso (uPulito) non rilucida il bronzo: qui il verde-sporco ridotto da RM.rovina torna quasi quello di prima      // il bronzo lasciato alle piogge si brunisce e perde la doratura, a velature larghe
   '  diffuseColor.rgb=mix(diffuseColor.rgb,gV,cV*0.85);',
   '  if(vTipo<0.5 && su<0.6){',      // muri e fianchi delle volte
   '    diffuseColor.rgb*=1.0-0.15*uVerde;',      // sporco
@@ -362,7 +380,7 @@ var DEGRADO=[
   '    float pU=1.0-smoothstep(0.0,0.12,vLoc.y-0.06-0.18*mA.g);',      // umido di risalita al piede, a orlo irregolare, con un velo di muschio
   '    diffuseColor.rgb*=mix(vec3(1.0),vec3(0.74,0.79,0.7),uVerde*pU);',
   '    if(uDegQ>0.75){',      // sul «telefono» i muri prendono solo sporco e umido al piede: il resto da «media» in su
-  '    diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.74,0.8,0.66),uVerde*0.45*smoothstep(0.55,0.75,mA.g+0.1*fr)*(0.3+0.7*nord)*(1.0-0.6*rq2));',      // muschio: in basso e sui muri a nord
+  '    diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.74,0.8,0.66),uVerde*0.45*(1.0-uPulito)*smoothstep(0.55,0.75,mA.g+0.1*fr)*(0.3+0.7*nord)*(1.0-0.6*rq2));',      // muschio: in basso e sui muri a nord
   '    float lI=smoothstep(0.38,0.55,dot(vColor,vec3(0.3,0.59,0.11)))*(1.0-smoothstep(0.3,0.55,su));',      // l'intonaco cade dai muri chiari (intonaco, marmo, travertino), non dal mattone a vista né dal dorso delle volte
   '    float nI=0.62*mA.g+0.38*mB.b+0.2*fr; float eI=fwidth(nI)+0.006; float fwY=fwidth(vLoc.y);',      // le derivate fuori dai rami
   '    if(lI>0.0){ float tI=0.86-0.26*uIntonaco;',      // intonaco caduto: poche chiazze grandi
@@ -376,19 +394,27 @@ var DEGRADO=[
   '  }',
   '}'].join(NL);
 var LEGNO='if(rmLegno>0.5) diffuseColor.rgb=rmLegnoC*diffuse;';      // l'orditura del tetto sotto i coppi caduti (si veda orditura): tinta dello stato del monumento, non del coppo
+/* uPulito (0-1, 26 novembre 2026): un edificio che torna in uso dopo un abbandono (RM.rovina, RIUSO in js/monumenti.js) viene ripulito: erba, muschio, rovi del recinto e
+   macchie verdi spariscono con uPulito, mentre sporco, colature, umido, bronzo brunito e intonaco caduto restano secondo uVerde e uIntonaco, che RM.rovina abbassa
+   solo in parte. Nucleo della muratura (si veda taglio): calcestruzzo grigio-bruno a zone di tre-cinque metri, più giallo dove prevale il tufo, e da vicino le scaglie
+   di tufo e di mattone; la tinta dello stato del monumento lo scurisce come il resto. Il colore è una resa del calcestruzzo romano, non una misura. */
+var NUCLEO=['if(rmRotto>0.5 && vNor.y<-0.6){ vec3 nuC=mix(vec3(0.4,0.37,0.32),vec3(0.52,0.45,0.34),rmN(vec3(vLoc.xz*2.0,31.0)));',      // il fondo dei solidi aperti (normale in giù vista da sopra): il pavimento della sala sotto le macerie, o la rottura del muro
+  '  float fwN=fwidth(vLoc.x)+fwidth(vLoc.z); float kN=1.0-smoothstep(0.02,0.06,fwN); nuC*=0.68+0.45*mix(0.5,rmN(vec3(vLoc.xz*5.0,33.0)),1.0-smoothstep(0.05,0.15,fwN));',      // mucchi e avvallamenti di due metri; le scaglie solo da vicino: da lontano brulicherebbero
+  '  if(kN>0.0){ float sN=rmN(vec3(vLoc*24.0+3.1)); nuC=mix(nuC,mix(vec3(0.3,0.27,0.23),sN>0.62?vec3(0.6,0.36,0.25):vec3(0.62,0.55,0.4),smoothstep(0.55,0.7,sN)),kN*0.6*abs(sN-0.5)*2.0); }',
+  '  diffuseColor.rgb=nuC*diffuse; }'].join(NL);
 function innesta(sh,u,colore){
   sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol; sh.uniforms.uVesteR=RM.vesteU||{value:0}; sh.uniforms.tMacchieR={value:RM.VESTE?RM.trameVeste().macchie:null};      // veste del PC: l'erba fra le lastre prende il verde dell'erba del suolo
   sh.uniforms.uRovina=u.uRovina; sh.uniforms.uCant=u.uCant; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uPiombo=u.uPiombo; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe; sh.uniforms.uSud=u.uSud; sh.uniforms.uSudDir=u.uSudDir; sh.uniforms.uSudR=u.uSudR;
-  sh.uniforms.uVerde=u.uVerde; sh.uniforms.uIntonaco=u.uIntonaco; sh.uniforms.uDegQ=RM.degradoQ; sh.uniforms.uCoppi=u.uCoppi;
+  sh.uniforms.uVerde=u.uVerde; sh.uniforms.uIntonaco=u.uIntonaco; sh.uniforms.uDegQ=RM.degradoQ; sh.uniforms.uCoppi=u.uCoppi; sh.uniforms.uPulito=u.uPulito; sh.uniforms.uCrZona=u.uCrZona; sh.uniforms.uCrPeso=u.uCrPeso;
   lodUniformi(sh); lodVertice(sh);
   var SCEGLI=LOD_SCEGLI.replace('dpxL<uSogliaCol','dpxL<uSogliaCol*(1.0-step(0.02,uRovina))');      // in rovina niente fascia: il portico è senza tetto e senza muri, e fra i monconi si vede il prato, non l'ombra
   SCEGLI+=NL+MANCA;      // le colonne che mancano, e i rocchi a terra
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA+(colore?NL+STRISCE:''));
-  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,COLORA,DEGRADO,LEGNO,SAP_TINTA].join(NL));
+  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,COLORA,DEGRADO,LEGNO,NUCLEO,SAP_TINTA].join(NL));
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',[SCEGLI,LOD_OMBRA,taglio(false),'#include <clipping_planes_fragment>'].join(NL));
 }
 RM.matRovina=function(alt){
-  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)},uVerde:{value:0},uIntonaco:{value:0},uCoppi:{value:1}};
+  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)},uVerde:{value:0},uIntonaco:{value:0},uCoppi:{value:1},uPulito:{value:0},uCrZona:{value:new THREE.Vector4(0,0,-2,-1)},uCrPeso:{value:new THREE.Vector4(1,1,0,1)}};      // uCrZona (0,0,-2,-1): tutto nella parte che cade, con peso 1
   var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
   m.onBeforeCompile=function(sh){ innesta(sh,u,true); };
   m.userData.u=u;
