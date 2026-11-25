@@ -1477,8 +1477,150 @@ var M=[
  {id:'leonine', nome:'Mura leonine', x:-215,z:-92, ry:0, zone:LEO.zone, fa:function(B){
     var y=suTerreno(-215,-92,0);
     LEO.passi.forEach(function(p,j){ var q=y(p.x,p.z); B.scatola(p.len+.15,1.35,.45,p.x,q-.3,p.z,P.tufo,p.ang); if(j%4===0) B.scatola(1,2.1,1,p.x,q-.3,p.z,P.tufo,p.ang).scatola(1.15,.12,1.15,p.x,q+1.8,p.z,P.mattone,p.ang); });
- }}
+ }},
+ /* ---------- gli horti, i grandi giardini dei colli (26 novembre 2026; l'utente: «rendile anche più riconoscibili», e sugli horti «Mettici anche laghi fontane etc?») ----------
+    Il cerchio di ciascuno è RM.HORTI (js/base.js): lì niente case, il prato e i pini (js/citta.js). Qui, per ciascuno, ciò che dice la sua voce di Platner e Ashby (LacusCurtius,
+    lette il 26 novembre 2026; i passi in horti(), più sotto) e nient'altro: dove la voce non nomina edifici, solo il recinto, i viali e le aiuole, che sono uno schema.
+    Acqua solo dove la voce la dà a quel giardino: un ninfeo e tre piscine nei Sallustiani, il ninfeo ottagonale negli horti degli Acilii. Laghi: nessuna voce letta. */
+ {id:'hortisallustiani', nome:'Horti Sallustiani', x:RM.HORTI[0][0],z:RM.HORTI[0][1], ry:0, fa:function(B){ horti(B,0); }},
+ {id:'casasallustio', x:RM.HORTI[0][0],z:RM.HORTI[0][1], ry:0, fa:function(B){ casaSallustio(B); }},      // la casa di Sallustio, a parte perché brucia nel 410 (Procopio III 2, 24) e il resto del giardino no; al clic apre la scheda degli horti
+ {id:'hortiacilii', nome:'Horti degli Acilii', etichetta:'Horti Aciliorum', x:RM.HORTI[1][0],z:RM.HORTI[1][1], ry:0, fa:function(B){ horti(B,1); }},
+ {id:'hortimaecenatis', nome:'Horti di Mecenate', x:RM.HORTI[2][0],z:RM.HORTI[2][1], ry:0, fa:function(B){ horti(B,2); }},
+ {id:'hortilamiani', nome:'Horti Lamiani', x:RM.HORTI[3][0],z:RM.HORTI[3][1], ry:0, fa:function(B){ horti(B,3); }},
+ {id:'hortiliciniani', nome:'Horti Liciniani', x:RM.HORTI[4][0],z:RM.HORTI[4][1], ry:0, fa:function(B){ horti(B,4); }},
+ {id:'hortiluculliani', nome:'Horti di Lucullo', x:RM.HORTI[5][0],z:RM.HORTI[5][1], ry:0, fa:function(B){ horti(B,5); }},
+ {id:'hortispeiveteris', nome:'Horti Spei Veteris', x:RM.HORTI[6][0],z:RM.HORTI[6][1], ry:0, fa:function(B){ horti(B,6); }},
+ {id:'horticaesaris', nome:'Horti di Cesare', x:RM.HORTI[7][0],z:RM.HORTI[7][1], ry:0, fa:function(B){ horti(B,7); }}
 ];
+
+/* ---------- gli horti: come si costruiscono ----------
+   Ogni pezzo sta sul suo terreno (luogo, piede) e lontano da strade, mura, fiume, monumenti e dagli altri pezzi (liberoH); se il posto voluto non è libero si cerca il più vicino
+   (postoH). INGOMBRI_HORTI (RM.hortiIngombri) tiene lontani anche gli alberi di js/citta.js. ACQUE_HORTI: l'acqua, disegnata più sotto («l'acqua degli horti»).
+   Misure, forme e posti dei pezzi sono una resa: nessuna voce letta dà una misura. Dove una voce dà un luogo (il ninfeo dei Sallustiani in fondo a via Sallustiana, il ninfeo
+   degli Acilii sotto villa Medici) il pezzo sta lì o, se lì c'è altro nel modello, il più vicino possibile. */
+var ACQUE_HORTI=[], INGOMBRI_HORTI=[]; RM.hortiIngombri=INGOMBRI_HORTI;
+function liberoH(x,z,m,H){
+  if(Math.hypot(x-H[0],z-H[1])>H[2]-m-.3) return false;
+  if(RM.distStrade(x,z)<m+1.05 || RM.distFiume(x,z)<9.5 || RM.distLinea(x,z,RM.MURA,true)<m+.8) return false;
+  var i, q; for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(RM.dZona(q,x,z)<q.r+(q.a?q.t||0:0)+m) return false; }
+  for(i=0;i<INGOMBRI_HORTI.length;i++){ q=INGOMBRI_HORTI[i]; if(Math.hypot(x-q[0],z-q[1])<q[2]+m) return false; }
+  return true; }
+function postoH(x,z,m,H){ for(var k=0;k<500;k++){ var r=k*.1, a=k*2.4, px=x+r*Math.cos(a), pz=z+r*Math.sin(a); if(liberoH(px,pz,m,H)){ INGOMBRI_HORTI.push([px,pz,m]); return [px,pz]; } } return null; }
+function hS(x,z){ return (RM.hSuolo||RM.h)(x,z); }
+/* un padiglione: muri intonacati, tetto a due falde, a volte un colonnato davanti (verso +z locale) */
+function padiglione(B,H,p,w,d,h,ry,colonnato){ luogo(B,H[0],H[1],p[0],p[1],ry,Math.max(w,d)/2,function(B){
+  B.scatola(w,h+.25,d,0,-.25,0,P.intonaco).falde(w+.16,h*.3,d+.16,0,h,0,P.coppi,0,P.intonaco);
+  if(colonnato){ B.scatola(w,.08,.5,0,-.2,d/2+.25,P.marmo).colonne(-w/2+.08,d/2+.42,w/2-.08,d/2+.42,Math.max(4,Math.round(w/.42)),h*.72,.045,-.12,P.marmo).scatola(w,.07,.56,0,h*.6-.12,d/2+.26,P.marmo); }
+  [.25,.6].forEach(function(f){ if(h*f<h-.15) B.aperture(-w/2+.15,d/2+.005,w/2-.15,d/2+.005,Math.max(2,Math.round(w/.6)),h*f,.18,.1); }); }); }
+/* un viale di ghiaia, largo w, lungo una fila di punti [x, z] del mondo, sul terreno disegnato; si salta dove non è libero */
+function viale(B,H,pts,w){ var Y0=quota(H[0],H[1]), k, j;
+  for(k=0;k<pts.length-1;k++){ var a=pts[k], b=pts[k+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.ceil(L/.8));
+    for(j=0;j<n;j++){ var x0=a[0]+(b[0]-a[0])*j/n, z0=a[1]+(b[1]-a[1])*j/n, x1=a[0]+(b[0]-a[0])*(j+1)/n, z1=a[1]+(b[1]-a[1])*(j+1)/n, nx=-(z1-z0)/(L/n)*w/2, nz=(x1-x0)/(L/n)*w/2;
+      if(!liberoH(x0,z0,w/2,H) || !liberoH(x1,z1,w/2,H)) continue;
+      function v(x,z){ return [x-H[0],hS(x,z)+.045-Y0,z-H[1]]; }
+      B.quad(v(x0-nx,z0-nz),v(x1-nx,z1-nz),v(x1+nx,z1+nz),v(x0+nx,z0+nz),P.sabbia); } } }
+/* il recinto: un muro di tufo alto un paio di metri sul giro del cerchio, interrotto dove passano strade o mura (lì il confine è un altro) */
+function recinto(B,H){ var Y0=quota(H[0],H[1]), R=H[2]-.75, n=Math.ceil(6.283*R/1.3), k;
+  for(k=0;k<n;k++){ var a0=k/n*6.283, a1=(k+1)/n*6.283, x0=H[0]+R*Math.cos(a0), z0=H[1]+R*Math.sin(a0), x1=H[0]+R*Math.cos(a1), z1=H[1]+R*Math.sin(a1);
+    if(!liberoH(x0,z0,.2,H) || !liberoH(x1,z1,.2,H)) continue;
+    var y=Math.min(hS(x0,z0),hS(x1,z1)); B.dentro((x0+x1)/2-H[0],y-Y0-.35,(z0+z1)/2-H[1],Math.atan2(-(z1-z0),x1-x0),function(B){ B.scatola(Math.hypot(x1-x0,z1-z0)+.06,.6+Math.abs(hS(x0,z0)-hS(x1,z1)),.08,0,0,0,P.tufo); }); } }
+/* aiuole di prato rialzate, una per quarto, fra il viale ad anello e i due viali diritti: abbandonato il giardino, lì crescono gli arbusti (js/monumenti.js, «il verde sui ruderi») */
+function aiuole(B,H,fi){ var Y0=quota(H[0],H[1]), R=H[2];
+  [0,1,2,3].forEach(function(q){ var a=fi+Math.PI/4+q*Math.PI/2, r=R*.36, x=H[0]+r*Math.cos(a), z=H[1]+r*Math.sin(a), w=R*.2, d=R*.13;
+    if(!liberoH(x,z,Math.hypot(w,d)/2+.1,H)) return;
+    B.dentro(x-H[0],hS(x,z)-Y0-.12,z-H[1],-a,function(B){ B.scatola(w,.17,d,0,0,0,P.prato).scatola(w+.1,.12,.05,0,0,d/2+.03,P.chioma).scatola(w+.1,.12,.05,0,0,-d/2-.03,P.chioma); }); }); }
+/* il ninfeo: una parete con tre nicchie e la vasca davanti; l'acqua cade dalle nicchie (cascata) nella vasca (specchio). Forma ignota: uno schema */
+function ninfeo(B,H,p,ry,k){ var w=2.2, y0=piede(p[0],p[1],1.2)-.05;
+  luogo(B,H[0],H[1],p[0],p[1],ry,1.2,function(B){
+    B.scatola(w,1.25,.35,0,-.2,-.5,P.mattone).scatola(w+.1,.08,.42,0,1.05,-.5,P.marmo);
+    [-.7,0,.7].forEach(function(x){ B.vano(x,.25,-.32,1,0,x?.32:.46,x?.6:.75); });
+    B.scatola(w,.1,1.1,0,-.05,.25,P.marmo).scatola(w,.22,.08,0,-.05,.8,P.marmo).scatola(.08,.22,1.1,-w/2+.04,-.05,.25,P.marmo).scatola(.08,.22,1.1,w/2-.04,-.05,.25,P.marmo); });
+  var c=Math.cos(ry), s=Math.sin(ry);
+  function mondo(lx,lz){ return [p[0]+lx*c+lz*s, p[1]-lx*s+lz*c]; }
+  [-.7,0,.7].forEach(function(x){ var q=mondo(x,-.31); var hc=(x?.6:.75)+.13; ACQUE_HORTI.push({tipo:'cascata', x:q[0], y:y0+.12+hc/2, z:q[1], w:x?.26:.38, h:hc, ry:ry, k:k}); });
+  var v=mondo(0,.25); ACQUE_HORTI.push({tipo:'specchio', x:v[0], y:y0+.12, z:v[1], w:w-.16, d:1.0, ry:ry, k:k}); }
+/* una piscina rettangolare col bordo di marmo; fino al 537 piena d'acqua */
+function piscina(B,H,p,w,d,ry,k){ var y0=piede(p[0],p[1],Math.max(w,d)/2)-.05;
+  luogo(B,H[0],H[1],p[0],p[1],ry,Math.max(w,d)/2,function(B){
+    B.scatola(w,.08,d,0,-.1,0,P.selce).scatola(w+.12,.24,.06,0,-.1,d/2+.03,P.marmo).scatola(w+.12,.24,.06,0,-.1,-d/2-.03,P.marmo).scatola(.06,.24,d,w/2+.03,-.1,0,P.marmo).scatola(.06,.24,d,-w/2-.03,-.1,0,P.marmo); });
+  ACQUE_HORTI.push({tipo:'specchio', x:p[0], y:y0+.06, z:p[1], w:w, d:d, ry:ry, k:k}); }
+var CASA_SALL=null;
+function casaSallustio(B){ var H=RM.HORTI[0], p=CASA_SALL; if(!p) return; var c3=Math.cos(.3), s3=Math.sin(.3);      // un corpo col colonnato e un'ala dietro; forma e misure ignote
+  padiglione(B,H,p,4.6,2.6,1.15,.3,true);
+  luogo(B,H[0],H[1],p[0]-1.9*s3,p[1]-1.9*c3,.3,1.6,function(B){ B.scatola(2.6,1.6,1.4,0,-.25,0,P.intonaco).falde(2.7,.4,1.5,0,1.35,0,P.coppi,0,P.intonaco); B.aperture(-1.1,.705,1.1,.705,4,.5,.25,.14); }); }
+function horti(B,k){
+  var H=RM.HORTI[k], R=H[2], fi=[.35,.1,.6,.2,.9,.4,.7,0][k], p;
+  if(k===0){
+    /* Horti Sallustiani (Platner e Ashby, «Horti Sallustiani»): nella regione VI, fra Quirinale e Pincio; un «hippodromus» nella valle, «with walls and terraces up the Quirinal
+       slope»; un tempio di Venere, noto solo dalle iscrizioni; tre piscine; un ninfeo, l'unico resto visibile, «at the end of the via Sallustiana», accanto a un edificio di quattro
+       piani (Rivoira: età di Vespasiano); un «palatium» negli Atti dei martiri; l'obelisco (voce a sé, obeliscosallustiano). Ancora un luogo di soggiorno nel IV secolo;
+       nel 410 i Goti bruciano «the house of Sallust», che «has stood half-burned up to my time» (Procopio III 2, 24). Il portico Miliarense di Aureliano è solo nella Storia
+       Augusta (Domaszewski: un'invenzione): non c'è. Il ninfeo sta su piazza Sallustio (RM.ll 41,9071 N, 12,4954 E, posto moderno del resto); l'ippodromo lungo la valle,
+       verso la porta Salaria; palazzo, tempio e piscine dove c'è posto. */
+    var asse=.78, v=RM.ll(41.9071,12.4954), vx=v.x!=null?v.x:v[0], vz=v.z!=null?v.z:v[1];
+    if((p=postoH(vx,vz,1.3,H))) ninfeo(B,H,p,-2.2,k);      // la fronte verso la valle e il palazzo
+    if((p=postoH(vx+3.6,vz+1.6,1.1,H))) luogo(B,H[0],H[1],p[0],p[1],.9,1,function(B){ B.scatola(2.1,2.1,1.5,0,-.3,0,P.mattone).falde(2.2,.35,1.6,0,1.8,0,P.coppi,0,P.mattone);      // l'edificio di quattro piani accanto al ninfeo
+      [.15,.6,1.05,1.45].forEach(function(y){ B.aperture(-.9,.755,.9,.755,5,y,.24,.13).aperture(.9,-.755,-.9,-.755,5,y,.24,.13); }); });
+    CASA_SALL=postoH(76,-172,2.7,H);      // il palatium, la casa di Sallustio: la costruisce casaSallustio, voce a sé
+    /* l'ippodromo, un giardino a forma di circo: lungo 80 m e largo 22 (misure ignote), una testata tonda, la pista di sabbia e nel mezzo un'aiuola lunga; muretto e colonnato sul lato del colle */
+    for(var t=0, ip=null; t<60 && !ip; t++){ var cx=vx-5.5-.35*t*Math.cos(asse)+(t%3-1)*.6, cz=vz+3+.35*t*Math.sin(asse)+(t%2)*.5, ok=true;
+      for(var u=-4.2;u<=4.2&&ok;u+=.7) for(var w2=-1.2;w2<=1.2&&ok;w2+=.6) ok=liberoH(cx+u*Math.cos(asse)+w2*Math.sin(asse),cz-u*Math.sin(asse)+w2*Math.cos(asse),.25,H);
+      if(ok) ip=[cx,cz]; }
+    if(ip){ for(var u2=-4;u2<=4;u2+=1) INGOMBRI_HORTI.push([ip[0]+u2*Math.cos(asse),ip[1]-u2*Math.sin(asse),1.3]);
+      var hy=suTerreno(ip[0],ip[1],asse), ql=quota(ip[0],ip[1])-quota(H[0],H[1]);
+      B.dentro(ip[0]-H[0],0,ip[1]-H[1],asse,function(B){ var L=8, W=2.2, k2, n=18;
+        for(k2=0;k2<n;k2++){ var x=-L/2+1.1+(L-2.2)*k2/(n-1), y=hy(x,0)+ql; B.scatola((L-2.2)/(n-1)+.02,.14,W-.3,x,y-.1,0,P.sabbia).scatola((L-2.2)/(n-1)+.02,.2,.5,x,y-.1,0,P.prato);      // pista e aiuola nel mezzo
+          B.scatola((L-2.2)/(n-1)+.03,.45,.1,x,y-.3,W/2,P.tufo).scatola((L-2.2)/(n-1)+.03,.45,.1,x,y-.3,-W/2,P.tufo); }
+        var ye=hy(L/2-1.1,0)+ql; for(k2=0;k2<10;k2++){ var a0=-PI/2+PI*k2/10, a1=-PI/2+PI*(k2+1)/10, r=W/2;      // la testata tonda
+          B.dentro(L/2-1.1+r*Math.cos((a0+a1)/2),ye-.3,r*Math.sin((a0+a1)/2),-(a0+a1)/2+PI/2,function(B){ B.scatola(r*(a1-a0)+.04,.45,.1,0,0,0,P.tufo); }); }
+        var yc=hy(0,-W/2-.35)+ql; B.colonne(-L/2+1.3,-W/2-.3,L/2-1.6,-W/2-.3,14,.42,.035,yc,P.marmo); B.scatola(L-2.8,.06,.4,-.15,yc+.42,-W/2-.3,P.marmo); }); }
+    if((p=postoH(70,-178,1.4,H))) luogo(B,H[0],H[1],p[0],p[1],-.4,1.3,function(B){ B.tempio(1.1,1.8,.85,0,0,0,{fronte:4,podio:.3}); });      // il tempio di Venere: forma ignota
+    [[72,-160],[75.5,-157.6],[79,-155.2]].forEach(function(q){ if((p=postoH(q[0],q[1],1.05,H))) piscina(B,H,p,1.7,.85,asse,k); });      // le tre piscine: posto e misura ignoti
+  } else if(k===1){
+    /* Horti degli Acilii (Platner e Ashby, «Horti Aciliorum»): sul Pincio, chiusi a nord, ovest ed est da muri di sostegno lungo il pendio, «lofty arcades with massive intervening
+       piers» in opera reticolata; a est e a nord Aureliano li prese nelle mura (il Muro Torto). A nord della Trinità un grande emiciclo aperto a ovest con rampe di scale verso
+       la pianura; sotto il casino moderno una cisterna (sotto terra: non si vede); sotto il monte di villa Medici un ninfeo ottagonale detto Parnaso. Degli Acilii Glabrioni nel
+       II secolo, nel IV dei Pincii, poi di Anicia Faltonia Proba e Petronio Probo, poi dell'imperatore. Qui: le arcate dove il terreno scende verso il Campo Marzio, l'emiciclo
+       sul ciglio verso la Trinità, il ninfeo verso villa Medici (nel modello il cerchio del giardino sta un poco a nord dei luoghi veri: i pezzi vanno al bordo più vicino). */
+    var Y0=quota(H[0],H[1]), n=56, a, prima=null;
+    for(var j=0;j<n;j++){ a=j/n*6.283; var ri=R-2.4, ro=R-.5, xi=H[0]+ri*Math.cos(a), zi=H[1]+ri*Math.sin(a), xo=H[0]+ro*Math.cos(a), zo=H[1]+ro*Math.sin(a), xm=H[0]+(R-1.3)*Math.cos(a), zm=H[1]+(R-1.3)*Math.sin(a);
+      var cad=hS(xi,zi)-hS(xo,zo); if(cad<.7 || !liberoH(xm,zm,.4,H)) continue;
+      var len=(R-1.3)*6.283/n+.05, hgt=cad+.45, yb=hS(xo,zo)-Y0-.25;
+      B.dentro(xm-H[0],yb,zm-H[1],-a-PI/2,function(B){ arcato(B,len,hgt,.4,0,0,0,P.tufo,hgt>1.3?2:1,2); }); }
+    var tr=RM.ll(41.9060,12.4832), tx=tr.x!=null?tr.x:tr[0], tz=tr.z!=null?tr.z:tr[1], dl=Math.hypot(tx-H[0],tz-H[1]);
+    if((p=postoH(H[0]+(tx-H[0])/dl*(R-3.2),H[1]+(tz-H[1])/dl*(R-3.2),1.6,H))) luogo(B,H[0],H[1],p[0],p[1],-PI/2,1.4,function(B){      // l'emiciclo, aperto a ovest (verso +z locale), con le rampe
+      var arc=[]; for(var q=0;q<=12;q++){ var t2=PI*q/12; arc.push([1.3*Math.cos(t2),-1.3*Math.sin(t2)]); }
+      B.striscia(arc,-.2,arc,.6,P.tufo,false).striscia(arc,.6,arc.map(function(c){ return [c[0]*.88,c[1]*.88]; }),.6,P.marmo,false);
+      for(var g=0;g<4;g++) B.scatola(2.4-g*.2,.42-g*.12,.32,0,-.3,.25+g*.32,P.travertino); });
+    var vm=RM.ll(41.9087,12.4826), mx=vm.x!=null?vm.x:vm[0], mz=vm.z!=null?vm.z:vm[1];
+    if((p=postoH(mx,mz,1.1,H))){ var y8=piede(p[0],p[1],1)-.05;      // il ninfeo ottagonale, Parnaso: forma ignota oltre la pianta; qui un recinto a otto lati con la vasca
+      luogo(B,H[0],H[1],p[0],p[1],PI/8,1,function(B){ var o=[], o2=[]; for(var q=0;q<8;q++){ var t3=q*PI/4; o.push([.95*Math.cos(t3),.95*Math.sin(t3)]); o2.push([.8*Math.cos(t3),.8*Math.sin(t3)]); }
+        B.striscia(o,-.2,o,.75,P.mattone).striscia(o2,-.2,o2,.75,P.mattone).striscia(o,.75,o2,.75,P.marmo).cilindro(.72,.1,0,-.05,0,P.selce,.72,8).cilindro(.12,.45,0,0,0,P.marmo,.08,8);
+        for(var q2=0;q2<8;q2+=2){ var t4=(q2+.5)*PI/4; B.vano(.9*Math.cos(t4),.1,.9*Math.sin(t4),-Math.sin(t4),Math.cos(t4),.3,.5); } });
+      ACQUE_HORTI.push({tipo:'vasca', x:p[0], y:y8+.1, z:p[1], r:.7, lati:8, ry:PI/8, k:k}); }
+  } else if(k===2){
+    /* Horti di Mecenate (Platner e Ashby, «Horti Maecenatis»): sull'Esquilino, sull'aggere serviano e sulla necropoli vicina; la «turris Maecenatiana» da cui Nerone guardò
+       l'incendio, forse la mole «propinquam nubibus arduis» di Orazio; imperiali dopo Mecenate. Il primo bagno caldo di Roma, che Cassio Dione dà a Mecenate, «may have been»
+       nei giardini: incerto, non c'è. L'Auditorium (aula absidata, «may have been a sort of conservatory») è nel gruppo esquilino. Qui la torre: alta 30 m, misura ignota. */
+    if((p=postoH(H[0]+2,H[1]+3,.9,H))) luogo(B,H[0],H[1],p[0],p[1],.2,.8,function(B){ B.scatola(1.1,3.2,1.1,0,-.3,0,P.mattone).scatola(1.25,.1,1.25,0,2.9,0,P.travertino).cono(.88,.5,0,3,0,P.coppi,4);
+      [.6,1.3,2,2.55].forEach(function(y){ B.aperture(-.4,.555,.4,.555,2,y,.22,.12).aperture(.4,-.555,-.4,-.555,2,y,.22,.12); }); });
+  } else if(k===3){
+    /* Horti Lamiani (Platner e Ashby, «Horti Lamiani»): poco a sud-est di piazza Vittorio, «numerous works of art and a few structural remains»; di L. Elio Lamia, poi di Tiberio
+       e degli imperatori; vi fu deposto per un tempo il corpo di Caligola. Nessun edificio descritto: un padiglione col colonnato, come segno dei resti, forma ignota. */
+    if((p=postoH(H[0],H[1],1.6,H))) padiglione(B,H,p,2.6,1.6,.8,.5,true);
+  } else if(k===5){
+    /* Horti di Lucullo (Platner e Ashby, «Horti Luculliani»): sopra il punto dove l'acqua Vergine esce dal colle, presso Capo le Case; di Lucullo verso il 60 a.C., poi di Valerio
+       Asiatico, poi di Messalina, che vi fu uccisa; «among the richest of the imperial properties»; «these horti were very beautiful», e una sala si chiamava Apollo.
+       Qui la sala, forma ignota. Nel modello il cerchio del giardino sta più a nord-est del luogo vero. */
+    if((p=postoH(H[0],H[1],1.8,H))) padiglione(B,H,p,3,1.8,1,-.3,true);
+  }
+  /* Liciniani (k 4: di Gallieno, «no indication of their location»; per alcuni il ninfeo detto tempio di Minerva Medica era loro), Spei Veteris (k 6: nominati una volta sola,
+     Storia Augusta, Elagabalo 13) e di Cesare (k 7: sulla riva destra lungo la via Portuense; lasciati da Cesare al popolo romano): solo recinto, viali e aiuole */
+  var ring=[]; for(var q=0;q<=40;q++){ var aa=q/40*6.283; ring.push([H[0]+R*.62*Math.cos(aa),H[1]+R*.62*Math.sin(aa)]); }
+  viale(B,H,ring,.32);
+  [fi,fi+Math.PI/2].forEach(function(a){ viale(B,H,[[H[0]-Math.cos(a)*R*.88,H[1]-Math.sin(a)*R*.88],[H[0]+Math.cos(a)*R*.88,H[1]+Math.sin(a)*R*.88]],.36); });
+  aiuole(B,H,fi); recinto(B,H);
+}
 
 /* ---------- messa in scena ---------- */
 var riquadro=document.getElementById('scena').parentNode;
@@ -1486,7 +1628,8 @@ var etichette=document.createElement('div'); etichette.className='etichette3d'; 
 function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return [o.x+lx*c+lz*s, o.z-lx*s+lz*c]; }
 /* prima le zone: sotto ogni monumento il terreno si spiana alla quota del suo centro; poi si posa il suolo */
 var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1,ospizionaumachia:1};        // complessi che seguono il pendio: niente terrazza
-['orologio','castrapretorio','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
+['orologio','castrapretorio','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });
+['casasallustio','hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'].forEach(function(k){ PENDIO[k]=1; });      // gli horti (26 novembre 2026): ogni pezzo sul suo terreno, senza zona (le case stanno già fuori dal cerchio di RM.HORTI)      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
   var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?(D.CANTIERI&&D.CANTIERI[o.id]?D.CANTIERI[o.id]-1:st[1][0]-8):0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)
@@ -1644,7 +1787,7 @@ RM.moduli.push(function(anno){
    Che fossero cespugli, fichi o edera, e quanti, nessuna fonte lo dice: è una resa dell'abbandono, non una misura. MISURA: il Pantheon fino al 609 e i templi del
    Foro Boario, che arrivano a noi interi, ne prendono meno. */
 (function(){
-  var MISURA=MISURA_V, QUANTI={diocleziano:400, caracalla:400, pompeo:220, sessoriano:160, massenzio:130, pantheon:50, minervamedica:35, foroboario:50, esquilino:50, metasudans:14};      // MISURA: la stessa del verde nello shader (RM.rovina)
+  var MISURA=MISURA_V, QUANTI={diocleziano:400, caracalla:400, pompeo:220, sessoriano:160, massenzio:130, pantheon:50, minervamedica:35, foroboario:50, esquilino:50, metasudans:14, hortisallustiani:170, casasallustio:45, hortiacilii:110, hortimaecenatis:60, hortilamiani:55, hortiliciniani:55, hortiluculliani:60, hortispeiveteris:35, horticaesaris:55};      // horti: arbusti sulle aiuole e sui pezzi, a giardino lasciato      // MISURA: la stessa del verde nello shader (RM.rovina)
   var ruderi=M.filter(function(o){ var st=D.MONUMENTI[o.id]; return o.g&&st&&st.some(function(q){ return q[1]==='abbandonato'; }); });
   if(!ruderi.length) return;
   var tel=RM.piccolo, quota=tel?.35:1, cespi=[], viti=[], seme=7;
@@ -1800,6 +1943,42 @@ RM.moduli.push(function(anno){
     var f=1-RM.sfuma(secca-.3,secca+.2,anno), st=RM.statoMonumento('metasudansvasca',anno), g=(st.s0==='assente'?(st.s1==='assente'?0:st.t>.98?1:0):1)*f;
     uF.value=f; uG.value=g; uN.value=RM.notte||0; gr.visible=f>.01; grande.visible=g>.01;
   });
+})();
+
+/* ---------- l'acqua degli horti (26 novembre 2026) ----------
+   Le cascate del ninfeo dei Sallustiani, le sue vasche e le tre piscine, e la vasca del ninfeo ottagonale degli Acilii (ACQUE_HORTI, si veda «gli horti: come si costruiscono»).
+   Si muove come quella della Meta Sudans (stesso tempo, RM.tempoAcqua): rivoli che scendono, increspature sugli specchi. Come la Meta Sudans si ferma quando i Goti tagliano
+   gli acquedotti (il primo «chiuso» degli acquedotti in js/dati.js, il 537): dopo restano le vasche vuote. Se dopo il 410 qualcuno curasse ancora le fontane dei Sallustiani
+   non lo dice nessuna fonte letta: qui l'acqua corre finché arriva. Rivoli e increspature sono uno schema. */
+(function(){
+  if(!ACQUE_HORTI.length) return;
+  var NL=String.fromCharCode(10), uF={value:1}, uN={value:0}, gr=new THREE.Group(); RM.scene.add(gr);
+  var VS='varying vec2 vUv; varying vec2 vP; void main(){ vUv=uv; vP=position.xy; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }';
+  var matCascata=new THREE.ShaderMaterial({transparent:true,depthWrite:false,toneMapped:false,side:THREE.DoubleSide,uniforms:{uTempo:RM.tempoAcqua,uForza:uF,uNotte:uN},vertexShader:VS,fragmentShader:[
+    'uniform float uTempo; uniform float uForza; uniform float uNotte; varying vec2 vUv;',
+    'float hh(float n){ return fract(sin(n*127.1)*43758.5453); }',
+    'void main(){ float n=7.0; float c=floor(vUv.x*n); float f=fract(vUv.x*n); float giu=1.0-vUv.y;',
+    '  float riv=smoothstep(0.42,0.05,abs(f-0.5+0.1*sin(giu*7.0+hh(c)*6.28)));',
+    '  float vel=1.3+0.8*hh(c); float onde=0.5+0.5*sin(giu*26.0-uTempo*vel*3.6+hh(c+7.0)*6.28);',
+    '  float gocce=smoothstep(0.7,1.0,sin(giu*70.0-uTempo*vel*8.0+hh(c+1.0)*6.28));',
+    '  float a=(0.22+riv*(0.32+0.26*onde+0.3*gocce))*uForza;',
+    '  vec3 col=mix(vec3(0.58,0.78,0.84),vec3(0.96,0.99,1.0),riv*(0.35*onde+0.65*gocce));',
+    '  gl_FragColor=vec4(col*(1.0-0.7*uNotte),a); }'].join(NL)});
+  var matSpecchio=new THREE.ShaderMaterial({transparent:true,depthWrite:false,toneMapped:false,uniforms:{uTempo:RM.tempoAcqua,uForza:uF,uNotte:uN},vertexShader:VS,fragmentShader:[
+    'uniform float uTempo; uniform float uForza; uniform float uNotte; varying vec2 vUv; varying vec2 vP;',
+    'void main(){ float o=sin(vP.x*34.0+uTempo*1.6)*sin(vP.y*27.0-uTempo*1.2)+0.6*sin((vP.x-vP.y)*52.0-uTempo*2.3);',      // increspature del vento: lente, incrociate
+    '  float l=smoothstep(0.85,1.6,o);',
+    '  vec3 col=vec3(0.33,0.54,0.6)*(0.9+0.07*o)+vec3(0.35,0.37,0.36)*l;',
+    '  gl_FragColor=vec4(col*(1.0-0.7*uNotte),0.9*uForza); }'].join(NL)});
+  ACQUE_HORTI.forEach(function(a){ var g, m;
+    if(a.tipo==='cascata'){ g=new THREE.PlaneGeometry(a.w,a.h); m=new THREE.Mesh(g,matCascata); }
+    else if(a.tipo==='specchio'){ g=new THREE.PlaneGeometry(a.w,a.d); m=new THREE.Mesh(g,matSpecchio); m.rotation.x=-Math.PI/2; }
+    else { g=new THREE.CircleGeometry(a.r,a.lati||24); m=new THREE.Mesh(g,matSpecchio); m.rotation.x=-Math.PI/2; }
+    var piv=new THREE.Group(); piv.position.set(a.x,a.y,a.z); piv.rotation.y=a.ry||0; piv.add(m); m.renderOrder=3; gr.add(piv); });
+  var secca=((D.MONUMENTI.acquedotti||[]).filter(function(q){ return q[1]==='chiuso'; })[0]||[537])[0];
+  RM.moduli.push(function(anno){ var f=1-RM.sfuma(secca-.3,secca+.2,anno); uF.value=f; uN.value=RM.notte||0; gr.visible=f>.01; });
+  RM.acqueHorti=gr;      // per le prove
+  var cs=M.filter(function(o){ return o.id==='casasallustio'; })[0]; if(cs&&cs.g) RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:cs.g, id:'hortisallustiani'}]);      // la casa di Sallustio apre la scheda degli horti
 })();
 
 /* ---------- travertini ai piedi del Colosseo ----------

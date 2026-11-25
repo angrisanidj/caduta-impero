@@ -17,7 +17,15 @@
      che Platner e Ashby elencano (voce Domus, letta dalla A alla H) ricorrono il Quirinale, poi il Celio e l'Aventino, e ancora Viminale ed Esquilino. Quante fossero e dove
      stesse ciascuna non si sa: la distribuzione è indicativa, e una domus qui occupa un isolato intero;
    - case basse, a uno o due piani, ai margini e fuori le mura.
-   I balconi delle insulae e il limite di sessanta piedi di Traiano, che si leggono spesso, non stavano nelle fonti lette: non ci sono. */
+   26 novembre 2026 (l'utente: «rendile anche più riconoscibili»; fonti in src/testi/vita-roma-fonti.md, «Abitare a Roma: insulae, domus, horti»):
+   - insulae al più 60 piedi, 17,8 m: Traiano, «that the height of houses not exceed sixty feet on account of proneness to collapse» (Epitome de Caesaribus 13, 13, trad. Banchich;
+     fonte sola e tarda, fine del IV secolo: lo dice il piede della pagina). A terra le botteghe con la finestra del mezzanino sopra la porta (Ostia, Caseggiato di Diana,
+     «mezzanine-windows»; insula dell'Ara Coeli), sopra file fitte di finestre (Giovenale III 268-275); lungo le vie larghe un portico sul fronte, «colonnades were added as
+     a protection to the front of the tenement-blocks» (Tacito, Annali XV 43, trad. Jackson): quali vie lo avessero non si sa, qui le strade larghe del modello (ipotesi). Balconi no:
+     per Roma nessun testo letto (uno solo a Ostia);
+   - domus: una casa ogni venti dentro le mura, non più una ogni dieci (si veda QUOTA_DOMUS); basse, col fronte quasi cieco e il portone (Smith, su Pompei), l'atrio col foro
+     e la vasca e dietro il peristilio a colonne con il giardino: dall'alto due vuoti, uno piccolo e uno verde. In rovina una domus diventa un cumulo basso col giardino
+     inselvatichito, un'insula un moncone alto (fato). */
 (function(){
 'use strict';
 var RM=window.RM; if(!RM||RM.guasto) return;
@@ -75,6 +83,20 @@ function sullaVia(b){
   return false;
 }
 function quartiereDi(x,z){ var m=1e9, k=0; for(var i=0;i<QUARTIERI.length;i++){ var d=Math.hypot(x-QUARTIERI[i][0],z-QUARTIERI[i][1]); if(d<m){ m=d; k=i; } } return k; }
+/* Quante domus (26 novembre 2026). I cataloghi delle regioni del IV secolo (Notitia, breviario) contano 1.790 domus e 46.602 insulae: per numero una domus ogni 27 case, il 3,7%.
+   Ma nei cataloghi «insula» è forse un'unità d'affitto, non un palazzo (Storey 2001, dal riassunto): i caseggiati erano meno di 46.602, e fra gli edifici la quota delle domus
+   era più alta del 3,7%, di quanto non si sa. Nel modello una casa è un lotto intero, domus o caseggiato che sia: qui una domus ogni venti case dentro le mura, il 5%
+   (prima una ogni dieci, il 13%). Il numero sotto dà circa 115 domus su 2.287 case: è tarato sul modello, e cambiarlo cambia il tipo di qualche posto, non i posti.
+   Dove: il peso di ogni regione è il suo rapporto domus/insulae nei cataloghi diviso per la media (1.681/44.300, somme delle regioni): dalla III, Iside e Serapide (60 domus
+   su 2.757 insulae, 0,57; il Curiosum ne dà 160) alla XIII, Aventino (130 su 2.487, 1,38). La regione di una casa è quella del monumento più vicino fra quelli che i cataloghi
+   le danno (src/testi/regioni-fonti.md): un confine indicativo. In più i pianori dei colli ne hanno quattro volte le valli: le domus dell'elenco di Platner e Ashby stanno
+   soprattutto su Quirinale, Esquilino, Celio, Palatino, Aventino. Mai nella Suburra. */
+var QUOTA_DOMUS=.0455;
+var REGIONI_DOMUS=[[.97,[[50,110],[90,170]]],[.93,[[64.7,50.6],[94.5,88],[120,60]]],[.57,[[57,26],[79.6,27.8],[97.4,3.7],[68,10]]],[.84,[[36,18],[25,7],[109,-57],[56,-34],[10.7,-8.9]]],
+  [1.23,[[246.8,53.9],[220,-16],[253,47.6],[170,-30],[180,20]]],[1.13,[[101,-122],[21.5,-65.9],[51,-182],[179,-156],[60,-100]]],[.83,[[-30,-106],[-31,-63],[-41,-97]]],
+  [.99,[[3,-8],[-29,0],[-10,-20]]],[1.33,[[-94,-31],[-50,9],[-58,-21],[-101,-74],[-70,-68],[-69,-49]]],[.86,[[13,47]]],[.93,[[0,71],[-29,37]]],[1.2,[[59,150],[30,120]]],
+  [1.38,[[-46,89],[-90,133],[-83,184]]],[.9,[[-61,30],[-120,60],[-100,20]]]];      // regioni I-XIV: [peso, punti del modello: porta Capena; Claudio, Santo Stefano; Colosseo, Ludus, terme di Traiano e di Tito; Venere e Roma, Massenzio, Santa Maria Maggiore, Suburra, foro di Nerva; Sessoriano, Minerva Medica, Santa Croce; Diocleziano, terme di Costantino, obelisco Sallustiano, Castra; Sole, Arcus Novus, archivi; Fori, Campidoglio; teatri, stadio, Pantheon, terme di Agrippa; Palatino; Circo, Foro Boario; Caracalla; Santa Sabina, Emporio, Testaccio; isola e Trastevere]
+function pesoRegione(x,z){ var m=1e9, w=1; REGIONI_DOMUS.forEach(function(r){ r[1].forEach(function(p){ var d=Math.hypot(x-p[0],z-p[1]); if(d<m){ m=d; w=r[0]; } }); }); return w; }
 QUARTIERI.forEach(function(Q,k){
   var ca=Math.cos(Q[2]), sa=Math.sin(Q[2]), R=30, qx=Math.round(Q[0]*10), qz=Math.round(Q[1]*10);
   for(var i=-R;i<=R;i++) for(var j=-R;j<=R;j++){
@@ -87,11 +109,11 @@ QUARTIERI.forEach(function(Q,k){
     var lib; if(bordo<3.5 || rnd()>dens || !(lib=libero(x,z,2.4)) || (lib>1&&borgo>.3)) continue;
     var e=1.9, y0=RM.h(x,z), y1=RM.h(x+e,z+e), y2=RM.h(x-e,z+e), y3=RM.h(x+e,z-e), y4=RM.h(x-e,z-e), yMin=Math.min(y0,y1,y2,y3,y4);
     if(Math.max(y0,y1,y2,y3,y4)-yMin>2.2) continue;        // rupi e scarpate restano nude
-    var fitto=1-RM.sfuma(30,240,centro), alt=dentro ? Math.min(2.07,.85+1.25*fitto*(.5+.5*rnd())+.3*rnd()) : .55+.5*rnd(), s=rnd();
+    var fitto=1-RM.sfuma(30,240,centro), alt=dentro ? Math.min(1.78,.85+1.25*fitto*(.5+.5*rnd())+.3*rnd()) : .55+.5*rnd(), s=rnd();
     var sub=dentro?Math.exp(-(Math.pow((x-56)/30,2)+Math.pow((z+34)/15,2))):0, caso=RM.grana(Math.round(x*7.3),Math.round(z*5.1)), caso2=RM.grana(Math.round(z*3.7)+17,Math.round(x*9.1)-5);      // sub: quanto si è dentro la Suburra; caso e caso2 vengono dal posto con RM.grana (scelta del 23 novembre, tenuta così il tipo delle case non cambia)
     var tp=!dentro?(s<.6?2:0):(s<.5-.15*fitto?2:s<.92-.14*fitto?0:1);
-    if(dentro && caso2<(.3*RM.sfuma(4.8,6.4,RM.hGrezza(x,z))+.02)*(1-Math.min(1,sub*1.6))){ tp=3; alt=.55+.25*caso; }      // domus: sui pianori dei colli, quasi mai in valle, mai nella Suburra
-    else if(sub>.45){ alt=Math.min(2.07,Math.max(alt,1.5+.57*caso)); if(tp===2) tp=caso<.6?1:0; }                          // Suburra: caseggiati alti, molti a corte
+    if(dentro && caso2<QUOTA_DOMUS*pesoRegione(x,z)*(.5+1.5*RM.sfuma(4.8,6.4,RM.hGrezza(x,z)))*(1-Math.min(1,sub*1.6))){ tp=3; alt=.55+.25*caso; }      // domus: più sui pianori dei colli, poche in valle, mai nella Suburra
+    else if(sub>.45){ alt=Math.min(1.78,Math.max(alt,1.5+.28*caso)); if(tp===2) tp=caso<.6?1:0; }                          // Suburra: caseggiati alti (fino ai 60 piedi), molti a corte
     else if(alt<1.05 && tp!==1) tp=tp===0?4:5;                                                                           // case basse
     var nuovo={x:x,z:z,y:yMin,ry:Q[2]+(rnd()-.5)*.05,w:3.85+rnd()*.9,d:3.85+rnd()*.9,alt:alt,
       tipo:tp,              // 0 insula a falde, 1 insula a corte, 2 insula a padiglione, 3 domus, 4 casa bassa a falde, 5 casa bassa a padiglione
@@ -101,6 +123,22 @@ QUARTIERI.forEach(function(Q,k){
   }
 });
 isolati.forEach(function(b){ if(b.nasce){ b.k=9; b.k1=9; b.alt=.6+.5*b.tono; b.tipo=b.tipo===2||b.tipo===5?5:4; } });      // il Borgo non si svuota: è l'unico quartiere che cresce
+/* Il portico davanti alle insulae lungo le vie larghe (Tacito, Annali XV 43; quali vie, ipotesi: qui quelle larghe 12 m e più nel modello, mezza larghezza da 0,6).
+   Per ogni insula dentro le mura si cerca il lato che guarda una via larga, con fra muro e strada almeno tre metri: lì il portico, profondo al più 3,2 m, senza mai toccare la via.
+   Nessun numero a caso: la scelta dipende solo dal posto della casa e dalle strade. b.por = [lato (0 +z, 1 +x, 2 -z, 3 -x, nel riferimento della casa), profondità] */
+isolati.forEach(function(b){
+  if(!b.dentro || b.tipo>2) return;
+  var ca=Math.cos(b.ry), sa=Math.sin(b.ry), cx=Math.floor(b.x/CELLA), cz=Math.floor(b.z/CELLA), gap=[9,9,9,9], str=[9,9,9,9], i, j, k, q;
+  function metti(f,g,lw){ if(lw<.6) str[f]=Math.min(str[f],g); else gap[f]=Math.min(gap[f],g); }      // vie larghe e vie strette a parte: davanti al portico non deve passare prima una via stretta
+  for(i=-1;i<=1;i++) for(j=-1;j<=1;j++){ q=grigliaVie[(cx+i)+','+(cz+j)]; if(!q) continue;
+    for(k=0;k<q.length;k+=3){ var lw=q[k+2], dx=q[k]-b.x, dz=q[k+1]-b.z, lx=dx*ca-dz*sa, lz=dx*sa+dz*ca;
+      if(Math.abs(lx)<b.w*.42){ if(lz>0) metti(0,lz-b.d/2-lw,lw); else metti(2,-lz-b.d/2-lw,lw); }
+      if(Math.abs(lz)<b.d*.42){ if(lx>0) metti(1,lx-b.w/2-lw,lw); else metti(3,-lx-b.w/2-lw,lw); } } }
+  var best=-1; for(k=0;k<4;k++) if(gap[k]>=.3 && gap[k]<1.8 && str[k]>gap[k] && (best<0 || gap[k]<gap[best])) best=k;
+  if(best>=0){ b.por=[best,Math.min(.32,gap[best]-.06)];
+    var aP=b.ry+best*Math.PI/2, eP=(best%2?b.w:b.d)/2, hq=RM.hSuolo||RM.h, L2=(best%2?b.d:b.w)*.4, cx2=b.x+Math.sin(aP)*eP, cz2=b.z+Math.cos(aP)*eP, y2=-1e9;      // la quota: il terreno più alto sotto il portico (b.y è il più basso sotto la casa: in pendenza il portico finiva sotto terra)
+    [-1,0,1].forEach(function(s){ [0,b.por[1]].forEach(function(o){ y2=Math.max(y2,hq(cx2+Math.cos(aP)*L2*s+Math.sin(aP)*o,cz2-Math.sin(aP)*L2*s+Math.cos(aP)*o)); }); }); b.porY=y2; }
+});
 isolati.slice().sort(function(a,b){ return a.k-b.k; }).forEach(function(o,i,tutti){ o.p2=i/(tutti.length-1); });     // rango dall'VIII secolo: nuclei sul Tevere e isole attorno alle chiese
 isolati.slice().sort(function(a,b){ return a.k1-b.k1; }).forEach(function(o,i,tutti){ o.p1=i/(tutti.length-1); });   // rango fino al VII secolo: abitato sparso
 /* fra il 640 e il 790 si passa da un ordine all'altro: la gente si raccoglie nel Campo Marzio e attorno alle chiese, e lì si torna a costruire */
@@ -111,8 +149,8 @@ var N=RM.N_ISOLATI=isolati.length; RM.isolati=isolati;
   var soglie=[], y; for(y=200;y<=852;y++) soglie.push(1-D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,y)));
   isolati.forEach(function(b){
     b.lasciato=9999; for(var k=0;k<soglie.length;k++) if(rango(b,200+k)<soglie[k]){ b.lasciato=200+k; break; }
-    b.fato=b.dentro?(b.sorte<.34?0:b.sorte<.8?1:2):(b.sorte<.3?1:2);          // 0 guscio alto, 1 rudere basso, 2 rudere molto basso (fra i suoi monconi, a volte, un orto)
-    b.hFin=b.fato===0?.5+.38*b.tono:b.fato===1?b.rudere+.06:.12+.1*b.tono;    // quanto resta in piedi, in quota dell'altezza (26 novembre 2026: rovine basse un po' più alte, perché restino leggibili)
+    b.fato=!b.dentro?(b.sorte<.3?1:2):b.tipo===3?(b.sorte<.55?1:2):(b.sorte<.48?0:b.sorte<.82?1:2);          // 0 guscio alto, 1 rudere basso, 2 rudere molto basso (fra i suoi monconi, a volte, un orto). Dal 26 novembre 2026, sera: la domus, bassa e con mezza pianta a giardino, non lascia mai un guscio alto; le insulae lo lasciano un po' più spesso (prima un isolato su tre)
+    b.hFin=b.fato===0?.5+.38*b.tono:b.tipo===3?(b.fato===1?.2+.15*b.tono:.1+.08*b.tono):b.fato===1?b.rudere+.06:.12+.1*b.tono;    // quanto resta in piedi, in quota dell'altezza (26 novembre 2026: rovine basse un po' più alte, perché restino leggibili); la domus scende a un cumulo di uno o due metri
     b.giro=(b.sorte*977)|0;                                                   // quarti di giro: quattro profili di rovina diversi
     b.orto=b.dentro?(b.fato===2 && b.tono<.6):b.fato===2;                    // orto o vigna fra i monconi, come ipotesi: dentro le mura circa un isolato su otto (prima uno su cinque, e dopo due-tre secoli quasi tutti i ruderi bassi)
     b.vigna=b.orto && RM.grana(Math.round(b.x*4.1)+3,Math.round(b.z*6.7)+11)<.4;
@@ -144,13 +182,21 @@ var N=RM.N_ISOLATI=isolati.length; RM.isolati=isolati;
 
 /* ---------- trame ---------- */
 var FIN=[], rf=RM.casuale(21);
-(function(){ for(var r=0;r<4;r++) for(var c=0;c<6;c++) FIN.push([9+c*20,12+r*21,7,10,rf()<.4]); for(var t=0;t<4;t++) FIN.push([8+t*31,101,19,24,rf()<.5]); })();      // insula: quattro piani di finestre e, a terra, le botteghe
-var texMuri=RM.tela(128,128,function(g,W,H){
+/* Insula (26 novembre 2026): la trama di una facciata, dall'alto (gronda) al basso (la base dell'istanza sta 1,5 m sotto terra). A terra sei botteghe a porta larga, con l'architrave
+   di legno e sopra la finestrella del mezzanino, dove stava il bottegaio (Ostia, Caseggiato di Diana, «mezzanine-windows» sopra le porte; Ara Coeli); una fascia; poi quattro file
+   fitte di finestre, dieci per fila, l'ultima più bassa sotto le tegole. Numero e misura delle aperture sono una resa: le fonti lette non danno larghezza del fronte né altezza dei piani. */
+(function(){ var r, c, t;
+  for(r=0;r<4;r++) for(c=0;c<10;c++) FIN.push([7+c*25.6,r?22+r*33:24,11,r?19:14,rf()<.4]);      // i piani, dall'alto: la fila sotto il tetto è più bassa
+  for(t=0;t<6;t++){ var x=8+t*42.7; FIN.push([x,180,27,46,rf()<.5],[x+6,159,15,11,rf()<.45]); } })();      // bottega e mezzanino sopra
+var texMuri=RM.tela(256,256,function(g,W,H){
   g.fillStyle='#f3eee4'; g.fillRect(0,0,W,H);
-  for(var i=0;i<260;i++){ g.fillStyle='rgba(120,95,70,'+(.02+rf()*.05)+')'; g.fillRect(rf()*W,rf()*H,2+rf()*10,6+rf()*30); }
-  g.fillStyle='rgba(110,85,60,.25)'; [29,50,71,92].forEach(function(y){ g.fillRect(0,y,W,1); });
+  for(var i=0;i<700;i++){ g.fillStyle='rgba(120,95,70,'+(.02+rf()*.05)+')'; g.fillRect(rf()*W,rf()*H,3+rf()*18,10+rf()*50); }
+  g.fillStyle='rgba(110,85,60,.22)'; [50,83,116].forEach(function(y){ g.fillRect(0,y,W,2); });      // i solai
+  g.fillStyle='rgba(235,226,208,.95)'; g.fillRect(0,148,W,4); g.fillStyle='rgba(90,70,50,.3)'; g.fillRect(0,152,W,2);      // la fascia sopra il piano delle botteghe
+  g.fillStyle='rgba(95,75,55,.18)'; g.fillRect(0,226,W,30);                                  // lo zoccolo
   FIN.forEach(function(f){ g.fillStyle='#35281f'; g.fillRect(f[0],f[1],f[2],f[3]); });
-  g.fillStyle='rgba(120,70,45,.5)'; g.fillRect(0,96,W,3);                                    // l'architrave di legno sopra le botteghe
+  for(var t=0;t<6;t++){ var x=8+t*42.7; g.fillStyle='rgba(120,70,45,.85)'; g.fillRect(x-3,175,33,5);      // l'architrave di legno della bottega
+    g.fillStyle='rgba(80,60,45,.55)'; g.fillRect(x+27,180,4,46); }                            // lo stipite fra una bottega e l'altra, in ombra
 });
 /* casa bassa: una fila di finestre sopra porte e botteghe */
 var FINB=[]; (function(){ for(var c=0;c<5;c++) FINB.push([10+c*24,26,9,16,rf()<.4]); FINB.push([10,78,22,44,rf()<.5],[54,74,16,50,false],[92,78,22,44,rf()<.5]); })();
@@ -170,7 +216,7 @@ var texDomus=RM.tela(256,128,function(g,W,H){
   g.fillStyle='rgba(235,225,205,.9)'; g.fillRect(52,56,24,5);                                // la cornice sopra la porta
   g.fillStyle='#3f3127'; [150,190,230].forEach(function(x){ g.fillRect(x,34,6,8); }); [24,100].forEach(function(x){ g.fillRect(x,34,6,8); });
 });
-var texLumi=RM.tela(128,128,function(g,W,H){
+var texLumi=RM.tela(256,256,function(g,W,H){
   g.fillStyle='#000'; g.fillRect(0,0,W,H);
   FIN.forEach(function(f){ if(f[4]){ g.fillStyle='#ffc070'; g.fillRect(f[0],f[1],f[2],f[3]); } });
 });
@@ -199,7 +245,7 @@ var texOrto=RM.tela(64,64,function(g,W,H){
 var texAlone=RM.tela(32,32,function(g){ var q=g.createRadialGradient(16,16,0,16,16,16); q.addColorStop(0,'rgba(255,190,110,1)'); q.addColorStop(.35,'rgba(255,160,70,.35)'); q.addColorStop(1,'rgba(255,140,50,0)'); g.fillStyle=q; g.fillRect(0,0,32,32); },false);
 
 /* ---------- forme (cubo unitario: base al suolo, lato 1, altezza 1) ---------- */
-function Forma(){ this.g=[[],[],[],[],[],[]]; }               // gruppi: 0 muri, 1 tetto, 2 corte; per la domus anche 3 giardino, 4 acqua, 5 pietra
+function Forma(){ this.g=[[],[],[],[],[],[],[]]; }               // gruppi: 0 muri, 1 tetto, 2 corte; per la domus anche 3 giardino, 4 acqua, 5 pietra, 6 arbusti
 Forma.prototype.q=function(gr,a,b,c,d,piano){
   var u=piano?[[.01,.99],[.01,.99],[.01,.99],[.01,.99]]:[[0,0],[1,0],[1,1],[0,1]], v=[a,b,c,d];
   [[0,1,2],[0,2,3]].forEach(function(t){ t.forEach(function(k){ this.g[gr].push(v[k][0],v[k][1],v[k][2],u[k][0],u[k][1]); },this); },this); return this;
@@ -237,17 +283,30 @@ var FORME=[
 ];
 /* Domus (vedi in testa): i tetti scendono verso l'interno, come nelle case ad atrio. Davanti l'atrio, col foro del compluvio e sotto la vasca; dietro il peristilio, un giardino
    a cielo aperto col suo colonnato. Il pavimento sta a un terzo dell'altezza, per restare sopra il terreno anche in pendenza. Misure e numero delle colonne indicativi. */
-var geoDomus=(function(){ var f=new Forma(), T=1, B=.8, y0=.3;
+/* 26 novembre 2026, perché dall'alto si riconosca dai due vuoti: davanti l'atrio, piccolo, col pavimento chiaro e la vasca dell'acqua piovana (compluvio e impluvio:
+   Smith, Domus, da Varrone e Festo); dietro il peristilio, «a court open to the sky in the middle… frequently decorated with flowers and shrubs» (Smith, da Vitruvio VI 4),
+   più largo (Vitruvio VI 3, 7: un terzo più lungo di traverso che in profondità), con le colonne sui quattro lati, i vialetti in croce e gli arbusti. Dettaglio per gradino
+   (RM.QUALITA.peristilio): 0 sei colonne e niente arbusti («bassa»), 1 sedici colonne, vialetti e arbusti. Il numero delle colonne e il disegno del giardino sono una resa. */
+RM.QUALITA.peristilio=[0,1,1,1,1];      // bassa, media, alta, massima, telefono
+function geoDomusDet(det){ var f=new Forma(), T=1, B=.78, y0=.3, xp=.3, zp0=-.43, zp1=-.07;
   f.qu(0,[-s,0,s],[s,0,s],[s,T,s],[-s,T,s],[[0,0],[.5,0],[.5,1],[0,1]]);                                                                   // la fronte
   [[[s,0,-s],[-s,0,-s]],[[s,0,s],[s,0,-s]],[[-s,0,-s],[-s,0,s]]].forEach(function(l){ f.qu(0,l[0],l[1],[l[1][0],T,l[1][2]],[l[0][0],T,l[0][2]],[[.5,0],[1,0],[1,1],[.5,1]]); });      // fianchi e retro
   function anello(x0,x1,z0,z1,a0,a1,c0,c1){                                                                                                 // tetto attorno a un'apertura: fuori alto, dentro basso
     f.q(1,[x0,T,z1],[x1,T,z1],[a1,B,c1],[a0,B,c1]).q(1,[x1,T,z0],[x0,T,z0],[a0,B,c0],[a1,B,c0]).q(1,[x1,T,z1],[x1,T,z0],[a1,B,c0],[a1,B,c1]).q(1,[x0,T,z0],[x0,T,z1],[a0,B,c1],[a0,B,c0]); }
-  anello(-s,s,0,s,-.085,.085,.165,.335); anello(-s,s,-s,0,-.27,.27,-.39,-.07);
+  anello(-s,s,0,s,-.085,.085,.165,.335); anello(-s,s,-s,0,-xp,xp,zp0,zp1);
   f.q(2,[-s,y0,s],[s,y0,s],[s,y0,0],[-s,y0,0],1).q(4,[-.075,y0+.02,.325],[.075,y0+.02,.325],[.075,y0+.02,.175],[-.075,y0+.02,.175],1);       // il pavimento dell'atrio e la vasca
-  f.q(2,[-s,y0,0],[s,y0,0],[s,y0,-s],[-s,y0,-s],1).q(3,[-.25,y0+.02,-.09],[.25,y0+.02,-.09],[.25,y0+.02,-.37],[-.25,y0+.02,-.37],1);          // il portico e il giardino
-  [[-.27,-.39],[-.09,-.39],[.09,-.39],[.27,-.39],[-.27,-.07],[-.09,-.07],[.09,-.07],[.27,-.07],[-.27,-.23],[.27,-.23]].forEach(function(c){ var r=.016, x=c[0], z=c[1];      // le colonne del peristilio
+  var xg=xp-.035, g0=zp0+.035, g1=zp1-.035, zc=(g0+g1)/2;
+  f.q(2,[-s,y0,0],[s,y0,0],[s,y0,-s],[-s,y0,-s],1).q(3,[-xg,y0+.02,g1],[xg,y0+.02,g1],[xg,y0+.02,g0],[-xg,y0+.02,g0],1);                     // il portico e il giardino
+  if(det>0){ f.q(2,[-.022,y0+.026,g1],[.022,y0+.026,g1],[.022,y0+.026,g0],[-.022,y0+.026,g0],1).q(2,[-xg,y0+.026,zc+.02],[xg,y0+.026,zc+.02],[xg,y0+.026,zc-.02],[-xg,y0+.026,zc-.02],1);      // i vialetti in croce
+    [[-.15,zc-.08],[.15,zc-.08],[-.15,zc+.08],[.15,zc+.08],[-.24,zc],[.24,zc]].forEach(function(c,i){ var r=i<4?.06:.04, h=y0+(i<4?.14:.1), n=6, k;      // arbusti: piccoli coni verdi in ogni aiuola
+      for(k=0;k<n;k++){ var a0=k/n*6.283, a1=(k+1)/n*6.283; f.t(6,[c[0]+Math.cos(a0)*r,y0+.02,c[1]+Math.sin(a0)*r],[c[0],h,c[1]],[c[0]+Math.cos(a1)*r,y0+.02,c[1]+Math.sin(a1)*r]); } }); }
+  var col=[], k, n=det>0?6:3;
+  for(k=0;k<n;k++){ var x=-xp+.02+(2*xp-.04)*k/(n-1); col.push([x,zp0+.02],[x,zp1-.02]); }
+  if(det>0) [-1,1].forEach(function(l){ col.push([l*(xp-.02),zp0+.02+(zp1-zp0-.04)/3],[l*(xp-.02),zp0+.02+2*(zp1-zp0-.04)/3]); });
+  col.forEach(function(c){ var r=.014, x=c[0], z=c[1];      // le colonne del peristilio
     f.q(5,[x-r,y0,z+r],[x+r,y0,z+r],[x+r,B,z+r],[x-r,B,z+r],1).q(5,[x+r,y0,z-r],[x-r,y0,z-r],[x-r,B,z-r],[x+r,B,z-r],1).q(5,[x+r,y0,z+r],[x+r,y0,z-r],[x+r,B,z-r],[x+r,B,z+r],1).q(5,[x-r,y0,z-r],[x-r,y0,z+r],[x-r,B,z+r],[x-r,B,z-r],1); });
-  return f.fine(); })();
+  return f.fine(); }
+var detPeristilio=RM.QUALITA.peristilio[RM.q]?1:0, geoDomus=geoDomusDet(detPeristilio);
 FORME.push(geoDomus,FORME[0],FORME[2]);                                                   // 3 domus; 4 e 5 le case basse, con le stesse forme delle insulae a falde e a padiglione
 /* guscio: muri perimetrali a creste rotte, due tramezzi. Alto 1: l'istanza lo abbassa man mano che crolla */
 var geoRudere=(function(){ var f=new Forma(), n=4, lati=[[-s,s,s,s],[s,s,s,-s],[s,-s,-s,-s],[-s,-s,-s,s]],
@@ -326,7 +385,8 @@ vesteTetti(matTetti);
 appoggio(matMuri,true);
 var matBasse=appoggio(new THREE.MeshStandardMaterial({map:texBasse,roughness:.95,side:THREE.DoubleSide,emissive:new THREE.Color(0xffffff),emissiveMap:texLumiB,emissiveIntensity:0}));
 var matDomus=appoggio(new THREE.MeshStandardMaterial({map:texDomus,roughness:.95,side:THREE.DoubleSide}));
-var matGiardino=new THREE.MeshStandardMaterial({color:RM.col(0x7f9a56),roughness:1}), matVasca=new THREE.MeshStandardMaterial({color:RM.col(0x6d9aa0),roughness:.3}), matColonne=new THREE.MeshStandardMaterial({color:RM.col(0xece4d2),roughness:.9,side:THREE.DoubleSide});
+var matGiardino=new THREE.MeshStandardMaterial({color:RM.col(0x86a85a),roughness:1}), matVasca=new THREE.MeshStandardMaterial({color:RM.col(0x4f93a8),roughness:.25}), matColonne=new THREE.MeshStandardMaterial({color:RM.col(0xf2ece0),roughness:.9,side:THREE.DoubleSide});
+var matAtrio=new THREE.MeshStandardMaterial({color:RM.col(0xc9b89c),roughness:1}), matArbusti=new THREE.MeshStandardMaterial({color:RM.col(0x4a6a32),roughness:1,side:THREE.DoubleSide});      // il pavimento chiaro dell'atrio e dei portici del peristilio, gli arbusti del giardino (26 novembre 2026: dall'alto la domus si legge dai due vuoti)
 function istanze(geo,mat,quante){ var m=new THREE.InstancedMesh(geo,mat,quante); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.castShadow=m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='citta'; RM.scene.add(m); return m; }
 /* Pacco di istanze compattato: le istanze a scala zero (case sparite, rovine non ancora nate) non vengono inviate alla scheda grafica.
    Si scrive per indice come su una InstancedMesh; stringi() ricopia in testa solo quelle vive e aggiorna il conteggio. */
@@ -434,13 +494,34 @@ function verdeRovina(mat,corpo,nome){ var prima=mat.onBeforeCompile, sua=mat.has
     sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NLc+CASA_FD).replace('#include <alphamap_fragment>',corpo+NLc+'#include <alphamap_fragment>'); };
   mat.userData.chiaveCasa='rovina|'+nome+'|'+(sua?prima.toString():''); return mat; }
 function chiaveCasa(mat){ var k=mat.customProgramCacheKey, sua=mat.hasOwnProperty('customProgramCacheKey'); mat.customProgramCacheKey=function(){ return mat.userData.chiaveCasa+'|'+(sua?k.call(mat):''); }; }
-[[matMuri,'muro'],[matBasse,'muro'],[matDomus,'muro'],[matTetti,'tetto'],[matCorte,'corte'],[matGiardino,'giardino'],[matVasca,'vasca'],[matColonne,'colonna']].forEach(function(q){ degradaCasa(q[0],q[1]); });
+[[matMuri,'muro'],[matBasse,'muro'],[matDomus,'muro'],[matTetti,'tetto'],[matCorte,'corte'],[matAtrio,'corte'],[matGiardino,'giardino'],[matArbusti,'giardino'],[matVasca,'vasca'],[matColonne,'colonna']].forEach(function(q){ degradaCasa(q[0],q[1]); });
 [matMuri,matTetti,matBasse,matDomus].forEach(function(m){ RM.tingi(m,'C'); });      // «che cosa sappiamo davvero»: le case sono ipotesi
-[matMuri,matTetti,matBasse,matDomus,matCorte,matGiardino,matVasca,matColonne].forEach(chiaveCasa);      // un programma per specie di materiale: three li riconosce dal testo di onBeforeCompile, che qui è lo stesso
+[matMuri,matTetti,matBasse,matDomus,matCorte,matAtrio,matGiardino,matArbusti,matVasca,matColonne].forEach(chiaveCasa);      // un programma per specie di materiale: three li riconosce dal testo di onBeforeCompile, che qui è lo stesso
 var conta=[0,0,0,0,0,0]; isolati.forEach(function(b){ b.ti=conta[b.tipo]++; }); RM.contaCase=conta;
-var MAT_INS=[matMuri,matTetti,matCorte], MAT_BAS=[matBasse,matTetti,matCorte], MATERIALI=[MAT_INS,MAT_INS,MAT_INS,[matDomus,matTetti,matCorte,matGiardino,matVasca,matColonne],MAT_BAS,MAT_BAS];
+var MAT_INS=[matMuri,matTetti,matCorte], MAT_BAS=[matBasse,matTetti,matCorte], MATERIALI=[MAT_INS,MAT_INS,MAT_INS,[matDomus,matTetti,matAtrio,matGiardino,matVasca,matColonne,matArbusti],MAT_BAS,MAT_BAS];
 FORME[4]=FORME[0].clone(); FORME[5]=FORME[2].clone();      // le case basse prendono una copia delle forme delle insulae: l'attributo del degrado sta sulla geometria, una per pacco
 var ombraC=ombraCasa(), vivi=FORME.map(function(g,k){ var p=pacco(g,MATERIALI[k],Math.max(1,conta[k]),true); p.maglia.customDepthMaterial=ombraC; return p; });
+if(RM.qualita) RM.qualita.quando(function(g){ var d=RM.QUALITA.peristilio[g]?1:0; if(d===detPeristilio) return; detPeristilio=d;      // al cambio di gradino cambia solo la forma della domus; il degrado (aDeg) passa alla forma nuova
+  var m=vivi[3].maglia, v=m.geometry, n=geoDomusDet(d); n.setAttribute('aDeg',v.getAttribute('aDeg')); m.geometry=n; v.dispose(); });
+/* I portici delle insulae lungo le vie larghe (b.por, più sopra): pilastri, architrave e un tetto a una falda appoggiato al muro, alti circa 4,5 m. Misure e passo dei pilastri
+   sono una resa. Dettaglio per gradino (RM.QUALITA.portici): 0 nessuno («bassa»), 1 cinque pilastri per lato, 2 dieci; oltre 1,6 km dalla camera non si disegnano
+   (il vertice li riduce a un punto: da lì un portico profondo tre metri è meno di un pixel). Meno di duemila triangoli in tutto per cento portici col dettaglio 1. */
+RM.QUALITA.portici=[0,2,2,2,1];      // bassa, media, alta, massima, telefono
+var listaPor=isolati.filter(function(b){ return b.por; }), detPortici=RM.QUALITA.portici[RM.q]||0;
+function porticoGeo(det){ var B=new RM.Costruttore(), n=det>1?10:5, k;
+  if(det<1) return B.geo(new THREE.PlaneGeometry(.001,.001),P.intonaco).geometria();
+  for(k=0;k<n;k++) B.scatola(.024,.84,.2,-.5+.035+(1-.07)*k/(n-1),0,.88,P.intonaco);                 // i pilastri sul filo esterno
+  B.scatola(1,.08,.24,0,.82,.88,P.intonaco);                                                          // l'architrave
+  B.quad([-.5,1,0],[.5,1,0],[.5,.9,1.02],[-.5,.9,1.02],P.coppi);                                     // il tetto a una falda, dal muro ai pilastri
+  return B.geometria(); }
+var matPortici=RM.matPietra(), lontanoPor={value:160};
+(function(){ var prima=matPortici.onBeforeCompile; matPortici.onBeforeCompile=function(sh,r){ prima.call(matPortici,sh,r); sh.uniforms.uLontanoPor=lontanoPor;
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+NLc+'uniform float uLontanoPor;').replace('#include <begin_vertex>',['#include <begin_vertex>','#ifdef USE_INSTANCING',
+    'if(distance((modelMatrix*instanceMatrix*vec4(0.0,0.0,0.0,1.0)).xyz,cameraPosition)>uLontanoPor) transformed=vec3(0.0);','#endif'].join(NLc)); };
+  matPortici.customProgramCacheKey=function(){ return 'portici-case'; }; })();
+RM.tingi(matPortici,'C');
+var portici=pacco(porticoGeo(detPortici),matPortici,Math.max(1,listaPor.length)); listaPor.forEach(function(b,i){ b.pi=i; b.pq=-1; }); RM.porticiCase=portici.maglia;      // per le prove
+if(RM.qualita) RM.qualita.quando(function(g){ var d=RM.QUALITA.portici[g]||0; if(d===detPortici) return; detPortici=d; var v=portici.maglia.geometry; portici.maglia.geometry=porticoGeo(d); v.dispose(); });
 var matRuderi=verdeRovina(appoggio(new THREE.MeshStandardMaterial({map:texRudere,roughness:1,side:THREE.DoubleSide})),RUDERE_F,'muri'); RM.tingi(matRuderi,'C'); chiaveCasa(matRuderi);
 var ruderi=pacco(geoRudere,matRuderi,N,true);
 var tettiRotti=pacco(geoTettoRotto,RM.tingi(new THREE.MeshStandardMaterial({map:texCoppi,roughness:1,side:THREE.DoubleSide}),'C'),N);
@@ -567,14 +648,20 @@ function alberoGeo(sp,det){
   return B.geometria();
 }
 var alberi=[[],[]];
-isolati.forEach(function(b,i){ var rnd=RM.casuale(b.seme^0x5BD1E995); if(rnd()<(b.fato===2?.4:.24)) alberi[rnd()<(b.orto?.45:0)?0:1].push({x:b.x+(rnd()-.5)*3,z:b.z+(rnd()-.5)*3,s:.7+rnd()*.7,r:rnd()*6.283,b:i}); });   // negli orti, e selvatici fra le rovine
-RM.HORTI.forEach(function(h){ var rnd=RM.casuale(semePosto(Math.round(h[0]*10),Math.round(h[1]*10),Math.round(h[2]*10),71)); for(var k=0;k<h[2]*h[2]/9;k++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*h[2]; alberi[rnd()<.4?0:1].push({x:h[0]+r*Math.cos(a),z:h[1]+r*Math.sin(a),s:.8+rnd()*.7,r:rnd()*6.283,b:-1}); } });
+isolati.forEach(function(b,i){ var rnd=RM.casuale(b.seme^0x5BD1E995); if(rnd()<(b.tipo===3&&b.dentro?.65:b.fato===2?.4:.24)) alberi[rnd()<(b.orto?.45:0)?0:1].push({x:b.x+(rnd()-.5)*3,z:b.z+(rnd()-.5)*3,s:.7+rnd()*.7,r:rnd()*6.283,b:i}); });   // negli orti, e selvatici fra le rovine; nella domus in rovina il giardino del peristilio inselvatichito, con più alberi (26 novembre 2026)
+/* negli horti: pini e lecci curati; dal 26 novembre 2026 mai sopra i pezzi dei giardini (RM.hortiIngombri, js/monumenti.js) né sulle strade che li attraversano (i numeri a caso si estraggono lo stesso: gli altri alberi restano dove sono).
+   E gli alberi che nascono da soli dopo l'abbandono (b -3): fichi e olmi, come fra le rovine delle case, dall'anno in cui js/dati.js lascia il giardino (ipotesi, detta nella scheda). */
+var HORTI_ID=['hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'];      // nell'ordine di RM.HORTI
+function liberoAlbero(x,z){ if(RM.distStrade(x,z)<1.25) return false; var I=RM.hortiIngombri||[]; for(var i=0;i<I.length;i++) if(Math.hypot(x-I[i][0],z-I[i][1])<I[i][2]+.25) return false; return true; }
+RM.HORTI.forEach(function(h,kh){ var rnd=RM.casuale(semePosto(Math.round(h[0]*10),Math.round(h[1]*10),Math.round(h[2]*10),71)); for(var k=0;k<h[2]*h[2]/9;k++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*h[2], sp=rnd()<.4?0:1, al={x:h[0]+r*Math.cos(a),z:h[1]+r*Math.sin(a),s:.8+rnd()*.7,r:rnd()*6.283,b:-1}; if(liberoAlbero(al.x,al.z)) alberi[sp].push(al); }
+  var st=((D.MONUMENTI||{})[HORTI_ID[kh]]||[]).filter(function(q){ return q[1]!=='uso'; })[0], r2=RM.casuale(semePosto(Math.round(h[0]*10),Math.round(h[1]*10),kh,97));
+  if(st) for(k=0;k<h[2]*h[2]/16;k++){ var a2=r2()*6.283, rr=Math.sqrt(r2())*h[2]*.92, sel={x:h[0]+rr*Math.cos(a2),z:h[1]+rr*Math.sin(a2),s:.6+r2()*.6,r:r2()*6.283,b:-3,dal:st[0]+5+40*r2()}; if(liberoAlbero(sel.x,sel.z)) alberi[1].push(sel); } });
 (function(){ var rnd=RM.casuale(478); for(var f=0;f<260;f++){ var t=rnd(), pf=RM.curvaFiume.getPoint(.12+t*.76), lato=rnd()<.5?-1:1, tg=RM.curvaFiume.getTangent(.12+t*.76); alberi[1].push({x:pf.x-tg.z*lato*(9+rnd()*4),z:pf.z+tg.x*lato*(9+rnd()*4),s:.6+rnd()*.5,r:rnd()*6.283,b:-2}); } })();   // rive: una fila a sé, che dipende solo dal fiume
 /* dalle due liste di prima alle sette specie, per posto: lungo il fiume pioppi; negli horti pini e lecci; negli orti ulivi, pini e lecci; fra le rovine fichi e olmi
    (fino al 25 novembre 2026 lecci e pini: ma sui muri di Roma gli alberi autoctoni come il leccio sono sempre stati scarsi, Celesti-Grapow e Ricotta 2021) */
 alberi=(function(){ var L=[alberi[0],[],[],[],[],[],[]];
   alberi[1].forEach(function(a){ var g=RM.grana(Math.floor(a.x*3.1),Math.floor(a.z*2.7)), sp;
-    if(a.b===-2) sp=4; else if(a.b===-1) sp=g<.62?1:3; else if(isolati[a.b].orto) sp=g<.5?2:g<.72?1:3; else sp=g<.55?5:6;
+    if(a.b===-2) sp=4; else if(a.b===-1) sp=g<.62?1:3; else if(a.b===-3) sp=g<.55?5:6; else if(isolati[a.b].orto) sp=g<.5?2:g<.72?1:3; else sp=g<.55?5:6;
     L[sp].push(a); });
   return L; })();
 var detAlberi=RM.QUALITA.alberi[RM.q]||0;
@@ -658,6 +745,9 @@ function aggiorna(anno){
     d.position.set(b.x,b.y-.15,b.z); if(inPiedi) d.scale.set(b.w,Y,b.d); else if(a>.01) d.scale.set(b.w,b.alt*a*(b.nasce?1:bassa)+.15,b.d); else d.scale.set(0,0,0); d.updateMatrix();
     vivi[b.tipo].setMatrixAt(b.ti,d.matrix); vivi[b.tipo].setColorAt(b.ti,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar((.86+.28*b.sfasa)*(1-.1*s1)));
     vivi[b.tipo].setDegAt(b.ti,inPiedi?Math.max(s1,a<.5?.001:0):0,s2,hT,b.sfasa);
+    if(b.por){ var pk=inPiedi?1-RM.sfuma(b.t1,b.t1+.6*(b.t2-b.t1),eta):a>.5?1:0, fP=b.por[0], aP=b.ry+fP*Math.PI/2, eP=(fP%2?b.w:b.d)/2;      // il portico: con la casa abitata; lasciata, cade nei primi anni dello stadio 2
+      d.rotation.set(0,aP,0); d.position.set(b.x+Math.sin(aP)*eP,b.porY-.15,b.z+Math.cos(aP)*eP); if(pk>.02) d.scale.set((fP%2?b.d:b.w)*.92,.6*pk,b.por[1]); else d.scale.set(0,0,0); d.updateMatrix();
+      portici.setMatrixAt(b.pi,d.matrix); portici.setColorAt(b.pi,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar(.95+.1*b.sfasa)); d.position.set(b.x,b.y-.15,b.z); }
     /* rovina: dopo lo stadio 2 (o subito, se è bruciata); appena lasciata ha il colore dell'intonaco, poi resta il mattone */
     hm=inPiedi?0:v*altezzaMuri(b,eta,anno); if(q>0) hm=Math.min(hm,hm*(1-q)+q*(.27+.05*b.tono));      // attorno a un orto i monconi si abbassano a muretti (1-2 m fuori terra)
     d.rotation.set(0,b.ry+b.giro*Math.PI/2,0);
@@ -673,7 +763,7 @@ function aggiorna(anno){
     macerie.setDegAt(i,v*RM.sfuma(15,170,eta),0,1,b.sfasa);
     /* rovi, lentisco, sambuco nano, valeriana: dentro i muri dopo il tetto, fuori contro i muri presto */
     d.rotation.set(0,b.ry,0); d.position.y=b.y-.02;
-    m=v*RM.sfuma(b.t1,b.t1+45,eta)*(1-.85*q); d.scale.set(m>.02?b.w:0,.3+.7*m,m>.02?b.d:0); d.updateMatrix(); macchiaD.setMatrixAt(i,d.matrix); macchiaD.setColorAt(i,c.copy(bianco).multiplyScalar(.8+.3*b.sfasa));
+    m=v*RM.sfuma(b.t1,b.t1+45,eta)*(1-.85*q); d.scale.set(m>.02?b.w:0,(b.tipo===3?1.6:1)*(.3+.7*m),m>.02?b.d:0);      // nella domus il giardino inselvatichito cresce più alto d.updateMatrix(); macchiaD.setMatrixAt(i,d.matrix); macchiaD.setColorAt(i,c.copy(bianco).multiplyScalar(.8+.3*b.sfasa));
     m=(b.anello?1:0)*v*RM.sfuma(5,40,eta)*(1-.6*q); d.scale.set(m>.02?b.w:0,.3+.7*m,m>.02?b.d:0); d.updateMatrix(); macchiaF.setMatrixAt(i,d.matrix); macchiaF.setColorAt(i,c.copy(bianco).multiplyScalar(.75+.35*b.tono));
     m=b.vigna?q:0; d.position.y=b.y+.02; d.scale.set(m>.02?b.w*.95:0,m,m>.02?b.d*.95:0); d.updateMatrix(); vigne.setMatrixAt(i,d.matrix); vigne.setColorAt(i,c.copy(bianco).multiplyScalar(.85+.25*b.tono));
     /* suolo: terra, calcinacci ed erba fra le rovine, poi (per alcuni) filari */
@@ -686,13 +776,13 @@ function aggiorna(anno){
   alberi.forEach(function(lista,k){
     var mosso=false;
     lista.forEach(function(al,j){
-      var qa=al.b<0?1:isolati[al.b].alb; if(Math.abs(qa-al.q0)<.002) return;
+      var qa=al.b===-3?RM.sfuma(al.dal,al.dal+70,anno):al.b<0?1:isolati[al.b].alb;      // gli alberi selvatici degli horti crescono in settant'anni dall'abbandono if(Math.abs(qa-al.q0)<.002) return;
       al.q0=qa; mosso=true; d.rotation.set(0,al.r,0); d.position.set(al.x,al.y-.05,al.z); d.scale.setScalar(al.s*qa*1.25); d.updateMatrix(); magliaAlberi[k].setMatrixAt(j,d.matrix);
     });
     if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;
   });
   if(toccati){
-    vivi.concat([ruderi,tettiRotti,macerie,macchiaD,macchiaF,vigne,incolti,orti]).forEach(function(p){ p.stringi(); });
+    vivi.concat([ruderi,tettiRotti,macerie,macchiaD,macchiaF,vigne,incolti,orti,portici]).forEach(function(p){ p.stringi(); });
     gLuci.attributes.color.needsUpdate=true; aggiornaVie();
   }
   matMuri.emissiveIntensity=matBasse.emissiveIntensity=RM.notte*2.2; luci.material.opacity=RM.notte; luci.visible=RM.notte>.02;
@@ -700,4 +790,18 @@ function aggiorna(anno){
   if(RM.erba) RM.erba.value=.6*(1-D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno-30)));   // l'erba arriva una trentina d'anni dopo; dal 26 novembre 2026 meno piena: fra le rovine il suolo è terra e calcinacci (gli isolati), non un prato
 }
 RM.moduli.push(aggiorna);
+/* Per lo strumento «Regioni e quartieri» (26 novembre 2026): quante case ci sono in una zona in un dato anno. dentro(x, z) dice se un punto è nella zona.
+   abitate; abbandonate ma ancora in piedi (stadi 1 e 2); rovine; e fra abitate e abbandonate in piedi quante domus e quante insulae (le case basse, tipi 4 e 5, in nessuna delle due).
+   Non conta le case non ancora nate (il Borgo) né quelle demolite per un monumento. Rifà i conti di aggiorna() senza toccare nulla; costa solo quando la si chiama. */
+RM.caseIn=function(anno,dentro){
+  var soglia=1-D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno)), r={abitate:0,abbandonate:0,rovine:0,domus:0,insulae:0};
+  isolati.forEach(function(b){ if(!dentro(b.x,b.z)) return;
+    var a=RM.sfuma(-.02,.02,rango(b,anno)-soglia), arso=0, da0=b.lasciato+b.sfasa*12;
+    if(b.fuoco!=null && anno>b.fuoco-.4){ if(anno<b.fuocoFine){ arso=RM.sfuma(b.fuoco-.4,b.fuoco,anno)*(1-RM.sfuma(b.fuocoFine-Math.min(5,(b.fuocoFine-b.fuoco)*.5),b.fuocoFine,anno)); a*=1-arso; } if(b.fuoco<da0) da0=b.fuoco; }
+    var dm=b.via?RM.sfuma(b.via-3*b.sfasa-1,b.via-3*b.sfasa,anno):0; if(dm>.5) return; if(dm>0) a*=1-dm;
+    if(b.nasce){ a=RM.sfuma(b.nasce-5,b.nasce,anno)*(1-arso); if(anno<b.nasce-2.5) return; }
+    var eta=Math.max(0,anno-da0), sventrata=b.fuoco!=null && anno>b.fuoco-.4 && b.fuoco<=da0+.01, inPiedi=a>.5 || (!b.nasce && !sventrata && eta<b.t2);
+    if(a>.5) r.abitate++; else if(inPiedi) r.abbandonate++; else r.rovine++;
+    if(inPiedi){ if(b.tipo===3) r.domus++; else if(b.tipo<3) r.insulae++; } });
+  return r; };
 })();
