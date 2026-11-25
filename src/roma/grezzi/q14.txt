@@ -1,0 +1,5 @@
+[out:json][timeout:90];
+(
+  way["highway"]["name"~"^(Via della Maddalena|Clivo di Rocca Savella|Via di Santa Sabina|Clivo dei Publicii|Via di Valle Murcia|Via Carlo Alberto|Piazza di Santa Maria Maggiore|Piazza dell'Esquilino|Via Liberiana|Piazza della Rotonda|Via del Pantheon)$"](41.875,12.470,41.905,12.505);
+);
+out tags geom;

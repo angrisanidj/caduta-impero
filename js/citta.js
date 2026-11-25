@@ -19,13 +19,21 @@
 (function(){
 'use strict';
 var RM=window.RM; if(!RM||RM.guasto) return;
-var D=window.RM_DATI, P=RM.P, rnd=RM.casuale(476), PASSO=5.6, isolati=[];
+var D=window.RM_DATI, P=RM.P, PASSO=5.6, isolati=[];
+/* Numeri a caso legati al posto (25 novembre 2026). Prima tutta la città usciva da una sola fila di numeri a caso (rnd), estratti uno dopo l'altro: posto, misura e
+   orientamento di ogni casa dipendevano da quante estrazioni c'erano state prima, e bastava una strada o una zona nuova (cioè un candidato in più o in meno che passa
+   libero()) per rimescolare tutta Roma. Ora ogni punto della griglia di un quartiere ha la sua fila, il cui seme viene dal centro del quartiere e dagli indici del punto
+   (semePosto): un candidato scartato non consuma niente agli altri, e una via o una zona nuova toglie solo le case che tocca. Lo stesso per gli alberi (seme della casa,
+   o del giardino) e per le rive (fila a sé). Ciò che resta legato all'insieme è il rango di abbandono (p1, p2: la posizione di una casa fra tutte), per forza:
+   la quota di case lasciate segue la curva della popolazione; una casa in più o in meno lo sposta di una frazione minima. */
+function semePosto(a,b,c,d){ var h=Math.imul((a|0)^0x2545F491,0x9E3779B1); h=Math.imul(h^(h>>>15)^((b|0)+0x3C6EF372),0x85EBCA77); h=Math.imul(h^(h>>>13)^((c|0)+0x7F4A7C15),0xC2B2AE3D);
+  h=Math.imul(h^(h>>>16)^((d|0)+0x165667B1),0x27D4EB2F); h=Math.imul(h^(h>>>15),0x2C1B3C6D); return (h^(h>>>16))>>>0; }
 
 /* ---------- dove sorgono gli isolati ---------- */
 var QUARTIERI=[[-90,-70,.08],[-60,-150,.3],[40,-35,.6],[70,-90,.75],[150,-40,.35],[120,50,.1],[90,110,.5],[-25,110,.3],[-60,150,.05],[80,170,.75],
                [-125,40,.35],[-230,-105,0],[-40,25,.62],[-20,-190,.3],[150,-120,.6],[190,80,.9],[-70,-15,.3],[40,-110,.45],[220,10,.2],[210,60,.5],[-150,-20,.4]];
 var NUCLEI=RM.NUCLEI;
-function tenuta(x,z){
+function tenuta(x,z,rnd){
   var t=0;
   NUCLEI.forEach(function(n){ var d=Math.hypot(x-n[0],z-n[1]); t=Math.max(t,n[2]*Math.exp(-(d*d)/(n[3]*n[3]))); });
   t+=.25*Math.exp(-RM.distFiume(x,z)/45);          // vicino al fiume c'è acqua anche senza acquedotti
@@ -34,7 +42,7 @@ function tenuta(x,z){
 }
 /* Tenuta nei secoli V-VII. Gli scavi mostrano un abitato sparso su tutta l'area dentro le mura, non ancora raccolto sul Tevere:
    qui conta soprattutto il caso, con un piccolo vantaggio per chi sta vicino al fiume o a una chiesa e uno svantaggio per i colli e i margini. */
-function tenutaSparsa(x,z){
+function tenutaSparsa(x,z,rnd){
   var t=0;
   NUCLEI.forEach(function(n){ var d=Math.hypot(x-n[0],z-n[1]); t=Math.max(t,(n[3]>15?.22:.4)*n[2]*Math.exp(-(d*d)/(n[3]>15?70*70:13*13))); });
   t+=.2*Math.exp(-RM.distFiume(x,z)/45)-.02*RM.h(x,z)-.22*RM.sfuma(140,300,Math.hypot(x-5,z-5));
@@ -66,10 +74,11 @@ function sullaVia(b){
 }
 function quartiereDi(x,z){ var m=1e9, k=0; for(var i=0;i<QUARTIERI.length;i++){ var d=Math.hypot(x-QUARTIERI[i][0],z-QUARTIERI[i][1]); if(d<m){ m=d; k=i; } } return k; }
 QUARTIERI.forEach(function(Q,k){
-  var ca=Math.cos(Q[2]), sa=Math.sin(Q[2]), R=30;
+  var ca=Math.cos(Q[2]), sa=Math.sin(Q[2]), R=30, qx=Math.round(Q[0]*10), qz=Math.round(Q[1]*10);
   for(var i=-R;i<=R;i++) for(var j=-R;j<=R;j++){
     var x=Q[0]+(i*ca+j*sa)*PASSO, z=Q[1]+(-i*sa+j*ca)*PASSO;
     if(x<-330||x>330||z<-380||z>420 || quartiereDi(x,z)!==k) continue;
+    var seme=semePosto(qx,qz,i,j), rnd=RM.casuale(seme);      // la fila di numeri a caso di questo punto della griglia, e di nessun altro
     var dentro=RM.dentroMura(x,z), bordo=RM.distLinea(x,z,RM.MURA,true), centro=Math.hypot(x-5,z-5);
     var borgo=dentro?0:Math.exp(-((x+228)*(x+228)/(27*27)+(z+104)*(z+104)/(15*15)));               // il Borgo, fra San Pietro e il fiume: case che nasceranno dal V secolo, dentro quella che sarà la città leonina (a nord non oltre il Passetto)
     var dens=dentro ? .95-.28*RM.sfuma(150,290,centro) : Math.max(.36*Math.exp(-bordo/24),.8*borgo);
@@ -77,14 +86,14 @@ QUARTIERI.forEach(function(Q,k){
     var e=1.9, y0=RM.h(x,z), y1=RM.h(x+e,z+e), y2=RM.h(x-e,z+e), y3=RM.h(x+e,z-e), y4=RM.h(x-e,z-e), yMin=Math.min(y0,y1,y2,y3,y4);
     if(Math.max(y0,y1,y2,y3,y4)-yMin>2.2) continue;        // rupi e scarpate restano nude
     var fitto=1-RM.sfuma(30,240,centro), alt=dentro ? Math.min(2.07,.85+1.25*fitto*(.5+.5*rnd())+.3*rnd()) : .55+.5*rnd(), s=rnd();
-    var sub=dentro?Math.exp(-(Math.pow((x-56)/30,2)+Math.pow((z+34)/15,2))):0, caso=RM.grana(Math.round(x*7.3),Math.round(z*5.1)), caso2=RM.grana(Math.round(z*3.7)+17,Math.round(x*9.1)-5);      // sub: quanto si è dentro la Suburra; i due numeri a caso vengono dal posto, per non spostare la sequenza di rnd
+    var sub=dentro?Math.exp(-(Math.pow((x-56)/30,2)+Math.pow((z+34)/15,2))):0, caso=RM.grana(Math.round(x*7.3),Math.round(z*5.1)), caso2=RM.grana(Math.round(z*3.7)+17,Math.round(x*9.1)-5);      // sub: quanto si è dentro la Suburra; caso e caso2 vengono dal posto con RM.grana (scelta del 23 novembre, tenuta così il tipo delle case non cambia)
     var tp=!dentro?(s<.6?2:0):(s<.5-.15*fitto?2:s<.92-.14*fitto?0:1);
     if(dentro && caso2<(.3*RM.sfuma(4.8,6.4,RM.hGrezza(x,z))+.02)*(1-Math.min(1,sub*1.6))){ tp=3; alt=.55+.25*caso; }      // domus: sui pianori dei colli, quasi mai in valle, mai nella Suburra
     else if(sub>.45){ alt=Math.min(2.07,Math.max(alt,1.5+.57*caso)); if(tp===2) tp=caso<.6?1:0; }                          // Suburra: caseggiati alti, molti a corte
     else if(alt<1.05 && tp!==1) tp=tp===0?4:5;                                                                           // case basse
     var nuovo={x:x,z:z,y:yMin,ry:Q[2]+(rnd()-.5)*.05,w:3.85+rnd()*.9,d:3.85+rnd()*.9,alt:alt,
       tipo:tp,              // 0 insula a falde, 1 insula a corte, 2 insula a padiglione, 3 domus, 4 casa bassa a falde, 5 casa bassa a padiglione
-      k:tenuta(x,z)+(dentro?0:-.35), k1:tenutaSparsa(x,z)+(dentro?0:-.6), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, via:lib>1?lib:0, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0};
+      k:tenuta(x,z,rnd)+(dentro?0:-.35), k1:tenutaSparsa(x,z,rnd)+(dentro?0:-.6), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, via:lib>1?lib:0, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0, seme:seme};
     if(sullaVia(nuovo)){ nuovo.w=Math.max(3,nuovo.w*.78); nuovo.d=Math.max(3,nuovo.d*.78); if(sullaVia(nuovo)) continue; }      // sulla strada: l'isolato si stringe, e se non basta non c'è
     isolati.push(nuovo);
   }
@@ -313,7 +322,8 @@ var orti=pacco(geoOrto,new THREE.MeshStandardMaterial({map:texOrto,roughness:1,p
 /* Alberi. Rifatti il 24 novembre 2026 (l'utente: «L'erba inesistente… Puoi fare molto di meglio»): prima erano un cono e una palla schiacciata, due sole specie.
    Ora cinque specie della campagna e dei giardini di Roma antica, tutte già presenti allora (nessuna pianta venuta dopo, come il platano d'Oriente nei viali o le palme):
    il pino a ombrello (Pinus pinea) e il cipresso negli horti e attorno alle tombe; l'ulivo e il leccio negli orti e fra le rovine, dove crescono da sé; il pioppo bianco
-   lungo il Tevere. Le posizioni sono quelle di prima (stesse estrazioni di rnd: l'ordine non cambia); la specie si sceglie dal posto, con RM.grana.
+   lungo il Tevere. Dal 25 novembre 2026 i numeri a caso degli alberi vengono dal seme della loro casa o del loro giardino (le rive hanno una fila a sé): una casa
+   in più o in meno non sposta gli alberi delle altre. La specie si sceglie dal posto, con RM.grana.
    Ogni chioma è un profilo girato con il contorno mosso e il colore che scurisce verso il basso e cambia da un punto all'altro: da lontano legge come un volume d'ombra
    e di luce, non come una palla. Tre dettagli (RM.QUALITA.alberi): 0 i solidi di prima («bassa» e «telefono»), 1 circa cento triangoli per albero, 2 circa trecento
    (chiome a più ciuffi). Forme e proporzioni sono indicative. Dal 24 novembre 2026, sera, valgono anche sui telefoni che reggono «media» e oltre. */
@@ -348,9 +358,9 @@ function alberoGeo(sp,det){
   return B.geometria();
 }
 var alberi=[[],[]];
-isolati.forEach(function(b,i){ if(rnd()<(b.fato===2?.4:.2)) alberi[rnd()<(b.fato===2?.45:.15)?0:1].push({x:b.x+(rnd()-.5)*3,z:b.z+(rnd()-.5)*3,s:.7+rnd()*.7,b:i}); });   // negli orti, e selvatici fra le rovine
-RM.HORTI.forEach(function(h){ for(var k=0;k<h[2]*h[2]/9;k++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*h[2]; alberi[rnd()<.4?0:1].push({x:h[0]+r*Math.cos(a),z:h[1]+r*Math.sin(a),s:.8+rnd()*.7,b:-1}); } });
-for(var f=0;f<260;f++){ var t=rnd(), pf=RM.curvaFiume.getPoint(.12+t*.76), lato=rnd()<.5?-1:1, tg=RM.curvaFiume.getTangent(.12+t*.76); alberi[1].push({x:pf.x-tg.z*lato*(9+rnd()*4),z:pf.z+tg.x*lato*(9+rnd()*4),s:.6+rnd()*.5,b:-2}); }   // rive
+isolati.forEach(function(b,i){ var rnd=RM.casuale(b.seme^0x5BD1E995); if(rnd()<(b.fato===2?.4:.2)) alberi[rnd()<(b.fato===2?.45:.15)?0:1].push({x:b.x+(rnd()-.5)*3,z:b.z+(rnd()-.5)*3,s:.7+rnd()*.7,r:rnd()*6.283,b:i}); });   // negli orti, e selvatici fra le rovine
+RM.HORTI.forEach(function(h){ var rnd=RM.casuale(semePosto(Math.round(h[0]*10),Math.round(h[1]*10),Math.round(h[2]*10),71)); for(var k=0;k<h[2]*h[2]/9;k++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*h[2]; alberi[rnd()<.4?0:1].push({x:h[0]+r*Math.cos(a),z:h[1]+r*Math.sin(a),s:.8+rnd()*.7,r:rnd()*6.283,b:-1}); } });
+(function(){ var rnd=RM.casuale(478); for(var f=0;f<260;f++){ var t=rnd(), pf=RM.curvaFiume.getPoint(.12+t*.76), lato=rnd()<.5?-1:1, tg=RM.curvaFiume.getTangent(.12+t*.76); alberi[1].push({x:pf.x-tg.z*lato*(9+rnd()*4),z:pf.z+tg.x*lato*(9+rnd()*4),s:.6+rnd()*.5,r:rnd()*6.283,b:-2}); } })();   // rive: una fila a sé, che dipende solo dal fiume
 /* dalle due liste di prima alle cinque specie, per posto: lungo il fiume pioppi; negli horti pini e lecci; negli orti ulivi, pini e lecci; fra le rovine lecci e pini */
 alberi=(function(){ var L=[alberi[0],[],[],[],[]];
   alberi[1].forEach(function(a){ var g=RM.grana(Math.floor(a.x*3.1),Math.floor(a.z*2.7)), sp;
@@ -445,7 +455,7 @@ function aggiorna(anno){
     var mosso=false;
     lista.forEach(function(al,j){
       var qa=al.b<0?1:isolati[al.b].alb; if(Math.abs(qa-al.q0)<.002) return;
-      al.q0=qa; mosso=true; d.rotation.set(0,j,0); d.position.set(al.x,al.y-.05,al.z); d.scale.setScalar(al.s*qa*1.25); d.updateMatrix(); magliaAlberi[k].setMatrixAt(j,d.matrix);
+      al.q0=qa; mosso=true; d.rotation.set(0,al.r,0); d.position.set(al.x,al.y-.05,al.z); d.scale.setScalar(al.s*qa*1.25); d.updateMatrix(); magliaAlberi[k].setMatrixAt(j,d.matrix);
     });
     if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;
   });

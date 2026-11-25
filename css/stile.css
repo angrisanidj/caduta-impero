@@ -80,7 +80,7 @@ body.roma-grande .scheda{top:96px;left:20px;max-height:calc(100% - 220px)}
 #mappa{position:relative}
 .m-acque{fill:none;stroke:#F4FAF6;stroke-linejoin:round}
 .m-terra{fill:var(--st-perso)}
-.m-nome-mare{font-family:var(--serif);font-style:italic;font-size:13px;letter-spacing:.34em;fill:#6E8F93;fill-opacity:.75;text-anchor:middle;pointer-events:none}
+.m-nome-mare{font-family:var(--serif);font-style:italic;font-size:14px;letter-spacing:.34em;fill:#6E8F93;fill-opacity:.75;text-anchor:middle;pointer-events:none}
 .m-grana{mix-blend-mode:multiply;opacity:.2;pointer-events:none}
 .m-costa{fill:none;stroke:rgba(62,46,30,.55);stroke-width:.7;stroke-linejoin:round;pointer-events:none}
 .m-fiumi path{fill:none;stroke:#8FC0CF;stroke-opacity:.9;stroke-width:.95;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
@@ -1002,3 +1002,10 @@ body.roma-grande .salta-giu,body.impero-grande .salta-giu{display:none}
   .tempo .comandi #btnPrima,.tempo .comandi #btnDopo{flex:0 0 40px;width:40px}
   .tempo .comandi #btnPlay{flex:0 0 auto}
 }
+
+/* nomi delle strade sulla scena di Roma (js/strade-nomi.js, 25 novembre 2026): corsivo, chiari e quieti, più piccoli dei nomi dei monumenti e sotto di loro; non si toccano */
+.strade3d{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.strade3d span{position:absolute;left:0;top:0;visibility:hidden;opacity:0;white-space:nowrap;font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:14px;line-height:1;letter-spacing:.03em;
+  color:#f4e9cf;text-shadow:0 0 3px rgba(28,20,10,.95),0 0 7px rgba(28,20,10,.6);transition:opacity .3s}
+body.roma-grande .strade3d span{font-size:15px}
+@media (max-width:700px){ .strade3d{display:none} body.roma-grande .strade3d{display:block} body.roma-grande .strade3d span{font-size:13px} }

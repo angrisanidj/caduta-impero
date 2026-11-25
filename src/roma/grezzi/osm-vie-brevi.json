@@ -1,0 +1,1259 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-07-24T11:04:51Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 4949651,
+  "bounds": {
+    "minlat": 41.8995808,
+    "minlon": 12.4767127,
+    "maxlat": 41.8999853,
+    "maxlon": 12.4768790
+  },
+  "geometry": [
+    { "lat": 41.8995808, "lon": 12.4768790 },
+    { "lat": 41.8998464, "lon": 12.4767843 },
+    { "lat": 41.8999853, "lon": 12.4767127 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via del Pantheon",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 4951429,
+  "bounds": {
+    "minlat": 41.8969079,
+    "minlon": 12.4968893,
+    "maxlat": 41.8981618,
+    "maxlon": 12.4985035
+  },
+  "geometry": [
+    { "lat": 41.8981618, "lon": 12.4968893 },
+    { "lat": 41.8980898, "lon": 12.4969764 },
+    { "lat": 41.8976318, "lon": 12.4975245 },
+    { "lat": 41.8975724, "lon": 12.4975962 },
+    { "lat": 41.8973476, "lon": 12.4978662 },
+    { "lat": 41.8972938, "lon": 12.4979356 },
+    { "lat": 41.8970974, "lon": 12.4981834 },
+    { "lat": 41.8970282, "lon": 12.4982706 },
+    { "lat": 41.8970187, "lon": 12.4982843 },
+    { "lat": 41.8970044, "lon": 12.4983064 },
+    { "lat": 41.8969883, "lon": 12.4983344 },
+    { "lat": 41.8969708, "lon": 12.4983660 },
+    { "lat": 41.8969561, "lon": 12.4983950 },
+    { "lat": 41.8969401, "lon": 12.4984276 },
+    { "lat": 41.8969231, "lon": 12.4984658 },
+    { "lat": 41.8969079, "lon": 12.4985035 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Liberiana",
+    "oneway": "yes",
+    "parking:left": "no",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 22886081,
+  "bounds": {
+    "minlat": 41.8969016,
+    "minlon": 12.4985035,
+    "maxlat": 41.8969694,
+    "maxlon": 12.4990567
+  },
+  "geometry": [
+    { "lat": 41.8969079, "lon": 12.4985035 },
+    { "lat": 41.8969038, "lon": 12.4985338 },
+    { "lat": 41.8969018, "lon": 12.4985636 },
+    { "lat": 41.8969016, "lon": 12.4985879 },
+    { "lat": 41.8969044, "lon": 12.4986149 },
+    { "lat": 41.8969086, "lon": 12.4986446 },
+    { "lat": 41.8969140, "lon": 12.4986706 },
+    { "lat": 41.8969631, "lon": 12.4988718 },
+    { "lat": 41.8969659, "lon": 12.4988880 },
+    { "lat": 41.8969678, "lon": 12.4989028 },
+    { "lat": 41.8969692, "lon": 12.4989223 },
+    { "lat": 41.8969694, "lon": 12.4989401 },
+    { "lat": 41.8969680, "lon": 12.4989616 },
+    { "lat": 41.8969650, "lon": 12.4989819 },
+    { "lat": 41.8969603, "lon": 12.4989978 },
+    { "lat": 41.8969540, "lon": 12.4990128 },
+    { "lat": 41.8969460, "lon": 12.4990254 },
+    { "lat": 41.8969260, "lon": 12.4990567 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Maria Maggiore",
+    "oneway": "yes",
+    "parking:left": "no",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23060476,
+  "bounds": {
+    "minlat": 41.8984919,
+    "minlon": 12.4963506,
+    "maxlat": 41.8988243,
+    "maxlon": 12.4972218
+  },
+  "geometry": [
+    { "lat": 41.8984919, "lon": 12.4972218 },
+    { "lat": 41.8985247, "lon": 12.4971394 },
+    { "lat": 41.8987803, "lon": 12.4964896 },
+    { "lat": 41.8988033, "lon": 12.4964226 },
+    { "lat": 41.8988243, "lon": 12.4963506 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Piazza dell'Esquilino",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 23327651,
+  "bounds": {
+    "minlat": 41.8970553,
+    "minlon": 12.4994896,
+    "maxlat": 41.8972687,
+    "maxlon": 12.4998672
+  },
+  "geometry": [
+    { "lat": 41.8970553, "lon": 12.4998672 },
+    { "lat": 41.8972101, "lon": 12.4996128 },
+    { "lat": 41.8972385, "lon": 12.4995555 },
+    { "lat": 41.8972687, "lon": 12.4994896 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Maria Maggiore",
+    "oneway": "yes",
+    "smoothness": "excellent",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24404015,
+  "bounds": {
+    "minlat": 41.8852660,
+    "minlon": 12.4824106,
+    "maxlat": 41.8852916,
+    "maxlon": 12.4826646
+  },
+  "geometry": [
+    { "lat": 41.8852916, "lon": 12.4824106 },
+    { "lat": 41.8852660, "lon": 12.4826646 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "residential",
+    "lit": "yes",
+    "name": "Via di Valle Murcia",
+    "odbl": "clean",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24468731,
+  "bounds": {
+    "minlat": 41.8866590,
+    "minlon": 12.4822277,
+    "maxlat": 41.8871939,
+    "maxlon": 12.4824479
+  },
+  "geometry": [
+    { "lat": 41.8871939, "lon": 12.4822503 },
+    { "lat": 41.8871691, "lon": 12.4822399 },
+    { "lat": 41.8871423, "lon": 12.4822312 },
+    { "lat": 41.8871175, "lon": 12.4822277 },
+    { "lat": 41.8870850, "lon": 12.4822287 },
+    { "lat": 41.8870492, "lon": 12.4822340 },
+    { "lat": 41.8870155, "lon": 12.4822414 },
+    { "lat": 41.8869834, "lon": 12.4822521 },
+    { "lat": 41.8869473, "lon": 12.4822665 },
+    { "lat": 41.8869186, "lon": 12.4822779 },
+    { "lat": 41.8868634, "lon": 12.4823060 },
+    { "lat": 41.8867905, "lon": 12.4823545 },
+    { "lat": 41.8866590, "lon": 12.4824479 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Clivo dei Publicii",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24468734,
+  "bounds": {
+    "minlat": 41.8846766,
+    "minlon": 12.4807464,
+    "maxlat": 41.8852916,
+    "maxlon": 12.4824106
+  },
+  "geometry": [
+    { "lat": 41.8852916, "lon": 12.4824106 },
+    { "lat": 41.8852809, "lon": 12.4823295 },
+    { "lat": 41.8851821, "lon": 12.4816479 },
+    { "lat": 41.8851656, "lon": 12.4815505 },
+    { "lat": 41.8851439, "lon": 12.4814531 },
+    { "lat": 41.8851221, "lon": 12.4813840 },
+    { "lat": 41.8850963, "lon": 12.4813219 },
+    { "lat": 41.8850592, "lon": 12.4812560 },
+    { "lat": 41.8850180, "lon": 12.4811981 },
+    { "lat": 41.8849939, "lon": 12.4811626 },
+    { "lat": 41.8847964, "lon": 12.4809001 },
+    { "lat": 41.8847246, "lon": 12.4808099 },
+    { "lat": 41.8846766, "lon": 12.4807464 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Via di Santa Sabina",
+    "name:etymology:wikidata": "Q262751",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 24468852,
+  "bounds": {
+    "minlat": 41.8843206,
+    "minlon": 12.4802795,
+    "maxlat": 41.8846766,
+    "maxlon": 12.4807464
+  },
+  "geometry": [
+    { "lat": 41.8846766, "lon": 12.4807464 },
+    { "lat": 41.8844819, "lon": 12.4804879 },
+    { "lat": 41.8843206, "lon": 12.4802795 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Via di Santa Sabina",
+    "name:etymology:wikidata": "Q262751",
+    "oneway": "yes",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 24468853,
+  "bounds": {
+    "minlat": 41.8835978,
+    "minlon": 12.4793668,
+    "maxlat": 41.8841271,
+    "maxlon": 12.4800346
+  },
+  "geometry": [
+    { "lat": 41.8835978, "lon": 12.4793668 },
+    { "lat": 41.8840798, "lon": 12.4799749 },
+    { "lat": 41.8841271, "lon": 12.4800346 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Via di Santa Sabina",
+    "name:etymology:wikidata": "Q262751",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 24534110,
+  "bounds": {
+    "minlat": 41.8840129,
+    "minlon": 12.4824106,
+    "maxlat": 41.8852916,
+    "maxlon": 12.4829978
+  },
+  "geometry": [
+    { "lat": 41.8852916, "lon": 12.4824106 },
+    { "lat": 41.8852278, "lon": 12.4824429 },
+    { "lat": 41.8851978, "lon": 12.4824590 },
+    { "lat": 41.8851678, "lon": 12.4824756 },
+    { "lat": 41.8851409, "lon": 12.4824918 },
+    { "lat": 41.8851139, "lon": 12.4825084 },
+    { "lat": 41.8850678, "lon": 12.4825390 },
+    { "lat": 41.8850368, "lon": 12.4825579 },
+    { "lat": 41.8850060, "lon": 12.4825762 },
+    { "lat": 41.8849664, "lon": 12.4825977 },
+    { "lat": 41.8849269, "lon": 12.4826186 },
+    { "lat": 41.8847963, "lon": 12.4826823 },
+    { "lat": 41.8847487, "lon": 12.4827041 },
+    { "lat": 41.8847083, "lon": 12.4827216 },
+    { "lat": 41.8846534, "lon": 12.4827406 },
+    { "lat": 41.8846057, "lon": 12.4827554 },
+    { "lat": 41.8843928, "lon": 12.4828144 },
+    { "lat": 41.8843871, "lon": 12.4828160 },
+    { "lat": 41.8843491, "lon": 12.4828266 },
+    { "lat": 41.8843177, "lon": 12.4828371 },
+    { "lat": 41.8842904, "lon": 12.4828464 },
+    { "lat": 41.8842630, "lon": 12.4828579 },
+    { "lat": 41.8842380, "lon": 12.4828694 },
+    { "lat": 41.8842072, "lon": 12.4828843 },
+    { "lat": 41.8841788, "lon": 12.4828992 },
+    { "lat": 41.8841030, "lon": 12.4829408 },
+    { "lat": 41.8840129, "lon": 12.4829978 }
+  ],
+  "tags": {
+    "access": "no",
+    "alt_name": "Clivo de' Publicii",
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Clivo dei Publicii",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 28677930,
+  "bounds": {
+    "minlat": 41.8990262,
+    "minlon": 12.4771447,
+    "maxlat": 41.8993048,
+    "maxlon": 12.4771849
+  },
+  "geometry": [
+    { "lat": 41.8993048, "lon": 12.4771447 },
+    { "lat": 41.8992771, "lon": 12.4771466 },
+    { "lat": 41.8990262, "lon": 12.4771849 }
+  ],
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "name": "Piazza della Rotonda",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 38916783,
+  "bounds": {
+    "minlat": 41.9004886,
+    "minlon": 12.4765555,
+    "maxlat": 41.9011702,
+    "maxlon": 12.4765947
+  },
+  "geometry": [
+    { "lat": 41.9011702, "lon": 12.4765800 },
+    { "lat": 41.9009839, "lon": 12.4765947 },
+    { "lat": 41.9004886, "lon": 12.4765555 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "motor_vehicle": "private",
+    "name": "Via della Maddalena",
+    "oneway:motor_vehicle": "yes",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 40872929,
+  "bounds": {
+    "minlat": 41.8850180,
+    "minlon": 12.4803624,
+    "maxlat": 41.8867329,
+    "maxlon": 12.4811981
+  },
+  "geometry": [
+    { "lat": 41.8850180, "lon": 12.4811981 },
+    { "lat": 41.8850428, "lon": 12.4811667 },
+    { "lat": 41.8850511, "lon": 12.4811563 },
+    { "lat": 41.8854439, "lon": 12.4806942 },
+    { "lat": 41.8855693, "lon": 12.4805361 },
+    { "lat": 41.8856588, "lon": 12.4804238 },
+    { "lat": 41.8856909, "lon": 12.4803641 },
+    { "lat": 41.8857081, "lon": 12.4803624 },
+    { "lat": 41.8857253, "lon": 12.4803678 },
+    { "lat": 41.8857884, "lon": 12.4804055 },
+    { "lat": 41.8859188, "lon": 12.4804854 },
+    { "lat": 41.8861559, "lon": 12.4806248 },
+    { "lat": 41.8864673, "lon": 12.4808303 },
+    { "lat": 41.8865022, "lon": 12.4808459 },
+    { "lat": 41.8865209, "lon": 12.4808474 },
+    { "lat": 41.8865436, "lon": 12.4808436 },
+    { "lat": 41.8865988, "lon": 12.4808254 },
+    { "lat": 41.8866565, "lon": 12.4807925 },
+    { "lat": 41.8867329, "lon": 12.4807276 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Clivo di Rocca Savella",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 51246343,
+  "bounds": {
+    "minlat": 41.8831391,
+    "minlon": 12.4787408,
+    "maxlat": 41.8833411,
+    "maxlon": 12.4790232
+  },
+  "geometry": [
+    { "lat": 41.8833411, "lon": 12.4790232 },
+    { "lat": 41.8831391, "lon": 12.4787408 }
+  ],
+  "tags": {
+    "cycleway:both": "no",
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Via di Santa Sabina",
+    "name:etymology:wikidata": "Q262751",
+    "parking:left": "no",
+    "sidewalk": "no",
+    "smoothness": "good",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 52582207,
+  "bounds": {
+    "minlat": 41.8852660,
+    "minlon": 12.4826646,
+    "maxlat": 41.8853883,
+    "maxlon": 12.4839664
+  },
+  "geometry": [
+    { "lat": 41.8852660, "lon": 12.4826646 },
+    { "lat": 41.8853330, "lon": 12.4834287 },
+    { "lat": 41.8853883, "lon": 12.4839664 }
+  ],
+  "tags": {
+    "bicycle": "designated",
+    "foot": "designated",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via di Valle Murcia",
+    "segregated": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 52722358,
+  "bounds": {
+    "minlat": 41.8982922,
+    "minlon": 12.4963506,
+    "maxlat": 41.8988243,
+    "maxlon": 12.4969980
+  },
+  "geometry": [
+    { "lat": 41.8988243, "lon": 12.4963506 },
+    { "lat": 41.8987785, "lon": 12.4963924 },
+    { "lat": 41.8987373, "lon": 12.4964398 },
+    { "lat": 41.8985927, "lon": 12.4966275 },
+    { "lat": 41.8983979, "lon": 12.4969060 },
+    { "lat": 41.8983570, "lon": 12.4969614 },
+    { "lat": 41.8983506, "lon": 12.4969700 },
+    { "lat": 41.8983336, "lon": 12.4969851 },
+    { "lat": 41.8983134, "lon": 12.4969941 },
+    { "lat": 41.8982922, "lon": 12.4969980 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "name": "Piazza dell'Esquilino",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 82718895,
+  "bounds": {
+    "minlat": 41.8860604,
+    "minlon": 12.4825276,
+    "maxlat": 41.8867000,
+    "maxlon": 12.4830375
+  },
+  "geometry": [
+    { "lat": 41.8860604, "lon": 12.4830375 },
+    { "lat": 41.8863063, "lon": 12.4828523 },
+    { "lat": 41.8867000, "lon": 12.4825276 }
+  ],
+  "tags": {
+    "highway": "footway",
+    "name": "Clivo dei Publicii",
+    "surface": "fine_gravel"
+  }
+},
+{
+  "type": "way",
+  "id": 106132626,
+  "bounds": {
+    "minlat": 41.8968721,
+    "minlon": 12.4990567,
+    "maxlat": 41.8969260,
+    "maxlon": 12.4994379
+  },
+  "geometry": [
+    { "lat": 41.8969260, "lon": 12.4990567 },
+    { "lat": 41.8969053, "lon": 12.4991030 },
+    { "lat": 41.8968915, "lon": 12.4991493 },
+    { "lat": 41.8968803, "lon": 12.4991953 },
+    { "lat": 41.8968743, "lon": 12.4992403 },
+    { "lat": 41.8968721, "lon": 12.4992869 },
+    { "lat": 41.8968753, "lon": 12.4993325 },
+    { "lat": 41.8968831, "lon": 12.4993763 },
+    { "lat": 41.8968907, "lon": 12.4994095 },
+    { "lat": 41.8969025, "lon": 12.4994379 }
+  ],
+  "tags": {
+    "highway": "tertiary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Maria Maggiore",
+    "oneway": "yes",
+    "parking:left": "no",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 106205318,
+  "bounds": {
+    "minlat": 41.8852916,
+    "minlon": 12.4824106,
+    "maxlat": 41.8866590,
+    "maxlon": 12.4829698
+  },
+  "geometry": [
+    { "lat": 41.8866590, "lon": 12.4824479 },
+    { "lat": 41.8860801, "lon": 12.4829014 },
+    { "lat": 41.8860319, "lon": 12.4829372 },
+    { "lat": 41.8859977, "lon": 12.4829598 },
+    { "lat": 41.8859672, "lon": 12.4829698 },
+    { "lat": 41.8859437, "lon": 12.4829654 },
+    { "lat": 41.8859189, "lon": 12.4829593 },
+    { "lat": 41.8858861, "lon": 12.4829472 },
+    { "lat": 41.8858567, "lon": 12.4829345 },
+    { "lat": 41.8856560, "lon": 12.4828497 },
+    { "lat": 41.8856176, "lon": 12.4828307 },
+    { "lat": 41.8855915, "lon": 12.4828140 },
+    { "lat": 41.8855684, "lon": 12.4827938 },
+    { "lat": 41.8855396, "lon": 12.4827633 },
+    { "lat": 41.8853806, "lon": 12.4825552 },
+    { "lat": 41.8853497, "lon": 12.4825102 },
+    { "lat": 41.8853158, "lon": 12.4824525 },
+    { "lat": 41.8852916, "lon": 12.4824106 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lit": "yes",
+    "name": "Clivo dei Publicii",
+    "oneway": "yes",
+    "parking:both": "yes",
+    "parking:both:orientation": "parallel",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 107254156,
+  "bounds": {
+    "minlat": 41.8969986,
+    "minlon": 12.4995468,
+    "maxlat": 41.8970699,
+    "maxlon": 12.4998672
+  },
+  "geometry": [
+    { "lat": 41.8969986, "lon": 12.4995468 },
+    { "lat": 41.8970181, "lon": 12.4995745 },
+    { "lat": 41.8970342, "lon": 12.4996082 },
+    { "lat": 41.8970515, "lon": 12.4996505 },
+    { "lat": 41.8970633, "lon": 12.4996898 },
+    { "lat": 41.8970696, "lon": 12.4997277 },
+    { "lat": 41.8970699, "lon": 12.4997688 },
+    { "lat": 41.8970635, "lon": 12.4998164 },
+    { "lat": 41.8970553, "lon": 12.4998672 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Maria Maggiore",
+    "oneway": "yes",
+    "smoothness": "excellent",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 107254172,
+  "bounds": {
+    "minlat": 41.8981618,
+    "minlon": 12.4968893,
+    "maxlat": 41.8986723,
+    "maxlon": 12.4974872
+  },
+  "geometry": [
+    { "lat": 41.8981618, "lon": 12.4968893 },
+    { "lat": 41.8982107, "lon": 12.4969878 },
+    { "lat": 41.8982273, "lon": 12.4970205 },
+    { "lat": 41.8982479, "lon": 12.4970549 },
+    { "lat": 41.8982710, "lon": 12.4970886 },
+    { "lat": 41.8982981, "lon": 12.4971238 },
+    { "lat": 41.8984691, "lon": 12.4973198 },
+    { "lat": 41.8985094, "lon": 12.4973659 },
+    { "lat": 41.8985319, "lon": 12.4973888 },
+    { "lat": 41.8985549, "lon": 12.4974094 },
+    { "lat": 41.8985803, "lon": 12.4974291 },
+    { "lat": 41.8986060, "lon": 12.4974466 },
+    { "lat": 41.8986723, "lon": 12.4974872 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Esquilino",
+    "oneway": "yes",
+    "parking:right": "no",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 107254181,
+  "bounds": {
+    "minlat": 41.8984919,
+    "minlon": 12.4972218,
+    "maxlat": 41.8986723,
+    "maxlon": 12.4974872
+  },
+  "geometry": [
+    { "lat": 41.8986723, "lon": 12.4974872 },
+    { "lat": 41.8985847, "lon": 12.4973452 },
+    { "lat": 41.8985655, "lon": 12.4973176 },
+    { "lat": 41.8985403, "lon": 12.4972824 },
+    { "lat": 41.8985159, "lon": 12.4972513 },
+    { "lat": 41.8984919, "lon": 12.4972218 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Esquilino",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 120513609,
+  "bounds": {
+    "minlat": 41.8969025,
+    "minlon": 12.4994379,
+    "maxlat": 41.8969986,
+    "maxlon": 12.4995468
+  },
+  "geometry": [
+    { "lat": 41.8969025, "lon": 12.4994379 },
+    { "lat": 41.8969986, "lon": 12.4995468 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "3",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Maria Maggiore",
+    "oneway": "yes",
+    "parking:left": "no",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 128672634,
+  "bounds": {
+    "minlat": 41.8981618,
+    "minlon": 12.4968893,
+    "maxlat": 41.8982922,
+    "maxlon": 12.4969980
+  },
+  "geometry": [
+    { "lat": 41.8982922, "lon": 12.4969980 },
+    { "lat": 41.8982431, "lon": 12.4969498 },
+    { "lat": 41.8982132, "lon": 12.4969233 },
+    { "lat": 41.8981618, "lon": 12.4968893 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Esquilino",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 128676652,
+  "bounds": {
+    "minlat": 41.8969986,
+    "minlon": 12.4994896,
+    "maxlat": 41.8972687,
+    "maxlon": 12.4995774
+  },
+  "geometry": [
+    { "lat": 41.8969986, "lon": 12.4995468 },
+    { "lat": 41.8970296, "lon": 12.4995639 },
+    { "lat": 41.8970641, "lon": 12.4995731 },
+    { "lat": 41.8970962, "lon": 12.4995763 },
+    { "lat": 41.8971332, "lon": 12.4995774 },
+    { "lat": 41.8971732, "lon": 12.4995660 },
+    { "lat": 41.8972052, "lon": 12.4995482 },
+    { "lat": 41.8972356, "lon": 12.4995270 },
+    { "lat": 41.8972687, "lon": 12.4994896 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Maria Maggiore",
+    "oneway": "yes",
+    "parking:left": "no",
+    "smoothness": "excellent",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 128676653,
+  "bounds": {
+    "minlat": 41.8972687,
+    "minlon": 12.4994098,
+    "maxlat": 41.8973690,
+    "maxlon": 12.4994896
+  },
+  "geometry": [
+    { "lat": 41.8972687, "lon": 12.4994896 },
+    { "lat": 41.8972974, "lon": 12.4994483 },
+    { "lat": 41.8973111, "lon": 12.4994329 },
+    { "lat": 41.8973254, "lon": 12.4994221 },
+    { "lat": 41.8973422, "lon": 12.4994142 },
+    { "lat": 41.8973566, "lon": 12.4994110 },
+    { "lat": 41.8973690, "lon": 12.4994098 }
+  ],
+  "tags": {
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Maria Maggiore",
+    "oneway": "yes",
+    "parking:left": "no",
+    "smoothness": "good",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 130920754,
+  "bounds": {
+    "minlat": 41.8993048,
+    "minlon": 12.4771447,
+    "maxlat": 41.8993557,
+    "maxlon": 12.4772869
+  },
+  "geometry": [
+    { "lat": 41.8993557, "lon": 12.4772869 },
+    { "lat": 41.8993048, "lon": 12.4771447 }
+  ],
+  "tags": {
+    "highway": "service",
+    "lit": "yes",
+    "name": "Piazza della Rotonda",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 131146041,
+  "bounds": {
+    "minlat": 41.8999853,
+    "minlon": 12.4767030,
+    "maxlat": 41.9000030,
+    "maxlon": 12.4767127
+  },
+  "geometry": [
+    { "lat": 41.8999853, "lon": 12.4767127 },
+    { "lat": 41.9000030, "lon": 12.4767030 }
+  ],
+  "tags": {
+    "check_date:lit": "2021-10-28",
+    "highway": "pedestrian",
+    "is_in:city": "Roma",
+    "lit": "yes",
+    "name": "Via del Pantheon",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 131146042,
+  "bounds": {
+    "minlat": 41.9001962,
+    "minlon": 12.4765555,
+    "maxlat": 41.9004886,
+    "maxlon": 12.4766007
+  },
+  "geometry": [
+    { "lat": 41.9001962, "lon": 12.4766007 },
+    { "lat": 41.9002657, "lon": 12.4765807 },
+    { "lat": 41.9003574, "lon": 12.4765643 },
+    { "lat": 41.9004886, "lon": 12.4765555 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Via della Maddalena",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 137470195,
+  "bounds": {
+    "minlat": 41.8953792,
+    "minlon": 12.5017269,
+    "maxlat": 41.8960450,
+    "maxlon": 12.5029149
+  },
+  "geometry": [
+    { "lat": 41.8960450, "lon": 12.5017269 },
+    { "lat": 41.8960119, "lon": 12.5017876 },
+    { "lat": 41.8960046, "lon": 12.5017982 },
+    { "lat": 41.8957885, "lon": 12.5021647 },
+    { "lat": 41.8954561, "lon": 12.5027729 },
+    { "lat": 41.8953792, "lon": 12.5029149 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Carlo Alberto",
+    "parking:both": "lane",
+    "parking:both:fee": "ticket",
+    "parking:both:orientation": "parallel",
+    "sidewalk:both": "separate",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 143725205,
+  "bounds": {
+    "minlat": 41.8867329,
+    "minlon": 12.4806725,
+    "maxlat": 41.8867901,
+    "maxlon": 12.4807276
+  },
+  "geometry": [
+    { "lat": 41.8867329, "lon": 12.4807276 },
+    { "lat": 41.8867901, "lon": 12.4806725 }
+  ],
+  "tags": {
+    "handrail": "no",
+    "highway": "steps",
+    "incline": "down",
+    "lit": "yes",
+    "name": "Clivo di Rocca Savella",
+    "ramp": "no",
+    "step_count": "10",
+    "surface": "sett",
+    "tactile_paving": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 143725208,
+  "bounds": {
+    "minlat": 41.8867901,
+    "minlon": 12.4805104,
+    "maxlat": 41.8869396,
+    "maxlon": 12.4806725
+  },
+  "geometry": [
+    { "lat": 41.8867901, "lon": 12.4806725 },
+    { "lat": 41.8869396, "lon": 12.4805104 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lane_markings": "no",
+    "lit": "yes",
+    "name": "Clivo di Rocca Savella",
+    "sidewalk": "both",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 159654538,
+  "bounds": {
+    "minlat": 41.8991538,
+    "minlon": 12.4770356,
+    "maxlat": 41.8993048,
+    "maxlon": 12.4771447
+  },
+  "geometry": [
+    { "lat": 41.8991538, "lon": 12.4770356 },
+    { "lat": 41.8993048, "lon": 12.4771447 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza della Rotonda",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 159654540,
+  "bounds": {
+    "minlat": 41.8991492,
+    "minlon": 12.4768712,
+    "maxlat": 41.8994582,
+    "maxlon": 12.4769196
+  },
+  "geometry": [
+    { "lat": 41.8994582, "lon": 12.4768712 },
+    { "lat": 41.8991492, "lon": 12.4769196 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza della Rotonda",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 159654543,
+  "bounds": {
+    "minlat": 41.8994390,
+    "minlon": 12.4766016,
+    "maxlat": 41.8995808,
+    "maxlon": 12.4768790
+  },
+  "geometry": [
+    { "lat": 41.8994390, "lon": 12.4766016 },
+    { "lat": 41.8994582, "lon": 12.4768712 },
+    { "lat": 41.8995808, "lon": 12.4768790 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza della Rotonda",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 159654545,
+  "bounds": {
+    "minlat": 41.8990262,
+    "minlon": 12.4766349,
+    "maxlat": 41.8991538,
+    "maxlon": 12.4771849
+  },
+  "geometry": [
+    { "lat": 41.8991329, "lon": 12.4766349 },
+    { "lat": 41.8991409, "lon": 12.4767801 },
+    { "lat": 41.8991492, "lon": 12.4769196 },
+    { "lat": 41.8991538, "lon": 12.4770356 },
+    { "lat": 41.8990262, "lon": 12.4771849 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza della Rotonda",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 159654548,
+  "bounds": {
+    "minlat": 41.8990170,
+    "minlon": 12.4765047,
+    "maxlat": 41.8995232,
+    "maxlon": 12.4766349
+  },
+  "geometry": [
+    { "lat": 41.8990170, "lon": 12.4765206 },
+    { "lat": 41.8991329, "lon": 12.4766349 },
+    { "lat": 41.8994390, "lon": 12.4766016 },
+    { "lat": 41.8995218, "lon": 12.4765920 },
+    { "lat": 41.8995232, "lon": 12.4765047 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza della Rotonda",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 190639860,
+  "bounds": {
+    "minlat": 41.8982922,
+    "minlon": 12.4969980,
+    "maxlat": 41.8984919,
+    "maxlon": 12.4972218
+  },
+  "geometry": [
+    { "lat": 41.8984919, "lon": 12.4972218 },
+    { "lat": 41.8983615, "lon": 12.4970746 },
+    { "lat": 41.8983264, "lon": 12.4970349 },
+    { "lat": 41.8982997, "lon": 12.4970056 },
+    { "lat": 41.8982922, "lon": 12.4969980 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza dell'Esquilino",
+    "oneway": "yes",
+    "sidewalk:left": "no",
+    "sidewalk:right": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 258581214,
+  "bounds": {
+    "minlat": 41.8960450,
+    "minlon": 12.4998672,
+    "maxlat": 41.8970553,
+    "maxlon": 12.5017269
+  },
+  "geometry": [
+    { "lat": 41.8970553, "lon": 12.4998672 },
+    { "lat": 41.8970023, "lon": 12.4999679 },
+    { "lat": 41.8969466, "lon": 12.5000749 },
+    { "lat": 41.8968881, "lon": 12.5001925 },
+    { "lat": 41.8966774, "lon": 12.5005982 },
+    { "lat": 41.8966452, "lon": 12.5006585 },
+    { "lat": 41.8965167, "lon": 12.5008956 },
+    { "lat": 41.8960450, "lon": 12.5017269 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via Carlo Alberto",
+    "parking:both": "yes",
+    "parking:both:orientation": "perpendicular",
+    "parking:condition:both": "ticket",
+    "sidewalk:both": "separate",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 366647668,
+  "bounds": {
+    "minlat": 41.8973690,
+    "minlon": 12.4994098,
+    "maxlat": 41.8977043,
+    "maxlon": 12.4994301
+  },
+  "geometry": [
+    { "lat": 41.8973690, "lon": 12.4994098 },
+    { "lat": 41.8976331, "lon": 12.4994252 },
+    { "lat": 41.8977043, "lon": 12.4994301 }
+  ],
+  "tags": {
+    "cycleway:right": "no",
+    "highway": "secondary",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Piazza di Santa Maria Maggiore",
+    "oneway": "yes",
+    "parking:left": "no",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 429476395,
+  "bounds": {
+    "minlat": 41.8973613,
+    "minlon": 12.4970481,
+    "maxlat": 41.8981497,
+    "maxlon": 12.4979878
+  },
+  "geometry": [
+    { "lat": 41.8973613, "lon": 12.4979878 },
+    { "lat": 41.8975678, "lon": 12.4977240 },
+    { "lat": 41.8976191, "lon": 12.4976584 },
+    { "lat": 41.8977078, "lon": 12.4975473 },
+    { "lat": 41.8977638, "lon": 12.4974840 },
+    { "lat": 41.8979575, "lon": 12.4972652 },
+    { "lat": 41.8981497, "lon": 12.4970481 }
+  ],
+  "tags": {
+    "footway": "sidewalk",
+    "highway": "footway",
+    "lit": "yes",
+    "name": "Via Liberiana",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 1381738743,
+  "bounds": {
+    "minlat": 41.8970858,
+    "minlon": 12.4979878,
+    "maxlat": 41.8973613,
+    "maxlon": 12.4985249
+  },
+  "geometry": [
+    { "lat": 41.8970858, "lon": 12.4985249 },
+    { "lat": 41.8970948, "lon": 12.4985104 },
+    { "lat": 41.8973418, "lon": 12.4981280 },
+    { "lat": 41.8973474, "lon": 12.4980959 },
+    { "lat": 41.8973469, "lon": 12.4980295 },
+    { "lat": 41.8973514, "lon": 12.4980072 },
+    { "lat": 41.8973613, "lon": 12.4979878 }
+  ],
+  "tags": {
+    "footway": "sidewalk",
+    "highway": "footway",
+    "lit": "yes",
+    "name": "Via Liberiana",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 1413408156,
+  "bounds": {
+    "minlat": 41.8990083,
+    "minlon": 12.4767801,
+    "maxlat": 41.8991409,
+    "maxlon": 12.4767956
+  },
+  "geometry": [
+    { "lat": 41.8990083, "lon": 12.4767956 },
+    { "lat": 41.8991409, "lon": 12.4767801 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza della Rotonda",
+    "smoothness": "intermediate",
+    "surface": "sett"
+  }
+}
+
+  ]
+}

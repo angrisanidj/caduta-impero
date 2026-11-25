@@ -56,12 +56,17 @@ function zoccolo(B,x0,x1,z0,z1,y0,y1,colore,s){ var h=y1-y0, c=colore||P.mattone
   return B.scatola(x1-x0,h,s,(x0+x1)/2,y0,z0+s/2,c).scatola(x1-x0,h,s,(x0+x1)/2,y0,z1-s/2,c).scatola(s,h,z1-z0-2*s,x0+s/2,y0,(z0+z1)/2,c).scatola(s,h,z1-z0-2*s,x1-s/2,y0,(z0+z1)/2,c); }
 /* Un portico dritto, con le proporzioni di portico() (25 novembre 2026, per la piazza del Pantheon): lungo L sull'asse x, la fila di colonne su z=0, profondo prof verso -z,
    aperto verso +z. muro: un muro di fondo col tetto a una falda; altrimenti una seconda fila di colonne e il tetto a due falde (un colonnato che si attraversa).
-   Architrave e tetto sono a pezzi, uno per colonna, col numero della colonna: in rovina cadono con lei (come in portico()). */
-function porticoDritto(B,L,prof,h,muro){
+   Architrave e tetto sono a pezzi, uno per colonna, col numero della colonna: in rovina cadono con lei (come in portico()).
+   o (facoltativo, 25 novembre 2026): rialzo, quanto il pavimento sta sopra il piano attorno (con o.gradini gradini sul lato aperto); colore, delle colonne. */
+function porticoDritto(B,L,prof,h,muro,o){
+  o=o||{}; var ri=o.rialzo||0, ng=o.gradini||0, pd=.035, k;
+  if(ri){ B.scatola(L,ri,prof+.15,0,0,-prof/2,P.travertino);                                                     // lo zoccolo del portico
+    for(k=1;k<ng;k++) B.scatola(L,ri*(ng-k)/ng,pd,0,0,.075+pd*(k-.5),P.travertino);                             // i gradini verso la piazza: lo zoccolo è il più alto
+    B.dentro(0,ri,0,0,function(B){ porticoDritto(B,L,prof,h,muro,{colore:o.colore}); }); return; }
   var a=.1, he=h*.18, hc=h-he, r=hc/20, ia=r*6.5, X0=-L/2+.2, X1=L/2-.2, n=Math.max(3,Math.round((X1-X0)/ia)+1), ht=he*.45, t=r*2.7, yl=a+hc+ht, yo=a+h+.17, q, f0, f1, xa, xb, id, id2=0;
   B.scatola(L,.1,prof+.15,0,0,-prof/2,P.selce);
-  B.colonne(X0,0,X1,0,n,hc,r,a); id=B.ultimaFila;
-  if(muro) B.scatola(L,h+.27,.14,0,0,-prof,P.tufo); else { B.colonne(X0,-prof,X1,-prof,n,hc,r,a); id2=B.ultimaFila; }
+  B.colonne(X0,0,X1,0,n,hc,r,a,o.colore); id=B.ultimaFila;
+  if(muro) B.scatola(L,h+.27,.14,0,0,-prof,P.tufo); else { B.colonne(X0,-prof,X1,-prof,n,hc,r,a,o.colore); id2=B.ultimaFila; }
   for(q=0;q<n;q++){ f0=q?(q-.5)/(n-1):-.02; f1=q<n-1?(q+.5)/(n-1):1.02; xa=X0+(X1-X0)*f0; xb=X0+(X1-X0)*f1;
     B.fc=id?id+q+1:0; B.scatola(xb-xa,ht,t,(xa+xb)/2,a+hc,0,P.marmo);
     if(muro) B.quad([xb,yo,-prof-.07],[xa,yo,-prof-.07],[xa,yl,r*1.4],[xb,yl,r*1.4],P.coppi);
@@ -639,7 +644,7 @@ var M=[
     B.scatola(9,2.9,.5,10.5,-.4,9.2,P.marmo);
     [0,1,2].forEach(function(l){ var yy=-.4+l*.97; B.colonne(6.3,9.95,14.7,9.95,12,.82,.055,yy).scatola(9,.13,.95,10.5,yy+.82,9.62,P.marmo); if(l<2) [-3,0,3].forEach(function(x){ B.vano(10.5+x,yy+.02,9.47,1,0,1.5,.78); }); });
  }},
- {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6],[0,11.5,5],[0,-3.7,3.5],[0,11.1,[3.4,6.6],.5]], et:1, fa:function(B){      // l'ultima zona è la piazza porticata (pantheonpiazza), fino al colonnato nord
+ {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6],[0,11.5,5],[0,-3.7,3.5],[0,11.1,[3.4,6.6],.5]], et:1, fa:function(B){      // l'ultima zona è la piazza porticata (pantheonpiazza), fino al lato nord, aperto
     /* La rotonda: tamburo di 56 m di diametro (43,2 dentro e muri di 6,2: Platner), alto circa 31, diviso in tre fasce da cornici; sopra, sette gradoni, il primo
        ancora rivestito di marmo, gli altri e la calotta coperti di tegole di bronzo (dorato secondo Cinti, ripreso da it.wikipedia; il Liber Pontificalis dice solo
        «tegulis aereis»): le toglie Costante II nel 663, Gregorio III (731-741) rifà il tetto «chartis plumbeis» (LP XCII 12). Il cambio di copertura sta nel modulo in fondo. */
@@ -670,11 +675,18 @@ var M=[
     Ipotesi, dette nella scheda del Pantheon: larga 66 m come la piazza di oggi (OpenStreetMap, way 1295329514), lunga 120 m, fino all'altezza della Maddalena; portici a una navata
     sui lati lunghi, col muro verso l'esterno; sul lato nord un colonnato a due file, senza muro, che si attraversa. L'«arcus Pietatis» che i testi medievali (Mirabilia) mettono
     a nord del Pantheon, «perhaps in the line of the enclosing porticus» (Platner e Ashby, arcus), non si disegna: posto e data non si conoscono. */
+ /* Rifatta di nuovo il 25 novembre 2026, sugli scavi (src/testi/topografia-fonti.md, sezione 3): Lanciani, Notizie degli scavi 1881, pp. 262 e 269-274, e Hülsen 1907, pp. 589-590.
+    La piazza, lastricata di travertino, stava 1,32 m sotto il piano del pronao; larga circa 60 m («ca. 60 m breit», Hülsen; poco o nulla più della piazza di oggi, Lanciani) e lunga
+    circa il doppio. Portico est: fondamenta sotto le case di oggi, pavimento di granito 1,19 m sopra la piazza, sei gradini, colonne di granito bigio larghe 1,00 m (Lanciani). Portico ovest:
+    nessun resto, «ma sarebbe assurdo credere che non vi fosse» (Lanciani): probabile, detto nella scheda. Lato nord: nessun portico; la piazza finiva su una strada antica, perpendicolare
+    all'asse, trovata nel 1873 sotto via delle Coppelle (Lanciani): il colonnato a due file di stamattina non aveva fonti ed è tolto. Qui la piazza resta lunga 120 m, come prima; la strada
+    del modello (la «via Recta») passa 35 m più a nord e una via corta, sulla linea di via della Maddalena (ipotesi), la unisce al lato aperto (VIE in src/roma/genera.mjs).
+    Dopo il 609: le scale del pronao rifatte alla meglio con pezzi di spoglio (scavo del 1874; quando, non si sa) sono un dettaglio che a questa scala non si vede; case addossate e interramento
+    non hanno date nelle fonti lette e non ci sono. L'arcus Pietatis non si disegna: posto e data ignoti (Hülsen). Profondità dei portici e altezza delle colonne (dieci diametri) indicative. */
  {id:'pantheonpiazza', x:-70,z:-68, ry:PI, come:'pantheon', fa:function(B){
-    var W=6.6, Z0=4.4, Z1=17.65, PN=.6, L=Z1-PN-Z0, ZC=(Z0+Z1-PN)/2;
+    var W=6.6, Z0=4.4, Z1=17.65, L=Z1-Z0, ZC=(Z0+Z1)/2;
     B.scatola(W,.12,Z1-5.65,0,-.1,(5.65+Z1)/2,P.selce);                                                                                // il lastricato, alla quota del piede dei gradini
-    [-1,1].forEach(function(q){ B.dentro(q*(W/2-.65),0,ZC,-q*PI/2,function(B){ porticoDritto(B,L,.65,.9,true); }); });             // i portici dei lati lunghi, aperti verso la piazza, dal fianco del pronao al lato nord
-    B.dentro(0,0,Z1-PN,PI,function(B){ porticoDritto(B,W,PN,.9,false); });                                                           // il colonnato del lato nord, a due file
+    [-1,1].forEach(function(q){ B.dentro(q*(W/2-.65),0,ZC,-q*PI/2,function(B){ porticoDritto(B,L,.65,1.22,true,{rialzo:.119,gradini:6,colore:P.granito}); }); });      // i portici dei lati lunghi, dal fianco del pronao al lato nord, aperto: colonne di 1 m (alte dieci diametri)
     /* A sud, addossata alla rotonda, l'aula detta basilica di Nettuno: 45 x 19 m, con un'abside di 9 m nel muro nord (Platner, Thermae Agrippae). Altezza e tetto sono ricostruiti. */
     B.scatola(4.5,2,1.9,0,0,-3.7,P.mattone).falde(4.6,.5,2,0,2,-3.7,P.coppi,0,P.mattone);
  }},
@@ -1159,9 +1171,13 @@ var M=[
        Dal 25 novembre 2026 i muri di sostegno scendono fino al piede del colle e ciascun lato ha la sua sostruzione (Platner e Ashby, Templum Claudii, letta quel giorno): a ovest
        «double rows of travertine arches with engaged columns and entablature» (due ordini di arcate: it.wikipedia «Tempio del Divo Claudio», in basso piatte, in alto ad arco);
        a nord «what seem to be reservoirs for water», una fila di stanze a volta; a est, il ninfeo di Nerone, «alternately square and semicircular recesses»; a sud, il lato meno
-       elaborato (it.wikipedia). Qui +z è l'ovest, -x il nord, -z l'est, +x il sud. Numero e misura dei vani sono indicativi. Scale: it.wikipedia dice di una scalinata che saliva
-       al complesso passando sopra una strada, ma non dove; non c'è. Il tempio guarda verso il Palatino (it.wikipedia); Platner lo dice «fronting towards the north» da una sua
-       lettura della Forma Urbis: le due fonti non concordano, e l'orientamento resta com'era. */
+       elaborato (it.wikipedia). Qui +z è l'ovest, -x il nord, -z l'est, +x il sud. Numero e misura dei vani sono indicativi.
+       Orientamento e scale (25 novembre 2026, src/testi/topografia-fonti.md, sezione 2): il tempio guarda a ovest (+z) come nel disegno del Cinquecento del frammento perduto 5c della pianta
+       marmorea, «oriented to the W, and with four steps in front providing access to its podium» (Stanford Digital Forma Urbis, scheda 4b, dal Lexicon di Buzzetti). L'«ovest» della pianta,
+       girata di circa 21 gradi, è il lato di via Claudia del modello, che è storto allo stesso modo. Il «fronting towards the north» di Platner viene dalla combinazione dei frammenti
+       proposta da Hülsen nel 1903, che lui stesso dà per condizionata. Scale della piattaforma: a nord «einer nach dem Colosseum hinabführenden Freitreppe» (Hülsen 1907, pp. 232-234: ne
+       restavano tracce), a sud una rampa a gradini che sale dal piano più basso (pianta marmorea, scheda 4b). Di nessuna delle due si sanno posto e misure: qui stanno sull'asse nord-sud,
+       dove la pianta mostra i sentieri che vanno al tempio, larghe 24 e 16 m; la pendenza della scalinata e il numero dei gradini sono uno schema. */
     B.scatola(20,3.97,18,0,-3.07,0,P.tufo).scatola(19.6,.06,17.6,0,.87,0,P.prato);                // la piattaforma, a giardino, coi muri fino al piede del colle
     B.scatola(20.06,.12,18.06,0,.78,0,P.travertino);                                                // la cornice in cima ai muri
     B.scatola(20.04,3.9,.04,0,-3.07,9,P.travertino);                                               // ovest: la fronte di travertino
@@ -1169,7 +1185,11 @@ var M=[
     B.colonne(-8.89,9.06,8.89,9.06,17,2.6,.07,-2.95,P.travertino);                                 // le semicolonne fra un'arcata e l'altra
     B.aperture(-10,-9,-10,9,16,-2.95,.95,.7);                                                      // nord: le stanze a volta delle cisterne
     for(var nc=0;nc<14;nc++) B.vano(10-(nc+.5)*20/14,-2.5,-9.075,-1,0,.75,1.3,nc%2===0);        // est: le nicchie del ninfeo, quadre e a semicerchio alternate
-    B.dentro(0,.85,0,0,function(B){ tempietto(B,2.2,3.8,.35,1.4,6,0,0,0,false); });
+    B.dentro(0,.85,0,0,function(B){ tempietto(B,2.2,3.8,.35,1.4,6,0,0,0,false);
+      [[.296,2.05,.3],[.242,2.275,.15],[.188,2.425,.15],[.134,2.575,.15]].forEach(function(g){ B.scatola(1.65,g[0],g[2],0,0,g[1],P.travertino); }); });      // i quattro gradini davanti al podio (pianta marmorea); il primo copre la scala di tempietto()
+    var NG=44, SA=3.67/(NG+1), PA=.097, k;                                                          // nord: la scalinata verso il Colosseo, dal piano (0,93) al terreno della valle (-2,74)
+    for(k=1;k<=NG;k++) B.scatola(PA,.93-SA*k+2.9,2.4,-10-PA*(k-.5),-2.9,0,P.travertino);
+    for(k=1;k<=6;k++) B.scatola(.2,.93-.04*k-.5,1.6,10+.2*(k-.5),.5,0,P.travertino);             // sud: la rampa a gradini, fino al terreno del Celio (0,7)
  }},
  /* Arco di Dolabella e Silano (10 d.C.), in travertino, poi sotto gli archi neroniani dell'acqua Claudia (Platner e Ashby, arcus). Contorno e orientamento: OpenStreetMap, way 135618677.
     Altezza e larghezza del fornice indicative. */
@@ -1308,6 +1328,13 @@ var M=[
  /* Arcus Novus sulla via Lata, per Diocleziano e Massimiano: «fu eretto nel 293» per i decennali e demolito nel 1491 (it.wikipedia «Arcus Novus», dove sta anche la posizione:
     41,89818 N, 12,48153 E). Misure indicative. */
  {id:'arcusnovus', nome:'Arcus Novus', x:-31.24,z:-63.12, ry:.285, zone:[[0,0,.8]], fa:function(B){ arcoUno(B,1.2,.5,1.3,.5,.8,0,0,0,0,P.marmo); }},
+ /* Arco di Valentiniano e Valente alla testata del ponte Aurelio sulla riva del Campo Marzio (25 novembre 2026; src/testi/topografia-fonti.md, sezione 1): «rebuilding of arch and bridge
+    by Valentinian I in 365-366» (Platner e Ashby, Pons Aurelius); l'iscrizione di Simmaco stava sul ponte e su un arco alla testata est (Taylor 2002); un arco trionfale «decorated the approach
+    from the Campus Martius» e nel 1878 i suoi pezzi stavano nel fiume, con le statue di bronzo (Lanciani, Ruins and Excavations, pp. 25-26). Il punto è il piede della rampa del ponte del
+    modello (RM.ponti in js/mura.js), sull'asse del ponte, coi ponteggi dal 365 come il ponte. Forma, misure, numero e posa delle statue sono generici (un fornice, tre figure di bronzo).
+    Quando cadde nel fiume non si sa: qui resta in piedi fino all'852. Nessuna zona: il terreno e le case attorno non cambiano. */
+ {id:'arcovalentiniano', nome:'Arco di Valentiniano', x:-110.9,z:-9.2, ry:-.797, fa:function(B){ arcoUno(B,1.3,.45,1.15,.55,.8,0,0,0,0,P.marmo);
+    [-.42,0,.42].forEach(function(x){ uomo(B,x,1.15,0,1.4,P.bronzo,0); }); }},
  /* Alle pendici del Campidoglio, posizioni da OpenStreetMap. Carcere Mamertino (relazione 1849827): ancora prigione nel 368 (Platner e Ashby, Carcer); il corpo fuori terra è indicativo.
     Portico degli Dei Consenti (nodo 1448531164): piccolo colonnato rivolto al Foro, misure indicative. Insula dell'Aracoeli: caseggiato del II secolo addossato al colle, misure indicative.
     Sepolcro di Bibulo (way 124808519): la fronte, larga 6,4 m, guarda la via Flaminia; profondità e altezza indicative. */
@@ -1343,7 +1370,7 @@ M.forEach(function(o){
 });
 /* dove una strada passa sotto un arco si stringe alla luce del fornice: [x, z, raggio, mezza larghezza] (24 novembre 2026: con strade larghe 16 m e fornici di 5 o 6, anche un arco
    ben centrato sembrava stare «accanto» alla strada) */
-RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.21],[27.2,20.15,1.6,.25],[44.47,30.43,2.4,.3],[81.86,76.56,1.4,.19]];      // Claudio, Portogallo, Arcus Novus, Gallieno, Tito, Costantino, Dolabella
+RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.21],[27.2,20.15,1.6,.25],[44.47,30.43,2.4,.3],[81.86,76.56,1.4,.19],[-110.9,-9.2,1.6,.25]];      // Claudio, Portogallo, Arcus Novus, Gallieno, Tito, Costantino, Dolabella, Valentiniano (ponte Aurelio)
 RM.posa();
 var perId={};
 M.forEach(function(o){
@@ -1715,5 +1742,6 @@ RM.frame.push(function(){
     o.div.style.opacity=vis?1:0; o.div.style.visibility=vis?'visible':'hidden';
     if(vis) o.div.style.transform='translate(-50%,-100%) translate('+px.toFixed(1)+'px,'+py.toFixed(1)+'px)';
   });
+  RM.etichetteMesse=messi;      // i nomi delle strade (js/strade-nomi.js) li scansano: i monumenti hanno la precedenza
 });
 })();
