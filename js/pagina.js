@@ -216,31 +216,41 @@ document.querySelector('.tempo').addEventListener('keydown',function(ev){      /
   if(ev.altKey||ev.ctrlKey||ev.metaKey||ev.shiftKey) return;
   if(ev.key==='Home'||ev.key==='End'){ ev.preventDefault(); ferma(); vai(ev.key==='Home'?0:T.length-1); var c=capi[ev.key==='Home'?1:0]; if(c && document.activeElement && document.activeElement.disabled) c.focus(); }
 });
-/* Tacche tutte uguali (25 novembre 2026, l'utente con una cattura dell'iPhone: «la parte iniziale ha barre più grandi?»). Prima ogni atto cresceva col numero delle sue tappe
-   ma aveva un minimo per la pastiglia del capo, e il primo atto, di cinque tacche, le aveva larghe il doppio. Ora si calcola una sola larghezza di tacca per tutta la linea; un atto
-   è largo quanto le sue tacche, ma mai meno di quanto serve al suo anno (e alla pastiglia «235» o «852»), misurati con un margine del 10% per le scritte più larghe dell'iPhone.
-   Dove l'atto deve restare più largo delle sue tacche, le tacche restano della stessa larghezza e si allarga lo spazio fra loro (stili .linea.tacche-uguali in fondo a css/stile.css). */
+/* Righello regolare (25 novembre 2026). Prima il primo atto aveva le tacche larghe il doppio (l'utente: «la parte iniziale ha barre più grandi?»), poi, con le tacche uguali
+   ma ogni atto largo almeno quanto la pastiglia «235», tacche sottili e sparse (l'utente: «È brutto così eh»). Ora la riga è un righello: stessa larghezza e stesso spazio
+   fra tutte le tacche, anche fra un atto e l'altro; gli atti si distinguono per l'intermezzo che li chiude, per la lineetta sopra le loro tacche e per l'anno. Il passo viene
+   dalla larghezza della riga e dal numero delle tacche. Gli anni stanno sopra l'inizio del loro gruppo; uno che urterebbe la scritta di prima (sul telefono la pastiglia «235»
+   è più larga del primo atto) si sposta a destra quanto basta, con 6 punti d'aria, e la lineetta resta lunga quanto il suo atto (anniAtti). Le scritte si misurano con un
+   margine del 10%: sull'iPhone sono più larghe che in Edge. Stili .linea.tacche-uguali in fondo a css/stile.css. */
 function tacche(){
   var linea=$('linea'), W=linea.clientWidth; if(!W) return;
-  var gi=parseFloat(getComputedStyle(gruppi[0].riga).columnGap)||0, ge=parseFloat(getComputedStyle(linea).columnGap)||0, G=gruppi.length;
-  var mins=gruppi.map(function(g,k){ var p=g.g.querySelector('p'), m=0; if(!p || getComputedStyle(p).display==='none') return 0;
-    var anno=p.querySelector('b:not(.fine)'), aw=anno&&getComputedStyle(anno).display!=='none'?anno.getBoundingClientRect().width:0;
-    var capo=k===0?capi[0]:k===G-1?capi[1]:null, cw=capo?capo.getBoundingClientRect().width:0;
-    m=aw*1.1+(cw?cw*1.1+(aw?10:2):0)+4; return m; });
-  var fisso=gruppi.map(function(){ return false; }), w=0;
-  for(var giro=0;giro<G;giro++){
-    var resto=W-(G-1)*ge, nl=0, cambia=false;
-    gruppi.forEach(function(g,k){ if(fisso[k]) resto-=mins[k]; else { resto-=(g.n-1)*gi; nl+=g.n; } });
-    w=nl?resto/nl:0;
-    gruppi.forEach(function(g,k){ if(!fisso[k] && g.n*w+(g.n-1)*gi<mins[k]){ fisso[k]=true; cambia=true; } });
-    if(!cambia) break; }
-  w=Math.max(2,Math.floor(w*100)/100);
-  gruppi.forEach(function(g,k){ var larg=fisso[k]?mins[k]:g.n*w+(g.n-1)*gi;
-    g.g.style.flex='0 0 '+larg.toFixed(2)+'px'; g.g.style.minWidth='0'; g.g.classList.toggle('largo',fisso[k]); });
-  linea.style.setProperty('--tacca',w+'px'); linea.classList.add('tacche-uguali');
+  var gi=parseFloat(getComputedStyle(gruppi[0].riga).columnGap)||0, G=gruppi.length, N=0;
+  gruppi.forEach(function(g){ N+=g.n; });
+  linea.style.columnGap=gi+'px';      // fra un atto e l'altro lo stesso spazio che fra due tacche
+  var w=Math.max(2,(W-(N-1)*gi)/N);
+  gruppi.forEach(function(g){ g.g.style.flex='0 0 '+(g.n*w+(g.n-1)*gi).toFixed(3)+'px'; g.g.style.minWidth='0'; });
+  linea.style.setProperty('--tacca',w.toFixed(3)+'px'); linea.classList.add('tacche-uguali');
   /* il nome dell'ultimo atto si ferma prima della pastiglia «852», qualunque sia la sua larghezza (con le scritte dell'iPhone era più larga dei 52 punti fissati) */
   var pf=gruppi[G-1].g.querySelector('p'); if(pf && capi[1]){ pf.style.paddingRight=''; var pr=parseFloat(getComputedStyle(pf).paddingRight)||0, cw1=capi[1].getBoundingClientRect().width; if(pr && cw1+8>pr) pf.style.paddingRight=Math.ceil(cw1+8)+'px'; }
+  anniAtti();
   centri=null;      // le posizioni delle tacche per il dito si rifanno
+}
+/* gli anni degli atti, da sinistra: ognuno parte dall'inizio del suo gruppo o, se lì toccherebbe la scritta di prima (pastiglia «235», anno o nome dell'atto di prima), 6 punti dopo.
+   Il nome dell'atto (sul PC) si accorcia con i puntini; se gli restano meno di 28 punti sparisce, per non lasciare un «L…» */
+function anniAtti(){
+  var A=1.1, ARIA=6, prima=-1e9;
+  if(capi[0] && capi[0].offsetParent){ var c=capi[0].getBoundingClientRect(); if(c.width) prima=c.left+c.width*A; }
+  gruppi.forEach(function(g){
+    var p=g.g.querySelector('p'); if(!p) return;
+    var sp=p.querySelector('span'); p.style.paddingLeft=''; if(sp) sp.style.display='';
+    if(getComputedStyle(p).display==='none') return;
+    var b=p.querySelector('b:not(.fine)'); if(!b || getComputedStyle(b).display==='none') return;
+    var rb=b.getBoundingClientRect(), sposta=prima+ARIA-rb.left;
+    if(sposta>0) p.style.paddingLeft=((parseFloat(getComputedStyle(p).paddingLeft)||0)+sposta).toFixed(1)+'px';
+    var destra=rb.left+Math.max(0,sposta)+rb.width*A;
+    if(sp && getComputedStyle(sp).display!=='none'){ var rs=sp.getBoundingClientRect(); if(rs.width<28) sp.style.display='none'; else destra=Math.max(destra,rs.right); }
+    prima=destra;
+  });
 }
 if(window.ResizeObserver){ new ResizeObserver(function(){ tacche(); }).observe($('linea')); }
 window.addEventListener('resize',function(){ tacche(); });

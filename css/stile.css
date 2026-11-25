@@ -980,13 +980,13 @@ body.roma-grande .salta-giu,body.impero-grande .salta-giu{display:none}
   .tempo .comandi #btnPrima,.tempo .comandi #btnDopo{flex:0 0 44px;width:44px;padding:0;font-size:25px;font-weight:600;padding-bottom:2px}
   .tempo .comandi #btnPlay{flex:1 1 auto;min-width:0;overflow:hidden}
   .tempo .comandi .leggi-tappa{flex:0 0 auto;padding:0 14px}
-  /* i capi stanno dentro la linea, allineati ai suoi bordi: il primo atto si allarga quanto basta per la pastiglia, così «284» ha aria */
-  .atto-gruppo.ha-inizio{min-width:56px}
-  .atto-gruppo.ha-fine{min-width:88px}      /* l'ultimo atto: «590» e la pastiglia «852 ⏭» insieme, con aria anche con le scritte più larghe dell'iPhone (a 360 punti l'atto era largo 72) */
+  /* i capi stanno dentro la linea, allineati ai suoi bordi. Con la linea a righello (25 novembre 2026) il primo atto è più stretto della pastiglia «235»: l'anno «284»
+     si sposta a destra (anniAtti in js/pagina.js) e la pastiglia è compatta, 4 punti di margine interno; il bersaglio resta alto 40 punti (10 sopra, 9 sotto) senza
+     scendere sulle tacche del secondo atto, che la pastiglia sovrasta */
   .atto-gruppo.ha-inizio p{padding-left:0} .atto-gruppo.ha-fine p{padding-right:48px}
-  .linea .capo,.linea .capo-inizio,.linea .capo-fine{top:-2px;height:21px;padding:0 6px;gap:2px;font-size:12px}
+  .linea .capo,.linea .capo-inizio,.linea .capo-fine{top:-2px;height:21px;padding:0 4px;gap:1px;font-size:12px}
   .linea .capo-inizio{left:0} .linea .capo-fine{right:0}
-  .linea .capo-inizio::before{inset:-10px -3px -18px -8px} .linea .capo-fine::before{inset:-10px -8px -18px -3px}
+  .linea .capo-inizio::before{inset:-10px 0 -9px -8px} .linea .capo-fine::before{inset:-10px -8px -9px 0}
 }
 /* telefoni stretti (360 punti): con le scritte più larghe dell'iPhone «Riproduci» si tagliava; frecce di 40 punti e margini interni più stretti */
 @media (max-width:379px){
@@ -1046,8 +1046,13 @@ body.roma-grande .rg-nota{top:56px;right:12px}
 .scheda.regione .rg-mon button.cat::before{content:'◆ ';color:var(--oro-t);font-size:10px}
 .scheda.regione .rg-mon button:hover{background:#f6ecd4}
 @media (max-width:420px){ .scheda.regione .rg-cat{grid-template-columns:1fr} }
-/* linea del tempo, tacche tutte uguali (js/pagina.js, tacche()): ogni tacca, intermezzi compresi, è larga --tacca; un atto più largo delle sue tacche, per far posto al suo anno,
-   allarga lo spazio fra loro, non le tacche */
-.linea.tacche-uguali .atto-gruppo>div{justify-content:space-between}
+/* linea del tempo a righello (js/pagina.js, tacche() e anniAtti()): ogni tacca, intermezzi compresi, è larga --tacca e lo spazio è lo stesso ovunque, anche fra gli atti.
+   Gli anni possono sporgere dal loro gruppo (spostati a destra dove la scritta di prima li urterebbe): la riga degli anni non taglia. La lineetta di ogni atto è rientrata
+   di un punto per parte, così fra due atti c'è un taglio visibile anche se le tacche sono equidistanti. */
+.linea.tacche-uguali .atto-gruppo>p{overflow:visible}
+.linea.tacche-uguali .atto-gruppo:not(.ha-fine)>p{padding-right:8px}      /* il nome troncato dell'atto non arriva all'anno del seguente */
+.linea.tacche-uguali .atto-gruppo>div{justify-content:space-between;--lin:var(--line);border-top-color:transparent;
+  background:linear-gradient(var(--lin),var(--lin)) 1px 0/calc(100% - 2px) 2px no-repeat;background-origin:border-box}
+.linea.tacche-uguali .atto-gruppo.attivo>div{--lin:var(--porpora)}
 .linea.tacche-uguali .atto-gruppo>div>button{flex:0 0 var(--tacca,8px);box-sizing:border-box}
 .riquadro.roma:has(.legenda-sapere:not([hidden])) .rg-nota{display:none}      /* con «Che cosa sappiamo» acceso la nota cede il posto alla sua legenda; resta nella scheda di ogni regione */
