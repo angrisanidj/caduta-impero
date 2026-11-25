@@ -40,10 +40,30 @@ function misura(){
   continua.setAttribute('aria-expanded',aperta?'true':'false'); continua.setAttribute('aria-label',aperta?'Riduci la didascalia':'Leggi tutta la didascalia');
 }
 function aggiorna(){ var c=!!ultimo && chiusa===ultimo; didascalia.classList.toggle('vivo',!!ultimo); didascalia.classList.toggle('chiusa',c); presto(); }
+/* La didascalia breve (25 novembre 2026, sera; l'utente: la scena dell'incoronazione dell'800 «spettacolare»; sul PC la didascalia ne copriva un terzo). Una scena animata
+   che dà, per ogni suo tempo, una riga con la fonte e le riserve (js/scene-tappe.js, quarto elemento delle «righe») la mette qui con RM.didascaliaBreve(testo): sul PC la
+   didascalia si riduce a quella riga, larga e bassa, con il bottone «Tutta la didascalia ▾» che riapre il testo intero; RM.didascaliaBreve(null) la rimette com'era.
+   Sui dispositivi stretti non cambia nulla: lì la didascalia parte già raccolta (più sopra). Stili .evento.breve e .ev-tutta in fondo a css/stile.css. */
+var breveT=null, tutta=false, btnTutta=null;
+if(didascalia){
+  btnTutta=document.createElement('button'); btnTutta.type='button'; btnTutta.className='ev-tutta'; btnTutta.setAttribute('aria-controls','evTesto'); btnTutta.setAttribute('aria-expanded','false');
+  didascalia.insertBefore(btnTutta,testoEv.nextSibling);
+  btnTutta.addEventListener('click',function(e){ e.stopPropagation(); tutta=!tutta; mostraTesto(ultimo); });
+}
+function suPC(){ return !(stretto && stretto.matches); }
+function mostraTesto(ev){
+  if(!didascalia) return;
+  var b=!!breveT && suPC(), t=b && !tutta ? breveT : (ev?ev.testo:testoEv.textContent);
+  if(testoEv.textContent!==t){ testoEv.textContent=t; presto(); }
+  didascalia.classList.toggle('breve',b); didascalia.classList.toggle('breve-tutta',b && tutta);
+  var et=tutta?'Riduci ▴':'Tutta la didascalia ▾'; if(btnTutta.textContent!==et) btnTutta.textContent=et; btnTutta.setAttribute('aria-expanded',tutta?'true':'false');
+}
+if(RM) RM.didascaliaBreve=function(t){ breveT=t||null; if(!breveT) tutta=false; mostraTesto(ultimo); };
+window.addEventListener('resize',function(){ if(breveT) mostraTesto(ultimo); });      // dal PC al telefono coricato e ritorno
 function scrivi(anno){
   var vivo=null; EV.forEach(function(ev){ ev.q=atto(ev,anno); if(ev.q>.5) vivo=ev; });
   if(!didascalia) return;
-  if(vivo && testoEv.textContent!==vivo.testo){ testoEv.textContent=vivo.testo; presto(); }
+  if(vivo) mostraTesto(vivo);
   if(vivo!==ultimo){ ultimo=vivo; aperta=false; if(chiusa && chiusa!==vivo) chiusa=null; aggiorna(); }      // evento nuovo: di nuovo raccolta
 }
 if(!RM||RM.guasto){ if(RM&&RM.moduli) RM.moduli.push(scrivi); return; }

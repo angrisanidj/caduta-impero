@@ -68,7 +68,7 @@ function pedinaCav(B,x,z,y,ry,colC,colU){
 var VERE=!!(RM.figuraGeo&&RM.figura&&RM.cavalloStatua);
 var LEGGERA=!!RM.piccolo || (navigator.maxTouchPoints>0) || !!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);      // come TOCCO_Q di js/base.js
 RM.QUALITA.figScena=[15000,52000,125000,210000];      // triangoli di persone per scena: in «bassa» solo le parti «tel» (una sessantina di persone leggere); circa 150, 350 e 600 persone a «media», «alta», «massima» (un cavaliere ne vale tre e mezzo)
-var TETTO_TEL={'593':32000};      // in «bassa» il 593 ne ha di più: tutta la fila dei prigionieri (80) e le guardie a cavallo (30, col cavallo leggero)
+var TETTO_TEL={'593':32000,'800i':24000};      // l'800 dentro San Pietro: il clero e i Franchi attorno a Carlo      // in «bassa» il 593 ne ha di più: tutta la fila dei prigionieri (80) e le guardie a cavallo (30, col cavallo leggero)
 var VIC=null, DETT=false, contaP=0, PARTI={}, nParti=0, BASI={}, matPers=null, BIANCO1=new THREE.Color(1,1,1);
 var V_BIANCO=RM.col(0xefe9da), V_LANA=RM.col(0x6b5a44), V_VELO=RM.col(0xe2d6bc), V_SANDALO=RM.col(0x4a3424), V_PELLE=RM.col(0xb07a55), CORDA=RM.col(0x3a2a1a);      // i colori del corpo di js/vita.js
 function uomo(B,x,z,y,col,scudo,ry,ruolo){
@@ -127,7 +127,8 @@ function chiudi(r,g){
 function matPersone(){
   if(matPers) return matPers;
   var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0}), A=String.fromCharCode(10);
-  m.onBeforeCompile=function(sh){ sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'attribute float fisso;').replace('#include <color_vertex>','#include <color_vertex>'+A+'vColor.xyz=mix(vColor.xyz,color.xyz,fisso);'); };
+  m.onBeforeCompile=function(sh){ sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'attribute float fisso;').replace('#include <color_vertex>','#include <color_vertex>'+A+'vColor.xyz=mix(vColor.xyz,color.xyz,fisso);');
+    conLumi(sh); };      // i due lumi dell'800 (spenti, a colore nero, nelle altre scene)
   return (matPers=m);
 }
 function base(k,fa){ return BASI[k]||(BASI[k]=fa()); }
@@ -197,7 +198,7 @@ function personaGeo(o){
   var X=new THREE.Vector3(1,0,0), Z=new THREE.Vector3(0,0,1), GIN=.05;      // GIN: l'altezza del ginocchio (50 cm)
   function braccio(p,nn,s){ var a=-.3*s, b=-.45; p.copy(ruota(ruota(p,Z,a,.138,0,s*.02),X,b,.138,0,0)); if(nn){ nn.applyAxisAngle(Z,a).applyAxisAngle(X,b); } }
   function testa(p,nn){ p.copy(ruota(p,X,o.chino,.143,0,0)); if(nn) nn.applyAxisAngle(X,o.chino); }
-  function alza(p,nn,s){ var a=(o.braccia===1?.3:-.06)*s, b=o.braccia===1?-2.6:-1.4; p.copy(ruota(ruota(p,Z,a,.138,0,s*.02),X,b,.138,0,0)); if(nn){ nn.applyAxisAngle(Z,a).applyAxisAngle(X,b); } }
+  function alza(p,nn,s){ var up=o.braccia===1||o.braccia===3, a=(up?.3:-.06)*s, b=up?-2.6:-1.4; p.copy(ruota(ruota(p,Z,a,.138,0,s*.02),X,b,.138,0,0)); if(nn){ nn.applyAxisAngle(Z,a).applyAxisAngle(X,b); } }
   function mano(i){ var j=i*3, s=pa[j]>0?1:-1; return Math.hypot(pa[j]-s*.022,pa[j+1]-.081,pa[j+2]-.006)<.0042; }      // un vertice della sfera della mano (js/vita.js)
   for(i=0;i<n;i++){
     if(LEGGERA && i%3===0 && Math.abs(oa[i])>1.5 && mano(i) && mano(i+1) && mano(i+2)){ i+=2; continue; }      // la persona leggera non ha le mani
@@ -208,7 +209,7 @@ function personaGeo(o){
     else if(uguale(c,V_LANA)) c=rgb(o.sopra||V_LANA);                                       // il mantello e le maniche
     else if(uguale(c,V_VELO)) c=rgb(o.velo||V_VELO);                                        // la palla delle donne
     else if(o.scalzo && uguale(c,V_SANDALO) && v.y<.012) c=rgb(V_PELLE);                    // a piedi nudi
-    if(o.braccia && Math.abs(os)>1.5) alza(v,w,os>0?1:-1);      // 800: le braccia alzate dell'acclamazione (1) o tese in avanti, col gesto della corona e dell'unzione (2)
+    if(o.braccia && Math.abs(os)>1.5 && (o.braccia!==3 || os>0)) alza(v,w,os>0?1:-1);      // 800: le braccia alzate dell'acclamazione (1), un braccio solo (3), o tese in avanti (2)
     else if(o.legato && Math.abs(os)>1.5) braccio(v,w,os>0?1:-1);
     else if(o.chino && Math.abs(os)<.5 && v.y>.143 && Math.abs(v.x)<.13) testa(v,w);
     if(o.ginocchio){ if(v.y<GIN){ v.copy(ruota(v,X,Math.PI/2,GIN,0,0)); w.applyAxisAngle(X,Math.PI/2); } v.y-=GIN-.008; }      // in ginocchio (800): le gambe sotto il ginocchio piegate all'indietro, il corpo abbassato
@@ -272,11 +273,13 @@ function riga(testo){
   if(!testo){ rigaEl.style.display='none'; return; }
   if(rigaEl.textContent!==testo) rigaEl.textContent=testo; rigaEl.style.display='block';
 }
+var breveOra=null;
+function breve(t){ if(t===breveOra) return; breveOra=t; if(RM.didascaliaBreve) RM.didascaliaBreve(t); }      // q[3]: fonte e riserve del tempo in corso, nella didascalia ridotta (solo le scene che le danno: l'800)
 RM.frame.push(function(dt){
-  var o=corrente; if(!o||!o.righe||MENO||FERMA!=null||o.t==null){ if(rigaEl&&rigaEl.style.display!=='none'&&(!o||o.t==null)) riga(null); return; }
-  if(!o.visibile()){ riga(null); return; }
-  if(o.t>=o.fine){ dopo+=dt; if(dopo>4){ riga(null); corrente=null; } return; }
-  var r=null, st=window.innerWidth<700; o.righe.forEach(function(q){ if(o.t>=q[0]) r=(st&&q[2])||q[1]; }); riga(r);      // q[2]: la riga corta per il telefono (la frase intera resta nella didascalia)
+  var o=corrente; if(!o||!o.righe||MENO||FERMA!=null||o.t==null){ if(rigaEl&&rigaEl.style.display!=='none'&&(!o||o.t==null)) riga(null); if(!MENO && breveOra && (!o||o.t==null)) breve(null); return; }
+  if(!o.visibile()){ riga(null); breve(null); return; }
+  if(o.t>=o.fine){ dopo+=dt; if(dopo>4){ riga(null); breve(null); corrente=null; } return; }
+  var r=null, f=null, st=window.innerWidth<700; o.righe.forEach(function(q){ if(o.t>=q[0]){ r=(st&&q[2])||q[1]; f=q[3]||null; } }); riga(r); breve(f);      // q[2]: la riga corta per il telefono (la frase intera resta nella didascalia)
 });
 function quadro(o){ o.disegna(FERMA!=null?Math.min(o.fine,FERMA):o.quadroT!=null?o.quadroT:o.fine); }      // la scena ferma, prima che parta o dopo (quadroT: un altro istante, se la fine non è il quadro giusto: l'800)
 RM.frame.push(function(dt){
@@ -933,6 +936,143 @@ function quotaSu(id,x,z,alto){
    il gesto dell'omaggio del papa (gli Annali non lo descrivono: qui il papa si inginocchia), la corona (forma ignota: un cerchio d'oro semplice, un poco più grande del vero perché si legga).
    Lo spaccato: i tetti e i muri della basilica si dissolvono dall'alto (due piani di taglio sul materiale di San Pietro e delle sue tegole: sopra una quota che scende, e solo a ovest della
    facciata), e resta l'interno, fatto qui, con i muri tagliati più bassi dal lato da cui si guarda (sud), come nei disegni in sezione. Si accende solo in quel momento. */
+/* ---------- 800: i protagonisti da vicino (25 novembre 2026, l'utente: «Rendi spettacolare la scena di Carlo che viene incoronato») ----------
+   Carlo, Leone III e il figlio Carlo hanno una figura loro, più fine delle persone della folla, con le giunture (busto, capo, spalle, gomiti) che si muovono: Carlo che si alza
+   dalla preghiera, il papa che alza la corona e la posa, l'omaggio, l'unzione. Misure in metri (piedi a terra, sguardo verso +z), poi scalate a 1 unità = 10 m.
+   Fonti lette il 25 novembre 2026 (src/testi/scene-roma-fonti.md, sezione 13):
+   - Eginardo, Vita Karoli 22: «statura eminenti» (sette dei suoi piedi), «apice capitis rotundo, oculis praegrandibus ac vegetis, naso paululum mediocritatem excedenti,
+     canitie pulchra», «cervix obesa et brevior venterque proiectior»: qui più alto degli altri, capelli bianchi, occhi grandi, naso un poco lungo, collo corto e grosso, il ventre.
+     Della barba Eginardo non dice nulla: qui non c'è.
+   - Eginardo 23: a Roma due volte, su richiesta di Adriano e poi di Leone, «longa tunica et clamide amictus, calceis quoque Romano more formatis»; nelle feste «veste auro texta
+     … et fibula aurea sagum adstringente». Quale giorno vestisse alla romana non è detto: la scena gli dà la tunica lunga e la clamide (fermata sulla spalla destra), con l'orlo
+     d'oro e la fibbia d'oro delle feste. I colori sono nostri; il mantello blu del suo abito comune («sago veneto») non c'entra.
+   - Il papa: veste bianca lunga e, sopra, una veste ampia nel colore che la scena gli dava già (forma e colore schema); il pallio come lo descrive en.wikipedia, «Pallium»
+     (letto il 25 novembre 2026): una fascia di lana bianca sulle spalle con i capi che nell'VIII secolo scendono in mezzo al petto e alla schiena, con croci scure vicino ai capi.
+   - Il figlio Carlo: nessuna fonte letta lo descrive; tunica corta e mantello, alla franca (Eginardo 23 per l'abito dei Franchi), colori nostri.
+   - La corona: «pretiosissima corona» (Liber Pontificalis); la forma non è detta. Qui un cerchio d'oro con pietre: schema.
+   Le pose (in ginocchio a pregare, il papa in ginocchio per l'omaggio, il figlio in piedi) sono schema, dette nella didascalia. */
+var LUMI800={uLumeV:{value:[new THREE.Vector3(),new THREE.Vector3()]}, uLumeC:{value:[new THREE.Color(0,0,0),new THREE.Color(0,0,0)]}, uLumeK:{value:[1,1]}};      // due lumi caldi, in coordinate della camera: il faro sopra il presbiterio e le candele della confessione
+function conLumi(sh){      // aggiunge ai materiali di persone e protagonisti la luce dei due lumi (senza luci vere: cambierebbero tutti i materiali della città)
+  sh.uniforms.uLumeV=LUMI800.uLumeV; sh.uniforms.uLumeC=LUMI800.uLumeC; sh.uniforms.uLumeK=LUMI800.uLumeK;
+  var A=String.fromCharCode(10);
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'uniform vec3 uLumeV[2]; uniform vec3 uLumeC[2]; uniform float uLumeK[2];')
+    .replace('#include <lights_fragment_end>',['#include <lights_fragment_end>',
+      'for(int i=0;i<2;i++){ vec3 Lv=uLumeV[i]+vViewPosition; float d=length(Lv); vec3 L=Lv/max(d,1e-4); float at=1.0/(1.0+d*d*uLumeK[i]);',
+      '  reflectedLight.directDiffuse+=diffuseColor.rgb*uLumeC[i]*(max(dot(normal,L),0.0)*0.8+0.2)*at;',
+      '  float sp=pow(max(dot(reflect(-L,normal),normalize(vViewPosition)),0.0),mix(70.0,6.0,roughnessFactor))*(1.0-roughnessFactor);',
+      '  reflectedLight.directSpecular+=uLumeC[i]*sp*at*1.6; }'].join(A));
+}
+var MAT800={};
+function matR(k){
+  if(MAT800[k]) return MAT800[k];
+  var m=k==='oro'?new THREE.MeshStandardMaterial({vertexColors:true,metalness:.55,roughness:.3,emissive:0x3a2608}):k==='argento'?new THREE.MeshStandardMaterial({color:0xc9cdd2,metalness:.7,roughness:.22,emissive:0x1d1a14}):
+    new THREE.MeshStandardMaterial({vertexColors:true,roughness:.8,metalness:0,side:THREE.DoubleSide});
+  m.onBeforeCompile=conLumi; return (MAT800[k]=m);
+}
+function fondi(lista){      // [{g, col}] → una geometria sola, non indicizzata, col colore nei vertici
+  var P=[], N=[], Cc=[];
+  lista.forEach(function(q){ var g=q.g.index?q.g.toNonIndexed():q.g, p=g.attributes.position.array, n=g.attributes.normal.array;
+    for(var i=0;i<p.length;i+=3){ P.push(p[i],p[i+1],p[i+2]); N.push(n[i],n[i+1],n[i+2]); Cc.push(q.col.r,q.col.g,q.col.b); } });
+  var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(P,3)); g.setAttribute('normal',new THREE.Float32BufferAttribute(N,3)); g.setAttribute('color',new THREE.Float32BufferAttribute(Cc,3)); return g;
+}
+function torno(pr,phi0,phil,sx,sz,seg,pieghe){ var g=new THREE.LatheGeometry(pr.map(function(q){ return new THREE.Vector2(q[0],q[1]); }),seg||28,phi0||0,phil||Math.PI*2);
+  if(pieghe){ var pa=g.attributes.position, y0=pr[0][1], y1=pr[pr.length-1][1], k;      // le pieghe della stoffa: il raggio ondeggia attorno all'asse, di più verso l'orlo (pieghe=[quante, ampiezza])
+    for(k=0;k<pa.count;k++){ var x=pa.getX(k), y=pa.getY(k), z=pa.getZ(k), f=1+pieghe[1]*Math.sin(Math.atan2(x,z)*pieghe[0]+y*3)*Math.pow(Math.max(0,Math.min(1,(y0-y)/((y0-y1)||1))),.7); pa.setXYZ(k,x*f,y,z*f); }
+    g.computeVertexNormals(); }
+  g.scale(sx||1,1,sz||1); return g; }
+function asta3(a,b,r0,r1,seg){ var d=new THREE.Vector3(b[0]-a[0],b[1]-a[1],b[2]-a[2]), L=d.length(), g=new THREE.CylinderGeometry(r1,r0,L,seg||12,1);
+  g.applyMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),d.clone().normalize()))); g.translate((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2); return g; }
+function palla3(r,x,y,z,sx,sy,sz,w,h){ return new THREE.SphereGeometry(r,w||16,h||12).scale(sx||1,sy||1,sz||1).translate(x,y,z); }
+function anello(r,t,y,sx,sz){ return new THREE.TorusGeometry(r,t,6,36).rotateX(Math.PI/2).scale(sx||1,1,sz||1).translate(0,y,0); }
+/* o: {chi:'carlo'|'papa'|'figlio', statura, pelle, capelli}. Restituisce {g (la figura), posa(p)}: p.k in ginocchio (0-1), p.chino (capo), p.busto (inclinazione),
+   p.mani:{d:Vector3|null, s:Vector3|null} (dove vanno le mani, nel mondo; null: a riposo), p.guarda (punto del mondo che il capo guarda, o null) */
+function ritratto(o){
+  var R=new THREE.Group(), WA=1.0, CADE=.45, chi=o.chi, pel=o.pelle||RM.col(0xb98a6a), cap=o.capelli||RM.col(0x5a4636);
+  var veste, sopra, scarpe=RM.col(0x4a2e22), oroC=RM.col(0xd9ad4a);
+  if(chi==='carlo'){ veste=RM.col(0xa8843c); sopra=RM.col(0x6e2228); }          // tunica lunga color oro scuro («veste auro texta») e clamide rosso scuro: colori nostri (Eginardo non li dice)
+  else if(chi==='papa'){ veste=RM.col(0xece6d8); sopra=RM.col(0xc09440); }
+  else { veste=RM.col(0x8a6a48); sopra=RM.col(0x4e5a3c); }
+  function pz(){ return {st:[], oro:[]}; }
+  function nodo(padre,q,x,y,z){ var g=new THREE.Group(); g.position.set(x||0,y||0,z||0);
+    ['st','oro'].forEach(function(k){ if(!q[k].length) return; var m=new THREE.Mesh(fondi(q[k]),matR(k)); m.castShadow=true; m.receiveShadow=true; g.add(m); }); padre.add(g); return g; }
+  /* la veste sotto la vita: si accorcia quando si inginocchia (scala in altezza) */
+  var qG=pz(), lunga=chi!=='figlio', orlo=lunga?0:.5;
+  qG.st.push({g:torno([[0,WA],[.165,WA],[.18,.8],[.21,Math.max(.45,orlo+.05)],[.24,orlo+.12],[.255,orlo+.03],[.245,orlo],[0,orlo]],0,0,1.1,.8,40,[13,.045]),col:veste});
+  if(chi==='carlo'){ qG.st.push({g:torno([[.2,WA+.02],[.245,.75],[.275,.45],[.285,.34]],Math.PI*1.95,Math.PI*1.5,1.12,.88,36,[9,.06]),col:sopra});      // la clamide, aperta sul fianco destro
+    qG.oro.push({g:anello(.25,.013,.04,1.1,.8),col:oroC}); qG.oro.push({g:anello(.25,.008,.1,1.1,.8),col:oroC}); }                             // l'orlo d'oro («veste auro texta»)
+  if(chi==='papa') qG.st.push({g:torno([[.27,WA+.02],[.29,.8],[.31,.58],[.3,.56]],0,0,1.1,.85,40,[10,.05]),col:sopra});
+  if(chi==='figlio'){ qG.st.push({g:torno([[.25,WA+.02],[.27,.75],[.28,.58]],Math.PI*1.95,Math.PI*1.5,1.1,.85,36,[8,.05]),col:sopra});
+    [-1,1].forEach(function(s){ qG.st.push({g:asta3([s*.08,.52,0],[s*.08,.06,.01],.05,.042),col:RM.col(0x5a4636)}); }); }                  // le gambe fasciate (Eginardo 23, «fasciolis crura»)
+  var gonna=nodo(R,qG);
+  var qP=pz(); [-1,1].forEach(function(s){ qP.st.push({g:new THREE.BoxGeometry(.09,.06,.25).translate(s*.085,.03,.06),col:scarpe}); }); var piedi=nodo(R,qP);
+  var qK=pz(); qK.st.push({g:palla3(.15,0,.07,-.24,1.05,.5,1.55),col:veste}); [-1,1].forEach(function(s){ qK.st.push({g:new THREE.BoxGeometry(.08,.08,.1).translate(s*.08,.04,-.47),col:scarpe}); });
+  var polp=nodo(R,qK);      // in ginocchio: la veste sopra le gambe piegate e le suole dietro
+  /* il busto, dalla vita in su */
+  var qB=pz(), pancia=chi==='carlo';
+  qB.st.push({g:torno([[0,-.02],[.155,-.02],[.168,.1],[.18,.25],[.205,.38],[.2,.44],[.15,.48],[.07,.5],[0,.5]],0,0,1.1,.72),col:veste});
+  if(pancia) qB.st.push({g:palla3(.13,0,.13,.045,1.05,.95,.72),col:veste});      // «venter proiectior»
+  qB.st.push({g:asta3([0,.47,0],[0,.6,.01],chi==='carlo'?.064:.052,chi==='carlo'?.06:.047),col:pel});      // il collo («cervix obesa et brevior» per Carlo)
+  if(chi==='carlo'){ qB.st.push({g:torno([[.07,.53],[.16,.5],[.235,.44],[.24,.3],[.218,.1],[.207,0],[.2,-.03]],Math.PI*1.95,Math.PI*1.5,1.12,.85),col:sopra});
+    qB.oro.push({g:palla3(.032,-.165,.465,.115,1,1,.45),col:oroC}); qB.oro.push({g:anello(.088,.009,.49,1,.85),col:oroC}); }                 // la fibbia d'oro sulla spalla destra, lo scollo
+  if(chi==='papa'){ qB.st.push({g:torno([[.06,.53],[.15,.5],[.245,.44],[.272,.3],[.272,0],[.272,-.03]],0,0,1.1,.85),col:sopra});
+    var bianco=RM.col(0xf4f1e8), nero=RM.col(0x2a2420);
+    qB.st.push({g:anello(.17,.02,.47,1.15,.95),col:bianco});                                              // il pallio sulle spalle
+    [1,-1].forEach(function(s){ qB.st.push({g:new THREE.BoxGeometry(.055,.36,.014).translate(0,.28,s*.205),col:bianco});      // i capi, in mezzo al petto e alla schiena
+      qB.st.push({g:new THREE.BoxGeometry(.034,.008,.006).translate(0,.16,s*.214),col:nero}); qB.st.push({g:new THREE.BoxGeometry(.008,.04,.006).translate(0,.16,s*.214),col:nero}); }); }      // la croce vicino al capo
+  if(chi==='figlio') qB.st.push({g:torno([[.07,.53],[.16,.5],[.235,.44],[.24,.3],[.22,.05],[.21,-.03]],Math.PI*1.95,Math.PI*1.5,1.12,.85),col:sopra});
+  var busto=nodo(R,qB,0,WA,0);
+  /* il capo: occhi, naso, bocca, orecchie, capelli */
+  var qT=pz(), occhi=chi==='carlo'?.02:.017, naso=chi==='carlo'?.052:.043, bianco2=RM.col(0xe9e2d4), iride=RM.col(0x2e241c);
+  qT.st.push({g:palla3(.105,0,.12,.012,.84,1.08,.94,20,16),col:pel});
+  [-1,1].forEach(function(s){ qT.st.push({g:palla3(occhi,s*.033,.135,.098,1,.75,.42,10,8),col:bianco2}); qT.st.push({g:palla3(occhi*.58,s*.033,.134,.105,1,1,.4,8,6),col:iride});      // gli occhi, appena fuori dalla sfera del capo (davanti sta a z 0,11)
+    qT.st.push({g:new THREE.BoxGeometry(.04,.011,.014).rotateZ(s*-.12).translate(s*.034,.16,.1),col:chi==='carlo'?RM.col(0x8a8276):cap}); qT.st.push({g:palla3(.022,s*.088,.12,.0,.45,1,.8,8,6),col:pel}); });
+  qT.st.push({g:new THREE.ConeGeometry(.017,naso,8).rotateX(Math.PI/2+.25).translate(0,.112,.112),col:pel});
+  qT.st.push({g:new THREE.BoxGeometry(.038,.008,.01).translate(0,.074,.1),col:RM.col(0x6e3a30)});
+  qT.st.push({g:new THREE.SphereGeometry(.112,20,10,0,Math.PI*2,0,Math.PI*.46).scale(.87,1.06,.98).rotateX(-.5).translate(0,.135,-.006),col:cap});
+  qT.st.push({g:palla3(.093,0,.1,-.035,.87,.85,.8,16,10),col:cap});
+  var testa=nodo(busto,qT,0,.56,0);
+  /* le braccia: spalla, gomito, mano (maniche nel colore della veste; per Carlo i polsi d'oro) */
+  var spalle=[];
+  [-1,1].forEach(function(s){
+    var qS=pz(), qA=pz(), man=chi==='papa'?veste:chi==='carlo'?veste:veste;
+    qS.st.push({g:palla3(.062,0,0,0,1,1,1,12,10),col:man}); qS.st.push({g:asta3([0,0,0],[0,-.3,0],.06,.048),col:man});
+    qA.st.push({g:asta3([0,0,0],[0,-.27,0],.046,.037),col:man}); qA.st.push({g:palla3(.043,0,-.31,0,.72,1.15,.48),col:pel}); qA.st.push({g:palla3(.017,-s*.028,-.29,.022,1,1.4,1),col:pel});
+    if(chi==='carlo') qA.oro.push({g:new THREE.TorusGeometry(.04,.008,6,16).rotateX(Math.PI/2).translate(0,-.25,0),col:oroC});
+    var sp=nodo(busto,qS,s*.205,.44,0), gm=nodo(sp,qA,0,-.3,0); spalle.push({s:s, sp:sp, gm:gm}); });
+  R.scale.setScalar(.1*(o.statura||1));
+  /* il braccio che arriva a un punto (due segmenti): il gomito sta nel piano che passa per spalla, mano e un punto «di richiamo» in basso, di fuori e un poco dietro */
+  var T=new THREE.Vector3(), L1=.3, L2=.31, uA=new THREE.Vector3(), vA=new THREE.Vector3(), E=new THREE.Vector3(), GIU3=new THREE.Vector3(0,-1,0), qU=new THREE.Quaternion();
+  function braccio(b,mondo){
+    if(mondo){ T.copy(mondo); busto.worldToLocal(T); } else T.set(b.s*.25,-.15,.1);      // a riposo, le mani lungo i fianchi
+    var S=b.sp.position; uA.copy(T).sub(S); var D=uA.length()||1e-4, d=Math.max(.12,Math.min(L1+L2-.004,D)); uA.divideScalar(D);
+    vA.set(b.s*.45,-1,-.25); vA.addScaledVector(uA,-vA.dot(uA)); if(vA.lengthSq()<1e-6) vA.set(0,0,-1); vA.normalize();
+    var al=Math.acos(Math.max(-1,Math.min(1,(L1*L1+d*d-L2*L2)/(2*L1*d))));
+    E.copy(uA).multiplyScalar(L1*Math.cos(al)).addScaledVector(vA,L1*Math.sin(al));                      // il gomito, rispetto alla spalla
+    b.sp.quaternion.setFromUnitVectors(GIU3,E.clone().divideScalar(L1));
+    T.copy(uA).multiplyScalar(d).sub(E).normalize().applyQuaternion(qU.copy(b.sp.quaternion).invert());   // l'avambraccio, nel riferimento del braccio
+    b.gm.quaternion.setFromUnitVectors(GIU3,T);
+  }
+  var G=new THREE.Vector3();
+  function posa(p){
+    var k=p.k||0; busto.position.y=WA-CADE*k; gonna.scale.y=Math.max(.02,(WA-CADE*k)/WA); polp.visible=k>.02; polp.scale.set(1,Math.max(.01,k),Math.max(.01,k)); piedi.visible=k<.6;
+    busto.rotation.x=p.busto||0; testa.rotation.set(p.chino||0,0,0);
+    R.updateMatrixWorld(true);
+    if(p.guarda){ G.copy(p.guarda); busto.worldToLocal(G); G.y-=.56; testa.rotation.set((p.chino||0)+Math.max(-.4,Math.min(.4,-Math.atan2(G.y-.12,Math.hypot(G.x,G.z))*.6)),Math.max(-.7,Math.min(.7,Math.atan2(G.x,G.z))),0); }
+    var m=p.mani||{}; spalle.forEach(function(b){ var w=b.s<0?m.d:m.s; braccio(b,w||null); });
+    R.updateMatrixWorld(true);
+  }
+  function capo(v){ return testa.localToWorld(v.set(0,.215,.0)); }      // la cima del capo, nel mondo
+  posa({});
+  return {g:R, posa:posa, capo:capo, testa:testa, spalle:spalle, busto:busto};
+}
+/* la corona: un cerchio d'oro con pietre (la forma non è nota: schema); misure in metri */
+function corona800(){
+  var q=[], oroC=RM.col(0xe2b54e), g=new THREE.Group();
+  q.push({g:new THREE.CylinderGeometry(.102,.1,.05,32,1,true),col:oroC}); q.push({g:anello(.102,.008,.025),col:oroC}); q.push({g:anello(.1,.008,-.025),col:oroC});
+  for(var i=0;i<8;i++){ var a=i/8*Math.PI*2; q.push({g:palla3(.012,Math.sin(a)*.104,0,Math.cos(a)*.104,1,1,.6,8,6),col:i%2?RM.col(0x2f7a4a):RM.col(0x9a1e24)});
+    q.push({g:palla3(.012,Math.sin(a+.39)*.1,.04,Math.cos(a+.39)*.1,1,1.4,1,8,6),col:oroC}); }
+  var m=new THREE.Mesh(fondi(q),matR('oro')); m.castShadow=true; g.add(m); return g;
+}
 var interno800=(function(){
   var pie=(RM.MONUMENTI||[]).filter(function(m){ return m.id==='pietro'; })[0]; if(!pie||!pie.g||!pie.mat) return null;
   var gy=pie.g.position.y, X0=pie.x, Z0=pie.z, teg=null, i, j;
@@ -970,8 +1110,34 @@ var interno800=(function(){
       B.quad([xa-.1,y0,z0],[xa+.1,y0,z0],[xa+.1,y1,z1],[xa-.1,y1,z1],muro); }
     /* il presbiterio alla corda dell'abside: il piano rialzato, l'altare sopra la tomba, la finestrella della confessione, la pergula di sei colonne (schema) */
     B.scatola(.9,.05,1.9,-5.82,f,0,RM.col(0xa99f8d)).scatola(.12,.1,.22,-5.58,f+.05,0,RM.col(0xe6dfcf)).scatola(.012,.06,.11,-5.515,f+.055,0,scuro).scatola(.014,.012,.13,-5.514,f+.115,0,P.bronzo);      // la finestrella della confessione, con la cornice (misure schema)
-    B.colonne(-5.3,-.75,-5.3,.75,6,.45,.022,f+.05,marmo).scatola(.05,.04,1.56,-5.3,f+.5,0,marmo);
+    /* la pergula (25 novembre 2026): dodici colonne tortili, come la nota 38 di Duchesne alla vita di Adriano I («portique de douze colonnes, en avant du presbyterium»)
+       e it.wikipedia («colonne tortili»); in una fila sola, con l'architrave: la disposizione è schema */
+    for(i=0;i<12;i++){ var zc=-.75+i*1.5/11; B.cilindro(.03,.03,-5.3,f+.05,zc,marmo,.03,8); B.coclide(.022,.019,.37,-5.3,f+.08,zc,3,marmo); B.cilindro(.028,.025,-5.3,f+.45,zc,marmo,.022,8); }
+    B.scatola(.05,.04,1.56,-5.3,f+.475,0,marmo);
   });
+  /* I veli fra le colonne (25 novembre 2026). Liber Pontificalis, vita di Adriano I (772-795), 46 (Duchesne I p. 499, letto il 25 novembre 2026): «per universos arcos eiusdem
+     … basilicae de palleis tyreis atque fundatis fecit vela numero LXV»; la nota di Duchesne: «les courtines disposées entre les colonnes des nefs intérieures». Qui tende di porpora
+     raccolte alle colonne della navata, con la balza in alto; forma, misura e quante se ne vedono sono schema. */
+  var porpora=RM.col(0x5a1d3a), porporaS=RM.col(0x441530);
+  B.dentro(X0,gy,Z0,0,function(B){
+    [-1,1].forEach(function(s){ for(i=0;i<21;i++){ var xa=-3.75+i*9.2/21, xb=xa+9.2/21, zz=s*(1.2-.035);
+      B.scatola(xb-xa-.03,.1,.008,(xa+xb)/2,f+.8,zz,porpora);                                                        // la balza
+      [xa+.035,xb-.035].forEach(function(xc,j){ var d=j?-1:1;
+        B.quad([xc,f+.8,zz],[xc+d*.07,f+.8,zz],[xc+d*.02,f+.42,zz],[xc,f+.42,zz],porpora);                          // il velo raccolto contro la colonna
+        B.quad([xc,f+.42,zz],[xc+d*.02,f+.42,zz],[xc+d*.035,f,zz],[xc,f,zz],porporaS); }); } });
+  });
+  /* il faro: Liber Pontificalis, vita di Adriano I, 46 (Duchesne I p. 499): «fecit et farum maiorem in eadem beati Petri ecclesia, in tipum crucis, qui pendet ante presbiterium,
+     habentem candelas mille CCCLXV; et constituit ut quattuor vicibus in anno ipsum farum accendatur, id est in natale Domini, in Pascha, in natale Apostolorum et in natale pontificis».
+     A Natale era acceso. Qui una croce di metallo appesa davanti al presbiterio con 1365 lumi; misure, altezza, catene e metallo sono schema.
+     Il pavimento d'argento: stessa vita, 45: «ab introitu de rugas usque ad confessionem pavimentum vestivit de argento purissimo» (nota 38 di Duchesne: dalla grata del portico
+     di dodici colonne all'ingresso della confessione). Qui una lastra d'argento fra la pergula e la confessione; la misura è schema. */
+  var FARO=[X0-4.55,gy+f+1.22,Z0];
+  B.dentro(FARO[0],FARO[1],FARO[2],0,function(B){
+    var br=RM.col(0x3a2c1c); B.scatola(1.0,.02,.05,0,0,0,br).scatola(.05,.02,1.0,0,0,0,br).scatola(.16,.025,.16,0,-.005,0,br);
+    [[.5,0],[-.5,0],[0,.5],[0,-.5]].forEach(function(q){ fune(B,[q[0]*.92,.02,q[1]*.92],[0,.75,0],.006,br); });
+  });
+  fune(B,[FARO[0],FARO[1]+.75,FARO[2]],[FARO[0],FARO[1]+1.2,FARO[2]],.008,RM.col(0x3a2c1c));
+  var argento=new THREE.Mesh(new THREE.PlaneGeometry(.2,.5).rotateX(-Math.PI/2),matR('argento')); argento.position.set(X0-5.41,gy+f+.0515,Z0); argento.receiveShadow=true; argento.visible=false; RM.scene.add(argento);
   /* le persone ferme: il clero nel presbiterio, i Franchi nel transetto dietro Carlo, il popolo romano nella navata, nelle navatelle e nelle ali del transetto */
   var r8=RM.casuale(801), CX=X0-4.98, CZ=Z0, Y=gy+f;
   function W(lx,lz){ return [X0+lx,Z0+lz]; }
@@ -982,7 +1148,7 @@ var interno800=(function(){
   },0,true);
   vicine(B,'800i',[CX,CZ],function(){
     for(var a=0;a<4;a++) for(var b=-6;b<=6;b++){ if(a===0 && Math.abs(b)<3) continue; var p=W(-4.62+a*.18+(r8()-.5)*.04,b*.2+(r8()-.5)*.05); uomo(B,p[0],p[1],Y,a%2?C.ferro:franco,null,-Math.PI/2+(r8()-.5)*.3); }
-  },1);
+  },1,true);      // anche sui telefoni (25 novembre 2026, sera): nel campo largo stanno in primo piano, e come pedine sembravano blocchi
   INVERNO=false;
   var g=B.maglia(RM.matPietra()); g.visible=false; g.castShadow=false; g.receiveShadow=true; RM.scene.add(g);      // i muri tagliati non fanno ombra: nello spaccato navata e transetto restavano in ombra piena (25 novembre 2026)
   /* la luce dipinta nei colori dei vertici: più calda e chiara verso la confessione e l'abside, appena più spenta verso la facciata (schema della luce, non una misura) */
@@ -994,40 +1160,43 @@ var interno800=(function(){
   /* Il popolo romano (Annali: «a cuncto Romanorum populo adclamatum est»): persone a istanze nella navata, nelle navatelle e nelle ali del transetto, d'inverno col mantello
      o con la palla; due pose, ferme e con le braccia alzate per l'acclamazione, a ondate dalla confessione verso la facciata, tre volte (Liber Pontificalis: «ter dictum est»).
      Quante, il gesto delle braccia e il ritmo delle ondate sono schema. Quante se ne vedono dipende dal gradino della qualità. */
+  /* 25 novembre 2026, sera: la folla più fitta (circa 1,2 m fra una persona e l'altra nella navata, prima 2) e più viva. I posti si riempiono a partire dalla confessione:
+     con meno persone (gradini bassi, telefoni) resta piena la parte davanti all'altare e si svuota il fondo verso la facciata. Tre pose: ferme, con le due braccia alzate,
+     con un braccio solo; chi acclama alza le braccia a tempi un poco diversi, e tutti si muovono appena (un dondolio lento). Gesti, ritmo e numeri sono schema. */
   var POSTI=[], lx, lz;
-  for(lx=-3.55;lx<5.4;lx+=.19) for(lz=-1.0;lz<=1.01;lz+=.2){ if(r8()<.1) continue; POSTI.push({x:X0+lx+(r8()-.5)*.07, z:Z0+lz+(r8()-.5)*.07, ry:-Math.PI/2+(r8()-.5)*.5}); }
-  for(i=0;i<230;i++){ var s1=r8()<.5?-1:1, x2=X0-3.6+r8()*9, z2=Z0+s1*(1.35+r8()*1.7); if(Math.abs(Math.abs(z2-Z0)-2.2)<.09) continue; POSTI.push({x:x2,z:z2,ry:-Math.PI/2+(r8()-.5)*.8}); }
-  for(i=0;i<80;i++){ var s2=r8()<.5?-1:1, x3=X0-5.5+r8()*1.4, z3=Z0+s2*(1.5+r8()*2.7); POSTI.push({x:x3,z:z3,ry:verso(x3,z3)}); }
-  for(i=POSTI.length-1;i>0;i--){ j=(r8()*(i+1))|0; var tmp=POSTI[i]; POSTI[i]=POSTI[j]; POSTI[j]=tmp; }      // in ordine sparso: con meno persone la folla si dirada in modo uniforme
-  var LANA=[0x6b5a44,0x8a4a33,0x5f6a4e,0x7a6a52,0x5b5f66,0xa58f6a,0x4a5a72,0x9a7a4a].map(RM.col), FOGGE=[{f:1,k:0},{f:2,k:3},{f:1,k:3},{f:2,k:0}], folla=[], NP=POSTI.length;
+  for(lx=-3.55;lx<5.4;lx+=.12) for(lz=-1.02;lz<=1.03;lz+=.12){ if(r8()<.08) continue; if(lx<-3.3 && Math.abs(lz)<.35) continue; POSTI.push({x:X0+lx+(r8()-.5)*.05, z:Z0+lz+(r8()-.5)*.05, ry:-Math.PI/2+(r8()-.5)*.45}); }
+  for(i=0;i<640;i++){ var s1=r8()<.5?-1:1, x2=X0-3.6+r8()*9, z2=Z0+s1*(1.35+r8()*1.7); if(Math.abs(Math.abs(z2-Z0)-2.2)<.09) continue; POSTI.push({x:x2,z:z2,ry:-Math.PI/2+(r8()-.5)*.8}); }
+  for(i=0;i<220;i++){ var s2=r8()<.5?-1:1, x3=X0-5.5+r8()*1.4, z3=Z0+s2*(1.5+r8()*2.7); POSTI.push({x:x3,z:z3,ry:verso(x3,z3)+(r8()-.5)*.4}); }
+  POSTI.forEach(function(p){ p.ord=Math.hypot(p.x-X0+4.9,(p.z-Z0)*1.6)+r8()*2.2; });
+  POSTI.sort(function(a,b){ return a.ord-b.ord; });      // dalla confessione verso la facciata
+  var LANA=[0x6b5a44,0x8a4a33,0x5f6a4e,0x7a6a52,0x5b5f66,0xa58f6a,0x4a5a72,0x9a7a4a,0x7d5a3a,0x8e8a7a].map(RM.col), FOGGE=[{f:1,k:0},{f:2,k:3},{f:1,k:3},{f:2,k:0}], folla=[], NP=POSTI.length;
   if(VERE) folla=FOGGE.map(function(fo,q){ var cap=Math.max(1,Math.ceil((NP-q)/4));
     function mk(br){ var m=new THREE.InstancedMesh(personaGeo({f:fo.f,k:fo.k,s:1,braccia:br}),matPersone(),cap); m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(cap*3),3);
       m.frustumCulled=false; m.castShadow=false; m.receiveShadow=true; m.visible=false; m.count=0; RM.scene.add(m); return m; }
-    return {giu:mk(0), su:mk(1)}; });
-  POSTI.forEach(function(p,n){ p.q=n%4; p.k=(n/4)|0; p.su=null; p.no=r8()<.12; p.rit=(p.x-X0+5.5)*.06+r8()*.15; var c=LANA[(r8()*LANA.length)|0];
-    if(folla.length){ folla[p.q].giu.instanceColor.setXYZ(p.k,c.r,c.g,c.b); folla[p.q].su.instanceColor.setXYZ(p.k,c.r,c.g,c.b); } });
-  var NQ=LEGGERA?[70,110,150,190]:[110,260,430,NP];      // persone del popolo per gradino («bassa», «media», «alta», «massima»)
+    return {giu:mk(0), su:mk(1), uno:mk(3)}; });
+  POSTI.forEach(function(p,n){ p.q=n%4; p.k=(n/4)|0; p.su=null; var h=r8(); p.no=h<.1; p.uno=h>.72; p.rit=(p.x-X0+5.5)*.05+r8()*.35; p.dur=.85+r8()*.55; p.fase=r8()*6.283; p.vel=.6+r8()*.8;
+    var c=LANA[(r8()*LANA.length)|0]; p.col=c.clone().multiplyScalar(.85+r8()*.3); });
+  var NQ=LEGGERA?[90,150,220,300]:[140,440,760,NP];      // persone del popolo per gradino («bassa», «media», «alta», «massima»)
   var ONDE=[19.4,21.2,23.0];
-  function popolo(u,forza){
-    if(!folla.length) return; var n=Math.min(NP,NQ[RM.q]||NQ[1]), cambiato=forza;
-    folla.forEach(function(F,q){ var c=Math.max(0,Math.ceil((n-q)/4)); if(F.giu.count!==c){ F.giu.count=F.su.count=c; cambiato=true; } });
-    for(var k=0;k<n;k++){ var p=POSTI[k], su=false;
-      if(!p.no) for(var w=0;w<3;w++){ var a=ONDE[w]+p.rit; if(u>=a && u<a+1.15){ su=true; break; } }
-      if(su===p.su && !forza) continue; p.su=su; cambiato=true; var F2=folla[p.q];
-      metti(F2.giu,p.k,p.x,Y,p.z,p.ry,su?0:1); metti(F2.su,p.k,p.x,Y,p.z,p.ry,su?1:0); }
-    if(cambiato) folla.forEach(function(F){ F.giu.instanceMatrix.needsUpdate=F.su.instanceMatrix.needsUpdate=true; if(forza){ F.giu.instanceColor.needsUpdate=F.su.instanceColor.needsUpdate=true; } });
+  /* Ogni persona sta in una sola delle tre maglie della sua foggia (ferma, due braccia, un braccio): le istanze si riempiono da capo a ogni fotogramma, così le maglie disegnano
+     solo chi c'è (prima le pose non usate erano istanze schiacciate a zero, disegnate lo stesso: tre volte i triangoli). Il dondolio: una rotazione lenta, diversa per ognuno. */
+  var POSE=['giu','su','uno'];
+  function popolo(u){
+    if(!folla.length) return; var n=Math.min(NP,NQ[RM.q]||NQ[1]);
+    folla.forEach(function(F){ F.n=[0,0,0]; });
+    for(var k=0;k<n;k++){ var p=POSTI[k], su=0;
+      if(!p.no) for(var w=0;w<3;w++){ var a=ONDE[w]+p.rit; if(u>=a && u<a+p.dur){ su=p.uno?2:1; break; } }
+      var F2=folla[p.q], m=F2[POSE[su]], j=F2.n[su]++, dond=MENO?0:Math.sin(u*p.vel+p.fase)*.035, salto=su&&!MENO?Math.max(0,Math.sin((u-ONDE[0]-p.rit)*7))*.0025:0;
+      metti(m,j,p.x,Y+salto,p.z,p.ry+dond,1); m.instanceColor.setXYZ(j,p.col.r,p.col.g,p.col.b); }
+    folla.forEach(function(F){ POSE.forEach(function(t,i){ var m=F[t]; m.count=F.n[i]; m.instanceMatrix.needsUpdate=true; m.instanceColor.needsUpdate=true; }); });
   }
   /* chi si muove: Carlo in ginocchio e in piedi, il papa in piedi, col gesto della corona e in ginocchio, il figlio Carlo */
-  var cIn=istanze(function(B){ inGinocchio(B,0,0,0,franco,0,'carlo'); },1,'800i','capi',0,null,true);
-  var cSu=istanze(function(B){ uomo(B,0,0,0,franco,null,0,'carlo'); },1,'800i','capi',0,null,true);
-  var pSu=istanze(function(B){ uomo(B,0,0,0,C.oro,null,0,'papa'); },1,'800i','capi',0,null,true);
-  var pTe=istanze(function(B){ aBracciaTese(B,C.oro,'papa'); },1,'800i','capi',0,null,true);
-  var pIn=istanze(function(B){ inGinocchio(B,0,0,0,C.oro,0,'papa'); },1,'800i','capi',0,null,true);
-  var fig=istanze(function(B){ uomo(B,0,0,0,RM.col(0x7a5a3a),null,0,'carlo'); },1,'800i','capi',0,null,true);
-  /* la corona: un cerchio d'oro (la forma non è nota), un poco più grande del vero; brilla (materiale emissivo e un alone) */
-  var corona=new THREE.Mesh(new THREE.TorusGeometry(.018,.005,8,24).rotateX(Math.PI/2),new THREE.MeshStandardMaterial({color:0xf0c75a,metalness:.6,roughness:.25,emissive:0xb07a18,emissiveIntensity:.8}));
-  corona.visible=false; corona.castShadow=true; RM.scene.add(corona);
-  var mobili=[cIn,cSu,pSu,pTe,pIn,fig];
+  /* (25 novembre 2026, sera) figure fini con le giunture: vedi «i protagonisti da vicino», più sopra */
+  var rC=ritratto({chi:'carlo', statura:1.07, capelli:RM.col(0xe4dfd3)}), rP=ritratto({chi:'papa', statura:1, capelli:RM.col(0x8c867c)}), rF=ritratto({chi:'figlio', statura:1.02, capelli:RM.col(0x6a4a30), pelle:RM.col(0xc0906c)});
+  [rC,rP,rF].forEach(function(r){ r.g.visible=false; RM.scene.add(r.g); });
+  /* la corona, a grandezza vera (prima era più grande, perché si leggesse da lontano: ora la vista le arriva vicino); brilla con un alone */
+  var corona=corona800(); corona.scale.setScalar(.1*1.07); corona.visible=false; RM.scene.add(corona);
+  var mobili=[rC.g,rP.g,rF.g,argento];
   /* il taglio: piani sul materiale di San Pietro e delle tegole (renderer.localClippingEnabled); a k=0 il piano orizzontale sta lontano e non taglia nulla */
   if(RM.renderer) RM.renderer.localClippingEnabled=true;
   var pA=new THREE.Plane(new THREE.Vector3(0,-1,0),1e5), pB=new THREE.Plane(new THREE.Vector3(1,0,0),-(X0+5.66)), mats=[pie.mat].concat(teg?[teg.material]:[]);
@@ -1036,7 +1205,9 @@ var interno800=(function(){
   function taglio(k){
     k=Math.max(0,Math.min(1,k)); if(k===kT) return; kT=k;
     pA.constant=k<=0?1e5:gy+4.45-k*4.6;
-    var om=k>0?false:ombraPie; if(pie.g.castShadow!==om){ pie.g.castShadow=om; if(teg) teg.castShadow=k>0?false:ombraTeg; if(RM.renderer) RM.renderer.shadowMap.needsUpdate=true; }      // senza tetto niente ombra della basilica sull'interno; la mappa delle ombre si rifà solo quando cambia (il taglio non tocca le ombre)
+    /* 25 novembre 2026, sera: il tetto tagliato continua a fare ombra (le ombre non sono tagliate): dentro c'è la penombra di una basilica coperta, rotta dai raggi delle
+       finestre e dalla luce calda dei lumi. Prima l'ombra si spegneva, e l'interno restava in pieno sole, chiaro e piatto. */
+    var om=ombraPie; if(pie.g.castShadow!==om){ pie.g.castShadow=om; if(teg) teg.castShadow=ombraTeg; if(RM.renderer) RM.renderer.shadowMap.needsUpdate=true; }
   }
   /* ---- la luce di una messa di Natale (25 novembre 2026, l'utente: «la scena deve essere spettacolare»). Tutto schema, detto nella didascalia: nessuna fonte letta descrive
      lampade, candele o luce di quel giorno. Senza luci nuove (cambierebbero tutti i materiali della città): la conca dell'abside d'oro che brilla da sé, le finestre alte accese,
@@ -1051,10 +1222,14 @@ var interno800=(function(){
   var pL=[], pC=[];
   for(i=0;i<13;i++) [-.62,.62].forEach(function(s){ pL.push(X0-3.4+i*.7,Y+.98,Z0+s); });      // le lampade appese sulla navata
   [-3.3,-2.4,2.4,3.3].forEach(function(s){ pL.push(X0-4.85,Y+.95,Z0+s); });                      // e nel transetto
-  for(i=0;i<6;i++) pC.push(X0-5.3,Y+.565,Z0-.75+i*.3);                                            // candele sulla pergula
+  for(i=0;i<12;i++) pC.push(X0-5.3,Y+.54,Z0-.75+i*1.5/11);                                        // candele sull'architrave della pergula
   pC.push(X0-5.58,Y+.19,Z0-.08, X0-5.58,Y+.19,Z0+.08);                                             // sull'altare
   [-1,1].forEach(function(s){ for(i=0;i<4;i++) pC.push(X0-6.15+i*.28,Y+.32,Z0+s*1.02); });          // candelabri attorno al presbiterio
   var lampade=lumi(pL,.3,0xffb85e), candele=lumi(pC,.17,0xffc870), fiamme=lumi(pL.concat(pC),.05,0xfff2c8);
+  /* i 1365 lumi del faro (vita di Adriano I, 46: «habentem candelas mille CCCLXV»), lungo i bracci della croce in tre file e attorno al centro; e il suo alone */
+  var pF=[], q3=0; while(pF.length<1365*3){ var bz=q3%2, tq=((q3*.618034)%1)*2-1, fila=((q3/2)|0)%3-1, rr=.46*tq; q3++;
+    pF.push(FARO[0]+(bz?fila*.02:rr), FARO[1]+.03, FARO[2]+(bz?rr:fila*.02)); }
+  var faroLumi=lumi(pF,.022,0xffd890), faroAlone=lumi([FARO[0],FARO[1],FARO[2], FARO[0]+.32,FARO[1],FARO[2], FARO[0]-.32,FARO[1],FARO[2], FARO[0],FARO[1],FARO[2]+.32, FARO[0],FARO[1],FARO[2]-.32],.7,0xffb860);
   /* i raggi: da ogni finestra della navata, nella direzione del sole della scena (js/base.js: da ovest-nord-ovest, alto 28 gradi), fino al pavimento */
   var RP=[], RC=[], D3=[.86,-.47,.24];
   for(i=0;i<11;i++){ var wx=X0-3.3+i*.85, wy=Y+1.5, wz=Z0-1.1, L=1.5/.47, bx=wx+D3[0]*L, bz=wz+D3[2]*L;
@@ -1067,6 +1242,7 @@ var interno800=(function(){
   bagliore.position.set(X0-5.35,Y+.45,Z0); bagliore.scale.set(2.6,2.6,1); bagliore.visible=false; RM.scene.add(bagliore);
   var pozza=new THREE.Mesh(new THREE.PlaneGeometry(3.4,3.4).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({map:alone,color:0xffd58a,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
   pozza.position.set(X0-5.05,Y+.014,Z0+.1); pozza.visible=false; RM.scene.add(pozza);      // la luce sul gruppo davanti alla confessione
+  var pozzaF=pozza.clone(); pozzaF.material=pozza.material.clone(); pozzaF.scale.setScalar(1.5); pozzaF.position.set(FARO[0],Y+.013,FARO[2]); RM.scene.add(pozzaF);      // la luce del faro sul pavimento
   var luccichio=new THREE.Sprite(new THREE.SpriteMaterial({map:alone,color:0xffe7a0,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
   luccichio.scale.set(.16,.16,1); luccichio.visible=false; RM.scene.add(luccichio);      // l'alone della corona
   /* il soffitto a capriate: travi di legno sotto i tetti, che si vedono quando i tetti sono spariti e si dissolvono per ultime (misure e passo sono schema) */
@@ -1074,7 +1250,7 @@ var interno800=(function(){
   for(i=0;i<22;i++){ var xc=X0-3.75+i*.44, yb=gy+3.3; fune(BT,[xc,yb,Z0-1.25],[xc,yb,Z0+1.25],.06,legno); fune(BT,[xc,yb,Z0-1.25],[xc,gy+3.98,Z0],.05,legno); fune(BT,[xc,yb,Z0+1.25],[xc,gy+3.98,Z0],.05,legno); fune(BT,[xc,yb,Z0],[xc,gy+3.98,Z0],.035,legno); }
   fune(BT,[X0-3.8,gy+3.98,Z0],[X0+5.6,gy+3.98,Z0],.05,legno);
   var capriate=BT.maglia(new THREE.MeshStandardMaterial({vertexColors:true,roughness:.9,transparent:true,opacity:1})); capriate.visible=false; RM.scene.add(capriate);
-  var effetti=[finestre,cupola,lampade,candele,fiamme,raggi,bagliore,pozza,luccichio,capriate];
+  var effetti=[finestre,cupola,lampade,candele,fiamme,raggi,bagliore,pozza,pozzaF,luccichio,capriate,faroLumi,faroAlone];
   /* la scritta dell'acclamazione, in sovrimpressione: entra ed esce col ritmo, in alto (sopra la navata, non sui volti) */
   var scritta=null;
   function sovra(testo,a){
@@ -1089,36 +1265,73 @@ var interno800=(function(){
   var minPrima=16;
   function mostra(on){
     if(on===acceso) return; acceso=on; g.visible=on; corona.visible=on; mobili.forEach(function(m){ m.visible=on; }); effetti.forEach(function(m){ m.visible=on; });
-    folla.forEach(function(F){ F.giu.visible=F.su.visible=on; }); if(on) popolo(0,true);
+    folla.forEach(function(F){ F.giu.visible=F.su.visible=F.uno.visible=on; }); if(on) popolo(0);
+    var et=document.querySelector('.etichette3d'); if(et) et.style.display=on?'none':'';      // dentro la basilica i nomi dei monumenti lontani (visti attraverso il taglio) non servono e coprirebbero la scena
     if(on){ giroPrima=!!RM.senzaGiro; RM.senzaGiro=true; if(RM.controlli){ RM.controlli.autoRotate=false; minPrima=RM.controlli.minDistance; RM.controlli.minDistance=.4; } }      // da vicino il dondolio lento della città (js/base.js) sposterebbe l'inquadratura: fermo finché si sta dentro
-    else { RM.senzaGiro=giroPrima; if(RM.controlli) RM.controlli.minDistance=Math.max(RM.controlli.minDistance,minPrima); if(scritta) scritta.style.opacity='0'; }
+    else { RM.senzaGiro=giroPrima; if(RM.controlli) RM.controlli.minDistance=Math.max(RM.controlli.minDistance,minPrima); if(scritta) scritta.style.opacity='0';
+      if(RM.camera && nearPrima!=null){ RM.camera.near=nearPrima; RM.camera.updateProjectionMatrix(); nearPrima=null; }
+      LUMI800.uLumeC.value[0].setRGB(0,0,0); LUMI800.uLumeC.value[1].setRGB(0,0,0); }
     if(RM.renderer) RM.renderer.shadowMap.needsUpdate=true;
   }
+  /* Il piano vicino della camera sta a 2 unità (20 m, js/base.js): da lì in qua non si disegna nulla, e i primi piani (4-6 m) non si potevano fare. Finché si sta dentro
+     la basilica scende con la distanza dal punto guardato (un ottavo, fra 30 cm e 2 unità); le passate degli effetti leggono quello vero (aggancio in RM.post.disegna). */
+  var nearPrima=null, mInv=new THREE.Matrix4();
+  RM.frame.push(function(){
+    if(!acceso || !RM.camera) return;
+    if(nearPrima==null) nearPrima=RM.camera.near;
+    var dc=RM.controlli?RM.camera.position.distanceTo(RM.controlli.target):20, nv=Math.max(.03,Math.min(nearPrima,dc*.125));
+    if(Math.abs(nv-RM.camera.near)>1e-4){ RM.camera.near=nv; RM.camera.updateProjectionMatrix(); }
+    RM.camera.updateMatrixWorld(); var mi=mInv.copy(RM.camera.matrixWorld).invert();
+    LUMI800.uLumeV.value[0].set(FARO[0],FARO[1],FARO[2]).applyMatrix4(mi); LUMI800.uLumeV.value[1].set(X0-5.45,Y+.42,Z0).applyMatrix4(mi);
+  });
   function liscio(a,b,u){ return RM.sfuma(a,b,u); }
-  var pos={carlo:[CX,Y,CZ], papa:[X0-5.17,Y,CZ], figlio:[X0-4.92,Y,CZ+.42]}, GIU=.05-.008, tel0=window.innerWidth<700;
+  var pos={carlo:[CX,Y,CZ], papa:[X0-5.17,Y,CZ], figlio:[X0-4.92,Y,CZ-.42]},      /* il figlio a nord di Carlo (25 novembre 2026, sera; prima a sud, dove ora sta la camera dei primi piani): il posto è schema */ GIU=.05-.008, tel0=window.innerWidth<700;
   /* u: secondi dentro il secondo tempo (la regia in carlo800). Le azioni, dalle fonti: Carlo prega davanti alla confessione e si alza (Annali), il papa gli posa la corona
      con le sue mani (Annali, Liber Pontificalis), i Romani acclamano tre volte (Liber Pontificalis), il papa gli rende omaggio (Annali: il gesto non è descritto, qui in ginocchio),
      il papa unge re il figlio (Liber Pontificalis). Tempi e pose sono schema. */
+  /* 25 novembre 2026, sera: i tre protagonisti sono figure con le giunture (ritratto, più sopra). Carlo prega in ginocchio a mani giunte e si alza (13,3-14,6); il papa,
+     con la corona fra le mani, fa un passo (14,0-14,7), la alza sopra il capo di Carlo (14,6-15,6) e la posa (15,6-16,9): le mani seguono la corona; Carlo china appena il capo.
+     L'omaggio: il papa in ginocchio (26,4-28,0, schema); l'unzione: la destra del papa sul capo del figlio (28,9-30,3). */
+  var CP=new THREE.Vector3(), CA=new THREE.Vector3(), MA=new THREE.Vector3(), MB=new THREE.Vector3(), PQ=new THREE.Vector3(), V0=new THREE.Vector3();
+  var PX0=X0-5.17, PXC=CX-.058, rC0=-Math.PI/2;
   function posa(u){
-    var su=liscio(13.3,14.6,u), avanti=liscio(14.6,15.4,u), alFiglio=liscio(28.2,28.8,u), ingin=u>=26.4&&u<28.0, tese=(u>=14.6&&u<17.1)||(u>=28.9&&u<30.3);
-    metti(cIn,0,CX,Y,CZ,-Math.PI/2,u<13.3?1:0); metti(cSu,0,CX,Y-GIU*(1-su),CZ,-Math.PI/2,u<13.3?0:1);
-    var px=X0-5.17+.08*avanti*(1-alFiglio)+.1*alFiglio, pz=CZ+.42*alFiglio; pos.papa=[px,Y,pz];
-    metti(pSu,0,px,Y,pz,Math.PI/2,(ingin||tese)?0:1); metti(pTe,0,px,Y,pz,Math.PI/2,tese&&!ingin?1:0); metti(pIn,0,px,Y,pz,Math.PI/2,ingin?1:0);
-    metti(fig,0,pos.figlio[0],Y,pos.figlio[2],-Math.PI/2,1);
-    mobili.forEach(function(m){ m.instanceMatrix.needsUpdate=true; });
-    /* la corona: nelle mani del papa; alzata sopra il capo di Carlo (14,6-15,6), scende piano (15,6-16,9), resta un attimo sospesa e brilla */
-    var su1=liscio(14.6,15.6,u), giu1=liscio(15.6,16.9,u), mano=[px+.04,Y+.1,CZ], alto=[CX,Y+.25,CZ], capo=[CX,Y+.174,CZ];
-    var cp=u<15.6?[mano[0]+(alto[0]-mano[0])*su1,mano[1]+(alto[1]-mano[1])*su1,CZ]:[alto[0],alto[1]+(capo[1]-alto[1])*giu1,CZ];
-    if(u<14.6) cp=[px+.035,Y+.095,CZ];
-    corona.position.set(cp[0],cp[1],cp[2]); corona.rotation.y=u*.4;
-    pos.carlo=[CX,Y-GIU*(1-su),CZ];
-    popolo(u,false);
+    var su=liscio(13.3,14.6,u), avanti=liscio(14.0,14.7,u), alFiglio=liscio(28.2,28.8,u), ingin=liscio(26.4,27.0,u)*(1-liscio(27.6,28.1,u));
+    var px=PX0+(PXC-PX0)*avanti*(1-alFiglio)+(pos.figlio[0]-.058-PX0)*alFiglio, pz=CZ+(pos.figlio[2]-CZ)*alFiglio; pos.papa=[px,Y,pz];
+    /* il figlio, fermo in piedi a mani giunte; china il capo all'unzione */
+    rF.g.position.set(pos.figlio[0],Y,pos.figlio[2]); rF.g.rotation.y=rC0; rF.g.updateMatrixWorld(true);
+    var ung=liscio(28.6,29.2,u)*(1-liscio(30.3,30.9,u));
+    function inFig(r,v,x,y,z){ return v.set(x,y,z).applyMatrix4(r.g.matrixWorld); }      // un punto in metri, nel riferimento della figura (piedi a terra, sguardo verso +z), nel mondo
+    rF.posa({chino:.28*ung, mani:{d:inFig(rF,MA,-.03,1.02,.2), s:inFig(rF,MB,.03,1.02,.2)}});
+    rF.capo(PQ);
+    /* Carlo: a mani giunte davanti al petto finché si alza, poi le braccia lungo i fianchi */
+    rC.g.position.set(CX,Y,CZ); rC.g.rotation.y=rC0; rC.g.updateMatrixWorld(true);
+    var chinoC=.3*(1-liscio(13.3,14.2,u))+.16*liscio(15.3,15.9,u)*(1-liscio(16.9,17.6,u)), yG=.88+.4*su;
+    rC.posa({k:1-su, chino:chinoC, mani:u<14.3?{d:inFig(rC,MA,-.025,yG,.24), s:inFig(rC,MB,.025,yG,.24)}:{}});
+    rC.capo(CA); pos.carlo=[CX,CA.y-.02,CZ];
+    /* la corona: fra le mani del papa davanti al petto, poi sopra il capo di Carlo, poi giù; posata, segue il capo */
+    rP.g.position.set(px,Y,pz); rP.g.rotation.y=Math.PI/2; rP.g.updateMatrixWorld(true);
+    var su1=liscio(14.6,15.6,u), giu1=liscio(15.6,16.9,u);
+    inFig(rP,V0,0,1.2,.3);                                                                                  // davanti al petto del papa
+    if(u<14.6) CP.copy(V0);
+    else if(u<15.6) CP.copy(V0).lerp(MA.copy(CA).setY(CA.y+.03),su1);
+    else CP.copy(CA).setY(CA.y+.03*(1-giu1));
+    if(u>=16.9) CP.copy(CA);
+    corona.position.copy(CP); corona.position.y-=.0025; corona.rotation.set(0,rC0,0);
+    var tieneCor=u<17.0, unge=u>=28.9&&u<30.3, giunteP=ingin>.3, yP=1.3-.42*ingin;
+    var mP={};
+    if(tieneCor){ MA.set(0,0,.1*.107*.95).add(CP); MB.set(0,0,-.1*.107*.95).add(CP); mP={d:MA, s:MB}; }      // le mani ai due lati della corona (il papa guarda verso +x: la sua destra è a +z)
+    else if(giunteP){ mP={d:inFig(rP,MA,-.025,yP,.24), s:inFig(rP,MB,.025,yP,.24)}; }
+    else if(unge) mP={d:MA.copy(PQ).setY(PQ.y+.004)};
+    rP.posa({k:ingin, chino:.38*ingin+.08*liscio(15.4,16.2,u)*(1-liscio(17,17.6,u)), busto:.12*ingin, mani:mP, guarda:(unge||ingin>.5)?null:CA});
+    popolo(u);
     /* la luce: si accende quando il tetto si apre; il bagliore sul gruppo cresce nel momento della corona */
     var k=kT, cal=liscio(.15,.6,k), pic=liscio(14.6,16.9,u)*(1-liscio(19,21,u));
-    g.material.emissive.setRGB(.06,.042,.02).multiplyScalar(cal); cupola.material.emissiveIntensity=.25+.75*cal;
-    lampade.material.opacity=.85*cal; candele.material.opacity=cal; fiamme.material.opacity=cal; raggi.material.opacity=.42*cal;
-    bagliore.material.opacity=cal*(.1+.2*pic); pozza.material.opacity=cal*(.14+.22*pic);
-    var luc=liscio(16.6,17.2,u)*(1-liscio(18.4,19.6,u)); luccichio.visible=luc>.01; luccichio.material.opacity=luc*(.8+.2*Math.sin(u*9)); luccichio.position.copy(corona.position); luccichio.scale.setScalar(.12+.1*luc);
+    g.material.emissive.setRGB(.05,.032,.014).multiplyScalar(cal); cupola.material.emissiveIntensity=.25+.75*cal;
+    lampade.material.opacity=.85*cal; candele.material.opacity=cal; fiamme.material.opacity=cal; raggi.material.opacity=.5*cal; faroLumi.material.opacity=cal; faroAlone.material.opacity=.55*cal*(.92+.08*Math.sin(u*3.1));
+    bagliore.material.opacity=cal*(.12+.22*pic); pozza.material.opacity=cal*(.26+.26*pic); pozzaF.material.opacity=.3*cal; argento.visible=acceso;
+    LUMI800.uLumeC.value[0].setRGB(2.4,1.45,.62).multiplyScalar(cal); LUMI800.uLumeK.value[0]=.9;      // il faro
+    LUMI800.uLumeC.value[1].setRGB(2.2,1.35,.6).multiplyScalar(cal*(1+.8*pic)); LUMI800.uLumeK.value[1]=3;      // le candele della pergula e dell'altare
+    var luc=liscio(16.6,17.2,u)*(1-liscio(18.4,19.6,u)); luccichio.visible=luc>.01; luccichio.material.opacity=luc*(.8+.2*Math.sin(u*9)); luccichio.position.copy(corona.position); luccichio.scale.setScalar(.05+.05*luc);
     capriate.material.opacity=1-liscio(.55,.85,k); capriate.visible=capriate.material.opacity>.02; capriate.material.depthWrite=capriate.material.opacity>.98;
     /* l'acclamazione in sovrimpressione: prima la frase intera, poi «tre volte» */
     var a1=liscio(18.2,18.9,u)*(1-liscio(22.0,22.6,u)), a2=liscio(22.6,23.2,u)*(1-liscio(24.6,25.1,u));
@@ -1130,14 +1343,26 @@ var interno800=(function(){
      Le chiavi della navata no: allontanate, finirebbero dietro la facciata. */
   function W3(q){ return [X0+q[0],Y+q[1],Z0+q[2]]; }
   function adatta(c,t,lontano){ var a=RM.camera&&RM.camera.aspect||1; if(a>=.85) return [c,t];
-    var k=lontano?RM.fattoreVista():1, c2=[t[0]+(c[0]-t[0])*k,t[1]+(c[1]-t[1])*k,t[2]+(c[2]-t[2])*k], d=Math.hypot(c2[0]-t[0],c2[1]-t[1],c2[2]-t[2]);
+    var k=lontano?(lontano===2?Math.min(1.3,RM.fattoreVista()):RM.fattoreVista()):1, c2=[t[0]+(c[0]-t[0])*k,t[1]+(c[1]-t[1])*k,t[2]+(c[2]-t[2])*k], d=Math.hypot(c2[0]-t[0],c2[1]-t[1],c2[2]-t[2]);
     return [c2,[t[0],t[1]-d*.16,t[2]]]; }
   /* Il piano vicino della camera sta a 2 unità (20 m, js/base.js): ogni inquadratura tiene il pavimento in basso nel quadro oltre quella distanza, se no lo si vede bucato */
-  var K={a:[[4.8,4.3,2.6],[-2,.5,0]], b:[[3.2,1.55,.15],[-3.4,.6,0]], c:[[-2.4,1.7,1.0],[-5,.35,.1]], d:[[-4.34,2.15,2.87],[-5.04,.16,.12]], d2:[[-4.42,2.05,2.62],[-5.04,.16,.12]],
-         m1:[[-5.1,3.0,2.9],[-4,.3,0]], e:[[-5.55,2.65,1.55],[1.5,.35,-.2]], et:[[-5.45,3.9,1.2],[1.5,.6,-.2]], m2:[[-5.0,2.8,3.0],[-4.6,.2,.2]], f:[[-4.3,2.2,2.95],[-5.0,.17,.22]]};      // et: il campo largo sul telefono, più alto e non allontanato (allontanato, l'arco trionfale copriva la navata)
+  /* 25 novembre 2026, sera: con il piano vicino che scende (più sopra) la vista arriva a pochi metri dai protagonisti. Le chiavi nuove:
+     p1 Carlo in ginocchio, da davanti e di lato, dietro la pergula; p2 di profilo, da sud, il papa che alza e posa la corona; p3 il volto di Carlo incoronato, da sopra la spalla
+     del papa; g l'omaggio di profilo; h l'unzione del figlio. Le chiavi «a» e «b» scendono nella navata, «c» e «d» finiscono davanti alla pergula, «e» è il campo largo
+     dall'abside, più basso di prima (le braccia alzate si leggono contro la navata). */
+  var K={a:[[4.8,4.3,2.6],[-2,.5,0]], b:[[3.2,1.55,.15],[-3.4,.6,0]], c:[[-2.4,1.2,.9],[-5,.3,.05]], d:[[-4.1,.75,1.25],[-5.08,.12,.05]],
+         p1a:[[-5.27,.17,.4],[-4.99,.075,0]], p1b:[[-5.25,.17,.33],[-4.99,.1,0]],
+         p2a:[[-4.86,.215,.56],[-5.02,.165,0]], p2b:[[-4.89,.205,.43],[-5.02,.175,0]],
+         p3a:[[-5.29,.215,-.22],[-4.985,.175,0]], p3b:[[-5.22,.205,-.145],[-4.985,.178,0]],
+         m1:[[-5.3,.75,.9],[-4.4,.2,0]], e:[[-5.32,.36,.5],[-3.9,.1,-.6]], et:[[-4.75,.42,.55],[-2.6,.05,-.3]],
+         g:[[-4.95,.2,.62],[-5.02,.1,0]], h:[[-5.17,.21,-.86],[-4.96,.13,-.4]]};      // et: il campo largo sul telefono, più alto e non allontanato (allontanato, l'arco trionfale copriva la navata)
   function chiave(n,lontano){ var q=K[n], t=q[1].slice();
-    if(n==='d'||n==='d2'||n==='f') t[0]-=(RM.camera&&RM.camera.aspect<.85)?.1:.42;      // il gruppo un poco a destra del centro: a sinistra, in basso, c'è la didascalia dell'evento
+    if(n==='d') t[0]-=(RM.camera&&RM.camera.aspect<.85)?.05:.2;      // il gruppo un poco a destra del centro
     var r=adatta(W3(q[0]),W3(t),lontano); return {c:r[0],t:r[1]}; }
+  function ripresa(n1,n2,dur,lon){      // uno stacco sulla chiave n1, poi la camera scivola piano fino a n2 (carrello)
+    var a=chiave(n1,lon==null?2:lon), b=chiave(n2,lon==null?2:lon);
+    RM.segui(function(k){ var s=k*(2-k)*.5+k*.5, c=[0,0,0], t=[0,0,0]; for(var j=0;j<3;j++){ c[j]=a.c[j]+(b.c[j]-a.c[j])*s; t[j]=a.t[j]+(b.t[j]-a.t[j])*s; } return {c:c, t:t}; },dur);
+  }
   function cammino(nomi,dur,lontani){      // da dove si è ora, lungo una curva liscia per le chiavi date
     var C0=RM.camera.position, T0=RM.controlli?RM.controlli.target:new THREE.Vector3(), PC=[C0.clone()], PT=[T0.clone()];
     nomi.forEach(function(n,i){ var q=chiave(n,lontani&&lontani[i]); PC.push(new THREE.Vector3(q.c[0],q.c[1],q.c[2])); PT.push(new THREE.Vector3(q.t[0],q.t[1],q.t[2])); });
@@ -1146,9 +1371,11 @@ var interno800=(function(){
   }
   function fermo(n,lontano){ var q=chiave(n,lontano); RM.segui(function(){ return q; },.05); }      // senza movimento (meno animazioni)
   var VE=mira(X0-1,Z0,[X0+20,gy+24,Z0+24]);      // da sud-est, sopra la basilica: il tetto, poi l'interno che si scopre
-  var regia={ discesa:function(){ cammino(['a','b','c','d'],7.8,[0,0,0,1]); }, avvicina:function(){ cammino(['d2'],5.2,[1]); }, largo:function(){ var tl=RM.camera&&RM.camera.aspect<.85; cammino(['m1',tl?'et':'e'],2.2,[1,tl?0:1]); },
-              medio:function(){ cammino(['m2','f'],1.6,[1,1]); }, fermo:fermo };
-  return {mostra:mostra, taglio:taglio, posa:posa, VE:VE, regia:regia, pos:pos, Y:Y, attivo:function(){ return acceso; }, k:function(){ return kT; }};
+  var regia={ discesa:function(){ cammino(['a','b','c','d'],7.8,[0,0,0,1]); },
+              preghiera:function(){ ripresa('p1a','p1b',1.9); }, corona:function(){ ripresa('p2a','p2b',2.4); }, volto:function(){ ripresa('p3a','p3b',1.5,0); },
+              largo:function(){ var tl=RM.camera&&RM.camera.aspect<.85; cammino(['m1',tl?'et':'e'],2.4,[1,tl?0:1]); },
+              omaggio:function(){ cammino(['g'],1.8,[2]); }, unzione:function(){ cammino(['h'],1.3,[2]); }, fermo:fermo };
+  return {mostra:mostra, taglio:taglio, posa:posa, VE:VE, regia:regia, pos:pos, Y:Y, X0:X0, Z0:Z0, chiave:chiave, ritratti:{carlo:rC, papa:rP, figlio:rF}, corona:corona, attivo:function(){ return acceso; }, k:function(){ return kT; }};
 })();
 var carlo800=(function(){
   var B=new RM.Costruttore(), i, x, z, e=Math.PI/2, Z=-108.1, franco=RM.col(0x3e5f7a), zA=V800.zAsse, CO=V800.CORSIA;      // e: rivolti a est, verso chi arriva
@@ -1207,7 +1434,9 @@ var carlo800=(function(){
   /* 25 novembre 2026, sera (l'utente: «la scena deve essere spettacolare»): il secondo tempo dura 34 secondi. u=t-T2:
      0 la vista sopra la basilica; 2,4-5,4 tetti e muri si dissolvono, le capriate per ultime, i lumi si accendono; 4,8-12,6 la discesa lungo la navata fino alla confessione;
      12,6-17,8 il primo piano: Carlo prega, si alza (13,3), il papa alza la corona e la posa (14,6-16,9), un attimo di sospensione; 17,8 campo largo dall'abside sulla navata piena,
-     l'acclamazione (le braccia a tre ondate); 25 a metà, l'omaggio (26,4-28); l'unzione del figlio (28,2-30,3); 30,6 la vista risale, il tetto torna. */
+     l'acclamazione (le braccia a tre ondate); 25 a metà, l'omaggio (26,4-28); l'unzione del figlio (28,2-30,3); 30,6 la vista risale, il tetto torna.
+     Stessa sera, i primi piani veri (il piano vicino della camera scende: interno800): 12,4 stacco su Carlo in ginocchio (p1), 14,3 di profilo la corona alzata e posata (p2),
+     16,7 il volto di Carlo incoronato da sopra la spalla del papa (p3), 18,2 il campo largo dietro Carlo sulla navata che acclama (e), 25 l'omaggio (g), 28,3 l'unzione (h). */
   var T2=FINE+3, FINE2=T2+34.2, I=interno800;
   function disegna(t){
     var dentro=I && t>=T2 && t<FINE2-.05, prima=t<T2;
@@ -1220,20 +1449,33 @@ var carlo800=(function(){
   function inquadra(t){ var p=via(Math.max(0,sC(t)-3)/LUN,0), y0=H(p.x,p.z)+1, f=F(); return {t:[p.x,y0,p.z], c:[p.x+18*f,y0+15*f,p.z-20*f]}; }      // da nord-est: il portico, a sud, non copre il corteo
   function vai(v,dur){ var w=alto(RM.adatta(v)), y0=RM.h(w.t[0],w.t[1])+1, d=Math.hypot(w.c[0]-w.t[0],w.c[1]-y0,w.c[2]-w.t[1]); if(RM.controlli) RM.controlli.minDistance=Math.min(RM.controlli.minDistance,d*.85); RM.volaA(w.t,w.c,dur); }
   var R2='2 · 25 dicembre: ';
+  /* Il quarto elemento di ogni riga (25 novembre 2026, sera): fonte e riserve di quel tempo della scena. Sul PC la didascalia dell'evento, che copriva un terzo della scena,
+     si riduce a questa riga in basso (js/eventi.js, RM.didascaliaBreve), con il bottone per leggerla tutta; sul telefono resta com'era (raccolta a tutto schermo). */
+  var FA='Annali dei Franchi, 801; Liber Pontificalis, vita di Leone III', FS='L’interno è uno spaccato: navate, colonne, arco e abside seguono la pianta nota, altezze e luci sono ipotetiche.';
   var o=sequenza({fine:I?FINE2:FINE, quadroT:FINE, attesa:1.8, disegna:disegna, visibile:function(){ return !!(carlo800&&carlo800.acceso); },
-    righe:[[0,'1 · 24 novembre: l’arrivo'],[VIAGGIO,'1 · 24 novembre: il papa lo accoglie sui gradini di San Pietro','1 · 24 novembre: il papa lo accoglie']].concat(I?[[T2,R2+'Natale, a San Pietro'],[T2+2.4,R2+'la messa, dentro la basilica','2 · Dentro la basilica'],
-      [T2+12.6,R2+'Carlo prega davanti alla confessione','2 · Carlo prega'],[T2+13.3,R2+'Carlo si alza dalla preghiera','2 · Carlo si alza'],[T2+14.6,R2+'Leone III gli posa la corona sul capo','2 · Leone III lo incorona'],
-      [T2+17.8,''],[T2+25,R2+'il papa gli rende omaggio, come agli antichi imperatori','2 · L’omaggio del papa'],[T2+28.2,R2+'il papa unge re il figlio Carlo','2 · Il papa unge re il figlio'],[T2+30.6,'2 · 25 dicembre 800: l’incoronazione','2 · 25 dicembre 800']]:[]),
+    righe:[[0,'1 · 24 novembre: l’arrivo',null,'Fonte: Annali dei Franchi, anno 800. La strada del corteo, i numeri, i colori e i posti sono nostri.'],
+      [VIAGGIO,'1 · 24 novembre: il papa lo accoglie sui gradini di San Pietro','1 · 24 novembre: il papa lo accoglie','Annali dei Franchi, 800: il papa sui gradini con il clero e i vescovi, le bandiere della città, i gruppi di pellegrini e di cittadini. Posti e numeri sono nostri.']]
+      .concat(I?[[T2,R2+'Natale, a San Pietro',null,'Fonti: '+FA+'. '+FS],
+      [T2+2.4,R2+'la messa, dentro la basilica','2 · Dentro la basilica','Vita di Adriano I (Liber Pontificalis): il faro a croce con 1365 lumi, acceso a Natale, e le tende di porpora fra le colonne. Forme e misure sono ipotetiche, come lampade e candele.'],
+      [T2+12.4,R2+'Carlo prega davanti alla confessione','2 · Carlo prega','Annali dei Franchi, 801: davanti alla confessione di san Pietro, «mentre si alzava dalla preghiera». In ginocchio: la posa è ipotetica.'],
+      [T2+13.3,R2+'Carlo si alza dalla preghiera','2 · Carlo si alza','Vesti di Carlo da Eginardo (23): a Roma una lunga tunica e la clamide; nelle feste l’oro e una fibbia d’oro. Quale giorno non è detto; i colori sono nostri.'],
+      [T2+14.6,R2+'Leone III gli posa la corona sul capo','2 · Leone III lo incorona','Liber Pontificalis: «con le sue mani, una corona preziosissima». La forma della corona non è nota.'],
+      [T2+18.0,'',null,'Liber Pontificalis: i Romani gridano tre volte, davanti alla confessione. Il gesto delle braccia e il numero delle persone sono ipotetici.'],
+      [T2+25,R2+'il papa gli rende omaggio, come agli antichi imperatori','2 · L’omaggio del papa','Annali dei Franchi, 801: «more antiquorum principum adoratus est». Il gesto non è descritto: qui il papa si inginocchia (ipotesi).'],
+      [T2+28.2,R2+'il papa unge re il figlio Carlo','2 · Il papa unge re il figlio','Liber Pontificalis: subito dopo il papa unge re con l’olio santo il figlio Carlo. Le pose sono ipotetiche.'],
+      [T2+30.6,'2 · 25 dicembre 800: l’incoronazione','2 · 25 dicembre 800','Fonti: '+FA+'; Eginardo. Spaccato, luci, pose, colori e numeri sono ipotetici; la luce d’inverno viene dalle date, non dal tempo di quei giorni.']]:[]),
     azioni:[[0,function(){ RM.segui(function(k){ return inquadra(k*VIAGGIO); },VIAGGIO); }],
             [VIAGGIO,function(){ var v=alto(RM.adatta({t:[-244,-107.5],c:[-232.5,11.5,-120.5]})); RM.volaA(v.t,v.c,2.5); }]]      // un poco più alta (24 novembre 2026): sul telefono, allontanata, la camera aveva un tetto del portico davanti
-      .concat(I?[[T2,function(){ vai(I.VE,2.4); }],[T2+4.8,function(){ I.regia.discesa(); }],[T2+12.6,function(){ I.regia.avvicina(); }],[T2+17.8,function(){ I.regia.largo(); }],
-                 [T2+25,function(){ I.regia.medio(); }],[T2+30.6,function(){ vai(I.VE,2.6); }]]:[])});      // la discesa nella navata, il primo piano sulla corona, il campo largo per l'acclamazione, a metà per l'omaggio e l'unzione
+      .concat(I?[[T2,function(){ vai(I.VE,2.4); }],[T2+4.8,function(){ I.regia.discesa(); }],[T2+12.4,function(){ I.regia.preghiera(); }],[T2+14.3,function(){ I.regia.corona(); }],
+                 [T2+16.7,function(){ I.regia.volto(); }],[T2+18.2,function(){ I.regia.largo(); }],[T2+25,function(){ I.regia.omaggio(); }],[T2+28.3,function(){ I.regia.unzione(); }],
+                 [T2+30.6,function(){ vai(I.VE,2.6); }]]:[])});      // la discesa nella navata; i primi piani: la preghiera, la corona di profilo, il volto incoronato; il campo largo per l'acclamazione; l'omaggio e l'unzione da vicino
   INVERNO=false;
   var v0=inquadra(0);
   return {g:g, tutte:tutte, seq:o, da:799.6, a:801, vista:{t:[v0.t[0],v0.t[2]],c:[v0.t[0]+18,v0.t[1]+15,v0.t[2]-20]}, carlo:function(){ return posC; }, T2:T2, FINE:FINE};
 })();
 /* Con meno animazioni (24 novembre 2026, poi 25 per il secondo tempo): tre viste ferme, l'arrivo, dopo otto secondi la corona in primo piano, dopo sedici la navata */
 var meno800=null;
+RM.prova800={seq:carlo800.seq, T2:carlo800.T2, FINE:carlo800.FINE, interno:interno800};      // per le prove senza finestra (catture della sequenza): a che punto è la scena
 ANIMA[800]=function(){
   if(MENO && interno800){ fermaTutte(); carlo800.seq.disegna(carlo800.FINE); meno800={t:0}; return; }
   avvia(carlo800.seq);
@@ -1241,8 +1483,10 @@ ANIMA[800]=function(){
 RM.frame.push(function(dt){
   if(!meno800 || !carlo800.acceso) return; meno800.t+=dt;
   if(!meno800.gradini && meno800.t>.05){ meno800.gradini=true; var g=alto(RM.adatta({t:[-244,-107.5],c:[-232.5,11.5,-120.5]})); RM.volaA(g.t,g.c,.05); }      // la prima vista: i gradini, dove il corteo è già arrivato
-  if(meno800.t>=8 && !meno800.corona){ meno800.corona=true; carlo800.seq.disegna(carlo800.T2+17.4); interno800.regia.fermo('d2',true); }      // la corona in primo piano
-  if(meno800.t>=16){ meno800=null; carlo800.seq.disegna(carlo800.T2+21.9); var tl=RM.camera&&RM.camera.aspect<.85; interno800.regia.fermo(tl?'et':'e',!tl); }                           // la navata, le braccia alzate
+  if(meno800.t>=8 && !meno800.corona){ meno800.corona=true; carlo800.seq.disegna(carlo800.T2+17.4); interno800.regia.fermo('p3b',0);      // la corona in primo piano
+    breve('Annali dei Franchi, 801; Liber Pontificalis: davanti alla confessione il papa gli posa sul capo «con le sue mani» una corona preziosissima. Forma della corona, vesti, luci e pose sono in parte ipotetiche.'); }
+  if(meno800.t>=16){ meno800=null; carlo800.seq.disegna(carlo800.T2+21.9); var tl=RM.camera&&RM.camera.aspect<.85; interno800.regia.fermo(tl?'et':'e',!tl);                           // la navata, le braccia alzate
+    breve('Liber Pontificalis: i Romani gridano tre volte, davanti alla confessione. Il gesto delle braccia e il numero delle persone sono ipotetici.'); }
 });
 if(S852) ANIMA[852]=function(){ avvia(S852.seq); };
 
@@ -1564,7 +1808,7 @@ var inverno800=(function(){
 RM.moduli.push(function(anno){
   [milvio,corteo,assedio472,prigionieri593,sepoltura476,trionfo274,palazzo455,teatro493,vandali455,costante663,leone852,carlo800,saraceni846,totila546,casali756].forEach(function(s){ s.g.visible=anno>=s.da&&anno<s.a; });
   [fuga312,carlo800,S410].forEach(function(s){ var v=anno>=s.da&&anno<s.a; if(v&&!s.acceso&&s.seq.t==null) quadro(s.seq); s.acceso=v; s.tutte.forEach(function(m){ m.visible=v; }); });      // le scene animate: prima che partano, il quadro finale
-  if(interno800 && !carlo800.acceso){ interno800.mostra(false); interno800.taglio(0); meno800=null; }      // fuori dall'800 San Pietro torna intera
+  if(interno800 && !carlo800.acceso){ interno800.mostra(false); interno800.taglio(0); meno800=null; breve(null); }      // fuori dall'800 San Pietro torna intera (e la didascalia torna intera)
   macchie756(RM.sfuma(755.6,756,anno)*(1-RM.sfuma(757,760,anno)));
   tombe.forEach(function(s){ s.g.visible=anno>=s.da; });
   if(!(anno>=409.6&&anno<411)) giornoDiNuovo();      // la notte del 410 non resta accesa nelle altre tappe
@@ -1598,9 +1842,9 @@ var CAPI=[
   {nome:'Carlo, re dei Franchi', corto:'Carlo', riga:'24 novembre: arriva a cavallo, scende e sale i gradini; il papa lo accoglie col clero (Annali dei Franchi, 800).', vis:function(){ return !!carlo800.acceso && carlo800.g.visible; }, p:function(){ return carlo800.carlo(); }, su:.26},
   {nome:'Leone III', corto:'Leone III', riga:'Il papa, sui gradini di San Pietro con il clero e i vescovi (Annali dei Franchi, 800).', vis:function(){ return !!carlo800.acceso && carlo800.g.visible; },
     p:function(){ if(quotaLeone3==null) quotaLeone3=quotaSu('pietro',-247.1,-108.1); return [-247.1,quotaLeone3,-108.1]; }},
-  {nome:'Carlo', riga:'25 dicembre: davanti alla confessione di Pietro si alza dalla preghiera, e Leone III gli posa la corona sul capo (Annali dei Franchi, 801).', vis:dentro800, p:function(){ return interno800.pos.carlo; }, lontano:30, su:.2},
-  {nome:'Leone III', riga:'Lo incorona «con le sue mani» (Liber Pontificalis), poi gli rende omaggio come agli antichi imperatori (Annali dei Franchi).', vis:dentro800, p:function(){ return interno800.pos.papa; }, lontano:30, su:.2},
-  {nome:'Carlo il Giovane', corto:'Il figlio', riga:'Il figlio di Carlo: quel giorno il papa lo unge re (Liber Pontificalis, vita di Leone III).', vis:dentro800, p:function(){ return [interno800.pos.figlio[0],interno800.Y,interno800.pos.figlio[2]]; }, lontano:30, su:.2},
+  {nome:'Carlo', riga:'25 dicembre: davanti alla confessione di Pietro si alza dalla preghiera, e Leone III gli posa la corona sul capo (Annali dei Franchi, 801).', vis:dentro800, p:function(){ return interno800.pos.carlo; }, lontano:30, vicino:1.1, su:.2},
+  {nome:'Leone III', riga:'Lo incorona «con le sue mani» (Liber Pontificalis), poi gli rende omaggio come agli antichi imperatori (Annali dei Franchi).', vis:dentro800, p:function(){ return interno800.pos.papa; }, lontano:30, vicino:1.1, su:.2},
+  {nome:'Carlo il Giovane', corto:'Il figlio', riga:'Il figlio di Carlo: quel giorno il papa lo unge re (Liber Pontificalis, vita di Leone III).', vis:dentro800, p:function(){ return [interno800.pos.figlio[0],interno800.Y,interno800.pos.figlio[2]]; }, lontano:30, vicino:1.1, su:.2},
   {nome:'Leone IV', riga:'Sopra la porta che guarda a San Pellegrino recita la prima preghiera; il clero gira le mura scalzo (vita di Leone IV, 72-73).', vis:function(){ return leone852.g.visible; }, p:function(){ var q=leone852.porta; return [q[0],RM.h(q[0],q[1])+1.05,q[1]]; }}
 ];
 var capiEl=null, vC=new THREE.Vector3(), contaF=0, rettM=[];
@@ -1640,7 +1884,7 @@ RM.frame.push(function(){
     try{ p=c.vis()&&c.p(); }catch(e){ p=null; }
     if(p && (!tel||quanti<2)){
       vC.set(p[0],p[1],p[2]);
-      if(vC.distanceTo(RM.camera.position)<(c.lontano||75)){
+      var dC=vC.distanceTo(RM.camera.position); if(dC<(c.lontano||75) && !(c.vicino && dC<c.vicino)){      // vicino: nei primi piani dell'800 il nome coprirebbe i volti (lo dice la riga dei tempi)
         vC.applyMatrix4(RM.camera.matrixWorldInverse);
         if(vC.z<-RM.camera.near-.1){ vC.set(p[0],p[1]+(c.su||.24),p[2]).project(RM.camera);      // davanti al piano vicino della camera: più vicino la figura non si disegna, e il nome finirebbe a caso sullo schermo
           if(vC.z<1 && Math.abs(vC.x)<.94 && Math.abs(vC.y)<.94){

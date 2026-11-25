@@ -787,6 +787,15 @@ body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visib
 }
 @media (max-height:559px) and (orientation:landscape){ body.roma-grande .evento.raccolta:not(.chiusa) .ev-testo{-webkit-line-clamp:2;line-clamp:2}
   body.roma-grande .evento:not(.raccolta):not(.chiusa) .ev-testo{max-height:26vh} }      /* telefono coricato, aperta: quattro righe che scorrono, sotto il numero degli abitanti */
+/* La didascalia breve sul PC (js/eventi.js, RM.didascaliaBreve; 25 novembre 2026, l'800): una riga larga e bassa con fonte e riserve del tempo in corso, e «Tutta la didascalia ▾» */
+.ev-tutta{display:none}
+.evento.breve:not(.chiusa){max-width:min(860px,calc(100% - 90px));padding:6px 40px 6px 12px;font-size:13.5px;line-height:1.38}
+.evento.breve:not(.chiusa) .ev-tutta{display:inline-block;margin-left:8px;padding:2px 6px;pointer-events:auto;cursor:pointer;font-family:var(--ui);font-size:12.5px;font-weight:600;letter-spacing:.02em;
+  color:var(--gold3);background:none;border:0;border-radius:5px;white-space:nowrap}
+.evento.breve .ev-tutta:focus-visible{outline:2px solid var(--gold2);outline-offset:0}
+.evento.breve-tutta:not(.chiusa) .ev-testo{display:block;max-height:46vh;overflow-y:auto;overscroll-behavior:contain;pointer-events:auto}
+.evento.breve-tutta:not(.chiusa) .ev-tutta{margin:4px 0 0 -6px}
+.evento:not(.vivo) .ev-tutta{pointer-events:none;visibility:hidden}
 /* telefono coricato, carta a tutto schermo: la legenda lunga (il 451) finiva sotto la linea del tempo; ora si ferma sopra e il resto scorre (23 novembre 2026) */
 @media (max-height:559px){ body.impero-largo .legenda-mappa{max-height:calc(100vh - 44px - var(--tempo,92px) - 22px - env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin} }
 
