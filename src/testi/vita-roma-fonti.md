@@ -731,3 +731,51 @@ Non letti, quindi non usati: Seneca, *De brevitate vitae* 13, 4 (le *codicariae*
 | Discesa verso il mare | No | — | Con la corrente, senza traino e senza scia: IPOTESI (ciò che fa la corrente) |
 | Misure, forma di prua e poppa, colore, fasciame, numero dei buoi, velocità | No | — | SCHEMA: 18 m per 4,5 (chiatta), 8 per 2 (barca piccola); prua e poppa rialzate, legno non dipinto; due buoi; circa 0,7 m al secondo al traino, 1 m con la corrente |
 | Chi guida i buoi | No | — | Nessuno (non si aggiunge) |
+
+## Il porto dell'Emporio
+
+Letto il 26 novembre 2026, sera, per la domanda dell'utente: «all'emporio non dovrebbero esserci navi al porto a scaricare quando era in funzione?».
+
+1. **Platner e Ashby, *A Topographical Dictionary of Ancient Rome* (1929), p. 200, «Emporium»**: https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Emporium.html (letto per intero)
+   - «the landing place and market for the merchandise that was brought up the Tiber from Ostia».
+   - Livio XXXV 10, 12 (193 a.C.): «porticum unam extra portam Trigeminam emporio ad Tiberim adiecto»; nel 174 «paved and enclosed by barriers» (Livio XLI 27). «It is not mentioned after this time».
+   - Faceva parte «of the system of quays (portus) and warehouses (horrea) that extended along the left bank of the river for a kilometre south from the porta Trigemina».
+   - «Fragments of the wall and quay and of the steps and paved inclines which led down to the water to facilitate unloading have been found, and a few of the stone corbels, sometimes in the shape of lions' heads, which projected out from the quay and were pierced with holes for mooring rings».
+   - «After the construction of the great horrea, the Emporium was largely used for unloading marble».
+   - Non dà la lunghezza della banchina, né quante scale o rampe, né la data della fine. Non parla delle mura.
+2. **Platner e Ashby, p. 261-262, «Horrea Galbae»**: https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Horrea_Galbae.html (letto per intero)
+   - Depositi «not only for grain, but for goods of all kinds» (Porfirione: «vino et oleo et similibus aliis referta»); nelle iscrizioni una «piscatrix», un «sagarius», un «negotiator marmorarius». Il «curator horreorum Galbae» è ancora nella *Notitia dignitatum*. Magazzini anche «just upstream of the new Ponte Aventino».
+3. **Platner e Ashby, p. 348-349, «Muri Aureliani»**: https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Muri_Aureliani.html (letta la parte sul tracciato)
+   - La cinta manca oggi «along the river from near the porta Flaminia to the pons Aurelius on the left bank, and from the porta Aurelia to the porta Portuensis on the right bank». Del tratto dell'Emporio non dice nulla, né di aperture verso il fiume.
+4. **Lanciani, *The Ruins and Excavations of Ancient Rome* (1897)**, testo su archive.org: https://archive.org/stream/ruinsexcavations00lanc/ruinsexcavations00lanc_djvu.txt
+   - p. 72: la cinta daziaria di Commodo aveva «first-class gates and custom-houses on the main roads and river landings, and with posterns and small pickets on the smaller lanes and landings of ferry-boats»; «Aurelian simply changed into a strong bulwark the octroi inclosure, respecting its gates, posterns, and ferries».
+   - p. 26: le posterule delle mura di Aureliano verso il fiume corrispondono ai traghetti «along the banks of the Campus Martius» (Ripetta, la Tinta, Posterula Domitia, l'Armata). Per l'Emporio non ne nomina nessuna.
+   - p. 510: «The wharves did not protrude into the river: they were simply sections of the quay or embankment, provided with landings, stairs, or inclines, and mooring-rings, parallel with the stream, and destined for a particular kind of trade, — for marbles, wine, oil, lead, pottery, building-materials, fish, fuel, timber, iron, and so forth». In nota i *codicarii*, equipaggi delle barche del grano da Ostia, e i *saburrarii*, «loaders and unloaders of ballast» (dalle iscrizioni, senza un luogo).
+   - p. 523: l'unico scarico descritto è un rilievo del Museo Torlonia trovato a Porto, non a Roma: «a plank connecting the ship with the quay, and upon the plank a line of sailors and porters each carrying an amphora on the left shoulder».
+   - p. 525 e 530-531: due banchine del marmo, «one on the bank under the Aventine, which still retains the old name of Marmorata», scavata da Visconti nel 1868-70; i blocchi trovati, alcuni squadrati, altri sbozzati in colonne, con i segni della cava.
+5. **FAI, «Emporium»**: https://fondoambiente.it/luoghi/emporium (sintesi moderna, senza note)
+   - Alla fine del III secolo «sopra gran parte delle sue strutture venne innalzato un lungo tratto delle Mura Aureliane».
+   - «In epoca tardo-imperiale il porto cadde in disuso»; dal V secolo le fonti non nominano più l'Emporium. Arrivavano anche marmi grezzi; il commercio più noto era quello dell'olio.
+6. **Wikipedia inglese, «Emporium (Rome)»**: una banchina di «500 metres» per «90», «with steps and ramps toward the river» e «bulging travertine blocks having holes for ships mooring». La voce non ha note (unica lettura indicata: Coarelli, *Guida archeologica di Roma*, 1984): le misure non si usano.
+
+Non letti, quindi non usati: Richmond, *The City Wall of Imperial Rome* (1930); Gatti, «L'arginatura del Tevere a Marmorata» (1936); Parker 1874 (la pagina di Heidelberg chiede una verifica contro i robot). Le risposte:
+
+- (a) **La banchina**: un muro di banchina lungo la riva, con scale e rampe lastricate che scendono all'acqua e mensole di pietra forate per gli anelli d'ormeggio; le banchine non sporgono nel fiume. La lunghezza non si sa (i 500 m di Wikipedia non hanno fonte).
+- (b) **Le merci**: dopo i grandi magazzini, soprattutto marmo (Platner); nei magazzini di Galba grano, vino, olio e merci di ogni tipo. La fine: «in epoca tardo-imperiale» (FAI), il curatore è ancora nella *Notitia*; il 430 del modello resta una scelta, che le fonti lette non smentiscono.
+- (c) **Dopo il 271**: le mura stanno sopra le strutture del porto (FAI). Aperture nel muro di riva all'Emporio: nessun testo letto ne nomina; le posterule sul fiume note a Lanciani stanno nel Campo Marzio. Non si disegnano.
+- (d) **Uomini che scaricano**: nessun testo letto li descrive all'Emporio. Lo scarico con portatori su una passerella è descritto a Porto (rilievo Torlonia) e a Ostia (affresco della *Isis Geminiana*, più sopra): non si trasporta qui.
+
+### Per chi disegna
+
+| Che cosa | Scritto | Fonte | Nel modello |
+|---|---|---|---|
+| Barche ferme alla banchina | Sì, in generale («landing place», banchine con ormeggi) | Platner, Lanciani | Chiatte ormeggiate una per tratto fra due scale (otto posti), prua a monte, cariche di sacchi, di marmo o vuote, senza uomini; numero con la curva dei commerci (5 nel 235 e nel 300, 3 nel 400); nessuna dal 430 (`js/vita.js`, «Il porto dell'Emporio») |
+| Le chiatte tirate dai buoi | — | — | Finiscono la corsa sulla riva dei buoi, di fronte all'Emporio, accostando piano: dove scaricassero non è scritto |
+| Scale e rampe verso l'acqua | Sì | Platner | Già nel monumento (`emporio` in `js/monumenti.js`); numero e passo: SCHEMA |
+| Anelli e mensole d'ormeggio | Sì | Platner | Due cime, da prua e da poppa alla cima della banchina; le mensole non sono disegnate: SCHEMA |
+| Lunghezza della banchina | No | — | Quella del monumento |
+| Merce a terra | Sì in generale (marmo; grano, vino, olio nei magazzini) | Platner, Lanciani | Sulla banchina, accanto alle chiatte cariche: blocchi squadrati e un fusto di colonna sbozzato, o una pila di sacchi; i banchi, i sacchi e le anfore del mercato c'erano già; quantità e posti: SCHEMA |
+| Anfore per questo porto | Solo indirette (olio, vino nei magazzini) | Platner, FAI | Restano quelle del mercato già fatto, generiche |
+| Uomini che scaricano | No, per l'Emporio | — | Nessuno: barche ferme e merce a terra senza azione |
+| Aperture nel muro di riva dopo il 271 | No | — | Nessuna; dal 271 le barche stanno sotto il muro e la merce a terra resta solo dove c'è posto fra muro e acqua |
+| Fine dell'uso | «tardo-imperiale» | FAI | 430 (scelta del modello, già nella scheda) |

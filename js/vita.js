@@ -804,7 +804,8 @@ function sagoma(B,x,y,z,col){ B.geo(gM(new THREE.CylinderGeometry(.16,.22,1.4,5)
 function uomoB(B,x,y,z,ry,nome,k,col,vere){ if(vere) B.dentro(x*MB,y*MB,z*MB,ry,function(B){ B.geo(figuraTinta(nome,k,col),col); }); else sagoma(B,x,y,z,col); }
 /* la chiatta (navis codicaria): 18 x 4,5 m, l'albero della corda a un terzo dalla prua, il remo-timone a poppa, sacchi nella stiva, due uomini (timoniere a poppa, uno a prua) */
 var LC=18, WC=4.5, ALB=LC/6, HALB=6.5;
-function geoChiatta(vere,ep){ var B=new RM.Costruttore(), sc=scafoGeo(LC,WC,.7,-.9,1.3,1.0,vere?22:10,vere?5:2,LEGNO_B), q;
+var MARMI_B=[[-4.6,.3,2.8,1.1,1.7,.94],[-1.4,-.5,2.3,.9,1.5,.88],[1.7,.4,3,1.2,1.8,1],[-1.6,1.1,1.5,.7,1,.91]];      // i blocchi di una chiatta da marmo: [x, z, lungo, alto, largo, tinta], in metri (SCHEMA)
+function geoChiatta(vere,ep,carico){ var B=new RM.Costruttore(), sc=scafoGeo(LC,WC,.7,-.9,1.3,1.0,vere?22:10,vere?5:2,LEGNO_B), q;      // carico: niente = in viaggio (sacchi e due uomini); 'sacchi', 'marmo', 'vuota' = ormeggiata all'Emporio, senza uomini
   B.geo(sc.g,P.tronco);
   pagliolo(B,sc,LC,.1,LEGNO_B.clone().multiplyScalar(.7));      // il pagliolo, sopra il pelo dell'acqua
   [-.47,.47].forEach(function(f){ q=sc.sez(f); B.geo(scatM(.32,.1,q[0]*1.86,f*LC/2,q[1]-.18,0),LEGNO_B.clone().multiplyScalar(.85)); });      // due banchi
@@ -813,9 +814,11 @@ function geoChiatta(vere,ep){ var B=new RM.Costruttore(), sc=scafoGeo(LC,WC,.7,-
   if(vere) [.25,.5,.75].forEach(function(f){ B.geo(scatM(.06,.06,.42,ALB,.1+HALB*f,0),LEGNO_B); });      // le piccole sporgenze dell'albero (ostia-antica.org)
   B.geo(gM(tratto([-LC/2+1.1,1.6,WC/2-.3],[-LC/2-1.6,-.5,WC/2+.35],.07,.06,vere?6:4)),LEGNO_B.clone().multiplyScalar(.8));      // il remo-timone, sul fianco destro a poppa
   B.geo(gM(new THREE.BoxGeometry(.08,1.1,.45).translate(0,-.55,0).rotateZ(.9).translate(-LC/2-1.5,-.2,WC/2+.33)),LEGNO_B.clone().multiplyScalar(.75));      // la pala
-  var sacchi=[], i, j; for(i=0;i<(vere?7:4);i++) for(j=0;j<3;j++) sacchi.push([-5+i*(vere?1.45:2.5),(j-1)*1.05]);
+  var sacchi=[], i, j; if(!carico || carico==='sacchi') for(i=0;i<(vere?7:4);i++) for(j=0;j<3;j++) sacchi.push([-5+i*(vere?1.45:2.5),(j-1)*1.05]);
+  if(carico==='marmo') MARMI_B.forEach(function(m){ B.geo(scatM(m[2],m[3],m[4],m[0],.1+m[3]/2,m[1]),P.marmo.clone().multiplyScalar(m[5])); });      // blocchi squadrati nella stiva (Lanciani 1897, p. 531: il marmo passava dalle navi a chiatte più leggere che risalivano il fiume); numero e misure: SCHEMA
   sacchi.forEach(function(s,n){ var h=((n*37)%5)/5; B.geo(gM(new THREE.SphereGeometry(1,vere?8:5,vere?5:3).scale(.62,.36,.5).rotateY(h*.6).translate(s[0],.45,s[1])),C_SACCO.clone().multiplyScalar(.85+.15*h));
     if(vere && n%3===1) B.geo(gM(new THREE.SphereGeometry(1,8,5).scale(.6,.34,.48).rotateY(-h).translate(s[0]+.3,1.05,s[1]*.6)),C_SACCO.clone().multiplyScalar(.9)); });      // sacchi di grano (Isis Geminiana)
+  if(carico) return B.geometria();      // ormeggiata: nessun uomo a bordo (nessun testo letto descrive lo scarico all'Emporio)
   var nomeU=['tunica3','tunica4','tunica7'][ep], tinte=VESTI[nomeU].tinte;
   q=sc.sez(-.86); uomoB(B,-.86*LC/2,q[1]-.08,.3,Math.PI/2,nomeU,1,tinte[1%tinte.length],vere);      // il timoniere, rivolto a prua
   uomoB(B,ALB+2.2,.13,-.6,Math.PI*.35,nomeU,2,tinte[2%tinte.length],vere);      // un uomo a prua
@@ -927,7 +930,7 @@ function muoviBarche(dt){
     else if(dtm>0 && !inPiena && !(C.traino && !tiroOk)){ b.f+=C.vel*dtm/Math.abs(L); mosso=1; if(b.f>=1){ b.f=1; b.fermo=60+((k*17)%40); } }
     b.mov=mosso;
     var u=C.a+(C.b-C.a)*b.f, p=fiume.getPointAt(u), tg=fiume.getTangentAt(u), n=[-tg.z,tg.x], dirS=C.b>C.a?1:-1, lat=C.lato;
-    if(C.traino && b.f>=.999){ lat=Math.sign(C.lato)*(riva(u,Math.sign(C.lato))-.5); }      // all'Emporio: accostata alla banchina
+    if(C.traino){ var sv=sm(.93,1,b.f); if(sv>0) lat=lat+(Math.sign(C.lato)*(riva(u,Math.sign(C.lato))-.5)-lat)*sv; }      // a fine corsa accosta alla riva dei buoi, di fronte all'Emporio, piano (prima saltava di 23 m all'ultimo passo)
     lat=corsia(u,lat);
     b.x=p.x+n[0]*lat; b.z=p.z+n[1]*lat; b.ry=Math.atan2(-tg.z*dirS,tg.x*dirS); b.u=u; b.n=n; b.lat=lat; b.dirS=dirS; b.tg=tg;
     if(C.traino && tiroOk!==true && b.f<.999){ var sr=Math.sign(C.lato); lat=sr*(riva(u,sr)-.6); b.x=p.x+n[0]*lat; b.z=p.z+n[1]*lat; }      // senza traino: ormeggiata alla riva
@@ -959,6 +962,46 @@ function muoviBarche(dt){
   [geoBuoi,geoBuoiL].forEach(function(g){ g.attributes.fase.needsUpdate=true; g.attributes.moto.needsUpdate=true; });
   matScia.color.setScalar(1-.75*(RM.notte||0));
 }
+/* Il porto dell'Emporio (26 novembre 2026, sera; l'utente: «all'emporio non dovrebbero esserci navi al porto a scaricare quando era in funzione?»). Fonti lette in
+   src/testi/vita-roma-fonti.md, «Il porto dell'Emporio». Scritto: l'Emporio è «the landing place and market for the merchandise that was brought up the Tiber from Ostia», con la banchina,
+   «the steps and paved inclines which led down to the water to facilitate unloading» e mensole forate «for mooring rings»; dopo i grandi magazzini «largely used for unloading marble»
+   (Platner e Ashby, Emporium); le banchine «did not protrude into the river» (Lanciani 1897, p. 510); i blocchi trovati alla Marmorata, squadrati o sbozzati in colonne (ivi, p. 531).
+   Nel modello: chiatte ferme accostate alla banchina del monumento `emporio`, una per ogni tratto fra due scale, prua a monte, legate alla banchina con due cime; cariche di sacchi,
+   di blocchi di marmo o vuote; sulla banchina accanto, blocchi e un fusto di colonna o una pila di sacchi. Quante: con la curva dei commerci, come le barche che si muovono; nessuna
+   quando l'Emporio non è in uso (dal 430 nel modello, scelta già nella scheda). SCHEMA: numero, posti, carichi, cime, mucchi. Nessuno scarica: nessun testo letto descrive uomini al
+   lavoro all'Emporio (i portatori sulla passerella sono descritti a Porto e a Ostia). Dopo il 271 le mura corrono dietro la banchina e nessun testo letto nomina aperture verso il fiume:
+   non se ne disegnano, e la merce resta sulla banchina, fuori dal muro (come entrasse in città non si vede: limite dichiarato). */
+var FERMI=[2.6,-2.6,7.8,-7.8,13,-13,18.2,-18.2], CARICHI_F=['sacchi','marmo','vuota','marmo','sacchi','vuota','marmo','sacchi'], NF=FERMI.length;      // i posti fra le scale del monumento (in unità lungo la banchina, +x verso monte), dal centro ai capi
+var TIPI_F={sacchi:0, marmo:1, vuota:2}, mFermi=[[],[]];      // [vicine, lontane][tipo]
+['sacchi','marmo','vuota'].forEach(function(t){ [true,false].forEach(function(v,l){ var m=new THREE.InstancedMesh(geoChiatta(v,0,t),matBarche,NF); m.count=0; m.visible=false; m.castShadow=true; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='vita'; RM.scene.add(m); mFermi[l].push(m); }); });
+var geoMucchi=[(function(){ var B=new RM.Costruttore(); B.geo(scatM(2.6,1.1,1.6,-2.2,.55,-.2),P.marmo.clone().multiplyScalar(.93)); B.geo(scatM(2.1,.9,1.4,.6,.45,.4),P.marmo.clone().multiplyScalar(.87)); B.geo(scatM(1.6,.8,1.2,.4,1.3,.3),P.marmo);
+    B.geo(gM(new THREE.CylinderGeometry(.5,.55,6,10).rotateZ(Math.PI/2).translate(.3,.52,-1.15)),P.marmo.clone().multiplyScalar(.96)); return B.geometria(); })(),      // blocchi squadrati e un fusto sbozzato a terra (Lanciani, p. 531); misure: SCHEMA
+  (function(){ var B=new RM.Costruttore(), k=0; for(var i=0;i<4;i++) for(var j=0;j<2;j++){ B.geo(gM(new THREE.SphereGeometry(1,7,4).scale(.62,.36,.5).translate(-1.9+i*1.25,.34,-.5+j*1.05)),C_SACCO.clone().multiplyScalar(.85+.05*((k++)%4))); }
+    for(i=0;i<3;i++) B.geo(gM(new THREE.SphereGeometry(1,7,4).scale(.62,.36,.5).translate(-1.3+i*1.25,.96,0)),C_SACCO.clone().multiplyScalar(.9)); return B.geometria(); })()];      // una pila di sacchi (SCHEMA)
+var mMucchi=geoMucchi.map(function(g){ var m=new THREE.InstancedMesh(g,matBarche,NF); m.count=0; m.visible=false; m.castShadow=true; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='vita'; RM.scene.add(m); return m; });
+var mCime=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1).translate(0,0,.5),mCorde.material,NF*2); mCime.count=0; mCime.visible=false; mCime.frustumCulled=false; mCime.userData.gruppo='vita'; RM.scene.add(mCime);
+var fermi=null, nFermi=0;      // i posti provati (una volta sola) e quanti ne sono occupati quest'anno
+function postiFermi(){ var m=(RM.MONUMENTI||[]).filter(function(q){ return q.id==='emporio'; })[0]; if(!m || !m.g) return [];
+  var c=Math.cos(m.ry), s=Math.sin(m.ry), yQ=m.g.position.y-.25;      // la cima della banchina: il muro del monumento va da -1,75 a -0,25 sotto la sua base
+  function W(lx,lz){ return [m.x+lx*c+lz*s, m.z-lx*s+lz*c]; }
+  return FERMI.map(function(lx,k){ var ok=true;
+    [-.95,0,.95].forEach(function(dx){ [-.25,.25].forEach(function(dz){ var p=W(lx+dx,-14.45+dz); if(RM.hSuolo(p[0],p[1])>-.6 || (RM.MURA && RM.distLinea(p[0],p[1],RM.MURA,true)<.5)) ok=false;
+      (RM.ponti||[]).forEach(function(q){ if(Math.hypot(q.x-p[0],q.z-p[1])<4) ok=false; }); }); });      // nell'acqua, lontano da mura e ponti
+    var b=W(lx,-14.45), q=W(lx,-13.7);
+    return {ok:ok, x:b[0], z:b[1], ry:m.ry, mx:q[0], mz:q[1], yQ:yQ, tipo:TIPI_F[CARICHI_F[k]], prua:W(lx+1.25,-14.2), poppa:W(lx-1.25,-14.2), bp:W(lx+.8,-14.3), bq:W(lx-.8,-14.3)}; }); }
+var oF=new THREE.Object3D(), vF=new THREE.Vector3(), vG=new THREE.Vector3();
+function annoFermi(anno){ if(!fermi) fermi=postiFermi(); var q=RM.statoMonumento('emporio',anno), on=q.s0==='uso' && !(q.s1!=='uso' && q.t>.5);
+  var quota=Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60); nFermi=on?Math.round(NF*quota):0;      // come le barche che si muovono (quotaBarche)
+  var nm=[0,0], nc=0; mMucchi.forEach(function(mm){ mm.count=0; });
+  fermi.forEach(function(f,k){ f.on=k<nFermi && f.ok; if(!f.on) return;
+    if(f.tipo<2){ var mm=mMucchi[f.tipo===1?0:1]; oF.position.set(f.mx,f.yQ,f.mz); oF.rotation.set(0,f.ry+(k%2?.08:-.06),0); oF.scale.setScalar(1); oF.updateMatrix(); mm.setMatrixAt(mm.count++,oF.matrix); }      // la merce sulla banchina accanto
+    [[f.bp,f.prua],[f.bq,f.poppa]].forEach(function(cc){ vF.set(cc[0][0],-.43,cc[0][1]); vG.set(cc[1][0],f.yQ,cc[1][1]); oF.position.copy(vF); oF.lookAt(vG); oF.scale.set(.005,.005,vF.distanceTo(vG)); oF.updateMatrix(); mCime.setMatrixAt(nc++,oF.matrix); }); });      // due cime: dalla prua e dalla poppa a terra (gli anelli delle mensole: Platner)
+  mMucchi.forEach(function(mm){ mm.visible=mm.count>0; mm.instanceMatrix.needsUpdate=true; }); mCime.count=nc; mCime.visible=nc>0; mCime.instanceMatrix.needsUpdate=true; }
+function frameFermi(){ if(!fermi) return; var cam=RM.camera.position, cnt=[[0,0,0],[0,0,0]];
+  fermi.forEach(function(f){ if(!f.on) return; var l=(RM.q!==0 && Math.hypot(f.x-cam.x,f.z-cam.z,-.5-cam.y)<60)?0:1, m=mFermi[l][f.tipo];
+    oF.position.set(f.x,-.5,f.z); oF.rotation.set(0,f.ry,0); oF.scale.setScalar(1); oF.updateMatrix(); m.setMatrixAt(cnt[l][f.tipo]++,oF.matrix); });      // ferme: niente beccheggio, il fiume qui è calmo (SCHEMA)
+  mFermi.forEach(function(L,l){ L.forEach(function(m,t){ m.count=cnt[l][t]; m.visible=m.count>0; if(m.count) m.instanceMatrix.needsUpdate=true; }); }); }
+RM.portoProva={ posti:function(){ return fermi; }, conta:function(){ return {fermi:nFermi, ok:fermi?fermi.filter(function(f){ return f.ok; }).length:0, accese:fermi?fermi.filter(function(f){ return f.on; }).length:0, mucchi:mMucchi.map(function(m){ return m.count; }), cime:mCime.count}; } };      // per le prove
 RM.barcheProva={ lista:function(){ return dati.map(function(b){ return {i:b.i, x:b.x, z:b.z, ry:b.ry, tipo:b.c.tipo, corsa:b.nome, vis:b.vis, mov:b.mov, bx:b.bx, bz:b.bz, by:b.by, f:b.f}; }); },      // per le prove
   conta:function(){ return {visibili:dati.filter(function(b){ return b.vis; }).length, vere:mCV.count+mPV.count, buoi:mBuoi.count+mBuoiL.count, buoiVicini:mBuoi.count, bovari:mBov.count, bovariSagoma:mBovL.count, triBue:Math.round(geoBuoi.attributes.position.count/3/2), triBueL:Math.round(geoBuoiL.attributes.position.count/3/2)}; },
   interni:{fiume:fiume, riva:riva, normale:normale, corsia:corsia, CORSE:CORSE, uFondo:uFondo, uEmporio:uEmporio, uMilvio:uMilvio, uAurelio:uAurelio, uEmilio:uEmilio, latoEmp:latoEmp, lungo:lungoFiume, PONTI:PONTI_B} };
@@ -967,7 +1010,7 @@ RM.moduli.push(function(anno){
   annoOra=anno; vestiEpoca(anno);
   VA=vitaAnno(anno);      // assedi e città vuota (VITA_ANNI): il 546 di prima ora sta lì
   quotaGente=Math.min(1,D.interp(D.CURVE.popolazione.punti,anno)/900000);      // una figura ogni tante persone: la stessa proporzione in ogni secolo
-  quotaBarche=Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60); epocaBarche(anno); trattoTiro(anno);      // 26 novembre 2026: tolto l'aumento a 16 barche nell'846 (era per le navi saracene, che dal 23 novembre stanno in js/scene-tappe.js; le chiatte coi buoi non sono navi saracene)
+  quotaBarche=Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60); epocaBarche(anno); trattoTiro(anno); annoFermi(anno);      // 26 novembre 2026: tolto l'aumento a 16 barche nell'846 (era per le navi saracene, che dal 23 novembre stanno in js/scene-tappe.js; le chiatte coi buoi non sono navi saracene)
   quotaPellegrini=D.interp(PELLEGRINI_NEL_TEMPO,anno);
   LUOGHI.forEach(function(L){ var on=anno>=L.da && anno<L.a; if(on && L.mon){ var q=RM.statoMonumento(L.mon,anno); on=q.s0==='uso' && !(q.s1!=='uso' && q.t>.5); } L.vis=on?1:0; if(L.porto) banchiVisibili(on && !!L.ok); });
   if(Math.abs(anno-annoVie)>=2) vieDaRifare=true;
@@ -984,7 +1027,7 @@ RM.frame.push(function(dt){
   matGente.opacity=1-.8*RM.notte;
   if(RM.leggero){ if(gente.visible){ gente.visible=false; fumo.visible=false; figure.forEach(function(m){ m.visible=false; }); if(ombraFig) ombraFig.visible=false; mCarri.visible=false; mMuli.visible=false; } }       // regolatore al terzo grado: si rinuncia a passanti e fumo
   else { if(!gente.visible){ gente.visible=true; fumo.visible=true; } muoviGente(dt); muoviFumo(); }
-  muoviBarche(dt);
+  muoviBarche(dt); frameFermi();
 });
 /* per le prove: ?notte=1 accende la notte all'avvio (le catture senza finestra non possono premere «Notte») */
 if(/[?&]notte=1/.test(location.search)) setTimeout(function(){ if(RM.applicaLuce) RM.applicaLuce(1); },1500);
