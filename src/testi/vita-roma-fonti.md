@@ -684,3 +684,50 @@ Restano:
 10. **Balconi.** Attestati solo a Ostia (Caseggiato di Diana). Li mettiamo su qualche insula di Roma, dichiarati come confronto con Ostia, o niente balconi?
 11. **Portici davanti alle insulae** (Tacito XV 43, dopo il 64). Li mettiamo lungo le vie principali? Quali vie, le fonti lette non lo dicono.
 12. **Nell'infografica, «46.602 insulae».** Lo diciamo così, spiegando che forse sono unità d'affitto e non palazzi, e che le somme delle regioni danno 44.300?
+
+## Le barche sul Tevere (letto il 26 novembre 2026)
+
+Per rifare le barche della città (`js/vita.js`, blocco «barche»). Frasi copiate dai testi aperti quel giorno.
+
+1. **Procopio, *Guerra gotica* I 26 (= *Guerre* V 26), 9-12**, traduzione di H. B. Dewing (Loeb), su LacusCurtius: https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/5D*.html
+   - § 9: Traiano (così Procopio) «made a road leading from Portus to Rome, which was smooth and presented no difficulty of any kind».
+   - § 10: «many barges are always anchored in the harbour ready for service»; «no small number of oxen stand in readiness close by».
+   - § 11: i mercanti «unload their cargos and place them in the barges, and sail by way of the Tiber to Rome»; «but they do not use sails or oars at all», perché «the boats cannot be propelled in the stream by any wind», «since the river winds about exceedingly and does not follow a straight course», e «nor can oars be employed, either, since the force of the current is always against them».
+   - § 12: «they fasten ropes from the barges to the necks of oxen, and so draw them just like waggons up to Rome».
+   - Procopio scrive del suo tempo (la guerra del 537).
+2. **Procopio, *Guerra gotica* II 7 (= *Guerre* VI 7), 4-12**, stessa traduzione: https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/6A*.html (già riassunto più sopra, anno 538)
+   - § 5: «For the oxen could hold out no longer, but all lay half-dead».
+   - § 6: «For the road which is on the left of the river was held by the enemy».
+   - § 7: «They therefore selected the small boats belonging to the larger ships, put a fence of high planks around them on all sides», e vi imbarcarono «archers and sailors on them in numbers suitable for each boat».
+   - § 8: «they waited for a favouring wind and set sail toward Rome by the Tiber».
+   - § 9: dove il fiume è diritto bastava alzare le vele; altrove «the sailors had no slight toil in rowing and forcing the boats against the current».
+   - È un ripiego di un anno di guerra, quando i buoi non bastano più.
+3. **Affresco della *Isis Geminiana***, Musei Vaticani, Sala delle Nozze Aldobrandine: https://www.museivaticani.va/content/museivaticani/it/collezioni/musei/sala-delle-nozze-aldobrandine/affresco-raffigurante-limbarcazione-isis-geminiana.html
+   - Dal colombario 31 della necropoli Ostiense sulla via Laurentina, trovato nel 1865; prima metà del III secolo.
+   - Una barca da fiume (*navis caudicaria*) di nome *Isis Geminiana*; a poppa il timoniere, *Farnaces magister*; a prua una passerella su cui salgono i portatori con i sacchi di grano in spalla; a bordo Abascantus sorveglia un uomo che vuota un sacco nel *modius*, la misura del grano.
+   - La pagina non descrive la forma dello scafo, l'albero né il timone.
+4. **Ostia Antica, «Transport on the Tiber»** (sito di J. Th. Bakker, sintesi moderna): https://ostia-antica.org/introduction/rome-transport-tiber.htm
+   - «They were called *naves codicariae*».
+   - «A main characteristic of the barges was a single mast to which the ropes for pulling were attached»; «The mast sometimes had small protuberances, and could be lowered».
+   - «Sails and oars can be seen on a few reliefs of tow boats, but they were helpful at most».
+   - «transportation took place across the Tiber, using tow boats pulled by men or oxen».
+   - «We should perhaps imagine groups of boats, using towpaths along the river, most likely on both banks»; «No traces of these paths have been found».
+   - Il viaggio da Ostia a Roma: circa tre giorni (con Filostrato, *Vita di Apollonio* VII 16: «on the third day they put in to the mouth of the Tiber»).
+
+Non letti, quindi non usati: Seneca, *De brevitate vitae* 13, 4 (le *codicariae*, solo citato da una ricerca); gli scafi trovati a Fiumicino (circa 20 m e 50 tonnellate, da una pagina che non si è aperta); i rilievi di Portus.
+
+### Per chi disegna
+
+| Che cosa | Scritto | Fonte | Nel modello |
+|---|---|---|---|
+| Chiatte da carico fra Porto e Roma | Sì | Procopio V 26, 10-11 | Chiatta (*codicaria*), il tipo più comune |
+| Controcorrente tirate da buoi, con corde legate al collo | Sì, al tempo di Procopio | Procopio V 26, 12 | Una coppia di buoi sulla riva, la corda all'albero; in tutti gli anni (che prima ci fossero anche uomini: sintesi moderna) |
+| Né vele né remi sulle chiatte | Sì | Procopio V 26, 11 | Nessuna vela, nessun remo sulle chiatte |
+| Un solo albero per la corda, abbassabile | Sì, sintesi moderna dai rilievi | Ostia Antica | Albero corto senza vela; la posizione (a un terzo dalla prua) è IPOTESI |
+| Timoniere a poppa | Sì | Affresco della *Isis Geminiana* | Un uomo a poppa al remo-timone; la forma del remo è IPOTESI |
+| Carico di sacchi di grano | Sì | Affresco della *Isis Geminiana* | Sacchi; le anfore sono SCHEMA (generiche, come all'Emporio) |
+| Barche piccole a remi e a vela | Sì, solo nel 538 (le barchette delle navi grandi) | Procopio VI 7, 7-9 | Barca piccola a remi, senza vela; che girassero anche in tempi normali è IPOTESI |
+| Su quale riva passavano i buoi | No (forse tutte e due) | Ostia Antica | Sulla riva vicina alla barca: IPOTESI |
+| Discesa verso il mare | No | — | Con la corrente, senza traino e senza scia: IPOTESI (ciò che fa la corrente) |
+| Misure, forma di prua e poppa, colore, fasciame, numero dei buoi, velocità | No | — | SCHEMA: 18 m per 4,5 (chiatta), 8 per 2 (barca piccola); prua e poppa rialzate, legno non dipinto; due buoi; circa 0,7 m al secondo al traino, 1 m con la corrente |
+| Chi guida i buoi | No | — | Nessuno (non si aggiunge) |

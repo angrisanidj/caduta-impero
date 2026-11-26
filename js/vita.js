@@ -448,28 +448,47 @@ function figureVicine(n){
    Le forme sono generiche e dichiarate: nessuna fonte letta descrive un carro, un mulo o un banco di Roma. Un carro a due ruote piene tirato da una coppia di buoi
    (la Tabula Heracleensis nomina carri tirati da buoi o da bestie da soma), un mulo col basto, un banco con la tenda di tela non tinta. In metri, poi in unità (×0,1).
    Le zampe oscillano nello shader (perno: la quota dell'anca; zampa: la fase), come le gambe della gente. */
-function Pz(){ this.p=[]; this.n=[]; this.c=[]; this.pe=[]; this.za=[]; this.pa=[]; this.parte=0; }      // parte: le varianti nella stessa maglia (si vede solo quella dell'istanza, attributo tipo)
-Pz.prototype.metti=function(g,colore,perno,zampa){ var q=g.index?g.toNonIndexed():g, P=q.attributes.position.array, Nn=q.attributes.normal.array, i;
-  for(i=0;i<P.length;i+=3){ this.p.push(P[i]*.1,P[i+1]*.1,P[i+2]*.1); this.n.push(Nn[i],Nn[i+1],Nn[i+2]); this.c.push(colore.r,colore.g,colore.b); this.pe.push((perno||0)*.1); this.za.push(zampa||0); this.pa.push(this.parte); }
+function Pz(){ this.p=[]; this.n=[]; this.c=[]; this.pe=[]; this.pz=[]; this.za=[]; this.pa=[]; this.parte=0; }      // parte: le varianti nella stessa maglia (si vede solo quella dell'istanza, attributo tipo)
+Pz.prototype.metti=function(g,colore,perno,zampa,pernoZ){ var q=g.index?g.toNonIndexed():g, P=q.attributes.position.array, Nn=q.attributes.normal.array, i;      // pernoZ: dove sta la zampa lungo il corpo (la zampa gira attorno alla sua spalla, non al centro dell'animale)
+  for(i=0;i<P.length;i+=3){ this.p.push(P[i]*.1,P[i+1]*.1,P[i+2]*.1); this.n.push(Nn[i],Nn[i+1],Nn[i+2]); this.c.push(colore.r,colore.g,colore.b); this.pe.push((perno||0)*.1); this.pz.push((pernoZ||0)*.1); this.za.push(zampa||0); this.pa.push(this.parte); }
   return this; };
 Pz.prototype.geometria=function(nIst){ var g=new THREE.BufferGeometry();
   g.setAttribute('position',new THREE.Float32BufferAttribute(this.p,3)); g.setAttribute('normal',new THREE.Float32BufferAttribute(this.n,3)); g.setAttribute('color',new THREE.Float32BufferAttribute(this.c,3));
-  g.setAttribute('perno',new THREE.Float32BufferAttribute(this.pe,1)); g.setAttribute('zampa',new THREE.Float32BufferAttribute(this.za,1)); g.setAttribute('parte',new THREE.Float32BufferAttribute(this.pa,1)); g.setAttribute('tipo',new THREE.InstancedBufferAttribute(new Float32Array(nIst),1));
+  g.setAttribute('perno',new THREE.Float32BufferAttribute(this.pe,1)); g.setAttribute('pernoZ',new THREE.Float32BufferAttribute(this.pz,1)); g.setAttribute('zampa',new THREE.Float32BufferAttribute(this.za,1)); g.setAttribute('parte',new THREE.Float32BufferAttribute(this.pa,1)); g.setAttribute('tipo',new THREE.InstancedBufferAttribute(new Float32Array(nIst),1));
   g.setAttribute('fase',new THREE.InstancedBufferAttribute(new Float32Array(nIst),1)); g.setAttribute('moto',new THREE.InstancedBufferAttribute(new Float32Array(nIst),1)); return g; };
 function scat(w,h,d,x,y,z){ return new THREE.BoxGeometry(w,h,d).translate(x,y,z); }
 function palla(rx,ry,rz,x,y,z,lati){ return new THREE.SphereGeometry(1,lati||8,5).scale(rx,ry,rz).translate(x,y,z); }
 var C_BUE=RM.col(0x948a7c), C_MULO=RM.col(0x5e4e40), C_CORNA=RM.col(0xcfc4ae), C_ZOCCOLO=RM.col(0x2e2620), C_TUFO=RM.col(0xb09a72), C_SACCO=RM.col(0xb9a98a), C_TERRA=RM.col(0xa35f3c), C_CESTO=RM.col(0x8a6b40);
-function bue(B,x0,z0){      // un bue, la testa verso +z
-  B.metti(palla(.4,.43,1.02,x0,1.05,z0,10),C_BUE).metti(palla(.3,.3,.4,x0,1.22,z0+.55,8),C_BUE);                                  // il corpo e il garrese
-  B.metti(tratto([x0,1.2,z0+.8],[x0,1.12,z0+1.18],.22,.16,6),C_BUE).metti(palla(.14,.17,.29,x0,1.08,z0+1.33,6),C_BUE);              // il collo e la testa
-  [-1,1].forEach(function(s){ B.metti(new THREE.ConeGeometry(.03,.2,4).rotateZ(-s*1.1).translate(x0+s*.17,1.27,z0+1.24),C_CORNA); });
-  B.metti(tratto([x0,1.2,z0-1],[x0,.5,z0-1.1],.03,.02,4),C_BUE);                                                                    // la coda
-  [[-1,1,0],[1,1,Math.PI],[-1,-1,Math.PI],[1,-1,0]].forEach(function(g){ var x=x0+g[0]*.2, z=z0+g[1]*.62;                           // le zampe, a passo diagonale
-    B.metti(tratto([x,.8,z],[x,.08,z],.08,.055,6),C_BUE,.8,g[2]).metti(scat(.1,.08,.12,x,.04,z+.02),C_ZOCCOLO,.8,g[2]); });
+/* Il bue (26 novembre 2026, rifatto: prima erano due uova con le zampe; l'utente trova le figure «dei lego»). Superfici lisce tese su sezioni ovali (RM.pelle di js/monumenti.js),
+   non scatole né sfere: tronco a botte, garrese, collo, testa bassa col muso scuro, corna, orecchie, quattro zampe col garretto piegato e lo zoccolo, coda col fiocco.
+   SCHEMA: nessuna fonte letta descrive i buoi da lavoro di Roma; misure da bue da lavoro (garrese a 1,45 m, lungo 2,2 m) e mantello grigio chiaro sono scelte del modello.
+   Circa 630 triangoli da vicino (fino:true), circa 330 da lontano e al gradino «bassa». La testa verso +z. */
+var C_BUE2=RM.col(0xa59d8f), C_MUSO=RM.col(0x3d3731);
+var finta={geo:function(g){ return g; }};      // RM.pelle consegna la superficie a B.geo: qui la si vuole indietro, per metterla nel Pz
+function telo(anelli,lati){ return RM.pelle(finta,anelli,C_BUE,lati); }
+function bue(B,x0,z0,opz){
+  opz=opz||{}; var fino=opz.fino!==false, col=opz.col||C_BUE, nC=fino?9:6, nT=fino?7:5, nZ=fino?5:4, fs=opz.fase||0;
+  function an(z,su,giu,rx){ return [x0,(su+giu)/2,z0+z,rx,(su-giu)/2]; }      // una sezione del tronco: dorso, ventre, mezza larghezza
+  B.metti(telo([an(-1.08,1.3,1.12,.1),an(-.98,1.37,.86,.27),an(-.72,1.38,.68,.36),an(-.3,1.34,.6,.4),an(.12,1.36,.58,.41),an(.45,1.45,.6,.36),an(.68,1.38,.62,.27),an(.8,1.2,.78,.16)],nC),col);      // il tronco a botte, il garrese sopra le spalle
+  B.metti(telo([[x0,1.15,z0+.5,.2,.25],[x0,1.16,z0+.82,.17,.24],[x0,1.15,z0+1.02,.14,.17],[x0,1.03,z0+1.16,.13,.13],[x0,.9,z0+1.3,.1,.1],[x0,.83,z0+1.39,.088,.088]],nT),col);      // il collo e la testa, bassa come sotto il giogo
+  if(fino) B.metti(telo([[x0,.8,z0+.6,.05,.06],[x0,.86,z0+.84,.06,.12],[x0,.93,z0+1.02,.04,.06]],5),col);      // la giogaia sotto il collo
+  B.metti(telo([[x0,.845,z0+1.37,.092,.09],[x0,.79,z0+1.45,.088,.078],[x0,.765,z0+1.49,.06,.05]],nT),C_MUSO);      // il muso scuro
+  [-1,1].forEach(function(s){
+    B.metti(telo([[x0+s*.09,1.2,z0+1.06,.04,.04],[x0+s*.2,1.27,z0+1.1,.032,.032],[x0+s*.26,1.41,z0+1.12,.012,.012]],fino?5:3),C_CORNA);      // le corna, in fuori e in su
+    if(fino) B.metti(telo([[x0+s*.12,1.12,z0+1.01,.025,.025],[x0+s*.21,1.1,z0+.99,.05,.02],[x0+s*.29,1.07,z0+.97,.008,.008]],4),col);      // le orecchie, di lato
+  });
+  B.metti(tratto([x0,1.3,z0-1.06],[x0,.62,z0-1.16],.035,.02,fino?4:3),col).metti(palla(.05,.09,.05,x0,.56,z0-1.16,4),C_MUSO);      // la coda col fiocco
+  [[-1,1,0],[1,1,Math.PI],[-1,-1,Math.PI],[1,-1,0]].forEach(function(g){ var x=x0+g[0]*.2, dav=g[1]>0, z=z0+(dav?.48:-.68), pe=dav?.95:1.0, fa=g[2]+fs;      // le zampe, a coppie diagonali alterne
+    var A=dav?[[x,1.0,z,.12,.16],[x,.62,z+.01,.075,.09],[x,.4,z,.055,.06],[x,.25,z+.01,.04,.045],[x,.09,z+.02,.045,.05]]
+             :[[x,1.05,z,.15,.2],[x,.72,z-.04,.09,.12],[x,.5,z-.1,.06,.075],[x,.26,z-.05,.045,.05],[x,.09,z-.02,.045,.05]];      // davanti diritte; dietro la coscia larga e il garretto piegato indietro
+    B.metti(telo(A,nZ),col,pe,fa,z).metti(tratto([x,.11,z+(dav?.02:-.02)],[x,0,z+(dav?.05:.01)],.05,.062,4),C_MUSO,pe,fa,z); });      // la zampa e lo zoccolo
 }
+function giogo(B,xs,z,lar){      // il giogo di legno sopra i due colli, con gli archetti che li cingono (forma: SCHEMA)
+  B.metti(scat(lar,.1,.13,0,1.46,z),LEGNO);
+  xs.forEach(function(x){ [-1,1].forEach(function(s){ B.metti(tratto([x+s*.19,1.44,z],[x+s*.17,.97,z],.02,.02,4),LEGNO); }); B.metti(scat(.38,.035,.04,x,.95,z),LEGNO); }); }
 function geoCarro(){ var B=new Pz();      // una maglia sola: il carro vuoto (tipo 1), con i blocchi (2), con i sacchi (3)
-  bue(B,-.46,1.45); bue(B,.46,1.45);
-  B.metti(scat(1.35,.09,.12,0,1.42,2.15),LEGNO).metti(tratto([0,.98,-.42],[0,1.38,2.15],.055,.05,5),LEGNO);                         // il giogo sul collo e il timone
+  bue(B,-.46,1.45); bue(B,.46,1.45,{col:C_BUE2,fase:.5});      // la stessa forma dei buoi del traino sul Tevere
+  giogo(B,[-.46,.46],2.29,1.35); B.metti(tratto([0,.98,-.42],[0,1.42,2.29],.055,.05,5),LEGNO);                                         // il giogo sul collo e il timone
   B.metti(scat(1.35,.09,2.1,0,.93,-1.5),LEGNO);                                                                                      // il pianale
   [-1,1].forEach(function(s){ B.metti(scat(.06,.32,2.1,s*.65,1.12,-1.5),LEGNO).metti(new THREE.CylinderGeometry(.56,.56,.13,12).rotateZ(Math.PI/2).translate(s*.79,.56,-1.5),LEGNO.clone().multiplyScalar(.8)); });      // le sponde e le ruote piene
   B.metti(scat(1.35,.32,.06,0,1.12,-.47),LEGNO).metti(scat(1.35,.32,.06,0,1.12,-2.53),LEGNO);
@@ -480,7 +499,7 @@ function geoMulo(){ var B=new Pz();      // un mulo col basto
   B.metti(palla(.25,.3,.62,0,.98,0,8),C_MULO).metti(tratto([0,1.08,.45],[0,1.34,.72],.13,.085,6),C_MULO).metti(new THREE.SphereGeometry(1,6,5).scale(.085,.105,.25).rotateX(.5).translate(0,1.34,.88),C_MULO);
   [-1,1].forEach(function(s){ B.metti(new THREE.ConeGeometry(.03,.19,4).rotateZ(-s*.25).translate(s*.05,1.5,.75),C_MULO); });       // le orecchie lunghe
   B.metti(tratto([0,1.1,-.6],[0,.55,-.7],.025,.02,4),C_MULO.clone().multiplyScalar(.6));
-  [[-1,1,0],[1,1,Math.PI],[-1,-1,Math.PI],[1,-1,0]].forEach(function(g){ var x=g[0]*.14, z=g[1]*.42; B.metti(tratto([x,.72,z],[x,.06,z],.055,.035,5),C_MULO,.72,g[2]).metti(scat(.07,.06,.08,x,.03,z),C_ZOCCOLO,.72,g[2]); });
+  [[-1,1,0],[1,1,Math.PI],[-1,-1,Math.PI],[1,-1,0]].forEach(function(g){ var x=g[0]*.14, z=g[1]*.42; B.metti(tratto([x,.72,z],[x,.06,z],.055,.035,5),C_MULO,.72,g[2],z).metti(scat(.07,.06,.08,x,.03,z),C_ZOCCOLO,.72,g[2],z); });
   B.metti(scat(.5,.07,.55,0,1.29,0),CUOIO);                                                                                        // il basto
   [-1,1].forEach(function(s){ B.metti(scat(.22,.36,.52,s*.34,1.04,0),C_SACCO.clone().multiplyScalar(.85)); });                       // i due carichi ai fianchi
   return B.geometria(NMUL); }
@@ -497,8 +516,8 @@ function sacchi(B){ [[-.3,0,.2],[.3,0,.25],[0,0,-.3],[-.3,.3,-.35],[.32,.3,-.32]
 function geoMercato(){ var B=new Pz(); B.parte=1; banco(B); B.parte=2; anfore(B); B.parte=3; sacchi(B); B.parte=0; return B.geometria(28); }      // banco (tipo 1), anfore (2), sacchi (3) in una maglia sola: un disegno      // il grano dell'annona in sacchi
 function matAnimali(){ var m=new THREE.MeshLambertMaterial({vertexColors:true}), A=String.fromCharCode(10);
   m.onBeforeCompile=function(sh){ sh.uniforms.uPasso=uPasso;
-    sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute float perno; attribute float zampa; attribute float parte; attribute float tipo; attribute float fase; attribute float moto; uniform float uPasso;'].join(A))
-      .replace('#include <begin_vertex>',['#include <begin_vertex>','if(parte>0.5 && abs(parte-tipo)>0.5) transformed=vec3(0.0);','if(perno>0.0){ float an=sin(uPasso*3.6+fase+zampa)*0.3*moto; vec3 q=transformed; q.y-=perno; float ca=cos(an), sa=sin(an); transformed=vec3(q.x,q.y*ca-q.z*sa,q.y*sa+q.z*ca); transformed.y+=perno; }'].join(A));
+    sh.vertexShader=sh.vertexShader.replace('#include <common>',['#include <common>','attribute float perno; attribute float pernoZ; attribute float zampa; attribute float parte; attribute float tipo; attribute float fase; attribute float moto; uniform float uPasso;'].join(A))
+      .replace('#include <begin_vertex>',['#include <begin_vertex>','if(parte>0.5 && abs(parte-tipo)>0.5) transformed=vec3(0.0);','if(perno>0.0){ float an=sin(uPasso*3.6+fase+zampa)*0.3*moto; vec3 q=transformed; q.y-=perno; q.z-=pernoZ; float ca=cos(an), sa=sin(an); transformed=vec3(q.x,q.y*ca-q.z*sa,q.y*sa+q.z*ca); transformed.y+=perno; transformed.z+=pernoZ; }'].join(A));      // la zampa gira attorno alla sua spalla (perno, pernoZ)
   }; return m; }
 var matAn=matAnimali();
 function istanze(geo,n,ombra){ var m=new THREE.InstancedMesh(geo,matAn,n); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(n*3).fill(1),3);
@@ -679,7 +698,7 @@ function muoviCarri(dt,fr,nt){
     x=pa.x+ex*f-ez/el*lat; z=pa.z+ez*f+ex/el*lat; y=v.y[i0]+(v.y[i0+1]-v.y[i0])*f;
     ang=Math.atan2(ex,ez)+(cDir[k]<0?Math.PI:0)+(cVira[k]>0?Math.PI*cVira[k]*cVira[k]*(3-2*cVira[k]):0);
     if(occupato(x,z)){ pos[o+1]=-60; continue; }
-    oT.position.set(x,y-.08,z); oT.rotation.set(0,ang,0); oT.scale.setScalar(1); oT.updateMatrix();
+    oT.position.set(x,y,z); oT.rotation.set(0,ang,0);      // 26 novembre 2026: sulla quota dei piedi di chi guida (prima 0,8 m più giù: ruote e zampe sparivano nel basolato) oT.scale.setScalar(1); oT.updateMatrix();
     var m=mulo?mMuli:mCarri, c=mulo?cm++:cc++;
     m.setMatrixAt(c,oT.matrix); m.geometry.attributes.tipo.array[c]=mulo?0:cTipo[k]+1; m.geometry.attributes.fase.array[c]=k*1.7; m.geometry.attributes.moto.array[c]=(MENO_MOTO||cVira[k]>0)?0:1; var tn=.88+.24*hh(k,8); m.instanceColor.setXYZ(c,tn,tn,tn);
     /* chi guida: accanto ai buoi, o davanti al mulo con la cavezza */
@@ -743,32 +762,190 @@ function muoviFumo(){
 /* ---------- barche ----------
    Seguono il filo della corrente a velocità costante, tenendo la destra, e passano sotto i ponti fra una pila e l'altra; in fondo al tratto virano.
    Due tratti navigabili: a monte, da ponte Milvio a ponte Aurelio; a valle, da ponte Emilio verso l'Emporio e San Paolo. Fra i due ci sono l'isola e, dal 537, i mulini. */
-var NB=16, scafo=new RM.Costruttore().scatola(1.9,.22,.55,0,0,0,P.tronco).scatola(.5,.16,.4,.95,.06,0,P.tronco).cilindro(.035,1.1,-.1,.2,0,P.tronco,.03,5);
-scafo.quad([-.1,.45,-.55],[-.1,.45,.55],[-.1,1.2,.55],[-.1,1.2,-.55],P.marmo);
-var barche=new THREE.InstancedMesh(scafo.geometria(),RM.matPietra(),NB), dati=[], d=new THREE.Object3D(), quotaBarche=1;
-barche.instanceMatrix.setUsage(THREE.DynamicDrawUsage); barche.castShadow=true; barche.frustumCulled=false; barche.userData.gruppo='vita'; RM.scene.add(barche);
+/* Rifatte il 26 novembre 2026 (l'utente: «La qualità delle barche deve essere diversa e migliorata molto»). Fonti lette e tabella «Per chi disegna» in src/testi/vita-roma-fonti.md,
+   «Le barche sul Tevere». Scritto: le chiatte (naves codicariae) fra Porto e Roma non usano né vele né remi e controcorrente sono tirate da buoi con corde legate al collo (Procopio V 26, 10-12);
+   un solo albero per la corda (sintesi di ostia-antica.org dai rilievi); il timoniere a poppa e i sacchi di grano (affresco della Isis Geminiana, Musei Vaticani); barche piccole a remi
+   (Procopio VI 7, 7-9, nel 538). SCHEMA: misure, forma di prua e poppa, fasciame, colori, posizione dell'albero, due buoi, la riva dei buoi, le velocità, la discesa con la corrente,
+   che le barche piccole girassero anche in tempi normali. Tre corse: le chiatte tirate dai buoi dal fondo del tratto di valle fino all'Emporio e quelle che scendono con la corrente
+   (a valle); a monte, fra ponte Milvio e ponte Aurelio, chiatte che scendono e barche piccole a remi. A fine corsa una barca resta ormeggiata e ricomincia solo fuori dall'inquadratura.
+   Sotto i ponti la corsia passa per il centro di un'arcata (RM.ponti in js/mura.js). In metri, poi in unità (×0,1): prua verso +x. */
+RM.QUALITA.barche=[0,6,10,16,3];      // quante barche vicine hanno uomini veri (bassa, media, alta, massima, telefono); le altre hanno sagome
+var NB=16, quotaBarche=1, d=new THREE.Object3D(), MB=.1;
+function gM(g){ return g.scale(MB,MB,MB); }      // da metri a unità
+function scatM(w,h,dd,x,y,z){ return gM(new THREE.BoxGeometry(w,h,dd).translate(x,y,z)); }
+/* lo scafo a guscio: sezioni lungo x (poppa -L/2, prua +L/2), ognuna dalla chiglia all'orlo; prua e poppa rialzate, fondo che risale ai capi, fasciame a corsi di tavole
+   (un colore per corso, la commessura più scura). Dentro, il guscio interno più scuro e il pagliolo appena sopra il pelo dell'acqua (y=0) */
+function scafoGeo(L,W,Hm,chi,alzaPr,alzaPp,NS,corsi,legno){
+  var pos=[], col=[], idx=[], fil=[], k, j, S=[];
+  for(j=0;j<corsi;j++){ S.push(j/corsi+.015); S.push((j+1)/corsi-.015); }
+  S[0]=0; S[S.length-1]=1;
+  function sez(t){ var a=Math.abs(t), pr=t>0, w=W/2*Math.sqrt(Math.max(.012,1-Math.pow(a,pr?2.2:3.2))), ysh=Hm+(pr?alzaPr:alzaPp)*Math.pow(sm(.45,1,a),1.6), yk=chi+(-chi-.05)*Math.pow(sm(.6,1,a),1.8); return [w,ysh,yk]; }
+  function punto(t,s,dentro){ var q=sez(t), z=q[0]*Math.pow(1-Math.pow(1-s,3),.55), y=q[2]+(q[1]-q[2])*s; if(dentro){ z=Math.max(0,z-.07); y+=dentro*.06; } return [t*L/2,y,z]; }
+  [1,-1].forEach(function(lato){ [0,1].forEach(function(dentro){
+    var base=pos.length/3;
+    for(k=0;k<=NS;k++){ var t=k/NS*2-1; t=Math.sign(t)*Math.pow(Math.abs(t),.8);
+      for(j=0;j<S.length;j++){ var p=punto(t,S[j],dentro), corso=Math.floor(j/2), c=legno.clone().multiplyScalar(dentro?.62:(.86+.14*((corso*7)%3)/2)*(j%2===0&&j>0?.8:1)*(corso===corsi-1?.78:1));
+        pos.push(p[0],p[1],p[2]*lato); col.push(c.r,c.g,c.b); } }
+    var n=S.length;
+    for(k=0;k<NS;k++) for(j=0;j<n-1;j++){ var a=base+k*n+j, b=a+n, c2=a+1, e=b+1, fuori=(lato>0)!==(dentro===1);
+      if(fuori){ idx.push(a,b,c2, c2,b,e); } else { idx.push(a,c2,b, c2,e,b); } }
+  }); });
+  /* l'orlo: dal guscio esterno a quello interno, sopra */
+  [1,-1].forEach(function(lato){ var base=pos.length/3;
+    for(k=0;k<=NS;k++){ var t=k/NS*2-1; t=Math.sign(t)*Math.pow(Math.abs(t),.8); var a=punto(t,1,0), b=punto(t,1,1), c=legno.clone().multiplyScalar(.7);
+      pos.push(a[0],a[1]+.03,a[2]*lato, b[0],b[1]+.03,b[2]*lato); col.push(c.r,c.g,c.b,c.r,c.g,c.b); }
+    for(k=0;k<NS;k++){ var q=base+k*2; if(lato>0) idx.push(q,q+1,q+2, q+1,q+3,q+2); else idx.push(q,q+2,q+1, q+1,q+2,q+3); } });
+  var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setAttribute('color',new THREE.Float32BufferAttribute(col,3)); g.setIndex(idx); g.computeVertexNormals();
+  return {g:gM(g), sez:sez}; }
+var LEGNO_B=RM.col(0x7a6148);      // legno non dipinto: SCHEMA (nessuna fonte letta dà il colore)
+function pagliolo(B,sc,L,y,col){ for(var k=0;k<10;k++){ var t0=-.9+k*.18, tm=t0+.09, q=sc.sez(tm), w=Math.max(.05,q[0]*Math.pow(1-Math.pow(1-Math.max(0,(y-q[2])/(q[1]-q[2])),3),.55)-.1); B.geo(scatM(.18*L/2+.02,.05,2*w,tm*L/2,y,0),col); } }      // a tratti, largo quanto lo scafo a quella quota
+/* sagoma di un uomo per le barche lontane: un fuso e una testa (una ventina di triangoli) */
+function sagoma(B,x,y,z,col){ B.geo(gM(new THREE.CylinderGeometry(.16,.22,1.4,5).translate(x,y+.7,z)),col); B.geo(gM(new THREE.SphereGeometry(.12,5,3).translate(x,y+1.55,z)),PELLE[1]); }
+function uomoB(B,x,y,z,ry,nome,k,col,vere){ if(vere) B.dentro(x*MB,y*MB,z*MB,ry,function(B){ B.geo(figuraTinta(nome,k,col),col); }); else sagoma(B,x,y,z,col); }
+/* la chiatta (navis codicaria): 18 x 4,5 m, l'albero della corda a un terzo dalla prua, il remo-timone a poppa, sacchi nella stiva, due uomini (timoniere a poppa, uno a prua) */
+var LC=18, WC=4.5, ALB=LC/6, HALB=6.5;
+function geoChiatta(vere,ep){ var B=new RM.Costruttore(), sc=scafoGeo(LC,WC,.7,-.9,1.3,1.0,vere?22:10,vere?5:2,LEGNO_B), q;
+  B.geo(sc.g,P.tronco);
+  pagliolo(B,sc,LC,.1,LEGNO_B.clone().multiplyScalar(.7));      // il pagliolo, sopra il pelo dell'acqua
+  [-.47,.47].forEach(function(f){ q=sc.sez(f); B.geo(scatM(.32,.1,q[0]*1.86,f*LC/2,q[1]-.18,0),LEGNO_B.clone().multiplyScalar(.85)); });      // due banchi
+  q=sc.sez(-.86); B.geo(scatM(1.6,.08,q[0]*1.9,-.86*LC/2,q[1]-.12,0),LEGNO_B.clone().multiplyScalar(.8));      // il ponticello del timoniere
+  B.geo(gM(new THREE.CylinderGeometry(.08,.13,HALB,vere?7:4).translate(ALB,.1+HALB/2,0)),LEGNO_B.clone().multiplyScalar(.9));      // l'albero della corda, senza vela (Procopio V 26, 11)
+  if(vere) [.25,.5,.75].forEach(function(f){ B.geo(scatM(.06,.06,.42,ALB,.1+HALB*f,0),LEGNO_B); });      // le piccole sporgenze dell'albero (ostia-antica.org)
+  B.geo(gM(tratto([-LC/2+1.1,1.6,WC/2-.3],[-LC/2-1.6,-.5,WC/2+.35],.07,.06,vere?6:4)),LEGNO_B.clone().multiplyScalar(.8));      // il remo-timone, sul fianco destro a poppa
+  B.geo(gM(new THREE.BoxGeometry(.08,1.1,.45).translate(0,-.55,0).rotateZ(.9).translate(-LC/2-1.5,-.2,WC/2+.33)),LEGNO_B.clone().multiplyScalar(.75));      // la pala
+  var sacchi=[], i, j; for(i=0;i<(vere?7:4);i++) for(j=0;j<3;j++) sacchi.push([-5+i*(vere?1.45:2.5),(j-1)*1.05]);
+  sacchi.forEach(function(s,n){ var h=((n*37)%5)/5; B.geo(gM(new THREE.SphereGeometry(1,vere?8:5,vere?5:3).scale(.62,.36,.5).rotateY(h*.6).translate(s[0],.45,s[1])),C_SACCO.clone().multiplyScalar(.85+.15*h));
+    if(vere && n%3===1) B.geo(gM(new THREE.SphereGeometry(1,8,5).scale(.6,.34,.48).rotateY(-h).translate(s[0]+.3,1.05,s[1]*.6)),C_SACCO.clone().multiplyScalar(.9)); });      // sacchi di grano (Isis Geminiana)
+  var nomeU=['tunica3','tunica4','tunica7'][ep], tinte=VESTI[nomeU].tinte;
+  q=sc.sez(-.86); uomoB(B,-.86*LC/2,q[1]-.08,.3,Math.PI/2,nomeU,1,tinte[1%tinte.length],vere);      // il timoniere, rivolto a prua
+  uomoB(B,ALB+2.2,.13,-.6,Math.PI*.35,nomeU,2,tinte[2%tinte.length],vere);      // un uomo a prua
+  return B.geometria(); }
+/* la barca piccola: 8 x 2 m, un rematore al centro (i remi sono a parte, si muovono), il timoniere a poppa */
+var LP=8, WP=2;
+function geoPiccola(vere,ep){ var B=new RM.Costruttore(), sc=scafoGeo(LP,WP,.45,-.5,.6,.45,vere?16:8,vere?4:2,LEGNO_B.clone().multiplyScalar(.92)), q;
+  B.geo(sc.g,P.tronco); pagliolo(B,sc,LP,.06,LEGNO_B.clone().multiplyScalar(.7));
+  [-.55,0,.45].forEach(function(f){ q=sc.sez(f); B.geo(scatM(.26,.07,q[0]*1.84,f*LP/2,q[1]-.14,0),LEGNO_B.clone().multiplyScalar(.85)); });      // i banchi (quello di mezzo è del rematore)
+  B.geo(gM(tratto([-LP/2+.5,.9,WP/2-.15],[-LP/2-1,-.4,WP/2+.2],.045,.04,vere?5:4)),LEGNO_B.clone().multiplyScalar(.8));      // il remo-timone
+  var nomeU=['tunica3','tunica4','tunica7'][ep], tinte=VESTI[nomeU].tinte;
+  if(vere) B.dentro(0,-.054,0,-Math.PI/2,function(B){ B.geo(figuraTinta(4,3,tinte[0]),tinte[0]); });      // il rematore, seduto sul banco di mezzo (piano a 0,31 m: le anche della figura seduta stanno a 0,86), rivolto a poppa; gli scalmi gli stanno davanti
+  else sagoma(B,0,-.25,0,tinte[0]);
+  q=sc.sez(-.8); uomoB(B,-.8*LP/2,q[1]-.1,0,Math.PI/2,nomeU,0,tinte[3%tinte.length],vere);
+  B.geo(gM(new THREE.CylinderGeometry(.18,.16,.5,6).translate(2,.32,0)),C_TERRA);      // un'anfora a bordo (SCHEMA)
+  return B.geometria(); }
+var matBarche=RM.matPietra(), EPB=-1, MAGLIE={};
+function magliaB(chiave,fa){ var m=new THREE.InstancedMesh(new THREE.BufferGeometry(),matBarche,NB); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.count=0; m.castShadow=true; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='vita'; m.userData.fa=fa; RM.scene.add(m); MAGLIE[chiave]=m; return m; }
+var mCV=magliaB('cv',function(ep){ return geoChiatta(true,ep); }), mCL=magliaB('cl',function(ep){ return geoChiatta(false,ep); }), mPV=magliaB('pv',function(ep){ return geoPiccola(true,ep); }), mPL=magliaB('pl',function(ep){ return geoPiccola(false,ep); });
+function epocaBarche(anno){ var ep=epoca(anno); if(ep===EPB) return; EPB=ep; for(var k in MAGLIE){ var m=MAGLIE[k], v=m.geometry; m.geometry=m.userData.fa(ep); v.dispose(); } }
+/* i remi della barca piccola: due per barca, a istanze, che girano attorno allo scalmo */
+var geoRemo=(function(){ var B=new RM.Costruttore(); B.geo(gM(new THREE.CylinderGeometry(.035,.035,3.75,5).rotateX(Math.PI/2).translate(0,0,1.175)),LEGNO_B); B.geo(scatM(.05,.18,.75,0,0,2.9),LEGNO_B.clone().multiplyScalar(.85)); return B.geometria(); })();      // dallo scalmo: 0,7 m di manico verso le mani del rematore, la pala a 2,9 m
+var mRemi=new THREE.InstancedMesh(geoRemo,new THREE.MeshLambertMaterial({vertexColors:true, side:THREE.DoubleSide}),NB*2); mRemi.instanceMatrix.setUsage(THREE.DynamicDrawUsage); mRemi.count=0; mRemi.castShadow=true; mRemi.frustumCulled=false; mRemi.userData.gruppo='vita'; RM.scene.add(mRemi);
+/* i buoi del traino: una coppia col giogo (Procopio: le corde legate al collo); le zampe camminano nello shader degli animali */
+function geoCoppia(fino){ var B=new Pz(); bue(B,-.5,0,{fino:fino}); bue(B,.5,0,{fino:fino,col:C_BUE2,fase:.5}); giogo(B,[-.5,.5],.84,1.5); return B.geometria(NB); }      // la corda si lega al centro del giogo (0; 1,46; 0,84 m)
+var geoBuoi=geoCoppia(true), geoBuoiL=geoCoppia(false), matBuoi=matAnimali();      // da vicino e da lontano (e al gradino «bassa»)
+function magliaBuoi(g){ var m=new THREE.InstancedMesh(g,matBuoi,NB); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(NB*3).fill(1),3); m.count=0; m.castShadow=true; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='vita'; RM.scene.add(m); return m; }
+var mBuoi=magliaBuoi(geoBuoi), mBuoiL=magliaBuoi(geoBuoiL);
+var mCorde=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1).translate(0,0,.5),new THREE.MeshLambertMaterial({color:0x8d7a5c}),NB); mCorde.instanceMatrix.setUsage(THREE.DynamicDrawUsage); mCorde.count=0; mCorde.frustumCulled=false; mCorde.userData.gruppo='vita'; RM.scene.add(mCorde);
+/* la scia: un velo a istanze con una trama a V, solo dietro chi si muove rispetto all'acqua (tirate o a remi; chi scende con la corrente non ne lascia) */
+var texScia=RM.tela(64,128,function(g){ g.clearRect(0,0,64,128); var y, k, j;
+  for(y=0;y<128;y++){ var a=.6*Math.pow(1-y/128,1.4), w=3+y*.2;      // due bordi a V che si allargano e sbiadiscono, e la schiuma in mezzo, a chiazze
+    for(j=-1;j<=1;j+=2){ var gr=g.createLinearGradient(32+j*w-3,0,32+j*w+3,0); gr.addColorStop(0,'rgba(255,255,255,0)'); gr.addColorStop(.5,'rgba(255,255,255,'+a.toFixed(3)+')'); gr.addColorStop(1,'rgba(255,255,255,0)'); g.fillStyle=gr; g.fillRect(32+j*w-3,y,6,1); }
+    for(k=0;k<3;k++){ var x=32+(Math.sin(y*1.7+k*2.1)*.5)*w*.9; g.fillStyle='rgba(255,255,255,'+(a*.28*(.5+.5*Math.sin(y*.9+k))).toFixed(3)+')'; g.fillRect(x-1.5,y,3,1); } } },false);
+var matScia=new THREE.MeshBasicMaterial({map:texScia,transparent:true,depthWrite:false,opacity:.85,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
+var mScie=new THREE.InstancedMesh(new THREE.PlaneGeometry(1,1).rotateX(-Math.PI/2).rotateY(-Math.PI/2).translate(-.5,0,0),matScia,NB); mScie.instanceMatrix.setUsage(THREE.DynamicDrawUsage); mScie.count=0; mScie.frustumCulled=false; mScie.renderOrder=2; mScie.userData.gruppo='vita'; RM.scene.add(mScie);
 var fiume=RM.curvaFiume; fiume.arcLengthDivisions=1200; fiume.updateArcLengths();
 var lungoFiume=fiume.getLength();
 function uVicino(x,z){ var m=1e9, um=0, k, q, dd; for(k=0;k<=1500;k++){ q=fiume.getPointAt(k/1500); dd=(q.x-x)*(q.x-x)+(q.z-z)*(q.z-z); if(dd<m){ m=dd; um=k/1500; } } return um; }
-var TRATTI=[[uVicino(-152,-479)+6/lungoFiume, uVicino(-120,1)-5/lungoFiume],[uVicino(-52,38)+6/lungoFiume, uVicino(-90,400)]];
-for(i=0;i<NB;i++){ var tr=i%3===0?0:1; dati.push({tr:tr, u:TRATTI[tr][0]+rnd()*(TRATTI[tr][1]-TRATTI[tr][0]), dir:i%2?-1:1, corsia:2.3+rnd()*.8, vel:.8+rnd()*.8, vira:0}); }
+function normale(u){ var tg=fiume.getTangentAt(u); return [-tg.z,tg.x]; }
+var uMilvio=uVicino(-152,-479)+6/lungoFiume, uAurelio=uVicino(-120,1)-5/lungoFiume, uEmilio=uVicino(-52,38)+4/lungoFiume, uFondo=uVicino(-90,400), uEmporio=uVicino(-102,131);
+var pE=fiume.getPointAt(uEmporio), nE=normale(uEmporio), latoEmp=((-102-pE.x)*nE[0]+(131-pE.z)*nE[1])>0?1:-1;      // da che parte sta l'Emporio
+/* le rive: per ogni punto del fiume quanto è lontana la terra asciutta, da una parte e dall'altra (per i buoi e gli ormeggi) */
+var NR=500, RIVA=[new Float32Array(NR+1),new Float32Array(NR+1)];
+(function(){ for(var k=0;k<=NR;k++){ var u=k/NR, p=fiume.getPointAt(u), n=normale(u);
+  [1,-1].forEach(function(s,si){ var w=7; for(var r=1.5;r<14;r+=.2){ if((RM.hSuolo||RM.h)(p.x+n[0]*s*r,p.z+n[1]*s*r)>-.46){ w=r; break; } } RIVA[si][k]=Math.min(w,5.4); }); } })();      // la riva: dove il terreno supera il pelo dell'acqua (-0,5), al più all'orlo del nastro del fiume (5,6, frastagliato)
+function riva(u,s){ var f=Math.max(0,Math.min(NR,u*NR)), k=Math.floor(f), t=f-k, A=RIVA[s>0?0:1]; return A[k]+(A[Math.min(NR,k+1)]-A[k])*t; }
+/* dove camminano i buoi: fuori dal nastro del fiume (frastagliato fino a circa 6) e sul terreno sopra il pelo dell'acqua; prima stavano a riva+0,55 e lungo il tratto di valle,
+   dove la riva è bassa (fino a -0,8), il nastro dell'acqua copriva loro le zampe */
+var RIVA_B=[new Float32Array(NR+1),new Float32Array(NR+1)];
+(function(){ for(var k=0;k<=NR;k++){ var u=k/NR, p=fiume.getPointAt(u), n=normale(u);
+  [1,-1].forEach(function(s,si){ var r=Math.max(RIVA[si][k]+.55,6.4); while(r<9.5 && (RM.hSuolo||RM.h)(p.x+n[0]*s*r,p.z+n[1]*s*r)<=-.48) r+=.25; RIVA_B[si][k]=r; }); } })();
+function rivaBuoi(u,s){ var f=Math.max(0,Math.min(NR,u*NR)), k=Math.floor(f), t=f-k, A=RIVA_B[s>0?0:1]; return A[k]+(A[Math.min(NR,k+1)]-A[k])*t; }
+/* i ponti: la corsia passa per il centro dell'arcata più vicina (le arcate dei ponti comuni: centri a 0, ±2,95, ±5,18; il Sublicio di legno: stilate ogni 1,1) */
+var PONTI_B=(RM.ponti||[]).filter(function(p){ return p.id!=='pontefabricio' && p.id!=='pontecestio'; }).map(function(p){ var u=uVicino(p.x,p.z), q=fiume.getPointAt(u), n=normale(u), de=(p.x-q.x)*n[0]+(p.z-q.z)*n[1];
+  var archi=p.id==='pontesublicio'?[-5.55,-4.45,-3.35,-2.25,-1.15,-.05,1.05,2.15,3.25,4.35,5.45]:[-5.18,-2.95,0,2.95,5.18];
+  return {u:u, de:de, archi:archi}; });
+function corsia(u,lat){ var out=lat, limS=riva(u,1)-.6, limD=riva(u,-1)-.6;
+  PONTI_B.forEach(function(p){ var ds=Math.abs(u-p.u)*lungoFiume; if(ds>3.5) return; var best=1e9, c; p.archi.forEach(function(a){ var v=a+p.de; if(Math.abs(a)<4.6 && v<limS && -v<limD && Math.abs(v-lat)<Math.abs(best-lat)) best=v; }); if(best>1e8) return;
+    var w=1-sm(1.4,3.5,ds); out=out+(best-out)*w; });
+  var s=out<0?-1:1, lim=riva(u,s)-.6; if(Math.abs(out)>lim) out=s*Math.max(.3,lim);      // mai addosso alla riva: mezza larghezza della chiatta (0,23) e un margine
+  return out; }
+/* Il traino (26 novembre 2026, secondo giro): i buoi camminano sulla riva destra (lato opposto all'Emporio), perché sulla sinistra, dall'Emporio in giù, le mura di riva stanno
+   a filo dell'acqua (RM.MURA). Quale riva usassero davvero le fonti lette non lo dicono (ostia-antica.org: «most likely on both banks»): IPOTESI. Ogni anno si cerca il tratto più lungo
+   in cui il posto dei buoi è libero (liberoQui: niente case, mura, monumenti, acqua) e la chiatta viaggia solo lì; nelle piene (EVENTI con piena) niente traino: le barche restano ferme. */
+var SALTO_BUOI=5, PIENE=(D.EVENTI||[]).filter(function(e){ return e.piena; }), tiroOk=true, inPiena=false;
+function postoBuoi(u,s){ var pa=fiume.getPointAt(u), na=normale(u), rw=rivaBuoi(u,s); return [pa.x+na[0]*s*rw, pa.z+na[1]*s*rw]; }
+function trattoTiro(anno){ var C=CORSE.tira, s=Math.sign(C.lato), N=60, ok=[], k, best=[0,-1], i0=-1;
+  inPiena=PIENE.some(function(e){ return anno>=e.da-.5 && anno<e.a+.5; }); tiroOk=!inPiena;
+  for(k=0;k<=N;k++){ var u=uEmporio+(uFondo-uEmporio)*k/N, q=postoBuoi(u,s), lib=!isNaN(liberoQui(q[0],q[1],anno));
+    if(lib){ var pb=fiume.getPointAt(Math.min(1,u+SALTO_BUOI/lungoFiume)), nb=normale(Math.min(1,u+SALTO_BUOI/lungoFiume)), bx=pb.x+nb[0]*C.lato, bz=pb.z+nb[1]*C.lato;      // la corda: dalla barca (cinque unità più a valle) ai buoi, provata a terra
+      for(var j=1;j<5 && lib;j++){ var x=bx+(q[0]-bx)*j/5, z=bz+(q[1]-bz)*j/5; if((RM.hSuolo||RM.h)(x,z)>-.46 && (suIsolato(x,z) || (RM.MURA && RM.distLinea(x,z,RM.MURA,true)<.4))) lib=false; } }
+    ok.push(lib); }
+  for(k=0;k<=N+1;k++){ if(k<=N && ok[k]){ if(i0<0) i0=k; } else if(i0>=0){ if(k-1-i0>best[1]-best[0]) best=[i0,k-1]; i0=-1; } }
+  var uO=function(k){ return uEmporio+(uFondo-uEmporio)*k/N; };
+  if(best[1]-best[0]<8 || inPiena) tiroOk=false;
+  C.b=Math.min(uFondo,uO(best[0])+SALTO_BUOI/lungoFiume); C.a=Math.min(uFondo,uO(best[1])+SALTO_BUOI/lungoFiume);      // la barca sta cinque unità a valle dei buoi
+  RM.barcheTiro={anno:anno, ok:tiroOk, da:best[0], a:best[1], N:N}; }      // per le prove
+/* le sedici barche, nell'ordine in cui compaiono quando il commercio cresce (con una sola barca: una chiatta tirata dai buoi verso l'Emporio) */
+var CORSE={tira:{a:uFondo, b:uEmporio, lato:-latoEmp*2.6, vel:.07, tipo:0, traino:true}, scende:{a:uEmporio+3/lungoFiume, b:uFondo, lato:latoEmp*2.6, vel:.1, tipo:0},
+  monte:{a:uMilvio, b:uAurelio, lato:2.95, vel:.1, tipo:0}, remiSu:{a:uAurelio, b:uMilvio, lato:-2.95, vel:.1, tipo:1, remi:true}, remiValle:{a:uEmilio, b:uFondo, lato:-latoEmp*1.2, vel:.15, tipo:1, remi:true}};
+var ORDINE_B=['tira','monte','remiValle','tira','scende','remiSu','monte','tira','remiValle','scende','monte','tira','remiSu','scende','monte','remiValle'];
+var dati=ORDINE_B.map(function(c,i){ var C=CORSE[c]; return {c:C, nome:c, f:rnd(), fermo:0, fase:rnd()*6.28, x:0, z:0, ry:0, vis:false, mov:0, i:i}; });
+var frustB=new THREE.Frustum(), mPB=new THREE.Matrix4(), vB=new THREE.Vector3(), tB=0, mB2=new THREE.Matrix4(), qB=new THREE.Quaternion(), eB=new THREE.Euler(), sB=new THREE.Vector3(1,1,1), pB=new THREE.Vector3();
 function muoviBarche(dt){
-  var visibili=Math.round(NB*quotaBarche);
-  dati.forEach(function(b,k){
-    var T=TRATTI[b.tr], lato=b.dir*b.corsia, gira=0, e;
-    if(b.vira>0){ b.vira=Math.max(0,b.vira-dt/6); e=1-b.vira; e=e*e*(3-2*e); lato=-b.dir*b.corsia*Math.cos(Math.PI*e); gira=Math.PI*(1-e); }      // virata: attraversa la corrente e riparte dall'altra parte
-    else{ b.u+=b.dir*b.vel*dt/lungoFiume; if(b.u>T[1]||b.u<T[0]){ b.u=Math.max(T[0],Math.min(T[1],b.u)); b.dir=-b.dir; b.vira=1; lato=-b.dir*b.corsia; gira=Math.PI; } }
-    var p=fiume.getPointAt(b.u), tg=fiume.getTangentAt(b.u), s=k<visibili?1:0;
-    d.position.set(p.x-tg.z*lato,-.52,p.z+tg.x*lato); d.rotation.set(0,Math.atan2(-tg.z,tg.x)+(b.dir<0?Math.PI:0)-gira,0); d.scale.setScalar(s); d.updateMatrix(); barche.setMatrixAt(k,d.matrix);
+  var visibili=Math.round(NB*quotaBarche), cam=RM.camera.position, dtm=MENO_MOTO?0:dt, nC=0, nCL=0, nP=0, nPL=0, nR=0, nBu=0, nBv=0, nBl=0, nS=0;
+  tB+=dtm; mPB.multiplyMatrices(RM.camera.projectionMatrix,RM.camera.matrixWorldInverse); frustB.setFromProjectionMatrix(mPB);
+  var maxV=RM.QUALITA.barche[RM.q]||0, vicine=[];
+  dati.forEach(function(b,k){ b.vis=k<visibili; if(!b.vis) return;
+    var C=b.c, L=(C.b-C.a)*lungoFiume, mosso=0;
+    if(b.fermo>0){ b.fermo-=dtm; if(b.fermo<=0){ vB.set(b.x,-.4,b.z); if(frustB.containsPoint(vB)) b.fermo=5; else b.f=0; } }      // ormeggiata: ricomincia solo quando nessuno la guarda
+    else if(dtm>0 && !inPiena && !(C.traino && !tiroOk)){ b.f+=C.vel*dtm/Math.abs(L); mosso=1; if(b.f>=1){ b.f=1; b.fermo=60+((k*17)%40); } }
+    b.mov=mosso;
+    var u=C.a+(C.b-C.a)*b.f, p=fiume.getPointAt(u), tg=fiume.getTangentAt(u), n=[-tg.z,tg.x], dirS=C.b>C.a?1:-1, lat=C.lato;
+    if(C.traino && b.f>=.999){ lat=Math.sign(C.lato)*(riva(u,Math.sign(C.lato))-.5); }      // all'Emporio: accostata alla banchina
+    lat=corsia(u,lat);
+    b.x=p.x+n[0]*lat; b.z=p.z+n[1]*lat; b.ry=Math.atan2(-tg.z*dirS,tg.x*dirS); b.u=u; b.n=n; b.lat=lat; b.dirS=dirS; b.tg=tg;
+    if(C.traino && tiroOk!==true && b.f<.999){ var sr=Math.sign(C.lato); lat=sr*(riva(u,sr)-.6); b.x=p.x+n[0]*lat; b.z=p.z+n[1]*lat; }      // senza traino: ormeggiata alla riva
+    var dd=(b.x-cam.x)*(b.x-cam.x)+(-.5-cam.y)*(-.5-cam.y)+(b.z-cam.z)*(b.z-cam.z); b.d2=dd; vicine.push(b); });
+  vicine.sort(function(a,b2){ return a.d2-b2.d2; });
+  vicine.forEach(function(b,r){ var C=b.c, vera=r<maxV && b.d2<70*70, piccola=C.tipo===1, ampio=MENO_MOTO?0:(piccola?2:1);
+    eB.set(.012*ampio*Math.sin(tB*1.1+b.fase),b.ry,.008*ampio*Math.sin(tB*.8+b.fase*1.3),'YXZ'); qB.setFromEuler(eB); pB.set(b.x,-.5+.004*ampio*Math.sin(tB*1.4+b.fase),b.z); sB.set(1,1,1); mB2.compose(pB,qB,sB);      // beccheggio appena accennato
+    var m=piccola?(vera?mPV:mPL):(vera?mCV:mCL), c=piccola?(vera?nP++:nPL++):(vera?nC++:nCL++); m.setMatrixAt(c,mB2);
+    if(piccola && C.remi){ var fi=tB*3.2+b.fase, sw=b.mov?.42*Math.sin(fi):0, dip=b.mov?-.15-.07*Math.cos(fi):-.13;      // i remi: avanti e indietro, la pala giù mentre tira (fermi senza animazioni)
+      [1,-1].forEach(function(s){ eB.set(dip*s,0,0); var qr=new THREE.Quaternion().setFromEuler(new THREE.Euler(0,s>0?-sw:Math.PI+sw,0)); var qd=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0),-dip);      // la pala scende fino all'acqua (lo scalmo a 0,42 m, la pala a 2,9 m dallo scalmo)
+        var ql=qr.multiply(qd), q2=qB.clone().multiply(ql), off=new THREE.Vector3(-.4*MB,.42*MB,s*.85*MB).applyQuaternion(qB); pB.set(b.x+off.x,-.5+off.y,b.z+off.z); mB2.compose(pB,q2,sB); mRemi.setMatrixAt(nR++,mB2); }); }
+    if(C.traino && b.f<.999 && tiroOk===true){      // la coppia di buoi sulla riva, una cinquantina di metri avanti, e la corda all'albero
+      var sL=Math.sign(C.lato), uA=b.u+b.dirS*SALTO_BUOI/lungoFiume, pa=fiume.getPointAt(uA), na=normale(uA), ta=fiume.getTangentAt(uA), rw=rivaBuoi(uA,sL), bx=pa.x+na[0]*sL*rw, bz=pa.z+na[1]*sL*rw, by=(RM.hSuolo||RM.h)(bx,bz);
+      b.bx=bx; b.bz=bz; b.by=by; eB.set(0,Math.atan2(ta.x*b.dirS,ta.z*b.dirS),0); qB.setFromEuler(eB); pB.set(bx,by,bz); mB2.compose(pB,qB,sB);
+      var vic=RM.q!==0 && (bx-cam.x)*(bx-cam.x)+(by-cam.y)*(by-cam.y)+(bz-cam.z)*(bz-cam.z)<40*40, mb=vic?mBuoi:mBuoiL, nb=vic?nBv++:nBl++;      // da vicino la forma fine, da lontano e a «bassa» quella leggera
+      mb.setMatrixAt(nb,mB2); mb.geometry.attributes.fase.array[nb]=b.fase; mb.geometry.attributes.moto.array[nb]=b.mov; nBu++;
+      var top=new THREE.Vector3(ALB*MB,(.1+HALB)*MB,0).applyEuler(new THREE.Euler(0,b.ry,0)); vB.set(b.x+top.x,-.5+top.y,b.z+top.z);
+      var gio=new THREE.Vector3(0,.146,.084).applyQuaternion(qB).add(pB); d.position.copy(vB); d.lookAt(gio); d.scale.set(.006,.006,vB.distanceTo(gio)); d.updateMatrix(); mCorde.setMatrixAt(nBu-1,d.matrix); }
+    if(b.mov && (C.traino||C.remi)){ var lg=piccola?2:4.2, lr=piccola?.6:1.2, ri=b.ry; eB.set(0,ri,0); qB.setFromEuler(eB); var st=new THREE.Vector3(-(piccola?LP:LC)/2*MB*.9,0,0).applyQuaternion(qB);
+      pB.set(b.x+st.x,-.497,b.z+st.z); sB.set(lg,1,lr); mB2.compose(pB,qB,sB); mScie.setMatrixAt(nS++,mB2); sB.set(1,1,1); }
   });
-  barche.instanceMatrix.needsUpdate=true;
+  mCV.count=nC; mCL.count=nCL; mPV.count=nP; mPL.count=nPL; mRemi.count=nR; mBuoi.count=nBv; mBuoiL.count=nBl; mScie.count=nS; mCorde.count=nBu;
+  [mCV,mCL,mPV,mPL,mRemi,mBuoi,mBuoiL,mScie,mCorde].forEach(function(m){ m.visible=m.count>0; if(m.count) m.instanceMatrix.needsUpdate=true; });
+  [geoBuoi,geoBuoiL].forEach(function(g){ g.attributes.fase.needsUpdate=true; g.attributes.moto.needsUpdate=true; });
+  matScia.color.setScalar(1-.75*(RM.notte||0));
 }
+RM.barcheProva={ lista:function(){ return dati.map(function(b){ return {i:b.i, x:b.x, z:b.z, ry:b.ry, tipo:b.c.tipo, corsa:b.nome, vis:b.vis, mov:b.mov, bx:b.bx, bz:b.bz, by:b.by, f:b.f}; }); },      // per le prove
+  conta:function(){ return {visibili:dati.filter(function(b){ return b.vis; }).length, vere:mCV.count+mPV.count, buoi:mBuoi.count+mBuoiL.count, buoiVicini:mBuoi.count, triBue:Math.round(geoBuoi.attributes.position.count/3/2), triBueL:Math.round(geoBuoiL.attributes.position.count/3/2)}; },
+  interni:{fiume:fiume, riva:riva, normale:normale, corsia:corsia, CORSE:CORSE, uFondo:uFondo, uEmporio:uEmporio, uMilvio:uMilvio, uAurelio:uAurelio, uEmilio:uEmilio, latoEmp:latoEmp, lungo:lungoFiume, PONTI:PONTI_B} };
 
 RM.moduli.push(function(anno){
   annoOra=anno; vestiEpoca(anno);
   VA=vitaAnno(anno);      // assedi e città vuota (VITA_ANNI): il 546 di prima ora sta lì
   quotaGente=Math.min(1,D.interp(D.CURVE.popolazione.punti,anno)/900000);      // una figura ogni tante persone: la stessa proporzione in ogni secolo
-  quotaBarche=Math.max(Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60), RM.sfuma(845.5,846,anno)*(1-RM.sfuma(846.4,847.4,anno)));   // nell'846 il fiume si riempie delle navi saracene
+  quotaBarche=Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60); epocaBarche(anno); trattoTiro(anno);      // 26 novembre 2026: tolto l'aumento a 16 barche nell'846 (era per le navi saracene, che dal 23 novembre stanno in js/scene-tappe.js; le chiatte coi buoi non sono navi saracene)
   quotaPellegrini=D.interp(PELLEGRINI_NEL_TEMPO,anno);
   LUOGHI.forEach(function(L){ var on=anno>=L.da && anno<L.a; if(on && L.mon){ var q=RM.statoMonumento(L.mon,anno); on=q.s0==='uso' && !(q.s1!=='uso' && q.t>.5); } L.vis=on?1:0; if(L.porto) banchiVisibili(on && !!L.ok); });
   if(Math.abs(anno-annoVie)>=2) vieDaRifare=true;
@@ -789,7 +966,7 @@ RM.frame.push(function(dt){
 });
 /* per le prove: ?notte=1 accende la notte all'avvio (le catture senza finestra non possono premere «Notte») */
 if(/[?&]notte=1/.test(location.search)) setTimeout(function(){ if(RM.applicaLuce) RM.applicaLuce(1); },1500);
-RM.vitaProve={luoghi:LUOGHI, ronde:RONDE, vie:vie, libero:liberoQui, suIsolato:suIsolato, ostacoli:ostacoli, occupato:occupato};      // per le prove
+RM.vitaProve={luoghi:LUOGHI, ronde:RONDE, vie:vie, libero:liberoQui, suIsolato:suIsolato, ostacoli:ostacoli, occupato:occupato, carri:mCarri};      // per le prove
 RM.vitaConta=function(){ var c={persone:0, carri:mCarri.count, muli:mMuli.count, mercato:mMerc.visible?mMerc.count:0}, k; for(k=0;k<NP;k++) if(pos[k*3+1]>-50) c.persone++;
   figure.forEach(function(m){ c.persone+=m.count; }); c.luoghi={}; LUOGHI.forEach(function(L){ if(L.vis) c.luoghi[L.id]=L.nOk||0; }); return c; };      // quante figure ci sono ora (per le prove e per il rapporto)
 })();
