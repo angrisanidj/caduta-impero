@@ -15,6 +15,7 @@
 'use strict';
 var RM=window.RM, D=window.RM_DATI;
 if(!RM||RM.guasto||!RM.scene) return;
+var moduliPrima=RM.moduli.length;      // i moduli di questo file: alla fine si applicano all'anno d'apertura (più sotto, «la tappa d'apertura»)
 var P=RM.P, rnd=RM.casuale(312);
 var C={ rosso:RM.col(0x9a2f2a), grigio:RM.col(0x7b7f86), ferro:RM.col(0xa9adb3), tunica:RM.col(0xd9cfbf), pelle:RM.col(0xb98a6a), oro:RM.col(0xd4ae55), porpora:RM.col(0x6b2a5a),
         bianco:RM.col(0xeee8dc), cavalloB:RM.col(0x6b4a33), cavalloC:RM.col(0x9c8a74), folla:[RM.col(0xb5543e),RM.col(0x8c7a5b),RM.col(0xc9b48a),RM.col(0x6f7f6a),RM.col(0x9c6a48),RM.col(0xd8cdb6)] };
@@ -363,12 +364,14 @@ function sottoConta(tel,pc){
 var breveOra=null;
 function breve(t){ if(t===breveOra) return; breveOra=t; if(RM.didascaliaBreve) RM.didascaliaBreve(t); }      // q[3]: fonte e riserve del tempo in corso, nella didascalia ridotta (solo le scene che le danno: l'800)
 RM.frame.push(function(dt){
+  if(inAttesa){ if(inAttesa.seq.visibile()) riga(RIGA_ATTESA); else riga(null); return; }      // la scena aspetta la carta: lo si dice nella riga dei tempi
   var o=corrente; if(!o||!o.righe||MENO||FERMA!=null||o.t==null){ if(rigaEl&&rigaEl.style.display!=='none'&&(!o||o.t==null)) riga(null); if(!MENO && breveOra && (!o||o.t==null)) breve(null); return; }
   if(!o.visibile()){ riga(null); breve(null); return; }
   if(o.t>=o.fine){ dopo+=dt; if(dopo>4){ riga(null); breve(null); corrente=null; } return; }
   var r=null, f=null, st=window.innerWidth<700; o.righe.forEach(function(q){ if(o.t>=q[0]){ r=(st&&q[2])||q[1]; f=q[3]||null; } }); riga(r); breve(f);      // q[2]: la riga corta per il telefono (la frase intera resta nella didascalia)
 });
-function quadro(o){ o.disegna(FERMA!=null?Math.min(o.fine,FERMA):o.quadroT!=null?o.quadroT:o.fine); }      // la scena ferma, prima che parta o dopo (quadroT: un altro istante, se la fine non è il quadro giusto: l'800)
+function quadro(o){ if(o.attende){ o.disegna(0); giornoDiNuovo(); return; }      // aspetta il passo della carta (410, più sotto): la città prima del sacco, alla luce scelta da chi guarda
+  o.disegna(FERMA!=null?Math.min(o.fine,FERMA):o.quadroT!=null?o.quadroT:o.fine); }      // la scena ferma, prima che parta o dopo (quadroT: un altro istante, se la fine non è il quadro giusto: l'800)
 RM.frame.push(function(dt){
   SEQ.forEach(function(o){
     if(o.t==null || FERMA!=null || o.t>=o.fine || !o.visibile()) return;
@@ -2323,15 +2326,56 @@ function vista(v){
   if(Array.isArray(v)) return fissa(v[0],v[1],v[2],v[3]);
   return v;
 }
+/* La scena di Roma aspetta la carta (26 novembre 2026, l'utente: «410: l'animazione dell'assedio e del sacco nella mappa di Roma deve partire quando la mappa dell'impero
+   arriva al 410»). Nella tappa del 410 la regia della carta mostra prima il 408 e il 409: finché li mostra, la città resta ferma com'era prima del sacco (il primo quadro
+   della scena: il campo dei Goti fuori porta Salaria, la porta chiusa), con la luce di chi guarda e la vista d'insieme; quando la carta arriva al passo del 410 partono il volo
+   e la scena, come prima all'arrivo. Il segnale è quello dei fuochi: RM.passoCarta (js/eventi.js), chiamato da js/mappa.js. Se la regia della carta si ferma prima
+   (un tocco sulla carta) la scena parte subito; un passo della barra «Passo per passo» la rimette in attesa (408, 409) o la fa ripartire (410).
+   Non aspetta: con meno animazioni, a tutto schermo, sul telefono (la carta non si vede accanto alla città), con l'attesa del via della carta (la regia non gira) e nelle prove ferme. */
+var ASPETTA={410:S410.seq}, RIGA_ATTESA='La scena di Roma parte quando la carta arriva al 410', inAttesa=null, tappaOra=null;
+function cartaGuida(){
+  if(MENO || FERMA!=null || document.body.classList.contains('roma-grande') || window.innerWidth<=1000) return false;
+  var m=document.getElementById('mappa'); return !!(m && m.offsetWidth>0);
+}
+function attesa(t){
+  if(inAttesa) inAttesa.seq.attende=false; inAttesa=null; if(!t) return;
+  var o=ASPETTA[t.anno]; o.attende=true; inAttesa={t:t,seq:o};
+  fermaTutte(); quadro(o);                                                               // anche una scena già partita torna al quadro di prima del sacco
+  if(portata && RM.vistaInsieme){ if(RM.controlli) RM.controlli.minDistance=16; RM.vistaInsieme(); portata=false; }
+}
+function aspettaCarta(t){
+  if(!t || t.intermezzo || !ASPETTA[t.anno] || !cartaGuida()) return false;
+  if(RM.passoCartaOra!=null && RM.passoCartaOra>=t.anno) return false;                  // la carta è già al suo anno
+  if(!(window.RM_mappa && RM_mappa.inRegia && RM_mappa.inRegia())) return false;        // la regia della carta non gira (attesa del via, tocco): si parte subito
+  attesa(t); return true;
+}
+function parti(){ var t=inAttesa&&inAttesa.t; attesa(null); if(!t) return; if(document.body.classList.contains('roma-grande')) anima(t); else regia(t); }      // a tutto schermo, come al cambio di tappa: la vista resta dov'è, la scena parte
+RM.suPassoCarta && RM.suPassoCarta.push(function(y){
+  var t=tappaOra; if(!t || t.intermezzo || !ASPETTA[t.anno]) return;
+  if(inAttesa){
+    if(y!=null && y>=t.anno) parti();
+    else if(y==null) setTimeout(function(){ if(inAttesa && !(window.RM_mappa && RM_mappa.inRegia && RM_mappa.inRegia())) parti(); },80);      // null anche all'avvio della regia: si guarda un attimo dopo
+    return;
+  }
+  if(y!=null && y<t.anno && cartaGuida()) attesa(t);                                     // la carta ricomincia dal 408 (il ▶ o un passo della barra): la scena torna ad aspettare
+});
 if(window.RM_pagina) RM_pagina.quando(function(i,t){
+  attesa(null); tappaOra=t;
   fermaTutte();                                                                          // le scene animate della tappa di prima tornano al loro quadro
   if(document.body.classList.contains('roma-grande')){ anima(t); return; }               // a tutto schermo decide chi guarda: la vista resta dov'è, la scena parte
   var telefono=window.innerWidth<=1000; if(telefono && scena()!=='roma') return;         // sul telefono la città non si apre da sola
   regia(t);
 });
+/* la tappa d'apertura (indirizzo diretto, #410) è scelta da js/pagina.js prima che questo file ascolti: se è una che aspetta la carta e la regia della carta gira,
+   la scena parte quando la carta arriva al suo anno; se la regia aspetta il via («▶ Guarda la scena»), parte dopo il via, allo stesso passo */
+/* (26 novembre 2026) js/pagina.js applica l'anno d'apertura prima che questo file ci sia: le scene dell'anno restavano nascoste finché l'anno non cambiava
+   (con l'indirizzo #410 la porta Salaria era vuota). Qui si applicano una volta i moduli di questo file all'anno in cui la pagina si apre. */
+if(window.RM_pagina && RM_pagina.annoOra){ var annoApertura=RM_pagina.annoOra(); RM.moduli.slice(moduliPrima).forEach(function(f){ f(annoApertura); }); }
+if(window.RM_pagina && D.TAPPE){ tappaOra=D.TAPPE[RM_pagina.tappa()]||null; aspettaCarta(tappaOra); }
 /* chiamata anche dalla riga «A Roma, in quest'anno» del telefono (js/pagina.js), dopo aver aperto la città */
 RM.regiaTappa=function(t){ regia(t); };
 function regia(t){
+  if(aspettaCarta(t)) return;                                                            // 410: volo e scena aspettano il passo della carta
   var ev=null; (D.EVENTI||[]).forEach(function(e){ if(!ev && Math.floor(e.da)===t.anno && !t.intermezzo) ev=e; });
   var v=ev?vista(ev.vista):null;
   if(v&&v.t) v=inquadra(v);                                                              // sul telefono in piedi la camera si allontana, e guarda un poco più in basso

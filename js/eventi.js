@@ -171,7 +171,8 @@ var fuocoCarta=1, fuocoMira=1;
 var tempiScena={};
 RM.tempoFuochi=function(id,t){ tempiScena[id]=t; };
 function ritardo(f){ var t=tempiScena[f.ev.id]; return (f.rit==null||t==null)?1:RM.sfuma(f.rit,f.rit+1.5,t); }
-RM.passoCarta=function(y,anno){ fuocoMira=(y!=null && anno!=null && y<Math.floor(anno))?0:1; };
+RM.passoCarta=function(y,anno){ fuocoMira=(y!=null && anno!=null && y<Math.floor(anno))?0:1; RM.passoCartaOra=y; RM.suPassoCarta.forEach(function(f){ f(y,anno); }); };      // passoCartaOra e suPassoCarta: anche la messa in scena del 410 aspetta il suo passo (js/scene-tappe.js)
+RM.passoCartaOra=null; RM.suPassoCarta=[];
 var acceso=false;
 RM.moduli.push(function(anno){
   scrivi(anno); pienaEVelo();

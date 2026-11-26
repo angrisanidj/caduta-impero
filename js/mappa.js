@@ -1051,6 +1051,7 @@ window.RM_mappa={
   grande:grande,
   miniatura:miniatura,
   fermaRegia:fermaRegia,      // per le prove: riporta subito la carta alla vista intera, senza aspettare la fine dello zoom
+  inRegia:function(){ return !!(regia && passiOra && !regia.fine); },      // la regia sta mostrando i passi della tappa: la città aspetta il suo anno (js/scene-tappe.js, 410)
   /* le voci di legenda presenti in una o più carte, con i nomi che valgono nell'anno dato: [colore o fondo, nome] */
   vociPresenti:function(elenco,anno){
     var ci={}, out=[]; elenco.forEach(function(stati){ for(var id in regioni) ci[stati[id]||'perso']=1; });
