@@ -732,7 +732,7 @@ function mostraPopoli(anno){
   var posti=[], qui={};
   for(id in popoli){
     var p=popoli[id], q=p.q, s=statoPopolo(id,anno), u=s.u, via=s.via, cl=s.cl, v=s.v, nome=s.nome;
-    p.g.setAttribute('class','m-popolo '+cl); p.g.style.transform='translate('+v[1]+'px,'+v[2]+'px)';
+    p.g.setAttribute('class','m-popolo '+cl); p.g.style.transform='translate('+v[1]+'px,'+v[2]+'px)'; p.v=v; p.via=via;      // p.v serve a segnaVivi
     if(p.nome!==nome){ p.nome=nome; p.t.textContent=nome; }
     var d='', da=Math.max(0,u-1), tratti=0;      // solo l'ultimo tratto: il cammino che ha portato il gruppo dov'è ora
     if(!via && anno-q.t[u][0]<=(cl==='regno'?5:25)) for(i=da;i<=u;i++){ if(i<u && q.t[u][0]-q.t[i][0]>40) continue; if(i>da && q.t[i][1]===q.t[i-1][1] && q.t[i][2]===q.t[i-1][2]) continue; if(d){ tratti++; if(q.t[i][4]) for(var w=0;w<q.t[i][4].length;w++) d+='L'+q.t[i][4][w][0]+' '+q.t[i][4][w][1]; } d+=(d?'L':'M')+q.t[i][1]+' '+q.t[i][2]; }
@@ -756,7 +756,18 @@ function mostraPopoli(anno){
     p.c.style.transform='translate('+(r[0]-v[1]).toFixed(1)+'px,'+o[1].toFixed(1)+'px)';
   }
   ultimiTesti=posti.concat(messi.slice(fp.length),(scenaFatta&&scenaFatta.etichette)||[]); ultimiFissi=fissi; sistemaSegni(ultimiTesti,ultimiFissi);
+  segnaVivi();      // le classi dei gruppi sono appena state riscritte
   return visti;
+}
+/* Con una voce degli stati accesa (o un tetrarca, o un fratello di Verdun) restano vivi i popoli il cui punto cade in una regione accesa: punto, cartellino e rotta
+   (26 novembre 2026, l'utente: «quando faccio un click su una pillola il nome ("Unni" in questo caso), va visto»); gli altri restano attenuati (css/carta.css) */
+function segnaVivi(){
+  var acc=[], id, k, p, si, pt=svg.createSVGPoint();
+  if(svg.classList.contains('m-fuoco')) for(k in regioni) if(regioni[k].classList.contains('acceso')) acc.push(regioni[k]);
+  for(id in popoli){ p=popoli[id]; si=false;
+    if(acc.length && p.v && !p.via){ pt.x=p.v[1]; pt.y=p.v[2]; for(k=0;k<acc.length && !si;k++){ try{ si=acc[k].isPointInFill(pt); }catch(e){} } }
+    p.g.classList.toggle('vivo',si); p.rotta.classList.toggle('vivo',si); p.sotto.classList.toggle('vivo',si);
+  }
 }
 
 /* Le legende mostrano solo ciò che c'è sulla carta in quella tappa, e le voci cambiano nome col tempo (l'impero «d'Occidente» esiste dal 395).
@@ -791,6 +802,7 @@ function applicaFuoco(){
   for(k in vociStati) vociStati[k].v.setAttribute('aria-pressed',k===fuoco?'true':'false');
   for(k in vociPopoli) vociPopoli[k].setAttribute('aria-pressed',k===fuocoP?'true':'false');
   legenda.classList.toggle('con-fuoco',!!fuoco); if(legendaPopoli) legendaPopoli.classList.toggle('con-fuoco',!!fuocoP);
+  segnaVivi();
 }
 function voceCliccabile(v,fa){
   v.setAttribute('role','button'); v.tabIndex=0; v.setAttribute('aria-pressed','false'); v.addEventListener('click',fa);

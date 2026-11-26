@@ -87,6 +87,7 @@ body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
 .m-regione{transition:color .9s ease,opacity .35s ease}
 #mappa svg.m-fuoco .m-regione:not(.acceso){opacity:.16}
 #mappa svg.m-fuoco .m-popolo:not(.via),#mappa svg.m-fuoco .m-rotta:not(.via),#mappa svg.m-fuoco .m-rotta-f:not(.via){opacity:.3}
+#mappa svg.m-fuoco .m-popolo.vivo:not(.via),#mappa svg.m-fuoco .m-rotta.vivo:not(.via),#mappa svg.m-fuoco .m-rotta-f.vivo:not(.via){opacity:1}      /* il popolo che sta sulle terre accese resta leggibile (segnaVivi in js/mappa.js) */
 #mappa svg[data-fuoco] .m-popolo:not(.via),#mappa svg[data-fuoco] .m-rotta:not(.via){opacity:.18}
 #mappa svg[data-fuoco="fuori"] .m-popolo.fuori,#mappa svg[data-fuoco="accordo"] .m-popolo.accordo,#mappa svg[data-fuoco="armi"] .m-popolo.armi,#mappa svg[data-fuoco="regno"] .m-popolo.regno,
 #mappa svg[data-fuoco="fuori"] .m-rotta.fuori,#mappa svg[data-fuoco="accordo"] .m-rotta.accordo,#mappa svg[data-fuoco="armi"] .m-rotta.armi{opacity:1}
