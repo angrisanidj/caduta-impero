@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 26/11/2026, 22:54:21.
+Generato da `src/testi.mjs` il 26/11/2026, 23:47:23.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -143,7 +143,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.64] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.65] Versione del 26/11/2026, ore 22:34
+[pagina.65] Versione del 26/11/2026, ore 23:06
 
 
 ## 2. Gli atti
@@ -2857,7 +2857,55 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.marforio.data7] Sta nel cortile di Palazzo Nuovo, ai Musei Capitolini.
 
-[scheda.marforio.certezza-C] La statua esiste ed è nota; nel modello la forma è semplificata, senza la conchiglia del restauro del 1594. Il posto davanti al Carcere è attestato dal Medioevo; verso l'800 solo se il «Tiberis» dell'Itinerario di Einsiedeln è questa statua, come pensano gli studiosi; prima è un'ipotesi. Punto preciso e orientamento sono una nostra scelta.
+[scheda.marforio.certezza-C] La statua esiste ed è nota; nel modello la posa viene dalle fotografie della statua di oggi, le forme sono semplificate e manca la conchiglia del restauro del 1594 (la mano destra poggia sul ginocchio: scelta). Il posto davanti al Carcere è attestato dal Medioevo; verso l'800 solo se il «Tiberis» dell'Itinerario di Einsiedeln è questa statua, come pensano gli studiosi; prima è un'ipotesi. Punto preciso e orientamento sono una nostra scelta.
+
+
+### Regia
+
+[scheda.regia.nome] Regia
+
+[scheda.regia.cosa] La Regia, nel Foro, accanto al tempio di Vesta e lungo la via Sacra. La tradizione la diceva la casa del re Numa; in età storica era un luogo sacro, la sede del pontefice massimo e dei pontefici, con un sacrario di Marte dove si conservavano le sue lance. Dopo il restauro del 36 a.C. era un piccolo edificio di blocchi di marmo bianco, lungo circa 22 metri e largo 8, con tre stanze; davanti, verso la via Sacra, un cortile lastricato di marmo con due pozzi e una cisterna.
+
+[scheda.regia.data1.quando] 36 a.C.
+
+[scheda.regia.data1] Gneo Domizio Calvino la ricostruisce in marmo: un edificio «piccolo ma di rara bellezza», scrive Cassio Dione.
+
+[scheda.regia.data2.quando] III-IV secolo
+
+[scheda.regia.data2] È ancora nominata nel III secolo e, probabilmente, nel IV (Platner e Ashby).
+
+[scheda.regia.data3-392] Nel modello è chiusa dal 392, dopo le leggi di Teodosio, come i templi: è una nostra scelta. Resta abbandonata, ma in piedi.
+
+[scheda.regia.data4.quando] VII-VIII secolo
+
+[scheda.regia.data4] Diventa una casa privata. Verso la via Sacra si sale per due gradini rozzi di marmo e travertino, su cui sta una fila di colonne di cipollino prese da un edificio antico. Nel modello dal 700: l'anno esatto non si sa.
+
+[scheda.regia.data5.quando] oggi
+
+[scheda.regia.data5] Restano le fondazioni e i filari più bassi dei muri, molti pezzi di marmo e le tracce della casa medievale. I blocchi coi fasti consolari, che erano scritti sui suoi muri, stanno nel Palazzo dei Conservatori.
+
+[scheda.regia.certezza-B] Le fondazioni danno la pianta della parte principale e del cortile (Platner e Ashby); altezze e coperture del modello sono una nostra scelta. La chiusura nel 392 e l'anno della casa privata (VII o VIII secolo) sono una nostra scelta.
+
+
+### Templi del Foro Olitorio
+
+[scheda.olitorio.nome] Templi del Foro Olitorio
+
+[scheda.olitorio.cosa] Tre templi uno accanto all'altro, con la stessa orientazione, rivolti verso il Foro Olitorio, il mercato degli ortaggi fra il Campidoglio e il Tevere. Il più grande, al centro, era probabilmente il tempio della Speranza: ionico, lungo circa 30 metri e largo 10, con sei colonne davanti e sei dietro e una scalinata alta. Quello a nord, ionico, con colonne sulla fronte e sui fianchi, è di solito detto di Giano; il più piccolo, a sud, dorico, di Giunone Sospita. I nomi sono quelli più accettati, ma gli studiosi non sono tutti d'accordo.
+
+[scheda.olitorio.data1.quando] III-II secolo a.C.
+
+[scheda.olitorio.data1] I templi vengono costruiti durante e dopo le guerre puniche: Giano da Duilio dopo la vittoria di Milazzo, la Speranza da Atilio Calatino; Giunone Sospita viene promesso in voto nel 197 a.C.
+
+[scheda.olitorio.data2-17] Tiberio e Germanico dedicano i templi di Giano e della Speranza, restaurati.
+
+[scheda.olitorio.data3-392] Nel modello i templi sono chiusi dal 392, come gli altri: è una nostra scelta. Le fonti lette non ne parlano più; nel modello restano in piedi.
+
+[scheda.olitorio.data4.quando] oggi
+
+[scheda.olitorio.data4] Le colonne e parte dei muri dei tre templi sono murate nella chiesa di San Nicola in Carcere: sei colonne di Giano, tre della Speranza nella facciata, cinque di Giunone Sospita con un tratto della trabeazione.
+
+[scheda.olitorio.certezza-B] Restano colonne e muri dei tre templi dentro San Nicola in Carcere; ordine, numero delle colonne sulla fronte e misure del tempio centrale sono noti (Platner e Ashby). I nomi dei tre templi sono discussi. Le misure dei due templi laterali, il numero delle colonne sui fianchi e l'orientamento esatto sono una nostra scelta, come la chiusura nel 392.
 
 
 ### Tempio di Saturno
@@ -3114,6 +3162,54 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.settizodio.data6] Non ne resta nulla in piedi.
 
 [scheda.settizodio.certezza-B] Scomparso. La forma generale è nota dalla pianta di marmo di Roma e dai disegni del Rinascimento (Platner e Ashby); misure e altezza del modello sono indicativi. Il posto è quello di Wikidata, all'angolo sud-est del Palatino, dove lo mettono le fonti. Nel modello la facciata guarda verso porta Capena, da dove arrivava la via Appia: l'angolo esatto è una nostra scelta.
+
+
+### Tempio della Magna Mater
+
+[scheda.magnamater.nome] Tempio della Magna Mater
+
+[scheda.magnamater.cosa] Il tempio della Grande Madre, Cibele, all'angolo ovest del Palatino. Dentro si custodiva la pietra nera portata nel 204 a.C. da Pessinunte, in Asia Minore, che rappresentava la dea. Era corinzio, con sei colonne sulla fronte, lungo 33 metri e largo 17, su un podio massiccio, con una scalinata larga quanto la fronte. Davanti si tenevano i giochi in onore della dea.
+
+[scheda.magnamater.data1.quando] 191 a.C.
+
+[scheda.magnamater.data1] Il tempio viene dedicato l'11 aprile.
+
+[scheda.magnamater.data2.quando] 3 d.C.
+
+[scheda.magnamater.data2] Brucia e Augusto lo ricostruisce.
+
+[scheda.magnamater.data3.quando] IV secolo
+
+[scheda.magnamater.data3] I Cataloghi delle regioni lo nominano: è ancora in piedi e intatto.
+
+[scheda.magnamater.data4-392] Nel modello il tempio è chiuso dal 392, come gli altri: è una nostra scelta. Da qui resta abbandonato, ma in piedi.
+
+[scheda.magnamater.data5.quando] oggi
+
+[scheda.magnamater.data5] Resta il podio, fatto di pezzi di tufo e peperino legati con molta malta, con pezzi delle colonne e della trabeazione. Lì accanto sono state trovate iscrizioni dedicate alla dea e parte di una grande statua femminile in trono.
+
+[scheda.magnamater.certezza-B] Restano il podio e pezzi delle colonne; lunghezza, larghezza, ordine e numero delle colonne sono noti (Platner e Ashby). Altezze e orientamento sono una nostra scelta; il tempio sta sul ciglio del colle del modello, un poco più a est del punto vero, perché il modello ha il colle più stretto.
+
+
+### Domus Tiberiana
+
+[scheda.tiberiana.nome] Domus Tiberiana
+
+[scheda.tiberiana.cosa] Il palazzo che Tiberio fece costruire sulla metà nord-ovest del Palatino, verso il Foro e il Campidoglio. Bruciò nell'80 e Domiziano lo ricostruì. Era un grande rettangolo, di circa 100 metri per 150, con un ampio cortile a pilastri nel mezzo; buona parte poggiava su alte sostruzioni ad arcate. Sopra il clivo della Vittoria, verso il Foro, correva un balcone a due ordini. Nel modello il pianoro del colle è più piccolo del vero: il palazzo è ridotto a 100 metri per 60 e le forme sono uno schema.
+
+[scheda.tiberiana.data1-80] Brucia nell'incendio dell'80; Domiziano lo ricostruisce.
+
+[scheda.tiberiana.data2.quando] IV secolo
+
+[scheda.tiberiana.data2] I Cataloghi delle regioni nominano la «casa Tiberiana» nella regione del Palatino.
+
+[scheda.tiberiana.data3-713] Le fonti lette non dicono che cosa ne fu dopo. Nel modello segue il resto del palazzo: abbandonato dal 720, ma in piedi. È una nostra scelta.
+
+[scheda.tiberiana.data4.quando] oggi
+
+[scheda.tiberiana.data4] Restano le grandi sostruzioni sul lato del Foro; sopra, dove stava il palazzo, c'è un giardino.
+
+[scheda.tiberiana.certezza-C] Del palazzo restano soprattutto le sostruzioni; la pianta sul colle è poco nota (Platner e Ashby). Nel modello è uno schema, ridotto di misura e un poco spostato per stare sul pianoro del colle; il destino dopo il IV secolo è una nostra scelta.
 
 
 ### Pantheon
@@ -4791,6 +4887,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.esculapio.data5] Sorge la chiesa di San Bartolomeo, voluta dall'imperatore Ottone III, secondo Turismo Roma, il sito del Comune; Platner e Ashby non danno la data. È dopo il periodo raccontato, e per questo nel modello la chiesa non c'è.
 
 
+### regiacasa
+
+[scheda.regiacasa.certezza-C] I gradini e la fila di colonne di cipollino della casa medievale sono descritti da Platner e Ashby; il numero delle colonne, la trave e l'anno sono una nostra scelta.
+
+
 ### fangocirco
 
 [scheda.fangocirco.certezza-C] Col tempo la pista divenne paludosa e fu ricoperta da sedimenti. Non sappiamo quale aspetto avesse già assunto nell'852.
@@ -4813,7 +4914,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 ### Chiese minori (solo i nomi)
 
-[chiese.nomi] San Marco · Santa Maria in Trastevere · San Lorenzo in Lucina · Santi Nereo e Achilleo · Sant'Anastasia · San Lorenzo in Damaso · Santa Susanna · San Crisogono · San Clemente · Santa Pudenziana · Santi Giovanni e Paolo · Santa Balbina · San Vitale · San Pietro in Vincoli · Santa Cecilia · Santi Quattro Coronati · Sant'Agata dei Goti · Santa Bibiana · Santa Prassede · San Martino ai Monti · Santa Maria in Cosmedin · Santa Maria Antiqua · Santi Apostoli · San Gregorio al Celio · San Teodoro · Santa Lucia in Selci · San Saba · Santa Maria in via Lata · Santa Maria in Domnica · Sant'Eustachio · Santa Maria in Aquiro · San Giorgio al Velabro · Santa Maria in Campo Marzio · Sant'Angelo in Pescheria · San Silvestro in Capite · Sant'Apollinare · San Vito · San Bonifacio · Santa Maria Domine Rose
+[chiese.nomi] San Marco · Santa Maria in Trastevere · San Lorenzo in Lucina · Santi Nereo e Achilleo · Sant'Anastasia · San Lorenzo in Damaso · Santa Susanna · San Crisogono · San Clemente · Santa Pudenziana · Santi Giovanni e Paolo · Santa Balbina · San Vitale · San Pietro in Vincoli · Santa Cecilia · Santi Quattro Coronati · Sant'Agata dei Goti · Santa Bibiana · Santa Prassede · San Martino ai Monti · Santa Maria in Cosmedin · Santa Maria Antiqua · Santi Apostoli · San Gregorio al Celio · San Teodoro · Santa Lucia in Selci · San Saba · Santa Maria in via Lata · Santa Maria in Domnica · Sant'Eustachio · Santa Maria in Aquiro · San Giorgio al Velabro · Santa Maria in Campo Marzio · Sant'Angelo in Pescheria · San Silvestro in Capite · Sant'Apollinare · San Vito · San Bonifacio · Santa Maria Domine Rose · Santa Prisca · San Sisto Vecchio · San Marcello · Sant'Eusebio · San Giovanni a Porta Latina · Santa Martina
 
 
 ## 7. Il percorso del pellegrino

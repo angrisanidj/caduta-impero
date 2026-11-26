@@ -636,18 +636,117 @@ var M=[
     di Traiano e Sant'Adriano, dove si passa «per arcum Severi», in due percorsi; che sia il Marforio lo dicono gli studiosi (Encyclopaedia Romana, voce Umbilicus; Nichols 1889), non il
     codice. I Mirabilia (dopo il 1143, Nichols 1889): «Ante privatam Mamertini, templum Martis, ubi nunc iacet simulacrum eius»; la Sovrintendenza: presso San Pietro in Carcere, di
     fronte ai Santi Luca e Martina, fino al 1588. Qui: sdraiato a terra davanti al Carcere (nel modello a x -5,92, z -7,14, gruppo campidoglio), dal lato del Foro, fuori dalla strada
-    (1,4 unità dall'asse della più vicina). Il punto esatto e l'orientamento sono una scelta; posa e forme a superfici lisce (pelle) sono indicative. Lunghezza lungo z locale. */
+    (1,4 unità dall'asse della più vicina). Il punto esatto e l'orientamento sono una scelta; posa e forme a superfici lisce (pelle) sono indicative. Lunghezza lungo z locale.
+    Rifatto la sera del 26 novembre 2026 (l'utente: era «una specie di mummia»). Posa presa da due fotografie della statua vera su Wikimedia Commons, guardate quel giorno («0 Marforio
+    - Cortile del Palazzo Nuovo - Musei Capitolini (MC0001).jpg» e «Marforio Musei Capitolini cortile Roma.jpg»): sdraiato sul fianco sinistro, il busto sollevato e piegato di lato,
+    il gomito sinistro appoggiato a un sostegno coperto dal mantello e la mano che pende in avanti; il torso nudo e muscoloso guarda chi passa; la testa dritta, con la barba lunga e
+    divisa in ciocche e i capelli lunghi e mossi che scendono sulle spalle; il mantello avvolto ai fianchi copre le gambe, distese, con la destra piegata e il ginocchio alzato; il
+    piede sinistro nudo sporge in fondo. Nella statua di oggi la destra tiene la conchiglia del restauro del 1594: qui la conchiglia non c'è e la mano poggia sul ginocchio (scelta
+    nostra). Misure: lunga 6,10 m, alta 2,42 col suo basamento di roccia (Musei Capitolini). Le misure qui sotto sono in metri (m() le porta in unità). Circa 6.800 triangoli (contati nella pagina). */
  {id:'marforio', nome:'Marforio (statua di un dio fluviale)', etichetta:'Marforio', x:-5.3,z:-5.9, ry:.9, come:'fori', zone:[], fa:function(B){
-    var M=P.marmo;
+    var M=P.marmo, FR=[1,0,0], DI=[-1,0,0], k, B0=B;
+    B=Object.create(B0); B.geo=function(g,c){      // tutto di marmo, ma col tipo delle statue (P.statua: niente conci, crepe né crolli, che sulla pietra liscia disegnavano filari di muro)
+      if(!g.attributes.color){ var n=g.attributes.position.count, a=new Float32Array(n*3); for(var i=0;i<n;i++){ a[i*3]=M.r; a[i*3+1]=M.g; a[i*3+2]=M.b; } g.setAttribute('color',new THREE.BufferAttribute(a,3)); }
+      return B0.geo.call(this,g,P.statua); };
+    function m(l){ return l.map(function(q){ return [q[0]*.1,q[1]*.1,q[2]*.1,q[3]*.1,(q[4]==null?q[3]:q[4])*.1]; }); }      // anelli in metri: [x, y, z, raggio in x, raggio nell'altro verso]
+    function pz(r,x,y,z,sx,sy,sz,lati){ return palla(B,r*.1,x*.1,y*.1,z*.1,M,sx,sy,sz,lati||6); }
+    function dito(l,r){ for(var q=0;q<l.length-1;q++) arto(B,[l[q][0]*.1,l[q][1]*.1,l[q][2]*.1],[l[q+1][0]*.1,l[q+1][1]*.1,l[q+1][2]*.1],r*.1*(1-.15*q),r*.1*(1-.15*(q+1)),M,5,false); }
+    function pieghe(t0,t1,passo,dir,wa,h){ var o=[]; for(var t=t0;t<=t1;t+=passo) o.push({t:t,wt:passo*.42,dir:dir,wa:wa,h:h}); return o; }      // pieghe di stoffa di traverso (più larghe del passo degli anelli, se no non si vedono)
     B.dentro(0,.05,0,0,function(B){      // il piano del Foro del modello sta 5 dm sotto il suolo disegnato qui
-      /* sdraiato sul fianco sinistro, il petto verso +x: negli anelli [x, y, z, profondità (x), larghezza (y o z)] la larghezza del corpo sta in verticale */
-      pelle(B,[[0,.028,.3,.022,.028],[0,.044,.2,.036,.044],[0,.055,.12,.045,.055],[0,.07,.03,.055,.074],[0,.084,-.04,.06,.086],[.005,.115,-.1,.055,.08],[.01,.155,-.15,.06,.088],[.012,.185,-.18,.054,.085],[.012,.205,-.196,.03,.03]],M,12,{sudd:2});      // il corpo, dai piedi alle spalle, col busto sollevato
-      pelle(B,[[.004,.04,.23,.032,.05],[.004,.058,.12,.052,.064],[.004,.072,.03,.064,.082],[.006,.086,-.04,.068,.092],[.01,.1,-.075,.062,.088]],M,12,{sudd:2});      // il mantello sulle gambe e sui fianchi
-      palla(B,.04,.014,.238,-.205,M,1,1.08,1,10); palla(B,.03,.038,.212,-.2,M,.8,1.1,1,8);                                  // la testa e la barba, verso +x
-      arto(B,[0,.15,-.19],[.004,.03,-.13],.026,.022,M,6); arto(B,[.004,.03,-.13],[.08,.024,-.15],.022,.018,M,6);          // il braccio sinistro: il gomito a terra regge il busto
-      arto(B,[.01,.205,-.16],[.05,.15,-.08],.024,.02,M,6); arto(B,[.05,.15,-.08],[.055,.11,.02],.02,.017,M,6);             // il braccio destro, posato sul fianco
+      /* il basamento: un masso basso e irregolare, più alto sotto il gomito (il sostegno coperto dal mantello) */
+      pelle(B,m([[0,0,-3.05,.4,.12],[-.05,.1,-2.7,.72,.42],[-.05,.18,-1.75,.82,.5],[0,.06,-.6,.86,.32],[0,.05,.8,.84,.3],[0,.05,2.1,.8,.29],[0,.04,2.85,.66,.26],[0,0,3.08,.35,.1]]),M,12,{sudd:1,patina:1.6,
+        muscoli:[{t:1.2,wt:.4,dir:[.6,.8,0],wa:.5,h:.1},{t:2.5,wt:.5,dir:FR,wa:.4,h:-.06},{t:3.6,wt:.4,dir:[.7,.7,0],wa:.4,h:.07},{t:4.6,wt:.6,dir:[.3,1,0],wa:.5,h:-.05},{t:5.7,wt:.5,dir:FR,wa:.5,h:.06}]});
+      /* il torso: dai glutei al collo, piegato di lato (sale piano dai fianchi, poi si raddrizza), il petto verso +x. Negli anelli il primo raggio è la profondità del corpo, il
+         secondo la larghezza da un fianco all'altro. Muscoli come sulla statua: pettorali pieni, addominali segnati, il ventre un poco pesante, le costole sul fianco destro */
+      var MT=[{t:4.2,wt:1.5,dir:FR,wa:.07,h:-.05},{t:3.05,wt:.18,dir:FR,wa:.12,h:-.05},{t:2.9,wt:.7,dir:FR,wa:.6,h:.05},{t:6.9,wt:.4,dir:FR,wa:.12,h:-.06},{t:4,wt:3,dir:DI,wa:.1,h:-.06}];      // linea alba, ombelico, ventre, fossetta del collo, solco della schiena
+      [-1,1].forEach(function(q){ MT.push(
+        {t:5.55,wt:.62,dir:[.84,q*.18,q*.5],wa:.45,h:.13},{t:4.9,wt:.22,dir:[.86,q*.15,q*.48],wa:.45,h:-.05},                       // pettorale e il suo margine
+        {t:4.4,wt:.16,dir:[.97,0,q*.25],wa:.17,h:.05},{t:3.95,wt:.16,dir:[.97,0,q*.25],wa:.17,h:.055},{t:3.5,wt:.16,dir:[.97,0,q*.25],wa:.17,h:.05},      // addominali
+        {t:2.3,wt:.4,dir:[.75,q*.3,q*.6],wa:.3,h:-.07},{t:2.6,wt:.45,dir:[.55,q*.4,q*.75],wa:.35,h:.07},                           // solco dell'inguine e cresta del fianco
+        {t:6.6,wt:.6,dir:[.2,q*.35,q*.92],wa:.5,h:.14},{t:6.3,wt:.9,dir:[-.6,q*.25,q*.7],wa:.5,h:.07}); });                       // deltoidi, scapole
+      [4.1,4.5,4.9].forEach(function(t){ MT.push({t:t,wt:.13,dir:[.45,.35,.82],wa:.3,h:.05}); });                                // le costole del fianco destro, tese
+      pelle(B,m([[-.04,.6,.62,.28,.36],[-.02,.73,.37,.35,.48],[0,.85,.12,.36,.5],[.01,.98,-.13,.32,.43],[.02,1.13,-.35,.35,.48],[.03,1.29,-.54,.39,.54],[.03,1.44,-.68,.4,.58],
+        [.03,1.58,-.75,.36,.6],[.03,1.67,-.77,.24,.42],[.06,1.77,-.79,.17,.17],[.08,1.9,-.8,.16,.16]]),M,18,{sudd:2,muscoli:MT,forza:2.3,patina:3.4});
+      /* la testa, dritta, il volto verso +x: mento, mascella, zigomi, fronte, calotta */
+      var MF=[{t:4.55,wt:.3,dir:FR,wa:.7,h:.07}];                                                                                   // l'arcata delle sopracciglia
+      [-1,1].forEach(function(q){ MF.push({t:4.15,wt:.25,dir:[.93,0,q*.36],wa:.2,h:-.11},{t:3.4,wt:.35,dir:[.75,0,q*.65],wa:.3,h:.06}); });      // orbite e zigomi
+      pelle(B,m([[.12,1.85,-.82,.06],[.12,1.89,-.82,.21,.18],[.11,1.97,-.82,.27,.21],[.1,2.08,-.82,.29,.225],[.09,2.18,-.82,.3,.23],[.08,2.27,-.82,.28,.225],[.07,2.35,-.82,.2,.17],[.07,2.39,-.82,.05]]),M,16,{sudd:2,muscoli:MF,forza:1.2,patina:2});
+      pelle(B,m([[.34,2.19,-.82,.03,.025],[.37,2.13,-.82,.035,.03],[.41,2.07,-.82,.045,.042],[.39,2.035,-.82,.035,.03]]),M,8,{sudd:2});      // il naso
+      [-1,1].forEach(function(q){ pz(.032,.31,2.155,-.82+q*.09,1,.8,1.1); pz(.05,.36,2.005,-.82+q*.055,.6,.45,1.5); });             // gli occhi, i baffi
+      /* la barba: lunga, piena, divisa in ciocche, scende sul petto */
+      var MB=[]; for(k=-4;k<=4;k++){ var aa=k*.36; MB.push({t:2.3,wt:2.2,dir:[Math.cos(aa),0,Math.sin(aa)],wa:.2,h:-.4}); }      // le ciocche: solchi larghi almeno quanto il passo dei vertici
+      [1.2,2.4,3.4].forEach(function(t){ MB.push({t:t,wt:.25,dir:FR,wa:.9,h:.08}); });
+      pelle(B,m([[.31,1.56,-.82,.05,.06],[.3,1.65,-.82,.12,.16],[.27,1.77,-.82,.18,.23],[.23,1.9,-.82,.19,.255],[.19,1.99,-.82,.16,.25],[.15,2.07,-.82,.1,.23]]),M,22,{sudd:2,muscoli:MB,patina:3.2});
+      /* i capelli: la massa dietro e ai lati, lunga fino alle spalle, e le ciocche mosse attorno al volto */
+      var MC=[]; for(k=0;k<10;k++){ var ac=k*.63; MC.push({t:2+k%3*.9,wt:1.6,dir:[Math.cos(ac),0,Math.sin(ac)],wa:.22,h:-.14}); }
+      pelle(B,m([[-.02,2.44,-.82,.06],[0,2.4,-.82,.23,.22],[-.03,2.3,-.82,.28,.26],[-.06,2.15,-.82,.28,.28],[-.1,2,-.82,.23,.28],[-.13,1.84,-.8,.17,.27],[-.14,1.72,-.78,.08,.18]]),M,16,{sudd:2,muscoli:MC,patina:2.4});
+      [[.24,2.33,-.95],[.27,2.35,-.82],[.24,2.33,-.69],[.17,2.3,-1.04],[.17,2.3,-.6],[.12,2.2,-1.06],[.12,2.2,-.58],[.13,2.08,-1.05],[.13,2.08,-.59],[.1,1.96,-1.04],[.1,1.96,-.6],[.08,1.84,-1.06],[.08,1.84,-.58]].forEach(function(p,i){ pz(.065+.012*(i%3),p[0],p[1],p[2],1,.85,1); });      // le ciocche
+      [-1,1].forEach(function(q){ pelle(B,m([[.1,2.1,-.82+q*.24,.06],[.08,1.92,-.82+q*.27,.07],[.04,1.74,-.82+q*.3,.065],[.02,1.62,-.82+q*.31,.03]]),M,6,{sudd:2}); });      // due lunghe ciocche sulle spalle
+      /* il braccio destro (verso i piedi): scende davanti al fianco, l'avambraccio sulla coscia, la mano sul ginocchio alzato */
+      pelle(B,m([[.03,1.86,-.25,.2],[.12,1.7,-.12,.2,.21],[.25,1.48,.04,.17,.18],[.36,1.3,.18,.14]]),M,10,{sudd:2,patina:2,muscoli:[{t:1,wt:.5,dir:[.3,.9,.3],wa:.8,h:.15},{t:1.6,wt:.6,dir:[.6,.3,.7],wa:.6,h:.12}]});      // deltoide, bicipite
+      pz(.14,.36,1.3,.18,1,1,1,8);                                                                                                  // il gomito
+      pelle(B,m([[.36,1.3,.18,.14],[.38,1.35,.45,.16,.15],[.4,1.4,.75,.12,.11],[.42,1.43,1.02,.09,.075]]),M,10,{sudd:2,patina:2,muscoli:[{t:1,wt:.6,dir:[.5,.8,0],wa:.7,h:.12}]});
+      pelle(B,m([[.42,1.43,1.02,.08,.06],[.42,1.45,1.14,.11,.05],[.41,1.44,1.26,.1,.035]]),M,8,{sudd:2});                       // la mano: il dorso, il palmo sul ginocchio
+      for(k=0;k<4;k++) dito([[.41,1.44,1.25],[.41,1.41,1.38],[.41,1.33,1.5]].map(function(p){ return [p[0]+(k-1.5)*.05,p[1],p[2]]; }),.022);      // le dita, piegate sul ginocchio
+      dito([[.33,1.42,1.12],[.29,1.4,1.24]],.025);                                                                                      // il pollice
+      /* il braccio sinistro (verso la testa): scende al sostegno, il gomito poggia, l'avambraccio viene avanti e la mano pende */
+      pelle(B,m([[.03,1.5,-1.17,.2],[-.01,1.3,-1.3,.2,.21],[-.05,1.05,-1.45,.17,.18],[-.08,.84,-1.58,.14]]),M,10,{sudd:2,patina:2,muscoli:[{t:1,wt:.5,dir:[.3,-.2,-.9],wa:.8,h:.15},{t:1.7,wt:.6,dir:FR,wa:.6,h:.13}]});
+      pz(.14,-.08,.84,-1.58,1,1,1,8);
+      pelle(B,m([[-.08,.84,-1.58,.14],[.08,.83,-1.72,.16,.15],[.28,.8,-1.86,.12,.11],[.46,.77,-1.96,.09,.075]]),M,10,{sudd:2,patina:2,muscoli:[{t:1,wt:.6,dir:[0,1,0],wa:.7,h:.12}]});
+      pelle(B,m([[.46,.77,-1.96,.075,.065],[.56,.74,-2.02,.08,.07],[.64,.7,-2.06,.065,.06]]),M,8,{sudd:2});                       // la mano: il dorso
+      for(k=0;k<4;k++) dito([[.64,.71,-2.06],[.71,.64,-2.08],[.72,.55,-2.08]].map(function(p){ return [p[0],p[1],p[2]+(k-1.5)*.045]; }),.021);      // le dita, che pendono
+      dito([[.55,.71,-1.97],[.62,.66,-1.95]],.024);                                                                                     // il pollice
+      /* le gambe sotto il mantello: la sinistra distesa sul masso, la destra piegata col ginocchio alzato. Le pieghe sono solchi di traverso */
+      pelle(B,m([[-.02,.62,.25,.3],[.01,.6,.6,.28,.27],[.03,.57,1.1,.23,.22],[.05,.55,1.55,.17,.16],[.03,.53,1.85,.19,.17],[.01,.5,2.22,.15,.14],[0,.48,2.42,.11,.105],[0,.47,2.66,.095,.09]]),M,14,{sudd:2,patina:2.2,
+        muscoli:pieghe(.6,4.4,.8,[.5,-.8,0],1.1,-.22).concat([{t:5.1,wt:.25,dir:FR,wa:2,h:.14}])});                                    // l'orlo del mantello sopra la caviglia
+      pelle(B,m([[-.07,.46,2.7,.085,.085],[.04,.46,2.8,.095,.115],[.18,.45,2.88,.06,.12],[.3,.44,2.93,.035,.105],[.35,.44,2.95,.02,.06]]),M,10,{sudd:2});      // il piede sinistro, nudo
+      pelle(B,m([[.03,1,.2,.3],[.12,1.07,.6,.28,.27],[.26,1.14,1,.23,.22],[.38,1.19,1.35,.18,.17]]),M,14,{sudd:2,patina:2.2,muscoli:pieghe(.5,2.6,.5,[.3,1,0],1,-.22)});      // la coscia destra
+      pz(.18,.38,1.19,1.35,1,1,1,10);                                                                                               // il ginocchio
+      pelle(B,m([[.38,1.19,1.35,.17],[.38,1.04,1.6,.19,.18],[.33,.82,1.9,.15,.14],[.28,.6,2.15,.11],[.27,.53,2.22,.09]]),M,12,{sudd:2,patina:2.2,muscoli:pieghe(.4,3,.6,[1,.3,0],1.2,-.22)});      // la gamba destra
+      pelle(B,m([[.2,.48,2.2,.085],[.33,.45,2.27,.1,.09],[.47,.42,2.33,.07,.07],[.56,.41,2.36,.03]]),M,10,{sudd:2});            // il piede destro
+      /* il mantello: il rotolo attorno ai fianchi, il lembo che pende sotto il ginocchio alzato fino al masso, e il telo che dalla spalla sinistra scende sul sostegno */
+      pelle(B,m([[-.25,.52,.75,.1],[.12,.55,.62,.15,.14],[.36,.72,.42,.16,.15],[.4,.98,.3,.15,.14],[.28,1.18,.32,.13,.12],[.02,1.24,.4,.1],[-.22,1.1,.5,.06]]),M,12,{sudd:2,patina:2.4,
+        muscoli:pieghe(.5,5.5,.6,[.6,.8,0],1.4,-.3)});
+      pelle(B,m([[.3,.55,.45,.05,.06],[.33,.62,.75,.06,.22],[.36,.62,1.15,.06,.3],[.36,.55,1.6,.06,.22],[.32,.45,2,.05,.08]]),M,10,{sudd:2,patina:2.4,
+        muscoli:[1.2,1.6,2,2.4,2.8].map(function(t){ return {t:t,wt:.08,dir:FR,wa:1.3,h:-.35}; })});                                 // il lembo, con le pieghe dritte
+      pelle(B,m([[-.12,1.55,-.95,.14,.22],[-.2,1.3,-1.18,.18,.28],[-.2,1.0,-1.45,.17,.3],[-.12,.78,-1.75,.14,.3],[-.02,.72,-2.1,.08,.2]]),M,12,{sudd:2,patina:2.4,
+        muscoli:pieghe(.5,3.6,.5,[-1,0,0],1.5,-.2)});
     });
  }},
+ /* Mancanti aggiunti la sera del 26 novembre 2026 (src/design/completezza-monumenti.md, sezione 2; fonti in coda a src/testi/topografia-fonti.md, «Mancanti aggiunti»).
+    La Regia: nel recinto di Vesta, fra la via Sacra, il tempio di Vesta e quello del Divo Giulio; posto di Wikidata (Q786489: 41.8919 N, 12.4864 E, con RM.ll x 9,1, z 6,7).
+    Platner e Ashby, Regia: dopo il restauro di Calvino (36 a.C.) un pentagono irregolare; la parte principale trapezia, lunga in media 22 m e larga 8, «of solid blocks of white
+    marble», tre stanze; fra lei e la via Sacra un cortile lastricato di marmo con un'anticamera coperta a est, dove stava l'ingresso; tutta l'area larga da 12 a 27 m.
+    Altezza: nessuna fonte letta; qui 7 m (scelta). Orientamento quello del Foro (-0,35). Il cortile è verso la via Sacra (a -z locale, verso nord). */
+ {id:'regia', nome:'Regia', x:9.1,z:6.7, ry:-.35, come:'fori', zone:[], fa:function(B){
+    B.scatola(2.2,.7,.8,0,0,.5,P.marmo).falde(2.2,.25,.86,0,.7,.5,P.coppi,0,P.marmo);                                        // la parte principale, di marmo bianco
+    B.vano(0,0,.09,1,0,.22,.4,true);                                                                                        // la porta, verso il cortile
+    B.scatola(2.2,.05,1.2,0,0,-.5,P.marmo);                                                                                    // il cortile lastricato
+    B.scatola(.05,.3,1.2,-1.08,0,-.5,P.marmo).scatola(1.5,.3,.05,-.35,0,-1.08,P.marmo);                                        // il recinto basso del cortile (altezza: scelta)
+    B.scatola(.7,.5,.6,.75,0,-.75,P.marmo).falde(.7,.18,.66,.75,.5,-.75,P.coppi,0,P.marmo);                                   // l'anticamera coperta a est, con l'ingresso
+    B.cilindro(.13,.08,-.4,.05,-.45,P.tufo,null,10);                                                                           // la base rotonda di tufo presso la cisterna
+ }},
+ /* La casa privata nella Regia, «in the seventh or eighth century» (Platner e Ashby, Regia): verso la via Sacra due gradini rozzi di marmo e travertino e sopra una fila di
+    colonne di cipollino prese da un edificio antico. Nel modello dal 700 (la data esatta non c'è); il numero delle colonne e l'altezza sono una scelta. */
+ {id:'regiacasa', x:9.1,z:6.7, ry:-.35, come:'fori', zone:[], fa:function(B){
+    var CIP=RM.col(0xc6ccb8);                                                                                                  // cipollino: marmo bianco verdastro
+    B.scatola(2.1,.04,.22,0,0,-1.2,P.travertino).scatola(2.1,.04,.14,0,.04,-1.16,P.marmo);                                     // i due gradini
+    B.colonne(-.95,-1.16,.95,-1.16,6,.42,.028,.08,CIP).scatola(2.05,.06,.1,0,.5,-1.16,P.tronco);                               // le colonne e una trave sopra (la trave è una scelta)
+ }},
+ /* I templi del Foro Olitorio (San Nicola in Carcere). Posto di Wikidata (Q1241176: 41.8911 N, 12.4800 E; x -43,9, z 15,6), accanto al teatro di Marcello.
+    Platner e Ashby, Ianus, aedes: «three temples, standing side by side with the same orientation and facing the forum Holitorium»; il centrale, il più grande, ionico; quello a nord
+    ionico, esastilo, periptero tranne che sul retro, colonne di 0,70 m di diametro (Giano, di solito); quello a sud il più piccolo, dorico (Giunone Sospita). Spes, aedes: il centrale
+    «about 30 metres long and 10 wide», ionico, anfiprostilo esastilo, una scalinata alta di dodici o tredici gradini, colonne alte 8,70 m. Iuno Sospita: «hexastyle, amphiprostyle and
+    peripteral», di travertino. Le misure del tempio di Giano e di quello di Giunone non le dà: qui un poco più piccoli del centrale (scelta), con nove colonne sui fianchi (scelta).
+    Il Foro Olitorio sta fra i templi e il Campidoglio: le fronti guardano a nord-est (ry 2,38); l'angolo esatto è una scelta. A +x locale (nord-ovest) Giano, a -x Giunone. */
+ {id:'olitorio', nome:'Templi del Foro Olitorio', etichetta:'Templi del Foro Olitorio', x:-43.9,z:15.6, ry:2.38, zone:[[0,.3,[2.2,2.3],.3]], fa:function(B){
+    var r=.035;
+    B.tempio(.95,2.6,.8,1.35,.15,0,{fronte:6,podio:.3});                                                                      // Giano
+    [-1,1].forEach(function(q){ B.colonne(1.35+q*(.475-r),.15+1.3-r,1.35+q*(.475-r),.15-1.3+r,9,.8,r,.3); });                 // i fianchi; sul retro niente colonne
+    B.tempio(1,3,.87,0,0,0,{fronte:6,podio:.35}).colonne(-.5+.037,-1.5+.037,.5-.037,-1.5+.037,6,.87,.037,.35);                // Speranza: anfiprostilo, sei colonne anche sul retro
+    B.tempio(.85,2.2,.7,-1.3,.35,0,{fronte:6,lati:9,podio:.25});                                                              // Giunone Sospita, dorica
+ }},
+ /* il tempio della Magna Mater e la Domus Tiberiana (26 novembre 2026, sera) stanno dopo il gruppo palatino, sul cui piano poggiano (come:'palatino') */
  {id:'saturno', nome:'Tempio di Saturno', etichetta:'Saturno', x:-10.1,z:1.1, ry:-.35, come:'fori', zone:[], fa:function(B){
     B.tempio(2.2,4,1.7,0,0,PI/2,{fronte:6,podio:.85});                                                                          // sul suo podio alto: «22.50 metres wide, about 40 long», ionico, sei colonne sulla fronte (Platner e Ashby, Saturnus, aedes)
  }},
@@ -721,6 +820,29 @@ var M=[
  {id:'settizodio', nome:'Settizodio', x:28.18,z:76.68, ry:.955, zone:[[0,.3,[4.9,.9],.3]], fa:function(B){
     B.scatola(9,2.9,.5,0,0,0,P.marmo);
     [0,1,2].forEach(function(l){ var yy=l*.97; B.colonne(-4.2,.75,4.2,.75,12,.82,.055,yy).scatola(9,.13,.95,0,yy+.82,.42,P.marmo); if(l<2) [-3,0,3].forEach(function(x){ B.vano(x,yy+.02,.27,1,0,1.5,.78); }); });
+ }},
+ /* Il tempio della Magna Mater (Cibele) all'angolo ovest del Palatino, in cima alle scale di Caco (Platner e Ashby, Magna Mater, aedes): lungo 33,18 m e largo 17,10,
+    corinzio, prostilo esastilo, con una scalinata larga quanto tutta la fronte; podio massiccio. Il punto di Wikidata (Q383609: x -5,8, z 32,2) nel modello cade sul fianco del colle,
+    che qui è più stretto del vero: il tempio sta sul ciglio dell'angolo ovest del pianoro, a x 0, z 37 (scelta). Fronte verso l'esterno del colle (ovest-nord-ovest): scelta.
+    Altezza delle colonne e del podio: nessuna fonte letta; qui 13 e 5 m. */
+ {id:'magnamater', nome:'Tempio della Magna Mater', etichetta:'Magna Mater', x:0,z:37, ry:-2.1, come:'palatino', zone:[[0,.3,[1.3,2.4],.3]], fa:function(B){      // poggia sul piano del palazzo (come); la zona tiene lontane le case, senza toccare il terreno (PENDIO, più sotto)
+    B.tempio(1.71,3.32,1.3,0,0,0,{fronte:6,podio:.5});
+    for(var g=0;g<4;g++) B.scatola(2.2,.5*(4-g)/4.3,.22,0,0,1.66+.25+.11+g*.22,P.travertino);                                 // la scalinata larga quanto la fronte
+ }},
+ /* La Domus Tiberiana, il palazzo sulla metà nord-ovest del Palatino (Platner e Ashby, Domus Tiberiana): rifatto da Domiziano; «the whole rectangle (about 100 by 150 metres) seems
+    to have had a large courtyard with pillars in the centre», e gran parte poggia su sostruzioni ad arcate; verso il Foro, sopra il clivo della Vittoria, un balcone a due ordini
+    e uno a un ordine tutt'attorno. Qui: un rettangolo di 100 x 60 m (scelta: il pianoro del modello è più piccolo del vero), le sostruzioni ad arcate dal piede del pendio fino al
+    piano del colle, sopra le ali a due piani attorno al cortile con i pilastri. Posto: Wikidata (Q1238767: x 7,5, z 25,6) cade sul pendio; il centro è a x 2, z 28,5, sul ciglio
+    nord-ovest, girato come il palazzo (-0,62). Forme e altezze sono uno schema. La parte su cui fu costruita Santa Maria Antiqua, ai piedi del colle, non è disegnata. */
+ {id:'tiberiana', nome:'Domus Tiberiana', etichetta:'Domus Tiberiana', x:2,z:28.5, ry:-.62, come:'palatino', zone:[[0,0,[5.3,3.3],.3]], fa:function(B){      // poggia sul piano del palazzo (come); la zona tiene lontane le case, senza toccare il terreno (PENDIO, più sotto)
+    var Y0=RM.hGrezza(13,47)-.1, T=7.22-Y0, yb=.6-Y0, l;                                                                     // Y0: il piano del gruppo palatino; T: il piano del colle (7,2 nel modello); yb: sotto il piede del pendio verso il Foro
+    arcato(B,10,T-yb,6,0,yb,0,P.mattone,4,18);                                                                                // le sostruzioni, con le arcate verso il Foro
+    for(l=0;l<4;l++){ var yy=yb+(T-yb)*(l+.14)/4, hh=(T-yb)/4*.6; B.aperture(-5,-3,-5,3,10,yy,hh).aperture(5,3,5,-3,10,yy,hh); }      // e sui lati corti
+    B.scatola(10.1,.12,6.1,0,T-.12,0,P.travertino);                                                                            // il piano, con la cornice
+    portico(B,5,2.6,0,T,.1,.9);                                                                                                // il cortile coi pilastri
+    [-1,1].forEach(function(q){ B.scatola(10,1.5,1.4,0,T,q*2.3,P.intonaco).falde(10,.42,1.5,0,T+1.5,q*2.3,P.coppi,0,P.intonaco);      // le ali lunghe
+      B.aperture(q<0?4.8:-4.8,q*3,q<0?-4.8:4.8,q*3,16,T+.25,.45,.22,true).aperture(q<0?4.8:-4.8,q*3,q<0?-4.8:4.8,q*3,16,T+.95,.38,.2,true);
+      B.scatola(2.4,1.5,3.2,q*3.8,T,0,P.intonaco).falde(3.2,.42,2.5,q*3.8,T+1.5,0,P.coppi,PI/2,P.intonaco); });                // le ali corte
  }},
  {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6],[0,11.5,5],[0,-3.7,3.5],[0,11.1,[3.4,6.6],.5]], et:1, fa:function(B){      // l'ultima zona è la piazza porticata (pantheonpiazza), fino al lato nord, aperto
     /* La rotonda: tamburo di 56 m di diametro (43,2 dentro e muri di 6,2: Platner), alto circa 31, diviso in tre fasce da cornici; sopra, sette gradoni, il primo
@@ -1703,6 +1825,7 @@ function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return 
 /* prima le zone: sotto ogni monumento il terreno si spiana alla quota del suo centro; poi si posa il suolo */
 var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1,ospizionaumachia:1};        // complessi che seguono il pendio: niente terrazza
 ['orologio','castrapretorio','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });
+['magnamater','tiberiana'].forEach(function(k){ PENDIO[k]=1; });      // 26 novembre 2026 (sera): sul pianoro del Palatino, che nel modello è la terrazza del gruppo palatino; RM.hGrezza lì sta 6 unità più in basso
 ['casasallustio','hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'].forEach(function(k){ PENDIO[k]=1; });      // gli horti (26 novembre 2026): ogni pezzo sul suo terreno, senza zona (le case stanno già fuori dal cerchio di RM.HORTI)      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;

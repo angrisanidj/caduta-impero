@@ -54,13 +54,13 @@ var REGIONI=[
   luoghi:'Il catalogo nomina un «campus Agrippae»: dove fosse esattamente, le pagine lette non lo dicono.'},
  {n:'VIII', it:'Foro Romano', la:'Forum Romanum (vel) Magnum', cat:[3480,130,18,86,120,20], cur:{3:85},
   cosa:'Il Foro (non tutta la via Sacra), i fori imperiali, il Campidoglio e la zona a sud, fino a una linea a nord del Foro Boario che attraversava il Velabro.',
-  mon:['*fori','*curia','*curiaantica','*curiastatue','*santadriano','*giove','*campidoglio','foca','focastatua','*castori','*saturno','*vesta','arcoseveroforo','*colonnatraiana','*concordia','*vespasiano','divogiulio','*giulia','*rostri','tabularium','*foroaugusto','*forocesare','*forotraiano','marforio'], bordo:['casenerva','mercatitraiano','foronerva'], ancore:[[-6,-22],[-19,-11]]},      // 26 novembre 2026: gli edifici del Foro resi monumenti a sé (con l'asterisco quelli del catalogo della VIII; l'arco di Severo, il Divo Giulio, il Tabularium e i mercati no)
+  mon:['*fori','*curia','*curiaantica','*curiastatue','*santadriano','*giove','*campidoglio','foca','focastatua','*castori','*saturno','*vesta','arcoseveroforo','*colonnatraiana','*concordia','*vespasiano','divogiulio','*giulia','*rostri','tabularium','*foroaugusto','*forocesare','*forotraiano','marforio','regia','regiacasa'], bordo:['casenerva','mercatitraiano','foronerva'], ancore:[[-6,-22],[-19,-11]]},      // 26 novembre 2026: gli edifici del Foro resi monumenti a sé (con l'asterisco quelli del catalogo della VIII; l'arco di Severo, il Divo Giulio, il Tabularium e i mercati no)
  {n:'IX', it:'Circo Flaminio', la:'Circus Flaminius', cat:[2777,140,25,63,120,20],
   cosa:'Tutto il terreno fra le mura serviane, la via Flaminia e il Tevere: la parte del Campo Marzio a ovest della via Lata.',
-  mon:['*pompeo','*marcello','*balbo','*domiziano','*pantheon','*pantheonpiazza','*pantheonchiesa','*termeagrippa','*termenerone','*tempioadriano','*colonnamarco','*iseo','saepta','argentina','ottavia','apollo','bellona','orologio','augusto','arcovalentiniano'], bordo:[], ancore:[]},
+  mon:['*pompeo','*marcello','*balbo','*domiziano','*pantheon','*pantheonpiazza','*pantheonchiesa','*termeagrippa','*termenerone','*tempioadriano','*colonnamarco','*iseo','saepta','argentina','ottavia','apollo','bellona','orologio','augusto','arcovalentiniano','olitorio'], bordo:[], ancore:[]},
  {n:'X', it:'Palatino', la:'Palatium', cat:[2742,89,48,44,90,20], cur:{0:2642,4:89},
   cosa:'Il Palatino, nei limiti che Tacito (Annali XII 24) dà al primo pomerio.',
-  mon:['*palatino','*settizodio'], bordo:['arcocostantino'], ancore:[[15,42],[25,35],[5,49],[20,49],[10,35]]},      // il Settizodio è nel catalogo della X («Septizonium divi Severi»)
+  mon:['*palatino','*settizodio','*magnamater','*tiberiana'], bordo:['arcocostantino'], ancore:[[15,42],[25,35],[5,49],[20,49],[10,35]]},      // il Settizodio è nel catalogo della X («Septizonium divi Severi»)
  {n:'XI', it:'Circo Massimo', la:'Circus Maximus', cat:[2500,88,16,15,20,16], cur:{0:2600,1:89},
   cosa:'Molto irregolare: il Circo Massimo e il terreno fra il Tevere e le regioni IX, VIII, X, XII e XIII, col Foro Boario.',
   mon:['circo','obelisco357','fiaccola357','fangocirco','*foroboario'], bordo:[], ancore:[[-22,56],[22,86]],
