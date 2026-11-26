@@ -541,69 +541,112 @@ var M=[
        Forme e misure restano schematiche; qualche edificio è accorciato di poco perché le vie vere gli passino accanto e non sopra. */
     var IMP=1.022;
     inForo(B,-1.2,1.6,0,function(B){ B.scatola(12.5,.1,5,0,0,0,P.selce); });                                                       // piazza del Foro
-    inForo(B,-4.6,6,0,function(B){ basilica(B,9.6,4.9,1.9,0,0); });                                                               // Giulia (l'Emilia è un edificio a sé: brucia nel 410)
+    /* la basilica Giulia è un monumento a sé dal 26 novembre 2026 (id 'giulia', più sotto); l'Emilia è un edificio a sé: brucia nel 410 */
     /* la Curia è un edificio a sé (id 'curia', più sotto): fino al 630 aula del Senato, poi la chiesa di Sant'Adriano */
-    inForo(B,-5.5,-1,0,function(B){ B.scatola(1.3,.32,2.4,0,0,0,P.marmo).scatola(.12,.12,2.4,.6,.32,0,P.marmo).aperture(.66,1.1,.66,-1.1,6,.06,.2,.12,true); });   // i Rostri: la tribuna degli oratori, sul lato ovest della piazza
-    inForo(B,-9.1,-4.9,0,function(B){ B.scatola(2,1.7,4.4,-.6,.5,0,P.marmo).falde(4.4,.5,2.1,-.6,2.2,0,P.coppi,PI/2,P.marmo).scatola(2.2,.5,4.5,-.6,0,0,P.travertino); B.tempio(2.2,1.6,1.6,.9,0,PI/2,{fronte:6}); });   // Concordia: cella larga, messa di traverso, e pronao verso il Foro
-    inForo(B,-11.4,-2.6,0,function(B){ B.tempio(1.7,3,1.6,0,0,PI/2,{fronte:6,podio:.6}); });                                       // Vespasiano e Tito
+    /* i Rostri sono un monumento a sé dal 26 novembre 2026 (id 'rostri', più sotto) */
+    /* il tempio della Concordia è un monumento a sé dal 26 novembre 2026 (id 'concordia', più sotto) */
+    /* il tempio di Vespasiano e Tito è un monumento a sé dal 26 novembre 2026 (id 'vespasiano', più sotto) */
     /* la casa delle Vestali e il tempio di Vesta sono un monumento a sé dal 26 novembre 2026 (id 'vesta', più sotto) */
     /* il tempio di Saturno è un monumento a sé dal 26 novembre 2026 (id 'saturno', più sotto) */
     /* il tempio dei Castori è un monumento a sé dal 26 novembre 2026 (id 'castori', più sotto) */
-    inForo(B,5.6,5.6,0,function(B){ B.tempio(2.4,2.8,1.4,0,0,-PI/2,{fronte:6}); });                                               // Divo Giulio
+    /* il tempio del Divo Giulio è un monumento a sé dal 26 novembre 2026 (id 'divogiulio', più sotto) */
     /* il tempio di Antonino e Faustina è un monumento a sé dal 26 novembre 2026 (id 'antonino', più sotto) */
-    inForo(B,-14.5,-5.2,PI/2,function(B){ B.scatola(7.4,1.1,2.4,0,0,0,P.tufo); arcato(B,7.2,1.9,2.2,0,1.1,0,P.tufo,2,11); });      // Tabularium: l'alto basamento di tufo e, sopra, la galleria ad arcate
+    /* il Tabularium è un monumento a sé dal 26 novembre 2026 (id 'tabularium', più sotto) */
     /* l'arco di Settimio Severo è un monumento a sé dal 26 novembre 2026 (id 'arcoseveroforo', più sotto) */
-    inForo(B,0,-13.2,IMP,function(B){ portico(B,7,15,0,0,0,1.1); B.tempio(2.6,3.6,1.7,0,-5.2,0,{fronte:8}); });                   // foro di Cesare, Venere Genitrice a nord-ovest
-    inForo(B,11.2,-19.5,IMP,function(B){                                                                                          // foro di Augusto: Marte Ultore contro il muro tagliafuoco verso la Suburra, le due esedre ai lati
-      portico(B,10.5,9.5,0,0,0,1.2); B.tempio(3.4,4.6,2.3,2.3,0,-PI/2,{fronte:8,lati:8,podio:.7}).scatola(.5,3.3,10.5,5.5,0,0,P.tufo);
-      [-1,1].forEach(function(q){ var es=RM.ellisse(2,2,10,q>0?0:PI,q>0?PI:2*PI).map(function(p){ return [p[0]+1.6,p[1]+q*4.75]; }), ce=es.map(function(){ return [1.6,q*4.75]; });
-        B.striscia(es,0,es,1.7,P.tufo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });
-    });
-    inForo(B,10.7,-8.9,IMP,function(B){ portico(B,12,4.2,0,0,0,1.2); B.tempio(1.8,2.4,1.5,4.6,0,-PI/2,{fronte:6}); });            // foro di Nerva, Minerva: lo attraversa l'Argileto
-    inForo(B,16.9,-2.6,IMP,function(B){                                                                                           // tempio della Pace: una piazza a giardino di circa 110 x 105 m (Fogagnolo e Rossi 2010); con le aule di fondo il complesso arriva a 125 m
-      portico(B,11,10.5,0,0,-.9,1.2,P.prato);
-      B.scatola(3.6,1.7,1.8,3.7,0,5.25,P.mattone).scatola(3.7,.12,1.9,3.7,1.7,5.25,P.coppi);                                         // le aule sul lato di fondo (sud-est); quella all'angolo sud è Santi Cosma e Damiano
-      B.tempio(3.2,2.4,2.1,0,5.15,PI,{fronte:6,podio:.2});                                                                          // il tempio: un'aula dietro il portico, da cui sporge solo il pronao a sei colonne
-      [-1,1].forEach(function(q){ for(var k=0;k<3;k++) B.scatola(.42,.14,6,q*(1.3+k*1.15),.1,-1.3,P.mattone).scatola(.3,.04,5.86,q*(1.3+k*1.15),.24,-1.3,P.acqua); });      // le sei lunghe vasche fra le aiuole
-      B.scatola(.5,.3,.5,0,.1,2.3,P.marmo);                                                                                        // l'altare davanti al tempio
-    });
-    inForo(B,-1.3,-27.8,IMP,function(B){
-      portico(B,11.5,9,0,0,0,1.3);                                                             // foro di Traiano
-      B.scatola(.62,.34,.34,0,.1,0,P.marmo).scatola(.56,.2,.18,0,.72,0,P.statua).scatola(.12,.26,.13,.3,.86,0,P.statua).scatola(.12,.3,.13,-.02,.92,0,P.statua);      // la statua equestre di Traiano, al centro della piazza
-      [[-.2,-.06],[-.2,.06],[.2,-.06],[.2,.06]].forEach(function(p){ B.scatola(.05,.28,.05,p[0],.44,p[1],P.statua); });
-      [-1,1].forEach(function(q){ var es=RM.ellisse(2.3,2.3,10,q>0?-PI/2:PI/2,q>0?PI/2:3*PI/2).map(function(p){ return [p[0]+q*5.75,p[1]]; }), ce=es.map(function(){ return [q*5.75,0]; });
-        B.striscia(es,0,es,1.7,P.marmo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });        // le due grandi esedre ai lati della piazza
-      basilica(B,17,5.6,2.4,0,-7.6,P.bronzo);                                                  // basilica Ulpia, con le absidi alle due testate
-      [-1,1].forEach(function(q){ B.cilindro(2.5,2,q*8.5,0,-7.6,P.marmo,null,18).cilindro(2.5,.55,q*8.5,2,-7.6,P.bronzo,.3,18); });
-      /* la colonna Traiana e la sua statua sono monumenti a sé dal 26 novembre 2026 (id 'colonnatraiana' e 'colonnatraianastatua', più sotto) */
-      B.scatola(2,1.8,2.6,-2.8,0,-11.6,P.mattone).scatola(2,1.8,2.6,2.8,0,-11.6,P.mattone);     // biblioteche
-      B.tempio(3.8,5.4,2.4,0,-16.4,PI,{fronte:8,lati:9,podio:.7});                              // tempio del Divo Traiano
-      B.dentro(5.75,0,0,0,function(B){
-        /* Mercati di Traiano. Il grande emiciclo gira attorno all'esedra del foro, oltre una strada, e guarda la piazza con tre livelli: le botteghe, le finestre ad arco, un piano arretrato.
-           Su OpenStreetMap (relazione 13353038) la facciata ha un raggio di 22 m e il corpo è profondo 7; qui il raggio è di 29,5 m, perché l'esedra del modello è più larga del vero.
-           Dietro, più in alto sul pendio del Quirinale, gli isolati lungo la via Biberatica e, a nord, la Grande Aula: posizioni dal contorno di OpenStreetMap, forme e altezze schematiche. */
-        var arco=function(r,a,n){ return RM.ellisse(r,r,n||18,-a,a); }, f=arco(2.95,PI/2), t=arco(3.3,PI/2), o=arco(3.7,PI/2), cor=arco(2.9,PI/2), v=arco(3.7,PI*.36,12), u=arco(4.55,PI*.36,12);
-        var th=IMP-.35, c0=Math.cos(th), s0=Math.sin(th), q0=quota(3,-8), su=function(lx,lz){ lx+=5.75; return Math.max(0,RM.h(-1.3+lx*c0+lz*s0,-27.8-lx*s0+lz*c0)-q0); };      // quanto sale il terreno rispetto al piano del foro
-        B.striscia(f,0,f,1.3,P.mattone,false).striscia(f,1.3,t,1.3,P.selce,false).striscia(t,1.3,t,1.95,P.mattone,false).striscia(t,1.95,o,1.75,P.coppi,false).striscia(o,0,o,1.75,P.mattone,false);
-        B.striscia(cor,.62,cor,.7,P.travertino,false).striscia(cor,.7,f,.7,P.travertino,false);                                  // la cornice sopra le botteghe
-        vaniVerso(B,f,0,0,.04,.5,.5,true); vaniVerso(B,f,0,0,.78,.4,.42); vaniVerso(B,t,0,0,1.42,.3,.34,true);
-        [-1,1].forEach(function(q){ B.scatola(.9,1.75,.75,.45,0,q*3.32,P.mattone).cilindro(.55,1.5,-.25,0,q*3.32,P.mattone,null,12).cupola(.55,-.25,1.5,q*3.32,P.mattone,.36); });      // le due aule di testata, a semicupola
-        var hb=Math.max(1.75,su(4.1,0))+1.3;                                                                                      // gli isolati della via Biberatica
-        B.striscia(v,1.75,v,hb,P.mattone,false).striscia(v,hb,u,hb-.2,P.coppi,false).striscia(u,0,u,hb-.2,P.mattone,false);
-        [0,v.length-1].forEach(function(i){ B.quad([v[i][0],0,v[i][1]],[u[i][0],0,u[i][1]],[u[i][0],hb-.2,u[i][1]],[v[i][0],hb,v[i][1]],P.mattone); });
-        vaniVerso(B,v,0,0,hb-.95,.4,.3); vaniVerso(B,v,0,0,hb-.42,.24,.3,true);
-        var ya=su(6.2,-3.6), yc=su(4.9,-2.3);
-        B.scatola(3.4,ya+2,2.6,6.2,0,-3.6,P.mattone).falde(3.4,.6,2.7,6.2,ya+2,-3.6,P.coppi,0,P.mattone);                       // la Grande Aula
-        B.aperture(4.6,-2.3,7.8,-2.3,5,ya+.9,.6,.34).aperture(7.8,-4.9,4.6,-4.9,5,ya+.9,.6,.34);
-        B.scatola(1.9,yc+1.5,1.8,4.9,0,-2.3,P.mattone).scatola(2,.12,1.9,4.9,yc+1.5,-2.3,P.coppi);                               // il corpo centrale
-      });
-    });
+    /* il foro di Cesare è un monumento a sé dal 26 novembre 2026 (id 'forocesare', più sotto) */
+    /* il foro di Augusto col tempio di Marte Ultore è un monumento a sé dal 26 novembre 2026 (id 'foroaugusto', più sotto) */
+    /* il foro di Nerva è un monumento a sé dal 26 novembre 2026 (id 'foronerva', più sotto) */
+    /* il tempio della Pace è un monumento a sé dal 26 novembre 2026 (id 'pace', più sotto) */
+    /* il foro di Traiano con la basilica Ulpia è un monumento a sé dal 26 novembre 2026 (id 'forotraiano', più sotto); così la colonna, la sua statua e i mercati */
  }},
  /* Edifici del Foro resi monumenti a sé il 26 novembre 2026 (l'utente: «sei sicuro che ci siano tutti i monumenti, tipo il tempio di Castore e Polluce?»): stesso disegno, stesso posto
     e stesso orientamento di quando stavano nel gruppo 'fori' (x, z sono il punto che il gruppo dava a inForo; ry quello del Foro, -0,35); ora hanno nome, scheda e storia propria.
     Fonti in coda a src/testi/topografia-fonti.md. */
  {id:'castori', nome:'Tempio dei Castori', etichetta:'Castori', x:3,z:9.3, ry:-.35, come:'fori', zone:[], fa:function(B){
     B.tempio(2.9,4.6,2,0,0,PI,{fronte:8,lati:11,podio:.8});                                                                     // «octastyle and peripteral, with eleven columns on each side»; tutto il tempio «about 50 metres long by 30 wide» (Platner e Ashby, Aedes Castoris)
+ }},
+ {id:'concordia', nome:'Tempio della Concordia', etichetta:'Concordia', x:-9.1,z:-4.9, ry:-.35, come:'fori', zone:[], fa:function(B){      // cella larga, messa di traverso, e pronao verso il Foro: «the cella … was 45 metres wide and only 24 deep, while the pronaos was only 34 metres wide and 14 deep» (Platner e Ashby, Concordia)
+    B.scatola(2,1.7,4.4,-.6,.5,0,P.marmo).falde(4.4,.5,2.1,-.6,2.2,0,P.coppi,PI/2,P.marmo).scatola(2.2,.5,4.5,-.6,0,0,P.travertino); B.tempio(2.2,1.6,1.6,.9,0,PI/2,{fronte:6});
+ }},
+ {id:'vespasiano', nome:'Tempio di Vespasiano e Tito', etichetta:'Vespasiano', x:-11.4,z:-2.6, ry:-.35, come:'fori', zone:[], fa:function(B){      // «prostyle hexastyle, 33 metres long and 22 wide», addossato al Tabularium (Platner e Ashby, Divus Vespasianus)
+    B.tempio(1.7,3,1.6,0,0,PI/2,{fronte:6,podio:.6});
+ }},
+ {id:'divogiulio', nome:'Tempio del Divo Giulio', etichetta:'Divo Giulio', x:5.6,z:5.6, ry:-.35, come:'fori', zone:[], fa:function(B){      // ionico, sei colonne sulla fronte, su una piattaforma alta 3,5 m con i rostri (Platner e Ashby, Divus Iulius, aedes)
+    B.tempio(2.4,2.8,1.4,0,0,-PI/2,{fronte:6});
+ }},
+ {id:'giulia', nome:'Basilica Giulia', x:-4.6,z:6, ry:-.35, come:'fori', zone:[], fa:function(B){ basilica(B,9.6,4.9,1.9,0,0); }},      // «101 metres long and 49 wide» (Platner e Ashby, Basilica Iulia)
+ {id:'rostri', nome:'Rostri', x:-5.5,z:-1, ry:-.35, come:'fori', zone:[], fa:function(B){      // la tribuna degli oratori sul lato ovest della piazza: fronte «about 24 metres in length and 3 high» (Platner e Ashby, Rostra Augusti)
+    B.scatola(1.3,.32,2.4,0,0,0,P.marmo).scatola(.12,.12,2.4,.6,.32,0,P.marmo).aperture(.66,1.1,.66,-1.1,6,.06,.2,.12,true);
+ }},
+ {id:'tabularium', nome:'Tabularium', x:-14.5,z:-5.2, ry:-.35, come:'fori', zone:[], fa:function(B){      // l'alto basamento di tufo e, sopra, la galleria ad arcate: «eleven arches, 7.50 metres in height» (Platner e Ashby, Tabularium)
+    B.dentro(0,0,0,PI/2,function(B){ B.scatola(7.4,1.1,2.4,0,0,0,P.tufo); arcato(B,7.2,1.9,2.2,0,1.1,0,P.tufo,2,11); });
+ }},
+ /* Mercati di Traiano (monumento a sé dal 26 novembre 2026; prima nel foro di Traiano del gruppo, in B.dentro(5,75, 0, 0) del suo riquadro: qui x, z e ry sono quel punto e quel giro).
+    Il grande emiciclo gira attorno all'esedra del foro, oltre una strada, e guarda la piazza con tre livelli: le botteghe, le finestre ad arco, un piano arretrato.
+    Su OpenStreetMap (relazione 13353038) la facciata ha un raggio di 22 m e il corpo è profondo 7; qui il raggio è di 29,5 m, perché l'esedra del modello è più larga del vero.
+    Dietro, più in alto sul pendio del Quirinale, gli isolati lungo la via Biberatica e, a nord, la Grande Aula: posizioni dal contorno di OpenStreetMap, forme e altezze schematiche. */
+ {id:'mercatitraiano', nome:'Mercati di Traiano', etichetta:'Mercati di Traiano', x:3.1998,z:-31.3797, ry:.672, come:'fori', zone:[], fa:function(B){
+    var arco=function(r,a,n){ return RM.ellisse(r,r,n||18,-a,a); }, f=arco(2.95,PI/2), t=arco(3.3,PI/2), o=arco(3.7,PI/2), cor=arco(2.9,PI/2), v=arco(3.7,PI*.36,12), u=arco(4.55,PI*.36,12);
+    var IMP=1.022, th=IMP-.35, c0=Math.cos(th), s0=Math.sin(th), q0=quota(3,-8), su=function(lx,lz){ lx+=5.75; return Math.max(0,RM.h(-1.3+lx*c0+lz*s0,-27.8-lx*s0+lz*c0)-q0); };      // quanto sale il terreno rispetto al piano del foro
+    B.striscia(f,0,f,1.3,P.mattone,false).striscia(f,1.3,t,1.3,P.selce,false).striscia(t,1.3,t,1.95,P.mattone,false).striscia(t,1.95,o,1.75,P.coppi,false).striscia(o,0,o,1.75,P.mattone,false);
+    B.striscia(cor,.62,cor,.7,P.travertino,false).striscia(cor,.7,f,.7,P.travertino,false);                                  // la cornice sopra le botteghe
+    vaniVerso(B,f,0,0,.04,.5,.5,true); vaniVerso(B,f,0,0,.78,.4,.42); vaniVerso(B,t,0,0,1.42,.3,.34,true);
+    [-1,1].forEach(function(q){ B.scatola(.9,1.75,.75,.45,0,q*3.32,P.mattone).cilindro(.55,1.5,-.25,0,q*3.32,P.mattone,null,12).cupola(.55,-.25,1.5,q*3.32,P.mattone,.36); });      // le due aule di testata, a semicupola
+    var hb=Math.max(1.75,su(4.1,0))+1.3;                                                                                      // gli isolati della via Biberatica
+    B.striscia(v,1.75,v,hb,P.mattone,false).striscia(v,hb,u,hb-.2,P.coppi,false).striscia(u,0,u,hb-.2,P.mattone,false);
+    [0,v.length-1].forEach(function(i){ B.quad([v[i][0],0,v[i][1]],[u[i][0],0,u[i][1]],[u[i][0],hb-.2,u[i][1]],[v[i][0],hb,v[i][1]],P.mattone); });
+    vaniVerso(B,v,0,0,hb-.95,.4,.3); vaniVerso(B,v,0,0,hb-.42,.24,.3,true);
+    var ya=su(6.2,-3.6), yc=su(4.9,-2.3);
+    B.scatola(3.4,ya+2,2.6,6.2,0,-3.6,P.mattone).falde(3.4,.6,2.7,6.2,ya+2,-3.6,P.coppi,0,P.mattone);                       // la Grande Aula
+    B.aperture(4.6,-2.3,7.8,-2.3,5,ya+.9,.6,.34).aperture(7.8,-4.9,4.6,-4.9,5,ya+.9,.6,.34);
+    B.scatola(1.9,yc+1.5,1.8,4.9,0,-2.3,P.mattone).scatola(2,.12,1.9,4.9,yc+1.5,-2.3,P.coppi);                               // il corpo centrale
+ }},
+ /* i fori imperiali resi monumenti a sé il 26 novembre 2026: x, z sono il punto che il gruppo dava a inForo, ry quello dei fori imperiali (-0,35 + 1,022) */
+ {id:'foroaugusto', nome:'Foro di Augusto e tempio di Marte Ultore', etichetta:'Foro di Augusto', x:11.2,z:-19.5, ry:.672, come:'fori', zone:[], fa:function(B){      // Marte Ultore contro il muro tagliafuoco verso la Suburra, le due esedre ai lati
+    portico(B,10.5,9.5,0,0,0,1.2); B.tempio(3.4,4.6,2.3,2.3,0,-PI/2,{fronte:8,lati:8,podio:.7}).scatola(.5,3.3,10.5,5.5,0,0,P.tufo);      // «octostyle, and peripteral except at the north-east end, where it joined the forum wall» (Platner e Ashby, Forum Augustum)
+    [-1,1].forEach(function(q){ var es=RM.ellisse(2,2,10,q>0?0:PI,q>0?PI:2*PI).map(function(p){ return [p[0]+1.6,p[1]+q*4.75]; }), ce=es.map(function(){ return [1.6,q*4.75]; });
+      B.striscia(es,0,es,1.7,P.tufo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });
+ }},
+ {id:'foronerva', nome:'Foro di Nerva e tempio di Minerva', etichetta:'Foro di Nerva', x:10.7,z:-8.9, ry:.672, come:'fori', zone:[], fa:function(B){      // lo attraversa l'Argileto: «about 120 metres, its width about 40» (Platner e Ashby, Forum Nervae)
+    portico(B,12,4.2,0,0,0,1.2); B.tempio(1.8,2.4,1.5,4.6,0,-PI/2,{fronte:6});                                                 // Minerva: «hexastyle prostyle»
+ }},
+ {id:'forocesare', nome:'Foro di Cesare e tempio di Venere Genitrice', etichetta:'Foro di Cesare', x:0,z:-13.2, ry:.672, come:'fori', zone:[], fa:function(B){      // «rectangular, about 115 metres long and 30 wide, surrounded by a colonnade and wall» (Platner e Ashby, Forum Iulium); Venere Genitrice a nord-ovest
+    portico(B,7,15,0,0,0,1.1); B.tempio(2.6,3.6,1.7,0,-5.2,0,{fronte:8});
+ }},
+ {id:'forotraiano', nome:'Foro di Traiano e basilica Ulpia', etichetta:'Foro di Traiano', x:-1.3,z:-27.8, ry:.672, come:'fori', zone:[], fa:function(B){      // la piazza «116 metres wide and 95 long» con le esedre, la basilica Ulpia, le biblioteche, il tempio del Divo Traiano (Platner e Ashby, Forum Traiani)
+    portico(B,11.5,9,0,0,0,1.3);
+    B.scatola(.62,.34,.34,0,.1,0,P.marmo).scatola(.56,.2,.18,0,.72,0,P.statua).scatola(.12,.26,.13,.3,.86,0,P.statua).scatola(.12,.3,.13,-.02,.92,0,P.statua);      // la statua equestre di Traiano, al centro della piazza
+    [[-.2,-.06],[-.2,.06],[.2,-.06],[.2,.06]].forEach(function(p){ B.scatola(.05,.28,.05,p[0],.44,p[1],P.statua); });
+    [-1,1].forEach(function(q){ var es=RM.ellisse(2.3,2.3,10,q>0?-PI/2:PI/2,q>0?PI/2:3*PI/2).map(function(p){ return [p[0]+q*5.75,p[1]]; }), ce=es.map(function(){ return [q*5.75,0]; });
+      B.striscia(es,0,es,1.7,P.marmo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });        // le due grandi esedre ai lati della piazza
+    basilica(B,17,5.6,2.4,0,-7.6,P.bronzo);                                                  // basilica Ulpia, con le absidi alle due testate
+    [-1,1].forEach(function(q){ B.cilindro(2.5,2,q*8.5,0,-7.6,P.marmo,null,18).cilindro(2.5,.55,q*8.5,2,-7.6,P.bronzo,.3,18); });
+    B.scatola(2,1.8,2.6,-2.8,0,-11.6,P.mattone).scatola(2,1.8,2.6,2.8,0,-11.6,P.mattone);     // biblioteche
+    B.tempio(3.8,5.4,2.4,0,-16.4,PI,{fronte:8,lati:9,podio:.7});                              // tempio del Divo Traiano
+ }},
+ {id:'pace', nome:'Tempio della Pace', x:16.9,z:-2.6, ry:.672, come:'fori', zone:[], fa:function(B){      // una piazza a giardino di circa 110 x 105 m (Fogagnolo e Rossi 2010); con le aule di fondo il complesso arriva a 125 m
+    portico(B,11,10.5,0,0,-.9,1.2,P.prato);
+    B.scatola(3.6,1.7,1.8,3.7,0,5.25,P.mattone).scatola(3.7,.12,1.9,3.7,1.7,5.25,P.coppi);                                         // le aule sul lato di fondo (sud-est); quella all'angolo sud è Santi Cosma e Damiano
+    B.tempio(3.2,2.4,2.1,0,5.15,PI,{fronte:6,podio:.2});                                                                          // il tempio: un'aula dietro il portico, da cui sporge solo il pronao a sei colonne
+    [-1,1].forEach(function(q){ for(var k=0;k<3;k++) B.scatola(.42,.14,6,q*(1.3+k*1.15),.1,-1.3,P.mattone).scatola(.3,.04,5.86,q*(1.3+k*1.15),.24,-1.3,P.acqua); });      // le sei lunghe vasche fra le aiuole
+    B.scatola(.5,.3,.5,0,.1,2.3,P.marmo);                                                                                        // l'altare davanti al tempio
+ }},
+ /* Il Marforio (26 novembre 2026; l'utente: «Non abbiamo proprio idea di dove fosse il Marforio?»). Statua colossale di marmo di un dio sdraiato, barbuto, col mantello: 6,10 x 2,42 m
+    (Musei Capitolini); la conchiglia è del restauro del 1594 e non c'è. Dove stava: l'Itinerario di Einsiedeln (cod. 326, ff. 79v e 82v, letti sul codice) nomina «Tiberis» fra il foro
+    di Traiano e Sant'Adriano, dove si passa «per arcum Severi», in due percorsi; che sia il Marforio lo dicono gli studiosi (Encyclopaedia Romana, voce Umbilicus; Nichols 1889), non il
+    codice. I Mirabilia (dopo il 1143, Nichols 1889): «Ante privatam Mamertini, templum Martis, ubi nunc iacet simulacrum eius»; la Sovrintendenza: presso San Pietro in Carcere, di
+    fronte ai Santi Luca e Martina, fino al 1588. Qui: sdraiato a terra davanti al Carcere (nel modello a x -5,92, z -7,14, gruppo campidoglio), dal lato del Foro, fuori dalla strada
+    (1,4 unità dall'asse della più vicina). Il punto esatto e l'orientamento sono una scelta; posa e forme a superfici lisce (pelle) sono indicative. Lunghezza lungo z locale. */
+ {id:'marforio', nome:'Marforio (statua di un dio fluviale)', etichetta:'Marforio', x:-5.3,z:-5.9, ry:.9, come:'fori', zone:[], fa:function(B){
+    var M=P.marmo;
+    B.dentro(0,.05,0,0,function(B){      // il piano del Foro del modello sta 5 dm sotto il suolo disegnato qui
+      /* sdraiato sul fianco sinistro, il petto verso +x: negli anelli [x, y, z, profondità (x), larghezza (y o z)] la larghezza del corpo sta in verticale */
+      pelle(B,[[0,.028,.3,.022,.028],[0,.044,.2,.036,.044],[0,.055,.12,.045,.055],[0,.07,.03,.055,.074],[0,.084,-.04,.06,.086],[.005,.115,-.1,.055,.08],[.01,.155,-.15,.06,.088],[.012,.185,-.18,.054,.085],[.012,.205,-.196,.03,.03]],M,12,{sudd:2});      // il corpo, dai piedi alle spalle, col busto sollevato
+      pelle(B,[[.004,.04,.23,.032,.05],[.004,.058,.12,.052,.064],[.004,.072,.03,.064,.082],[.006,.086,-.04,.068,.092],[.01,.1,-.075,.062,.088]],M,12,{sudd:2});      // il mantello sulle gambe e sui fianchi
+      palla(B,.04,.014,.238,-.205,M,1,1.08,1,10); palla(B,.03,.038,.212,-.2,M,.8,1.1,1,8);                                  // la testa e la barba, verso +x
+      arto(B,[0,.15,-.19],[.004,.03,-.13],.026,.022,M,6); arto(B,[.004,.03,-.13],[.08,.024,-.15],.022,.018,M,6);          // il braccio sinistro: il gomito a terra regge il busto
+      arto(B,[.01,.205,-.16],[.05,.15,-.08],.024,.02,M,6); arto(B,[.05,.15,-.08],[.055,.11,.02],.02,.017,M,6);             // il braccio destro, posato sul fianco
+    });
  }},
  {id:'saturno', nome:'Tempio di Saturno', etichetta:'Saturno', x:-10.1,z:1.1, ry:-.35, come:'fori', zone:[], fa:function(B){
     B.tempio(2.2,4,1.7,0,0,PI/2,{fronte:6,podio:.85});                                                                          // sul suo podio alto: «22.50 metres wide, about 40 long», ionico, sei colonne sulla fronte (Platner e Ashby, Saturnus, aedes)

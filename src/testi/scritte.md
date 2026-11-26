@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 26/11/2026, 22:33:01.
+Generato da `src/testi.mjs` il 26/11/2026, 22:54:21.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -143,7 +143,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.64] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.65] Versione del 26/11/2026, ore 21:29
+[pagina.65] Versione del 26/11/2026, ore 22:34
 
 
 ## 2. Gli atti
@@ -2473,6 +2473,391 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.castori.data6] Restano il nucleo del podio e tre colonne del lato est con la loro trabeazione: di marmo bianco, scanalate, alte 12,50 metri.
 
 [scheda.castori.certezza-B] Si conservano il podio e tre colonne con la trabeazione; le misure della pianta sono note (Platner e Ashby). Nel modello la forma del tempio è semplificata, e la data della chiusura e lo stato fra il V e il IX secolo sono una scelta, perché nessuna fonte letta li dice.
+
+
+### Tempio della Concordia
+
+[scheda.concordia.nome] Tempio della Concordia
+
+[scheda.concordia.cosa] Il tempio della Concordia, all'angolo nord-ovest del Foro, ai piedi del Campidoglio, con il fondo appoggiato al Tabularium. Aveva una pianta unica fra i templi romani: la cella era larga 45 metri e profonda solo 24, e il pronao, più stretto, non copriva tutta la fronte. Era tutto rivestito di marmo. Il Senato vi si riuniva spesso; dentro c'erano molte opere d'arte, tanto che era una specie di museo.
+
+[scheda.concordia.data1.quando] 10 d.C.
+
+[scheda.concordia.data1] Tiberio lo ricostruisce e lo dedica a nome suo e del fratello Druso.
+
+[scheda.concordia.data2.quando] fine del III secolo
+
+[scheda.concordia.data2] Un restauro, forse dopo l'incendio del 284, è ricordato da un'iscrizione sul pronao. Nel Medioevo la copia chi compila l'Itinerario di Einsiedeln: il pronao era ancora in piedi.
+
+[scheda.concordia.data3-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi: è una nostra scelta. Resta in piedi.
+
+[scheda.concordia.data4.quando] 772-795
+
+[scheda.concordia.data4] Al tempo di papa Adriano I l'edificio minaccia di crollare (Liber Pontificalis, citato da Platner e Ashby). Nel modello resta in piedi: le fonti lette non dicono che crollò.
+
+[scheda.concordia.data5.quando] oggi
+
+[scheda.concordia.data5] Restano il nucleo del podio, la soglia di marmo dell'ingresso, lunga 7 metri, pochi pezzi del pavimento e parte della cornice.
+
+[scheda.concordia.certezza-B] Restano il podio e pochi pezzi; la pianta viene dalla pianta di marmo di Roma (Platner e Ashby). Nel modello l'alzato è un'ipotesi semplificata; la chiusura nel 392 e lo stato fino all'852 sono una nostra scelta.
+
+
+### Tempio di Vespasiano e Tito
+
+[scheda.vespasiano.nome] Tempio di Vespasiano e Tito
+
+[scheda.vespasiano.cosa] Il tempio dedicato a Vespasiano divinizzato, cominciato da Tito e finito da Domiziano, ai piedi del Campidoglio, addossato al Tabularium. Aveva sei colonne sulla fronte ed era lungo 33 metri e largo 22; per lo spazio stretto fra il Tabularium e la salita al Campidoglio le scale erano disposte in modo insolito. Dentro, i muri erano rivestiti di marmi orientali; sul fondo stavano le statue di Vespasiano e di Tito.
+
+[scheda.vespasiano.data1.quando] fine del I secolo
+
+[scheda.vespasiano.data1] Finito da Domiziano; si chiama tempio di Vespasiano e Tito.
+
+[scheda.vespasiano.data2.quando] inizio del III secolo
+
+[scheda.vespasiano.data2] Settimio Severo e Caracalla lo restaurano, forse poco: lo dice una seconda riga aggiunta all'iscrizione.
+
+[scheda.vespasiano.data3.quando] IV secolo
+
+[scheda.vespasiano.data3] I Cataloghi regionari lo nominano nella regione VIII.
+
+[scheda.vespasiano.data4-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi: è una nostra scelta. Resta in piedi.
+
+[scheda.vespasiano.data5.quando] VII secolo
+
+[scheda.vespasiano.data5] L'iscrizione è ancora intera: la copia chi compila l'Itinerario di Einsiedeln (Platner e Ashby).
+
+[scheda.vespasiano.data6-1811] Colonne e trabeazione vengono rimesse in piedi; allora lo si chiamava ancora tempio di Giove Tonante.
+
+[scheda.vespasiano.data7.quando] oggi
+
+[scheda.vespasiano.data7] Restano il nucleo del podio, due pezzi del muro della cella e tre colonne corinzie dell'angolo sud-est, alte 15,20 metri, con un tratto della trabeazione e le ultime lettere dell'iscrizione.
+
+[scheda.vespasiano.certezza-B] Restano il podio e tre colonne; misure note (Platner e Ashby). Nel modello la forma è semplificata; la chiusura nel 392 e lo stato fino all'852 sono una nostra scelta.
+
+
+### Tempio del Divo Giulio
+
+[scheda.divogiulio.nome] Tempio del Divo Giulio
+
+[scheda.divogiulio.cosa] Il tempio di Giulio Cesare divinizzato, all'estremità est del Foro, nel punto dove il suo corpo fu bruciato. Stava su una piattaforma alta 3,5 metri; nel mezzo della fronte, in una nicchia, c'era l'altare rotondo nel luogo del rogo. Ai lati la piattaforma era ornata con i rostri delle navi prese ad Azio, e da lì parlavano gli imperatori. Il tempio era ionico, con sei colonne sulla fronte; dentro, una statua colossale di Cesare con una stella sul capo.
+
+[scheda.divogiulio.data1.quando] 29 a.C.
+
+[scheda.divogiulio.data1] Augusto lo dedica il 18 agosto.
+
+[scheda.divogiulio.data2.quando] II secolo
+
+[scheda.divogiulio.data2] Adriano lo restaura, secondo le monete.
+
+[scheda.divogiulio.data3-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi: è una nostra scelta. Le fonti lette non dicono nulla di lui dopo il restauro di Adriano; nel modello resta in piedi.
+
+[scheda.divogiulio.data4.quando] oggi
+
+[scheda.divogiulio.data4] Restano il nucleo di cemento del podio, quasi tutto spogliato delle pietre del rivestimento, l'esedra con i resti dell'altare e pezzi della decorazione.
+
+[scheda.divogiulio.certezza-B] Restano le fondazioni, da cui si ricostruisce la pianta nelle linee principali (Platner e Ashby). Nel modello la forma è semplificata e la piattaforma con i rostri non è disegnata; la chiusura nel 392 e lo stato fino all'852 sono una nostra scelta.
+
+
+### Basilica Giulia
+
+[scheda.giulia.nome] Basilica Giulia
+
+[scheda.giulia.cosa] La grande basilica sul lato sud del Foro, lunga 101 metri e larga 49, chiusa da strade su tutti i lati. Il cortile centrale, coperto da un tetto di legno, era circondato da due navate a due piani; fuori era tutta di marmo bianco, con un piano terra ad arcate aperte. Vi si teneva il tribunale dei centumviri. Sul pavimento si vedono ancora più di ottanta tavole da gioco incise.
+
+[scheda.giulia.data1.quando] 46 a.C.
+
+[scheda.giulia.data1] Cesare la dedica ancora incompiuta; Augusto la finisce, la ricostruisce dopo un incendio e la dedica di nuovo nel 12 d.C.
+
+[scheda.giulia.data2-283] Danneggiata dall'incendio al tempo di Carino; Diocleziano la restaura.
+
+[scheda.giulia.data3-416] Il prefetto della città Gabinio Vettio Probiano la restaura di nuovo e la orna di statue.
+
+[scheda.giulia.data4-537] Nel modello, come il resto dei Fori, smette di servire dopo l'assedio dei Goti e resta abbandonata, ma in piedi: è una nostra scelta.
+
+[scheda.giulia.data5.quando] VII o VIII secolo
+
+[scheda.giulia.data5] La navata esterna sul lato ovest diventa una chiesa (Platner e Ashby). Nel modello non è disegnata.
+
+[scheda.giulia.data6.quando] Medioevo
+
+[scheda.giulia.data6] I suoi marmi sono la preda preferita di chi fa la calce: sul pavimento è stata trovata una fornace. Quando, le fonti lette non lo dicono.
+
+[scheda.giulia.data7.quando] oggi
+
+[scheda.giulia.data7] Restano le fondazioni, pezzi del pavimento con le tavole da gioco, i gradini e, verso il vico Iugario, alcuni pilastri e archi di mattoni del restauro di Diocleziano. La colonna di travertino in piedi e molti pilastri di mattoni sono moderni.
+
+[scheda.giulia.certezza-B] Restano le fondazioni e parte del pavimento; la pianta è nota (Platner e Ashby). Nel modello l'alzato è semplificato; la fine dell'uso nel 537 e lo stato fino all'852 sono una nostra scelta.
+
+
+### Rostri
+
+[scheda.rostri.nome] Rostri
+
+[scheda.rostri.cosa] La tribuna da cui si parlava al popolo, all'estremità nord-ovest del Foro. Il nome viene dai rostri, le prue di bronzo delle navi nemiche fissate sulla fronte. Questa è la tribuna di Cesare e di Augusto: una piattaforma con una fronte lunga circa 24 metri e alta 3, a cui si saliva da dietro per una scalinata curva. Accanto e dietro stavano colonne con statue di imperatori e di uomini illustri. I Cataloghi regionari del IV secolo contano nel Foro tre tribune.
+
+[scheda.rostri.data1.quando] dopo il 42 a.C.
+
+[scheda.rostri.data1] Augusto finisce la tribuna voluta da Cesare a questa estremità del Foro.
+
+[scheda.rostri.data2-357] Ammiano la chiama «il luogo più in vista dell'antica potenza».
+
+[scheda.rostri.data3.quando] inizio del V secolo
+
+[scheda.rostri.data3] Fra le statue sulla tribuna c'è quella di Stilicone (iscrizione).
+
+[scheda.rostri.data4.quando] verso il 470
+
+[scheda.rostri.data4] Il prefetto della città Giunio Valentino la restaura e allunga la piattaforma: lo dice un'iscrizione, forse per una vittoria sui Vandali.
+
+[scheda.rostri.data5-537] Nel modello, come il resto dei Fori, smette di servire dopo l'assedio dei Goti e resta abbandonata, ma in piedi: è una nostra scelta.
+
+[scheda.rostri.data6.quando] oggi
+
+[scheda.rostri.data6] Restano il nucleo di cemento della tribuna di Cesare, parte dei muri di Augusto e i resti dell'allungamento del V secolo.
+
+[scheda.rostri.certezza-B] Restano i nuclei delle tribune di Cesare e di Augusto e i muri dei restauri (Platner e Ashby). Nel modello la tribuna è semplice: niente rostri, colonne né statue; la fine dell'uso nel 537 è una nostra scelta.
+
+
+### Tabularium
+
+[scheda.tabularium.nome] Tabularium
+
+[scheda.tabularium.cosa] L'archivio di Stato sul fianco sud-est del Campidoglio, costruito nel 78 a.C. da Quinto Lutazio Catulo. Verso il Foro aveva un alto muro di fondazione e, sopra, una galleria lunga quanto tutto l'edificio, con undici arcate doriche alte 7,50 metri: chiudeva il Foro come una quinta e collegava le due cime del colle. Sopra c'era un secondo piano ad arcate, forse di età flavia. Che fosse l'archivio lo dicono due iscrizioni: le fonti antiche non lo nominano.
+
+[scheda.tabularium.data1.quando] 78 a.C.
+
+[scheda.tabularium.data1] Lutazio Catulo lo costruisce per decreto del Senato.
+
+[scheda.tabularium.data2.quando] fine del I secolo
+
+[scheda.tabularium.data2] Forse viene aggiunto o rifatto il secondo piano.
+
+[scheda.tabularium.data3-537] Nel modello, come il resto dei Fori, smette di servire dopo l'assedio dei Goti e resta abbandonato, ma in piedi: è una nostra scelta. Le fonti lette non dicono nulla di lui fino al 1300 circa.
+
+[scheda.tabularium.data4.quando] verso il 1300
+
+[scheda.tabularium.data4] Al tempo di papa Bonifacio VIII si costruisce la torre all'estremità nord.
+
+[scheda.tabularium.data5.quando] XVI secolo
+
+[scheda.tabularium.data5] Michelangelo demolisce la parte alta e quella ovest e costruisce sopra il palazzo Senatorio.
+
+[scheda.tabularium.data6.quando] oggi
+
+[scheda.tabularium.data6] Sotto il palazzo Senatorio restano il muro di fondazione e la galleria con le arcate, quasi tutte murate; un tratto del lato sud-ovest è ancora in piedi.
+
+[scheda.tabularium.certezza-A] La parte bassa è conservata sotto il palazzo Senatorio, con le misure della galleria (Platner e Ashby). Il secondo piano del modello è un'ipotesi; la fine dell'uso nel 537 è una nostra scelta.
+
+
+### Mercati di Traiano
+
+[scheda.mercatitraiano.nome] Mercati di Traiano
+
+[scheda.mercatitraiano.cosa] Il grande emiciclo di mattoni che chiude il foro di Traiano dal lato del Quirinale, appoggiato al fianco del colle. Al piano terra stanno stanze aperte sul foro, probabilmente botteghe; sopra, una galleria con le stanze del secondo piano e un terzo piano arretrato sul pendio. Più in alto, sul Quirinale, altre sale a cui si sale per scale dal livello del foro.
+
+[scheda.mercatitraiano.data1.quando] inizio del II secolo
+
+[scheda.mercatitraiano.data1] Costruiti insieme al foro di Traiano.
+
+[scheda.mercatitraiano.data2-537] Nel modello, come il resto dei Fori, smettono di servire dopo l'assedio dei Goti e restano abbandonati, ma in piedi: è una nostra scelta. Le fonti lette non danno date.
+
+[scheda.mercatitraiano.data3-938] Un documento nomina il luogo «de banneo Neapolim»; nel XIII secolo si chiama «mons Manianapoli», da cui il nome di oggi, Magnanapoli.
+
+[scheda.mercatitraiano.data4.quando] oggi
+
+[scheda.mercatitraiano.data4] Restano l'emiciclo con i suoi piani, la via Biberatica e la Grande Aula.
+
+[scheda.mercatitraiano.certezza-A] In gran parte in piedi. Nel modello l'emiciclo ha un raggio di 29,5 metri invece dei 22 veri, perché l'esedra del foro disegnata è più larga del vero; isolati e Grande Aula sono schematici. La fine dell'uso nel 537 è una nostra scelta.
+
+
+### Foro di Augusto e tempio di Marte Ultore
+
+[scheda.foroaugusto.nome] Foro di Augusto e tempio di Marte Ultore
+
+[scheda.foroaugusto.cosa] Il secondo dei fori imperiali, accanto a quello di Cesare, costruito da Augusto per i tribunali. Al centro, contro un altissimo muro che lo proteggeva dagli incendi e nascondeva i quartieri poveri dietro, il tempio di Marte Ultore, il vendicatore, promesso da Augusto alla battaglia di Filippi. Il tempio aveva otto colonne sulla fronte. Ai lati, due grandi esedre con nicchie piene di statue dei trionfatori. Plinio lo metteva fra i tre edifici più belli del mondo.
+
+[scheda.foroaugusto.data1.quando] 2 a.C.
+
+[scheda.foroaugusto.data1] Augusto dedica il foro e il tempio, il 1° agosto.
+
+[scheda.foroaugusto.data2.quando] verso il 395
+
+[scheda.foroaugusto.data2] Il luogo si chiama «foro di Marte»: lo scrive un copista che vi corregge un libro di Apuleio. Il nome sopravvive nella via del Marforio.
+
+[scheda.foroaugusto.data3.quando] circa 500
+
+[scheda.foroaugusto.data3] Secondo la scheda dei Fori di questa pagina, alcuni artigiani smontano il tempio di Marte Ultore per riusarne i materiali: su un blocco di colonna si legge il nome di Decio. Nel modello da qui il foro è usato come cava; la fonte di quella notizia non è stata riletta per questa scheda.
+
+[scheda.foroaugusto.data4.quando] Medioevo
+
+[scheda.foroaugusto.data4] Nel podio del tempio una stanza viene tagliata per farne una tomba (Platner e Ashby).
+
+[scheda.foroaugusto.data5.quando] oggi
+
+[scheda.foroaugusto.data5] Restano tre colonne del tempio con l'architrave, alte 15,30 metri, il podio e il grande muro di fondo.
+
+[scheda.foroaugusto.certezza-B] Restano il muro di fondo, il podio e tre colonne del tempio; la pianta è nota (Platner e Ashby). Nel modello portici, esedre e tempio sono semplificati; lo smontaggio dal 500 segue la scheda dei Fori.
+
+
+### Foro di Nerva e tempio di Minerva
+
+[scheda.foronerva.nome] Foro di Nerva e tempio di Minerva
+
+[scheda.foronerva.cosa] Il foro costruito da Domiziano e dedicato da Nerva nel 97, fra il foro di Augusto e quello della Pace: una piazza stretta e lunga, circa 120 metri per 40, ricavata dall'Argileto, la strada fra la Suburra e il Foro. Per questo fu chiamato anche foro Transitorio, «di passaggio». In fondo stava il tempio di Minerva, la dea cara a Domiziano, con sei colonne sulla fronte. Attorno, un colonnato di marmo addossato al muro di cinta.
+
+[scheda.foronerva.data1-97] Nerva lo dedica all'inizio dell'anno, insieme al tempio di Minerva.
+
+[scheda.foronerva.data2.quando] III secolo
+
+[scheda.foronerva.data2] Alessandro Severo vi fa mettere statue colossali degli imperatori divinizzati, con colonne di bronzo che raccontano le loro imprese.
+
+[scheda.foronerva.data3.quando] IV secolo
+
+[scheda.foronerva.data3] I Cataloghi regionari lo contano due volte: come foro Transitorio nella regione IV e come foro di Nerva nella VIII. Il confine fra le due regioni lo attraversava.
+
+[scheda.foronerva.data4-537] Nel modello, come il resto dei Fori, smette di servire dopo l'assedio dei Goti e resta abbandonato, ma in piedi: è una nostra scelta.
+
+[scheda.foronerva.data5.quando] metà del IX secolo
+
+[scheda.foronerva.data5] Nella piazza sorgono case: nel modello sono un edificio a sé.
+
+[scheda.foronerva.data6.quando] XII secolo
+
+[scheda.foronerva.data6] Il tempio si chiama «templum Palladis». Nel Medioevo le due colonne del portico rimaste in piedi sono dette Arca di Noè.
+
+[scheda.foronerva.data7-1606] Papa Paolo V fa distruggere quel che restava del tempio di Minerva e ne usa i marmi per la fontana sul Gianicolo.
+
+[scheda.foronerva.data8.quando] oggi
+
+[scheda.foronerva.data8] Restano un tratto del muro di cinta e due colonne con circa 11 metri di muro, le «Colonnacce».
+
+[scheda.foronerva.certezza-B] Restano il muro di cinta in parte e due colonne; la pianta viene dalla pianta di marmo di Roma e dalle vedute del Cinquecento (Platner e Ashby). Nel modello è semplificato; la fine dell'uso nel 537 è una nostra scelta.
+
+
+### Foro di Cesare e tempio di Venere Genitrice
+
+[scheda.forocesare.nome] Foro di Cesare e tempio di Venere Genitrice
+
+[scheda.forocesare.cosa] Il primo dei fori imperiali, voluto da Giulio Cesare come centro di affari: una piazza rettangolare di circa 115 metri per 30, chiusa da un portico e da un muro. Al centro, sull'asse, il tempio di Venere Genitrice, la dea da cui la famiglia di Cesare diceva di discendere, tutto di marmo, con dentro la statua della dea e opere d'arte famose. Davanti al tempio una fontana con le ninfe.
+
+[scheda.forocesare.data1.quando] 46 a.C.
+
+[scheda.forocesare.data1] Cesare dedica tempio e foro il 26 settembre, ultimo giorno del suo trionfo; li finisce Ottaviano.
+
+[scheda.forocesare.data2-283] Il foro brucia; Diocleziano lo restaura.
+
+[scheda.forocesare.data3.quando] IV secolo
+
+[scheda.forocesare.data3] I Cataloghi regionari lo chiamano foro di Cesare, nella regione VIII.
+
+[scheda.forocesare.data4-537] Nel modello, come il resto dei Fori, smette di servire dopo l'assedio dei Goti e resta abbandonato, ma in piedi: è una nostra scelta.
+
+[scheda.forocesare.data5.quando] fine dell'VIII secolo
+
+[scheda.forocesare.data5] Secondo la scheda dei Fori di questa pagina vengono tolte le lastre del pavimento; nella piazza sorgono capanne e orti. Nel modello da qui il foro è spogliato.
+
+[scheda.forocesare.data6.quando] oggi
+
+[scheda.forocesare.data6] Nel 1929 Platner e Ashby vedevano solo un tratto del muro di cinta, alto 12 metri, e alcune botteghe a volta; del tempio, gli scavi del Cinquecento avevano trovato fondazioni e pezzi di colonne.
+
+[scheda.forocesare.certezza-B] La pianta è nota dagli scavi e dai disegni del Cinquecento (Platner e Ashby). Nel modello portico e tempio sono semplificati; la fine dell'uso nel 537 è una nostra scelta, lo spoglio dall'800 segue la scheda dei Fori.
+
+
+### Foro di Traiano e basilica Ulpia
+
+[scheda.forotraiano.nome] Foro di Traiano e basilica Ulpia
+
+[scheda.forotraiano.cosa] L'ultimo, il più grande e il più ricco dei fori imperiali, costruito da Traiano con l'architetto Apollodoro e dedicato verso il 113. Una piazza di 116 metri per 95, con grandi esedre ai lati e al centro la statua di bronzo di Traiano a cavallo; sul tetto dei portici, cavalli e insegne dorate. Sul fondo la basilica Ulpia, dietro di essa le due biblioteche, una greca e una latina, ai lati della colonna, e il tempio del Divo Traiano costruito da Adriano. Qui si tenevano processi, si liberavano gli schiavi e si affiggevano le leggi.
+
+[scheda.forotraiano.data1.quando] verso il 113
+
+[scheda.forotraiano.data1] Traiano lo dedica, almeno in parte.
+
+[scheda.forotraiano.data2.quando] fino al 353
+
+[scheda.forotraiano.data2] I senatori vi tengono le loro casse di denaro.
+
+[scheda.forotraiano.data3-357] Costanzo II lo visita e ne resta stupito (Ammiano; Platner e Ashby scrivono 356).
+
+[scheda.forotraiano.data4.quando] IV e V secolo
+
+[scheda.forotraiano.data4] Nei portici si mettono statue di uomini illustri: fra gli altri il poeta Claudiano e, più tardi, Sidonio Apollinare.
+
+[scheda.forotraiano.data5-537] Nel modello, come il resto dei Fori, smette di servire dopo l'assedio dei Goti e resta abbandonato, ma in piedi: è una nostra scelta.
+
+[scheda.forotraiano.data6.quando] dal VI secolo
+
+[scheda.forotraiano.data6] Comincia a essere smontato: per tutto il Medioevo è una miniera di marmi per le chiese e i palazzi di Roma (Platner e Ashby).
+
+[scheda.forotraiano.data7-663] Se il tetto di bronzo della basilica Ulpia ci fosse ancora non si sa: nel modello da quest'anno i bronzi dei Fori non ci sono più, come dice la scheda dei Fori.
+
+[scheda.forotraiano.data8-850] Verso la metà del IX secolo, secondo la scheda dei Fori, si tolgono su larga scala le lastre di marmo del pavimento: nel modello da qui il foro è usato come cava.
+
+[scheda.forotraiano.data9.quando] oggi
+
+[scheda.forotraiano.data9] Restano colonne della basilica Ulpia e, intera, la colonna Traiana.
+
+[scheda.forotraiano.certezza-B] La pianta della piazza e della basilica è nota (Platner e Ashby); il tempio del Divo Traiano, dietro le biblioteche, è meno noto. Nel modello tutto è semplificato; la fine dell'uso nel 537, i bronzi via nel 663 e la cava dall'850 seguono la scheda dei Fori.
+
+
+### Tempio della Pace
+
+[scheda.pace.nome] Tempio della Pace
+
+[scheda.pace.cosa] Il tempio della Pace, cominciato da Vespasiano dopo la presa di Gerusalemme nel 71 e dedicato nel 75, al centro di una grande piazza a giardino circondata da portici, accanto ai fori imperiali. Dentro erano custoditi molti tesori portati da Gerusalemme e opere famose di artisti greci; c'era anche una biblioteca. Plinio lo metteva fra i tre edifici più belli di Roma. Dava il nome alla quarta regione della città.
+
+[scheda.pace.data1-75] Vespasiano lo dedica.
+
+[scheda.pace.data2-191] Poco prima della morte di Commodo un incendio lo distrugge; viene restaurato, probabilmente da Settimio Severo. Al tempo di Severo, su un muro del complesso, si fissa la grande pianta di marmo di Roma.
+
+[scheda.pace.data3-357] Ammiano lo mette fra gli edifici più splendidi della città.
+
+[scheda.pace.data4-408] Per sette giorni la terra «muggisce» nel foro della Pace (Marcellino Conte): forse il tempio viene danneggiato.
+
+[scheda.pace.data5-500] Procopio, nel VI secolo, scrive che il tempio è stato distrutto da un fulmine da molto tempo, ma che attorno restano molte opere d'arte. In quale anno non si sa: nel modello il fuoco arriva nel 500 e tocca tutto il complesso. È una nostra scelta.
+
+[scheda.pace.data6-527] Nell'aula all'angolo sud, sulla via Sacra, nasce la chiesa dei Santi Cosma e Damiano, che nel modello è un edificio a sé.
+
+[scheda.pace.data7.quando] oggi
+
+[scheda.pace.data7] Del tempio e della piazza restano pochissime tracce, oltre all'aula diventata Santi Cosma e Damiano: un tratto del pavimento di marmi colorati, dieci metri sotto la strada di oggi (Platner e Ashby).
+
+[scheda.pace.certezza-C] Del complesso restano poche tracce; la forma della piazza a giardino segue gli scavi recenti citati nel modello, quella del tempio è un'ipotesi. L'anno della distruzione, il 500, è una nostra scelta: Procopio dice solo che era avvenuta da molto tempo.
+
+
+### Marforio (statua di un dio fluviale)
+
+[scheda.marforio.nome] Marforio (statua di un dio fluviale)
+
+[scheda.marforio.cosa] Una statua colossale di marmo, lunga 6,10 metri: un dio sdraiato, barbuto, col mantello. È del I secolo (Musei Capitolini). Forse rappresentava un fiume, forse Oceano: gli studiosi non sono d'accordo. Non sappiamo per quale edificio fu fatta. Qui sta davanti al Carcere Mamertino, presso l'arco di Settimio Severo: il posto viene dalle schede della Sovrintendenza e dei Musei Capitolini, che lo dicono lì, di fronte alla chiesa dei Santi Luca e Martina, fino al Cinquecento, e da due guide medievali.
+
+[scheda.marforio.data1.quando] I secolo
+
+[scheda.marforio.data1] La statua viene scolpita. Dove stesse in origine non si sa.
+
+[scheda.marforio.data2.quando] verso l'800
+
+[scheda.marforio.data2] L'Itinerario di Einsiedeln, una guida di Roma per i pellegrini, nomina in due percorsi un «Tiberis», il Tevere, fra il foro di Traiano e la chiesa di Sant'Adriano, dove si passa sotto l'arco di Severo. Per gli studiosi è probabilmente questa statua; il manoscritto però dice solo «Tiberis».
+
+[scheda.marforio.data3.quando] prima dell'800
+
+[scheda.marforio.data3] Nessuna fonte letta nomina la statua fra il 235 e l'800: nel modello sta davanti al Carcere in tutti gli anni, ma prima dell'800 è un'ipotesi.
+
+[scheda.marforio.data4.quando] XII secolo
+
+[scheda.marforio.data4] I Mirabilia, una guida di Roma scritta dopo il 1143, dicono che davanti al carcere Mamertino c'era il tempio di Marte, «dove ora giace la sua statua»: forse proprio questa, scambiata per Marte.
+
+[scheda.marforio.data5.quando] XVI secolo
+
+[scheda.marforio.data5] Secondo altre fonti fu trovata nel Foro di Augusto, nella zona detta nel Medioevo «foro di Marte», da cui verrebbe il nome Marforio; per la Sovrintendenza e i Musei Capitolini restò invece davanti al Carcere fino al 1588-1592. Le due versioni non si accordano.
+
+[scheda.marforio.data6-1594] Viene restaurata come Oceano, con la conchiglia, e messa in una fontana in piazza del Campidoglio.
+
+[scheda.marforio.data7.quando] oggi
+
+[scheda.marforio.data7] Sta nel cortile di Palazzo Nuovo, ai Musei Capitolini.
+
+[scheda.marforio.certezza-C] La statua esiste ed è nota; nel modello la forma è semplificata, senza la conchiglia del restauro del 1594. Il posto davanti al Carcere è attestato dal Medioevo; verso l'800 solo se il «Tiberis» dell'Itinerario di Einsiedeln è questa statua, come pensano gli studiosi; prima è un'ipotesi. Punto preciso e orientamento sono una nostra scelta.
 
 
 ### Tempio di Saturno

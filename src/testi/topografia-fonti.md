@@ -343,3 +343,118 @@ Richiesta dell'utente: «sei sicuro che ci siano tutti i monumenti, tipo il temp
 - «the tomb of M. Vergilius Eurysaces, a baker, built apparently about the end of the republic, in the angle formed by the bifurcation of the via Praenestina and the via Labicana, just outside the arches of the aqua Claudia»; «trapezoidal, measuring 8.75, 6.85, 5.80 and 4.05 metres on its sides, of concrete with travertine facing»; «a frieze covered with reliefs representing the various operations of breadmaking».
 - «When Honorius restored the wall of Aurelian he erected two towers outside the Porta Praenestina, one of which stood over this tomb, and concealed it from view. It must, however, have been partially accessible from the interior, for the inscriptions were partly read in the sixteenth century»; «The towers were removed in 1838 … but the east side is almost wholly demolished».
 - Nel modello aveva già storia (nascosto dal 402) e disegno; mancava solo il nome. Ora ha nome e scheda.
+
+### Secondo gruppo (26 novembre 2026, sera)
+
+#### Tempio della Concordia (`concordia`; voce `Concordia.html`, «Concordia, aedes, templum»)
+
+- «a temple at the north-west corner of the forum»; ricostruito da Tiberio, «dedicated as aedes Concordiae Augustae … on 16th January, 10 A.D.».
+- «A later restoration, perhaps after the fire of 284, is recorded in an inscription (CIL VI.89), which was seen on the pronaos of the temple by the copyist of the inscriptions in the Einsiedeln Itinerary».
+- «this temple was frequently used for assemblies of the senate»; «it evidently became a sort of museum»; «mentioned in the Regionary Catalogue (Reg. VIII)».
+- «The structure was threatening to collapse in the time of Hadrian I, 772-795 A.D. (LPD I.512, 522)».
+- Forma: «the cella of the Augustan temple was 45 metres wide and only 24 deep, while the pronaos was only 34 metres wide and 14 deep … The back wall of the cella abutted against the front of the Tabularium».
+- Oggi (1929): «the concrete core of the podium … the threshold of the main entrance, composed of two blocks of Porta Santa marble, together 7 metres long; a very few fragments of the marble pavement … and a part of the magnificent cornice».
+- Nel modello: in uso fino al 392 (scelta), poi abbandonato ma in piedi (la fonte dice che minacciava di crollare, non che crollò).
+
+#### Tempio di Vespasiano e Tito (`vespasiano`; voce `Templum_Vespasiani.html`, «Divus Vespasianus, templum»)
+
+- «completed by Domitian, and called templum Vespasiani et Titi (Chron. 146; Not. Reg. VIII)»; seconda riga dell'iscrizione «Impp. Caes. Severus et Antoninus Pii felices Augg. restituerunt», «a restoration, probably not extensive».
+- «This inscription was complete in the seventh century and was copied by the compiler of the Einsiedeln Itinerary, but only the end of the last word has been preserved».
+- «The temple was prostyle hexastyle, 33 metres long and 22 wide, with an unusual arrangement of the steps on account of the narrow space between the Tabularium, against which it was built, and the clivus Capitolinus».
+- Oggi: «the core of the podium … two fragments of the cella wall of travertine, part of the pedestal … and three Corinthian columns at the south-east corner of the pronaos … 15.20 metres high»; «Columns and entablature were reset in 1811, at which time it was still called the temple of Jupiter Tonans».
+- Nel modello: in uso fino al 392 (scelta), poi abbandonato ma in piedi.
+
+#### Tempio del Divo Giulio (`divogiulio`; voce `Aedes_Divi_Juli.html`)
+
+- «the temple of the deified Julius Caesar, authorised by the triumvirs in 42 B.C., but apparently built by Augustus alone, and dedicated 18th August, 29 B.C.»; costruito dove il corpo di Cesare fu bruciato, «in front of the Regia».
+- «From the evidence of coins, the temple was restored by Hadrian».
+- «a rectangular platform 3.5 metres high, 26 wide, and about 30 long»; nella fronte «a semi-circular niche 8.3 metres in diameter … a round altar»; «the projection was called rostra aedis divi Iuli … decorated with the beaks of the ships captured at Actium»; «The temple was Ionic, hexastyle»; dentro «a colossal statue of Caesar with a comet or star on its head».
+- Oggi: «Remains of the concrete podium and of the architectural decoration still exist; but the concrete core has been almost entirely stripped of the stone walls by which it was originally enclosed». Nessuna notizia della voce fra il III e il IX secolo.
+- Nel modello: in uso fino al 392 (scelta), poi abbandonato ma in piedi. Non è nell'elenco della VIII dei Cataloghi letto nel rapporto di completezza: in `js/regioni.js` sta nella VIII senza asterisco.
+
+#### Basilica Giulia (`giulia`; voce `Basilica_Julia.html`)
+
+- «It was injured by fire under Carinus (Chron. p148) and restored by Diocletian, and again in 416 A.D. by a certain Gabinus Vettius Probianus, prefect of the city, who also adorned it with statues»; «in Reg. (Reg. VIII)».
+- «The amount and magnificence of the marble used in this basilica marked it as the special prey of the vandals of the middle ages, and a lime kiln was found on its very pavement».
+- «In the seventh or eighth century the outer aisle on the west side was converted into a church».
+- «The basilica occupied a space 101 metres long and 49 wide»; «The central area was covered with a wooden roof».
+- Oggi: «the foundation, with fragments of the marble pavement on which are inscribed upwards of eighty tabulae lusoriae; the steps …; and on the vicus Iugarius some of the brick pillars and arches of the outer aisles belonging to the restoration of Diocletian»; «the standing column of travertine and many of the brick piers are modern».
+- Nel modello: in uso fino al 537 come il resto dei Fori (scelta), poi abbandonata ma in piedi; la chiesa nella navata ovest non è disegnata.
+
+#### Rostri (`rostri`; voci `Rostra.html` e `Rostra_Augusti.html`)
+
+- «the rostra of the imperial period, situated at the north-west end of the forum. Caesar had decided on their removal … Augustus completed them».
+- Ammiano XVI 10, 13: «perspectissimum priscae potentiae locum»; statue «in rostris» di Augusto, Claudio il Gotico e Stilicone (CIL VI 1731).
+- «The platform extended 10 metres forward from the western brick wall, and its front was about 24 metres in length and 3 high».
+- Quarto periodo, verso il 470: «An inscription which ran the whole length of the enlarged platform recorded a restoration by the praefectus urbi, Junius Valentinus, in honour of Leo and Anthemius (?), possibly after a naval victory over the Vandals».
+- Cataloghi VIII: «rostra III» (dal rapporto di completezza).
+- Nel modello: in uso fino al 537 (scelta, come il resto dei Fori), poi abbandonati ma in piedi.
+
+#### Tabularium (`tabularium`; voce `Tabularium.html`, pp. 506-508)
+
+- «a repository for state archives … that was built by Q. Lutatius Catulus in 78 B.C. on the south-east slope of the Capitoline»; «It is not mentioned in literature, but its identification is based on two inscriptions».
+- «The second story seems to have been added, or at least rebuilt, about the end of the first century, but nothing else is known of the history of the building until the reign of Boniface VIII (about 1300 A.D.), when the present tower at the north end was erected. Later, Michelangelo destroyed the entire upper and western part, and built the present Palazzo del Senatore directly upon the ancient structure».
+- «There were eleven arches, 7.50 metres in height … all but one of which have been walled up. This arcade afforded the means of communication between the two portions of the Capitoline, and formed a striking architectural terminus for the forum».
+- Nel modello: in uso fino al 537 (scelta, come il resto dei Fori), poi abbandonato ma in piedi.
+
+#### Mercati di Traiano (`mercatitraiano`; nessuna voce propria in Platner e Ashby: la parte sull'emiciclo della voce `Forum_Trajani.html`)
+
+- «The hemicycle on the north-east side of the forum area has been partially excavated. Built of ornamental brick with travertine trimmings, it consists principally of two stories of chambers abutting directly against the side of the Quirinal hill. The rooms on the ground floor, which were probably shops, open on the marble pavement of the forum. Above the first story is a gallery with Tuscan pilasters … Above this gallery there was another story, the front of which was not flush with the lower façade but pushed back on the slope of the hill».
+- «Still higher, on the upper level of the Quirinal, is a series of halls … approached by steps from the forum level».
+- «Hülsen quotes a privilege of 938 which speaks of Adrianus quondam de banneo Neapolim; and the name occurs in the form mons Balnei Neapolis and mons Manianapoli in the thirteenth century».
+- Nel modello: in uso fino al 537 (scelta, come il resto dei Fori), poi abbandonati ma in piedi. In `js/regioni.js` stanno sul confine (fra la VIII dei fori e la VI del Quirinale: le pagine lette non dicono in quale regione fossero).
+
+#### Foro di Augusto e tempio di Marte Ultore (`foroaugusto`; voce `Forum_Augustum.html`, pp. 220-223)
+
+- «the second of the imperial fora, adjoining the Forum Iulium, built by Augustus to provide additional room for the courts»; dedicato «on 1st August, 2 B.C.».
+- «Because of the temple of Mars, this forum was sometimes called forum Martis (… Pol. Silv. 545 …; cod. Laur. Apul. subscriptio: ego Salustius legi (c. 395 A.D.) et emendavi Romae in foro Martis), and this name is preserved in that of the via Marforio».
+- «Pliny regarded this forum with the temple of Peace and the basilica Aemilia, as the three most beautiful buildings in the world».
+- «The forum was surrounded by an enormous wall; which served the double purpose of protecting it against fire and shutting off the view of the squalid quarters»; «The temple was octostyle, and peripteral except at the north-east end».
+- «Three of the columns with the architrave are still standing. They are of white marble, fluted, 15.30 metres high»; «In the podium was a chamber which was cut in the Middle Ages to serve as a burial vault».
+- Nessuna data di danni fra il IV e il IX secolo nella voce. Nel modello: cava dal 500, seguendo la scheda dei Fori già in pagina (lo smontaggio del tempio e il nome di Decio: fonte di quella scheda non riletta qui).
+
+#### Foro di Nerva e tempio di Minerva (`foronerva`; voce `Forum_Nervae.html`, pp. 227-229)
+
+- «built by Domitian, but dedicated by Nerva at the beginning of 97 A.D.»; «Its length was about 120 metres, its width about 40»; «it soon became known as the forum Transitorium».
+- «In Reg. it is listed in Region IV as forum Transitorium, in Region VIII and the Appendix as forum Nervae, which indicates … that the boundary between the two regions passed through the forum».
+- Tempio di Minerva: «of the Corinthian order, hexastyle prostyle»; «Alexander Severus set up colossal statues of all the emperors who had been deified, with bronze columns on which their res gestae were inscribed».
+- «A considerable part of the temple of Minerva (which was known as templum Palladis in the twelfth century) was standing in the sixteenth century … but this was destroyed in 1606 by Paul V and the material used in building his fountain on the Janiculum»; «the Colonnacce were called Arca Noe».
+- «Two of these columns, with about 11 metres of the wall itself, are still standing at the east corner of the forum».
+- Nel modello: in uso fino al 537 (scelta), poi abbandonato ma in piedi. In `js/regioni.js` sta sul confine fra la IV e la VIII.
+
+#### Foro di Cesare e tempio di Venere Genitrice (`forocesare`; voce `Forum_Julium.html`, pp. 225-227)
+
+- «Temple and forum were dedicated on the last day of Caesar's great triumph, 26th September, 46 B.C. … although the forum was not finished by Caesar … but by Octavianus».
+- «The forum was burned in 283 A.D. and restored by Diocletian (Chron. 148)»; «it appears regularly in our sources as forum Caesaris (… Not. Reg. VIII …)».
+- «The forum Iulium was rectangular, about 115 metres long and 30 wide, surrounded by a colonnade and wall … On this axis the temple was built, facing south-east»; «In front of the temple stood a fountain surrounded by nymphs, called Appiades».
+- «All that remains of the forum is part of the enclosure wall of peperino on the south-west side …, 12 metres high and 3.70 thick, and some small vaulted chambers or tabernae»; «Of the temple of Venus, excavations in the sixteenth century brought to light portions of the foundations».
+- Nessuna notizia fra il IV e il XVI secolo. Nel modello: in uso fino al 537 (scelta), abbandonato, spogliato dall'800 seguendo la scheda dei Fori già in pagina (pavimento tolto fra VIII e IX secolo; fonte di quella scheda non riletta qui).
+
+#### Foro di Traiano e basilica Ulpia (`forotraiano`; voce `Forum_Trajani.html`)
+
+- «the last, largest and most magnificent of the imperial fora, built by Trajan with the assistance of the Greek architect Apollodorus, and dedicated, at least in part, about 113 A.D.»; «The forum proper was a rectangular court … 116 metres wide and 95 long»; «in the centre of the area was a bronze equestrian statue of Trajan himself (Amm. Marcell. XVI.10.15: in atrio medio)»; «On the roof of the colonnade were gilded statues of horses and military standards».
+- «Down to 353 A.D. the senators kept their money and silver in chests in this forum»; statue di uomini illustri nei portici, fra cui «Claudian the poet» e Sidonio Apollinare.
+- «a vivid picture is given of the astonishment of the Emperor Constantius on the occasion of his visit to it in 356 A.D. The history of its destruction begins with the sixth century, and throughout the Middle Ages it furnished an almost inexhaustible supply of decorative material for the churches and palaces of Rome».
+- Nel modello: in uso fino al 537 (scelta), bronzi via nel 663 (scelta già dichiarata per i Fori), cava dall'850 (scheda dei Fori già in pagina: lastre tolte verso la metà del IX secolo; fonte di quella scheda non riletta qui).
+
+#### Tempio della Pace (`pace`; voce `Templum_Pacis.html`, pp. 386-388)
+
+- «the temple of Peace which was begun by Vespasian after the capture of Jerusalem in 71 A.D., and dedicated in 75»; «In it were placed many of the treasures brought by Vespasian from Jerusalem, as well as famous works of Greek artists».
+- «Just before the death of Commodus, probably in 191, the temple was destroyed by fire, but it must have been restored, probably by Severus, for it is mentioned in the succeeding centuries as one of the most magnificent buildings in the city (… Amm. Marcell. XVI.10.14 …). It gave its name to the fourth region of the city (Not. Reg. IV)».
+- «In 408 there were seismic disturbances for seven successive days in the forum Pacis (Marcell. Comes …: in foro Pacis per dies septem terra mugitum dedit), and the temple may have been injured then. At any rate Procopius (B. G. IV.21), writing in the sixth century, says that it had long since been destroyed by lightning, although there were still many works of art set up in the immediate vicinity».
+- «At the south-east corner there was an entrance from the Sacra via through a monumental passage which, after several changes, is now the church of SS. Cosma e Damiano»; «In the time of Severus a wall was built across the north-east end of this entrance, and on its north-east side … was placed the so-called Capitoline Plan of the city».
+- «scarcely any traces of either have been found except a portion of the pavement of giallo antico and pavonazzetto … ten metres below the present level».
+- Nel modello: in uso fino al 500, poi bruciato (anno scelto prima di Procopio; il fuoco tocca tutto il complesso, scelta). In `js/regioni.js` nella IV senza asterisco (dà il nome alla regione, ma non è nell'elenco del catalogo letto nel rapporto).
+
+#### Il Marforio (`marforio`)
+
+Fonti già lette nel rapporto `src/design/completezza-monumenti.md`, sezione 5.2 (Musei Capitolini, Sovrintendenza Capitolina, Turismo Roma, it.wikipedia). Lette il 26 novembre 2026, sera:
+
+1. **Itinerario di Einsiedeln** (Einsiedeln, Stiftsbibliothek, cod. 326; immagini del codice su e-codices, `https://media.e-codices.ch/iip/sbe/sbe-0326/sbe-0326_079v.jp2/full/1500,/0/default.jpg` e `…_082v…`, lette sull'immagine; datazione della pagina, fra il 757 e l'855, dall'`ITINERARIO` di `js/dati.js`).
+   - f. 79v, percorso «A porta sci Petri usque ad…», colonna di sinistra: «Circus flamineus · Rotunda · Thermae commodianae · Forum traiani et columna eius · Tiberis · Sci hadriani · Sci cyriaci …»; al centro, fra le colonne, «ARCUS», poi «FORUM».
+   - f. 82v, percorso VIII «A porta sci Petri usque [ad portam Asinariam]», colonna di sinistra: «… Minervam · ibi sca Maria · Ad scm Marcum · Forum traiani et columna eius · Tiberis · Sci hadriani · Forum romanum»; al centro «R· PER AR[cum Severi]».
+   - Il codice dice solo «Tiberis», due volte, sempre fra il foro di Traiano e Sant'Adriano, nel punto in cui si passa l'arco di Severo. Che sia la statua del Marforio: Encyclopaedia Romana (Thayer, voce «Umbilicus Romae», `https://penelope.uchicago.edu/encyclopaedia_romana/romanforum/umbilicus.html`: «what probably is the Marforio, the reclining figure of a river god (Einsiedeln Codex, folio 79v, Tiberis)») e la nota già in pagina nel percorso del pellegrino. È un'identificazione degli studiosi.
+2. **Mirabilia Urbis Romae**, edizione di F. M. Nichols, *Mirabilia Urbis Romae. The Marvels of Rome*, Londra, Ellis and Elvey, 1889 (archive.org, `marvelsromeorap00nichgoog`). Datazione di Nichols: nel testo il sarcofago di Adriano è la tomba di Innocenzo II, «who died 1143»: l'opera è di poco dopo. Capitolo 9 (traduzione di Nichols): «Before Mamertinus his prison was the temple of Mars, where is now his image»; nota: «The statue called Marforio, removed in the sixteenth century to the Piazza del Campidoglio, and to the Court of the Capitoline Museum in or about 1668»; e, in una nota al capitolo dei luoghi santi: «Privata Mamertini. The ancient Carcer … opposite to which was the statue of a river-god, miscalled Mars, more lately Marforio». Testo latino (The Latin Library, `mirabilia.html`, non datato): «Ante privatam Mamertini, templum Martis, ubi nunc iacet simulacrum eius. Iuxta eum templum Fatale, id est Sancta Martina; iuxta quod est templum Refugii, id est Sanctus Adrianus».
+3. **Platner e Ashby, Forum Augustum**: il foro era detto «forum Martis … and this name is preserved in that of the via Marforio».
+
+Nessun testo letto mette la statua altrove fra il 235 e l'852. Nel modello: sdraiata a terra davanti al Carcere Mamertino, dal lato del Foro, fra il Carcere e l'arco di Severo (x -5,3, z -5,9), fuori dalla strada, stato «uso» in tutti gli anni. Prima dell'800 il posto è un'ipotesi, detta nella scheda; punto preciso, orientamento e posa sono scelte.
