@@ -580,13 +580,13 @@ RM.acquaFiume={ centro:RM.col(0x1c2624), riva:RM.col(0x37423d), cieloA:cielo.mat
 function fiumeNuovo(sh){ var A=String.fromCharCode(10), tx=RM.VESTE?RM.trameVeste().macchie:new THREE.DataTexture(new Uint8Array([128,128,128,255]),1,1);
   sh.uniforms.uTempo=RM.tempoFiume; sh.uniforms.uNotte=RM.notteFiume; sh.uniforms.uVesteF=RM.vesteU; sh.uniforms.tMacchie={value:tx};
   sh.uniforms.uAcquaC={value:RM.acquaFiume.centro}; sh.uniforms.uAcquaR={value:RM.acquaFiume.riva}; sh.uniforms.uFango={value:RM.col(0x4a4334)}; sh.uniforms.uSabbia={value:RM.col(0x6e6450)}; sh.uniforms.uCieK={value:1}; sh.uniforms.uCieF={value:.03};
-  sh.uniforms.uCieloA=cielo.material.uniforms.alto; sh.uniforms.uCieloB=cielo.material.uniforms.basso;
+  sh.uniforms.uCieloA=cielo.material.uniforms.alto; sh.uniforms.uCieloB=cielo.material.uniforms.basso; sh.uniforms.uPile=RM.pileU; sh.uniforms.uNPile=RM.nPileU; sh.uniforms.uScia=RM.sciaU;
   sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying vec2 vRiva; varying vec3 vWf;')
     .replace('#include <beginnormal_vertex>','vec3 objectNormal=vec3(0.0,1.0,0.0);')      // il nastro è a due facce: la normale sempre in su, anche per lo scostamento dell'ombra
     .replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vRiva=uv; vWf=(modelMatrix*vec4(transformed,1.0)).xyz;')
     .replace('#include <shadowmap_vertex>','#ifdef USE_SHADOWMAP'+A+'worldPosition.y+=0.15;'+A+'#endif'+A+'#include <shadowmap_vertex>'+A+'#ifdef USE_SHADOWMAP'+A+'worldPosition.y-=0.15;'+A+'#endif');
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying vec2 vRiva; varying vec3 vWf; uniform float uTempo; uniform float uNotte; uniform float uVesteF; uniform sampler2D tMacchie;'+
-      ' uniform vec3 uAcquaC; uniform vec3 uAcquaR; uniform vec3 uFango; uniform vec3 uSabbia; uniform float uCieK; uniform float uCieF; uniform vec3 uCieloA; uniform vec3 uCieloB; vec3 nFiume=vec3(0.0,1.0,0.0);')
+      ' uniform vec3 uAcquaC; uniform vec3 uAcquaR; uniform vec3 uFango; uniform vec3 uSabbia; uniform float uCieK; uniform float uCieF; uniform vec3 uCieloA; uniform vec3 uCieloB; uniform vec4 uPile[48]; uniform float uNPile; uniform float uScia; vec3 nFiume=vec3(0.0,1.0,0.0);')
     .replace('#include <color_fragment>',['#include <color_fragment>',
       'float bw=abs(vRiva.x-0.5)*2.0; float sF=vRiva.y*6.0; float fwF=max(fwidth(vWf.x),fwidth(vWf.z));',      // bw: 0 al centro, 1 sulla riva; sF: lungo il fiume, in unità (i punti del nastro sono a circa 3 unità)
       'float lato=step(0.5,vRiva.x);',      // le due rive hanno rive diverse
@@ -601,7 +601,19 @@ function fiumeNuovo(sh){ var A=String.fromCharCode(10), tx=RM.VESTE?RM.trameVest
       'float secco=smoothstep(filo,1.0,bw)*(0.6+0.8*rF.g);',      // bagnata vicino all'acqua, più asciutta verso l'erba
       'vec3 cR=mix(uFango,uSabbia,clamp(secco,0.0,1.0))*(0.9+0.2*rF.r);',
       'cR=mix(cR,cA*1.25,(1.0-smoothstep(filo,filo+0.05,bw))*0.6);',      // sabbia appena coperta: sfuma nell'acqua
-      'diffuseColor.rgb=mix(cR,cA,acqua)*mix(1.0,0.45,uNotte);'].join(A))
+      'float schiuma=0.0;',      // attorno alle pile dei ponti e nella loro scia a V, a valle
+      'if(uScia>0.5 && acqua>0.0 && fwF<0.2){ for(int i=0;i<48;i++){ if(float(i)>=uNPile) break; vec4 Pp=uPile[i]; vec2 dP=vWf.xz-Pp.xy; if(dot(dP,dP)>64.0) continue;',
+      '  vec2 fl=vec2(cos(Pp.z),sin(Pp.z)); float al=dot(dP,fl); float ac=dot(dP,vec2(-fl.y,fl.x)); float r=Pp.w;',
+      '  float anello=1.0-smoothstep(r*1.0,r*1.9,length(vec2(al*0.7,ac)));',
+      '  float coda=step(0.0,al)*pow(1.0-smoothstep(r*1.5,r*8.0+0.6,al),2.0);',
+      '  float braccio=coda*(1.0-smoothstep(0.0,0.08+al*0.05,abs(abs(ac)-(r*0.9+al*0.2))));',
+      '  float scia=step(0.0,al)*(1.0-smoothstep(0.0,r*1.2,abs(ac)))*(1.0-smoothstep(0.0,r*6.0+0.4,al));',
+      '  schiuma=max(schiuma,max(anello*0.8,max(braccio*0.28,scia*0.3))); }',
+      '  float nS=texture2D(tMacchie,vWf.xz*0.37+vec2(0.0,-uTempo*0.05)).b; schiuma*=acqua*smoothstep(0.3,0.75,nS*0.7+rF.g*0.5); }',      // spezzata a chiazze dal rumore, che scende con la corrente
+      'float lontF=smoothstep(480.0,820.0,length(vWf.xz));',      // dove il terreno diventa la carta antica (shader del suolo) il fiume diventa il suo tratto d'inchiostro
+      'diffuseColor.rgb=mix(cR,cA,acqua);',
+      'diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.24,0.25,0.23),clamp(schiuma,0.0,1.0)*0.7);',      // schiuma sporca, grigia: un fiume torbido non fa schiuma bianca
+      'diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.13,0.16,0.17),lontF*0.75)*mix(1.0,0.45,uNotte);'].join(A))
     .replace('#include <roughnessmap_fragment>',['#include <roughnessmap_fragment>',
       'roughnessFactor=mix(mix(0.5,0.9,smoothstep(filo,1.0,bw)),mix(0.1,0.35,smoothstep(0.02,0.25,fwF)),acqua);'].join(A))      // da vicino liscia (il sole a piccoli punti), da lontano un riflesso largo e morbido; la sabbia bagnata luccica un poco
     .replace('#include <normal_fragment_maps>',['#include <normal_fragment_maps>',
@@ -613,12 +625,49 @@ function fiumeNuovo(sh){ var A=String.fromCharCode(10), tx=RM.VESTE?RM.trameVest
       '    float hh=texture2D(tMacchie,u).b; gF+=vec2(texture2D(tMacchie,u+vec2(e,0.0)).b-hh,texture2D(tMacchie,u+vec2(0.0,e)).b-hh)*0.5*wv; }',
       '  gF*=acqua; }',
       'nFiume=normalize(vec3(-gF.x,1.0,-gF.y)); normal=normalize((viewMatrix*vec4(nFiume,0.0)).xyz);'].join(A))
+    .replace('#include <lights_fragment_end>',['#include <lights_fragment_end>',
+      'reflectedLight.directSpecular=min(reflectedLight.directSpecular,vec3(mix(1.2,0.16,smoothstep(0.015,0.15,fwF))))*mix(vec3(1.0),vec3(0.8,0.88,0.92),smoothstep(0.015,0.15,fwF));'].join(A))      // il sole riflesso: da vicino punti chiari sulle increspature, da lontano un tetto basso e grigio-azzurro (radente, controsole, il riflesso largo del sole faceva il fiume bianco come ghiaccio)
     .replace('#include <emissivemap_fragment>',['#include <emissivemap_fragment>',
       '{ vec3 Vf=normalize(cameraPosition-vWf); vec3 Rf=reflect(-Vf,nFiume); vec3 cie=mix(uCieloB,uCieloA,pow(clamp(Rf.y*1.5,0.0,1.0),0.6));',
-      '  float Ff=0.02+0.98*pow(1.0-max(dot(nFiume,Vf),0.0),5.0); totalEmissiveRadiance+=cie*min(1.0,uCieF+Ff*uCieK)*acqua; }'].join(A));
+      '  cie=mix(vec3(dot(cie,vec3(0.3,0.4,0.3))),cie,0.6)*vec3(0.72,0.8,0.86);',      // il cielo riflesso più grigio-azzurro e più scuro: l'orizzonte della scena è quasi bianco, e radente il fiume sembrava latte o ghiaccio (27 novembre 2026)
+      '  float Ff=0.02+0.98*pow(1.0-max(dot(nFiume,Vf),0.0),5.0); totalEmissiveRadiance+=cie*min(0.3,uCieF+Ff*uCieK)*acqua*(1.0-0.7*lontF); }'].join(A));      // tetto al riflesso: anche radente resta acqua grigio-verde scura; le increspature lasciano strisce chiare sottili
 }
+/* Le pile dei ponti nel fiume (27 novembre 2026): da RM.ponti di js/mura.js, per la schiuma attorno a ciascuna e la scia a V a valle. Le pile dei ponti di pietra comuni sono quelle
+   disegnate da ponte() in js/mura.js (quattro, a ±1,5 e ±4,4 unità dal centro); per il Sublicio le stilate di legname() (una ogni 1,1 unità). Fabricio e Cestio, con le arcate
+   misurate, non ci sono: le loro pile non escono da js/mura.js. Forma e lunghezza della scia sono uno schema. Solo dal gradino «media» in su. */
+RM.pileU={value:[]}; RM.nPileU={value:0}; RM.sciaU={value:0}; for(var kP=0;kP<48;kP++) RM.pileU.value.push(new THREE.Vector4(0,0,0,0));
+var PILE=null;
+function pileFiume(anno){
+  if(!RM.ponti || !RM.curvaFiume) return;
+  if(!PILE){ PILE=[]; var c=RM.curvaFiume;
+    RM.ponti.forEach(function(p){
+      var xs=null, r=.42, dal=-1e9, fino=1e9;
+      if(p.id==='pontesublicio'){ xs=[]; for(var x=-p.mezzo+.5;x<p.mezzo;x+=1.1) if(Math.abs(x)<5.2) xs.push(x); r=.16; fino=500; }
+      else if(p.id!=='pontefabricio' && p.id!=='pontecestio'){ xs=[-4.4,-1.5,1.5,4.4]; if(p.id==='ponteprobo') dal=280; }
+      if(!xs) return;
+      var m=1e9, tm=0, i, q; for(i=0;i<=1200;i++){ q=c.getPoint(i/1200); var dd=(q.x-p.x)*(q.x-p.x)+(q.z-p.z)*(q.z-p.z); if(dd<m){ m=dd; tm=i/1200; } }
+      var g=c.getTangent(tm), ang=Math.atan2(g.z,g.x), ax=Math.cos(p.rot), az=-Math.sin(p.rot);      // la corrente scende lungo la curva; ax, az: l'asse del ponte (x locale)
+      xs.forEach(function(x){ PILE.push({x:p.x+ax*x, z:p.z+az*x, a:ang, r:r, dal:dal, fino:fino}); });
+    }); }
+  var n=0; PILE.forEach(function(P){ if(n<48 && anno>=P.dal && anno<P.fino){ RM.pileU.value[n].set(P.x,P.z,P.a,P.r); n++; } }); RM.nPileU.value=n;
+}
+RM.moduli.push(pileFiume);
 if(FIUME_VAR){ RM.matFiume.onBeforeCompile=fiumeNuovo; RM.matFiume.color.setRGB(1,1,1); RM.matFiume.metalness=0; RM.matFiume.roughness=.3;
-  RM.frame.push(function(dt){ if(!MENO_MOTO) RM.tempoFiume.value+=dt; }); }
+  RM.frame.push(function(dt){ if(!MENO_MOTO) RM.tempoFiume.value+=dt; RM.sciaU.value=(RM.vesteU.value>.5 && RM.q>=1 && RM.q<=3)?1:0; }); }      // la scia delle pile: «media», «alta», «massima» (RM.q 1-3; 0 è «bassa», 4 «telefono»)
+/* La maglia del fiume (27 novembre 2026). L'asse resta quello di sempre: RM.curvaFiume è la stessa curva di prima (barche, ponti, isola, mura di riva e piena ci stanno sopra).
+   Cambia solo il disegno: un punto ogni 10 m invece che ogni 30 (nelle anse strette l'orlo esterno girava a gomito, a facce di 30 m) e la linea prolungata di 25 km diritta oltre
+   i due capi, dove la foschia e la carta antica la nascondono (prima il fiume finiva con un taglio diritto contro l'erba). Le coordinate lungo il fiume sono in unità vere. */
+function magliaFiume(){
+  var L=RM.FIUME, a=L[0], a1=L[1], z=L[L.length-1], z1=L[L.length-2], i, pre=[], post=[], la=Math.hypot(a[0]-a1[0],a[1]-a1[1]), lz=Math.hypot(z[0]-z1[0],z[1]-z1[1]);
+  for(i=10;i>=1;i--) pre.push([a[0]+(a[0]-a1[0])/la*250*i,a[1]+(a[1]-a1[1])/la*250*i]);
+  for(i=1;i<=10;i++) post.push([z[0]+(z[0]-z1[0])/lz*250*i,z[1]+(z[1]-z1[1])/lz*250*i]);
+  var curva=new THREE.CatmullRomCurve3(pre.concat(L,post).map(function(p){ return new THREE.Vector3(p[0],0,p[1]); }),false,'catmullrom',.35), lung=curva.getLength(), n=Math.round(lung), v=[], uv=[], idx=[], k, p, t, nx, nz, W=5.6;
+  curva.arcLengthDivisions=Math.round(lung*2); curva.updateArcLengths();
+  for(k=0;k<=n;k++){ p=curva.getPointAt(k/n); t=curva.getTangentAt(k/n); nx=-t.z; nz=t.x;
+    v.push(p.x+nx*W,-.5,p.z+nz*W, p.x-nx*W,-.5,p.z-nz*W); uv.push(0,k*lung/n/6,1,k*lung/n/6); if(k<n){ var b=k*2; idx.push(b,b+2,b+1, b+1,b+2,b+3); } }
+  var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(v,3)); g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.setIndex(idx); g.computeVertexNormals();
+  var m=new THREE.Mesh(g,RM.matFiume); m.receiveShadow=true; m.userData.gruppo='strade'; m.frustumCulled=false; scene.add(m); return m;
+}
 RM.posa=function(){
   if(RM.suolo) return;
   posaSuolo();
@@ -626,7 +675,8 @@ RM.posa=function(){
      cappi: ma porte, case e passanti si calcolano sulla linea, e così la strada passava accanto all'arco di Gallieno invece che sotto. Con un punto ogni 30 m lo scarto resta sotto i 3. */
   function fitta(l){ var o=[l[0]], k, a, b, n, j; for(k=0;k<l.length-1;k++){ a=l[k]; b=l[k+1]; n=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/3)); for(j=1;j<=n;j++) o.push([a[0]+(b[0]-a[0])*j/n,a[1]+(b[1]-a[1])*j/n]); } return o; }
   RM.STRADE.forEach(function(s,i){ RM.nastro(fitta(s),TOPO.stradeLarghe[i],matStrada,.1); });
-  RM.curvaFiume=RM.nastro(RM.FIUME,5.6,RM.matFiume,0,-.5).userData.curva;
+  if(FIUME_VAR){ RM.curvaFiume=new THREE.CatmullRomCurve3(RM.FIUME.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); }),false,'catmullrom',.35); magliaFiume(); }      // la stessa curva che RM.nastro faceva per il fiume
+  else RM.curvaFiume=RM.nastro(RM.FIUME,5.6,RM.matFiume,0,-.5).userData.curva;
 };
 
 /* ---- giorno / notte ---- */
