@@ -564,6 +564,55 @@ function fiumeVeste(sh){ var A=String.fromCharCode(10), TVf=RM.trameVeste();
       '  float Ff=0.02+0.98*pow(1.0-max(dot(nFiume,Vf),0.0),5.0); totalEmissiveRadiance+=cie*Ff*0.85*(1.0-0.6*smoothstep(0.8,1.0,abs(vRiva.x-0.5)*2.0)); }'].join(A));
 }
 RM.frame.push(function(dt){ RM.tempoAcqua.value+=dt; });
+/* Il Tevere in prova (26 novembre 2026; l'utente: «Il Tevere secondo me va rivisto dappertutto»: da vicino a ponte Milvio sembrava un prato). Tre varianti da scegliere, solo con ?fiume=a|b|c;
+   senza parametro il fiume resta quello di sopra. Le fonti lette sul colore (Orazio, Odi I 2, 13: «flavom Tiberim»; Virgilio, Eneide VII 31: «multa flavus harena») stanno in
+   src/testi/topografia-fonti.md, «Il colore del Tevere». (a) il biondo-bruno di quelle fonti, (b) grigio-verde freddo e scuro, (c) grigio-azzurro dominato dal riflesso del cielo.
+   Resa comune: più scuro e profondo al centro, più chiaro e torbido verso le rive, una striscia di fango bagnato sull'orlo; il cielo riflesso cresce guardando radente (Fresnel, dalla
+   direzione di vista, senza mappe d'ambiente); increspature di rumore (non onde regolari: le onde regolari facevano gli scacchi) che scendono con la corrente e accendono il sole a
+   punti, e che si spengono quando diventano più piccole di qualche pixel; da lontano l'acqua diventa più opaca e il riflesso del sole largo e morbido. Le ombre si leggono un metro e
+   mezzo più in alto, con la normale verso l'alto: il nastro del fiume è quasi alla quota del terreno e l'ombra del terreno stesso lo quadrettava. Al gradino «bassa» (niente veste)
+   restano colore, rive e riflesso del cielo, senza increspature. Con meno animazioni la corrente sta ferma. */
+var FIUME_VAR=(/[?&]fiume=([abc])/.exec(location.search)||[])[1]||null; RM.fiumeVar=FIUME_VAR;
+var FIUME_TINTE={ a:{c:0x3d311c, r:0x6a5632, k:1.2, f:.06}, b:{c:0x1c2624, r:0x37423d, k:1, f:.03}, c:{c:0x222c33, r:0x3f4b50, k:1.6, f:.1} };      // l'acqua torbida rimanda poca luce: tinte scure, il chiaro lo dà il cielo riflesso      // c: centro, r: verso le rive, k e f: forza e fondo del riflesso del cielo
+RM.tempoFiume={value:0}; RM.notteFiume={value:0};
+function fiumeNuovo(sh){ var A=String.fromCharCode(10), T=FIUME_TINTE[FIUME_VAR], tx=RM.VESTE?RM.trameVeste().macchie:new THREE.DataTexture(new Uint8Array([128,128,128,255]),1,1);
+  sh.uniforms.uTempo=RM.tempoFiume; sh.uniforms.uNotte=RM.notteFiume; sh.uniforms.uVesteF=RM.vesteU; sh.uniforms.tMacchie={value:tx};
+  sh.uniforms.uAcquaC={value:RM.col(T.c)}; sh.uniforms.uAcquaR={value:RM.col(T.r)}; sh.uniforms.uFango={value:RM.col(0x3b3124)}; sh.uniforms.uCieK={value:T.k}; sh.uniforms.uCieF={value:T.f};
+  sh.uniforms.uCieloA=cielo.material.uniforms.alto; sh.uniforms.uCieloB=cielo.material.uniforms.basso;
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying vec2 vRiva; varying vec3 vWf;')
+    .replace('#include <beginnormal_vertex>','vec3 objectNormal=vec3(0.0,1.0,0.0);')      // il nastro è a due facce: la normale sempre in su, anche per lo scostamento dell'ombra
+    .replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vRiva=uv; vWf=(modelMatrix*vec4(transformed,1.0)).xyz;')
+    .replace('#include <shadowmap_vertex>','#ifdef USE_SHADOWMAP'+A+'worldPosition.y+=0.15;'+A+'#endif'+A+'#include <shadowmap_vertex>'+A+'#ifdef USE_SHADOWMAP'+A+'worldPosition.y-=0.15;'+A+'#endif');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying vec2 vRiva; varying vec3 vWf; uniform float uTempo; uniform float uNotte; uniform float uVesteF; uniform sampler2D tMacchie;'+
+      ' uniform vec3 uAcquaC; uniform vec3 uAcquaR; uniform vec3 uFango; uniform float uCieK; uniform float uCieF; uniform vec3 uCieloA; uniform vec3 uCieloB; vec3 nFiume=vec3(0.0,1.0,0.0);')
+    .replace('#include <color_fragment>',['#include <color_fragment>',
+      'float bw=abs(vRiva.x-0.5)*2.0; float sF=vRiva.y*6.0; float fwF=max(fwidth(vWf.x),fwidth(vWf.z));',      // bw: 0 al centro, 1 sulla riva; sF: lungo il fiume, in unità (i punti del nastro sono a circa 3 unità)
+      'float acqua=1.0-smoothstep(0.885,0.915,bw);',      // l'orlo esterno è fango bagnato, non acqua
+      'vec3 cA=mix(uAcquaC,uAcquaR,smoothstep(0.3,0.9,bw));',
+      'if(uVesteF>0.5){ vec4 mt=texture2D(tMacchie,vec2(vRiva.x*0.35,sF*0.008-uTempo*0.0012)); cA*=0.9+0.2*mt.g; }',      // filoni di torbida che scendono con la corrente
+      'vec3 cR=mix(cA*1.18,uFango,smoothstep(0.9,0.95,bw));',      // filo d'acqua bassa e limo, poi il fango
+      'diffuseColor.rgb=mix(cR,cA,acqua)*mix(1.0,0.45,uNotte);'].join(A))
+    .replace('#include <roughnessmap_fragment>',['#include <roughnessmap_fragment>',
+      'roughnessFactor=mix(0.75,mix(0.09,0.38,smoothstep(0.02,0.25,fwF)),acqua);'].join(A))      // da vicino liscia (il sole a punti sulle increspature), da lontano un riflesso largo e morbido
+    .replace('#include <normal_fragment_maps>',['#include <normal_fragment_maps>',
+      'vec2 gF=vec2(0.0);',
+      'if(uVesteF>0.5 && acqua>0.0){ vec2 q=vec2(vRiva.x*11.2,sF); float e=1.0/128.0;',
+      '  vec2 u0=q/40.0+vec2(0.0,-uTempo*0.0018); float h0=texture2D(tMacchie,u0).r;',      // ondulazione larga (decine di metri): da mezza distanza fa variare il riflesso del cielo
+      '  gF+=vec2(texture2D(tMacchie,u0+vec2(e,0.0)).r-h0,texture2D(tMacchie,u0+vec2(0.0,e)).r-h0)*1.2*(1.0-smoothstep(0.4,1.5,fwF));',
+      '  float fm=1.0-smoothstep(0.08,0.35,fwF); if(fm>0.0){ vec2 um=q/9.0+vec2(0.11,-uTempo*0.012); float hm=texture2D(tMacchie,um).g;',      // chiazze di vento e di corrente di una decina di metri: da mezza distanza l'acqua non è mai liscia come un prato
+      '    gF+=vec2(texture2D(tMacchie,um+vec2(e,0.0)).g-hm,texture2D(tMacchie,um+vec2(0.0,e)).g-hm)*1.6*fm; }',
+      '  float f1=1.0-smoothstep(0.012,0.045,fwF); if(f1>0.0){ vec2 u1=q/2.2+vec2(0.03,-uTempo*0.055); float h1=texture2D(tMacchie,u1).b;',      // increspature di un metro circa
+      '    gF+=vec2(texture2D(tMacchie,u1+vec2(e,0.0)).b-h1,texture2D(tMacchie,u1+vec2(0.0,e)).b-h1)*1.4*f1; }',
+      '  float f2=1.0-smoothstep(0.005,0.016,fwF); if(f2>0.0){ vec2 u2=q/0.8+vec2(-uTempo*0.02,-uTempo*0.11); float h2=texture2D(tMacchie,u2).b;',      // e di qualche decimetro, più svelte
+      '    gF+=vec2(texture2D(tMacchie,u2+vec2(e,0.0)).b-h2,texture2D(tMacchie,u2+vec2(0.0,e)).b-h2)*1.1*f2; }',
+      '  gF*=acqua; }',
+      'nFiume=normalize(vec3(-gF.x,1.0,-gF.y)); normal=normalize((viewMatrix*vec4(nFiume,0.0)).xyz);'].join(A))
+    .replace('#include <emissivemap_fragment>',['#include <emissivemap_fragment>',
+      '{ vec3 Vf=normalize(cameraPosition-vWf); vec3 Rf=reflect(-Vf,nFiume); vec3 cie=mix(uCieloB,uCieloA,pow(clamp(Rf.y*1.5,0.0,1.0),0.6));',
+      '  float Ff=0.02+0.98*pow(1.0-max(dot(nFiume,Vf),0.0),5.0); totalEmissiveRadiance+=cie*min(1.0,uCieF+Ff*uCieK)*acqua; }'].join(A));
+}
+if(FIUME_VAR){ RM.matFiume.onBeforeCompile=fiumeNuovo; RM.matFiume.color.setRGB(1,1,1); RM.matFiume.metalness=0; RM.matFiume.roughness=.3;
+  RM.frame.push(function(dt){ if(!MENO_MOTO) RM.tempoFiume.value+=dt; }); }
 RM.posa=function(){
   if(RM.suolo) return;
   posaSuolo();
@@ -592,7 +641,8 @@ RM.applicaLuce=function(n){
   scene.fog.color.copy(cielo.material.uniforms.basso.value);
   emi.color.copy(G.emiSu).lerp(N.emiSu,n); emi.groundColor.copy(G.emiGiu).lerp(N.emiGiu,n); emi.intensity=(G.iEmi+(N.iEmi-G.iEmi)*n)*(1+.5*v);
   sole.color.copy(G.sole).lerp(N.sole,n).lerp(VELO.sole,v); sole.intensity=(G.iSole+(N.iSole-G.iSole)*n)*(1-.62*v);
-  RM.matFiume.color.copy(fiumeG).lerp(fiumeN,n); RM.stelle.material.opacity=n*.9;
+  if(FIUME_VAR) RM.notteFiume.value=n; else RM.matFiume.color.copy(fiumeG).lerp(fiumeN,n);      // le varianti in prova scuriscono l'acqua nello shader
+  RM.stelle.material.opacity=n*.9;
 };
 RM.applicaLuce(0);
 

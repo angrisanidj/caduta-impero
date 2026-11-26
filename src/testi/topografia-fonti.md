@@ -244,3 +244,12 @@ Tutte le tavole sono di Rodolfo Lanciani, *Forma Urbis Romae* (1893-1901), su Wi
 
 **Contorno (25 novembre 2026, sera).** OpenStreetMap, query `src/roma/grezzi/q15.txt` → `osm-testaccio.json`: l'area archeologica (way 23921018) misura 4,3 ettari e 830 m perché comprende strade e cantine attorno al monte; il recinto del parco «Monte de' Cocci» (way 190994645), cioè il piede di oggi, 2,8 ettari e 740 m; sfoltito e arrotondato nel modello, 2,75 ettari e 675 m. Le fonti dicono circa 2 ettari (22.000 m² il CEIPAC) e circa un chilometro di giro (Remesal, Platner e Ashby), 1490 m il CEIPAC: misure che non stanno insieme, perché un triangolo di 2 ettari ha circa 650 m di giro. La pianta di Remesal (p. 138) non è stata riletta per questo lavoro: la forma triangolare viene dalla nota qui sopra e dal dato di OpenStreetMap.
 **Sezione.** Nessuna fonte letta dà la sezione del monte o le quote delle due piattaforme: nel modello hanno la stessa quota, separate da un leggero avvallamento (schema); l'altezza resta 35 m sul piano di oggi (Wikipedia, da Claridge e Peña), perché nessuna fonte letta la dà sul piano antico.
+
+## Il colore del Tevere
+
+Letti il 26 novembre 2026 su The Latin Library (testo latino, senza traduzione a fronte).
+
+1. **Orazio, *Odi* I 2, 13-14** (`https://www.thelatinlibrary.com/horace/carm1.shtml`): «Vidimus flavom Tiberim retortis / litore Etrusco violenter undis» — abbiamo visto il Tevere *biondo*, con le onde respinte con violenza dalla riva etrusca. È la piena del Tevere fra i prodigi dopo la morte di Cesare.
+2. **Virgilio, *Eneide* VII 30-32** (`https://www.thelatinlibrary.com/vergil/aen7.shtml`): «hunc inter fluvio Tiberinus amoeno / verticibus rapidis et multa flavus harena / in mare prorumpit» — fra questi boschi il Tevere, dalla corrente piacevole, coi gorghi rapidi e *biondo* di molta sabbia, si getta nel mare. Qui la ragione del colore è detta: la sabbia (e il limo) che il fiume porta.
+
+**Che cosa se ne ricava per la scena.** *Flavus* è il giallo-bruno chiaro dei capelli biondi e della sabbia: un fiume torbido, carico di sedimenti, non verde né azzurro. Nessuna delle due fonti dice quanto fosse scuro, né che riflettesse il cielo: il riflesso è fisica dell'acqua, non fonte. Tutte e due parlano del fiume in moto (piena, gorghi rapidi): la torbida è più forte quando l'acqua corre. Le fonti sono di età augustea; per il III-IX secolo non ne è stata letta nessuna: si suppone che il fiume, con lo stesso bacino, avesse lo stesso colore.
