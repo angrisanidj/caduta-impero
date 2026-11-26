@@ -253,3 +253,93 @@ Letti il 26 novembre 2026 su The Latin Library (testo latino, senza traduzione a
 2. **Virgilio, *Eneide* VII 30-32** (`https://www.thelatinlibrary.com/vergil/aen7.shtml`): «hunc inter fluvio Tiberinus amoeno / verticibus rapidis et multa flavus harena / in mare prorumpit» — fra questi boschi il Tevere, dalla corrente piacevole, coi gorghi rapidi e *biondo* di molta sabbia, si getta nel mare. Qui la ragione del colore è detta: la sabbia (e il limo) che il fiume porta.
 
 **Che cosa se ne ricava per la scena.** *Flavus* è il giallo-bruno chiaro dei capelli biondi e della sabbia: un fiume torbido, carico di sedimenti, non verde né azzurro. Nessuna delle due fonti dice quanto fosse scuro, né che riflettesse il cielo: il riflesso è fisica dell'acqua, non fonte. Tutte e due parlano del fiume in moto (piena, gorghi rapidi): la torbida è più forte quando l'acqua corre. Le fonti sono di età augustea; per il III-IX secolo non ne è stata letta nessuna: si suppone che il fiume, con lo stesso bacino, avesse lo stesso colore.
+
+## Monumenti resi a sé il 26 novembre 2026
+
+Richiesta dell'utente: «sei sicuro che ci siano tutti i monumenti, tipo il tempio di Castore e Polluce?»; «Manca anche il Septizodium?»; «Almeno di questi [quelli rimasti a noi] devono esserci tutti». Gli edifici erano già disegnati dentro un gruppo (`fori`, `palatino`) o senza nome; ora hanno nome, scheda e storia propria (`js/monumenti.js`, `js/dati.js`). Fonte principale per tutti: Platner e Ashby, *A Topographical Dictionary of Ancient Rome* (1929), su LacusCurtius, `https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/<voce>.html`, ogni voce letta per intero il 26 novembre 2026. Regola: dove la fonte non dà una data fra il 235 e l'852, vale la scelta già dichiarata del modello (i templi chiudono nel 392, `src/testi/audit-anacronismi.md`), poi «abbandonato, ma in piedi»; niente cava né crollo senza una fonte.
+
+### Tempio dei Castori (`castori`; voce `Aedes_Castoris.html`)
+
+- Forma: «The Augustan temple was Corinthian, octastyle and peripteral, with eleven columns on each side, and a double row on each side of the pronaos. This pronaos was 9.90 metres by 15.80, the cella 16 by 19.70, and the whole building about 50 metres long by 30 wide. The floor was about 7 metres above the Sacra via.»
+- Ricostruzione: «the temple was completely rebuilt by Tiberius in 6 A.D.»; «The existing remains are mostly of the Augustan period».
+- Usi: «This temple served frequently as a meeting-place for the senate»; «its steps forming a sort of second Rostra»; «In it were kept the standards of weights and measures, and the chambers in the podium … seem to have served as safe deposit vaults for the imperial fiscus».
+- Che cosa resta: «Of the superstructure three columns on the east side are standing … They are of white marble, fluted, 12.50 metres in height and 1.45 in diameter.»
+- Storia dopo il IV secolo: «This temple was standing in the fourth century, but nothing is known of its subsequent history, except that in the fifteenth century only three columns were visible, for the street running by them was called via Trium Columnarum».
+- Nel modello: in uso fino al 392 (scelta), poi abbandonato ma in piedi fino all'852 (nessuna fonte di crolli prima del Quattrocento).
+
+### Settizodio (`settizodio`; voce `Septizonium.html`, pp. 473-475)
+
+- Posto: «a building erected by Septimius Severus at the extreme south-east corner of the Palatine hill»; Storia Augusta, Severo 24 (citata da Platner): «cum Septizonium fecerit nihil aliud cogitavit quam ut ex Africa venientibus suum opus occurreret»; Platner: «Severus intended this building to serve as a monumental façade at this corner of the hill, visible to all who approached by the via Appia».
+- Data: «The inscription (CIL VI.1032, 31229) records the dedication in 203 A.D.»; Cataloghi, regione X: «Septizonium divi Severi».
+- Uso: Ammiano XV 7, 3 (anno 355): «ad Septemzodium convenisset celebrum locum ubi operis ambitiosi nymfaeum Marcus condidit imperator»; Platner: «There appears indeed to be no doubt that it was actually decorated with fountains».
+- Forma: «an ornamental façade with three large niches, and three orders of columns»; «There is no doubt, however, that the building only had three stories»; «The columns of the three orders were all composite»; «its general form may be taken as certain».
+- Medioevo: «septem solia (divided into maius and minus, referring to the east and west ends)»; «The church of S. Lucia de Septem solio is first mentioned in Eins.»; «The mediaeval history of the building, which served as a fortress, is interesting» (fonti di Platner non lette).
+- Fine: «Its destruction was completed by 14th September, 1588»; «The east angle of the building itself was preserved until the pontificate of Sixtus V who ordered its destruction, and the use of its materials for his own buildings».
+- Punto: Wikidata Q1234446, 41.8856 N, 12.4887 E (dal rapporto `src/design/completezza-monumenti.md`, sezione 5.1); en.wikipedia «Septizodium» (letta il 26 novembre 2026) dà 41.8854, 12.4889, circa 25 m più a sud-est. La stessa voce scrive «By the 8th century, the edifice was already ruined», senza nota: non usato.
+- Nel modello: spostato dal pianoro del Palatino (centro della facciata a x 16,2, z 60,6) al punto di Wikidata (x 28,18, z 76,68), circa 200 m più a sud-est, al piede del colle, fra la curva del Circo Massimo e la strada per porta Capena; la facciata ora guarda porta Capena (scelta: la fonte dice solo che doveva colpire chi arrivava dall'Appia). In uso fino al 537 (l'acqua si ferma con gli acquedotti: scelta), poi abbandonato ma in piedi fino all'852.
+
+### Mausoleo di Augusto (`augusto`; voce `Mausoleum_Augusti.html`, pp. 332-336)
+
+- Posto e data: «by Augustus for himself, his family, and his successors in the northern part of the campus Martius, between the via Flaminia and the Tiber, as early as 28 B.C.».
+- Forma: «a large circular drum, faced with travertine, or, as some think, marble; this was 87 metres in external diameter at the base. Above it rose an upper arcade … and there were probably other tiers above, planted with evergreen trees, while at the summit was a bronze statue of Augustus. The entrance was on the south»; «In front of the entrance stood two obelisks … and the mausoleum was surrounded by a spacious park planted with trees and laid out with walks».
+- Sepolture: Marcello (23 a.C.) il primo; Nerva «certainly buried here»; per Adriano (Cassio Dione LXIX 23) il mausoleo era pieno; «It was only opened on one other occasion — when the body of Julia Domna was temporarily placed there».
+- Dopo: «The story of its plundering by Alaric in 410 has no historical foundation, and we know nothing of its destruction. During the whole of the Middle Ages it kept its name — Mons Augustus in 955-962»; «the vaults in this area have collapsed, and the whole has been used as a lime kiln in the Middle Ages»; «The ruins were converted into a fortress by the Colonna family, and its destruction in 1167 led to considerable damage to the ruins».
+- Oggi (1929): «the mausoleum is now surmounted by a large concert hall, known as the Augusteo, in the entrance passages of which considerable remains of the chambers … may still be seen».
+- Nel modello: il disegno c'era già; prima non aveva nome né voce e seguiva le comparse (chiuso nel 500, con crolli). Ora: in uso (tomba curata) fino al 500, data delle comparse (scelta), poi abbandonato ma in piedi fino all'852.
+
+### Tempio di Saturno (`saturno`; voce `Aedes_Saturni.html`, pp. 463-465)
+
+- Posto: «the temple erected close to the original ara at the foot of the Capitoline and edge of the forum».
+- Storia: «In 42 B.C. the temple was rebuilt by L. Munatius Plancus»; «at some time in the fourth century it was injured by fire and restored by vote of the senate, as recorded in the inscription on the architrave (CIL VI.937)»; «mentioned in Reg. (Not. Reg. VIII)».
+- Uso: «Throughout the republic this temple contained the state treasury, the aerarium populi Romani or Saturni»; «Other public documents were affixed to the outer walls of the temple».
+- Forma: podio «22.50 metres wide, about 40 long, and its front and east side rise very high above the forum because of the slope of the Capitoline hill. The temple was Ionic, hexastyle prostyle»; «The architrave blocks with the palmette frieze below them belong to the forum of Trajan, whence they were removed for the fourth century restoration».
+- Che cosa resta: «eight columns of the pronaos remain, six in front and one on each side, together with the entablature»; «The front columns are of grey and those on the sides of red granite … The columns are 11 metres in height».
+- Fine: Poggio, De varietate fortunae: «superest porticus aedis Concordiae (sic), quam, cum primum ad urbem accessi, vidi fere integram … Romani postmodum, ad calcem aedem totam et porticus partem, disiectis columnis, sunt demoliti» (prima visita 1402, scritto nel 1447).
+- Nel modello: in uso fino al 392 (scelta), poi abbandonato ma in piedi fino all'852.
+
+### Tempio di Vesta e casa delle Vestali (`vesta`; voci `Vesta.html`, pp. 556-559, e `Atrium_Vestae.html`, pp. 58-60)
+
+- Tempio: «the temple of Vesta at the east end of the forum, near the fountain of Juturna and the temple of Castor»; «In the great fire of 64 A.D. it was burned, but soon restored, probably by Nero, and later in 191, when it was restored by Julia Domna»; «It is mentioned in the Regionary Catalogue (Reg. VIII), and was closed by Theodosius in 394».
+- Forma: «It was of white marble, peripteral, with twenty columns connected by metal gratings. The roof was dome-shaped, with an opening in the centre for the exit of smoke of the sacred fire»; «no statue of the goddess herself»; colonne «0.51 metre in diameter and about 4.45 in height».
+- Oggi (1929): «The excavations of 1883 and 1899-1900 brought to light various architectural fragments and the podium».
+- Casa: «the house of the Vestal Virgins at the foot of the Palatine, just east of the forum proper»; «after suffering injury in the fire of Commodus, the atrium was restored by Julia Domna, and the courtyard lengthened to 69 metres (it was, as before, 24 metres wide)»; «in the Constantinian period, of an octagonal structure … and of two small piscinae»; «Round the court stood numerous statues of Virgines Vestales Maximae».
+- Monete: «830 Saxon coins, dating down to the middle of the tenth century, in 1883 … and 397 gold coins dating from 335 to 467-472 A.D. in 1899». Nessuna data di abbandono della casa.
+- Nel modello: tempio e casa in uso fino al 394 (la chiusura di Teodosio, data della fonte; per la casa è una scelta), poi abbandonati ma in piedi fino all'852.
+
+### Tempio di Antonino e Faustina (`antonino`; voce `Templum_Antonini-Faustinae.html`, pp. 13-14)
+
+- Posto e storia: «the temple built by Antoninus Pius on the north side of the Sacra via at the entrance to the forum, just east of the basilica Aemilia, in honour of his deified wife, the empress Faustina, who died in 141 A.D.»; «After the death of Antoninus himself in 161, the temple was dedicated to both together»; Cataloghi, regione IV: «templum Faustinae».
+- Forma: «hexastyle prostyle, with two columns on each side, besides those at the corners»; «The columns are of cipollino, 17 metres high and 1.45 in diameter at the base».
+- Chiesa: «In the seventh or eighth century this temple, apparently in good condition, was converted into the church of S. Lorenzo in Miranda (Armellini 156-157), the floor of which is about 12 metres above the ancient level».
+- Graffiti: «on the columns are numerous inscriptions and figures, some of which are Christian and have been scratched as early as the fourth century A.D.».
+- Che cosa resta: «portions of the cella wall of peperino, built into the walls of the church … the columns of the pronaos … the architrave and frieze of the façade and sides … and the wide flight of steps leading down to the Sacra via, in the middle of which are the remains of an altar».
+- Nel modello: in uso fino al 392 (scelta), abbandonato ma in piedi, chiesa dal 700 (anno scelto fra VII e VIII secolo), in uso fino all'852.
+
+### Arco di Settimio Severo (`arcoseveroforo`; voce `Arcus_Septimii_Severi.html`, pp. 43-44)
+
+- «The arch erected in 203 A.D. in honour of Severus and his sons Geta and Caracalla, at the northwest corner of the forum, in front of the temple of Concord»; «The original bronze letters of this inscription have disappeared, but their matrices remain, and it can be seen that the name of Geta was chiselled away after his murder».
+- «Later, probably in the fourth century, the level in front of the arch on this side was lowered, the flight of steps lengthened»; «The arch was never traversed by a road until mediaeval times».
+- Misure: «The arch is 23 metres high, 25 wide and 11.85 deep, the central archway being 12 metres high and 7 wide, and the side archways 7.80 high and 3 wide»; attico «5.60 metres in height».
+- Statue: «on the top of the arch was a six- or eight-horse chariot, in which stood Severus and Victory … and on the ends four equestrian figures; but of these statues no traces have been found» (dalle monete).
+- Medioevo: «The excellent preservation of this monument is due in part to the fact that in the Middle Ages its southern half belonged to the neighbouring church of SS. Sergio e Bacco, and its northern half was fortified».
+- Nel modello: in piedi dal principio all'852, nessun cambio di stato (nessuna fonte letta di danni).
+
+### Colonna Traiana (`colonnatraiana`, `colonnatraianastatua`; voce `Forum_Trajani.html`)
+
+- «It was called columna cochlis (Not. Reg. VIII) … It is built of Parian marble. The shaft and basis, composed of 18 blocks, 3.70 metres in diameter, with the additional block that forms the capital, and the plinth which is cut in the upper block of the pedestal, measure 100 Roman feet (29.77 metres) in height. The height of shaft and pedestal together is 38 metres, which corresponds with the figures of the Notitia (columnam cochlidem altam pedes CXXVIII semis)».
+- «On its top was a statue of Trajan in gilt bronze, of which we have no representation. Sixtus V erected the present statue of S. Peter in 1588».
+- «Within the hollow column a spiral staircase with 185 steps leads to the top … Light is furnished by 43 narrow slits in the wall (Not.: fenestras XLV). The pedestal, 5.4 metres high and 5.5 square»; «a rectangular sepulchral chamber … in which the ashes of Trajan in a golden urn were probably placed»; «This chamber was evidently robbed, for when re-excavated in 1906 … a hole had been cut through the travertine foundation».
+- Fregio: «These reliefs represent the principal events in the campaigns of Trajan in Dacia between 101 and 106 A.D.»; «These reliefs were also coloured most brilliantly»; monete «of Trajan after 113».
+- Il foro: «a vivid picture is given of the astonishment of the Emperor Constantius on the occasion of his visit to it in 356 A.D. (Amm. Marcell. XVI.10.15). The history of its destruction begins with the sixth century».
+- Nel modello: la colonna in piedi dal principio all'852; la statua sparisce nel 663 con i bronzi dei Fori (scelta già dichiarata nella scheda dei Fori).
+
+### Arco di Dolabella e Silano (`dolabella`; voce `arcus.html`, «Arcus Dolabellae et Silani»)
+
+- «on the Caelian, at the north corner of the site of the castra Peregrina, erected in 10 A.D. by the consuls P. Cornelius Dolabella and C. Iulius Silanus (CIL VI.1384). It is of travertine without ornamentation, and is usually supposed to have been built to support a branch of the aqua Marcia …, and afterwards to have been used by Nero in his extension of the aqua Claudia, the arcus Neroniani».
+- Nel modello aveva già storia e disegno; mancava solo il nome. Ora ha nome e scheda; resta in piedi fino all'852.
+
+### Sepolcro di Eurisace (`eurisace`; voce `Sepulcrum_Eurysacis.html`, p. 479)
+
+- «the tomb of M. Vergilius Eurysaces, a baker, built apparently about the end of the republic, in the angle formed by the bifurcation of the via Praenestina and the via Labicana, just outside the arches of the aqua Claudia»; «trapezoidal, measuring 8.75, 6.85, 5.80 and 4.05 metres on its sides, of concrete with travertine facing»; «a frieze covered with reliefs representing the various operations of breadmaking».
+- «When Honorius restored the wall of Aurelian he erected two towers outside the Porta Praenestina, one of which stood over this tomb, and concealed it from view. It must, however, have been partially accessible from the interior, for the inscriptions were partly read in the sixteenth century»; «The towers were removed in 1838 … but the east side is almost wholly demolished».
+- Nel modello aveva già storia (nascosto dal 402) e disegno; mancava solo il nome. Ora ha nome e scheda.

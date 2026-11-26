@@ -535,7 +535,7 @@ var M=[
     B.striscia(p,.135,asse,.135,FANGO);
     for(k=0;k<9;k++) B.cilindro(.5+.8*rnd(),.02,-25+48*rnd(),.14,(rnd()<.5?-1:1)*(1+1.8*rnd()),P.acqua,null,12);
  }},
- {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6],[11.2,13.1,3.8]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
+ {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, altoFisso:4.118, raggioFisso:25.931, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6],[11.2,13.1,3.8]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
     /* Posizioni reali: i centri dei resti rilevati in OpenStreetMap (src/roma/grezzi/osm-foro.json), scritti qui in coordinate di scena.
        Orientamenti: il Foro Romano lungo il suo asse, i fori imperiali sulla loro griglia comune, girata di circa 58° rispetto al Foro.
        Forme e misure restano schematiche; qualche edificio è accorciato di poco perché le vie vere gli passino accanto e non sopra. */
@@ -546,21 +546,13 @@ var M=[
     inForo(B,-5.5,-1,0,function(B){ B.scatola(1.3,.32,2.4,0,0,0,P.marmo).scatola(.12,.12,2.4,.6,.32,0,P.marmo).aperture(.66,1.1,.66,-1.1,6,.06,.2,.12,true); });   // i Rostri: la tribuna degli oratori, sul lato ovest della piazza
     inForo(B,-9.1,-4.9,0,function(B){ B.scatola(2,1.7,4.4,-.6,.5,0,P.marmo).falde(4.4,.5,2.1,-.6,2.2,0,P.coppi,PI/2,P.marmo).scatola(2.2,.5,4.5,-.6,0,0,P.travertino); B.tempio(2.2,1.6,1.6,.9,0,PI/2,{fronte:6}); });   // Concordia: cella larga, messa di traverso, e pronao verso il Foro
     inForo(B,-11.4,-2.6,0,function(B){ B.tempio(1.7,3,1.6,0,0,PI/2,{fronte:6,podio:.6}); });                                       // Vespasiano e Tito
-    inForo(B,11.2,13.1,0,function(B){ portico(B,6.8,3,0,0,0,1); B.scatola(6.8,1.1,.5,0,1.15,-1.5,P.mattone).scatola(.5,1.1,3,-3.4,1.15,0,P.mattone).scatola(.5,1.1,3,3.4,1.15,0,P.mattone); });   // casa delle Vestali: il lungo cortile porticato, a due piani
-    inForo(B,-10.1,1.1,0,function(B){ B.tempio(2.2,4,1.7,0,0,PI/2,{fronte:6,podio:.85}); });                                      // Saturno, sul suo podio alto
-    inForo(B,3,9.3,0,function(B){ B.tempio(2.9,4.6,2,0,0,PI,{fronte:8,lati:11,podio:.8}); });                                     // Castori: «octastyle and peripteral, with eleven columns on each side» (Platner e Ashby, Aedes Castoris)
-    inForo(B,7.4,9,0,function(B){                                                                                                 // Vesta: tempio rotondo, colonne tutt'attorno, tetto conico con il foro per il fumo
-      B.cilindro(1,.32,0,0,0,P.marmo,null,20).cilindro(.62,1.25,0,.32,0,P.marmo,null,16);
-      for(var k=0;k<20;k++){ var a=k*PI/10; B.cilindro(.06,1.25,.86*Math.cos(a),.32,.86*Math.sin(a),P.marmo,.052,7); }      // «peripteral, with twenty columns» (Platner e Ashby, Vesta)
-      B.cilindro(.98,.14,0,1.57,0,P.marmo,null,20).cilindro(.98,.5,0,1.71,0,P.bronzo,.16,20);
-    });
+    /* la casa delle Vestali e il tempio di Vesta sono un monumento a sé dal 26 novembre 2026 (id 'vesta', più sotto) */
+    /* il tempio di Saturno è un monumento a sé dal 26 novembre 2026 (id 'saturno', più sotto) */
+    /* il tempio dei Castori è un monumento a sé dal 26 novembre 2026 (id 'castori', più sotto) */
     inForo(B,5.6,5.6,0,function(B){ B.tempio(2.4,2.8,1.4,0,0,-PI/2,{fronte:6}); });                                               // Divo Giulio
-    inForo(B,11.6,3.7,0,function(B){ B.tempio(2.1,3.4,1.7,0,0,0,{fronte:6}); });                                                  // Antonino e Faustina
+    /* il tempio di Antonino e Faustina è un monumento a sé dal 26 novembre 2026 (id 'antonino', più sotto) */
     inForo(B,-14.5,-5.2,PI/2,function(B){ B.scatola(7.4,1.1,2.4,0,0,0,P.tufo); arcato(B,7.2,1.9,2.2,0,1.1,0,P.tufo,2,11); });      // Tabularium: l'alto basamento di tufo e, sopra, la galleria ad arcate
-    inForo(B,-4.6,-3.7,0,function(B){                                                                                             // arco di Settimio Severo: tre fornici, colonne su piedistalli, attico
-      muroForato(B,2.3,1.45,1.1,[[0,.68,1.2],[-.78,.34,.76],[.78,.34,.76]],P.marmo); B.scatola(2.42,.13,1.22,0,1.45,0,P.marmo).scatola(2.3,.52,1.1,0,1.58,0,P.marmo);      // i fornici sono aperti (23 novembre 2026)
-      [1,-1].forEach(function(q){ B.colonne(-1.06,q*.66,1.06,q*.66,4,1.2,.06,.25); [-1.06,-.353,.353,1.06].forEach(function(x){ B.scatola(.2,.25,.2,x,0,q*.66,P.marmo); }); });
-    });
+    /* l'arco di Settimio Severo è un monumento a sé dal 26 novembre 2026 (id 'arcoseveroforo', più sotto) */
     inForo(B,0,-13.2,IMP,function(B){ portico(B,7,15,0,0,0,1.1); B.tempio(2.6,3.6,1.7,0,-5.2,0,{fronte:8}); });                   // foro di Cesare, Venere Genitrice a nord-ovest
     inForo(B,11.2,-19.5,IMP,function(B){                                                                                          // foro di Augusto: Marte Ultore contro il muro tagliafuoco verso la Suburra, le due esedre ai lati
       portico(B,10.5,9.5,0,0,0,1.2); B.tempio(3.4,4.6,2.3,2.3,0,-PI/2,{fronte:8,lati:8,podio:.7}).scatola(.5,3.3,10.5,5.5,0,0,P.tufo);
@@ -583,9 +575,7 @@ var M=[
         B.striscia(es,0,es,1.7,P.marmo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });        // le due grandi esedre ai lati della piazza
       basilica(B,17,5.6,2.4,0,-7.6,P.bronzo);                                                  // basilica Ulpia, con le absidi alle due testate
       [-1,1].forEach(function(q){ B.cilindro(2.5,2,q*8.5,0,-7.6,P.marmo,null,18).cilindro(2.5,.55,q*8.5,2,-7.6,P.bronzo,.3,18); });
-      /* colonna Traiana: piedistallo «5.4 metres high»; base, fusto e capitello «3.70 metres in diameter … measure 100 Roman feet (29.77 metres)» (Platner e Ashby, Forum Traiani) */
-      B.scatola(.56,.55,.56,0,0,-11.6,P.marmo).cilindro(.23,.1,0,.55,-11.6,P.marmo,.2,14).coclide(.185,.165,2.73,0,.65,-11.6,23,P.marmo);      // basamento, toro, fusto col fregio a spirale: ventitré giri è il numero corrente, non letto in Platner
-      B.scatola(.45,.12,.45,0,3.38,-11.6,P.marmo).cilindro(.11,.1,0,3.5,-11.6,P.marmo,.1,10); uomo(B,0,3.6,-11.6,2.1,P.statua);  // capitello e statua dell'imperatore (indicativa)
+      /* la colonna Traiana e la sua statua sono monumenti a sé dal 26 novembre 2026 (id 'colonnatraiana' e 'colonnatraianastatua', più sotto) */
       B.scatola(2,1.8,2.6,-2.8,0,-11.6,P.mattone).scatola(2,1.8,2.6,2.8,0,-11.6,P.mattone);     // biblioteche
       B.tempio(3.8,5.4,2.4,0,-16.4,PI,{fronte:8,lati:9,podio:.7});                              // tempio del Divo Traiano
       B.dentro(5.75,0,0,0,function(B){
@@ -609,6 +599,38 @@ var M=[
       });
     });
  }},
+ /* Edifici del Foro resi monumenti a sé il 26 novembre 2026 (l'utente: «sei sicuro che ci siano tutti i monumenti, tipo il tempio di Castore e Polluce?»): stesso disegno, stesso posto
+    e stesso orientamento di quando stavano nel gruppo 'fori' (x, z sono il punto che il gruppo dava a inForo; ry quello del Foro, -0,35); ora hanno nome, scheda e storia propria.
+    Fonti in coda a src/testi/topografia-fonti.md. */
+ {id:'castori', nome:'Tempio dei Castori', etichetta:'Castori', x:3,z:9.3, ry:-.35, come:'fori', zone:[], fa:function(B){
+    B.tempio(2.9,4.6,2,0,0,PI,{fronte:8,lati:11,podio:.8});                                                                     // «octastyle and peripteral, with eleven columns on each side»; tutto il tempio «about 50 metres long by 30 wide» (Platner e Ashby, Aedes Castoris)
+ }},
+ {id:'saturno', nome:'Tempio di Saturno', etichetta:'Saturno', x:-10.1,z:1.1, ry:-.35, come:'fori', zone:[], fa:function(B){
+    B.tempio(2.2,4,1.7,0,0,PI/2,{fronte:6,podio:.85});                                                                          // sul suo podio alto: «22.50 metres wide, about 40 long», ionico, sei colonne sulla fronte (Platner e Ashby, Saturnus, aedes)
+ }},
+ /* colonna Traiana: piedistallo «5.4 metres high»; base, fusto e capitello «3.70 metres in diameter … measure 100 Roman feet (29.77 metres)» (Platner e Ashby, Forum Traiani).
+    Il punto è quello che aveva nel foro di Traiano del gruppo (locale 0, -11,6 nel riquadro del foro, girato di 1,022 sul Foro): x -8,5216, z -36,8779, ry 0,672. */
+ {id:'colonnatraiana', nome:'Colonna Traiana', x:-8.5216,z:-36.8779, ry:.672, come:'fori', zone:[], fa:function(B){
+    B.scatola(.56,.55,.56,0,0,0,P.marmo).cilindro(.23,.1,0,.55,0,P.marmo,.2,14).coclide(.185,.165,2.73,0,.65,0,23,P.marmo);      // basamento, toro, fusto col fregio a spirale: ventitré giri è il numero corrente, non letto in Platner
+    B.scatola(.45,.12,.45,0,3.38,0,P.marmo).cilindro(.11,.1,0,3.5,0,P.marmo,.1,10);                                             // capitello e plinto della statua
+ }},
+ /* la statua di Trajano in cima, «in gilt bronze, of which we have no representation» (Platner e Ashby): forma indicativa. Quando sia stata tolta non si sa: nel modello va via nel 663
+    con gli altri bronzi dei Fori (Costante II, Liber Pontificalis, vita di Vitaliano), scelta già dichiarata nella scheda dei Fori e ripetuta in quella della colonna */
+ {id:'colonnatraianastatua', x:-8.5216,z:-36.8779, ry:.672, come:'fori', zone:[], fa:function(B){ uomo(B,0,3.6,0,2.1,P.statua); }},
+ {id:'antonino', nome:'Tempio di Antonino e Faustina', etichetta:'Antonino e Faustina', x:11.6,z:3.7, ry:-.35, come:'fori', zone:[], fa:function(B){
+    B.tempio(2.1,3.4,1.7,0,0,0,{fronte:6});                                                                                     // «hexastyle prostyle», colonne di cipollino «17 metres high» (Platner e Ashby, Antoninus et Faustina, templum)
+ }},
+ {id:'arcoseveroforo', nome:'Arco di Settimio Severo', etichetta:'Arco di Severo', x:-4.6,z:-3.7, ry:-.35, come:'fori', zone:[], fa:function(B){      // tre fornici, colonne su piedistalli, attico (Platner e Ashby, Arcus Septimii Severi: alto 23 m, largo 25, profondo 11,85)
+    muroForato(B,2.3,1.45,1.1,[[0,.68,1.2],[-.78,.34,.76],[.78,.34,.76]],P.marmo); B.scatola(2.42,.13,1.22,0,1.45,0,P.marmo).scatola(2.3,.52,1.1,0,1.58,0,P.marmo);      // i fornici sono aperti (23 novembre 2026)
+    [1,-1].forEach(function(q){ B.colonne(-1.06,q*.66,1.06,q*.66,4,1.2,.06,.25); [-1.06,-.353,.353,1.06].forEach(function(x){ B.scatola(.2,.25,.2,x,0,q*.66,P.marmo); }); });
+ }},
+ {id:'vesta', nome:'Tempio di Vesta e casa delle Vestali', etichetta:'Vesta', x:7.4,z:9, ry:-.35, come:'fori', zone:[], fa:function(B){
+    B.cilindro(1,.32,0,0,0,P.marmo,null,20).cilindro(.62,1.25,0,.32,0,P.marmo,null,16);                                         // il tempio: rotondo, colonne tutt'attorno, tetto conico con il foro per il fumo
+    for(var k=0;k<20;k++){ var a=k*PI/10; B.cilindro(.06,1.25,.86*Math.cos(a),.32,.86*Math.sin(a),P.marmo,.052,7); }        // «peripteral, with twenty columns» (Platner e Ashby, Vesta)
+    B.cilindro(.98,.14,0,1.57,0,P.marmo,null,20).cilindro(.98,.5,0,1.71,0,P.bronzo,.16,20);
+    var p=LF(11.2,13.1), q=LF(7.4,9);                                                                                              // la casa delle Vestali, dove stava nel gruppo dei Fori
+    B.dentro(p[0]-q[0],0,p[1]-q[1],0,function(B){ portico(B,6.8,3,0,0,0,1); B.scatola(6.8,1.1,.5,0,1.15,-1.5,P.mattone).scatola(.5,1.1,3,-3.4,1.15,0,P.mattone).scatola(.5,1.1,3,3.4,1.15,0,P.mattone); });      // il lungo cortile porticato, a due piani
+ }},
  {id:'emilia', nome:'Basilica Emilia', x:7.2,z:-1, ry:-.35, come:'fori', fa:function(B){ basilica(B,8,3.4,1.8,0,0); }},
  /* La Basilica Emilia dopo l'incendio, probabilmente del 410 (scheda): il tetto è crollato e non viene rifatto; sul pavimento restano le monete. Qui il pavimento di marmo, i pilastri
     delle arcate rotti ad altezze diverse, i monconi delle colonne della navata, qualche fusto caduto e le travi bruciate. Altezze e numero dei pezzi sono indicativi; il portico di
@@ -625,7 +647,7 @@ var M=[
  {id:'giove', nome:'Tempio di Giove Capitolino', x:-29,z:0, ry:.5, zone:[[0,0,7.5]], fa:function(B){      // basamento di circa 54 x 62 m, la misura più citata (le stime pubblicate vanno da 50 a 74 m di lato: pianta discussa)
     B.scatola(5.4,.2,6.2,0,0,0,P.tufo).dentro(0,.2,0,0,function(B){ B.tempio(4.5,5.3,2.8,0,0,0,{fronte:6,lati:7,tetto:P.oro,podio:.3,r:.17}); });      // podio alto in tutto 5 m: «Its height was apparently from 4 to 5 metres» (Platner e Ashby, Aedes Iovis Capitolini)
  }},
- {id:'palatino', nome:'Palazzi del Palatino', x:13,z:47, ry:-.62, zone:[[-7,-1,13],[7,-1,13],[0,6,12]], fa:function(B){
+ {id:'palatino', nome:'Palazzi del Palatino', x:13,z:47, ry:-.62, altoFisso:5.4, raggioFisso:14.25, zone:[[-7,-1,13],[7,-1,13],[0,6,12]], fa:function(B){
     arcato(B,27,1.5,18,0,-.4,0,P.mattone,2,22);                                                // sostruzioni
     B.dentro(0,1.1,0,0,function(B){
       portico(B,8.5,8,-7,0,-1,1.2,P.prato);                                                    // Domus Flavia: peristilio
@@ -644,9 +666,18 @@ var M=[
       B.scatola(1.6,2.2,2.6,13.6,0,-.2,P.mattone).cupola(1.3,13.6,2.2,-.2,P.intonaco,.5);        // la tribuna imperiale, sul lato est
       B.tempio(2.4,3.6,1.8,-11.5,3.4,0,{fronte:6});                                            // tempio di Apollo
     });
-    /* Settizodio (203): facciata scenografica a tre ordini di colonne libere, con tre grandi nicchie, verso chi arriva dalla via Appia. Demolito nel 1588-89; forma dai disegni del Cinquecento */
-    B.scatola(9,2.9,.5,10.5,-.4,9.2,P.marmo);
-    [0,1,2].forEach(function(l){ var yy=-.4+l*.97; B.colonne(6.3,9.95,14.7,9.95,12,.82,.055,yy).scatola(9,.13,.95,10.5,yy+.82,9.62,P.marmo); if(l<2) [-3,0,3].forEach(function(x){ B.vano(10.5+x,yy+.02,9.47,1,0,1.5,.78); }); });
+    /* il Settizodio è un monumento a sé dal 26 novembre 2026 (id 'settizodio', qui sotto), spostato all'angolo sud-est del colle */
+ }},
+ /* Settizodio (203): facciata scenografica a tre ordini di colonne libere, con tre grandi nicchie, verso chi arriva dalla via Appia. Demolito nel 1588-89; forma dai disegni del Cinquecento.
+    Fino al 26 novembre 2026 stava in fondo al gruppo 'palatino', sul pianoro, circa 200 m a nord-ovest del suo posto. Ora sta al punto di Wikidata (Q1234446: 41.8856 N, 12.4887 E, con RM.ll
+    x 28,18, z 76,68), al piede dell'angolo sud-est del Palatino, dove lo mette Platner e Ashby («at the extreme south-east corner of the Palatine hill», voce Septizonium); il punto di
+    en.wikipedia (41.8854, 12.4889) dista circa 25 m. La facciata è la stessa di prima; prima guardava la valle del Circo (orientamento del gruppo, -0,62) e chi arrivava
+    dalla via Appia la vedeva di taglio. Ora guarda porta Capena, da dove arriva l'Appia (ry 0,955: la direzione dal Settizodio alla porta), perché la Storia Augusta (Severo 24, riportata
+    da Platner e Ashby) dice che doveva colpire chi arrivava dall'Africa: l'angolo esatto nessuna fonte letta lo dà. Prima era interrata di 4 m nel ciglio del colle, ora poggia sul piano
+    della valle con tutti e tre gli ordini fuori terra. Altezza: nessuna fonte letta la dà. */
+ {id:'settizodio', nome:'Settizodio', x:28.18,z:76.68, ry:.955, zone:[[0,.3,[4.9,.9],.3]], fa:function(B){
+    B.scatola(9,2.9,.5,0,0,0,P.marmo);
+    [0,1,2].forEach(function(l){ var yy=l*.97; B.colonne(-4.2,.75,4.2,.75,12,.82,.055,yy).scatola(9,.13,.95,0,yy+.82,.42,P.marmo); if(l<2) [-3,0,3].forEach(function(x){ B.vano(x,yy+.02,.27,1,0,1.5,.78); }); });
  }},
  {id:'pantheon', nome:'Pantheon', x:-70,z:-68, ry:PI, zone:[[0,0,7],[0,7,6],[0,11.5,5],[0,-3.7,3.5],[0,11.1,[3.4,6.6],.5]], et:1, fa:function(B){      // l'ultima zona è la piazza porticata (pantheonpiazza), fino al lato nord, aperto
     /* La rotonda: tamburo di 56 m di diametro (43,2 dentro e muri di 6,2: Platner), alto circa 31, diviso in tre fasce da cornici; sopra, sette gradoni, il primo
@@ -788,7 +819,7 @@ var M=[
     [-.33,-.11,.11,.33].forEach(function(x){ cavallo(B,x,5.2,.2,0,2.2,P.statua); });                               // i quattro cavalli, verso il ponte
     B.scatola(.5,.16,.26,0,5.2,-.36,P.statua).scatola(.5,.12,.04,0,5.36,-.25,P.statua); uomo(B,0,5.36,-.38,2.2,P.statua);      // il carro e chi lo guida
  }},
- {id:'augusto', x:-74,z:-151, ry:0, zone:[[0,0,7]], fa:function(B){                             // mausoleo di Augusto
+ {id:'augusto', nome:'Mausoleo di Augusto', x:-74,z:-151, ry:0, zone:[[0,0,7]], fa:function(B){                             // mausoleo di Augusto; nome, scheda e storia dal 26 novembre 2026 (Platner e Ashby, Mausoleum Augusti: tamburo di 87 m, ingresso a sud, obelischi davanti, statua di bronzo in cima)
     B.cilindro(4.4,1.2,0,0,0,P.travertino,null,40).cilindro(4,.3,0,1.2,0,P.prato,3.2,24).cilindro(2.6,1.1,0,1.4,0,P.travertino,null,30).cilindro(1,1.5,0,2.5,0,P.marmo,null,16).scatola(.3,.6,.3,0,4,0,P.bronzo);
     for(var k=0;k<18;k++) B.cono(.22,1.2,3.6*Math.cos(k*.349),1.45,3.6*Math.sin(k*.349),P.chioma,6);
     B.vano(0,0,4.42,1,0,.5,.85);                                                                                 // l'ingresso, a sud
@@ -1321,7 +1352,7 @@ var M=[
  }},
  /* Arco di Dolabella e Silano (10 d.C.), in travertino, poi sotto gli archi neroniani dell'acqua Claudia (Platner e Ashby, arcus). Contorno e orientamento: OpenStreetMap, way 135618677.
     Altezza e larghezza del fornice indicative. */
- {id:'dolabella', x:81.86,z:76.56, ry:.89, zone:[[0,0,.7]], fa:function(B){ arcoUno(B,.81,.52,.65,.4,.5,0,0,0,0,P.travertino); }},
+ {id:'dolabella', nome:'Arco di Dolabella e Silano', etichetta:'Arco di Dolabella', x:81.86,z:76.56, ry:.89, zone:[[0,0,.7]], fa:function(B){ arcoUno(B,.81,.52,.65,.4,.5,0,0,0,0,P.travertino); }},
  /* Ludus Magnus, la caserma dei gladiatori accanto al Colosseo (Domiziano, rifatta sotto Traiano): celle su tre piani attorno a un cortile con un'arena ellittica e piccole gradinate
     (it.wikipedia «Ludus Magnus»). Orientamento e lunghezza (86 m) dalla parte scavata (OpenStreetMap, relazione 1894844), che è la metà nord; larghezza (circa 72 m) e arena (circa 62 x 45)
     a memoria, indicative. */
@@ -1441,7 +1472,7 @@ var M=[
  }},
  /* Sepolcro di Eurisace, il fornaio (fine della repubblica): trapezio di 8,75, 6,85, 5,80 e 4,05 m, rivestito di travertino, nell'angolo fra Prenestina e Labicana; quando Onorio rifà le mura
     una delle torri di porta Maggiore lo chiude dentro di sé (Platner e Ashby, Sepulchrum Eurysacis): sparisce alla vista nel 402. OpenStreetMap, way 585473524. Altezza (circa 10 m) a memoria. */
- {id:'eurisace', x:248.73,z:11.94, ry:1.187, zone:[[0,0,.7]], fa:function(B){
+ {id:'eurisace', nome:'Sepolcro di Eurisace', x:248.73,z:11.94, ry:1.187, zone:[[0,0,.7]], fa:function(B){
     B.scatola(.8,.95,.6,0,0,0,P.travertino).scatola(.84,.18,.64,0,.72,0,P.marmo);                    // il fregio con le scene della panificazione
     [.2,.45].forEach(function(y){ B.aperture(-.4,.31,.4,.31,6,y,.14,.07).aperture(.4,-.31,-.4,-.31,6,y,.14,.07); });      // le file di bocche cilindriche
  }},
@@ -1647,8 +1678,8 @@ var perId={};
 M.forEach(function(o){
   var B=new RM.Costruttore(); o.fa(B); perId[o.id]=o;
   o.g=B.maglia(RM.matPietra()); if(o.sc) o.g.geometry.scale(o.sc,o.sc,o.sc); o.g.geometry.computeBoundingBox();
-  var bb=o.g.geometry.boundingBox; o.raggio=Math.max(bb.max.x-bb.min.x,bb.max.z-bb.min.z)/2; o.alto=bb.max.y;
-  o.mat=o.g.material=RM.matRovina(o.g.geometry.boundingBox.max.y); o.g.customDepthMaterial=o.mat.userData.ombra;
+  var bb=o.g.geometry.boundingBox; o.raggio=o.raggioFisso||Math.max(bb.max.x-bb.min.x,bb.max.z-bb.min.z)/2; o.alto=o.altoFisso||bb.max.y;      // altoFisso, raggioFisso: le misure di un gruppo da cui si sono staccati dei pezzi (26 novembre 2026), perché il degrado del resto non cambi
+  o.mat=o.g.material=RM.matRovina(o.alto); o.g.customDepthMaterial=o.mat.userData.ombra;
   o.certezza=((D.CERTEZZA||{})[o.id]||['C'])[0]; o.mat.userData.u.uSapCol.value.copy(RM.sapere.COL[o.certezza]);      // «che cosa sappiamo davvero»
   o.g.position.set(o.x,o.quota!=null?o.quota-.05:quota(o.x,o.z),o.z); o.g.rotation.y=o.ry||0;
   if(o.come) o.g.position.y=perId[o.come].g.position.y;                       // poggia sullo stesso piano del complesso vicino
@@ -1664,7 +1695,7 @@ RM.statoMonumento=function(id,anno){
   var st=D.MONUMENTI[id]||COMPARSA, i=0, k;
   for(k=0;k<st.length;k++) if(anno>=st[k][0]) i=k;
   var s0=anno<st[0][0]?'assente':st[i][1], prossimo=st[i+1];
-  var brusco=prossimo&&(prossimo[1]==='bruciato'||prossimo[1]==='spogliato'||prossimo[1]==='crollato'||(prossimo[1]==='assente'&&(id==='adrianostatue'||id==='colosso'||id==='castrapretorio'||id==='curiaantica'||id==='curiastatue'||id==='focastatua'||id==='fiaccola357')));      /* anche il Colosso sparisce di colpo: non si accorcia negli anni prima; i Castra Praetoria, smantellati dopo il 312, nel 312 sono ancora interi */      // le statue del mausoleo cadono in un giorno (537)
+  var brusco=prossimo&&(prossimo[1]==='bruciato'||prossimo[1]==='spogliato'||prossimo[1]==='crollato'||(prossimo[1]==='assente'&&(id==='adrianostatue'||id==='colosso'||id==='castrapretorio'||id==='curiaantica'||id==='curiastatue'||id==='focastatua'||id==='fiaccola357'||id==='colonnatraianastatua')));      /* anche il Colosso sparisce di colpo: non si accorcia negli anni prima; i Castra Praetoria, smantellati dopo il 312, nel 312 sono ancora interi */      // le statue del mausoleo cadono in un giorno (537)
   var inizio=prossimo&&s0==='assente'&&D.CANTIERI&&D.CANTIERI[id];      // inizio dei lavori, dove la scheda lo dice (CANTIERI in js/dati.js)
   return {s0:s0, s1:prossimo?prossimo[1]:s0, t:prossimo?RM.sfuma(inizio||prossimo[0]-(brusco?.4:6),prossimo[0],anno):0};
 };
@@ -1673,7 +1704,7 @@ RM.statoMonumento=function(id,anno){
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Fino al 23 novembre 2026 alla chiusura toglieva subito un poco di cima a ogni tratto: sul tetto di Giove Capitolino il colmo si spezzava a blocchi e il tempio sembrava spaccato (l'utente: «fai delle crepe, non che si spacchi a metà»).
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, ospizionaumachia:0, mulini:0, casenerva:0, foca:.4, focastatua:.4, fiaccola357:.4, curiastatue:.5, adriano:.35, arcocostantino:.5, arcotito:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
+var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, ospizionaumachia:0, mulini:0, casenerva:0, foca:.4, focastatua:.4, fiaccola357:.4, curiastatue:.5, adriano:.35, arcocostantino:.5, arcotito:.5, arcoseveroforo:.5, colonnatraiana:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
 /* «abbandonato» (25 novembre 2026, l'utente: «Ok» alla proposta della verifica degli anacronismi, src/testi/audit-anacronismi.md): non più in uso, ma la struttura regge
    per secoli (la cupola di Minerva Medica fino al 1828, il Pantheon fra il 392 e il 609, i templi del Foro Boario diventati chiese). Prende l'incuria della chiusura
    (sporco, crepe, erba, coppi mancanti: uCrepe) ma niente crolli (uRovina resta a zero), finché un evento non li porta (terremoto, incendio, cava). Uno «spogliato»

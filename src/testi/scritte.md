@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 26/11/2026, 21:29:15.
+Generato da `src/testi.mjs` il 26/11/2026, 22:33:01.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -143,7 +143,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.64] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.65] Versione del 26/11/2026, ore 21:05
+[pagina.65] Versione del 26/11/2026, ore 21:29
 
 
 ## 2. Gli atti
@@ -2444,6 +2444,188 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.fori.certezza-B] Alcuni monumenti sono ancora in piedi, tra cui la Curia, dove si riuniva il Senato, l'arco di Settimio Severo, la colonna e i mercati di Traiano e il tempio di Antonino e Faustina. Per ricostruire piazze, basiliche e altri templi abbiamo usato gli scavi e la pianta di Roma incisa nel marmo al tempo di Settimio Severo. Per il tempio dedicato a Traiano dopo la sua morte si può proporre soltanto un'ipotesi. Persino la sua posizione rispetto alla colonna è incerta.
 
 
+### Tempio dei Castori
+
+[scheda.castori.nome] Tempio dei Castori
+
+[scheda.castori.cosa] Il tempio di Castore e Polluce, i due gemelli divini, sul lato sud del Foro. Era corinzio, con otto colonne sulla fronte e undici su ogni fianco, lungo circa 50 metri e largo 30. Il pavimento stava circa 7 metri sopra la via Sacra. Dal podio si parlava al popolo, come dai Rostri. Nelle stanze del podio si custodivano i pesi e le misure ufficiali e, sembra, i tesori dell'erario imperiale e dei privati.
+
+[scheda.castori.data1.quando] 484 a.C.
+
+[scheda.castori.data1] Dedicato, secondo la tradizione, dopo che i Dioscuri erano apparsi qui dopo la battaglia del lago Regillo.
+
+[scheda.castori.data2.quando] 6 d.C.
+
+[scheda.castori.data2] Tiberio lo ricostruisce del tutto. Le colonne rimaste sono di quest'epoca.
+
+[scheda.castori.data3.quando] IV secolo
+
+[scheda.castori.data3] Il tempio è ancora in piedi (Platner e Ashby). Dopo, le fonti lette non ne dicono più nulla.
+
+[scheda.castori.data4-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi. Da qui resta abbandonato, ma in piedi: nessuna fonte letta dice quando cominciò a cadere.
+
+[scheda.castori.data5.quando] XV secolo
+
+[scheda.castori.data5] Restano solo tre colonne: la via che passa accanto si chiama via delle Tre Colonne.
+
+[scheda.castori.data6.quando] oggi
+
+[scheda.castori.data6] Restano il nucleo del podio e tre colonne del lato est con la loro trabeazione: di marmo bianco, scanalate, alte 12,50 metri.
+
+[scheda.castori.certezza-B] Si conservano il podio e tre colonne con la trabeazione; le misure della pianta sono note (Platner e Ashby). Nel modello la forma del tempio è semplificata, e la data della chiusura e lo stato fra il V e il IX secolo sono una scelta, perché nessuna fonte letta li dice.
+
+
+### Tempio di Saturno
+
+[scheda.saturno.nome] Tempio di Saturno
+
+[scheda.saturno.cosa] Il tempio di Saturno, ai piedi del Campidoglio, sul bordo del Foro. Custodiva l'erario, il tesoro dello Stato; sui muri esterni si affiggevano documenti pubblici. Il podio è largo 22,50 metri e lungo circa 40, e per la pendenza del colle la fronte sta molto in alto sopra il Foro. Il tempio era ionico, con sei colonne sulla fronte.
+
+[scheda.saturno.data1.quando] inizio della Repubblica
+
+[scheda.saturno.data1] Uno dei templi più antichi di Roma: le fonti antiche non sono d'accordo sulla data.
+
+[scheda.saturno.data2.quando] 42 a.C.
+
+[scheda.saturno.data2] Lucio Munazio Planco lo ricostruisce. Il podio di oggi è il suo.
+
+[scheda.saturno.data3.quando] IV secolo
+
+[scheda.saturno.data3] Un incendio lo danneggia; il Senato lo fa restaurare, come dice l'iscrizione sull'architrave. In quale anno non si sa. Per il restauro si usano pezzi presi dal foro di Traiano.
+
+[scheda.saturno.data4-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi. Da qui resta abbandonato, ma in piedi: nessuna fonte letta dice altro fino al Quattrocento.
+
+[scheda.saturno.data5-1402] L'umanista Poggio vede il portico «quasi intero». Lo chiama tempio della Concordia, ma per Platner e Ashby si tratta di questo tempio.
+
+[scheda.saturno.data6-1447] Poggio racconta che i Romani hanno demolito il tempio e parte del portico per farne calce.
+
+[scheda.saturno.data7.quando] oggi
+
+[scheda.saturno.data7] Restano il podio e otto colonne del pronao, sei sulla fronte e una per lato, con la trabeazione: alte 11 metri, di granito grigio e rosso.
+
+[scheda.saturno.certezza-B] Si conservano il podio e il pronao con otto colonne; le misure del podio sono note (Platner e Ashby). Nel modello la forma è semplificata; la chiusura nel 392 e lo stato fino all'852 sono una scelta, perché le fonti lette non ne parlano.
+
+
+### Colonna Traiana
+
+[scheda.colonnatraiana.nome] Colonna Traiana
+
+[scheda.colonnatraiana.cosa] La colonna di marmo di Paro che il Senato e il popolo dedicarono a Traiano nel suo foro, fra le due biblioteche, dietro la basilica Ulpia. Fusto e base misurano 100 piedi romani, 29,77 metri; con il piedistallo arriva a 38 metri. Un fregio a spirale, dipinto a colori vivaci, racconta le guerre di Traiano contro i Daci, dal 101 al 106. Dentro, una scala a chiocciola di 185 gradini, illuminata da 43 feritoie, porta in cima, dove stava una statua di Traiano di bronzo dorato. Nel piedistallo c'era la camera dove furono deposte, probabilmente, le ceneri dell'imperatore in un'urna d'oro.
+
+[scheda.colonnatraiana.data1.quando] dopo il 113
+
+[scheda.colonnatraiana.data1] La colonna compare su varie monete di Traiano.
+
+[scheda.colonnatraiana.data2.quando] morto Traiano
+
+[scheda.colonnatraiana.data2] Le sue ceneri sono deposte nella camera del piedistallo, probabilmente in un'urna d'oro.
+
+[scheda.colonnatraiana.data3-357] L'imperatore Costanzo II visita il foro di Traiano e ne resta stupito (Ammiano; Platner e Ashby scrivono 356).
+
+[scheda.colonnatraiana.data4.quando] IV secolo
+
+[scheda.colonnatraiana.data4] I Cataloghi regionari la chiamano «columna cochlis», la colonna a chiocciola, alta 128 piedi e mezzo, con 185 gradini e 45 finestre.
+
+[scheda.colonnatraiana.data5.quando] dal VI secolo
+
+[scheda.colonnatraiana.data5] Il foro attorno comincia a essere smontato per i suoi marmi; la colonna resta in piedi.
+
+[scheda.colonnatraiana.data6-663] La statua di bronzo dorato in cima: quando sia sparita non si sa, e non ne abbiamo immagini. Nel modello va via nel 663 con gli altri bronzi dei Fori: è una nostra scelta.
+
+[scheda.colonnatraiana.data7-1588] Sisto V mette in cima la statua di San Pietro che si vede oggi.
+
+[scheda.colonnatraiana.data8.quando] oggi
+
+[scheda.colonnatraiana.data8] La colonna è intera, con tutto il fregio. La camera del piedistallo era stata saccheggiata: nel 1906 vi si è trovato un buco scavato nelle fondazioni.
+
+[scheda.colonnatraiana.certezza-A] Intera, con misure note (Platner e Ashby). Nel modello il fregio è reso con una spirale semplice e la statua in cima è indicativa: non ne esistono immagini.
+
+
+### Tempio di Antonino e Faustina
+
+[scheda.antonino.nome] Tempio di Antonino e Faustina
+
+[scheda.antonino.cosa] Il tempio che Antonino Pio dedicò alla moglie Faustina, divinizzata dopo la morte nel 141, sul lato nord della via Sacra, all'ingresso del Foro, accanto alla basilica Emilia. Morto anche Antonino, nel 161, fu dedicato a tutti e due. Aveva sei colonne di marmo cipollino sulla fronte, alte 17 metri, e un fregio scolpito con grifi e ghirlande. Sulle colonne si leggono scritte e figure graffite, alcune cristiane già nel IV secolo.
+
+[scheda.antonino.data1-141] Antonino Pio lo dedica a Faustina.
+
+[scheda.antonino.data2-161] Dopo la morte di Antonino il tempio è dedicato anche a lui: la seconda iscrizione è sul fregio.
+
+[scheda.antonino.data3-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi: è una nostra scelta. Resta in piedi.
+
+[scheda.antonino.data4.quando] VII o VIII secolo
+
+[scheda.antonino.data4] Il tempio, a quanto pare in buono stato, diventa la chiesa di San Lorenzo in Miranda (Platner e Ashby). Nel modello torna in uso nel 700: l'anno è una nostra scelta.
+
+[scheda.antonino.data5.quando] oggi
+
+[scheda.antonino.data5] Restano le colonne del pronao con l'architrave e il fregio, la larga scalinata con i resti dell'altare e parte dei muri della cella, chiusi nei muri della chiesa. Il pavimento della chiesa sta circa 12 metri sopra il livello antico.
+
+[scheda.antonino.certezza-A] In piedi il pronao e parte della cella, dentro la chiesa di San Lorenzo in Miranda: forma e misure sono note (Platner e Ashby). Nel modello la forma è semplificata; la chiusura nel 392 e l'anno della chiesa, il 700, sono una nostra scelta.
+
+
+### Arco di Settimio Severo
+
+[scheda.arcoseveroforo.nome] Arco di Settimio Severo
+
+[scheda.arcoseveroforo.cosa] L'arco a tre fornici dedicato nel 203 a Settimio Severo e ai figli Caracalla e Geta, all'angolo nord-ovest del Foro, davanti al tempio della Concordia. È di marmo, alto 23 metri, largo 25 e profondo quasi 12. Su ogni fronte quattro colonne su piedistalli e grandi rilievi con le campagne di Severo in Oriente; nell'attico, alto 5,60 metri, l'iscrizione a lettere di bronzo. Sopra c'era, secondo le monete, un carro con Severo e la Vittoria fra statue a cavallo. Dal lato del Foro ci si arrivava per una scalinata: nessuna strada lo attraversava.
+
+[scheda.arcoseveroforo.data1-203] Dedicato dal Senato a Settimio Severo e ai figli.
+
+[scheda.arcoseveroforo.data2.quando] poco dopo
+
+[scheda.arcoseveroforo.data2] Dopo l'uccisione di Geta il suo nome viene scalpellato via dall'iscrizione e sostituito con altri titoli di Severo e Caracalla.
+
+[scheda.arcoseveroforo.data3.quando] IV secolo
+
+[scheda.arcoseveroforo.data3] Probabilmente in questo secolo il piano davanti all'arco, dal lato del Foro, viene abbassato e la scalinata allungata.
+
+[scheda.arcoseveroforo.data4.quando] data ignota
+
+[scheda.arcoseveroforo.data4] Le lettere di bronzo dell'iscrizione e le statue in cima spariscono; quando, le fonti lette non lo dicono. Nel modello le statue non sono disegnate.
+
+[scheda.arcoseveroforo.data5.quando] Medioevo
+
+[scheda.arcoseveroforo.data5] La metà sud dell'arco appartiene alla vicina chiesa dei Santi Sergio e Bacco, la metà nord è fortificata: per questo l'arco si è conservato così bene (Platner e Ashby). Solo allora una strada comincia a passarci sotto.
+
+[scheda.arcoseveroforo.data6.quando] oggi
+
+[scheda.arcoseveroforo.data6] L'arco è in piedi; delle lettere di bronzo restano gli incavi.
+
+[scheda.arcoseveroforo.certezza-A] In piedi, con misure note (Platner e Ashby). Nel modello rilievi, statue in cima e lettere di bronzo non sono disegnati; lo stato fino all'852 è «in piedi» perché nessuna fonte letta parla di danni.
+
+
+### Tempio di Vesta e casa delle Vestali
+
+[scheda.vesta.nome] Tempio di Vesta e casa delle Vestali
+
+[scheda.vesta.cosa] Il santuario di Vesta all'estremità est del Foro. Il tempio era rotondo, di marmo bianco, con venti colonne collegate da grate di metallo e un tetto a cupola con un'apertura per il fumo del fuoco sacro, che non doveva mai spegnersi. Dentro non c'era una statua della dea, ma oggetti sacri tenuti in un luogo segreto. Accanto, la casa delle Vestali, le sacerdotesse di Vesta: un lungo cortile di 69 metri per 24, con portici, vasche e statue delle Vestali Massime, e stanze su più piani.
+
+[scheda.vesta.data1-64] Tempio e casa bruciano nell'incendio di Nerone e vengono ricostruiti.
+
+[scheda.vesta.data2-191] Un altro incendio. Giulia Domna, moglie di Settimio Severo, fa restaurare il tempio e la casa; il cortile viene allungato fino a 69 metri.
+
+[scheda.vesta.data3.quando] IV secolo
+
+[scheda.vesta.data3] Al tempo di Costantino il cortile riceve una struttura ottagonale al centro e due vasche piccole.
+
+[scheda.vesta.data4-394] Teodosio fa chiudere il tempio (Platner e Ashby). Nel modello da qui tempio e casa restano abbandonati, ma in piedi: per la casa le fonti lette non danno una data.
+
+[scheda.vesta.data5.quando] dopo il 472
+
+[scheda.vesta.data5] Nella casa è stato trovato un tesoro di 397 monete d'oro, le più recenti degli anni 467-472.
+
+[scheda.vesta.data6.quando] X secolo
+
+[scheda.vesta.data6] Nella casa è stato trovato un gruzzolo di 830 monete sassoni, fino alla metà del X secolo: qualcuno la frequentava ancora. Come fosse usata, le fonti lette non lo dicono.
+
+[scheda.vesta.data7.quando] oggi
+
+[scheda.vesta.data7] Del tempio restano il podio e pezzi dell'alzato, tornati alla luce negli scavi del 1883 e del 1899-1900. Della casa restano il cortile e le stanze attorno.
+
+[scheda.vesta.certezza-B] Del tempio si conservano il podio e i pezzi del restauro di Giulia Domna, che con le monete e i rilievi permettono di ricostruirlo (Platner e Ashby); la pianta della casa è nota dagli scavi. Nel modello tutti e due sono semplificati; dopo il 394 lo stato è una nostra scelta.
+
+
 ### Basilica Emilia
 
 [scheda.emilia.nome] Basilica Emilia
@@ -2521,7 +2703,32 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.palatino.data6-713] Ultima menzione del palazzo: si combatte sulla via Sacra «davanti al palazzo» (Liber Pontificalis).
 
-[scheda.palatino.certezza-B] Gli scavi hanno permesso di ricostruire la pianta dei palazzi imperiali, la Domus Flavia e la Domus Augustana, e quella dello stadio. Il modello propone un possibile aspetto delle strutture sopra il livello del suolo, del tempio di Apollo e del Settizodio, demolito nel 1588.
+[scheda.palatino.certezza-B] Gli scavi hanno permesso di ricostruire la pianta dei palazzi imperiali, la Domus Flavia e la Domus Augustana, e quella dello stadio. Il modello propone un possibile aspetto delle strutture sopra il livello del suolo e del tempio di Apollo. Il Settizodio ha una scheda sua.
+
+
+### Settizodio
+
+[scheda.settizodio.nome] Settizodio
+
+[scheda.settizodio.cosa] Una grande facciata di marmo all'angolo sud-est del Palatino, fatta costruire da Settimio Severo per colpire chi arrivava dall'Africa lungo la via Appia (Storia Augusta). Aveva tre grandi nicchie e tre ordini di colonne, come la scena di un teatro. Secondo Ammiano era un ninfeo, una grande fontana. Dietro non c'era nulla da usare: nel modello è una facciata sola.
+
+[scheda.settizodio.data1-203] Dedicato da Settimio Severo (iscrizione).
+
+[scheda.settizodio.data2-355] Ammiano lo chiama un luogo molto frequentato: la plebe in agitazione vi si raduna. Lo descrive come un ninfeo costruito con grande sfarzo.
+
+[scheda.settizodio.data3-537] Nel modello l'acqua si ferma nel 537, quando i Goti tagliano gli acquedotti, e la fontana resta abbandonata, ma in piedi. È una nostra scelta: nessuna fonte letta dice quando smise di funzionare.
+
+[scheda.settizodio.data4.quando] Medioevo
+
+[scheda.settizodio.data4] Il nome sopravvive storpiato: «Septem solia», «Septem viae», «scuola di Virgilio». La chiesa di Santa Lucia «de Septem solio», accanto, compare nell'Itinerario di Einsiedeln, una guida di Roma del Medioevo. Più tardi l'edificio diventa una fortezza.
+
+[scheda.settizodio.data5-1588] Sisto V fa demolire la parte est, l'ultima rimasta, e ne riusa i marmi per i suoi cantieri.
+
+[scheda.settizodio.data6.quando] oggi
+
+[scheda.settizodio.data6] Non ne resta nulla in piedi.
+
+[scheda.settizodio.certezza-B] Scomparso. La forma generale è nota dalla pianta di marmo di Roma e dai disegni del Rinascimento (Platner e Ashby); misure e altezza del modello sono indicativi. Il posto è quello di Wikidata, all'angolo sud-est del Palatino, dove lo mettono le fonti. Nel modello la facciata guarda verso porta Capena, da dove arrivava la via Appia: l'angolo esatto è una nostra scelta.
 
 
 ### Pantheon
@@ -2705,6 +2912,41 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.adriano.data3-537] Secondo Procopio, durante l'assedio dei Goti i difensori del mausoleo fanno a pezzi gran parte delle statue e lanciano i blocchi di marmo sugli assalitori. Non sappiamo quando sia scomparsa la quadriga, il carro a quattro cavalli. Nella ricostruzione scompare insieme alle statue.
 
 [scheda.adriano.certezza-A] Il basamento e il corpo cilindrico della tomba sono conservati dentro Castel Sant'Angelo. La parte superiore è ricostruita.
+
+
+### Mausoleo di Augusto
+
+[scheda.augusto.nome] Mausoleo di Augusto
+
+[scheda.augusto.cosa] La tomba di Augusto e della sua famiglia, nella parte nord del Campo Marzio, fra la via Flaminia e il Tevere. Era un grande tamburo rotondo di 87 metri di diametro, rivestito di travertino o forse di marmo, con altri ripiani sopra piantati a sempreverdi e, in cima, una statua di bronzo di Augusto. L'ingresso era a sud; davanti stavano due obelischi e due tavole di bronzo con le imprese di Augusto. Attorno c'era un grande parco con viali aperto al popolo.
+
+[scheda.augusto.data1.quando] 28 a.C.
+
+[scheda.augusto.data1] Augusto lo fa costruire, primo dei suoi edifici nel Campo Marzio.
+
+[scheda.augusto.data2.quando] 23 a.C.
+
+[scheda.augusto.data2] Vi sono deposte le ceneri di Marcello, il primo. Poi Agrippa, Druso, i nipoti di Augusto e, nel 14 d.C., Augusto stesso.
+
+[scheda.augusto.data3-98] Vi è sepolto Nerva. Dopo di lui il mausoleo è pieno: Adriano si costruisce una tomba nuova.
+
+[scheda.augusto.data4-217] Il corpo di Giulia Domna, moglie di Settimio Severo, vi è deposto per poco tempo. È l'ultima volta che il mausoleo viene aperto.
+
+[scheda.augusto.data5-410] Il racconto di un saccheggio dei Goti di Alarico non ha fondamento storico (Platner e Ashby).
+
+[scheda.augusto.data6-500] Non sappiamo come e quando cominciò a rovinarsi. Nel modello resta curato fino al 500 circa, come gli altri edifici di cui le fonti tacciono; poi resta abbandonato, ma in piedi.
+
+[scheda.augusto.data7.quando] 955-962
+
+[scheda.augusto.data7] Conserva il suo nome: «Mons Augustus».
+
+[scheda.augusto.data8-1167] I Colonna ne avevano fatto una fortezza; la sua distruzione danneggia molto le rovine. Nel Medioevo le volte interne crollano e l'interno è usato come fornace per la calce (non si sa quando).
+
+[scheda.augusto.data9.quando] oggi
+
+[scheda.augusto.data9] Resta il tamburo, con gli anelli dei muri interni. Nel 1929 Platner e Ashby lo descrivono sormontato da una sala da concerti, l'Augusteo, nei cui corridoi si vedevano le stanze antiche.
+
+[scheda.augusto.certezza-B] Restano gli anelli inferiori; la forma della parte alta è discussa. Lo stato fra il 500 e l'852 è una nostra scelta: le fonti lette non ne dicono nulla.
 
 
 ### Teatro di Pompeo
@@ -3519,6 +3761,29 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.tempioclaudio.certezza-B] La piattaforma è in gran parte in piedi e il lato su via Claudia si vede; il tempio è perduto e qui ha misure indicative.
 
 
+### Arco di Dolabella e Silano
+
+[scheda.dolabella.nome] Arco di Dolabella e Silano
+
+[scheda.dolabella.cosa] Un arco semplice di travertino, senza decorazioni, sul Celio, all'angolo nord dell'area dei Castra Peregrina. Lo fecero i consoli Publio Cornelio Dolabella e Gaio Giunio Silano. Di solito si pensa che reggesse un ramo dell'acqua Marcia e che poi Nerone lo abbia usato per gli archi del suo prolungamento dell'acqua Claudia, che gli passano sopra.
+
+[scheda.dolabella.data1.quando] 10 d.C.
+
+[scheda.dolabella.data1] Costruito dai consoli Dolabella e Silano (iscrizione).
+
+[scheda.dolabella.data2.quando] I secolo
+
+[scheda.dolabella.data2] Gli archi neroniani dell'acqua Claudia lo incorporano, secondo l'opinione più diffusa.
+
+[scheda.dolabella.data3-537] I Goti tagliano gli acquedotti: l'acqua smette di passare, l'arco resta in piedi.
+
+[scheda.dolabella.data4.quando] oggi
+
+[scheda.dolabella.data4] L'arco è in piedi, accanto alla chiesa di San Tommaso in Formis.
+
+[scheda.dolabella.certezza-A] In piedi.
+
+
 ### Ludus Magnus
 
 [scheda.ludusmagnus.nome] Ludus Magnus
@@ -3693,6 +3958,31 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.sessoriano.data3-1570] L'obelisco, rotto in tre pezzi, viene trovato fuori porta Maggiore; dal 1822 sta sul Pincio.
 
 [scheda.sessoriano.certezza-B] L'anfiteatro si conserva nelle mura. Del circo sono stati scavati i vani da cui partivano i carri, chiamati carceres. La lunghezza della pista e la posizione dell'obelisco sul divisorio centrale restano ipotetiche.
+
+
+### Sepolcro di Eurisace
+
+[scheda.eurisace.nome] Sepolcro di Eurisace
+
+[scheda.eurisace.cosa] La tomba di Marco Virgilio Eurisace, un fornaio che lavorava per lo Stato, costruita verso la fine della Repubblica dove si dividono la via Prenestina e la via Labicana, appena fuori dagli archi dell'acqua Claudia. È un trapezio di cemento rivestito di travertino, con file di cilindri, forse misure per il grano o vasche per impastare, e un fregio con le fasi della lavorazione del pane. Su tutti i lati l'iscrizione dice di chi è la tomba.
+
+[scheda.eurisace.data1.quando] fine della Repubblica
+
+[scheda.eurisace.data1] Costruita per Eurisace; vi è stata trovata anche l'iscrizione della moglie Atistia.
+
+[scheda.eurisace.data2-402] Quando Onorio rifà le mura di Aureliano, davanti a porta Prenestina (porta Maggiore) alza due torri: una sta sopra la tomba e la nasconde. Nel modello l'anno è il 402; le fonti lette non danno l'anno preciso.
+
+[scheda.eurisace.data3.quando] XVI secolo
+
+[scheda.eurisace.data3] Le iscrizioni si leggono in parte dall'interno della torre.
+
+[scheda.eurisace.data4-1838] Le torri vengono abbattute e la tomba torna visibile; il lato est è quasi del tutto distrutto.
+
+[scheda.eurisace.data5.quando] oggi
+
+[scheda.eurisace.data5] La tomba è in piedi davanti a porta Maggiore.
+
+[scheda.eurisace.certezza-A] In piedi, liberato dalla torre nel 1838.
 
 
 ### Archi della via Lata
@@ -4121,24 +4411,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.fangocirco.certezza-C] Col tempo la pista divenne paludosa e fu ricoperta da sedimenti. Non sappiamo quale aspetto avesse già assunto nell'852.
 
 
-### augusto
-
-[scheda.augusto.certezza-B] Restano gli anelli inferiori; la forma della parte alta è discussa.
-
-
 ### tegolepietro
 
 [scheda.tegolepietro.certezza-B] Le tegole di bronzo sono attestate dal Liber Pontificalis; il loro aspetto è ricostruito.
-
-
-### dolabella
-
-[scheda.dolabella.certezza-A] In piedi.
-
-
-### eurisace
-
-[scheda.eurisace.certezza-A] In piedi, liberato dalla torre nel 1838.
 
 
 ### campidoglio
