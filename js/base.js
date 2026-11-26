@@ -303,19 +303,30 @@ var ombra={x:10,z:0,s:420}, ombraFissa=null;
    seguiva il corteo il riquadro si rispostava a ogni quinto del suo lato: la mappa si rifaceva (tutta la città, a 4096 pixel in «massima»: un fotogramma lungo) e le ombre
    saltavano di colpo. RM.ombraFissa({x, z, s}) tiene il riquadro dove dice la scena e rifà la mappa una volta sola; RM.ombraFissa(null) torna a seguire la camera.
    s: metà del lato, in unità; se manca, quello che dà circa dieci centimetri per pixel della mappa (bordi morbidi, non a scalini), mai sotto t (il minimo che serve). */
+/* Il riquadro agganciato ai pixel della mappa (26 novembre 2026, sera; l'utente: «togli l'ombra che traballa»). Prima il centro del riquadro era il punto guardato,
+   dovunque cadesse: a ogni volta che la mappa si rifaceva la griglia dei suoi pixel si spostava di una frazione di pixel, e tutti gli orli delle ombre (portici, muri, alberi)
+   tremavano di colpo. Ora il centro si sposta solo di pixel interi, misurati sugli assi della luce: rifatta, la mappa dà le stesse ombre di prima dove le cose non si sono mosse.
+   Anche il lato va a gradini fissi (un quarto in più o in meno), così la grandezza dei pixel cambia di rado. */
+var SOLE_D=new THREE.Vector3(610,-330,170).normalize(), SOLE_X=new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0),SOLE_D.clone().negate()).normalize(), SOLE_Y=new THREE.Vector3().crossVectors(SOLE_D.clone().negate(),SOLE_X).normalize(), AGG=new THREE.Vector3();
+function aggancia(x,z,L){      // il centro più vicino a (x, 0, z) che cade su un pixel intero della mappa con lato 2L
+  var ts=2*L/sole.shadow.mapSize.x; AGG.set(x,0,z);
+  var a=AGG.dot(SOLE_X), b=AGG.dot(SOLE_Y), da=Math.round(a/ts)*ts-a, db=Math.round(b/ts)*ts-b;
+  return AGG.addScaledVector(SOLE_X,da).addScaledVector(SOLE_Y,db); }
+function ombraIn(x,z,L){ var c=aggancia(x,z,L); sole.target.position.copy(c); sole.position.set(c.x-610,c.y+330,c.z-170); sole.target.updateMatrixWorld(); }
 RM.ombraFissa=function(o){
   ombraFissa=o||null; if(!o){ ombra.s=-1; return; }
   var L=o.s||Math.max(o.t||7,sole.shadow.mapSize.x*.005);
   ombra.x=o.x; ombra.z=o.z; ombra.s=L;
-  sole.target.position.set(o.x,0,o.z); sole.position.set(o.x-610,330,o.z-170); sole.target.updateMatrixWorld();
+  ombraIn(o.x,o.z,L);
   oc.left=-L; oc.right=L; oc.top=L; oc.bottom=-L; oc.updateProjectionMatrix(); sole.shadow.normalBias=o.s?Math.max(.14,.5*L/420):Math.max(.012,5*L/sole.shadow.mapSize.x);      // un riquadro grande come quello che segue la camera; uno stretto: due pixel e mezzo della mappa
   renderer.shadowMap.needsUpdate=true; };
 RM.frame.push(function(){
   if(!sole.castShadow || ombraFissa) return;
   var dist=camera.position.distanceTo(controlli.target), lato=Math.max(70,Math.min(420,dist*1.25)), x=lato>=420?10:controlli.target.x, z=lato>=420?0:controlli.target.z;
   if(Math.abs(lato-ombra.s)<ombra.s*.2 && Math.hypot(x-ombra.x,z-ombra.z)<ombra.s*.22) return;
+  lato=lato>=420?420:Math.min(420,70*Math.pow(1.25,Math.round(Math.log(lato/70)/Math.log(1.25))));      // a gradini fissi: 70, 87,5, 109… fino a 420
   ombra.x=x; ombra.z=z; ombra.s=lato;
-  sole.target.position.set(x,0,z); sole.position.set(x-610,330,z-170); sole.target.updateMatrixWorld();
+  ombraIn(x,z,lato);
   oc.left=-lato; oc.right=lato; oc.top=lato; oc.bottom=-lato; oc.updateProjectionMatrix(); sole.shadow.normalBias=Math.max(.14,.5*lato/420);
   renderer.shadowMap.needsUpdate=true;
 });

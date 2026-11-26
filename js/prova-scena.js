@@ -70,6 +70,11 @@ async function prova(){
   stato('<b>Prova della scena '+ANNO+'</b> · preparo la città…');
   var i=tappa(); if(i<0){ stato('Nessuna tappa per l’anno '+ANNO); return; }
   if(GRADINO && RM.qualita && RM.qualita.forza) RM.qualita.forza(GRADINO);
+  /* interruttori per cercare che cosa fa tremare o rallentare (26 novembre 2026): &ombre=0 niente ombre del sole, &appoggio=0 niente macchie d'appoggio sotto i piedi,
+     &lumi=0 niente luce dei lumi né aloni (scena dell'800) */
+  if(cerca('ombre')==='0'){ var luci=[]; RM.scene.traverse(function(o){ if(o.isDirectionalLight) luci.push(o); }); RM.frame.push(function(){ luci.forEach(function(l){ l.castShadow=false; }); }); }      // a ogni fotogramma: la qualità le riaccenderebbe
+  if(cerca('appoggio')==='0' && RM.interruttori800) RM.interruttori800('appoggio');
+  if(cerca('lumi')==='0' && RM.interruttori800) RM.interruttori800('lumi');
   apriCitta(); await dorme(600);
   if(PG && PG.tappa()!==i) PG.vai(i,true);
   await dorme(4000);      // la città si ricostruisce per l'anno, le scene si accendono

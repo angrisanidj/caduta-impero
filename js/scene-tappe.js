@@ -96,7 +96,8 @@ var VERE=!!(RM.figuraGeo&&RM.figura&&RM.cavalloStatua);
 var LEGGERA=!!RM.piccolo || (navigator.maxTouchPoints>0) || !!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);      // come TOCCO_Q di js/base.js
 RM.QUALITA.figScena=[18000,62000,150000,250000];      // 25 novembre 2026, sera: un quinto in più, quanto pesa di più la persona nuova (js/vita.js): restano persone le stesse figure di prima
       // triangoli di persone per scena: in «bassa» solo le parti «tel» (una sessantina di persone leggere); circa 150, 350 e 600 persone a «media», «alta», «massima» (un cavaliere ne vale tre e mezzo)
-var TETTO_TEL={'593':38000,'800i':36000};      // l'800 dentro San Pietro: il clero e i Franchi attorno a Carlo      // in «bassa» il 593 ne ha di più: tutta la fila dei prigionieri (80) e le guardie a cavallo (30, col cavallo leggero)
+var TETTO_TEL={'593':38000,'800i':36000,'800':44000};
+var TETTO_PIU={'800':1.45};      // 26 novembre 2026, sera: l'arrivo dell'800 ha il seguito a cavallo vicino alla camera (70 cavalieri leggeri, circa 42.000 triangoli): con il tetto comune restavano pedine, o restavano pedine Carlo e il clero      // l'800 fuori: il clero sui gradini e il seguito a cavallo (cavallo leggero)      // l'800 dentro San Pietro: il clero e i Franchi attorno a Carlo      // in «bassa» il 593 ne ha di più: tutta la fila dei prigionieri (80) e le guardie a cavallo (30, col cavallo leggero)
 var VIC=null, DETT=false, contaP=0, PARTI={}, nParti=0, BASI={}, matPers=null, BIANCO1=new THREE.Color(1,1,1);
 var V_BIANCO=RM.col(0xefe9da), V_LANA=RM.col(0x6b5a44), V_VELO=RM.col(0xe2d6bc), V_SANDALO=RM.col(0x4a3424), V_PELLE=RM.col(0xb07a55), CORDA=RM.col(0x3a2a1a);      // i colori del corpo di js/vita.js
 function uomo(B,x,z,y,col,scudo,ry,ruolo){
@@ -240,13 +241,13 @@ function opzioni(col,scudo,ruolo,k){
   return o;
 }
 function chiaveP(o){ var v=o.v?(typeof o.v==='string'?o.v:o.v.nome):'', p=o.posa?[o.posa.yaw.toFixed(1),o.posa.braccio,o.posa.anca.toFixed(4)].join(','):'';
-  return ['p'+(o.pieno?'P':''),o.f,o.k,hex(o.sopra),hex(o.velo),o.chino||0,o.legato?1:0,o.collare?1:0,hex(o.scudo),o.s,o.scalzo?1:0,o.ginocchio?1:0,o.braccia||0,v,p].join('|'); }
+  return ['p'+(o.pieno?'P':'')+(o.leggero?'L':''),o.f,o.k,hex(o.sopra),hex(o.velo),o.chino||0,o.legato?1:0,o.collare?1:0,hex(o.scudo),o.s,o.scalzo?1:0,o.ginocchio?1:0,o.braccia||0,v,p].join('|'); }
 function persona(dest,x,z,y,col,scudo,ry,ruolo){ var o=opzioni(col,scudo,ruolo,contaP++); emetti(dest,chiaveP(o),function(){ return personaGeo(o); },locale(x,y,z,ry),o.veste); }
 function cavaliereVero(dest,x,z,y,ry,colC,colU,solo,ruolo){
-  var k=contaP++, m=locale(x,y,z,ry), cc=colC||C.cavalloB;
-  emetti(dest,'cav|'+hex(cc),function(){ return cavalloGeo(cc); },m,null);
+  var k=contaP++, m=locale(x,y,z,ry), cc=colC||C.cavalloB, leg=CAV_LEGGERO;
+  emetti(dest,(leg?'cavL|':'cav|')+hex(cc),function(){ return cavalloGeo(cc,leg); },m,null);
   if(solo) return;
-  var o=opzioni(colU,null,ruolo,k); o.f=4; o.sopra=null; o.velo=null; o.s=1; o.v=null; o.posa=null;      // a cavallo: la foggia seduta, senza posa
+  var o=opzioni(colU,null,ruolo,k); o.f=4; o.sopra=null; o.velo=null; o.s=1; o.v=null; o.posa=null; if(leg){ o.leggero=true; o.pieno=false; }      // a cavallo: la foggia seduta, senza posa (col cavallo leggero anche il cavaliere è leggero)
   emetti(dest,chiaveP(o),function(){ return personaGeo(o); },m.clone().multiply(locale(0,.068,-.01,0)),o.veste);      // seduto in sella, come RM.figura.cavaliere di js/vita.js
 }
 function seduto(dest,x,y,z,ry,col){ var o=opzioni(col,null,null,contaP++); o.f=4; o.sopra=null; o.v=null; o.posa=null; emetti(dest,chiaveP(o),function(){ return personaGeo(o); },locale(x,y,z,ry),o.veste); }      // l'imperatore sul carro
@@ -262,7 +263,8 @@ function cavalloLeggero(T,col){ var u=.01;
     else { arto([xx,11*u,zx],[xx,5.6*u,gin],1.6*u,1*u); arto([xx,5.6*u,gin],[xx,.2*u,zx],.95*u,.85*u); } });
   arto([0,13.4*u,-7.6*u],[0,6.5*u,-9.6*u],1.1*u,.5*u);
 }
-function cavalloGeo(col){ var T=new RM.Costruttore(); if(LEGGERA) cavalloLeggero(T,col); else RM.cavalloStatua(T,0,0,0,0,1,col); var g=T.geometria(); g.deleteAttribute('tipo');
+var CAV_LEGGERO=false;      // mentre si costruisce il seguito dell'800: il cavallo leggero anche sul PC (70 cavalieri visti da 50 m: con il cavallo delle statue non stavano nel tetto di «media» e restavano pedine)
+function cavalloGeo(col,leg){ var T=new RM.Costruttore(); if(LEGGERA||leg) cavalloLeggero(T,col); else RM.cavalloStatua(T,0,0,0,0,1,col); var g=T.geometria(); g.deleteAttribute('tipo');
   g.setAttribute('fisso',new THREE.Float32BufferAttribute(new Float32Array(g.attributes.position.count).fill(1),1)); return g; }
 /* La geometria di una persona, in unità della scena (piedi a y=0, sguardo verso +z), dal corpo di js/vita.js. Le parti senza colore proprio (la veste) diventano bianche:
    il colore lo dà l'istanza o emetti(). Le pose: o.chino piega in avanti collo e testa attorno alla base del collo; o.legato porta le due braccia in avanti e verso il centro,
@@ -270,7 +272,7 @@ function cavalloGeo(col){ var T=new RM.Costruttore(); if(LEGGERA) cavalloLeggero
 function personaGeo(o){
   /* o.pieno (25 novembre 2026): dentro San Pietro, nell'800, le persone si vedono da pochi metri (i Franchi dietro Carlo, il clero, le prime file della folla): sui telefoni
      restavano a tre lati e senza mani, «birilli» nella cattura dell'utente. Lì sono piene anche sui telefoni: costano circa il doppio, pagato dalle figure leggere dei protagonisti */
-  var LEG=LEGGERA && !o.pieno, g=RM.figuraGeo(o.v||o.f,o.k,LEG?3:5), pa=g.attributes.position.array, na=g.attributes.normal.array, ca=g.attributes.color.array, fa=g.attributes.fisso.array, oa=g.attributes.oscilla.array, sa=g.attributes.ombra?g.attributes.ombra.array:null;
+  var LEG=(LEGGERA||!!o.leggero) && !o.pieno, g=RM.figuraGeo(o.v||o.f,o.k,LEG?3:5), pa=g.attributes.position.array, na=g.attributes.normal.array, ca=g.attributes.color.array, fa=g.attributes.fisso.array, oa=g.attributes.oscilla.array, sa=g.attributes.ombra?g.attributes.ombra.array:null;
   var Pp=[], Nn=[], Cc=[], Ff=[], i, n=pa.length/3, v=new THREE.Vector3(), w=new THREE.Vector3();
   function uguale(c,q){ return Math.abs(c[0]-q.r)+Math.abs(c[1]-q.g)+Math.abs(c[2]-q.b)<.01; }
   function rgb(q){ return [q.r,q.g,q.b]; }
@@ -316,7 +318,7 @@ function prigioniero(dest,x,z,y,ry,h,veste,k){
 /* tutte le scene: ogni parte riceve la sua quota di triangoli, in ordine di priorità */
 function assegna(){
   var tetto=VERE?(RM.QUALITA.figScena[RM.q]||0):0;
-  Object.keys(PARTI).forEach(function(nome){ var resto=(RM.q===0 && TETTO_TEL[nome])||tetto;
+  Object.keys(PARTI).forEach(function(nome){ var resto=(RM.q===0 && TETTO_TEL[nome])||tetto*(TETTO_PIU[nome]||1);
     PARTI[nome].forEach(function(q){
       var r0=resto; if(RM.q===0 && !q.tel) resto=0;      // in «bassa» spendono solo le parti «tel»
       if(q.tipo==='blocco'){ var t=0; q.coppie.forEach(function(c){ t+=c.tri*Math.max(0,c.g.count); }); var si=tetto>0&&t<=resto; if(si) resto-=t;
@@ -395,6 +397,7 @@ function istanze(fa,N,nome,chiave,pr,faD,tel){ if(annoDi(nome)) ANNO_SC=annoDi(n
     gd.instanceMatrix=g.instanceMatrix; gd.frustumCulled=false; gd.castShadow=gd.receiveShadow=true; gd.visible=false; gd.count=cnt; g.add(gd);
     Object.defineProperty(g,'count',{configurable:true, get:function(){ return cnt; }, set:function(v){ cnt=v; gd.count=v; }});      // le due maglie mostrano le stesse istanze
     parte(nome,{tipo:'blocco', pr:pr||0, chiave:chiave, tel:!!tel, coppie:[{g:g, gd:gd, tri:Bd.pos.length/9}]});
+    g.userData.gd=gd;      // la maglia delle persone, per chi le cambia il materiale (il passo del corteo dell'800)
   }
   RM.scene.add(g); return g; }
 function metti(g,k,x,y,z,ry,s){ O3.position.set(x,y,z); O3.rotation.set(0,ry||0,0); O3.scale.setScalar(s==null?1:s); O3.updateMatrix(); g.setMatrixAt(k,O3.matrix); }
@@ -1080,6 +1083,8 @@ function quotaSu(id,x,z,alto){
    - Il figlio Carlo: nessuna fonte letta lo descrive; tunica corta e mantello, alla franca (Eginardo 23 per l'abito dei Franchi), colori nostri.
    - La corona: «pretiosissima corona» (Liber Pontificalis); la forma non è detta. Qui un cerchio d'oro con pietre: schema.
    Le pose (in ginocchio a pregare, il papa in ginocchio per l'omaggio, il figlio in piedi) sono schema, dette nella didascalia. */
+var SPENTI800={};      // gli interruttori della prova della scena (js/prova-scena.js: &appoggio=0, &lumi=0)
+RM.interruttori800=function(k){ SPENTI800[k]=true; if(k==='appoggio') matAppoggio().visible=false; };
 var LUMI800={uLumeV:{value:[new THREE.Vector3(),new THREE.Vector3()]}, uLumeC:{value:[new THREE.Color(0,0,0),new THREE.Color(0,0,0)]}, uLumeK:{value:[1,1]}, uPen:{value:1}};      // uPen: la penombra dell'interno (1 fuori dalla scena: nessun effetto)      // due lumi caldi, in coordinate della camera: il faro sopra il presbiterio e le candele della confessione
 function conLumi(sh){      // aggiunge ai materiali di persone e protagonisti la luce dei due lumi (senza luci vere: cambierebbero tutti i materiali della città)
   sh.uniforms.uLumeV=LUMI800.uLumeV; sh.uniforms.uLumeC=LUMI800.uLumeC; sh.uniforms.uLumeK=LUMI800.uLumeK; sh.uniforms.uPen=LUMI800.uPen;
@@ -1590,7 +1595,7 @@ var interno800=(function(){
      con la corona fra le mani, fa un passo (14,0-14,7), la alza sopra il capo di Carlo (14,6-15,6) e la posa (15,6-16,9): le mani seguono la corona; Carlo china appena il capo.
      L'omaggio: il papa in ginocchio (26,4-28,0, schema); l'unzione: la destra del papa sul capo del figlio (28,9-30,3). */
   var CP=new THREE.Vector3(), CA=new THREE.Vector3(), MA=new THREE.Vector3(), MB=new THREE.Vector3(), PQ=new THREE.Vector3(), V0=new THREE.Vector3();
-  var PX0=X0-5.17, PXC=CX-.058, rC0=-Math.PI/2;
+  var PX0=X0-5.17, PXC=CX-.05, rC0=-Math.PI/2;      // 26 novembre 2026, sera: il papa mezzo metro davanti a Carlo (prima 58 cm: con la corona alzata le mani non ci arrivavano e la corona restava sospesa da sola)
   function posa(u){
     var su=liscio(13.3,14.6,u), avanti=liscio(14.0,14.7,u), alFiglio=liscio(28.2,28.8,u), ingin=liscio(26.4,27.0,u)*(1-liscio(27.6,28.1,u));
     var px=PX0+(PXC-PX0)*avanti*(1-alFiglio)+(pos.figlio[0]-.058-PX0)*alFiglio, pz=CZ+(pos.figlio[2]-CZ)*alFiglio; pos.papa=[px,Y,pz];
@@ -1602,7 +1607,7 @@ var interno800=(function(){
     rF.capo(PQ);
     /* Carlo: a mani giunte davanti al petto finché si alza, poi le braccia lungo i fianchi */
     rC.g.position.set(CX,Y,CZ); rC.g.rotation.y=rC0; rC.g.updateMatrixWorld(true); rC.piedi.position.set(CX,Y,CZ);
-    var chinoC=.3*(1-liscio(13.3,14.2,u))+.16*liscio(15.3,15.9,u)*(1-liscio(16.9,17.6,u)), yG=.88+.4*su;
+    var chinoC=.3*(1-liscio(13.3,14.2,u))+.24*liscio(15.3,15.9,u)*(1-liscio(16.9,17.6,u)), yG=.88+.4*su;
     rC.posa({k:1-su, chino:chinoC, mani:u<14.3?{d:inFig(rC,MA,-.025,yG,.24), s:inFig(rC,MB,.025,yG,.24)}:{}});
     rC.capo(CA); pos.carlo=[CX,CA.y-.02,CZ];
     /* la corona: fra le mani del papa davanti al petto, poi sopra il capo di Carlo, poi giù; posata, segue il capo */
@@ -1610,8 +1615,8 @@ var interno800=(function(){
     var su1=liscio(14.6,15.6,u), giu1=liscio(15.6,16.9,u);
     inFig(rP,V0,0,1.2,.3);                                                                                  // davanti al petto del papa
     if(u<14.6) CP.copy(V0);
-    else if(u<15.6) CP.copy(V0).lerp(MA.copy(CA).setY(CA.y+.03),su1);
-    else CP.copy(CA).setY(CA.y+.03*(1-giu1));
+    else if(u<15.6) CP.copy(V0).lerp(MA.copy(CA).setY(CA.y+.012),su1);
+    else CP.copy(CA).setY(CA.y+.012*(1-giu1));      // alzata 12 cm sopra il capo (prima 30: fuori dalla portata delle braccia del papa)
     if(u>=16.9) CP.copy(CA);
     corona.position.copy(CP); corona.position.y-=.0025; corona.rotation.set(0,rC0,0);
     var tieneCor=u<17.0, unge=u>=28.9&&u<30.3, giunteP=ingin>.3, yP=1.3-.42*ingin;
@@ -1629,6 +1634,7 @@ var interno800=(function(){
     LUMI800.uLumeC.value[0].setRGB(2.1,1.25,.52).multiplyScalar(cal); LUMI800.uLumeK.value[0]=.9;      // il faro
     LUMI800.uLumeC.value[1].setRGB(1.9,1.15,.5).multiplyScalar(cal*(.7+.4*pic)); LUMI800.uLumeK.value[1]=3;      // le candele della pergula e dell'altare (più deboli dal secondo giro: il gruppo non deve staccarsi chiaro dalla navata)
     LUMI800.uPen.value=1-.7*cal;      // la penombra delle persone lontane dai lumi, come i muri e il pavimento
+    if(SPENTI800.lumi){ LUMI800.uLumeC.value[0].setRGB(0,0,0); LUMI800.uLumeC.value[1].setRGB(0,0,0); bagliore.visible=pozza.visible=pozzaF.visible=luccichio.visible=faroAlone.visible=false; }      // la prova senza lumi (js/prova-scena.js, &lumi=0)
     var luc=liscio(16.6,17.2,u)*(1-liscio(18.4,19.6,u)); luccichio.visible=luc>.01; luccichio.material.opacity=luc*(.8+.2*Math.sin(u*9)); luccichio.position.copy(corona.position); luccichio.scale.setScalar(.05+.05*luc);
     capriate.material.opacity=1-liscio(.55,.85,k); capriate.visible=capriate.material.opacity>.02; capriate.material.depthWrite=capriate.material.opacity>.98;
     /* l'acclamazione in sovrimpressione: prima la frase intera, poi «tre volte» */
@@ -1755,26 +1761,66 @@ var carlo800=(function(){
   /* il corteo, a istanze; via(t,lat) dà punto e verso lungo il percorso. Carlo nella tunica blu che la scena gli dava, a piedi con un mantello di lana di colore sobrio
      (Eginardo, Vita Karoli 23, riletto il 25 novembre 2026: il mantello blu è l'abito comune, ma in quale giorno a Roma vestisse alla romana non è detto), a capo scoperto: niente corona il 24 novembre */
   var via=spezzata(V800.L), LUN=via(0).lung, D=108.8, FINE=24, VIAGGIO=20;
-  var cav=[istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,C.ferro); },35,'800','seguito',3), istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloC,C.ferro); },35,'800','seguito',3)];
-  var capi=istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,franco); },8,'800','capi',2);      // qualche cavaliere dei Franchi in blu, come prima
-  var band=[C.rosso,C.oro,C.bianco,C.porpora].map(function(col){ return istanze(function(B){ uomo(B,0,0,0,C.tunica,null,0); bandiera(B,.03,0,0,col,.55); },2,'800','bandiere',1); });
+  CAV_LEGGERO=true;      // il seguito: cavallo leggero, priorità davanti alla folla lungo il portico, anche sui telefoni (26 novembre 2026, sera: come pedine erano i «blocchi» che scivolavano)
+  var cav=[istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,C.ferro); },35,'800','seguito',2,null,true), istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloC,C.ferro); },35,'800','seguito',2,null,true)];
+  var capi=istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,franco); },8,'800','capi',2,null,true);
+  CAV_LEGGERO=false;      // qualche cavaliere dei Franchi in blu, come prima
+  var band=[C.rosso,C.oro,C.bianco,C.porpora].map(function(col){ return istanze(function(B){ uomo(B,0,0,0,C.tunica,null,0); bandiera(B,.03,0,0,col,.55); },2,'800','bandiere',1,null,true); });
   var re=istanze(function(B){ cavaliere(B,0,0,0,0,C.bianco,franco); },1,'800','carlo',1,null,true), cavallo=istanze(function(B){      // il cavallo, senza cavaliere
     B.scatola(.055,.085,.025,0,0,.08,C.bianco).scatola(.055,.085,.025,0,0,-.08,C.bianco).scatola(.06,.07,.22,0,.08,0,C.bianco).scatola(.04,.1,.05,0,.13,.095,C.bianco).scatola(.035,.04,.09,0,.2,.135,C.bianco); },1,'800','carlo',1,
     function(B){ cavaliere(B,0,0,0,0,C.bianco,null,true); },true);
   var aPiedi=istanze(function(B){ uomo(B,0,0,0,franco,null,0,'carlo'); },1,'800','carlo',1,null,true);
   cav.concat([capi,re,cavallo]).forEach(function(m){ senzaOmbra(m); appoggioIstanze(m,.035,.13); }); band.concat([aPiedi]).forEach(function(m){ senzaOmbra(m); appoggioIstanze(m,.028,.028); });      // il corteo si muove: niente ombra nella mappa del sole (si veda ombre800, più sotto), la macchia d'appoggio
+  /* Il passo (26 novembre 2026, sera; l'utente: «l'animazione di Carlo Magno che si muove fino ad arrivare a San Pietro è weird … non un blocco che si muove così»).
+     Prima tutto il corteo scivolava in blocco, alla stessa velocità, e in 20 secondi faceva più di un chilometro: 80 metri al secondo, con le zampe ferme.
+     Ora il corteo si vede in tre momenti, con uno stacco fra l'uno e l'altro (lo dice la didascalia): su ponte Elio, lungo il portico, davanti ai gradini, dove rallenta e si ferma.
+     Va al passo, circa 1,7 metri al secondo, e ognuno ha il suo: le zampe dei cavalli e le gambe di chi va a piedi si muovono nello shader dei vertici (matCammino), con la fase
+     presa dalla strada fatta (niente scivolamento: un passo intero ogni 1,6 m per i cavalli, 1,4 m per gli uomini), il corpo sale e scende col passo; le file si allungano e si
+     stringono un poco, ognuno sbanda appena di lato, e alla fermata la coda si ferma dopo la testa. Che cosa succede non cambia: il corteo arriva ai gradini, Carlo scende
+     da cavallo e sale verso il papa (Annali dei Franchi, 800: «equo descendentem gradusque ascendentem»). Andatura, misure e tempi sono uno schema. */
+  var A_CAV=[], A_PIE=[];
+  function matCammino(cav,pedina){
+    var m=RM.matPietra(), prima=m.onBeforeCompile, A=String.fromCharCode(10);
+    var hip=cav?(pedina?.085:.108):(pedina?.088:.092), fz=cav?(pedina?.08:.052):0, amp=cav?(pedina?.18:.34):(pedina?.3:.4), sale=cav?.0035:.0028;      // anca, dove stanno le zampe lungo il corpo, ampiezza, quanto sale il corpo
+    m.onBeforeCompile=function(sh,r){ if(prima) prima.call(this,sh,r);
+      sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'attribute vec2 passo;')
+        .replace('#include <begin_vertex>',['#include <begin_vertex>',
+          '{ float ph=passo.x, am=passo.y; vec3 p0=transformed;',
+          (cav?'  float w=(1.0-smoothstep('+(hip-.022).toFixed(3)+','+(hip-.002).toFixed(3)+',p0.y))*smoothstep(0.004,0.012,abs(p0.x)); float zp=p0.z>0.0?'+fz.toFixed(3)+':-'+fz.toFixed(3)+'; float of=(p0.x<0.0?0.0:3.1416)+(p0.z>0.0?1.5708:0.0);'
+              :'  float w=(1.0-smoothstep('+(hip-.017).toFixed(3)+','+hip.toFixed(3)+',p0.y))*(1.0-smoothstep(0.022,0.027,abs(p0.x))); float zp=0.0; float of=p0.x<0.0?0.0:3.1416;'),
+          '  float an=sin(ph+of)*'+amp.toFixed(2)+'*am*w; vec2 q=vec2(p0.y-'+hip.toFixed(3)+',p0.z-zp); float ca=cos(an), sa=sin(an);',
+          '  transformed.y='+hip.toFixed(3)+'+q.x*ca-q.y*sa; transformed.z=zp+q.x*sa+q.y*ca;',
+          '  transformed.y+=(0.5-0.5*cos(2.0*ph))*'+sale.toFixed(4)+'*am; }'].join(A)); };      // la zampa gira attorno alla sua anca; due salite per passo intero
+    return m; }
+  function cammina(gm,cav){      // il materiale col passo, alla pedina e alla persona; la fase e l'ampiezza per istanza
+    var n=gm.instanceMatrix.count, at=new THREE.InstancedBufferAttribute(new Float32Array(n*2),2); at.setUsage(THREE.DynamicDrawUsage);
+    gm.geometry.setAttribute('passo',at); gm.material=matCammino(cav,true);
+    var gd=gm.userData.gd; if(gd){ gd.geometry.setAttribute('passo',at); gd.material=matCammino(cav,false); }
+    gm.userData.passo=at; return at; }
+  if(!MENO){ cav.concat([capi,re]).forEach(function(m){ cammina(m,true); }); band.concat([aPiedi]).forEach(function(m){ cammina(m,false); }); }
+  function passo(gm,k,s,v,cav){ var at=gm.userData.passo; if(!at) return; at.setXY(k,s/(cav?.16:.14)*6.2832,Math.min(1,v/.12)); }      // fase dalla strada fatta (un passo intero: 1,6 m il cavallo, 1,4 m l'uomo); ampiezza dalla velocità
   function y(p){ var d=RM.distFiume(p.x,p.z); return d<7.5?.66:Math.max(p.y,.66-(d-7.5)*.33,sulSagrato(p.x,p.z)); }      // sul piano di ponte Elio (0,65, js/mura.js), poi giù per la rampa; in fondo sopra il sagrato
-  function sC(t){ var k=Math.min(1,t/VIAGGIO); return LUN+D*(k*k*(3-2*k)-1); }      // dove sta Carlo lungo il percorso
+  var VEL=.17, SA=53.2, SB=99.2, TA=7, TB=13.5, TC=6.2, ARR=FINE+2.6;      // al passo (1,7 m/s); ponte Elio (s 47,9-62,9) e la metà del portico; i tre momenti; Carlo in cima ai gradini
+  function sTempo(t,rit){      // dove sta, lungo la strada, chi è rit secondi dietro la testa (alla fermata la coda si ferma dopo): s e velocità
+    if(t<TA) return {s:SA+VEL*Math.max(0,t), v:t<0?0:VEL};
+    if(t<TB) return {s:SB+VEL*(t-TA), v:VEL};
+    var u=t-TB-rit; if(u>=TC) return {s:LUN, v:0};
+    return {s:LUN-VEL*TC/2+VEL*(u-(u>0?u*u/(2*TC):0)), v:VEL*(1-Math.max(0,u)/TC)}; }
+  function sC(t){ return sTempo(t,0).s; }      // dove sta Carlo lungo il percorso
   function posa(gm,k,s,lat,ry){ var p=via(Math.max(0,s)/LUN,lat); metti(gm,k,p.x,y(p),p.z,ry==null?p.ry:ry); return p; }
   var posC=[-245.8,0,-108.1];      // dov'è Carlo (per il suo nome sulla scena)
   function arrivo(t){
-    var s=sC(t), scende=t>=VIAGGIO+.3, apre=RM.sfuma(VIAGGIO-2.5,VIAGGIO,t), i, nb=[0,0,0,0], pf=via(1,0);
-    for(i=0;i<70;i++){ var row=i>>1, gm=(i%9===4)?capi:cav[i&1], kk=gm===capi?(i/9)|0:(i>>1); posa(gm,kk,s-1-row*.42,(i&1)?.13:-.13); }
-    for(i=0;i<6;i++){ var c=i%4, sb=Math.min(s+1.3+(i>>1)*.5,LUN-.4-(i>>1)*.5); posa(band[c],nb[c]++,sb,((i&1)?1:-1)*(.13+.8*apre)); }
-    if(!scende){ var pr=posa(re,0,s,0); posC=[pr.x,y(pr)+.1,pr.z]; metti(cavallo,0,0,-50,0,0,0); metti(aPiedi,0,0,-50,0,0,0); }
+    var c0=sTempo(t,0), s=c0.s, scende=t>=VIAGGIO+.3, apre=RM.sfuma(VIAGGIO-2.5,VIAGGIO,t), i, nb=[0,0,0,0], pf=via(1,0);
+    for(i=0;i<70;i++){ var row=i>>1, gm=(i%9===4)?capi:cav[i&1], kk=gm===capi?(i/9)|0:(i>>1), h=((i*2654435761)>>>0)%1000/1000;
+      var q=sTempo(t,row*.09+h*.2), gap=1+row*.42*(.95+.1*h)+.035*Math.sin(t*.8+row*.7)*(q.v/VEL);      // la coda si ferma dopo la testa; le file si allungano e si stringono un poco
+      var sr=q.s-gap, lat=((i&1)?.13:-.13)+.012*Math.sin(t*.45+i*1.7);      // ognuno sbanda appena di lato
+      posa(gm,kk,sr,lat); passo(gm,kk,sr+h*.08,q.v*(1+.06*Math.cos(t*.8+row*.7)),true); }
+    for(i=0;i<6;i++){ var c=i%4, sb0=s+1.3+(i>>1)*.5, cap=LUN-.4-(i>>1)*.5, sb=Math.min(sb0,cap); posa(band[c],nb[c],sb,((i&1)?1:-1)*(.13+.8*apre)); passo(band[c],nb[c],sb+i*.03,sb0<cap?c0.v:0,false); nb[c]++; }
+    if(!scende){ var pr=posa(re,0,s,0); passo(re,0,s,c0.v,true); posC=[pr.x,y(pr)+.1,pr.z]; metti(cavallo,0,0,-50,0,0,0); metti(aPiedi,0,0,-50,0,0,0); }
     else { metti(re,0,0,-50,0,0,0); metti(cavallo,0,pf.x,Math.max(H(pf.x,pf.z),sulSagrato(pf.x,pf.z)),pf.z,pf.ry);      // sceso da cavallo, sale i gradini fino al papa
-      var ks=RM.sfuma(VIAGGIO+1,FINE,t), xa=-245.8+(-246.8+245.8)*ks; metti(aPiedi,0,xa,salita(xa),-108.1-.3*(1-ks),-Math.PI/2); posC=[xa,salita(xa),-108.1-.3*(1-ks)]; }      // gradino per gradino (quotaSu)
-    cav.concat([capi,re,cavallo,aPiedi],band).forEach(function(m){ m.instanceMatrix.needsUpdate=true; });
+      var ks=RM.sfuma(VIAGGIO+.6,ARR,t), x0=pf.x-.03, z0=pf.z+.075, xa=x0+(-246.8-x0)*ks, za=z0+(-108.1-z0)*ks; metti(aPiedi,0,xa,salita(xa),za,-Math.PI/2); posC=[xa,salita(xa),za];      // sceso accanto al cavallo, a sinistra (prima compariva tre metri più in là); gradino per gradino (quotaSu), a passo d'uomo
+      var dk=RM.sfuma(VIAGGIO+.6,ARR,t+.05)-RM.sfuma(VIAGGIO+.6,ARR,t-.05), Lp=Math.hypot(-246.8-x0,-108.1-z0); passo(aPiedi,0,ks*Lp,dk/.1*Lp,false); }
+    cav.concat([capi,re,cavallo,aPiedi],band).forEach(function(m){ m.instanceMatrix.needsUpdate=true; if(m.userData.passo) m.userData.passo.needsUpdate=true; });
   }
   var tutte=[g].concat(cav,[capi,re,cavallo,aPiedi],band), F=function(){ return RM.fattoreVista(); };
   /* Il secondo tempo (25 novembre 2026): il 25 dicembre dentro San Pietro (interno800, più sopra). T2 è il suo inizio; u=t-T2:
@@ -1790,20 +1836,23 @@ var carlo800=(function(){
   var T2=FINE+3, FINE2=T2+34.2, I=interno800;
   function disegna(t){
     var dentro=I && t>=T2 && t<FINE2-.05, prima=t<T2;
-    arrivo(Math.min(t,FINE));
+    arrivo(Math.min(t,ARR));
     tutte.forEach(function(m){ m.visible=prima; });
     if(!I) return;
     var u=t-T2; I.mostra(!!dentro); I.taglio(dentro?RM.sfuma(2.4,5.4,u)*(1-RM.sfuma(31.2,33.6,u)):0);
     if(dentro) I.posa(u);
   }
-  function inquadra(t){ var p=via(Math.max(0,sC(t)-3)/LUN,0), y0=H(p.x,p.z)+1, f=F(); return {t:[p.x,y0,p.z], c:[p.x+18*f,y0+15*f,p.z-20*f]}; }      // da nord-est: il portico, a sud, non copre il corteo
+  /* la camera dei tre momenti (26 novembre 2026, sera): a 50-60 m dal corteo, perché il passo si veda; su ponte Elio da est, sul fiume; lungo il portico e ai gradini
+     da nord-est (il portico, a sud, non copre il corteo). Fra un momento e l'altro uno stacco. */
+  function inquadra(t){ var k=t<TA?0:t<TB?1:2, o=[[5.0,2.1,1.3],[2.6,2.4,-5.0],[3.1,2.5,-4.7]][k], p=via(Math.max(0,sC(t)-.7)/LUN,0), y0=y(p)+.06, f=F();
+    return {t:[p.x,y0,p.z], c:[p.x+o[0]*f,y0+o[1]*f,p.z+o[2]*f]}; }
   function vai(v,dur){ var w=alto(RM.adatta(v)), y0=RM.h(w.t[0],w.t[1])+1, d=Math.hypot(w.c[0]-w.t[0],w.c[1]-y0,w.c[2]-w.t[1]); if(RM.controlli) RM.controlli.minDistance=Math.min(RM.controlli.minDistance,d*.85); RM.volaA(w.t,w.c,dur); }
   var R2='2 · 25 dicembre: ';
   /* Il quarto elemento di ogni riga (25 novembre 2026, sera): fonte e riserve di quel tempo della scena. Sul PC la didascalia dell'evento, che copriva un terzo della scena,
      si riduce a questa riga in basso (js/eventi.js, RM.didascaliaBreve), con il bottone per leggerla tutta; sul telefono resta com'era (raccolta a tutto schermo). */
   var FA='Annali dei Franchi, 801; Liber Pontificalis, vita di Leone III', FS='L’interno è uno spaccato: navate, colonne, arco e abside seguono la pianta nota, altezze e luci sono ipotetiche.';
-  var o=sequenza({fine:I?FINE2:FINE, quadroT:FINE, attesa:1.8, disegna:disegna, visibile:function(){ return !!(carlo800&&carlo800.acceso); },
-    righe:[[0,'1 · 24 novembre: l’arrivo',null,'Fonte: Annali dei Franchi, anno 800. La strada del corteo, i numeri, i colori e i posti sono nostri.'],
+  var o=sequenza({fine:I?FINE2:ARR, quadroT:ARR, attesa:1.8, disegna:disegna, visibile:function(){ return !!(carlo800&&carlo800.acceso); },
+    righe:[[0,'1 · 24 novembre: l’arrivo',null,'Fonte: Annali dei Franchi, anno 800. La strada del corteo, i numeri, i colori e i posti sono nostri; il corteo si vede in tre momenti, al passo (andatura e tempi sono uno schema).'],
       [VIAGGIO,'1 · 24 novembre: il papa lo accoglie sui gradini di San Pietro','1 · 24 novembre: il papa lo accoglie','Annali dei Franchi, 800: il papa sui gradini con il clero e i vescovi, le bandiere della città, i gruppi di pellegrini e di cittadini. Posti e numeri sono nostri.']]
       .concat(I?[[T2,R2+'Natale, a San Pietro',null,'Fonti: '+FA+'. '+FS],
       [T2+2.4,R2+'la messa, dentro la basilica','2 · Dentro la basilica','Vita di Adriano I (Liber Pontificalis): il faro a croce con 1365 lumi, acceso a Natale, e le tende di porpora fra le colonne. Forme e misure sono ipotetiche, come lampade e candele.'],
@@ -1821,7 +1870,7 @@ var carlo800=(function(){
                  [T2+30.6,function(){ vai(I.VE,2.6); }]]:[])});      // la discesa nella navata; i primi piani: la preghiera, la corona di profilo, il volto incoronato; il campo largo per l'acclamazione; l'omaggio e l'unzione da vicino
   INVERNO=false;
   var v0=inquadra(0);
-  return {g:g, tutte:tutte, seq:o, da:799.6, a:801, vista:{t:[v0.t[0],v0.t[2]],c:[v0.t[0]+18,v0.t[1]+15,v0.t[2]-20]}, carlo:function(){ return posC; }, T2:T2, FINE:FINE};
+  return {g:g, tutte:tutte, seq:o, da:799.6, a:801, vista:{t:[v0.t[0],v0.t[2]],c:v0.c}, carlo:function(){ return posC; }, T2:T2, FINE:ARR};      // FINE: la fine del primo tempo, Carlo in cima ai gradini
 })();
 /* Con meno animazioni (24 novembre 2026, poi 25 per il secondo tempo): tre viste ferme, l'arrivo, dopo otto secondi la corona in primo piano, dopo sedici la navata */
 /* Le ombre dell'800 (25 novembre 2026; l'utente, sull'iPhone: «evitando che l'ombra faccia effetto flash»). Mentre la scena gira il riquadro della mappa delle ombre
