@@ -147,6 +147,130 @@ function terme(B,L,Pd,o){                                 // recinto con giardin
   if(o.tepidarium==='tondo'){ var zt=(zc+Pd*.085+zk-rc*.85)/2; B.cilindro(L*.045,2.75,0,0,zt,P.intonaco,null,14).cupola(L*.045,0,2.75,zt,P.intonaco,.55); }      // tepidarium circolare, fra l'aula centrale e il caldarium
   else B.scatola(L*.1,2.6,Pd*.08,0,0,zk-Pd*.08,P.intonaco);
 }
+/* Le terme una per una (27 novembre 2026). Prima tutte le terme uscivano da terme() e da mezza distanza sembravano la stessa cosa (richiesta dell'utente: «mi convincono poco
+   perché tutti uguali»). Ora le grandi terme hanno misure, orientamento e parti proprie, dalle voci di Platner e Ashby e da it.wikipedia lette quel giorno: frasi e tabella
+   «Per chi disegna» in src/testi/topografia-fonti.md, sezione «Le terme, una per una». Coordinate locali: x lungo l'asse maggiore del corpo centrale, +z verso il caldarium.
+   Schema dichiarato nelle schede: altezze, numero e forma delle sale minori, numero delle arcate, posto delle esedre piccole. terme() qui sopra non è più chiamata. */
+function muroTerme(B,x0,z0,x1,z1,h,s,col,liv){                 // un tratto di recinto ad arcate fra due punti
+  var L=Math.hypot(x1-x0,z1-z0); B.dentro((x0+x1)/2,0,(z0+z1)/2,Math.atan2(-(z1-z0),x1-x0),function(B){ arcato(B,L,h,s,0,0,0,col||P.mattone,liv||1,Math.max(2,Math.round(L/1.6))); });
+}
+function esedraTerme(B,cx,cz,rx,rz,a0,a1,h,col,dentro){         // muro curvo da a0 ad a1 (0 = +x, PI/2 = +z); dentro: nicchie sul lato concavo, altrimenti arcate fuori
+  var pr=RM.ellisse(rx,rz,14,a0,a1).map(function(p){ return [cx+p[0],cz+p[1]]; });
+  B.striscia(pr,0,pr,h,col||P.mattone,false); if(dentro) vaniVerso(B,pr,cx,cz,h*.22,h*.5,.45); else B.fornici(pr,.2,h*.45,.5,1,false);
+  return pr;
+}
+function gradiTeatro(B,cx,cz,rx,rz,a0,a1,n,h){                 // gradinate a semicerchio che salgono verso il muro (le esedre-teatro)
+  for(var g=0;g<n;g++){ var k0=.45+.55*g/n, k1=.45+.55*(g+1)/n, y=h*(g+1)/n, p0=RM.ellisse(rx*k0,rz*k0,14,a0,a1).map(function(p){ return [cx+p[0],cz+p[1]]; }), p1=RM.ellisse(rx*k1,rz*k1,14,a0,a1).map(function(p){ return [cx+p[0],cz+p[1]]; });
+    B.striscia(p0,y-h/n,p0,y,P.travertino,false).striscia(p0,y,p1,y,P.travertino,false); }
+}
+/* Il corpo centrale delle terme imperiali, simmetrico sull'asse z: davanti (z0) il frigidarium (frig:'scoperto', la natatio a cielo aperto con il muro esterno a nicchie e colonne
+   di Caracalla e Diocleziano; 'sala' coperto), poi la sala centrale a tre crociere con i finestroni, il tepidarium, il caldarium che sporge (cald.forma 'tondo' o 'rett');
+   ai capi dell'asse maggiore le palestre, cortili a portico su tre lati (pal: [larghezza, profondità], 0 senza); in fondo, ai lati del caldarium, una fila di sale (sale:false
+   le toglie, come a Costantino). W, D: larghezza e profondità senza il caldarium; hb: altezza delle sale basse; ingresso: un portale al centro della fronte (Traiano). */
+function corpoTerme(B,o){
+  var W=o.W, D=o.D, z0=o.z0, z1=z0+D, hb=o.hb||1.9, sw=o.sala[0], sd=o.sala[1], sh=o.sala[2], nd=o.nat[1], nw=o.nat[0], c=o.cald, t=o.tep, I=P.intonaco;
+  var zr=o.sale===false?z1:z1-(o.fila||1.8), pw=o.pal?o.pal[0]:0, pd=o.pal?o.pal[1]:0, xp=W/2-pw, zs=z0+nd+sd/2, zh=zs+sd/2, i, k;
+  if(o.frig==='sala'){ B.scatola(nw,hb*1.25,nd,0,0,z0+nd/2,I).volta(nd,nw/2*.5,0,hb*1.25,z0+nd/2,I,PI/2).aperture(nw/2,z0,-nw/2,z0,3,hb*.45,hb*.6,nw/5); }      // frigidarium coperto, a botte
+  else {                                                                                                                       // la natatio a cielo aperto
+    B.scatola(nw,.1,nd,0,0,z0+nd/2,P.travertino).scatola(nw-.3,.05,nd-.45,0,.1,z0+nd/2+.08,P.acqua);
+    B.scatola(nw,hb*1.2,.25,0,0,z0+.12,I);                                                                                     // il muro esterno a nicchie e colonne su due ordini
+    for(k=0;k<2;k++){ B.colonne(nw/2-.25,z0-.16,-nw/2+.25,z0-.16,Math.max(4,Math.round(nw/.6)),hb*.52-.12,.06,.04+k*hb*.58);
+      B.aperture(nw/2-.2,z0,-nw/2+.2,z0,Math.max(3,Math.round(nw/.6))-1,.16+k*hb*.58,hb*.34,.2); B.scatola(nw,.08,.3,0,hb*.52-.08+k*hb*.58,z0-.15,P.marmo); }
+    [-1,1].forEach(function(s){ B.scatola(.2,hb*.7,nd,s*nw/2,0,z0+nd/2,I); }); }
+  if(o.ingresso){ B.scatola(2.2,hb*1.7,.6,0,0,z0+.1,I).vano(0,0,z0-.21,-1,0,1,hb*1.15).falde(2.3,.5,.7,0,hb*1.7,z0+.1,P.coppi,0,I); }      // il portale al centro della facciata
+  B.scatola(sw,sh,sd,0,0,zs,I);                                                                                                // la sala centrale, a tre crociere
+  for(i=-1;i<=1;i++) B.falde(sd+.12,.7,sw/3,i*sw/3,sh,zs,P.coppi,PI/2,I);
+  B.falde(sw+.05,.6,sd+.05,0,sh,zs,P.coppi,0,I);
+  B.aperture(-sw/2,zs+sd/2,sw/2,zs+sd/2,3,sh*.62,sh*.3,sw/3*.62).aperture(sw/2,zs-sd/2,-sw/2,zs-sd/2,3,sh*.62,sh*.3,sw/3*.62);      // i finestroni termali sopra i tetti vicini
+  [-1,1].forEach(function(s){
+    if(nw<sw) B.scatola((sw-nw)/2,hb,nd,s*(nw+sw)/4,0,z0+nd/2,I);                                                              // i vestiboli accanto alla natatio
+    var xa=sw/2, xb=pw?xp:W/2, la=xb-xa;
+    if(la>.2){ B.scatola(la,hb,zr-z0,s*(xa+la/2),0,(z0+zr)/2,I);                                                              // le sale fra la sala centrale e la palestra (spogliatoi, vestiboli), una falda per sala
+      var ns=Math.max(1,Math.round((zr-z0)/2.6)), ls=(zr-z0)/ns; for(i=0;i<ns;i++) B.falde(la+.06,.42+.12*(i%2),ls-.04,s*(xa+la/2),hb,z0+ls*(i+.5),P.coppi,0,I);
+      B.aperture(Math.max(s*xa,s*xb),z0,Math.min(s*xa,s*xb),z0,Math.max(1,Math.round(la/.9)),hb*.25,hb*.45,.3); }
+    if(pw){ var zp0=z0+.5, zp1=Math.min(zr,zp0+pd), zm=(zp0+zp1)/2, xo=s*W/2, xi=s*xp;                                     // la palestra: cortile scoperto con portico su tre lati
+      B.scatola(pw,.06,zp1-zp0,s*(W/2-pw/2),0,zm,P.sabbia).scatola(.25,hb*.85,zp1-zp0,xo-s*.12,0,zm,I);
+      B.aperture(xo,s>0?zp1-.3:zp0+.3,xo,s>0?zp0+.3:zp1-.3,Math.max(2,Math.round((zp1-zp0)/.9)),hb*.25,hb*.42,.32);      // finestre sul muro esterno, rivolte fuori
+      B.colonne(xi+s*.25,zp0+.35,xo-s*.45,zp0+.35,Math.max(3,Math.round(pw/.45)),hb*.42,.05,.06).colonne(xi+s*.25,zp1-.35,xo-s*.45,zp1-.35,Math.max(3,Math.round(pw/.45)),hb*.42,.05,.06);
+      B.colonne(xo-s*.45,zp0+.35,xo-s*.45,zp1-.35,Math.max(3,Math.round((zp1-zp0)/.45)),hb*.42,.05,.06);
+      B.scatola(pw-.2,.06,.42,s*(W/2-pw/2),hb*.48,zp0+.2,P.coppi).scatola(pw-.2,.06,.42,s*(W/2-pw/2),hb*.48,zp1-.2,P.coppi).scatola(.42,.06,zp1-zp0,xo-s*.3,hb*.48,zm,P.coppi);
+      if(zp0>z0+.05) B.scatola(pw,hb,zp0-z0,s*(W/2-pw/2),0,(z0+zp0)/2,I);
+      if(zr>zp1+.05) B.scatola(pw,hb*.9,zr-zp1,s*(W/2-pw/2),0,(zp1+zr)/2,I).volta(pw-.1,Math.min(.9,(zr-zp1)/2)*.9,s*(W/2-pw/2),hb*.9,(zp1+zr)/2,I); }
+    if(o.sale!==false){ var r0=c.forma==='tondo'?c.r+.15:c.w/2+.15, n=4, lw=(W/2-r0)/n;                                    // la fila di sale in fondo, quattro per parte del caldarium
+      for(i=0;i<n;i++){ var hx=hb*(i%2?1.05:1.25), cx=s*(r0+lw*(i+.5));
+        B.scatola(lw-.08,hx,zr<z1?z1-zr:1.6,cx,0,(zr+z1)/2,I).volta(z1-zr-.1,Math.min(lw/2-.06,.8),cx,hx,(zr+z1)/2,I,PI/2);
+        B.aperture(cx-lw/2+.1,z1,cx+lw/2-.1,z1,2,hb*.3,hb*.5,lw*.25); } }
+  });
+  var zt1=(c.forma==='tondo'?z1+c.sporge-2*c.r:z1+c.sporge-c.d)+.15, tl=t.forma==='tondo'?2*t.r:Math.min(t.d||1.6,zt1-zh), zt0=Math.max(zh,zt1-tl), ztc=(zt0+zt1)/2, xw=t.forma==='tondo'?t.r:t.w/2;      // il tepidarium, davanti al caldarium
+  if(t.forma==='tondo') B.cilindro(t.r,hb*1.45,0,0,ztc,I,null,16).cupola(t.r,0,hb*1.45,ztc,I,.6);
+  else B.scatola(t.w,hb*1.3,zt1-zt0,0,0,ztc,I).falde(t.w,.4,zt1-zt0,0,hb*1.3,ztc,P.coppi,PI/2,I);
+  if(zt0>zh+.1) B.scatola(2*xw,hb*.9,zt0-zh+.1,0,0,(zh+zt0)/2,I);                                                              // le sale di passaggio dalla sala centrale
+  if(zr>zh+.2) [-1,1].forEach(function(s){ var lw2=sw/2-xw-.9, zw=Math.max(zh,Math.min(zt0,zr)), lw3=sw/2-xw;      // ai lati del tepidarium i cortili scoperti che danno luce («light wells», Platner e Ashby); fra loro e la sala centrale sale basse
+    if(zw>zh+.1) B.scatola(lw3,hb*.85,zw-zh,s*(xw+lw3/2),0,(zh+zw)/2,I);
+    if(zr>zw+.1){ if(lw2>.3) B.scatola(lw2,hb*.85,zr-zw,s*(sw/2-lw2/2),0,(zw+zr)/2,I); B.scatola(lw2>.3?.85:lw3,.05,zr-zw,s*(xw+(lw2>.3?.45:lw3/2)),0,(zw+zr)/2,P.selce); } });
+  if(c.forma==='tondo'){ var zc=z1+c.sporge-c.r, pr=RM.ellisse(c.r,c.r,16,0,PI).map(function(p){ return [p[0],zc+p[1]]; });    // il caldarium rotondo a cupola, finestre su due file verso il sole
+    B.cilindro(c.r,c.h,0,0,zc,I,null,24).cupola(c.r,0,c.h,zc,I,.6);
+    B.fornici(pr,c.h*.14,c.h*.34,.55,1,false).fornici(pr,c.h*.58,c.h*.3,.5,1,false);
+  } else { var zq=z1+c.sporge-c.d/2;                                                                                           // il caldarium rettangolare con tre absidi e una volta a botte
+    B.scatola(c.w,c.h,c.d,0,0,zq,I).volta(c.w,c.d/2,0,c.h,zq,I);
+    [-1,1].forEach(function(s){ B.cilindro(c.d*.3,c.h*.78,s*c.w/2,0,zq,I,null,12).cupola(c.d*.3,s*c.w/2,c.h*.78,zq,I,.6); });
+    B.cilindro(c.w*.17,c.h*.78,0,0,zq+c.d/2,I,null,12).cupola(c.w*.17,0,c.h*.78,zq+c.d/2,I,.6);
+    B.aperture(-c.w/2+.2,zq+c.d/2,c.w/2-.2,zq+c.d/2,4,c.h*.45,c.h*.42,c.w*.11); }
+}
+/* Caracalla: recinto di 337 x 328 m (406 con le esedre), corpo centrale di 220 x 114 m spinto verso la fronte (le esedre cominciano «almost as far as the back of the central
+   building»), caldarium tondo di 34-35 m che sporge di 26 m al centro del lato sud-ovest; sulla fronte botteghe e uffici su due piani; sui fianchi le due grandi esedre con la sala
+   ottagona a cupola, una sala rettangolare aperta e una sala riscaldata, e il portico verso il giardino; agli angoli di fondo le biblioteche; al centro del fondo lo stadio
+   e, più in alto, le cisterne di 64 camere su due piani (Platner e Ashby; misure da it.wikipedia). */
+function termeCaracalla(B){
+  var L=33.7, Pd=32.8, a=1.5, s=.7, ws=L*.42, zf=Pd/2-Pd*.07-.2, ze=6.4, rz=5.4, rx=3.45, g;
+  B.scatola(L-1,.08,Pd-1,0,0,0,P.prato);
+  arcato(B,L,a*1.45,s*1.8,0,0,-Pd/2+.2,P.mattone,2,Math.round(L/1.1));                                           // la fronte: botteghe e uffici su due piani sotto il giardino rialzato
+  arcato(B,L,a,s,0,0,Pd/2,P.mattone,1,Math.round(L/1.6));
+  [-1,1].forEach(function(k){ var X=k*L/2, a0=k>0?-PI/2:PI/2, a1=k>0?PI/2:PI*1.5, xi=k*(L/2+rx*.5);
+    muroTerme(B,X,-Pd/2,X,ze-rz,a,s); muroTerme(B,X,ze+rz,X,Pd/2,a,s);
+    esedraTerme(B,X,ze,rx,rz,a0,a1,a+.7,P.mattone,false);                                                          // la grande esedra sul fianco
+    B.cilindro(1,2.5,xi,0,ze-2.4,P.intonaco,null,8).cupola(1,xi,2.5,ze-2.4,P.intonaco,.62);                       // la sala ottagona a cupola
+    B.scatola(1.7,2.1,1.8,xi,0,ze,P.intonaco).scatola(1.75,.08,1.85,xi,2.1,ze,P.coppi).vano(X-k*.02,0,ze,0,1,1.1,1.5);      // la sala rettangolare aperta verso il giardino
+    B.scatola(1.7,2,1.8,xi,0,ze+2.4,P.intonaco).volta(1.8,.82,xi,2,ze+2.4,P.intonaco,PI/2);                         // la sala riscaldata
+    B.colonne(X-k*.35,ze-rz+.3,X-k*.35,ze+rz-.3,14,1.1,.06,.05).scatola(.55,.07,2*rz-.4,X-k*.3,1.15,ze,P.coppi);       // il portico verso il giardino
+    var xb=k*(L/2-2.2), zb=Pd/2-1.75;                                                                             // la biblioteca nell'angolo di fondo, aperta verso il giardino
+    B.scatola(3.6,2.2,2.6,xb,0,zb,P.intonaco).falde(3.7,.45,2.7,xb,2.2,zb,P.coppi,0,P.intonaco).vano(xb,0,zb-1.31,-1,0,2.2,1.6); });
+  B.scatola(ws,2.2,Pd*.07,0,0,Pd/2-Pd*.035-.2,P.mattone);                                                          // le cisterne: due file di camere su due piani
+  [.2,1.25].forEach(function(y){ B.aperture(ws/2,zf,-ws/2,zf,16,y,.75); });
+  for(g=0;g<4;g++) B.scatola(ws*.86,.9-.22*g,.42,0,0,zf-.21-.42*g,P.travertino);                                  // lo stadio: le file di sedili verso il giardino
+  [-1,1].forEach(function(k){ var cu=RM.ellisse(1.7,1.7,8,0,PI).map(function(q){ return [k*(ws*.43+q[1]*.8),zf-.84+q[0]*-.5]; }); B.striscia(cu,0,cu,.5,P.travertino,false); });
+  corpoTerme(B,{W:22,D:11.4,z0:-11,hb:2,sala:[5.8,2.4,4],nat:[5.4,3.2],pal:[4.4,4.8],frig:'scoperto',cald:{forma:'tondo',r:1.7,sporge:2.6,h:3.4},tep:{forma:'rett',w:1.9,d:1.5}});
+}
+/* Diocleziano: recinto di 356 x 316 m, corpo centrale «280 by 160 metres» (Platner e Ashby), più grande rispetto al recinto che a Caracalla; sala centrale a tre crociere;
+   natatio scoperta con il muro nord a nicchie; tepidarium tondo e caldarium rettangolare che sporge a sud-ovest; al centro del lato sud-ovest la grande esedra con le gradinate,
+   «served as a theatre»; agli angoli ovest e sud le due aule rotonde (una è San Bernardo); sui fianchi esedre piccole (posto in schema). Nessuno stadio, nessuna esedra grande
+   sui fianchi: è ciò che, a colpo d'occhio, la separa da Caracalla. Misure della sala, della natatio e dell'esedra: schema. */
+/* Traiano: «partly surrounded, on the east, west, and south sides, by a peribolus … and exedrae at the four corners. On the north side there was no enclosure, but the façade
+   of the building with the main entrance in the middle»; dal centro del lato sud «a very large exedra projected outward which served as a theatre»; misure estreme 340 x 330 m
+   (Platner e Ashby, Thermae Traiani). Il frigidarium coperto e le misure del corpo centrale e delle esedre d'angolo sono schema. */
+function termeTraiano(B){
+  var L=28, zN=-16.35, zS=12.6, a=1.5, s=.7, ex=4.65, ez=3.7;
+  B.scatola(L-1,.08,zS-zN-.6,0,0,(zN+zS)/2+.3,P.prato);
+  muroTerme(B,-L/2,zS,-ex,zS,a,s); muroTerme(B,ex,zS,L/2,zS,a,s);
+  esedraTerme(B,0,zS,ex,ez,0,PI,a+1,P.mattone,false); gradiTeatro(B,0,zS,ex-.4,ez-.35,0,PI,5,a*.9);                       // la grande esedra a teatro, sopra le sale della domus Aurea
+  [-1,1].forEach(function(k){ var X=k*L/2, a0=k>0?-PI/2:PI/2, a1=k>0?PI/2:PI*1.5;
+    muroTerme(B,X,zN+.6,X,zN+1.6,a,s); muroTerme(B,X,zN+6.4,X,zS-6.2,a,s); muroTerme(B,X,zS-1.4,X,zS,a,s);
+    [zN+4,zS-3.8].forEach(function(z){ esedraTerme(B,X,z,2.6,2.4,a0,a1,a+.9,P.mattone,true);                            // le esedre agli angoli, con le nicchie (quella a nord-est ne ha undici)
+      B.cupola(1,X+k*1.2,a+.9,z,P.intonaco,.5); }); });
+  corpoTerme(B,{W:19,D:19.5,z0:zN,hb:2,sala:[6,2.5,3.8],nat:[6.4,3],pal:[3.6,6],frig:'sala',ingresso:true,cald:{forma:'tondo',r:1.55,sporge:1.9,h:3.2},tep:{forma:'rett',w:1.8,d:2.6}});
+}
+function termeDiocleziano(B){
+  var L=35.6, Pd=31.6, a=1.5, s=.7, ex=7.5, ez=4.2;
+  B.scatola(L-1,.08,Pd-1,0,0,0,P.prato);
+  arcato(B,L,a,s,0,0,-Pd/2,P.mattone,1,Math.round(L/1.6));
+  muroTerme(B,-L/2,Pd/2,-ex,Pd/2,a,s); muroTerme(B,ex,Pd/2,L/2,Pd/2,a,s);
+  esedraTerme(B,0,Pd/2,ex,ez,0,PI,a+1,P.mattone,false); gradiTeatro(B,0,Pd/2,ex-.5,ez-.4,0,PI,5,a*.9);                 // la grande esedra a teatro (oggi piazza della Repubblica)
+  [-1,1].forEach(function(k){ var X=k*L/2;
+    muroTerme(B,X,-Pd/2,X,-6,a,s); muroTerme(B,X,-2,X,Pd/2,a,s);
+    esedraTerme(B,X,-4,1.4,2,k>0?-PI/2:PI/2,k>0?PI/2:PI*1.5,a+.3,P.mattone,false);                                 // un'esedra piccola sul fianco (schema)
+    B.cilindro(1.15,1.9,k*(L/2-.6),0,Pd/2-.6,P.intonaco,null,16).cupola(1.15,k*(L/2-.6),1.9,Pd/2-.6,P.intonaco,.55); });      // le aule rotonde agli angoli ovest e sud
+  corpoTerme(B,{W:28,D:16,z0:-13.4,hb:2.1,sala:[9,2.7,4.4],nat:[10,3.6],pal:[6,6.4],frig:'scoperto',cald:{forma:'rett',w:5.4,d:3.2,sporge:2.2,h:3.6},tep:{forma:'tondo',r:1.15}});
+}
 /* opz (facoltativo): strette = navatelle larghe circa metà della navata, il rapporto delle basiliche a tre navate di Roma (senza opz restano larghe come prima);
    finestre = finestre per lato della navata; atrio:false = niente quadriportico */
 function chiesa(B,L,W,transetto,opz){                     // basilica cristiana: navata lungo x, abside a -x, atrio a +x
@@ -891,21 +1015,21 @@ var M=[
     B.scatola(4.5,2,1.9,0,0,-3.7,P.mattone).falde(4.6,.5,2,0,2,-3.7,P.coppi,0,P.mattone);
  }},
  {id:'domiziano', nome:'Stadio di Domiziano', x:-101,z:-74, ry:PI/2, lunga:[28,7.5], fa:function(B){ stadio(B,27.5,10.6,1.9); }},      // circa 275 x 106 m, la curva a nord: è piazza Navona. Ordini di arcate e altezza della facciata sono ricostruiti
- {id:'traiano', nome:'Terme di Traiano', x:97.4,z:3.7, ry:-.62, zone:[[0,0,[12,12.5],3.5],[0,17,2.4,1.5]], fa:function(B){ terme(B,31,32,{pc:21,zc:-3.8});      /* posizione: il centro della relazione OpenStreetMap 13162787 «Thermae Traianae» (Nominatim, 23 novembre 2026); prima stava circa 95 m più a ovest */
+ {id:'traiano', nome:'Terme di Traiano', x:97.4,z:3.7, ry:-.524, zone:[[0,0,[12,12.5],3.5],[0,17,2.4,1.5]], fa:function(B){ termeTraiano(B);      /* 27 novembre 2026: pianta propria (termeTraiano); ry da -.62 a -.524, «at an angle of 30 degrees from the meridian» (Platner e Ashby). Posizione: il centro della relazione OpenStreetMap 13162787 «Thermae Traianae» (Nominatim, 23 novembre 2026); prima stava circa 95 m più a ovest */
     /* La terrazza (25 novembre 2026): le terme stanno su un piano artificiale, fondato dentro le sale della domus Aurea riempite («This exedra was built over part of the domus Aurea»,
        muri aggiunti «to provide sufficiently strong foundations», Platner e Ashby, Thermae Traiani). Verso la valle del Colosseo (+z) il piano sta circa 35 m sopra il terreno: lì e sugli
        altri lati dove il colle scende si vedono muri di mattoni. Prima la zona sfumava su 70 m e la terrazza stava su un cumulo, staccata da terra fino a 15 m. Forma dei muri: una resa. */
     zoccolo(B,-15.85,15.85,-16.35,16.35,-3.75,.02,P.mattone,.7);
-    var esT=RM.ellisse(31*.15,31*.12,16,0,PI).map(function(p){ return [p[0],p[1]+16]; }); B.striscia(esT,-3.75,esT,.02,P.mattone,false).striscia(esT.slice().reverse(),-3.75,esT.slice().reverse(),.02,P.mattone,false);      // sotto l'esedra del lato verso il Colosseo
+    var esT=RM.ellisse(4.65,3.7,16,0,PI).map(function(p){ return [p[0],p[1]+12.6]; }); B.striscia(esT,-3.75,esT,.02,P.mattone,false).striscia(esT.slice().reverse(),-3.75,esT.slice().reverse(),.02,P.mattone,false);      // sotto l'esedra del lato verso il Colosseo (27 novembre 2026: l'esedra sta al centro del lato sud del recinto, misure estreme 340 x 330 m)
  }},
  /* Terme di Tito: «just west of the later thermae Traianae on the edge of the slope overhanging the Colosseum, with the same orientation as the domus Aurea … about 105 by 120 metres.
     The façade and principal entrance were on the north side … a caldarium projecting out from the south side» (Platner e Ashby, Thermae Titi). Oggi quasi nulla resta (it.wikipedia: fra via Nicola Salvi,
     via delle Terme di Tito e viale del Monte Oppio). Centro e orientamento sono stimati da queste vie; corpo unico senza recinto, caldario verso il Colosseo. */
- {id:'tito', nome:'Terme di Tito', x:68,z:10, ry:0, zone:[[0,-.2,[4,3.3],1.6],[0,4.35,.9,.8]], fa:function(B){ terme(B,10.5,12,{recinto:false,lc:10.5,pc:8.5,zc:-.5,rc:.9});      // zone a misura dell'edificio (25 novembre 2026: prima un cerchio di 50 m sotto un corpo di 105 x 102, che restava in parte sepolto e in parte sospeso)
+ {id:'tito', nome:'Terme di Tito', x:68,z:10, ry:0, zone:[[0,-.2,[4,3.3],1.6],[0,4.35,.9,.8]], fa:function(B){ corpoTerme(B,{W:10.5,D:8.5,z0:-4.75,hb:1.6,sala:[3.2,1.8,2.8],nat:[3.4,1.8],frig:'sala',ingresso:true,pal:[2.4,3.4],cald:{forma:'tondo',r:.9,sporge:1.5,h:2.2},tep:{forma:'rett',w:1.1,d:.9}});      // 27 novembre 2026: lo stesso corpo delle terme imperiali (corpoTerme), senza recinto, ingresso a nord e caldarium che sporge a sud (Platner e Ashby); le sale interne sono schema. Zone a misura dell'edificio (25 novembre 2026: prima un cerchio di 50 m sotto un corpo di 105 x 102, che restava in parte sepolto e in parte sospeso)
     zoccolo(B,-5.25,5.25,-4.75,3.75,-1,.02,P.mattone,.25); B.cilindro(.9,1.02,0,-1,4.35,P.mattone,null,16);      // lo zoccolo dove il bordo dell'Oppio scende, «on the edge of the slope overhanging the Colosseum» (Platner e Ashby)
  }},      // corpo centrale di circa 190 x 212 m, verso il lato nord del recinto (it.wikipedia, da Caruso e Volpe); il caldarium tondo è schematico
- {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ terme(B,33.7,32.8,{rc:1.75,stadio:true,esedreLati:true}); }},      // il caldarium rotondo, al centro del lato sud-ovest, ha una cupola di 35 m; sul fondo del recinto la gradinata e le cisterne, sui fianchi le due esedre (Platner)
- {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ terme(B,37.6,36,{lc:28,pc:16,caldarium:'rettangolo',tepidarium:'tondo',rotonde:true}); }},      // corpo centrale di 280 x 160 m, caldarium rettangolare che sporge a sud-ovest, tepidarium circolare, grande esedra al centro del lato sud-ovest, due sale rotonde agli angoli ovest e sud (Platner)
+ {id:'caracalla', nome:'Terme di Caracalla', x:59,z:150, ry:-.78, zone:[[0,0,25]], et:1, fa:function(B){ termeCaracalla(B); }},      // 27 novembre 2026: pianta propria (termeCaracalla). Il caldarium rotondo, al centro del lato sud-ovest, ha una cupola di 35 m; sul fondo del recinto la gradinata e le cisterne, sui fianchi le due esedre (Platner)
+ {id:'diocleziano', nome:'Terme di Diocleziano', x:101,z:-122, ry:-.78, zone:[[0,0,27.5]], et:1, fa:function(B){ termeDiocleziano(B); }},      // 27 novembre 2026: pianta propria (termeDiocleziano), recinto di 356 x 316 m invece di 376 x 360. Corpo centrale di 280 x 160 m, caldarium rettangolare che sporge a sud-ovest, tepidarium circolare, grande esedra al centro del lato sud-ovest, due sale rotonde agli angoli ovest e sud (Platner)
  {id:'massenzio', nome:'Basilica di Massenzio', x:25,z:7, ry:-.35, zone:[[0,0,7.5]], fa:function(B){
     B.scatola(8.2,3.5,2.6,0,0,0,P.mattone); for(var i=-1;i<=1;i++){ B.falde(2.7,.9,2.7,i*2.72,3.5,0,P.bronzo,PI/2,P.mattone);
       [-1,1].forEach(function(k){ B.scatola(2.6,2.4,2,i*2.72,0,k*2.3,P.mattone).volta(2,1.3,i*2.72,2.4,k*2.3,P.intonaco,PI/2); B.vano(i*2.72,.25,k*3.31,1,0,.5,.9).vano(i*2.72-.75,.25,k*3.31,1,0,.5,.9).vano(i*2.72+.75,.25,k*3.31,1,0,.5,.9).vano(i*2.72,1.4,k*3.31,1,0,1.6,1.5); }); }      // ogni campata laterale: tre archi in basso e il grande finestrone sopra
@@ -1095,7 +1219,21 @@ var M=[
        («a magnificent flight of steps») non c'è: nel modello il lato ovest sta alla quota della cima del colle. Le misure del piano sono quelle dell'edificio (qui si conta in unità
        scalate di 1/0,45). */
     B.scatola(21.4,7.96,25.6,0,-7.8,.7,P.mattone).scatola(21.5,.1,25.7,0,.06,.7,P.selce);
-    terme(B,33,32,{recinto:false,pc:14,zc:2});
+    /* 27 novembre 2026, pianta propria (prima la stessa delle altre terme in piccolo): «The frigidarium seems to have had its longer axis north and south instead of east and west,
+       and behind it were tepidarium and caldarium both circular in shape. Because of the comparative narrowness of the building, the ordinary arrangement of the anterooms on each
+       side of the caldarium was not carried out» (Platner e Ashby, Thermae Constantinianae). Qui in fila da nord a sud: frigidarium lungo, tepidarium e caldarium tondi; ai lati
+       del frigidarium due ali di sale, nessuna sala ai lati del caldarium; l'ingresso al centro del lato nord. Misure e altezze: schema (unità della maglia, scalate di 0,45). */
+    var I=P.intonaco, k, z;
+    B.scatola(6,7.5,8,0,0,-2,I); for(k=0;k<3;k++) B.falde(6.1,1.2,8/3,0,7.5,-2-8/3+k*8/3,P.coppi,0,I);                     // il frigidarium, lungo da nord a sud, a tre crociere
+    B.falde(8.1,1,6.1,0,7.5,-2,P.coppi,PI/2,I);
+    B.aperture(3,2,3,-6,3,4.6,2.2,1.6).aperture(-3,-6,-3,2,3,4.6,2.2,1.6);                                                    // i finestroni sopra le ali
+    B.scatola(3.2,5.2,1,0,0,-6.2,I).vano(0,0,-6.72,-1,0,1.8,3.6).falde(3.3,.9,1.1,0,5.2,-6.2,P.coppi,0,I);                   // l'ingresso al centro del lato nord
+    B.cilindro(2.4,6,0,0,4.5,I,null,18).cupola(2.4,0,6,4.5,I,.6);                                                             // il tepidarium tondo
+    B.cilindro(3.4,7,0,0,9.8,I,null,24).cupola(3.4,0,7,9.8,I,.6);                                                             // il caldarium tondo, a sud
+    var cal=RM.ellisse(3.4,3.4,14,0,PI).map(function(p){ return [p[0],p[1]+9.8]; }); B.fornici(cal,1,2.3,.5,1,false).fornici(cal,4,2,.5,1,false);
+    [-1,1].forEach(function(s){ B.scatola(6.3,4.4,10,s*6.15,0,-1,I);                                                           // le due ali di sale ai lati del frigidarium
+      for(z=-6;z<4;z+=2.5) B.falde(6.4,.9,2.46,s*6.15,4.4,z+1.25,P.coppi,0,I);
+      B.aperture(s*9.3,s>0?4:-6,s*9.3,s>0?-6:4,5,1,1.8,.9); B.aperture(s>0?9.3:-3,-6.01,s>0?3:-9.3,-6.01,3,1,1.8,.9); });
     var cv=RM.ellisse(10,6,16,PI,2*PI).map(function(p){ return [p[0],p[1]-6]; });
     B.striscia(cv,.16,cv,1.2,P.mattone,false);
  }},
@@ -1474,12 +1612,17 @@ var M=[
  /* Terme di Nerone (62 o 64), rifatte da Alessandro Severo nel 227 e da allora dette Alessandrine: «a rectangular area extending from the north-west corner of the Pantheon to the stadium
     of Domitian, an area of about 190 by 120 metres, and fronted north», con il caldarium che sporge dal centro del lato sud (Platner e Ashby, Thermae Neronianae). Il riquadro sta fra lo stadio
     del modello e il Pantheon, alla latitudine di palazzo Madama, dove ne restano muri (Nominatim, relazione 76432). La pianta interna è quella schematica delle altre terme. */
- {id:'termenerone', nome:'Terme di Nerone e di Alessandro', x:-85.8,z:-72, ry:0, zone:[[-5,0,6.2],[5,0,6.2]], fa:function(B){ terme(B,19.4,12,{recinto:false,lc:18,pc:9,zc:-.6,rc:1.4}); }},
+ {id:'termenerone', nome:'Terme di Nerone e di Alessandro', x:-85.8,z:-72, ry:0, zone:[[-5,0,6.2],[5,0,6.2]], fa:function(B){      // 27 novembre 2026, pianta propria: frigidarium al centro del lato nord, tepidarium, caldarium che sporge dal centro del lato sud, grandi cortili a colonne a est e a ovest della sala centrale, quattro sale per parte del caldarium (Platner e Ashby). Misure delle sale e altezze: schema
+    corpoTerme(B,{W:19,D:10.6,z0:-6,hb:1.8,sala:[5,2.2,3.2],nat:[4.4,2.4],frig:'sala',ingresso:true,pal:[5,6.4],cald:{forma:'tondo',r:1.4,sporge:1.6,h:2.8},tep:{forma:'rett',w:1.6,d:1.4}}); }},
  /* Terme di Agrippa (25-19 a.C.): orientate nord-sud sull'asse del Pantheon, circa 100-120 m da nord a sud e 80-100 da est a ovest; appena a nord del centro una sala rotonda di circa 25 m,
     di un rifacimento non anteriore ad Alessandro Severo, l'«arco della Ciambella» (Platner e Ashby, Thermae Agrippae). Centro: OpenStreetMap, relazione 6596512. Altezze indicative. */
  {id:'termeagrippa', nome:'Terme di Agrippa', x:-68.78,z:-49.23, ry:0, zone:[[0,-2.5,5],[0,2.5,5]], fa:function(B){
     B.scatola(9,1.3,11,0,0,0,P.intonaco).falde(11,.4,9.2,0,1.3,0,P.coppi,PI/2,P.intonaco);
     B.cilindro(1.25,1.9,0,0,-1,P.mattone,null,24).cupola(1.25,0,1.9,-1,P.intonaco,.55);
+    /* 27 novembre 2026: «the caldarium was probably directly west of the circular hall» (Platner e Ashby, Thermae Agrippae): una sala più alta a ovest della rotonda, con l'abside
+       verso ovest e le finestre al sole del pomeriggio. Forma e misure: schema, perché la fonte dice «probably» e la disposizione delle altre sale «is uncertain». */
+    B.scatola(2.4,1.65,2.8,-3.1,0,-1,P.intonaco).falde(2.9,.5,2.5,-3.1,1.65,-1,P.coppi,PI/2,P.intonaco).cilindro(.9,1.4,-4.3,0,-1,P.intonaco,null,12).cupola(.9,-4.3,1.4,-1,P.intonaco,.6);
+    B.aperture(-4.3,.41,-1.9,.41,2,.75,.7,.5);
     B.aperture(-4.5,5.5,4.5,5.5,9,.15,.7).aperture(4.5,-5.5,-4.5,-5.5,9,.15,.7);
  }},
  /* Tempio del Divo Adriano (145): periptero ottastilo, tredici colonne sui fianchi; restano undici colonne del lato nord, alte 15 m con 1,44 di diametro, su un podio di peperino alto 4 m

@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 26/11/2026, 23:47:23.
+Generato da `src/testi.mjs` il 27/11/2026, 00:25:11.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -143,7 +143,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.64] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.65] Versione del 26/11/2026, ore 23:06
+[pagina.65] Versione del 26/11/2026, ore 23:51
 
 
 ## 2. Gli atti
@@ -3252,13 +3252,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.traiano.nome] Terme di Traiano
 
-[scheda.traiano.cosa] Terme sul colle Oppio, costruite su un piano artificiale: le sale della Domus Aurea sotto di loro furono riempite e usate come fondamenta. Nel modello i muri che reggono il piano verso la valle del Colosseo sono ricostruiti.
+[scheda.traiano.cosa] Terme sul colle Oppio, costruite su un piano artificiale: le sale della Domus Aurea sotto di loro furono riempite e usate come fondamenta. Il recinto chiude il giardino solo a est, a ovest e a sud. A nord c'è la facciata dell'edificio, con l'ingresso al centro. Al centro del lato sud una grande esedra fa da teatro; altre esedre stanno agli angoli. Le terme sono girate di 30 gradi rispetto al nord e misurano al massimo circa 340 per 330 metri (Platner e Ashby). Nel modello i muri che reggono il piano verso la valle del Colosseo, l'interno dell'edificio e le altezze sono ricostruiti. Le Sette Sale, la cisterna delle terme, non sono disegnate.
 
 [scheda.traiano.data1-109] Inaugurate.
 
-[scheda.traiano.data2-537] Nel V secolo un prefetto, il magistrato che amministrava Roma, fa ancora collocare statue nelle terme di Traiano. Nel 537 il taglio degli acquedotti le lascia senz'acqua. Più tardi, in altre terme abbandonate, come quelle di Caracalla e Diocleziano e le terme Alessandrine, si cominciano a seppellire i morti. Per le terme di Traiano non sono note sepolture. Alcune tombe sono state trovate poco lontano, nel portico di Livia sul colle Oppio.
+[scheda.traiano.data2-537] Nel V secolo un prefetto, il magistrato che amministrava Roma, fa ancora collocare statue nelle terme di Traiano. Nel 537 il taglio degli acquedotti le lascia senz'acqua. Più tardi, in altre terme abbandonate, come quelle di Caracalla e Diocleziano e le terme Alessandrine, si cominciano a seppellire i morti. Per le terme di Traiano non sono note sepolture. Alcune tombe sono state trovate poco lontano, nel portico di Livia sul colle Oppio. Nel modello da qui le terme sono abbandonate ma in piedi: per Platner e Ashby il loro nome resta legato a rovine che si riducono poco a poco, fino al Cinquecento.
 
-[scheda.traiano.certezza-B] Restano in piedi alcune sale semicircolari e la grande cisterna delle Sette Sale. Per la parte centrale delle terme le principali testimonianze sono i disegni del Cinquecento.
+[scheda.traiano.certezza-B] Restano in piedi alcune sale semicircolari e la grande cisterna delle Sette Sale. Per la parte centrale delle terme le principali testimonianze sono i disegni del Cinquecento. Nel modello il recinto aperto a nord, le esedre e l'orientamento seguono Platner e Ashby; l'interno dell'edificio è uno schema.
 
 
 ### Terme di Tito
@@ -3280,7 +3280,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.caracalla.nome] Terme di Caracalla
 
-[scheda.caracalla.cosa] Terme sulla via Appia, per migliaia di bagnanti al giorno.
+[scheda.caracalla.cosa] Terme sulla via Appia, per migliaia di bagnanti al giorno. Un recinto di circa 337 per 328 metri chiude un giardino; al centro sta l'edificio dei bagni, di 220 per 114 metri. Sulla fronte, verso la strada, ci sono botteghe su due piani. Sui fianchi si aprono due grandi esedre, con una sala ottagonale a cupola. Sul fondo c'è una gradinata, come in uno stadio, e dietro le cisterne. Nell'edificio, in fila: la piscina scoperta, la grande sala a tre volte a crociera, una sala tiepida e il caldarium rotondo, largo 35 metri, che sporge verso il sole. Ai due capi ci sono le palestre, cortili con portici. Nel modello le altezze e le sale minori sono indicative.
 
 [scheda.caracalla.data1-216] Inaugurate.
 
@@ -3294,14 +3294,14 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.caracalla.data5-847] Negli scavi si sono trovati i segni dei danni del terremoto dell'847: una colonna del cortile poggia su un cumulo di macerie (Platner e Ashby). Nel modello qui cede una parte delle coperture.
 
-[scheda.caracalla.certezza-A] In piedi, con la pianta completa.
+[scheda.caracalla.certezza-A] In piedi, con la pianta completa. Nel modello le misure del recinto e dell'edificio dei bagni sono quelle vere; altezze e sale minori sono indicative.
 
 
 ### Terme di Diocleziano
 
 [scheda.diocleziano.nome] Terme di Diocleziano
 
-[scheda.diocleziano.cosa] Le terme più grandi mai costruite a Roma.
+[scheda.diocleziano.cosa] Le terme più grandi mai costruite a Roma. Il recinto misura circa 356 per 316 metri e la pianta somiglia a quella delle terme di Caracalla. Al centro del lato sud-ovest c'è una grande esedra con le gradinate, usata come teatro: la sua curva è oggi piazza della Repubblica. Agli angoli ovest e sud ci sono due sale rotonde; una è la chiesa di San Bernardo. Nell'edificio dei bagni ci sono la piscina scoperta, la grande sala a tre volte a crociera (oggi Santa Maria degli Angeli), una sala tiepida rotonda e un caldarium rettangolare. Nel modello le misure delle sale, le piccole esedre dei fianchi e le altezze sono indicative.
 
 [scheda.diocleziano.data1-306] Inaugurate.
 
@@ -3309,7 +3309,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.diocleziano.data3-663] Quando si tolgano marmi e bronzi non lo dice la fonte letta: nel modello vanno via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano). È una scelta. Le grandi demolizioni vengono molto dopo, con Sisto V.
 
-[scheda.diocleziano.certezza-A] In buona parte in piedi (Santa Maria degli Angeli, l'aula ottagona, l'esedra della piazza).
+[scheda.diocleziano.certezza-A] In buona parte in piedi (Santa Maria degli Angeli, l'aula ottagona, l'esedra della piazza). Nel modello le misure del recinto e dell'edificio dei bagni sono quelle date da Platner e Ashby; altezze, sale minori ed esedre piccole sono indicative.
 
 
 ### Basilica di Massenzio
@@ -3608,7 +3608,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.termecostantino.nome] Terme di Costantino
 
-[scheda.termecostantino.cosa] Le ultime grandi terme costruite a Roma sorgevano sul Quirinale. Più piccole degli altri grandi stabilimenti, occupavano tutto lo spazio tra due strade. A nord si apriva uno spiazzo con un lato curvo. Mancava il grande recinto tipico delle altre terme. Il terreno era in pendenza e fu necessario un piano artificiale (Platner e Ashby): nel modello è un basamento di mattoni. Le misure del modello sono indicative.
+[scheda.termecostantino.cosa] Le ultime grandi terme costruite a Roma sorgevano sul Quirinale. Più piccole degli altri grandi stabilimenti, occupavano tutto lo spazio tra due strade. A nord si apriva uno spiazzo con un lato curvo. Mancava il grande recinto tipico delle altre terme. Il terreno era in pendenza e fu necessario un piano artificiale (Platner e Ashby): nel modello è un basamento di mattoni. L'edificio era stretto: dietro un frigidario allungato da nord a sud c'erano una sala tiepida e il caldarium, tutti e due rotondi, e ai lati del caldarium mancavano le solite sale. L'ingresso principale stava al centro del lato nord. Le misure e le altezze del modello sono indicative; la grande scalinata che scendeva a ovest verso il Campo Marzio non è disegnata.
 
 [scheda.termecostantino.data1-315] Costruite sotto Costantino, probabilmente prima del 315.
 
@@ -3616,7 +3616,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.termecostantino.data3.quando] VI secolo
 
-[scheda.termecostantino.data3] Non sappiamo quando chiusero queste terme. Nel modello smettono di funzionare nel 537, al momento del taglio degli acquedotti, come gli altri grandi stabilimenti.
+[scheda.termecostantino.data3] Non sappiamo quando chiusero queste terme. Nel modello smettono di funzionare nel 537, al momento del taglio degli acquedotti, come gli altri grandi stabilimenti, e da allora restano abbandonate ma in piedi. Furono abbandonate all'inizio del Medioevo, e nel Cinquecento ne restava ancora abbastanza per disegnarne la pianta.
 
 [scheda.termecostantino.certezza-B] Distrutte fra Seicento e Ottocento; la pianta è nota dai disegni di Palladio e di altri.
 
@@ -4170,7 +4170,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.termenerone.nome] Terme di Nerone e di Alessandro
 
-[scheda.termenerone.cosa] Le seconde terme pubbliche di Roma, fra il Pantheon e lo stadio di Domiziano: circa 190 metri per 120, con l'ingresso a nord.
+[scheda.termenerone.cosa] Le seconde terme pubbliche di Roma, fra il Pantheon e lo stadio di Domiziano: circa 190 metri per 120, con l'ingresso a nord. Al centro del lato nord c'è il frigidario, poi una sala tiepida e il caldarium, che sporge dal lato sud. A est e a ovest della grande sala ci sono due ampi cortili con colonne; ai lati del caldarium, quattro sale per parte (Platner e Ashby). Nel modello le misure delle sale e le altezze sono indicative.
 
 [scheda.termenerone.data1.quando] 62 o 64
 
@@ -4178,9 +4178,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.termenerone.data2-227] Severo Alessandro fa ricostruire le terme, che da allora prendono il nome di Terme Alessandrine.
 
-[scheda.termenerone.data3.quando] 998-1011
+[scheda.termenerone.data3-537] Nel modello smettono di funzionare con il taglio degli acquedotti, come le altre terme, e restano in rovina. Una data precisa non è nota.
 
-[scheda.termenerone.data3] Il nome è ancora vivo nei documenti. Oggi ne restano muri dentro palazzo Madama.
+[scheda.termenerone.data4.quando] 998-1011
+
+[scheda.termenerone.data4] Il nome è ancora vivo nei documenti. Oggi ne restano muri dentro palazzo Madama.
 
 [scheda.termenerone.certezza-B] Estensione nota dagli scavi e dai disegni del Cinquecento, posizione certa fra Pantheon e stadio; la pianta interna è ricostruita.
 
@@ -4189,7 +4191,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.termeagrippa.nome] Terme di Agrippa
 
-[scheda.termeagrippa.cosa] Agrippa fa costruire le prime terme pubbliche di Roma a sud del Pantheon, allineate con il tempio. Il complesso misura circa 110 per 90 metri. Un tratto della sala circolare, larga 25 metri, è ancora visibile ed è noto come «arco della Ciambella».
+[scheda.termeagrippa.cosa] Agrippa fa costruire le prime terme pubbliche di Roma a sud del Pantheon, allineate con il tempio. Il complesso misura circa 110 per 90 metri. Un tratto della sala circolare, larga 25 metri, è ancora visibile ed è noto come «arco della Ciambella». Non hanno la pianta simmetrica delle grandi terme imperiali. La disposizione delle altre sale è incerta: il caldarium stava probabilmente subito a ovest della sala rotonda, e così è nel modello, con forma e misure indicative.
 
 [scheda.termeagrippa.data1.quando] 25-19 a.C.
 
@@ -4199,7 +4201,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.termeagrippa.data2] La sala circolare risale a una ristrutturazione avvenuta al tempo di Severo Alessandro o più tardi.
 
-[scheda.termeagrippa.certezza-B] Estensione nota dagli scavi, la sala rotonda è in parte in piedi; l'alzato è ricostruito.
+[scheda.termeagrippa.data3.quando] 344-345
+
+[scheda.termeagrippa.data3] Costanzo e Costante restaurano terme «indebolite dalla vecchiaia»: l'iscrizione, trovata accanto, si riferisce probabilmente a queste.
+
+[scheda.termeagrippa.data4-537] Ancora nominate nel VI secolo da papa Gregorio Magno. Nel modello smettono di funzionare con il taglio degli acquedotti.
+
+[scheda.termeagrippa.data5.quando] VII secolo
+
+[scheda.termeagrippa.data5] La distruzione è già avanzata: il marmo finisce nelle fornaci da calce, e più tardi il luogo si chiama Calcararium (Platner e Ashby). Nel modello diventano una cava nel 650, un anno scelto dentro il secolo.
+
+[scheda.termeagrippa.certezza-B] Estensione nota dagli scavi, la sala rotonda è in parte in piedi; l'alzato è ricostruito. Il caldarium a ovest della rotonda segue un «probabilmente» della fonte.
 
 
 ### Tempio di Adriano
