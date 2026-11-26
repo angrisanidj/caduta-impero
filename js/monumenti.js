@@ -2046,8 +2046,8 @@ RM.frame.push(function(){
       var r=[px-o.lw/2-4,py-o.lh-2,px+o.lw/2+4,py+2];
       for(var k=0;k<messi.length;k++){ var q=messi[k]; if(r[0]<q[2]&&r[2]>q[0]&&r[1]<q[3]&&r[3]>q[1]){ vis=false; break; } }
       if(vis) messi.push(r); }
-    o.div.style.opacity=vis?1:0; o.div.style.visibility=vis?'visible':'hidden';
-    if(vis) o.div.style.transform='translate(-50%,-100%) translate('+px.toFixed(1)+'px,'+py.toFixed(1)+'px)';
+    if(o.visEt!==vis){ o.visEt=vis; o.div.style.opacity=vis?1:0; o.div.style.visibility=vis?'visible':'hidden'; }      // si scrive solo ciò che cambia (26 novembre 2026): a camera ferma nessuno stile da ricalcolare
+    if(vis){ var tr='translate(-50%,-100%) translate('+px.toFixed(1)+'px,'+py.toFixed(1)+'px)'; if(o.trEt!==tr){ o.trEt=tr; o.div.style.transform=tr; } }
   });
   RM.etichetteMesse=messi;      // i nomi delle strade (js/strade-nomi.js) li scansano: i monumenti hanno la precedenza
 });

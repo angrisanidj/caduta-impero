@@ -1056,3 +1056,51 @@ body.roma-grande .rg-nota{top:56px;right:12px}
 .linea.tacche-uguali .atto-gruppo.attivo>div{--lin:var(--porpora)}
 .linea.tacche-uguali .atto-gruppo>div>button{flex:0 0 var(--tacca,8px);box-sizing:border-box}
 .riquadro.roma:has(.legenda-sapere:not([hidden])) .rg-nota{display:none}      /* con «Che cosa sappiamo» acceso la nota cede il posto alla sua legenda; resta nella scheda di ogni regione */
+/* ---------- Attesa delle due scene all'apertura (26 novembre 2026; l'utente: «Animazione di caricamento delle due mappe all'inizio») ----------
+   Un velo color carta copre la carta dell'Impero e la città finché non sono disegnate davvero (index.html, RM_carica; la città lo toglie in js/base.js dopo il primo
+   disegno completo), poi sparisce in un terzo di secondo. Le scritte dicono che cosa il codice sta costruendo in quel momento (le aggiornano piccoli script fra un file
+   e l'altro di index.html): nessuna percentuale. Il segno che si muove è una barretta d'oro che scorre su un filo: solo transform e opacity, che il browser anima
+   anche mentre il filo principale costruisce la città (all'apertura due blocchi di oltre un secondo). Il contenuto del velo compare dopo un quarto di secondo:
+   se la scena è pronta prima, non lampeggia. Con prefers-reduced-motion la barretta sta ferma al centro. Le scritte stanno in alto (il riquadro della città, sul PC,
+   è più alto della finestra: al centro non si vedrebbero). */
+.carica{position:absolute;inset:0;z-index:40;display:grid;place-items:start center;padding-top:clamp(24px,15vh,150px);margin:0;background:var(--carta);transition:opacity .35s ease}
+.carica[hidden]{display:none}
+.carica.via{opacity:0;pointer-events:none}
+.riquadro.roma .carica{background:#EFE8DA}      /* un tono più caldo, come il fondo del riquadro della città */
+.carica-dentro{display:flex;flex-direction:column;align-items:center;gap:7px;padding:16px 20px;text-align:center;opacity:0;animation:carica-entra .4s .25s ease forwards}
+.carica-titolo{margin:0;font-family:var(--cap);font-size:15px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--porpora)}
+.carica-fase{margin:0;min-height:1.35em;font-family:var(--ui);font-size:13px;line-height:1.35;color:var(--muted)}
+.carica-filo{position:relative;display:block;width:132px;height:2px;margin-top:5px;border-radius:2px;background:var(--line);overflow:hidden}
+.carica-filo i{position:absolute;left:0;top:0;width:40px;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));will-change:transform;animation:carica-scorre 1.5s cubic-bezier(.45,0,.55,1) infinite alternate}
+@keyframes carica-entra{to{opacity:1}}
+@keyframes carica-scorre{from{transform:translateX(0)}to{transform:translateX(92px)}}
+@media (prefers-reduced-motion:reduce){
+  .carica-dentro{animation:none;opacity:1}
+  .carica-filo i{animation:none;transform:translateX(46px)}
+  .carica{transition:none}
+}
+@media (max-width:420px){ .carica-titolo{font-size:13.5px} .carica-fase{font-size:12.5px} }
+
+/* ---------- Barre di scorrimento in tinta (26 novembre 2026; l'utente: «Le barre laterali di scorrimento devono essere di un colore adeguato al resto») ----------
+   Solo dove c'è un mouse (sui telefoni le barre sono quelle sottili del sistema, che spariscono da sole). Sul fondo chiaro un cursore bruno dorato (#8C6B3A: contrasto
+   4,3 a 1 sul fondo carta, 4,6 sul bianco; passandoci sopra più scuro) su un binario carta per la pagina, trasparente nei riquadri; sui fondi scuri (didascalie della città,
+   regia della carta, apertura e piede color vino) il cursore è oro chiaro su un binario appena visibile. Firefox e Chromium leggono scrollbar-color e scrollbar-width;
+   Safari le regole ::-webkit-scrollbar (Chromium, se c'è scrollbar-color, le ignora). Le barre nascoste apposta (la fila dei passi della carta, le tappe della scheda
+   dell'atto) restano nascoste: per Safari, che con le regole qui sotto mostrerebbe una barra, si nascondono anche col suo selettore. */
+@media (hover:hover) and (pointer:fine){
+  html{scrollbar-color:#8C6B3A var(--carta)}
+  *{scrollbar-color:#8C6B3A transparent;scrollbar-width:thin}
+  html{scrollbar-width:auto}
+  .evento,.evento *,.m-didascalia,.m-didascalia *,.apertura,.apertura *,.piede,.piede *,.atto-scheda .as-testa,.atto-scheda .as-testa *{scrollbar-color:rgba(226,196,120,.8) rgba(255,255,255,.08)}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:#8C6B3A;border:2px solid transparent;border-radius:999px;background-clip:padding-box}
+  ::-webkit-scrollbar-thumb:hover{background-color:#6E4F1E}
+  ::-webkit-scrollbar-corner{background:transparent}
+  html::-webkit-scrollbar{width:12px}
+  html::-webkit-scrollbar-track{background:var(--carta)}
+  :is(.evento,.m-didascalia,.apertura,.piede,.atto-scheda .as-testa) ::-webkit-scrollbar-thumb{background-color:rgba(226,196,120,.8)}
+  :is(.evento,.m-didascalia,.apertura,.piede,.atto-scheda .as-testa) ::-webkit-scrollbar-track{background:rgba(255,255,255,.08)}
+  body.impero-grande .m-passi::-webkit-scrollbar{display:none}
+}
+@media (hover:hover) and (pointer:fine) and (max-width:700px){ body:not(.impero-grande) .m-passi::-webkit-scrollbar{display:none} }      /* le stesse condizioni di css/carta.css */

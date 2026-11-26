@@ -27,9 +27,32 @@ function distSeg(px,pz,a,b){
   var x=a[0]+t*dx-px, z=a[1]+t*dz-pz;
   return Math.sqrt(x*x+z*z);
 }
+/* Distanza da una spezzata. Dal 26 novembre 2026 i tratti stanno in pacchi di otto con il loro rettangolo: un pacco il cui rettangolo è più lontano della distanza già
+   trovata non può darne una minore e si salta (con un margine, perché l'arrotondamento non decida al posto della geometria). Si comincia dal pacco che ha vinto la volta
+   prima: il suolo, le case e i passanti chiedono punti vicini uno dopo l'altro. Il risultato è lo stesso numero di prima, bit per bit (il minimo non dipende dall'ordine);
+   all'apertura della pagina le chiamate (Tevere, mura, strade) costavano circa un quarto di secondo. */
+var PACCHI_LINEA=new WeakMap();
+function pacchiLinea(linea,chiusa){
+  var c=PACCHI_LINEA.get(linea), n=linea.length, fine=chiusa?n:n-1, i, k, a, b, p;
+  if(c && c.n===n && c.chiusa===chiusa) return c;
+  c={n:n, chiusa:chiusa, p:[], ultimo:0};
+  for(i=0;i<fine;i+=8){ p={da:i, a:Math.min(fine,i+8), x0:1e9, x1:-1e9, z0:1e9, z1:-1e9};
+    for(k=p.da;k<p.a;k++){ a=linea[k]; b=linea[(k+1)%n]; p.x0=Math.min(p.x0,a[0],b[0]); p.x1=Math.max(p.x1,a[0],b[0]); p.z0=Math.min(p.z0,a[1],b[1]); p.z1=Math.max(p.z1,a[1],b[1]); if(a[0]===b[0]&&a[1]===b[1]) c.nulla=true; }
+    c.p.push(p); }      // un tratto lungo zero dà NaN in distSeg, e il NaN di prima deve restare: quella spezzata si misura come prima (c.nulla)
+  PACCHI_LINEA.set(linea,c); return c;
+}
 RM.distLinea = function(px,pz,linea,chiusa){
-  var d=1e9, n=linea.length, fine=chiusa?n:n-1;
-  for(var i=0;i<fine;i++) d=Math.min(d,distSeg(px,pz,linea[i],linea[(i+1)%n]));
+  var n=linea.length, fine=chiusa?n:n-1;
+  if(fine<24){ var d0=1e9; for(var i0=0;i0<fine;i0++) d0=Math.min(d0,distSeg(px,pz,linea[i0],linea[(i0+1)%n])); return d0; }      // spezzate corte: come prima
+  var c=pacchiLinea(linea,!!chiusa), P=c.p, np=P.length, d=1e9, j, i, p, ex, ez, lb, vinto=c.ultimo, prima;
+  if(c.nulla){ for(i=0;i<fine;i++) d=Math.min(d,distSeg(px,pz,linea[i],linea[(i+1)%n])); return d; }
+  for(j=-1;j<np;j++){
+    p=j<0?P[c.ultimo]:P[j]; if(j===c.ultimo) continue;
+    if(d<1e9){ ex=Math.max(p.x0-px,0,px-p.x1); ez=Math.max(p.z0-pz,0,pz-p.z1); lb=Math.sqrt(ex*ex+ez*ez); if(lb*(1-1e-9)-1e-9>=d) continue; }
+    prima=d; for(i=p.da;i<p.a;i++) d=Math.min(d,distSeg(px,pz,linea[i],linea[(i+1)%n]));
+    if(d<prima) vinto=j<0?c.ultimo:j;
+  }
+  c.ultimo=vinto;
   return d;
 };
 RM.distFiume = function(x,z){ return RM.distLinea(x,z,RM.FIUME,false); };
@@ -86,9 +109,27 @@ RM.hGrezza = function(x,z){
    il pendio di terra di 70 m le faceva sembrare posate su un cumulo. */
 RM.dZona = function(q,x,z){ var dx=x-q.x, dz=z-q.z; if(!q.a) return Math.hypot(dx,dz);
   return Math.hypot(Math.max(Math.abs(dx*q.c-dz*q.s)-q.a,0),Math.max(Math.abs(dx*q.s+dz*q.c)-q.b,0)); };
+/* Indice delle zone (26 novembre 2026): RM.h si chiama centinaia di migliaia di volte all'apertura e ogni volta scorreva tutte le zone. Ora una griglia di quadrati di 20 unità
+   dice quali zone possono toccare un punto (quelle il cui quadrato di prova, lo stesso di prima allargato di un quadrato per parte, lo copre); le altre il controllo di prima
+   le avrebbe scartate comunque. Stesse zone, nello stesso ordine: stessa quota, bit per bit. Le zone si aggiungono solo all'avvio (js/monumenti.js, js/nuclei.js) e non
+   cambiano dopo: l'indice si rifà quando ne cambia il numero. Fuori dalla griglia si scorrono tutte, come prima. */
+var IZ={n:-1, S:20, X0:-1200, Z0:-1200, NX:120, NZ:120, celle:null};
+function indiceZone(){
+  var Z=RM.zone, c=new Array(IZ.NX*IZ.NZ), i, q, L, cx0, cx1, cz0, cz1, a, b;
+  for(i=0;i<Z.length;i++){ q=Z[i]; if(q.h==null) continue; L=(q.r+(q.R||0)+(q.t||7))*1.5;
+    cx0=Math.max(0,Math.floor((q.x-L-IZ.X0)/IZ.S)-1); cx1=Math.min(IZ.NX-1,Math.floor((q.x+L-IZ.X0)/IZ.S)+1);
+    cz0=Math.max(0,Math.floor((q.z-L-IZ.Z0)/IZ.S)-1); cz1=Math.min(IZ.NZ-1,Math.floor((q.z+L-IZ.Z0)/IZ.S)+1);
+    for(b=cz0;b<=cz1;b++) for(a=cx0;a<=cx1;a++){ var k=b*IZ.NX+a; (c[k]||(c[k]=[])).push(i); } }
+  IZ.celle=c; IZ.n=Z.length;
+}
+var NESSUNA=[];
 RM.h = function(x,z){
-  var y=RM.hGrezza(x,z), i, q, d, w, p, t, meglio=0, sp=0, sh=0;
-  for(i=0;i<RM.zone.length;i++){ q=RM.zone[i]; if(q.h==null) continue; t=q.t||7; d=Math.abs(x-q.x)+Math.abs(z-q.z); if(d>(q.r+(q.R||0)+t)*1.5) continue;
+  var y=RM.hGrezza(x,z), i, q, d, w, p, t, meglio=0, sp=0, sh=0, Z=RM.zone, lista=null, j, nl;
+  if(IZ.n!==Z.length) indiceZone();
+  var cx=Math.floor((x-IZ.X0)/IZ.S), cz=Math.floor((z-IZ.Z0)/IZ.S);
+  if(cx>=0 && cz>=0 && cx<IZ.NX && cz<IZ.NZ) lista=IZ.celle[cz*IZ.NX+cx]||NESSUNA;
+  nl=lista?lista.length:Z.length;
+  for(j=0;j<nl;j++){ i=lista?lista[j]:j; q=Z[i]; if(q.h==null) continue; t=q.t||7; d=Math.abs(x-q.x)+Math.abs(z-q.z); if(d>(q.r+(q.R||0)+t)*1.5) continue;
     d=RM.dZona(q,x,z); if(d<q.r+t){ w=1-RM.sfuma(q.r,q.r+t,d); if(w<=0) continue; if(w>meglio) meglio=w; p=w*w; p*=p; p*=p; sp+=p; sh+=p*q.h; } }
   return meglio?y*(1-meglio)+sh/sp*meglio:y;
 };
@@ -119,7 +160,7 @@ var contenitore=document.getElementById('scena'), renderer;
    e costerebbe solo memoria e tempo (quattro campioni per pixel). Resta acceso dove la passata finale non c'è (WebGL1). 23 novembre 2026 */
 var GL2=!!window.WebGL2RenderingContext;
 try{ renderer=new THREE.WebGLRenderer({antialias:!GL2}); }
-catch(e){ document.getElementById('errore').hidden=false; RM.guasto=true; return; }
+catch(e){ document.getElementById('errore').hidden=false; RM.guasto=true; if(window.RM_carica) RM_carica.cittaPronta(); return; }
 var piccolo=Math.min(window.innerWidth,window.innerHeight)<700; RM.piccolo=piccolo;
 /* La «veste» (24 novembre 2026, fase 2; l'utente: «dobbiamo fare in modo davvero che migliori l'aspetto di Roma almeno da pc»): suolo, erba, luce, occlusione, acqua, tetti e muri.
    Dal 24 novembre 2026, sera, anche sui telefoni (l'utente: «Secondo te non si può migliorare la qualità della città anche su telefonino?»): il codice nuovo degli shader si compila
@@ -428,6 +469,7 @@ function posaSuolo(){
   };
   var suolo=new THREE.Mesh(geo,matSuolo);
   suolo.receiveShadow=true; suolo.userData.gruppo='suolo'; scene.add(suolo); RM.suolo=suolo;
+  suolo.renderOrder=.5; cielo.renderOrder=.6;      // il suolo, poi il cielo, dopo tutto il resto dell'opaco (26 novembre 2026): la profondità già scritta da case e monumenti scarta i loro pixel coperti prima di colorarli (lo shader del suolo è il più caro: 0,3-0,7 millesimi in meno a fotogramma sulla Radeon di prova). Prima e dopo i valori interi (le macchie d'appoggio a 1, l'acqua a 2-3) l'ordine resta quello di prima; l'immagine è la stessa
   /* la quota del terreno come è disegnato (triangolo per triangolo): fra un vertice e l'altro della maglia RM.h, più fine, può uscirne di qualche metro sui bordi delle terrazze.
      Le strade la seguono, così non galleggiano e non affondano (23 novembre 2026) */
   var N=S+1, inv=function(v){ var s=v<0?-1:1, a=Math.min(1,Math.abs(v)/3400), t=a; for(var k=0;k<12;k++){ var t2=t*t, t6=t2*t2*t2; t-=(.2*t+.05*t2*t+.75*t6*t-a)/(.2+.15*t2+5.25*t6); if(t>1) t=1; } return s*t; };      // (25 novembre 2026) il ciclo non aveva le graffe e faceva un passo solo: oltre 1,5 km dal Foro la cella cercata era sbagliata (fino a 130 celle) e strade, rampe dei ponti e figure prendevano la quota di un altro punto (Flaminia a ponte Milvio 105 m sotto terra); col tetto a 1 dodici passi bastano ovunque (scarto sotto un milionesimo di cella)
@@ -1009,6 +1051,7 @@ var tsPrima=0;
     occhioPrima.copy(camera.position); puntoPrima.copy(controlli.target);
     passoAlta(iv>0&&iv<.4?iv:grezzo,(performance.now()-ora)/1000,ora,!volo && ora-ultimoAnno>1500 && mv<.15);
   }
+  if(!RM.disegnata && document.readyState!=='loading' && contenitore.clientWidth>40 && contenitore.clientHeight>40){ RM.disegnata=true; if(window.RM_carica) RM_carica.cittaPronta(); }      // il primo disegno della città intera (tutti i file eseguiti): si toglie il velo dell'attesa (index.html). Sul telefono con la scheda della carta aperta la città non si disegna: il velo resta finché non la si apre
   RM.lavoro=performance.now()-ora;      // millesimi di lavoro del processore in questo fotogramma (per la prova della qualità)
 })();
 /* ?prova=qualita: la prova dei gradini sul telefono (js/prova-qualita.js), caricata solo a richiesta, con la versione di questo file */
