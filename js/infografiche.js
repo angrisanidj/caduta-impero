@@ -1189,10 +1189,10 @@ var MILVIO={ titolo:"Ponte Milvio", sotto:"312: la marcia, la battaglia, il segn
     ["Lattanzio","Lattanzio scrive verso il 315: un sogno, la notte prima della battaglia. Costantino fa segnare sugli scudi dei soldati il segno di Cristo."],
     ["Eusebio","Eusebio scrive dopo il 337: durante la marcia, verso mezzogiorno, una croce luminosa sopra il sole, con la scritta «Con questo vinci». Poi, in sogno, Costantino apprende come usare quel segno."],
     ["Lattanzio","Anche il ponte cambia da una fonte all'altra. Per Lattanzio il ponte alle spalle di Massenzio viene tagliato: nella fuga lo trova «interrotto»."],
-    ["Eusebio","Per Eusebio, nella Storia ecclesiastica, è un ponte di barche."],
-    ["Zosimo","Per Zosimo è un ponte di travi in due metà, unite al centro da ferri da togliere. Sotto i fuggiaschi cede."],
+    ["Eusebio","Per Eusebio, nella Storia ecclesiastica, è un ponte di barche. Si spezza e affonda: va a fondo prima Massenzio, poi le sue guardie."],
+    ["Zosimo","Per Zosimo è un ponte di travi in due metà, unite al centro da ferri da togliere quando l'esercito di Costantino fosse arrivato al centro. Ci passano invece i fuggiaschi, e le travi cedono sotto il peso: la corrente porta via Massenzio con gli altri."],
     ["L'arco","Sull'arco che il Senato dedica a Costantino, la vittoria è attribuita all'«ispirazione della divinità», senza nominarla."]],
-  fonte:"Panegirico del 313 e panegirico di Nazario del 321 (Panegirici latini XII e IV) per le città della marcia; Aurelio Vittore 40, 23 per Saxa Rubra; Lattanzio, La morte dei persecutori 44 (verso il 315); Eusebio, Vita di Costantino I 28 (dopo il 337) e Storia ecclesiastica IX 9; Zosimo II 15-16; l'iscrizione dell'arco di Costantino (CIL VI 1139); il Cronografo del 354 per la data. La partenza da Treviri è un'ipotesi; le linee uniscono le città nominate, ma la strada esatta non è scritta, e da Modena a Roma il tracciato è uno schema. Lo schieramento, la rotta, il segno sugli scudi, i tre ponti e l'arco sono disegni schematici: le fonti non dicono numeri, posizioni né forme." };
+  fonte:"Panegirico del 313 e panegirico di Nazario del 321 (Panegirici latini XII e IV) per le città della marcia; Aurelio Vittore 40, 23 per Saxa Rubra; Lattanzio, La morte dei persecutori 44 (verso il 315); Eusebio, Vita di Costantino I 28 (dopo il 337) e Storia ecclesiastica IX 9, 5-7; Zosimo II 15-16; l'iscrizione dell'arco di Costantino (CIL VI 1139); il Cronografo del 354 per la data. La partenza da Treviri è un'ipotesi; le linee uniscono le città nominate, ma la strada esatta non è scritta, e da Modena a Roma il tracciato è uno schema. Lo schieramento, la rotta, il segno sugli scudi, i tre ponti e l'arco sono disegni schematici: le fonti non dicono numeri, posizioni né forme. Sui tre ponti le figure sono uno schema, Massenzio in porpora: ogni ponte fa solo ciò che dice la sua fonte, e chi cade nel fiume ci resta." };
 function disegnaMilvio(svg,S,W,H){
   var G=window.RM_MAPPA, TP=window.RM_TOPO; if(!G||!G.citta||!TP||!TP.fiume) return;
   var oriz=W/H>=1.15, pad=oriz?20:12, defs=el('defs',null,svg);
@@ -1230,7 +1230,7 @@ function disegnaMilvio(svg,S,W,H){
     o.L=lungo(p); if(schema){ var n=Math.max(2,Math.floor(o.L/6.5)); for(var j=0;j<=n;j++){ var q=puntoA(p,o.L*j/n); o.pt.push(el('circle',{cx:r1(q[0]),cy:r1(q[1]),r:1.9,'class':'ig-m-punto'},gl)); } } else scopri(p);
     return o; });
   var anello=el('g',{'class':'ig-f',transform:'translate('+xy(M(CI('verona')))+')'},sopraA); el('circle',{r:10.5,'class':'ig-v-anello'},anello);
-  var NOMI=[['treviri','Treviri',8,4,'start'],['susa','Susa',-8,4,'end'],['torino','Torino',5,15,'start'],['milano','Milano',-2,-9,'middle'],['brescia','Brescia',2,17,'middle'],['verona','Verona',10,-9,'middle'],
+  var NOMI=[['treviri','Treviri',8,4,'start'],['susa','Susa',-8,4,'end'],['torino','Torino',5,15,'start'],['milano','Milano',-2,-9,'middle'],['brescia','Brescia',4,14,'end'],['verona','Verona',10,-9,'middle'],
     ['aquileia','Aquileia',4,-9,'middle'],['modena','Modena',-7,14,'end'],['rimini','Rimini',8,4,'start'],['narni','Narni',8,4,'start'],['roma','Roma',10,5,'start']];
   var citta={}; NOMI.forEach(function(n){ var q=M(CI(n[0])), sch=n[0]==='rimini'||n[0]==='narni', g=el('g',{'class':'ig-v-luogo'+(sch?' tenue':''),transform:'translate('+xy(q)+')'},sopraA);
     el('circle',{r:n[0]==='roma'?5.2:sch?2.6:3.8,'class':'ig-v-punto'+(n[0]==='roma'?' roma':'')},g); tx(g,n[2],n[3],'ig-v-nome'+(n[0]==='roma'?' roma':''),n[1],n[4]); citta[n[0]]=g; });
@@ -1295,8 +1295,12 @@ function disegnaMilvio(svg,S,W,H){
   var tvP=Pp([-211,-405]); tx(dentroB,tvP[0]-12,tvP[1]+4,'ig-m-et-fiume','Tevere','end');
   /* verso Roma: la Flaminia esce dal fondo della pianta */
   var rq=null; for(i=1;i<flam.length;i++) if(flam[i-1][1]>=PV[1]+PV[3]-8&&flam[i][1]<PV[1]+PV[3]-8){ var fr=(PV[1]+PV[3]-8-flam[i-1][1])/(flam[i][1]-flam[i-1][1]); rq=[lerp(flam[i-1][0],flam[i][0],fr),PV[1]+PV[3]-8]; }
-  if(rq){ var rP=Pp(rq); el('path',{d:'M0 0 L-6 -9 L6 -9 Z','class':'ig-m-sx-punta',transform:'translate('+xy([rP[0],rP[1]+6])+')'},dentroB); tx(dentroB,rP[0]-8,rP[1]-12,'ig-m-et','verso Roma','end'); }
-  var fl0=Pp([-113,-555]), fl1=Pp([-110,-575]); var tFl=tx(dentroB,0,0,'ig-m-et','via Flaminia','middle'); tFl.setAttribute('transform','translate('+xy([(fl0[0]+fl1[0])/2-9,(fl0[1]+fl1[1])/2])+') rotate('+r1(Math.atan2(fl1[1]-fl0[1],fl1[0]-fl0[0])*180/Math.PI)+')');
+  if(rq){ var rP=Pp(rq); el('path',{d:'M0 0 L-6 -9 L6 -9 Z','class':'ig-m-sx-punta',transform:'translate('+xy([rP[0],rP[1]+6])+')'},dentroB); tx(dentroB,rP[0]+10,rP[1]-2,'ig-m-et','verso Roma','start'); }      // a destra della freccia: a sinistra, sul telefono, toccava la scala (26 novembre 2026)
+  /* il nome della via Flaminia lungo il suo tratto fra il ponte e Roma: a nord del ponte stava sulle file di Costantino (26 novembre 2026) */
+  var zF=B0[1]+(PV[1]+PV[3]-B0[1])*.5, fl0=null, fl1=null; for(i=1;i<flam.length&&!fl0;i++) if((flam[i-1][1]-zF)*(flam[i][1]-zF)<=0){ fl0=flam[i-1]; fl1=flam[i]; }
+  if(!fl0){ fl0=[-113,-555]; fl1=[-110,-575]; } if(fl1[1]>fl0[1]){ var sc_=fl0; fl0=fl1; fl1=sc_; }      // la scritta si legge dal basso in alto
+  var fq0=Pp(fl0), fq1=Pp(fl1), fm=Pp([lerp(fl0[0],fl1[0],(zF-fl0[1])/((fl1[1]-fl0[1])||1)),zF]), tFl=tx(dentroB,0,0,'ig-m-et','via Flaminia','middle');
+  tFl.setAttribute('transform','translate('+xy(fm)+') rotate('+r1(Math.atan2(fq1[1]-fq0[1],fq1[0]-fq0[0])*180/Math.PI)+') translate(0,-7)');
   /* Saxa Rubra: fuori dalla pianta, verso nord lungo la Flaminia */
   var sxA=Pp([-104,-596]), sxB=[sxA[0]+4,pb[1]+10], gSx=el('g',{'class':'ig-f'},pianta);
   el('path',{d:'M'+xy(sxA)+' L'+xy(sxB),'class':'ig-m-sx-linea'},gSx); el('path',{d:'M0 0 L-6 9 L6 9 Z','class':'ig-m-sx-punta',transform:'translate('+xy(sxB)+')'},gSx);
@@ -1311,12 +1315,13 @@ function disegnaMilvio(svg,S,W,H){
   for(i=-4;i<=4;i++) for(j=0;j<2;j++){ var q=piu(B0,i*14+(j?7:0),26+j*12); if(dF(q)<12) continue; var g=el('g',{'class':'ig-m-blocco mass'},gE); el('rect',{x:r1(-bw/2),y:r1(-bh/2),width:r1(bw),height:r1(bh),rx:1.2},g); mass.push({g:g,p:q}); }
   for(i=-5;i<=5;i++) for(j=0;j<2;j++){ var c=i===-5||i===5, q2=piu(B0,i*13+(j?6:0),84+j*12), g2=el('g',{'class':'ig-m-blocco cost'+(c?' cav':'')},gE);
     if(c) el('path',{d:'M'+r1(-bw/2)+' '+r1(-bh)+' L'+r1(bw/2)+' '+r1(-bh)+' L0 '+r1(bh*1.2)+' Z'},g2); else el('rect',{x:r1(-bw/2),y:r1(-bh/2),width:r1(bw),height:r1(bh),rx:1.2},g2); cost.push({g:g2,p:q2,i:i}); }
-  /* la rotta: punti che scorrono verso il ponte; una parte passa, una parte finisce in acqua */
+  /* la rotta: punti che scorrono verso il ponte; una parte finisce in acqua, gli altri restano ammassati sulla riva davanti al ponte. Nessuno passa dall'altra parte: nessuna
+     delle fonti lo racconta, e per Lattanzio il ponte era interrotto (26 novembre 2026; prima una parte passava il ponte verso sud) */
   var arco=[0]; for(i=1;i<TP.fiume.length;i++) arco.push(arco[i-1]+Math.hypot(TP.fiume[i][0]-TP.fiume[i-1][0],TP.fiume[i][1]-TP.fiume[i-1][1]));
   var s0=0, mB=1e9; for(i=1;i<TP.fiume.length;i++){ var a=TP.fiume[i-1], b=TP.fiume[i], dx=b[0]-a[0], dy=b[1]-a[1], l2=dx*dx+dy*dy, kk=clamp(((B0[0]-a[0])*dx+(B0[1]-a[1])*dy)/l2,0,1), d0=Math.hypot(a[0]+dx*kk-B0[0],a[1]+dy*kk-B0[1]); if(d0<mB){ mB=d0; s0=arco[i-1]+kk*Math.sqrt(l2); } }
   function sulFiume(s){ for(var i=1;i<arco.length;i++) if(arco[i]>=s){ var f=(s-arco[i-1])/(arco[i]-arco[i-1]); return [lerp(TP.fiume[i-1][0],TP.fiume[i][0],f),lerp(TP.fiume[i-1][1],TP.fiume[i][1],f)]; } return TP.fiume[TP.fiume.length-1]; }
   var Rr=caso(312), gP=el('g',{'class':'ig-m-folla'},gB), fuga=[], testaP=piu(B0,0,9);
-  for(i=0;i<190;i++){ var m0=mass[Math.floor(Rr()*mass.length)], st=piu(m0.p,(Rr()-.5)*12,(Rr()-.5)*7), acqua=Rr()<.46, fine=acqua?sulFiume(s0+(Rr()-.5)*50):piu(B0,(Rr()-.5)*56,-18-Rr()*46);
+  for(i=0;i<190;i++){ var m0=mass[Math.floor(Rr()*mass.length)], st=piu(m0.p,(Rr()-.5)*12,(Rr()-.5)*7), acqua=Rr()<.46, fine=acqua?sulFiume(s0+(Rr()-.5)*50):piu(B0,-4-Rr()*28,13+Rr()*24);      // la folla a monte della testa del ponte: a valle c'è il nome di Massenzio
     var vc=piu(testaP,(Rr()-.5)*8,6), t0=T.b2+300+Rr()*2600; fuga.push({c:el('circle',{r:r1(Math.max(1.3,1.9*kp)),'class':'ig-m-fuggiasco'},gP),a:Pp(st),v:Pp(vc),b:Pp(fine),t0:t0,t1:t0+1500+Rr()*1100,acqua:acqua,st:null}); }
   var mx=Pp(piu(B0,0,44)), mxV=Pp(testaP), mxF=Pp(sulFiume(s0+9));
   var gMx=el('g',{'class':'ig-m-massenzio'},gB); el('circle',{r:6.5},gMx); var tMx=tx(gMx,10,4,'ig-m-et-mx','Massenzio','start');
@@ -1326,7 +1331,7 @@ function disegnaMilvio(svg,S,W,H){
   var tM=tx(gB,0,0,'ig-m-et-es mass','Massenzio','end'), tC=tx(gB,0,0,'ig-m-et-es cost','Costantino','end');
   var aOvest=Pp(piu(B0,80,90))[0]-largo(tC)>pb[0]+6, mOvest=Pp(piu(B0,74,32))[0]-largo(tM)>pb[0]+6;
   if(!aOvest) tC.setAttribute('text-anchor','start'); if(!mOvest) tM.setAttribute('text-anchor','start');
-  var gMi=el('g',{'class':'ig-f'},gB), lMi=Pp(piu(B0,-34,13)); var tAl=tx(gMi,lMi[0],lMi[1],'ig-m-alle','il Tevere alle spalle','middle');
+  var gMi=el('g',{'class':'ig-f'},gB), lMi=Pp(piu(B0,-30,9));      // fra le file di Massenzio e il fiume (26 novembre 2026: a 13 toccava le file) var tAl=tx(gMi,lMi[0],lMi[1],'ig-m-alle','il Tevere alle spalle','middle');
   /* il pannello accanto: la data, la legenda, le parole delle fonti */
   var xL=oriz?pb[0]+pb[2]+30:pad, yL=oriz?pad+6:pb[1]+pb[3]+12, wL=oriz?W-xL-pad:W-2*pad, hL=oriz?H-2*pad:H-yL-4, gL=el('g',{'class':'ig-m-lato'},gB);
   if(sovr){ wL=136; hL=58; xL=pb[0]+pb[2]-wL-10; yL=pb[1]+46; el('rect',{x:r1(xL-8),y:r1(yL-6),width:wL+14,height:hL+6,rx:8,'class':'ig-m-sovr'},gL); }
@@ -1386,8 +1391,9 @@ function disegnaMilvio(svg,S,W,H){
   /* Ogni carta è alta quanto il suo testo, misurato dopo avvolgi (23 novembre 2026: sul telefono la citazione di Lattanzio usciva dalla carta); fra opera e numero del passo
      uno spazio unificatore, perché il numero non vada a capo da solo */
   var gC=el('g',{'class':'ig-atto'},svg), riga=W/3>=210, gap=12, pW=riga?(W-2*pad-2*gap)/3:W-2*pad, disp=H-2*pad-(riga?0:2*gap), basso=!riga&&disp/3<175, frTw=.42, pHs=[];
-  var TESTI=[['LATTANZIO','La morte dei persecutori\u00a044,\u00a09','Il ponte alle spalle di Massenzio viene tagliato: nella fuga è «interrotto».'],['EUSEBIO','Storia ecclesiastica\u00a0IX\u00a09','Un ponte di barche.'],
-    ['ZOSIMO','libro\u00a0II,\u00a015-16','Travi in due metà, unite al centro da ferri da togliere: sotto i fuggiaschi cede.']];
+  var TESTI=[['LATTANZIO','La morte dei persecutori\u00a044,\u00a09','Il ponte alle spalle di Massenzio viene tagliato. Nella fuga è «interrotto»: spinto dalla folla, Massenzio cade nel Tevere.'],
+    ['EUSEBIO','Storia ecclesiastica\u00a0IX\u00a09','Un ponte di barche. Si spezza e affonda: prima Massenzio, poi le sue guardie.'],
+    ['ZOSIMO','libro\u00a0II,\u00a015-16','Travi in due metà, unite al centro da ferri da togliere. Sotto il peso dei fuggiaschi le travi cedono: Massenzio e gli altri finiscono nel fiume.']];
   function righeDi(s,cl,w,lh){ var t=el('text',{x:0,y:0,'class':cl},gC); t.textContent=s; var n=1; if(largo(t)>w){ t.textContent=''; n=avvolgi(t,s,w,lh); } t.remove(); return n; }
   function serve(d,tw){ var nr=righeDi(d[1],'ig-m-c-sot dark',tw-4,13); return (nr>1?72:58)+(righeDi(d[2],'ig-m-pann-dida',tw-4,16)-1)*16+14; }
   if(riga) pHs=[disp,disp,disp];
@@ -1419,19 +1425,33 @@ function disegnaMilvio(svg,S,W,H){
   }
   var P1=pannello(0,TESTI[0][0],TESTI[0][1],TESTI[0][2]), P2=pannello(1,TESTI[1][0],TESTI[1][1],TESTI[1][2]), P3=pannello(2,TESTI[2][0],TESTI[2][1],TESTI[2][2]);
   var f1=fiumeLato(P1), f2=fiumeLato(P2), f3=fiumeLato(P3), th=Math.max(4,f1.h*0.045), hu=Math.max(8,f1.h*0.12);
-  /* 1. Lattanzio: un piano su pile; il tratto di mezzo si stacca e cade */
+  /* I tre ponti mostrano solo ciò che ogni passo racconta, e ogni figura fa una strada sola: chi cade nel fiume resta nel fiume, nessuno passa un ponte rotto (26 novembre 2026,
+     l'utente: «omini cadono in acqua e poi tornano ad andare dall'altra sul ponte rotto? Impossibile»; prima le figure giravano in tondo e, nella versione di Zosimo, dopo la caduta
+     riprendevano a camminare sulle travi). Passi riletti lo stesso giorno:
+     - Lattanzio 44, 9 (latino, The Latin Library): «Pons a tergo eius scinditur» quando Massenzio scende in campo, prima della rotta; poi «in fugam versus properat ad pontem, qui
+       interruptus erat, ac multitudine fugientium pressus in Tiberim deturbatur». Qui: il tratto di mezzo cade per primo; i fuggiaschi si fermano ammassati al bordo del vuoto;
+       Massenzio, davanti, spinto dalla folla, cade nel Tevere. Nessun altro cade: Lattanzio non lo dice.
+     - Eusebio, Storia ecclesiastica IX 9, 5-7 (traduzione inglese di A. C. McGiffert, 1890, New Advent): il ponte di barche fatto da Massenzio; «the bridge over the river being broken,
+       the passageway settled down, immediately the boats with the men disappeared in the depths», lui per primo, poi gli scudieri. Qui: Massenzio e le sue guardie sul ponte, il piano
+       si spezza e si abbassa, le barche affondano, Massenzio per primo e poi le guardie spariscono nell'acqua.
+     - Zosimo II 15-16 (traduzione inglese di Londra, 1814, tertullian.org): le travi in due metà, con i ferri da togliere quando l'esercito di Costantino fosse sulla giuntura (era il
+       piano: che qualcuno li abbia tolti non è detto); gli uomini di Massenzio fuggono «over the bridge into the city», «The beams not being strong enough to bear so great a weight,
+       they broke», e Massenzio «with the others, was carried with the stream». Qui: i ferri restano al loro posto, le travi cedono sotto la folla, tutti quelli che ci sono sopra
+       cadono nel fiume e ci restano. */
+  /* 1. Lattanzio: un piano su pile; il tratto di mezzo è tagliato prima della fuga */
   var L1={}, m1=(f1.xa+f1.xb)/2, g1=(f1.xb-f1.xa)*0.11;
   [f1.xa+(f1.xb-f1.xa)*0.28,f1.xa+(f1.xb-f1.xa)*0.72].forEach(function(px){ el('rect',{x:r1(px-th*.6),y:r1(f1.yd),width:r1(th*1.2),height:r1(f1.y+f1.h-f1.yd),'class':'ig-m-pila'},P1.d); });
   el('rect',{x:r1(f1.xa-4),y:r1(f1.yd-th),width:r1(m1-g1-f1.xa+4),height:r1(th),'class':'ig-m-piano'},P1.d); el('rect',{x:r1(m1+g1),y:r1(f1.yd-th),width:r1(f1.xb+4-m1-g1),height:r1(th),'class':'ig-m-piano'},P1.d);
   L1.pezzo=el('rect',{x:r1(m1-g1),y:r1(f1.yd-th),width:r1(2*g1),height:r1(th),'class':'ig-m-piano rotto'},P1.d);
   L1.spruzzo=el('ellipse',{cx:r1(m1),cy:r1(f1.yw+2),rx:r1(g1*1.6),ry:4,'class':'ig-m-spruzzo'},P1.d);
-  /* 2. Eusebio: barche affiancate sotto un piano di passaggio */
-  var L2={barche:[]}, nb=riga?6:8, sp2=(f2.xb-f2.xa)/(nb+0.2), yb2=f2.yw+2, bl=sp2*0.92, bh2=Math.max(6,f2.h*0.09);
+  /* 2. Eusebio: barche affiancate sotto un piano di passaggio, in due metà che si spezzano al centro */
+  var L2={barche:[]}, nb=riga?6:8, sp2=(f2.xb-f2.xa)/(nb+0.2), yb2=f2.yw+2, bl=sp2*0.92, bh2=Math.max(6,f2.h*0.09), m2=(f2.xa+f2.xb)/2;
   for(i=0;i<nb;i++){ var bx2=f2.xa+sp2*(i+0.6), gb=el('g',{'class':'ig-m-barca'},P2.d);
     el('path',{d:'M'+r1(-bl/2)+' '+r1(-bh2*.55)+' Q'+r1(-bl*.42)+' '+r1(bh2*.6)+' 0 '+r1(bh2*.6)+' Q'+r1(bl*.42)+' '+r1(bh2*.6)+' '+r1(bl/2)+' '+r1(-bh2*.55)+' Z','class':'ig-m-scafo'},gb);
-    el('line',{x1:0,y1:r1(-bh2*.55),x2:0,y2:r1(-(yb2-f2.yd)+th*.2),'class':'ig-m-palo'},gb); L2.barche.push({g:gb,x:bx2,f:i*1.3}); }
-  L2.piano=el('rect',{x:r1(f2.xa-4),y:r1(f2.yd-th),width:r1(f2.xb-f2.xa+8),height:r1(th),'class':'ig-m-piano'},P2.d);
-  /* 3. Zosimo: due metà su cavalletti, unite da ferri al centro; i ferri si tolgono e le metà cedono */
+    el('line',{x1:0,y1:r1(-bh2*.55),x2:0,y2:r1(-(yb2-f2.yd)+th*.2),'class':'ig-m-palo'},gb); L2.barche.push({g:gb,x:bx2,f:i*1.3,d:Math.abs(bx2-m2)}); }
+  L2.sx=el('rect',{x:r1(f2.xa-4),y:r1(f2.yd-th),width:r1(m2-f2.xa+4),height:r1(th),'class':'ig-m-piano'},P2.d); L2.dx=el('rect',{x:r1(m2),y:r1(f2.yd-th),width:r1(f2.xb+4-m2),height:r1(th),'class':'ig-m-piano'},P2.d);
+  L2.spruzzo=el('ellipse',{cx:r1(m2),cy:r1(f2.yw+2),rx:r1((f2.xb-f2.xa)*0.2),ry:4,'class':'ig-m-spruzzo'},P2.d);
+  /* 3. Zosimo: due metà su cavalletti, unite da ferri al centro; le travi cedono sotto il peso */
   var L3={}, m3=(f3.xa+f3.xb)/2;
   [f3.xa+(f3.xb-f3.xa)*0.16,f3.xb-(f3.xb-f3.xa)*0.16].forEach(function(px){ el('path',{d:'M'+r1(px-th*1.6)+' '+r1(f3.y+f3.h)+' L'+r1(px)+' '+r1(f3.yd)+' L'+r1(px+th*1.6)+' '+r1(f3.y+f3.h),'class':'ig-m-cavalletto'},P3.d); });
   L3.sx=el('g',null,P3.d); el('rect',{x:r1(f3.xa-4),y:r1(f3.yd-th),width:r1(m3-f3.xa+4),height:r1(th),'class':'ig-m-piano'},L3.sx);
@@ -1439,9 +1459,13 @@ function disegnaMilvio(svg,S,W,H){
   L3.ferri=el('g',{'class':'ig-m-ferri'},P3.d); L3.alone=el('circle',{cx:r1(m3),cy:r1(f3.yd-th/2),r:r1(th*3.2),'class':'ig-m-ferri-luce'},L3.ferri);
   L3.chiodi=[-1,1].map(function(s){ var g=el('g',null,L3.ferri); el('rect',{x:r1(m3+s*th*0.9-th*.35),y:r1(f3.yd-th*1.8),width:r1(th*.7),height:r1(th*2.6),rx:1,'class':'ig-m-ferro'},g); return g; });
   L3.spruzzo=el('ellipse',{cx:r1(m3),cy:r1(f3.yw+2),rx:r1((f3.xb-f3.xa)*0.16),ry:4,'class':'ig-m-spruzzo'},P3.d);
-  /* gli uomini in fuga sui tre ponti */
-  function fuggiaschi(P,f,n){ var a=[]; for(var q=0;q<n;q++) a.push({o:omino(P.d,hu,'mass'),d:q/n}); return a; }
-  var U1=fuggiaschi(P1,f1,5), U2=fuggiaschi(P2,f2,5), U3=fuggiaschi(P3,f3,6);
+  /* gli uomini sui tre ponti: ognuno una strada sola, da sinistra (la riva della battaglia) verso destra (la città); la prima figura di ogni gruppo, in porpora, è Massenzio */
+  function fuggiaschi(P,n,mx){ var a=[]; for(var q=0;q<n;q++) a.push({o:omino(P.d,hu,q===mx?'porpora':'mass'),k:q,mx:q===mx}); return a; }
+  function nome(P,x,y){ var t=tx(P.d,x,y,'ig-m-et ig-m-et-mxp','Massenzio','middle'); return t; }
+  var U1=fuggiaschi(P1,6,0), U2=fuggiaschi(P2,5,0), U3=fuggiaschi(P3,7,3);
+  var sp1=hu*.42, orlo1=m1-g1-hu*.22, sp2b=hu*.5, x2F=f2.xa+(f2.xb-f2.xa)*0.6, x3F=m3+(f3.xb-m3)*0.6, x3B=f3.xa+(f3.xb-f3.xa)*0.1, sp3=(x3F-x3B)/6;
+  var N1=nome(P1,m1,Math.min(f1.yw+hu*.55+21,f1.y+f1.h-5)), N2=nome(P2,x2F,f2.yw+18), N3=nome(P3,m3,Math.min(f3.yw+hu*.55+21,f3.y+f3.h-5));
+  function suPonte(x,f){ return x<f.xa-4||x>f.xb+4?f.yd+2:f.yd-th; }      // i piedi: sulla riva o sul piano
 
   /* ---------- D. l'arco del Senato ---------- */
   var gD=el('g',{'class':'ig-atto'},svg), ab, tb;
@@ -1503,7 +1527,8 @@ function disegnaMilvio(svg,S,W,H){
   if(POCO){ var hh=(ab[3]-8)/2; PF.push(pannelloFoto([ab[0],ab[1],ab[2],hh],'ig-m-fa')); PF.push(pannelloFoto([ab[0],ab[1]+hh+8,ab[2],hh],'ig-m-fb')); }
   else PF.push(pannelloFoto(ab,'ig-m-fa'));
   PF.forEach(function(P){ P.K0=P.K([0,0,AW,AH],true); P.K1=P.K(RI,true); P.K2=P.K(vicinoR,false); });
-  function didascalia(s){ if(capOra===s) return; capOra=s; tsc.textContent=''; tsc.setAttribute('text-anchor','start'); tsc.setAttribute('x',r1(ab[0])); tsc.setAttribute('class','ig-v-ril-lab'); avvolgi(tsc,s,ab[2],14); }
+  function didascalia(s){ if(capOra===s) return; capOra=s; tsc.textContent=''; tsc.setAttribute('text-anchor','start'); tsc.setAttribute('x',r1(ab[0])); tsc.setAttribute('class','ig-v-ril-lab'); var nC=avvolgi(tsc,s,ab[2],14);
+    if(!oriz){ var sp=Math.max(0,14*nC-30); [].forEach.call(gT.childNodes,function(c){ fissa(c,'transform',sp?'translate(0,'+r1(sp)+')':''); }); } }      // le scritte una per una: il gruppo ha già il transform dell'entrata (CSS)      // in piedi, la didascalia lunga (le due foto, con «Riduci movimento») spinge giù il testo accanto: prima ci finiva sopra (26 novembre 2026)
   var CAP={a:"L'arco di Costantino, lato sud · foto Paris Orlando (NikonZ7II), CC BY-SA 4.0, Wikimedia Commons",i:"L'iscrizione sul lato sud dell'arco · foto Carole Raddato, CC BY-SA 2.0, Wikimedia Commons",
     due:"Sopra l'arco, lato sud: foto Paris Orlando (NikonZ7II), CC BY-SA 4.0. Sotto l'iscrizione: foto Carole Raddato, CC BY-SA 2.0. Wikimedia Commons"};
   function pronta(){ fotoA=fotoG; fotoG.style.display=''; arcoG.style.display='none'; if(S._t!=null) S.passo(S._t); }      // ridisegna il fotogramma in corso (anche fermo, con «Riduci movimento»)
@@ -1545,6 +1570,7 @@ function disegnaMilvio(svg,S,W,H){
       if(f.st!==st){ f.st=st; f.c.setAttribute('class','ig-m-fuggiasco '+st+(f.acqua?' acq':'')); } });
     var pm=fase(t,T.b2+600,T.b2+3600), mp=pm<.7?[lerp(mx[0],mxV[0],E.io(pm/.7)),lerp(mx[1],mxV[1],E.io(pm/.7))]:[lerp(mxV[0],mxF[0],E.io((pm-.7)/.3)),lerp(mxV[1],mxF[1],E.io((pm-.7)/.3))];
     fissa(gMx,'transform','translate('+xy(mp)+')'); cls(gMx,'vis',t>=T.b1+900); cls(tMx,'via',t<T.b2+200); cls(gMx,'annega',pm>=1); scrivi(tMx,pm>=1?'Massenzio annega':'Massenzio');
+    fissa(tMx,'x',pm>=1?'-10':'10'); fissa(tMx,'y',pm>=1?'-9':'4'); fissa(tMx,'text-anchor',pm>=1?'end':'start');      // annegato, il nome va a sinistra e in alto: a destra copriva il ponte
     cls(onda,'vis',pm>=1&&t<T.s1); citaz.forEach(function(c,ii){ cls(c.g,'vis',t>=c.t&&(!una||ii===citaz.length-1||t<citaz[ii+1].t)); });
     /* il segno */
     cls(gS,'vis',t>=T.s1&&t<T.c1-300);
@@ -1555,19 +1581,37 @@ function disegnaMilvio(svg,S,W,H){
     /* C */
     cls(gC,'vis',t>=T.c1-300&&t<T.d1-300); cls(P1.g,'vis',t>=T.c1-300); cls(P2.g,'vis',t>=T.c2-300); cls(P3.g,'vis',t>=T.c3-300);
     cls(P1.g,'ora',t<T.c2); cls(P2.g,'ora',t>=T.c2&&t<T.c3); cls(P3.g,'ora',t>=T.c3);
-    var ft=fase(t,T.c1+1400,T.c1+2400), e1=E.io(ft); fissa(L1.pezzo,'transform',ft>0?'translate(0,'+r1(e1*(f1.yw-f1.yd+6))+') rotate('+r1(e1*24)+' '+r1(m1)+' '+r1(f1.yd)+')':''); cls(L1.pezzo,'giu',ft>=1);
-    cls(L1.spruzzo,'vis',ft>=.95&&t<T.c1+3400);
-    U1.forEach(function(u){ var c=((t-T.c1)/2600+u.d)%1, run=t>=T.c1+300, x=lerp(f1.xa-hu,m1-g1,c), y=f1.yd-th, cade=ft>=1&&x>m1-g1-hu*.8;
-      if(ft>=1 && c>0.7){ var k2=(c-0.7)/0.3; x=m1-g1+k2*g1; y=f1.yd-th+E.out(k2)*(f1.yw-f1.yd+hu); }
-      fissa(u.o,'transform','translate('+r1(x)+','+r1(y)+')'+(ft>=1&&c>0.7?' rotate('+r1((c-.7)*300)+')':'')); cls(u.o,'vis',run&&t<T.d1); cls(u.o,'giu',ft>=1&&c>0.92); });
-    var tb2=(t-T.c2)/1000; L2.barche.forEach(function(b){ fissa(b.g,'transform','translate('+r1(b.x)+','+r1(yb2+Math.sin(tb2*2.2+b.f)*1.2)+')'); });
-    fissa(L2.piano,'transform','translate(0,'+r1(Math.sin(tb2*2.2)*0.6)+')');
-    U2.forEach(function(u){ var c=((t-T.c2)/3000+u.d)%1; fissa(u.o,'transform','translate('+r1(lerp(f2.xa-hu,f2.xb+hu,c))+','+r1(f2.yd-th)+')'); cls(u.o,'vis',t>=T.c2+300&&t<T.d1); });
-    var fz=fase(t,T.c3+700,T.c3+1300), fo=fase(t,T.c3+1500,T.c3+2300), fc=E.io(fase(t,T.c3+2400,T.c3+3200));
-    cls(L3.alone,'vis',fz>0&&fo<1); L3.chiodi.forEach(function(c,ii){ fissa(c,'transform',fo>0?'translate('+r1((ii?1:-1)*fo*th*2)+','+r1(-E.out(fo)*f3.h*0.3)+')':''); cls(c,'via',fo>=1); });
-    fissa(L3.sx,'transform',fc>0?'rotate('+r1(fc*32)+' '+r1(f3.xa)+' '+r1(f3.yd)+')':''); fissa(L3.dx,'transform',fc>0?'rotate('+r1(-fc*32)+' '+r1(f3.xb)+' '+r1(f3.yd)+')':''); cls(L3.spruzzo,'vis',fc>=.95&&t<T.c3+4200);
-    U3.forEach(function(u,ii){ var c=((t-T.c3)/2800+u.d)%1, x=lerp(f3.xa-hu,f3.xb+hu,c), y=f3.yd-th; if(fc>0){ var dx=x-m3, sl=Math.tan(fc*32*Math.PI/180); y+=Math.max(0,dx<0?(x-f3.xa):(f3.xb-x))*sl; if(fc>=1&&Math.abs(dx)<(f3.xb-f3.xa)*0.3) y=lerp(y,f3.yw+hu*0.6,clamp((t-T.c3-3200)/600,0,1)); }
-      fissa(u.o,'transform','translate('+r1(x)+','+r1(y)+')'); cls(u.o,'vis',t>=T.c3+300&&t<T.d1); cls(u.o,'giu',fc>=1&&Math.abs(x-m3)<(f3.xb-f3.xa)*0.3&&t>T.c3+3600); });
+    /* 1. Lattanzio: il taglio, poi la folla che si ferma al bordo, poi Massenzio spinto giù */
+    var ft=fase(t,T.c1+300,T.c1+1300), e1=E.io(ft); fissa(L1.pezzo,'transform',ft>0?'translate(0,'+r1(e1*(f1.yw-f1.yd+6))+') rotate('+r1(e1*24)+' '+r1(m1)+' '+r1(f1.yd)+')':''); cls(L1.pezzo,'giu',ft>=1);
+    var spinta=E.io(fase(t,T.c1+3500,T.c1+4200)), giu1=E.io(fase(t,T.c1+3700,T.c1+4500));
+    cls(L1.spruzzo,'vis',ft>=.95&&t<T.c1+2200 || giu1>=.95&&t<T.c1+5600);
+    U1.forEach(function(u){ var k=u.k, a=f1.x-hu*(.6+k*.55), b=orlo1-k*sp1, c=E.io(fase(t,T.c1+1400+k*110,T.c1+3200+k*60)), x=lerp(a,b,c), y=suPonte(x,f1), rot=0;
+      if(!u.mx) x+=spinta*sp1*.45;      // la folla preme in avanti di mezzo passo, senza passare il bordo
+      else if(giu1>0){ x=lerp(b,m1-g1*.25,giu1); y=lerp(f1.yd-th,f1.yw+hu*.55,giu1); rot=giu1*80; }
+      fissa(u.o,'transform','translate('+r1(x)+','+r1(y)+')'+(rot?' rotate('+r1(rot)+')':'')); cls(u.o,'vis',t>=T.c1+1300&&c>0&&t<T.d1); cls(u.o,'acqua',u.mx&&giu1>=1); });
+    cls(N1,'vis',giu1>=1&&t<T.d1);
+    /* 2. Eusebio: Massenzio e le guardie sul ponte di barche; il piano si spezza e si abbassa, le barche affondano con gli uomini, Massenzio per primo */
+    var tb2=(t-T.c2)/1000, rompe2=E.io(fase(t,T.c2+2000,T.c2+2600)), ang2=rompe2*9, sl2=Math.tan(ang2*Math.PI/180), ond=1-rompe2;
+    L2.barche.forEach(function(b){ var af=E.io(fase(t,T.c2+2200+b.d*3,T.c2+3500+b.d*3)); fissa(b.g,'transform','translate('+r1(b.x)+','+r1(yb2+Math.sin(tb2*2.2+b.f)*1.2*ond+af*(f2.y+f2.h-yb2)*.62)+')'); cls(b.g,'affonda',af>=.5); });
+    var giuP=E.io(fase(t,T.c2+2300,T.c2+3600)), dyP=giuP*(f2.y+f2.h-f2.yd)*.75;      // il piano scende con le barche («the passageway settled down»)
+    fissa(L2.sx,'transform',rompe2>0?'translate(0,'+r1(dyP)+') rotate('+r1(ang2)+' '+r1(f2.xa)+' '+r1(f2.yd)+')':'translate(0,'+r1(Math.sin(tb2*2.2)*0.6)+')'); fissa(L2.dx,'transform',rompe2>0?'translate(0,'+r1(dyP)+') rotate('+r1(-ang2)+' '+r1(f2.xb)+' '+r1(f2.yd)+')':'translate(0,'+r1(Math.sin(tb2*2.2)*0.6)+')');
+    cls(L2.sx,'affonda',giuP>=.5); cls(L2.dx,'affonda',giuP>=.5);
+    cls(L2.spruzzo,'vis',rompe2>=.9&&t<T.c2+4200);
+    U2.forEach(function(u){ var k=u.k, a=f2.x-hu*(.6+k*.5), b=x2F-k*sp2b, c=E.io(fase(t,T.c2+300+k*100,T.c2+1900)), x=lerp(a,b,c), y=suPonte(x,f2), af=E.io(fase(t,T.c2+2400+k*260,T.c2+3200+k*260));
+      if(rompe2>0) y+=(x<m2?(x-f2.xa):(f2.xb-x))*sl2;
+      y+=dyP+af*hu*.6; fissa(u.o,'transform','translate('+r1(x)+','+r1(y)+')'); cls(u.o,'vis',t>=T.c2+300&&c>0&&t<T.d1); cls(u.o,'giu',af>=.7); });
+    cls(N2,'vis',t>=T.c2+2600&&t<T.c2+4300);      // il nome segna dove va a fondo, finché dura il suo quadro
+    /* 3. Zosimo: la folla sul ponte, le travi cedono sotto il peso, tutti quelli sopra cadono nel fiume (i ferri restano al loro posto: nessuno li toglie) */
+    var fc=E.io(fase(t,T.c3+2400,T.c3+3000)), slc=Math.tan(fc*32*Math.PI/180);
+    cls(L3.alone,'vis',t>=T.c3+700&&t<T.c3+2000); L3.chiodi.forEach(function(c){ cls(c,'via',fc>.3); });
+    fissa(L3.sx,'transform',fc>0?'rotate('+r1(fc*32)+' '+r1(f3.xa)+' '+r1(f3.yd)+')':''); fissa(L3.dx,'transform',fc>0?'rotate('+r1(-fc*32)+' '+r1(f3.xb)+' '+r1(f3.yd)+')':''); cls(L3.spruzzo,'vis',fc>=.95&&t<T.c3+4400);
+    var pM=null;
+    U3.forEach(function(u){ var k=u.k, b=x3F-k*sp3, a=b-(f3.xb-f3.xa)*.75, x=lerp(a,b,fase(t,T.c3+300,T.c3+2400)), y=suPonte(x,f3), fd=E.io(fase(t,T.c3+2800+k*80,T.c3+3500+k*80)), rot=0;
+      if(fc>0) y+=Math.max(0,x<m3?(x-f3.xa):(f3.xb-x))*slc;
+      if(fd>0){ var xd=m3+(x-m3)*.72; rot=fd*(x<m3?80:-80); x=lerp(x,xd,fd); y=lerp(y,f3.yw+hu*(.45+.12*(k%2)),fd); }
+      if(u.mx) pM=x;
+      fissa(u.o,'transform','translate('+r1(x)+','+r1(y)+')'+(rot?' rotate('+r1(rot)+')':'')); cls(u.o,'vis',t>=T.c3+300&&t<T.d1); cls(u.o,'acqua',fd>=1); });
+    if(pM!=null) fissa(N3,'x',r1(pM)); cls(N3,'vis',t>=T.c3+3600&&t<T.d1);
     /* D */
     cls(gD,'vis',t>=T.d1-300);
     var zi=E.io(fase(t,T.d1+1700,T.d1+2900))*(1-E.io(fase(t,T.d1+4800,T.d1+6000))), zs=1+zi*(oriz?1.9:1.6);
@@ -1830,24 +1874,33 @@ function disegnaPantheon(svg,S,W,H){
    tolto di nuovo verso il 382 (tappa 384, con le voci di Simmaco e di Ambrogio), il Senato «attestato fino al 603» (scheda dei Fori), «Dov'è il Senato?» di Gregorio Magno nel 593,
    Onorio I e la chiesa del beato Adriano «ai Tre Fati» (tappa 630 e scheda santadriano, Liber Pontificalis), le porte di bronzo in San Giovanni in Laterano dal 1660 (commento
    del monumento curia), «ancora in piedi: fu chiesa fino al Novecento» (CERTEZZA). Schemi: l'incendio (della Curia di prima non si disegna la forma: resta un contorno), la facciata,
-   l'altare (un altare qualsiasi: dove stesse nell'aula e com'era non è detto qui), il cantiere. Le fotografie sono fotogrammi della città in 3D di questa pagina nel 300, nel 384 e nel 700. */
+   l'altare (un altare qualsiasi: dove stesse nell'aula e com'era non è detto qui), il cantiere. Le fotografie sono fotogrammi della città in 3D di questa pagina nel 300, nel 384 e nel 700.
+   Dal 26 novembre 2026 la Curia assorbe «L'altare della Vittoria» (l'utente: «Ha senso ancora l'infografica dell'altare della vittoria visto che ne parliamo anche in quella
+   della Curia?», poi «Sì»; quella infografica, con la pianta dell'aula, resta nella storia di git). Ne vengono due quadri, con i testi già verificati e corretti dall'utente:
+   - 357, il secondo: tappa del 357 (testo e voce di Simmaco, Relazione III 8: «Non tolse nulla ai privilegi delle vergini sacre… non negò le spese ai riti romani») e il commento
+     delle fonti in testa a js/dati.js, 357: Ambrogio, Lettera 18, 32 («Constantius […] Jussit auferri, non jussit reponi»: chi rimise l'altare non si sa; traduzione nostra);
+   - 392-394: tappa del 394 (testo e storici): Eugenio cristiano che fa doni ai senatori dei culti tradizionali, con l'appoggio di Arbogaste; Paolino di Milano che «menziona anche
+     l'altare della Vittoria e i fondi per i riti», «le fonti divergono»; protagonisti: Eugenio 392-394. Sul nastro, 392-394 è segnato incerto.
+   Dalla tappa del 384 si apre sul primo quadro del 357 (campo da di INFO). */
 var CURIA={ titolo:"La Curia nel tempo", sotto:"L'aula del Senato, dall'incendio del 283 alla chiesa di Sant'Adriano",
   fasi:[["Il Foro","Nel Foro romano, l'aula dove si riunisce il Senato: la Curia. Qui la si vede nella città di questa pagina com'è nel 300, dopo la ricostruzione."],
     ["283","Un incendio devasta il Foro. La Curia brucia."],
     ["284-305","Diocleziano la fa ricostruire: un'aula alta e stretta, di 27 metri per 18."],
     ["284-305","La facciata è di mattoni, rivestita di stucco a finti blocchi, con uno zoccolo di lastre di marmo, tre finestre e la porta con i battenti di bronzo. Il portico davanti è discusso; le statue sul frontone sono indicative."],
     ["357","Durante la sua visita, l'imperatore Costanzo II fa togliere dalla Curia l'altare della dea Vittoria."],
+    ["357","Ma, secondo Simmaco, Costanzo rispetta i privilegi delle Vestali e non nega le spese per i riti. Ambrogio osserva che ordinò di togliere l'altare, non di rimetterlo."],
     ["dopo il 357","L'altare torna al suo posto, probabilmente sotto Giuliano: le fonti non dicono quando."],
     ["verso il 382","L'imperatore Graziano lo fa togliere di nuovo."],
     ["384","Simmaco, prefetto di Roma, chiede che l'altare torni nella Curia. Ambrogio, vescovo di Milano, si oppone. Valentiniano II respinge la richiesta."],
+    ["392-394","Con l'appoggio del generale Arbogaste, Eugenio diventa imperatore d'Occidente. È cristiano, ma fa doni ai senatori che difendono i culti tradizionali. Paolino di Milano nomina anche l'altare della Vittoria: le fonti divergono."],
     ["593","«Dov'è il Senato?», chiede Gregorio Magno. Il Senato è attestato fino al 603."],
     ["625-638","Papa Onorio I fa la chiesa del beato Adriano «ai Tre Fati», l'angolo nord del Foro. Che fosse proprio la Curia lo mostrano gli studi sull'edificio."],
     ["1660","Le porte di bronzo restano al loro posto fino al 1660. Oggi sono in San Giovanni in Laterano."],
     ["Oggi","La Curia è ancora in piedi: è stata una chiesa fino al Novecento. Così è arrivata fino a noi."]],
-  fonte:"Tappe del 293, del 357, del 384 e del 630, schede del Foro e di Sant'Adriano e voci di Simmaco (Relazione III 10), di Ambrogio (Lettera 18, 8) e del Liber Pontificalis (vita di Onorio I) in questa pagina; misure e facciata dai commenti del modello della Curia. L'altare fu rimesso «probabilmente» sotto Giuliano: le fonti non dicono quando. La facciata è uno schema dalle misure del modello: il portico davanti è discusso, le statue sul frontone e la croce sono indicative, l'incendio e il cantiere sono disegni. L'altare disegnato è un altare qualsiasi. Le fotografie sono fotogrammi della città in 3D di questa pagina negli anni indicati." };
+  fonte:"Tappe del 293, del 357, del 384, del 394 e del 630, schede del Foro e di Sant'Adriano e voci di Simmaco (Relazione III 8 e 10), di Ambrogio (Lettera 18, 8 e 32, nel latino annotato fra le fonti della pagina: traduzione nostra) e del Liber Pontificalis (vita di Onorio I) in questa pagina; per Eugenio e Paolino di Milano la tappa del 394 e il suo riquadro degli storici, che dice che le fonti divergono; misure e facciata dai commenti del modello della Curia. L'altare fu rimesso «probabilmente» sotto Giuliano: le fonti non dicono quando. La facciata è uno schema dalle misure del modello: il portico davanti è discusso, le statue sul frontone e la croce sono indicative, l'incendio e il cantiere sono disegni. L'altare disegnato è un altare qualsiasi. Le fotografie sono fotogrammi della città in 3D di questa pagina negli anni indicati." };
 function disegnaCuria(svg,S,W,H){
   var oriz=W/H>=1.15, pad=oriz?18:12, defs=el('defs',null,svg), fasi=CURIA.fasi;
-  var T=[1400,5200,8600,12600,17600,21600,25200,28600,35200,39400,45000,49600], tFin=T[11]+6200;
+  var T=[1400,5200,8600,12600,17600,22400,27400,31000,34400,41000,47000,51200,56800,61400], tFin=T[13]+6200;      // 14 quadri dal 26 novembre 2026: il secondo 357 e il 392-394 vengono da «L'altare della Vittoria»
   var fb, rb, cb, rib=oriz?66:70;
   if(oriz){ var fw=Math.round(W*(W<700?0.6:0.62)); fb=[pad,pad,fw,H-2*pad-rib-8]; rb=[pad,H-pad-rib,fw,rib]; cb=[pad+fw+24,pad+4,W-(pad+fw+24)-pad,H-2*pad-4]; }
   else { var fh=Math.round(Math.min(H*0.56,(W-2*pad)*0.95)); fb=[pad,pad,W-2*pad,fh]; rb=[pad,H-rib-2,W-2*pad,rib]; cb=[pad,fb[1]+fh+12,W-2*pad,rb[1]-(fb[1]+fh+12)-6]; }
@@ -1932,7 +1985,9 @@ function disegnaCuria(svg,S,W,H){
   /* il velo del Senato vuoto (593) */
   var velo=el('rect',{x:fb[0],y:fb[1],width:fb[2],height:fb[3],'class':'ig-c-velo'},dentro);
   var quota=el('g',{'class':'ig-p-quota'},dentro), qa=M(-9.5,-1.6), qb=M(9.5,-1.6); el('path',{d:'M'+xy(qa)+' H'+r1(qb[0])+' M'+r1(qa[0])+' '+r1(qa[1]-4)+' v8 M'+r1(qb[0])+' '+r1(qb[1]-4)+' v8'},quota);
-  var etS=tx(dentro,fb[0]+10,fb[1]+fb[3]-8,'ig-p-dida vis','','start'), nS=adatta(etS,'facciata: schema dal modello',Math.max(90,M(-11,0)[0]-fb[0]-16),{righe:3}); if(nS>1) etS.setAttribute('y',r1(fb[1]+fb[3]-8-etS._lh*(nS-1)));      // in basso a sinistra, accanto ai gradini e non sopra (25 novembre 2026); in alto ci sono le citazioni
+  /* la nota «facciata: schema» sta nella striscia del suolo, sotto i gradini, su una riga sola e più scura: sul telefono, su tre righe, finiva sullo zoccolo e sulle colonne
+     del portico e si leggeva poco (26 novembre 2026) */
+  var etS=tx(dentro,fb[0]+10,fb[1]+fb[3]-3,'ig-p-dida vis','','start'); etS.style.fill='#5F554B'; adatta(etS,'facciata: schema dal modello',fb[2]-20,{righe:1});
   /* le fotografie: il Foro nel 300 (all'inizio), la Curia nel 384 e Sant'Adriano nel 700 (alla fine, prima e dopo) */
   var X0=.8, Z0=-5.1, ry=-.35, fx2=Math.sin(ry), fz2=Math.cos(ry), hC=.8;
   var posaV={t:[X0,hC+1.4,Z0],c:[X0+fx2*10.8-fz2*4.6,hC+5.6,Z0+fz2*10.8+fx2*4.6]}, posaF={t:[X0+1,hC+.6,Z0-2],c:[X0+fx2*20+6,hC+12.5,Z0+fz2*20]};
@@ -1966,14 +2021,14 @@ function disegnaCuria(svg,S,W,H){
   function banda(i,a,b,cl){ return el('rect',{x:r1(X(a)),y:r1(ys[i]),width:r1(Math.max(2,X(b)-X(a)-1)),height:rh,rx:2,'class':'ig-c-b '+cl},gB); }
   var ptC=el('pattern',{id:'ig-c-trat',width:5,height:5,patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'},defs); el('rect',{width:5,height:5,fill:'#EFE6D4'},ptC); el('rect',{width:2,height:5,fill:'#B8A98E'},ptC);
   banda(0,250,283,'senato'); banda(0,283,305,'cantiere'); banda(0,305,603,'senato');
-  banda(1,305,357,'altare'); banda(1,357,382,'forse'); banda(2,625,638,'cantiere'); banda(2,638,700,'chiesa'); el('rect',{x:r1(rxB+8),y:r1(ys[2]),width:r1(rx1-rxB-8),height:rh,rx:2,'class':'ig-c-b chiesa'},gB);
-  var sF=tx(gB,X(370),ys[1]+rh-2,'ig-c-b-t','?','middle');
+  banda(1,305,357,'altare'); banda(1,357,382,'forse'); banda(1,392,394,'forse'); banda(2,625,638,'cantiere'); banda(2,638,700,'chiesa'); el('rect',{x:r1(rxB+8),y:r1(ys[2]),width:r1(rx1-rxB-8),height:rh,rx:2,'class':'ig-c-b chiesa'},gB);
+  /* il tratto incerto dell'altare (357-382 e 392-394) è a trattini, senza il punto di domanda: stava sotto la linea del cursore (26 novembre 2026) */
   el('path',{d:'M'+r1(rxB+4)+' '+r1(ys[0]-3)+' l5 '+r1(3*(rh+5))+' M'+r1(rxB+9)+' '+r1(ys[0]-3)+' l5 '+r1(3*(rh+5)),'class':'ig-c-salto'},gR);
   [[283,'283','middle'],[357,'357','end'],[384,'384','start'],[603,'603','end'],[638,'630','start'],[1660,'1660','middle'],[3000,'oggi','end']].filter(function(q){ return rxB-rx0>=300||q[0]!==357; }).forEach(function(q){ var x=q[0]===638?X(625):X(q[0]); tx(gR,x,ys[2]+rh+14,'ig-p-n-anno',q[1],q[2]); });
   var cur=el('g',{'class':'ig-p-cur'},gR); el('line',{x1:0,x2:0,y1:r1(ys[0]-5),y2:r1(ys[2]+rh+3),'class':'ig-p-cur-l'},cur); el('circle',{cx:0,cy:r1(ys[0]-5),r:4,'class':'ig-p-cur-p'},cur);
   /* la colonna: l'anno, lo stato, l'altare */
   var gC=el('g',{'class':'ig-p-col-d'},svg), stretta=cb[2]<230, fsA=oriz?Math.min(60,cb[2]/4.4):Math.min(34,W/10.5), tA=tx(gC,cb[0],cb[1]+fsA*.82,'ig-p-anno',''), tSt=el('text',{x:r1(cb[0]),y:r1(cb[1]+fsA*.82+24),'class':'ig-p-stato'},gC);
-  var STATI=['L\'AULA DEL SENATO','L\'INCENDIO','LA RICOSTRUZIONE','LA FACCIATA','VIA L\'ALTARE','L\'ALTARE TORNA','VIA DI NUOVO','LA RICHIESTA RESPINTA','IL SENATO SCOMPARE','SANT\'ADRIANO','LE PORTE DI BRONZO','ANCORA IN PIEDI'];
+  var STATI=['L\'AULA DEL SENATO','L\'INCENDIO','LA RICOSTRUZIONE','LA FACCIATA','VIA L\'ALTARE','MA I RITI RESTANO','L\'ALTARE TORNA','VIA DI NUOVO','LA RICHIESTA RESPINTA','EUGENIO','IL SENATO SCOMPARE','SANT\'ADRIANO','LE PORTE DI BRONZO','ANCORA IN PIEDI'];
   /* l'altare della Vittoria: un altare qualsiasi, che entra ed esce */
   var ay=cb[1]+fsA*.82+(oriz?64:48), ah=Math.min(oriz?92:62,cb[3]-(ay-cb[1])-30), gA=el('g',{'class':'ig-c-altare-box'},gC), mostraA=ah>=40&&!stretta, ayQ=ay, inTav=false, xL=0, wL=0, fondoA=null;
   /* senza posto nella colonna (telefono in piedi) l'altare va nella tavola, a destra della facciata: prima stava in alto a sinistra e copriva il frontone */
@@ -1987,19 +2042,19 @@ function disegnaCuria(svg,S,W,H){
   if(inTav) nT=adatta(aT,'l\'altare della Vittoria',xL+wL-10-tX,{lh:17,min:11}); else { aT.textContent='l\'altare della Vittoria'; if(tX+largo(aT)>cb[0]+cb[2]) aT.textContent='l\'altare'; }
   var sX=inTav?xL+10:tX, sY=inTav?Math.max(ay+ah,ay+ah*.3+(nT-1)*17)+18:ay+ah*0.38+19, wS=inTav?wL-20:cb[0]+cb[2]-tX, aS=el('text',{x:r1(sX),y:r1(sY),'class':'ig-c-alt-st'},gA);
   function statoA(s0){ if(aS._s===s0) return; aS._s=s0; aS.textContent=''; aS.style.fontSize=''; if(inTav){ adatta(aS,s0,wS,{lh:15,min:11}); return; } aS.textContent=s0; if(largo(aS)>wS) aS.style.fontSize='12px'; }
-  if(fondoA){ var nMax=1; ['nella Curia','tolto da Costanzo II','rimesso, probabilmente sotto Giuliano','tolto da Graziano','la richiesta di Simmaco è respinta'].forEach(function(s0){ aS.textContent=''; nMax=Math.max(nMax,avvolgi(aS,s0,wS,15)); }); aS.textContent=''; fondoA.setAttribute('height',r1(sY+(nMax-1)*15+12-(ay-8))); }
+  if(fondoA){ var nMax=1; ['nella Curia','tolto da Costanzo II','rimesso, probabilmente sotto Giuliano','tolto da Graziano','la richiesta di Simmaco è respinta','sotto Eugenio: le fonti divergono'].forEach(function(s0){ aS.textContent=''; nMax=Math.max(nMax,avvolgi(aS,s0,wS,15)); }); aS.textContent=''; fondoA.setAttribute('height',r1(sY+(nMax-1)*15+12-(ay-8))); }
   var yQ=inTav?ayQ:ay+ah+22, gQ=el('g',{'class':'ig-p-cita'},gC), qVista=-2;
-  var CQ={9:["«Fece la chiesa del beato Adriano ai Tre Fati, la dedicò e vi offrì molti doni.»","Liber Pontificalis, vita di Onorio I"]};
-  var SCH={1:[['il fuoco','devasta il Foro']],2:[['aula','27 × 18 m'],['la rifà','Diocleziano'],['anni','284-305']],8:[['il Senato','attestato fino al 603']],10:[['porte di bronzo','qui fino al 1660'],['oggi','in San Giovanni in Laterano']],11:[['la Curia','ancora in piedi'],['chiesa','fino al Novecento']]};
+  var CQ={5:["«Ordinò di toglierlo, non ordinò di rimetterlo.»","Ambrogio, Lettera 18, 32, su Costanzo II"],11:["«Fece la chiesa del beato Adriano ai Tre Fati, la dedicò e vi offrì molti doni.»","Liber Pontificalis, vita di Onorio I"]};
+  var SCH={1:[['il fuoco','devasta il Foro']],2:[['aula','27 × 18 m'],['la rifà','Diocleziano'],['anni','284-305']],9:[['Eugenio','cristiano, fa doni ai senatori pagani'],['Paolino','nomina anche l\'altare'],['le fonti','divergono']],10:[['il Senato','attestato fino al 603']],12:[['porte di bronzo','qui fino al 1660'],['oggi','in San Giovanni in Laterano']],13:[['la Curia','ancora in piedi'],['chiesa','fino al Novecento']]};
   function scriviQ(i){ gQ.textContent=''; var c=CQ[i]; if(stretta) return;
-    if(!c && SCH[i]){ var rr=SCH[i], rh2=oriz?28:24, y0q=mostraA&&!inTav&&i>=4&&i<8?yQ:ayQ, wl0=oriz?118:104; if(y0q+rr.length*rh2>cb[1]+cb[3]) rr=rr.slice(0,Math.max(0,Math.floor((cb[1]+cb[3]-y0q)/rh2)));
+    if(!c && SCH[i]){ var rr=SCH[i], rh2=oriz?28:24, y0q=mostraA&&!inTav&&i>=4&&i<10?yQ:ayQ, wl0=oriz?118:104; if(y0q+rr.length*rh2>cb[1]+cb[3]) rr=rr.slice(0,Math.max(0,Math.floor((cb[1]+cb[3]-y0q)/rh2)));
       rr.forEach(function(r,j){ var y=y0q+j*rh2; el('line',{x1:r1(cb[0]),x2:r1(cb[0]+cb[2]),y1:r1(y),y2:r1(y),'class':'ig-p-sch-filo'},gQ); var kq=tx(gQ,cb[0],y+rh2*.66,'ig-p-sch-k',r[0].toUpperCase()), wl=Math.max(wl0,largo(kq)*1.1+12); var v=tx(gQ,cb[0]+wl,y+rh2*.68,'ig-p-sch-v',r[1]);      /* la chiave lunga («PORTE DI BRONZO») spinge il valore a destra: prima ci finiva sopra */ if(largo(v)>cb[2]-wl) v.style.fontSize='14px'; if(largo(v)>cb[2]-wl){ v.setAttribute('x',r1(cb[0])); v.setAttribute('y',r1(y+rh2*.68+16)); } });
       return; }
-    if(!c) return; var yy=mostraA&&!inTav&&i>=4&&i<8?yQ:ayQ, hq=cb[1]+cb[3]-yy; if(hq<60) return; var fq=oriz?17:15, t=el('text',{x:r1(cb[0]+14),y:r1(yy+fq),'class':'ig-p-cita-t'},gQ); t.style.fontSize=fq+'px';
+    if(!c) return; var yy=mostraA&&!inTav&&i>=4&&i<10?yQ:ayQ, hq=cb[1]+cb[3]-yy; if(hq<60) return; var fq=oriz?17:15, t=el('text',{x:r1(cb[0]+14),y:r1(yy+fq),'class':'ig-p-cita-t'},gQ); t.style.fontSize=fq+'px';
     var n=avvolgi(t,c[0],cb[2]-16,fq*1.22), hh=n*fq*1.22; if(hh+24>hq){ gQ.textContent=''; return; } el('rect',{x:r1(cb[0]),y:r1(yy),width:3,height:r1(hh+20),rx:1.5,'class':'ig-m-cita-filo'},gQ); tx(gQ,cb[0]+14,yy+hh+fq*.4+12,'ig-m-cita-chi',c[1]); }
   var visto=-1, ultimoT=null;
   S.passo=function(t){
-    ultimoT=t; var i=-1; T.forEach(function(x,j){ if(t>=x) i=j; }); var ii=Math.max(0,i), fin=t>=T[11]+600;
+    ultimoT=t; var i=-1; T.forEach(function(x,j){ if(t>=x) i=j; }); var ii=Math.max(0,i), fin=t>=T[13]+600;
     cls(tav,'vis',t>=T[0]-400);
     /* la fotografia del Foro all'inizio */
     var f0=t<T[1]-300; cls(foto[0],'vis',fOk[0]&&f0&&t>=T[0]-400); cls(fCuria,'vis',fOk[0]&&f0&&t>=T[0]+900&&!!pCuria); if(pCuria) fCuria.metti(pCuria); cls(dida,'vis',fOk[0]&&f0&&t>=T[0]);
@@ -2009,27 +2064,27 @@ function disegnaCuria(svg,S,W,H){
     /* la ricostruzione */
     var su=E.io(fase(t,T[2]+200,T[3]-600)); fissa(cpR,'y',r1(y0-su*(y0-fb[1]))); fissa(cpR,'height',r1(su*(y0-fb[1])+2)); cls(ponteggio,'vis',t>=T[2]&&t<T[3]+400);
     cls(blocchi,'vis',t>=T[3]); cls(porte,'vis',true); cls(finestre,'vis',true);
-    var chiesa=i>=9, porteVia=i>=10;
+    var chiesa=i>=11, porteVia=i>=12;
     cls(portico,'vis',su>=1&&!chiesa); cls(statue,'vis',su>=1&&!chiesa); cls(croce,'vis',chiesa); cls(gradini,'via',chiesa); cls(gradChiesa,'vis',chiesa);
-    var dp=E.io(fase(t,T[10]+500,T[10]+2200)); fissa(porte,'transform',dp>0?'translate('+r1(dp*fb[2]*0.7)+',0)':''); cls(porte,'via',dp>=1); cls(pVia,'vis',dp>0.15&&i===10);
-    cls(velo,'vis',i===8); cls(quota,'vis',i===2&&t>=T[2]+1600); cls(etS,'vis',t>=T[2]&&!(i===2&&t>=T[2]+1600)&&!(fin&&fOk[1]&&fOk[2]));
+    var dp=E.io(fase(t,T[12]+500,T[12]+2200)); fissa(porte,'transform',dp>0?'translate('+r1(dp*fb[2]*0.7)+',0)':''); cls(porte,'via',dp>=1); cls(pVia,'vis',dp>0.15&&i===12);
+    cls(velo,'vis',i===10); cls(quota,'vis',i===2&&t>=T[2]+1600); cls(etS,'vis',t>=T[2]&&!(i===2&&t>=T[2]+1600)&&i!==10&&!(fin&&fOk[1]&&fOk[2]));      // non sotto il velo del 593
     /* le fotografie della fine: prima e dopo */
-    var vF=fin&&fOk[1]&&fOk[2]; cls(foto[2],'vis',vF); cls(foto[1],'vis',vF); var wp=fase(t,T[11]+1400,T[11]+5200), fw=cW+0.2*Math.sin(wp*Math.PI*2)*(1-wp*0.4);
+    var vF=fin&&fOk[1]&&fOk[2]; cls(foto[2],'vis',vF); cls(foto[1],'vis',vF); var wp=fase(t,T[13]+1400,T[13]+5200), fw=cW+0.2*Math.sin(wp*Math.PI*2)*(1-wp*0.4);
     if(!fin) pd.libera(); if(pd.mano) fw=pd.f; else pd.metti(fw); pd.mostra(vF); var wx=fb[0]+fb[2]*fw;      // presa in mano, la lama sta dove la lascia chi guarda
     fissa(cpWr,'width',r1(wx-fb[0])); fissa(lama,'transform','translate('+r1(wx)+',0)'); cls(lama,'vis',vF); cls(dW1,'vis',vF); cls(dW2,'vis',vF);
     /* i fumetti */
     function Fu(k,da,a){ var f=F[k]; cls(f[0],'vis',t>=da&&t<a); f[0].metti(f[1]); }
     var uno=fb[2]<520, seq=['stucco','zoccolo','finestre','porte','portico','statue'];      // sul telefono i cartellini della facciata vengono uno alla volta
     Fu('misura',T[2]+1800,T[3]-200); seq.forEach(function(k,j){ var da=T[3]+200+j*(uno?760:400); Fu(k,da,uno?da+740:T[4]-300); });
-    Fu('croce',T[9]+1200,T[10]-200);
+    Fu('croce',T[11]+1200,T[12]-200);
     /* l'altare */
-    var st=i<4||i===4&&t<T[4]+1500?'c':i===4?'via':i===5?'forse':'via2';
-    cls(gA,'vis',mostraA&&i>=4&&i<8&&!(inTav&&i===7&&t>=T[7]+400)); cls(alt,'via',st==='via'||st==='via2'); cls(alt,'forse',st==='forse'); cls(alGhost,'vis',st!=='c');
-    statoA(st==='c'?'nella Curia':st==='via'?'tolto da Costanzo II':st==='forse'?'rimesso, probabilmente sotto Giuliano':i>=7?'la richiesta di Simmaco è respinta':'tolto da Graziano');
-    cls(simm,'vis',i===7&&t>=T[7]+500); cls(ambr,'vis',i===7&&t>=T[7]+2600); cls(dove,'vis',i===8&&t>=T[8]+300);
+    var st=i<4||i===4&&t<T[4]+1500?'c':i===4||i===5?'via':i===6?'forse':i===9?'eugenio':'via2';      // 392-394: solo l'ombra, col punto di domanda: le fonti divergono
+    cls(gA,'vis',mostraA&&i>=4&&i<10&&!(inTav&&i===8&&t>=T[8]+400)); cls(alt,'via',st==='via'||st==='via2'||st==='eugenio'); cls(alt,'forse',st==='forse'); cls(alGhost,'vis',st!=='c'); cls(alGhost,'dubbio',st==='eugenio');
+    statoA(st==='c'?'nella Curia':st==='via'?'tolto da Costanzo II':st==='forse'?'rimesso, probabilmente sotto Giuliano':st==='eugenio'?'sotto Eugenio: le fonti divergono':i>=8?'la richiesta di Simmaco è respinta':'tolto da Graziano');
+    cls(simm,'vis',i===8&&t>=T[8]+500); cls(ambr,'vis',i===8&&t>=T[8]+2600); cls(dove,'vis',i===10&&t>=T[10]+300);
     /* il nastro */
-    var anni=[250,283,284,300,357,370,382,384,593,630,1660,3000], a=lerp(anni[ii],anni[Math.min(11,ii+1)],E.io(fase(t,T[Math.min(11,ii+1)]-900,T[Math.min(11,ii+1)])));
-    if(i<0) a=250; if(i===0) a=Math.min(a,283); if(i>=11) a=3000; if(i===10&&t<T[11]-900) a=1660;
+    var anni=[250,283,284,300,357,357,370,382,384,393,593,630,1660,3000], a=lerp(anni[ii],anni[Math.min(13,ii+1)],E.io(fase(t,T[Math.min(13,ii+1)]-900,T[Math.min(13,ii+1)])));
+    if(i<0) a=250; if(i===0) a=Math.min(a,283); if(i>=13) a=3000; if(i===12&&t<T[13]-900) a=1660;
     cls(gR,'vis',t>=T[0]+300); fissa(cur,'transform','translate('+r1(X(a))+',0)'); fissa(cpNr,'width',r1(Math.max(0,X(a)-rx0+2)));
     /* la colonna */
     cls(gC,'vis',t>=T[0]-200);
@@ -2888,205 +2943,6 @@ function disegnaCapobon(svg,S,W,H){
 }
 
 /* ======================================================================
-   14. L'altare della Vittoria (384)
-   Aggiunta il 23 novembre 2026 (gruppo 3). La tavola è la pianta dell'aula del Senato: forma e proporzioni prese, come base visiva, dalla pianta della Curia Iulia del progetto
-   «Senato Roma» dello stesso autore (gradini dei seggi lungo i due lati lunghi, tribuna in fondo, porte di bronzo sul lato corto, pavimento a intarsi di marmo) e ridisegnate qui;
-   le misure (27 x 18 m) sono quelle del modello della Curia (js/monumenti.js, già usate in «La Curia nel tempo»). Fatti, tutti dalla pagina:
-   - tappa del 357 (testo e voce di Simmaco, Relazione III, «Non tolse nulla ai privilegi delle vergini sacre… non negò le spese ai riti romani»), EVENTI visita357, scheda fori;
-   - il commento delle fonti in testa a js/dati.js, 357: Ambrogio, Lettera 18, 32 («Constantius […] Jussit auferri, non jussit reponi»: chi rimise l'altare non si sa); traduzione nostra dal latino;
-   - tappa del 384: tolto «intorno al 382» da Graziano, «rimesso al suo posto, probabilmente sotto Giuliano: le fonti non dicono quando», i fondi tagliati ai culti e alle Vestali,
-     Magno Massimo che fa uccidere Graziano («l'anno seguente»), Valentiniano II che governa solo una parte dell'Occidente, Simmaco a nome di tutti i senatori, Ambrogio che obietta,
-     la richiesta respinta; voce di Simmaco, Relazione III, 10; riquadro degli storici (Ambrogio: i cristiani maggioranza, «pochi pagani»; «Dalle loro parole non si può stabilire
-     quanti senatori sostenessero ciascuna posizione»; Cameron 2011: meno di quanto si pensasse; i tagli restano in vigore); commento delle fonti, 384: Ambrogio, Lettera 17, 5
-     («cum majore jam curia christianorum numero sit referta»: traduzione nostra);
-   - tappa del 394 (testo e storici): il divieto dei sacrifici del 391, Eugenio cristiano che fa doni ai senatori dei culti tradizionali, Paolino di Milano che «menziona anche l'altare
-     della Vittoria e i fondi per i riti», «le fonti divergono», Cameron che dubita di una rinascita pagana sotto Eugenio, la vittoria di Teodosio sul Frigido; protagonisti: Eugenio 392-394.
-   Lasciato fuori perché la pagina non lo dice: la statua della Vittoria sopra l'altare (non è nominata in nessun testo della pagina: qui c'è solo l'altare), il punto dell'aula in cui
-   stava l'altare, che cosa fece Teodosio dell'altare dopo il Frigido, la sorte dell'altare dopo il 394. Schemi, detti nel disegno: la pianta, la posizione dell'altare, le figure dei
-   senatori (non contate) e le proporzioni fra pagani e cristiani (indicative: la pagina dice che non si possono stabilire). */
-var ALTARE={ titolo:"L'altare della Vittoria", sotto:"Tolto, rimesso, tolto di nuovo: il Senato diviso, dal 357 al 394",
-  fasi:[["La Curia","Nel Foro, l'aula dove si riunisce il Senato: la Curia, ricostruita da Diocleziano dopo l'incendio del 283. Qui c'è l'altare della dea Vittoria."],
-    ["357","L'imperatore Costanzo II visita Roma per la prima volta e fa togliere l'altare della Vittoria dalla Curia."],
-    ["357","Ma, secondo Simmaco, Costanzo rispetta i privilegi delle Vestali e non nega le spese per i riti. Ambrogio osserva che ordinò di togliere l'altare, non di rimetterlo."],
-    ["dopo il 357","L'altare torna al suo posto, probabilmente sotto Giuliano. Le fonti non dicono quando."],
-    ["verso il 382","L'imperatore Graziano lo fa togliere di nuovo. Taglia anche i fondi pubblici per i culti tradizionali e per le Vestali, le sacerdotesse di Vesta."],
-    ["poco dopo","In Britannia le truppe proclamano imperatore Magno Massimo, che passa in Gallia e fa uccidere Graziano. Valentiniano II governa ormai solo una parte dell'Occidente."],
-    ["384","Simmaco, prefetto di Roma, chiede a Valentiniano II che l'altare torni nella Curia e che lo Stato paghi di nuovo i culti. Dice di parlare a nome di tutti i senatori."],
-    ["384","Ambrogio, vescovo di Milano, risponde che i senatori cristiani non sono d'accordo: sono già la maggioranza, e solo «pochi pagani» pretendono di parlare per tutti."],
-    ["Quanti?","Chi ha ragione? Simmaco e Ambrogio vogliono entrambi convincere l'imperatore: dalle loro parole non si può stabilire quanti senatori stessero con l'uno o con l'altro."],
-    ["384","Valentiniano II respinge la richiesta di Simmaco. I tagli ai fondi per i culti restano in vigore."],
-    ["392-394","Con l'appoggio del generale Arbogaste, Eugenio diventa imperatore d'Occidente. È cristiano, ma fa doni ai senatori che difendono i culti tradizionali. Paolino di Milano nomina anche l'altare della Vittoria: le fonti divergono."],
-    ["394","Nel 391 Teodosio aveva vietato i sacrifici. Ai primi di settembre del 394 sconfigge Eugenio sul fiume Frigido."],
-    ["Dopo","Dopo il 394 l'altare della Vittoria non compare più nelle fonti di questa pagina."]],
-  fonte:"Tappe del 357, del 384 e del 394 di questa pagina, con le voci di Simmaco (Relazione III, 8 e 10) e il riquadro degli storici; Ambrogio, Lettera 18, 32 e Lettera 17, 5, nel latino annotato fra le fonti della pagina (traduzioni nostre). Simmaco e Ambrogio scrivono entrambi per convincere l'imperatore: le loro parole non dicono quanti senatori stessero con l'uno o con l'altro, e le proporzioni dei colori nell'aula sono indicative. La pianta è uno schema dell'aula ricostruita da Diocleziano (27 per 18 metri): i gradini dei seggi, la tribuna e il pavimento sono disegnati, non misurati; le figure dei senatori non sono contate. Dove stesse l'altare nell'aula non è detto: la posizione è indicativa, e l'altare disegnato è un altare qualsiasi. Della statua della Vittoria e della sorte dell'altare dopo il 394 le fonti di questa pagina non parlano." };
-function disegnaAltare(svg,S,W,H){
-  var oriz=W/H>=1.15, piccolo=oriz&&W<700, pad=oriz?18:12, defs=el('defs',null,svg), fasi=ALTARE.fasi, i, j;
-  var T=[1400,6600,11400,16600,21000,26200,30800,37000,43200,48800,53400,59600,64600], tFin=T[12]+6400;
-  /* impaginazione: aula, colonna, nastro */
-  /* il disegno va da -2 a 28 metri in lungo (porte comprese) e da -1 a 19 in largo; sotto, 20 punti per la legenda */
-  var rib=piccolo?62:72, ab, cb, rb, s;
-  if(oriz&&!piccolo){ var aw=Math.round(W*.58)-pad, ah=H-2*pad-22; s=Math.min(aw/30,ah/20); ab=[pad+(aw-30*s)/2+2*s,pad+(ah-20*s)/2+s,27*s,18*s];      /* la colonna a destra, col nastro in fondo */
-    cb=[pad+aw+30,pad+4,W-(pad+aw+30)-pad,H-2*pad-rib-14]; rb=[cb[0]-8,H-pad-rib+4,cb[2]+8,rib-4]; }
-  else if(oriz){ var aw3=Math.round(W*.64)-pad, ah3=H-2*pad-rib-22; s=Math.min(aw3/30,ah3/20); ab=[pad+(aw3-30*s)/2+2*s,pad+(ah3-20*s)/2+s,27*s,18*s];      /* telefono coricato: l'aula più grande possibile, il nastro sotto l'aula */
-    cb=[pad+aw3+14,pad+2,W-(pad+aw3+14)-pad,H-2*pad-4]; rb=[pad,H-pad-rib+8,aw3,rib-8]; }
-  else { s=(W-2*pad)/30; ab=[pad+2*s,pad+s,27*s,18*s]; rb=[pad,H-rib-2,W-2*pad,rib]; cb=[pad,ab[1]+19*s+30,W-2*pad,rb[1]-(ab[1]+19*s+30)-6]; }
-  var M=function(x,y){ return [ab[0]+x*s,ab[1]+y*s]; };
-  function R(p,x1,y1,x2,y2,cl,o){ var a=M(x1,y1), b=M(x2,y2), r=el('rect',{x:r1(a[0]),y:r1(a[1]),width:r1(b[0]-a[0]),height:r1(b[1]-a[1]),'class':cl},p); if(o) for(var k in o) r.setAttribute(k,o[k]); return r; }
-  /* ---- l'aula ridisegnata: profondità con ombre e marmi, sullo stile della pianta della Curia di «Senato Roma» (filtro del marmo, ombre dei gradini, luce sulle figure) ---- */
-  function ombraLin(id,x1,y1,x2,y2,a){ var g=el('linearGradient',{id:id,x1:x1,y1:y1,x2:x2,y2:y2},defs); el('stop',{offset:0,'stop-color':'#3A2614','stop-opacity':a},g); el('stop',{offset:1,'stop-color':'#3A2614','stop-opacity':0},g); }
-  ombraLin('ig-al-sd',0,0,0,1,.34); ombraLin('ig-al-su',0,1,0,0,.34); ombraLin('ig-al-sl',1,0,0,0,.3);
-  var mf=el('filter',{id:'ig-al-marmo',x:0,y:0,width:'100%',height:'100%','color-interpolation-filters':'sRGB'},defs);
-  el('feTurbulence',{type:'turbulence',baseFrequency:'0.012 0.05',numOctaves:3,seed:11},mf); el('feColorMatrix',{type:'matrix',values:'0 0 0 0 .42  0 0 0 0 .36  0 0 0 0 .27  -2.2 0 0 0 .62'},mf);
-  var hi=el('radialGradient',{id:'ig-al-hi',cx:'34%',cy:'28%',r:'70%'},defs); [[0,'#fff',.6],[.5,'#fff',.06],[1,'#000',.14]].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1],'stop-opacity':q[2]},hi); });
-  var lg=el('linearGradient',{id:'ig-al-legno',x1:0,y1:0,x2:0,y2:1},defs); [[0,'#B48A55'],[.5,'#946638'],[1,'#6E4822']].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1]},lg); });
-  /* il pavimento a intarsi: mattonelle che entrano intere nel riquadro (prima la trama si tagliava sui bordi) */
-  var pa=M(1.15,4.45), pz=M(22.95,13.55), wP=pz[0]-pa[0], hP=pz[1]-pa[1], nX=Math.max(6,Math.round(wP/Math.max(14,s*1.6)/2)*2), tw=wP/nX, nY=Math.max(2,Math.round(hP/tw/2)*2), th=hP/nY, ps=Math.min(tw,th);
-  var pt=el('pattern',{id:'ig-al-os',width:r1(tw*2),height:r1(th*2),patternUnits:'userSpaceOnUse',x:r1(pa[0]),y:r1(pa[1])},defs);
-  el('rect',{width:r1(tw*2),height:r1(th*2),fill:'#A8883E'},pt);
-  [[0,0],[tw,th]].forEach(function(q){ var c=[q[0]+tw/2,q[1]+th/2]; el('rect',{x:r1(q[0]+.6),y:r1(q[1]+.6),width:r1(tw-1.2),height:r1(th-1.2),fill:'#DCBC74'},pt); el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.4),fill:'#3E6150'},pt);
-    el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.34),fill:'#EFE6D8'},pt); el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.28),fill:'#7E2530'},pt); el('circle',{cx:r1(c[0]-ps*.08),cy:r1(c[1]-ps*.08),r:r1(ps*.11),fill:'#9A3A44',opacity:.4},pt); el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.06),fill:'#EFE6D8'},pt); });
-  [[tw,0],[0,th]].forEach(function(q){ var c=[q[0]+tw/2,q[1]+th/2], r=ps*.44; el('rect',{x:r1(q[0]+.6),y:r1(q[1]+.6),width:r1(tw-1.2),height:r1(th-1.2),fill:'#D0AC62'},pt);
-    [1,.72,.5].forEach(function(k,j){ el('path',{d:'M'+xy([c[0],c[1]-r*k])+' L'+xy([c[0]+r*k,c[1]])+' L'+xy([c[0],c[1]+r*k])+' L'+xy([c[0]-r*k,c[1]])+' Z',fill:['#3E6150','#D0AC62','#EFE6D8'][j]},pt); });
-    el('circle',{cx:r1(c[0]),cy:r1(c[1]),r:r1(ps*.11),fill:'#7E2530'},pt); });
-  var luce=el('radialGradient',{id:'ig-al-luce',cx:'42%',cy:'38%',r:'72%'},defs); [[0,'#FFF8E8',.38],[.55,'#FFF8E8',0],[1,'#3A2614',.26]].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1],'stop-opacity':q[2]},luce); });
-  var fia=el('radialGradient',{id:'ig-al-fiamma'},defs); [[0,'#FFF3D0',1],[.3,'#FFC85A',.9],[.7,'#E8622C',.35],[1,'#B8321A',0]].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1],'stop-opacity':q[2]},fia); });
-  var brz=el('linearGradient',{id:'ig-al-bronzo',x1:0,y1:0,x2:1,y2:1},defs); [[0,'#8A6232'],[.5,'#5E3F1C'],[1,'#7A5528']].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1]},brz); });
-  var tav=el('g',{'class':'ig-al-tavola'},svg);
-  R(tav,-1,-1,28,19,'ig-al-muro');
-  R(tav,0,0,27,18,'ig-al-fondo');
-  /* gradini dei seggi lungo i lati lunghi (tre per lato): il più alto contro il muro; ogni gradino fa ombra su quello sotto */
-  [0,1,2].forEach(function(k){ R(tav,0,k*1.1,24,(k+1)*1.1,'ig-al-gradino g'+k); R(tav,0,18-(k+1)*1.1,24,18-k*1.1,'ig-al-gradino g'+k); });
-  R(tav,0,0,24,3.3,'ig-al-venature'); R(tav,0,14.7,24,18,'ig-al-venature');
-  [1.1,2.2,3.3].forEach(function(y,k){ var hh=k<2?.42:.6; R(tav,0,y,24,y+hh,null,{fill:'url(#ig-al-sd)'}); R(tav,0,18-y-hh,24,18-y,null,{fill:'url(#ig-al-su)'}); });
-  var spig=''; [1.1,2.2,3.3].forEach(function(y){ var a=M(0,y), b=M(24,y), c=M(0,18-y); spig+='M'+xy(a)+' H'+r1(b[0])+' M'+xy(c)+' H'+r1(b[0])+' '; }); el('path',{d:spig,'class':'ig-al-spigolo'},tav);
-  /* la tribuna in fondo: due gradini e il piano, con i riquadri del marmo */
-  R(tav,24,0,27,18,'ig-al-tribuna'); R(tav,24,0,24.5,18,'ig-al-gradino g2'); R(tav,24.5,0,25,18,'ig-al-gradino g1'); R(tav,24,0,27,18,'ig-al-venature');
-  [[23.6,24],[24.15,24.5],[24.65,25]].forEach(function(q){ R(tav,q[0],0,q[1],18,null,{fill:'url(#ig-al-sl)'}); });
-  R(tav,25.6,1.3,26.6,7.4,'ig-al-riquadro'); R(tav,25.6,10.6,26.6,16.7,'ig-al-riquadro');
-  /* il pavimento con le sue fasce */
-  R(tav,.5,3.8,23.6,14.2,'ig-al-fascia1'); R(tav,.8,4.1,23.3,13.9,'ig-al-fascia2'); R(tav,1,4.3,23.1,13.7,'ig-al-fascia3'); R(tav,1.15,4.45,22.95,13.55,null,{fill:'url(#ig-al-os)'});
-  R(tav,.5,3.8,23.6,14.2,'ig-al-venature ig-al-v-pav');
-  R(tav,0,0,27,18,null,{fill:'url(#ig-al-luce)','pointer-events':'none'});
-  R(tav,0,0,27,.5,null,{fill:'url(#ig-al-sd)'}); R(tav,0,17.5,27,18,null,{fill:'url(#ig-al-su)'});      // l'ombra dei muri
-  /* le porte di bronzo sul lato corto, con le formelle */
-  R(tav,-1.05,6.9,0,11.1,'ig-al-soglia'); R(tav,-1.9,7,-1,11,null,{fill:'url(#ig-al-bronzo)'}); el('path',{d:'M'+xy(M(-1.9,9))+' H'+r1(M(-1,9)[0]),'class':'ig-al-porta-l'},tav);
-  [[7.35,8.65],[9.35,10.65]].forEach(function(q){ R(tav,-1.72,q[0],-1.18,q[1],'ig-al-formella'); });
-  /* i senatori: figure sedute viste dall'alto, rivolte verso il pavimento (non contate); ognuna un po' diversa: grandezza, piega, capelli, qualche seggio vuoto */
-  var sen=[], Rs=caso(384), fila=[.55,1.65,2.75], CAPELLI=['#4E3320','#6B4A30','#86664A','#A89A88'];
-  function seggio(x,y,dir){ var a=M(x-.62,y-dir*.48), b=M(x+.62,y-dir*.08); el('rect',{x:r1(Math.min(a[0],b[0])),y:r1(Math.min(a[1],b[1])),width:r1(Math.abs(b[0]-a[0])),height:r1(Math.abs(b[1]-a[1])),rx:1.2,'class':'ig-al-seggio'},tav); }
-  [0,1].forEach(function(lato){ var dir=lato?-1:1; fila.forEach(function(fy,k){ for(var x=1.6;x<23.4;x+=1.52){ var xx=x+(k%2?.4:0), y=lato?18-fy:fy; seggio(xx,y,dir); if(Rs()<.1) continue;
-      xx+=(Rs()-.5)*.22; var q=M(xx,y), sc=s*(.9+Rs()*.16), u=function(n){ return r1(n*sc); }, w=function(n){ return r1(n*sc*dir); };
-      var g=el('g',{'class':'ig-al-sen',transform:'translate('+xy(q)+')'},tav);
-      el('ellipse',{cx:u(.09),cy:u(.12),rx:u(.5),ry:u(.4),'class':'ig-al-sen-ombra'},g);      // l'ombra: la luce viene sempre da sinistra in alto
-      var f=el('g',{transform:'rotate('+r1((Rs()-.5)*14)+')'},g), corpo='M'+u(-.42)+' '+w(-.1)+' C'+u(-.46)+' '+w(-.36)+' '+u(.46)+' '+w(-.36)+' '+u(.42)+' '+w(-.1)+' L'+u(.3)+' '+w(.3)+' Q0 '+w(.43)+' '+u(-.3)+' '+w(.3)+' Z';
-      el('path',{d:corpo,'class':'ig-al-toga'},f); el('path',{d:corpo,fill:'url(#ig-al-hi)','class':'ig-al-lucefig'},f);
-      var lp=Rs()<.5?1:-1; el('path',{d:'M'+u(-.33*lp)+' '+w(-.2)+' Q'+u(-.04*lp)+' '+w(.04)+' '+u(.2*lp)+' '+w(.3),'class':'ig-al-piega'},f);
-      var te=el('circle',{cx:0,cy:w(-.17),r:u(.155),'class':'ig-al-capo'},f); te.style.fill=CAPELLI[Math.floor(Rs()*CAPELLI.length)];
-      el('circle',{cx:u(-.05),cy:r1((-.17-.05)*sc*dir),r:u(.055),'class':'ig-al-capo-luce'},f);
-      g.style.transitionDelay=(x/23*.9+k*.12).toFixed(2)+'s'; sen.push({g:g,cr:Rs()<.74,x:x}); } }); });
-  /* l'altare (un altare qualsiasi; posizione indicativa) e la sua ombra quando manca */
-  var AX=21.6, AY=9, ombra=el('g',{'class':'ig-al-ombra'},tav); R(ombra,AX-1.1,AY-.8,AX+1.1,AY+.8,'ig-al-ombra-r'); var qO=M(AX,AY), dubbio=tx(ombra,qO[0],qO[1]+5,'ig-al-dubbio','?','middle');
-  var alt=el('g',{'class':'ig-al-altare'},tav), alC=el('g',null,alt), v=function(n){ return r1(n*s); };
-  el('circle',{r:v(2.6),fill:'url(#ig-al-fiamma)','class':'ig-al-bagliore'},alC);
-  el('rect',{x:v(-1.05),y:v(-.8),width:v(2.1),height:v(1.6),rx:2,'class':'ig-al-zoccolo'},alC);      // il gradino, con la sua ombra (CSS)
-  el('rect',{x:v(-.85),y:v(-.6),width:v(1.7),height:v(1.2),rx:1.5,'class':'ig-al-blocco'},alC); el('rect',{x:v(-.85),y:v(-.6),width:v(1.7),height:v(1.2),rx:1.5,fill:'url(#ig-al-hi)'},alC);
-  [-1,1].forEach(function(sx){ el('rect',{x:v(sx<0?-.85:.6),y:v(-.6),width:v(.25),height:v(1.2),rx:v(.12),'class':'ig-al-pulvino'},alC); [-1,1].forEach(function(sy){ el('circle',{cx:v(sx*.725),cy:v(sy*.5),r:r1(Math.max(1.2,s*.1)),'class':'ig-al-rosetta'},alC); }); });
-  el('ellipse',{rx:v(.34),ry:v(.28),'class':'ig-al-focolare'},alC); [[-.12,.06],[.1,-.05],[.03,.12]].forEach(function(q){ el('circle',{cx:v(q[0]),cy:v(q[1]),r:r1(Math.max(1,s*.06)),'class':'ig-al-brace'},alC); });
-  var fsc=Math.max(.6,s/13), fg=el('g',{'class':'ig-al-fuoco-a'},alC);
-  el('path',{d:FIAMMA,transform:'scale('+r1(fsc*100)/100+')','class':'ig-al-fuoco'},fg);
-  el('path',{d:FIAMMA,transform:'translate(0,'+r1(fsc*3.2)+') scale('+r1(fsc*62)/100+')','class':'ig-al-fuoco2'},fg);
-  el('path',{d:FIAMMA,transform:'translate(0,'+r1(fsc*5.8)+') scale('+r1(fsc*32)/100+')','class':'ig-al-fuoco3'},fg);
-  for(var sp=0;sp<3;sp++){ el('circle',{cx:r1((sp-1)*s*.28),cy:r1(-fsc*10),r:1.3,'class':'ig-al-scintilla'},alC).style.animationDelay=(sp*.47)+'s'; }
-  var asse=M(AX,AY), uscita=M(-3.2,AY);
-  /* i portatori, quando l'altare si muove */
-  var port=el('g',{'class':'ig-al-port'},alt); [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(function(q){ el('circle',{cx:r1(q[0]*s*1.05),cy:r1(q[1]*s*.8),r:r1(Math.max(1.8,s*.24)),'class':'ig-al-testa'},port); });
-  /* la scritta sopra la pianta e il bollo: piccolo, su due righe, accanto al posto vuoto dell'altare (prima copriva mezzo pavimento) */
-  var sch=tx(svg,ab[0]+ab[2]+s,ab[1]+19*s+14,'ig-m-schema ig-f','pianta: uno schema','end');
-  var fsB=piccolo||!oriz?11:14, bollo=el('g',{'class':'ig-ca-bollo ig-al-bollo'},svg), bF=el('rect',{rx:4,'class':'ig-al-bollo-r'},bollo), bR1=el('rect',{rx:4,'class':'ig-ca-bollo-r'},bollo), bR2=el('rect',{rx:2.5,'class':'ig-al-bollo-r2'},bollo);
-  var bt1=tx(bollo,0,0,'ig-ca-bollo-t','RICHIESTA','middle'), bt2=tx(bollo,0,0,'ig-ca-bollo-t','RESPINTA','middle'); bt1.style.fontSize=bt2.style.fontSize=fsB+'px';
-  var bwB=Math.max(largo(bt1),largo(bt2))+20, bhB=fsB*2.3+14, bx=Math.max(ab[0]+4*s,M(AX-1.5,AY)[0]-bwB), by=M(AX,AY)[1]-bhB/2;
-  [[bF,0],[bR1,0],[bR2,3]].forEach(function(q){ q[0].setAttribute('x',r1(bx+q[1])); q[0].setAttribute('y',r1(by+q[1])); q[0].setAttribute('width',r1(bwB-2*q[1])); q[0].setAttribute('height',r1(bhB-2*q[1])); });
-  [bt1,bt2].forEach(function(t,j){ t.setAttribute('x',r1(bx+bwB/2)); t.setAttribute('y',r1(by+7+fsB*(j?2.05:.95))); });
-  /* i fumetti della pianta: frazioni del riquadro dell'aula */
-  var ba=[ab[0],ab[1],ab[2],ab[3]], fq=function(x,y){ return [x/27,y/18]; };
-  var FU={porte:[fumetto(svg,ba,'porte di bronzo','dx'),fq(-1.4,9)],seggi:[fumetto(svg,ba,'i gradini dei seggi','dx'),fq(7,1.65)],tribuna:[fumetto(svg,ba,'la tribuna','sx'),fq(25.6,15.5)],
-    altare:[fumetto(svg,ba,piccolo||!oriz?'l\'altare (dove: indicativo)':'l\'altare: posizione indicativa','dx'),fq(AX,AY)]};
-  /* la legenda dei colori dei senatori, sotto l'aula */
-  var gLeg=el('g',{'class':'ig-al-leg'},svg), lx=ab[0]-2*s, ly=ab[1]+19*s+14, VOCI=[['pagano',oriz&&!piccolo?'culti tradizionali':'pagani'],['cristiano','cristiani'],['ignoto','non si sa']];
-  VOCI.forEach(function(v){ var g=el('g',{'class':'ig-al-voce '+v[0]},gLeg); el('ellipse',{cx:r1(lx+6),cy:r1(ly-4),rx:6,ry:4.4,'class':'ig-al-toga'},g); var t=tx(g,lx+16,ly,'ig-al-voce-t',v[1]); lx+=largo(t)+34; });
-  var avvLeg=tx(gLeg,lx-8,ly,'ig-al-voce-t nota','· proporzioni indicative'); if(lx+largo(avvLeg)>ab[0]+ab[2]+s-largo(sch)-12) avvLeg.textContent='';
-  /* la colonna: anno, stato, voce o schede */
-  var gC=el('g',{'class':'ig-p-col-d'},svg), fsA=oriz?Math.min(piccolo?34:56,cb[2]/4.6):Math.min(30,W/11), tA=tx(gC,cb[0],cb[1]+fsA*.82,'ig-p-anno',''), tSt=el('text',{x:r1(cb[0]),y:r1(cb[1]+fsA*1.08+(oriz?16:14)),'class':'ig-p-stato'},gC);
-  var gQ=el('g',null,gC), yQ=cb[1]+fsA*1.08+(piccolo?52:oriz?40:34);
-  var STATI=["L'AULA DEL SENATO","VIA L'ALTARE","MA I RITI RESTANO","L'ALTARE TORNA","VIA DI NUOVO","UN USURPATORE","LA RICHIESTA","LA RISPOSTA","QUANTI ERANO?","RESPINTA","EUGENIO","IL FRIGIDO","SILENZIO"];
-  var COL={0:{r:[['l\'aula','27 × 18 m'],['la rifà','Diocleziano, dopo il 283']]},1:{r:[['chi','Costanzo II'],['durante','la sua visita a Roma']]},
-    2:{q:['«Ordinò di toglierlo, non ordinò di rimetterlo.»','Ambrogio, Lettera 18, 32, su Costanzo II']},3:{r:[['quando','le fonti non lo dicono'],['sotto chi','probabilmente Giuliano']]},
-    4:{r:[['chi','Graziano'],['e i fondi','tagliati: culti e Vestali']]},5:{r:[['Magno Massimo','fa uccidere Graziano'],['Valentiniano II','governa una parte dell\'Occidente']]},
-    6:{q:['«Non si può arrivare per una sola strada a un mistero così grande.»','Simmaco, Relazione III, 10']},7:{q:['«La curia è ormai piena di un numero maggiore di cristiani.»','Ambrogio, Lettera 17, 5']},
-    8:{r:[['Simmaco','parla per tutto il Senato'],['Ambrogio','solo «pochi pagani»'],['gli storici','non si può stabilire']]},9:{r:[['chi decide','Valentiniano II'],['i tagli','restano in vigore']]},
-    10:{r:[['Eugenio','cristiano, fa doni ai senatori pagani'],['Paolino','nomina anche l\'altare'],['Alan Cameron','dubita di una rinascita pagana']]},
-    11:{r:[['391','Teodosio vieta i sacrifici'],['394','vince Eugenio sul Frigido']]},12:{t:'Dopo il 394 l\'altare non compare più nelle fonti di questa pagina.'}};
-  /* la colonna delle chiavi è larga quanto la chiave più lunga (25 novembre 2026: «MAGNO MASSIMO» passava sotto «fa uccidere Graziano» con la colonna fissa a 112 punti);
-     se la chiave più lunga prende più di metà della colonna, il valore va sotto la chiave */
-  var misK=[], chiavi=[]; Object.keys(COL).forEach(function(k){ (COL[k].r||[]).forEach(function(r){ chiavi.push(r[0].toUpperCase()); }); });
-  chiavi.forEach(function(s){ misK.push(tx(svg,0,0,'ig-p-sch-k',s)); }); var wkM=colonna(misK)+14; misK.forEach(function(t){ t.remove(); });
-  var stretta=cb[2]<250||wkM>cb[2]*.5;
-  var colCit=null;
-  function scriviCol(ii){ gQ.textContent=''; colCit=null; var c=COL[ii]; if(!c) return; var hq=cb[1]+cb[3]-yQ; if(hq<34) return;
-    if(c.q){ var fs=oriz?(piccolo?15:Math.min(19,cb[2]/18)):15.5, g=citazione(gQ,cb[0],yQ,cb[2],c.q[0],c.q[1],fs); if(g._h>hq){ gQ.textContent=''; } else colCit=g; return; }
-    if(c.t){ var t0=el('text',{x:r1(cb[0]),y:r1(yQ+18),'class':'ig-al-fine'},gQ); t0.style.fontSize=(oriz&&!piccolo?21:16)+'px'; avvolgi(t0,c.t,cb[2],oriz&&!piccolo?27:21); return; }
-    var rh=stretta?40:(oriz&&!piccolo?34:28), wk=stretta?0:Math.max(oriz&&!piccolo?128:112,wkM), y=yQ;
-    c.r.forEach(function(r){ if(y+rh>cb[1]+cb[3]+2) return; var g=el('g',null,gQ); el('line',{x1:r1(cb[0]),x2:r1(cb[0]+cb[2]),y1:r1(y),y2:r1(y),'class':'ig-p-sch-filo'},g); tx(g,cb[0],y+(stretta?14:rh*.64),'ig-p-sch-k',r[0].toUpperCase());
-      var v=tx(g,cb[0]+wk,y+(stretta?32:rh*.66),'ig-p-sch-v',r[1]), n=1; if(!oriz||piccolo) v.style.fontSize='15px'; var lim=cb[2]-wk; if(largo(v)>lim){ v.style.fontSize='13.5px'; }
-      if(largo(v)>lim){ var s0=r[1]; v.textContent=''; n=avvolgi(v,s0,lim,15); if(!stretta) v.setAttribute('y',r1(y+rh*.5)); }
-      var hh=stretta?Math.max(rh,24+n*15):Math.max(rh,rh*.5+n*15-4); if(y+hh>cb[1]+cb[3]+2){ g.remove(); y=1e9; return; } y+=hh; }); }
-  /* il nastro: dove sta l'altare, dal 350 al 400 */
-  var gR=el('g',{'class':'ig-p-nastro'},svg), n0=rb[0]+62, n1=rb[0]+rb[2]-4, A0=350, A1=400, X=function(a){ return n0+(a-A0)/(A1-A0)*(n1-n0); }, ny=rb[1]+18, nh=12;
-  tx(gR,rb[0],ny+nh-2,'ig-p-n-et','L\'ALTARE');
-  var cpN=el('clipPath',{id:'ig-al-cn'},defs), cpNr=el('rect',{x:r1(n0-2),y:r1(ny-4),width:0,height:nh+8},cpN), gB=el('g',{'clip-path':'url(#ig-al-cn)'},gR);
-  var gF=el('linearGradient',{id:'ig-al-sfuma'},defs); [[0,'#E8D7A8'],[.5,'#F4EBD4'],[1,'#E8D7A8']].forEach(function(q){ el('stop',{offset:q[0],'stop-color':q[1]},gF); });
-  function banda(a,b,cl){ return el('rect',{x:r1(X(a)),y:r1(ny),width:r1(Math.max(2,X(b)-X(a)-1)),height:nh,rx:2,'class':'ig-al-b '+cl},gB); }
-  banda(350,357,'dentro'); banda(357,382,'forse'); banda(382,392,'fuori'); banda(392,394,'forse'); banda(394,400,'muto');
-  tx(gB,X(369.5),ny+nh-2.5,'ig-al-b-t',W<520?'?':'tolto, poi rimesso: quando?','middle'); tx(gB,X(393),ny+nh-2.5,'ig-al-b-t','?','middle');
-  [[357,'357','middle'],[382,'382','end'],[384,'384','start'],[394,'394','middle']].forEach(function(q){ var x=X(q[0]); el('line',{x1:r1(x),x2:r1(x),y1:r1(ny+nh+1),y2:r1(ny+nh+5),'class':'ig-base'},gR); tx(gR,x,ny+nh+17,'ig-p-n-anno',q[1],q[2]); });
-  var legN=[['dentro','nella Curia'],['fuori','tolto'],['forse','incerto'],['muto','nessuna notizia']], lnx=n0, gLN=el('g',null,gR);
-  legN.forEach(function(v){ el('rect',{x:r1(lnx),y:r1(ny-13),width:12,height:7,rx:1.5,'class':'ig-al-b '+v[0]},gLN); var t=tx(gLN,lnx+16,ny-6,'ig-al-voce-t piccola',v[1]); lnx+=largo(t)+30; });
-  if(lnx>n1+10) gLN.textContent='';
-  var cur=el('g',{'class':'ig-p-cur'},gR); el('line',{x1:0,x2:0,y1:r1(ny-3),y2:r1(ny+nh+3),'class':'ig-p-cur-l'},cur); el('circle',{cx:0,cy:r1(ny-3),r:4,'class':'ig-p-cur-p'},cur);
-  var visto=-1;
-  S.passo=function(t){
-    var i=-1; T.forEach(function(x,j){ if(t>=x) i=j; }); var ii=Math.max(0,i);
-    cls(tav,'vis',t>=T[0]-500); cls(sch,'vis',t>=T[0]+400&&!(i>=6&&i<=8));
-    /* l'altare: fuori nel 357, di nuovo dentro, fuori dal 382; nel 392-394 solo l'ombra col punto di domanda */
-    function corsa(a,b){ return E.io(fase(t,a,b)); }
-    var via1=corsa(T[1]+600,T[1]+3600), torna=corsa(T[3]+400,T[3]+3200), via2=corsa(T[4]+400,T[4]+3400), pos;
-    if(t<T[3]) pos=via1; else if(t<T[4]) pos=1-torna; else pos=via2;
-    var q=[lerp(asse[0],uscita[0],pos),asse[1]]; fissa(alC,'transform','translate('+xy(q)+')'); fissa(port,'transform','translate('+xy(q)+')');
-    var muove=(t>T[1]+500&&t<T[1]+3700)||(t>T[3]+300&&t<T[3]+3300)||(t>T[4]+300&&t<T[4]+3500);
-    cls(port,'vis',muove); cls(alt,'vis',pos<.97); cls(alt,'forse',t>=T[3]&&t<T[4]);
-    cls(ombra,'vis',pos>.05||i>=10); cls(ombra,'eugenio',i===10||i===11&&t<T[11]+800); cls(dubbio,'vis',i===3||i===10);
-    /* i senatori */
-    var col=i>=6&&i<8?(i===6?'pagano':null):null;
-    sen.forEach(function(q){ var c=i===6?'pagano':i===7?(q.cr?'cristiano':'pagano'):i===8?'ignoto':i===9&&t<T[9]+600?'ignoto':''; ['pagano','cristiano','ignoto'].forEach(function(k){ cls(q.g,k,c===k); }); });
-    cls(gLeg,'vis',i>=6&&i<=8); ['pagano','cristiano','ignoto'].forEach(function(k,kk){ cls(gLeg.childNodes[kk],'ora',(i===6&&k==='pagano')||(i===7&&k!=='ignoto')||(i===8&&k==='ignoto')); });
-    cls(bollo,'vis',i===9&&t>=T[9]+700);
-    /* i fumetti */
-    function Fu(k,da,a){ var f=FU[k]; cls(f[0],'vis',t>=da&&t<a); f[0].metti(f[1]); }
-    var uno=!oriz||piccolo; Fu('seggi',T[0]+700,uno?T[0]+1900:T[1]-300); Fu('porte',uno?T[0]+2000:T[0]+1300,uno?T[0]+3000:T[1]-300); Fu('tribuna',uno?T[0]+3100:T[0]+1900,uno?T[0]+4100:T[1]-300); Fu('altare',uno?T[0]+4200:T[0]+2600,T[1]+400);
-    /* la colonna */
-    cls(gC,'vis',t>=T[0]-300);
-    if(i!==visto){ visto=i; scrivi(tA,i<0?'':fasi[ii][0]); var fa=fsA; tA.style.fontSize=fa+'px'; while(largo(tA)>cb[2]&&fa>18){ fa-=2; tA.style.fontSize=fa+'px'; } tSt.textContent=''; if(i>=0){ avvolgi(tSt,STATI[ii],cb[2],17); scriviCol(ii); } else gQ.textContent=''; }
-    cls(gC,'cambia',i>=0&&t<T[ii]+120); if(colCit) cls(colCit,'vis',t>=T[ii]+250);
-    /* il nastro */
-    var anni=[350,357,357,362,382,383,384,384,384,384,392,394,400], a=i<0?350:lerp(anni[ii],anni[Math.min(12,ii+1)],E.io(fase(t,T[Math.min(12,ii+1)]-1000,T[Math.min(12,ii+1)])));
-    if(i>=12) a=lerp(394,400,E.io(fase(t,T[12],T[12]+2000)));
-    cls(gR,'vis',t>=T[0]+300); fissa(cur,'transform','translate('+r1(X(a))+',0)'); fissa(cpNr,'width',r1(Math.max(0,X(a)-n0+2)));
-  };
-  S.dura=tFin;
-  S.battute=fasi.map(function(f,k){ return {t:T[k],anno:f[0],testo:f[1]}; });
-}
-
-/* ======================================================================
    15. I sacchi di Roma a confronto (410, 455, 546)
    Aggiunta il 23 novembre 2026 (gruppo 3). Tre schede affiancate (sul telefono in piedi, una sotto l'altra) con le stesse domande: chi e da dove, quanto durò, che cosa fu preso
    o distrutto; poi una linea del tempo delle fonti (dal sacco all'anno in cui la fonte scrive) e il finale. Fatti, tutti dalla pagina:
@@ -3451,6 +3307,12 @@ function disegnaBarbari(svg,S,W,H){
   var oriz=W/H>=1.15, piccolo=oriz&&W<700, pad=oriz?16:10, defs=el('defs',null,svg), fasi=BARBARI.fasi, i;
   var T=[1300,6600,12000,17400,23400,28600,34000,41000,47000,53000,58000,63600,69000,75000], tFin=T[13]+7200;
   var CP={goti:'#8054C3',vandali:'#967E56',svevi:'#AD6B0A',burgundi:'#C16BBC',franchi:'#405D83',alamanni:'#7A6A55',sassoni:'#848FB4',longobardi:'#725302',ostrogoti:'#5E7F58',unni:'#67664E'};
+  /* i nomi scritti nel colore del popolo, scuriti quanto basta per leggersi sul fondo chiaro (contrasto di almeno 4,7 a 1: 26 novembre 2026, prima Sassoni, Burgundi e altri
+     restavano fra 3 e 4); barre e punti tengono il colore pieno */
+  function scuro(hex){ var c=[1,3,5].map(function(k){ return parseInt(hex.substr(k,2),16); }), L=function(v){ return v.map(function(x){ x/=255; return x<=.03928?x/12.92:Math.pow((x+.055)/1.055,2.4); }); };
+    for(var n=0;n<30;n++){ var l=L(c), Y=.2126*l[0]+.7152*l[1]+.0722*l[2]; if((.88+.05)/(Y+.05)>=4.7) break; c=c.map(function(x){ return x*.93; }); }
+    return '#'+c.map(function(x){ return ('0'+Math.round(x).toString(16)).slice(-2); }).join(''); }
+  var CT={}; Object.keys(CP).forEach(function(k){ CT[k]=scuro(CP[k]); });
   /* impaginazione: la carta e la colonna */
   var mb, cb;
   if(oriz){ var mw=Math.round(W*(piccolo?.66:.64))-pad; mb=[pad,pad,mw,H-2*pad]; cb=[pad+mw+(piccolo?12:26),pad+2,W-(pad+mw+(piccolo?12:26))-pad,H-2*pad-4]; }
@@ -3459,7 +3321,7 @@ function disegnaBarbari(svg,S,W,H){
   var nC=0; function carta(V,stati){ var g=el('g',{'class':'ig-atto'},svg), F=finestra(g,defs,'ig-bb-c'+(++nC),V,mb,{stati:stati}); F.atto=g;
     Object.keys(stati||{}).forEach(function(r){ if(stati[r]==='regno:unni'&&G.regioni[r]){ var p=el('path',{d:G.regioni[r].d,'class':'ig-fin-reg ig-bb-unni'},null); F.carta.insertBefore(p,F.carta.querySelector('image')); F.reg[r]=p; } });
     return F; }
-  function punto(F,p,nome,cl,dx,dy,an){ var q=F.M(p), g=el('g',{'class':'ig-bb-pop '+(cl||''),transform:'translate('+xy(q)+')'},F.sopra); g.style.setProperty('--c',CP[cl]||'#3B2F26');
+  function punto(F,p,nome,cl,dx,dy,an){ var q=F.M(p), g=el('g',{'class':'ig-bb-pop '+(cl||''),transform:'translate('+xy(q)+')'},F.sopra); g.style.setProperty('--c',CP[cl]||'#3B2F26'); g.style.setProperty('--ct',CT[cl]||'#3B2F26');
     el('circle',{r:9,'class':'ig-bb-pop-a'},g); el('circle',{r:4.6,'class':'ig-bb-pop-p'},g); if(nome) tx(g,dx||0,dy==null?-10:dy,'ig-bb-pop-n',nome,an||'middle'); return g; }
   function data(F,a,b){ var g=el('g',{'class':'ig-bb-data'},F.sopra), t1=tx(g,mb[0]+14,mb[1]+(piccolo||!oriz?26:34),'ig-bb-data-1',a); t1.style.fontSize=(piccolo||!oriz?19:26)+'px'; if(b) tx(g,mb[0]+14,mb[1]+(piccolo||!oriz?44:56),'ig-bb-data-2',b); return g; }
   /* A. da dove vengono (235) e il Danubio (376) */
@@ -3518,15 +3380,20 @@ function disegnaBarbari(svg,S,W,H){
   [400,500,600,700,800].forEach(function(a){ el('line',{x1:r1(X(a)),x2:r1(X(a)),y1:r1(top-4),y2:r1(bot),'class':'ig-griglia'},gR); tx(gR,X(a),bot+15,'ig-asse',String(a),'middle'); });
   var ptR=el('pattern',{id:'ig-bb-trat',width:5,height:5,patternUnits:'userSpaceOnUse',patternTransform:'rotate(45)'},defs); el('rect',{width:5,height:5,fill:'#F4EBD8'},ptR); el('rect',{width:2,height:5,fill:'#9C8A6C'},ptR);
   var sfu=el('linearGradient',{id:'ig-bb-sfuma'},defs); [[0,1],[1,0]].forEach(function(q){ el('stop',{offset:q[0],'stop-color':CP.burgundi,'stop-opacity':q[1]},sfu); });
-  RIGHE.forEach(function(r,j){ var y=top+j*rhR, cy=y+rhR*.52, g=el('g',{'class':'ig-bb-riga'},gR), bh=Math.min(12,rhR*.36); g.style.setProperty('--c',CP[r[1]]);
+  RIGHE.forEach(function(r,j){ var y=top+j*rhR, cy=y+rhR*.52, g=el('g',{'class':'ig-bb-riga'},gR), bh=Math.min(12,rhR*.36); g.style.setProperty('--c',CP[r[1]]); g.style.setProperty('--ct',CT[r[1]]);
     var tn=tx(g,fb[0],cy+4,'ig-bb-r-n',r[0]); if(largo(tn)>cl-8) tn.style.fontSize='11px'; if(largo(tn)>cl-8) tn.textContent=r[0].replace(' (Visigoti)','').replace(' e Alani','').replace('Angli e ','');
     var clip=el('clipPath',{id:'ig-bb-rc'+j},defs), cr=el('rect',{x:r1(x0),y:r1(y),width:0,height:r1(rhR)},clip), gb=el('g',{'clip-path':'url(#ig-bb-rc'+j+')'},g);
     r[2].forEach(function(s){ var a=X(s[0]), b=X(s[1]), w=Math.max(2,b-a); if(s[2]==='mov') el('path',{d:'M'+r1(a)+' '+r1(cy)+' H'+r1(b),'class':'ig-bb-r-mov'},gb); else if(s[2]==='alleati'||s[2]==='forse') el('rect',{x:r1(a),y:r1(cy-bh/2),width:r1(w),height:r1(bh),rx:2,'class':'ig-bb-r-alle'},gb);
       else el('rect',{x:r1(a),y:r1(cy-bh/2),width:r1(w),height:r1(bh),rx:2,'class':'ig-bb-r-regno',fill:s[2]==='sfuma'?'url(#ig-bb-sfuma)':null},gb); });
-    if(r[4]){ var xe=X(r[4][0]); el('path',{d:'M'+r1(xe)+' '+r1(cy-bh/2-3)+' V'+r1(cy+bh/2+3),'class':'ig-bb-r-fine'},gb); tx(gb,xe+4,cy+4,'ig-bb-r-anno',r[4][1]); }
+    /* l'anno della fine accanto al segno; se la barra va oltre (i Franchi dopo Verdun, 843) l'anno sta sotto la barra, non sopra il colore (26 novembre 2026, l'utente:
+       «la barra dei Franchi arriva su 843 che non si legge») */
+    if(r[4]){ var xe=X(r[4][0]), oltre=r[2].some(function(s){ return s[1]>r[4][0]; }); el('path',{d:'M'+r1(xe)+' '+r1(cy-bh/2-3)+' V'+r1(cy+bh/2+3),'class':'ig-bb-r-fine'},gb);
+      if(!oltre) tx(gb,xe+4,cy+4,'ig-bb-r-anno',r[4][1]); }
     else if(r[1]==='burgundi') tx(gb,X(545),cy+4,'ig-bb-r-anno','?');
     else el('path',{d:'M'+r1(x1-8)+' '+r1(cy-5)+' L'+r1(x1)+' '+r1(cy)+' L'+r1(x1-8)+' '+r1(cy+5),'class':'ig-bb-r-oltre'},gb);
     var note=el('g',{'class':'ig-bb-r-note'},g), finora=-1e9; if(rhR>=24) r[3].forEach(function(n){ var xn=X(n[0]), t=tx(note,xn,cy-bh/2-4,'ig-bb-r-nota',n[1],'middle'), w=largo(t), a=xn-w/2; if(xn+w/2>x1){ t.setAttribute('text-anchor','end'); a=xn-w; } if(a<finora+6){ t.remove(); return; } finora=a+w; el('circle',{cx:r1(xn),cy:r1(cy),r:2.6,'class':'ig-bb-r-pt'},note); });
+    if(r[4]&&r[2].some(function(s){ return s[1]>r[4][0]; })){ var tF=tx(note,X(r[4][0]),cy-bh/2-4,'ig-bb-r-anno',r[4][1],'middle'), wF=largo(tF);      // l'anno sopra la barra, come le note, e compare con loro a barra finita
+      if(X(r[4][0])-wF/2<finora+6||rhR<24) tF.setAttribute('y',r1(cy+bh/2+15)); }      // se tocca la nota prima (o le note non ci sono), sotto la barra
     righeR.push({g:g,cr:cr,note:note,end:X(860)-x0}); });
   var legR=el('g',{'class':'ig-bb-leg ig-bb-leg-r'},gR), lx=x0, VOCI=[['mov','in cammino'],['alle','alleati o data incerta'],['regno','regno']];
   VOCI.forEach(function(v){ var g=el('g',null,legR); if(v[0]==='mov') el('path',{d:'M'+r1(lx)+' '+r1(fb[1]+27)+' h14','class':'ig-bb-r-mov'},g); else el('rect',{x:r1(lx),y:r1(fb[1]+22),width:14,height:9,rx:2,'class':v[0]==='alle'?'ig-bb-r-alle':'ig-bb-r-regno'},g).style.setProperty('--c','#7A6A55');
@@ -3599,10 +3466,10 @@ function disegnaBarbari(svg,S,W,H){
     Object.keys(FD.reg).forEach(function(r){ if(/ig-bb-unni/.test(FD.reg[r].getAttribute('class'))) cls(FD.reg[r],'acceso',i===4); });
     segui(rT,E.io(fase(t,T[5]+600,T[5]+3000)));
     /* E */
-    cls(FE.atto,'vis',t>=T[6]-300&&t<T[7]-200); segui(rE,E.io(fase(t,T[6]+500,T[6]+5200))); segui(rE2,E.io(fase(t,T[6]+5200,T[6]+6400)));
+    cls(FE.atto,'vis',t>=T[6]-120&&t<T[7]-200); segui(rE,E.io(fase(t,T[6]+500,T[6]+5200))); segui(rE2,E.io(fase(t,T[6]+5200,T[6]+6400)));
     var stE=[T[6]+400,T[6]+1700,T[6]+3600,T[6]+5000,T[6]+6300]; pE.forEach(function(g,j){ cls(g,'vis',t>=stE[j]); }); cls(avvE,'vis',t>=T[6]+2000); cls(dE,'vis',true);
     /* F */
-    cls(gR,'vis',t>=T[7]-300&&t<T[9]-200); righeR.forEach(function(r,j){ var f=E.io(fase(t,T[7]+400+j*260,T[7]+3400+j*260)); fissa(r.cr,'width',r1(r.end*f+30)); cls(r.note,'vis',f>=1); cls(r.g,'vis',t>=T[7]+300+j*260);
+    cls(gR,'vis',t>=T[7]-120&&t<T[9]-200);      /* le righe entrano dopo che carta e colonna hanno cominciato a uscire: prima si sovrapponevano (26 novembre 2026) */ righeR.forEach(function(r,j){ var f=E.io(fase(t,T[7]+400+j*260,T[7]+3400+j*260)); fissa(r.cr,'width',r1(r.end*f+30)); cls(r.note,'vis',f>=1); cls(r.g,'vis',t>=T[7]+300+j*260);
       cls(r.g,'evid',i===8&&[0,2,7,8].indexOf(j)>=0); });
     /* G */
     cls(gQ,'vis',t>=T[9]-300&&t<T[12]-200); var fv=E.out(fase(t,T[9]+400,T[9]+2400)); scrivi(nV,num(Math.round(80000*fv/1000)*1000));
@@ -3611,7 +3478,7 @@ function disegnaBarbari(svg,S,W,H){
     /* H */
     cls(gP,'vis',t>=T[12]-300); cards.forEach(function(c,j){ cls(c,'vis',j<3?t>=T[12]+500+j*700:t>=T[13]+400+(j-3)*900); }); cls(tP,'vis',t>=T[13]+2600);
     /* la colonna: solo accanto alle carte */
-    cls(gK,'vis',t>=T[0]-300&&i<7);
+    cls(gK,'vis',t>=T[0]-300&&t<T[7]-200);
     if(i!==visto){ visto=i; scrivi(tA,i<0?'':fasi[ii][0]); var fa=fsA; tA.style.fontSize=fa+'px'; while(largo(tA)>cb[2]&&fa>14){ fa-=2; tA.style.fontSize=fa+'px'; } tSt.textContent=''; if(i>=0) avvolgi(tSt,STATI[ii],cb[2],16); scriviK(ii); }
   };
   S.dura=tFin;
@@ -3925,7 +3792,7 @@ function disegnaPoitiers(svg,S,W,H){
 }
 
 /* ======================================================================
-   Il Cristianesimo a Roma: da perseguitati a padroni di casa (303-852)
+   Il trionfo del Cristianesimo a Roma: da perseguitati a padroni di casa (303-852). Il titolo era «Il Cristianesimo a Roma» fino al 26 novembre 2026 (l'utente: «Rinomina…»)
    Aggiunta il 24 novembre 2026 (l'utente: «Procedi come proposto»; «Manteniamo la fedeltà con i veri racconti»). Una pianta di Roma che si riempie di chiese mentre i templi
    chiudono, e un nastro del potere che cambia forma: culto perseguitato, culto libero, religione dell'Impero, il papa che governa. Tutto viene dalla pagina:
    - tappe del 312 (la persecuzione del 303: distruggere le chiese e bruciare i libri; Galerio nel 311; Milano nel 313, libertà «ai cristiani e a tutti»; il segno in Lattanzio e
@@ -3940,7 +3807,7 @@ function disegnaPoitiers(svg,S,W,H){
    Schemi, detti nelle avvertenze in pagina: la pianta è quella del modello; i segni stanno sugli edifici attuali; per molte chiese minori l'anno è una scelta del modello dentro
    un secolo o una prima attestazione; i templi segnati sono quelli che il modello chiude nel 392, ma la fine del culto non ha una data; il nastro del potere è un riassunto
    delle tappe, non una periodizzazione delle fonti; il segno sullo scudo è disegnato dalla descrizione di Lattanzio. Nessun numero di cristiani: le fonti non lo danno. */
-var CRISTIANESIMO={ titolo:"Il Cristianesimo a Roma", sotto:"Da culto perseguitato a religione dell'Impero, fino al papa che governa la città: 303-852",
+var CRISTIANESIMO={ titolo:"Il trionfo del Cristianesimo a\u00a0Roma",      /* «a Roma» non si divide: sul telefono il titolo va a capo prima di «a» */ sotto:"Da culto perseguitato a religione dell'Impero, fino al papa che governa la città: 303-852",
   fasi:[["303","Sotto Diocleziano comincia la grande persecuzione dei cristiani. Le autorità ordinano di distruggere le chiese e bruciare i libri sacri."],
     ["312","Ponte Milvio, in due racconti. Per Lattanzio, verso il 315, Costantino sogna e fa tracciare sugli scudi il segno di Cristo. Per Eusebio, dopo il 337, prima vede in cielo una croce luminosa, poi un sogno gli spiega come usare quel segno. L'arco del Senato parla solo di «ispirazione della divinità»."],
     ["313","Nel 311 Galerio aveva riconosciuto ai cristiani il diritto di praticare la loro religione. Nel 313, a Milano, Costantino e Licinio garantiscono la libertà di culto «ai cristiani e a tutti»."],
@@ -4024,6 +3891,7 @@ function disegnaCristianesimo(svg,S,W,H){
     giove:nome(B([-29,0]),'Giove Capitolino',-sT*.9,sT*.9,'end'),curia:nome(B([.8,-5.1]),"Curia → Sant'Adriano",sT*.8,-sT*.8,'start'),venere:nome(pV,'tempio di Roma',sT*.8,sT*.9,'start'),sole:nome(B([-30,-106]),'tempio del Sole',sT*.8,-sT*.4,'start'),
     leonine:nome(pP,'San Pietro e la città leonina',-sT*.6,-sT-5,'start')};
   /* i nomi non stanno sopra le croci, i templi, le mura leonine o l'arco delle tegole (25 novembre 2026: «Santa Maria Maggiore» copriva le chiese vicine) */
+  var NT={}; Object.keys(N).forEach(function(q){ NT[q]=N[q].querySelector('text'); });      // le scritte, prima che nomiInCima le sposti in un gruppo gemello
   var ostN=[].slice.call(gC.childNodes).concat([].slice.call(gT.childNodes),[leo,teg]);
   liberaScritte(svg,Object.keys(N).map(function(q){ return N[q].querySelector('text'); }),ostN,pb,{soli:true});
   tx(tav,pb[0]+12,pb[1]+pb[3]-12,'ig-m-schema ig-f','schema: pianta del modello','start');
@@ -4042,9 +3910,11 @@ function disegnaCristianesimo(svg,S,W,H){
   el('line',{x1:r1(cb[0]),x2:r1(cb[0]+cb[2]),y1:r1(yL),y2:r1(yL),'class':'ig-cr-asse'},gL); diradaAsse([303,380,593,756,852].map(function(a,j){ return tx(gL,X(a),yL+16,'ig-cr-anno-p',String(a),j?j===4?'end':'middle':'start'); }));      // sotto il punto del cursore, non a contatto
   var curL=el('circle',{cx:r1(cb[0]),cy:r1(yL),r:4.5,'class':'ig-p-cur-p'},gL);
   /* il contatore: una croce per ogni chiesa nella pianta, un frontone per ogni tempio aperto (nessuna cifra) */
-  var yC=yL+(oriz?34:28), gCo=el('g',{'class':'ig-cr-conta'},gK), passo=oriz?9:8, perRiga=Math.floor((cb[2]-100)/passo), cc=[], tt=[];
-  tx(gCo,cb[0],yC+4,'ig-cr-conta-t','chiese'); chiese.forEach(function(c,j){ var x=cb[0]+100+(j%perRiga)*passo, y=yC+Math.floor(j/perRiga)*11; cc.push(el('path',{d:'M'+r1(x)+' '+r1(y-4)+' V'+r1(y+4)+' M'+r1(x-2.6)+' '+r1(y-1.2)+' H'+r1(x+2.6),'class':'ig-cr-conta-c'},gCo)); });
-  var righeC=Math.ceil(chiese.length/perRiga), yT=yC+righeC*11+8; tx(gCo,cb[0],yT+4,'ig-cr-conta-t','templi aperti'); TEMPLI.forEach(function(t,j){ var x=cb[0]+100+j*(passo+5); var g=el('g',{transform:'translate('+r1(x)+','+r1(yT)+')'},gCo); el('path',{d:'M-4 -1 L0 -4.5 L4 -1 Z M-3.6 3.5 H3.6 V4.6 H-3.6 Z M-2.6 -1 V3.5 M0 -1 V3.5 M2.6 -1 V3.5','class':'ig-cr-conta-t2'},g); tt.push(g); });
+  /* i segni del contatore cominciano dopo la scritta più lunga, misurata (26 novembre 2026: con le scritte larghe dell'iPhone «TEMPLI APERTI» finiva sui frontoni) */
+  var yC=yL+(oriz?34:28), gCo=el('g',{'class':'ig-cr-conta'},gK), passo=oriz?9:8, cc=[], tt=[];
+  var tCh=tx(gCo,cb[0],yC+4,'ig-cr-conta-t','chiese'), tTe=tx(gCo,cb[0],0,'ig-cr-conta-t','templi aperti'), x0c=Math.max(100,Math.ceil(Math.max(largo(tCh),largo(tTe)))+14), perRiga=Math.floor((cb[2]-x0c)/passo);
+  chiese.forEach(function(c,j){ var x=cb[0]+x0c+(j%perRiga)*passo, y=yC+Math.floor(j/perRiga)*11; cc.push(el('path',{d:'M'+r1(x)+' '+r1(y-4)+' V'+r1(y+4)+' M'+r1(x-2.6)+' '+r1(y-1.2)+' H'+r1(x+2.6),'class':'ig-cr-conta-c'},gCo)); });
+  var righeC=Math.ceil(chiese.length/perRiga), yT=yC+righeC*11+8; tTe.setAttribute('y',r1(yT+4)); TEMPLI.forEach(function(t,j){ var x=cb[0]+x0c+j*(passo+5); var g=el('g',{transform:'translate('+r1(x)+','+r1(yT)+')'},gCo); el('path',{d:'M-4 -1 L0 -4.5 L4 -1 Z M-3.6 3.5 H3.6 V4.6 H-3.6 Z M-2.6 -1 V3.5 M0 -1 V3.5 M2.6 -1 V3.5','class':'ig-cr-conta-t2'},g); tt.push(g); });
   var yQ=yT+(oriz?22:18), hQ=cb[1]+cb[3]-yQ, gQ=el('g',{'class':'ig-cr-voce'},gK);
   var VOCI={1:[["Lattanzio, verso il 315","«Fu avvertito in sogno di segnare sugli scudi il segno celeste di Dio»"],["Eusebio, dopo il 337","«Un segno di vittoria a forma di croce luminosa, con la scritta “Con questo vinci”»"]],
     2:[["l'accordo di Milano, 313","la libertà di culto «ai cristiani e a tutti»"]],
@@ -4074,7 +3944,29 @@ function disegnaCristianesimo(svg,S,W,H){
   var ANNI=[303,312,313,330,380,384,392,593,609,630,756,800,852];
   var tm=Tempo(303,ANNI.map(function(a){ return {anno:a,sosta:4700}; }),{inizio:1500,vel:7,min:700}), tFine=tm.fine+300, tFin=tFine+6200, visto=-2;
   function faseDi(a){ for(var j=FASCE.length-1;j>=0;j--) if(a>=FASCE[j][0]) return j; return 0; }
+  /* I nomi si piazzano al primo passo, a disegno finito (dopo alzaCorpi e liberaLuoghi, che li spostava evitando anche i nomi degli altri quadri) e con le scritte
+     della misura vera: ogni nome scansa solo i segni che si vedono nei suoi quadri, cioè le chiese e i templi dall'anno del quadro all'anno del seguente (mentre il tempo
+     scorre verso il quadro dopo il nome resta acceso), le mura leonine, l'arco delle tegole, gli aloni, e gli altri nomi dello stesso quadro (26 novembre 2026: «Santa
+     Maria Maggiore» finiva sui templi del Campo Marzio, «tempio di Roma» e «Curia → Sant'Adriano» sulle croci) */
+  var QN={pietro:[9,11],laterano:[3,4],paolo:[3],lorenzo:[3],agnese:[3],maggiore:[7],giove:[0,1,6],pantheon:[8],curia:[9],venere:[9],sole:[6],leonine:[12,13]}, piazzati=false;
+  function piazzaNomi(){ piazzati=true; var messi={};
+    Object.keys(QN).forEach(function(k2){ var tN=NT[k2]; if(!tN) return; var ob=[];
+      QN[k2].forEach(function(j){ var Y0=ANNI[Math.min(j,ANNI.length-1)], Y1=j+1<ANNI.length?ANNI[j+1]:852;
+        chiese.forEach(function(c){ if(c.a<=Y1&&c.f>Y0) ob.push(c.g); }); TEMPLI.forEach(function(tt0){ if((tt0.dal||0)<=Y1&&!(tt0.chiesa&&tt0.chiesa<=Y0)) ob.push(tt0.g); });
+        if(Y0<630) ob.push(curia); aloni.forEach(function(c){ if(c[2]>=Y0&&c[2]<=Y1) ob.push(c.alone); }); if(j>=12) ob.push(leo); if(j===9) ob.push(teg);
+        Object.keys(messi).forEach(function(m){ if(QN[m].indexOf(j)>=0) ob.push(messi[m]); }); });
+      /* senza un posto libero vicino si prova dall'altro lato del segno, poi più in alto e più in basso (nel centro le croci sono fitte); se nessuno va, resta il primo */
+      var x0=tN.getAttribute('x'), y0=tN.getAttribute('y'), a0=tN.getAttribute('text-anchor')||'start', ok=liberaScritte(svg,[tN],ob,pb,{soli:true})===0, tr0=tN.getAttribute('transform');
+      [[-1,0],[1,-1],[-1,-1],[1,1],[-1,1]].some(function(v){ if(ok) return true; tN.setAttribute('x',r1(v[0]*(+x0||0))); tN.setAttribute('text-anchor',v[0]<0?(a0==='end'?'start':'end'):a0); tN.setAttribute('y',r1((+y0||0)+v[1]*sT*2.6));
+        ok=liberaScritte(svg,[tN],ob,pb,{soli:true})===0; return ok; });
+      if(!ok){ tN.setAttribute('x',x0); tN.setAttribute('y',y0); tN.setAttribute('text-anchor',a0); if(tr0) tN.setAttribute('transform',tr0); else tN.removeAttribute('transform'); }
+      /* un nome finito lontano dal suo segno gli resta legato con un filo sottile */
+      try{ var bb=tN.getBBox(), mt=/translate\(([-\d.]+),([-\d.]+)\)/.exec(tN.getAttribute('transform')||''), ox=mt?+mt[1]:0, oy=mt?+mt[2]:0, bx=[bb.x+ox-2,bb.y+oy+bb.height*.15,bb.width+4,bb.height*.7],
+        qx=clamp(0,bx[0],bx[0]+bx[2]), qy=clamp(0,bx[1],bx[1]+bx[3]), dd=Math.hypot(qx,qy);
+        if(dd>sT*1.6){ var u0=sT*.75/dd; tN.parentNode.insertBefore(el('line',{x1:r1(qx*u0),y1:r1(qy*u0),x2:r1(qx),y2:r1(qy),'class':'ig-cr-filo'},null),tN); } }catch(e){}
+      messi[k2]=tN; }); }
   S.passo=function(t){
+    if(!piazzati) piazzaNomi();
     var a=tm.anno(t), i2=-1; tm.arrivi.forEach(function(x,j){ if(t>=x) i2=j; }); var fin=t>=tFine, q=fin?fasi.length:i2;
     cls(tav,'vis',t>=200); cls(gK,'vis',t>=500);
     var aperti=0; TEMPLI.forEach(function(tt,j){ var aperto=a<392&&a>=(tt.dal||0), chiesa=tt.chiesa&&a>=tt.chiesa; cls(tt.g,'vis',a>=(tt.dal||0)&&!chiesa); cls(tt.g,'chiuso',!aperto); if(aperto) aperti++; cls(tTT(j),'on',aperto); });
@@ -4402,14 +4294,13 @@ var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno==
   sacco:{d:SACCO, disegna:disegnaSacco, tappe:function(t){ return t.anno===410&&!t.intermezzo; }},
   governo:{d:GOVERNO, disegna:disegnaGoverno, tappe:function(t){ return !t.intermezzo && (t.anno===476||t.anno===568||t.anno===800); }},
   valeriano:{d:VALERIANO, disegna:disegnaValeriano, tappe:function(t){ return t.anno===260&&!t.intermezzo; }},
-  curia:{d:CURIA, disegna:disegnaCuria, tappe:function(t){ return !t.intermezzo && (t.anno===593||t.anno===630); }},
+  curia:{d:CURIA, disegna:disegnaCuria, tappe:function(t){ return !t.intermezzo && (t.anno===384||t.anno===593||t.anno===630); }, da:function(t){ return t&&!t.intermezzo&&t.anno===384?'357':null; }},      // dal 26 novembre 2026 anche nel 384, al posto di «L'altare della Vittoria» (l'utente: «Sì»): da lì parte dal 357
   pantheon:{d:PANTHEON, disegna:disegnaPantheon, tappe:function(t){ return !t.intermezzo && (t.anno===609||t.anno===663); }, da:function(t){ return t&&t.anno===663?'663':null; }},      // anche nella tappa di Costante II (24 novembre 2026, l'utente: «inserire»); aperta dal 663 parte dal suo quadro
   milvio:{d:MILVIO, disegna:disegnaMilvio, tappe:function(t){ return t.anno===312&&!t.intermezzo; }},
   adrianopoli:{d:ADRIANOPOLI, disegna:disegnaAdrianopoli, tappe:function(t){ return t.anno===378&&!t.intermezzo; }},
   catalaunici:{d:CATALAUNICI, disegna:disegnaCatalaunici, tappe:function(t){ return t.anno===451&&!t.intermezzo; }},
   capobon:{d:CAPOBON, disegna:disegnaCapobon, tappe:function(t){ return t.anno===468&&!t.intermezzo; }},
-  altare:{d:ALTARE, disegna:disegnaAltare, tappe:function(t){ return t.anno===384&&!t.intermezzo; }},
-  barbari:{d:BARBARI, disegna:disegnaBarbari, tappe:function(t){ return t.anno===439&&t.intermezzo || t.anno===406&&!t.intermezzo; }},
+  barbari:{d:BARBARI, disegna:disegnaBarbari, tappe:function(t){ return t.anno===439&&t.intermezzo || !t.intermezzo&&(t.anno===406||t.anno===418||t.anno===429); }, da:function(t){ return t&&!t.intermezzo&&t.anno===418?'I patti':t&&!t.intermezzo&&t.anno===429?'409-455':null; }},      // anche nel 418 e nel 429 (26 novembre 2026, l'utente: «418: inserisci l'infografica animata sui Barbari», e così il 429): dal 418 parte dai patti (i Visigoti federati in Aquitania), dal 429 dalla strada dei Vandali
   acquedotti:{d:ACQUEDOTTI, disegna:disegnaAcquedotti, tappe:function(t){ return !t.intermezzo && (t.anno===537||t.anno===780); }, da:function(t){ return t&&t.anno===780?'verso il 776':null; }},      // anche nel 780 (24 novembre 2026, l'utente: «inserire», non spostare); aperta dal 780 parte dai restauri di Adriano I
   sacchi:{d:SACCHI, disegna:disegnaSacchi, tappe:function(t){ return !t.intermezzo && (t.anno===455||t.anno===546); }},
   cristianesimo:{d:CRISTIANESIMO, disegna:disegnaCristianesimo, tappe:function(t){ return !t.intermezzo && (t.anno===330||t.anno===394||t.anno===756||t.anno===852); }, da:function(t){ return t&&t.anno===394?'380':t&&t.anno===756?'756':null; }},      // 24 novembre 2026; dal 394 parte dall'editto del 380, dal 756 dallo Stato della Chiesa
@@ -4417,7 +4308,7 @@ var INFO={ roma:{d:ROMA, disegna:disegnaRoma, tappe:function(t){ return t.anno==
   terre:{d:TERRE, disegna:disegnaTerre, tappe:function(t){ return t.anno===476&&t.intermezzo&&/esercito/i.test(t.titolo); }} };      /* solo nell'intermezzo «L'esercito»: dalla tappa del 439 (Cartagine) l'utente l'ha fatta togliere il 24 novembre 2026 */
 /* Poitiers: accesa il 24 novembre 2026 sulla tappa del 711, dopo le prove a 393, 1280 e 812x375 e con ?fermo=1 (prima era scritta ma spenta) */
 INFO.poitiers={d:POITIERS, disegna:disegnaPoitiers, tappe:function(t){ return t.anno===711&&!t.intermezzo; }};
-var ORDINE=['valeriano','moneta','milvio','cristianesimo','navi','adrianopoli','altare','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','cielo','pantheon','curia','poitiers','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 330, 395, 410, 439, 476, 542, 609, 630, 711; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno
+var ORDINE=['valeriano','moneta','milvio','cristianesimo','navi','adrianopoli','sacco','terre','barbari','catalaunici','sacchi','capobon','governo','acquedotti','cielo','pantheon','curia','poitiers','roma'];      // in ordine di storia, secondo la prima tappa in cui compaiono (260, 284, 312, 330, 395, 410, 439, 476, 542, 609, 630, 711; «Roma si svuota» resta in fondo, come chiesto); riordinate il 23 novembre 2026 su richiesta dell'utente, con le tre nuove (ponte Milvio, Pantheon, Curia) aggiunte lo stesso giorno; «L'altare della Vittoria» è entrata nella Curia il 26 novembre 2026: 19 in tutto
 var ICO={ play:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',
   pausa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 5.5h3v13h-3zM13.5 5.5h3v13h-3z" fill="currentColor"/></svg>',
   prima:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6v12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M18 6.5v11l-8.5-5.5z" fill="currentColor"/></svg>',
@@ -4439,7 +4330,6 @@ var GLIFI={ valeriano:'<path d="M7 12l2.2-5 2.6 3 2.2-4 2.2 4 2.6-3 2.2 5z"/><re
   adrianopoli:'<g fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="14" cy="14" r="8.5" stroke-dasharray="3.2 1.6"/></g><path d="M3 21l5.5-3.2v6.4z"/><path d="M14 9.5l1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" opacity=".85"/>',
   catalaunici:'<path d="M3 24.5c4-5 8-7 11-7s7 2 11 7z" opacity=".45"/><g transform="translate(14 16.4) scale(.62)"><path d="'+SPADA+'" transform="rotate(-45)"/><path d="'+SPADA+'" transform="rotate(45)"/></g><path d="M14 2l1.3 2.7 2.8.4-2 1.9.5 2.8-2.6-1.4-2.6 1.4.5-2.8-2-1.9 2.8-.4z"/>',      /* le spade incrociate al posto delle due X (24 novembre 2026) */
   capobon:'<path d="M4 18.5h20l-3.2 4.5H7.2z"/><path d="M14 4v13" stroke="currentColor" stroke-width="1.5"/><path d="M14.8 5.5c4 2 5.5 5.5 5.5 9.5h-5.5z" opacity=".8"/><path d="M9.5 7c1 3 3.6 4 3.6 7.6a3.6 3.6 0 0 1-7.2 0c0-2 1-3 1.9-3.9.3 1.2.8 1.9 1.4 2 0-2.4.3-4.2.3-5.7z"/>',
-  altare:'<path d="M14 3.5c.9 3 4 4.2 4 7.6a4 4 0 0 1-8 0c0-2 1-3 2-4 .2 1.3.8 2 1.4 2.2-.1-2.2.1-4 .6-5.8z"/><rect x="8" y="15" width="12" height="2.4" rx=".6"/><rect x="9.5" y="17.4" width="9" height="5" rx=".4" opacity=".8"/><rect x="7.5" y="22.4" width="13" height="2.2" rx=".6"/>',
   sacchi:'<rect x="3" y="6" width="6" height="16" rx="1.2"/><rect x="11" y="6" width="6" height="16" rx="1.2" opacity=".75"/><rect x="19" y="6" width="6" height="16" rx="1.2" opacity=".5"/><path d="M6 4.5c.5 1.6 2 2.2 2 4a2 2 0 0 1-4 0c0-1 .5-1.5 1-2 .1.6.4 1 .7 1.1 0-1.1.1-2.1.3-3.1z" fill="#F1D99A"/>',
   barbari:'<path d="M3 7c3 1 4 4 3 7s0 6 3 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" opacity=".55"/><path d="M9 10h11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M24 10l-5-3.4v6.8z"/><path d="M9 16h9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 16l-5-3.4v6.8z"/><path d="M9 22h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M25 22l-5-3.4v6.8z"/>',
   acquedotti:'<path d="M2 9h24v3H2z"/><path d="M4 12v11h3v-5a3 3 0 0 1 6 0v5h2v-5a3 3 0 0 1 6 0v5h3V12z" opacity=".8"/><path d="M2 7.2h24" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2.5 2"/>',
@@ -4543,8 +4433,9 @@ function inviti(i,t){
     h('span','ig-play',null,b).innerHTML=ICO.play; b.addEventListener('click',function(){ apri(k,t); }); });
 }
 if(window.RM_pagina && box){ RM_pagina.quando(inviti); var T0=(D.TAPPE||[])[RM_pagina.tappa()]; if(T0) inviti(RM_pagina.tappa(),T0); }      // anche la tappa aperta all'avvio
-/* per le prove: vai(f) ferma l'animazione aperta e la porta alla frazione f (da 0 a 1); ?info=<roma|terre|moneta|sacco|navi|governo|valeriano|milvio|pantheon|curia|adrianopoli|catalaunici|capobon|altare|sacchi|acquedotti|barbari|poitiers>&infop=<0..1> la apre da sola */
+/* per le prove: vai(f) ferma l'animazione aperta e la porta alla frazione f (da 0 a 1); ?info=<roma|terre|moneta|sacco|navi|governo|valeriano|milvio|pantheon|curia|adrianopoli|catalaunici|capobon|sacchi|acquedotti|barbari|poitiers|cristianesimo|cielo>&infop=<0..1> la apre da sola;
+   ?info=altare, il nome di prima dell'infografica entrata nella Curia, apre la Curia dal quadro del 357, come dalla tappa del 384 */
 window.RM_infografiche={apri:apri, chiudi:chiudi, vai:function(f){ if(ctl) ctl.vai(f); }, elenco:ORDINE.slice(), quadri:function(){ return ctl?ctl.quadri():[]; }};
-(function(){ var q=/[?&]info=(\w+)/.exec(location.search), f=/[?&]infop=([\d.]+)/.exec(location.search); if(!q||!INFO[q[1]]) return;
-  setTimeout(function(){ apri(q[1]); if(f) setTimeout(function(){ RM_infografiche.vai(+f[1]); },300); },900); })();
+(function(){ var q=/[?&]info=(\w+)/.exec(location.search), f=/[?&]infop=([\d.]+)/.exec(location.search); if(!q) return; var k=q[1], tp=null; if(k==='altare'){ k='curia'; tp={anno:384}; } if(!INFO[k]) return;
+  setTimeout(function(){ apri(k,tp); if(f) setTimeout(function(){ RM_infografiche.vai(+f[1]); },300); },900); })();
 })();

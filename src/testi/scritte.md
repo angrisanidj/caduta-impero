@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 25/11/2026, 02:04:48.
+Generato da `src/testi.mjs` il 26/11/2026, 14:27:54.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -39,87 +39,111 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.12] Roma
 
-[pagina.13] Legenda
+[pagina.13] L'Impero
 
-[pagina.14] I popoli
+[pagina.14] I dati della carta
 
-[pagina.15] Sulla carta il nome di ogni popolo indica la zona in cui viveva il gruppo più numeroso, comprese le famiglie. La linea tratteggiata ne mostra la provenienza e il probabile percorso via terra. Sia le posizioni sia i percorsi sono approssimativi. In ogni tappa la legenda spiega i simboli presenti sulla carta. Nel novembre 2026 abbiamo ricontrollato sulle fonti le date e i rapporti di ciascun popolo con Roma.
+[pagina.15] Legenda
 
-[pagina.16] Roma — abitanti, stima
+[pagina.16] I popoli
 
-[pagina.17] Strumenti
+[pagina.17] Sulla carta il nome di ogni popolo indica la zona in cui viveva il gruppo più numeroso, comprese le famiglie. La linea tratteggiata ne mostra la provenienza e il probabile percorso via terra. Sia le posizioni sia i percorsi sono approssimativi. In ogni tappa la legenda spiega i simboli presenti sulla carta. Nel novembre 2026 abbiamo ricontrollato sulle fonti le date e i rapporti di ciascun popolo con Roma.
 
-[pagina.18] Notte
+[pagina.18] Roma in 3D
 
-[pagina.19] Percorso del pellegrino
+[pagina.19] I dati
 
-[pagina.20] Prima e dopo
+[pagina.20] Roma — abitanti, stima
 
-[pagina.21] Che cosa sappiamo
+[pagina.21] Strumenti
 
-[pagina.22] Qualità · automatica
+[pagina.22] Notte
 
-[pagina.23] Tocca la città per esplorarla
+[pagina.23] Percorso del pellegrino
 
-[pagina.24] Posizione e pianta certe. L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.
+[pagina.24] Prima e dopo
 
-[pagina.25] Sappiamo dove sorgeva l'edificio. Per ricostruirne l'aspetto ci basiamo sugli scavi, sulle piante antiche o sui resti sopravvissuti alle trasformazioni successive.
+[pagina.25] Che cosa sappiamo
 
-[pagina.26] La posizione o la forma sono ipotetiche. È il caso, per esempio, delle singole case che il modello mostra nei quartieri abitati o in rovina.
+[pagina.26] Nomi delle strade
 
-[pagina.27] I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.
+[pagina.27] Regioni e quartieri
 
-[pagina.28] Il modello 3D non è disponibile su questo dispositivo.
+[pagina.28] Qualità · automatica
 
-[pagina.29] ▶ Riproduci
+[pagina.29] Tocca la città per esplorarla
 
-[pagina.30] Protagonisti · tocca un'immagine per ingrandirla e vederne fonte e licenza
+[pagina.30] Posizione e pianta certe. L'edificio è ancora in piedi oppure ne conosciamo l'intera pianta grazie ai rilievi.
 
-[pagina.31] Una voce di allora
+[pagina.31] Sappiamo dove sorgeva l'edificio. Per ricostruirne l'aspetto ci basiamo sugli scavi, sulle piante antiche o sui resti sopravvissuti alle trasformazioni successive.
 
-[pagina.32] Fra storia e leggenda
+[pagina.32] La posizione o la forma sono ipotetiche. È il caso, per esempio, delle singole case che il modello mostra nei quartieri abitati o in rovina.
 
-[pagina.33] Le interpretazioni degli storici
+[pagina.33] I colori indicano quanto conosciamo la posizione e la pianta di ciascun edificio. I dettagli architettonici sono schematici. La scheda racconta quando e come il monumento cambiò o cadde in rovina.
 
-[pagina.34] I monumenti di Roma · seleziona un nome per aprire la scheda
+[pagina.34] Il modello 3D non è disponibile su questo dispositivo.
 
-[pagina.35] in uso in disuso abbandonato, in piedi spogliato di materiali usato come cava bruciato danneggiato da un terremoto
+[pagina.35] ▶ Riproduci
 
-[pagina.36] Mostra tutti
+[pagina.36] Protagonisti · tocca un'immagine per ingrandirla e vederne fonte e licenza
 
-[pagina.37] Le interpretazioni degli storici
+[pagina.37] Una voce di allora
 
-[pagina.38] Perché cadde l'Occidente?
+[pagina.38] Fra storia e leggenda
 
-[pagina.39] Perché cadde l'Impero romano d'Occidente? Da tre secoli gli storici propongono risposte diverse. Alcuni guardano alle difficoltà di governare territori tanto vasti, al costo dell'esercito, alle tasse o al ruolo della religione. Altri si concentrano sull'avanzata degli Unni e sui popoli che attraversarono il Reno e il Danubio. Altri ancora studiano il clima e le epidemie. Per alcuni storici furono decisive scelte che avrebbero potuto avere un esito diverso. Per altri, parlare di «trasformazione» aiuta a capire che cosa sopravvisse del mondo romano nei secoli successivi. Seleziona uno storico per leggere la sua tesi, una citazione, le obiezioni e gli episodi a cui si riferisce.
+[pagina.39] Le interpretazioni degli storici
 
-[pagina.40] Segui sulla carta l'avanzata degli Unni e l'attraversamento del Danubio da parte dei Goti nel 376. Passa poi al Reno nel 406 e a Cartagine nel 439. A ogni tappa puoi vedere quanta parte dell'Occidente era ancora sotto il controllo di Roma. Il grafico della popolazione ti permette anche di confrontare le stime sugli abitanti con le testimonianze sul sole velato del 536 e sulla peste del 542.
+[pagina.40] I monumenti di Roma · seleziona un nome per aprire la scheda
 
-[pagina.41] Come finisce un impero
+[pagina.41] in uso in disuso abbandonato, in piedi spogliato di materiali usato come cava bruciato danneggiato da un terremoto
 
-[pagina.42] Fonti Testi antichi e medievali e studi moderni consultati
+[pagina.42] Mostra tutti
 
-[pagina.43] Tra gli autori antichi e medievali consultati figurano Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Tra le opere consultate ci sono anche l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Per le cronache e gli annali abbiamo consultato gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Tra le altre fonti figurano l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.
+[pagina.43] Le interpretazioni degli storici
 
-[pagina.44] Per Gibbon abbiamo consultato il testo e per Jones la conclusione. Per Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer abbiamo verificato singoli passi. Di Pirenne abbiamo letto l'articolo del 1922. Per la popolazione e gli scavi di Roma abbiamo consultato le pagine dedicate a questi temi nel Companion to Rome e, per la popolazione, anche lo studio di Durliat. Per Heather abbiamo letto le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), di cui abbiamo consultato la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
+[pagina.44] Perché cadde l'Occidente?
 
-[pagina.45] Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.
+[pagina.45] Perché cadde l'Impero romano d'Occidente? Da tre secoli gli storici propongono risposte diverse. Alcuni guardano alle difficoltà di governare territori tanto vasti, al costo dell'esercito, alle tasse o al ruolo della religione. Altri si concentrano sull'avanzata degli Unni e sui popoli che attraversarono il Reno e il Danubio. Altri ancora studiano il clima e le epidemie. Per alcuni storici furono decisive scelte che avrebbero potuto avere un esito diverso. Per altri, parlare di «trasformazione» aiuta a capire che cosa sopravvisse del mondo romano nei secoli successivi. Seleziona uno storico per leggere la sua tesi, una citazione, le obiezioni e gli episodi a cui si riferisce.
 
-[pagina.46] Come abbiamo ricostruito la carta e la città Dati misurati e stime
+[pagina.46] Segui sulla carta l'avanzata degli Unni e l'attraversamento del Danubio da parte dei Goti nel 376. Passa poi al Reno nel 406 e a Cartagine nel 439. A ogni tappa puoi vedere quanta parte dell'Occidente era ancora sotto il controllo di Roma. Il grafico della popolazione ti permette anche di confrontare le stime sugli abitanti con le testimonianze sul sole velato del 536 e sulla peste del 542.
 
-[pagina.47] La carta prende come punto di partenza le province romane intorno al 200 d.C. Per l'Italia usa le regioni istituite da Augusto. La base cartografica è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Quando i confini dei regni successivi si discostavano da quelli romani, li abbiamo ridisegnati seguendo i fiumi, i crinali e le città citati nelle fonti. Il tracciato è quindi approssimativo. Nel novembre 2026 abbiamo rivisto i confini, gli spostamenti dei popoli e l'attribuzione delle regioni ai diversi governi. Abbiamo consultato Bury, Ammiano, Zosimo ed Eugippio, oltre a Beda e, per i singoli regni, alle relative voci di Wikipedia. Alcune date sono riportate a memoria. Per la Corsica, i manuali ipotizzano un dominio longobardo dal 725 circa, ma manca una testimonianza diretta. Il dominio dei Franchi è documentato dall'806.
+[pagina.47] Come finisce un impero
 
-[pagina.48] Per ricostruire Roma abbiamo ripreso da OpenStreetMap il corso del Tevere e il tracciato delle mura (© OpenStreetMap contributors). Partendo da un rilievo moderno del terreno (SRTM), abbiamo ridisegnato i colli alle quote antiche. Nel modello ne abbiamo poi quasi raddoppiato l'altezza. Gli edifici occupano la posizione ricostruita dalle fonti e hanno forme semplificate. Alcune strade moderne conservano percorsi antichi. È il caso di via del Corso, sul tracciato della via Lata, dell'Appia Antica e di via dei Coronari. Nel Foro restano visibili anche tratti dei pavimenti della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. Abbiamo disegnato a mano i tratti mancanti. Nel Foro romano e nei Fori imperiali i resti archeologici permettono di collocare gli edifici. Per gli acquedotti, percorsi e altezze sono ricostruzioni. Il modello genera gli isolati e propone una possibile successione nell'abbandono dei quartieri.
+[pagina.48] Fonti Testi antichi e medievali e studi moderni consultati
 
-[pagina.49] L'indicatore «Occidente governato da Roma» mostra quanta parte del territorio occidentale era ancora sotto il controllo di Roma. Il totale di riferimento è la superficie dell'Occidente sulla nostra carta, circa 2,7 milioni di km². Come si confronta questo dato con quelli degli storici? Per l'intero impero le cifre sono vicine. Intorno al 200 le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km², che scendono a 4,5 senza Mesopotamia, Dacia e Agri Decumates. Nel 1979 Rein Taagepera, usando l'atlante storico di Shepherd, calcolò 4,6 milioni di km² per il 138, 4,5 per il 275 e 4,4 per il 390. La differenza emerge quando si considerano separatamente Oriente e Occidente dopo la divisione del 395. Taagepera parla di «due parti pressoché uguali». Stima 2 milioni di km² per l'Occidente e 2,1 per l'Oriente, con un margine di 0,3 milioni per l'Oriente. Le sue cifre arrotondate danno un totale di 4,1 milioni, contro i 4,4 stimati per il 390. Sulla nostra carta l'Oriente misura 1,9 milioni e l'Occidente 2,7, circa un terzo in più della sua stima per l'Occidente.
+[pagina.49] Tra gli autori antichi e medievali consultati figurano Erodiano (in traduzione), Aurelio Vittore, Ambrogio, Claudiano, Ammiano Marcellino, Lattanzio, Eutropio, Orosio, Zosimo, Prospero d'Aquitania, Idazio, Vittore di Vita, Giordane, Eugippio, Marcellino Comes, Gregorio Magno, Gregorio di Tours, Paolo Diacono, Beda, Cipriano, Girolamo, Possidio, Salviano, Teofane, Eginardo, Erchemperto, Ennodio, Gildas, Giovanni Diacono, Liutprando di Cremona, Incmaro di Reims e Martino Polono. Tra le opere consultate ci sono anche l'Origine di Costantino, le Guerre di Procopio (nella traduzione di Dewing), le Variae di Cassiodoro, l'Anonimo Valesiano, il Liber Pontificalis (edizione Duchesne), la Vita di Fulgenzio di Ruspe e la Legenda aurea di Jacopo da Varazze. Per le cronache e gli annali abbiamo consultato gli Annales regni Francorum, il Cronografo del 354, gli Annali di San Bertino, i Fasti di Vienna, la Cronaca del 754, la Historia Brittonum, gli Annali del Galles e la Cronaca universale di Metz. Tra le altre fonti figurano l'iscrizione di Shapur I (in traduzione), l'editto dei prezzi di Diocleziano, le Novelle di Valentiniano III e di Maggioriano, la legge dei Burgundi, il Constitutum Constantini, il Codex Carolinus (nella ristampa di Migne) e l'Itinerario di Einsiedeln.
 
-[pagina.50] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
+[pagina.50] Per Gibbon abbiamo consultato il testo e per Jones la conclusione. Per Goffart, Halsall, Ward-Perkins, Wickham e Krautheimer abbiamo verificato singoli passi. Di Pirenne abbiamo letto l'articolo del 1922. Per la popolazione e gli scavi di Roma abbiamo consultato le pagine dedicate a questi temi nel Companion to Rome e, per la popolazione, anche lo studio di Durliat. Per Heather abbiamo letto le pagine del libro del 2010 in cui riassume la sua tesi. Riferimenti bibliografici: E. Gibbon, The History of the Decline and Fall of the Roman Empire (1776-1789); J. B. Bury, History of the Later Roman Empire (1923); S. B. Platner e T. Ashby, A Topographical Dictionary of Ancient Rome (1929); H. Pirenne, «Mahomet et Charlemagne», Revue belge de philologie et d'histoire 1 (1922), e il libro del 1937; A. H. M. Jones, The Later Roman Empire (1964); R. Krautheimer, Rome. Profile of a City (1980); W. Goffart, Barbarians and Romans (1980); J. Durliat, De la ville antique à la ville byzantine (1990); P. Heather, The Fall of the Roman Empire (2005) e Empires and Barbarians (2010); B. Ward-Perkins, The Fall of Rome and the End of Civilization (2005); C. Wickham, Framing the Early Middle Ages (2005); G. Halsall, Barbarian Migrations and the Roman West (2007); D. Robinson e A. Wilson sui relitti (2011) e la banca dati dei relitti di J. Strauss, A. Wilson e M. Flohr (Oxford Roman Economy Project, 2017); R. Taagepera, «Size and Duration of Empires: Growth-Decline Curves, 600 B.C. to 600 A.D.», Social Science History 3 (1979), di cui abbiamo consultato la tabella su Roma; K. Harper, The Fate of Rome (2017) e la risposta di J. Haldon e altri (2018); J. McConnell e altri sul piombo nei ghiacci (2018); A Companion to Rome c. 400-c. 1050 , Brill (2026).
 
-[pagina.51] Licenze Come riutilizzare i materiali
+[pagina.51] Le schede, i riquadri dedicati agli storici e le note «Che cosa sappiamo» indicano dove le fonti divergono e quali testi non sono stati riletti.
 
-[pagina.52] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
+[pagina.52] Come abbiamo ricostruito la carta e la città Dati misurati e stime
 
-[pagina.53] Versione del 25/11/2026, ore 01:25
+[pagina.53] La carta prende come punto di partenza le province romane intorno al 200 d.C. Per l'Italia usa le regioni istituite da Augusto. La base cartografica è il Digital Atlas of the Roman Empire di Johan Åhlfeldt (università di Lund e di Göteborg), con licenza Creative Commons Attribuzione - Condividi allo stesso modo (CC BY-SA). Coste, rilievi e fiumi provengono dai dati di pubblico dominio di Natural Earth. Quando i confini dei regni successivi si discostavano da quelli romani, li abbiamo ridisegnati seguendo i fiumi, i crinali e le città citati nelle fonti. Il tracciato è quindi approssimativo. Nel novembre 2026 abbiamo rivisto i confini, gli spostamenti dei popoli e l'attribuzione delle regioni ai diversi governi. Abbiamo consultato Bury, Ammiano, Zosimo ed Eugippio, oltre a Beda e, per i singoli regni, alle relative voci di Wikipedia. Alcune date sono riportate a memoria. Per la Corsica, i manuali ipotizzano un dominio longobardo dal 725 circa, ma manca una testimonianza diretta. Il dominio dei Franchi è documentato dall'806.
+
+[pagina.54] Per ricostruire Roma abbiamo ripreso da OpenStreetMap il corso del Tevere e il tracciato delle mura (© OpenStreetMap contributors). Partendo da un rilievo moderno del terreno (SRTM), abbiamo ridisegnato i colli alle quote antiche. Nel modello ne abbiamo poi quasi raddoppiato l'altezza. Gli edifici occupano la posizione ricostruita dalle fonti e hanno forme semplificate. Alcune strade moderne conservano percorsi antichi. È il caso di via del Corso, sul tracciato della via Lata, dell'Appia Antica e di via dei Coronari. Nel Foro restano visibili anche tratti dei pavimenti della via Sacra, dell'Argileto, del vico Tusco e del clivo Capitolino. Abbiamo disegnato a mano i tratti mancanti. Nel Foro romano e nei Fori imperiali i resti archeologici permettono di collocare gli edifici. Per gli acquedotti, percorsi e altezze sono ricostruzioni. Il modello genera gli isolati e propone una possibile successione nell'abbandono dei quartieri.
+
+[pagina.55] Per i ponti, posizioni, misure e date vengono da Platner e Ashby e da Procopio. Le strade che li raggiungono seguono le vie moderne che ne hanno preso il posto: sono ipotesi. Il ponte Fabricio sta dove il fiume del modello lo permette, circa 140 metri a sud della posizione vera. La posizione del ponte Sublicio è discussa. L'arco di Valentiniano stava all'ingresso del ponte Aurelio dalla parte del Campo Marzio: la sua forma è generica. Il ponte Aurelio fu rotto nel 772 o pochi anni dopo: le fonti non concordano. La piazza davanti al Pantheon ha le misure degli scavi dell'Ottocento. Il portico est è attestato, quello ovest è probabile. A nord non c'era un portico: la piazza finiva su una strada. Non sappiamo che cosa ne restasse quando il Pantheon divenne chiesa. L'arco detto «della Pietà», ricordato dalle guide medievali, non è disegnato: non si sa dove stesse. Il tempio di Claudio guarda a ovest, come nel disegno di un pezzo perduto della pianta marmorea; una lettura più vecchia lo voleva rivolto a nord. La scalinata verso il Colosseo è ricordata dai resti, ma non se ne conoscono misure e posizione. Anche le vie corte che portano al Pantheon, a Santa Maria Maggiore, a Santa Sabina e al tempio di Claudio sono ipotesi. Le grandi piattaforme (tempio di Claudio, tempio di Venere e Roma, terme di Traiano e di Costantino) sono attestate; i muri che le sostengono sono ricostruiti.
+
+[pagina.56] Le persone in città cambiano veste con l'epoca. Abbiamo disegnato solo ciò che le fonti mostrano: capi, lunghezze, mantelli, copricapi. Per il III secolo seguiamo il fregio dell'arco di Costantino: tunica al ginocchio, mantello sulle spalle, toga per i senatori; i soldati hanno elmo con cresta, scudo tondo e lancia. Per il IV-VI secolo seguiamo il Codice Teodosiano (tunica e mantello chiuso, il cappuccio degli schiavi) e i mosaici romani datati (Santa Maria Maggiore, la vedova Turtura nella catacomba di Commodilla). Per il VII-IX secolo seguiamo gli affreschi e i mosaici di Roma (Santa Maria Antiqua, Santa Prassede, San Marco), la descrizione dei ritratti nella vita di Gregorio Magno e, per i Franchi, Eginardo. Sono ipotesi le vesti delle donne del III secolo, dei poveri, dei preti e dei soldati dopo il VI secolo: per loro usiamo forme semplici e i colori della lana non tinta. Anche gli altri colori sono di lana non tinta, tranne quelli che le fonti danno: le vesti scure delle donne nel IV-VI secolo, i mantelli castagna e rosso-bruno, il velo bianco e la dalmatica bianca dei secoli VII-IX. Pose e volti sono indicativi.
+
+[pagina.57] Anche la gente per strada segue le fonti. Il numero delle figure dipende dalla stima della popolazione: ogni figura vale molte persone, nella stessa proporzione in ogni secolo. Per questo nel III e nel IV secolo le strade sono piene e dal VI secolo quasi vuote. Le figure camminano sulle vie principali e vicino alle case abitate; dove le case sono abbandonate non passa quasi nessuno. Quante figure ci sono in ogni strada è un'ipotesi. Dalle fonti vengono i luoghi dove la gente si raccoglieva, e fino a quando: i fori; le terme, frequentate secondo Ammiano e il Digesto e chiuse quando i Goti tagliano gli acquedotti nel 537 (Procopio); l'Emporio sul Tevere, il mercato del vino, dell'olio e del grano, finché il modello lo tiene in uso; i mendicanti davanti a San Pietro, a cui Teodorico dava il grano (Procopio); i poveri e i pellegrini ai gradini di San Pietro al tempo di Leone III e l'ospizio di Belisario sulla via Lata (Liber Pontificalis). I banchi, le anfore e i sacchi dell'Emporio sono uno schema. Chi stava davanti alle diaconie è un'ipotesi. Altri mercati sono attestati, come il foro dei maiali e il mercato di Livia, ma non li disegniamo: nel modello al loro posto ci sono le case. Non disegniamo nemmeno il pane distribuito «dai gradini»: le leggi lo nominano, ma non dicono dove. Una legge della tarda Repubblica, la Tabula Heracleensis, vietava i carri in città di giorno, salvo quelli per i templi, le opere pubbliche, le macerie e il letame. Non sappiamo se valesse ancora nel III secolo. Per questo di giorno ci sono pochi carri, soprattutto accanto ai cantieri, e di notte qualcuno in più. Carri a buoi, muli col basto e banchi hanno forme generiche. Di notte la città è buia: nessuna fonte parla di luci per le strade. Le ronde dei vigili compaiono solo di notte e solo nel III secolo, perché le descrive il Digesto; dopo, le fonti lette non le nominano più. Negli anni degli assedi (408-410, 472, 537-538, 545-546, 593) la gente per strada si dirada; dopo il dicembre 546 Roma resta vuota per «quaranta giorni o più», come scrive Marcellino Conte. Se sul dispositivo sono ridotte le animazioni, la gente c'è ma sta ferma.
+
+[pagina.58] L'indicatore «Occidente governato da Roma» mostra quanta parte del territorio occidentale era ancora sotto il controllo di Roma. Il totale di riferimento è la superficie dell'Occidente sulla nostra carta, circa 2,7 milioni di km². Come si confronta questo dato con quelli degli storici? Per l'intero impero le cifre sono vicine. Intorno al 200 le province dell'atlante di Åhlfeldt coprono 4,9 milioni di km², che scendono a 4,5 senza Mesopotamia, Dacia e Agri Decumates. Nel 1979 Rein Taagepera, usando l'atlante storico di Shepherd, calcolò 4,6 milioni di km² per il 138, 4,5 per il 275 e 4,4 per il 390. La differenza emerge quando si considerano separatamente Oriente e Occidente dopo la divisione del 395. Taagepera parla di «due parti pressoché uguali». Stima 2 milioni di km² per l'Occidente e 2,1 per l'Oriente, con un margine di 0,3 milioni per l'Oriente. Le sue cifre arrotondate danno un totale di 4,1 milioni, contro i 4,4 stimati per il 390. Sulla nostra carta l'Oriente misura 1,9 milioni e l'Occidente 2,7, circa un terzo in più della sua stima per l'Occidente.
+
+[pagina.59] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
+
+[pagina.60] Le case lasciate non spariscono. Prima restano in piedi: cade l'intonaco, mancano le tegole, le finestre restano vuote, cresce l'erba. Poi crollano il tetto e i piani alti. Alla fine restano muri bassi e cumuli di macerie, coperti di rovi. Le fonti parlano di case e chiese «in rovina», di orti accanto alle case e di bestie al pascolo, non di una città tornata campagna. Gli orti e le vigne vengono dalle fonti in quattro luoghi: presso le terme di Agrippa (599), davanti a Santa Sabina (598-599), attorno a Santa Susanna, con un orto a vigna (al tempo di Sergio I, 687-701), e presso il portico di San Pietro (al tempo di Leone IV, 847-855). Nell'atrio di San Paolo, prima che Adriano I lo facesse lastricare, l'erba cresceva e ci pascolavano buoi e cavalli: lo mostriamo dal 715 al 771, perché le date esatte non si sanno. Gli altri orti sono ipotesi. Sono ipotesi anche quali quartieri si svuotano per primi, quanto restano in piedi le case, quanto si abbassano le rovine e quanto in fretta crescono le piante. Nessuna fonte antica dice quali piante crescessero sulle rovine: abbiamo preso fico, olmo, rovo, lentisco, sambuco nano, valeriana rossa ed edera da un elenco delle piante del Colosseo scritto nel 1855.
+
+[pagina.61] Le case sono di tre specie. Le insulae, i caseggiati d'affitto, non superano i 60 piedi, circa 18 metri: è il limite di Traiano, che però conosciamo da una sola fonte, scritta tre secoli dopo. A terra hanno le botteghe con la finestrella del mezzanino, come negli scavi di Ostia; lungo le vie più larghe hanno un portico, come vuole Tacito dopo l'incendio del 64, ma quali vie lo avessero è un'ipotesi. Le domus dei ricchi sono basse, chiuse verso la strada, con l'atrio e il giardino a colonne: il fronte cieco è quello delle case di Pompei. I cataloghi del IV secolo contano 1.790 domus e 46.602 insulae, ma un'insula era forse un appartamento e non un palazzo: per questo nel modello c'è una domus ogni venti case, più spesso sui colli e nelle regioni dove i cataloghi ne contano di più. Gli horti, i grandi giardini dei colli, hanno gli edifici e l'acqua che le fonti nominano per ciascuno; forme, misure e posti sono ricostruiti, e quando le fonti tacciono abbiamo supposto che fossero abbandonati nel 537.
+
+[pagina.62] Lo strumento «Regioni e quartieri» mostra le quattordici regioni di Augusto, con i nomi dei cataloghi del IV secolo (la Notitia e il Curiosum ), che danno di ogni regione solo l'elenco dei monumenti e qualche numero. Nessuna fonte antica traccia i confini: quelli degli atlanti sono di Hülsen. Noi abbiamo dato a ogni monumento del modello la sua regione, seguendo Platner e Ashby, e diviso la città fra i gruppi di monumenti. Sono linee vere, e continue, solo le mura, il Tevere e cinque strade che le voci danno come confine (via Lata, via Appia, clivo Suburano, vico Patricio, la strada dal Colosseo alla porta Asinaria); il resto è tratteggiato. I nomi dei quartieri sono antichi e attestati; il posto delle scritte è approssimato.
+
+[pagina.63] Licenze Come riutilizzare i materiali
+
+[pagina.64] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
+
+[pagina.65] Versione del 26/11/2026, ore 13:27
 
 
 ## 2. Gli atti
@@ -1507,7 +1531,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T40-552.titolo] La fine del regno dei Goti in Italia
 
-[T40-552.testo] Nel 552 il generale Narsete, inviato in Italia dall'imperatore d'Oriente Giustiniano, sconfigge il re goto Totila a Tagina, sull'Appennino. Totila muore durante la fuga. Narsete riconquista Roma e manda a Giustiniano le chiavi delle porte. Secondo lo storico Procopio, è la quinta volta che la città passa di mano dall'inizio del regno di Giustiniano. Durante la ritirata i Goti uccidono alcuni senatori che dalla Campania stavano tornando a Roma. Il loro ultimo re, Teia, muore in battaglia ai piedi del Vesuvio. Dopo diciotto anni di guerra l'Italia torna sotto il governo imperiale. Il 13 agosto 554 Giustiniano emana la Prammatica Sanzione, un provvedimento che annulla le decisioni di Totila ed estende all'Italia le leggi raccolte nei suoi codici. Conferma i fondi per rifornire Roma di grano e per la manutenzione degli edifici pubblici, del letto del Tevere, del porto e degli acquedotti.
+[T40-552.testo] Nel 550 Totila aveva ripreso Roma e richiamato i senatori tenuti in Campania. Secondo Procopio assistette anche alle corse dei cavalli, ma non dice dove. Nel 552 il generale Narsete, inviato in Italia dall'imperatore d'Oriente Giustiniano, sconfigge il re goto Totila a Tagina, sull'Appennino. Totila muore durante la fuga. Narsete riconquista Roma e manda a Giustiniano le chiavi delle porte. Secondo lo storico Procopio, è la quinta volta che la città passa di mano dall'inizio del regno di Giustiniano. Durante la ritirata i Goti uccidono alcuni senatori che dalla Campania stavano tornando a Roma. Il loro ultimo re, Teia, muore in battaglia ai piedi del Vesuvio. Dopo diciotto anni di guerra l'Italia torna sotto il governo imperiale. Il 13 agosto 554 Giustiniano emana la Prammatica Sanzione, un provvedimento che annulla le decisioni di Totila ed estende all'Italia le leggi raccolte nei suoi codici. Conferma i fondi per rifornire Roma di grano e per la manutenzione degli edifici pubblici, del letto del Tevere, del porto e degli acquedotti.
 
 [T40-552.chi1.nome] Narsete
 
@@ -1595,7 +1619,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [T42-589.titolo] Il Tevere allaga Roma
 
-[T42-589.testo] Nell'autunno del 589, probabilmente a novembre, il Tevere supera le mura, inonda i quartieri più bassi e danneggia i granai della Chiesa. Pochi mesi dopo torna la peste. Tra le vittime c'è papa Pelagio II, a cui succede Gregorio Magno. Le fonti ricordano altre grandi piene. Nel 716 o 717 l'acqua rimane in città per sette giorni e sulla via Lata raggiunge una volta e mezzo l'altezza di un uomo. Il fiume straripa di nuovo nel dicembre 791.
+[T42-589.testo] Nell'autunno del 589, probabilmente a novembre, il Tevere supera le mura, inonda i quartieri più bassi e danneggia i granai della Chiesa. Pochi mesi dopo torna la peste. Tra le vittime c'è papa Pelagio II, a cui succede Gregorio Magno. Le fonti ricordano altre grandi piene. Nel 716 o 717 l'acqua rimane in città per sette giorni e sulla via Lata raggiunge una volta e mezzo l'altezza di un uomo. Il fiume straripa di nuovo nel dicembre 791. Il 22 novembre 844 entra dalla posterula di Sant'Agata e arriva fino a San Marco, ma nella notte si ritira.
 
 [T42-589.chi1.nome] Pelagio II
 
@@ -2148,7 +2172,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.basiliche330] Verso il 330 · A Roma sorgono le grandi basiliche volute da Costantino. Al Laterano c'è la cattedrale, la chiesa del vescovo di Roma. Fuori dalle mura è ancora in costruzione San Pietro, sulla tomba dell'apostolo.
 
-[evento.trionfo274] 274 · Aureliano celebra a Roma il trionfo, la cerimonia pubblica della vittoria. Secondo lo storico Eutropio, Tetrico e Zenobia sfilano davanti al carro dell'imperatore. Dopo la vittoria su Palmira, Aureliano dedica a Roma il tempio del Sole.
+[evento.trionfo274] 274 · Aureliano celebra a Roma il trionfo, la cerimonia pubblica della vittoria. Secondo lo storico Eutropio, Tetrico e Zenobia sfilano davanti al carro dell'imperatore. La Storia Augusta aggiunge altri particolari, ma è una fonte poco sicura: non li mostriamo. Dopo la vittoria su Palmira, Aureliano dedica a Roma il tempio del Sole.
 
 [evento.legge458] 458 · L'imperatore Maggioriano vieta di demolire gli edifici pubblici per recuperarne i materiali. Nella legge denuncia un'abitudine diffusa a Roma. Per riparazioni di poco conto si smontano interi monumenti antichi.
 
@@ -2321,7 +2345,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.circo.data3] Cassiodoro, che scrive per il re Teodorico, descrive i due obelischi ancora presenti nel circo. Il più grande era dedicato al Sole, il più piccolo alla Luna. Ricorda anche le sculture di delfini che versavano acqua in un canale e, alle due estremità della pista, i gruppi di tre coni attorno ai quali svoltavano i carri.
 
-[scheda.circo.data4-550] Procopio ricorda che Totila, dopo aver riconquistato Roma, assiste alle corse dei cavalli. Sono le ultime corse documentate in città. È probabile che si siano svolte al Circo Massimo, ma Procopio non indica il luogo.
+[scheda.circo.data4-550] Secondo Procopio, Totila riprende Roma, assiste alle corse dei cavalli e poi prepara l'esercito per andare in Sicilia. Procopio non dice dove si corse: la frase potrebbe riferirsi anche alla Campania. Il Circo Massimo lo indica lo storico J. B. Bury. Nel modello il circo è ancora in uso nel 550 e nei sei anni seguenti passa a chiuso: è una nostra scelta, perché le fonti lette non dicono quando finirono le corse.
 
 [scheda.circo.data5.quando] dopo il 550
 
@@ -2504,13 +2528,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.pantheon.nome] Pantheon
 
-[scheda.pantheon.cosa] Ricostruito da Adriano e dedicato a tutti gli dèi, il Pantheon ha l'ingresso rivolto a nord. Davanti alla sala circolare si trova il portico d'ingresso con sedici colonne di granito, otto grigie in facciata e otto rosa alle loro spalle. In antico il portico si affacciava su una piazza circondata da colonnati. A sud, addossata al Pantheon, si trova l'aula chiamata basilica di Nettuno. Sul fregio del portico si legge l'iscrizione di Agrippa, «M. Agrippa L. f. cos. tertium fecit». Sotto, sull'architrave, c'è quella più piccola del restauro di Settimio Severo e Caracalla, del 202. Nel timpano c'era una decorazione di bronzo. Non se ne conosce la forma, né quando fu tolta: nel modello è un tondo, che sparisce nel 663 con le tegole.
+[scheda.pantheon.cosa] Ricostruito da Adriano e dedicato a tutti gli dèi, il Pantheon ha l'ingresso rivolto a nord. Davanti alla sala circolare si trova il portico d'ingresso con sedici colonne di granito, otto grigie in facciata e otto rosa alle loro spalle. In antico il portico si affacciava su una piazza circondata da colonnati. Il portico stava circa 1,30 metri sopra il lastricato della piazza. Gli scavi dell'Ottocento danno le misure della piazza: larga una sessantina di metri e lunga circa il doppio. Sul lato est c'era un portico rialzato di sei gradini, con colonne di granito grigio larghe un metro. Sul lato ovest un portico è probabile, ma non se ne sono trovati resti. A nord non c'era un portico: la piazza finiva su una strada antica. Nel modello una via corta porta da quel lato alla strada del modello, che passa poco più a nord: il suo tracciato è un'ipotesi. Nessuna fonte dice che la piazza fosse chiusa o abbattuta quando il Pantheon diventò chiesa: nel modello i portici vanno in rovina dal VI secolo e il centro resta libero davanti alla porta. I testi medievali ricordano a nord del Pantheon un arco «della Pietà»: non si sa dove fosse né di quando fosse, e nel modello non c'è. A sud, addossata al Pantheon, si trova l'aula chiamata basilica di Nettuno. Sul fregio del portico si legge l'iscrizione di Agrippa, «M. Agrippa L. f. cos. tertium fecit». Sotto, sull'architrave, c'è quella più piccola del restauro di Settimio Severo e Caracalla, del 202. Nel timpano c'era una decorazione di bronzo. Non se ne conosce la forma, né quando fu tolta: nel modello è un tondo, che sparisce nel 663 con le tegole.
 
 [scheda.pantheon.data1-126] Completato sotto Adriano.
 
 [scheda.pantheon.data2-392] Nel 368 o 370 nel Pantheon si leggono ancora pubblicamente le leggi imperiali. Le fonti tornano a citarlo solo nel 609. Non sappiamo quando cessò il culto pagano. Nel modello abbiamo scelto il 392, sulla base dei divieti imperiali. Da allora è abbandonato, ma la cupola e i muri reggono: nel 609 il papa riceve un edificio intero.
 
-[scheda.pantheon.data3-609] Donato al papa dall'imperatore Foca, il 13 maggio è consacrato come Santa Maria ad Martyres: per questo è arrivato intero fino a noi.
+[scheda.pantheon.data3-609] Donato al papa dall'imperatore Foca, il 13 maggio è consacrato come Santa Maria ad Martyres: per questo è arrivato intero fino a noi. Le fonti lette non parlano di lavori. Nel modello viene ripulito in pochi anni, ma conserva i segni dell'abbandono, e il bronzo della cupola resta scurito fino al 663: è una scelta.
 
 [scheda.pantheon.data4-663] Costante II fa togliere le tegole di bronzo e le spedisce verso Costantinopoli.
 
@@ -2540,7 +2564,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.traiano.nome] Terme di Traiano
 
-[scheda.traiano.cosa] Terme sul colle Oppio.
+[scheda.traiano.cosa] Terme sul colle Oppio, costruite su un piano artificiale: le sale della Domus Aurea sotto di loro furono riempite e usate come fondamenta. Nel modello i muri che reggono il piano verso la valle del Colosseo sono ricostruiti.
 
 [scheda.traiano.data1-109] Inaugurate.
 
@@ -2614,7 +2638,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.massenzio.data3-663] Le tegole di bronzo del tetto: secondo alcuni sono quelle che papa Onorio I tolse verso il 630 al «tempio di Roma» (si veda il tempio di Venere e Roma). Nel modello vanno via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano): è una scelta.
 
-[scheda.massenzio.data4-847] Con il terremoto di quest'anno crollano probabilmente la navata sud e la volta centrale (Platner e Ashby). Il Liber Pontificalis registra la scossa ma non nomina la basilica.
+[scheda.massenzio.data4-847] Con il terremoto di quest'anno crollano probabilmente la navata sud e la volta centrale (Platner e Ashby). Il Liber Pontificalis registra la scossa ma non nomina la basilica. Resta in piedi la navata nord con le sue tre volte, come oggi. Le macerie e l'altezza dei muri spezzati sono una ricostruzione.
 
 [scheda.massenzio.certezza-A] In piedi la navata nord; la pianta è nota per intero.
 
@@ -2623,7 +2647,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.venere.nome] Tempio di Venere e Roma
 
-[scheda.venere.cosa] Il tempio più grande di Roma, fra il Foro e il Colosseo.
+[scheda.venere.cosa] Il tempio più grande di Roma, fra il Foro e il Colosseo. Stava su un podio di 145 per 100 metri, più alto verso il Colosseo per la pendenza del terreno, con una scalinata larga dalla parte del Foro e due scale piccole dalla parte del Colosseo. Nel modello le due scale scendono lungo il muro del podio: la loro forma è una ricostruzione.
 
 [scheda.venere.data1-307] Ricostruito da Massenzio dopo un incendio.
 
@@ -2786,7 +2810,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.santadriano.cosa] La Curia del Foro, dove si riuniva il Senato, trasformata in chiesa di Sant'Adriano.
 
-[scheda.santadriano.data1-630] Papa Onorio I (625-638) vi fa la chiesa del beato Adriano, secondo il Liber Pontificalis. L'anno preciso non è noto.
+[scheda.santadriano.data1-630] Papa Onorio I (625-638) vi fa la chiesa del beato Adriano, secondo il Liber Pontificalis. L'anno preciso non è noto. Onorio aggiunge un'abside (Platner e Ashby). Le fonti non dicono su quale muro né quanto fosse grande: nel modello sta sul muro di fondo, di fronte alla porta, e le misure sono indicative.
 
 [scheda.santadriano.certezza-A] La Curia è ancora in piedi: fu chiesa fino al Novecento. Nel modello la croce sul frontone è indicativa.
 
@@ -2861,7 +2885,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.termecostantino.nome] Terme di Costantino
 
-[scheda.termecostantino.cosa] Le ultime grandi terme costruite a Roma sorgevano sul Quirinale. Più piccole degli altri grandi stabilimenti, occupavano tutto lo spazio tra due strade. A nord si apriva uno spiazzo con un lato curvo. Mancava il grande recinto tipico delle altre terme. Le misure del modello sono indicative.
+[scheda.termecostantino.cosa] Le ultime grandi terme costruite a Roma sorgevano sul Quirinale. Più piccole degli altri grandi stabilimenti, occupavano tutto lo spazio tra due strade. A nord si apriva uno spiazzo con un lato curvo. Mancava il grande recinto tipico delle altre terme. Il terreno era in pendenza e fu necessario un piano artificiale (Platner e Ashby): nel modello è un basamento di mattoni. Le misure del modello sono indicative.
 
 [scheda.termecostantino.data1-315] Costruite sotto Costantino, probabilmente prima del 315.
 
@@ -3176,6 +3200,23 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.scholae2.certezza-C] I Frisoni hanno un sito certo (Santi Michele e Magno), ma la forma è ignota; i siti di Franchi e Longobardi sono discussi.
 
 
+### Ospizio della Naumachia (Leone III)
+
+[scheda.ospizionaumachia.nome] Ospizio della Naumachia (Leone III)
+
+[scheda.ospizionaumachia.cosa] Ospizio per i poveri e per i pellegrini venuti da lontano, nel luogo detto Naumachia, con una chiesa dedicata a san Pietro. Lo costruisce papa Leone III «dalle fondamenta», con diverse case, e gli dà poderi in città e in campagna per sfamare gli ospiti.
+
+[scheda.ospizionaumachia.data1.quando] 795-816
+
+[scheda.ospizionaumachia.data1] Il Liber Pontificalis lo mette fra le opere di Leone III, ma non dice l'anno. Nel modello compare nell'816, l'anno della morte del papa: è una nostra scelta.
+
+[scheda.ospizionaumachia.data2.quando] dove
+
+[scheda.ospizionaumachia.data2] Il testo dice solo «nel luogo detto Naumachia». Per Duchesne, che ha curato l'edizione del Liber Pontificalis, il posto è segnato dalla chiesa di San Pellegrino, sopra l'attuale palazzo dei papi, nel quartiere della guardia svizzera. Per Platner e Ashby la Naumachia vaticana era un edificio scavato nel 1743 poco a nord-ovest di Castel Sant'Angelo, da cui prese nome il quartiere. Nel modello l'ospizio sta presso San Pellegrino: è un'ipotesi.
+
+[scheda.ospizionaumachia.certezza-C] Il luogo è discusso fra due posti vicini, la forma è ignota: case e chiesa sono uno schema. Nel modello stanno dove oggi è la chiesa di San Pellegrino (OpenStreetMap), fuori dalle mura leonine.
+
+
 ### Mulini sul Tevere
 
 [scheda.mulini.nome] Mulini sul Tevere
@@ -3276,23 +3317,23 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.testaccio.nome] Monte Testaccio
 
-[scheda.testaccio.cosa] Il Monte Testaccio è una collina artificiale formata dai frammenti delle anfore che portavano l'olio al porto sul Tevere. Una volta svuotate, le anfore venivano rotte e i cocci disposti a terrazze. La collina è alta 35 metri e misura quasi un chilometro alla base, lungo il perimetro. Si stima che contenga i resti di 53 milioni di anfore. In antico era probabilmente più alta.
+[scheda.testaccio.cosa] Il Monte Testaccio è una collina artificiale fatta tutta di cocci d'anfora, accanto ai magazzini del porto sul Tevere. Quasi tutte le anfore sono Dressel 20: portavano a Roma l'olio della Betica, nel sud della Spagna; le altre venivano dall'Africa. Svuotate, le anfore salivano intere sul monte, forse a dorso di mulo secondo chi lo scava, e lì si rompevano. Gli scavi mostrano come era costruito: gradoni sostenuti da file di anfore intere riempite di cocci, ogni fila un poco più indietro della prima. Sui cocci si spargeva calce, contro l'odore dell'olio rancido. Oggi è alto circa 35 metri; le fonti gli danno circa due ettari e un perimetro di circa un chilometro, due misure che non stanno bene insieme. Nel modello il piede è quello di oggi, il recinto del parco su OpenStreetMap: circa 2,75 ettari e 675 metri di giro. Si stima che contenga i resti di circa 53 milioni di anfore. Nel modello sono uno schema il numero, l'altezza e la larghezza dei gradoni (sei, diversi fra loro: dove una fila è arretrata poco due gradoni si fondono), le due piattaforme, accennate solo con un avvallamento perché le fonti lette non dicono quale fosse più alta, il posto della rampa (una pagina del Comune parla di una rampa e due stradelle, senza dire dove; qui sale a tornanti sul lato verso il porto), le bestie da soma, la fila d'anfore in cima e il verde dopo l'abbandono.
 
 [scheda.testaccio.data1.quando] I secolo a.C.?
 
-[scheda.testaccio.data1] Non si sa quando comincia lo scarico: gli strati più bassi non sono stati scavati. Quelli datati vanno dal 140 al 250 circa.
+[scheda.testaccio.data1] Non si sa quando comincia lo scarico: gli strati più bassi non sono stati scavati. Dressel lo faceva cominciare con Augusto. Fino alla metà del II secolo cresce la prima piattaforma, a est; poi si scarica su una seconda, accanto alla prima, a ovest. I cocci datati vanno dal 140 al 250 circa.
 
 [scheda.testaccio.data2.quando] fine del II secolo
 
 [scheda.testaccio.data2] Nel periodo di maggiore attività si scaricano qui fino a 130.000 anfore l'anno. Quasi tutte arrivano dalla Betica, nel sud dell'attuale Spagna, e contengono l'olio che lo Stato distribuisce alla popolazione.
 
-[scheda.testaccio.data3.quando] dopo il 260
+[scheda.testaccio.data3.quando] 265
 
-[scheda.testaccio.data3] Lo scarico si ferma. L'olio viaggia ormai in contenitori diversi, e forse cambiano gli approdi: la ragione non è certa.
+[scheda.testaccio.data3] È l'ultima data consolare trovata sulle anfore. Poco dopo lo scarico si ferma. L'olio viaggia ormai in contenitori diversi, e forse cambiano gli approdi: la ragione non è certa.
 
-[scheda.testaccio.data4.quando] dopo il 260 circa
+[scheda.testaccio.data4.quando] dopo il 265
 
-[scheda.testaccio.data4] La zona attorno resta dentro le mura ma si svuota. Che sul monte crescesse l'erba già in questi secoli è una nostra supposizione; nel Medioevo vi si terranno i giochi del carnevale.
+[scheda.testaccio.data4] Nessuna fonte parla del monte fino al Medioevo. Nel modello resta nudo per qualche decennio, poi si copre piano d'erba e di arbusti, come gli altri ruderi: è una nostra supposizione. I giochi del carnevale a Testaccio sono ricordati solo dal XII secolo, dopo il periodo di questa pagina.
 
 [scheda.testaccio.certezza-A] Esiste: il contorno è quello di oggi, raggiunto quando gli scarichi cessano, verso il 260; prima era più basso.
 
@@ -3395,6 +3436,10 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.castrapretorio.data3-312] Costantino scioglie i pretoriani, che avevano combattuto per Massenzio, e abbatte i muri interni del campo.
 
+[scheda.castrapretorio.data4.quando] inizio del VI secolo
+
+[scheda.castrapretorio.data4] Dentro il vecchio campo si è trovato un cimitero cristiano di questi anni (Platner e Ashby). Nessuna fonte parla di case: nel modello il recinto resta vuoto.
+
 [scheda.castrapretorio.certezza-A] Tre lati della caserma si conservano nelle mura Aureliane e permettono di misurare il recinto. Gli scavi hanno rivelato tratti dei muri interni e degli alloggi. Nel modello la forma della porta e gli spessori dei muri sono indicativi.
 
 
@@ -3455,7 +3500,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioclaudio.nome] Tempio di Claudio
 
-[scheda.tempioclaudio.cosa] Il tempio dedicato all'imperatore Claudio dopo la sua morte sorgeva sul Celio, su una piattaforma di 180 per 200 metri, sostenuta da muri alti fino a 15 metri. La facciata aveva sei colonne ed era rivolta verso il Palatino. Sul lato orientale c'era una grande fontana monumentale ornata di nicchie.
+[scheda.tempioclaudio.cosa] Il tempio dedicato all'imperatore Claudio dopo la sua morte sorgeva sul Celio, su una piattaforma di 180 per 200 metri, sostenuta da muri alti fino a 15 metri. La facciata aveva sei colonne ed era rivolta a ovest, verso il Palatino, come nel disegno di un pezzo perduto della pianta marmorea; quattro gradini salivano al podio. Sul lato orientale c'era una grande fontana monumentale ornata di nicchie. Nel modello si vedono i lati descritti da Platner e Ashby: due ordini di arcate a ovest, una fila di stanze a volta a nord, le nicchie della fontana a est. Numero e misura delle aperture sono indicativi. Una lettura più vecchia lo voleva rivolto a nord, ed è quella di Platner e Ashby: veniva da un modo di accostare i frammenti della pianta proposto nel 1903. Dal lato nord una scalinata scendeva verso il Colosseo: ne restavano tracce, ma non se ne conoscono misure e posizione esatta. Sul lato sud la pianta marmorea mostra una rampa a gradini. Nel modello le due scale stanno al centro dei due lati: è una stima.
 
 [scheda.tempioclaudio.data1-54] Agrippina avvia la costruzione del tempio dedicato al marito Claudio, onorato come un dio dopo la morte.
 
@@ -3682,6 +3727,19 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.arcusnovus.certezza-B] L'arco fu demolito nel 1491. Per la posizione il modello segue la voce italiana di Wikipedia. Forma e misure sono indicative.
 
 
+### Arco di Valentiniano
+
+[scheda.arcovalentiniano.nome] Arco di Valentiniano
+
+[scheda.arcovalentiniano.cosa] Arco all'ingresso del ponte Aurelio, sulla riva del Campo Marzio, eretto quando Valentiniano I e Valente fecero ricostruire il ponte. Nel 1878 i suoi pezzi erano nel fiume, insieme a statue di bronzo. Nel modello la forma è generica: un solo fornice e tre statue. Quando sia caduto non si sa: nel modello resta in piedi.
+
+[scheda.arcovalentiniano.data1-365] Ricostruzione del ponte e dell'arco (iscrizioni del 365-366).
+
+[scheda.arcovalentiniano.data2-1878] I pezzi dell'arco e le statue di bronzo vengono ritrovati nel fiume (Lanciani).
+
+[scheda.arcovalentiniano.certezza-C] Noto dalle iscrizioni e dai pezzi trovati nel fiume nel 1878; forma e misure sono generiche.
+
+
 ### Mura leonine
 
 [scheda.leonine.nome] Mura leonine
@@ -3695,6 +3753,164 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.leonine.data3-852] Cerimonia conclusiva il 27 giugno: nasce la «città leonina».
 
 [scheda.leonine.certezza-B] Nei Giardini Vaticani si conservano alcuni tratti delle mura e una torre. A nord il Passetto, costruito più tardi, segue la linea delle mura di Leone IV. A sud il tracciato è ricostruito collegando i punti conosciuti.
+
+
+### Horti Sallustiani
+
+[scheda.hortisallustiani.nome] Horti Sallustiani
+
+[scheda.hortisallustiani.cosa] Grandi giardini fra il Quirinale e il Pincio, nella regione VI. Li creò lo storico Sallustio con le ricchezze portate dalla Numidia; da Tiberio furono degli imperatori. Dentro c'erano un ippodromo nella valle, con muri e terrazze sul pendio del Quirinale, un tempio di Venere, tre piscine, un ninfeo e l'obelisco. Le fonti danno solo l'elenco: nel modello forma, misure e posto di ogni parte sono ricostruiti. Il ninfeo sta dove se ne vedono ancora i resti, in piazza Sallustio, accanto a un edificio di quattro piani.
+
+[scheda.hortisallustiani.data1.quando] I secolo
+
+[scheda.hortisallustiani.data1] Vespasiano ci sta volentieri; Nerva ci muore.
+
+[scheda.hortisallustiani.data2.quando] III secolo
+
+[scheda.hortisallustiani.data2] Secondo la Storia Augusta, fonte poco sicura, Aureliano vi fa un portico lungo un miglio. Forse è un'invenzione: nel modello non c'è.
+
+[scheda.hortisallustiani.data3.quando] IV secolo
+
+[scheda.hortisallustiani.data3] I giardini sono ancora un luogo di soggiorno.
+
+[scheda.hortisallustiani.data4-410] Entrati da porta Salaria, i Goti di Alarico bruciano le case vicino alla porta e la casa di Sallustio. Verso il 550 Procopio scrive che è ancora mezza bruciata.
+
+[scheda.hortisallustiani.data5-440] Nel modello il giardino resta abbandonato, e il verde cresce sulle aiuole e sulle rovine. Quando fu lasciato le fonti lette non lo dicono: l'anno è una scelta.
+
+[scheda.hortisallustiani.data6-537] I Goti tagliano gli acquedotti: nel modello il ninfeo e le piscine restano senz'acqua. Se dopo il 410 qualcuno curasse ancora le fontane non si sa.
+
+[scheda.hortisallustiani.data7.quando] Medioevo
+
+[scheda.hortisallustiani.data7] La zona si chiama Sallustricum.
+
+[scheda.hortisallustiani.certezza-C] Certi il luogo e l'elenco delle parti (Platner e Ashby). Forma, misure e posto di palazzo, ippodromo, tempio e piscine sono ricostruiti; il ninfeo sta dove ne restano i ruderi.
+
+
+### Horti degli Acilii
+
+[scheda.hortiacilii.nome] Horti degli Acilii
+
+[scheda.hortiacilii.cosa] Giardini sul Pincio, chiusi lungo il pendio da alti muri di sostegno ad arcate. A nord della Trinità dei Monti c'era un grande emiciclo aperto verso ovest, con scale che scendevano alla pianura; sotto villa Medici, un ninfeo a otto lati detto Parnaso; sotto terra una cisterna. Nel modello il giardino sta un poco più a nord dei luoghi veri, e forma e misure delle parti sono ricostruite.
+
+[scheda.hortiacilii.data1.quando] II secolo
+
+[scheda.hortiacilii.data1] Appartengono agli Acilii Glabrioni.
+
+[scheda.hortiacilii.data2.quando] 271-275
+
+[scheda.hortiacilii.data2] Aureliano prende nelle mura i muri di sostegno a est e a nord: il Muro Torto ne è un contrafforte.
+
+[scheda.hortiacilii.data3.quando] IV secolo
+
+[scheda.hortiacilii.data3] Passano ai Pincii, poi ad Anicia Faltonia Proba e a Petronio Probo, infine all'imperatore.
+
+[scheda.hortiacilii.data4-537] Le fonti lette non dicono altro. Nel modello da quest'anno il giardino è abbandonato e il ninfeo resta senz'acqua: è un'ipotesi.
+
+[scheda.hortiacilii.certezza-C] Attestati i muri ad arcate (in parte nelle mura), l'emiciclo e il ninfeo ottagonale; nel modello posti e forme sono approssimati.
+
+
+### Horti di Mecenate
+
+[scheda.hortimaecenatis.nome] Horti di Mecenate
+
+[scheda.hortimaecenatis.cosa] Giardini creati da Mecenate sull'Esquilino, sopra l'argine delle vecchie mura e sulla necropoli vicina. Avevano una torre alta: da lì, si raccontava, Nerone guardò l'incendio del 64. L'altezza della torre nel modello è ricostruita; viali e aiuole sono uno schema.
+
+[scheda.hortimaecenatis.data1.quando] fine del I secolo a.C.
+
+[scheda.hortimaecenatis.data1] Morto Mecenate, i giardini passano all'imperatore. Tiberio ci abita.
+
+[scheda.hortimaecenatis.data2.quando] I secolo
+
+[scheda.hortimaecenatis.data2] Nerone li unisce al Palatino.
+
+[scheda.hortimaecenatis.data3.quando] dopo
+
+[scheda.hortimaecenatis.data3] Le fonti lette non dicono più nulla. Cassio Dione attribuisce a Mecenate la prima piscina d'acqua calda di Roma, che forse stava qui: è incerto, e nel modello non c'è.
+
+[scheda.hortimaecenatis.data4-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+
+[scheda.hortimaecenatis.certezza-C] Luogo approssimato; la torre è attestata, forma e altezza no.
+
+
+### Horti Lamiani
+
+[scheda.hortilamiani.nome] Horti Lamiani
+
+[scheda.hortilamiani.cosa] Giardini sull'Esquilino, poco a sud-est di piazza Vittorio. Probabilmente li creò Lucio Elio Lamia, console nel 3 d.C., che li lasciò a Tiberio. Vi si sono trovate molte opere d'arte e pochi resti di edifici: il padiglione del modello ne è solo un segno.
+
+[scheda.hortilamiani.data1-41] Il corpo di Caligola viene bruciato e deposto qui per un tempo.
+
+[scheda.hortilamiani.data2.quando] dopo
+
+[scheda.hortilamiani.data2] Restano degli imperatori; le fonti lette non dicono altro.
+
+[scheda.hortilamiani.data3-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+
+[scheda.hortilamiani.certezza-C] Luogo approssimato; nessun edificio descritto dalle fonti lette.
+
+
+### Horti Liciniani
+
+[scheda.hortiliciniani.nome] Horti Liciniani
+
+[scheda.hortiliciniani.cosa] Giardini dell'imperatore Gallieno sull'Esquilino. Dove fossero non si sa: alcuni studiosi pensano che la grande sala detta tempio di Minerva Medica fosse il loro ninfeo. Nel modello il giardino è messo attorno a quella sala, ed è uno schema con viali e aiuole.
+
+[scheda.hortiliciniani.data1.quando] 253-268
+
+[scheda.hortiliciniani.data1] Sono di Gallieno, secondo la Storia Augusta, fonte poco sicura.
+
+[scheda.hortiliciniani.data2-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+
+[scheda.hortiliciniani.certezza-C] Posto ignoto: nel modello attorno a Minerva Medica, come pensano alcuni studiosi.
+
+
+### Horti di Lucullo
+
+[scheda.hortiluculliani.nome] Horti di Lucullo
+
+[scheda.hortiluculliani.cosa] Giardini creati da Lucullo verso il 60 a.C. sul Pincio, sopra il punto in cui l'acqua Vergine usciva dal colle, presso l'odierna Capo le Case. Erano molto belli; una sala si chiamava Apollo. Nel modello il giardino sta più a nord-est del luogo vero, e la sala è ricostruita.
+
+[scheda.hortiluculliani.data1.quando] I secolo
+
+[scheda.hortiluculliani.data1] Nel 46 sono di Valerio Asiatico. Messalina li vuole: lo costringe a uccidersi e li prende. Poi viene uccisa lì anche lei.
+
+[scheda.hortiluculliani.data2.quando] dopo
+
+[scheda.hortiluculliani.data2] Sono fra le proprietà più ricche degli imperatori.
+
+[scheda.hortiluculliani.data3-537] Le fonti lette non dicono altro. Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+
+[scheda.hortiluculliani.certezza-C] Nel modello il giardino è spostato rispetto al luogo vero; la sala è attestata solo per nome.
+
+
+### Horti Spei Veteris
+
+[scheda.hortispeiveteris.nome] Horti Spei Veteris
+
+[scheda.hortispeiveteris.cosa] Giardini nominati una sola volta, nella vita di Elagabalo della Storia Augusta, fonte poco sicura. Nel modello stanno nella zona detta Spes Vetus, presso il palazzo del Sessorio: posto e aspetto sono uno schema.
+
+[scheda.hortispeiveteris.data1.quando] III secolo
+
+[scheda.hortispeiveteris.data1] Unica notizia: la Storia Augusta, vita di Elagabalo, 13.
+
+[scheda.hortispeiveteris.data2-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+
+[scheda.hortispeiveteris.certezza-C] Solo il nome: posto e aspetto sono ipotesi.
+
+
+### Horti di Cesare
+
+[scheda.horticaesaris.nome] Horti di Cesare
+
+[scheda.horticaesaris.cosa] Giardini di Giulio Cesare sulla riva destra del Tevere, lungo la via Portuense. Più avanti, a un miglio dalla porta, c'era il tempio della Fors Fortuna, fuori dal modello. Confini e aspetto non si conoscono: nel modello solo viali e aiuole.
+
+[scheda.horticaesaris.data1.quando] 44 a.C.
+
+[scheda.horticaesaris.data1] Cesare li lascia per testamento al popolo romano.
+
+[scheda.horticaesaris.data2-537] Le fonti lette non dicono altro. Nel modello da quest'anno sono abbandonati: è un'ipotesi.
+
+[scheda.horticaesaris.certezza-C] Luogo approssimato lungo la via Portuense; aspetto ignoto.
 
 
 ### Mura Aureliane
@@ -3754,6 +3970,150 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.acquedotti.data3-780] Secondo il Liber Pontificalis, papa Adriano I (772-795) fa riparare quattro acquedotti. La Sabbatina, l'antica Traiana, era interrotta da vent'anni e aveva cento arcate crollate. Dopo i lavori rifornisce di nuovo San Pietro e i mulini del Gianicolo. Anche la Iovia era ferma da vent'anni: per Platner e Ashby è l'acquedotto della Marcia, per altri il suo ramo per le terme di Caracalla. La Claudia riporta l'acqua al Laterano. L'acquedotto Vergine, che prima ne portava pochissima, torna a dissetare quasi tutta la città. La fonte non precisa gli anni dei lavori. La data del 776 circa è una stima degli studiosi.
 
 [scheda.acquedotti.certezza-B] Si conservano molte arcate dell'Acqua Claudia e del ramo costruito da Nerone. Degli acquedotti dell'Acqua Marcia, dell'Acqua Vergine e dell'Acqua Traiana conosciamo soltanto alcuni tratti. Gli altri percorsi e tutte le altezze indicate in questa ricostruzione sono stime.
+
+
+### ponteelio
+
+[scheda.ponteelio.cosa] Il ponte che Adriano costruì insieme al suo mausoleo, oggi ponte Sant'Angelo. Aveva tre grandi arcate di poco più di 18 metri e arcate minori ai due capi.
+
+[scheda.ponteelio.data1-134] Finito sotto Adriano.
+
+[scheda.ponteelio.data2-537] Durante l'assedio i Goti attaccano il mausoleo, che ormai fa parte delle mura. Secondo Procopio arrivano coperti dal portico che porta alla chiesa di San Pietro.
+
+[scheda.ponteelio.data3.quando] Medioevo
+
+[scheda.ponteelio.data3] Lo chiamano ponte di San Pietro. Fra il 235 e l'852 le fonti lette non ricordano danni né restauri: nel modello resta intero.
+
+
+### ponteaurelio
+
+[scheda.ponteaurelio.cosa] Il ponte che univa il Campo Marzio a Trastevere, dove oggi c'è ponte Sisto. Per gli studiosi è il ponte che nel Medioevo si chiama Antonino. Qui le mura delle due rive arrivavano al ponte.
+
+[scheda.ponteaurelio.data1-365] Valentiniano I lo fa ricostruire, insieme a un arco commemorativo all'ingresso (iscrizioni del 365-366). L'arco stava all'ingresso dalla parte del Campo Marzio: nel modello ha una forma generica.
+
+[scheda.ponteaurelio.data2-537] Secondo Procopio, i Romani avevano cinto di mura il colle oltre il fiume e le avevano unite alla cinta con un ponte, che gli studiosi identificano con questo. Durante l'assedio Belisario tende catene di ferro sul Tevere, a monte del ponte.
+
+[scheda.ponteaurelio.data3-772] Crolla in parte: da allora lo chiamano «rotto». La data è discussa: il 772 per Platner e Ashby, una piena del 797 per Lanciani, che però ne dubita; all'inizio dell'XI secolo è di sicuro rotto. Se lo si passasse ancora le fonti lette non lo dicono. Nel modello gli manca un'arcata.
+
+[scheda.ponteaurelio.data4-791] La piena del Tevere arriva fino al ponte e abbatte un tratto delle mura sulla riva (Liber Pontificalis).
+
+
+### pontefabricio
+
+[scheda.pontefabricio.cosa] Il ponte di pietra fra la riva sinistra e l'isola Tiberina, lungo 62 metri: due arcate di circa 24 metri e una piccola fra loro, in tufo e peperino rivestiti di travertino. È il ponte di Roma meglio conservato, quasi com'era.
+
+[scheda.pontefabricio.data1--62] Costruito da Lucio Fabricio, curatore delle strade.
+
+[scheda.pontefabricio.data2--21] Restaurato dopo la piena del 23 a.C.
+
+[scheda.pontefabricio.data3.quando] 235-852
+
+[scheda.pontefabricio.data3] Nessun danno ricordato dalle fonti lette: nel modello è sempre intero. Larghezza e arcata piccola sono ricostruite.
+
+
+### pontecestio
+
+[scheda.pontecestio.cosa] Il ponte fra l'isola Tiberina e Trastevere. Quello disegnato è il ponte rifatto alla fine del IV secolo: lungo 48 metri e largo 8,20, con un'arcata centrale di 23,65 metri e una piccola per lato. Del ponte più antico non si sanno le misure.
+
+[scheda.pontecestio.data1.quando] I secolo a.C.
+
+[scheda.pontecestio.data1] Il primo ponte di pietra fra l'isola e la riva destra, costruito probabilmente poco dopo il ponte Fabricio.
+
+[scheda.pontecestio.data2-369] Valentiniano I, Valente e Graziano finiscono un ponte quasi tutto nuovo. Nel modello il cantiere comincia nel 367: l'anno d'inizio non è noto.
+
+[scheda.pontecestio.data3-370] Dedicato come ponte di Graziano.
+
+
+### ponteemilio
+
+[scheda.ponteemilio.cosa] Il ponte di pietra del Foro Boario, oggi ponte Rotto. Partiva dal Foro Boario; la strada che ne usciva sulla riva destra saliva al Gianicolo: era la via Aurelia.
+
+[scheda.ponteemilio.data1--179] I censori appaltano le pile.
+
+[scheda.ponteemilio.data2--142] Sulle pile si costruiscono le arcate.
+
+[scheda.ponteemilio.data3.quando] VII secolo
+
+[scheda.ponteemilio.data3] Il geografo Etico lo chiama «ponte di Lepido» e lo descrive ancora come il ponte che attraversa il fiume accanto al Foro Boario.
+
+[scheda.ponteemilio.data4.quando] dopo l'852
+
+[scheda.ponteemilio.data4] Resta in piedi fino alla piena del 1557; nel 1598 il fiume ne porta via metà. Il numero delle arcate del modello non è quello vero.
+
+
+### pontesublicio
+
+[scheda.pontesublicio.cosa] Un ponte di legno, costruito senza nessun pezzo di metallo. Dove fosse è discusso: secondo gli indizi più forti partiva dal Foro Boario, poco a valle del ponte Emilio. Il modello lo mette 150 metri più giù; forma e misure sono ricostruite.
+
+[scheda.pontesublicio.data1.quando] età antichissima
+
+[scheda.pontesublicio.data1] Il modo in cui era costruito, tutto di legno, fa pensare agli studiosi che risalga a un'epoca molto antica.
+
+[scheda.pontesublicio.data2.quando] V secolo
+
+[scheda.pontesublicio.data2] Ogni volta che le piene lo danneggiano lo si ripara. È ancora in piedi nel V secolo: è l'ultima notizia nelle fonti lette.
+
+[scheda.pontesublicio.data3-500] Nel modello scompare qui: l'anno è una nostra ipotesi.
+
+
+### ponteprobo
+
+[scheda.ponteprobo.cosa] L'ultimo ponte nell'elenco dei cataloghi della città. Il ponte che lo sostituì passava poco a sud dell'angolo nord dell'Aventino: le sue ultime pile furono tolte dal fiume nel 1878. Il modello lo mette lì, dove oggi c'è ponte Sublicio.
+
+[scheda.ponteprobo.data1-280] Probabilmente costruito da Probo (276-282): il modello lo fa comparire nel 280.
+
+[scheda.ponteprobo.data2-384] Il ponte di Teodosio, considerato una ricostruzione di quello di Probo: dalle lettere di Simmaco i lavori sono cominciati prima del 384 e non sono finiti nel 387. Nel modello i ponteggi restano dal 383 al 388.
+
+[scheda.ponteprobo.data3.quando] XI secolo
+
+[scheda.ponteprobo.data3] Distrutto in parte; quasi del tutto nel 1484.
+
+
+### pontemilvio
+
+[scheda.pontemilvio.cosa] Il ponte della via Flaminia, tre chilometri a nord delle mura.
+
+[scheda.pontemilvio.data1-312] Costantino sconfigge Massenzio davanti al ponte.
+
+[scheda.pontemilvio.data2-537] Secondo Procopio, durante l'assedio i Goti mettono un campo oltre il Tevere, nel Campo di Nerone, «perché il ponte stesse fra i loro due eserciti».
+
+[scheda.pontemilvio.data3-547] Procopio: Totila ha abbattuto quasi tutti i ponti sul Tevere, ma questo non riesce a distruggerlo.
+
+
+### ponteneroniano
+
+[scheda.ponteneroniano.cosa] Il ponte costruito probabilmente da Nerone fra il Campo Marzio e la pianura del Vaticano, subito a valle dell'attuale ponte Vittorio Emanuele. A nord ne partiva la via Trionfale.
+
+[scheda.ponteneroniano.data1.quando] IV secolo
+
+[scheda.ponteneroniano.data1] Probabilmente già in rovina: il catalogo della città non lo nomina. Nel modello restano le pile dal 300, anno che è una nostra ipotesi.
+
+[scheda.ponteneroniano.data2.quando] oggi
+
+[scheda.ponteneroniano.data2] Resti delle pile in fondo al fiume.
+
+
+### esculapio
+
+[scheda.esculapio.cosa] Il santuario del dio della medicina, sull'isola Tiberina. Tutta l'isola era sua, e fu sistemata in forma di nave; l'obelisco forse ne era l'albero. Il tempio stava probabilmente dove oggi c'è la chiesa di San Bartolomeo, verso il capo a valle. Non ne restano resti sicuri: forma e misure del modello sono ricostruite.
+
+[scheda.esculapio.data1.quando] inizio del III secolo a.C.
+
+[scheda.esculapio.data1] Arriva a Roma il culto di Esculapio. La leggenda del serpente del dio che raggiunge l'isola spiega la forma di nave.
+
+[scheda.esculapio.data2.quando] I secolo a.C.
+
+[scheda.esculapio.data2] Il tempio è rifatto o restaurato verso la fine della repubblica.
+
+[scheda.esculapio.data3-392] Nel modello chiude al culto con gli altri templi: è una nostra scelta, la fonte letta non dà la data della fine.
+
+[scheda.esculapio.data4.quando] Medioevo
+
+[scheda.esculapio.data4] L'isola si chiama Licaonia.
+
+[scheda.esculapio.data5.quando] fine del X secolo
+
+[scheda.esculapio.data5] Sorge la chiesa di San Bartolomeo, voluta dall'imperatore Ottone III, secondo Turismo Roma, il sito del Comune; Platner e Ashby non danno la data. È dopo il periodo raccontato, e per questo nel modello la chiesa non c'è.
 
 
 ### fangocirco
@@ -4341,79 +4701,81 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.pagina.10-r65] non ancora costruito
 
-[ui.pagina.11-r74] Mostra tutti i
+[ui.pagina.11-r82] Mostra meno
 
-[ui.pagina.12-r74] Mostra meno
+[ui.pagina.12-r82] Mostra altri (
 
-[ui.pagina.13-r162] Vai alla fine:
+[ui.pagina.13-r83] Mostra tutti i
 
-[ui.pagina.14-r162] Vai all’ultima tappa,
+[ui.pagina.14-r211] Vai alla fine:
 
-[ui.pagina.15-r162] Vai alla prima tappa,
+[ui.pagina.15-r211] Vai all’ultima tappa,
 
-[ui.pagina.16-r162] Vai alla fine
+[ui.pagina.16-r211] Vai alla prima tappa,
 
-[ui.pagina.17-r162] Vai all’ultima tappa
+[ui.pagina.17-r211] Vai alla fine
 
-[ui.pagina.18-r162] Vai alla prima tappa
+[ui.pagina.18-r211] Vai all’ultima tappa
 
-[ui.pagina.19-r180] · si legge sotto
+[ui.pagina.19-r211] Vai alla prima tappa
 
-[ui.pagina.20-r220] Voci di allora
+[ui.pagina.20-r268] · si legge sotto
 
-[ui.pagina.21-r220] Una voce di allora
+[ui.pagina.21-r308] Voci di allora
 
-[ui.pagina.22-r267] Esci dallo schermo intero
+[ui.pagina.22-r308] Una voce di allora
 
-[ui.pagina.23-r267] Scena a tutto schermo
+[ui.pagina.23-r355] Esci dallo schermo intero
 
-[ui.pagina.24-r267] Tutto schermo
+[ui.pagina.24-r355] Scena a tutto schermo
 
-[ui.pagina.25-r348] Leggi la fine
+[ui.pagina.25-r355] Tutto schermo
 
-[ui.pagina.26-r348] Leggi l’intermezzo
+[ui.pagina.26-r437] Leggi la fine
 
-[ui.pagina.27-r348] Leggi la tappa
+[ui.pagina.27-r437] Leggi l’intermezzo
 
-[ui.pagina.28-r348] Leggi la fine, «
+[ui.pagina.28-r437] Leggi la tappa
 
-[ui.pagina.29-r348] Leggi il testo della tappa
+[ui.pagina.29-r437] Leggi la fine, «
 
-[ui.pagina.30-r348] , sotto la linea del tempo
+[ui.pagina.30-r437] Leggi il testo della tappa
 
-[ui.pagina.31-r386] ↑ Torna alla carta e alla città
+[ui.pagina.31-r437] , sotto la linea del tempo
 
-[ui.pagina.32-r412] Riduci l’avviso e guarda la scena
+[ui.pagina.32-r475] ↑ Torna alla carta e alla città
 
-[ui.pagina.33-r424] La carta e la città restano
+[ui.pagina.33-r501] Riduci l’avviso e guarda la scena
 
-[ui.pagina.34-r424] Si legge sotto.
+[ui.pagina.34-r513] La carta e la città restano
 
-[ui.pagina.35-r424] L’intermezzo si legge sotto.
+[ui.pagina.35-r513] Si legge sotto.
 
-[ui.pagina.36-r425] Esci e leggi ↓
+[ui.pagina.36-r513] L’intermezzo si legge sotto.
 
-[ui.pagina.37-r425] Leggi la fine ↓
+[ui.pagina.37-r514] Esci e leggi ↓
 
-[ui.pagina.38-r425] Leggi l’intermezzo ↓
+[ui.pagina.38-r514] Leggi la fine ↓
 
-[ui.pagina.39-r459] voci di allora
+[ui.pagina.39-r514] Leggi l’intermezzo ↓
 
-[ui.pagina.40-r460] Fra storia e leggenda
+[ui.pagina.40-r548] voci di allora
 
-[ui.pagina.41-r461] Gli storici discutono
+[ui.pagina.41-r549] Fra storia e leggenda
 
-[ui.pagina.42-r463] Letture di questa tappa
+[ui.pagina.42-r550] Gli storici discutono
 
-[ui.pagina.43-r484] Ingrandisci l’immagine e vedi fonte e licenza
+[ui.pagina.43-r552] Letture di questa tappa
 
-[ui.pagina.44-r492] Immagine ingrandita
+[ui.pagina.44-r573] Ingrandisci l’immagine e vedi fonte e licenza
 
-[ui.pagina.45-r505] Il file su Wikimedia Commons
+[ui.pagina.45-r581] Immagine ingrandita
 
-[ui.pagina.46-r529] A Roma, in quest'anno
+[ui.pagina.46-r594] Il file su Wikimedia Commons
 
-[ui.pagina.47-r529] Guarda la città →
+[ui.pagina.47-r618] A Roma, in quest'anno
+
+[ui.pagina.48-r618] Guarda la città →
 
 
 ### js/mappa.js
@@ -4655,12 +5017,42 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.eventi.05-r40] Leggi tutta la didascalia
 
+[ui.eventi.06-r59] Tutta la didascalia ▾
+
 
 ### js/base.js
 
-[ui.base.01-r807] , piena definizione
+[ui.base.01-r890] , piena definizione
 
-[ui.base.02-r817] Qualità della città: automatica, bassa, telefono, media, alta, massima
+[ui.base.02-r900] Qualità della città: automatica, bassa, telefono, media, alta, massima
 
-[ui.base.03-r899] fine prova
+[ui.base.03-r1003] fine prova
+
+
+### js/vita.js
+
+[ui.vita.01-r28] Ricimero chiude la zona del Tevere e affama chi sta dentro (Giovanni di Antiochia, fr. 209)
+
+
+### js/mura.js
+
+[ui.mura.01-r299] Ponte Elio
+
+[ui.mura.02-r300] Ponte Aurelio
+
+[ui.mura.03-r301] Ponte Emilio
+
+[ui.mura.04-r302] Ponte di Probo
+
+[ui.mura.05-r303] Ponte Milvio
+
+[ui.mura.06-r304] Ponte Neroniano
+
+[ui.mura.07-r336] Ponte Fabricio
+
+[ui.mura.08-r337] Ponte Cestio
+
+[ui.mura.09-r346] Ponte Sublicio
+
+[ui.mura.10-r376] Tempio di Esculapio (isola Tiberina)
 
