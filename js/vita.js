@@ -835,7 +835,7 @@ function geoPiccola(vere,ep){ var B=new RM.Costruttore(), sc=scafoGeo(LP,WP,.45,
 var matBarche=RM.matPietra(), EPB=-1, MAGLIE={};
 function magliaB(chiave,fa){ var m=new THREE.InstancedMesh(new THREE.BufferGeometry(),matBarche,NB); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.count=0; m.castShadow=true; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='vita'; m.userData.fa=fa; RM.scene.add(m); MAGLIE[chiave]=m; return m; }
 var mCV=magliaB('cv',function(ep){ return geoChiatta(true,ep); }), mCL=magliaB('cl',function(ep){ return geoChiatta(false,ep); }), mPV=magliaB('pv',function(ep){ return geoPiccola(true,ep); }), mPL=magliaB('pl',function(ep){ return geoPiccola(false,ep); });
-function epocaBarche(anno){ var ep=epoca(anno); if(ep===EPB) return; EPB=ep; for(var k in MAGLIE){ var m=MAGLIE[k], v=m.geometry; m.geometry=m.userData.fa(ep); v.dispose(); } }
+function epocaBarche(anno){ var ep=epoca(anno); if(ep===EPB) return; EPB=ep; for(var k in MAGLIE){ var m=MAGLIE[k], v=m.geometry; m.geometry=m.userData.fa(ep); v.dispose(); } if(typeof epocaBovaro==='function') epocaBovaro(ep); }
 /* i remi della barca piccola: due per barca, a istanze, che girano attorno allo scalmo */
 var geoRemo=(function(){ var B=new RM.Costruttore(); B.geo(gM(new THREE.CylinderGeometry(.035,.035,3.75,5).rotateX(Math.PI/2).translate(0,0,1.175)),LEGNO_B); B.geo(scatM(.05,.18,.75,0,0,2.9),LEGNO_B.clone().multiplyScalar(.85)); return B.geometria(); })();      // dallo scalmo: 0,7 m di manico verso le mani del rematore, la pala a 2,9 m
 var mRemi=new THREE.InstancedMesh(geoRemo,new THREE.MeshLambertMaterial({vertexColors:true, side:THREE.DoubleSide}),NB*2); mRemi.instanceMatrix.setUsage(THREE.DynamicDrawUsage); mRemi.count=0; mRemi.castShadow=true; mRemi.frustumCulled=false; mRemi.userData.gruppo='vita'; RM.scene.add(mRemi);
@@ -844,6 +844,23 @@ function geoCoppia(fino){ var B=new Pz(); bue(B,-.5,0,{fino:fino}); bue(B,.5,0,{
 var geoBuoi=geoCoppia(true), geoBuoiL=geoCoppia(false), matBuoi=matAnimali();      // da vicino e da lontano (e al gradino «bassa»)
 function magliaBuoi(g){ var m=new THREE.InstancedMesh(g,matBuoi,NB); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(NB*3).fill(1),3); m.count=0; m.castShadow=true; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='vita'; RM.scene.add(m); return m; }
 var mBuoi=magliaBuoi(geoBuoi), mBuoiL=magliaBuoi(geoBuoiL);
+/* Il bovaro (27 novembre 2026, decisione dell'utente: «Vai con bovaro»). IPOTESI: Procopio (Guerra gotica I 26, 10-12) racconta solo che le corde si legano al collo dei buoi,
+   non dice chi li guida; un uomo a piedi accanto alla coppia è una scelta del modello, detta nel piede della pagina. Cammina dal lato della terra, un poco avanti alla spalla
+   del bue, al passo dei buoi; in mano un bastone lungo (forma e misura: SCHEMA). Veste della gente comune dell'epoca, come i barcaioli. Persona vera da vicino (le gambe
+   camminano nello shader dei passanti), sagoma da lontano e al gradino «bassa»; non c'è quando non ci sono i buoi (piene). */
+var NOME_BOV=['tunica3','tunica4','tunica7'];
+function geoBovaro(ep){ var g=corpo(NOME_BOV[ep],2), B=new Parti();      // la figura comune, con il bastone che segue il braccio destro (oscilla -2)
+  B.metti(tratto([-.23,.06,.36],[-.2,1.62,-.1],.016,.013,4),LEGNO,-2,true);
+  var A=g.attributes, n0=A.position.count, n1=B.p.length/3, g2=new THREE.BufferGeometry();
+  function unisci(a,b,k){ var r=new Float32Array((n0+n1)*k); r.set(a); r.set(b,n0*k); return new THREE.Float32BufferAttribute(r,k); }
+  g2.setAttribute('position',unisci(A.position.array,B.p,3)); g2.setAttribute('normal',unisci(A.normal.array,B.n,3)); g2.setAttribute('color',unisci(A.color.array,B.c,3));
+  g2.setAttribute('oscilla',unisci(A.oscilla.array,B.o,1)); g2.setAttribute('fisso',unisci(A.fisso.array,B.f,1)); g2.setAttribute('ombra',unisci(A.ombra.array,B.s,1)); cuoci(g2);
+  g2.setAttribute('fase',new THREE.InstancedBufferAttribute(new Float32Array(NB),1)); g2.setAttribute('moto',new THREE.InstancedBufferAttribute(new Float32Array(NB),1)); g2.setAttribute('posa',new THREE.InstancedBufferAttribute(new Float32Array(NB*3),3));
+  return g2; }
+var mBov=new THREE.InstancedMesh(new THREE.BufferGeometry(),matF||matFigure(),NB); mBov.instanceMatrix.setUsage(THREE.DynamicDrawUsage); mBov.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(NB*3).fill(1),3);
+mBov.count=0; mBov.visible=false; mBov.frustumCulled=false; mBov.castShadow=true; mBov.receiveShadow=true; mBov.userData.gruppo='vita'; RM.scene.add(mBov);
+var mBovL=magliaB('bov',function(ep){ var B=new RM.Costruttore(), ti=VESTI[NOME_BOV[ep]].tinte; sagoma(B,0,0,0,ti[0]); B.geo(gM(tratto([-.23,.06,.36],[-.2,1.62,-.1],.03,.03,3)),LEGNO); return B.geometria(); });      // da lontano: la sagoma col bastone
+function epocaBovaro(ep){ var v=mBov.geometry; mBov.geometry=geoBovaro(ep); v.dispose(); var c=VESTI[NOME_BOV[ep]].tinte[0]; for(var i=0;i<NB;i++) mBov.instanceColor.setXYZ(i,c.r,c.g,c.b); mBov.instanceColor.needsUpdate=true; }
 var mCorde=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1).translate(0,0,.5),new THREE.MeshLambertMaterial({color:0x8d7a5c}),NB); mCorde.instanceMatrix.setUsage(THREE.DynamicDrawUsage); mCorde.count=0; mCorde.frustumCulled=false; mCorde.userData.gruppo='vita'; RM.scene.add(mCorde);
 /* la scia: un velo a istanze con una trama a V, solo dietro chi si muove rispetto all'acqua (tirate o a remi; chi scende con la corrente non ne lascia) */
 var texScia=RM.tela(64,128,function(g){ g.clearRect(0,0,64,128); var y, k, j;
@@ -901,7 +918,7 @@ var ORDINE_B=['tira','monte','remiValle','tira','scende','remiSu','monte','tira'
 var dati=ORDINE_B.map(function(c,i){ var C=CORSE[c]; return {c:C, nome:c, f:rnd(), fermo:0, fase:rnd()*6.28, x:0, z:0, ry:0, vis:false, mov:0, i:i}; });
 var frustB=new THREE.Frustum(), mPB=new THREE.Matrix4(), vB=new THREE.Vector3(), tB=0, mB2=new THREE.Matrix4(), qB=new THREE.Quaternion(), eB=new THREE.Euler(), sB=new THREE.Vector3(1,1,1), pB=new THREE.Vector3();
 function muoviBarche(dt){
-  var visibili=Math.round(NB*quotaBarche), cam=RM.camera.position, dtm=MENO_MOTO?0:dt, nC=0, nCL=0, nP=0, nPL=0, nR=0, nBu=0, nBv=0, nBl=0, nS=0;
+  var visibili=Math.round(NB*quotaBarche), cam=RM.camera.position, dtm=MENO_MOTO?0:dt, nC=0, nCL=0, nP=0, nPL=0, nR=0, nBu=0, nBv=0, nBl=0, nBo=0, nBoL=0, nS=0;
   tB+=dtm; mPB.multiplyMatrices(RM.camera.projectionMatrix,RM.camera.matrixWorldInverse); frustB.setFromProjectionMatrix(mPB);
   var maxV=RM.QUALITA.barche[RM.q]||0, vicine=[];
   dati.forEach(function(b,k){ b.vis=k<visibili; if(!b.vis) return;
@@ -927,18 +944,23 @@ function muoviBarche(dt){
       b.bx=bx; b.bz=bz; b.by=by; eB.set(0,Math.atan2(ta.x*b.dirS,ta.z*b.dirS),0); qB.setFromEuler(eB); pB.set(bx,by,bz); mB2.compose(pB,qB,sB);
       var vic=RM.q!==0 && (bx-cam.x)*(bx-cam.x)+(by-cam.y)*(by-cam.y)+(bz-cam.z)*(bz-cam.z)<40*40, mb=vic?mBuoi:mBuoiL, nb=vic?nBv++:nBl++;      // da vicino la forma fine, da lontano e a «bassa» quella leggera
       mb.setMatrixAt(nb,mB2); mb.geometry.attributes.fase.array[nb]=b.fase; mb.geometry.attributes.moto.array[nb]=b.mov; nBu++;
+      var tl=Math.hypot(ta.x,ta.z)||1, hx=bx+na[0]*sL*.12+ta.x/tl*b.dirS*.08, hz=bz+na[1]*sL*.12+ta.z/tl*b.dirS*.08;      // il bovaro: 1,2 m dal centro della coppia verso la terra, 0,8 m avanti
+      pB.set(hx,(RM.hSuolo||RM.h)(hx,hz),hz); mB2.compose(pB,qB,sB);
+      if(RM.QUALITA.barche[RM.q] && vic && mBov.geometry.attributes.fase){ mBov.setMatrixAt(nBo,mB2); var GA=mBov.geometry.attributes; GA.fase.array[nBo]=b.fase*1.7; GA.moto.array[nBo]=b.mov; GA.posa.array[nBo*3]=.15; nBo++; }      // vero: cammina; la testa appena girata verso i buoi
+      else mBovL.setMatrixAt(nBoL++,mB2);
       var top=new THREE.Vector3(ALB*MB,(.1+HALB)*MB,0).applyEuler(new THREE.Euler(0,b.ry,0)); vB.set(b.x+top.x,-.5+top.y,b.z+top.z);
       var gio=new THREE.Vector3(0,.146,.084).applyQuaternion(qB).add(pB); d.position.copy(vB); d.lookAt(gio); d.scale.set(.006,.006,vB.distanceTo(gio)); d.updateMatrix(); mCorde.setMatrixAt(nBu-1,d.matrix); }
     if(b.mov && (C.traino||C.remi)){ var lg=piccola?2:4.2, lr=piccola?.6:1.2, ri=b.ry; eB.set(0,ri,0); qB.setFromEuler(eB); var st=new THREE.Vector3(-(piccola?LP:LC)/2*MB*.9,0,0).applyQuaternion(qB);
       pB.set(b.x+st.x,-.497,b.z+st.z); sB.set(lg,1,lr); mB2.compose(pB,qB,sB); mScie.setMatrixAt(nS++,mB2); sB.set(1,1,1); }
   });
-  mCV.count=nC; mCL.count=nCL; mPV.count=nP; mPL.count=nPL; mRemi.count=nR; mBuoi.count=nBv; mBuoiL.count=nBl; mScie.count=nS; mCorde.count=nBu;
-  [mCV,mCL,mPV,mPL,mRemi,mBuoi,mBuoiL,mScie,mCorde].forEach(function(m){ m.visible=m.count>0; if(m.count) m.instanceMatrix.needsUpdate=true; });
+  mCV.count=nC; mCL.count=nCL; mPV.count=nP; mPL.count=nPL; mRemi.count=nR; mBuoi.count=nBv; mBuoiL.count=nBl; mScie.count=nS; mCorde.count=nBu; mBov.count=nBo; mBovL.count=nBoL;
+  [mCV,mCL,mPV,mPL,mRemi,mBuoi,mBuoiL,mScie,mCorde,mBov,mBovL].forEach(function(m){ m.visible=m.count>0; if(m.count) m.instanceMatrix.needsUpdate=true; });
+  if(nBo){ var GB=mBov.geometry.attributes; GB.fase.needsUpdate=true; GB.moto.needsUpdate=true; GB.posa.needsUpdate=true; }
   [geoBuoi,geoBuoiL].forEach(function(g){ g.attributes.fase.needsUpdate=true; g.attributes.moto.needsUpdate=true; });
   matScia.color.setScalar(1-.75*(RM.notte||0));
 }
 RM.barcheProva={ lista:function(){ return dati.map(function(b){ return {i:b.i, x:b.x, z:b.z, ry:b.ry, tipo:b.c.tipo, corsa:b.nome, vis:b.vis, mov:b.mov, bx:b.bx, bz:b.bz, by:b.by, f:b.f}; }); },      // per le prove
-  conta:function(){ return {visibili:dati.filter(function(b){ return b.vis; }).length, vere:mCV.count+mPV.count, buoi:mBuoi.count+mBuoiL.count, buoiVicini:mBuoi.count, triBue:Math.round(geoBuoi.attributes.position.count/3/2), triBueL:Math.round(geoBuoiL.attributes.position.count/3/2)}; },
+  conta:function(){ return {visibili:dati.filter(function(b){ return b.vis; }).length, vere:mCV.count+mPV.count, buoi:mBuoi.count+mBuoiL.count, buoiVicini:mBuoi.count, bovari:mBov.count, bovariSagoma:mBovL.count, triBue:Math.round(geoBuoi.attributes.position.count/3/2), triBueL:Math.round(geoBuoiL.attributes.position.count/3/2)}; },
   interni:{fiume:fiume, riva:riva, normale:normale, corsia:corsia, CORSE:CORSE, uFondo:uFondo, uEmporio:uEmporio, uMilvio:uMilvio, uAurelio:uAurelio, uEmilio:uEmilio, latoEmp:latoEmp, lungo:lungoFiume, PONTI:PONTI_B} };
 
 RM.moduli.push(function(anno){

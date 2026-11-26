@@ -584,7 +584,13 @@ RM.frame.push(function(dt){ RM.tempoAcqua.value+=dt; });
    l'una nell'altra (come i livelli di una trama): la stessa acqua a ogni distanza, senza salti di grana fra un tratto vicino e uno lontano (prima ogni scala si spegneva per conto
    suo e a monte e a valle di un ponte l'acqua sembrava diversa). Le ombre si leggono un metro e mezzo più in alto, con la normale verso l'alto: il nastro del fiume è quasi alla
    quota del terreno e l'ombra del terreno stesso lo quadrettava. Al gradino «bassa» (niente veste) restano colore, rive e riflesso del cielo, senza increspature. Con meno animazioni
-   la corrente sta ferma. RM.acquaFiume: la tinta e il cielo, per la piena di js/eventi.js, che è la stessa acqua. */
+   la corrente sta ferma. RM.acquaFiume: la tinta e il cielo, per la piena di js/eventi.js, che è la stessa acqua.
+   La corrente che si vede (27 novembre 2026; l'utente dal telefono: «Ma il fiume non si muove su telefonino?»): le increspature vanno alla velocità vera, circa 1 m/s, e si spengono
+   sotto i dieci pixel, quindi da lontano e su uno schermo piccolo il fiume sembrava fermo. Sopra il colore scendono a valle strisce di torbida (qualche decina di metri di
+   larghezza, un centinaio di lunghezza) e filamenti di schiuma sporca, poco contrastati. FORZATURA VOLUTA: da vicino vanno alla velocità vera (0,09 unità al secondo), da lontano
+   più in fretta, quanto serve perché sullo schermo si spostino di circa due pixel e mezzo al secondo (velocità = 2,5 volte la grandezza del pixel, fwF); per non deformare il
+   disegno dove la velocità cambia, due strati sfasati che si danno il cambio ogni dieci secondi. Dal gradino «telefono» e da «media» in su (a «bassa» niente veste: fermo); fermo
+   con meno animazioni (RM.tempoFiume non avanza). */
 var FIUME_VAR=/[?&]fiume=vecchio/.test(location.search)?null:'nuovo'; RM.fiumeVar=FIUME_VAR;
 RM.tempoFiume={value:0}; RM.notteFiume={value:0};
 RM.acquaFiume={ centro:RM.col(0x1c2624), riva:RM.col(0x37423d), cieloA:cielo.material.uniforms.alto, cieloB:cielo.material.uniforms.basso };      // l'acqua torbida rimanda poca luce: tinte scure, il chiaro lo dà il cielo riflesso
@@ -609,6 +615,11 @@ function fiumeNuovo(sh){ var A=String.fromCharCode(10), tx=RM.VESTE?RM.trameVest
       'float acqua=1.0-smoothstep(filo-0.012-0.5*fwF/5.6,filo+0.006+0.5*fwF/5.6,bw);',
       'vec3 cA=mix(uAcquaC,uAcquaR,smoothstep(0.3,0.95,bw/filo));',
       'if(uVesteF>0.5){ vec4 mt=texture2D(tMacchie,vec2(vRiva.x*0.35,sF*0.008-uTempo*0.0012)); cA*=0.92+0.16*mt.g; }',      // filoni di torbida che scendono con la corrente
+      'if(uVesteF>0.5 && acqua>0.0){ float vC=max(0.09,2.5*fwF); float fT=fract(uTempo*0.1); float w1=1.0-abs(2.0*fT-1.0); float fT2=fract(uTempo*0.1+0.5);',      // la corrente che si vede da lontano (27 novembre 2026): vedi il commento in testa
+      '  vec2 c1=vec2(vRiva.x*1.6+0.13,(sF-vC*fT*10.0)/90.0); vec2 c2=vec2(vRiva.x*1.6+0.57,(sF-vC*fT2*10.0)/90.0+0.31);',      // una piastrella ogni 7 unità di traverso e ogni 90 lungo il fiume: strisce allungate nel verso della corrente
+      '  float tb=texture2D(tMacchie,c1*vec2(0.38,0.6)).g*w1+texture2D(tMacchie,c2*vec2(0.38,0.6)).g*(1.0-w1); float fs=texture2D(tMacchie,c1*vec2(2.0,1.5)).b*w1+texture2D(tMacchie,c2*vec2(2.0,1.5)).b*(1.0-w1);',
+      '  float kV=smoothstep(0.01,0.06,fwF), kL=smoothstep(0.08,0.5,fwF);',      // kV: da vicino si spengono (il fiume da vicino resta com\'era); kL: da lontano la torbida un poco più marcata, se no il filtro della trama la cancella
+      '  cA*=1.0+kV*(0.14+0.2*kL)*(tb-0.5); cA=mix(cA,vec3(0.27,0.29,0.28),smoothstep(0.66,0.86,fs)*0.07*kV*(1.0-smoothstep(480.0,820.0,length(vWf.xz)))); }',      // strisce di torbida larghe qualche decina di metri e filamenti di schiuma sporca, poco contrastati
       'float secco=smoothstep(filo,1.0,bw)*(0.6+0.8*rF.g);',      // bagnata vicino all'acqua, più asciutta verso l'erba
       'vec3 cR=mix(uFango,uSabbia,clamp(secco,0.0,1.0))*(0.9+0.2*rF.r);',
       'cR=mix(cR,cA*1.25,(1.0-smoothstep(filo,filo+0.05,bw))*0.6);',      // sabbia appena coperta: sfuma nell'acqua
