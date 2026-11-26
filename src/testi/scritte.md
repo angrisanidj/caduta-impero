@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 26/11/2026, 16:39:46.
+Generato da `src/testi.mjs` il 26/11/2026, 17:26:09.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -143,7 +143,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.64] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.65] Versione del 26/11/2026, ore 14:30
+[pagina.65] Versione del 26/11/2026, ore 16:48
 
 
 ## 2. Gli atti
@@ -2178,7 +2178,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [evento.tombe476] Dal V secolo a Roma si cominciano a seppellire i morti anche dentro le mura. All'inizio accade di rado. Dalla seconda metà del VI secolo diventa la pratica abituale. Gli archeologi hanno individuato più di ottanta luoghi di sepoltura. Alcuni si trovano attorno al Colosseo e lungo la strada dei magazzini sul Tevere. Altri, più tardi, sul Palatino e nel recinto delle terme di Caracalla. Le tombe sono semplici fosse, spesso coperte di tegole. Qui, nella valle del Colosseo, si vedono le prime tombe e una sepoltura: numero e disposizione sono indicativi.
 
-[evento.milvio312] 28 ottobre 312 · A ponte Milvio Costantino sconfigge Massenzio, che annega nel Tevere durante la fuga. Dopo la vittoria Costantino scioglie il corpo dei pretoriani, i soldati della guardia imperiale. Sul colle del Celio viene demolita la caserma della guardia a cavallo. Al suo posto sorgerà la basilica del Laterano. Nella ricostruzione, in rosso i cavalieri di Costantino, in chiaro e in grigio i soldati di Massenzio in fuga. La battaglia si combatte più a nord, a Saxa Rubra: qui si vede la fuga verso il ponte. Le fonti non dicono lo stesso del ponte. Per Lattanzio è interrotto, per Eusebio è fatto di barche, per Zosimo è di travi e cede sotto i fuggiaschi. La scena segue Zosimo: forma e posto del passaggio, numeri e tempi sono ipotetici.
+[evento.milvio312] 28 ottobre 312 · A ponte Milvio Costantino sconfigge Massenzio, che annega nel Tevere durante la fuga. Dopo la vittoria Costantino scioglie il corpo dei pretoriani, i soldati della guardia imperiale. Sul colle del Celio viene demolita la caserma della guardia a cavallo. Al suo posto sorgerà la basilica del Laterano. La battaglia si combatte più a nord, a Saxa Rubra: qui si vede la fuga. Le fonti non dicono lo stesso del ponte. Il ponte di pietra interrotto viene da Lattanzio; il ponte di travi che cede sotto il peso dei fuggiaschi, con Massenzio portato via dalla corrente, viene da Zosimo. Nessuna fonte parla di due ponti: unirli è una ricostruzione. Sono ipotesi il punto e la forma del taglio, il posto del ponte di travi, i numeri, i tempi e i colori (in rosso i cavalieri di Costantino).
 
 [evento.visita357] 357 · Costanzo II visita Roma per la prima volta. Al Circo Massimo fa innalzare un secondo obelisco sulla barriera centrale attorno alla quale girano i carri durante le corse. Dalla sede del Senato fa rimuovere l'altare della dea Vittoria.
 
@@ -4900,55 +4900,55 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.60-r626] Impero dei Franchi
 
-[ui.mappa.61-r765] regno d'Italia di Odoacre
+[ui.mappa.61-r776] regno d'Italia di Odoacre
 
-[ui.mappa.62-r765] regno degli Ostrogoti
+[ui.mappa.62-r776] regno degli Ostrogoti
 
-[ui.mappa.63-r765] regno dei Franchi
+[ui.mappa.63-r776] regno dei Franchi
 
-[ui.mappa.64-r766] impero romano
+[ui.mappa.64-r777] impero romano
 
-[ui.mappa.65-r766] impero d'Occidente
+[ui.mappa.65-r777] impero d'Occidente
 
-[ui.mappa.66-r766] territorio con un imperatore rivale
+[ui.mappa.66-r777] territorio con un imperatore rivale
 
-[ui.mappa.67-r766] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.67-r777] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.68-r766] regione contesa in guerra
+[ui.mappa.68-r777] regione contesa in guerra
 
-[ui.mappa.69-r767] popoli insediati per trattato
+[ui.mappa.69-r778] popoli insediati per trattato
 
-[ui.mappa.70-r767] impero d'Oriente
+[ui.mappa.70-r778] impero d'Oriente
 
-[ui.mappa.71-r768] califfato ed emirati arabi
+[ui.mappa.71-r779] califfato ed emirati arabi
 
-[ui.mappa.72-r768] regni franchi dopo la divisione dell'843
+[ui.mappa.72-r779] regni franchi dopo la divisione dell'843
 
-[ui.mappa.73-r768] abbandonata da Roma
+[ui.mappa.73-r779] abbandonata da Roma
 
-[ui.mappa.74-r768] fuori dal controllo romano
+[ui.mappa.74-r779] fuori dal controllo romano
 
-[ui.mappa.75-r806] Mostra meno voci della legenda
+[ui.mappa.75-r818] Mostra meno voci della legenda
 
-[ui.mappa.76-r816] Mostra le altre
+[ui.mappa.76-r828] Mostra le altre
 
-[ui.mappa.77-r867] mai appartenuta all'impero
+[ui.mappa.77-r879] mai appartenuta all'impero
 
-[ui.mappa.78-r916] Carta a tutto schermo
+[ui.mappa.78-r928] Carta a tutto schermo
 
-[ui.mappa.79-r921] ⤢ Guarda la carta a tutto schermo
+[ui.mappa.79-r933] ⤢ Guarda la carta a tutto schermo
 
-[ui.mappa.80-r922] Non ora
+[ui.mappa.80-r934] Non ora
 
-[ui.mappa.81-r933] Tutto schermo
+[ui.mappa.81-r945] Tutto schermo
 
-[ui.mappa.82-r933] Esci dallo schermo intero
+[ui.mappa.82-r945] Esci dallo schermo intero
 
-[ui.mappa.83-r1026] Torna alla carta intera
+[ui.mappa.83-r1038] Torna alla carta intera
 
-[ui.mappa.84-r1028] La scena continua fuori dalla carta, verso
+[ui.mappa.84-r1040] La scena continua fuori dalla carta, verso
 
-[ui.mappa.85-r1028] : guardala tutta
+[ui.mappa.85-r1040] : guardala tutta
 
 
 ### js/atti.js

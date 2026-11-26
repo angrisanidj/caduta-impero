@@ -432,15 +432,22 @@ var riva312=(function(){
    e 17, 1: l'esercito di Massenzio schierato «a tergo Tiberi amne», la rotta «angustiis Muluii pontis»; Zosimo II 15-16 (traduzione del 1814): il ponte provvisorio di travi in due
    metà, unite al centro da ferri da togliere, cede sotto i fuggiaschi. Eusebio, Storia ecclesiastica IX 9: un ponte di barche. La scena segue Zosimo e lo dice la didascalia.
    La battaglia vera è a Saxa Rubra, circa nove miglia a nord (Aurelio Vittore 40, 23), fuori dalla scena: qui la fuga.
-   In 14 secondi: i fuggiaschi corrono ai due ponti, il ponte di pietra si intasa, la passerella si riempie; all'ottavo secondo si tolgono i ferri e le due metà cadono in acqua
-   con chi c'è sopra; dalla riva altri sono spinti nel fiume; la corrente porta via gli uomini in acqua, Massenzio (in porpora) fra loro. La cavalleria di Costantino (in rosso)
-   incalza da nord e si ferma prima del fiume. Forma e posto della passerella, numeri, tempi, percorsi e colori sono uno schema; che Massenzio fosse a cavallo è una scelta nostra.
-   Sotto, ferma, una massa di fuggiaschi più lontani dal fiume (prima metà dell'imbuto era 32 m a valle, dalla parte sbagliata: ora a monte, verso la passerella). */
+   26 novembre 2026, passi riletti (src/testi/scene-roma-fonti.md, «312, ponte Milvio»): togliere i ferri era il piano di Massenzio, Zosimo non dice che furono tolti; i suoi fuggono
+   «over the bridge into the city», «The beams not being strong enough to bear so great a weight, they broke», e Massenzio «with the others, was carried with the stream».
+   Nessuna delle tre fonti fa passare i fuggiaschi sul ponte di pietra: prima la scena li mandava anche lì e lo faceva intasare, e un terzo di quelli fermi alla testata
+   veniva spinto nel fiume (non è nel racconto di Zosimo). Ora, in 14 secondi: i fuggiaschi corrono tutti al ponte di travi, i primi lo passano verso la città; la folla lo
+   riempie, le travi si flettono e all'ottavo secondo cedono al centro (i ferri restano dove sono); chi era sopra cade nel Tevere e la corrente lo porta a valle, Massenzio
+   (in porpora) con loro; chi non era ancora salito si ferma. La cavalleria di Costantino (in rosso) insegue da nord e si ferma prima del fiume. Il ponte di pietra resta vuoto.
+   Forma e posto della passerella, numeri, tempi, percorsi e colori sono uno schema; che Massenzio fosse a cavallo è una scelta nostra.
+   Sotto, ferma, una massa di fuggiaschi più lontani dal fiume, davanti al ponte di travi.
+   Scelta dell'utente del 26 novembre 2026 («Pietra tagliato»): nel 312 il ponte di pietra si mostra interrotto (Lattanzio 44, 9: «Pons a tergo eius scinditur», «ad pontem, qui
+   interruptus erat»; il varco sta in js/mura.js, campo taglio di GENERICI) accanto al ponte di travi di Zosimo. Unire i due racconti è una ricostruzione: nessuna fonte parla di due
+   ponti; punto e forma del taglio e posto del ponte di travi sono ipotesi, dette nella didascalia. Il taglio non si vede accadere: Lattanzio non dice come né chi. */
 ANNO_SC=312;      // le figure del 312 non stanno in una raccolta: le vesti del III secolo
 var milvio=(function(){
   var B=new RM.Costruttore(), P2=M312.P, i, b, a, xz;
   for(i=0;i<1300;i++){
-    b=11+Math.pow(rnd(),1.4)*7.5; a=(rnd()<.5?0:M312.AP)+(rnd()-.5)*2*(1.5+(b-10)*1.1); xz=P2(a,b);
+    b=11+Math.pow(rnd(),1.4)*7.5; rnd(); a=M312.AP+(rnd()-.5)*2*(1.5+(b-10)*1.1); xz=P2(a,b);      // tutti davanti al ponte di travi (prima metà davanti al ponte di pietra); il rnd() a vuoto tiene ferma la sequenza
     if(RM.distFiume(xz[0],xz[1])<6.4) continue;
     uomo(B,xz[0],xz[1],H(xz[0],xz[1]),rnd()<.75?C.tunica:C.grigio,C.grigio,M312.SUD+(rnd()-.5)*.8);
   }
@@ -474,67 +481,98 @@ var fuga312=(function(){
     g.castShadow=true; g.visible=false; RM.scene.add(g); return g;
   }
   var nord=meta(1), sud=meta(-1);
-  /* le figure che si muovono */
-  var NF=RM.leggero?160:320, F=[], tent=0;
-  var corpi=[istanze(function(B){ uomo(B,0,0,0,C.tunica,C.grigio,0); },NF*2), istanze(function(B){ uomo(B,0,0,0,C.grigio,C.grigio,0); },NF*2)];
-  while(F.length<NF*2 && tent++<NF*20){ var j=F.length, pas=j%2===0, aB=pas?AP:0, f={pas:pas,aB:aB,lat:(rnd()-.5)*(pas?.56:1),v:1+rnd()*.6,j:j,g:corpi[rnd()<.75?0:1]};
-    if(rnd()<.3){ f.d1=0; f.rit=0; f.s0=rnd()*(pas?9:16); }      // già sulla rampa o sul ponte
-    else { var b0=10.8+rnd()*7, a0=aB+(rnd()-.5)*2*(1+(b0-10)*1.1), q0=P2(a0,b0); if(RM.distFiume(q0[0],q0[1])<6.4) continue;
-      f.a0=a0; f.b0=b0; f.d1=Math.hypot(a0-aB-f.lat,b0-10.5); f.rit=rnd()*2.5; f.s0=0; }
-    f.stop=8.3+(j%9)*.32; f.spinto=pas&&rnd()<.3; f.tp=TC+1+(j%13)*.28; f.ry=SUD+(rnd()-.5)*.5; F.push(f); }
-  var nk=[0,0]; F.forEach(function(f){ f.k=f.g===corpi[0]?nk[0]++:nk[1]++; });
+  /* le figure che si muovono (26 novembre 2026: tutte verso il ponte di travi, nessuna sul ponte di pietra, nessuna spinta nel fiume; si veda il commento sopra).
+     La sequenza dei numeri a caso del file (rnd) e il contatore delle persone (contaP) servono anche alle scene che seguono: qui si consumano come prima (consumo),
+     e le figure nuove prendono i loro numeri da un generatore loro, così le altre scene non cambiano. */
+  var c0=contaP, NF=RM.leggero?160:320, F=[], tent=0, r3=RM.casuale(3120);
+  (function consumo(){ var n=0, t=0; while(n<NF*2 && t++<NF*20){ var pas=n%2===0; rnd(); rnd(); rnd();
+    if(rnd()<.3) rnd(); else { var b0=10.8+rnd()*7, a0=(pas?AP:0)+(rnd()-.5)*2*(1+(b0-10)*1.1), q0=P2(a0,b0); if(RM.distFiume(q0[0],q0[1])<6.4) continue; rnd(); }
+    if(pas) rnd(); rnd(); n++; } })();
+  /* i più vicini al ponte di travi (NV) diventano persone se il gradino lo consente (RM.QUALITA.figScena; tutti insieme o nessuno), gli altri restano pedine */
+  var NV=RM.leggero?50:100, fa0=function(B){ uomo(B,0,0,0,C.tunica,C.grigio,0); }, fa1=function(B){ uomo(B,0,0,0,C.grigio,C.grigio,0); };
+  var corpi=[istanze(fa0,NV,'312','fuggiaschi',1), istanze(fa1,NV,'312','fuggiaschi',1), istanze(fa0,NF*2), istanze(fa1,NF*2)];
+  while(F.length<NF*2 && tent++<NF*20){ var j=F.length, f={aB:AP,lat:(r3()-.5)*.56,v:1+r3()*.6,j:j,col:r3()<.75?0:1,fase:r3()*6.3};
+    if(r3()<.3){ f.d1=0; f.rit=0; f.s0=r3()*9; }      // già sulla rampa o sul ponte
+    else { var b0=10.8+r3()*7, a0=AP+(r3()-.5)*2*(1+(b0-10)*1.1), q0=P2(a0,b0); if(RM.distFiume(q0[0],q0[1])<6.4) continue;
+      f.a0=a0; f.b0=b0; f.d1=Math.hypot(a0-AP-f.lat,b0-10.5); f.rit=r3()*2.5; f.s0=0; }
+    f.ry=SUD+(r3()-.5)*.5; F.push(f); }
+  F.slice().sort(function(x,y){ return (x.d1+x.rit-x.s0)-(y.d1+y.rit-y.s0); }).forEach(function(f,i){ f.g=corpi[(i<NV?0:2)+f.col]; });      // vicini: quelli che arrivano prima sul ponte
+  var nk=[0,0,0,0]; F.forEach(function(f){ var q=corpi.indexOf(f.g); if(nk[q]>=(q<2?NV:NF*2)){ q+=q<2?2:0; f.g=corpi[q]; } f.k=nk[q]++; });
   corpi.forEach(function(g,k){ g.count=nk[k]; });
-  function cadi(t){ return t<TC?0:Math.min(1,Math.pow((t-TC)/.9,2)); }
-  var ANG=.2;
+  /* il cedimento: le travi si flettono sotto il peso (da TC-1,6) e poi si spezzano al centro; le due metà ruotano attorno al capo a terra, la sud un poco dopo */
+  var ANG=.2, FLES=.014;
+  function liscio(x){ x=Math.max(0,Math.min(1,x)); return x*x*(3-2*x); }
+  function angolo(t,s){ var tc=TC+(s<0?.18:0), fl=FLES*liscio((t-TC+1.6)/1.6); return t<tc?fl:fl+(ANG*(s<0?.93:1)-fl)*Math.min(1,Math.pow((t-tc)/.9,2)); }
   function prima(f,t){      // [a,b] senza il crollo
     var s=Math.max(0,t-f.rit)*f.v;
     if(s<f.d1){ var k=s/f.d1; return [f.a0+(f.aB+f.lat-f.a0)*k, f.b0+(10.5-f.b0)*k, 0]; }
-    var b=10.5-(f.s0+(s-f.d1)*(f.pas?.9:.5));
-    if(!f.pas) b=Math.max(b,-14-(f.j%12)*1.6);      // passato il ponte di pietra, verso Roma
-    return [f.aB+f.lat, b, 1];
+    return [f.aB+f.lat, Math.max(-16-(f.j%9)*.4,10.5-(f.s0+(s-f.d1)*.9)), 1];      // passato il ponte, verso la città: poi si fermano sulla pista
   }
-  function inAcqua(a,b,t0,t){ var xz=P2(a+.3*Math.max(0,t-t0),b); return [xz[0],-.645,xz[1]]; }      // sotto il pelo dell'acqua resta fuori la testa; la corrente porta a valle
-  function dove(f,t){      // [x,y,z]
-    var p=prima(f,Math.min(t,TC)), xz;
-    if(t<TC || !f.pas || p[1]<-7.8){ p=prima(f,t); xz=P2(p[0],p[1]); return [xz[0],p[2]?quota(p[0],p[1],f.pas):Hm(xz[0],xz[1]),xz[1]]; }
-    if(p[2] && p[1]<=7.8){      // sull'impalcato quando cede: scende con la sua metà, poi è in acqua
-      var r=7.8-Math.abs(p[1]), y=.5-r*Math.sin(ANG*cadi(t)), bb=p[1]*(1-.25*cadi(t)); xz=P2(p[0],bb);
-      return y>-.645?[xz[0],y,xz[1]]:inAcqua(p[0],bb,TC+.6,t);
+  function inAcqua(a,b,t0,t,f){ var xz=P2(a+.22*Math.max(0,t-t0),b); return [xz[0],-.645+.008*Math.sin(t*2.2+f.fase),xz[1],1]; }      // sotto il pelo dell'acqua resta fuori la testa; la corrente porta a valle (Zosimo: «carried with the stream»)
+  function sulPonte(a,b,t){ var s=b<0?-1:1, r=7.8-Math.abs(b), an=angolo(t,s); return [.5-r*Math.sin(an), b*(1-.25*an/ANG)]; }      // quota e posto lungo l'asse di chi è sull'impalcato mentre si flette e cede
+  function passo(f,t){ return .0035*Math.abs(Math.sin(t*8.5+f.fase)); }      // il passo di corsa: un sobbalzo di pochi centimetri
+  function dove(f,t){      // [x,y,z,in acqua]
+    var p=prima(f,Math.min(t,TC)), xz, q;
+    if(p[2] && Math.abs(p[1])<=7.8){      // sull'impalcato all'istante del cedimento (o prima): si flette e scende con la sua metà, poi è in acqua
+      q=sulPonte(p[0],p[1],t); xz=P2(p[0],q[1]);
+      if(q[0]>-.645) return [xz[0],q[0]+(t<TC?passo(f,t):0),xz[1],0];
+      var tw=TC+.75; return inAcqua(p[0],q[1],tw,t,f);
     }
-    p=prima(f,t); var b=Math.max(p[1],f.stop);      // non ancora sull'impalcato: si ferma sul capo spezzato
-    if(f.spinto && b<=f.stop+.01 && t>f.tp){ var kp=Math.min(1,(t-f.tp)/.6); if(kp>=1) return inAcqua(p[0],5,f.tp+.6,t);      // Lattanzio: spinti nel fiume dalla folla
-      var b2=b-(b-5)*kp; xz=P2(p[0],b2); return [xz[0],quota(p[0],b,true)*(1-kp)-.645*kp,xz[1]]; }
-    xz=P2(p[0],b); return [xz[0],p[2]?quota(p[0],b,true):Hm(xz[0],xz[1]),xz[1]];
+    if(t<TC || (p[2] && p[1]<-7.8)){ p=prima(f,t); xz=P2(p[0],p[1]); var cam=p[2]&&p[1]>-16-(f.j%9)*.4+.01;      // prima del cedimento, o già passato verso la città
+      return [xz[0],(p[2]?quota(p[0],p[1],true):Hm(xz[0],xz[1]))+(cam||!p[2]?passo(f,t):0),xz[1],0]; }
+    /* non ancora sull'impalcato: rallenta e si ferma dov'è, senza salire oltre la testata spezzata */
+    var p1=prima(f,TC+.05), k=1-Math.exp(-3*(t-TC)), a=p[0]+(p1[0]-p[0])*6.67*k, b=Math.max(7.95,p[1]+(p1[1]-p[1])*6.67*k);
+    if(p[1]<=7.95) b=p[1];
+    xz=P2(a,b); return [xz[0],(p[2]||b<10.5?quota(a,b,true):Hm(xz[0],xz[1]))+passo(f,t)*(1-k),xz[1],0];
   }
   /* la cavalleria di Costantino, le insegne e Massenzio */
-  var NC=RM.leggero?80:160, K=[], cav=[istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloB,C.rosso); },NC), istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloC,C.rosso); },NC)];
+  /* la cavalleria di Costantino: i più avanti (NCV) diventano persone se il gradino lo consente, gli altri restano pedine */
+  var NC=RM.leggero?80:160, NCV=12, K=[], fc0=function(B){ cavaliere(B,0,0,0,0,C.cavalloB,C.rosso); }, fc1=function(B){ cavaliere(B,0,0,0,0,C.cavalloC,C.rosso); };
+  var cav=[istanze(fc0,NCV,'312','cavalieri',2), istanze(fc1,NCV,'312','cavalieri',2), istanze(fc0,NC), istanze(fc1,NC)];
   for(i=0;i<NC*2&&K.length<NC*2;i++){ var sc=i%3, a1=(rnd()-.5)*30+(sc-1)*8, b1=25+sc*3+rnd()*6, st=19.5+sc*1.6+rnd()*1.5, p1=P2(a1,st), p0=P2(a1,b1);
-    if(RM.distFiume(p1[0],p1[1])<6.4||RM.distFiume(p0[0],p0[1])<6.4) continue; K.push({a:a1,b0:b1,stop:st,g:cav[K.length%2],k:K.length>>1,ry:SUD+(rnd()-.5)*.3}); }
-  cav[0].count=Math.ceil(K.length/2); cav[1].count=Math.floor(K.length/2);
+    if(RM.distFiume(p1[0],p1[1])<6.4||RM.distFiume(p0[0],p0[1])<6.4) continue; K.push({a:a1,b0:b1,stop:st,ry:SUD+(rnd()-.5)*.3,fase:K.length*1.7}); }
+  var nc=[0,0,0,0]; K.slice().sort(function(x,y){ return x.stop-y.stop; }).forEach(function(k2,i2){ var q=(i2<NCV*2?0:2)+(i2%2); k2.g=cav[q]; k2.k=nc[q]++; });
+  cav.forEach(function(g,q){ g.count=nc[q]; });
   var ins=istanze(function(B){ insegna(B,0,0,0,C.rosso,.42); },9), INS=[]; for(i=0;i<9;i++) INS.push({a:(i-4)*3.4,b0:29+rnd()*4,stop:23.5+rnd()*1.5});
-  var mass=istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloC,C.porpora); },1,'312','massenzio',0);      // Massenzio: l'unico, qui, fatto da persona (i gruppi grandi restano pedine)
-  /* gli spruzzi quando le due metà battono sull'acqua */
-  var mSpr=new THREE.MeshBasicMaterial({color:0xe9eef0,transparent:true,opacity:0,depthWrite:false}), spr=[];
-  for(i=0;i<8;i++){ var ps=P2(AP+(rnd()-.5)*1.2,(i-3.5)*1.1), sm=new THREE.Mesh(new THREE.SphereGeometry(.5,10,8),mSpr); sm.position.set(ps[0],-.5,ps[1]); sm.visible=false; RM.scene.add(sm); spr.push(sm); }
+  var mass=istanze(function(B){ cavaliere(B,0,0,0,0,C.cavalloC,C.porpora); },1,'312','massenzio',0,null,true);      // Massenzio: persona anche sui telefoni (parte «tel»)
+  contaP=c0+2+((VERE&&!LEGGERA)?1:0);      // il contatore delle persone come lo lasciava la scena di prima (si veda consumo)
+  /* l'acqua attorno a chi cade: quando le due metà battono sull'acqua, chiazze di schiuma che si allargano e svaniscono (prima sfere grigie larghe 20 m); attorno a ogni
+     uomo in acqua un anello chiaro che pulsa piano. Macchie piatte, morbide al bordo (la stessa trama dell'ombra d'appoggio, in bianco) */
+  var TB=(function(){ var N=64, d=new Uint8Array(N*N*4), i2, j2; for(j2=0;j2<N;j2++) for(i2=0;i2<N;i2++){ var r=Math.hypot(i2+.5-N/2,j2+.5-N/2)/(N/2), k2=(j2*N+i2)*4; d[k2]=d[k2+1]=d[k2+2]=255; d[k2+3]=Math.round(255*(r>=1?0:Math.pow(1-r*r,1.3))); }
+    var tx=new THREE.DataTexture(d,N,N,THREE.RGBAFormat); tx.magFilter=THREE.LinearFilter; tx.minFilter=THREE.LinearMipmapLinearFilter; tx.generateMipmaps=true; tx.needsUpdate=true; return tx; })();      // bianca: quella dell'ombra d'appoggio è nera (la schiuma di prima veniva scura, e sul fiume scuro non si vedeva)
+  var mSch=new THREE.MeshBasicMaterial({map:TB, color:0xf2f5f3, transparent:true, opacity:0, depthWrite:false, fog:false, polygonOffset:true, polygonOffsetFactor:-2, polygonOffsetUnits:-8}), spr=[];
+  for(i=0;i<14;i++){ if(i<8) rnd(); var ps=P2(AP+(r3()-.5)*1.4,(i-6.5)*1.05), sm=new THREE.Mesh(geoAppoggio(1,1),mSch); sm.position.set(ps[0],-.497,ps[1]); sm.visible=false; sm.renderOrder=2; fissa.add(sm); spr.push({m:sm, r:1.2+r3()*1.4, d:Math.abs(i-6.5)*.03}); }      // il rnd() a vuoto: gli otto spruzzi di prima ne prendevano uno ciascuno; figlie della maglia fissa, si spengono con lei
+  var mAn=new THREE.MeshBasicMaterial({map:TB, color:0xeef2f0, transparent:true, opacity:.85, depthWrite:false, fog:false, polygonOffset:true, polygonOffsetFactor:-2, polygonOffsetUnits:-8}), anelli=new THREE.InstancedMesh(geoAppoggio(.11,.11),mAn,F.length+1);
+  anelli.frustumCulled=false; anelli.castShadow=anelli.receiveShadow=false; anelli.renderOrder=2; anelli.visible=false; RM.scene.add(anelli);
+  function anello(k,p,t,fase){ if(!p){ O3.position.set(0,-50,0); O3.scale.setScalar(0); } else { O3.position.set(p[0],-.497,p[2]); O3.scale.setScalar(1+.25*Math.sin(t*2.6+fase)); } O3.rotation.set(0,0,0); O3.updateMatrix(); anelli.setMatrixAt(k,O3.matrix); }
   function disegna(t){
-    var ang=ANG*cadi(t); nord.rotation.z=-ang; sud.rotation.z=-ang;
-    F.forEach(function(f){ var p=dove(f,t); metti(f.g,f.k,p[0],p[1],p[2],f.ry); });
-    K.forEach(function(k2){ var b=Math.max(k2.stop,k2.b0-t*1.1), p=P2(k2.a,b); metti(k2.g,k2.k,p[0],Hm(p[0],p[1]),p[1],k2.ry); });
+    if(MENO) t=Math.min(t,TC+2.6);      // con meno animazioni la scena resta ferma qui: le travi cedute, gli uomini in acqua, Massenzio ancora visibile
+    var aN=angolo(t,1), aS=angolo(t,-1); nord.rotation.z=-aN; sud.rotation.z=-aS;
+    F.forEach(function(f,j){ var p=dove(f,t); metti(f.g,f.k,p[0],p[1],p[2],f.ry); anello(j,p[3]?p:null,t,f.fase); });
+    K.forEach(function(k2){ var b=Math.max(k2.stop,k2.b0-t*1.1), p=P2(k2.a,b), cr=b>k2.stop+.01?.005*Math.abs(Math.sin(t*6+k2.fase)):0; metti(k2.g,k2.k,p[0],Hm(p[0],p[1])+cr,p[1],k2.ry); });
     INS.forEach(function(s,j){ var b=Math.max(s.stop,s.b0-t*1.1), p=P2(s.a,b); metti(ins,j,p[0],Hm(p[0],p[1]),p[1],0); });
-    var bm=Math.max(2.8,12-t*1.15), am=AP+.4*Math.min(1,t/4), pm, ym;      // Massenzio arriva sul mezzo della passerella quando cede
-    if(t<TC){ pm=P2(am,bm); ym=bm>10.4?Hm(pm[0],pm[1]):quota(am,bm,true); }
-    else { var rr=7.8-bm, yy=.5-rr*Math.sin(ANG*cadi(t)), b3=bm*(1-.25*cadi(t)); pm=P2(am+.3*Math.max(0,t-TC-.6),b3); ym=Math.max(-.645,yy); }
-    var sm=t>TC+3?Math.max(0,1-(t-TC-3)):1; metti(mass,0,pm[0],ym,pm[1],SUD,sm);      // annega
-    posM=sm>.2?[pm[0],ym+.1,pm[1]]:null; var c4=INS[4], b4=Math.max(c4.stop,c4.b0-t*1.1), q4=P2(c4.a,b4); posK=[q4[0],Hm(q4[0],q4[1]),q4[1]];      // per i nomi sulla scena
-    var ks=(t-TC-.25)/1.5; mSpr.opacity=ks>0&&ks<1?.75*(1-ks):0; spr.forEach(function(sm,j){ sm.visible=ks>0&&ks<1; var g=.4+1.6*Math.sqrt(Math.max(0,ks))+(j%3)*.2; sm.scale.set(g,g*.55,g); });
-    corpi.concat(cav,[ins,mass]).forEach(function(g){ g.instanceMatrix.needsUpdate=true; });
+    /* Massenzio: arriva sul mezzo del ponte di travi quando cede (Zosimo: «with the others, was carried with the stream»); in acqua la corrente lo porta a valle, poi sparisce sotto */
+    var bm=Math.max(1.2,12-t*1.35), am=AP+.4*liscio(t/4), pm, ym, sm=1, inA=false;
+    if(t<TC || bm>7.8){ pm=P2(am,bm); ym=bm>10.4?Hm(pm[0],pm[1]):bm>7.8?quota(am,bm,true):sulPonte(am,bm,t)[0]; }
+    else { var bq=Math.max(1.2,12-TC*1.35), q=sulPonte(am,bq,t); inA=q[0]<=-.645;
+      if(!inA){ pm=P2(am,q[1]); ym=q[0]; }
+      else { var tw=TC+.82, sk=liscio((t-TC-3)/1.4); pm=P2(am+.22*Math.max(0,t-tw),q[1]); ym=-.645-.32*sk; sm=sk>=1?0:1; } }
+    metti(mass,0,pm[0],ym,pm[1],SUD,sm); anello(F.length,inA&&sm?[pm[0],0,pm[1]]:null,t,0);
+    posM=sm?[pm[0],ym+.1,pm[1]]:null; var c4=INS[4], b4=Math.max(c4.stop,c4.b0-t*1.1), q4=P2(c4.a,b4); posK=[q4[0],Hm(q4[0],q4[1]),q4[1]];      // per i nomi sulla scena
+    var ks=t-TC-.35; mSch.opacity=ks>0&&ks<2.6?.8*(1-ks/2.6):0; spr.forEach(function(s){ var k=Math.max(0,(ks-s.d)/2.6); s.m.visible=ks>s.d&&k<1; var g=s.r*(.35+.9*Math.sqrt(k)); s.m.scale.set(g,1,g); });
+    anelli.instanceMatrix.needsUpdate=true; corpi.concat(cav,[ins,mass]).forEach(function(g){ g.instanceMatrix.needsUpdate=true; });
   }
-  var tutte=corpi.concat(cav,[ins,mass,nord,sud,fissa]), posM=null, posK=null;
-  var o=sequenza({fine:14, attesa:1.8, disegna:disegna, visibile:function(){ return fissa.visible; }, righe:[[0,'1 · La fuga verso il Tevere, a ponte Milvio'],[7.6,'2 · Il ponte di travi cede (versione di Zosimo)']],
-    azioni:[[6.3,function(){ var q=P2(AP+10,15), v=alto(RM.adatta({t:P2(AP,2),c:[q[0],Hm(q[0],q[1])+7,q[1]]})); RM.volaA(v.t,v.c,2.2); }]]});      // da vicino, sulla passerella che sta per cedere
-  /* la vista della regia: da nord, dietro la cavalleria di Costantino, verso i ponti e la città (prima guardava a nord, verso il bordo del disegno) */
-  var vt=P2(-1.6,3), vc=P2(7,34);
-  return {seq:o, tutte:tutte, da:311.6, a:313, vista:{t:vt,c:[vc[0],Hm(vc[0],vc[1])+19,vc[1]]}, massenzio:function(){ return posM; }, cavalieri:function(){ return posK; }};
+  var tutte=corpi.concat(cav,[ins,mass,nord,sud,fissa,anelli]), posM=null, posK=null;
+  var o=sequenza({fine:14, attesa:1.8, disegna:disegna, visibile:function(){ return fissa.visible; },
+    righe:[[0,'1 · I soldati di Massenzio fuggono verso il ponte di travi','1 · La fuga verso il ponte di travi'],[TC-1.6,'2 · La folla è troppo pesante: le travi si flettono (Zosimo)','2 · Le travi si flettono (Zosimo)'],
+           [TC,'3 · Le travi cedono: chi era sopra cade nel Tevere','3 · Le travi cedono'],[TC+2.4,'4 · La corrente porta via Massenzio con gli altri (Zosimo)','4 · La corrente porta via Massenzio']],
+    azioni:[[5.6,function(){ var q=P2(AP-5,-12.5), v=alto(RM.adatta({t:P2(AP+2.6,.5),c:[q[0],11.5,q[1]]})); RM.volaA(v.t,v.c,2.2); }]]});      // da vicino, sul ponte di travi che sta per cedere
+  /* la vista della regia: da sud, oltre il fiume, alta e inclinata: in basso l'acqua (sotto la didascalia non c'è nulla), in mezzo il ponte di travi intero e accanto il ponte
+     di pietra interrotto, in alto la riva nord con la folla che si stringe verso il ponte e i cavalieri di Costantino che arrivano; il sole alle spalle della camera.
+     (26 novembre 2026, secondo giro: la vista da nord stava controsole e lasciava i ponti sul bordo alto, sotto la didascalia; quella stretta non mostrava chi fugge né chi insegue) */
+  var vt=P2(AP+5.5,4.5), vc=P2(AP-3,-31);
+  RM.prova312={seq:o, TC:TC, disegna:disegna};      // per le prove senza finestra: ?scena=<secondi> ferma la scena, RM.prova312.disegna(t) la porta a un istante
+  return {seq:o, tutte:tutte, da:311.6, a:313, vista:{t:vt,c:[vc[0],38,vc[1]]}, massenzio:function(){ return posM; }, cavalieri:function(){ return posK; }};
 })();
 ANIMA[312]=function(){ avvia(fuga312.seq); };
 
@@ -2162,7 +2200,7 @@ var CAPI=[
   {nome:'Aureliano', riga:'Sul carro del trionfo; davanti al carro sfilano Tetrico e Zenobia (Eutropio IX 13).', vis:function(){ return trionfo274.g.visible; }, p:function(){ return trionfo274.capi.aureliano; }, su:.2},
   {nome:'Zenobia', riga:'La regina di Palmira, prigioniera davanti al carro (Eutropio IX 13).', vis:function(){ return trionfo274.g.visible; }, p:function(){ return trionfo274.capi.zenobia; }},
   {nome:'Tetrico', riga:'L’imperatore delle Gallie, prigioniero davanti al carro (Eutropio IX 13).', vis:function(){ return trionfo274.g.visible; }, p:function(){ return trionfo274.capi.tetrico; }},
-  {nome:'Massenzio', riga:'In fuga verso il ponte, finisce nel Tevere (Lattanzio 44, 9). Che fosse a cavallo è una scelta della ricostruzione.', vis:function(){ return !!fuga312.acceso; }, p:function(){ return fuga312.massenzio(); }},
+  {nome:'Massenzio', riga:'Fugge sul ponte di travi; le travi cedono e la corrente lo porta via (Zosimo II 16). Che fosse a cavallo è una scelta della ricostruzione.', vis:function(){ return !!fuga312.acceso; }, p:function(){ return fuga312.massenzio(); }},
   {nome:'Cavalieri di Costantino', corto:'Costantino', gruppo:true, riga:'Incalzano da nord; Costantino stesso non si vede. Il rosso è un colore di comodo.', vis:function(){ return !!fuga312.acceso; }, p:function(){ return fuga312.cavalieri(); }},
   {nome:'Costanzo II', riga:'Seduto solo sul carro d’oro, fra i draghi di porpora sulle aste e la doppia fila di armati (Ammiano XVI 10).', vis:function(){ return corteo.g.visible; }, p:function(){ return [corteo.carro[0],H(corteo.carro[0],corteo.carro[1])+.07,corteo.carro[1]]; }, su:.22},
   {nome:'Campo di Alarico', corto:'Alarico', gruppo:true, riga:'Procopio: Alarico si era accampato qui, davanti a porta Salaria, all’inizio dell’assedio. Forma e misure del campo sono uno schema.', vis:function(){ return !!S410.acceso; }, p:function(){ return S410.campo; }, su:.5},

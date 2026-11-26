@@ -300,7 +300,7 @@ var acque=(function(){
     [-120,1,'B',0,772,null,null,'ponteaurelio','Ponte Aurelio',[364.6,367]],      // «rebuilding of arch and bridge by Valentinian I in 365-366» (Platner e Ashby, Pons Aurelius, letto il 25 novembre 2026)
     [-52,38,'A',0,null,null,null,'ponteemilio','Ponte Emilio'],
     [-84,97,'C',280,null,null,null,'ponteprobo','Ponte di Probo',[383,388]],      // i lavori del ponte di Teodosio: cominciati prima del 384, non finiti nel 387 (lettere di Simmaco, in Platner e Ashby, Pons Probi). Inizio e fine nel modello sono ipotesi
-    [-152,-479,'A',0,null,null,null,'pontemilvio','Ponte Milvio'],
+    [-152,-479,'A',0,null,null,null,'pontemilvio','Ponte Milvio',null,[311.6,313]],      // l'undicesimo campo: gli anni in cui il ponte si mostra interrotto (312, Lattanzio 44, 9: si veda il blocco del 312 più sotto)
     [-173.5,-92.6,'C',0,null,300,null,'ponteneroniano','Ponte Neroniano']];
   GENERICI.forEach(function(p){     // Elio, Aurelio (ponte Sisto), Emilio, Probo, Milvio, Neroniano
     var q, A=asse(vicino(p[0],p[1])), rot=A.rot; q=A.q;            // l'asse x locale attraversa il fiume
@@ -308,9 +308,9 @@ var acque=(function(){
        del modello, che lo girava di 8,4 gradi e lo faceva arrivare 15 m a ovest della porta del mausoleo. */
     if(p[6]!=null){ q=new THREE.Vector3(p[0],q.y,p[1]); rot=p[6]; RM.ponteElio={x:p[0], z:p[1], asse:[Math.cos(rot),-Math.sin(rot)]}; }
     var piedi=null, info={id:p[7], nome:p[8], x:q.x, z:q.z, rot:rot, mezzo:7.5, larga:.65, yTop:.65, classe:p[2]};
-    if(!p[3] && !p[4] && !p[5]){ PC[p[2]].dentro(q.x,-.5,q.z,rot,function(B){ piedi=ponte(B,'tutto',q,rot); }); info.comune=p[2]; }      // i ponti che non cambiano restano nella maglia comune
+    if(!p[3] && !p[4] && !p[5] && !p[10]){ PC[p[2]].dentro(q.x,-.5,q.z,rot,function(B){ piedi=ponte(B,'tutto',q,rot); }); info.comune=p[2]; }      // i ponti che non cambiano restano nella maglia comune
     else { var mat=RM.matPietra(p[2]), fa=function(parti){ var C=new RM.Costruttore(); C.dentro(q.x,-.5,q.z,rot,function(B){ var pp=ponte(B,parti,q,rot); if(pp) piedi=pp; }); var g=C.maglia(mat); g.visible=false; RM.scene.add(g); return g; };
-      var s={dal:p[3]||0, rotto:p[4], pile:p[5], intero:fa('tutto'), mezzo:p[4]?fa('rotto'):null, resti:p[5]?fa('pile'):null}; storie.push(s);
+      var s={dal:p[3]||0, rotto:p[4], pile:p[5], taglio:p[10], intero:fa('tutto'), mezzo:(p[4]||p[10])?fa('rotto'):null, resti:p[5]?fa('pile'):null}; storie.push(s);
       RM.cliccabili=(RM.cliccabili||[]).concat([s.intero,s.mezzo,s.resti].filter(Boolean).map(function(g){ return {maglia:g, id:p[7]}; })); }
     if(p[9]) cantieri.push({da:p[9][0], a:p[9][1], g:scaffale(q,rot,7.5,.65,1.15)});
     info.piedi=piedi; RM.ponti.push(info);
@@ -346,7 +346,7 @@ var acque=(function(){
   RM.ponti.push({id:'pontesublicio', nome:'Ponte Sublicio', x:S.q.x, z:S.q.z, rot:S.rot, mezzo:6.6, larga:.3, yTop:.45, classe:'C', piedi:subPiedi});
   RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:gSub, id:'pontesublicio'}]);
   RM.moduli.push(function(anno){ storie.forEach(function(s){
-    var su=anno>=s.dal&&!(s.fino&&anno>=s.fino), r=s.rotto&&anno>=s.rotto, pi=s.pile&&anno>=s.pile;
+    var su=anno>=s.dal&&!(s.fino&&anno>=s.fino), r=(s.rotto&&anno>=s.rotto)||(s.taglio&&anno>=s.taglio[0]&&anno<s.taglio[1]), pi=s.pile&&anno>=s.pile;      // taglio: un varco solo in quegli anni (ponte Milvio nel 312)
     s.intero.visible=su&&!r&&!pi; if(s.mezzo) s.mezzo.visible=su&&r; if(s.resti) s.resti.visible=pi; });
     cantieri.forEach(function(c){ c.g.visible=anno>=c.da&&anno<c.a; }); });
   /* l'isola: fiancate di travertino e piano */
@@ -402,9 +402,13 @@ function rampe(B,q,rot,mezzo,yTop,larga,colore,suolo){
     return {x:q.x+x1*c, z:q.z-x1*sn, y:y1-.5};
   });
 }
-/* 312: il ponte provvisorio di Massenzio accanto al ponte Milvio. Zosimo II 15-16 (traduzione del 1814): un ponte di travi in due metà, unite al centro da ferri da togliere, che cede
-   sotto i fuggiaschi; Eusebio, Storia ecclesiastica IX 9, 5-7: un ponte di barche; Lattanzio 44, 9: il ponte alle spalle di Massenzio «viene tagliato». Dove fosse esattamente non è scritto:
+/* 312: il ponte provvisorio di Massenzio accanto al ponte Milvio. Zosimo II 15-16 (traduzione del 1814): un ponte di travi in due metà, unite al centro da ferri; toglierli era il piano
+   di Massenzio, ma il testo non dice che furono tolti: le travi cedono sotto il peso dei fuggiaschi. Eusebio, Storia ecclesiastica IX 9, 5-7: un ponte di barche; Lattanzio 44, 9: il ponte
+   alle spalle di Massenzio «viene tagliato». Nessuna fonte dice dove fosse il ponte provvisorio, né che i ponti in uso fossero due (riletti il 26 novembre 2026: src/testi/scene-roma-fonti.md):
    qui una passerella di travi su cavalletti, una trentina di metri a monte del ponte di pietra, visibile solo nella tappa del 312. È uno schema, detto nella didascalia (milvio312 in js/dati.js).
+   Scelta dell'utente del 26 novembre 2026 («Pietra tagliato»): nel 312 il ponte di pietra si mostra interrotto, come in Lattanzio 44, 9 («Pons a tergo eius scinditur»; «ad pontem, qui
+   interruptus erat»), con il ponte di travi di Zosimo accanto. Unire i due racconti è una ricostruzione: nessuna fonte parla di due ponti. Il varco è la forma 'rotto' di ponte()
+   (manca l'arcata di mezzo, restano le pile), solo dal 311,6 al 313 (campo taglio in GENERICI): punto e forma del taglio non sono nelle fonti, nessuno lo taglia sulla scena.
    Dal 24 novembre 2026 la passerella, con le sue rampe, sta in js/scene-tappe.js (fuga312), in due metà che cedono al centro. */
 
 /* avanzamento del cantiere delle mura (0-1): aperto nel 271, il grosso fatto alla morte di Aureliano, finito sotto Probo (vedi sopra); alla tappa del 271 è appena cominciato */
