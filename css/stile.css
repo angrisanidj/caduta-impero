@@ -1104,3 +1104,15 @@ body.roma-grande .rg-nota{top:56px;right:12px}
   body.impero-grande .m-passi::-webkit-scrollbar{display:none}
 }
 @media (hover:hover) and (pointer:fine) and (max-width:700px){ body:not(.impero-grande) .m-passi::-webkit-scrollbar{display:none} }      /* le stesse condizioni di css/carta.css */
+/* Sui telefoni e sulle tavolette (26 novembre 2026; l'utente: «Perché non anche sul telefonino?»): solo il colore, con le stesse tinte. Niente scrollbar-width né ::-webkit-scrollbar:
+   lì le barre sono sottili, sopra il testo e spariscono da sole, e quelle regole le renderebbero fisse (una barra fissa ruba spazio al riquadro).
+   Che cosa ne fanno i browser (MDN e caniuse, letti il 26 novembre 2026): Chrome per Android dalla 121 colora il cursore della barra sovrapposta mentre si scorre, il binario
+   non si vede (developer.chrome.com, «Scrollbar styling»: sulle barre sovrapposte il colore del binario non ha effetto); Safari per iPhone legge scrollbar-color solo dalla 26.2
+   (su iOS 18 non cambia nulla) e il binario dipende dal sistema; la WebView di Android non lo legge. Chromium ignora ::-webkit-scrollbar dove scrollbar-color non è «auto»:
+   le file nascoste apposta (passi della carta, tappe della scheda dell'atto) tornano ad «auto», così il loro ::-webkit-scrollbar{display:none} vale ancora, insieme a scrollbar-width:none. */
+@media not ((hover:hover) and (pointer:fine)){
+  html{scrollbar-color:#8C6B3A var(--carta)}
+  *{scrollbar-color:#8C6B3A transparent}
+  .evento,.evento *,.m-didascalia,.m-didascalia *,.apertura,.apertura *,.piede,.piede *,.atto-scheda .as-testa,.atto-scheda .as-testa *{scrollbar-color:rgba(226,196,120,.8) rgba(255,255,255,.08)}
+  .m-passi,.as-scorre{scrollbar-color:auto}
+}

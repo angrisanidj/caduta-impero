@@ -4,6 +4,7 @@
 'use strict';
 var D=window.RM_DATI, RM=window.RM||{moduli:[]}, MAPPA=window.RM_mappa;
 var T=D.TAPPE, A0=235, A1=852;
+var chiaveTappa=window.RM_indirizzi.chiave, tappaDaIndirizzo=window.RM_indirizzi.tappa;      // indirizzi delle tappe (#552, #439-barbari, i vecchi #tappa-N): stanno in index.html, perché la carta d'apertura si disegna prima di questo file e deve scegliere la stessa tappa
 var $=function(id){ return document.getElementById(id); };
 var nf=new Intl.NumberFormat('it-IT');
 var avvio=true, idx=0, anno=T[0].anno, meta=anno, vel=0, notte=0, metaNotte=0, coda=null, ascolto=[];      // ascolto: chi vuole sapere quando cambia la tappa (js/atti.js)
@@ -395,18 +396,8 @@ var ultimo=performance.now(), contaGiri=0;
 })();
 
 /* ---------- avvio ---------- */
-/* Indirizzi delle tappe (23 novembre 2026): l'anno, e per i quattro intermezzi l'anno col nome (#284-moneta, #395-commerci, #439-barbari, #476-esercito, #590-citta).
-   I vecchi #tappa-N contavano le tappe: con le tre tappe del 23 novembre dalla 34 in poi portavano alla tappa sbagliata. Si traducono secondo la numerazione
-   rimasta in rete dalla notte del 22 alla mattina del 23 novembre (51 tappe; VECCHIE); i link ancora più vecchi, di quando le tappe erano 47, non si possono distinguere. */
-function chiaveTappa(t){ return t.intermezzo?t.anno+'-'+String(t.titolo).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/^(la|il|lo|le|i|gli)\s+|^l['’]/,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''):String(t.anno); }
-var VECCHIE='235 251 260 271 274 284i 293 301 312 330 357 363 378 384 394 395 395i 402 406 409 410 418 429 439 439i 451 455 458 468 472 476 476i 493 526 537 542 546 568 589 593 609 663 711 727 756 780 791 800 801 846 852'.split(' ');
-function tappaDaIndirizzo(h){
-  var m=/^#tappa-(\d+)$/.exec(h), i, v;
-  if(m){ v=VECCHIE[parseInt(m[1],10)-1]; if(!v) return -1; for(i=0;i<T.length;i++) if(String(T[i].anno)===v.replace('i','') && !!T[i].intermezzo===(v.slice(-1)==='i')) return i; return -1; }
-  if(h==='#476-citta') h='#590-citta';      // «La città» spostata in fondo all'atto V il 23 novembre 2026: il vecchio indirizzo resta valido
-  for(i=0;i<T.length;i++) if('#'+chiaveTappa(T[i])===h) return i;
-  return -1;
-}
+/* Gli indirizzi delle tappe (chiaveTappa, tappaDaIndirizzo, con i vecchi #tappa-N) stanno in index.html (RM_indirizzi) dal 26 novembre 2026: lì si disegna la carta d'apertura, prima della città.
+   Qui MAPPA.mostra trova quella carta già disegnata per la stessa tappa e non la rifà (js/mappa.js, anticipo). */
 var daIndirizzo=tappaDaIndirizzo(location.hash);
 if(daIndirizzo>=0){ vai(daIndirizzo,true); }
 else{                                   // apertura dalla fine: la città del 550, poi il riavvolgimento

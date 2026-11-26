@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 26/11/2026, 14:27:54.
+Generato da `src/testi.mjs` il 26/11/2026, 16:39:46.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -143,7 +143,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.64] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.65] Versione del 26/11/2026, ore 13:27
+[pagina.65] Versione del 26/11/2026, ore 14:30
 
 
 ## 2. Gli atti
@@ -4681,101 +4681,101 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/pagina.js
 
-[ui.pagina.01-r17] Occidente governato da Roma
+[ui.pagina.01-r18] Occidente governato da Roma
 
-[ui.pagina.02-r22] percentuale del territorio
+[ui.pagina.02-r23] percentuale del territorio
 
-[ui.pagina.03-r22] su questa carta
+[ui.pagina.03-r23] su questa carta
 
-[ui.pagina.04-r22] , per regioni
+[ui.pagina.04-r23] , per regioni
 
-[ui.pagina.05-r64] posizione e forma certe
+[ui.pagina.05-r65] posizione e forma certe
 
-[ui.pagina.06-r64] posizione certa, forma ricostruita
+[ui.pagina.06-r65] posizione certa, forma ricostruita
 
-[ui.pagina.07-r65] abbandonato, ma in piedi
+[ui.pagina.07-r66] abbandonato, ma in piedi
 
-[ui.pagina.08-r65] danneggiato da un terremoto
+[ui.pagina.08-r66] danneggiato da un terremoto
 
-[ui.pagina.09-r65] usato come cava
+[ui.pagina.09-r66] usato come cava
 
-[ui.pagina.10-r65] non ancora costruito
+[ui.pagina.10-r66] non ancora costruito
 
-[ui.pagina.11-r82] Mostra meno
+[ui.pagina.11-r83] Mostra meno
 
-[ui.pagina.12-r82] Mostra altri (
+[ui.pagina.12-r83] Mostra altri (
 
-[ui.pagina.13-r83] Mostra tutti i
+[ui.pagina.13-r84] Mostra tutti i
 
-[ui.pagina.14-r211] Vai alla fine:
+[ui.pagina.14-r212] Vai alla fine:
 
-[ui.pagina.15-r211] Vai all’ultima tappa,
+[ui.pagina.15-r212] Vai all’ultima tappa,
 
-[ui.pagina.16-r211] Vai alla prima tappa,
+[ui.pagina.16-r212] Vai alla prima tappa,
 
-[ui.pagina.17-r211] Vai alla fine
+[ui.pagina.17-r212] Vai alla fine
 
-[ui.pagina.18-r211] Vai all’ultima tappa
+[ui.pagina.18-r212] Vai all’ultima tappa
 
-[ui.pagina.19-r211] Vai alla prima tappa
+[ui.pagina.19-r212] Vai alla prima tappa
 
-[ui.pagina.20-r268] · si legge sotto
+[ui.pagina.20-r269] · si legge sotto
 
-[ui.pagina.21-r308] Voci di allora
+[ui.pagina.21-r309] Voci di allora
 
-[ui.pagina.22-r308] Una voce di allora
+[ui.pagina.22-r309] Una voce di allora
 
-[ui.pagina.23-r355] Esci dallo schermo intero
+[ui.pagina.23-r356] Esci dallo schermo intero
 
-[ui.pagina.24-r355] Scena a tutto schermo
+[ui.pagina.24-r356] Scena a tutto schermo
 
-[ui.pagina.25-r355] Tutto schermo
+[ui.pagina.25-r356] Tutto schermo
 
-[ui.pagina.26-r437] Leggi la fine
+[ui.pagina.26-r428] Leggi la fine
 
-[ui.pagina.27-r437] Leggi l’intermezzo
+[ui.pagina.27-r428] Leggi l’intermezzo
 
-[ui.pagina.28-r437] Leggi la tappa
+[ui.pagina.28-r428] Leggi la tappa
 
-[ui.pagina.29-r437] Leggi la fine, «
+[ui.pagina.29-r428] Leggi la fine, «
 
-[ui.pagina.30-r437] Leggi il testo della tappa
+[ui.pagina.30-r428] Leggi il testo della tappa
 
-[ui.pagina.31-r437] , sotto la linea del tempo
+[ui.pagina.31-r428] , sotto la linea del tempo
 
-[ui.pagina.32-r475] ↑ Torna alla carta e alla città
+[ui.pagina.32-r466] ↑ Torna alla carta e alla città
 
-[ui.pagina.33-r501] Riduci l’avviso e guarda la scena
+[ui.pagina.33-r492] Riduci l’avviso e guarda la scena
 
-[ui.pagina.34-r513] La carta e la città restano
+[ui.pagina.34-r504] La carta e la città restano
 
-[ui.pagina.35-r513] Si legge sotto.
+[ui.pagina.35-r504] Si legge sotto.
 
-[ui.pagina.36-r513] L’intermezzo si legge sotto.
+[ui.pagina.36-r504] L’intermezzo si legge sotto.
 
-[ui.pagina.37-r514] Esci e leggi ↓
+[ui.pagina.37-r505] Esci e leggi ↓
 
-[ui.pagina.38-r514] Leggi la fine ↓
+[ui.pagina.38-r505] Leggi la fine ↓
 
-[ui.pagina.39-r514] Leggi l’intermezzo ↓
+[ui.pagina.39-r505] Leggi l’intermezzo ↓
 
-[ui.pagina.40-r548] voci di allora
+[ui.pagina.40-r539] voci di allora
 
-[ui.pagina.41-r549] Fra storia e leggenda
+[ui.pagina.41-r540] Fra storia e leggenda
 
-[ui.pagina.42-r550] Gli storici discutono
+[ui.pagina.42-r541] Gli storici discutono
 
-[ui.pagina.43-r552] Letture di questa tappa
+[ui.pagina.43-r543] Letture di questa tappa
 
-[ui.pagina.44-r573] Ingrandisci l’immagine e vedi fonte e licenza
+[ui.pagina.44-r564] Ingrandisci l’immagine e vedi fonte e licenza
 
-[ui.pagina.45-r581] Immagine ingrandita
+[ui.pagina.45-r572] Immagine ingrandita
 
-[ui.pagina.46-r594] Il file su Wikimedia Commons
+[ui.pagina.46-r585] Il file su Wikimedia Commons
 
-[ui.pagina.47-r618] A Roma, in quest'anno
+[ui.pagina.47-r609] A Roma, in quest'anno
 
-[ui.pagina.48-r618] Guarda la città →
+[ui.pagina.48-r609] Guarda la città →
 
 
 ### js/mappa.js
@@ -4900,55 +4900,55 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mappa.60-r626] Impero dei Franchi
 
-[ui.mappa.61-r763] regno d'Italia di Odoacre
+[ui.mappa.61-r765] regno d'Italia di Odoacre
 
-[ui.mappa.62-r763] regno degli Ostrogoti
+[ui.mappa.62-r765] regno degli Ostrogoti
 
-[ui.mappa.63-r763] regno dei Franchi
+[ui.mappa.63-r765] regno dei Franchi
 
-[ui.mappa.64-r764] impero romano
+[ui.mappa.64-r766] impero romano
 
-[ui.mappa.65-r764] impero d'Occidente
+[ui.mappa.65-r766] impero d'Occidente
 
-[ui.mappa.66-r764] territorio con un imperatore rivale
+[ui.mappa.66-r766] territorio con un imperatore rivale
 
-[ui.mappa.67-r764] territorio romano che il governo di Ravenna non controlla più
+[ui.mappa.67-r766] territorio romano che il governo di Ravenna non controlla più
 
-[ui.mappa.68-r764] regione contesa in guerra
+[ui.mappa.68-r766] regione contesa in guerra
 
-[ui.mappa.69-r765] popoli insediati per trattato
+[ui.mappa.69-r767] popoli insediati per trattato
 
-[ui.mappa.70-r765] impero d'Oriente
+[ui.mappa.70-r767] impero d'Oriente
 
-[ui.mappa.71-r766] califfato ed emirati arabi
+[ui.mappa.71-r768] califfato ed emirati arabi
 
-[ui.mappa.72-r766] regni franchi dopo la divisione dell'843
+[ui.mappa.72-r768] regni franchi dopo la divisione dell'843
 
-[ui.mappa.73-r766] abbandonata da Roma
+[ui.mappa.73-r768] abbandonata da Roma
 
-[ui.mappa.74-r766] fuori dal controllo romano
+[ui.mappa.74-r768] fuori dal controllo romano
 
-[ui.mappa.75-r804] Mostra meno voci della legenda
+[ui.mappa.75-r806] Mostra meno voci della legenda
 
-[ui.mappa.76-r814] Mostra le altre
+[ui.mappa.76-r816] Mostra le altre
 
-[ui.mappa.77-r865] mai appartenuta all'impero
+[ui.mappa.77-r867] mai appartenuta all'impero
 
-[ui.mappa.78-r914] Carta a tutto schermo
+[ui.mappa.78-r916] Carta a tutto schermo
 
-[ui.mappa.79-r919] ⤢ Guarda la carta a tutto schermo
+[ui.mappa.79-r921] ⤢ Guarda la carta a tutto schermo
 
-[ui.mappa.80-r920] Non ora
+[ui.mappa.80-r922] Non ora
 
-[ui.mappa.81-r931] Tutto schermo
+[ui.mappa.81-r933] Tutto schermo
 
-[ui.mappa.82-r931] Esci dallo schermo intero
+[ui.mappa.82-r933] Esci dallo schermo intero
 
-[ui.mappa.83-r1024] Torna alla carta intera
+[ui.mappa.83-r1026] Torna alla carta intera
 
-[ui.mappa.84-r1026] La scena continua fuori dalla carta, verso
+[ui.mappa.84-r1028] La scena continua fuori dalla carta, verso
 
-[ui.mappa.85-r1026] : guardala tutta
+[ui.mappa.85-r1028] : guardala tutta
 
 
 ### js/atti.js

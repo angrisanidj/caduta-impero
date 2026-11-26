@@ -712,7 +712,9 @@ function piantaPer(k){
   var vicina=ks.reduce(function(m,c){ return Math.abs(c-k)<Math.abs(m-k)?c:m; });
   return piante[vicina];
 }
-if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ piante={}; larghePop={}; larghiL={}; larghe={}; if(annoVisto!=null) mostraPopoli(annoVisto); });      // con i caratteri veri le misure cambiano
+function caratteriArrivati(){ piante={}; larghePop={}; larghiL={}; larghe={}; if(annoVisto!=null) mostraPopoli(annoVisto); }      // con i caratteri veri le misure cambiano
+if(document.fonts && document.fonts.ready) document.fonts.ready.then(caratteriArrivati);
+if(document.fonts && document.fonts.addEventListener) document.fonts.addEventListener('loadingdone',caratteriArrivati);      // dal 26 novembre 2026 la carta si disegna prima della città, spesso prima che i caratteri comincino a caricarsi: «ready» può essere già risolta quando le misure si prendono coi caratteri di riserva, e senza questo la pianta dei cartellini restava fatta su quelle
 /* su uno schermo stretto la carta rimpicciolisce: cartellini e punti si ingrandiscono per restare leggibili */
 /* a tutto schermo restano della stessa misura sullo schermo anche quando si ingrandisce la carta */
 function ingrandimento(){
@@ -1032,6 +1034,7 @@ bFuori.addEventListener('click',function(){
   bordo=[8,G.w-8,8,G.h-8]; scalaScena=scalaDi(a); testoMin=testoDi(a); if(annoVisto!=null) mostraPopoli(annoVisto);
   svg.setAttribute('viewBox',a.map(function(x){ return x.toFixed(1); }).join(' ')); fuoriFermo=true; scriviFuori();
 });
+var anticipo=null;      // la carta d'apertura già disegnata (mostra con anticipa): dati e misure, e se la regia è rimandata
 window.RM_mappa={
   grande:grande,
   miniatura:miniatura,
@@ -1042,11 +1045,16 @@ window.RM_mappa={
     STATI.forEach(function(s){ if(ci[s[0]]) out.push([s[0]==='conteso'?'repeating-linear-gradient(130deg,#9A2F2A 0 3px,#DCD0B8 3px 6px)':s[0].indexOf('regno:')===0?REGNI[s[0].slice(6)][0]:'var(--st-'+s[0]+')', voceStato(s[0],anno), s[0]]); });      // il terzo elemento è lo stato: serve alla legenda che risponde (js/atti.js)
     return out;
   },
-  mostra:function(stati,anno,luoghi,scena,passi){
+  /* anticipa: la carta d'apertura, disegnata da index.html prima dei file della città (26 novembre 2026). La regia che partirebbe subito (con ?moto=1)
+     aspetta js/pagina.js: mentre la città si costruisce il browser disegna pochi fotogrammi e lo zoom andrebbe a scatti. Quando js/pagina.js chiede la stessa tappa
+     (gli stessi dati, non una copia) e il disegno ha ancora le stesse misure, la carta non si rifà: parte solo la regia rimandata. Altrimenti si ridisegna tutto, come prima. */
+  mostra:function(stati,anno,luoghi,scena,passi,anticipa){
+    if(anticipo){ var a=anticipo, ra=svg.getBoundingClientRect(); anticipo=null;
+      if(!anticipa && a.dati[0]===stati && a.dati[1]===anno && a.dati[2]===luoghi && a.dati[3]===scena && a.dati[4]===passi && Math.abs(ra.width-a.w)<.5 && Math.abs(ra.height-a.h)<.5){ if(a.regia && !regia) avviaRegia(luoghi,scenaOra); return; } }
     if(anno!=null){ fermaRegia(); if(anno!==annoVisto) chiudiDid(false); /* tappa nuova: la didascalia chiusa ricompare */ annoVisto=anno; scriviLuoghi(luoghi); scenaOra=scena||null; passiOra=passi&&passi.length?passi:null; statiTappa=stati; faiBarra(); }      // la scena va saputa prima dei cartellini: mostraPopoli la disegna e la fa evitare
     if(anno!=null && scritte.costantinopoli){ var nc=anno<330?'Bisanzio':G.citta.costantinopoli.nome; if(scritte.costantinopoli.textContent!==nc) scritte.costantinopoli.textContent=nc; }      // prima di piazzare i nomi: Bisanzio è più corto
-    var visti=anno!=null?mostraPopoli(anno):null;
-    if(anno!=null) avviaRegia(luoghi,scenaOra);
+    var visti=anno!=null?mostraPopoli(anno):null, rimanda=anticipa && !aspetta && !pocoMoto;      // con l'attesa del via (o senza animazioni) avviaRegia non anima nulla: si chiama subito, e mostra il bottone «▶ Guarda la scena»
+    if(anno!=null){ if(rimanda) luoghiRegia=luoghi; else avviaRegia(luoghi,scenaOra); }
     if(anno!=null){ tetra.setAttribute('class','m-tetra'+(tetrarchia(anno)?'':' via')); notaTetra(anno); notaVerdun(anno); }
     if(anno!=null){ verdun.setAttribute('class','m-verdun'+(anno>=843?'':' via')); verdunParti.setAttribute('class','m-verdun-parti'+(anno>=843?'':' via')); var ta=String(Math.round(anno)); if(annoCarta.textContent!==ta) annoCarta.textContent=ta; }
     aggiornaLegende(stati,anno,visti);
@@ -1054,6 +1062,7 @@ window.RM_mappa={
     if(!ricolorata) coloraRegioni(stati);      // durante un passo che ricolora (Arabi del 711) i colori restano quelli del passo
     applicaFuoco(); nascondiChi();      // la voce accesa in legenda resta accesa da una tappa all'altra, finché c'è
     if(anno!=null) segnaFuori();
+    if(anticipa && anno!=null){ var rb=svg.getBoundingClientRect(); anticipo={dati:[stati,anno,luoghi,scena,passi],w:rb.width,h:rb.height,regia:rimanda}; }
   },
   /* quota dell'Occidente governata da Roma, pesata per regione: federati e contesi valgono metà, ma solo finché c'è un governo romano d'Occidente (fino al 480, quando muore Giulio Nepote
      in Dalmazia). Dopo, una regione contesa lo è fra altri (Goti e Costantinopoli, Visigoti e Arabi, Bizantini e Saraceni) e non conta: prima del 22 novembre 2026 la spia dava il 9% nel 711 */

@@ -22,12 +22,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/stile.css?v=20261126-1430">
-<link rel="stylesheet" href="css/carta.css?v=20261126-1430">
-<link rel="stylesheet" href="css/cause.css?v=20261126-1430">
-<link rel="stylesheet" href="css/atti.css?v=20261126-1430">
-<link rel="stylesheet" href="css/ritratti.css?v=20261126-1430">
-<link rel="stylesheet" href="css/infografiche.css?v=20261126-1430">
+<link rel="stylesheet" href="css/stile.css?v=20261126-1639">
+<link rel="stylesheet" href="css/carta.css?v=20261126-1639">
+<link rel="stylesheet" href="css/cause.css?v=20261126-1639">
+<link rel="stylesheet" href="css/atti.css?v=20261126-1639">
+<link rel="stylesheet" href="css/ritratti.css?v=20261126-1639">
+<link rel="stylesheet" href="css/infografiche.css?v=20261126-1639">
 </head>
 <body>
 <header class="testata">
@@ -200,47 +200,68 @@
       <p class="licenze">Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio (<a href="https://commons.wikimedia.org/wiki/File:Fra-titusbuen.jpg">Wikimedia Commons</a>). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file <a href="https://github.com/angrisanidj/caduta-impero/blob/main/LICENZA.md">LICENZA.md</a>.</p>
     </div>
   </details>
-                                                                                                                                                                                                                                                                      <p class="versione">Versione del 26/11/2026, ore 14:30</p>
+                                                                                                                                                                                                                                                                        <p class="versione">Versione del 26/11/2026, ore 16:39</p>
 </footer>
 
-<script>/* attesa delle due scene (css/stile.css, «Attesa delle due scene»): le fasi le scrivono i piccoli script qui sotto, fra un file e l'altro; la carta si scopre dopo il suo primo disegno (js/pagina.js), la città dopo il suo (js/base.js) */
+<script>/* attesa delle due scene (css/stile.css, «Attesa delle due scene»): le fasi le scrivono i piccoli script qui sotto, fra un file e l'altro; la carta si scopre appena disegnata, prima dei file della città (qui sotto, dopo js/mappa.js), la città dopo il suo primo disegno (js/base.js) */
 window.RM_carica=(function(){ function el(id){ return document.getElementById(id); } function scrivi(id,t){ var e=el(id), p=e&&e.querySelector('.carica-fase'); if(p) p.textContent=t; }
   function via(id){ var e=el(id); if(!e||e.classList.contains('via')) return; e.classList.add('via'); setTimeout(function(){ e.hidden=true; },420); }
   return { citta:function(t){ scrivi('caricaRoma',t); }, carta:function(t){ scrivi('caricaCarta',t); }, cartaPronta:function(){ via('caricaCarta'); }, cittaPronta:function(){ via('caricaRoma'); } }; })();</script>
+<script src="js/dati.js?v=20261126-1639"></script>
+<script src="js/mappa-dati.js?v=20261126-1639"></script>
+<script>RM_carica.carta('La carta'); RM_carica.citta('In attesa della carta');</script>
+<script src="js/mappa.js?v=20261126-1639"></script>
+<script>/* La carta prima della città (26 novembre 2026). I file della città, qui sotto, tengono occupato il browser per qualche secondo: la carta della tappa d'apertura si disegna prima,
+   appena caricato js/mappa.js, così è sullo schermo mentre la città si costruisce. Che il browser ridisegni qui, prima di js/base.js, non è una regola: Chrome ed Edge lo fanno dopo uno script lungo
+   come questo (misurato il 26 novembre 2026 in tutte le aperture provate); Safari non si è potuto provare, e nel caso peggiore la carta compare quando compariva prima.
+   Gli indirizzi delle tappe stanno qui, perché carta e js/pagina.js scelgano la stessa tappa: l'anno (#552), per gli intermezzi l'anno col nome (#284-moneta, #395-commerci,
+   #439-barbari, #476-esercito, #590-citta). I vecchi #tappa-N contavano le tappe: con le tre tappe del 23 novembre dalla 34 in poi portavano alla tappa sbagliata; si traducono
+   secondo la numerazione rimasta in rete dalla notte del 22 alla mattina del 23 novembre (51 tappe, VECCHIE); i link ancora più vecchi, di quando le tappe erano 47, non si distinguono.
+   js/pagina.js, a città pronta, chiede la stessa tappa e trova la carta già disegnata (js/mappa.js, anticipo); se qui qualcosa va storto, la disegna lui come prima. */
+window.RM_indirizzi=(function(){ var T=window.RM_DATI.TAPPE;
+  function chiave(t){ return t.intermezzo?t.anno+'-'+String(t.titolo).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/^(la|il|lo|le|i|gli)\s+|^l['’]/,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''):String(t.anno); }
+  var VECCHIE='235 251 260 271 274 284i 293 301 312 330 357 363 378 384 394 395 395i 402 406 409 410 418 429 439 439i 451 455 458 468 472 476 476i 493 526 537 542 546 568 589 593 609 663 711 727 756 780 791 800 801 846 852'.split(' ');
+  function tappa(h){
+    var m=/^#tappa-(\d+)$/.exec(h), i, v;
+    if(m){ v=VECCHIE[parseInt(m[1],10)-1]; if(!v) return -1; for(i=0;i<T.length;i++) if(String(T[i].anno)===v.replace('i','') && !!T[i].intermezzo===(v.slice(-1)==='i')) return i; return -1; }
+    if(h==='#476-citta') h='#590-citta';      // «La città» spostata in fondo all'atto V il 23 novembre 2026: il vecchio indirizzo resta valido
+    for(i=0;i<T.length;i++) if('#'+chiave(T[i])===h) return i;
+    return -1;
+  }
+  return { chiave:chiave, tappa:tappa }; })();
+(function(){ var i=RM_indirizzi.tappa(location.hash), t=RM_DATI.TAPPE[i>=0?i:0];      // senza indirizzo, la prima tappa: js/pagina.js apre lì (la città dal 550, che si riavvolge)
+  if(!window.RM_mappa || !t) return;
+  try{ RM_mappa.mostra(t.regioni,t.anno,t.luoghi,t.scena,t.passi,true); }catch(e){ setTimeout(function(){ throw e; },0); return; }      // l'errore resta in console; il velo lo toglie js/pagina.js
+  RM_carica.cartaPronta(); })();
+RM_carica.citta('Il terreno e la luce');</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-<script src="js/dati.js?v=20261126-1430"></script>
-<script src="js/mappa-dati.js?v=20261126-1430"></script>
-<script>RM_carica.carta('In attesa della città');</script>
-<script src="js/roma-topo.js?v=20261126-1430"></script>
-<script>RM_carica.citta('Il terreno e la luce');</script>
-<script src="js/base.js?v=20261126-1430"></script>
-<script src="js/costruttore.js?v=20261126-1430"></script>
+<script src="js/roma-topo.js?v=20261126-1639"></script>
+<script src="js/base.js?v=20261126-1639"></script>
+<script src="js/costruttore.js?v=20261126-1639"></script>
 <script>RM_carica.citta('I monumenti');</script>
-<script src="js/monumenti.js?v=20261126-1430"></script>
-<script src="js/nuclei.js?v=20261126-1430"></script>
+<script src="js/monumenti.js?v=20261126-1639"></script>
+<script src="js/nuclei.js?v=20261126-1639"></script>
 <script>RM_carica.citta('Le mura e i ponti');</script>
-<script src="js/mura.js?v=20261126-1430"></script>
+<script src="js/mura.js?v=20261126-1639"></script>
 <script>RM_carica.citta('Le case');</script>
-<script src="js/citta.js?v=20261126-1430"></script>
+<script src="js/citta.js?v=20261126-1639"></script>
 <script>RM_carica.citta('La gente e le barche');</script>
-<script src="js/vita.js?v=20261126-1430"></script>
-<script src="js/eventi.js?v=20261126-1430"></script>
-<script>RM_carica.carta('La carta');</script>
-<script src="js/mappa.js?v=20261126-1430"></script>
-<script src="js/ritratti.js?v=20261126-1430"></script>
-<script src="js/protagonisti.js?v=20261126-1430"></script>
-<script src="js/pagina.js?v=20261126-1430"></script>
-<script>RM_carica.cartaPronta(); RM_carica.citta('Le scene delle tappe');</script>
-<script src="js/scene-tappe.js?v=20261126-1430"></script>
+<script src="js/vita.js?v=20261126-1639"></script>
+<script src="js/eventi.js?v=20261126-1639"></script>
+<script src="js/ritratti.js?v=20261126-1639"></script>
+<script src="js/protagonisti.js?v=20261126-1639"></script>
+<script src="js/pagina.js?v=20261126-1639"></script>
+<script>RM_carica.cartaPronta(); RM_carica.citta('Le scene delle tappe');      /* cartaPronta qui non fa nulla se la carta è già scoperta: serve solo se il disegno anticipato non è riuscito */</script>
+<script src="js/scene-tappe.js?v=20261126-1639"></script>
 <script>RM_carica.citta('Il primo disegno');</script>
-<script src="js/strade-nomi.js?v=20261126-1430"></script>
-<script src="js/regioni.js?v=20261126-1430"></script>
-<script src="js/infografiche.js?v=20261126-1430"></script>
-<script src="js/atti.js?v=20261126-1430"></script>
-<script src="js/itinerario.js?v=20261126-1430"></script>
-<script src="js/confronto.js?v=20261126-1430"></script>
-<script src="js/cause.js?v=20261126-1430"></script>
-<script src="js/condividi.js?v=20261126-1430"></script>
+<script src="js/strade-nomi.js?v=20261126-1639"></script>
+<script src="js/regioni.js?v=20261126-1639"></script>
+<script src="js/infografiche.js?v=20261126-1639"></script>
+<script src="js/atti.js?v=20261126-1639"></script>
+<script src="js/itinerario.js?v=20261126-1639"></script>
+<script src="js/confronto.js?v=20261126-1639"></script>
+<script src="js/cause.js?v=20261126-1639"></script>
+<script src="js/condividi.js?v=20261126-1639"></script>
 </body>
 </html>
