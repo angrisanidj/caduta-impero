@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 09:41:18.
+Generato da `src/testi.mjs` il 27/11/2026, 10:04:25.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -151,7 +151,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.68] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.69] Versione del 27/11/2026, ore 08:58
+[pagina.69] Versione del 27/11/2026, ore 09:41
 
 
 ## 2. Gli atti
@@ -5368,11 +5368,33 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.mura.data2-403] Le iscrizioni sulle porte documentano i restauri di mura, porte e torri sotto Onorio, tra il 401 e il 403. Alcuni studiosi ritengono che allora l'altezza delle mura sia raddoppiata. Altri attribuiscono l'intervento a Massenzio, circa un secolo prima. Il modello segue la prima interpretazione.
 
-[scheda.mura.data3-546] Totila ne abbatte dei tratti (un terzo secondo Procopio, che forse esagera); nel 547 Belisario richiude le brecce in venticinque giorni.
+[scheda.mura.data3.quando] inizio del VI secolo
 
-[scheda.mura.data4-715] Dopo un tentativo di Sisinnio (708), papa Gregorio II avvia il restauro; Gregorio III ne rifà gran parte a sue spese, Adriano I lo completa tutt'intorno, con cento libbre d'oro.
+[scheda.mura.data3] Teodorico fa riparare le mura: lo dicono i bolli dei mattoni e Cassiodoro (Platner e Ashby).
 
-[scheda.mura.data5-791] A dicembre la piena del Tevere strappa porta Flaminia dalle fondamenta (Liber Pontificalis). Quando sia stata rifatta non è scritto: qui resta abbattuta.
+[scheda.mura.data4-536] Belisario trova le mura «cadute in rovina in molti punti» e le ripara. A ogni merlo aggiunge un'ala sul lato sinistro, per riparare chi combatte; scava anche un fossato (Procopio). Nel modello i merli hanno l'ala da qui; il fossato non c'è.
+
+[scheda.mura.data5-537] Fra porta Flaminia e porta Pinciana un tratto è spaccato da tempo, a metà altezza: una parte piega in fuori, l'altra in dentro. I Romani dicono che lo protegge san Pietro, e nessuno osa rifarlo (Procopio). Nel modello è all'angolo del Pincio: il punto è una scelta. Quando si fosse spaccato non è detto.
+
+[scheda.mura.data6-546] Totila abbatte le mura «in molti punti», circa un terzo secondo Procopio; per Platner e Ashby è un'esagerazione. Distrugge anche tutti i battenti delle porte. Quali tratti, la fonte non lo dice: nel modello un terzo della cinta, a tratti di 300 metri.
+
+[scheda.mura.data7-547] Belisario richiude le brecce in venticinque giorni. Non ha calce: ammucchia le pietre trovate lì vicino, una sull'altra, senza ordine, e cura solo che la faccia del muro sia diritta; fuori pianta molti pali (Procopio). Nel modello i rattoppi sono di pietre di colori diversi, senza merli, con i pali davanti fino al 553: quando i pali siano stati tolti non è scritto.
+
+[scheda.mura.data8-708] Papa Sisinnio fa cuocere la calce per rifare le mura, ma muore dopo venti giorni (Liber Pontificalis).
+
+[scheda.mura.data9-715] Papa Gregorio II comincia dal portico di San Lorenzo, vicino a porta Tiburtina; ne rifà una parte e poi deve fermarsi (Liber Pontificalis). Nel modello sono 600 metri attorno alla porta: la lunghezza è una scelta.
+
+[scheda.mura.data10-731] Sotto Gregorio III si rifà «la maggior parte» delle mura; il papa paga gli operai e la calce (Liber Pontificalis). Nel modello entro il 741.
+
+[scheda.mura.data11-772] Adriano I trova le mura in rovina e «in più punti torri rovesciate fino a terra». Rifà mura e torri tutt'intorno e spende cento libbre d'oro (Liber Pontificalis). Nel modello i lavori stanno fra il 776 e il 790: gli anni sono una scelta. Ciò che i papi rifanno ha il colore del mattone di recupero.
+
+[scheda.mura.data12-791] A dicembre la piena del Tevere strappa porta Flaminia dalle fondamenta (Liber Pontificalis).
+
+[scheda.mura.data13-848] Leone IV fa rifare le mura, rovinate dagli anni, e anche le porte (Liber Pontificalis). Nel modello porta Flaminia torna in piedi: la fonte non la nomina.
+
+[scheda.mura.data14.quando] fra un restauro e l'altro
+
+[scheda.mura.data14] Che cosa cadesse fra un restauro e l'altro le fonti non lo dicono. Nel modello cadono merli, qualche torre e pochi tratti di muro fino alle fondamenta, scelti a caso; nessun tratto lungo crolla.
 
 [scheda.mura.certezza-A] In piedi per la maggior parte dei circa 19 chilometri del circuito; i tratti scomparsi, soprattutto lungo il Tevere, sono ricostruiti.
 
@@ -5428,6 +5450,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.ponteelio.data3.quando] Medioevo
 
 [scheda.ponteelio.data3] Lo chiamano ponte di San Pietro. Fra il 235 e l'852 le fonti lette non ricordano danni né restauri: nel modello resta intero.
+
+[scheda.ponteelio.data4-1450] Per Platner e Ashby il ponte non subisce danni gravi fino al dicembre 1450, quando la folla dei pellegrini ne rompe il parapetto.
 
 
 ### ponteaurelio
@@ -5522,7 +5546,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.pontemilvio.data2-537] Secondo Procopio, durante l'assedio i Goti mettono un campo oltre il Tevere, nel Campo di Nerone, «perché il ponte stesse fra i loro due eserciti».
 
-[scheda.pontemilvio.data3-547] Procopio: Totila ha abbattuto quasi tutti i ponti sul Tevere, ma questo non riesce a distruggerlo.
+[scheda.pontemilvio.data3-547] Procopio: Totila ha abbattuto quasi tutti i ponti sul Tevere, ma questo non riesce a distruggerlo, perché è troppo vicino alla città. Quali ponti, non lo dice: quelli dentro le mura erano in mano a Belisario, e nel modello restano tutti in piedi.
+
+[scheda.pontemilvio.data4.quando] una torre
+
+[scheda.pontemilvio.data4] Procopio racconta che nel 537 Belisario aveva fatto una torre con le porte su un ponte del Tevere a quattordici stadi da Roma, e che la guardia la lasciò all'arrivo dei Goti. Il traduttore inglese pensa al ponte Milvio, ma Procopio non lo nomina e i Goti venivano dalla Sabina: nel modello la torre non c'è.
+
+[scheda.pontemilvio.data5.quando] fino all'852
+
+[scheda.pontemilvio.data5] Nessuna fonte letta ricorda danni: nel modello resta intero.
 
 
 ### ponteneroniano
@@ -6471,23 +6503,23 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/mura.js
 
-[ui.mura.01-r299] Ponte Elio
+[ui.mura.01-r365] Ponte Elio
 
-[ui.mura.02-r300] Ponte Aurelio
+[ui.mura.02-r366] Ponte Aurelio
 
-[ui.mura.03-r301] Ponte Emilio
+[ui.mura.03-r367] Ponte Emilio
 
-[ui.mura.04-r302] Ponte di Probo
+[ui.mura.04-r368] Ponte di Probo
 
-[ui.mura.05-r303] Ponte Milvio
+[ui.mura.05-r369] Ponte Milvio
 
-[ui.mura.06-r304] Ponte Neroniano
+[ui.mura.06-r370] Ponte Neroniano
 
-[ui.mura.07-r337] Ponte Fabricio
+[ui.mura.07-r403] Ponte Fabricio
 
-[ui.mura.08-r338] Ponte Cestio
+[ui.mura.08-r404] Ponte Cestio
 
-[ui.mura.09-r347] Ponte Sublicio
+[ui.mura.09-r413] Ponte Sublicio
 
-[ui.mura.10-r377] Tempio di Esculapio (isola Tiberina)
+[ui.mura.10-r443] Tempio di Esculapio (isola Tiberina)
 

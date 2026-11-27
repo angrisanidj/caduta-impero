@@ -20,12 +20,23 @@ var mura=(function(){
   }
   /* tratto: cortina, cammino di ronda, merli. Spessa circa 3,5 m («about 12 feet thick», Platner); alta 7 m sul terreno nella prima fase («not more than 25 feet»), poi rialzata */
   var T=new RM.Costruttore().scatola(1,1,.34,0,0,0,P.mattone);
-  for(k=0;k<4;k++) T.scatola(.13,.14,.1,-.375+k*.25,1,-.12,P.mattone);      // i merli stanno sul filo esterno
+  /* I merli a parte (27 novembre 2026), per toglierli dove cadono e per l'ala che Belisario aggiunge nel 536: «he constructed each merlon of the battlement with a wing, adding a sort
+     of flanking wall on the left side» (Procopio, Guerra gotica I 14, 15, Dewing); la nota di Dewing: a sinistra di chi difende, in pianta ┏ ┏ ┏. Chi difende guarda fuori (-z locale): la sua sinistra è -x */
+  var MP=new RM.Costruttore(), MA=new RM.Costruttore();
+  for(k=0;k<4;k++){ MP.scatola(.13,.14,.1,-.375+k*.25,1,-.12,P.mattone); MA.scatola(.13,.14,.1,-.375+k*.25,1,-.12,P.mattone).scatola(.025,.14,.12,-.375+k*.25-.0525,1,-.01,P.mattone); }      // i merli stanno sul filo esterno
+  /* Il rattoppo di Belisario (547): «Gathering stones which lay close by, he threw them one on top of the other, regardless of order, without putting anything at all between the stones,
+     since he had neither lime nor anything else of the sort, but caring only that the face of the masonry should be preserved, and he set a great quantity of stakes on the outside»
+     (Procopio, Guerra gotica III 24, 4, Dewing). Qui pietre di colori diversi, senza merli, la cresta irregolare; i pali davanti. Pietre, cresta e pali sono uno schema */
+  var TP=new RM.Costruttore().scatola(1,.88,.36,0,0,0,RM.col(0x948a7c));
+  [[-.42,.06,P.selce],[-.24,.1,P.granito],[-.05,.04,P.tufo],[.14,.09,P.selce],[.33,.05,P.granito],[.45,.08,P.tufo]].forEach(function(b){ TP.scatola(.17,b[1],.3,b[0],.88,0,b[2]); });      // la cresta, a pietre di altezza diversa
+  [[-.34,.08,.2,P.selce],[.02,.3,.16,P.granito],[.3,.12,.22,P.travertino],[-.16,.55,.14,P.granito],[.22,.62,.18,P.selce],[-.4,.7,.12,P.travertino]].forEach(function(b){ TP.scatola(.2,b[2],.012,b[0],b[1],-.184,b[3]); });      // pietre diverse sulla faccia esterna
+  var PA=new RM.Costruttore(); for(k=0;k<9;k++) PA.scatola(.022,.17+(k%3)*.03,.022,-.45+k*.1125,0,-.42-(k%2)*.07,P.tronco);      // i pali piantati fuori
   /* torre quadrata, sporgente circa 3 m dalla cortina («project about 10 feet», Platner); la larghezza, 7,5 m, è indicativa */
   /* Le torri sporgono verso l'esterno (24 novembre 2026): prima, su 96 lati della cinta su 99, sporgevano verso la città. Il lato esterno è il -z locale dei tratti. */
   var W=new RM.Costruttore().scatola(.75,1.42,.66,0,0,-.18,P.mattone).scatola(.75,.06,.66,0,1.42,-.18,P.tufo);
   [[-.25,.08],[.25,.08],[-.25,-.45],[.25,-.45]].forEach(function(p){ W.scatola(.18,.16,.12,p[0],1.48,p[1],P.mattone); });
   var mat=RM.matPietra(classe('mura')), tratti=istanze(T.geometria(),mat,passi.length), torri=istanze(W.geometria(),mat,passi.length);
+  var merliP=istanze(MP.geometria(),mat,passi.length), merliA=istanze(MA.geometria(),mat,passi.length), toppe=istanze(TP.geometria(),mat,passi.length), pali=istanze(PA.geometria(),RM.matPietra(),passi.length); pali.visible=false;
 
   /* porte dove le vie attraversano la cinta */
   /* Dal 24 novembre 2026 ogni porta è un'istanza con la sua base: prima erano una maglia sola, scalata in altezza attorno al livello del fiume, e così le porte sui colli
@@ -43,42 +54,97 @@ var mura=(function(){
     }
   });
   var magliaPorte=istanze(GP.geometria(),mat,Math.max(1,posti.length)); RM.porte=posti;
-  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'}]);
+  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'},{maglia:merliP,id:'mura'},{maglia:merliA,id:'mura'},{maglia:toppe,id:'mura'}]);
+  /* colore per istanza: le maglie condividono il materiale, quindi tutte lo devono avere (come negli acquedotti) */
+  var BIANCO=new THREE.Color(1,1,1), RICUPERO=new THREE.Color(1.03,.86,.76), PIETRA=new THREE.Color(.95,1.04,1.22), tinta=new THREE.Color();
+  [tratti,torri,merliP,merliA,toppe].forEach(function(m){ for(var j=0;j<passi.length;j++) m.setColorAt(j,BIANCO); }); for(k=0;k<Math.max(1,posti.length);k++) magliaPorte.setColorAt(k,BIANCO);
   passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; p.riva791=Math.hypot(p.x+117.4,p.z+7.4)<2.4; });      /* 25 novembre 2026: la cinta di riva ora parte dalla testata del ponte (prima 50 m più a valle): il tratto del 791 sono i suoi primi due passi */      // riva791: il tratto di mura sul Tevere presso ponte Sisto che la piena del dicembre 791 abbatte («usque ad pontem Antonini, ipsum evertens murum», Liber Pontificalis, Adriano I 95; ponte Sisto per Duchesne). Lunghezza indicativa; rifatto qui nel 795, anno ignoto     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
   /* Il cantiere. «Rome, which before had no walls, was now surrounded with them. This work was begun in the reign of Aurelianus, and was finished by Probus» (Zosimo I 49,
      letto il 22 novembre 2026 nella traduzione del 1814, tertullian.org). L'anno della fine non è scritto: nel modello il 280, a metà del regno di Probo (276-282); che il grosso
      fosse in piedi alla morte di Aureliano (275) è l'opinione corrente, non un dato. In che ordine salissero i tratti non si sa: qui a blocchi di circa 240 m, in ordine casuale.
      Dove il lavoro non è cominciato si vede il solo filare di fondazione lungo tutto il tracciato; dove è in corso, i ponteggi di legno. */
   passi.forEach(function(p,j){ p.turno=RM.grana(Math.floor(j/8),13); });
+  /* Le mura nei secoli (27 novembre 2026, l'utente: «Verifica anche se le mura crollano nel periodo in oggetto»). Fonti lette, in src/testi/topografia-fonti.md, «Mura, ponti e isola nei secoli»:
+     536: Belisario trova la cinta «fallen into ruin in many places» e la ripara, coi merli ad ala (Procopio, Guerra gotica I 14, 15).
+     546-547: Totila «tore down the fortifications in many places so that about one third of the defences were destroyed» (III 22, 7: Platner e Ashby, Muri Aureliani, «this is an
+       exaggeration»); Belisario richiude in venticinque giorni con pietre a secco e pali (III 24, 3-6). Il terzo resta, a blocchi di 300 m (p.rotto): dove, Procopio non lo dice.
+     708: Sisinnio fa cuocere la calce «pro restauratione murorum», ma muore dopo venti giorni (Liber Pontificalis, ed. Duchesne I, p. 388): nessun lavoro.
+     715: Gregorio II «a portico sancti Laurenti inquoans, huius civitatis muros restaurare decreverat; et aliquam partem faciens» si ferma (Duchesne I, p. 396): qui dieci passi per parte
+       da porta Tiburtina, dove comincia il portico di San Lorenzo; la lunghezza è una scelta.
+     731-741: sotto Gregorio III «plurima pars murorum huius civitatis Romane restaurata est», e il papa paga la calce (Duchesne I, p. 420): qui sette danni su dieci.
+     772-795: Adriano I trova «muros ... in ruinis positos et per loca plures turres usque ad terram eversas» e rifà «muros atque turres ... quae diruti erant et usque ad fundamenta
+       destructi», «omnia in circuitu», con cento libbre d'oro (Duchesne I, pp. 501 e 513): qui il resto, fra il 776 e il 790 (gli anni dentro il pontificato sono una scelta).
+     847-849: Leone IV rifà le mura, «longo iam senio» (il testo dell'OCR è guasto), «sed et portas» (Duchesne II, p. 115): qui nel 848-849.
+     Che cosa cade fra un restauro e l'altro, e quando, le fonti non lo dicono: sono scelte nostre, prese dal posto (RM.grana), e piccole: merli caduti su un tratto su tre, torri
+     a terra su una su dieci, tratti di cortina caduti fino alla fondazione su uno su trenta, prima di Adriano. Nessun tratto lungo cade. Ciò che i papi rifanno ha il colore del
+     mattone di recupero, come gli acquedotti di Adriano I. */
+  var iT=0, iTorto=0, dm=1e9, dm2=1e9;
+  passi.forEach(function(p,j){ var a=Math.hypot(p.x-207.1,p.z+55.3), b=Math.hypot(p.x+33.5,p.z+212); if(a<dm){ dm=a; iT=j; } if(b<dm2){ dm2=b; iTorto=j; } });      // porta Tiburtina (porta San Lorenzo) e l'angolo del Pincio
+  /* Il «muro rotto»: «between this gate [la Flaminia] and the small gate next on the right, which is called the Pincian, a certain portion of the wall had split open of its own accord in
+     ancient times, not clear to the ground, however, but about half way down, but still it had not fallen or been otherwise destroyed, though it leaned so to either side that one part of it
+     appeared outside the rest of the wall and the other inside»; nessuno lo rifà, «up to the present day the wall there is split open in this way» (Procopio, Guerra gotica I 23, 3-8).
+     Qui due passi all'angolo del Pincio, uno piegato fuori e uno dentro: il punto fra le due porte e la piega di tutto il passo sono uno schema. Compare nel 537, quando Procopio lo descrive:
+     quando si fosse aperto non è detto. Dopo, nessuna fonte letta dice che fu rifatto: resta così */
+  passi[iTorto].piega=-.12; if(passi[iTorto+1]) passi[iTorto+1].piega=.12;      // sette gradi: quanto pendesse non è detto
+  passi.forEach(function(p,j){
+    function g(k){ return RM.grana(j,40+k); }
+    var greg2=Math.abs(j-iT)<=10?715.5+1.5*Math.abs(j-iT)/10:0, greg3=731.5+g(1)*9.4, adr=776+g(2)*14, leo=848+g(3)*1.4, bel=536.5+g(4)*.4;
+    var rip=[greg2||(g(5)<.7?greg3:adr),adr,adr,leo].filter(function(a){ return a>0; });
+    function quando(da){ var a=9999; [bel<da?9999:bel].concat(rip).forEach(function(r){ if(r>da&&r<a) a=r; }); return a; }      // il primo restauro dopo il danno
+    var ev=[];
+    if(g(6)<.25) ev.push({tipo:'merli',da:505+g(7)*30}); if(g(8)<.04) ev.push({tipo:'torre',da:510+g(9)*25});      // prima del 536: «fallen into ruin in many places»
+    if(g(10)<.33) ev.push({tipo:'merli',da:560+g(11)*170}); if(g(12)<.1) ev.push({tipo:'torre',da:580+g(13)*190}); if(g(14)<.033) ev.push({tipo:'muro',da:600+g(15)*170});      // fra Belisario e Adriano
+    if(g(16)<.12) ev.push({tipo:'merli',da:796+g(17)*50}); if(g(18)<.03) ev.push({tipo:'torre',da:800+g(19)*46});      // prima di Leone IV: «longo iam senio»
+    ev.forEach(function(e){ e.a=e.da<536.5?bel:quando(e.da); });
+    if(p.rotto) ev.push({tipo:'totila',da:546.5,a:547.25},{tipo:'toppa',da:547.25,a:quando(547.3)});      // la breccia di Totila e il rattoppo di Belisario, finché un papa non lo rifà
+    p.ev=ev; p.rifatto=9999; ev.forEach(function(e){ if(e.a<9999&&e.a>600&&e.a<p.rifatto) p.rifatto=e.a; });      // il primo restauro di un papa: da lì il mattone di recupero
+  });
+  RM.muraPassi=passi;      // per le prove
   var S=new RM.Costruttore(); [-.42,-.14,.14,.42].forEach(function(x){ S.scatola(.014,1.14,.03,x,0,.3,P.tronco); }); [.3,.62,.94].forEach(function(y){ S.scatola(1,.02,.1,0,y,.27,P.tronco); });
   var ponteggi=istanze(S.geometria(),RM.matPietra(),passi.length); ponteggi.visible=false; ponteggi.receiveShadow=false;
-  /* Dicembre 791: il Tevere «portam quae dicitur Flamminea … a fundamenta evellens» (LP, Adriano I 94). Quando sia stata rifatta non è scritto: qui resta abbattuta. */
+  /* Dicembre 791: il Tevere «portam quae dicitur Flamminea … a fundamenta evellens» (LP, Adriano I 94). Quando sia stata rifatta non è scritto: qui torna su nel 848, con le porte che Leone IV fa rifare («sed et portas»), ed è una scelta. */
   /* 493 (24 novembre 2026, l'utente: «anche le mura restaurate da Teodorico vanno fatte vedere»). Anonimo Valesiano 66-67, citato nella tappa: «per la riparazione delle mura della città
      si dessero ogni anno duecento libbre». Quale tratto si riparasse non è detto: qui, per ipotesi, i tre passi di cortina più vicini al teatro di Pompeo, lungo il Tevere, con il ponteggio,
      solo nell'anno della tappa, così si vedono nella stessa inquadratura del teatro in restauro. */
   var TEOD=(function(){ var d=passi.map(function(p,j){ return [Math.hypot(p.x+94.3,p.z+30.8),j]; }).sort(function(a,b){ return a[0]-b[0]; }); return d.slice(0,3).map(function(q){ return q[1]; }); })();
   RM.muraTeodorico=TEOD.map(function(j){ return [passi[j].x,passi[j].z]; });      // per la regia del 493 (js/scene-tappe.js)
-  var ultima=-1, ultimaBr=-1, ultimoCant=-1, ultimo791=-1, ultimaFlam=-1, ultimoTeod=-1;      // alla tappa del 791 la porta Flaminia è già a terra, come dicono testo e didascalia
-  return function(alt,br,anno,cant){
-    var r791=anno>=790.9&&anno<795?1:0, rialzo=alt>1.004&&alt<1.496, teod=anno>=492.6&&anno<494?1:0, inCantiere=(cant>0&&cant<1)||rialzo||teod, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
-    var flamGiu=anno>=790.9?1:0;
-    if(Math.abs(alt-ultima)<.002 && Math.abs(br-ultimaBr)<.01 && Math.abs(cant-ultimoCant)<.002 && r791===ultimo791 && flamGiu===ultimaFlam && teod===ultimoTeod) return; ultima=alt; ultimaBr=br; ultimoCant=cant; ultimo791=r791; ultimaFlam=flamGiu; ultimoTeod=teod;
+  var ultima=-1, ultimoCant=-1, ultimo791=-1, ultimaFlam=-1, ultimoTeod=-1, ultimoPasso=-1;      // alla tappa del 791 la porta Flaminia è già a terra, come dicono testo e didascalia
+  function zero(m,j){ d.scale.set(0,0,0); d.updateMatrix(); m.setMatrixAt(j,d.matrix); }
+  return function(alt,anno,cant){
+    var r791=anno>=790.9&&anno<795?1:0, rialzo=alt>1.004&&alt<1.496, teod=anno>=492.6&&anno<494?1:0, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
+    var flamGiu=anno>=790.9&&anno<848?1:0;      // Leone IV fa rifare le mura «sed et portas» (Duchesne II, p. 115): che fra queste ci fosse porta Flaminia la fonte non lo dice; qui torna su nel 848
+    var passo=anno>=500?Math.round(anno*8):0;      // dal 500 lo stato dei tratti cambia con gli anni (danni e restauri), un ottavo d'anno alla volta
+    if(Math.abs(alt-ultima)<.002 && Math.abs(cant-ultimoCant)<.002 && r791===ultimo791 && flamGiu===ultimaFlam && teod===ultimoTeod && passo===ultimoPasso) return; ultima=alt; ultimoCant=cant; ultimo791=r791; ultimaFlam=flamGiu; ultimoTeod=teod; ultimoPasso=passo;
     posti.forEach(function(o,j){ var sy=o.flaminia&&flamGiu?0:porteSu; d.position.set(o.x,o.y,o.z); d.rotation.set(0,o.ang,0); if(sy>.01) d.scale.set(1,sy,1); else d.scale.set(0,0,0); d.updateMatrix(); magliaPorte.setMatrixAt(j,d.matrix); });
     magliaPorte.instanceMatrix.needsUpdate=true;
+    var cantPapi=false, paliSu=false, ala=anno>=536.9;
     passi.forEach(function(p,j){
       if(p.y==null){ var cx=Math.cos(p.ang)*p.len/2, cz=-Math.sin(p.ang)*p.len/2, ya=RM.h(p.x-cx,p.z-cz), yb=RM.h(p.x+cx,p.z+cz); p.y=(ya+yb)/2-.3; p.yt=ya-.3; p.pend=Math.atan2(yb-ya,p.len); }   // sui pendii la cortina segue il terreno invece di salire a gradoni
       var c=cant>=1?1:cant<=0?0:Math.max(.1,Math.min(1,(cant-p.turno*.55)/.45));      // quanto è alto questo tratto: 0,1 sono i primi filari sopra la fondazione, lungo tutto il tracciato
-      var y=p.y, sy=Math.max(alt*c,.0001)*(p.rotto?1-.8*br:1)*(p.riva791&&r791?.12:1);
-      d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix(); tratti.setMatrixAt(j,d.matrix);
-      d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.z=0; d.scale.set(1,sy,1); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);      // una torre a ogni passo
-      if(inCantiere){      // ponteggio sui tratti che stanno salendo, un poco più alto del muro
-        if(rialzo||(c>.1&&c<1)||(teod&&TEOD.indexOf(j)>=0)){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);
-        d.updateMatrix(); ponteggi.setMatrixAt(j,d.matrix);
-      }
+      /* lo stato del passo in quest'anno: quali danni sono aperti, se c'è il rattoppo di Belisario, se un papa ci sta lavorando */
+      var senzaMerli=false, torreGiu=false, muroGiu=false, breccia=0, toppa=false, lavori=false;
+      p.ev.forEach(function(e){ if(anno>=e.da&&anno<e.a){ if(e.tipo==='merli') senzaMerli=true; else if(e.tipo==='torre') torreGiu=true; else if(e.tipo==='muro') muroGiu=true; else if(e.tipo==='totila') breccia=RM.sfuma(e.da,e.da+.25,anno); else if(e.tipo==='toppa') toppa=true; }
+        if(e.a>600&&e.a<9999&&anno>=e.a-.9&&anno<e.a&&anno>=e.da) lavori=true; });      // il ponteggio del papa nell'anno prima della fine del restauro
+      var y=p.y, h=Math.max(alt*c,.0001), sy=h*(1-.75*breccia)*(muroGiu?.25:1)*(p.riva791&&r791?.12:1), piega=anno>=536.9&&p.piega?p.piega:0;
+      d.position.set(p.x,y,p.z); d.rotation.set(piega,p.ang,p.pend,'YZX'); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix();
+      if(toppa){ toppe.setMatrixAt(j,d.matrix); zero(tratti,j); d.rotation.set(piega,p.ang,p.pend,'YZX'); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix(); } else { tratti.setMatrixAt(j,d.matrix); zero(toppe,j); d.rotation.set(piega,p.ang,p.pend,'YZX'); d.scale.set(p.len/Math.cos(p.pend)+.05,sy,1); d.updateMatrix(); }
+      var mSu=!(senzaMerli||muroGiu||toppa||breccia>.02||(p.riva791&&r791));
+      if(mSu){ (ala?merliA:merliP).setMatrixAt(j,d.matrix); zero(ala?merliP:merliA,j); } else { zero(merliA,j); zero(merliP,j); }
+      if(toppa&&anno<553){ paliSu=true; d.rotation.set(0,p.ang,p.pend,'YZX'); d.scale.set(p.len/Math.cos(p.pend),1,1); d.updateMatrix(); pali.setMatrixAt(j,d.matrix); } else zero(pali,j);      // i pali di Belisario: quando li si tolse non è scritto, qui con la fine della guerra
+      d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.set(0,p.ang,0,'YZX'); d.scale.set(1,torreGiu?h*.12:sy,1); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);      // una torre a ogni passo; a terra resta il moncone
+      d.rotation.order='XYZ';
+      tinta.copy(anno>=p.rifatto?RICUPERO:BIANCO); if(toppa) tinta.multiply(PIETRA);
+      tratti.setColorAt(j,tinta); torri.setColorAt(j,tinta); merliA.setColorAt(j,tinta); merliP.setColorAt(j,tinta); toppe.setColorAt(j,BIANCO);
+      var suPonteggio=rialzo||(c>.1&&c<1)||(teod&&TEOD.indexOf(j)>=0)||lavori;
+      if(lavori) cantPapi=true;
+      if(suPonteggio){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);      // ponteggio sui tratti che stanno salendo, un poco più alto del muro
+      d.updateMatrix(); ponteggi.setMatrixAt(j,d.matrix);
     });
-    tratti.instanceMatrix.needsUpdate=true; torri.instanceMatrix.needsUpdate=true;
-    ponteggi.visible=inCantiere; if(inCantiere) ponteggi.instanceMatrix.needsUpdate=true;
-    tratti.visible=torri.visible=alt>.01&&cant>0; magliaPorte.visible=porteSu>.01&&posti.length>0;
+    var inCantiere=(cant>0&&cant<1)||rialzo||teod||cantPapi;
+    [tratti,torri,merliP,merliA,toppe,pali,ponteggi].forEach(function(m){ m.instanceMatrix.needsUpdate=true; });
+    [tratti,torri,merliP,merliA,toppe].forEach(function(m){ m.instanceColor.needsUpdate=true; });
+    ponteggi.visible=inCantiere; pali.visible=paliSu;
+    tratti.visible=torri.visible=merliP.visible=merliA.visible=toppe.visible=alt>.01&&cant>0; magliaPorte.visible=porteSu>.01&&posti.length>0;
   };
 })();
 
@@ -415,7 +481,7 @@ function rampe(B,q,rot,mezzo,yTop,larga,colore,suolo){
 /* avanzamento del cantiere delle mura (0-1): aperto nel 271, il grosso fatto alla morte di Aureliano, finito sotto Probo (vedi sopra); alla tappa del 271 è appena cominciato */
 var CANTIERE_MURA=[[270.6,0],[271,.3],[275,.85],[280,1]];
 RM.moduli.push(function(anno){
-  mura(Math.max(D.interp(D.MURA_ALTE,anno),anno>=270.6?1:0), RM.sfuma(545.2,546,anno)*(1-.7*RM.sfuma(546.8,549,anno))*(1-RM.sfuma(715,790,anno)),anno,D.interp(CANTIERE_MURA,anno));   // Belisario le richiude in fretta nel 547: resta la cicatrice
+  mura(Math.max(D.interp(D.MURA_ALTE,anno),anno>=270.6?1:0),anno,D.interp(CANTIERE_MURA,anno));   // brecce di Totila, rattoppi, danni e restauri dei papi: anno per anno nei passi (sopra)
   acque(anno);
 });
 })();

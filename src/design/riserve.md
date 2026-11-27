@@ -177,6 +177,16 @@ Fonti di questo elenco: messaggi dei commit dal 26 novembre alle 12 al 27 alle 7
 | 115 | Ara Pacis in piedi e in vista fino all'852, perché le fonti lette non dicono quando sparì sotto il suolo. | Ara Pacis (573110a) | Trovare una fonte sull'interramento (scavi del 1903 o del 1937) | noi | resta aperta: riletta il 27 novembre la pagina del museo («The level of the land rose relentlessly […] For more than a millennium silence fell on the Ara Pacis»): nessun anno. Serve una pubblicazione di scavo |
 | 116 | Posti antichi scelti: Marco Aurelio a piazza Colonna (le fonti dicono il Foro o piazza Colonna), la Pigna nel recinto dell'Iseo («forse nel Campo Marzio»). Detti nelle schede. | Marco Aurelio e Pigna (573110a) | Conferma dell'utente | solo l'utente | aperta |
 
+## Dal lavoro sulle mura, sui ponti e sull'isola (27 novembre, mattina; da-guardare, scheda 25)
+
+| N | Riserva | Da quale lavoro | Che cosa serve per chiuderla | Chi la chiude | Stato |
+|---|---|---|---|---|---|
+| 117 | Leone IV: l'OCR di Duchesne II, p. 115 è guasto; letti solo pezzi («longo iam senio», «sed et portas»). Il resto (torri? il porto sul Tevere?) non è usato. | Mura nei secoli | Un'altra copia leggibile della vita di Leone IV (Duchesne in altra scansione, o la traduzione di Davis) | noi | aperta |
+| 118 | Che cosa cade fra un restauro e l'altro, dove e quando, e quali tratti abbatté Totila e rifecero i papi: scelte (merli, torri, tratti fino alla fondazione), detti nella scheda. | Mura nei secoli | Uno studio sulle murature delle mura (Richmond, *The City Wall of Imperial Rome*, 1930, citato da Platner e Ashby) | noi | aperta |
+| 119 | Non fatti: il fossato di Belisario (536 e 547), il Vivarium presso porta Prenestina col suo muro corto (Procopio I 23, 15-17), i battenti delle porte tolti da Totila e rimessi da Belisario. Il verde sulle creste delle mura abbandonate non c'è (il materiale delle mura non ha il verde dei ruderi). | Mura nei secoli | Posto del Vivarium da una fonte; verde: portare `uVerde` al materiale delle mura | noi | aperta |
+| 120 | Gli anni dei lavori dentro i pontificati (Gregorio III 731-741, Adriano I 776-790, Leone IV 848-849) e porta Flaminia rifatta da Leone IV sono scelte. | Mura nei secoli | Leggere il commento di Duchesne alla vita di Adriano (note 48 e 125) e a quella di Leone IV | noi, poi l'utente | aperta |
+| 121 | La scena del 546 in `js/scene-tappe.js` comincia a 545,6: le brecce di Totila ora cominciano a 546,5 (dopo l'entrata, come in Procopio III 20 e 22); la scena non le mostra. Da decidere se va aggiunta una riga «Totila abbatte un terzo delle mura». | Mura nei secoli | Decisione e lavoro su `js/scene-tappe.js` (non toccato) | noi, poi l'utente | aperta |
+
 ## Scelte fatte senza chiedere, da confermare
 
 1. Le corse nel Circo Massimo solo in alcune tappe: 235, 260, 301 (il 284 tolto il 27 novembre: è un intermezzo e la città resta al 274), 330, 363, 384, 402, 418, 439, 468, 507 (una sì e una no, saltando quelle con un'altra scena vicina) (86bd7ae).
