@@ -1,0 +1,2031 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-27T13:06:21Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "way",
+  "id": 49824161,
+  "bounds": {
+    "minlat": 41.8927289,
+    "minlon": 12.4846187,
+    "maxlat": 41.8929384,
+    "maxlon": 12.4848592
+  },
+  "nodes": [
+    633024974,
+    633024975,
+    1446707002,
+    633024976,
+    633024977,
+    1446707098,
+    633024974
+  ],
+  "geometry": [
+    { "lat": 41.8927692, "lon": 12.4846187 },
+    { "lat": 41.8927289, "lon": 12.4846926 },
+    { "lat": 41.8928120, "lon": 12.4847737 },
+    { "lat": 41.8928981, "lon": 12.4848592 },
+    { "lat": 41.8929384, "lon": 12.4847853 },
+    { "lat": 41.8928493, "lon": 12.4846974 },
+    { "lat": 41.8927692, "lon": 12.4846187 }
+  ],
+  "tags": {
+    "building": "triumphal_arch",
+    "historic": "monument",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "name": "Arco di Settimio Severo",
+    "name:cs": "Oblouk Septimia Severa",
+    "name:en": "Arch of Septimius Severus",
+    "name:es": "Arco de Septimo Severo",
+    "name:fr": "Arc de Septime Sévère",
+    "name:it": "Arco di Settimio Severo",
+    "name:ru": "Арка Септимия Севера",
+    "name:uk": "Арка Септіміуса Северуса",
+    "name:zh": "赛普提米-塞维鲁凯旋门",
+    "start_date": "0203",
+    "wikidata": "Q162353",
+    "wikimedia_commons": "Category:Arch of Septimius Severus (Rome)",
+    "wikipedia": "en:Arch of Septimius Severus"
+  }
+},
+{
+  "type": "way",
+  "id": 131451564,
+  "bounds": {
+    "minlat": 41.8915232,
+    "minlon": 12.4840540,
+    "maxlat": 41.8923855,
+    "maxlon": 12.4855085
+  },
+  "nodes": [
+    1446702161,
+    1446702146,
+    1446703544,
+    1446705478,
+    9222326337,
+    9222326334,
+    9222326329,
+    1446703247,
+    1446702161
+  ],
+  "geometry": [
+    { "lat": 41.8915330, "lon": 12.4851984 },
+    { "lat": 41.8915232, "lon": 12.4852275 },
+    { "lat": 41.8919874, "lon": 12.4855085 },
+    { "lat": 41.8923855, "lon": 12.4843358 },
+    { "lat": 41.8923768, "lon": 12.4843163 },
+    { "lat": 41.8923383, "lon": 12.4842917 },
+    { "lat": 41.8922951, "lon": 12.4842640 },
+    { "lat": 41.8919508, "lon": 12.4840540 },
+    { "lat": 41.8915330, "lon": 12.4851984 }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Basilica Iulia",
+    "name:it": "Basilica Giulia",
+    "source": "Bing",
+    "tourism": "attraction",
+    "wikidata": "Q616271",
+    "wikimedia_commons": "Category:Basilica Julia (Rome)",
+    "wikipedia": "en:Basilica Julia"
+  }
+},
+{
+  "type": "way",
+  "id": 131451819,
+  "bounds": {
+    "minlat": 41.8918582,
+    "minlon": 12.4857112,
+    "maxlat": 41.8922506,
+    "maxlon": 12.4862828
+  },
+  "nodes": [
+    1446704838,
+    1446703739,
+    1446703502,
+    1446702749,
+    9221867652,
+    9221867651,
+    1446703337,
+    1446704838
+  ],
+  "geometry": [
+    { "lat": 41.8922506, "lon": 12.4859209 },
+    { "lat": 41.8920627, "lon": 12.4862809 },
+    { "lat": 41.8920125, "lon": 12.4862828 },
+    { "lat": 41.8918582, "lon": 12.4861623 },
+    { "lat": 41.8919764, "lon": 12.4858844 },
+    { "lat": 41.8919352, "lon": 12.4858473 },
+    { "lat": 41.8919842, "lon": 12.4857112 },
+    { "lat": 41.8922506, "lon": 12.4859209 }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio del Divo Giulio",
+    "name:cs": "Caesarův chrám",
+    "name:de": "Tempel des Divus Iulius",
+    "name:en": "Temple of Divus Iulius",
+    "name:it": "Tempio del Divo Giulio",
+    "name:la": "Aedes Divi Iulii",
+    "name:nl": "Tempel van Caesar",
+    "name:ru": "Храм Цезаря",
+    "start_date": "29 BC",
+    "wikidata": "Q1133288",
+    "wikimedia_commons": "Category:Temple of Iulius Caesar (Rome)",
+    "wikipedia": "it:Tempio del Divo Giulio"
+  }
+},
+{
+  "type": "relation",
+  "id": 1765429,
+  "bounds": {
+    "minlat": 41.8917769,
+    "minlon": 12.4862411,
+    "maxlat": 41.8920412,
+    "maxlon": 12.4866200
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 136631110,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8917851, "lon": 12.4865739 },
+         { "lat": 41.8917769, "lon": 12.4863209 },
+         { "lat": 41.8917808, "lon": 12.4862637 },
+         { "lat": 41.8917856, "lon": 12.4862411 },
+         { "lat": 41.8918631, "lon": 12.4862533 },
+         { "lat": 41.8919399, "lon": 12.4862714 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136631228,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8919104, "lon": 12.4865912 },
+         { "lat": 41.8918921, "lon": 12.4866200 },
+         { "lat": 41.8917851, "lon": 12.4865739 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136631064,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8920228, "lon": 12.4863978 },
+         { "lat": 41.8919652, "lon": 12.4864985 },
+         { "lat": 41.8919104, "lon": 12.4865912 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136630872,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8920358, "lon": 12.4863721 },
+         { "lat": 41.8920228, "lon": 12.4863978 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136631055,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8920358, "lon": 12.4863721 },
+         { "lat": 41.8920412, "lon": 12.4863621 },
+         { "lat": 41.8920119, "lon": 12.4863337 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131358826,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8919854, "lon": 12.4863274 },
+         { "lat": 41.8919995, "lon": 12.4863231 },
+         { "lat": 41.8920119, "lon": 12.4863337 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136631231,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8919399, "lon": 12.4862714 },
+         { "lat": 41.8919402, "lon": 12.4862912 },
+         { "lat": 41.8919635, "lon": 12.4863126 },
+         { "lat": 41.8919805, "lon": 12.4863278 },
+         { "lat": 41.8919854, "lon": 12.4863274 }
+      ]
+    }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Regia",
+    "name:uk": "Регія",
+    "type": "multipolygon",
+    "wikidata": "Q786489",
+    "wikimedia_commons": "Category:Regia (Rome)",
+    "wikipedia": "it:Regia (Roma)"
+  }
+},
+{
+  "type": "relation",
+  "id": 1766534,
+  "bounds": {
+    "minlat": 41.8920924,
+    "minlon": 12.4852867,
+    "maxlat": 41.8921823,
+    "maxlon": 12.4854806
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 131451632,
+      "role": "inner",
+      "geometry": [
+         { "lat": 41.8921136, "lon": 12.4854547 },
+         { "lat": 41.8921109, "lon": 12.4854525 },
+         { "lat": 41.8921095, "lon": 12.4854487 },
+         { "lat": 41.8921098, "lon": 12.4854445 },
+         { "lat": 41.8921118, "lon": 12.4854412 },
+         { "lat": 41.8921148, "lon": 12.4854398 },
+         { "lat": 41.8921179, "lon": 12.4854409 },
+         { "lat": 41.8921200, "lon": 12.4854440 },
+         { "lat": 41.8921206, "lon": 12.4854482 },
+         { "lat": 41.8921194, "lon": 12.4854521 },
+         { "lat": 41.8921168, "lon": 12.4854546 },
+         { "lat": 41.8921136, "lon": 12.4854547 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131451785,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8921079, "lon": 12.4854151 },
+         { "lat": 41.8921384, "lon": 12.4854329 },
+         { "lat": 41.8921229, "lon": 12.4854806 },
+         { "lat": 41.8920924, "lon": 12.4854628 },
+         { "lat": 41.8921079, "lon": 12.4854151 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131451666,
+      "role": "inner",
+      "geometry": [
+         { "lat": 41.8921575, "lon": 12.4853264 },
+         { "lat": 41.8921547, "lon": 12.4853242 },
+         { "lat": 41.8921533, "lon": 12.4853204 },
+         { "lat": 41.8921536, "lon": 12.4853162 },
+         { "lat": 41.8921556, "lon": 12.4853128 },
+         { "lat": 41.8921586, "lon": 12.4853115 },
+         { "lat": 41.8921617, "lon": 12.4853125 },
+         { "lat": 41.8921638, "lon": 12.4853156 },
+         { "lat": 41.8921644, "lon": 12.4853198 },
+         { "lat": 41.8921632, "lon": 12.4853237 },
+         { "lat": 41.8921606, "lon": 12.4853262 },
+         { "lat": 41.8921575, "lon": 12.4853264 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131451783,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8921518, "lon": 12.4852867 },
+         { "lat": 41.8921823, "lon": 12.4853045 },
+         { "lat": 41.8921669, "lon": 12.4853523 },
+         { "lat": 41.8921364, "lon": 12.4853344 },
+         { "lat": 41.8921518, "lon": 12.4852867 }
+      ]
+    }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Colonne Onorarie",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841077,
+  "bounds": {
+    "minlat": 41.8919399,
+    "minlon": 12.4862638,
+    "maxlat": 41.8920012,
+    "maxlon": 12.4863278
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 136630856,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8919399, "lon": 12.4862714 },
+         { "lat": 41.8919420, "lon": 12.4862649 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136631243,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8919854, "lon": 12.4863274 },
+         { "lat": 41.8919805, "lon": 12.4863278 },
+         { "lat": 41.8919635, "lon": 12.4863126 },
+         { "lat": 41.8919402, "lon": 12.4862912 },
+         { "lat": 41.8919399, "lon": 12.4862714 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131557416,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8919955, "lon": 12.4862965 },
+         { "lat": 41.8919981, "lon": 12.4862934 },
+         { "lat": 41.8920012, "lon": 12.4862966 },
+         { "lat": 41.8919854, "lon": 12.4863274 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136631020,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8919955, "lon": 12.4862965 },
+         { "lat": 41.8919844, "lon": 12.4862788 },
+         { "lat": 41.8919759, "lon": 12.4862726 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136631219,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8919420, "lon": 12.4862649 },
+         { "lat": 41.8919518, "lon": 12.4862638 },
+         { "lat": 41.8919634, "lon": 12.4862640 },
+         { "lat": 41.8919709, "lon": 12.4862681 },
+         { "lat": 41.8919759, "lon": 12.4862726 }
+      ]
+    }
+  ],
+  "tags": {
+    "building": "yes",
+    "historic": "archaeological_site",
+    "name": "Arco di Augusto",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q1232346",
+    "wikipedia": "it:Arco di Augusto (Foro Romano)"
+  }
+},
+{
+  "type": "relation",
+  "id": 1841090,
+  "bounds": {
+    "minlat": 41.8920005,
+    "minlon": 12.4865232,
+    "maxlat": 41.8921910,
+    "maxlon": 12.4867916
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 131451567,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8920538, "lon": 12.4866821 },
+         { "lat": 41.8920005, "lon": 12.4866370 },
+         { "lat": 41.8920137, "lon": 12.4865553 },
+         { "lat": 41.8920539, "lon": 12.4865232 },
+         { "lat": 41.8921072, "lon": 12.4865684 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136631073,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8921072, "lon": 12.4865684 },
+         { "lat": 41.8921275, "lon": 12.4865253 },
+         { "lat": 41.8921910, "lon": 12.4865839 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136630895,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8921910, "lon": 12.4865839 },
+         { "lat": 41.8921863, "lon": 12.4865877 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136630975,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8921015, "lon": 12.4867683 },
+         { "lat": 41.8921863, "lon": 12.4865877 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 111987287,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8920899, "lon": 12.4867916 },
+         { "lat": 41.8921015, "lon": 12.4867683 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136631120,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8920899, "lon": 12.4867916 },
+         { "lat": 41.8920269, "lon": 12.4867396 },
+         { "lat": 41.8920538, "lon": 12.4866821 }
+      ]
+    }
+  ],
+  "tags": {
+    "building": "temple",
+    "historic": "temple",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio di Antonino e Faustina",
+    "name:de": "Tempel des Antoninus Pius und der Faustina",
+    "name:en": "Temple of Antoninus and Faustina",
+    "name:es": "Templo de Antonino y Faustina",
+    "name:fr": "Temple d'Antonin et Faustine",
+    "name:he": "מקדש אנטונינוס ופאוסטינה",
+    "name:la": "Templum Antonini et Faustinae",
+    "name:nl": "Tempel van Antoninus en Faustina",
+    "name:ru": "Храм Антонина и Фаустины",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q752555",
+    "wikimedia_commons": "Category:Temple of Antoninus and Faustina (Rome)",
+    "wikipedia": "it:Tempio di Antonino e Faustina"
+  }
+},
+{
+  "type": "relation",
+  "id": 1842058,
+  "bounds": {
+    "minlat": 41.8909799,
+    "minlon": 12.4860229,
+    "maxlat": 41.8916691,
+    "maxlon": 12.4872795
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 998809846,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910759, "lon": 12.4867490 },
+         { "lat": 41.8910737, "lon": 12.4867561 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690343,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910759, "lon": 12.4867490 },
+         { "lat": 41.8910897, "lon": 12.4867060 },
+         { "lat": 41.8911056, "lon": 12.4867152 },
+         { "lat": 41.8911110, "lon": 12.4866985 },
+         { "lat": 41.8911231, "lon": 12.4867055 },
+         { "lat": 41.8911303, "lon": 12.4866831 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690278,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8911303, "lon": 12.4866831 },
+         { "lat": 41.8911474, "lon": 12.4866313 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690258,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8911474, "lon": 12.4866313 },
+         { "lat": 41.8911699, "lon": 12.4865644 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690261,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8911699, "lon": 12.4865644 },
+         { "lat": 41.8911962, "lon": 12.4864821 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809972,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8911962, "lon": 12.4864821 },
+         { "lat": 41.8911998, "lon": 12.4864716 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809976,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8911998, "lon": 12.4864716 },
+         { "lat": 41.8912586, "lon": 12.4862954 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809974,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8912586, "lon": 12.4862954 },
+         { "lat": 41.8912621, "lon": 12.4862851 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809975,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8912621, "lon": 12.4862851 },
+         { "lat": 41.8912892, "lon": 12.4862073 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809994,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8912892, "lon": 12.4862073 },
+         { "lat": 41.8912919, "lon": 12.4861993 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690303,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8912919, "lon": 12.4861993 },
+         { "lat": 41.8913070, "lon": 12.4861537 },
+         { "lat": 41.8913115, "lon": 12.4861560 },
+         { "lat": 41.8913129, "lon": 12.4861508 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809979,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913129, "lon": 12.4861508 },
+         { "lat": 41.8913208, "lon": 12.4861283 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809971,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913208, "lon": 12.4861283 },
+         { "lat": 41.8913271, "lon": 12.4861103 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809992,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913271, "lon": 12.4861103 },
+         { "lat": 41.8913297, "lon": 12.4861037 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690246,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913297, "lon": 12.4861037 },
+         { "lat": 41.8913517, "lon": 12.4860382 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809977,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913517, "lon": 12.4860382 },
+         { "lat": 41.8913543, "lon": 12.4860309 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131358811,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913631, "lon": 12.4860232 },
+         { "lat": 41.8913572, "lon": 12.4860229 },
+         { "lat": 41.8913543, "lon": 12.4860309 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690285,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914214, "lon": 12.4860354 },
+         { "lat": 41.8914104, "lon": 12.4860263 },
+         { "lat": 41.8913631, "lon": 12.4860232 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690314,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914685, "lon": 12.4860370 },
+         { "lat": 41.8914214, "lon": 12.4860354 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810005,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914808, "lon": 12.4860387 },
+         { "lat": 41.8914685, "lon": 12.4860370 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690277,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914808, "lon": 12.4860387 },
+         { "lat": 41.8915167, "lon": 12.4860448 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810021,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915661, "lon": 12.4860628 },
+         { "lat": 41.8915674, "lon": 12.4860575 },
+         { "lat": 41.8915167, "lon": 12.4860448 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690340,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916432, "lon": 12.4860811 },
+         { "lat": 41.8916085, "lon": 12.4860689 },
+         { "lat": 41.8915661, "lon": 12.4860628 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690308,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916639, "lon": 12.4860891 },
+         { "lat": 41.8916432, "lon": 12.4860811 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690290,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916639, "lon": 12.4860891 },
+         { "lat": 41.8916587, "lon": 12.4861044 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810055,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916179, "lon": 12.4861485 },
+         { "lat": 41.8916204, "lon": 12.4861409 },
+         { "lat": 41.8916243, "lon": 12.4861433 },
+         { "lat": 41.8916258, "lon": 12.4861388 },
+         { "lat": 41.8916205, "lon": 12.4861356 },
+         { "lat": 41.8916248, "lon": 12.4861229 },
+         { "lat": 41.8916124, "lon": 12.4861153 },
+         { "lat": 41.8916196, "lon": 12.4860919 },
+         { "lat": 41.8916320, "lon": 12.4860980 },
+         { "lat": 41.8916347, "lon": 12.4860901 },
+         { "lat": 41.8916587, "lon": 12.4861044 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810057,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916179, "lon": 12.4861485 },
+         { "lat": 41.8916133, "lon": 12.4861621 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810028,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916091, "lon": 12.4861743 },
+         { "lat": 41.8916133, "lon": 12.4861621 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810059,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916024, "lon": 12.4861943 },
+         { "lat": 41.8916091, "lon": 12.4861743 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810030,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915973, "lon": 12.4862092 },
+         { "lat": 41.8916024, "lon": 12.4861943 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810060,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915907, "lon": 12.4862288 },
+         { "lat": 41.8915973, "lon": 12.4862092 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810032,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915849, "lon": 12.4862458 },
+         { "lat": 41.8915907, "lon": 12.4862288 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810058,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915744, "lon": 12.4862770 },
+         { "lat": 41.8915849, "lon": 12.4862458 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810034,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915724, "lon": 12.4862828 },
+         { "lat": 41.8915744, "lon": 12.4862770 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810036,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915902, "lon": 12.4862929 },
+         { "lat": 41.8915724, "lon": 12.4862828 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690295,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915902, "lon": 12.4862929 },
+         { "lat": 41.8916105, "lon": 12.4863052 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690319,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916105, "lon": 12.4863052 },
+         { "lat": 41.8916046, "lon": 12.4863228 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810061,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916046, "lon": 12.4863228 },
+         { "lat": 41.8915929, "lon": 12.4863575 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810087,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915929, "lon": 12.4863575 },
+         { "lat": 41.8915700, "lon": 12.4864254 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810084,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915569, "lon": 12.4864646 },
+         { "lat": 41.8915700, "lon": 12.4864254 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810081,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915784, "lon": 12.4864776 },
+         { "lat": 41.8915569, "lon": 12.4864646 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810082,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915830, "lon": 12.4864804 },
+         { "lat": 41.8915784, "lon": 12.4864776 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810079,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916037, "lon": 12.4864929 },
+         { "lat": 41.8915830, "lon": 12.4864804 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810078,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916094, "lon": 12.4864963 },
+         { "lat": 41.8916037, "lon": 12.4864929 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810098,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916437, "lon": 12.4865861 },
+         { "lat": 41.8916110, "lon": 12.4865662 },
+         { "lat": 41.8916267, "lon": 12.4865195 },
+         { "lat": 41.8916601, "lon": 12.4865398 },
+         { "lat": 41.8916646, "lon": 12.4865271 },
+         { "lat": 41.8916094, "lon": 12.4864963 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810074,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916437, "lon": 12.4865861 },
+         { "lat": 41.8916599, "lon": 12.4865909 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810077,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916543, "lon": 12.4866073 },
+         { "lat": 41.8916634, "lon": 12.4866130 },
+         { "lat": 41.8916691, "lon": 12.4865967 },
+         { "lat": 41.8916599, "lon": 12.4865909 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810073,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916405, "lon": 12.4865958 },
+         { "lat": 41.8916543, "lon": 12.4866073 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810065,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916216, "lon": 12.4866439 },
+         { "lat": 41.8915912, "lon": 12.4866256 },
+         { "lat": 41.8916077, "lon": 12.4865761 },
+         { "lat": 41.8916405, "lon": 12.4865958 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810072,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916216, "lon": 12.4866439 },
+         { "lat": 41.8916391, "lon": 12.4866498 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810106,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916334, "lon": 12.4866661 },
+         { "lat": 41.8916426, "lon": 12.4866718 },
+         { "lat": 41.8916482, "lon": 12.4866555 },
+         { "lat": 41.8916391, "lon": 12.4866498 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810071,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916178, "lon": 12.4866553 },
+         { "lat": 41.8916334, "lon": 12.4866661 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810067,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916030, "lon": 12.4867018 },
+         { "lat": 41.8915720, "lon": 12.4866831 },
+         { "lat": 41.8915874, "lon": 12.4866370 },
+         { "lat": 41.8916178, "lon": 12.4866553 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810070,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916030, "lon": 12.4867018 },
+         { "lat": 41.8916192, "lon": 12.4867077 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810108,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916129, "lon": 12.4867260 },
+         { "lat": 41.8916214, "lon": 12.4867313 },
+         { "lat": 41.8916277, "lon": 12.4867131 },
+         { "lat": 41.8916192, "lon": 12.4867077 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810069,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915989, "lon": 12.4867142 },
+         { "lat": 41.8916129, "lon": 12.4867260 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131359043,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915511, "lon": 12.4868906 },
+         { "lat": 41.8915109, "lon": 12.4868664 },
+         { "lat": 41.8915282, "lon": 12.4868143 },
+         { "lat": 41.8915615, "lon": 12.4868343 },
+         { "lat": 41.8915655, "lon": 12.4868222 },
+         { "lat": 41.8915323, "lon": 12.4868022 },
+         { "lat": 41.8915475, "lon": 12.4867564 },
+         { "lat": 41.8915780, "lon": 12.4867748 },
+         { "lat": 41.8915820, "lon": 12.4867630 },
+         { "lat": 41.8915515, "lon": 12.4867447 },
+         { "lat": 41.8915679, "lon": 12.4866955 },
+         { "lat": 41.8915989, "lon": 12.4867142 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810100,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915511, "lon": 12.4868906 },
+         { "lat": 41.8915550, "lon": 12.4868936 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810099,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915550, "lon": 12.4868936 },
+         { "lat": 41.8915408, "lon": 12.4869347 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810113,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915408, "lon": 12.4869347 },
+         { "lat": 41.8915360, "lon": 12.4869486 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690307,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915360, "lon": 12.4869486 },
+         { "lat": 41.8915462, "lon": 12.4869550 },
+         { "lat": 41.8915423, "lon": 12.4869663 },
+         { "lat": 41.8915321, "lon": 12.4869599 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690254,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915321, "lon": 12.4869599 },
+         { "lat": 41.8915175, "lon": 12.4870022 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690344,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915175, "lon": 12.4870022 },
+         { "lat": 41.8914248, "lon": 12.4872795 },
+         { "lat": 41.8914149, "lon": 12.4872737 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690266,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914149, "lon": 12.4872737 },
+         { "lat": 41.8912329, "lon": 12.4871714 },
+         { "lat": 41.8912247, "lon": 12.4872011 },
+         { "lat": 41.8910389, "lon": 12.4870828 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809836,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910389, "lon": 12.4870828 },
+         { "lat": 41.8909799, "lon": 12.4870487 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131358805,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8909799, "lon": 12.4870487 },
+         { "lat": 41.8909959, "lon": 12.4869988 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809829,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910016, "lon": 12.4869808 },
+         { "lat": 41.8909959, "lon": 12.4869988 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690305,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910016, "lon": 12.4869808 },
+         { "lat": 41.8910128, "lon": 12.4869461 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690276,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910128, "lon": 12.4869461 },
+         { "lat": 41.8910184, "lon": 12.4869284 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690321,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910184, "lon": 12.4869284 },
+         { "lat": 41.8910335, "lon": 12.4868813 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690273,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910335, "lon": 12.4868813 },
+         { "lat": 41.8910377, "lon": 12.4868684 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809842,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910397, "lon": 12.4868620 },
+         { "lat": 41.8910377, "lon": 12.4868684 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809849,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910534, "lon": 12.4868193 },
+         { "lat": 41.8910397, "lon": 12.4868620 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809841,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910554, "lon": 12.4868131 },
+         { "lat": 41.8910534, "lon": 12.4868193 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809847,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910575, "lon": 12.4868066 },
+         { "lat": 41.8910554, "lon": 12.4868131 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809840,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910596, "lon": 12.4867999 },
+         { "lat": 41.8910575, "lon": 12.4868066 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809850,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910697, "lon": 12.4867685 },
+         { "lat": 41.8910596, "lon": 12.4867999 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809845,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910712, "lon": 12.4867638 },
+         { "lat": 41.8910697, "lon": 12.4867685 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998809848,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8910712, "lon": 12.4867638 },
+         { "lat": 41.8910737, "lon": 12.4867561 }
+      ]
+    }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Casa delle Vestali",
+    "name:de": "Haus der Vestalinnen",
+    "name:en": "House of the Vestal Virgins",
+    "name:fr": "Maison des vestales",
+    "name:it": "Casa delle Vestali",
+    "name:la": "Atrium Vestae",
+    "name:nl": "Huis van de Vestaalse Maagden",
+    "name:ru": "Дом весталок",
+    "name:uk": "Дім весталок",
+    "type": "multipolygon",
+    "wikidata": "Q285196",
+    "wikipedia": "en:House of the Vestals"
+  }
+},
+{
+  "type": "relation",
+  "id": 1842061,
+  "bounds": {
+    "minlat": 41.8913960,
+    "minlon": 12.4852879,
+    "maxlat": 41.8919562,
+    "maxlon": 12.4859750
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 131358858,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916009, "lon": 12.4858242 },
+         { "lat": 41.8915805, "lon": 12.4858121 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690265,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915522, "lon": 12.4857926 },
+         { "lat": 41.8915805, "lon": 12.4858121 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 1001172998,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915018, "lon": 12.4857874 },
+         { "lat": 41.8915093, "lon": 12.4857657 },
+         { "lat": 41.8915522, "lon": 12.4857926 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 1001172991,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914973, "lon": 12.4857846 },
+         { "lat": 41.8915018, "lon": 12.4857874 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 1001172992,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914850, "lon": 12.4857767 },
+         { "lat": 41.8914973, "lon": 12.4857846 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 1001172994,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914693, "lon": 12.4857667 },
+         { "lat": 41.8914850, "lon": 12.4857767 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 1001172995,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914500, "lon": 12.4857552 },
+         { "lat": 41.8914693, "lon": 12.4857667 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690311,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914583, "lon": 12.4857241 },
+         { "lat": 41.8914620, "lon": 12.4857309 },
+         { "lat": 41.8914629, "lon": 12.4857394 },
+         { "lat": 41.8914607, "lon": 12.4857474 },
+         { "lat": 41.8914560, "lon": 12.4857531 },
+         { "lat": 41.8914500, "lon": 12.4857552 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 1001172999,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914100, "lon": 12.4857010 },
+         { "lat": 41.8914125, "lon": 12.4856917 },
+         { "lat": 41.8914607, "lon": 12.4857152 },
+         { "lat": 41.8914583, "lon": 12.4857241 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 1001172997,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913960, "lon": 12.4856942 },
+         { "lat": 41.8914100, "lon": 12.4857010 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690238,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913960, "lon": 12.4856942 },
+         { "lat": 41.8915219, "lon": 12.4852879 },
+         { "lat": 41.8919303, "lon": 12.4855385 },
+         { "lat": 41.8919264, "lon": 12.4855501 },
+         { "lat": 41.8919562, "lon": 12.4855689 },
+         { "lat": 41.8919385, "lon": 12.4856315 },
+         { "lat": 41.8919494, "lon": 12.4856374 },
+         { "lat": 41.8918899, "lon": 12.4858094 },
+         { "lat": 41.8918768, "lon": 12.4858002 },
+         { "lat": 41.8918373, "lon": 12.4859176 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690281,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8917843, "lon": 12.4859750 },
+         { "lat": 41.8918373, "lon": 12.4859176 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690289,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8917002, "lon": 12.4858938 },
+         { "lat": 41.8917089, "lon": 12.4859079 },
+         { "lat": 41.8917843, "lon": 12.4859750 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690251,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8916009, "lon": 12.4858242 },
+         { "lat": 41.8917002, "lon": 12.4858938 }
+      ]
+    }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Templum Castoris",
+    "name:de": "Tempel der Dioskuren",
+    "name:en": "Temple of Castor and Pollux",
+    "name:es": "Templo de Cástor y Pólux",
+    "name:fr": "Temple des Dioscures",
+    "name:it": "Tempio dei Dioscuri",
+    "name:la": "Aedes Castoris",
+    "name:nl": "Tempel van Castor en Pollux",
+    "name:pl": "Świątynia Kastora i Polluksa",
+    "name:ru": "Храм Диоскуров",
+    "name:sv": "Dioskurernas tempel",
+    "name:uk": "Храм Діоскурів",
+    "start_date": "6",
+    "type": "multipolygon",
+    "wikidata": "Q380530",
+    "wikimedia_commons": "Category:Temple of Castor and Pollux, Rome",
+    "wikipedia": "en:Temple of Castor and Pollux"
+  }
+},
+{
+  "type": "relation",
+  "id": 1842062,
+  "bounds": {
+    "minlat": 41.8916355,
+    "minlon": 12.4861156,
+    "maxlat": 41.8917516,
+    "maxlon": 12.4862813
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 131358919,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8917334, "lon": 12.4862609 },
+         { "lat": 41.8917254, "lon": 12.4862698 },
+         { "lat": 41.8917193, "lon": 12.4862746 },
+         { "lat": 41.8917108, "lon": 12.4862789 },
+         { "lat": 41.8916980, "lon": 12.4862813 },
+         { "lat": 41.8916858, "lon": 12.4862797 },
+         { "lat": 41.8916757, "lon": 12.4862757 },
+         { "lat": 41.8916669, "lon": 12.4862669 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810049,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8917447, "lon": 12.4862366 },
+         { "lat": 41.8917407, "lon": 12.4862486 },
+         { "lat": 41.8917334, "lon": 12.4862609 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690361,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8917509, "lon": 12.4861830 },
+         { "lat": 41.8917516, "lon": 12.4861935 },
+         { "lat": 41.8917513, "lon": 12.4862056 },
+         { "lat": 41.8917497, "lon": 12.4862176 },
+         { "lat": 41.8917473, "lon": 12.4862281 },
+         { "lat": 41.8917447, "lon": 12.4862366 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690302,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8917483, "lon": 12.4861725 },
+         { "lat": 41.8917509, "lon": 12.4861830 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690363,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8917483, "lon": 12.4861725 },
+         { "lat": 41.8917437, "lon": 12.4861577 },
+         { "lat": 41.8917365, "lon": 12.4861435 },
+         { "lat": 41.8917285, "lon": 12.4861338 },
+         { "lat": 41.8917175, "lon": 12.4861234 },
+         { "lat": 41.8917042, "lon": 12.4861164 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 136690298,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8917042, "lon": 12.4861164 },
+         { "lat": 41.8916890, "lon": 12.4861156 },
+         { "lat": 41.8916741, "lon": 12.4861201 },
+         { "lat": 41.8916606, "lon": 12.4861295 },
+         { "lat": 41.8916493, "lon": 12.4861433 },
+         { "lat": 41.8916411, "lon": 12.4861605 },
+         { "lat": 41.8916363, "lon": 12.4861800 },
+         { "lat": 41.8916355, "lon": 12.4862004 },
+         { "lat": 41.8916386, "lon": 12.4862205 },
+         { "lat": 41.8916454, "lon": 12.4862388 },
+         { "lat": 41.8916554, "lon": 12.4862542 },
+         { "lat": 41.8916669, "lon": 12.4862669 }
+      ]
+    }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio di Vesta",
+    "name:cs": "Vestin chrám",
+    "name:de": "Tempel der Vesta",
+    "name:en": "Temple of Vesta",
+    "name:it": "Tempio di Vesta",
+    "name:la": "Templum Vestae",
+    "name:nl": "Tempel van Vesta",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q753791",
+    "wikimedia_commons": "Category:Temple of Vesta (Rome)",
+    "wikipedia": "en:Temple of Vesta"
+  }
+},
+{
+  "type": "relation",
+  "id": 1849832,
+  "bounds": {
+    "minlat": 41.8920096,
+    "minlon": 12.4844560,
+    "maxlat": 41.8927105,
+    "maxlon": 12.4858436
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 131451586,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924714, "lon": 12.4854140 },
+         { "lat": 41.8923409, "lon": 12.4857259 },
+         { "lat": 41.8923213, "lon": 12.4857083 },
+         { "lat": 41.8922673, "lon": 12.4858436 },
+         { "lat": 41.8920899, "lon": 12.4857203 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278880,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8920281, "lon": 12.4855723 },
+         { "lat": 41.8920096, "lon": 12.4856213 },
+         { "lat": 41.8920266, "lon": 12.4856313 },
+         { "lat": 41.8920173, "lon": 12.4856565 },
+         { "lat": 41.8920333, "lon": 12.4856696 },
+         { "lat": 41.8920304, "lon": 12.4856779 },
+         { "lat": 41.8920899, "lon": 12.4857203 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131557363,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8920579, "lon": 12.4854878 },
+         { "lat": 41.8920281, "lon": 12.4855723 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131557527,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8921121, "lon": 12.4853370 },
+         { "lat": 41.8920579, "lon": 12.4854878 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278917,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8923975, "lon": 12.4844560 },
+         { "lat": 41.8923258, "lon": 12.4847208 },
+         { "lat": 41.8922469, "lon": 12.4849513 },
+         { "lat": 41.8923211, "lon": 12.4850017 },
+         { "lat": 41.8923036, "lon": 12.4850426 },
+         { "lat": 41.8922267, "lon": 12.4850052 },
+         { "lat": 41.8921121, "lon": 12.4853370 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278954,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924652, "lon": 12.4844943 },
+         { "lat": 41.8924607, "lon": 12.4845077 },
+         { "lat": 41.8923975, "lon": 12.4844560 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618409,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8925068, "lon": 12.4845249 },
+         { "lat": 41.8924652, "lon": 12.4844943 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278776,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924783, "lon": 12.4846065 },
+         { "lat": 41.8925068, "lon": 12.4845249 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278820,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924783, "lon": 12.4846065 },
+         { "lat": 41.8924616, "lon": 12.4846602 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278885,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924616, "lon": 12.4846602 },
+         { "lat": 41.8926855, "lon": 12.4848012 },
+         { "lat": 41.8926996, "lon": 12.4848100 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278906,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924714, "lon": 12.4854140 },
+         { "lat": 41.8925771, "lon": 12.4851586 },
+         { "lat": 41.8927105, "lon": 12.4848263 },
+         { "lat": 41.8926996, "lon": 12.4848100 }
+      ]
+    }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Piazza del Foro",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q180212"
+  }
+},
+{
+  "type": "relation",
+  "id": 1849835,
+  "bounds": {
+    "minlat": 41.8922092,
+    "minlon": 12.4838275,
+    "maxlat": 41.8925924,
+    "maxlon": 12.4843281
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 131557556,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924386, "lon": 12.4839394 },
+         { "lat": 41.8925924, "lon": 12.4840797 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131557361,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8925784, "lon": 12.4841039 },
+         { "lat": 41.8925924, "lon": 12.4840797 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278803,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8925784, "lon": 12.4841039 },
+         { "lat": 41.8925166, "lon": 12.4842269 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131557542,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924990, "lon": 12.4842616 },
+         { "lat": 41.8925317, "lon": 12.4842901 },
+         { "lat": 41.8925480, "lon": 12.4842576 },
+         { "lat": 41.8925166, "lon": 12.4842269 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278944,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924990, "lon": 12.4842616 },
+         { "lat": 41.8924735, "lon": 12.4843092 },
+         { "lat": 41.8924816, "lon": 12.4843163 },
+         { "lat": 41.8924759, "lon": 12.4843281 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131557418,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924759, "lon": 12.4843281 },
+         { "lat": 41.8924667, "lon": 12.4843210 },
+         { "lat": 41.8924642, "lon": 12.4843267 },
+         { "lat": 41.8924234, "lon": 12.4842898 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 1000529937,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8923722, "lon": 12.4838563 },
+         { "lat": 41.8923495, "lon": 12.4838275 },
+         { "lat": 41.8922092, "lon": 12.4840915 },
+         { "lat": 41.8924234, "lon": 12.4842898 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 1000529936,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8923722, "lon": 12.4838563 },
+         { "lat": 41.8924386, "lon": 12.4839394 }
+      ]
+    }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Tempio di Saturno",
+    "name:cs": "Saturnův chrám",
+    "name:de": "Tempel des Saturn",
+    "name:en": "Temple of Saturn",
+    "name:it": "Tempio di Saturno",
+    "name:nl": "Tempel van Saturnus",
+    "name:pl": "Świątynia Saturna",
+    "name:ru": "Храм Сатурна",
+    "name:uk": "Храм Сатурна",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q746721",
+    "wikimedia_commons": "Category:Temple of Saturn, Rome",
+    "wikipedia": "en:Temple of Saturn"
+  }
+},
+{
+  "type": "relation",
+  "id": 13357829,
+  "bounds": {
+    "minlat": 41.8924616,
+    "minlon": 12.4844607,
+    "maxlat": 41.8927261,
+    "maxlon": 12.4848100
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 995618423,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8925068, "lon": 12.4845249 },
+         { "lat": 41.8925307, "lon": 12.4844607 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618419,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8925307, "lon": 12.4844607 },
+         { "lat": 41.8925596, "lon": 12.4844860 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618420,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8925604, "lon": 12.4845132 },
+         { "lat": 41.8925596, "lon": 12.4844860 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618410,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8926202, "lon": 12.4845626 },
+         { "lat": 41.8925921, "lon": 12.4845420 },
+         { "lat": 41.8925604, "lon": 12.4845132 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618417,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8926202, "lon": 12.4845626 },
+         { "lat": 41.8926448, "lon": 12.4845736 },
+         { "lat": 41.8926670, "lon": 12.4845806 },
+         { "lat": 41.8926913, "lon": 12.4845864 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618418,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8926913, "lon": 12.4845864 },
+         { "lat": 41.8927029, "lon": 12.4845868 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618416,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8927053, "lon": 12.4846011 },
+         { "lat": 41.8927033, "lon": 12.4845942 },
+         { "lat": 41.8927029, "lon": 12.4845868 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618415,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8927261, "lon": 12.4846127 },
+         { "lat": 41.8927201, "lon": 12.4846135 },
+         { "lat": 41.8927142, "lon": 12.4846116 },
+         { "lat": 41.8927091, "lon": 12.4846073 },
+         { "lat": 41.8927053, "lon": 12.4846011 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618414,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8927261, "lon": 12.4846127 },
+         { "lat": 41.8926736, "lon": 12.4847235 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618413,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8927125, "lon": 12.4847762 },
+         { "lat": 41.8927206, "lon": 12.4847567 },
+         { "lat": 41.8926736, "lon": 12.4847235 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 995618412,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8927125, "lon": 12.4847762 },
+         { "lat": 41.8927031, "lon": 12.4847998 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 131451828,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8926996, "lon": 12.4848100 },
+         { "lat": 41.8927031, "lon": 12.4847998 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278885,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924616, "lon": 12.4846602 },
+         { "lat": 41.8926855, "lon": 12.4848012 },
+         { "lat": 41.8926996, "lon": 12.4848100 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278820,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924783, "lon": 12.4846065 },
+         { "lat": 41.8924616, "lon": 12.4846602 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 137278776,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8924783, "lon": 12.4846065 },
+         { "lat": 41.8925068, "lon": 12.4845249 }
+      ]
+    }
+  ],
+  "tags": {
+    "historic": "archaeological_site",
+    "name": "Rostra Vetera",
+    "name:la": "Rostra Vetera",
+    "type": "multipolygon",
+    "wikidata": "Q426372",
+    "wikimedia_commons": "Category:Rostra (Rome)",
+    "wikipedia": "it:Rostri"
+  }
+},
+{
+  "type": "relation",
+  "id": 13402580,
+  "bounds": {
+    "minlat": 41.8912190,
+    "minlon": 12.4862490,
+    "maxlat": 41.8915574,
+    "maxlon": 12.4869504
+  },
+  "members": [
+    {
+      "type": "way",
+      "ref": 131358852,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913282, "lon": 12.4869405 },
+         { "lat": 41.8912190, "lon": 12.4868715 },
+         { "lat": 41.8914280, "lon": 12.4862490 },
+         { "lat": 41.8915574, "lon": 12.4863309 },
+         { "lat": 41.8915266, "lon": 12.4864237 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810090,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8915266, "lon": 12.4864237 },
+         { "lat": 41.8914708, "lon": 12.4865849 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810089,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8914708, "lon": 12.4865849 },
+         { "lat": 41.8913836, "lon": 12.4868359 }
+      ]
+    },
+    {
+      "type": "way",
+      "ref": 998810092,
+      "role": "outer",
+      "geometry": [
+         { "lat": 41.8913836, "lon": 12.4868359 },
+         { "lat": 41.8913439, "lon": 12.4869504 },
+         { "lat": 41.8913282, "lon": 12.4869405 }
+      ]
+    }
+  ],
+  "tags": {
+    "historic": "ruins",
+    "historic:civilization": "ancient_roman",
+    "name": "Atrio della Casa delle Vestali",
+    "name:en": "Atrium of the House of the Vestal Virgin",
+    "name:la": "Atrium Vestae",
+    "name:nl": "Atrium van het huis van Vestaalse Maagden",
+    "name:ru": "Атриум дома вестальских девственниц",
+    "type": "multipolygon",
+    "wikidata": "Q285196",
+    "wikipedia": "en:House of the Vestals"
+  }
+}
+
+  ]
+}

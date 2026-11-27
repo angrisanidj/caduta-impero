@@ -298,6 +298,15 @@ Scorciatoia di prova: `?guarda=<monumento>&anno=<anno>&dist=<distanza in decine 
 - **Che cosa sarebbe un difetto**: tetti tutti marroni anche dove rifatti; pietra al sole che diventa fango; mura arancioni come un cartone; la strada che passa ancora sotto l'arco di Costantino; un pezzo di acquedotto sospeso sopra l'arco di Claudio dopo il 700.
 - **Scelte da confermare**: **il colore delle mura** (scelta della sessione, cambia anche il 235 e il 300: la fonte dice solo «faced with brick» e «largely older brick»); gli anni dentro i pontificati (780, 806, 820) e quanto ripulisce ogni restauro; il lato della strada accanto all'arco di Costantino (ovest: la fonte non lo dice); le arcate della Vergine oltre la via Lata lasciate senz'acqua dopo il 700. La scalinata di Severo resta fuori: la fonte dà il lato, non la misura.
 
+## 32. Il Foro rimisurato e l'arco di Tiberio (27 novembre, pomeriggio)
+
+- **Che cosa è cambiato**: i templi attorno al posto dell'arco di Augusto rimisurati sui contorni dei resti (OpenStreetMap). Saturno era girato: la fronte guardava la basilica Giulia, ora guarda a nord-nord-est, verso il clivo e i Rostri, con il fianco est sulla piazza (come dice Platner). Il Divo Giulio stava sull'asse comune del Foro e sporgeva nella piazza: ora è 6 m più a est e girato di 10 gradi. I Castori 3,4 m più a ovest; la casa delle Vestali 8,6 m più a nord-ovest, sul suo cortile; i Rostri girati di 5 gradi. Nuovo l'arco di Tiberio, all'angolo nord-ovest della basilica Giulia: un fornice, su uno zoccolo con tre gradini dal lato della piazza. L'arco di Augusto resta fuori: fra il Divo Giulio e i Castori c'è meno posto dei suoi 17,75 m (8-15 m, secondo come si misura).
+- **Dove guardare**: https://angrisanidj.github.io/caduta-impero/?guarda=arcotiberio&anno=300&dist=25 , poi `&anno=800`; `?guarda=saturno&anno=300&dist=40`, `?guarda=divogiulio&anno=300&dist=40`. Foglio nello scratchpad del lavoro, cartella FO: `foglio-foro.png` (il Foro dall'alto e dalla via Sacra, prima e dopo, nel 300 e nell'800; l'arco di Tiberio; il posto dell'arco di Augusto; il trionfo del 274).
+- **Su quale dispositivo**: PC.
+- **Che cosa dovresti vedere**: Saturno con la fronte verso l'arco di Severo; il Divo Giulio con la fronte sulla piazza e un varco stretto fra lui e i Castori; il piccolo arco di Tiberio fra Saturno e i Rostri.
+- **Che cosa sarebbe un difetto**: un tempio sopra una strada (ce ne sono già: il clivo su Saturno, la via Sacra sui Rostri e sulla Regia, riserva 155); il corteo del 274 che passa nei templi (già prima, riserva 156); l'arco di Tiberio dentro qualcosa.
+- **Scelte da confermare**: l'altezza dell'arco di Tiberio (10 m), la fronte verso la piazza, i gradini; lasciare fuori l'arco di Augusto finché non si trova una pianta degli scavi (riserva 153).
+
 ## Cose che puoi dirci solo tu
 
 1. Sul tuo PC: dove la città va a scatti (all'apertura, nei voli, muovendo il mouse), e se l'800 va più lento del 301.

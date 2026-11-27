@@ -898,7 +898,13 @@ var M=[
  /* Edifici del Foro resi monumenti a sé il 26 novembre 2026 (l'utente: «sei sicuro che ci siano tutti i monumenti, tipo il tempio di Castore e Polluce?»): stesso disegno, stesso posto
     e stesso orientamento di quando stavano nel gruppo 'fori' (x, z sono il punto che il gruppo dava a inForo; ry quello del Foro, -0,35); ora hanno nome, scheda e storia propria.
     Fonti in coda a src/testi/topografia-fonti.md. */
- {id:'castori', nome:'Tempio dei Castori', etichetta:'Castori', x:3,z:9.3, ry:-.35, come:'fori', zone:[], fa:function(B){
+ /* Rimisurati il 27 novembre 2026 sui contorni dei resti su OpenStreetMap (src/roma/grezzi/osm-foro-geom.json, scaricato con q16.txt; tabella in coda a src/testi/topografia-fonti.md,
+    «I vicini dell'arco di Augusto e dell'arco di Tiberio»): Castori spostato di 3,4 m verso ovest (il suo asse stava 3,4 m a est della mezzeria dei due fianchi del contorno);
+    Divo Giulio spostato di 6 m verso est e girato di 10 gradi sull'asse del contorno (prima stava sull'asse comune del Foro, -0,35, e sporgeva verso la piazza); il modello è largo
+    29 m contro i 26 del contorno e di Platner: sta 3 m più a sud-ovest del centro del contorno, perché lo spigolo dietro non cada sulla via Sacra (e sul trionfo del 274); Saturno girato di
+    74 gradi: la fronte guarda il clivo e la piazza a nord-nord-est, non a est-sud-est (il contorno, 38,7 x 26,9 m, ha il lato lungo a 125 gradi); Rostri girati di 5 gradi; la casa
+    delle Vestali spostata di 8,6 m sul cortile del contorno. Forme e stati invariati. */
+ {id:'castori', nome:'Tempio dei Castori', etichetta:'Castori', x:2.69,z:9.16, ry:-.35, come:'fori', zone:[], fa:function(B){
     B.tempio(2.9,4.6,1.25,0,0,PI,{fronte:8,lati:11,podio:.8});                                                                  // «octastyle and peripteral, with eleven columns on each side»; tutto il tempio «about 50 metres long by 30 wide»; colonne «12.50 metres in height» (Platner e Ashby, Aedes Castoris; 27 novembre 2026: prima erano alte 20 m)
  }},
  {id:'concordia', nome:'Tempio della Concordia', etichetta:'Concordia', x:-9.1,z:-4.9, ry:-.35, come:'fori', zone:[], fa:function(B){      // cella larga, messa di traverso, e pronao verso il Foro: «the cella … was 45 metres wide and only 24 deep, while the pronaos was only 34 metres wide and 14 deep» (Platner e Ashby, Concordia)
@@ -907,11 +913,11 @@ var M=[
  {id:'vespasiano', nome:'Tempio di Vespasiano e Tito', etichetta:'Vespasiano', x:-11.4,z:-2.6, ry:-.35, come:'fori', zone:[], fa:function(B){      // «prostyle hexastyle, 33 metres long and 22 wide», addossato al Tabularium (Platner e Ashby, Divus Vespasianus)
     B.tempio(1.7,3,1.6,0,0,PI/2,{fronte:6,podio:.6});
  }},
- {id:'divogiulio', nome:'Tempio del Divo Giulio', etichetta:'Divo Giulio', x:5.6,z:5.6, ry:-.35, come:'fori', zone:[], fa:function(B){      // ionico, sei colonne sulla fronte, su una piattaforma alta 3,5 m con i rostri (Platner e Ashby, Divus Iulius, aedes)
+ {id:'divogiulio', nome:'Tempio del Divo Giulio', etichetta:'Divo Giulio', x:6.15,z:5.35, ry:-.531, come:'fori', zone:[], fa:function(B){      // ionico, sei colonne sulla fronte, su una piattaforma alta 3,5 m con i rostri (Platner e Ashby, Divus Iulius, aedes)
     B.tempio(2.4,2.8,1.4,0,0,-PI/2,{fronte:6});
  }},
  {id:'giulia', nome:'Basilica Giulia', x:-4.6,z:6, ry:-.35, come:'fori', zone:[], fa:function(B){ basilica(B,9.6,4.9,1.9,0,0); }},      // «101 metres long and 49 wide» (Platner e Ashby, Basilica Iulia)
- {id:'rostri', nome:'Rostri', x:-5.5,z:-1, ry:-.35, come:'fori', zone:[], fa:function(B){      // la tribuna degli oratori sul lato ovest della piazza: fronte «about 24 metres in length and 3 high» (Platner e Ashby, Rostra Augusti)
+ {id:'rostri', nome:'Rostri', x:-5.5,z:-1, ry:-.44, come:'fori', zone:[], fa:function(B){      // la tribuna degli oratori sul lato ovest della piazza: fronte «about 24 metres in length and 3 high» (Platner e Ashby, Rostra Augusti)
     B.scatola(1.3,.32,2.4,0,0,0,P.marmo).scatola(.12,.12,2.4,.6,.32,0,P.marmo).aperture(.66,1.1,.66,-1.1,6,.06,.2,.12,true);
  }},
  {id:'tabularium', nome:'Tabularium', x:-14.5,z:-5.2, ry:-.35, come:'fori', zone:[], fa:function(B){      // l'alto basamento di tufo e, sopra, la galleria ad arcate: «eleven arches, 7.50 metres in height» (Platner e Ashby, Tabularium)
@@ -1095,7 +1101,7 @@ var M=[
     B.tempio(.85,2.2,.7,-1.3,.35,0,{fronte:6,lati:9,podio:.25});                                                              // Giunone Sospita, dorica
  }},
  /* il tempio della Magna Mater e la Domus Tiberiana (26 novembre 2026, sera) stanno dopo il gruppo palatino, sul cui piano poggiano (come:'palatino') */
- {id:'saturno', nome:'Tempio di Saturno', etichetta:'Saturno', x:-10.1,z:1.1, ry:-.35, come:'fori', zone:[], fa:function(B){
+ {id:'saturno', nome:'Tempio di Saturno', etichetta:'Saturno', x:-10.1,z:1.1, ry:.95, come:'fori', zone:[], fa:function(B){
     B.tempio(2.2,4,1.1,0,0,PI/2,{fronte:6,podio:.85});                                                                          // sul suo podio alto: «22.50 metres wide, about 40 long», ionico, sei colonne sulla fronte; «The columns are 11 metres in height» (Platner e Ashby, Saturnus, aedes; 27 novembre 2026: prima erano alte 17 m)
  }},
  /* colonna Traiana: piedistallo «5.4 metres high»; base, fusto e capitello «3.70 metres in diameter … measure 100 Roman feet (29.77 metres)» (Platner e Ashby, Forum Traiani).
@@ -1122,11 +1128,23 @@ var M=[
     [1,-1].forEach(function(q){ var z=q*.71; [-1.11,-.51,.51,1.11].forEach(function(x){ B.scatola(.22,.55,.22,x,0,z,P.marmo).colonne(x,z,x,z,1,.88,.045,.55).scatola(.24,.19,.24,x,1.43,z,P.marmo); B.scatola(.12,1.62,.03,x,0,q*.6,P.marmo); });      // piedistallo con la base (alto 5,5 m: schema), colonna libera (8,78 m, diametro 0,90), il suo tratto di trabeazione; dietro, la lesena
       B.scatola(1.9,.42,.02,0,1.8,q*.6,P.travertino); [-.82,.82].forEach(function(x){ B.scatola(.5,.42,.02,x,1.0,q*.6,P.travertino).scatola(.4,.07,.02,x,.82,q*.6,P.travertino); }); });      // l'iscrizione dell'attico, i quattro grandi rilievi sopra i fornici laterali e le fasce strette sotto
  }},
+ /* Arco di Tiberio (27 novembre 2026), dalla voce Arcus Tiberii di Platner e Ashby letta per intero (src/testi/topografia-fonti.md, «Gli archi, uno per uno»): eretto nel 16 d.C.;
+    «It stood at the north-west corner of the basilica Julia, on the north side of the Sacra Via, which was made narrower at this point by having its curb bent toward the south.
+    The arch was single … and was approached by steps from the level of the forum»; fondazioni «9 metres long and 6.3 wide». Nessun contorno su OpenStreetMap: il punto sta a nord
+    dell'angolo nord-ovest della basilica Giulia (9 m a nord del suo fianco nel modello, 7 a nord e 9 a est dell'angolo del contorno di OpenStreetMap), fra i Rostri e Saturno, fuori
+    dalle strade del modello (la via Sacra lungo la basilica non c'è). Schema, detto in scheda: quale lato è la fronte (qui verso la piazza, il passaggio sull'asse del Foro), altezza
+    (10 m), luce del fornice (4 m), lo zoccolo alto 1,5 m e i tre gradini dal lato della piazza. Né statue né iscrizione: la fonte non ne dà (i frammenti attribuiti non sono suoi).
+    Quando sparì non si sa: in piedi fino all'852. Niente strozzatura: nessuna strada del modello ci passa. */
+ {id:'arcotiberio', nome:'Arco di Tiberio', etichetta:'Arco di Tiberio', x:-7,z:1, ry:1.221, come:'fori', zone:[], fa:function(B){
+    B.scatola(.9,.15,.63,0,0,0,P.travertino);                                                                                    // lo zoccolo sulle fondazioni di 9 x 6,3 m
+    for(var g=0;g<3;g++) B.scatola(.6,.05*(3-g),.09,0,0,.315+.045+g*.09,P.travertino);                                         // i gradini dal piano del Foro (lato +z, verso la piazza)
+    B.dentro(0,.15,0,0,function(B){ muroForato(B,.9,.66,.63,[[0,.4,.55]],P.marmo); B.scatola(.96,.06,.67,0,.66,0,P.marmo).scatola(.9,.2,.63,0,.72,0,P.marmo); });      // il fornice, la cornice, l'attico
+ }},
  {id:'vesta', nome:'Tempio di Vesta e casa delle Vestali', etichetta:'Vesta', x:7.4,z:9, ry:-.35, come:'fori', zone:[], fa:function(B){
     B.cilindro(.76,.32,0,0,0,P.marmo,null,20).cilindro(.47,1.25,0,.32,0,P.marmo,null,16);                                      // il tempio: rotondo, colonne tutt'attorno, tetto conico con il foro per il fumo; il podio è largo 15 m («a circular foundation … 15.05 metres in diameter», Platner e Ashby, Vesta; 27 novembre 2026: prima 20)
     for(var k=0;k<20;k++){ var a=k*PI/10; B.cilindro(.048,1.25,.65*Math.cos(a),.32,.65*Math.sin(a),P.marmo,.042,7); }        // «peripteral, with twenty columns» (Platner e Ashby, Vesta)
     B.cilindro(.74,.14,0,1.57,0,P.marmo,null,20).cilindro(.74,.42,0,1.71,0,P.bronzo,.12,20);
-    var p=LF(11.2,13.1), q=LF(7.4,9);                                                                                              // la casa delle Vestali, dove stava nel gruppo dei Fori
+    var p=LF(10.78,12.35), q=LF(7.4,9);                                                                                            // la casa delle Vestali: il centro del cortile su OpenStreetMap (relazione 13402580; prima 11,2, 13,1, dal gruppo dei Fori)
     B.dentro(p[0]-q[0],0,p[1]-q[1],0,function(B){ portico(B,6.8,3,0,0,0,1); B.scatola(6.8,1.1,.5,0,1.15,-1.5,P.mattone).scatola(.5,1.1,3,-3.4,1.15,0,P.mattone).scatola(.5,1.1,3,3.4,1.15,0,P.mattone); });      // il lungo cortile porticato, a due piani
  }},
  {id:'emilia', nome:'Basilica Emilia', x:7.2,z:-1, ry:-.35, come:'fori', fa:function(B){ basilica(B,8,3.4,1.8,0,0); }},
