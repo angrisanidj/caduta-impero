@@ -489,6 +489,93 @@ function uomo(B,x,y,z,s,col,ry){ return B.dentro(x,y,z,ry||0,function(){
 }); }
 RM.cavalloStatua=cavallo;      // per le figure delle scene (RM.figura.cavaliere in js/vita.js)
 RM.pelle=pelle;      // per i protagonisti delle scene (ritratto in js/scene-tappe.js)
+/* La statua equestre di Marco Aurelio (27 novembre 2026; l'utente: «La statua equestre di Marco Aurelio ponila nella zona più probabile»). Fonti in coda a src/testi/topografia-fonti.md.
+   Musei Capitolini (scheda MC3247 e scheda didattica in PDF, lette quel giorno): bronzo dorato, 176-180 d.C., alta 4,24 m; la zampa anteriore destra piegata e sollevata, la sinistra
+   tesa a terra, delle posteriori la sinistra più avanzata, tutte e due a terra; la testa del cavallo un poco girata a destra e piegata in basso; niente sella rigida ma strati di stoffa
+   che scendono fino al basso ventre; l'imperatore con la testa girata verso il braccio destro, alzato all'altezza della spalla con le dita aperte; il sinistro piegato in basso teneva
+   le redini, perdute; barba e capelli folti e ricci; tunica corta a mezze maniche con la cintura, mantello fermato sulla spalla destra che ricade sul petto e scende lungo la schiena
+   sul dorso del cavallo, dai due lati; calzari, non stivali. Lunga 3,87 m dalla coda al muso (it.wikipedia, da Argan 1989). Forme e pose guardando due fotografie di Wikimedia
+   Commons, il 27 novembre 2026: «Rome Capitoline Marcus Aurelius statue original.jpg» (l'originale, da vicino) e «Equestrian statue of Marcus Aurelius, Rome.jpg» (la copia in piazza).
+   Le misure qui sotto sono quelle di un cavallo e di un uomo veri, in metri; F le porta a 1,6 volte, che dà la lunghezza e l'altezza della fonte. Il basamento è uno schema: quello
+   antico non si conosce (l'ovale di oggi è di Michelangelo). Il cavallo guarda +z; la sua destra è -x. Circa 8.700 triangoli col basamento. */
+function marcoAurelio(B){
+  var B0=B, BR=P.bronzo, F=.16, Y0=.2, k;
+  B=Object.create(B0); B.geo=function(g,c){      // tutto dello stesso bronzo dorato, ma col tipo delle statue (P.statua: niente conci, crepe né crolli)
+    if(!g.attributes.color){ var n=g.attributes.position.count, a=new Float32Array(n*3); for(var i=0;i<n;i++){ a[i*3]=BR.r; a[i*3+1]=BR.g; a[i*3+2]=BR.b; } g.setAttribute('color',new THREE.BufferAttribute(a,3)); }
+    return B0.geo.call(this,g,P.statua); };
+  function f(l){ return l.map(function(q){ return [q[0]*F,q[1]*F+Y0,q[2]*F,q[3]*F,(q[4]==null?q[3]:q[4])*F]; }); }
+  function p(x,y,z){ return [x*F,y*F+Y0,z*F]; }
+  function pz(r,x,y,z,sx,sy,sz,lati){ return palla(B,r*F,x*F,y*F+Y0,z*F,BR,sx,sy,sz,lati||6); }
+  function dito(l,r){ for(var q=0;q<l.length-1;q++) arto(B,p(l[q][0],l[q][1],l[q][2]),p(l[q+1][0],l[q+1][1],l[q+1][2]),r*F*(1-.15*q),r*F*(1-.15*(q+1)),BR,5,false); }
+  function solchi(t0,t1,passo,dir,wa,h){ var o=[]; for(var t=t0;t<=t1;t+=passo) o.push({t:t,wt:passo*.4,dir:dir,wa:wa,h:h}); return o; }      // pieghe o ciocche di traverso
+  B0.scatola(.27,Y0-.02,.5,0,0,-.01,P.marmo).scatola(.3,.025,.53,0,Y0-.025,-.01,P.marmo).scatola(.3,.025,.53,0,0,-.01,P.marmo);      // il basamento (schema: 2 m, di marmo), con la cornice in alto e lo zoccolo
+  /* il corpo del cavallo: massiccio, la groppa tonda, il petto largo */
+  var MC=[{t:3.5,wt:4,dir:[0,1,0],wa:.22,h:-.035}];      // il solco della schiena
+  [-1,1].forEach(function(q){ MC.push({t:1.9,wt:.9,dir:[q,.35,-.2],wa:.55,h:.09},{t:6.1,wt:.8,dir:[q,.25,.3],wa:.55,h:.1},{t:5.3,wt:.35,dir:[q,-.1,0],wa:.5,h:-.05},{t:4,wt:1.6,dir:[q*.6,-.8,0],wa:.4,h:.05}); });      // le cosce, le spalle col loro margine, il ventre
+  pelle(B,f([[0,1.2,-.99,.05,.06],[0,1.21,-.91,.2,.24],[0,1.18,-.72,.29,.34],[0,1.15,-.45,.31,.37],[0,1.12,-.12,.3,.38],[0,1.13,.2,.305,.39],[0,1.18,.48,.31,.4],[0,1.22,.7,.25,.33],[0,1.26,.83,.1,.16]]),BR,20,{sudd:2,patina:2.2,muscoli:MC});
+  /* il collo arcuato e grosso, con la criniera a ciocche sulla cresta */
+  var MN=[{t:1.6,wt:2.2,dir:[0,.6,-.8],wa:.5,h:.14}]; for(k=0;k<7;k++) MN.push({t:.5+k*.45,wt:.18,dir:[0,.6,-.8],wa:.7,h:-.07});
+  pelle(B,f([[0,1.3,.46,.22,.31],[0,1.48,.56,.23,.31],[0,1.7,.64,.21,.27],[0,1.88,.7,.175,.22],[-.01,2.0,.74,.14,.17]]),BR,16,{sudd:2,patina:2.2,muscoli:MN});
+  /* la testa: un poco girata a destra (-x) e piegata in basso; la bardatura a doppie cinghie (solchi tutt'attorno) */
+  pelle(B,f([[-.01,2.07,.74,.13,.17],[-.03,1.94,.83,.125,.17],[-.05,1.81,.9,.105,.145],[-.065,1.69,.95,.09,.12],[-.075,1.6,.98,.085,.105],[-.08,1.54,.99,.04,.05]]),BR,14,{sudd:2,patina:2,
+    muscoli:[{t:1.2,wt:.12,dir:[0,1,0],wa:3,h:-.06},{t:1.45,wt:.12,dir:[0,1,0],wa:3,h:-.06},{t:3.3,wt:.12,dir:[0,1,0],wa:3,h:-.07},{t:.9,wt:.4,dir:[-1,0,0],wa:.5,h:.08},{t:.9,wt:.4,dir:[1,0,0],wa:.5,h:.08}]});
+  [-1,1].forEach(function(q){ pz(.034,-.035+q*.12,1.95,.86,.7,1,1.1); arto(B,p(-.01+q*.06,2.1,.73),p(-.01+q*.09,2.29,.68),.038*F,.008*F,BR,5,false); pz(.025,-.075+q*.05,1.58,1.0,1,.8,.8); });      // gli occhi, le orecchie, le narici
+  pz(.055,-.015,2.15,.77,1,1.4,.9);                                                                                  // il ciuffo sulla fronte, alzato fra le orecchie
+  /* le zampe: anteriore sinistra tesa a terra, anteriore destra piegata e alzata; posteriori a terra, la sinistra più avanti */
+  function zampa(l){ pelle(B,f(l.map(function(q){ return [q[0],q[1],q[2],q[3]*1.18,(q[4]==null?q[3]:q[4])*1.18]; })),BR,10,{sudd:2,patina:1.6}); }      // zampe robuste, come nella statua
+  zampa([[.17,1.03,.58,.11,.14],[.17,.8,.6,.085,.1],[.17,.56,.61,.07],[.17,.46,.61,.052],[.17,.22,.62,.042],[.17,.13,.63,.055],[.17,.04,.66,.06,.07],[.17,0,.67,.064]]);
+  zampa([[-.17,1.03,.62,.11,.14],[-.17,.86,.78,.088,.1],[-.17,.74,.92,.07],[-.17,.69,.97,.06],[-.17,.56,.92,.043],[-.17,.4,.85,.042],[-.17,.33,.8,.055],[-.17,.27,.72,.06,.07],[-.17,.25,.69,.05]]);
+  [[-1,0],[1,.12]].forEach(function(q){ var x=q[0]*.17, dz=q[1];
+    zampa([[x,1.06,-.58+dz*.5,.13,.17],[x,.8,-.52+dz*.6,.1,.12],[x,.58,-.74+dz,.07,.08],[x,.5,-.8+dz,.062],[x,.3,-.76+dz,.044],[x,.13,-.72+dz,.04],[x,.07,-.7+dz,.055],[x,.02,-.67+dz,.06,.07],[x,0,-.66+dz,.064]]); });
+  pelle(B,f([[0,1.25,-.93,.07,.08],[0,1.12,-1.05,.09,.1],[0,.88,-1.12,.1,.09],[0,.62,-1.1,.08,.06],[0,.45,-1.06,.035]]),BR,10,{sudd:2,patina:2,muscoli:solchi(.3,4,.35,[0,0,-1],.5,-.12)});      // la coda, a ciocche
+  /* la gualdrappa: strati di stoffa sul dorso che scendono fino al basso ventre, con l'orlo a frange (solchi) */
+  pelle(B,f([[0,1.1,-.3,.25,.25],[0,1.21,-.25,.318,.33],[0,1.22,.08,.318,.34],[0,1.24,.36,.315,.325],[0,1.13,.42,.27,.27]]),BR,24,{sudd:2,patina:2,muscoli:[-1,1].map(function(q){ return {t:2,wt:3,dir:[q,-.75,0],wa:.25,h:.04}; })});
+  /* il cavaliere: senza staffe, le gambe lungo i fianchi; tunica corta con la cintura */
+  pelle(B,f([[0,1.55,.1,.18,.14],[0,1.67,.1,.22,.165],[0,1.82,.12,.21,.145],[0,1.98,.13,.235,.15],[0,2.1,.13,.245,.14],[0,2.19,.13,.15,.105]]),BR,16,{sudd:2,patina:2.4,
+    muscoli:[{t:1.95,wt:.2,dir:[0,0,1],wa:3,h:.06},{t:2.2,wt:.12,dir:[0,0,1],wa:3,h:-.05}].concat(solchi(.4,4.4,.4,[0,0,1],.35,-.05))});      // la cintura annodata e le pieghe della tunica
+  [-1,1].forEach(function(q){
+    pelle(B,f([[q*.1,1.63,.08,.11],[q*.2,1.55,.18,.105,.1],[q*.31,1.4,.3,.085]]),BR,10,{sudd:2,patina:2,muscoli:solchi(.5,2,.5,[0,1,0],.6,-.08)});      // la coscia, con l'orlo della tunica
+    pz(.08,q*.31,1.4,.3,1,1,1,8);                                                                                   // il ginocchio
+    pelle(B,f([[q*.31,1.4,.3,.07],[q*.33,1.2,.25,.06],[q*.335,1.02,.19,.042],[q*.335,.96,.21,.046,.04],[q*.335,.92,.31,.035,.025]]),BR,10,{sudd:2,patina:1.6});      // la gamba e il piede coi calzari, che pende lungo il fianco
+  });
+  arto(B,p(0,2.17,.13),p(-.01,2.3,.15),.06*F,.055*F,BR,8,false);                                                    // il collo
+  /* la testa, girata verso il braccio alzato: il volto; la barba folta che scende oltre il mento; i capelli ricci a ciocche tonde */
+  var MT=[{t:2.6,wt:.4,dir:[-.25,0,1],wa:.7,h:.08}]; [-1,1].forEach(function(q){ MT.push({t:2.3,wt:.25,dir:[-.25+q*.4,0,.9],wa:.25,h:-.12}); });
+  pelle(B,f([[-.02,2.24,.15,.06],[-.02,2.27,.155,.088,.095],[-.02,2.34,.15,.1,.11],[-.02,2.42,.145,.1,.11],[-.02,2.48,.14,.08,.09],[-.02,2.51,.14,.03]]),BR,18,{sudd:3,patina:2,muscoli:MT});
+  pelle(B,f([[-.05,2.36,.24,.012,.01],[-.055,2.34,.265,.02,.02],[-.058,2.32,.27,.018,.014]]),BR,6,{sudd:1});      // il naso
+  [-1,1].forEach(function(q){ pz(.016,-.05+q*.04,2.39,.24,1,.8,.6); });                                              // gli occhi, sporgenti
+  pelle(B,f([[-.035,2.17,.2,.035,.03],[-.035,2.21,.2,.075,.065],[-.03,2.27,.185,.098,.08],[-.025,2.33,.165,.1,.075],[-.02,2.37,.15,.09,.06]]),BR,16,{sudd:3,patina:3,muscoli:solchi(.6,4,.45,[0,0,1],.7,-.12)});      // la barba, che segue la mascella e scende oltre il mento
+  for(k=0;k<22;k++){ var ac=k*2.39996, yc=2.42+.07*Math.sin(k*1.7)*(k%3?1:.4); if(Math.cos(ac)>-.1&&yc<2.47) continue;      // i riccioli dei capelli: sulla nuca, sulla calotta e sopra la fronte, non sulle guance (la barba ha le sue ciocche nei solchi)
+    pz(.024,-.02+Math.sin(ac)*.088,yc,.14+Math.cos(ac)*.092,1,1,1); }
+  pz(.085,-.02,2.48,.13,1,.5,1.05,10);                                                                               // la calotta dei capelli
+  /* il braccio destro: alzato in avanti e di lato, all'altezza della spalla e un poco più su, la mano aperta con le dita non tese; la manica corta della tunica */
+  pelle(B,f([[-.2,2.11,.13,.075],[-.3,2.12,.17,.072],[-.39,2.13,.21,.062]]),BR,10,{sudd:2,patina:2,muscoli:solchi(.5,1.6,.4,[0,1,0],.8,-.06)});
+  pelle(B,f([[-.39,2.13,.21,.058],[-.49,2.17,.28,.05],[-.58,2.24,.36,.042],[-.63,2.3,.41,.034]]),BR,10,{sudd:2,patina:1.6});
+  pelle(B,f([[-.63,2.3,.41,.032,.021],[-.645,2.35,.44,.047,.021],[-.655,2.4,.46,.044,.019]]),BR,8,{sudd:1});      // il palmo, girato in avanti
+  for(k=0;k<4;k++){ var xd=-.635-(k-1.5)*.022; dito([[xd,2.41,.46],[xd-(k-1.5)*.008,2.46,.475],[xd-(k-1.5)*.012,2.5,.49]],.0115); }      // le dita, aperte e appena piegate
+  dito([[-.62,2.35,.44],[-.59,2.39,.47],[-.58,2.42,.49]],.0125);                                                        // il pollice
+  /* il braccio sinistro: piegato in basso, la mano chiusa a metà, col palmo in su (le redini sono perdute) */
+  pelle(B,f([[.2,2.1,.12,.07],[.24,1.97,.11,.065],[.27,1.84,.1,.055]]),BR,10,{sudd:2,patina:2});
+  pelle(B,f([[.27,1.84,.1,.05],[.25,1.79,.22,.045],[.21,1.75,.35,.035]]),BR,10,{sudd:2,patina:1.6});
+  pz(.04,.2,1.75,.39,1,.7,1.2);                                                                                       // la mano
+  /* il mantello: fermato sulla spalla destra, ricade sul petto in un rotolo morbido; dietro scende lungo la schiena e si posa sul dorso del cavallo, dai due lati */
+  pelle(B,f([[-.21,2.15,.16,.04],[-.12,2.08,.27,.05],[0,1.99,.29,.052],[.12,1.97,.26,.05],[.2,2.03,.18,.045],[.22,2.12,.08,.04]]),BR,10,{sudd:3,patina:2.6,muscoli:solchi(.5,4.5,.5,[0,1,0],.9,-.12)});
+  pz(.035,-.2,2.15,.15,1,1,1,8);                                                                                      // la fibbia sulla spalla destra
+  pelle(B,f([[0,2.14,.04,.17,.05],[0,1.97,-.01,.23,.06],[0,1.77,-.04,.25,.065],[0,1.62,-.08,.26,.06],[0,1.54,-.1,.2,.04]]),BR,14,{sudd:2,patina:2.6,muscoli:[-3,-1.5,0,1.5,3].map(function(q){ return {t:2,wt:3,dir:[q*.18,0,-1],wa:.12,h:-.25}; })});
+  pelle(B,f([[0,1.3,-.15,.14,.12],[0,1.29,-.24,.31,.23],[0,1.29,-.45,.322,.235],[0,1.27,-.62,.31,.22],[0,1.25,-.7,.14,.1]]),BR,18,{sudd:2,patina:2.6,muscoli:[-.6,-.35,-.12,.12,.35,.6].map(function(q){ return {t:2,wt:2.5,dir:[q,.3,0],wa:.18,h:-.12}; })});      // sul dorso del cavallo, con le pieghe che scendono
+}
+/* La Pigna di bronzo (27 novembre 2026; l'utente: «Anche la pigna»). Musei Vaticani (pagina del restauro del 2020): fatta fra il I e il II secolo d.C. da Publius Cincius Salvius,
+   «doveva ornare un monumento pubblico della Roma antica, forse nel Campo Marzio»; alta quasi 4 m (en.wikipedia, «Fontana della Pigna», dalla pagina storica del Vaticano), un
+   tempo gettava acqua dalla cima. Forma guardando la fotografia di Wikimedia Commons «Rome - Pine cone.jpg» (27 novembre 2026): un ovale appuntito in alto, largo poco più di metà
+   dell'altezza, con le squame a file sfalsate, ognuna gonfia e appuntita in basso. Qui alta 3,9 m e larga 2,3 (la larghezza dalla fotografia). Le squame sono rigonfiamenti della
+   stessa pelle. h0: dove poggia, in unità. Circa 8.600 triangoli con la base. */
+function pigna(B,h0){
+  var B0=B, BR=P.bronzo, k, j, mus=[];
+  B=Object.create(B0); B.geo=function(g,c){ return B0.geo.call(this,g,P.statua); };      // il colore viene dalla patina della pelle; il tipo è quello delle statue
+  for(k=0;k<15;k++) for(j=0;j<13;j++){ var t=.6+k*.6, a=(j+(k%2)*.5)/13*2*Math.PI, a2=a+Math.PI/13;      // quindici file di squame, tredici per fila, sfalsate
+    mus.push({t:t,wt:.24,dir:[Math.cos(a),-.3,Math.sin(a)],wa:.13,h:.17},{t:t-.3,wt:.14,dir:[Math.cos(a),0,Math.sin(a)],wa:.2,h:-.1},{t:t,wt:.3,dir:[Math.cos(a2),0,Math.sin(a2)],wa:.07,h:-.08}); }      // la squama, gonfia in basso, il solco sotto e quello fra due squame
+  pelle(B,[[0,h0,0,.035],[0,h0+.03,0,.08],[0,h0+.08,0,.105],[0,h0+.14,0,.115],[0,h0+.2,0,.113],[0,h0+.26,0,.1],[0,h0+.31,0,.08],[0,h0+.35,0,.055],[0,h0+.375,0,.03],[0,h0+.39,0,.006]],BR,78,{sudd:6,muscoli:mus,patina:2});
+}
 function casa(B,y,lx,lz,w,d,h,ry){ B.scatola(w,h+.3,d,lx,y-.3,lz,P.mattone,ry).falde(w+.2,.45,d+.2,lx,y+h,lz,P.coppi,ry,P.mattone); }
 
 /* tracciato delle mura leonine (848-852): dal mausoleo di Adriano attorno al colle Vaticano, fino al Tevere. Coordinate relative a (-215,-92).
@@ -1734,28 +1821,52 @@ var M=[
     B.coclide(.195,.18,2.65,0,1.0885,0,21,P.marmo);                                                  // il fusto col fregio a spirale (ventuno giri è il numero corrente, non letto in Platner): rastrema meno di quello di Traiano
     B.scatola(.44,.15,.44,0,3.7385,0,P.marmo).cilindro(.14,.12,0,3.8885,0,P.marmo,.12,12);           // capitello dorico e tamburo in cima
  }},
+ /* La statua equestre di Marco Aurelio in due posti (27 novembre 2026; fonti in coda a src/testi/topografia-fonti.md, «Marco Aurelio, Pigna, Ara Pacis»). Dove stesse in antico
+    non si sa: «alcuni dicono si trovasse nel Foro Romano, altri a piazza Colonna» (it.wikipedia, che cita i Musei Capitolini). Qui la seconda, accanto alla colonna di Marco Aurelio,
+    26 m a nord della colonna, rivolta verso di lei, 47 m a ovest dell'asse della via Lata (punto e orientamento: scelta). I Musei Capitolini: al Laterano «first recorded in the tenth century», ma «likely» lì «from at least the end of the eighth
+    century»: qui al Laterano dal 790 (anno: scelta), nel campo davanti al Patriarchio, a nord del palazzo verso la Scala Santa (punto e orientamento: scelta). */
+ {id:'marcoaurelio', nome:'Statua equestre di Marco Aurelio', etichetta:'Marco Aurelio', x:-44,z:-90.2, ry:PI, zone:[[0,0,.45]], fa:function(B){ marcoAurelio(B); }},
+ {id:'marcoaureliolat', nome:'Statua equestre di Marco Aurelio al Laterano', etichetta:'Marco Aurelio', x:180.2,z:57.6, ry:-PI/2+.1, zone:[[0,0,.45]], fa:function(B){ marcoAurelio(B); }},
+ /* La Pigna in due posti (27 novembre 2026). In antico: «forse nel Campo Marzio» (Musei Vaticani); «near the Pantheon next to the Temple of Isis» (en.wikipedia, dalla pagina storica
+    del Vaticano): qui dentro il recinto dell'Iseo, su una base (punto e base: schema). Nell'atrio di San Pietro la nomina per primo Pietro Mallio (1159-1181): «ad pineam aeneam,
+    quae est in paradiso»; Stefano II (752-757) mise sopra il cantaro «aereum ... tegumenum», una copertura di bronzo, e a quegli anni gli studiosi (van den Hoek) legano «probabilmente»
+    l'arrivo della pigna (Roger Pearse, che cita Krautheimer e van den Hoek). Qui nell'atrio dal 755 (anno: scelta dentro quegli anni), dentro la vasca della fontana, sotto il baldacchino
+    di bronzo a quattro colonne di Paolino da Nola (Lettera 13, 13), che il modello già disegna. */
+ {id:'pigna', nome:'Pigna di bronzo', etichetta:'Pigna', x:-51.6,z:-64.2, ry:0, zone:[], fa:function(B){      // senza «come»: l'Iseo viene dopo nella lista
+    B.scatola(.2,.14,.2,0,0,0,P.marmo).scatola(.23,.02,.23,0,.13,0,P.marmo); pigna(B,.15); }},      // la base (schema: 1,5 m di marmo)
+ {id:'pignapietro', nome:'Pigna di bronzo nell\'atrio di San Pietro', etichetta:'Pigna', x:-250.61,z:-108, ry:0, come:'pietro', zone:[], fa:function(B){
+    B.cilindro(.07,.1,0,.16,0,P.marmo,null,10); pigna(B,.26); }},      // su un piede basso dentro la vasca (schema)
  /* Orologio di Augusto. L'obelisco di Psammetico II, portato da Augusto nel 10 a.C., è alto 21,79 m e fa da gnomone a una meridiana: un pavimento di marmo a nord, con le linee di bronzo dorato
     (Platner e Ashby, Obeliscus Augusti; Plinio NH XXXVI 72). In piedi nell'VIII secolo (Itinerario di Einsiedeln), caduto in data ignota. Stava sotto piazza del Parlamento, dove se ne trovarono i pezzi
     nel 1502 e la meridiana nel 1748 (it.wikipedia «Obelisco di Montecitorio»; Nominatim, way 28157922). In cima, la sfera di cui parla Plinio. Lunghezza della meridiana (circa 50 m, l'ombra di
     mezzogiorno d'inverno) dal calcolo di Thayer nella stessa pagina; larghezza del pavimento e altezza del basamento indicative.
-    Ara Pacis (13-9 a.C.): stava dove poi sorse palazzo Fiano (it.wikipedia «Ara Pacis»; Nominatim, way 80220845). Recinto di circa 11,6 x 10,6 m alto circa 4,6, ingresso a ovest: misure a memoria, indicative.
+    L'Ara Pacis, che stava qui dentro, dal 27 novembre 2026 è la voce arapacis, subito dopo.
     Colonna di Antonino Pio (161): monolite di granito rosso alto 14,75 m con 1,90 di diametro, su un piedistallo di marmo bianco, con la statua di Antonino in cima come sulle monete
     (Platner e Ashby, Columna Antonini Pii). Posizione da it.wikipedia (41,90155 N, 12,47742 E); altezza del piedistallo indicativa. */
- {id:'orologio', nome:'Orologio di Augusto', x:-56.68,z:-108.69, ry:0, zone:[[0,0,1.4],[0,-2.8,2.4],[6.13,-12,1.2],[-8.62,8.12,.7]], fa:function(B){
+ {id:'orologio', nome:'Orologio di Augusto', x:-56.68,z:-108.69, ry:0, zone:[[0,0,1.4],[0,-2.8,2.4],[-8.62,8.12,.7]], fa:function(B){      // 27 novembre 2026: l'Ara Pacis è una voce a sé (arapacis, qui sotto), con la sua zona
     var X=-56.68, Z=-108.69;
     luogo(B,X,Z,X,Z,0,.4,function(B){
       obelisco(B,2.18,.24,.3,0,0); B.geo(new THREE.SphereGeometry(.09,10,8).translate(0,2.57,0),P.oro);           // basamento, fusto e sfera
       B.scatola(1.6,.04,5.2,0,0,-2.85,P.marmo).scatola(.05,.045,5,0,0,-2.85,P.oro);                               // il pavimento della meridiana e la linea di bronzo dorato
     });
-    luogo(B,X,Z,-50.55,-120.69,-PI/2,.7,function(B){                                                               // Ara Pacis: fronte (+z) verso ovest
-      B.scatola(1.3,.1,1.2,0,0,0,P.travertino).scatola(.4,.1,.3,0,0,.75,P.travertino);                             // podio e scala davanti alla porta ovest
-      B.scatola(1.165,.46,.06,0,.1,.531,P.marmo).scatola(1.165,.46,.06,0,.1,-.531,P.marmo).scatola(.06,.46,1.062,.5525,.1,0,P.marmo).scatola(.06,.46,1.062,-.5525,.1,0,P.marmo);
-      B.vano(0,.1,.565,1,0,.36,.36,true).vano(0,.1,-.565,-1,0,.36,.36,true);                                       // le due porte
-      B.scatola(.62,.2,.7,0,.1,-.05,P.marmo);                                                                       // l'altare
-    });
     luogo(B,X,Z,-65.3,-100.57,0,.3,function(B){                                                                    // colonna di Antonino Pio
       B.scatola(.36,.25,.36,0,0,0,P.marmo).cilindro(.095,1.475,0,.25,0,P.granito,.085,14).scatola(.22,.06,.22,0,1.725,0,P.marmo).cilindro(.04,.16,0,1.785,0,P.statua,.04,6);
     });
+ }},
+ /* L'Ara Pacis Augustae (13-9 a.C.), voce a sé dal 27 novembre 2026 (prima stava nel gruppo dell'orologio con «misure a memoria»). Platner e Ashby, «Ara Pacis Augustae», letta quel
+    giorno: «on the west side of the via Flaminia», dove oggi è palazzo Fiano-Almagià; il recinto di marmo bianco «about 6 metres high», «11.625 metres east and west, and 10.55 north and
+    south»; «In the middle of the east and west sides were entrances flanked with pilasters»; «The altar itself was not found» (allora: fu trovato negli scavi del 1937-1938). Prima
+    il recinto era girato di 90 gradi, con le misure scambiate e alto 4,6 m. Il posto resta quello di prima (palazzo Fiano, Nominatim way 80220845): il lato est sta 10 m a ovest dell'asse della via Lata.
+    Gradino, altare e lesene sono uno schema; la scala davanti alla porta ovest della ricostruzione di oggi non c'è, perché le fonti lette non la descrivono. Sito del museo
+    (arapacis.it, «The Ara Pacis in the Field of Mars»): il suolo salì per le piene del Tevere, un muro tentò di fermarlo invano, e per più di mille anni l'altare fu dimenticato;
+    quando sparì alla vista non lo dice: qui resta in piedi fino all'852. Chiuso al culto nel 392 come i templi (scelta del modello), poi «abbandonato, ma in piedi». */
+ {id:'arapacis', nome:'Ara Pacis', x:-50.55,z:-120.69, ry:0, zone:[[0,0,.85]], fa:function(B){
+    B.scatola(1.22,.04,1.11,0,0,0,P.marmo);                                                                       // il gradino sotto il recinto (schema)
+    B.scatola(1.1625,.56,.06,0,.04,.4975,P.marmo).scatola(1.1625,.56,.06,0,.04,-.4975,P.marmo);                    // i lati nord e sud, lunghi 11,6 m
+    [-1,1].forEach(function(q){ B.scatola(.06,.56,.37,q*.55125,.04,.3425,P.marmo).scatola(.06,.56,.37,q*.55125,.04,-.3425,P.marmo);      // i lati est e ovest, con la porta in mezzo (larga 3,2 m: schema)
+      B.scatola(.08,.56,.05,q*.56,.04,.18,P.marmo).scatola(.08,.56,.05,q*.56,.04,-.18,P.marmo); });                 // le lesene ai lati delle porte
+    [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(function(q){ B.scatola(.08,.56,.08,q[0]*.56,.04,q[1]*.505,P.marmo); });   // le lesene agli angoli
+    B.scatola(.62,.06,.5,0,.04,0,P.marmo).scatola(.5,.14,.36,0,.1,0,P.marmo);                                       // l'altare a gradini (schema)
  }},
  /* Obelisco degli Horti Sallustiani: copia romana, alta 13 m, dei geroglifici dell'obelisco di Ramesse II del Circo Massimo; in piedi nell'VIII secolo (Itinerario di Einsiedeln); nel XV secolo
     a terra in due pezzi. La base di granito, di 2,50 x 2,55 m, fu ritrovata nel 1843 fra via Sicilia, via Sardegna, via Toscana e via Abruzzi (Platner e Ashby, Obeliscus Hortorum Sallustianorum).
@@ -2360,7 +2471,7 @@ RM.statoMonumento=function(id,anno){
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Fino al 23 novembre 2026 alla chiusura toglieva subito un poco di cima a ogni tratto: sul tetto di Giove Capitolino il colmo si spezzava a blocchi e il tempio sembrava spaccato (l'utente: «fai delle crepe, non che si spacchi a metà»).
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, ospizionaumachia:0, mulini:0, casenerva:0, foca:.4, focastatua:.4, fiaccola357:.4, curiastatue:.5, adriano:.35, arcocostantino:.5, arcotito:.5, arcoseveroforo:.5, colonnatraiana:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0, giano:.5, argentari:.5, arcogallieno:.5, ottaviapropileo:.4};      // 27 novembre 2026: i tre archi usciti dai gruppi, come gli altri archi in uso; il propileo d'Ottavia, che è in piedi oggi con le sue colonne, perde meno pezzi
+var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, ospizionaumachia:0, mulini:0, casenerva:0, foca:.4, focastatua:.4, fiaccola357:.4, curiastatue:.5, adriano:.35, arcocostantino:.5, arcotito:.5, arcoseveroforo:.5, colonnatraiana:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0, giano:.5, argentari:.5, arcogallieno:.5, ottaviapropileo:.4, marcoaurelio:0, marcoaureliolat:0, pigna:0, pignapietro:0};      // 27 novembre 2026: i tre archi usciti dai gruppi, come gli altri archi in uso; il propileo d'Ottavia, che è in piedi oggi con le sue colonne, perde meno pezzi
 /* «abbandonato» (25 novembre 2026, l'utente: «Ok» alla proposta della verifica degli anacronismi, src/testi/audit-anacronismi.md): non più in uso, ma la struttura regge
    per secoli (la cupola di Minerva Medica fino al 1828, il Pantheon fra il 392 e il 609, i templi del Foro Boario diventati chiese). Prende l'incuria della chiusura
    (sporco, crepe, erba, coppi mancanti: uCrepe) ma niente crolli (uRovina resta a zero), finché un evento non li porta (terremoto, incendio, cava). Uno «spogliato»
@@ -2449,7 +2560,7 @@ RM.rovina=function(id,anno){
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
-var SENZA_CANTIERE={dioscuri:1,curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};
+var SENZA_CANTIERE={dioscuri:1,curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1,marcoaureliolat:1,pignapietro:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};
 function ponteggio(o,t){
   if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
   if(!o.pont){

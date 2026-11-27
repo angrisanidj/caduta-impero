@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 06:49:04.
+Generato da `src/testi.mjs` il 27/11/2026, 07:52:05.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -151,7 +151,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.68] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.69] Versione del 27/11/2026, ore 06:22
+[pagina.69] Versione del 27/11/2026, ore 07:09
 
 
 ## 2. Gli atti
@@ -4209,11 +4209,123 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.colonnamarco.certezza-A] In piedi al suo posto; il piedistallo antico è rifatto e in parte interrato, qui è indicativo.
 
 
+### Statua equestre di Marco Aurelio
+
+[scheda.marcoaurelio.nome] Statua equestre di Marco Aurelio
+
+[scheda.marcoaurelio.cosa] La statua di bronzo dorato dell'imperatore Marco Aurelio a cavallo, fatta fra il 176 e il 180. È alta 4,24 metri (Musei Capitolini) e lunga 3,87 dalla coda al muso: più grande del vero. Il cavallo alza la zampa anteriore destra. L'imperatore, con la barba, una tunica corta e il mantello, alza il braccio destro con la mano aperta. Non ha staffe. Dove stesse in antico non si sa: per alcuni nel Foro Romano, per altri a piazza Colonna. Nel modello sta a piazza Colonna, accanto alla colonna di Marco Aurelio, ma è un'ipotesi; il punto preciso e il basamento sono una nostra scelta.
+
+[scheda.marcoaurelio.data1.quando] 176-180
+
+[scheda.marcoaurelio.data1] La statua viene fusa e dorata. Forse fu innalzata nel 176, insieme ad altri onori (Musei Capitolini).
+
+[scheda.marcoaurelio.data2.quando] fine dell'VIII secolo
+
+[scheda.marcoaurelio.data2] Secondo i Musei Capitolini è probabile che stia già al Laterano almeno da allora: Carlo Magno, che voleva copiare la piazza del Laterano, portò ad Aquisgrana una statua equestre presa a Ravenna. Nel modello passa al Laterano nel 790: l'anno è una nostra scelta.
+
+[scheda.marcoaurelio.data3.quando] X secolo
+
+[scheda.marcoaurelio.data3] Prima notizia sicura della statua al Laterano (Musei Capitolini). Nel Medioevo la chiamano «cavallo di Costantino»: credendola di Costantino, il primo imperatore cristiano, non la fusero, come accadde a quasi tutti gli altri bronzi (it.wikipedia). Un erudito del Settecento, in una nota a Winckelmann, la metteva invece nel Foro fino al XII secolo: le fonti non si accordano.
+
+[scheda.marcoaurelio.data4-1538] Papa Paolo III la fa portare sul Campidoglio. Michelangelo le disegna il basamento ovale.
+
+[scheda.marcoaurelio.data5.quando] oggi
+
+[scheda.marcoaurelio.data5] L'originale è nei Musei Capitolini, nel Palazzo dei Conservatori; in piazza del Campidoglio c'è una copia.
+
+[scheda.marcoaurelio.certezza-C] La statua esiste ed è nota; le forme sono semplificate, viste su fotografie della statua di oggi. Il posto antico è incerto: le fonti propongono il Foro o piazza Colonna, e qui si è scelta la seconda; il punto, l'orientamento e il basamento sono nostre scelte. Al Laterano la statua è sicura dal X secolo e probabile dalla fine dell'VIII; l'anno del passaggio, il 790, è una scelta.
+
+
+### Statua equestre di Marco Aurelio al Laterano
+
+[scheda.marcoaureliolat.nome] Statua equestre di Marco Aurelio al Laterano
+
+[scheda.marcoaureliolat.cosa] La statua di bronzo dorato dell'imperatore Marco Aurelio a cavallo, fatta fra il 176 e il 180. È alta 4,24 metri (Musei Capitolini) e lunga 3,87 dalla coda al muso: più grande del vero. Il cavallo alza la zampa anteriore destra. L'imperatore, con la barba, una tunica corta e il mantello, alza il braccio destro con la mano aperta. Non ha staffe. Dove stesse in antico non si sa: per alcuni nel Foro Romano, per altri a piazza Colonna. Nel modello sta a piazza Colonna, accanto alla colonna di Marco Aurelio, ma è un'ipotesi; il punto preciso e il basamento sono una nostra scelta.
+
+[scheda.marcoaureliolat.data1.quando] 176-180
+
+[scheda.marcoaureliolat.data1] La statua viene fusa e dorata. Forse fu innalzata nel 176, insieme ad altri onori (Musei Capitolini).
+
+[scheda.marcoaureliolat.data2.quando] fine dell'VIII secolo
+
+[scheda.marcoaureliolat.data2] Secondo i Musei Capitolini è probabile che stia già al Laterano almeno da allora: Carlo Magno, che voleva copiare la piazza del Laterano, portò ad Aquisgrana una statua equestre presa a Ravenna. Nel modello passa al Laterano nel 790: l'anno è una nostra scelta.
+
+[scheda.marcoaureliolat.data3.quando] X secolo
+
+[scheda.marcoaureliolat.data3] Prima notizia sicura della statua al Laterano (Musei Capitolini). Nel Medioevo la chiamano «cavallo di Costantino»: credendola di Costantino, il primo imperatore cristiano, non la fusero, come accadde a quasi tutti gli altri bronzi (it.wikipedia). Un erudito del Settecento, in una nota a Winckelmann, la metteva invece nel Foro fino al XII secolo: le fonti non si accordano.
+
+[scheda.marcoaureliolat.data4-1538] Papa Paolo III la fa portare sul Campidoglio. Michelangelo le disegna il basamento ovale.
+
+[scheda.marcoaureliolat.data5.quando] oggi
+
+[scheda.marcoaureliolat.data5] L'originale è nei Musei Capitolini, nel Palazzo dei Conservatori; in piazza del Campidoglio c'è una copia.
+
+[scheda.marcoaureliolat.certezza-C] La statua esiste ed è nota; le forme sono semplificate, viste su fotografie della statua di oggi. Il posto antico è incerto: le fonti propongono il Foro o piazza Colonna, e qui si è scelta la seconda; il punto, l'orientamento e il basamento sono nostre scelte. Al Laterano la statua è sicura dal X secolo e probabile dalla fine dell'VIII; l'anno del passaggio, il 790, è una scelta.
+
+
+### Pigna di bronzo
+
+[scheda.pigna.nome] Pigna di bronzo
+
+[scheda.pigna.cosa] Una grande pigna di bronzo, alta quasi 4 metri, fatta fra il I e il II secolo da Publius Cincius Salvius (Musei Vaticani). Dalla cima usciva acqua: era una fontana. Dove stesse in antico non si sa con certezza: «forse nel Campo Marzio» per i Musei Vaticani, presso il tempio di Iside per altre fonti. Nel modello sta nel recinto dell'Iseo, su una base: il punto e la base sono una nostra scelta.
+
+[scheda.pigna.data1.quando] I-II secolo
+
+[scheda.pigna.data1] Viene fusa e firmata da Publius Cincius Salvius.
+
+[scheda.pigna.data2.quando] 752-757
+
+[scheda.pigna.data2] Papa Stefano II mette una copertura di bronzo sopra la fontana dell'atrio di San Pietro. Gli studiosi pensano che la pigna sia arrivata lì probabilmente in quegli anni, ma la fonte non la nomina. Nel modello arriva nel 755, dentro la vasca, sotto il baldacchino a quattro colonne.
+
+[scheda.pigna.data3.quando] 1159-1181
+
+[scheda.pigna.data3] Pietro Mallio, nella sua descrizione di San Pietro, nomina per primo «la pigna di bronzo che sta nel paradiso», cioè nell'atrio.
+
+[scheda.pigna.data4.quando] inizio del XIV secolo
+
+[scheda.pigna.data4] Dante la ricorda nell'Inferno (canto XXXI) come «la pina di San Pietro».
+
+[scheda.pigna.data5.quando] oggi
+
+[scheda.pigna.data5] Sta nei Musei Vaticani, nel cortile che da lei prende il nome di Cortile della Pigna, sopra un grande capitello trovato nelle terme di Alessandro Severo.
+
+[scheda.pigna.certezza-C] La pigna esiste ed è nota; le squame sono semplificate, viste su una fotografia. Il posto antico è incerto («forse nel Campo Marzio», presso il tempio di Iside): punto e base sono nostre scelte. Nell'atrio di San Pietro è sicura solo dal XII secolo; il 755 segue un'ipotesi degli studiosi.
+
+
+### Pigna di bronzo nell'atrio di San Pietro
+
+[scheda.pignapietro.nome] Pigna di bronzo nell'atrio di San Pietro
+
+[scheda.pignapietro.cosa] Una grande pigna di bronzo, alta quasi 4 metri, fatta fra il I e il II secolo da Publius Cincius Salvius (Musei Vaticani). Dalla cima usciva acqua: era una fontana. Dove stesse in antico non si sa con certezza: «forse nel Campo Marzio» per i Musei Vaticani, presso il tempio di Iside per altre fonti. Nel modello sta nel recinto dell'Iseo, su una base: il punto e la base sono una nostra scelta.
+
+[scheda.pignapietro.data1.quando] I-II secolo
+
+[scheda.pignapietro.data1] Viene fusa e firmata da Publius Cincius Salvius.
+
+[scheda.pignapietro.data2.quando] 752-757
+
+[scheda.pignapietro.data2] Papa Stefano II mette una copertura di bronzo sopra la fontana dell'atrio di San Pietro. Gli studiosi pensano che la pigna sia arrivata lì probabilmente in quegli anni, ma la fonte non la nomina. Nel modello arriva nel 755, dentro la vasca, sotto il baldacchino a quattro colonne.
+
+[scheda.pignapietro.data3.quando] 1159-1181
+
+[scheda.pignapietro.data3] Pietro Mallio, nella sua descrizione di San Pietro, nomina per primo «la pigna di bronzo che sta nel paradiso», cioè nell'atrio.
+
+[scheda.pignapietro.data4.quando] inizio del XIV secolo
+
+[scheda.pignapietro.data4] Dante la ricorda nell'Inferno (canto XXXI) come «la pina di San Pietro».
+
+[scheda.pignapietro.data5.quando] oggi
+
+[scheda.pignapietro.data5] Sta nei Musei Vaticani, nel cortile che da lei prende il nome di Cortile della Pigna, sopra un grande capitello trovato nelle terme di Alessandro Severo.
+
+[scheda.pignapietro.certezza-C] La pigna esiste ed è nota; le squame sono semplificate, viste su una fotografia. Il posto antico è incerto («forse nel Campo Marzio», presso il tempio di Iside): punto e base sono nostre scelte. Nell'atrio di San Pietro è sicura solo dal XII secolo; il 755 segue un'ipotesi degli studiosi.
+
+
 ### Orologio di Augusto
 
 [scheda.orologio.nome] Orologio di Augusto
 
-[scheda.orologio.cosa] Nel Campo Marzio settentrionale Augusto fa usare un obelisco alto quasi 22 metri come indicatore di una grande meridiana. A mezzogiorno l'ombra si proietta su un pavimento di marmo segnato da linee di bronzo dorato. Nelle vicinanze sorge l'Ara Pacis, l'altare della Pace. Più tardi si aggiunge la colonna di Antonino Pio.
+[scheda.orologio.cosa] Nel Campo Marzio settentrionale Augusto fa usare un obelisco alto quasi 22 metri come indicatore di una grande meridiana. A mezzogiorno l'ombra si proietta su un pavimento di marmo segnato da linee di bronzo dorato. Poco più a est, lungo la via Flaminia, sorge l'Ara Pacis, l'altare della Pace, che ha una scheda sua. Più tardi si aggiunge la colonna di Antonino Pio.
 
 [scheda.orologio.data1.quando] 10 a.C.
 
@@ -4230,6 +4342,35 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.orologio.data4] L'Itinerario di Einsiedeln ricorda l'obelisco ancora in piedi. Fu abbattuto e spezzato in una data che non si sa (Platner e Ashby): nel modello resta in piedi fino all'852. Ritrovato nel 1512, scavato nel 1748, rialzato in piazza di Montecitorio nel 1789 secondo Platner e Ashby (altre fonti danno il 1502 e il 1792). L'Ara Pacis è stata ricomposta sul Lungotevere nel 1938.
 
 [scheda.orologio.certezza-B] L'obelisco fu ritrovato sotto piazza del Parlamento e l'Ara Pacis sotto palazzo Fiano. La loro posizione è nota con un margine di qualche decina di metri. Della meridiana sono stati scavati solo alcuni tratti, perciò la larghezza e la forma del pavimento restano ipotetiche. Per la posizione della colonna di Antonino Pio il modello segue la voce italiana di Wikipedia.
+
+
+### Ara Pacis
+
+[scheda.arapacis.nome] Ara Pacis
+
+[scheda.arapacis.cosa] L'altare della Pace di Augusto, nel Campo Marzio, sul lato ovest della via Flaminia. Un recinto di marmo bianco, scolpito dentro e fuori, alto circa 6 metri, lungo 11,6 metri da est a ovest e 10,5 da nord a sud, con una porta in mezzo al lato est e una al lato ovest (Platner e Ashby). Dentro c'era l'altare. Nel modello il gradino, l'altare e le lesene sono uno schema.
+
+[scheda.arapacis.data1.quando] 13-9 a.C.
+
+[scheda.arapacis.data1] Il Senato la vuole per il ritorno di Augusto dalla Spagna e dalla Gallia; è dedicata il 30 gennaio del 9 a.C.
+
+[scheda.arapacis.data2.quando] secoli dopo
+
+[scheda.arapacis.data2] Il suolo del Campo Marzio sale, soprattutto per le piene del Tevere. Un muro cerca di fermarlo, senza riuscirci (Museo dell'Ara Pacis). Quando l'altare sparì alla vista non si sa: nel modello resta in piedi fino all'852.
+
+[scheda.arapacis.data3-392] Nel modello è chiusa al culto come i templi pagani: è una nostra scelta, le fonti lette non ne parlano. Poi resta abbandonata, ma in piedi.
+
+[scheda.arapacis.data4.quando] dopo
+
+[scheda.arapacis.data4] Per più di mille anni nessuno la ricorda più (Museo dell'Ara Pacis).
+
+[scheda.arapacis.data5-1568] Si trovano i primi pezzi dei rilievi, oggi a Villa Medici, nei Musei Vaticani, agli Uffizi e al Louvre; altri nel 1859 e negli scavi del 1903 sotto palazzo Fiano (Platner e Ashby).
+
+[scheda.arapacis.data6.quando] 1937-1938
+
+[scheda.arapacis.data6] Lo scavo completo recupera ciò che resta; l'altare viene ricomposto sul Lungotevere, in un posto nuovo e girato rispetto a prima. Oggi sta nel museo dell'Ara Pacis.
+
+[scheda.arapacis.certezza-B] Il posto è noto, sotto palazzo Fiano, e le misure del recinto vengono da Platner e Ashby. Gradino, altare e lesene sono uno schema, senza i rilievi. Quando sparì sotto il suolo non si sa: nel modello resta in vista fino all'852.
 
 
 ### Obelisco degli Horti Sallustiani

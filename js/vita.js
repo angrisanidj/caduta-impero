@@ -1063,7 +1063,11 @@ RM.moduli.push(function(anno){
   LUOGHI.forEach(function(L){ var on=anno>=L.da && anno<L.a; if(on && L.mon){ var q=RM.statoMonumento(L.mon,anno); on=q.s0==='uso' && !(q.s1!=='uso' && q.t>.5); } L.vis=on?1:0; if(L.porto) banchiVisibili(on && !!L.ok); });
   if(Math.abs(anno-annoVie)>=2) vieDaRifare=true;
   zoneDaRifare=true;
-  var bassaF=1-.42*RM.sfuma(470,720,anno); FONTI.forEach(function(f){ if(f.id){ var q=RM.statoMonumento(f.id,anno), s=f.stato||'uso'; f.vivo=(q.s0===s?1-q.t:0)+(q.s1===s?q.t:0); } else if(f.b) f.y=f.b.y+f.b.alt*(f.b.nasce?1:bassaF)+.15; });      // il fumo esce dal tetto, che dal V secolo si abbassa con le case
+  var bassaF=1-.42*RM.sfuma(470,720,anno); FONTI.forEach(function(f){ if(f.id){ var q=RM.statoMonumento(f.id,anno), s=f.stato||'uso'; f.vivo=(q.s0===s?1-q.t:0)+(q.s1===s?q.t:0); } else if(f.b) faiTetto(f,anno); });      // il fumo esce dal tetto, che dal V secolo si abbassa con le case
+  function faiTetto(f,anno){ var b=f.b, cm=b.medP&&b.medP.case&&b.medP.case[0];      // 27 novembre 2026: sulla casa altomedievale il fumo esce dal suo tetto (alta da 5 a 10 m), non 10-17 m più in alto dove stava il tetto della casa romana
+    if(f.x0==null){ f.x0=f.x; f.z0=f.z; }
+    if(cm && anno>=b.medDa+1.5){ f.x=cm.x; f.z=cm.z; f.y=cm.y+cm.h+.15; }      // la prima casa del lotto: la sua scala in altezza (o.h + 0,15) è quella di scriviMed in js/citta.js
+    else { f.x=f.x0; f.z=f.z0; f.y=b.y+b.alt*(b.nasce?1:bassaF)+.15; } }
   mostraForni(); vicoli();
 });
 RM.frame.push(function(dt){
