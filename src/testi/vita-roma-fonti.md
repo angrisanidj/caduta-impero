@@ -779,3 +779,21 @@ Non letti, quindi non usati: Richmond, *The City Wall of Imperial Rome* (1930); 
 | Uomini che scaricano | No, per l'Emporio | — | Nessuno: barche ferme e merce a terra senza azione |
 | Aperture nel muro di riva dopo il 271 | No | — | Nessuna; dal 271 le barche stanno sotto il muro e la merce a terra resta solo dove c'è posto fra muro e acqua |
 | Fine dell'uso | «tardo-imperiale» | FAI | 430 (scelta del modello, già nella scheda) |
+
+## Segni di vita e il loro rovescio: fumo, fontane, lumi (27 novembre 2026)
+
+L'utente: «per far sembrare più viva la città quando era abitata all'epoca romana, fai apparire del fumo da qualche parte»; «la mancanza di questi aspetti dopo il crollo deve rendere la città ancora più magnificamente vuota». Nessuna fonte nuova letta oggi, salvo i **vici** dei cataloghi (in `src/testi/regioni-fonti.md`, «Densità dei quartieri»). I numeri per regione di **pistrina** e **lacus** sono quelli della tabella «I cataloghi delle regioni» qui sopra.
+
+### Per chi disegna
+
+| Segno | Che cosa dice una fonte letta | Che cosa è schema | Nel modello (`js/vita.js`) | Il rovescio |
+|---|---|---|---|---|
+| Fumo delle case | Le cucine: la plebe attirata «dall'odore delle cucine» (Ammiano XIV 6, 25-26; XXVIII 4, 34) | Quante case fumano (circa una su diciassette, di più nelle insulae alte e nella Suburra), dove, il vento | Colonne sottili grigio chiare che salgono e si piegano tutte dalla stessa parte | Una casa lasciata non fuma |
+| Forni del pane | I *pistrina* di ogni regione, da 15 a 25 (*Notitia*) | Una colonna ogni quattro pistrina, su un caseggiato della regione scelto dal posto | Colonne più dense | Il forno si spegne con la sua casa |
+| Terme | Le terme si fermano quando i Goti tagliano gli acquedotti (Procopio V 19) | Che fumassero, e quanto | Pennacchi larghi da Caracalla, Diocleziano, Traiano e, più piccoli, Tito, Costantino, Nerone, Agrippa | Spenti dal 537 |
+| Calcare | *Codice Teodosiano* XIV 6, 1 (359); vite del *Liber Pontificalis* | Il posto, accanto ai monumenti usati come cava | Come prima, con un pennacchio più leggibile | Accese solo negli anni di cava |
+| Fontane dei quartieri | I *lacus* di ogni regione, da 20 a 180 (*Notitia*); 1.352 nel breviario | Una vasca ogni sei lacus, all'angolo di un isolato; forma e misura | Vasche di pietra con l'acqua | Asciutte dal 537; dal 776, con gli acquedotti di nuovo in uso nel modello, l'acqua torna solo accanto alle case abitate |
+| Lumi della notte | — | Tutto (c'erano già) | Finestre accese e aloni sulle case abitate | Spenti nelle case lasciate: nell'800 restano i nuclei del Campo Marzio, del Trastevere, del Velabro e del Borgo |
+| Gente, carri, ronde, barche | Vedi le sezioni sopra | Vedi le sezioni sopra | C'erano già | Seguono la curva della popolazione e le case abitate |
+
+Panni stesi, tende e banchi lungo le vie: nessuna fonte letta li dà per Roma, quindi non ci sono.

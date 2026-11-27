@@ -97,6 +97,20 @@ var REGIONI_DOMUS=[[.97,[[50,110],[90,170]]],[.93,[[64.7,50.6],[94.5,88],[120,60
   [.99,[[3,-8],[-29,0],[-10,-20]]],[1.33,[[-94,-31],[-50,9],[-58,-21],[-101,-74],[-70,-68],[-69,-49]]],[.86,[[13,47]]],[.93,[[0,71],[-29,37]]],[1.2,[[59,150],[30,120]]],
   [1.38,[[-46,89],[-90,133],[-83,184]]],[.9,[[-61,30],[-120,60],[-100,20]]]];      // regioni I-XIV: [peso, punti del modello: porta Capena; Claudio, Santo Stefano; Colosseo, Ludus, terme di Traiano e di Tito; Venere e Roma, Massenzio, Santa Maria Maggiore, Suburra, foro di Nerva; Sessoriano, Minerva Medica, Santa Croce; Diocleziano, terme di Costantino, obelisco Sallustiano, Castra; Sole, Arcus Novus, archivi; Fori, Campidoglio; teatri, stadio, Pantheon, terme di Agrippa; Palatino; Circo, Foro Boario; Caracalla; Santa Sabina, Emporio, Testaccio; isola e Trastevere]
 function pesoRegione(x,z){ var m=1e9, w=1; REGIONI_DOMUS.forEach(function(r){ r[1].forEach(function(p){ var d=Math.hypot(x-p[0],z-p[1]); if(d<m){ m=d; w=r[0]; } }); }); return w; }
+/* La pianta delle regioni di js/regioni.js (che si calcola dopo, a strumento aperto) ricopiata qui a celle di 40 m il 27 novembre 2026, dentro le mura aureliane: una riga per z,
+   da z -384 a passi di 4 unità, da x -332; a-n = regioni I-XIV, punto = nessuna, il numero dopo la lettera = quante celle uguali di seguito. Va rifatta se js/regioni.js cambia
+   (script nello scratchpad del 27 novembre, V/griglia.mjs: RM.regioni.regioneIn su ogni centro di cella). */
+var PIANTA_REG=(function(){ return '.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.70f4.92|.68f6.92|.66g3f5.92|.62i2g6f5.91|.59i5g7f4.91|.57i7g8f3.23f13.55|.58i7g8f3.20f16.54|.58i7g9f3.18f19.52|.58i7g10f3.15f22.51|.59i7g10f3.9f28.50|.59i7g11f3.7f30.12f.36|.60i6g12f3.4f33.9f4.35|.60i6g13f3.2f36.4f7.35|.61i6g13f51.35|.61i6g14f51.34|.62i5g14f51.34|.62i6g14f50.34|.62i6g15f50.33|.62i6g16f49.33|.62i7g16f49.32|.62i7g17f47.33|.62i7g17f46.34|.61i9g16f43.37|.61i9g17f41.38|.60i10g17f41.38|.60i10g17f34e2f5.38|.59i12g16f32e9.38|.58i13g15f32e10.38|.57i14g14f32e12.37|.54i18g13f32e12.37|.51i21g12f32e14.36|.44i28g11f33e14.36|.42i31g9f34e14.36|.40i33g9f34e15.35|.40i33g8f33d2e15.35|.40i34g7f31d4e16.34|.40i34g7f28d8e15.34|.40i34g7f25d11e16.33|.41i34g6f24d12e16.33|.41i34g6f24d13e16.32|.42i33g6hf14df7d14e16.32|.42i33g5h3f12df7d16e15.32|.43i33g3h5f9d2f8d16e16.31|.43i32hgh8f7d3f7d17e17.30|.44i31h11f5d4f6d18e17.30|.45i29h15d7f5d17e19.29|.46i28h16d7f3d18e20.28|.47i27h16d7hf2d11c5e23.27|.48i26h16d8hd9c8e24.26|.49i25h16d8cd7c11e23.26|.50i23h18d7c19e24.25|.51i22h18d7c19e25.24|.52i21h15d9c20e26.23|.53i20h13d11c20e26.23|.54i19h11d13c20e27.22|.54i19h10d13c21e27.22|.55i19h11d11c21e28.21|.45n7.5i17h12d10c22e27.21|.44n9.6i15h12d10c22e27.21|.42n13.7i14h11d8c23e26.22|.41n15.8i12k2h3j3h2d9c24e26.21|.39n20.3n3.2i8k4j7d9c24e27.20|.38n24.2n3.2i4k6j9d6c25e29.18|.37n27.2n2.2i2k7j13d4c24e30.16|.36n31.4k8j13d4c3b4c17e31.15|.35n33.4k7j13d4cb9c14e32.14|.34n35.3k7j14d2b14c11e31.15|.34n36.2k8j13db18c9e30.15|.34n36.2k9j12b20c8e29.16|.35n34.3k9j12b23c5e22.e.21|.36n33.3k10j11b26c3e19.25|.37n31.4k14j7b29e17.27|.38n29.4mk15j7b31e12.29|.39n28.3m4k13j7b35e5.32|.40n26.3m6k12j8b36e.34|.41n24.4m7k12j7b34.37|.42n22.4m9k13j6b30.40|.46n18.3m11k13j5b29.41|.52n11.3m13k14j3a4b24.42|.58n4.4m14k14ja8b19.44|.59n2.4m16k14a9b17.45|.58n.5m18k13a10b15.46|.57n.4m21k8l5a18.52|.62m21k7l7a14.55|.61m22k6l9a12.56|.60m23lk4l11a11.56|.59m24lk3l13a10.56|.58m25l2kl15a10.55|.57m25l20a9.55|.56m26l21a9.54|.55m27l22a8.54|.55m28l22a8.53|.54m29l23a8.52|.54m29l24a8.51|.53m30l25a8.50|.53m31l25a9.48|.53m31l26a9.47|.53m31l4.2l21a8.47|.53m31l3.3l22a7.47|.53m32l.5l21a7.47|.53m20.10m.8l21a5.48|.54m18.21l21a4.48|.54m16.24l20a4.48|.54m15.26l20a4.47|.54m13.29l19a5.46|.55m11.31l18a5.46|.55m10.32l19a4.46|.55m9.34l.4al12a3.47|.56m7.42l11a.49|.58m3.105|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166|.166'.split('|').map(function(r){ var out=[], m, re=/([a-n.])(\d*)/g; while((m=re.exec(r))){ if(!m[0]) break; for(var n=+(m[2]||1);n>0;n--) out.push(m[1]==='.'?-1:m[1].charCodeAt(0)-97); } return out; }); })();
+function regioneDi(x,z){ var j=Math.floor((z+384)/4), i=Math.floor((x+332)/4), r=PIANTA_REG[j]; return r && r[i]!=null ? r[i] : -1; }      // 0 = I … 13 = XIV, -1 fuori
+/* Quanto è fitta ogni regione (27 novembre 2026; l'utente: «credo che la Suburra fosse molto più intensamente popolata del quartiere ricco tipo il palatino»). Tabella e riserve
+   in src/testi/regioni-fonti.md, «Densità dei quartieri». Le insulae della Notitia divise per la superficie della regione nel modello (js/regioni.js) danno da 15 per ettaro
+   (VI, Alta Semita) a 99 (X, Palatino): ma i numeri delle regioni stanno quasi tutti fra 2.500 e 4.400 mentre le superfici cambiano di otto volte, e il Palatino, tutto palazzo
+   imperiale, risulterebbe la regione più fitta di Roma. Quindi non contano palazzi (forse unità d'affitto, Storey 2001; Platner e Ashby, «Insulae»), e il modello ne prende solo
+   i rapporti dove reggono: il peso di ogni regione è la radice delle sue insulae per ettaro divise per la mediana (45), fra 0,6 e 1,3. Fuori dal conto la VIII (Foro) e la X (Palatino),
+   dove case comuni e palazzi pubblici non si distinguono: peso 1, e sul Palatino solo domus, poche (il catalogo della X nomina la «domum Augustianam et Tiberianam»).
+   La Suburra (nella IV, peso 1) è la più fitta per una scelta dichiarata: i cataloghi danno le regioni, non i quartieri; le fonti la dicono «regione frequentissima»
+   (scolio a Giovenale XI 51) e «clamosa» (Marziale XII 18, 2), non dicono quanto alta. Il peso cambia quante case passano, quanto sono alte e quanto stretti i vicoli; mai il posto. */
+var FITTEZZA=[1.3,1.1,.97,1,.73,.6,1.07,1,.6,1,1.17,.81,.69,1.04];      // regioni I-XIV: I 84 insulae per ettaro, II 55, III 43, IV 46, V 24, VI 15, VII 52, VIII (89, fuori dal conto), IX 16, X (99, fuori dal conto), XI 63, XII 30, XIII 22, XIV 49 (dentro le mura)
 QUARTIERI.forEach(function(Q,k){
   var ca=Math.cos(Q[2]), sa=Math.sin(Q[2]), R=30, qx=Math.round(Q[0]*10), qz=Math.round(Q[1]*10);
   for(var i=-R;i<=R;i++) for(var j=-R;j<=R;j++){
@@ -105,19 +119,22 @@ QUARTIERI.forEach(function(Q,k){
     var seme=semePosto(qx,qz,i,j), rnd=RM.casuale(seme);      // la fila di numeri a caso di questo punto della griglia, e di nessun altro
     var dentro=RM.dentroMura(x,z), bordo=RM.distLinea(x,z,RM.MURA,true), centro=Math.hypot(x-5,z-5);
     var borgo=dentro?0:Math.exp(-((x+228)*(x+228)/(27*27)+(z+104)*(z+104)/(15*15)));               // il Borgo, fra San Pietro e il fiume: case che nasceranno dal V secolo, dentro quella che sarà la città leonina (a nord non oltre il Passetto)
-    var dens=dentro ? .95-.28*RM.sfuma(150,290,centro) : Math.max(.36*Math.exp(-bordo/24),.8*borgo);
+    var reg=dentro?regioneDi(x,z):-1, F=reg<0?1:FITTEZZA[reg], sub=dentro?Math.exp(-(Math.pow((x-56)/30,2)+Math.pow((z+34)/15,2))):0;      // sub: quanto si è dentro la Suburra
+    var dens=dentro ? Math.min(1,(.95-.28*RM.sfuma(150,290,centro))*(.55+.45*F)+.3*sub)*(reg===9?.55:1) : Math.max(.36*Math.exp(-bordo/24),.8*borgo);      // la regione e la Suburra: più case dove i cataloghi danno più insulae per ettaro; sul Palatino una casa su due di prima
     var lib; if(bordo<3.5 || rnd()>dens || !(lib=libero(x,z,2.4)) || (lib>1&&borgo>.3)) continue;
     var e=1.9, y0=RM.h(x,z), y1=RM.h(x+e,z+e), y2=RM.h(x-e,z+e), y3=RM.h(x+e,z-e), y4=RM.h(x-e,z-e), yMin=Math.min(y0,y1,y2,y3,y4);
     if(Math.max(y0,y1,y2,y3,y4)-yMin>2.2) continue;        // rupi e scarpate restano nude
-    var fitto=1-RM.sfuma(30,240,centro), alt=dentro ? Math.min(1.78,.85+1.25*fitto*(.5+.5*rnd())+.3*rnd()) : .55+.5*rnd(), s=rnd();
-    var sub=dentro?Math.exp(-(Math.pow((x-56)/30,2)+Math.pow((z+34)/15,2))):0, caso=RM.grana(Math.round(x*7.3),Math.round(z*5.1)), caso2=RM.grana(Math.round(z*3.7)+17,Math.round(x*9.1)-5);      // sub: quanto si è dentro la Suburra; caso e caso2 vengono dal posto con RM.grana (scelta del 23 novembre, tenuta così il tipo delle case non cambia)
+    var fitto=1-RM.sfuma(30,240,centro), fH=Math.max(0,Math.min(1,fitto+.7*(F-1))), alt=dentro ? Math.min(sub>.45?1.78:1.7,.85+1.25*fH*(.5+.5*rnd())+.3*rnd()) : .55+.5*rnd(), s=rnd();      // l'altezza: dalla vicinanza al centro (come prima) più o meno il peso della regione; i 60 piedi pieni solo nella Suburra
+    var caso=RM.grana(Math.round(x*7.3),Math.round(z*5.1)), caso2=RM.grana(Math.round(z*3.7)+17,Math.round(x*9.1)-5);      // caso e caso2 vengono dal posto con RM.grana (scelta del 23 novembre, tenuta così il tipo delle case non cambia)
     var tp=!dentro?(s<.6?2:0):(s<.5-.15*fitto?2:s<.92-.14*fitto?0:1);
-    if(dentro && caso2<QUOTA_DOMUS*pesoRegione(x,z)*(.5+1.5*RM.sfuma(4.8,6.4,RM.hGrezza(x,z)))*(1-Math.min(1,sub*1.6))){ tp=3; alt=.55+.25*caso; }      // domus: più sui pianori dei colli, poche in valle, mai nella Suburra
-    else if(sub>.45){ alt=Math.min(1.78,Math.max(alt,1.5+.28*caso)); if(tp===2) tp=caso<.6?1:0; }                          // Suburra: caseggiati alti (fino ai 60 piedi), molti a corte
+    if(dentro && (reg===9 || caso2<QUOTA_DOMUS*pesoRegione(x,z)*(.5+1.5*RM.sfuma(4.8,6.4,RM.hGrezza(x,z)))*(1-Math.min(1,sub*1.6)))){ tp=3; alt=.55+.25*caso; }      // domus: più sui pianori dei colli, poche in valle, mai nella Suburra; sul Palatino solo domus
+    else if(sub>.45){ alt=Math.min(1.78,Math.max(alt,1.6+.18*caso)); if(tp===2) tp=caso<.6?1:0; }                          // Suburra: caseggiati alti (fino ai 60 piedi), molti a corte
     else if(alt<1.05 && tp!==1) tp=tp===0?4:5;                                                                           // case basse
-    var nuovo={x:x,z:z,y:yMin,ry:Q[2]+(rnd()-.5)*.05,w:3.85+rnd()*.9,d:3.85+rnd()*.9,alt:alt,
+    var lar=sub>.45?1.13:.95+.05*F;      // vicoli più stretti dove le case sono più fitte: nella Suburra fra un isolato e l'altro restano circa 7 metri invece di 13 (resa)
+    var g3=RM.grana(Math.round(x*2.3)+41,Math.round(z*4.7)-23), g4=RM.grana(Math.round(z*6.1)-7,Math.round(x*1.9)+61), giro=tp===3?0:Math.floor(g3*3.999)*Math.PI/2, fa=.8+.4*g4;      // contro lo stampino: un quarto di giro e proporzioni dal posto (non da rnd); la domus resta con la fronte verso la griglia
+    var nuovo={x:x,z:z,y:yMin,ry:Q[2]+(rnd()-.5)*.05+giro,w:Math.min(5.3,(3.85+rnd()*.9)*lar*fa),d:Math.min(5.3,(3.85+rnd()*.9)*lar/fa),alt:alt,
       tipo:tp,              // 0 insula a falde, 1 insula a corte, 2 insula a padiglione, 3 domus, 4 casa bassa a falde, 5 casa bassa a padiglione
-      k:tenuta(x,z,rnd)+(dentro?0:-.35), k1:tenutaSparsa(x,z,rnd)+(dentro?0:-.6), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, via:lib>1?lib:0, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0, seme:seme};
+      k:tenuta(x,z,rnd)+(dentro?0:-.35), k1:tenutaSparsa(x,z,rnd)+(dentro?0:-.6), rudere:.16+.3*rnd(), sorte:rnd(), tono:rnd(), sfasa:rnd(), dentro:dentro, via:lib>1?lib:0, a0:-1, q0:0, e0:-1, alb:0, nasce:borgo>.3?450+Math.round(330*rnd()*(1.15-borgo)):0, seme:seme, reg:reg, sub:sub};      // reg e sub servono anche al fumo (js/vita.js)
     if(sullaVia(nuovo)){ nuovo.w=Math.max(3,nuovo.w*.78); nuovo.d=Math.max(3,nuovo.d*.78); if(sullaVia(nuovo)) continue; }      // sulla strada: l'isolato si stringe, e se non basta non c'è
     isolati.push(nuovo);
   }
@@ -268,10 +285,25 @@ Forma.prototype.fine=function(){
   g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.computeVertexNormals(); return g;
 };
 var s=.5, o=.54;
+/* La casa a due falde in due corpi (27 novembre 2026; un amico dell'utente: le ricostruzioni «troppo con lo stampino… dopo un poco uno ci gira, vede che è tutto uguale»):
+   un corpo alto con il colmo lungo x e un'ala più bassa e più stretta con il colmo di traverso. Girata di un quarto di giro a caso dal posto (si veda dove nascono gli isolati),
+   dà quattro sagome diverse con la stessa forma; con le proporzioni e le altezze che cambiano da casa a casa nessun isolato ripete il vicino. Che un isolato fosse fatto di
+   corpi di altezza diversa è uno schema del modello: le fonti lette non danno piante di insulae di Roma. 26 triangoli invece di 14. Le pareti prendono la trama a misura
+   (larghezza e altezza vere: le finestre non si stirano). Vale anche per le case basse (tipo 4), che ne hanno una copia. */
+function scatolaMuri(f,x0,x1,z0,z1,h,lati){ var vT=Math.min(1,h/.78), lx=x1-x0, lz=z1-z0;      // lati: quali pareti, in ordine +z, -z, +x, -x
+  if(lati[0]) f.qu(0,[x0,0,z1],[x1,0,z1],[x1,h,z1],[x0,h,z1],[[0,0],[lx,0],[lx,vT],[0,vT]]);
+  if(lati[1]) f.qu(0,[x1,0,z0],[x0,0,z0],[x0,h,z0],[x1,h,z0],[[0,0],[lx,0],[lx,vT],[0,vT]]);
+  if(lati[2]) f.qu(0,[x1,0,z1],[x1,0,z0],[x1,h,z0],[x1,h,z1],[[0,0],[lz,0],[lz,vT],[0,vT]]);
+  if(lati[3]) f.qu(0,[x0,0,z0],[x0,0,z1],[x0,h,z1],[x0,h,z0],[[0,0],[lz,0],[lz,vT],[0,vT]]); return f; }
 var FORME=[
-  (function(){ var f=new Forma().muri(.78);                                            // a due falde
-    f.t(0,[s,.78,s],[s,.78,-s],[s,1,0]).t(0,[-s,.78,-s],[-s,.78,s],[-s,1,0]);
-    return f.q(1,[-o,.74,o],[o,.74,o],[o,1,0],[-o,1,0]).q(1,[o,.74,-o],[-o,.74,-o],[-o,1,0],[o,1,0]).fine(); })(),
+  (function(){ var f=new Forma(), xa=.12, hB=.56, cB=.73, zb=.42, xm=(xa+s)/2;            // a due falde: corpo alto da -s a xa, ala bassa da xa a s
+    scatolaMuri(f,-s,xa,-s,s,.78,[1,1,1,1]);
+    f.t(0,[xa,.78,s],[xa,.78,-s],[xa,1,0]).t(0,[-s,.78,-s],[-s,.78,s],[-s,1,0]);
+    f.q(1,[-o,.74,o],[xa+.04,.74,o],[xa+.04,1,0],[-o,1,0]).q(1,[xa+.04,.74,-o],[-o,.74,-o],[-o,1,0],[xa+.04,1,0]);
+    scatolaMuri(f,xa,s,-zb,zb,hB,[1,1,1,0]);
+    f.t(0,[xa,hB,zb],[s,hB,zb],[xm,cB,zb]).t(0,[s,hB,-zb],[xa,hB,-zb],[xm,cB,-zb]);
+    f.q(1,[s+.04,hB-.03,zb+.04],[s+.04,hB-.03,-zb-.04],[xm,cB,-zb-.04],[xm,cB,zb+.04]).q(1,[xa,hB-.03,-zb-.04],[xa,hB-.03,zb+.04],[xm,cB,zb+.04],[xm,cB,-zb-.04]);
+    return f.fine(); })(),
   (function(){ var f=new Forma().muri(.9), c=.2, m=.35;                                // a corte
     f.q(0,[-c,.04,-c],[c,.04,-c],[c,.8,-c],[-c,.8,-c],1).q(0,[c,.04,c],[-c,.04,c],[-c,.8,c],[c,.8,c],1).q(0,[c,.04,-c],[c,.04,c],[c,.8,c],[c,.8,-c],1).q(0,[-c,.04,c],[-c,.04,-c],[-c,.8,-c],[-c,.8,c],1);
     [[1,1],[-1,1],[-1,-1],[1,-1]].forEach(function(e,i,E){ var n=E[(i+1)%4];           // falda esterna e interna, lato per lato
@@ -377,9 +409,9 @@ function vesteMuri(sh){ hashIstanza(sh);
 function vesteTetti(mat){ if(!RM.VESTE) return mat; mat.onBeforeCompile=function(sh){ hashIstanza(sh);
   sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',
     'if(uVeste>0.5){ vec3 c=diffuseColor.rgb; float l=dot(c,vec3(0.3,0.59,0.11)); c=mix(vec3(l),c,0.78); float h=vHi;',
-    '  c*=h<0.38?vec3(1.0,0.9,0.86):h<0.62?vec3(0.78,0.68,0.62):h<0.84?vec3(1.04,0.97,0.93):vec3(0.86,0.83,0.8);',
-    '  if(h>0.84) c=mix(c,vec3(dot(c,vec3(0.33))),0.38);',
-    '  c*=(0.86+0.24*fract(h*13.7))*(1.0-0.16*smoothstep(0.35,0.0,vUvR.y));',
+    '  c*=h<0.3?vec3(1.0,0.9,0.86):h<0.5?vec3(0.78,0.68,0.62):h<0.66?vec3(1.04,0.97,0.93):h<0.8?vec3(0.66,0.56,0.5):vec3(0.86,0.83,0.8);',      // 27 novembre 2026, contro lo stampino: una tinta in più, coppi vecchi bruno scuri, e più differenza di luce da un tetto all'altro
+    '  if(h>0.8) c=mix(c,vec3(dot(c,vec3(0.33))),0.38);',
+    '  c*=(0.8+0.34*fract(h*13.7))*(1.0-0.16*smoothstep(0.35,0.0,vUvR.y));',
     '  diffuseColor.rgb=c; }'].join(String.fromCharCode(10))); }; return mat; }
 vesteTetti(matTetti);
 appoggio(matMuri,true);
@@ -527,7 +559,7 @@ var ruderi=pacco(geoRudere,matRuderi,N,true);
 var tettiRotti=pacco(geoTettoRotto,RM.tingi(new THREE.MeshStandardMaterial({map:texCoppi,roughness:1,side:THREE.DoubleSide}),'C'),N);
 var matMacerie=verdeRovina(new THREE.MeshStandardMaterial({roughness:1,side:THREE.DoubleSide,flatShading:true}),MACERIE_F,'macerie'); RM.tingi(matMacerie,'C'); chiaveCasa(matMacerie);
 var macerie=pacco(geoMacerie,matMacerie,N,true);
-var matMacchia=RM.matPietra(), macchiaD=pacco(macchiaGeo(false,detIncolto),matMacchia,N), macchiaF=pacco(macchiaGeo(true,detIncolto),matMacchia,N); macchiaD.maglia.castShadow=macchiaF.maglia.castShadow=false;
+var matMacchia=RM.matPietra(), macchiaD=pacco(macchiaGeo(false,Math.min(1,detIncolto)),matMacchia,N), macchiaF=pacco(macchiaGeo(true,detIncolto),matMacchia,N); macchiaD.maglia.castShadow=macchiaF.maglia.castShadow=false;      // 27 novembre 2026: la macchia dentro i muri al dettaglio 1 (circa 60 triangoli invece di 170): finché un commento a metà riga la spegneva non costava nulla, e dentro i muri si vede poco
 var vigne=pacco(geoVigna,RM.matPietra(),N); vigne.maglia.castShadow=false;
 /* Strade nei quartieri vuoti (26 novembre 2026): le vie strette (larghe 9 m nel modello) diventano sentieri, erba ai lati e terra battuta nel mezzo; sulle vie larghe l'erba
    cresce solo ai margini, così il lastricato e le messe in scena restano libere. Un pezzo di nastro ogni 24 m, acceso quando le case attorno (entro 70 m) sono lasciate da
@@ -593,7 +625,7 @@ if(RM.qualita) RM.qualita.quando(function(){ aggiornaVie(); });
   RM.moduli.push(function(anno){ m.visible=anno>=847; });
 })();
 if(RM.qualita) RM.qualita.quando(function(g){ var d=RM.QUALITA.incolto[g]||0; uDegC.value=RM.QUALITA.degradoCase[g]||0; if(d===detIncolto) return; detIncolto=d;      // al cambio di gradino cambia solo la forma delle macchie
-  [[macchiaD,false],[macchiaF,true]].forEach(function(q){ var v=q[0].maglia.geometry; q[0].maglia.geometry=macchiaGeo(q[1],d); v.dispose(); }); });
+  [[macchiaD,false],[macchiaF,true]].forEach(function(q){ var v=q[0].maglia.geometry; q[0].maglia.geometry=macchiaGeo(q[1],q[1]?d:Math.min(1,d)); v.dispose(); }); });
 var geoPiano=new THREE.PlaneGeometry(1,1); geoPiano.rotateX(-Math.PI/2);
 var incolti=pacco(geoPiano,new THREE.MeshStandardMaterial({map:texIncolto,roughness:1,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}),N); incolti.maglia.castShadow=false;
 /* Veste del PC: l'incolto non è più un quadrato col bordo netto (da lontano erano «macchie a spicchi»): sfuma nel suolo con un orlo irregolare, e prende il verde dell'erba nuova */
@@ -768,7 +800,7 @@ function aggiorna(anno){
     macerie.setDegAt(i,v*RM.sfuma(15,170,eta),0,1,b.sfasa);
     /* rovi, lentisco, sambuco nano, valeriana: dentro i muri dopo il tetto, fuori contro i muri presto */
     d.rotation.set(0,b.ry,0); d.position.y=b.y-.02;
-    m=v*RM.sfuma(b.t1,b.t1+45,eta)*(1-.85*q); d.scale.set(m>.02?b.w:0,(b.tipo===3?1.6:1)*(.3+.7*m),m>.02?b.d:0);      // nella domus il giardino inselvatichito cresce più alto d.updateMatrix(); macchiaD.setMatrixAt(i,d.matrix); macchiaD.setColorAt(i,c.copy(bianco).multiplyScalar(.8+.3*b.sfasa));
+    m=v*RM.sfuma(b.t1,b.t1+45,eta)*(1-.85*q); d.scale.set(m>.02?b.w:0,(b.tipo===3?1.6:1)*(.3+.7*m),m>.02?b.d:0); d.updateMatrix(); macchiaD.setMatrixAt(i,d.matrix); macchiaD.setColorAt(i,c.copy(bianco).multiplyScalar(.8+.3*b.sfasa));      // nella domus il giardino inselvatichito cresce più alto (27 novembre 2026: fino a oggi questo commento stava a metà riga e spegneva il resto: le macchie dentro i muri non si aggiornavano mai)
     m=(b.anello?1:0)*v*RM.sfuma(5,40,eta)*(1-.6*q); d.scale.set(m>.02?b.w:0,.3+.7*m,m>.02?b.d:0); d.updateMatrix(); macchiaF.setMatrixAt(i,d.matrix); macchiaF.setColorAt(i,c.copy(bianco).multiplyScalar(.75+.35*b.tono));
     m=b.vigna?q:0; d.position.y=b.y+.02; d.scale.set(m>.02?b.w*.95:0,m,m>.02?b.d*.95:0); d.updateMatrix(); vigne.setMatrixAt(i,d.matrix); vigne.setColorAt(i,c.copy(bianco).multiplyScalar(.85+.25*b.tono));
     /* suolo: terra, calcinacci ed erba fra le rovine, poi (per alcuni) filari */

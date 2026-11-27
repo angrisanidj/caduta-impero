@@ -125,3 +125,35 @@ Da dichiarare in pagina (due frasi):
 - **Gianicolo** (`Janiculum.html`) e **Sacra Via**: non letti.
 - Se il «Minerva medica» del catalogo della V sia proprio l'edificio che il modello chiama così, e se l'«arcum divi Constantini» della XI sia l'arco del modello: non risolto.
 - Di nessun quartiere tranne la Suburra le fonti lette dicono com'era la vita di tutti i giorni.
+
+---
+
+## 6. Densità dei quartieri (27 novembre 2026)
+
+L'utente: «verificare la densità abitativa dei vari quartieri… credo che la Suburra fosse molto più intensamente popolata del quartiere ricco tipo il Palatino».
+
+**Fonti.** Insulae, domus, horrea, balnea, lacus e pistrina della *Notitia* dalla tabella di `src/testi/vita-roma-fonti.md` («I cataloghi delle regioni»). I **vici** riletti oggi sulla stessa pagina di LacusCurtius (`…/_Texts/Regionaries/text*.html`, edizione Jordan, le due redazioni affiancate; scaricata con `curl -g`): «vici X» nella I, VII nella II, XII nella III, VIII nella IV, XV nella V, XVII nella VI, XV nella VII, XXXIV nella VIII, XXXV nella IX, XX nella X, XXI o XIX nella XI, XVII nella XII, XVIII o XVII nella XIII, LXXVIII nella XIV (dove le due redazioni divergono do i due numeri). Ogni vico ha la sua edicola («aediculae» uguali ai vici). Superficie: le celle di 20 m che `js/regioni.js` dà a ogni regione, dentro le mura aureliane per la XIV (calcolata nella pagina con `RM.regioni.regioneIn`). Modello: le case abitate nell'anno 300, dentro le mura (`RM.isolati`, campo `a0`), per tipo; «alte» le insulae da 13 m in su, «medie» le altre insulae, «basse» le case a uno o due piani (tipi 4 e 5). Una casa del modello è un lotto di circa 43 x 43 m su una griglia di 56 m: un isolato, non un edificio; il massimo possibile è circa 3 lotti per ettaro.
+
+| Reg. | insulae | domus | vici | horrea | balnea | lacus | pistrina | ettari (modello) | insulae per ettaro | Modello prima: case (alte / medie / domus / basse), altezza media, case per ettaro | Modello dopo |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| I Porta Capena | 3.250 | 120 | 10 | 16 | 86 | 81 | 20 | 38 | 84 | 79 (46/24/2/7), 13,4 m, 2,05 | 86 (67/17/2/0), 14,9 m, 2,23 |
+| II Celio | 3.600 | 127 | 7 | 27 | 85 | 65 | 15 | 66 | 55 | 110 (84/23/3/0), 14,6 m, 1,67 | 117 (98/16/3/0), 15,0 m, 1,78 |
+| III Iside e Serapide | 2.757 | 60 | 12 | 18 | 80 | 65 | 16 | 64 | 43 | 92 (86/4/2/0), 15,8 m, 1,43 | 91 (83/6/2/0), 15,4 m, 1,41 |
+| IV Tempio della Pace | 2.757 | 88 | 8 | 18 | 65 | 71 | 15 | 60 | 46 | 122 (115/4/3/0), 16,2 m, 2,02 | 122 (115/4/3/0), 15,9 m, 2,02 |
+| V Esquilie | 3.850 | 180 | 15 | 22 | 75 | 74 | 15 | 159 | 24 | 319 (68/169/25/57), 11,4 m, 2,00 | 292 (7/141/23/121), 10,2 m, 1,83 |
+| VI Alta Semita | 3.403 | 146 | 17 | 18 | 75 | 73 | 16 | 224 | 15 | 370 (210/92/29/39), 13,5 m, 1,65 | 301 (117/98/25/61), 12,0 m, 1,35 |
+| VII Via Lata | 3.805 | 120 | 15 | 25 | 75 | 76 | 15 | 73 | 52 | 162 (94/58/2/8), 13,8 m, 2,21 | 166 (115/41/2/8), 14,0 m, 2,26 |
+| VIII Foro Romano | 3.480 | 130 | 34 | 18 | 86 | 120 | 20 | 39 | 89 | 36 (35/0/1/0), 17,3 m, 0,92 | 35 (33/0/2/0), 16,4 m, 0,90 |
+| IX Circo Flaminio | 2.777 | 140 | 35 | 25 | 63 | 120 | 20 | 170 | 16 | 270 (178/74/11/7), 14,1 m, 1,59 | 231 (78/89/11/53), 12,0 m, 1,36 |
+| X Palatino | 2.742 | 89 | 20 | 48 | 44 | 90 | 20 | 28 | 99 | 16 (16/0/0/0), 17,2 m, 0,58 | 12 (1/0/11/0), 7,7 m, 0,43 |
+| XI Circo Massimo | 2.500 | 88 | 19-21 | 16 | 15 | 20 | 16 | 40 | 63 | 51 (49/0/2/0), 16,4 m, 1,28 | 54 (52/0/2/0), 16,4 m, 1,36 |
+| XII Piscina Pubblica | 2.487 | 113 | 17 | 27 | 63 | 80 | 25 | 82 | 30 | 115 (40/53/4/18), 12,3 m, 1,41 | 108 (28/42/4/34), 11,3 m, 1,32 |
+| XIII Aventino | 2.487 | 130 | 17-18 | 35 | 44 | 89 | 20 | 114 | 22 | 216 (121/65/11/19), 13,3 m, 1,89 | 175 (48/82/6/39), 11,8 m, 1,53 |
+| XIV Trastevere | 4.405 | 150 | 78 | 22 | 86 | 180 | 24 | 90 (dentro le mura) | 49 | 167 (122/36/6/3), 14,1 m, 1,86 | 167 (126/34/6/1), 14,2 m, 1,86 |
+| Suburra (dentro la IV) | — | — | — | — | — | — | — | circa 14 | — | 28 (28/0/0/0), 17,5 m, 2,0 | 28 (28/0/0/0), 17,4 m, 2,0, e isolati più larghi (vicoli di circa 7 m invece di 13) |
+
+**Quanto valgono questi numeri.** Poco, come misura di case. (1) Le insulae delle regioni stanno quasi tutte fra 2.487 e 4.405, mentre le superfici cambiano di otto volte: divise per gli ettari danno il Palatino (99 per ettaro), il Foro (89) e Porta Capena (84) come le regioni più fitte di Roma, e la Suburra, nella IV, nella media (46). Il Palatino nel IV secolo è il palazzo imperiale: il catalogo della X stessa nomina la «domum Augustianam et Tiberianam». Quindi «insula» lì non vuol dire un caseggiato: per Storey (2001, letto solo il riassunto) è «a separate apartment-like unit», un'unità d'abitazione; Platner e Ashby («Insulae») danno la lettura corrente, «a house containing a number of apartments», e segnalano studi contrari che non ho letto. (2) Le somme delle regioni non danno i totali del breviario (44.300 contro 46.602). (3) Le superfici sono quelle del modello, cioè confini ricostruiti (punto 2). (4) I vici seguono un'altra logica ancora (78 nel Trastevere, 7 sul Celio). Nessuno di questi numeri dice da solo che la Suburra fosse più fitta del Palatino; lo dicono le parole delle fonti sulla Suburra («regione frequentissima», scolio a Giovenale XI 51; «clamosa», Marziale XII 18, 2) e il fatto che il Palatino fosse palazzo.
+
+**Che cosa ne prende il modello** (`js/citta.js`, `FITTEZZA` e `PIANTA_REG`, 27 novembre 2026). Solo i rapporti fra le regioni dove i numeri non contraddicono ciò che si sa: il peso di ogni regione è la radice delle sue insulae per ettaro divise per la mediana (45), fra 0,6 e 1,3; la VIII e la X restano fuori dal conto (peso 1). Il peso cambia quante case passano (fino a un quinto in meno nelle regioni leggere), quanto sono alte (circa ±2 m sulla media) e quanto larghi sono i vicoli, mai il posto delle case. Risultato: più alte e fitte I, II, VII, XIV; più basse, con molte case a uno o due piani, V, VI, IX, XII, XIII, che nei cataloghi hanno poche insulae per molta terra (sono anche le regioni degli horti e del Campo Marzio). Sul Palatino solo domus, una ogni due lotti di prima. **Scelte dichiarate**: la Suburra è la più fitta e la più alta (60 piedi pieni, vicoli stretti) perché le fonti la dicono affollata, non per un numero; il Foro resta con le poche case che ci lasciano i monumenti. Le domus restano distribuite col rapporto domus/insulae di ogni regione, come dal 26 novembre.
+
+Case cambiate rispetto a prima (anno 300, confronto per posto, comprese le proporzioni e il quarto di giro contro lo «stampino» dello stesso giorno): 2.649 → 2.461 case; 213 tolte e 25 nuove; delle 2.436 rimaste nello stesso posto, 243 hanno cambiato tipo, 1.615 l'altezza, 575 solo la misura, 3 identiche; l'anno d'abbandono si sposta in 1.152 case (il rango è relativo: con meno case cambia di un anno o due). Prova di stabilità `RM_provaCase(450)`: zero case lontane cambiate.

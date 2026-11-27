@@ -719,45 +719,71 @@ function muoviRonde(dt,nt){
     } }
 }
 
-/* ---------- fumo ---------- */
-var FONTI=[], PER_FONTE=4, PER_TERME=16;
-for(i=0;i<130;i++){ var bf=isolati[(rnd()*N)|0]; FONTI.push({x:bf.x,y:bf.y+bf.alt,z:bf.z,b:bf,n:PER_FONTE,alto:7,forza:1}); }
-[['caracalla',59,150],['diocleziano',108,-118],['traiano',92,-2]].forEach(function(t){ FONTI.push({x:t[1]+2,y:RM.h(t[1],t[2])+3.5,z:t[2]+3,id:t[0],n:PER_TERME,alto:16,forza:1.5}); });
+/* ---------- fumo ----------
+   Rifatto il 27 novembre 2026 (l'utente: «per far sembrare più viva la città quando era abitata… fai apparire del fumo da qualche parte»: quello di prima, 130 nuvolette chiare
+   di quattro punti grandi come un isolato, sulla città chiara non si vedeva). Ora colonne sottili, grigio chiare, che salgono diritte e poi si piegano tutte dalla stessa parte,
+   come col vento: da vicino un filo, dalla vista d'insieme una riga di pochi punti. Chi fuma:
+   - le case abitate, circa una su diciassette, di più nelle insulae alte e nella Suburra (fuochi per cucinare: «l'odore delle cucine» che attira la plebe, Ammiano XIV 6, 25-26
+     e XXVIII 4, 34, in src/testi/vita-roma-fonti.md); quante e quali è uno schema, detto nel piede della pagina;
+   - i forni del pane: i cataloghi del IV secolo danno i pistrina di ogni regione (da 15 a 25: src/testi/regioni-fonti.md, «Densità dei quartieri»); qui una colonna più densa
+     ogni quattro pistrina, su un caseggiato abitato della regione scelto dal posto; dove stessero davvero non si sa;
+   - le terme finché sono in uso (il modello le chiude nel 537, quando i Goti tagliano gli acquedotti, Procopio V 19): pennacchi più larghi; che fumassero è uno schema;
+   - le calcare accanto ai monumenti usati come cava (Codice Teodosiano XIV 6, 1, e le vite del Liber Pontificalis: già prima).
+   Tutto segue gli abitanti: una casa lasciata non fuma più, e con la popolazione che cala nell'800 restano pochi fili attorno ai nuclei vivi. Il vento ha una sola direzione
+   (schema). Con «meno animazioni» le colonne restano ferme; al gradino «bassa» ne resta la metà (RM.QUALITA.fumo); col regolatore al terzo grado spariscono come prima.
+   Perché prima non si vedeva: dal 26 novembre il porto dell'Emporio (più sotto) dichiara un altro NF, il numero delle navi ferme (8), e il ciclo del fumo, che legge NF
+   a ogni fotogramma, muoveva solo otto punti su più di settecento. Ora il conto del fumo si chiama NFU. */
+RM.QUALITA.fumo=[.5,1,1,1,.7];      // la parte delle colonne delle case e dei forni che si accende, per gradino (bassa, media, alta, massima, telefono)
+var FONTI=[], i, rndF=RM.casuale(9127), VENTO=[.92,.38];
+var PISTRINA=[20,15,16,15,15,16,15,20,20,20,16,25,20,24];      // regioni I-XIV, Notitia
 /* calcare: accanto a ogni monumento usato come cava, un forno da calce che fuma finché dura lo smontaggio */
 var forni=[];
 (RM.MONUMENTI||[]).forEach(function(m){
   var st=D.MONUMENTI[m.id]||[]; if(m.x==null || !st.some(function(q){ return q[1]==='cava'; })) return;
-  var x=m.x+(m.raggio||6)*.95+1.6, z=m.z+(m.raggio||6)*.45, f={x:x,y:RM.h(x,z)+.9,z:z,id:m.id,stato:'cava',n:8,alto:11,forza:1.2,vivo:0};
+  var x=m.x+(m.raggio||6)*.95+1.6, z=m.z+(m.raggio||6)*.45, f={x:x,y:RM.h(x,z)+.9,z:z,id:m.id,stato:'cava',n:16,alto:17,larg:2.4,forza:1.5,vivo:0,q:0};
   FONTI.push(f); forni.push(f);
 });
+for(i=0;i<130+130*4+3*16+forni.length*8;i++) rnd();      // i numeri a caso che il fumo di prima prendeva da rnd: consumati lo stesso, così le barche (che vengono dopo) restano dove erano
+isolati.forEach(function(b){ var g=RM.grana(Math.round(b.x*3.7)+101,Math.round(b.z*2.9)-77), p=.06*(b.tipo<3?.5+.5*b.alt:b.tipo===3?.7:.55)*(1+1.4*(b.sub||0));      // case: fuochi di cucina
+  if(g<p) FONTI.push({x:b.x,y:b.y+b.alt,z:b.z,b:b,n:14,alto:8+4*(g/p),larg:1.3+.3*(g/p),forza:1,q:g/p}); });
+PISTRINA.forEach(function(np,r){ var c=isolati.filter(function(b){ return b.reg===r && b.tipo<3; }).map(function(b){ return [RM.grana(Math.round(b.x*5.9)-31,Math.round(b.z*4.3)+53),b]; }).sort(function(a,b){ return a[0]-b[0]; }), quanti=Math.round(np/4);
+  for(var k=0;k<Math.min(c.length,quanti);k++){ var b=c[k][1]; FONTI.push({x:b.x+.8,y:b.y+b.alt,z:b.z-.6,b:b,n:16,alto:13,larg:1.9,forza:1.5,q:k/quanti,forno:1}); } });      // forni del pane
+['caracalla','diocleziano','traiano','tito','termecostantino','termenerone','termeagrippa'].forEach(function(id,k){ var m=(RM.MONUMENTI||[]).filter(function(o){ return o.id===id; })[0]; if(!m||m.x==null) return;
+  var gr=k<3?1:.7; FONTI.push({x:m.x+1.5,y:RM.h(m.x,m.z)+3.5*gr,z:m.z+1.5,id:id,n:Math.round(26*gr),alto:24*gr,larg:3.4*gr,forza:1.3,q:0}); });      // terme: le tre grandi più delle altre
 var geoForno=new RM.Costruttore().cilindro(.6,.55,0,0,0,P.tufo,.48,10).cupola(.48,0,.55,0,P.mattone,.8).scatola(.55,.26,.36,1,0,.25,P.marmo).scatola(.42,.22,.3,1.05,.26,.2,P.marmo).scatola(.5,.2,.3,.85,0,-.5,P.marmo,.6).geometria();
 var magliaForni=new THREE.InstancedMesh(geoForno,RM.matPietra(),Math.max(1,forni.length)), dF=new THREE.Object3D();
 magliaForni.castShadow=true; magliaForni.frustumCulled=false; magliaForni.userData.gruppo='vita'; RM.scene.add(magliaForni);
 function mostraForni(){ for(var k=0;k<Math.max(1,forni.length);k++){ var f=forni[k]; dF.position.set(f?f.x:0,f?f.y-1:-80,f?f.z:0); dF.scale.setScalar(f&&f.vivo>.05?1.6:0); dF.updateMatrix(); magliaForni.setMatrixAt(k,dF.matrix); } magliaForni.instanceMatrix.needsUpdate=true; }
-var NF=FONTI.reduce(function(a,f){ return a+f.n; },0), fPos=new Float32Array(NF*3), fFase=new Float32Array(NF), fDi=[];
-FONTI.forEach(function(f){ for(var k=0;k<f.n;k++){ fFase[fDi.length]=rnd(); fDi.push(f); } f.vivo=1; });
-var gFumo=new THREE.BufferGeometry(), fAlfa=new Float32Array(NF);
-gFumo.setAttribute('position',new THREE.BufferAttribute(fPos,3)); gFumo.setAttribute('alfa',new THREE.BufferAttribute(fAlfa,1));
-var texFumo=RM.tela(64,64,function(g){ var q=g.createRadialGradient(32,32,0,32,32,32); q.addColorStop(0,'rgba(255,255,255,1)'); q.addColorStop(.45,'rgba(255,255,255,.45)'); q.addColorStop(1,'rgba(255,255,255,0)'); g.fillStyle=q; g.fillRect(0,0,64,64); },false);
+var NFU=FONTI.reduce(function(a,f){ return a+f.n; },0), fPos=new Float32Array(NFU*3), fFase=new Float32Array(NFU), fDi=[];
+FONTI.forEach(function(f){ for(var k=0;k<f.n;k++){ fFase[fDi.length]=(k+.5*rndF())/f.n; fDi.push(f); } if(f.vivo==null) f.vivo=1; });      // le fasi distribuite lungo la colonna: un filo continuo, non sbuffi
+var gFumo=new THREE.BufferGeometry(), fAlfa=new Float32Array(NFU), fMis=new Float32Array(NFU);
+gFumo.setAttribute('position',new THREE.BufferAttribute(fPos,3)); gFumo.setAttribute('alfa',new THREE.BufferAttribute(fAlfa,1)); gFumo.setAttribute('mis',new THREE.BufferAttribute(fMis,1));
+var texFumo=RM.tela(64,64,function(g){ var q=g.createRadialGradient(32,32,0,32,32,32); q.addColorStop(0,'rgba(255,255,255,1)'); q.addColorStop(.55,'rgba(255,255,255,.62)'); q.addColorStop(1,'rgba(255,255,255,0)'); g.fillStyle=q; g.fillRect(0,0,64,64); },false);
 var NL=String.fromCharCode(10);
 var matFumo=new THREE.ShaderMaterial({
   transparent:true, depthWrite:false,
-  uniforms:{ map:{value:texFumo}, colore:{value:RM.col(0xd9d4cc)}, lato:{value:1} },
-  vertexShader:['attribute float alfa; varying float vA; uniform float lato;','void main(){ vA=alfa; vec4 mv=modelViewMatrix*vec4(position,1.0); gl_PointSize=(7.0+13.0*alfa)*lato/-mv.z; gl_Position=projectionMatrix*mv; }'].join(NL),
+  uniforms:{ map:{value:texFumo}, colore:{value:RM.col(0xd2cec7)}, lato:{value:1} },
+  vertexShader:['attribute float alfa; attribute float mis; varying float vA; uniform float lato;','void main(){ vec4 mv=modelViewMatrix*vec4(position,1.0); float px=mis*projectionMatrix[1][1]*lato/-mv.z;',
+    '  vA=alfa*clamp(px/2.0,0.0,1.0); gl_PointSize=clamp(px,2.0,90.0); gl_Position=projectionMatrix*mv; }'].join(NL),      // la grandezza vera in unità della scena; sotto i due pixel il punto resta di due pixel e sbiadisce
   fragmentShader:['uniform sampler2D map; uniform vec3 colore; varying float vA;','void main(){ gl_FragColor=vec4(colore,texture2D(map,gl_PointCoord).a*vA);','#include <encodings_fragment>','}'].join(NL)
 });
 var fumo=new THREE.Points(gFumo,matFumo); fumo.frustumCulled=false; fumo.userData.gruppo='vita'; RM.scene.add(fumo);
-var fumoG=RM.col(0xd9d4cc), fumoN=RM.col(0x30343f);
+var fumoG=RM.col(0xd2cec7), fumoN=RM.col(0x30343f);
 function muoviFumo(){
   matFumo.uniforms.lato.value=RM.renderer.domElement.height*.5;
   matFumo.uniforms.colore.value.copy(fumoG).lerp(fumoN,RM.notte);
-  for(var k=0;k<NF;k++){
-    var f=fDi[k], p=(fFase[k]+tempo*.045*(1+(k%5)*.12))%1, o=k*3, v=f.b?(f.b.a0>.5?1:0):f.vivo;
-    fPos[o]=f.x+p*f.alto*.9+Math.sin(tempo*.3+k)*.6; fPos[o+1]=f.y+p*f.alto; fPos[o+2]=f.z+p*f.alto*.35+Math.cos(tempo*.23+k)*.6;
-    fAlfa[k]=Math.sin(Math.PI*Math.sqrt(p))*.5*f.forza*v;
+  var tF=MENO_MOTO?30:tempo, qf=RM.QUALITA.fumo[RM.q]||1;
+  for(var k=0;k<NFU;k++){
+    var f=fDi[k], o=k*3, v=f.b?(f.b.a0>.5&&f.q<qf?1:0):f.vivo;
+    if(v<=.01){ if(fAlfa[k]!==0){ fAlfa[k]=0; fPos[o+1]=-1e4; } continue; }
+    var p=(fFase[k]+tF*.05*(1+(k%5)*.08))%1, cu=f.alto*.8*Math.pow(p,1.7), on=Math.sin(tF*.5+k*1.7)*.12*p*f.larg*3;      // sale diritta, poi il vento la piega; un poco di ondeggiare
+    fPos[o]=f.x+VENTO[0]*cu+VENTO[1]*on; fPos[o+1]=f.y+p*f.alto; fPos[o+2]=f.z+VENTO[1]*cu-VENTO[0]*on;
+    fMis[k]=f.larg*(.4+1.8*p);
+    fAlfa[k]=Math.min(.7,Math.sin(Math.PI*Math.sqrt(p))*(1-.45*p)*f.forza*v);
   }
-  gFumo.attributes.position.needsUpdate=true; gFumo.attributes.alfa.needsUpdate=true;
+  gFumo.attributes.position.needsUpdate=true; gFumo.attributes.alfa.needsUpdate=true; gFumo.attributes.mis.needsUpdate=true;
 }
+RM.fumoConta=function(){ var r={fonti:FONTI.length, punti:NFU, case:0, forni:0, terme:0, calcare:0}; FONTI.forEach(function(f){ var v=f.b?(f.b.a0>.5&&f.q<(RM.QUALITA.fumo[RM.q]||1)?1:0):f.vivo; if(v<=.01) return; if(f.forno) r.forni++; else if(f.b) r.case++; else if(f.stato==='cava') r.calcare++; else r.terme++; }); return r; };      // quante colonne fumano ora (per le prove e per il rapporto)
 
 /* ---------- barche ----------
    Seguono il filo della corrente a velocità costante, tenendo la destra, e passano sotto i ponti fra una pila e l'altra; in fondo al tratto virano.
@@ -1006,7 +1032,29 @@ RM.barcheProva={ lista:function(){ return dati.map(function(b){ return {i:b.i, x
   conta:function(){ return {visibili:dati.filter(function(b){ return b.vis; }).length, vere:mCV.count+mPV.count, buoi:mBuoi.count+mBuoiL.count, buoiVicini:mBuoi.count, bovari:mBov.count, bovariSagoma:mBovL.count, triBue:Math.round(geoBuoi.attributes.position.count/3/2), triBueL:Math.round(geoBuoiL.attributes.position.count/3/2)}; },
   interni:{fiume:fiume, riva:riva, normale:normale, corsia:corsia, CORSE:CORSE, uFondo:uFondo, uEmporio:uEmporio, uMilvio:uMilvio, uAurelio:uAurelio, uEmilio:uEmilio, latoEmp:latoEmp, lungo:lungoFiume, PONTI:PONTI_B} };
 
+/* ---------- le fontane dei quartieri (27 novembre 2026) ----------
+   I cataloghi del IV secolo contano i lacus, le vasche pubbliche, regione per regione: da 20 (XI) a 180 (XIV), 1.352 in tutto nel breviario (src/testi/vita-roma-fonti.md;
+   src/testi/regioni-fonti.md, «Densità dei quartieri»). Qui una vasca ogni sei, all'angolo di un isolato della regione scelto dal posto, fra un lotto e l'altro: dove stessero
+   e che forma avessero (una vasca di pietra di circa 3,5 x 2 m con la bocca dell'acqua) è uno schema, detto nel piede della pagina. L'acqua c'è finché il modello tiene
+   in uso gli acquedotti: fino al 537, quando i Goti li tagliano (Procopio V 19); poi le vasche restano asciutte, col fondo di terra. Dal 776 il modello rimette in uso
+   gli acquedotti (i restauri di Adriano I, Liber Pontificalis): l'acqua torna solo nelle vasche accanto a una casa abitata (schema). Circa 4.000 triangoli in tutto. */
+var LACUS=[81,65,65,71,74,73,76,120,120,90,20,80,89,180], vasche=[];
+LACUS.forEach(function(nl,r){ var c=isolati.filter(function(b){ return b.reg===r && b.dentro && !b.via; }).map(function(b){ return [RM.grana(Math.round(b.x*4.9)+211,Math.round(b.z*6.3)-157),b]; }).sort(function(a,b){ return a[0]-b[0]; }), quante=Math.round(nl/6), k, n=0;
+  for(k=0;k<c.length && n<quante;k++){ var b=c[k][1], ca=Math.cos(b.ry), sa=Math.sin(b.ry), angoli=[[1,1],[-1,1],[1,-1],[-1,-1]], j;
+    for(j=0;j<4;j++){ var lx=angoli[j][0]*(b.w/2+.42), lz=angoli[j][1]*(b.d/2+.42), x=b.x+lx*ca+lz*sa, z=b.z-lx*sa+lz*ca;      // l'angolo dell'isolato, fuori dai muri
+      if(RM.distStrade(x,z)>1.1 && RM.distFiume(x,z)>12){ vasche.push({x:x,z:z,y:(RM.hSuolo||RM.h)(x,z),ry:b.ry,b:b}); n++; break; } } } });
+var geoVasca=new RM.Costruttore().scatola(.36,.08,.22,0,0,0,P.travertino).scatola(.3,.012,.16,0,.06,0,P.terra||P.tufo).scatola(.05,.17,.05,.16,0,0,P.travertino).geometria();      // la vasca, il fondo, la bocca
+var magliaVasche=new THREE.InstancedMesh(geoVasca,RM.matPietra(),Math.max(1,vasche.length)), matAcqua=new THREE.MeshStandardMaterial({color:RM.col(0x5d93a6),roughness:.08,metalness:.1,emissive:RM.col(0x16303a)});
+var geoAcqua=new THREE.PlaneGeometry(.3,.16); geoAcqua.rotateX(-Math.PI/2); geoAcqua.translate(0,.075,0);
+var magliaAcqua=new THREE.InstancedMesh(geoAcqua,matAcqua,Math.max(1,vasche.length)); magliaAcqua.count=0;
+[magliaVasche,magliaAcqua].forEach(function(m){ m.frustumCulled=false; m.userData.gruppo='vita'; m.receiveShadow=true; RM.scene.add(m); }); magliaVasche.castShadow=true;
+(function(){ var o=new THREE.Object3D(); vasche.forEach(function(v,i){ o.position.set(v.x,v.y-.01,v.z); o.rotation.set(0,v.ry,0); o.scale.setScalar(1); o.updateMatrix(); magliaVasche.setMatrixAt(i,o.matrix); }); magliaVasche.count=vasche.length; magliaVasche.instanceMatrix.needsUpdate=true; })();
+function acquaVasche(anno){ var q=RM.statoMonumento?RM.statoMonumento('acquedotti',anno):null, su=q?(q.t>.5?q.s1:q.s0)==='uso':anno<537, o=new THREE.Object3D(), n=0;
+  vasche.forEach(function(v){ if(!su || (anno>=537 && !(v.b.a0>.5))) return; o.position.set(v.x,v.y-.01,v.z); o.rotation.set(0,v.ry,0); o.updateMatrix(); magliaAcqua.setMatrixAt(n++,o.matrix); });
+  magliaAcqua.count=n; magliaAcqua.instanceMatrix.needsUpdate=true; RM.vascheConta={vasche:vasche.length, conAcqua:n}; }      // per le prove
+
 RM.moduli.push(function(anno){
+  acquaVasche(anno);
   annoOra=anno; vestiEpoca(anno);
   VA=vitaAnno(anno);      // assedi e città vuota (VITA_ANNI): il 546 di prima ora sta lì
   quotaGente=Math.min(1,D.interp(D.CURVE.popolazione.punti,anno)/900000);      // una figura ogni tante persone: la stessa proporzione in ogni secolo
@@ -1015,7 +1063,7 @@ RM.moduli.push(function(anno){
   LUOGHI.forEach(function(L){ var on=anno>=L.da && anno<L.a; if(on && L.mon){ var q=RM.statoMonumento(L.mon,anno); on=q.s0==='uso' && !(q.s1!=='uso' && q.t>.5); } L.vis=on?1:0; if(L.porto) banchiVisibili(on && !!L.ok); });
   if(Math.abs(anno-annoVie)>=2) vieDaRifare=true;
   zoneDaRifare=true;
-  FONTI.forEach(function(f){ if(f.id){ var q=RM.statoMonumento(f.id,anno), s=f.stato||'uso'; f.vivo=(q.s0===s?1-q.t:0)+(q.s1===s?q.t:0); } });
+  var bassaF=1-.42*RM.sfuma(470,720,anno); FONTI.forEach(function(f){ if(f.id){ var q=RM.statoMonumento(f.id,anno), s=f.stato||'uso'; f.vivo=(q.s0===s?1-q.t:0)+(q.s1===s?q.t:0); } else if(f.b) f.y=f.b.y+f.b.alt*(f.b.nasce?1:bassaF)+.15; });      // il fumo esce dal tetto, che dal V secolo si abbassa con le case
   mostraForni(); vicoli();
 });
 RM.frame.push(function(dt){
