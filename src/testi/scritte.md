@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 07:52:05.
+Generato da `src/testi.mjs` il 27/11/2026, 08:53:43.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -141,7 +141,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.63] Le case sono di tre specie. Le insulae, i caseggiati d'affitto, non superano i 60 piedi, circa 18 metri: è il limite di Traiano, che però conosciamo da una sola fonte, scritta tre secoli dopo. A terra hanno le botteghe con la finestrella del mezzanino, come negli scavi di Ostia; lungo le vie più larghe hanno un portico, come vuole Tacito dopo l'incendio del 64, ma quali vie lo avessero è un'ipotesi. Le domus dei ricchi sono basse, chiuse verso la strada, con l'atrio e il giardino a colonne: il fronte cieco è quello delle case di Pompei. I cataloghi del IV secolo contano 1.790 domus e 46.602 insulae, ma un'insula era forse un appartamento e non un palazzo: per questo nel modello c'è una domus ogni venti case, più spesso sui colli e nelle regioni dove i cataloghi ne contano di più. Gli horti, i grandi giardini dei colli, hanno gli edifici e l'acqua che le fonti nominano per ciascuno; forme, misure e posti sono ricostruiti, e quando le fonti tacciono abbiamo supposto che fossero abbandonati nel 537.
 
-[pagina.64] Dall'VIII secolo le case abitate non sono più insulae né domus: sono case semplici a uno o due piani, come quelle scavate nel Foro di Nerva (metà del IX secolo), nella Basilica Emilia e nel Foro di Cesare da Roberto Meneghini e Riccardo Santangeli Valenzani, con il piano terra di blocchi presi dai monumenti, il piano di sopra di mattoni e la scala esterna, oppure una stanza sola con i muri di argilla, e attorno l'orto e il pozzo. Quando le case romane siano state sostituite gli scavi non lo dicono: nel modello avviene casa per casa fra il 690 e l'805, e prima le case ancora abitate si abbassano e si rappezzano; misure, finestre, colori, il tetto di scandole (da una carta del 1012) o di paglia e le case costruite dentro i muri di case romane in rovina sono uno schema.
+[pagina.64] Dall'VIII secolo le case abitate non sono più insulae né domus: sono case semplici a uno o due piani, come quelle scavate nel Foro di Nerva (metà del IX secolo), nella Basilica Emilia e nel Foro di Cesare da Roberto Meneghini e Riccardo Santangeli Valenzani, con il piano terra di blocchi presi dai monumenti, il piano di sopra di mattoni e la scala esterna, oppure una stanza sola con i muri di argilla, e attorno l'orto e il pozzo. Quando le case romane siano state sostituite gli scavi non lo dicono: nel modello avviene casa per casa fra il 690 e l'805, e prima le case ancora abitate si abbassano e si rappezzano; misure, finestre, colori, il tetto di scandole (da una carta del 1012) o di paglia e le case costruite dentro i muri di case romane in rovina sono uno schema. Ogni gruppo di case attorno a un cortile sta per le famiglie di un isolato: quante case abbia è uno schema (la gente dell'anno divisa per gli isolati abitati, con otto persone per casa, nostra stima, finché c'è posto).
 
 [pagina.65] Quanto è fitto ogni quartiere segue, con prudenza, i cataloghi del IV secolo: dove contano più insulae per ettaro le case sono più alte e vicine, dove ne contano poche ci sono più case basse. Ma quei numeri non possono contare palazzi, perché darebbero al Palatino, tutto occupato dal palazzo imperiale, più case che a ogni altra regione: lì abbiamo messo solo domus, e la Suburra è la più fitta perché le fonti la dicono affollata, non per un numero. Il fumo delle case, dei forni del pane (i cataloghi ne contano da 15 a 25 per regione), delle terme e delle calcare, le fontane dei quartieri (i cataloghi ne contano 1.352) e i lumi della notte sono uno schema: quanti e dove l'abbiamo deciso noi, ma seguono gli abitanti, e dove le case sono lasciate si spengono e le vasche restano asciutte.
 
@@ -151,7 +151,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.68] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.69] Versione del 27/11/2026, ore 07:09
+[pagina.69] Versione del 27/11/2026, ore 07:53
 
 
 ## 2. Gli atti
@@ -2343,7 +2343,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.circo.nome] Circo Massimo
 
-[scheda.circo.cosa] Il più grande edificio per spettacoli di Roma ospitava le corse dei carri. In alcune tappe, fra il 235 e il 507, nel modello si corre: quattro quadrighe, una per squadra (verde, rossa, azzurra, bianca), escono dai cancelli a ovest e fanno sette giri con la spina a sinistra, come scrivono Cassiodoro e il dizionario di Smith. Velocità, sorpassi, chi vince, la forma dei carri, la polvere e il pubblico sono uno schema.
+[scheda.circo.cosa] Il più grande edificio per spettacoli di Roma ospitava le corse dei carri. In alcune tappe, fra il 235 e il 507, nel modello si corre: quattro quadrighe, una per squadra (verde, rossa, azzurra, bianca), escono dai cancelli a ovest e fanno sette giri con la spina a sinistra, come scrivono Cassiodoro e il dizionario di Smith. A ogni giro, sulla spina, si alza una delle sette «uova» che contano i giri, come dice Cassiodoro (secondo Varrone se ne toglieva una); la loro forma e il posto sulla spina sono uno schema. Velocità, sorpassi, chi vince, la forma dei carri, la polvere e il pubblico sono uno schema.
 
 [scheda.circo.data1-81] Il Senato fa erigere in onore di Tito un arco con tre passaggi al centro della curva orientale del circo. Nel modello l'altezza è ipotetica.
 
@@ -2417,7 +2417,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.fori.data8.quando] circa 500
 
-[scheda.fori.data8] Tra la fine del V e l'inizio del VI secolo, quando i Goti governano l'Italia, alcuni artigiani smontano il tempio di Marte Ultore nel foro di Augusto per riutilizzarne i materiali. Sulla sommità di un blocco di colonna si legge il nome di Decio. Forse era il senatore autorizzato a recuperare la pietra. Un'interpretazione simile è stata proposta per il nome di Geronzio inciso al Colosseo. Per questi secoli mancano però dati sugli strati archeologici del foro che permettano di ricostruire la successione dei lavori.
+[scheda.fori.data8] Tra la fine del V e la prima metà del VI secolo, quando i Goti governano l'Italia, sulla sommità di un blocco di colonna del tempio di Marte Ultore, nel foro di Augusto, si incide il nome di un patrizio Decio. Forse era il senatore autorizzato a recuperare la pietra del tempio, ma alcuni studiosi ne dubitano (Liverani, in A Companion to Rome, 2026). Un'interpretazione simile è stata proposta per il nome di Geronzio inciso al Colosseo. Per questi secoli mancano però dati sugli strati archeologici del foro che permettano di ricostruire la successione dei lavori.
 
 [scheda.fori.data9-527] Prima chiesa nell'area: Santi Cosma e Damiano.
 
@@ -2692,19 +2692,23 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.foroaugusto.data2] Il luogo si chiama «foro di Marte»: lo scrive un copista che vi corregge un libro di Apuleio. Il nome sopravvive nella via del Marforio.
 
-[scheda.foroaugusto.data3.quando] circa 500
+[scheda.foroaugusto.data3.quando] fine del V o inizio del VI secolo
 
-[scheda.foroaugusto.data3] Secondo la scheda dei Fori di questa pagina, alcuni artigiani smontano il tempio di Marte Ultore per riusarne i materiali: su un blocco di colonna si legge il nome di Decio. Nel modello da qui il foro è usato come cava; la fonte di quella notizia non è stata riletta per questa scheda.
+[scheda.foroaugusto.data3] Sulla faccia di sopra di un rocchio di colonna si legge il nome di un patrizio Decio. Alcuni studiosi la leggono come il permesso di smontare il tempio di Marte Ultore per riusarne la pietra; altri ne dubitano. Forse fu un primo spoglio, limitato (Liverani, in A Companion to Rome, 2026).
 
-[scheda.foroaugusto.data4.quando] Medioevo
+[scheda.foroaugusto.data4-537] Nel modello, come il resto dei Fori, smette di servire dopo l'assedio dei Goti e resta abbandonato, ma in piedi: è una nostra scelta.
 
-[scheda.foroaugusto.data4] Nel podio del tempio una stanza viene tagliata per farne una tomba (Platner e Ashby).
+[scheda.foroaugusto.data5-847] Per lo stesso studioso, forse il terremoto fa cadere parte del tempio, e poi si spoglia il foro come quello di Traiano. Gli scavi trovano i primi strati sopra il pavimento solo nel IX e X secolo. Nel modello dall'850 il foro è spogliato, ma resta in piedi: oggi tre colonne, il podio e il muro di fondo ci sono ancora.
 
-[scheda.foroaugusto.data5.quando] oggi
+[scheda.foroaugusto.data6.quando] Medioevo
 
-[scheda.foroaugusto.data5] Restano tre colonne del tempio con l'architrave, alte 15,30 metri, il podio e il grande muro di fondo.
+[scheda.foroaugusto.data6] Nel podio del tempio una stanza viene tagliata per farne una tomba (Platner e Ashby). Fra il IX e il X secolo sul podio sorge il monastero di San Basilio.
 
-[scheda.foroaugusto.certezza-B] Restano il muro di fondo, il podio e tre colonne del tempio; la pianta è nota (Platner e Ashby). Nel modello portici, esedre e tempio sono semplificati; lo smontaggio dal 500 segue la scheda dei Fori.
+[scheda.foroaugusto.data7.quando] oggi
+
+[scheda.foroaugusto.data7] Restano tre colonne del tempio con l'architrave, alte 15,30 metri, il podio e il grande muro di fondo.
+
+[scheda.foroaugusto.certezza-B] Restano il muro di fondo, il podio e tre colonne del tempio; la pianta è nota (Platner e Ashby). Nel modello portici, esedre e tempio sono semplificati. La fine dell'uso nel 537 è una nostra scelta; lo spoglio dall'850 segue un'ipotesi di Liverani (2026), che pensa a un primo spoglio all'inizio del VI secolo e a uno più forte dopo il terremoto dell'847.
 
 
 ### Foro di Nerva e tempio di Minerva
@@ -2762,13 +2766,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.forocesare.data5.quando] fine dell'VIII secolo
 
-[scheda.forocesare.data5] Secondo la scheda dei Fori di questa pagina vengono tolte le lastre del pavimento; nella piazza sorgono capanne e orti. Nel modello da qui il foro è spogliato.
+[scheda.forocesare.data5] Fra la fine dell'VIII e l'inizio del IX secolo vengono tolte le lastre di travertino del pavimento; nella piazza si fanno orti e vigne (Liverani, in A Companion to Rome, 2026). Nel modello da qui il foro è spogliato.
 
 [scheda.forocesare.data6.quando] oggi
 
 [scheda.forocesare.data6] Nel 1929 Platner e Ashby vedevano solo un tratto del muro di cinta, alto 12 metri, e alcune botteghe a volta; del tempio, gli scavi del Cinquecento avevano trovato fondazioni e pezzi di colonne.
 
-[scheda.forocesare.certezza-B] La pianta è nota dagli scavi e dai disegni del Cinquecento (Platner e Ashby). Nel modello portico e tempio sono semplificati; la fine dell'uso nel 537 è una nostra scelta, lo spoglio dall'800 segue la scheda dei Fori.
+[scheda.forocesare.certezza-B] La pianta è nota dagli scavi e dai disegni del Cinquecento (Platner e Ashby). Nel modello portico e tempio sono semplificati; la fine dell'uso nel 537 è una nostra scelta, lo spoglio dall'800 segue gli scavi (Liverani, 2026).
 
 
 ### Foro di Traiano e basilica Ulpia
@@ -2799,13 +2803,13 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.forotraiano.data7-663] Se il tetto di bronzo della basilica Ulpia ci fosse ancora non si sa: nel modello da quest'anno i bronzi dei Fori non ci sono più, come dice la scheda dei Fori.
 
-[scheda.forotraiano.data8-850] Verso la metà del IX secolo, secondo la scheda dei Fori, si tolgono su larga scala le lastre di marmo del pavimento: nel modello da qui il foro è usato come cava.
+[scheda.forotraiano.data8-850] Solo verso la metà del IX secolo si tolgono in modo sistematico le lastre del pavimento, forse cotte per fare la calce delle mura di Leone IV (Liverani, in A Companion to Rome, 2026): nel modello da qui il foro è usato come cava.
 
 [scheda.forotraiano.data9.quando] oggi
 
 [scheda.forotraiano.data9] Restano colonne della basilica Ulpia e, intera, la colonna Traiana.
 
-[scheda.forotraiano.certezza-B] La pianta della piazza e della basilica è nota (Platner e Ashby); il tempio del Divo Traiano, dietro le biblioteche, è meno noto. Nel modello tutto è semplificato; la fine dell'uso nel 537, i bronzi via nel 663 e la cava dall'850 seguono la scheda dei Fori.
+[scheda.forotraiano.certezza-B] La pianta della piazza e della basilica è nota (Platner e Ashby); il tempio del Divo Traiano, dietro le biblioteche, è meno noto. Nel modello tutto è semplificato; la fine dell'uso nel 537 e i bronzi via nel 663 sono nostre scelte; la cava dall'850 segue gli scavi (Liverani, 2026).
 
 
 ### Tempio della Pace
@@ -4488,7 +4492,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioadriano.nome] Tempio di Adriano
 
-[scheda.tempioadriano.cosa] Tempio del Campo Marzio dedicato ad Adriano dopo la sua morte e divinizzazione. Sorgeva su un basamento alto 4 metri, entro un recinto porticato. Aveva otto colonne sulla facciata e tredici su ciascun fianco, alte 15 metri.
+[scheda.tempioadriano.cosa] Tempio del Campo Marzio dedicato ad Adriano dopo la sua morte e divinizzazione. Sorgeva su un basamento alto 4 metri, entro un recinto porticato. Aveva otto colonne sulla facciata e, secondo le piante di oggi, tredici su ciascun fianco, alte 15 metri; Platner e Ashby (1929) ne supponevano quindici. Il modello ne mette tredici.
 
 [scheda.tempioadriano.data1-145] Dedicato da Antonino Pio.
 
@@ -4519,7 +4523,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioclaudio.data4-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi; da allora è abbandonato, ma resta in piedi: nessuna fonte racconta come andò in rovina. La data è una scelta della ricostruzione.
 
-[scheda.tempioclaudio.data5-1217] Una bolla di papa Onorio III nomina ancora gli edifici «dentro il recinto di Claudio»: la piattaforma si riconosce ancora.
+[scheda.tempioclaudio.data5-440] Nel modello le siepi del giardino, che nessuno pota più, sono diventate macchie disordinate: nessuna fonte lo dice, l'anno è una scelta.
+
+[scheda.tempioclaudio.data6-1217] Una bolla di papa Onorio III nomina ancora gli edifici «dentro il recinto di Claudio»: la piattaforma si riconosce ancora.
 
 [scheda.tempioclaudio.certezza-B] La piattaforma è in gran parte in piedi e il lato su via Claudia si vede; il tempio è perduto e qui ha misure indicative.
 
@@ -4784,7 +4790,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcogallieno.nome] Arco di Gallieno
 
-[scheda.arcogallieno.cosa] L'arco sull'Esquilino che segna il posto dell'antica porta Esquilina delle mura serviane (Platner e Ashby). Fu dedicato all'imperatore Gallieno. Nel modello è un arco a un fornice di travertino; le misure sono indicative.
+[scheda.arcogallieno.cosa] L'arco sull'Esquilino che segna il posto dell'antica porta Esquilina delle mura serviane (Platner e Ashby). Fu dedicato all'imperatore Gallieno. Il fornice che resta è di travertino, alto 8,80 metri, largo 7,30 e profondo 3,50 (Platner e Ashby): nel modello ha queste misure. Un disegno del Quattrocento mostra due piccoli archi ai lati, oggi spariti: nel modello non ci sono.
 
 [scheda.arcogallieno.data1-262] Un funzionario, Marco Aurelio Vittore, dedica l'arco a Gallieno e a Salonina. Non è lo storico Aurelio Vittore.
 
@@ -4796,7 +4802,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcogallieno.data3] È in piedi.
 
-[scheda.arcogallieno.certezza-B] L'arco è in piedi; nel modello le misure sono indicative e lo stato fra il 235 e l'852 è una scelta, perché nessuna fonte letta lo dice.
+[scheda.arcogallieno.certezza-B] L'arco è in piedi e le misure del fornice vengono da Platner e Ashby, che danno anche l'anno, il 262; mancano i due archi minori che un disegno del Quattrocento mostra ai lati. Lo stato fra il 235 e l'852 è una scelta, perché nessuna fonte letta lo dice.
 
 
 ### Trofei di Mario (ninfeo di Alessandro)
@@ -5282,6 +5288,8 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.hortilamiani.data2] Restano degli imperatori; le fonti lette non dicono altro.
 
 [scheda.hortilamiani.data3-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi. Gli alberi crescono senza cura, un bosco selvatico copre aiuole e viali, i ruderi restano.
+
+[scheda.hortilamiani.data4-600] Nel modello i riquadri bordati di siepe non si vedono più sotto il bosco: anche quest'anno è una scelta.
 
 [scheda.hortilamiani.certezza-C] Luogo approssimato; nessun edificio descritto dalle fonti lette; le molte opere d'arte sono attestate, le statue del modello sono uno schema.
 
@@ -6449,11 +6457,11 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/base.js
 
-[ui.base.01-r1064] , piena definizione
+[ui.base.01-r1066] , piena definizione
 
-[ui.base.02-r1074] Qualità della città: automatica, bassa, telefono, media, alta, massima
+[ui.base.02-r1076] Qualità della città: automatica, bassa, telefono, media, alta, massima
 
-[ui.base.03-r1177] fine prova
+[ui.base.03-r1179] fine prova
 
 
 ### js/vita.js
@@ -6475,11 +6483,11 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 [ui.mura.06-r304] Ponte Neroniano
 
-[ui.mura.07-r336] Ponte Fabricio
+[ui.mura.07-r337] Ponte Fabricio
 
-[ui.mura.08-r337] Ponte Cestio
+[ui.mura.08-r338] Ponte Cestio
 
-[ui.mura.09-r346] Ponte Sublicio
+[ui.mura.09-r347] Ponte Sublicio
 
-[ui.mura.10-r376] Tempio di Esculapio (isola Tiberina)
+[ui.mura.10-r377] Tempio di Esculapio (isola Tiberina)
 

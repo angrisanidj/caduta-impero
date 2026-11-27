@@ -1,6 +1,6 @@
 # Da guardare: la verifica del 27 novembre 2026
 
-Versione in rete: «Versione del 27/11/2026, ore 07:09» (in fondo alla pagina), https://angrisanidj.github.io/caduta-impero/
+Versione in rete: «Versione del 27/11/2026, ore 07:53» (in fondo alla pagina), https://angrisanidj.github.io/caduta-impero/
 
 L'elenco unico delle riserve aperte sta in `src/design/riserve.md`. Qui c'è solo ciò che conviene guardare, lavoro per lavoro.
 
@@ -47,7 +47,7 @@ Scorciatoia di prova: `?guarda=<monumento>&anno=<anno>&dist=<distanza in decine 
 - **Su quale dispositivo**: PC (più comodo per cliccare), poi iPhone.
 - **Che cosa dovresti vedere**: cartellini che non si coprono, una scheda per ogni edificio con ciò che resta oggi; nell'800 gli edifici del Foro in piedi, abbandonati, non più una cava unica.
 - **Che cosa sarebbe un difetto**: il cartellino della Magna Mater discosto dal tempio (lo sappiamo); un monumento che non si apre col clic; due cartellini sovrapposti.
-- **Scelte da confermare**: templi chiusi nel 392; fine dell'uso dei Fori nel 537; tempio della Pace bruciato nel 500; Antonino e Faustina chiesa dal 700; Regia casa dal 700; angolo del Settizodio; Dioscuri dal 443 (la fonte dice «probabile»); Domus Augustana fino al 720. Tre stati dei fori imperiali (Augusto cava dal 500, Cesare spogliato dall'800, Traiano cava dall'850) vengono da una scheda la cui fonte non è stata riletta.
+- **Scelte da confermare**: templi chiusi nel 392; fine dell'uso dei Fori nel 537; tempio della Pace bruciato nel 500; Antonino e Faustina chiesa dal 700; Regia casa dal 700; angolo del Settizodio; Dioscuri dal 443 (la fonte dice «probabile»); Domus Augustana fino al 720. Gli stati dei fori imperiali sono stati riletti il 27 novembre sulla fonte (Liverani, Companion to Rome 2026): Cesare spogliato dall'800 e Traiano cava dall'850 reggono; Augusto non è più «cava» dal 500 ma abbandonato dal 537 e spogliato dall'850.
 
 ## 4. Il Marforio
 
@@ -137,7 +137,7 @@ Scorciatoia di prova: `?guarda=<monumento>&anno=<anno>&dist=<distanza in decine 
 - **Su quale dispositivo**: PC.
 - **Che cosa dovresti vedere**: templi in proporzione; schede degli obelischi che dicono «non si sa quando cadde».
 - **Che cosa sarebbe un difetto**: le siepi del tempio di Claudio ancora ordinate nell'800 (lo sappiamo).
-- **Scelte da confermare**: obelischi tutti in piedi fino all'852; tempio del Sole spogliato dal 532; Venere e Roma in uso dal 312. Da decidere: il foro di Augusto «cava» dal 500 (fonte non riletta); l'obelisco Capitolino non aggiunto.
+- **Scelte da confermare**: obelischi tutti in piedi fino all'852; tempio del Sole spogliato dal 532; Venere e Roma in uso dal 312. Da decidere: l'obelisco Capitolino non aggiunto. (Il foro di Augusto non è più «cava» dal 500: fonte riletta il 27 novembre.)
 
 ## 14. La scena dell'800
 
@@ -207,6 +207,24 @@ Scorciatoia di prova: `?guarda=<monumento>&anno=<anno>&dist=<distanza in decine 
 - **Che cosa sarebbe un difetto**: scritte accavallate nelle altre quindici infografiche (non ancora provate); spazio vuoto a destra nei Barbari a 1280.
 
 ---
+
+## 22. Marco Aurelio, Pigna, Ara Pacis
+
+- **Che cosa è cambiato**: la statua equestre di Marco Aurelio, di bronzo dorato, sta a piazza Colonna accanto alla colonna di Marco fino al 790, poi al Laterano; la Pigna sta nel recinto del tempio di Iside fino al 755, poi sulla fontana dell'atrio di San Pietro; l'Ara Pacis è un monumento a sé con le misure di Platner e Ashby (prima era dentro l'orologio di Augusto, girata e troppo bassa). Il fumo delle case altomedievali esce dal tetto.
+- **Dove guardare**: https://angrisanidj.github.io/caduta-impero/?guarda=marcoaurelio&anno=301&dist=12 ; https://angrisanidj.github.io/caduta-impero/?guarda=marcoaureliolat&anno=800&dist=12 ; https://angrisanidj.github.io/caduta-impero/?guarda=pigna&anno=301&dist=12 ; https://angrisanidj.github.io/caduta-impero/?guarda=pignapietro&anno=800&dist=12 ; https://angrisanidj.github.io/caduta-impero/?guarda=arapacis&anno=301&dist=15 ; poi un clic su ciascuno per la scheda.
+- **Su quale dispositivo**: PC, poi iPhone.
+- **Che cosa dovresti vedere**: il cavallo con la zampa anteriore destra alzata e l'imperatore col braccio destro teso; la pigna sopra la sua base e poi sotto il baldacchino dell'atrio; il recinto bianco dell'Ara Pacis con le due porte a est e a ovest.
+- **Che cosa sarebbe un difetto**: una statua nei due posti nello stesso anno; volti e squame più rozzi di così (lo sappiamo: restano semplici); un cartellino che copre la colonna di Marco.
+- **Scelte da confermare**: il posto antico (piazza Colonna e Iseo: le fonti sono incerte); gli anni 790 e 755; l'Ara Pacis in vista fino all'852 perché le fonti lette non dicono quando sparì.
+
+## 23. Primo passaggio sulle riserve (27 novembre, mattina)
+
+- **Che cosa è cambiato**: nell'800 ogni isolato ancora abitato è un gruppo di casette attorno a un cortile, con l'orto (prima una o tre casette, quasi invisibili: le misure delle case restano quelle degli scavi, cambia il numero); argilla e paglia un poco più chiare. Il foro di Augusto non è più una cava dal 500 (fonte riletta): abbandonato, poi spogliato dall'850. Nel Circo Massimo le uova contagiri salgono una per giro; dopo il 556 le pozze della palude sono grigio-verdi e non più azzurre. Le siepi del tempio di Claudio diventano macchie. Il nome della Magna Mater sta sopra il tempio. Una casa altomedievale lasciata lascia muretti bassi, non il rudere di un'insula. La pista del circo e dello stadio è sabbia liscia, senza lastre. La banchina dell'Emporio è 10 m più verso terra. I riquadri degli horti Lamiani spariscono sotto il bosco dal 600. Dal 560 al 760 la foschia della distanza si alleggerisce un poco (le vedute larghe dell'800 sono più nitide). Il 284 non ha più la corsa (era solo l'intermezzo). `?notte=1` accende anche le finestre.
+- **Dove guardare**: https://angrisanidj.github.io/caduta-impero/?guarda=punto&x=-100&z=-55&anno=800&dist=120 (nuclei del Campo Marzio); https://angrisanidj.github.io/caduta-impero/#800 (veduta d'insieme); https://angrisanidj.github.io/caduta-impero/?guarda=foroaugusto&anno=800&dist=26 ; https://angrisanidj.github.io/caduta-impero/?guarda=circo&anno=235&dist=20 (aspettare la corsa e guardare la sbarra a ovest della spina); https://angrisanidj.github.io/caduta-impero/?guarda=tempioclaudio&anno=800&dist=28 ; https://angrisanidj.github.io/caduta-impero/?guarda=magnamater&anno=301&dist=25.
+- **Su quale dispositivo**: PC e iPhone (le case nuove sono molte di più: vanno guardate anche sul telefono).
+- **Che cosa dovresti vedere**: gruppi di casette basse sparsi fra le rovine, che si leggono anche da mezza distanza; la città fino al 550 uguale a prima.
+- **Che cosa sarebbe un difetto**: casette che si toccano o entrano nei ruderi vicini; gruppi tutti uguali; fotogrammi più bassi nell'800.
+- **Scelte da confermare**: otto persone per casa (stima nostra, detta nel piede); un gruppo non esce dal suo isolato più di un metro e mezzo, quindi nell'800 le case sono circa 1.900 per 30.000 persone; le uova di Cassiodoro (salgono) e non di Varrone (scendono); siepi del tempio di Claudio inselvatichite dal 440 e riquadri dei Lamiani spariti dal 600 (anni scelti); la foschia più leggera negli anni tardi (scelta di resa, non una notizia); San Giovanni a Porta Latina dal 496 (Gelasio I, Armellini).
 
 ## Cose che puoi dirci solo tu
 

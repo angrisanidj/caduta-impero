@@ -873,7 +873,7 @@ function geoCoppia(fino){ var B=new Pz(); bue(B,-.5,0,{fino:fino}); bue(B,.5,0,{
 var geoBuoi=geoCoppia(true), geoBuoiL=geoCoppia(false), matBuoi=matAnimali();      // da vicino e da lontano (e al gradino «bassa»)
 function magliaBuoi(g){ var m=new THREE.InstancedMesh(g,matBuoi,NB); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(NB*3).fill(1),3); m.count=0; m.castShadow=true; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='vita'; RM.scene.add(m); return m; }
 var mBuoi=magliaBuoi(geoBuoi), mBuoiL=magliaBuoi(geoBuoiL);
-/* Il bovaro (27 novembre 2026, decisione dell'utente: «Vai con bovaro»). IPOTESI: Procopio (Guerra gotica I 26, 10-12) racconta solo che le corde si legano al collo dei buoi,
+/* Il bovaro (26 novembre 2026, decisione dell'utente: «Vai con bovaro»). IPOTESI: Procopio (Guerra gotica I 26, 10-12) racconta solo che le corde si legano al collo dei buoi,
    non dice chi li guida; un uomo a piedi accanto alla coppia è una scelta del modello, detta nel piede della pagina. Cammina dal lato della terra, un poco avanti alla spalla
    del bue, al passo dei buoi; in mano un bastone lungo (forma e misura: SCHEMA). Veste della gente comune dell'epoca, come i barcaioli. Persona vera da vicino (le gambe
    camminano nello shader dei passanti), sagoma da lontano e al gradino «bassa»; non c'è quando non ci sono i buoi (piene). */
@@ -1082,7 +1082,7 @@ RM.frame.push(function(dt){
   muoviBarche(dt); frameFermi();
 });
 /* per le prove: ?notte=1 accende la notte all'avvio (le catture senza finestra non possono premere «Notte») */
-if(/[?&]notte=1/.test(location.search)) setTimeout(function(){ if(RM.applicaLuce) RM.applicaLuce(1); },1500);
+if(/[?&]notte=1/.test(location.search)) setTimeout(function(){ var b=document.getElementById('btnNotte'); if(b && b.getAttribute('aria-pressed')!=='true') b.click(); else if(RM.applicaLuce) RM.applicaLuce(1); },1500);      // 27 novembre 2026: come il bottone, così la regia rifà anche i moduli (finestre accese di js/citta.js); prima si cambiava solo la luce
 RM.vitaProve={luoghi:LUOGHI, ronde:RONDE, vie:vie, libero:liberoQui, suIsolato:suIsolato, ostacoli:ostacoli, occupato:occupato, carri:mCarri};      // per le prove
 RM.vitaConta=function(){ var c={persone:0, carri:mCarri.count, muli:mMuli.count, mercato:mMerc.visible?mMerc.count:0}, k; for(k=0;k<NP;k++) if(pos[k*3+1]>-50) c.persone++;
   figure.forEach(function(m){ c.persone+=m.count; }); c.luoghi={}; LUOGHI.forEach(function(L){ if(L.vis) c.luoghi[L.id]=L.nOk||0; }); return c; };      // quante figure ci sono ora (per le prove e per il rapporto)

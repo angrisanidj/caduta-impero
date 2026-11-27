@@ -936,3 +936,12 @@ Già letti in questo file e in `scene-roma-fonti.md`: case con orto e orti vitat
 | Dove | Sul pavimento dei Fori, contro il muro del foro, contro le botteghe della Basilica Emilia, nelle arcate dello stadio di Domiziano (958), negli ambienti di servizio delle domus abbandonate (V-VI) | Alcune case addossate ai muri rimasti delle case romane in rovina | Case dentro i gusci delle insulae: nessuna fonte letta |
 | Che cosa c'era prima | Foro di Cesare: capanne e campi, poi il piano rialzato; piazza Venezia: depositi di abbandono, poi una calcara (VIII), poi la casa (IX-X); San Pasquale: discarica, poi tombe, poi case | — | — |
 | Strade | Fra i nuclei nuovi, dalla seconda metà del IX secolo, «strade strette e sinuose (viae vicinales)» (Peresso 135) | Non disegnate (le vie della città non sono di questo lavoro) | — |
+
+## Aggiunte del 27 novembre 2026 (primo passaggio sulle riserve)
+
+### Le uova che contano i giri (Circo Massimo)
+- Smith, *Dictionary of Greek and Roman Antiquities*, voce «Circus» (LacusCurtius, letta il 27 novembre 2026): «two columns (F) supporting seven conical balls, which, from their resemblance to eggs, were called ova […] They are, therefore, seven in number, such being the number of the circuits made in each race; and as each round was run, one of the ova was put up (Cassiodor. Var. Ep. III.51) or taken down, according to Varro (De Re Rust. I.2 §11)». All'altra estremità della spina «seven dolphins, termed delphinae», che non pare si togliessero.
+- Nel modello (`js/scene-tappe.js`, `mettiUova`): si segue Cassiodoro, il più vicino agli anni della pagina; un uovo si alza a ogni giro finito del primo carro. Forma, misura e da quale capo della spina stessero sono uno schema, detto nella scheda del circo.
+
+### Quante case in un nucleo altomedievale
+- Nessuna fonte letta dice quante persone vivessero in una casa altomedievale di Roma. Nel modello (`NUCLEO_PERSONE` in `js/citta.js`) otto, stima nostra e prudente (meno case); il numero di case di un nucleo è la gente dell'anno (`CURVE.popolazione`) divisa per i lotti abitati e per otto, al più quante ne entrano nel lotto. Detto nel piede.

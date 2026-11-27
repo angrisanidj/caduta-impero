@@ -2126,7 +2126,7 @@ var corse=(function(){
   function mon(id){ return (RM.MONUMENTI||[]).filter(function(m){ return m.id===id; })[0]; }
   var mC=mon('circo'), mS=mon('domiziano'); if(!mC||!mC.g||!mS||!mS.g) return null;
   var FERMA_C=(function(){ var r=/[?&]corse=([0-9.]+)/.exec(location.search); return r?+r[1]:null; })();
-  var ACCESE_C={235:1,260:1,284:1,301:1,330:1,363:1,384:1,402:1,418:1,439:1,468:1,507:1}, ACCESE_S={235:1};
+  var ACCESE_C={235:1,260:1,301:1,330:1,363:1,384:1,402:1,418:1,439:1,468:1,507:1}, ACCESE_S={235:1};      // 27 novembre 2026: tolto il 284, che è solo l'intermezzo «La moneta» (carta e città restano al 274): la corsa non si vedeva mai
   var pop=(D.CURVE&&D.CURVE.popolazione&&D.CURVE.popolazione.punti)||[[0,900000]], AN=String.fromCharCode(10);
   function sm(a,b,x){ var t=Math.max(0,Math.min(1,(x-a)/(b-a))); return t*t*(3-2*t); }
   function gruppo(m){ var g=new THREE.Group(); g.position.copy(m.g.position); g.quaternion.copy(m.g.quaternion); g.scale.copy(m.g.scale); g.visible=false; RM.scene.add(g); return g; }
@@ -2225,9 +2225,15 @@ var corse=(function(){
   var ruote=istMesh(gR,matPersone(),8); ruote.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(24).fill(1),3); gC.add(ruote);      // matPersone vuole il colore per istanza (il programma è lo stesso dei carri)
   /* la polvere (schema: nessuna fonte letta la descrive): sbuffi bassi e chiari dietro ogni carro, che si allargano e salgono */
   var NP=LEGGERA?6:10, polv=istMesh(new THREE.SphereGeometry(1,7,5),new THREE.MeshBasicMaterial({color:P.sabbia.clone().multiplyScalar(1.05),transparent:true,opacity:.14,depthWrite:false}),4*NP); polv.renderOrder=2; gC.add(polv);
+  /* le uova che contano i giri (27 novembre 2026; Smith, «Circus», letto quel giorno: sette «ova» su due colonne della spina, «as each round was run, one of the ova was put up
+     (Cassiodor. Var. Ep. III.51) or taken down, according to Varro»). Qui segue Cassiodoro, il più vicino agli anni della pagina: a ogni giro del primo carro se ne alza uno.
+     Sulla sbarra a ovest (circo() in js/monumenti.js), i delfini sull'altra: da che parte stessero è uno schema; forma e misura (circa 80 cm) anche. */
+  var uova=istMesh(new THREE.SphereGeometry(1,8,6),new THREE.MeshStandardMaterial({color:P.marmo,roughness:.6}),7), XU=-1-L*.12, nUova=-1; uova.count=7; gC.add(uova);
+  function mettiUova(n){ if(n===nUova) return; nUova=n; for(var k=0;k<7;k++){ Ob.position.set(XU-.39+k*.13,1.5+.04,0); Ob.rotation.set(0,0,0); if(k<n) Ob.scale.set(.035,.045,.035); else Ob.scale.setScalar(.00001); Ob.updateMatrix(); uova.setMatrixAt(k,Ob.matrix); } uova.instanceMatrix.needsUpdate=true; }
   var oc={}, op={}, tC=25, fermoC=false;
   function disegnaC(t){
     t=((t%CICLO)+CICLO)%CICLO; var vis=t<CICLO-1.5;      // l'ultimo secondo e mezzo del ciclo i carri non ci sono: poi la corsa seguente esce dai carceres
+    var uMax=0; for(var iu=0;iu<4;iu++) uMax=Math.max(uMax,uN(iu,t-T0)); mettiUova(vis?Math.max(0,Math.min(7,Math.floor((uMax-S0)/LAPN))):0);      // i giri finiti dal primo carro
     for(var i=0;i<4;i++){
       carroA(i,t,oc); var ry=Math.atan2(oc.dx,oc.dz), d=oc.d; carroA(i,t+.1,op); var v=(op.d-d)/.1, am=Math.min(1,v/1.1);
       var y=YA+(0.5+0.5*Math.sin(d/.68*6.2832+.4))*.004*am;

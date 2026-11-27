@@ -255,6 +255,32 @@ var N=RM.N_ISOLATI=isolati.length; RM.isolati=isolati;
     function mondo(o,w,d,r){ o.x=b.x+o.lx*ca+o.lz*sa; o.z=b.z-o.lx*sa+o.lz*ca; o.ry=b.ry+(r||0); o.y=basePosto(o.x,o.z,o.ry,w,d)-.15; }
     P.case.forEach(function(o){ mondo(o,o.w,o.d,o.r); }); if(P.rec) mondo(P.rec,P.rec.w,P.rec.d); if(P.poz) mondo(P.poz,.12,.12); mondo(P.orto,P.orto.w,P.orto.d);
     b.medP=P;
+    /* Il nucleo (27 novembre 2026; l'utente: «Le casette nuove son troppo piccole quasi invisibili a volte»). Un lotto del modello sta per la gente di un isolato: nell'800 circa
+       30.000 abitanti in un centinaio di lotti abitati, quasi trecento persone a lotto. Una o tre casette erano poche: qui il lotto abitato del tipo nuovo diventa un gruppo di case
+       (si veda NUCLEO_PERSONE più sotto: quante se ne accendono dipende dalla gente dell'anno). Le misure restano quelle delle fonti; posti, giri, specie vengono dal posto (G).
+       Le case stanno in giro attorno a un cortile vuoto, su una griglia di 10 m con le viuzze in mezzo, fuori dall'orto e dalle case già messe; un lotto ne tiene quante ne entrano.
+       Solo per i lotti che fra l'arrivo del tipo nuovo e l'852 sono abitati almeno una volta (gli altri non le vedrebbero mai). */
+    var vive=false; for(y=Math.ceil(b.medDa);y<=852 && !vive;y+=3){ if(b.nasce ? y>=b.nasce : rango(b,y)-soglie[Math.min(soglie.length-1,Math.max(0,y-640))]>0) vive=true; }
+    b.villa=[]; if(!vive) return;
+    var cx0=(G(b,3.4,40)-.5)*W*.2, cz0=(G(b,4.6,41)-.5)*Dd*.2, CL=.78, WL=W+.3, DL=Dd+.3, nx=Math.max(1,Math.floor(WL/CL)), nz=Math.max(1,Math.floor(DL/CL)), celle=[], ix, iz;      // celle di 7,8 m sul lotto e un metro e mezzo oltre il suo bordo, verso la via
+    var viaGrande=!!b.por || NUCLEI.some(function(n){ return Math.hypot(b.x-n[0],b.z-n[1])<n[3]*.45; });      // lungo una via larga (il lotto ha il portico) o nel cuore di un nucleo attorno a una chiesa: più case a due piani
+    for(ix=0;ix<nx;ix++) for(iz=0;iz<nz;iz++){ var cx=-WL/2+(ix+.5)*WL/nx, cz=-DL/2+(iz+.5)*DL/nz, o2=P.orto, libero=true;
+      if(Math.hypot(cx-cx0,cz-cz0)<.6) libero=false;      // il cortile
+      if(Math.abs(cx-o2.lx)<o2.w/2+.15 && Math.abs(cz-o2.lz)<o2.d/2+.15) libero=false;      // l'orto del lotto
+      if(P.rec && (Math.abs(Math.abs(cx)-P.rec.w/2)<.4 || Math.abs(Math.abs(cz)-P.rec.d/2)<.4)) libero=false;      // il muro del cortile recintato della casa a due piani
+      P.case.forEach(function(o){ if(Math.abs(cx-o.lx)<o.w/2+.4 && Math.abs(cz-o.lz)<o.d/2+.4) libero=false; });
+      if(P.poz && Math.hypot(cx-P.poz.lx,cz-P.poz.lz)<.5) libero=false;
+      if(libero) celle.push({ix:ix,iz:iz,cx:cx,cz:cz,ord:Math.hypot(cx-cx0,cz-cz0)+.9*G(b,2.2+ix*.31,50+iz*3)}); }
+    celle.sort(function(p,q){ return p.ord-q.ord; });
+    var preso={}; celle.forEach(function(e,k){ if(preso[e.ix+','+e.iz]) return; preso[e.ix+','+e.iz]=1;
+      var g1=G(b,2.6+k*.17,60+k), g2=G(b,3.8+k*.13,61+k), g3=G(b,5.4+k*.11,62+k), g4=G(b,4.2+k*.19,63+k), o={k:k};
+      var vers=Math.atan2(cx0-e.cx,cz0-e.cz), giro=Math.round(vers/(Math.PI/2))*Math.PI/2+(g3-.5)*.3;      // girate più o meno verso il cortile, mai tutte uguali
+      var sopra=preso[e.ix+','+(e.iz+1)]===undefined && e.iz+1<nz && celle.some(function(q){ return q.ix===e.ix && q.iz===e.iz+1; });
+      o.sol=sopra && g4<(viaGrande?.3:.08);      // la casa a due piani si accende solo dal 775 (scriviVilla); prima al suo posto una casa a un piano
+      if(o.sol){ preso[e.ix+','+(e.iz+1)]=1; o.t=g1<.5?0:1; o.w=.6+.15*g2; o.d=1.1+.25*g3; o.h=.82+.13*g1; o.lx=e.cx+(g2-.5)*.1; o.lz=e.cz+DL/nz*.5; o.r=(g3-.5)*.12; }      // 6 x 11 fino a 7,5 x 13,5 m, lungo la viuzza: occupa due celle
+      else { o.t=g1<.55?2:3; o.w=.38+.24*g2; o.d=.34+.16*g3; o.h=.5+.1*g4; o.lx=e.cx+(g2-.5)*.08; o.lz=e.cz+(g4-.5)*.08; o.r=giro; }      // una stanza da 3,8 x 3,4 a 6,2 x 5 m
+      var bordo=e.ix===0||e.iz===0||e.ix===nx-1||e.iz===nz-1; o.rec=!o.sol && bordo && G(b,6.3+k*.07,64+k)<.35;      // sul giro esterno, a volte un recinto basso stretto attorno alla casa e al suo pezzo d'aia (San Pasquale, Foro di Cesare)
+      mondo(o,o.w,o.d,o.r); b.villa.push(o); });
   });
 })();
 
@@ -692,13 +718,13 @@ var texScandole=RM.tela(64,64,function(g,W,H){ g.fillStyle='#6a5847'; g.fillRect
   for(var y=0;y<H;y+=6) for(var x=((y/6)%2)*5-10;x<W;x+=10){ var c=rM(); g.fillStyle=c<.4?'#77634f':c<.7?'#5e4e3f':c<.9?'#857560':'#4f4337'; g.fillRect(x+.5,y,9,5.4); }
   g.fillStyle='rgba(30,24,18,.35)'; for(y=5;y<H;y+=6) g.fillRect(0,y,W,1); }); texScandole.repeat.set(3,2);
 var texTerra=RM.tela(128,128,function(g,W,H){ var x, y, l;      // casa a un piano: argilla sopra uno zoccolo di pietre di spoglio
-  g.fillStyle='#a58a66'; g.fillRect(0,0,W,H);
+  g.fillStyle='#b39871'; g.fillRect(0,0,W,H);      // 27 novembre 2026: un poco più chiara (prima #a58a66), argilla seccata al sole: dall'alto si confondeva con la terra
   for(var i=0;i<260;i++){ g.fillStyle='rgba('+(rM()<.5?'120,96,70':'190,170,135')+','+(.08+rM()*.14)+')'; g.fillRect(rM()*W,rM()*88,6+rM()*20,1+rM()*3); }
   for(y=88;y<H;y+=10) for(x=-rM()*20;x<W;x+=l){ l=10+rM()*18; var c=rM(); g.fillStyle=c<.5?'#9c8a6e':c<.8?'#857f72':'#b3a68a'; g.fillRect(x+1,y+1,l-2,8); }
   g.strokeStyle='rgba(80,60,42,.4)'; g.lineWidth=1; for(i=0;i<6;i++){ g.beginPath(); x=rM()*W; g.moveTo(x,rM()*30); for(y=0;y<5;y++) g.lineTo(x+=(rM()-.5)*8,30+y*11); g.stroke(); }      // crepe dell'argilla
   g.fillStyle='#45331f'; g.fillRect(52,66,22,62); g.fillStyle='#2e241d'; g.fillRect(96,40,8,9);      // porta e una finestrella
 });
-var texPaglia=RM.tela(64,64,function(g,W,H){ g.fillStyle='#9a8a5c'; g.fillRect(0,0,W,H);      // paglia: fili lungo la falda, a strati
+var texPaglia=RM.tela(64,64,function(g,W,H){ g.fillStyle='#ab9a66'; g.fillRect(0,0,W,H);      // paglia: fili lungo la falda, a strati
   for(var i=0;i<420;i++){ var c=rM(); g.fillStyle=c<.4?'rgba(176,160,108,.6)':c<.75?'rgba(120,106,70,.55)':'rgba(90,82,58,.5)'; g.fillRect(rM()*W,rM()*H,1,5+rM()*12); }
   g.fillStyle='rgba(60,52,34,.3)'; for(var y=10;y<H;y+=16) g.fillRect(0,y,W,2); }); texPaglia.repeat.set(2,2);
 function vS(y,F,E){ return y<=F?.5*y/F:.5+.5*Math.min(1,(y-F)/(E-F)); }      // la trama dei muri: sotto la metà dei blocchi (fino al solaio F), sopra quella dei mattoni
@@ -757,6 +783,25 @@ var matBuio=new THREE.MeshStandardMaterial({color:RM.col(0x2a2019),roughness:1,s
 var MED=[pacco(geoSolarata(true),[matMed,matScandole,matBuio],N),pacco(geoSolarata(false),[matMed,matScandole,matBuio],N),pacco(geoTerrinea(false),[matTerra,matPaglia,matBuio],N*3),pacco(geoTerrinea(true),[matTerra,matPaglia,matBuio],N*3)];
 var medRec=pacco(geoRecinto,[matMed],N), medPoz=pacco(geoPozzo,[matMed,matBuio,matBuio],N);
 medPoz.maglia.castShadow=false; RM.caseAltomedievali=MED;      // per le prove
+/* Il nucleo di case attorno al cortile (27 novembre 2026; i posti li prepara il lotto, b.villa). Quante case si accendono in un lotto abitato del tipo nuovo: la gente dell'anno
+   (CURVE.popolazione) divisa per i lotti abitati (RM.caseIn) e per NUCLEO_PERSONE, meno le casette già messe; al più quante ne entrano nel lotto. Otto persone per casa
+   è una stima prudente nostra (una famiglia con chi ci lavora; più persone a casa danno meno case): nessuna fonte letta la dà. Quante case è quindi uno schema, detto nel piede. */
+var NUCLEO_PERSONE=8, VIL_N=0; isolati.forEach(function(b){ b.vi0=VIL_N; VIL_N+=b.villa.length; });
+var VIL=[pacco(geoSolarata(true),[matMed,matScandole,matBuio],Math.max(1,VIL_N)),pacco(geoSolarata(false),[matMed,matScandole,matBuio],Math.max(1,VIL_N)),pacco(geoTerrinea(false),[matTerra,matPaglia,matBuio],Math.max(1,VIL_N)),pacco(geoTerrinea(true),[matTerra,matPaglia,matBuio],Math.max(1,VIL_N))];
+var vilRec=pacco(geoRecinto,[matMed],Math.max(1,VIL_N)); vilRec.maglia.castShadow=false; RM.caseNuclei=VIL;      // per le prove
+var viviAnno={};      // lotti abitati per anno intero, contati una volta sola
+function quanteVilla(anno){ var y=Math.round(anno); if(y<650) return 0;
+  if(viviAnno[y]==null) viviAnno[y]=Math.max(1,RM.caseIn(y,function(){ return true; }).abitate);
+  return D.interp(D.CURVE.popolazione.punti,anno)/viviAnno[y]/NUCLEO_PERSONE; }
+function scriviVilla(b,k,anno,quante){ var V=b.villa, j, o, sl, t;      // accende le prime «quante» case del nucleo, alte quanto k
+  for(j=0;j<V.length;j++){ o=V[j]; sl=b.vi0+j; for(t=0;t<4;t++) VIL[t].setMatrixAt(sl,ZERO); vilRec.setMatrixAt(sl,ZERO);
+    if(k<.02 || j>=quante) continue;
+    var sol=o.sol && anno>=775, kk=k*RM.sfuma(j,j+1,quante);      // l'ultima casa accesa cresce con la gente: nessun salto
+    d.position.set(o.x,o.y,o.z); d.rotation.set(0,o.ry,0);
+    if(o.sol && !sol) d.scale.set(.55,(.5+.1*o.h)*kk+.15,.5); else d.scale.set(o.w,o.h*kk+.15,o.d);      // prima del 775 al posto della casa a due piani una a un piano
+    d.updateMatrix(); t=o.sol&&!sol?2:o.t; VIL[t].setMatrixAt(sl,d.matrix);
+    VIL[t].setColorAt(sl,c.copy(bianco).multiplyScalar(.9+.32*RM.grana(Math.round(o.x*9.7)+j,Math.round(o.z*8.3)-j)));      // argilla e paglia al sole un poco più chiare dei muri di pietra (27 novembre 2026)
+    if(o.rec){ d.scale.set(.74,.3*kk,.74); d.updateMatrix(); vilRec.setMatrixAt(sl,d.matrix); vilRec.setColorAt(sl,c.copy(bianco).multiplyScalar(.62+.16*b.tono)); } } }
 function scriviMed(b,i,k){ var Pm=b.medP, j, o, sl;      // le parti altomedievali del lotto i, alte quanto k (0 nessuna, 1 intere)
   MED[0].setMatrixAt(i,ZERO); MED[1].setMatrixAt(i,ZERO); for(j=0;j<3;j++){ MED[2].setMatrixAt(i*3+j,ZERO); MED[3].setMatrixAt(i*3+j,ZERO); }
   medRec.setMatrixAt(i,ZERO); medPoz.setMatrixAt(i,ZERO);
@@ -972,6 +1017,7 @@ function altezzaMuri(b,eta,anno){ return .15+Math.max(.1,b.alt*(b.nasce?1:b.bass
 function aggiorna(anno){
   var fr=D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno)), soglia=1-fr, numVivi=0, toccati=false, i, b, a, q, eta, v, crollo, H, hm, m;
   var bassa=1-.42*RM.sfuma(470,720,anno), forza=Math.abs(bassa-ultimaBassa)>.01; if(forza) ultimaBassa=bassa;      // le case a più piani lasciano il posto a case basse, a uno o due piani
+  var qVil=quanteVilla(anno);      // quante case per lotto abitato, in quest'anno (si veda NUCLEO_PERSONE)
   for(i=0;i<N;i++){
     b=isolati[i];
     a=RM.sfuma(-.02,.02,rango(b,anno)-soglia);             // 1 abitato, 0 abbandonato
@@ -986,8 +1032,9 @@ function aggiorna(anno){
     eta=a>.999?0:b.nasce?(arso>0?Math.max(0,anno-b.fuoco):0):Math.max(0,anno-da0);          // anni passati dall'abbandono (o dall'incendio)
     b.vA=a; b.vE=eta; b.vX=(b.nasce&&anno<b.nasce-2.5)||dm>.5?0:1;      // per lo stato delle vie (statoVie): una casa non ancora nata o demolita per un monumento non conta
     var med=anno>=b.medDa && a>.01 && dm<.001 ? RM.sfuma(b.medDa,b.medDa+3,anno) : 0, rip=a>.5 && med<1 ? .2*RM.sfuma(550,720,anno) : 0, mS=med*3+rip;      // med: quanto la casa è già del tipo altomedievale; rip: la casa romana abitata, rappezzata (si veda dove si preparano le case altomedievali)
-    if(!(forza&&a>.01) && Math.abs(a-b.a0)<.002 && Math.abs(mS-b.m0)<.002 && (a>.999 || Math.abs(eta-b.e0)<1.5 || (eta>430&&b.e0>430))) continue;
-    b.a0=a; b.e0=eta; b.m0=mS; toccati=true; v=b.nasce?arso:(1-a)*(1-dm);
+    var qV=med>0&&b.villa.length?Math.min(b.villa.length,Math.max(0,qVil-b.medP.case.length)):0;      // quante case del nucleo (27 novembre 2026)
+    if(!(forza&&a>.01) && Math.abs(a-b.a0)<.002 && Math.abs(mS-b.m0)<.002 && Math.abs(qV-b.qv0)<.02 && (a>.999 || Math.abs(eta-b.e0)<1.5 || (eta>430&&b.e0>430))) continue;
+    b.a0=a; b.e0=eta; b.m0=mS; b.qv0=qV; toccati=true; v=b.nasce?arso:(1-a)*(1-dm);
     var sventrata=b.fuoco!=null && anno>b.fuoco-.4 && b.fuoco<=da0+.01;                       // lasciata per un incendio: niente stadio in piedi, resta subito il guscio bruciato
     var inPiedi=!b.nasce && !sventrata && dm<.001 && v>.001 && eta<b.t2 && !(anno>=b.medDa && da0>=b.medDa); b.gv=v*RM.sfuma(15,70,eta);      // gv: quanto l'erba prende le vie attorno (aggiornaVie); stadi 1 e 2: la casa abbandonata, ancora in piedi (si veda in testa); una casa già altomedievale, lasciata, non ripassa dalla casa romana in piedi
     crollo=b.fato===2?RM.sfuma(5,60,eta):RM.sfuma(8,95,eta); H=altezzaRovina(b,eta,anno);
@@ -1005,14 +1052,15 @@ function aggiorna(anno){
     d.position.set(b.x,b.y-.15,b.z); if(inPiedi) d.scale.set(b.w,Y,b.d); else if(aR>.01) d.scale.set(b.w,b.alt*aR*(b.nasce?1:bassa)+.15,b.d); else d.scale.set(0,0,0); d.updateMatrix();
     vivi[b.tipo].setMatrixAt(b.ti,d.matrix); vivi[b.tipo].setColorAt(b.ti,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar((.86+.28*b.sfasa)*(1-.1*s1)*(1-.4*rip)));
     vivi[b.tipo].setDegAt(b.ti,inPiedi?Math.max(s1,a<.5?.001:0):rip,s2,hT,b.sfasa+(rip>0&&!inPiedi?2:0));      // rappezzata: il segno +2 sul numero del posto dice allo shader che la casa è abitata (lumi, finestre, tetto intero)
-    scriviMed(b,i,med*a); pPos[i*3+1]=med>.5?b.y+.4:b.y+b.alt*.8; d.position.set(b.x,b.y-.15,b.z);
+    scriviMed(b,i,med*a); if(b.villa.length) scriviVilla(b,med*a,anno,qV); pPos[i*3+1]=med>.5?b.y+.4:b.y+b.alt*.8; d.position.set(b.x,b.y-.15,b.z);
     if(b.por){ var pk=inPiedi?1-RM.sfuma(b.t1,b.t1+.6*(b.t2-b.t1),eta):aR>.5?1:0, fP=b.por[0], aP=b.ry+fP*Math.PI/2, eP=(fP%2?b.w:b.d)/2;      // il portico: con la casa abitata; lasciata, cade nei primi anni dello stadio 2
       d.rotation.set(0,aP,0); d.position.set(b.x+Math.sin(aP)*eP,b.porY-.15,b.z+Math.cos(aP)*eP); if(pk>.02) d.scale.set((fP%2?b.d:b.w)*.92,.6*pk,b.por[1]); else d.scale.set(0,0,0); d.updateMatrix();
       portici.setMatrixAt(b.pi,d.matrix); portici.setColorAt(b.pi,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar(.95+.1*b.sfasa)); d.position.set(b.x,b.y-.15,b.z); }
     /* rovina: dopo lo stadio 2 (o subito, se è bruciata); appena lasciata ha il colore dell'intonaco, poi resta il mattone */
     var eR=eta, vR=v, bassoM=med>0&&b.medRud&&!b.medRotta;      // la casa altomedievale dentro i muri rimasti: di una rovina vecchia (eR dall'abbandono) o della casa romana ridotta a muri bassi
     if(med>0 && b.medRud){ vR=Math.max(v,med*a); eR=b.medRotta?Math.max(0,anno-da0):80; }
-    hm=inPiedi?0:bassoM?vR*(.4+.18*b.tono):vR*altezzaMuri(b,eR,anno); if(q>0) hm=Math.min(hm,hm*(1-q)+q*(.27+.05*b.tono));      // attorno a un orto i monconi si abbassano a muretti (1-2 m fuori terra)
+    var medLasc=!b.nasce && med<.01 && anno>=b.medDa && da0>=b.medDa && !b.medRud;      // 27 novembre 2026: lasciata quando era già una casa altomedievale, bassa e d'argilla: resta un rudere basso, non quello di un'insula
+    hm=inPiedi?0:bassoM?vR*(.4+.18*b.tono):medLasc?vR*(.15+(.2+.08*b.tono)*(1-.4*RM.sfuma(0,80,eta))):vR*altezzaMuri(b,eR,anno); if(q>0) hm=Math.min(hm,hm*(1-q)+q*(.27+.05*b.tono));      // attorno a un orto i monconi si abbassano a muretti (1-2 m fuori terra)
     d.rotation.set(0,b.ry+b.giro*Math.PI/2,0);
     var gu=b.fato===0&&!bassoM, pR=gu?gusci:ruderi; (gu?ruderi:gusci).setMatrixAt(i,ZERO);      // il guscio alto o il rudere basso: l'altra forma resta vuota
     d.scale.set(hm>.01?b.w:0,hm,hm>.01?b.d:0); d.updateMatrix(); pR.setMatrixAt(i,d.matrix);
@@ -1023,7 +1071,7 @@ function aggiorna(anno){
     tettiRotti.setColorAt(i,c.copy(bianco).lerp(COPPI_ROTTI,RM.sfuma(0,25,eta)).multiplyScalar(.8+.25*b.tono));
     /* macerie: crescono mentre i muri scendono e restano (nessuno le porta via, se non per farci un orto), coperte via via da rovi ed erba */
     var macerie=macerieV[b.mv], lM=b.tipo===3?1.18:1.05+.22*b.fit, hM=(b.tipo===3?.7:1)*(1+.45*b.fit);      // nei quartieri fitti i cumuli escono nei vicoli e sono più alti; la domus fa un cumulo largo e basso
-    m=v*crollo*(1-.85*q)*(inPiedi?s2:1); d.rotation.set(0,b.ry+(b.mv===1?b.giro*Math.PI/2:b.sfasa*6),0); d.position.y=b.y-.06; d.scale.set(m>.02?b.w*lM:0,hM*m*Math.min(.6,.24+.28*b.alt*(1-b.hFin)),m>.02?b.d*lM:0); d.updateMatrix(); macerie.setMatrixAt(i,d.matrix);
+    m=v*crollo*(1-.85*q)*(inPiedi?s2:1)*(medLasc?.35:1); d.rotation.set(0,b.ry+(b.mv===1?b.giro*Math.PI/2:b.sfasa*6),0); d.position.y=b.y-.06; d.scale.set(m>.02?b.w*lM:0,hM*m*Math.min(.6,.24+.28*b.alt*(1-b.hFin)),m>.02?b.d*lM:0); d.updateMatrix(); macerie.setMatrixAt(i,d.matrix);
     macerie.setColorAt(i,c.copy(MACERIA).lerp(MACERIA_VECCHIA,RM.sfuma(30,150,eta)).multiplyScalar(.8+.35*b.tono));
     macerie.setDegAt(i,v*RM.sfuma(15,170,eta),0,1,b.sfasa);
     if(b.tipo===3){ var kC=v*(inPiedi?0:1)*(1-RM.sfuma(90+200*b.tono,160+260*b.tono,eta)*(b.sorte<.33?0:1));      // le colonne del peristilio: in piedi dopo il crollo, poi portate via a poco a poco
@@ -1052,7 +1100,7 @@ function aggiorna(anno){
     if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;
   });
   if(toccati){
-    vivi.concat([ruderi,gusci,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,portici,colonneRov,medRec,medPoz],macerieV,MED).forEach(function(p){ p.stringi(); });
+    vivi.concat([ruderi,gusci,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,portici,colonneRov,medRec,medPoz,vilRec],macerieV,MED,VIL).forEach(function(p){ p.stringi(); });
     gLuci.attributes.color.needsUpdate=true; gLuci.attributes.position.needsUpdate=true; aggiornaVie(); statoVie();
   }
   if(RM.statoVie){ RM.statoVie.anno.value=.3*RM.sfuma(450,800,anno); RM.statoVie.esterno.value=.55*RM.sfuma(430,780,anno); }      // la manutenzione che cala per tutti; fuori, dove non ci sono case, le vie consolari

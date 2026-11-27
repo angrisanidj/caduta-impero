@@ -330,7 +330,8 @@ var acque=(function(){
   function dueSponde(Ax,lat,mezzo,larga,parti,id,nome){
     var q={x:Ax.q.x+Ax.dx[0]*lat, z:Ax.q.z+Ax.dx[1]*lat}, piedi=null;
     PC.A.dentro(q.x,-.5,q.z,Ax.rot,function(B){ misurato(B,parti,larga,DB,YT,P.travertino); piedi=rampe(B,q,Ax.rot,mezzo,YT,larga,P.travertino,suolo); });
-    RM.ponti.push({id:id, nome:nome, x:q.x, z:q.z, rot:Ax.rot, mezzo:mezzo, larga:larga, yTop:YT-.5, classe:'A', comune:'A', piedi:piedi}); return q; }
+    var pile=[], xp=-mezzo; parti.forEach(function(p,i){ if(p[1]===0 && i>0 && i<parti.length-1) pile.push([xp+p[0]/2,p[0]/2]); xp+=p[0]; });      // centro e mezza larghezza delle pile, per la schiuma del fiume (js/base.js, pileFiume; 27 novembre 2026)
+    RM.ponti.push({id:id, nome:nome, x:q.x, z:q.z, rot:Ax.rot, mezzo:mezzo, larga:larga, yTop:YT-.5, classe:'A', comune:'A', piedi:piedi, pile:pile}); return q; }
   /* il capo sull'isola sta sull'orlo di travertino; il resto, più lungo del ramo del fiume del modello (22 m), finisce sulla riva */
   function orlo(d){ var u=d/MEZZA; return WI*Math.pow(1-Math.pow(Math.abs(u),u<0?2.6:1.7),.75); }      // mezza larghezza dell'isola a d unità dal suo centro
   var qF=dueSponde(F,-(orlo(5.3)+3.11-.15),3.11,.3,[[.27,0],[2.425,1.21],[.2,0],[.4,.2],[.2,0],[2.45,1.22],[.275,0]],'pontefabricio','Ponte Fabricio');      // dalla riva sinistra (-x) all'isola

@@ -78,7 +78,7 @@ function circo(B,L,W,h,spina){                           // circo o stadio: grad
   var pr=function(w){ return RM.stadio(L-(W-w),w,26,14); }, est=pr(W), cima=pr(W-1.3), pista=pr(W*.62);
   var asse=pista.map(function(p){ return [Math.max(-L/2+4,Math.min(L/2-W/2,p[0])),0]; });
   B.striscia(est,0,est,h,P.travertino).striscia(est,h,cima,h,P.travertino).striscia(cima,h,cima,h-.3,P.travertino)
-   .striscia(cima,h-.3,pista,.45,P.tufo).striscia(pista,.45,pista,.12,P.travertino).striscia(pista,.12,asse,.12,P.sabbia);
+   .striscia(cima,h-.3,pista,.45,P.tufo).striscia(pista,.45,pista,.12,P.travertino).striscia(pista,.12,asse,.12,P.arena);
   B.fornici(est,.15,h*.36,.5,1,false).fornici(est,h*.56,h*.28,.4,1,false).aperture(-L/2,-W/2+1,-L/2,W/2-1,12,.15,h*.4);
   if(spina){
     B.scatola(L*.56,.4,.8,-1,.12,0,P.travertino);      // la spina; l'obelisco di Augusto che stava nel mezzo (oggi in piazza del Popolo) è una voce a sé dal 27 novembre 2026 (obeliscoflaminio)
@@ -156,61 +156,10 @@ function castrense(B,murato){
   if(!murato) B.striscia(ar,.12,ar.map(function(){ return [0,0]; }),.12,P.sabbia,false);
   else [-1,1].forEach(function(s){ B.quad([s*2.4,0,0],[s*4.43,0,0],[s*4.43,2.05,0],[s*2.4,.3,0],MT).quad([s*2.4,.3,0],[s*4.43,2.05,0],[s*4.43,0,0],[s*2.4,0,0],MT); });      // le testate del taglio
 }
-/* o (facoltativo): lc e pc, larghezza e profondità del corpo centrale; zc, dove sta il suo centro; rc, raggio del caldarium; recinto:false per le terme senza peribolo.
-   Dal 23 novembre 2026 le grandi terme non escono più tutte dallo stesso stampo (fonti lette: Platner e Ashby, Thermae Diocletiani e Thermae Antoninianae):
-   caldarium:'rettangolo' (Diocleziano: «the rectangular caldarium, which projected south-westwards»); tepidarium:'tondo' («the circular tepidarium»);
-   rotonde:true (due sale circolari «at the west and south angles of the peribolus», una è San Bernardo); stadio:true (Caracalla: al centro del lato sud-ovest «rows of seats,
-   with a curve at each end», e dietro, più in alto, le cisterne, «sixty-four vaulted chambers in two stories and in two rows»); esedreLati:true (Caracalla: «two huge exedrae»;
-   Platner non dice su quali lati: qui stanno sui due fianchi, come nelle piante correnti). Raggi, altezze e numero dei gradini sono indicativi. */
-function terme(B,L,Pd,o){                                 // recinto con giardini, corpo centrale a volte, caldarium a sud (+z)
-  o=o||{}; var s=.7, a=1.5, zc=o.zc==null?-Pd*.05:o.zc, lc=o.lc||L*.64, cd=o.pc||Pd*.3, rc=o.rc||L*.085, zk=zc+cd/2+Pd*.05;
-  if(o.recinto!==false){
-  B.scatola(L-1,.08,Pd-1,0,0,0,P.prato);
-  arcato(B,L,a,s,0,0,-Pd/2,P.mattone,1,Math.round(L/1.6));
-  B.scatola(s,a,Pd,-L/2,0,0,P.mattone).scatola(s,a,Pd,L/2,0,0,P.mattone);
-  if(o.stadio){                                                                                  // Caracalla: gradinata e cisterne al centro del lato di fondo
-    var ws=L*.42, zf=Pd/2-Pd*.07-.2, gs;
-    arcato(B,L,a,s,0,0,Pd/2,P.mattone,1,Math.round(L/1.6));
-    B.scatola(ws,2.2,Pd*.07,0,0,Pd/2-Pd*.035-.2,P.mattone);                                      // le cisterne: due file di camere su due piani
-    [.2,1.25].forEach(function(y){ B.aperture(ws/2,zf,-ws/2,zf,16,y,.75); });
-    for(gs=0;gs<4;gs++) B.scatola(ws*.86,.9-.22*gs,.42,0,0,zf-.21-.42*gs,P.travertino);          // le file di sedili, verso il giardino
-    [-1,1].forEach(function(k){ var cu=RM.ellisse(1.7,1.7,8,0,PI).map(function(q){ return [k*(ws*.43+q[1]*.8),zf-.84+q[0]*-.5]; });      // la curva a ciascun capo
-      B.striscia(cu,0,cu,.5,P.travertino,false); });
-  } else {
-    arcato(B,L*.36,a,s,-L*.32,0,Pd/2,P.mattone,1,8); arcato(B,L*.36,a,s,L*.32,0,Pd/2,P.mattone,1,8);
-    var es=RM.ellisse(L*.15,L*.12,16,0,PI).map(function(p){ return [p[0],p[1]+Pd/2]; });         // esedra del recinto
-    B.striscia(es,0,es,a+.3,P.mattone,false).fornici(es,.2,.8,.5,1,false);
-  }
-  if(o.esedreLati) [-1,1].forEach(function(k){ var el=RM.ellisse(Pd*.17,L*.085,14,0,PI).map(function(q){ return [k*(L/2+q[1]),q[0]]; });
-    B.striscia(el,0,el,a+.5,P.mattone,false).fornici(el,.2,.9,.5,1,false); });
-  if(o.rotonde) [-1,1].forEach(function(k){ B.cilindro(1.15,1.7,k*(L/2-.6),0,Pd/2-.6,P.mattone,null,16).cupola(1.15,k*(L/2-.6),1.7,Pd/2-.6,P.intonaco,.55); });
-  }
-  arcato(B,lc,2.3,cd,0,0,zc,P.intonaco,2,Math.round(o.lc?lc*.78:L*.5));                                   // corpo centrale: i muri di mattoni erano coperti di intonaco
-  B.scatola(L*.2,3.7,Pd*.17,0,0,zc,P.intonaco);                                                   // frigidarium, a tre crociere
-  for(var i=-1;i<=1;i++) B.falde(Pd*.19,.8,L*.066,i*L*.066,3.7,zc,P.coppi,PI/2,P.intonaco);
-  B.falde(L*.2,.7,Pd*.17,0,3.7,zc,P.coppi,0,P.intonaco);
-  B.aperture(-L*.1,zc+Pd*.085,L*.1,zc+Pd*.085,3,2.5,1.05,L*.05).aperture(L*.1,zc-Pd*.085,-L*.1,zc-Pd*.085,3,2.5,1.05,L*.05);      // i finestroni termali, uno per crociera, sopra i tetti delle aule vicine
-  [-1,1].forEach(function(k){
-    B.scatola(L*.12,2.9,Pd*.26,k*L*.17,0,zc,P.intonaco).volta(Pd*.26,L*.06,k*L*.17,2.9,zc,P.intonaco,PI/2);  // aule laterali
-    B.scatola(L*.13,.12,Pd*.2,k*L*.255,2.3,zc-Pd*.02,P.ombra);                                              // palestre a cielo aperto
-    if(o.recinto!==false) B.scatola(L*.1,1.9,Pd*.1,k*L*.3,0,Pd*.3,P.mattone).falde(L*.1,.5,Pd*.1,k*L*.3,1.9,Pd*.3,P.coppi);       // biblioteche
-  });
-  B.scatola(L*.2,.14,Pd*.09,0,2.3,zc-Pd*.11,P.acqua);                                                       // natatio
-  if(o.caldarium==='rettangolo'){ var wq=rc*2.5, dq=rc*1.7;                                                // caldarium rettangolare, che sporge dal corpo centrale
-    B.scatola(wq,3.1,dq,0,0,zk,P.intonaco).falde(wq+.1,.8,dq+.1,0,3.1,zk,P.coppi,0,P.intonaco);
-    B.aperture(-wq/2,zk+dq/2,wq/2,zk+dq/2,3,.5,1.3).aperture(-wq/2,zk+dq/2,wq/2,zk+dq/2,3,2.05,.85);
-  } else {
-  B.cilindro(rc,3.3,0,0,zk,P.intonaco).cupola(rc,0,3.3,zk,P.intonaco,.62);                                 // caldarium: rotonda a cupola, con le grandi finestre a sud per il sole del pomeriggio
-  var cal=RM.ellisse(rc,rc,12,0,PI).map(function(p){ return [p[0],p[1]+zk]; });
-  B.fornici(cal,.5,1.1,.5,1,false).fornici(cal,2,.9,.5,1,false);
-  }
-  if(o.tepidarium==='tondo'){ var zt=(zc+Pd*.085+zk-rc*.85)/2; B.cilindro(L*.045,2.75,0,0,zt,P.intonaco,null,14).cupola(L*.045,0,2.75,zt,P.intonaco,.55); }      // tepidarium circolare, fra l'aula centrale e il caldarium
-  else B.scatola(L*.1,2.6,Pd*.08,0,0,zk-Pd*.08,P.intonaco);
-}
 /* Le terme una per una (27 novembre 2026). Prima tutte le terme uscivano da terme() e da mezza distanza sembravano la stessa cosa (richiesta dell'utente: «mi convincono poco
    perché tutti uguali»). Ora le grandi terme hanno misure, orientamento e parti proprie, dalle voci di Platner e Ashby e da it.wikipedia lette quel giorno: frasi e tabella
    «Per chi disegna» in src/testi/topografia-fonti.md, sezione «Le terme, una per una». Coordinate locali: x lungo l'asse maggiore del corpo centrale, +z verso il caldarium.
-   Schema dichiarato nelle schede: altezze, numero e forma delle sale minori, numero delle arcate, posto delle esedre piccole. terme() qui sopra non è più chiamata. */
+   Schema dichiarato nelle schede: altezze, numero e forma delle sale minori, numero delle arcate, posto delle esedre piccole. La vecchia terme(), uguale per tutte e non più chiamata, è stata tolta il 27 novembre 2026. */
 function muroTerme(B,x0,z0,x1,z1,h,s,col,liv){                 // un tratto di recinto ad arcate fra due punti
   var L=Math.hypot(x1-x0,z1-z0); B.dentro((x0+x1)/2,0,(z0+z1)/2,Math.atan2(-(z1-z0),x1-x0),function(B){ arcato(B,L,h,s,0,0,0,col||P.mattone,liv||1,Math.max(2,Math.round(L/1.6))); });
 }
@@ -828,7 +777,8 @@ var M=[
  {id:'fangocirco', x:0,z:71, ry:-.651, come:'circo', fa:function(B){
     var FANGO=RM.col(0x8a7656), L=62, w=8.3, p=RM.stadio(L-(14-w),w,26,14), asse=p.map(function(q){ return [Math.max(-L/2+4,Math.min(L/2-7,q[0])),0]; }), rnd=RM.casuale(550), k;
     B.striscia(p,.135,asse,.135,FANGO);
-    for(k=0;k<9;k++) B.cilindro(.5+.8*rnd(),.02,-25+48*rnd(),.14,(rnd()<.5?-1:1)*(1+1.8*rnd()),P.acqua,null,12);
+    var POZZA=RM.col(0x5d6650);      // 27 novembre 2026: acqua ferma e torbida di palude («waterlogged»), grigio-verde come il Tevere del modello; prima l'azzurro di P.acqua, quello delle vasche
+    for(k=0;k<9;k++) B.cilindro(.5+.8*rnd(),.02,-25+48*rnd(),.14,(rnd()<.5?-1:1)*(1+1.8*rnd()),POZZA,null,12);
  }},
  {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, altoFisso:4.118, raggioFisso:25.931, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6],[11.2,13.1,3.8]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
     /* Posizioni reali: i centri dei resti rilevati in OpenStreetMap (src/roma/grezzi/osm-foro.json), scritti qui in coordinate di scena.
@@ -1145,7 +1095,7 @@ var M=[
     corinzio, prostilo esastilo, con una scalinata larga quanto tutta la fronte; podio massiccio. Il punto di Wikidata (Q383609: x -5,8, z 32,2) nel modello cade sul fianco del colle,
     che qui è più stretto del vero: il tempio sta sul ciglio dell'angolo ovest del pianoro, a x 0, z 37 (scelta). Fronte verso l'esterno del colle (ovest-nord-ovest): scelta.
     Altezza delle colonne e del podio: nessuna fonte letta; qui 13 e 5 m. */
- {id:'magnamater', nome:'Tempio della Magna Mater', etichetta:'Magna Mater', x:0,z:37, ry:-2.1, come:'palatino', zone:[[0,.3,[1.3,2.4],.3]], fa:function(B){      // poggia sul piano del palazzo (come); la zona tiene lontane le case, senza toccare il terreno (PENDIO, più sotto)
+ {id:'magnamater', nome:'Tempio della Magna Mater', etichetta:'Magna Mater', x:0,z:37, ey:3.6, ry:-2.1, come:'palatino', zone:[[0,.3,[1.3,2.4],.3]], fa:function(B){      // poggia sul piano del palazzo (come); la zona tiene lontane le case, senza toccare il terreno (PENDIO, più sotto)
     B.tempio(1.71,3.32,1.3,0,0,0,{fronte:6,podio:.5});
     for(var g=0;g<4;g++) B.scatola(2.2,.5*(4-g)/4.3,.22,0,0,1.66+.25+.11+g*.22,P.travertino);                                 // la scalinata larga quanto la fronte
  }},
@@ -1673,8 +1623,8 @@ var M=[
     B.aperture(24.35,-3,-24.35,-3,n,.05,.5);
     for(k=0;k<4;k++){ var ax=-19.1+k*6.07; B.scatola(1.8,.95,15.5,ax,0,13,P.mattone).falde(15.6,.4,1.9,ax,.95,13,P.coppi,PI/2,P.mattone); }     // magazzini di Galba: quattro ali di celle, tre cortili
     [-1,1].forEach(function(q){ B.scatola(20,.95,1.8,-10,0,13+q*6.85,P.mattone).falde(20.1,.4,1.9,-10,.95,13+q*6.85,P.coppi,0,P.mattone); });
-    B.scatola(47,1.5,1,0,-1.75,-13.7,P.travertino);                                                                                         // muro di banchina
-    for(k=-4;k<=4;k++) B.scatola(1.8,1.15,1.2,k*5.2,-1.75,-14.6,P.travertino);                                                             // scale e rampe verso l'acqua
+    B.scatola(47,1.5,1,0,-1.75,-12.7,P.travertino);                                                                                         // muro di banchina (27 novembre 2026: un metro di modello più verso terra; a -13,7 la sua faccia stava da 4,3 a 4,6 unità dall'asse del fiume, che è largo 5,6 per parte: 10-13 m dentro l'acqua)
+    for(k=-4;k<=4;k++) B.scatola(1.8,1.15,1.2,k*5.2,-1.75,-13.6,P.travertino);                                                             // scale e rampe verso l'acqua
  }},
  {id:'testaccio', nome:'Monte Testaccio', x:-83.3,z:184.4, ry:0, zone:[[-1.5,-1.3,8],[-2.8,-1.5,7],[-.5,-3.3,7],[.8,2.5,6.4],[3.3,6.5,4.8],[1.5,-7.5,4.3],[4.5,10.5,2.7],[2.8,-10.8,2.3],[4,12.5,1.5]], et:1, fa:function(B){       // collina di cocci d'anfora: 35 m sul piano, qui 1,8 volte tanto come gli altri rilievi; le zone (cerchi scelti per coprire il contorno con poco avanzo) tengono le case fuori dal monte
     /* Rifatto il 25 novembre 2026 sulle fonti lette (src/testi/topografia-fonti.md, sezione «Monte Testaccio»); contorno e gradoni rifatti la sera dello stesso giorno.
@@ -1940,14 +1890,26 @@ var M=[
     for(nc=1;nc<14;nc++) for(var n3=-1;n3<=1;n3++){ var x3=10-nc*20/14+n3*.17, y3=piedeEst(x3)+.25; B.vano(x3,y3,-9.075,-1,0,.1,Math.min(.55,.7-y3)); }      // fra l'una e l'altra «narrow semicircular niches in groups of three» (Platner e Ashby, Templum Claudii)
     /* il giardino della pianta marmorea (27 novembre 2026; Stanford, scheda 4b): «long, narrow strips» attorno al tempio, lette come siepi (Lloyd 1982), spazio libero davanti e
        dietro, sentieri sull'asse nord-sud dai bordi al tempio. Quante strisce, quanto distanti e quanto alte: schema */
-    [[-1,1],[1,1]].forEach(function(q){ [3.2,5.2,7.2].forEach(function(dx){ B.scatola(.9,.12,.14,q[0]*dx,.93,-2.3,P.chioma).scatola(.9,.12,.14,q[0]*dx,.93,2.3,P.chioma); }); });      // le siepi ai lati lunghi del tempio, a nord e a sud
-    [-1,1].forEach(function(q){ [2.6,4.6,6.6].forEach(function(dx){ B.scatola(.14,.12,1.5,q*dx,.93,1.05,P.chioma).scatola(.14,.12,1.5,q*dx,.93,-1.05,P.chioma); }); });      // le siepi di traverso, interrotte dal sentiero
-    B.scatola(15.6,.01,.5,0,.93,0,P.sabbia);                                                         // il sentiero sull'asse nord-sud, dal bordo nord al bordo sud
+    /* le siepi stanno in tempioclaudiosiepi, qui sotto: potate finché il tempio è in uso, poi macchie (27 novembre 2026) */
+    B.scatola(15.6,.01,.5,0,.93,0,P.sabbia);                                                        // il sentiero sull'asse nord-sud, dal bordo nord al bordo sud
     B.dentro(0,.85,0,0,function(B){ tempietto(B,2.2,3.8,.35,1.4,6,0,0,0,false);
       [[.296,2.05,.3],[.242,2.275,.15],[.188,2.425,.15],[.134,2.575,.15]].forEach(function(g){ B.scatola(1.65,g[0],g[2],0,0,g[1],P.travertino); }); });      // i quattro gradini davanti al podio (pianta marmorea); il primo copre la scala di tempietto()
     var NG=44, SA=3.67/(NG+1), PA=.097, k;                                                          // nord: la scalinata verso il Colosseo, dal piano (0,93) al terreno della valle (-2,74)
     for(k=1;k<=NG;k++) B.scatola(PA,.93-SA*k+2.9,2.4,-10-PA*(k-.5),-2.9,0,P.travertino);
     for(k=1;k<=6;k++) B.scatola(.2,.93-.04*k-.5,1.6,10+.2*(k-.5),.5,0,P.travertino);             // sud: la rampa a gradini, fino al terreno del Celio (0,7)
+ }},
+ /* Le siepi del giardino del tempio di Claudio (27 novembre 2026, riserva 47): potate finché il tempio è curato; dopo la chiusura (392) nessuno le pota più e dal 440 al loro posto
+    ci sono macchie e arbusti disordinati lungo le stesse file. Che le siepi si inselvatichissero non lo dice nessuna fonte: è ciò che succede a un giardino lasciato, e l'anno è una scelta. */
+ {id:'tempioclaudiosiepi', x:64.72,z:50.57, ry:-1.21, come:'tempioclaudio', fa:function(B){
+    [[-1,1],[1,1]].forEach(function(q){ [3.2,5.2,7.2].forEach(function(dx){ B.scatola(.9,.12,.14,q[0]*dx,.93,-2.3,P.chioma).scatola(.9,.12,.14,q[0]*dx,.93,2.3,P.chioma); }); });      // le siepi ai lati lunghi del tempio, a nord e a sud
+    [-1,1].forEach(function(q){ [2.6,4.6,6.6].forEach(function(dx){ B.scatola(.14,.12,1.5,q*dx,.93,1.05,P.chioma).scatola(.14,.12,1.5,q*dx,.93,-1.05,P.chioma); }); });      // le siepi di traverso, interrotte dal sentiero
+ }},
+ {id:'tempioclaudiomacchie', x:64.72,z:50.57, ry:-1.21, come:'tempioclaudio', fa:function(B){
+    var r=RM.casuale(441);
+    function macchia(x0,z0,lx,lz){ var n=3+Math.floor(r()*3); for(var j=0;j<n;j++){ var t=(j+.5)/n+(r()-.5)*.25, rr=.09+.12*r();      // lungo la vecchia siepe, a ciuffi di misura diversa, con dei vuoti
+      if(r()<.2) continue; palla(B,rr,x0+(t-.5)*lx+(r()-.5)*.12,.93+rr*.55,z0+(t-.5)*lz+(r()-.5)*.12,r()<.5?P.chioma:P.chioma2,1+.5*r(),.7+.4*r(),1+.5*r(),7); } }
+    [[-1,1],[1,1]].forEach(function(q){ [3.2,5.2,7.2].forEach(function(dx){ macchia(q[0]*dx,-2.3,.9,0); macchia(q[0]*dx,2.3,.9,0); }); });
+    [-1,1].forEach(function(q){ [2.6,4.6,6.6].forEach(function(dx){ macchia(q*dx,1.05,0,1.5); macchia(q*dx,-1.05,0,1.5); }); });
  }},
  /* Arco di Dolabella e Silano (10 d.C.), in travertino, poi sotto gli archi neroniani dell'acqua Claudia (Platner e Ashby, arcus). Contorno e orientamento: OpenStreetMap, way 135618677.
     Altezza e larghezza del fornice indicative. */
@@ -2176,7 +2138,11 @@ var M=[
  {id:'hortiacilii', nome:'Horti degli Acilii', etichetta:'Horti Aciliorum', x:RM.HORTI[1][0],z:RM.HORTI[1][1], ry:0, fa:function(B){ horti(B,1); }},
  {id:'hortimaecenatis', nome:'Horti di Mecenate', x:RM.HORTI[2][0],z:RM.HORTI[2][1], ry:0, fa:function(B){ horti(B,2); }},
  {id:'hortilamiani', nome:'Horti Lamiani', x:RM.HORTI[3][0],z:RM.HORTI[3][1], ry:0, fa:function(B){ horti(B,3); }},
- {id:'hortilamianistatue', x:RM.HORTI[3][0],z:RM.HORTI[3][1], ry:0, fa:function(B){ statueLamiani(B); }},      // le statue dei Lamiani (27 novembre 2026), a parte perché si tolgono nel 537 e il giardino resta
+ {id:'hortilamianistatue', x:RM.HORTI[3][0],z:RM.HORTI[3][1], ry:0, fa:function(B){ statueLamiani(B); }},
+ /* I riquadri bordati di siepe dei Lamiani e la siepe di cinta (27 novembre 2026, riserva 60): tenuti finché gli horti sono curati; dal 600, sessant'anni dopo l'abbandono del 537,
+    non si vedono più sotto il bosco cresciuto. Che si perdessero allora è una scelta, detta nella scheda: nessuna fonte racconta la fine del giardino. */
+ {id:'hortilamianiriquadri', x:RM.HORTI[3][0],z:RM.HORTI[3][1], ry:0, fa:function(B){ var H=RM.HORTI[3], a3=.5, W3=15, D3=10;
+    parterre(B,H,H[0],H[1],W3,D3,a3,5,3); muroLinea(B,H,rett(H[0],H[1],W3+1.3,D3+1.3,a3),.22,P.chioma,.24); }},      // le statue dei Lamiani (27 novembre 2026), a parte perché si tolgono nel 537 e il giardino resta
  {id:'hortiliciniani', nome:'Horti Liciniani', x:RM.HORTI[4][0],z:RM.HORTI[4][1], ry:0, fa:function(B){ horti(B,4); }},
  {id:'hortiluculliani', nome:'Horti di Lucullo', x:RM.HORTI[5][0],z:RM.HORTI[5][1], ry:0, fa:function(B){ horti(B,5); }},
  {id:'hortispeiveteris', nome:'Horti Spei Veteris', x:RM.HORTI[6][0],z:RM.HORTI[6][1], ry:0, fa:function(B){ horti(B,6); }},
@@ -2370,12 +2336,11 @@ function horti(B,k){
     /* 27 novembre 2026: il luogo dei Lamiani si riconosce dalle «numerous works of art» trovate lì. Qui un giardino in piano, a riquadri bordati di siepe, chiuso da una
        siepe con i cipressi, e le statue sugli incroci dei viali (a parte, hortilamianistatue: si tolgono nel 537). La forma a riquadri, la siepe, il numero e il posto delle
        statue sono uno schema: la fonte dice solo che lì si trovarono molte opere d'arte. */
-    var a3=.5, W3=15, D3=10, nx3=5, nz3=3, i3, j3;
-    parterre(B,H,H[0],H[1],W3,D3,a3,nx3,nz3);
+    var a3=.5, W3=15, D3=10, nx3=5, nz3=3, i3, j3;      // i riquadri bordati di siepe e la siepe di cinta stanno in hortilamianiriquadri (27 novembre 2026): si perdono dopo l'abbandono
     for(i3=0;i3<=nx3;i3++) viale(B,H,[inMondo(H[0],H[1],a3,-W3/2+W3*i3/nx3,-D3/2-.3),inMondo(H[0],H[1],a3,-W3/2+W3*i3/nx3,D3/2+.3)],.3);
     for(j3=0;j3<=nz3;j3++) viale(B,H,[inMondo(H[0],H[1],a3,-W3/2-.3,-D3/2+D3*j3/nz3),inMondo(H[0],H[1],a3,W3/2+.3,-D3/2+D3*j3/nz3)],.3);
     for(i3=0;i3<=nx3;i3++) for(j3=0;j3<=nz3;j3++){ var s3=inMondo(H[0],H[1],a3,-W3/2+W3*i3/nx3,-D3/2+D3*j3/nz3); if(liberoH(s3[0],s3[1],.15,H)) STATUE_LAMIA.push([s3[0],s3[1],a3+(i3<nx3/2?PI/2:-PI/2)]); }
-    var sie=rett(H[0],H[1],W3+1.3,D3+1.3,a3); muroLinea(B,H,sie,.22,P.chioma,.24); filare(k,H,rett(H[0],H[1],W3+2.6,D3+2.6,a3),1.1,0,0,1);
+    filare(k,H,rett(H[0],H[1],W3+2.6,D3+2.6,a3),1.1,0,0,1);
     boschetto(k,H,H[0]+inMondo(0,0,a3,0,7.8)[0],H[1]+inMondo(0,0,a3,0,7.8)[1],2.5,6,[3],931); boschetto(k,H,H[0]-inMondo(0,0,a3,0,7.8)[0],H[1]-inMondo(0,0,a3,0,7.8)[1],2.5,6,[3],932);
   } else if(k===5){
     /* Horti di Lucullo (Platner e Ashby, «Horti Luculliani»): sopra il punto dove l'acqua Vergine esce dal colle, presso Capo le Case; di Lucullo verso il 60 a.C., poi di Valerio
@@ -2854,9 +2819,9 @@ RM.frame.push(function(){
   var w=riquadro.clientWidth, h=riquadro.clientHeight, messi=[];      // messi: i rettangoli delle etichette già visibili; una che ne coprirebbe un'altra si nasconde (23 novembre 2026: le due scholae si accavallavano)
   M.forEach(function(o){
     if(!o.div) return;
-    var ex=o.ex!=null?o.ex:o.x, ez=o.ez!=null?o.ez:o.z;      // ex, ez: dove sta il nome, se non al centro del gruppo
-    v.set(ex,o.g.position.y+7,ez).applyMatrix4(RM.camera.matrixWorldInverse); var davanti=v.z<-2;      // dietro la camera non si proietta
-    v.set(ex,o.g.position.y+7,ez).project(RM.camera);
+    var ex=o.ex!=null?o.ex:o.x, ez=o.ez!=null?o.ez:o.z, ey=o.ey!=null?o.ey:7;      // ex, ez: dove sta il nome, se non al centro del gruppo; ey: a che altezza sopra il gruppo (di norma 70 m; 27 novembre 2026)
+    v.set(ex,o.g.position.y+ey,ez).applyMatrix4(RM.camera.matrixWorldInverse); var davanti=v.z<-2;      // dietro la camera non si proietta
+    v.set(ex,o.g.position.y+ey,ez).project(RM.camera);
     var vis=o.presenza>.5 && davanti && v.z<1 && Math.abs(v.x)<.8 && v.y>-.9 && v.y<.88 && !(v.y>.3 && v.x<-.1) && (o.et || Math.hypot(RM.camera.position.x-o.x,RM.camera.position.y,RM.camera.position.z-o.z)<(o.raggio>6?150:95));   // non sui bordi né sopra il contatore; i monumenti minori hanno il nome solo da vicino
     var px=(v.x+1)*w/2, py=(1-v.y)*h/2;
     if(vis){ if(!o.lw){ o.lw=o.div.offsetWidth||o.div.textContent.length*7; o.lh=o.div.offsetHeight||16; }

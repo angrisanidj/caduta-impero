@@ -623,7 +623,7 @@ RM.frame.push(function(dt){ RM.tempoAcqua.value+=dt; });
    suo e a monte e a valle di un ponte l'acqua sembrava diversa). Le ombre si leggono un metro e mezzo più in alto, con la normale verso l'alto: il nastro del fiume è quasi alla
    quota del terreno e l'ombra del terreno stesso lo quadrettava. Al gradino «bassa» (niente veste) restano colore, rive e riflesso del cielo, senza increspature. Con meno animazioni
    la corrente sta ferma. RM.acquaFiume: la tinta e il cielo, per la piena di js/eventi.js, che è la stessa acqua.
-   La corrente che si vede (27 novembre 2026; l'utente dal telefono: «Ma il fiume non si muove su telefonino?»): le increspature vanno alla velocità vera, circa 1 m/s, e si spengono
+   La corrente che si vede (26 novembre 2026; l'utente dal telefono: «Ma il fiume non si muove su telefonino?»): le increspature vanno alla velocità vera, circa 1 m/s, e si spengono
    sotto i dieci pixel, quindi da lontano e su uno schermo piccolo il fiume sembrava fermo. Sopra il colore scendono a valle strisce di torbida (qualche decina di metri di
    larghezza, un centinaio di lunghezza) e filamenti di schiuma sporca, poco contrastati. FORZATURA VOLUTA: da vicino vanno alla velocità vera (0,09 unità al secondo), da lontano
    più in fretta, quanto serve perché sullo schermo si spostino di circa due pixel e mezzo al secondo (velocità = 2,5 volte la grandezza del pixel, fwF); per non deformare il
@@ -653,7 +653,7 @@ function fiumeNuovo(sh){ var A=String.fromCharCode(10), tx=RM.VESTE?RM.trameVest
       'float acqua=1.0-smoothstep(filo-0.012-0.5*fwF/5.6,filo+0.006+0.5*fwF/5.6,bw);',
       'vec3 cA=mix(uAcquaC,uAcquaR,smoothstep(0.3,0.95,bw/filo));',
       'if(uVesteF>0.5){ vec4 mt=texture2D(tMacchie,vec2(vRiva.x*0.35,sF*0.008-uTempo*0.0012)); cA*=0.92+0.16*mt.g; }',      // filoni di torbida che scendono con la corrente
-      'if(uVesteF>0.5 && acqua>0.0){ float vC=max(0.09,2.5*fwF); float fT=fract(uTempo*0.1); float w1=1.0-abs(2.0*fT-1.0); float fT2=fract(uTempo*0.1+0.5);',      // la corrente che si vede da lontano (27 novembre 2026): vedi il commento in testa
+      'if(uVesteF>0.5 && acqua>0.0){ float vC=max(0.09,2.5*fwF); float fT=fract(uTempo*0.1); float w1=1.0-abs(2.0*fT-1.0); float fT2=fract(uTempo*0.1+0.5);',      // la corrente che si vede da lontano (26 novembre 2026): vedi il commento in testa
       '  vec2 c1=vec2(vRiva.x*1.6+0.13,(sF-vC*fT*10.0)/90.0); vec2 c2=vec2(vRiva.x*1.6+0.57,(sF-vC*fT2*10.0)/90.0+0.31);',      // una piastrella ogni 7 unità di traverso e ogni 90 lungo il fiume: strisce allungate nel verso della corrente
       '  float tb=texture2D(tMacchie,c1*vec2(0.38,0.6)).g*w1+texture2D(tMacchie,c2*vec2(0.38,0.6)).g*(1.0-w1); float fs=texture2D(tMacchie,c1*vec2(2.0,1.5)).b*w1+texture2D(tMacchie,c2*vec2(2.0,1.5)).b*(1.0-w1);',
       '  float kV=smoothstep(0.01,0.06,fwF), kL=smoothstep(0.08,0.5,fwF);',      // kV: da vicino si spengono (il fiume da vicino resta com\'era); kL: da lontano la torbida un poco più marcata, se no il filtro della trama la cancella
@@ -689,10 +689,10 @@ function fiumeNuovo(sh){ var A=String.fromCharCode(10), tx=RM.VESTE?RM.trameVest
       'reflectedLight.directSpecular=min(reflectedLight.directSpecular,vec3(mix(1.2,0.16,smoothstep(0.015,0.15,fwF))))*mix(vec3(1.0),vec3(0.8,0.88,0.92),smoothstep(0.015,0.15,fwF));'].join(A))      // il sole riflesso: da vicino punti chiari sulle increspature, da lontano un tetto basso e grigio-azzurro (radente, controsole, il riflesso largo del sole faceva il fiume bianco come ghiaccio)
     .replace('#include <emissivemap_fragment>',['#include <emissivemap_fragment>',
       '{ vec3 Vf=normalize(cameraPosition-vWf); vec3 Rf=reflect(-Vf,nFiume); vec3 cie=mix(uCieloB,uCieloA,pow(clamp(Rf.y*1.5,0.0,1.0),0.6));',
-      '  cie=mix(vec3(dot(cie,vec3(0.3,0.4,0.3))),cie,0.6)*vec3(0.72,0.8,0.86);',      // il cielo riflesso più grigio-azzurro e più scuro: l'orizzonte della scena è quasi bianco, e radente il fiume sembrava latte o ghiaccio (27 novembre 2026)
+      '  cie=mix(vec3(dot(cie,vec3(0.3,0.4,0.3))),cie,0.6)*vec3(0.72,0.8,0.86);',      // il cielo riflesso più grigio-azzurro e più scuro: l'orizzonte della scena è quasi bianco, e radente il fiume sembrava latte o ghiaccio (26 novembre 2026)
       '  float Ff=0.02+0.98*pow(1.0-max(dot(nFiume,Vf),0.0),5.0); totalEmissiveRadiance+=cie*min(0.3,uCieF+Ff*uCieK)*acqua*(1.0-0.7*lontF); }'].join(A));      // tetto al riflesso: anche radente resta acqua grigio-verde scura; le increspature lasciano strisce chiare sottili
 }
-/* Le pile dei ponti nel fiume (27 novembre 2026): da RM.ponti di js/mura.js, per la schiuma attorno a ciascuna e la scia a V a valle. Le pile dei ponti di pietra comuni sono quelle
+/* Le pile dei ponti nel fiume (26 novembre 2026): da RM.ponti di js/mura.js, per la schiuma attorno a ciascuna e la scia a V a valle. Le pile dei ponti di pietra comuni sono quelle
    disegnate da ponte() in js/mura.js (quattro, a ±1,5 e ±4,4 unità dal centro); per il Sublicio le stilate di legname() (una ogni 1,1 unità). Fabricio e Cestio, con le arcate
    misurate, non ci sono: le loro pile non escono da js/mura.js. Forma e lunghezza della scia sono uno schema. Solo dal gradino «media» in su. */
 RM.pileU={value:[]}; RM.nPileU={value:0}; RM.sciaU={value:0}; for(var kP=0;kP<48;kP++) RM.pileU.value.push(new THREE.Vector4(0,0,0,0));
@@ -703,6 +703,7 @@ function pileFiume(anno){
     RM.ponti.forEach(function(p){
       var xs=null, r=.42, dal=-1e9, fino=1e9;
       if(p.id==='pontesublicio'){ xs=[]; for(var x=-p.mezzo+.5;x<p.mezzo;x+=1.1) if(Math.abs(x)<5.2) xs.push(x); r=.16; fino=500; }
+      else if(p.pile){ xs=p.pile.map(function(q){ return q[0]; }); r=Math.max(.12,p.pile[0][1]*1.2); }      // Fabricio e Cestio (27 novembre 2026): le pile vere dei due ponti dell'isola, da js/mura.js (il Cestio ha sempre la forma di Graziano, come il ponte disegnato)
       else if(p.id!=='pontefabricio' && p.id!=='pontecestio'){ xs=[-4.4,-1.5,1.5,4.4]; if(p.id==='ponteprobo') dal=280; }
       if(!xs) return;
       var m=1e9, tm=0, i, q; for(i=0;i<=1200;i++){ q=c.getPoint(i/1200); var dd=(q.x-p.x)*(q.x-p.x)+(q.z-p.z)*(q.z-p.z); if(dd<m){ m=dd; tm=i/1200; } }
@@ -714,7 +715,7 @@ function pileFiume(anno){
 RM.moduli.push(pileFiume);
 if(FIUME_VAR){ RM.matFiume.onBeforeCompile=fiumeNuovo; RM.matFiume.color.setRGB(1,1,1); RM.matFiume.metalness=0; RM.matFiume.roughness=.3;
   RM.frame.push(function(dt){ if(!MENO_MOTO) RM.tempoFiume.value+=dt; RM.sciaU.value=(RM.vesteU.value>.5 && RM.q>=1 && RM.q<=3)?1:0; }); }      // la scia delle pile: «media», «alta», «massima» (RM.q 1-3; 0 è «bassa», 4 «telefono»)
-/* La maglia del fiume (27 novembre 2026). L'asse resta quello di sempre: RM.curvaFiume è la stessa curva di prima (barche, ponti, isola, mura di riva e piena ci stanno sopra).
+/* La maglia del fiume (26 novembre 2026). L'asse resta quello di sempre: RM.curvaFiume è la stessa curva di prima (barche, ponti, isola, mura di riva e piena ci stanno sopra).
    Cambia solo il disegno: un punto ogni 10 m invece che ogni 30 (nelle anse strette l'orlo esterno girava a gomito, a facce di 30 m) e la linea prolungata di 25 km diritta oltre
    i due capi, dove la foschia e la carta antica la nascondono (prima il fiume finiva con un taglio diritto contro l'erba). Le coordinate lungo il fiume sono in unità vere. */
 function magliaFiume(){
@@ -757,6 +758,7 @@ RM.applicaVelo=function(v){ if(Math.abs(v-RM.velo)<.004) return; RM.velo=v; RM.a
 /* La luce della veste del PC (24 novembre 2026): sole più caldo e un poco più forte, cielo più azzurro che riempie le ombre con una tinta fredda, la terra che rimanda
    un riflesso caldo; orizzonte meno giallo, perché la foschia della distanza (negli effetti a tutto schermo) è azzurrina. La notte resta quella di prima. */
 var G2={ alto:RM.col(0x89abcc), basso:RM.col(0xe6e2d6), emiSu:RM.col(0xb4cbeb), emiGiu:RM.col(0x7c6b55), sole:RM.col(0xffd9a6), iSole:3.2, iEmi:.46, esp:.9 }, G1=G; RM.luceVeste=G2;
+RM.hazeK={value:1}; RM.moduli.push(function(anno){ RM.hazeK.value=1-.45*RM.sfuma(560,760,anno); });      // 27 novembre 2026: quanta foschia della distanza (si veda VESTE_POST_C); una scelta di resa, non una notizia: il 300 non cambia
 RM.hazeU={value:new THREE.Color(0xc9d3da)}; var HAZE_G=new THREE.Color(0xc9d3da), HAZE_N=new THREE.Color(0x1a2236);      // colore della foschia, già in sRGB: si mescola nella passata dei contorni
 RM.applicaLuce=function(n){
   G=RM.vesteU.value>.5?G2:G1; RM.hazeU.value.copy(HAZE_G).lerp(HAZE_N,n); renderer.toneMappingExposure=RM.vesteU.value>.5?G2.esp:1.07;
@@ -782,7 +784,7 @@ RM.applicaLuce(0);
 var VESTE_POST_C=['  if(uVeste>0.5){',
   '    if(uAO>0.0){ vec2 ua=vUv*aoK; float ao=0.25*(texture2D(tAO,ua+px).r+texture2D(tAO,ua-px).r+texture2D(tAO,ua+vec2(px.x,-px.y)).r+texture2D(tAO,ua+vec2(-px.x,px.y)).r);',      // aoK: la mezza risoluzione è arrotondata per eccesso, così ogni suo pixel copre esattamente due pixel della tela (25 novembre 2026)
   '      c*=mix(1.0,ao,uAO*(1.0-0.5*notte)*(1.0-0.35*smoothstep(250.0,700.0,p))); }',      // da lontano più leggera: dalla vista d'insieme scuriva i vicoli fino a sporcare la città
-  '    float hz=(1.0-exp(-max(0.0,p-120.0)*0.0005))*0.36*step(p,3000.0);',
+  '    float hz=(1.0-exp(-max(0.0,p-120.0)*0.0005))*0.36*uHazeK*step(p,3000.0);',      // uHazeK (27 novembre 2026): negli anni tardi la foschia si alleggerisce, perché le moli in rovina si stacchino dalla veduta larga; fino al 550 vale 1
   '    c=mix(c,uHaze,hz); contorno*=1.0-min(1.0,hz*1.5); }'].join(String.fromCharCode(10));
 var post=null, ALTA=1;      // ALTA: quante volte i pixel dello schermo ha la tela degli effetti (1; 1,25 o 1,5 con l'«alta qualità», più sotto)
 /* Per i colonnati che da lontano diventano una fascia (js/costruttore.js): dov'è l'occhio e quanti pixel fa un'unità a distanza 1. Si aggiornano a ogni disegno,
@@ -807,7 +809,7 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
     fragmentShader:[
       PREC,
       'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; uniform float sfoca; uniform float scala; uniform float larga; uniform vec2 aoK; varying vec2 vUv;',
-      RM.VESTE?'uniform sampler2D tAO; uniform float uAO; uniform vec3 uHaze; uniform float uVeste;':'',
+      RM.VESTE?'uniform sampler2D tAO; uniform float uAO; uniform vec3 uHaze; uniform float uHazeK; uniform float uVeste;':'',
       'float prof(vec2 uv){ float z=texture2D(tProf,uv).x*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',
       'void main(){',
       '  vec3 c=texture2D(tCol,vUv).rgb;',
@@ -830,7 +832,7 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
   var telaAO=null, matAO=null, uAO={value:0}, uNAO={value:8}, uTan={value:new THREE.Vector2(1,1)}, uPxS={value:1000};
   if(RM.VESTE){
     telaAO=new THREE.WebGLRenderTarget(4,4,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat,depthBuffer:false,stencilBuffer:false}); telaAO.texture.generateMipmaps=false;
-    matC.uniforms.tAO={value:telaAO.texture}; matC.uniforms.uAO=uAO; matC.uniforms.uHaze=RM.hazeU; matC.uniforms.uVeste=RM.vesteU;
+    matC.uniforms.tAO={value:telaAO.texture}; matC.uniforms.uAO=uAO; matC.uniforms.uHaze=RM.hazeU; matC.uniforms.uHazeK=RM.hazeK; matC.uniforms.uVeste=RM.vesteU;
     matAO=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
       uniforms:{ tProf:{value:tela.depthTexture}, px:uPx, vicino:{value:camera.near}, lontano:{value:camera.far}, uTan:uTan, uPxS:uPxS, uNAO:uNAO },
       vertexShader:VS,

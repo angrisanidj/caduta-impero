@@ -131,7 +131,7 @@ var piena=null, matPiena=new THREE.ShaderMaterial({
     ' vS=(1.0-smoothstep(0.0,0.02,abs(onda-lungo-0.012)))*step(onda,1.5); vec4 wp=modelMatrix*vec4(position.x,position.y+vF+vS*0.05,position.z,1.0); vW=wp.xyz; gl_Position=projectionMatrix*viewMatrix*wp; }'].join(NL),
   fragmentShader:['uniform vec3 colore; uniform vec3 cieloA; uniform vec3 cieloB; uniform float uRifl; varying float vF; varying float vS; varying vec3 vW;',
     'void main(){ if(vF<0.004) discard; vec3 V=normalize(cameraPosition-vW); float Ff=0.02+0.98*pow(1.0-max(V.y,0.0),5.0);',
-    ' vec3 cie=mix(cieloB,cieloA,0.5); cie=mix(vec3(dot(cie,vec3(0.3,0.4,0.3))),cie,0.6)*vec3(0.72,0.8,0.86); vec3 c=colore+uRifl*cie*min(0.3,0.03+Ff);',      // lo stesso tetto del fiume (27 novembre 2026): radente non diventa bianca c=mix(c,vec3(0.93,0.9,0.82)*(uRifl>0.5?0.6:1.0),vS*0.75);',      // il cielo riflesso, come sul fiume; il fronte dell'ondata resta chiaro di schiuma
+    ' vec3 cie=mix(cieloB,cieloA,0.5); cie=mix(vec3(dot(cie,vec3(0.3,0.4,0.3))),cie,0.6)*vec3(0.72,0.8,0.86); vec3 c=colore+uRifl*cie*min(0.3,0.03+Ff);',      // lo stesso tetto del fiume (26 novembre 2026): radente non diventa bianca c=mix(c,vec3(0.93,0.9,0.82)*(uRifl>0.5?0.6:1.0),vS*0.75);',      // il cielo riflesso, come sul fiume; il fronte dell'ondata resta chiaro di schiuma
     ' gl_FragColor=vec4(c,smoothstep(0.0,uRifl>0.5?0.1:0.07,vF)*(uRifl>0.5?0.93+0.05*vS:0.84+0.12*vS));','#include <encodings_fragment>','}'].join(NL)
 });
 var coloreAcqua=RM.col(AF?0x343c36:0x8a9478);      // la tinta del fiume come appare sullo schermo (il velo non è illuminato dalla scena: la luce è già nel colore)
