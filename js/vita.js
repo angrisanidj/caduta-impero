@@ -922,7 +922,14 @@ function geoPiccola(vere,ep){ var B=new RM.Costruttore(), sc=scafoGeo(LP,WP,.45,
 var matBarche=RM.matPietra(), EPB=-1, MAGLIE={};
 function magliaB(chiave,fa){ var m=new THREE.InstancedMesh(new THREE.BufferGeometry(),matBarche,NB); m.instanceMatrix.setUsage(THREE.DynamicDrawUsage); m.count=0; m.castShadow=true; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='vita'; m.userData.fa=fa; RM.scene.add(m); MAGLIE[chiave]=m; return m; }
 var mCV=magliaB('cv',function(ep){ return geoChiatta(true,ep); }), mCL=magliaB('cl',function(ep){ return geoChiatta(false,ep); }), mPV=magliaB('pv',function(ep){ return geoPiccola(true,ep); }), mPL=magliaB('pl',function(ep){ return geoPiccola(false,ep); });
-function epocaBarche(anno){ var ep=epoca(anno); if(ep===EPB) return; EPB=ep; for(var k in MAGLIE){ var m=MAGLIE[k], v=m.geometry; m.geometry=m.userData.fa(ep); v.dispose(); } if(typeof epocaBovaro==='function') epocaBovaro(ep); }
+var GEOB={};      // le geometrie delle barche di ogni epoca, fatte una volta sola e tenute (27 novembre 2026, sera): prima si rifacevano a ogni passaggio di epoca, anche nel viaggio fra due tappe (circa 40 millesimi a passaggio); le tre epoche sono le stesse di epoca()
+function geoBarca(k,ep){ var c=k+ep; return GEOB[c]||(GEOB[c]=MAGLIE[k].userData.fa(ep)); }
+function epocaBarche(anno){ var ep=epoca(anno); if(ep===EPB) return; EPB=ep; for(var k in MAGLIE) MAGLIE[k].geometry=geoBarca(k,ep); if(typeof epocaBovaro==='function') epocaBovaro(ep); }
+/* le geometrie delle altre epoche si preparano nei momenti morti dopo l'apertura, una per volta, così il primo viaggio oltre il 330 o il 600 non le costruisce lì */
+(function(){ var coda=[];
+  var chiedi=window.requestIdleCallback||function(f){ return setTimeout(function(){ f({timeRemaining:function(){ return 8; }}); },200); };
+  function passo(sc){ while(coda.length && sc.timeRemaining()>6){ var q=coda.shift(); if(q[0]==='bovaro'){ if(typeof geoBovaroEp==='function') geoBovaroEp(q[1]); } else geoBarca(q[0],q[1]); } if(coda.length) chiedi(passo); }
+  setTimeout(function(){ [0,1,2].forEach(function(ep){ for(var k in MAGLIE) coda.push([k,ep]); coda.push(['bovaro',ep]); }); chiedi(passo); },4000); })();      // qui MAGLIE ha già anche la sagoma lontana del bovaro
 /* i remi della barca piccola: due per barca, a istanze, che girano attorno allo scalmo */
 var geoRemo=(function(){ var B=new RM.Costruttore(); B.geo(gM(new THREE.CylinderGeometry(.035,.035,3.75,5).rotateX(Math.PI/2).translate(0,0,1.175)),LEGNO_B); B.geo(scatM(.05,.18,.75,0,0,2.9),LEGNO_B.clone().multiplyScalar(.85)); return B.geometria(); })();      // dallo scalmo: 0,7 m di manico verso le mani del rematore, la pala a 2,9 m
 var mRemi=new THREE.InstancedMesh(geoRemo,new THREE.MeshLambertMaterial({vertexColors:true, side:THREE.DoubleSide}),NB*2); mRemi.instanceMatrix.setUsage(THREE.DynamicDrawUsage); mRemi.count=0; mRemi.castShadow=true; mRemi.frustumCulled=false; mRemi.userData.gruppo='vita'; RM.scene.add(mRemi);
@@ -947,7 +954,8 @@ function geoBovaro(ep){ var g=corpo(NOME_BOV[ep],2), B=new Parti();      // la f
 var mBov=new THREE.InstancedMesh(new THREE.BufferGeometry(),matF||matFigure(),NB); mBov.instanceMatrix.setUsage(THREE.DynamicDrawUsage); mBov.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(NB*3).fill(1),3);
 mBov.count=0; mBov.visible=false; mBov.frustumCulled=false; mBov.castShadow=true; mBov.receiveShadow=true; mBov.userData.gruppo='vita'; RM.scene.add(mBov);
 var mBovL=magliaB('bov',function(ep){ var B=new RM.Costruttore(), ti=VESTI[NOME_BOV[ep]].tinte; sagoma(B,0,0,0,ti[0]); B.geo(gM(tratto([-.23,.06,.36],[-.2,1.62,-.1],.03,.03,3)),LEGNO); return B.geometria(); });      // da lontano: la sagoma col bastone
-function epocaBovaro(ep){ var v=mBov.geometry; mBov.geometry=geoBovaro(ep); v.dispose(); var c=VESTI[NOME_BOV[ep]].tinte[0]; for(var i=0;i<NB;i++) mBov.instanceColor.setXYZ(i,c.r,c.g,c.b); mBov.instanceColor.needsUpdate=true; }
+var GEOBOV={}; function geoBovaroEp(ep){ return GEOBOV[ep]||(GEOBOV[ep]=geoBovaro(ep)); }      // come le barche: una geometria per epoca, tenuta (27 novembre 2026, sera)
+function epocaBovaro(ep){ mBov.geometry=geoBovaroEp(ep); var c=VESTI[NOME_BOV[ep]].tinte[0]; for(var i=0;i<NB;i++) mBov.instanceColor.setXYZ(i,c.r,c.g,c.b); mBov.instanceColor.needsUpdate=true; }
 var mCorde=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1).translate(0,0,.5),new THREE.MeshLambertMaterial({color:0x8d7a5c}),NB); mCorde.instanceMatrix.setUsage(THREE.DynamicDrawUsage); mCorde.count=0; mCorde.frustumCulled=false; mCorde.userData.gruppo='vita'; RM.scene.add(mCorde);
 /* la scia: un velo a istanze con una trama a V, solo dietro chi si muove rispetto all'acqua (tirate o a remi; chi scende con la corrente non ne lascia) */
 var texScia=RM.tela(64,128,function(g){ g.clearRect(0,0,64,128); var y, k, j;

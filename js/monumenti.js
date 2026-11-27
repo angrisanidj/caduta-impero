@@ -2880,7 +2880,8 @@ RM.moduli.push(function(anno){
     m.count=j; m.visible=j>0; m.instanceMatrix.needsUpdate=true; }
   var qUltimo=-1;
   function quotaQ(){ var t=RM.QUALITA&&RM.QUALITA.verde; return t&&t[RM.q]!=null?t[RM.q]:1; }
-  RM.moduli.push(function(anno){ var fr=quotaQ(); if(Math.abs(anno-ultimo)<.05 && fr===qUltimo) return; ultimo=anno; qUltimo=fr; posa(mc,cespi,anno,false,fr); posa(mv,viti,anno,true,fr); });
+  var passoVerde={};      // nel viaggio fra due tappe al più otto volte al secondo; all'arrivo sempre (RM.saltaPasso in js/base.js)
+  RM.moduli.push(function(anno){ var fr=quotaQ(); if(Math.abs(anno-ultimo)<.05 && fr===qUltimo) return; if(RM.saltaPasso && RM.saltaPasso(passoVerde,125)) return; ultimo=anno; qUltimo=fr; posa(mc,cespi,anno,false,fr); posa(mv,viti,anno,true,fr); });
   RM.frame.push(function(){ var t=RM.QUALITA&&RM.QUALITA.degrado, dq=t&&t[RM.q]!=null?t[RM.q]:1; if(dq!==RM.degradoQ.value) RM.degradoQ.value=dq;      // il dettaglio dello shader dell'abbandono segue il gradino
     if(quotaQ()!==qUltimo && ultimo>=0){ qUltimo=quotaQ(); posa(mc,cespi,ultimo,false,qUltimo); posa(mv,viti,ultimo,true,qUltimo); RM.renderer.shadowMap.needsUpdate=true; } });
   /* gli alberi: un tronco e una chioma di cinque masse a faccette (non una palla), due verdi; alti da 12 a 20 m (lecci e fichi dei ruderi arrivano a tanto). Spuntano quando il verde del monumento è avanti (crescita oltre

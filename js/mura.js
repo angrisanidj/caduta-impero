@@ -551,7 +551,8 @@ function rampe(B,q,rot,mezzo,yTop,larga,colore,suolo){
 
 /* avanzamento del cantiere delle mura (0-1): aperto nel 271, il grosso fatto alla morte di Aureliano, finito sotto Probo (vedi sopra); alla tappa del 271 è appena cominciato */
 var CANTIERE_MURA=[[270.6,0],[271,.3],[275,.85],[280,1]];
-RM.moduli.push(function(anno){
+var passoMura={};      // nel viaggio fra due tappe al più otto volte al secondo; all'arrivo sempre (RM.saltaPasso in js/base.js)
+RM.moduli.push(function(anno){ if(RM.saltaPasso && RM.saltaPasso(passoMura,125)) return;
   mura(Math.max(D.interp(D.MURA_ALTE,anno),anno>=270.6?1:0),anno,D.interp(CANTIERE_MURA,anno));   // brecce di Totila, rattoppi, danni e restauri dei papi: anno per anno nei passi (sopra)
   acque(anno);
 });

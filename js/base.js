@@ -147,6 +147,12 @@ RM.casuale = function(seme){            // generatore ripetibile
   return function(){ s=(s+0x6D2B79F5)>>>0; var t=Math.imul(s^(s>>>15),1|s); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; };
 };
 RM.sfuma = function(a,b,t){ t=Math.max(0,Math.min(1,(t-a)/(b-a))); return t*t*(3-2*t); };
+/* Il viaggio fra due tappe (27 novembre 2026, sera; l'utente: «La parte dell'alto medioevo è più difficile da caricare»). Nel viaggio (meno di due secondi) js/pagina.js
+   chiama i moduli a ogni fotogramma con un anno nuovo, e le case si riscrivevano 40-50 volte, da 6 a 50 millesimi l'una. RM.inViaggio è vero solo dentro quella chiamata,
+   quando l'anno non è ancora quello della tappa; RM.saltaPasso(o,ms) dice a un modulo pesante di saltare il passo se si è già scritto meno di ms millesimi fa.
+   L'ultimo passo, all'arrivo, non si salta mai: lì l'anno è quello della tappa e RM.inViaggio è falso. Chi chiama i moduli da fuori (confronto, infografiche) non salta nulla. */
+RM.inViaggio=false;
+RM.saltaPasso=function(o,ms){ var t=performance.now(); if(RM.inViaggio && t-(o.t||-1e9)<ms) return true; o.t=t; return false; };
 function grana(ix,iz){ var n=Math.sin(ix*127.1+iz*311.7)*43758.5453; return n-Math.floor(n); }
 RM.rumore = function(x,z){               // rumore morbido 0…1
   var ix=Math.floor(x), iz=Math.floor(z), fx=x-ix, fz=z-iz; fx=fx*fx*(3-2*fx); fz=fz*fz*(3-2*fz);

@@ -318,9 +318,13 @@ function vai(i,subito){
   ascolto.forEach(function(f){ f(idx,t); });
   if(subito) applica();
 }
+var ultimaLista=-1e9;
 function applica(){
-  for(var i=0;i<RM.moduli.length;i++) RM.moduli[i](anno);
-  scriviSpie(); if(voci.length){ scriviMonumenti(); scriviScheda(); }
+  var viaggio=anno!==meta, ora=performance.now();
+  RM.inViaggio=viaggio;      // nel viaggio fra due tappe i moduli pesanti possono saltare un passo (RM.saltaPasso in js/base.js); all'arrivo mai
+  try{ for(var i=0;i<RM.moduli.length;i++) RM.moduli[i](anno); } finally{ RM.inViaggio=false; }
+  scriviSpie();
+  if(voci.length && !(viaggio && ora-ultimaLista<125)){ ultimaLista=ora; scriviMonumenti(); scriviScheda(); }      // l'elenco dei monumenti rimisura la pagina (circa 6 millesimi): nel viaggio al più otto volte al secondo, all'arrivo sempre
 }
 
 /* ---------- comandi ---------- */
