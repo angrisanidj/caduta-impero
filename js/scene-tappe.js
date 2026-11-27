@@ -1405,7 +1405,7 @@ var interno800=(function(){
     /* il pavimento a grandi lastre, con una fascia scura sull'asse della navata (misure, colori e fascia sono schema) */
     for(i=0;i<16;i++) for(j=0;j<10;j++){ var x0=-3.95+i*.6, z0=-3.1+j*.62; B.quad([x0,f,z0],[x0,f,z0+.62],[x0+.6,f,z0+.62],[x0+.6,f,z0],(j===4||j===5)&&i%4===1?porfido:lastra[(i+j*2)%3]); }
     for(i=0;i<3;i++) for(j=0;j<14;j++){ var x1=-5.72+i*.59, z1=-4.42+j*.63; B.quad([x1,f,z1],[x1,f,z1+.63],[x1+.59,f,z1+.63],[x1+.59,f,z1],lastra[(i*2+j)%3]); }
-    B.cilindro(.84,.02,-5.75,f-.02,0,lastra[1],null,14);
+    B.cilindro(.84,.016,-5.75,f-.02,0,lastra[1],null,14);      // il piano dell'abside, 4 cm sotto il pavimento (27 novembre 2026): alla stessa quota delle lastre le due facce si contendevano i pixel attorno a Carlo e al papa (il disco arriva fin sotto i loro piedi), e i triangoli del disco, più chiari o più scuri delle lastre, lampeggiavano a ogni movimento della camera: era «l'ombra che flasha»
     /* i muri esterni, tagliati: a nord alti, a sud bassi (da sud si guarda) */
     B.scatola(9.6,1.2,.08,.85,f,-3.12,muro).scatola(9.6,.5,.08,.85,f,3.12,muro);
     B.scatola(.08,1.4,3.58,-5.72,f,-2.63,muro).scatola(.08,.55,3.58,-5.72,f,2.63,muro);                      // il fondo del transetto, ai due lati dell'abside

@@ -346,7 +346,7 @@ RM.veduta=function(mat,o){ var A=String.fromCharCode(10), prima=mat.onBeforeComp
   return mat; };
 RM.ombraFissa=function(o){
   ombraFissa=o||null; if(!o){ ombra.s=-1; return; }
-  var L=o.s||Math.max(o.t||7,sole.shadow.mapSize.x*.005);
+  var L=o.s||o.L||(o.L=Math.max(o.t||7,sole.shadow.mapSize.x*.005));      // o.L: il lato scelto alla prima chiamata resta quello anche se il gradino della qualità cambia la grandezza della mappa a metà scena (27 novembre 2026)
   ombra.x=o.x; ombra.z=o.z; ombra.s=L;
   ombraIn(o.x,o.z,L);
   oc.left=-L; oc.right=L; oc.top=L; oc.bottom=-L; oc.updateProjectionMatrix(); sole.shadow.normalBias=o.s?Math.max(.14,.5*L/420):Math.max(.012,5*L/sole.shadow.mapSize.x);      // un riquadro grande come quello che segue la camera; uno stretto: due pixel e mezzo della mappa
@@ -1105,7 +1105,8 @@ function applicaQ(){
   RM.q=alta.g; var L=RM.QUALITA.ombra[alta.g]; RM.pratoU=RM.pratoU||{value:1}; RM.pratoU.value=RM.QUALITA.prato[alta.g];
   var ve=RM.VESTE?RM.QUALITA.veste[alta.g]:0; if(ve!==RM.vesteU.value){ RM.vesteU.value=ve; RM.applicaLuce(RM.notte); }
   if(post){ post.ao.value=(RM.VESTE && !SENZA_AO)?RM.QUALITA.ao[alta.g]:0; post.aoN.value=RM.QUALITA.aoN[alta.g]||8; }
-  if(sole.shadow.mapSize.x!==L){ sole.shadow.mapSize.set(L,L); if(sole.shadow.map){ sole.shadow.map.dispose(); sole.shadow.map=null; } renderer.shadowMap.needsUpdate=true; }
+  if(sole.shadow.mapSize.x!==L){ sole.shadow.mapSize.set(L,L); if(sole.shadow.map){ sole.shadow.map.dispose(); sole.shadow.map=null; } renderer.shadowMap.needsUpdate=true;
+    if(ombraFissa) RM.ombraFissa(ombraFissa); }      // con il riquadro fermo di una scena: stesso centro e stesso lato, rimesso sui pixel interi della mappa nuova (prima il centro restava agganciato alla grandezza di prima)
   aggiornaMisura();
   alta.ascoltatori.forEach(function(fn){ try{ fn(alta.g); }catch(e){} });
   var b=document.getElementById('btnQualita'); if(b){ b.textContent=testoQ(); b.title='Qualità della città: automatica, bassa, telefono, media, alta, massima'; }
