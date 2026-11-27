@@ -66,7 +66,8 @@ if(/[?&]strade=0/.test(location.search)) acceso=false;      // per le catture «
 var btn=document.getElementById('btnStrade');
 function scriviBtn(){ if(btn) btn.setAttribute('aria-pressed',acceso?'true':'false'); }
 scriviBtn();
-if(btn) btn.addEventListener('click',function(){ acceso=!acceso; scriviBtn(); try{ sessionStorage.setItem('rm-strade',acceso?'1':'0'); }catch(e){} if(!acceso) spegni(); ultimo=''; });
+if(btn) btn.addEventListener('click',function(){ acceso=!acceso; scriviBtn(); try{ sessionStorage.setItem('rm-strade',acceso?'1':'0'); }catch(e){} if(!acceso){ spegni(); rettiStrade=[]; } ultimo=''; });
+var rettiStrade=[];
 
 /* ---------- strato ---------- */
 var riquadro=document.getElementById('scena').parentNode, strato=document.createElement('div'); strato.className='strade3d'; strato.setAttribute('aria-hidden','true');
@@ -80,16 +81,17 @@ var v=new THREE.Vector3(), ultimo='', conta=0, capi=false, MAX=20, ostacoli=[], 
 var SOPRA='.strumenti .apri, .strumenti .voci, .comandi-scena, .evento, .ev-i, .conta, .scheda, .riga-tempo, .legenda-sapere, .esplora';
 function tocca(a,b){ return a[0]<b[2]&&a[2]>b[0]&&a[1]<b[3]&&a[3]>b[1]; }
 RM.frame.push(function(){
-  if(!acceso) return;
+  if(!acceso && !colliAcceso) return;      // gli ostacoli servono anche ai nomi dei colli
   var w=riquadro.clientWidth, hh=riquadro.clientHeight, grande=document.body.classList.contains('roma-grande');
   if((conta++)%6===0){ capi=false; var c=document.querySelector('.capi3d'); if(c){ for(var i=0;i<c.children.length;i++) if(c.children[i].style.display==='block'){ capi=true; break; } }
-    if(acceso && w){ ostacoli=[]; var rq=riquadro.getBoundingClientRect(), el=riquadro.querySelectorAll(SOPRA);
+    if(w){ ostacoli=[]; var rq=riquadro.getBoundingClientRect(), el=riquadro.querySelectorAll(SOPRA);
       for(i=0;i<el.length;i++){ var b=el[i].getBoundingClientRect(); if(!b.width||!b.height) continue; var cs=getComputedStyle(el[i]); if(cs.visibility==='hidden'||+cs.opacity<.05) continue;
         ostacoli.push([b.left-rq.left-4,b.top-rq.top-4,b.right-rq.left+4,b.bottom-rq.top+4]); }
       firmaOst=ostacoli.map(function(r){ return r.map(Math.round).join(','); }).join(';'); } }
+  if(!acceso){ rettiStrade=[]; return; }
   var dT=RM.camera.position.distanceTo(RM.controlli.target);
   var via=!w || !hh || (window.innerWidth<=700 && !grande) || document.body.classList.contains('impero-grande') || capi || dT<30 || (etM && etM.style.display==='none');
-  if(via){ if(ultimo!=='via'){ spegni(); ultimo='via'; } return; }
+  if(via){ rettiStrade=[]; if(ultimo!=='via'){ spegni(); ultimo='via'; } return; }
   /* si ricalcola solo se la camera o il riquadro sono cambiati */
   var e=RM.camera.matrixWorld.elements, firma=w+'|'+hh+'|'+e[12].toFixed(1)+'|'+e[13].toFixed(1)+'|'+e[14].toFixed(1)+'|'+e[8].toFixed(3)+'|'+e[9].toFixed(3)+'|'+e[10].toFixed(3)+'|'+(RM.etichetteMesse?RM.etichetteMesse.length:0)+'|'+firmaOst;
   if(firma===ultimo) return; ultimo=firma;
@@ -133,6 +135,7 @@ RM.frame.push(function(){
       messi.push(r); quanti++; o.prossimo={x:px,y:py,a:ang*180/Math.PI}; break;
     }
   });
+  rettiStrade=messi.slice(messi.length-quanti);      // i nomi delle strade messi: i nomi dei colli non li coprono
   NOMI.forEach(function(o){
     var p=o.prossimo;
     if(p){ o.el.style.transform='translate('+p.x.toFixed(1)+'px,'+p.y.toFixed(1)+'px) translate(-50%,-50%) rotate('+p.a.toFixed(1)+'deg)';
@@ -141,4 +144,57 @@ RM.frame.push(function(){
   });
 });
 RM.nomiStrade={ nomi:NOMI, acceso:function(){ return acceso; } };      // per le prove
+
+/* ---------- i nomi dei colli (27 novembre 2026, notte; l'utente: «non c'erano i "7 colli"? Ne vedo solo 3..») ----------
+   Fonti lette (src/testi/topografia-fonti.md, «I colli»): Platner e Ashby, Septimontium: Varrone dice la città «Septimontium nominatum ab tot montibus quos postea urbs muris
+   comprehendit», ma gli antichi non erano d'accordo su quali fossero i sette (Lido: Aventino, Celio, Esquilino, Capitolino, Velia, Quirinale, Palatino; Servio: Palatino, Quirinale,
+   Aventino, Celio, Viminale, Esquilino, Gianicolo; la festa di Labeone: Palatium, Velia, Fagutal, Subura, Cermalus, Oppius, Caelius, Cispius). Qui i sette che le mura serviane chiudono
+   (Campidoglio, Palatino, Aventino, Celio, Esquilino, Viminale, Quirinale), più Pincio («Collis Hortulorum» nella prima età imperiale, Platner e Ashby, Pincius Mons) e Gianicolo
+   (Platner e Ashby, Ianiculum); da mezza distanza anche Velia, Oppio e Cispio (nella lista di Labeone). Il punto del nome è il pianoro del colle nel modello (COLLI in js/base.js);
+   il Gianicolo sta sulla cresta a ovest di San Pietro in Montorio («the highest point within the line of the Aurelian wall», Platner e Ashby). Si vedono dalla vista d'insieme e a mezza distanza,
+   si nascondono da vicino (camera a meno di 70 unità dal punto guardato) e non coprono i nomi dei monumenti, quelli delle strade e i comandi.
+   Interruttore «Nomi dei colli» nel menu Strumenti, acceso di norma (sessionStorage «rm-colli»); ?colli=0 li spegne. */
+var COLLI_NOMI=[
+  {n:'Campidoglio', p:[-24,-5]}, {n:'Palatino', p:[15,42]}, {n:'Aventino', p:[-42,96]}, {n:'Celio', p:[96,72]},
+  {n:'Esquilino', p:[150,-30]}, {n:'Viminale', p:[95,-95]}, {n:'Quirinale', p:[40,-92]}, {n:'Pincio', p:[-30,-192]},
+  {n:'Gianicolo', p:[-215,40]},      // sulla cresta della griglia misurata (56 m sopra il fiume, 100 per il rilievo accentuato), fra San Pietro in Montorio e porta San Pancrazio
+  {n:'Velia', p:[36,12], m:1}, {n:'Oppio', p:[100,-6], m:1}, {n:'Cispio', p:[108,-55], m:1}
+];
+var colliAcceso=true; try{ colliAcceso=sessionStorage.getItem('rm-colli')!=='0'; }catch(e){}
+if(/[?&]colli=0/.test(location.search)) colliAcceso=false;
+var btnC=document.getElementById('btnColli'), ultimoC='', strC=document.createElement('div'); strC.className='colli3d'; strC.setAttribute('aria-hidden','true');
+riquadro.insertBefore(strC,strato);
+function scriviBtnC(){ if(btnC) btnC.setAttribute('aria-pressed',colliAcceso?'true':'false'); }
+scriviBtnC();
+COLLI_NOMI.forEach(function(o){ o.el=document.createElement('span'); o.el.textContent=o.n; if(o.m) o.el.className='minore'; strC.appendChild(o.el); });
+function spegniC(){ COLLI_NOMI.forEach(function(o){ if(o.vis){ o.vis=false; o.el.style.visibility='hidden'; o.el.style.opacity=0; } }); }
+if(btnC) btnC.addEventListener('click',function(){ colliAcceso=!colliAcceso; scriviBtnC(); try{ sessionStorage.setItem('rm-colli',colliAcceso?'1':'0'); }catch(e){} if(!colliAcceso) spegniC(); ultimoC=''; });
+var vC=new THREE.Vector3();
+RM.frame.push(function(){
+  if(!colliAcceso) return;
+  var w=riquadro.clientWidth, hh=riquadro.clientHeight, grande=document.body.classList.contains('roma-grande'), dT=RM.camera.position.distanceTo(RM.controlli.target);
+  var via=!w || !hh || (window.innerWidth<=700 && !grande) || document.body.classList.contains('impero-grande') || capi || dT<70 || (etM && etM.style.display==='none');
+  if(via){ if(ultimoC!=='via'){ spegniC(); ultimoC='via'; } return; }
+  var e=RM.camera.matrixWorld.elements, firma=w+'|'+hh+'|'+e[12].toFixed(1)+'|'+e[13].toFixed(1)+'|'+e[14].toFixed(1)+'|'+e[8].toFixed(3)+'|'+e[9].toFixed(3)+'|'+e[10].toFixed(3)+'|'+(RM.etichetteMesse?RM.etichetteMesse.length:0)+'|'+firmaOst+'|'+rettiStrade.length;
+  if(firma===ultimoC) return; ultimoC=firma;
+  var h=RM.hSuolo||RM.h, messi=(RM.etichetteMesse||[]).concat(ostacoli,rettiStrade), t=RM.controlli.target, cand=[];
+  COLLI_NOMI.forEach(function(o){ o.prossimo=null;
+    if(!o.v){ var p=o.p; if(o.ll) p=RM.ll(o.ll[0],o.ll[1]); o.v=new THREE.Vector3(p[0],h(p[0],p[1])+2,p[1]); }
+    if(o.m && dT>380) return;      // Velia, Oppio e Cispio solo da mezza distanza
+    vC.copy(o.v).project(RM.camera); if(!isFinite(vC.x) || !isFinite(vC.y) || vC.z>=1 || Math.abs(vC.x)>.92 || vC.y<-.88 || vC.y>.9) return;
+    cand.push({o:o, x:(vC.x+1)*w/2, y:(1-vC.y)*hh/2, d:Math.hypot(o.v.x-t.x,o.v.z-t.z)+(o.m?300:0)}); });
+  cand.sort(function(a,b){ return a.d-b.d; });
+  cand.forEach(function(c){ var o=c.o;
+    if(!o.lw || o.lwG!==grande){ var ow=o.el.offsetWidth; o.lw=ow||o.n.length*11; o.lh=o.el.offsetHeight||16; o.lwG=ow?grande:null; }
+    var prove=[[0,0],[0,-o.lh-4],[0,o.lh+4],[-o.lw*.6,0],[o.lw*.6,0],[0,-2*o.lh-8]];      // il nome può scostarsi di poco dal pianoro se lì c'è il nome di un monumento
+    for(var k=0;k<prove.length;k++){ var px=c.x+prove[k][0], py=c.y+prove[k][1], r=[px-o.lw/2-3,py-o.lh/2-2,px+o.lw/2+3,py+o.lh/2+2];
+      if(r[0]<4||r[2]>w-4||r[1]<4||r[3]>hh-4) continue;
+      var libero=true; for(var q=0;q<messi.length;q++) if(tocca(r,messi[q])){ libero=false; break; }
+      if(!libero) continue;
+      messi.push(r); o.prossimo={x:px,y:py}; break; } });
+  COLLI_NOMI.forEach(function(o){ var p=o.prossimo;
+    if(p){ o.el.style.transform='translate('+p.x.toFixed(1)+'px,'+p.y.toFixed(1)+'px) translate(-50%,-50%)'; if(!o.vis){ o.vis=true; o.el.style.visibility='visible'; o.el.style.opacity=1; } }
+    else if(o.vis){ o.vis=false; o.el.style.visibility='hidden'; o.el.style.opacity=0; } });
+});
+RM.nomiColli={ nomi:COLLI_NOMI, acceso:function(){ return colliAcceso; } };      // per le prove
 })();

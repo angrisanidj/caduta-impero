@@ -1009,6 +1009,13 @@ body.roma-grande .salta-giu,body.impero-grande .salta-giu{display:none}
   color:#f4e9cf;text-shadow:0 0 3px rgba(28,20,10,.95),0 0 7px rgba(28,20,10,.6);transition:opacity .3s}
 body.roma-grande .strade3d span{font-size:15px}
 @media (max-width:700px){ .strade3d{display:none} body.roma-grande .strade3d{display:block} body.roma-grande .strade3d span{font-size:13px} }
+/* nomi dei colli (js/strade-nomi.js, 27 novembre 2026): maiuscoletto spaziato, più grandi dei nomi delle strade, per la vista d'insieme e la mezza distanza; i minori più piccoli */
+.colli3d{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.colli3d span{position:absolute;left:0;top:0;visibility:hidden;opacity:0;white-space:nowrap;font-family:var(--cap);font-size:15px;font-weight:600;line-height:1;letter-spacing:.22em;text-transform:uppercase;
+  color:#fff4d6;text-shadow:0 0 3px rgba(28,20,10,.95),0 0 9px rgba(28,20,10,.65);transition:opacity .3s}
+.colli3d span.minore{font-size:12px;letter-spacing:.16em;font-weight:500;color:#f3e6c4}
+body.roma-grande .colli3d span{font-size:17px} body.roma-grande .colli3d span.minore{font-size:13px}
+@media (max-width:700px){ .colli3d{display:none} body.roma-grande .colli3d{display:block} body.roma-grande .colli3d span{font-size:13px;letter-spacing:.16em} body.roma-grande .colli3d span.minore{font-size:11px} }
 
 /* regioni e quartieri sulla scena di Roma (js/regioni.js, 25 novembre 2026): numero e nome delle regioni in maiuscoletto, i quartieri in corsivo, più piccoli; si toccano */
 .regioni3d{position:absolute;inset:0;pointer-events:none;overflow:hidden}

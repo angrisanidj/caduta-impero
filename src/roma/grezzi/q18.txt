@@ -1,0 +1,7 @@
+[out:json][timeout:90];
+(
+  nwr(41.8915,12.4835,41.8942,12.4880)["name"~"Vespasiano|Concordia|Minerva|Nerva|Capitolin|Argilet|Transitori",i];
+  way(id:140264246);
+  relation(id:1899639);
+);
+out geom;

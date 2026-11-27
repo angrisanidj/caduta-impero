@@ -841,7 +841,7 @@ var M=[
     var e1=RM.ellisse(1.05,1.05,28), e2=RM.ellisse(.97,.97,28), e3=RM.ellisse(.67,.67,28);
     B.striscia(e1,0,e1,.2,P.marmo).striscia(e1,.2,e2,.2,P.marmo).striscia(e2,.2,e2,.1,P.marmo).striscia(e2,.1,e3,.1,P.marmo);
  }},
- {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], et:1, fa:function(B){
+ {id:'circo', nome:'Circo Massimo', x:0,z:71, ry:-.651, lunga:[62,10], fermo:[[0,0,31.2,7.2]], et:1, fa:function(B){      // fermo (27 novembre 2026): il fianco del Palatino non entra più nell'arena e nelle gradinate
     circo(B,62,14,2.5,true);
     /* l'arco di Tito al centro della curva orientale (81): «replaced by a triple arch, erected by the senate in honour of Titus» (Platner e Ashby, Circus Maximus; CIL VI.944, pianta marmorea fr. 38).
        Largo circa 17 m e profondo 15, tre fornici, colonne libere alte oltre 10 m, quadriga sull'attico (scavi del 2015, da it.wikipedia «Circo Massimo»). Le altezze qui sono ipotetiche. */
@@ -871,7 +871,9 @@ var M=[
     var POZZA=RM.col(0x5d6650);      // 27 novembre 2026: acqua ferma e torbida di palude («waterlogged»), grigio-verde come il Tevere del modello; prima l'azzurro di P.acqua, quello delle vasche
     for(k=0;k<9;k++) B.cilindro(.5+.8*rnd(),.02,-25+48*rnd(),.14,(rnd()<.5?-1:1)*(1+1.8*rnd()),POZZA,null,12);
  }},
- {id:'fori', nome:'Fori', x:3,z:-8, ry:-.35, altoFisso:4.118, raggioFisso:25.931, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6],[11.2,13.1,3.8]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
+ {id:'fori', nome:'Fori', ex:-1.5,ez:2, x:3,z:-8, ry:-.35, altoFisso:4.118, raggioFisso:25.931, zone:[[-1.2,2.5,10.5],[-11,-1.5,7],[9,6,6],[0,-13.2,9],[11.5,-19.5,8.5],[13,-6,9.5],[-1.3,-27.8,9.5],[-7.5,-36,9.5],[5,-33,6],[11.2,13.1,3.8]].map(function(q){ var p=LF(q[0],q[1]); return [p[0],p[1],q[2]]; }), et:1, fa:function(B){
+    /* Il nome «Fori» sta sul centro della piazza del Foro di OpenStreetMap (relazione 1849832, «Piazza del Foro»): dal 26 novembre 2026 il gruppo disegna solo la piazza, e il nome
+       stava ancora nel mezzo del vecchio gruppo, fra la Curia e il foro di Nerva (27 novembre 2026, notte) */
     /* Posizioni reali: i centri dei resti rilevati in OpenStreetMap (src/roma/grezzi/osm-foro.json), scritti qui in coordinate di scena.
        Orientamenti: il Foro Romano lungo il suo asse, i fori imperiali sulla loro griglia comune, girata di circa 58° rispetto al Foro.
        Forme e misure restano schematiche; qualche edificio è accorciato di poco perché le vie vere gli passino accanto e non sopra. */
@@ -907,11 +909,11 @@ var M=[
  {id:'castori', nome:'Tempio dei Castori', etichetta:'Castori', x:2.69,z:9.16, ry:-.35, come:'fori', zone:[], fa:function(B){
     B.tempio(2.9,4.6,1.25,0,0,PI,{fronte:8,lati:11,podio:.8});                                                                  // «octastyle and peripteral, with eleven columns on each side»; tutto il tempio «about 50 metres long by 30 wide»; colonne «12.50 metres in height» (Platner e Ashby, Aedes Castoris; 27 novembre 2026: prima erano alte 20 m)
  }},
- {id:'concordia', nome:'Tempio della Concordia', etichetta:'Concordia', x:-9.1,z:-4.9, ry:-.35, come:'fori', zone:[], fa:function(B){      // cella larga, messa di traverso, e pronao verso il Foro: «the cella … was 45 metres wide and only 24 deep, while the pronaos was only 34 metres wide and 14 deep» (Platner e Ashby, Concordia)
+ {id:'concordia', nome:'Tempio della Concordia', etichetta:'Concordia', x:-9.1,z:-4.9, ry:-.559, come:'fori', zone:[], fa:function(B){      // cella larga, messa di traverso, e pronao verso il Foro: «the cella … was 45 metres wide and only 24 deep, while the pronaos was only 34 metres wide and 14 deep» (Platner e Ashby, Concordia); 27 novembre 2026 (notte): girato di 12 gradi sul contorno di OpenStreetMap (relazione 1767601: centro -9,01, -4,93, come il modello; lati a 32 gradi, il modello a 20)
     B.scatola(2,1.7,4.4,-.6,.5,0,P.marmo).falde(4.4,.5,2.1,-.6,2.2,0,P.coppi,PI/2,P.marmo).scatola(2.2,.5,4.5,-.6,0,0,P.travertino); B.tempio(2.2,1.6,1.6,.9,0,PI/2,{fronte:6});
  }},
- {id:'vespasiano', nome:'Tempio di Vespasiano e Tito', etichetta:'Vespasiano', x:-11.4,z:-2.6, ry:-.35, come:'fori', zone:[], fa:function(B){      // «prostyle hexastyle, 33 metres long and 22 wide», addossato al Tabularium (Platner e Ashby, Divus Vespasianus)
-    B.tempio(1.7,3,1.6,0,0,PI/2,{fronte:6,podio:.6});
+ {id:'vespasiano', nome:'Tempio di Vespasiano e Tito', etichetta:'Vespasiano', x:-11.4,z:-2.6, ry:-.576, come:'fori', zone:[], fa:function(B){      // «prostyle hexastyle, 33 metres long and 22 wide», addossato al Tabularium (Platner e Ashby, Divus Vespasianus)
+    B.tempio(1.7,2.8,1.6,0,0,PI/2,{fronte:6,podio:.6});      // 27 novembre 2026 (notte): girato di 13 gradi sul contorno di OpenStreetMap (relazione 1767603: centro -11,43, -2,56, come il modello; lati a 33 gradi, il modello a 20) e podio lungo 33 m come la fonte (prima 35); il clivo Capitolino passa davanti alla scala
  }},
  {id:'divogiulio', nome:'Tempio del Divo Giulio', etichetta:'Divo Giulio', x:6.15,z:5.35, ry:-.531, come:'fori', zone:[], fa:function(B){      // ionico, sei colonne sulla fronte, su una piattaforma alta 3,5 m con i rostri (Platner e Ashby, Divus Iulius, aedes)
     B.tempio(2.4,2.8,1.4,0,0,-PI/2,{fronte:6});
@@ -950,7 +952,7 @@ var M=[
       B.striscia(es,0,es,1.7,P.tufo,false).striscia(es,1.7,ce,2.1,P.coppi,false); });
  }},
  {id:'foronerva', nome:'Foro di Nerva e tempio di Minerva', etichetta:'Foro di Nerva', x:10.7,z:-8.9, ry:.672, come:'fori', zone:[], fa:function(B){      // lo attraversa l'Argileto: «about 120 metres, its width about 40» (Platner e Ashby, Forum Nervae)
-    portico(B,12,4.2,0,0,0,1.2); B.tempio(1.8,2.4,1.5,4.6,0,-PI/2,{fronte:6});                                                 // Minerva: «hexastyle prostyle»
+    portico(B,12,4.2,0,0,0,1.2); B.tempio(1.8,2.4,1.5,5.9,0,-PI/2,{fronte:6});                                                 // Minerva: «hexastyle prostyle»; «in the centre of the north-east end», «its apse projected beyond the limits of the forum» (Platner e Ashby, Forum Nervae): dal 27 novembre 2026 il centro sta a 59 m dal centro del foro (prima 46), presso il centro del tempio su OpenStreetMap (way 140264246, 65 m), e il retro esce dal muro di fondo. L'Argileto non lo attraversa più: il foro era il passaggio (src/roma/genera.mjs)
  }},
  {id:'forocesare', nome:'Foro di Cesare e tempio di Venere Genitrice', etichetta:'Foro di Cesare', x:0,z:-13.2, ry:.672, come:'fori', zone:[], fa:function(B){      // «rectangular, about 115 metres long and 30 wide, surrounded by a colonnade and wall» (Platner e Ashby, Forum Iulium); Venere Genitrice a nord-ovest
     portico(B,7,15,0,0,0,1.1); B.tempio(2.6,3.6,1.7,0,-5.2,0,{fronte:8});
@@ -1102,7 +1104,7 @@ var M=[
  }},
  /* il tempio della Magna Mater e la Domus Tiberiana (26 novembre 2026, sera) stanno dopo il gruppo palatino, sul cui piano poggiano (come:'palatino') */
  {id:'saturno', nome:'Tempio di Saturno', etichetta:'Saturno', x:-10.1,z:1.1, ry:.95, come:'fori', zone:[], fa:function(B){
-    B.tempio(2.2,4,1.1,0,0,PI/2,{fronte:6,podio:.85});                                                                          // sul suo podio alto: «22.50 metres wide, about 40 long», ionico, sei colonne sulla fronte; «The columns are 11 metres in height» (Platner e Ashby, Saturnus, aedes; 27 novembre 2026: prima erano alte 17 m)
+    B.tempio(2.2,3.5,1.1,0,0,PI/2,{fronte:6,podio:.85});                                                                       // sul suo podio alto: «22.50 metres wide, about 40 long», ionico, sei colonne sulla fronte; «The columns are 11 metres in height» (Platner e Ashby, Saturnus, aedes; 27 novembre 2026: prima erano alte 17 m); podio lungo 40 m come la fonte (prima 45, e il clivo Capitolino ci passava sopra; il contorno di OpenStreetMap, relazione 1849835, è lungo 38,7 m)
  }},
  /* colonna Traiana: piedistallo «5.4 metres high»; base, fusto e capitello «3.70 metres in diameter … measure 100 Roman feet (29.77 metres)» (Platner e Ashby, Forum Traiani).
     Il punto è quello che aveva nel foro di Traiano del gruppo (locale 0, -11,6 nel riquadro del foro, girato di 1,022 sul Foro): x -8,5216, z -36,8779, ry 0,672. */
@@ -1240,7 +1242,7 @@ var M=[
     for(var gr=0;gr<7;gr++) B.cilindro(2.74-gr*.075,.09,0,3.05+gr*.08,0,gr?P.oro:P.marmo,null,40);                                // i sette gradoni
     B.cupola(2.24,0,3.6,0,P.oro,.44,.2);                                                                                            // calotta con l'occhio di 9 m
     /* Avancorpo: il blocco fra pronao e rotonda, col secondo frontone più alto di quello del pronao; la punta arriva poco sotto la cima del tamburo (forma dalle foto, a memoria). */
-    B.scatola(3.44,2.45,1.25,0,0,3,P.intonaco).scatola(3.5,.1,1.3,0,2.35,3,P.marmo).falde(1.3,.55,3.5,0,2.45,3,P.bronzo,PI/2,P.marmo);
+    B.scatola(3.44,2.42,1.25,0,0,3,P.intonaco).scatola(3.5,.1,1.3,0,2.35,3,P.marmo).falde(1.3,.55,3.5,0,2.45,3,P.bronzo,PI/2,P.marmo);      // 27 novembre 2026: l'avancorpo alto 2,42 e non 2,45, sotto la cornice: le due facce di sopra stavano alla stessa quota
     /* Pronao, 34 x 13,6 m (Platner; 34,2 x 15,6 per Ziolkowski), rialzato di 1,3 m sulla piazza: otto colonne di granito grigio in fronte, quattro di granito rosa
        in ciascuna delle due file dietro (Platner), colonne alte 14,15 m con basi e capitelli (Ziolkowski). Nessuna cella: dietro le colonne c'è la porta di bronzo.
        Che le file interne stiano dietro la prima, la terza, la sesta e l'ottava colonna, formando tre navate, è detto a memoria. */
@@ -1363,8 +1365,8 @@ var M=[
  }},
  {id:'adriano', nome:'Mausoleo di Adriano', x:-156.97,z:-118, ry:.064,      /* sull'asse di ponte Sant'Angelo (OpenStreetMap): il ponte arriva alla porta (24 novembre 2026; prima x -157, ry 0,1) */ zone:[[0,0,10]], et:1, fa:function(B){
     /* basamento quadrato di circa 84 m di lato e 10 di altezza, tamburo di 64 m di diametro e 21 di altezza, sopra un giardino (Platner) */
-    B.scatola(8.4,1,8.4,0,0,0,P.marmo).scatola(8.55,.12,8.55,0,1,0,P.marmo).cilindro(3.2,2.1,0,1.12,0,P.travertino,null,40).cilindro(3.27,.1,0,3.12,0,P.marmo,null,40).cilindro(3,.3,0,3.22,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.4,0,P.marmo).scatola(1.6,.1,1.6,0,5.1,0,P.marmo);
-    B.vano(0,0,4.23,1,0,.7,.85);                                                                                 // l'ingresso, verso il ponte
+    B.scatola(8.4,1,8.4,0,0,0,P.marmo).scatola(8.55,.12,8.55,0,1,0,P.marmo).cilindro(3.2,2.07,0,1.12,0,P.travertino,null,40).cilindro(3.27,.1,0,3.12,0,P.marmo,null,40).cilindro(3,.3,0,3.22,0,P.prato,2.2,24).scatola(1.5,1.7,1.5,0,3.4,0,P.marmo).scatola(1.6,.1,1.6,0,5.1,0,P.marmo);      // 27 novembre 2026: il tamburo alto 2,07 e non 2,1 (la sua cima ora sta dentro lo spessore della cornice), perché la sua faccia di sopra stava alla stessa quota della cornice e le due si contendevano i pixel (raggi verticali)
+    B.vano(0,0,4.23,1,0,.7,.85);                                                                                // l'ingresso, verso il ponte
     for(var st=0;st<20;st+=5) uomo(B,3.05*Math.cos(st*PI/10),3.22,3.05*Math.sin(st*PI/10),2.2,P.marmo);            // le poche statue sull'orlo che restano dopo il 537: le altre stanno in 'adrianostatue'
     for(var k=0;k<14;k++) B.cono(.22,1.2,2.5*Math.cos(k*.449),3.45,2.5*Math.sin(k*.449),P.chioma,6);
  }},
@@ -2587,6 +2589,11 @@ var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonin
 ['magnamater','tiberiana'].forEach(function(k){ PENDIO[k]=1; });
 ['ercolevincitore','portuno','giano','argentari','arcogallieno','trofeimario','servianetermini','servianeaventino'].forEach(function(k){ PENDIO[k]=1; });      // 27 novembre 2026: pezzi usciti dai gruppi foroboario ed esquilino, che seguono il pendio; ognuno al piede di prima (luogo)      // 26 novembre 2026 (sera): sul pianoro del Palatino, che nel modello è la terrazza del gruppo palatino; RM.hGrezza lì sta 6 unità più in basso
 ['casasallustio','hortilamianistatue','hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'].forEach(function(k){ PENDIO[k]=1; });      // gli horti (26 novembre 2026): ogni pezzo sul suo terreno, senza zona (le case stanno già fuori dal cerchio di RM.HORTI)      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
+/* Piani fermi trovati dalla prova a tappeto del 27 novembre 2026 (notte): dove il suolo disegnato usciva sopra un pavimento, una gradinata o un podio. Il rettangolo è l'ingombro
+   del monumento nelle sue coordinate [x, z, mezza lunghezza, mezza larghezza]; quanto usciva, in metri, nel commento */
+var FERMI_TAB={pace:[[.06,.19,5.63,6.41]], olitorio:[[.05,.37,2.03,2.12]], vesta:[[3.6,1.39,4.37,2.15]], traiano:[[0,-.12,16.6,16.48]], massenzio:[[-.65,-.1,4.75,4.2]],      // pace 3,5; olitorio 0,1; vesta 0,1; traiano 0,2; massenzio 0,9
+  apollo:[[0,.37,1.25,2.28]], bellona:[[0,.37,1.05,2.57]], termecostantino:[[0,.32,4.84,5.79]], mariamaggiore:[[1.61,0,6.57,2.02]], tempioclaudio:[[-1.54,.09,12.74,9.16]],      // apollo 1,4; bellona 0,4; termecostantino 0,3; mariamaggiore 0,3; tempioclaudio 0,6
+  ottavia:[[.04,-.02,6,6.66]], pantheonpiazza:[[0,6.5,3.4,11.25,0,-.06]]};      // ottavia 2; piazza del Pantheon 0,5: qui il suolo scende 60 cm sotto il piano del Pantheon, perché il lastricato della piazza sta 30 cm sotto quel piano e il suolo lo copriva (raggi verticali: a meno di 2 mm in cinque punti)
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
   var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?(D.CANTIERI&&D.CANTIERI[o.id]?D.CANTIERI[o.id]-1:st[1][0]-8):0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)
@@ -2595,6 +2602,8 @@ M.forEach(function(o){
     if(q[2] instanceof Array){ var gz=(o.ry||0)+(q[4]||0); z.r=0; z.a=q[2][0]; z.b=q[2][1]; z.c=Math.cos(gz); z.s=Math.sin(gz); z.R=Math.hypot(z.a,z.b); }      // [x, z, [mezza larghezza, mezza profondità], sfumatura, rotazione in più]: un rettangolo girato col monumento
     RM.zone.push(z); });
   if(o.lunga){ var n=Math.ceil(o.lunga[0]/o.lunga[1]); for(var i=0;i<n;i++){ var p=globale(o,((i+.5)/n-.5)*o.lunga[0],0); RM.zone.push({x:p[0],z:p[1],r:o.lunga[1],h:h}); } }
+  var fe=o.fermo||FERMI_TAB[o.id], hf=o.come?(M.filter(function(p){ return p.id===o.come; })[0]||{}).quota:h;      // i pezzi con come poggiano sul piano del complesso
+  if(fe&&hf!=null) fe.forEach(function(q){ var p=globale(o,q[0],q[1]), g=(o.ry||0)+(q[4]||0); (RM.pianiFermi||(RM.pianiFermi=[])).push([p[0],p[1],Math.cos(g),Math.sin(g),q[2],q[3],hf+(q[5]||0)]); });      // fermo: [x, z, mezza lunghezza, mezza larghezza, rotazione in più, quota in più]: la pianta dove la maglia del suolo non deve salire sopra il piano (posaSuolo in js/base.js)
 });
 /* dove una strada passa sotto un arco si stringe alla luce del fornice: [x, z, raggio, mezza larghezza] (24 novembre 2026: con strade larghe 16 m e fornici di 5 o 6, anche un arco
    ben centrato sembrava stare «accanto» alla strada) */

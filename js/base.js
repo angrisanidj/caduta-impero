@@ -453,9 +453,18 @@ function posaSuolo(){
   var S=piccolo?220:300, geo=new THREE.PlaneGeometry(2,2,S,S); geo.rotateX(-Math.PI/2);
   var pos=geo.attributes.position, uv=geo.attributes.uv, col=new Float32Array(pos.count*3), urb=new Float32Array(pos.count*2), c=new THREE.Color(), i, x, z;
   var curva=function(t){ var a=Math.abs(t), a3=a*a*a; return (t<0?-1:1)*(.2*a+.05*a3+.75*a3*a3*a)*3400; };      // fitta in tutta la città: un vertice ogni 45 m sul Foro (prima 68), ogni 100 a ponte Milvio (prima 130, più della larghezza del Tevere, e la maglia gli passava sopra); rada solo nella campagna lontana (23 novembre 2026)
+  /* Piani fermi (27 novembre 2026, notte; l'utente, con una cattura del Circo Massimo: una chiazza di prato a spigoli sopra la sabbia dell'arena e le gradinate). La maglia ha un vertice
+     ogni 45 m: un vertice alto appena fuori da un monumento (qui il fianco del Palatino, la cui terrazza si fonde con quella del circo) tira su tutto il triangolo che entra nella pianta.
+     RM.pianiFermi (da js/monumenti.js, campo fermo dei monumenti): rettangoli [x, z, coseno, seno, mezza lunghezza, mezza larghezza, quota]; ogni vertice che sta a meno di una
+     diagonale di cella dal rettangolo non sale sopra la quota del piano, così nessun triangolo che tocca la pianta esce sopra il pavimento. RM.h non cambia: case e alberi restano dove erano */
+  var FERMI=RM.pianiFermi||[], passoC=2/S;
   for(i=0;i<pos.count;i++){
     x=curva(pos.getX(i)); z=curva(pos.getZ(i));
-    pos.setXYZ(i,x,RM.h(x,z),z); uv.setXY(i,x/42,z/42);
+    var yV=RM.h(x,z);
+    for(var kf=0;kf<FERMI.length;kf++){ var pf=FERMI[kf], dxf=x-pf[0], dzf=z-pf[1];
+      var df=Math.hypot(Math.max(Math.abs(dxf*pf[2]-dzf*pf[3])-pf[4],0),Math.max(Math.abs(dxf*pf[3]+dzf*pf[2])-pf[5],0));
+      if(df<Math.hypot(curva(Math.min(1,Math.abs(pos.getX(i))+passoC))-curva(Math.abs(pos.getX(i))),curva(Math.min(1,Math.abs(pos.getZ(i))+passoC))-curva(Math.abs(pos.getZ(i))))+.2 && yV>pf[6]) yV=pf[6]; }
+    pos.setXYZ(i,x,yV,z); uv.setXY(i,x/42,z/42);
     urb[i*2]=coloreSuolo(x,z,c); urb[i*2+1]=urb[i*2]>0?nucleo(x,z):0; col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
   }
   geo.setAttribute('color',new THREE.BufferAttribute(col,3)); geo.setAttribute('urb',new THREE.BufferAttribute(urb,2)); geo.computeVertexNormals();
