@@ -96,6 +96,66 @@ function teatro(B,r,h,tre){                              // cavea a semicerchio 
   [0,1].forEach(function(l){ B.colonne(-r*.66,.07,r*.66,.07,10,h*.36,.05,.35+l*h*.4).scatola(r*1.36,.07,.16,0,.35+l*h*.4+h*.36,.07,P.marmo); });      // la fronte della scena: due ordini di colonne
   B.aperture(r*.9,-r*.24,-r*.9,-r*.24,9,.2,h*.42);                                                                                                   // gli archi sul retro della scena
 }
+/* I teatri, uno per uno (27 novembre 2026). L'utente: teatri e terme «mi convincono poco perché tutti uguali». Uscivano tutti da teatro(), qui sopra, con due numeri.
+   Ora ognuno ha il suo disegno, dalle fonti lette (src/testi/topografia-fonti.md, «I teatri, uno per uno»): misure, orientamento, numero e tipo degli ordini, materiali, scena.
+   Cavea a semicerchio verso +z, scena a -z, centro dell'orchestra all'origine. o.r raggio esterno; o.archi arcate sulla mezza facciata; o.ordini: [y0,y1,altezza dell'arco] per ogni
+   ordine di arcate aperte, fatte con campata() come al Colosseo; o.attico [y0,y1]: muro pieno con lesene (Marcello); o.col colore della facciata, o.semi delle semicolonne;
+   o.sedili colore delle gradinate; o.rorc raggio dell'orchestra; o.scena [lunghezza, profondità, altezza]; o.frons ordini di colonne della fronte della scena;
+   o.aule [larghezza, profondità]: le aule absidate ai capi della scena (Marcello); o.tettoia: il tetto sporgente sopra il palco (Pompeo); o.porticato: colonne davanti al retro della scena.
+   Altezze degli archi, numero dei sedili e delle colonne della scena sono uno schema dove la fonte non li dà: lo dicono le schede. */
+function teatroVero(B,o){
+  var r=o.r, n=o.archi, col=o.col||P.travertino, sem=o.semi||col, sed=o.sedili||P.tufo, H=o.ordini, top=o.attico?o.attico[1]:H[H.length-1][1], k;
+  var e=RM.ellisse(r,r,n,0,PI), ri=r-.55, w=RM.ellisse(ri,ri,n,0,PI), passo=PI*r/n, ro=o.rorc||r*.25, hc=top-.12, NS=28;
+  function an(q){ return RM.ellisse(q,q,NS,0,PI); }
+  for(k=0;k<n;k++) H.forEach(function(q){ campata(B,e[k],e[k+1],q[0],q[1],passo*.58,q[2],.24,col); });                                  // la facciata: arcate aperte
+  H.forEach(function(q,l){ var c=RM.ellisse(r+.07,r+.07,n,0,PI); B.striscia(c,q[1]-.09,c,q[1],P.marmo,false).striscia(e,q[1]-.09,c,q[1]-.09,P.marmo,false);      // cornice in cima a ogni ordine
+    B.striscia(e,q[1],w,q[1],col,false);                                                                                                  // il piano dell'ambulacro, che si vede dagli archi
+    var sc=Array.isArray(sem)?sem[l]:sem;
+    e.forEach(function(p){ var ang=Math.atan2(p[0],p[1]), hh=q[1]-q[0]-.12;                                                               // semicolonne fra gli archi
+      B.dentro(p[0]*1.004,q[0],p[1]*1.004,ang,function(B){ B.geo(new THREE.CylinderGeometry(.045,.05,hh,5,1,true,-Math.PI/2,Math.PI).translate(0,hh/2,0),sc); }); }); });
+  if(o.attico){ var a0=o.attico[0], a1=o.attico[1];                                                                                       // l'attico: muro pieno, lesene, cornicione
+    B.striscia(e,a0,e,a1,col,false).striscia(e,a1,w,a1,col,false);
+    e.forEach(function(p,q){ if(q%2===0) B.scatola(.08,a1-a0-.06,.05,p[0]*1.004,a0,p[1]*1.004,col,Math.atan2(p[0],p[1])); });
+    var c3=RM.ellisse(r+.08,r+.08,n,0,PI); B.striscia(c3,a1-.08,c3,a1,P.marmo,false); }
+  B.striscia(w,0,w,top,col,false);                                                                                                        // il muro di fondo dell'ambulacro
+  for(k=0;k<14;k++){ var ra=ro+(ri-ro)*k/14, rb=ro+(ri-ro)*(k+1)/14, ya=.3+(hc-.3)*k/14, yb=.3+(hc-.3)*(k+1)/14;                         // la cavea, a gradini
+    B.striscia(an(ra),ya,an(ra),yb,sed,false).striscia(an(ra),yb,an(rb),yb,sed,false); }
+  var pr=ro+(ri-ro)*.5, yp=.3+(hc-.3)*.5; B.striscia(an(pr),yp,an(pr),yp+.12,col,false);                                                  // il muretto fra la parte bassa e quella alta della cavea
+  B.striscia(an(ro),.15,an(ro),.3,P.marmo,false).striscia(an(ro),.15,an(ro).map(function(){ return [0,0]; }),.15,P.marmo,false);           // l'orchestra
+  [-1,1].forEach(function(s){ B.quad([s*ro,0,0],[s*r,0,0],[s*r,top,0],[s*ro,.4,0],col).quad([s*ro,.4,0],[s*r,top,0],[s*r,0,0],[s*ro,0,0],col); });      // le testate della cavea
+  var S=o.scena, Ls=S[0], Sd=S[1], Sh=S[2], zf=-.6;
+  B.scatola(Ls*.92,.15,.6,0,0,-.3,P.marmo);                                                                                               // il palco
+  B.scatola(Ls,Sh,Sd,0,0,zf-Sd/2,col).scatola(Ls+.06,.1,Sd+.06,0,Sh,zf-Sd/2,P.marmo);                                                     // l'edificio della scena
+  var nf=o.frons||2, hf=(Sh-.2)/nf, nc=o.nc||Math.max(6,Math.round(Ls/.75));
+  for(k=0;k<nf;k++){ var yf=.15+k*hf; B.colonne(-Ls/2+.25,zf+.12,Ls/2-.25,zf+.12,nc,hf*.8,Math.min(.06,hf*.05),yf).scatola(Ls-.3,hf*.12,.18,0,yf+hf*.8,zf+.08,P.marmo); }      // la fronte: colonne su più ordini
+  [-1,0,1].forEach(function(q){ B.vano(q*Ls*.22,.15,zf+.01,1,0,q?.4:.55,hf*.7,true); });                                                  // le tre porte della scena
+  B.aperture(Ls/2-.3,zf-Sd,-Ls/2+.3,zf-Sd,Math.max(5,Math.round(Ls/1.2)),.15,Sh*.38);                                                     // il retro della scena
+  if(o.porticato) B.colonne(-Ls/2+.3,zf-Sd-.35,Ls/2-.3,zf-Sd-.35,o.porticato,Sh*.42,.07,0).scatola(Ls*.55,.12,.45,0,Sh*.42,zf-Sd-.25,P.marmo);      // portico davanti al retro (Marcello: sei colonne sulla Forma Urbis)
+  if(o.tettoia) B.quad([-Ls/2,Sh,zf],[Ls/2,Sh,zf],[Ls/2,Sh-.25,.05],[-Ls/2,Sh-.25,.05],P.coppi);                                          // il tetto sporgente sopra il palco
+  if(o.aule) [-1,1].forEach(function(s){ var al=o.aule, xa=s*(Ls/2+al[0]/2);                                                              // le aule absidate ai capi della scena
+    B.scatola(al[0],Sh*.75,al[1],xa,0,zf-al[1]/2,col).falde(al[1],.3,al[0]+.1,xa,Sh*.75,zf-al[1]/2,P.coppi,PI/2,col).cilindro(al[0]*.36,Sh*.6,xa,0,zf-al[1],col,null,10); });
+}
+/* L'anfiteatro Castrense (voci castrense e castrensemura): tutto di mattoni, tre piani; murato: resta la metà sud (+z), con gli archi tamponati */
+function castrense(B,murato){
+  var n=40, MT=P.mattone, TAMP=RM.col(0x9c7f66), k, f;
+  function ell(s,q){ return RM.ellisse(2.4+(4.43-2.4)*s,1.9+(3.9-1.9)*s,q||n); }
+  function parte(l){ return murato?l.slice(0,n/2+1):l.concat([l[0]]); }                                                                  // dopo il 271 la metà sud, da est a ovest
+  var e=parte(RM.ellisse(4.43,3.9,n)), w=parte(RM.ellisse(3.9,3.37,n)), m=e.length-1, PIA=[[0,.8,.6],[.8,1.5,.5]];
+  for(k=0;k<m;k++) PIA.forEach(function(q,l){ campata(B,e[k],e[k+1],q[0],q[1],.3,q[2],.2,MT);
+    var a=[e[k][0]*.985,e[k][1]*.985], b=[e[k+1][0]*.985,e[k+1][1]*.985];
+    if(murato) B.quad([a[0],q[0],a[1]],[b[0],q[0],b[1]],[b[0],q[1]-.02,b[1]],[a[0],q[1]-.02,a[1]],TAMP);                                    // gli archi tamponati
+    else if(l===1) B.quad([a[0],q[0],a[1]],[b[0],q[0],b[1]],[b[0],q[0]+.12,b[1]],[a[0],q[0]+.12,a[1]],MT); });                            // i parapetti del secondo piano
+  [.8,1.5,2.05].forEach(function(y){ var c=parte(RM.ellisse(4.48,3.95,n)); B.striscia(c,y-.05,c,y,MT,false).striscia(e,y-.05,c,y-.05,MT,false); });      // le cornici
+  B.striscia(e,1.5,e,2.05,MT,false).fornici(e,1.62,.22,.3,2,false).striscia(e,2.05,w,2.05,MT,false);                                      // l'attico con le finestre
+  e.forEach(function(p){ var ang=Math.atan2(p[0],p[1]);                                                                                    // semicolonne e lesene, di mattoni
+    PIA.forEach(function(q){ var hh=q[1]-q[0]-.06; B.dentro(p[0]*1.004,q[0],p[1]*1.004,ang,function(B){ B.geo(new THREE.CylinderGeometry(.04,.045,hh,5,1,true,-Math.PI/2,Math.PI).translate(0,hh/2,0),MT); }); });
+    B.scatola(.07,.5,.04,p[0]*1.006,1.52,p[1]*1.006,MT,ang); });
+  B.striscia(w,0,w,2.05,MT,false); [.8,1.5].forEach(function(y){ B.striscia(e,y,w,y,MT,false); });                                         // l'ambulacro
+  for(f=0;f<7;f++){ var s0=.74-f*.105, s1=s0-.105; B.striscia(parte(ell(s0)),1.9-f*.23,parte(ell(s0)),1.67-f*.23,P.tufo,false).striscia(parte(ell(s0)),1.67-f*.23,parte(ell(s1)),1.67-f*.23,P.tufo,false); }      // la cavea
+  var ar=parte(RM.ellisse(2.4,1.9,n)); B.striscia(ar,0,ar,.3,MT,false);                                                                    // il muro dell'arena
+  if(!murato) B.striscia(ar,.12,ar.map(function(){ return [0,0]; }),.12,P.sabbia,false);
+  else [-1,1].forEach(function(s){ B.quad([s*2.4,0,0],[s*4.43,0,0],[s*4.43,2.05,0],[s*2.4,.3,0],MT).quad([s*2.4,.3,0],[s*4.43,2.05,0],[s*4.43,0,0],[s*2.4,0,0],MT); });      // le testate del taglio
+}
 /* o (facoltativo): lc e pc, larghezza e profondità del corpo centrale; zc, dove sta il suo centro; rc, raggio del caldarium; recinto:false per le terme senza peribolo.
    Dal 23 novembre 2026 le grandi terme non escono più tutte dallo stesso stampo (fonti lette: Platner e Ashby, Thermae Diocletiani e Thermae Antoninianae):
    caldarium:'rettangolo' (Diocleziano: «the rectangular caldarium, which projected south-westwards»); tepidarium:'tondo' («the circular tepidarium»);
@@ -310,15 +370,27 @@ function vaniVerso(B,prof,cx,cz,y,h,quota,quadra){
   for(var i=0;i<prof.length-1;i++){ var a=prof[i], b=prof[i+1], mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, dx=b[0]-a[0], dz=b[1]-a[1], L=Math.hypot(dx,dz), nx=cx-mx, nz=cz-mz, m=Math.hypot(nx,nz)||1;
     B.vano(mx+nx/m*.07,y,mz+nz/m*.07,dx/L,dz/L,L*(quota||.5),h,quadra); }
 }
+/* un profilo chiuso ripreso a passo costante (per le arcate) */
+function ricampiona(prof,passo){
+  var o=[], i, n=prof.length, tot=0, L=[];
+  for(i=0;i<n;i++){ var a=prof[i], b=prof[(i+1)%n]; L.push(Math.hypot(b[0]-a[0],b[1]-a[1])); tot+=L[i]; }
+  var q=Math.max(8,Math.round(tot/passo)), d=tot/q, s=0, j=0, acc=0;
+  for(i=0;i<q;i++){ s=i*d; while(j<n-1 && acc+L[j]<s){ acc+=L[j]; j++; } var f=(s-acc)/(L[j]||1), a2=prof[j], b2=prof[(j+1)%n]; o.push([a2[0]+(b2[0]-a2[0])*f,a2[1]+(b2[1]-a2[1])*f]); }
+  return o;
+}
 /* stadio per le gare atletiche: facciata a due ordini di arcate con le loro cornici, due settori di gradinate divisi da un muro, pista senza spina; ingressi al centro dei lati lunghi, sulla curva e sulla testata */
 function stadio(B,L,W,h){
   var pr=function(w){ return RM.stadio(L-(W-w),w,26,14); }, est=pr(W), fas=pr(W+.14), cima=pr(W-1.1), mez=pr(W-2.7), pod=pr(W*.52);
   var cen=pod.map(function(p){ return [Math.max(-L/2+3,Math.min(L/2-W/2,p[0])),0]; }), xm=-W/4;
-  B.striscia(est,0,est,h,P.travertino).striscia(est,h,cima,h,P.travertino).striscia(cima,h,cima,h-.25,P.travertino)
+  /* 27 novembre 2026: le arcate sono aperte, con campata() come al Colosseo e ai teatri (prima erano fornici dipinti sul muro pieno), con l'ambulacro dietro.
+     Larghezza delle campate (5,5 m) e altezze sono uno schema: le fonti lette non le danno */
+  var fit=ricampiona(est,.55), nf=fit.length, amb=pr(W-1), y1=h*.46, y2=h*.91, k;
+  for(k=0;k<nf;k++){ campata(B,fit[k],fit[(k+1)%nf],0,y1,.3,h*.34,.2,P.travertino,true); campata(B,fit[k],fit[(k+1)%nf],y1,y2,.28,h*.3,.2,P.travertino,true); }
+  B.striscia(amb,0,amb,h,P.travertino).striscia(est,y1,amb,y1,P.travertino).striscia(est,y2,amb,y2,P.travertino);
+  B.striscia(est,y2,est,h,P.travertino).striscia(est,h,cima,h,P.travertino).striscia(cima,h,cima,h-.25,P.travertino)
    .striscia(cima,h-.25,mez,h*.55,P.tufo).striscia(mez,h*.55,mez,h*.55-.3,P.travertino)
    .striscia(mez,h*.55-.3,pod,.45,P.tufo).striscia(pod,.45,pod,.12,P.travertino).striscia(pod,.12,cen,.12,P.sabbia);
   [h*.46,h*.91].forEach(function(y){ B.striscia(fas,y,fas,y+.09,P.marmo).striscia(fas,y+.09,est,y+.09,P.marmo); });
-  B.fornici(est,.12,h*.36,.55,1,false).fornici(est,h*.46+.14,h*.33,.5,1,false).aperture(-L/2,-W/2+1.2,-L/2,W/2-1.2,7,.12,h*.38);
   [-1,1].forEach(function(q){ var z=q*(W/2+.22);                                                    // gli avancorpi degli ingressi sui lati lunghi
     B.scatola(2,h*.5,.44,xm,0,z,P.travertino).scatola(2.1,.1,.54,xm,h*.5,z,P.marmo).vano(xm,0,z+q*.24,1,0,.8,h*.4).colonne(xm-.75,z+q*.3,xm+.75,z+q*.3,2,h*.46,.07,0); });
   B.scatola(.44,h*.5,2,L/2+.22,0,0,P.travertino).scatola(.54,.1,2.1,L/2+.22,h*.5,0,P.marmo).vano(L/2+.46,0,0,0,1,.8,h*.4).colonne(L/2+.52,-.75,L/2+.52,.75,2,h*.46,.07,0);      // l'ingresso sulla curva
@@ -481,8 +553,9 @@ function muroForato(B,w,h,p,fornici,col,y){
   return B;
 }
 /* una campata d'arcata lungo un muro curvo, fra due punti del profilo: i due piedritti, l'arco, l'intradosso profondo t verso l'interno */
-function campata(B,P0,P1,y0,y1,aw,ah,t,col){
+function campata(B,P0,P1,y0,y1,aw,ah,t,col,perp){                 // perp (27 novembre 2026): l'intradosso va perpendicolare al muro, non verso il centro (lati diritti dello stadio)
   var dx=P1[0]-P0[0], dz=P1[1]-P0[1], L=Math.hypot(dx,dz), ux=dx/L, uz=dz/L, mx=(P0[0]+P1[0])/2, mz=(P0[1]+P1[1])/2, m=Math.hypot(mx,mz)||1, nx=mx/m, nz=mz/m, a=aw/2, hs=ah-a, N=6, k, sl=L/2-a;
+  if(perp){ nx=uz; nz=-ux; if(nx*mx+nz*mz<0){ nx=-nx; nz=-nz; } }
   function pt(q,yy,d){ return [P0[0]+ux*q-nx*d,yy,P0[1]+uz*q-nz*d]; }
   B.quad(pt(0,y0,0),pt(sl,y0,0),pt(sl,y1,0),pt(0,y1,0),col).quad(pt(L-sl,y0,0),pt(L,y0,0),pt(L,y1,0),pt(L-sl,y1,0),col);
   B.quad(pt(sl,y0,0),pt(sl,y0,t),pt(sl,y0+hs,t),pt(sl,y0+hs,0),col).quad(pt(L-sl,y0,t),pt(L-sl,y0,0),pt(L-sl,y0+hs,0),pt(L-sl,y0+hs,t),col);
@@ -1014,6 +1087,15 @@ var M=[
     /* A sud, addossata alla rotonda, l'aula detta basilica di Nettuno: 45 x 19 m, con un'abside di 9 m nel muro nord (Platner, Thermae Agrippae). Altezza e tetto sono ricostruiti. */
     B.scatola(4.5,2,1.9,0,0,-3.7,P.mattone).falde(4.6,.5,2,0,2,-3.7,P.coppi,0,P.mattone);
  }},
+ /* Odeon di Domiziano (27 novembre 2026; mancava: src/design/completezza-monumenti.md, sezione 2, n. 11). Platner e Ashby, Odeum: «a building for musical performances, erected by Domitian
+    in the campus Martius, probably near the Stadium», restaurato da Apollodoro sotto Traiano, 10.600 posti (circa 5000 persone; it.wikipedia ne dà 10.000), nel IV secolo fra i
+    monumenti più notevoli (Ammiano XVI 10, 14), nel V fra i sette «mira praecipua» (Polemio Silvio). Il posto: «The outline of its cavea is still preserved by the façade of the
+    Palazzo Massimo alle Colonne» (en.wikipedia), a sud dello stadio. Centro e raggio (63 m) sono ricavati dalla curva della facciata del palazzo su OpenStreetMap (via 125915788,
+    cinque punti): l'arco è corto, la misura è incerta. La cavea guarda a nord, verso lo stadio. La scena «alta quattro piani» e le circa novanta colonne (una, di cipollino, è in piazza
+    dei Massimi) sono di it.wikipedia. Schema: facciata (due ordini di arcate), altezze, profondità della scena; se fosse coperto non si sa, e qui non lo è. */
+ {id:'odeon', nome:'Odeon di Domiziano', x:-95.3,z:-52.4, ry:0, zone:[[0,0,6.6]], fa:function(B){
+    teatroVero(B,{r:6.3, archi:40, ordini:[[.05,1.1,.76],[1.1,2.2,.72]], rorc:1.9, scena:[9,1,2.2], frons:4, nc:22});
+ }},
  {id:'domiziano', nome:'Stadio di Domiziano', x:-101,z:-74, ry:PI/2, lunga:[28,7.5], fa:function(B){ stadio(B,27.5,10.6,1.9); }},      // circa 275 x 106 m, la curva a nord: è piazza Navona. Ordini di arcate e altezza della facciata sono ricostruiti
  {id:'traiano', nome:'Terme di Traiano', x:97.4,z:3.7, ry:-.524, zone:[[0,0,[12,12.5],3.5],[0,17,2.4,1.5]], fa:function(B){ termeTraiano(B);      /* 27 novembre 2026: pianta propria (termeTraiano); ry da -.62 a -.524, «at an angle of 30 degrees from the meridian» (Platner e Ashby). Posizione: il centro della relazione OpenStreetMap 13162787 «Thermae Traianae» (Nominatim, 23 novembre 2026); prima stava circa 95 m più a ovest */
     /* La terrazza (25 novembre 2026): le terme stanno su un piano artificiale, fondato dentro le sale della domus Aurea riempite («This exedra was built over part of the domus Aurea»,
@@ -1118,8 +1200,33 @@ var M=[
     fra il 507 e il 511 (Cassiodoro), e nient'altro fino al Medioevo, quando una volta delle sostruzioni dà il nome a Santa Maria de Crypta Pinta e piazza di Grottapinta
     conserva la forma della cavea. In dati.js: abbandonato dal 546 (la data che il modello aveva già), in piedi, senza crolli; marmi e bronzi tolti nel 663 per scelta.
     Dal 25 novembre 2026, sera, ha nome e scheda (SCHEDE.pompeo in js/dati.js), che dichiara le due scelte. */
- {id:'pompeo', nome:'Teatro di Pompeo', x:-94.3,z:-30.8, ry:-PI/2, zone:[[0,0,10],[0,-14,10]], fa:function(B){ teatro(B,8,2.6); B.tempio(2,2.6,1.4,0,6.6,PI,{fronte:6}); portico(B,13,18,0,0,-11.5,1.1,P.prato); }},   // teatro e portici di Pompeo
- {id:'marcello', nome:'Teatro di Marcello', x:-49.85,z:9, ry:PI*.8, zone:[[0,0,7.5]], fa:function(B){ teatro(B,6,2.9,true); }},      /* centro e raggio ricavati dal cerchio della facciata curva conservata (OpenStreetMap, via 86217821: raggio di circa 59 m); prima il teatro stava circa 45 m più a nord-est e copriva i due templi */
+ /* Rifatto il 27 novembre 2026 sulle voci Theatrum Pompei e Porticus Pompei di Platner e Ashby: diametro di «150-160 metres» (qui 160, il raggio di prima, su cui sta il ponteggio
+    del 493), la scena «about 95 metres»; la facciata a «three series of arcades, adorned with columns», dorico, ionico, corinzio, con archi di peperino e davanti alle arcate di sotto
+    colonne di granito rosso; il tempio di Venere Vincitrice «at the top of the central part of the cavea», con le file dei sedili come gradini; il «theatrum marmoreum» dei calendari
+    (sedili di marmo). Il portico, «about 180 metres long and 135 wide», con «four parallel rows of columns» e il giardino con i viali d'ombra (Properzio): qui le due file interne
+    corrono lungo il lato lungo, gli alberi fra le file; in fondo la sala della Curia di Pompeo, che Augusto fece murare (it.wikipedia). Il tetto sporgente sopra il palco e i tre
+    ordini di colonne della scena sono di it.wikipedia («Teatro di Pompeo»). Schema: altezze (30 m), numero degli archi, profondità della scena, misure del tempio. */
+ {id:'pompeo', nome:'Teatro di Pompeo', x:-94.3,z:-30.8, ry:-PI/2, zone:[[0,0,10],[0,-14,10]], fa:function(B){
+    var PEP=RM.col(0xb3ab9a), GRR=RM.col(0x9a6253);                                                                                      // peperino e granito rosso
+    teatroVero(B,{r:8, archi:48, ordini:[[.05,1.05,.76],[1.05,2.05,.72],[2.05,3,.66]], col:PEP, semi:[GRR,PEP,PEP], sedili:P.marmo, rorc:2.3, scena:[9.5,1.4,2.9], frons:3, tettoia:true});
+    B.scatola(2.5,2.85,2.3,0,0,6.3,PEP);                                                                                                  // il podio del tempio, che sale dalla cavea dietro l'ultima fila
+    B.dentro(0,2.85,6.4,PI,function(B){ B.tempio(2,2,1.3,0,0,0,{fronte:6,podio:.15}); });                                                 // Venere Vincitrice, rivolta alla scena
+    portico(B,13.5,18,0,0,-11,1.1,P.prato);                                                                                               // il portico dietro la scena, col giardino
+    [-1,1].forEach(function(s){ B.colonne(s*3.4,-3.4,s*3.4,-18.6,20,.9,.045,.1);                                                          // le due file di colonne interne
+      for(var k=0;k<9;k++) [2.2,4.6].forEach(function(x){ B.cilindro(.03,.25,s*x,.1,-4.2-k*1.7,P.tronco,null,4).cono(.38,.75,s*x,.3,-4.2-k*1.7,P.chioma,7); }); });      // i viali d'alberi
+    B.scatola(2.4,1.5,1.5,0,0,-19.05,P.tufo).falde(1.6,.4,2.5,0,1.5,-19.05,P.coppi,PI/2,P.tufo);                                         // la Curia di Pompeo, murata
+ }},
+ /* Rifatto il 27 novembre 2026 (Platner e Ashby, Theatrum Marcelli; it.wikipedia «Teatro di Marcello», che segue il Lexicon Topographicum): di travertino, «three series of open
+    arcades», doriche e ioniche, e in cima un attico a muro pieno con paraste corinzie; 41 arcate e 42 semicolonne; alto circa 32,60 m, e i due ordini che restano ne misurano circa 20;
+    la scena rettilinea, lunga 80-90 m e profonda 20, con «un portico di sei colonne verso l'esterno» (Forma Urbis) e alle due estremità un'aula absidata di circa 25 x 15 m; dietro,
+    una grande esedra con i due tempietti ricostruiti della Pietà e di Diana; dentro, stucco e marmo; la scena verso il fiume, l'asse da nord-nord-est a sud-sud-ovest. Il raggio resta
+    quello della facciata conservata (59 m): Platner dà un diametro di 150 m, il Lexicon 129,80. Schema: altezza degli archi, sedili, colonne della scena, forma dell'esedra e dei tempietti. */
+ {id:'marcello', nome:'Teatro di Marcello', x:-49.85,z:9, ry:PI*.8, zone:[[0,0,7.5]], fa:function(B){
+    teatroVero(B,{r:6, archi:41, ordini:[[.05,1,.72],[1,2,.7]], attico:[2,3.26], sedili:P.marmo, rorc:1.85, scena:[8.5,2,3], frons:2, aule:[2.5,1.5], porticato:6});
+    var es=RM.ellisse(2,1.6,14,PI,2*PI).map(function(p){ return [p[0],p[1]-2.6]; });                                                      // l'esedra dietro la scena
+    B.striscia(es,0,es,.9,P.travertino,false);
+    [-.8,.8].forEach(function(x){ B.tempio(.55,.8,.5,x,-3.5,0,{fronte:4,podio:.2}); });                                                   // i tempietti della Pietà e di Diana
+ }},      /* centro e raggio ricavati dal cerchio della facciata curva conservata (OpenStreetMap, via 86217821: raggio di circa 59 m); prima il teatro stava circa 45 m più a nord-est e copriva i due templi */
  /* I due templi a nord del teatro, sui contorni di OpenStreetMap (vie 182282759 e 998844739): Apollo «in circo», detto Sosiano (it.wikipedia) e quello che gli studi successivi a Platner e Ashby
     identificano con Bellona (per loro, nel 1929, il sito di Bellona «is not known with certainty»; it.wikipedia lo pone accanto al tempio di Apollo). Fronte verso nord, verso il circo Flaminio:
     orientamento e alzati sono indicativi. Chiusi come gli altri templi dopo le leggi di Teodosio. */
@@ -1392,8 +1499,20 @@ var M=[
  /* Teatro e Crypta di Balbo. Posizioni reali (OpenStreetMap): l'isolato del museo fra via Caetani, via delle Botteghe Oscure, via dei Polacchi e via dei Delfini è la crypta;
     la cavea (95 m di diametro) sta a ovest, sotto palazzo Mattei. Misure del portico e forma dell'esedra sono indicative. */
  {id:'balbo', nome:'Teatro e Crypta di Balbo', x:-57.7,z:-21.5, ry:-PI/2, zone:[[0,2.4,5.6],[0,-5.6,6.8]], et:1, fa:function(B){
-    teatro(B,4.75,2);                                                                              // cavea verso ovest, scena lungo l'odierna via Caetani
-    portico(B,9,8.4,0,0,-5.6,.9);                                                                  // la crypta: cortile porticato dietro la scena
+    /* 27 novembre 2026: il più piccolo dei tre, 95 m di diametro e circa 7700 spettatori (Platner e Ashby, Theatrum Balbi; it.wikipedia); delle sue arcate le fonti lette non dicono
+       nulla: due ordini, come schema. Restano tracce in opera quadrata e reticolata della parte bassa della cavea. Il posto e l'asse di Platner (sotto palazzo Cenci) sono superati
+       dagli scavi della Crypta, dal 1981: il teatro sta a ovest del portico. */
+    teatroVero(B,{r:4.75, archi:30, ordini:[[.05,.95,.68],[.95,1.9,.64]], col:P.tufo, rorc:1.4, scena:[6.6,.8,1.9], frons:2});      // cavea verso ovest, scena lungo l'odierna via Caetani
+    /* la crypta: un cortile dietro la scena chiuso da gallerie coperte. Platner e Ashby, Crypta Balbi: il nome indica «a vaulted passage lighted from above»; perciò qui le gallerie
+       sono a volta, chiuse verso fuori, aperte ad archi verso il cortile, con le luci sul tetto (27 novembre 2026; prima era un portico a colonne come quello di Pompeo).
+       Larghezza e altezza delle gallerie, numero degli archi e delle luci sono uno schema. */
+    var cw=9, cd=8.4, cz=-5.6, cs=.8, ch=.85, z0=cz-cd/2, z1=cz+cd/2;
+    B.scatola(cw-2*cs,.06,cd-2*cs,0,0,cz,P.selce);                                                                                 // il cortile
+    B.scatola(cw,ch,cs,0,0,z0+cs/2,P.tufo).scatola(cw,ch,cs,0,0,z1-cs/2,P.tufo).scatola(cs,ch,cd-2*cs,-cw/2+cs/2,0,cz,P.tufo).scatola(cs,ch,cd-2*cs,cw/2-cs/2,0,cz,P.tufo);
+    B.aperture(-cw/2+cs,z0+cs+.01,cw/2-cs,z0+cs+.01,9,.06,.55).aperture(cw/2-cs,z1-cs-.01,-cw/2+cs,z1-cs-.01,9,.06,.55)                 // gli archi verso il cortile
+     .aperture(cw/2-cs-.01,z0+cs,cw/2-cs-.01,z1-cs,8,.06,.55).aperture(-cw/2+cs+.01,z1-cs,-cw/2+cs+.01,z0+cs,8,.06,.55);
+    for(var lk=0;lk<6;lk++){ var lx=-cw/2+cs+(lk+.5)*(cw-2*cs)/6, lz=z0+cs+(lk+.5)*(cd-2*cs)/6;                                     // le luci nella volta
+      B.scatola(.3,.02,.12,lx,ch,z0+cs/2,P.ombra).scatola(.3,.02,.12,lx,ch,z1-cs/2,P.ombra).scatola(.12,.02,.3,-cw/2+cs/2,ch,lz,P.ombra).scatola(.12,.02,.3,cw/2-cs/2,ch,lz,P.ombra); }
     var es=RM.ellisse(1.1,1.1,12,PI,2*PI).map(function(p){ return [p[0],p[1]-9.8]; });             // l'esedra sul lato est: tombe nel VI secolo, scarico nel VII, calcara nell'VIII
     B.striscia(es,0,es,1.5,P.mattone,false).fornici(es,.2,.8,.5,1,false);
  }},
@@ -1764,13 +1883,17 @@ var M=[
     est-ovest come il tratto di mura che lo chiude a sud; altezza e arena indicative. Circo Variano: i carceres stanno dentro le mura (OpenStreetMap, way 261041472, che dà l'orientamento) e la pista
     corre verso nord-nord-est fuori dalla cinta, che la taglia; lunghezza (circa 565 m) a memoria, larghezza dai carceres (91 m), indicativa. L'obelisco di Antinoo vi fu portato da Elagabalo
     (it.wikipedia «Obelisco del Pincio») e fu ritrovato in tre pezzi fuori porta Maggiore: il posto a metà della spina è un'ipotesi. Alto 9,24 m. */
- {id:'sessoriano', nome:'Anfiteatro Castrense e circo Variano', x:246.79,z:53.9, ry:0, zone:[[0,0,4.8]].concat([-24,-16,-8,0,8,16,24].map(function(t){ return [VARIANO.x-246.79+.485*t, VARIANO.z-53.9-.875*t, 6.2]; })), fa:function(B){
+ /* Anfiteatro Castrense, rifatto il 27 novembre 2026 e diviso in due voci, prima e dopo le mura (prima stava nel gruppo sessoriano, sempre intero). Platner e Ashby,
+    Amphitheatrum Castrense: assi di 88,5 e 78 m, «constructed entirely of brick and brick-faced concrete»; fuori «three stories of open arcades, adorned with pilasters and
+    Corinthian capitals»; it.wikipedia («Anfiteatro castrense»): al primo piano arcate fra semicolonne, al secondo arcate chiuse da bassi parapetti fra lesene, il terzo un attico
+    con finestre. Con le mura di Aureliano il muro si attacca a metà dei lati est e ovest: la metà esterna diventa un bastione, «the open arcades of the exterior were walled up»,
+    e «the inner half was evidently pulled down». Qui le mura del modello (da OpenStreetMap) girano attorno al lato sud: il bastione è la metà sud. I disegni del Cinquecento
+    mostrano ancora i tre piani. Schema: altezze dei piani, numero delle arcate, gradinate. L'abbassamento del terreno attorno non è disegnato. */
+ {id:'castrense', nome:'Anfiteatro Castrense', x:246.79,z:53.9, ry:0, fa:function(B){ luogo(B,246.79,53.9,246.79,53.9,0,3,function(B){ castrense(B,false); }); }},
+ {id:'castrensemura', nome:'Anfiteatro Castrense', x:246.79,z:53.9, ry:0, note:{chiuso:'murato nelle mura, come bastione'}, fa:function(B){ luogo(B,246.79,53.9,246.79,53.9,0,3,function(B){ castrense(B,true); }); }},
+ /* Sessoriano: resta il circo Variano (l'anfiteatro ha le sue due voci qui sopra) */
+ {id:'sessoriano', nome:'Circo Variano', ex:VARIANO.x, ez:VARIANO.z, x:246.79,z:53.9, ry:0, zone:[[0,0,4.8]].concat([-24,-16,-8,0,8,16,24].map(function(t){ return [VARIANO.x-246.79+.485*t, VARIANO.z-53.9-.875*t, 6.2]; })), fa:function(B){
     var X=246.79, Z=53.9;
-    luogo(B,X,Z,X,Z,0,3,function(B){
-      var e=RM.ellisse(4.43,3.9,40), i=RM.ellisse(3.7,3.2,40), a=RM.ellisse(2.4,1.9,40), c=a.map(function(){ return [0,0]; });
-      B.striscia(e,-.3,e,1.6,P.mattone).striscia(e,1.6,i,1.6,P.mattone).striscia(i,1.6,a,.25,P.tufo).striscia(a,.25,c,.25,P.sabbia);
-      B.fornici(e,.1,.7,.55).fornici(e,.95,.5,.5);
-    });
     luogo(B,X,Z,VARIANO.x,VARIANO.z,VARIANO.ry,4,function(B){
       var L=56.5, o=RM.stadio(L,11.5,26,14), t=RM.stadio(L-2,9.5,26,14), asse=t.map(function(p){ return [Math.max(-L/2+4,Math.min(L/2-6,p[0])),0]; });
       B.striscia(o,-1,o,.7,P.mattone).striscia(o,.7,t,.25,P.tufo).striscia(t,.25,asse,.25,P.sabbia);

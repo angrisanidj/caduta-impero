@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 00:25:11.
+Generato da `src/testi.mjs` il 27/11/2026, 01:01:17.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -143,7 +143,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.64] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.65] Versione del 26/11/2026, ore 23:51
+[pagina.65] Versione del 27/11/2026, ore 00:29
 
 
 ## 2. Gli atti
@@ -3233,6 +3233,31 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.pantheon.certezza-A] L'edificio si conserva per intero.
 
 
+### Odeon di Domiziano
+
+[scheda.odeon.nome] Odeon di Domiziano
+
+[scheda.odeon.cosa] Un teatro per la musica, voluto da Domiziano accanto al suo stadio. Aveva circa 10.600 posti, per cinque-diecimila persone. La sua cavea è ancora disegnata dalla facciata curva di palazzo Massimo alle Colonne, su corso Vittorio Emanuele; davanti al retro del palazzo è stata rialzata una colonna di cipollino che forse ornava la scena. Nel modello centro e grandezza vengono da quella curva, che è corta: la misura è incerta. La facciata, le altezze e la scena sono uno schema; se fosse coperto non si sa.
+
+[scheda.odeon.data1.quando] inizio del II secolo
+
+[scheda.odeon.data1] Sotto Traiano lo restaura l'architetto Apollodoro.
+
+[scheda.odeon.data2-357] Costanzo II lo ammira fra i monumenti più belli di Roma (Ammiano Marcellino).
+
+[scheda.odeon.data3.quando] V secolo
+
+[scheda.odeon.data3] Polemio Silvio lo mette fra le sette meraviglie della città.
+
+[scheda.odeon.data4-537] Quando smise di servire nessuna fonte letta lo dice. Nel modello è abbandonato dalla guerra gotica e resta in piedi: è una scelta.
+
+[scheda.odeon.data5.quando] XV secolo
+
+[scheda.odeon.data5] Sui resti della cavea sorge palazzo Massimo.
+
+[scheda.odeon.certezza-C] Non resta nulla di visibile: solo la curva della facciata di palazzo Massimo, che segue la cavea, e una colonna rialzata nel 1950. Nel modello il posto e la grandezza vengono da quella curva; facciata, altezze e scena sono uno schema.
+
+
 ### Stadio di Domiziano
 
 [scheda.domiziano.nome] Stadio di Domiziano
@@ -3245,7 +3270,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.domiziano.data2] Nel 357 lo stadio è ancora tra i monumenti che stupiscono Costanzo II. Non sappiamo quando cessarono le gare. Nel modello lo stadio cade in disuso verso il 450. Più tardi, sotto le arcate sorgeranno case e botteghe.
 
-[scheda.domiziano.certezza-A] Piazza Navona ne conserva esattamente la pianta; resti delle arcate sotto il lato nord. Il numero degli ordini di arcate e l'altezza della facciata sono ricostruiti.
+[scheda.domiziano.certezza-A] PiazzaNavona ne conserva esattamente la pianta; resti delle arcate sotto il lato nord. Il numero degli ordini di arcate e l'altezza della facciata sono ricostruiti.
 
 
 ### Terme di Traiano
@@ -3434,15 +3459,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.pompeo.nome] Teatro di Pompeo
 
-[scheda.pompeo.cosa] Il teatro e i portici di Pompeo. Sotto Teodorico il teatro viene ancora restaurato.
+[scheda.pompeo.cosa] Il primo teatro di pietra di Roma, il più grande: largo 150-160 metri, con la scena lunga circa 95. La facciata curva aveva tre ordini di arcate; gli archi erano di peperino e davanti a quelli in basso stavano colonne di granito rosso. In cima alla cavea, al centro, Pompeo mise il tempio di Venere Vincitrice: le file dei sedili sembravano la sua scalinata. Dietro la scena c'era un grande portico di circa 180 per 135 metri, con quattro file di colonne e un giardino con viali d'ombra; in fondo la sala dove fu ucciso Cesare, che Augusto fece murare. Sotto Teodorico il teatro viene ancora restaurato. Nel modello l'altezza, il numero degli archi e le misure del tempio sono uno schema.
 
-[scheda.pompeo.data1.quando] 507-511
+[scheda.pompeo.data1-247] Il teatro brucia; più tardi Diocleziano e Massimiano lo restaurano, e con lui il portico (Cronografo del 354).
 
-[scheda.pompeo.data1] Teodorico affida a Simmaco il restauro del teatro e paga lui i lavori (Cassiodoro, Variae IV 51). È l'ultimo restauro di cui si ha notizia. Nella scena del 493 il ponteggio e la gru sono un'ipotesi: le fonti non dicono dove si lavorasse.
+[scheda.pompeo.data2.quando] 507-511
 
-[scheda.pompeo.data2-546] Quando il teatro smise di servire nessuna fonte lo dice. Nel modello è abbandonato da quest'anno, con la guerra gotica: resta in piedi, senza crolli. È una scelta.
+[scheda.pompeo.data2] Teodorico affida a Simmaco il restauro del teatro e paga lui i lavori (Cassiodoro, Variae IV 51). È l'ultimo restauro di cui si ha notizia. Nella scena del 493 il ponteggio e la gru sono un'ipotesi: le fonti non dicono dove si lavorasse.
 
-[scheda.pompeo.data3-663] Nel modello Costante II porta via marmi e bronzi. Che ce ne fossero ancora non si sa: anche questa è una scelta.
+[scheda.pompeo.data3-546] Quando il teatro smise di servire nessuna fonte lo dice. Nel modello è abbandonato da quest'anno, con la guerra gotica: resta in piedi, senza crolli. È una scelta.
+
+[scheda.pompeo.data4-663] Nel modello Costante II porta via marmi e bronzi. Che ce ne fossero ancora non si sa: anche questa è una scelta.
 
 [scheda.pompeo.certezza-B] La curva delle antiche gradinate si riconosce ancora nell'andamento delle strade e nelle cantine degli edifici attuali. Il portico compare anche nell'antica pianta di Roma incisa nel marmo. Il modello propone un possibile aspetto delle strutture che si alzavano sopra il suolo.
 
@@ -3451,7 +3478,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.marcello.nome] Teatro di Marcello
 
-[scheda.marcello.cosa] Teatro voluto da Augusto, fra il Campidoglio e il Tevere.
+[scheda.marcello.cosa] Teatro voluto da Augusto, fra il Campidoglio e il Tevere, con la scena verso il fiume. La facciata di travertino aveva 41 arcate su due ordini, dorico e ionico, e in cima un attico a muro pieno: in tutto circa 32 metri e mezzo. La scena era diritta, con un portico di sei colonne sul retro e una sala con l'abside a ciascun capo; dietro, un'esedra con due tempietti. Nel modello l'altezza degli archi, i sedili e la forma dell'esedra sono uno schema.
 
 [scheda.marcello.data1-370] Alcuni blocchi di travertino del teatro servono a restaurare ponte Cestio. Si è quindi già cominciato a prelevare pietra dall'edificio quando il pubblico lo frequenta ancora.
 
@@ -3459,7 +3486,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.marcello.data3.quando] VI secolo?
 
-[scheda.marcello.data3] Non si sa quando cessano gli spettacoli e comincia lo smontaggio sistematico: qui lo si assume dopo la guerra gotica.
+[scheda.marcello.data3] Non si sa quando cessano gli spettacoli. Nel modello il teatro è abbandonato dalla guerra gotica, ma resta in piedi: è una scelta.
+
+[scheda.marcello.data4.quando] VIII secolo
+
+[scheda.marcello.data4] Chi scrive l'Itinerario di Einsiedeln vede ancora al suo posto la base di una statua con l'iscrizione. Nel 998 le rovine si chiamano ancora «templum Marcelli»; dal XII secolo sono una fortezza di famiglia.
 
 [scheda.marcello.certezza-A] Nel palazzo costruito sopra il teatro si conserva parte della facciata curva, con due livelli di arcate. Il terzo livello, la scena e le gradinate sono andati perduti. Nel modello sono ricostruiti sulla base della pianta conosciuta.
 
@@ -3978,7 +4009,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.balbo.nome] Teatro e Crypta di Balbo
 
-[scheda.balbo.cosa] Il teatro di Balbo, costruito nel 13 a.C., aveva alle spalle del palcoscenico un ampio cortile circondato da un portico, chiamato crypta. A est si apriva uno spazio semicircolare, l'esedra. Dal 1981 gli archeologi hanno studiato gli strati accumulati qui fino al Medioevo. I ritrovamenti mostrano come cambiò l'uso di questo angolo di Roma. Dove si andava a teatro sorsero officine, si scavarono tombe e poi si costruirono edifici medievali. Nel modello le dimensioni del portico e la forma dell'esedra sono approssimative.
+[scheda.balbo.cosa] Il teatro di Balbo, costruito nel 13 a.C., era il più piccolo dei tre teatri di pietra: 95 metri di diametro, per circa 7700 spettatori. Come fosse la sua facciata le fonti lette non lo dicono: nel modello due ordini di arcate di tufo sono uno schema. Il teatro aveva alle spalle del palcoscenico un ampio cortile circondato da un portico, chiamato crypta. A est si apriva uno spazio semicircolare, l'esedra. Dal 1981 gli archeologi hanno studiato gli strati accumulati qui fino al Medioevo. I ritrovamenti mostrano come cambiò l'uso di questo angolo di Roma. Dove si andava a teatro sorsero officine, si scavarono tombe e poi si costruirono edifici medievali. Nel modello le dimensioni del portico e la forma dell'esedra sono approssimative.
 
 [scheda.balbo.data1.quando] prima metà del V secolo
 
@@ -4434,9 +4465,57 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.minervamedica.certezza-A] In piedi, senza la cupola caduta nel 1828; la data di costruzione è approssimata.
 
 
-### Anfiteatro Castrense e circo Variano
+### Anfiteatro Castrense
 
-[scheda.sessoriano.nome] Anfiteatro Castrense e circo Variano
+[scheda.castrense.nome] Anfiteatro Castrense
+
+[scheda.castrense.cosa] L'anfiteatro di corte del palazzo del Sessorio: un'ellisse di 88 per 78 metri, tutta di mattoni, cosa rara per questi edifici. Fuori aveva tre piani: arcate fra semicolonne, poi arcate chiuse da bassi parapetti, in cima un attico con le finestre. Nel modello le altezze dei piani e il numero delle arcate sono uno schema.
+
+[scheda.castrense.data1.quando] II-III secolo
+
+[scheda.castrense.data1] Quando fu costruito è discusso: Platner e Ashby leggono nei mattoni l'età di Traiano, altri studiosi i Severi o Elagabalo.
+
+[scheda.castrense.data2.quando] 271-275
+
+[scheda.castrense.data2] Le mura di Aureliano si attaccano a metà dei suoi lati est e ovest. La metà fuori città diventa un bastione e le sue arcate vengono murate; quella dentro viene demolita. Da qui l'anfiteatro non serve più agli spettacoli.
+
+[scheda.castrense.data3-537] Durante l'assedio i Goti di Vitige attaccano le mura in questo tratto e vengono respinti (it.wikipedia).
+
+[scheda.castrense.data4.quando] metà del XVI secolo
+
+[scheda.castrense.data4] Paolo IV fa abbattere i due piani superiori per ragioni di difesa: resta il piano più basso, con gli archi murati.
+
+[scheda.castrense.certezza-A] Resta il piano più basso della metà murata nelle mura; la pianta e i tre piani della facciata sono noti dai resti e dai disegni del Cinquecento (Platner e Ashby). Nel modello altezze e numero delle arcate sono uno schema.
+
+
+### Anfiteatro Castrense
+
+[scheda.castrensemura.nome] Anfiteatro Castrense
+
+[scheda.castrensemura.cosa] L'anfiteatro di corte del palazzo del Sessorio: un'ellisse di 88 per 78 metri, tutta di mattoni, cosa rara per questi edifici. Fuori aveva tre piani: arcate fra semicolonne, poi arcate chiuse da bassi parapetti, in cima un attico con le finestre. Nel modello le altezze dei piani e il numero delle arcate sono uno schema.
+
+[scheda.castrensemura.data1.quando] II-III secolo
+
+[scheda.castrensemura.data1] Quando fu costruito è discusso: Platner e Ashby leggono nei mattoni l'età di Traiano, altri studiosi i Severi o Elagabalo.
+
+[scheda.castrensemura.data2.quando] 271-275
+
+[scheda.castrensemura.data2] Le mura di Aureliano si attaccano a metà dei suoi lati est e ovest. La metà fuori città diventa un bastione e le sue arcate vengono murate; quella dentro viene demolita. Da qui l'anfiteatro non serve più agli spettacoli.
+
+[scheda.castrensemura.data3-537] Durante l'assedio i Goti di Vitige attaccano le mura in questo tratto e vengono respinti (it.wikipedia).
+
+[scheda.castrensemura.data4.quando] metà del XVI secolo
+
+[scheda.castrensemura.data4] Paolo IV fa abbattere i due piani superiori per ragioni di difesa: resta il piano più basso, con gli archi murati.
+
+[scheda.castrensemura.certezza-A] Resta il piano più basso della metà murata nelle mura; la pianta e i tre piani della facciata sono noti dai resti e dai disegni del Cinquecento (Platner e Ashby). Nel modello altezze e numero delle arcate sono uno schema.
+
+[scheda.castrensemura.nota-chiuso] murato nelle mura, come bastione
+
+
+### Circo Variano
+
+[scheda.sessoriano.nome] Circo Variano
 
 [scheda.sessoriano.cosa] Nel complesso del palazzo imperiale del Sessorio, residenza di Elena, madre di Costantino, sorgevano due edifici per spettacoli. L'anfiteatro di corte aveva una pianta ellittica di 88 per 78 metri. Il circo Variano era lungo più di mezzo chilometro e aveva l'obelisco di Antinoo sul divisorio centrale della pista.
 

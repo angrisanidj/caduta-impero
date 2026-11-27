@@ -41,7 +41,7 @@ var REGIONI=[
   nota:'Il nome non può essere più antico del Tempio della Pace di Vespasiano. Il foro di Nerva sta in due cataloghi: in questo come «forum transitorium», in quello della VIII come foro di Nerva.'},
  {n:'V', it:'Esquilie', la:'Esquiliae', cat:[3850,180,22,75,74,15],
   cosa:'Tutta fuori dalle mura serviane, a nord della via Asinaria, con l\'estremità est del Celio. Nel IV secolo il confine seguiva le mura aureliane dalla via Labicana al lato sud dei Castra Pretoria. Molti horti; Properzio chiama le Esquilie «aquosae», per gli acquedotti che entravano da porta Prenestina.',
-  mon:['*sessoriano','*minervamedica','croce','eurisace'], bordo:['laterano','patriarchio','triclinioleone','esquilino'], ancore:[[176,-28],[215,-40],[195,22],[168,-82],[168,5]],
+  mon:['sessoriano','*castrense','*castrensemura','*minervamedica','croce','eurisace'], bordo:['laterano','patriarchio','triclinioleone','esquilino'], ancore:[[176,-28],[215,-40],[195,22],[168,-82],[168,5]],
   luoghi:'Il catalogo nomina anche un «campus Viminalis subager»: il posto non si sa. In origine il nome Esquiliae indicava l\'Oppio e il Cispio, che restano fuori da questa regione (sono nella III e nella IV).',
   nota:'Che la «Minerva medica» del catalogo sia proprio l\'edificio che il modello chiama così non è stato verificato.'},
  {n:'VI', it:'Alta Semita', la:'Alta Semita', cat:[3403,146,18,75,73,16],
@@ -57,7 +57,7 @@ var REGIONI=[
   mon:['*fori','*curia','*curiaantica','*curiastatue','*santadriano','*giove','*campidoglio','foca','focastatua','*castori','*saturno','*vesta','arcoseveroforo','*colonnatraiana','*concordia','*vespasiano','divogiulio','*giulia','*rostri','tabularium','*foroaugusto','*forocesare','*forotraiano','marforio','regia','regiacasa'], bordo:['casenerva','mercatitraiano','foronerva'], ancore:[[-6,-22],[-19,-11]]},      // 26 novembre 2026: gli edifici del Foro resi monumenti a sé (con l'asterisco quelli del catalogo della VIII; l'arco di Severo, il Divo Giulio, il Tabularium e i mercati no)
  {n:'IX', it:'Circo Flaminio', la:'Circus Flaminius', cat:[2777,140,25,63,120,20],
   cosa:'Tutto il terreno fra le mura serviane, la via Flaminia e il Tevere: la parte del Campo Marzio a ovest della via Lata.',
-  mon:['*pompeo','*marcello','*balbo','*domiziano','*pantheon','*pantheonpiazza','*pantheonchiesa','*termeagrippa','*termenerone','*tempioadriano','*colonnamarco','*iseo','saepta','argentina','ottavia','apollo','bellona','orologio','augusto','arcovalentiniano','olitorio'], bordo:[], ancore:[]},
+  mon:['*pompeo','*marcello','*balbo','*domiziano','*odeon','*pantheon','*pantheonpiazza','*pantheonchiesa','*termeagrippa','*termenerone','*tempioadriano','*colonnamarco','*iseo','saepta','argentina','ottavia','apollo','bellona','orologio','augusto','arcovalentiniano','olitorio'], bordo:[], ancore:[]},
  {n:'X', it:'Palatino', la:'Palatium', cat:[2742,89,48,44,90,20], cur:{0:2642,4:89},
   cosa:'Il Palatino, nei limiti che Tacito (Annali XII 24) dà al primo pomerio.',
   mon:['*palatino','*settizodio','*magnamater','*tiberiana'], bordo:['arcocostantino'], ancore:[[15,42],[25,35],[5,49],[20,49],[10,35]]},      // il Settizodio è nel catalogo della X («Septizonium divi Severi»)
