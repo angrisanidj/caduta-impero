@@ -829,3 +829,63 @@ Chiesto dall'utente: «Ricordati che le strade devono essere lastricate appunto.
 | Macerie verdi | Rovi e cespugli attorno a una chiesa abbandonata (vita di Adriano I, c. LXXVII); erba e arbusti: sezione «Le piante dell'incolto» (confronto con il Colosseo del 1855) | Specie, misura, ritmo | Quattro forme di cumulo; edera, rovi e cespugli che crescono coi decenni dall'abbandono |
 | Rovine per quartiere | Nessuna fonte letta dice come caddero i singoli quartieri; l'altezza e la fittezza delle case di prima vengono dalle sezioni «Abitare a Roma» e dai pesi delle regioni (`FITTEZZA`) | Tutto: quote di gusci alti, cumuli, colonne rimaste | Insulae fitte e alte: gusci alti, cumuli che escono nei vicoli, più alberi dentro i gusci; domus: cumulo largo e basso con tre-cinque colonne del peristilio, portate via a poco a poco; case basse e fuori le mura: tracce |
 | Quali quartieri si svuotano prima | Nessuna fonte letta lo dice per i quartieri | Il rango di abbandono di `js/citta.js` | Invariato |
+
+## Le corse (27 novembre 2026)
+
+L'utente: «per Circo Massimo e Stadio di Domiziano fai vedere le corse ogni tanto quando erano in uso». Testi letti oggi:
+
+1. **Platner e Ashby (1929), «Circus Maximus»**, LacusCurtius: https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Circus_Maximus.html (letto per intero)
+   - Le uova contagiri del 174 a.C.: «ova, or sets of seven large eggs of wood, with which to record the number of laps run in the races for the benefit of the spectators — an arrangement that became permanent»; nel 33 a.C. Agrippa «placed on the spina seven dolphins, probably of bronze, which served with the ova to indicate the laps».
+   - Le misure finali: «The length of the arena was 568 metres, and its width increased from 75 metres at the carceres to 84 at the beginning of the spina and 87 at its east end. The length of the spina was 344 metres».
+   - I carceres a ovest: «The west end contained the carceres or stalls for the chariots (…), set on a curve so that the distance was the same from each to the starting line (alba linea …) drawn across the arena which marked the start and finish. The carceres, twelve in number (…), were closed by rope barriers supported by small hermae (hermulae), which were dropped simultaneously at the start». Sopra i carceres il palco del magistrato, che dà il via «with a mappa».
+   - La spina: «On the spina were the two obelisks, the eggs, and dolphins (…), and at each end the metae or goals, three cones of gilt bronze (Cassiod. Var. III.51.7)». Il secondo obelisco è quello portato da Costanzo II nel 357 (Ammiano XVII 4, 12-16, citato da Platner).
+   - La fine: «The last recorded games took place under Totila in 550 A.D. (Procop. b. Goth. III.37), and in that century the destruction of the circus began».
+2. **W. Smith, *Dictionary of Greek and Roman Antiquities* (1875), «Circus»**, LacusCurtius: https://penelope.uchicago.edu/Thayer/E/Roman/Texts/secondary/SMIGRA*/Circus.html
+   - «The carriage usually employed in the circus was drawn by two or four horses (biga, quadriga)». «The usual number of chariots which started for each race was four. The drivers (aurigae, agitatores) were also divided into four companies, each distinguished by a different colour (…) factio prasina, the green (…) factio russata, red (…) factio veneta, azure (…) and factio alba or albata, white». Domiziano aggiunse due fazioni, «an exception to the usual practice».
+   - Il verso e i giri: «the race commenced, the extent of which was seven times round the spina (Varro, ap. Gell. III.10), keeping it always on the left (Ovid Amor. III.2.72 …)». «A course of seven circuits was termed unus missus». Le uova: «seven in number, such being the number of the circuits made in each race; and as each round was run, one of the ova was put up (Cassiodor.) or taken down, according to Varro».
+   - La partenza: «the doors of the carceres were flung open, and the chariots were formed abreast of the alba linea»; la corda «was loosened from one side, and all poured into the course at once».
+   - L'auriga: «The driver stood in his car within the reins, which went round his back», con un coltello alla cintura per tagliarle. Alla fine il vincitore scendeva dal carro e saliva sulla spina a ricevere il premio.
+   - Che la veste dell'auriga fosse del colore della sua fazione Smith non lo scrive con queste parole: dice che le squadre erano «distinguished by a different colour»; per la veste rimanda a una statua (non vista).
+3. **Cassiodoro, *Variae* III 51** (Teodorico a Fausto, sull'auriga Tommaso, inizio del VI secolo), latino su The Latin Library: https://www.thelatinlibrary.com/cassiodorus/varia3.shtml
+   - § 4: «bis sena quippe ostia ad duodecim signa posuerunt. haec ab hermulis funibus demissis subita aequalitate panduntur»: dodici porte, che si aprono tutte insieme quando le funi cadono dalle erme.
+   - § 5: «Colores autem in vicem temporum quadrifaria divisione funduntur: prasinus (…) venetus (…) russeus (…) albus»: quattro colori.
+   - § 6: «Biga quasi lunae, quadriga solis imitatione reperta est».
+   - § 7: «Alba linea non longe ab ostiis in utrumque podium quasi regula directa perducitur, ut quadrigis progredientibus inde certamen oriretur»; «septem metis certamen omne peragitur»: sette giri; «ipsae vero metae (…) ternas obtinent summitates»: tre punte per meta.
+   - § 8: due obelischi, i delfini che versano acqua, la spina con i rilievi dei generali sui prigionieri.
+   - § 10: «XXIIII missibus», ventiquattro corse al giorno; i giri contati togliendo le uova («ovorum ereptionibus»).
+   - § 11: «transit prasinus, pars populi maeret: praecedit venetus et ocius turba civitatis affligitur»: le corse del circo di Roma ai tempi di Teodorico, col popolo che si appassiona.
+4. **Procopio, *Guerra gotica* III 37 (= *Guerre* VII 37), 3-4**, trad. Dewing (Loeb), LacusCurtius: https://penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/7G*.html
+   - § 3: Totila fa portare viveri in città, ordina di ricostruire ciò che aveva distrutto, «then he summoned the members of the Roman senate and all the others whom he had under guard in Campania».
+   - § 4: «And after witnessing the horse-races there, he made ready his whole army, intending to make an expedition against Sicily».
+   - Procopio non nomina il Circo Massimo e «there» può voler dire Roma (la lettura di Platner e di Bury) o la Campania. È la notizia di corse più tarda nelle fonti lette (549-550); che siano state le ultime lo dice Platner («last recorded»), non Procopio. Resta valida la riga «Totila che offre le corse al popolo» in «Che cosa NON disegnare».
+5. **Platner e Ashby, «Stadium Domitiani»**: https://penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Stadium_Domitiani.html (letto per intero)
+   - «the stadium which Domitian built in the campus Martius for athletic contests»; dopo l'incendio del Colosseo del 217 «it was used for several years for gladiatorial combats (Cass. Dio LXXVIII.25)»; restaurato da Severo Alessandro; nel IV secolo fra gli edifici che stupirono Costanzo (Ammiano XVI 10, 14); «30088 loca», «seats for about 15,000 spectators»; arena lunga circa 250 metri. Non dice quali gare, né fino a quando.
+6. **Svetonio, *Domiziano* 4, 3-4**, latino e trad. Rolfe su LacusCurtius: https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Suetonius/12Caesars/Domitian*.html
+   - 4, 4: «Instituit et quinquennale certamen Capitolino Iovi triplex, musicum equestre gymnicum (…) in stadio vero cursu etiam virgines»: «while in the stadium there were races even between maidens» (Rolfe). Nello stadio si correva a piedi; Svetonio non dice le distanze né quanti correvano.
+   - 4, 3: nei giochi secolari Domiziano ridusse i giri del circo «e septenis spatiis ad quina», da sette a cinque, per fare cento corse in un giorno: di norma i giri erano sette.
+7. **Censorino, *De die natali* 18, 4 e 18, 15** (scritto nel 238), latino su LacusCurtius: https://penelope.uchicago.edu/Thayer/L/Roman/Texts/Censorinus/text*.html
+   - 18, 4: «agon et in Elide Jovi Olympio et Romae Capitolino quinto quoque anno redeunte celebratur».
+   - 18, 15: «quorum agonum primus a Domitiano institutus fuit (…). Itaque hoc nunc anno qui celebratus est agon undequadragensimus numeratur»: nel 238 si è celebrato il trentanovesimo agone. Gli agoni vicini alla prima tappa sono quindi quelli del 234 e del 238. Censorino non dice dove si tennero le gare.
+8. **Smith, «Athletae»**: https://penelope.uchicago.edu/Thayer/E/Roman/Texts/secondary/SMIGRA*/Athletae.html
+   - Gli atleti «were anointed with oil (…) and were accustomed to contend naked»; la cintura sui fianchi dei tempi di Omero e delle prime Olimpiadi «was discontinued afterwards».
+
+Non letti, quindi non usati: Ovidio, *Amores* III 2 (citato da Smith per il verso); Dionigi III 68 (citato da Platner); ogni notizia dell'agone Capitolino dopo il 238; ogni corsa a Roma fra Teodorico (*Variae* III 51) e Totila.
+
+### Per chi disegna
+
+| Che cosa | Dalla fonte letta | Che cosa è schema | Nel modello (`js/scene-tappe.js`, blocco «le corse») |
+|---|---|---|---|
+| Quanti carri | Di solito quattro, uno per fazione (Smith) | — | Quattro quadrighe |
+| Colori | Verde, rosso, azzurro, bianco (Smith; Cassiodoro III 51, 5) | Tinta esatta; che la tunica dell'auriga fosse del colore della fazione | Tunica dell'auriga nel colore della fazione |
+| Carro e cavalli | Quadriga, quattro cavalli (Smith; Cassiodoro III 51, 6-7) | Forma del carro, misure, mantello dei cavalli | Cassa bassa su due ruote che girano, quattro cavalli affiancati che galoppano |
+| Auriga | In piedi, le redini attorno alla schiena (Smith) | Il taglio della veste, il casco | Figura comune in piedi, con le redini tese ai cavalli |
+| Partenza | Dai carceres a ovest, porte aperte insieme, linea bianca (Platner; Smith; Cassiodoro III 51, 4 e 7) | Dove sta la linea | I carri partono affiancati dal lato ovest |
+| Verso | La spina sempre a sinistra (Smith, da Ovidio): visto dall'alto, contro il verso dell'orologio | — | Andata sul lato dell'Aventino verso est, ritorno sul lato del Palatino |
+| Giri | Sette (Smith; Cassiodoro III 51, 7) | La velocità (circa 15 m al secondo) e quindi la durata; l'ordine d'arrivo | Sette giri attorno alla spina, poi i carri rallentano e si fermano |
+| Mete | Tre coni di bronzo dorato a ogni capo (Platner; Cassiodoro) | — | Già nel monumento; i carri girano stretti attorno |
+| Uova e delfini | Sette per i giri (Platner; Smith) | — | Nel monumento; non si tolgono a ogni giro (troppo piccoli da vedere) |
+| Polvere | Nessuna fonte letta | Tutto | Una scia bassa e chiara dietro i carri |
+| Pubblico | Il popolo che si appassiona (Cassiodoro III 51, 11) | Quanti, dove, colori | Gente seduta sulle gradinate, a istanze |
+| Incidenti, premio, palco, giro d'onore | Il carro rovesciato del mosaico di Lione; il premio sulla spina (Smith) | — | Non si mostrano: non sono il racconto di una corsa qualunque |
+| Fino a quando | Corse a Roma sotto Teodorico (*Variae* III 51); forse sotto Totila nel 549-550 (Procopio, luogo incerto) | Quali tappe | Accese nelle tappe 235, 260, 284, 301, 330, 363, 384, 402, 418, 439, 458, 476, 507; dopo il 507 nessuna (nessuna fonte letta dà corse a Roma nel 526-546; il 546 è l'anno di Roma vuota) |
+| Stadio di Domiziano | Gare atletiche (Platner), corse a piedi anche di ragazze (Svetonio, *Dom.* 4, 4), agone ogni quattro anni, ancora nel 238 (Censorino 18, 15), atleti nudi (Smith) | Quanti corrono, la distanza, chi vince | Sei corridori nudi che corrono sulla pista, solo nella tappa del 235 (gli agoni vicini sono del 234 e del 238: scelta dichiarata); nessuna gara dopo (nessuna fonte letta dice fino a quando) |

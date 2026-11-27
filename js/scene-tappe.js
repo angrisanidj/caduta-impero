@@ -2106,6 +2106,197 @@ var giochi=(function(){
   }};
 })();
 
+/* ---------- le corse: il Circo Massimo e lo stadio di Domiziano (27 novembre 2026) ----------
+   L'utente: «per Circo Massimo e Stadio di Domiziano fai vedere le corse ogni tanto quando erano in uso». Fonti lette: src/testi/vita-roma-fonti.md, sezione «Le corse».
+   Circo: quattro quadrighe, una per fazione (Smith, «Circus»: «The usual number of chariots which started for each race was four»; i quattro colori anche in Cassiodoro,
+   Variae III 51, 5), partono affiancate dal lato dei carceres, a ovest (Platner e Ashby, «Circus Maximus»), corrono sette giri con la spina sempre a sinistra (Smith, da
+   Varrone e Ovidio; Cassiodoro III 51, 7: «septem metis certamen omne peragitur»), girano strette attorno alle mete e dopo la linea rallentano e si fermano. L'auriga sta
+   in piedi, con le redini tese, inclinato indietro (Smith: «within the reins, which went round his back», per buttare il peso contro i cavalli).
+   Schema, detto nella scheda: la velocità (circa 16 m al secondo), le corsie, i sorpassi e chi vince, la forma del carro, il mantello dei cavalli, la tunica nel colore della
+   fazione, la polvere, il pubblico (quanto e dove). Nessun incidente né premio: non sono il racconto di una corsa qualunque.
+   Quando: nelle tappe di ACCESE_C, una sì e una no fra quelle in cui il circo è in uso e la scena di Roma non ne ha un'altra vicina (fuori il 274 del trionfo, il 409-410,
+   il 455 dei Vandali sul Palatino, il 472 dell'assedio, il 476 della sepoltura nella valle del Colosseo), fino al 507: dopo, nessuna fonte letta dà corse a Roma, salvo
+   Totila nel 549-550, dove il luogo è incerto (Procopio, Guerra gotica III 37, 4: «after witnessing the horse-races there») e non c'è una tappa.
+   Stadio: una corsa a piedi (Svetonio, Domiziano 4, 4: «in stadio vero cursu etiam virgines»), atleti nudi (Smith, «Athletae»), sei corridori su un tratto di 185 m
+   (schema), solo nella tappa del 235: l'agone Capitolino si teneva ogni quattro anni ed era ancora vivo nel 238 (Censorino 18, 15); fino a quando, nessuna fonte letta lo dice.
+   La regia non vola qui: non sono l'evento della tappa. Chi apre il circo o lo stadio li trova.
+   Prove: RM.senzaCorse=true spegne tutto; ?corse=<secondi> ferma le due corse a quell'istante; RM.provaCorse.circo(t) e RM.provaCorse.stadio(t) le portano a un istante
+   (RM.provaCorse.ferma(true) le tiene lì). Con meno animazioni i carri restano fermi a metà del terzo giro e i corridori a metà pista. */
+var corse=(function(){
+  function mon(id){ return (RM.MONUMENTI||[]).filter(function(m){ return m.id===id; })[0]; }
+  var mC=mon('circo'), mS=mon('domiziano'); if(!mC||!mC.g||!mS||!mS.g) return null;
+  var FERMA_C=(function(){ var r=/[?&]corse=([0-9.]+)/.exec(location.search); return r?+r[1]:null; })();
+  var ACCESE_C={235:1,260:1,284:1,301:1,330:1,363:1,384:1,402:1,418:1,439:1,468:1,507:1}, ACCESE_S={235:1};
+  var pop=(D.CURVE&&D.CURVE.popolazione&&D.CURVE.popolazione.punti)||[[0,900000]], AN=String.fromCharCode(10);
+  function sm(a,b,x){ var t=Math.max(0,Math.min(1,(x-a)/(b-a))); return t*t*(3-2*t); }
+  function gruppo(m){ var g=new THREE.Group(); g.position.copy(m.g.position); g.quaternion.copy(m.g.quaternion); g.scale.copy(m.g.scale); g.visible=false; RM.scene.add(g); return g; }
+  /* pezzi in una geometria sola, coi colori nei vertici e l'attributo «fisso» di matPersone (0: prende il colore dell'istanza) */
+  function unisci(lista){ var Pp=[], Nn=[], Cc=[], Ff=[];
+    lista.forEach(function(q){ var g=q.g.index?q.g.toNonIndexed():q.g, pa=g.attributes.position.array, na=g.attributes.normal.array, ca=g.attributes.color?g.attributes.color.array:null, fa=g.attributes.fisso?g.attributes.fisso.array:null, n=pa.length/3, i;
+      for(i=0;i<n;i++){ Pp.push(pa[i*3],pa[i*3+1],pa[i*3+2]); Nn.push(na[i*3],na[i*3+1],na[i*3+2]);
+        if(q.col){ Cc.push(q.col.r,q.col.g,q.col.b); Ff.push(q.f==null?1:q.f); } else { Cc.push(ca[i*3],ca[i*3+1],ca[i*3+2]); Ff.push(fa?fa[i]:1); } } });
+    var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(Pp,3)); g.setAttribute('normal',new THREE.Float32BufferAttribute(Nn,3));
+    g.setAttribute('color',new THREE.Float32BufferAttribute(Cc,3)); g.setAttribute('fisso',new THREE.Float32BufferAttribute(Ff,1)); return g; }
+  function scatola(w,h,d,x,y,z){ return new THREE.BoxGeometry(w,h,d).translate(x,y,z); }
+  function asta(a,b,r){ var d=new THREE.Vector3(b[0]-a[0],b[1]-a[1],b[2]-a[2]), L=d.length(), m=new THREE.Matrix4().lookAt(new THREE.Vector3(0,0,0),d,new THREE.Vector3(0,1,0));
+    m.scale(new THREE.Vector3(r,r,L)); m.setPosition((a[0]+b[0])/2,(a[1]+b[1])/2,(a[2]+b[2])/2); return new THREE.BoxGeometry(1,1,1).applyMatrix4(m); }
+  function istMesh(geo,mat,n){ var g=new THREE.InstancedMesh(geo,mat,n); g.frustumCulled=false; g.castShadow=false; g.receiveShadow=true; return g; }
+  var Ob=new THREE.Object3D(), Mt=new THREE.Matrix4(), Mt2=new THREE.Matrix4();
+  /* Il pubblico (schema): sulle gradinate un «tappeto» di gente, una trama in cui ogni punto è una persona (50 cm per 60), piena secondo la curva della popolazione
+     come al Colosseo; nelle prime file qualche figura a istanze. Si vede solo quando c'è la corsa. pr(w): il contorno della gradinata larga w (come circo() e stadio() di js/monumenti.js) */
+  var TINTE=[C.bianco,C.tunica,C.folla[0],C.folla[1],C.folla[2],C.folla[3],C.folla[4],C.folla[5]];
+  function pubblico(gr,pr,bande,seme,nFig){
+    var Pp=[], Uv=[], Ii=[], n0=0, posti=[], r=RM.casuale(seme);
+    bande.forEach(function(b){ var A=pr(b[0]), B2=pr(b[2]), d=0, i;
+      for(i=0;i<A.length;i++){ if(i>0) d+=Math.hypot(A[i][0]-A[i-1][0],A[i][1]-A[i-1][1]);
+        Pp.push(A[i][0],b[1]+.01,A[i][1],B2[i][0],b[3]+.01,B2[i][1]); Uv.push(d/.05/512,0,d/.05/512,1);
+        if(i>0){ var a=n0+(i-1)*2; Ii.push(a,a+1,a+2,a+1,a+3,a+2); } }
+      n0+=A.length*2; });
+    var geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.Float32BufferAttribute(Pp,3)); geo.setAttribute('uv',new THREE.Float32BufferAttribute(Uv,2)); geo.setIndex(Ii); geo.computeVertexNormals();
+    var TW=512, TH=64, dati=new Uint8Array(TW*TH*4), soglia=new Float32Array(TW*TH), gente=new Float32Array(TW*TH*3), i, j, GR=RM.col(0x7a6a58), CAPO=[RM.col(0x2e241c),RM.col(0x4a3a2c),C.pelle];      // due punti per persona, uno sopra l'altro: la veste e, sopra, il capo
+    for(j=0;j<TH;j+=2) for(i=0;i<TW;i++){ var k=j*TW+i, t=TINTE[(r()*TINTE.length)|0].clone().lerp(GR,.35), l=.6+.35*r(), c2=CAPO[(r()*3)|0], s0=r();
+      soglia[k]=soglia[k+TW]=s0; gente[k*3]=t.r*l; gente[k*3+1]=t.g*l; gente[k*3+2]=t.b*l; gente[(k+TW)*3]=c2.r*.8; gente[(k+TW)*3+1]=c2.g*.8; gente[(k+TW)*3+2]=c2.b*.8; }
+    var tex=new THREE.DataTexture(dati,TW,TH,THREE.RGBAFormat); tex.wrapS=THREE.RepeatWrapping; tex.wrapT=THREE.ClampToEdgeWrapping; tex.magFilter=THREE.LinearFilter; tex.minFilter=THREE.LinearMipmapLinearFilter; tex.generateMipmaps=true;
+    if(RM.renderer) tex.anisotropy=Math.min(8,RM.renderer.capabilities.getMaxAnisotropy());
+    var mat=new THREE.MeshStandardMaterial({map:tex, roughness:1, metalness:0, side:THREE.DoubleSide, polygonOffset:true, polygonOffsetFactor:-1, polygonOffsetUnits:-2});
+    var tappeto=new THREE.Mesh(geo,mat); tappeto.receiveShadow=true; gr.add(tappeto);
+    function riempi(f){ for(var k=0;k<TW*TH;k++){ var on=soglia[k]<f, fila=(k/TW|0)%4<2?.88:1, q=on?[gente[k*3],gente[k*3+1],gente[k*3+2]]:[P.tufo.r*.8*fila,P.tufo.g*.8*fila,P.tufo.b*.8*fila];      // dove non c'è nessuno, la pietra della gradinata
+        dati[k*4]=Math.min(255,q[0]*255); dati[k*4+1]=Math.min(255,q[1]*255); dati[k*4+2]=Math.min(255,q[2]*255); dati[k*4+3]=255; } tex.needsUpdate=true; }
+    /* le figure nelle prime file: corpo e testa (la testa non prende il colore dell'istanza) */
+    var b0=bande[0], Ain=pr(b0[0]), Aout=pr(b0[2]), nn=Ain.length, fig=null, cnt=0;
+    if(nFig){ var gF=unisci([{g:scatola(.044,.07,.042,0,.035,0), col:BIANCO1, f:0},{g:new THREE.OctahedronGeometry(.018).scale(1,1.15,1).translate(0,.09,0), col:C.pelle}]);
+      fig=istMesh(gF,matPersone(),nFig); fig.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(nFig*3),3);
+      for(var q=0;q<nFig*6&&cnt<nFig;q++){ var s=r()*(nn-1.001), i0=s|0, fr=s-i0, uu=.04+.3*r(), xa=Ain[i0][0]+(Ain[i0+1][0]-Ain[i0][0])*fr, za=Ain[i0][1]+(Ain[i0+1][1]-Ain[i0][1])*fr,
+          xb=Aout[i0][0]+(Aout[i0+1][0]-Aout[i0][0])*fr, zb=Aout[i0][1]+(Aout[i0+1][1]-Aout[i0][1])*fr, x=xa+(xb-xa)*uu, z=za+(zb-za)*uu, y=b0[1]+(b0[3]-b0[1])*uu;
+        Ob.position.set(x,y,z); Ob.rotation.set(0,Math.atan2(xa-xb,za-zb),0); Ob.scale.setScalar(1); Ob.updateMatrix(); fig.setMatrixAt(cnt,Ob.matrix);
+        var tt=TINTE[(r()*TINTE.length)|0]; fig.instanceColor.setXYZ(cnt,tt.r,tt.g,tt.b); cnt++; }
+      fig.count=cnt; fig.castShadow=true; gr.add(fig); }
+    return {riempi:riempi, tappeto:tappeto, fig:fig, n:cnt, tri:Ii.length/3+(fig?cnt*fig.geometry.attributes.position.count/3:0)};
+  }
+  /* ---- il Circo Massimo: misure di circo(B,62,14,2.5) in js/monumenti.js, nel riferimento del circo (x lungo l'asse, verso est; -z il lato del Palatino) ---- */
+  var gC=gruppo(mC), L=62, W=14, h=2.5, YA=.12;
+  var prC=function(w){ return RM.stadio(L-(W-w),w,26,14); };
+  var pubC=pubblico(gC,prC,[[W*.62,.45,W-1.3,h-.3]],235,LEGGERA?220:700);
+  var XE=-1+L*.28+.6, XW=-1-L*.28-.6, XC=-29.3, RS=[.95,1.4,1.85,2.3], LAPN=80, V=1.6, TA=4, GIRI=7, S0=XW-XC, T0=2, TB=7;      // le due mete (i coni di circo()), la linea dei carceres, le corsie, il giro «nominale», la velocità (16 m/s), i sette giri
+  var LAPS=RS.map(function(r){ return 2*(XE-XW)+2*Math.PI*r; }), UFIN=S0+GIRI*LAPN;
+  var VAR=[[1.3,.071,0,.009],[1.1,.083,2.1,-.004],[1.5,.064,4.0,.002],[1.2,.077,1.0,-.008]];      // chi sorpassa chi e chi vince: ampiezza, pulsazione, fase, tendenza (schema)
+  var FAZ=[RM.col(0x3f7a3a),RM.col(0xa8342c),RM.col(0x3c679c),RM.col(0xe9e3d5)];      // verde, rosso, azzurro, bianco (le tinte sono uno schema)
+  function uN(i,t){ if(t<=0) return 0; var q=VAR[i], b=t<TA?V*t*t/(2*TA):V*(t-TA/2); return b+sm(TA,TA+25,t)*(q[0]*(Math.sin(q[1]*(t-TA)+q[2])-Math.sin(q[2]))+q[3]*(t-TA)); }
+  var TF=RS.map(function(r,i){ var a=0, b=600; for(var k=0;k<50;k++){ var c=(a+b)/2; if(uN(i,c)<UFIN) a=c; else b=c; } return b; });      // quando ognuno passa la linea dopo il settimo giro
+  var CICLO=T0+Math.max.apply(null,TF)+TB+12, T_MENO=T0+TA+(S0+2.55*LAPN-V*TA/2)/V;      // 12 s fermi dopo l'arrivo, poi la corsa seguente; con meno animazioni: a metà del terzo giro
+  function sulGiro(r,s,o){ var A=XE-XW, c=Math.PI*r, f;
+    if(s<A){ o.x=XW+s; o.z=r; o.dx=1; o.dz=0; return; } s-=A;
+    if(s<c){ f=s/r; o.x=XE+r*Math.sin(f); o.z=r*Math.cos(f); o.dx=Math.cos(f); o.dz=-Math.sin(f); return; } s-=c;
+    if(s<A){ o.x=XE-s; o.z=-r; o.dx=-1; o.dz=0; return; } s-=A; f=Math.min(Math.PI,s/r);
+    o.x=XW-r*Math.sin(f); o.z=-r*Math.cos(f); o.dx=-Math.cos(f); o.dz=Math.sin(f); }
+  function carroA(i,t,o){      // dove sta il carro i all'istante t del ciclo: x, z, direzione, strada fatta d (per le ruote e il passo dei cavalli)
+    var r=RS[i], tr=t-T0, k=LAPS[i]/LAPN;
+    if(tr>=TF[i]){ var tau=tr-TF[i], vF=V*k, e=tau<TB?vF*tau-vF*tau*tau/(2*TB):vF*TB/2; o.x=XW+e; o.z=r; o.dx=1; o.dz=0; o.d=S0+GIRI*LAPS[i]+e; return o; }
+    var u=uN(i,tr);
+    if(u<S0){ o.x=XC+u; o.z=r; o.dx=1; o.dz=0; o.d=u; return o; }
+    var f=(u-S0)/LAPN; sulGiro(r,(f-Math.floor(f))*LAPS[i],o); o.d=S0+(u-S0)*k; return o; }
+  /* i cavalli: il cavallo delle statue (sui telefoni il leggero), quattro affiancati davanti al carro; il galoppo nello shader dei vertici: le zampe girano attorno all'anca
+     (le due di dietro quasi insieme, poi le due davanti), il corpo beccheggia e sale e scende una volta per falcata (circa 6,8 m) */
+  function matGaloppo(){ var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.78,metalness:0});
+    m.onBeforeCompile=function(sh){ sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+AN+'attribute vec2 passo;')
+      .replace('#include <begin_vertex>',['#include <begin_vertex>',
+        '{ float ph=passo.x, am=passo.y; vec3 p0=transformed;',
+        '  float w=(1.0-smoothstep(0.082,0.102,p0.y))*smoothstep(0.004,0.012,abs(p0.x)); float dav=step(0.0,p0.z); float zp=dav>0.5?0.052:-0.052;',
+        '  float of=dav*2.5+(p0.x<0.0?0.0:0.45); float an=(sin(ph+of)*0.52+(dav>0.5?-0.1:0.12))*am*w;',
+        '  vec2 q=vec2(p0.y-0.108,p0.z-zp); float ca=cos(an), sa=sin(an); transformed.y=0.108+q.x*ca-q.y*sa; transformed.z=zp+q.x*sa+q.y*ca;',
+        '  float pt=sin(ph+1.2)*0.06*am; vec2 r=vec2(transformed.y-0.11,transformed.z); transformed.y=0.11+r.x*cos(pt)-r.y*sin(pt); transformed.z=r.x*sin(pt)+r.y*cos(pt);',
+        '  transformed.y+=(0.5+0.5*sin(ph+0.4))*0.007*am; }'].join(AN)); };
+    return m; }
+  var XH=[-.105,-.035,.035,.105], ZH=[.19,.205,.205,.19];      // i quattro cavalli: i due al giogo nel mezzo, i due di fuori a fianco
+  var mantelli=[C.cavalloB,RM.col(0x4a3324),C.cavalloC,RM.col(0x7d5a3c)], cav=[], matG=matGaloppo();
+  mantelli.forEach(function(col){ var g=istMesh(cavalloGeo(col),matG,4), at=new THREE.InstancedBufferAttribute(new Float32Array(8),2); at.setUsage(THREE.DynamicDrawUsage); g.geometry.setAttribute('passo',at); g.userData.passo=at; gC.add(g); appoggioIstanze(g,.035,.12); cav.push(g); });
+  /* il carro e l'auriga: la cassa bassa aperta dietro, il parapetto davanti, l'asse, il timone, il giogo; l'auriga (la figura comune in tunica corta, le braccia tese)
+     in piedi inclinato indietro, le redini dalle mani alle teste dei cavalli. Una maglia a istanze: la tunica prende il colore della fazione */
+  var LEGNO=RM.col(0x6e5034), CUOIO=RM.col(0x3b2a1c), FERRO=RM.col(0x6d6a66);
+  var oA=opzioni(C.tunica,null,null,7); oA.f=0; oA.v=null; oA.posa=null; oA.sopra=null; oA.velo=null; oA.s=1; oA.braccia=2;
+  var gAur=personaGeo(oA); gAur.applyMatrix4(new THREE.Matrix4().makeRotationX(-.2)); gAur.translate(0,.047,-.008);
+  var pezzi=[{g:gAur},{g:scatola(.12,.008,.075,0,.047,0),col:LEGNO},{g:scatola(.12,.072,.008,0,.086,.036),col:LEGNO},{g:scatola(.008,.042,.06,-.058,.072,.004),col:LEGNO},{g:scatola(.008,.042,.06,.058,.072,.004),col:LEGNO},
+    {g:scatola(.17,.007,.007,0,.045,0),col:FERRO},{g:asta([0,.05,.04],[0,.118,.27],.007),col:LEGNO},{g:scatola(.16,.01,.012,0,.122,.27),col:LEGNO}];
+  XH.forEach(function(x,k){ pezzi.push({g:asta([x<0?-.02:.02,.19,.03],[x,.16,ZH[k]+.12],.0022),col:CUOIO}); });      // le redini
+  var carri=istMesh(unisci(pezzi),matPersone(),4); carri.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(12),3); FAZ.forEach(function(c,i){ carri.instanceColor.setXYZ(i,c.r,c.g,c.b); });
+  gC.add(carri); appoggioIstanze(carri,.07,.05);      // chi si muove non fa ombra nella mappa del sole: la macchia d'appoggio (come nell'800)
+  /* le ruote, che girano: cerchione, sei raggi, mozzo (circa 90 cm) */
+  var gR=unisci([{g:new THREE.TorusGeometry(.045,.0042,4,16).rotateY(Math.PI/2),col:LEGNO},{g:new THREE.CylinderGeometry(.008,.008,.02,8).rotateZ(Math.PI/2),col:FERRO}].concat([0,1,2].map(function(k){ return {g:scatola(.004,.088,.005,0,0,0).rotateX(k*Math.PI/3),col:LEGNO}; })));
+  var ruote=istMesh(gR,matPersone(),8); ruote.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(24).fill(1),3); gC.add(ruote);      // matPersone vuole il colore per istanza (il programma è lo stesso dei carri)
+  /* la polvere (schema: nessuna fonte letta la descrive): sbuffi bassi e chiari dietro ogni carro, che si allargano e salgono */
+  var NP=LEGGERA?6:10, polv=istMesh(new THREE.SphereGeometry(1,7,5),new THREE.MeshBasicMaterial({color:P.sabbia.clone().multiplyScalar(1.05),transparent:true,opacity:.14,depthWrite:false}),4*NP); polv.renderOrder=2; gC.add(polv);
+  var oc={}, op={}, tC=25, fermoC=false;
+  function disegnaC(t){
+    t=((t%CICLO)+CICLO)%CICLO; var vis=t<CICLO-1.5;      // l'ultimo secondo e mezzo del ciclo i carri non ci sono: poi la corsa seguente esce dai carceres
+    for(var i=0;i<4;i++){
+      carroA(i,t,oc); var ry=Math.atan2(oc.dx,oc.dz), d=oc.d; carroA(i,t+.1,op); var v=(op.d-d)/.1, am=Math.min(1,v/1.1);
+      var y=YA+(0.5+0.5*Math.sin(d/.68*6.2832+.4))*.004*am;
+      Ob.position.set(oc.x,vis?y:-50,oc.z); Ob.rotation.set(0,ry,0); Ob.scale.setScalar(1); Ob.updateMatrix(); carri.setMatrixAt(i,Ob.matrix);
+      [-1,1].forEach(function(s,w){ Mt.makeRotationX(d/.045); Mt.setPosition(s*.075,.045,0); Mt2.multiplyMatrices(Ob.matrix,Mt); ruote.setMatrixAt(i*2+w,Mt2); });
+      for(var k=0;k<4;k++){ var g=cav[(i+k)%4], j=i; Mt.makeTranslation(XH[k],0,ZH[k]); Mt2.multiplyMatrices(Ob.matrix,Mt); Mt2.elements[13]=vis?YA:-50; g.setMatrixAt(j,Mt2);      // ogni carro ha un cavallo di ogni mantello
+        g.userData.passo.setXY(j,d/.068*6.2832*.1+i*1.3+k*.17,am); }
+      for(k=0;k<NP;k++){ var age=(k+1)*.17; carroA(i,t-age,op); var vv=Math.min(1,v/1.2), sc=(.035+.07*age)*vv;
+        Ob.position.set(op.x-op.dx*.02,YA+.012+.025*age,op.z-op.dz*.02); Ob.rotation.set(0,0,0); Ob.scale.set(sc*1.3,sc*.55,sc*1.3); if(!vis||sc<.004) Ob.scale.setScalar(.00001); Ob.updateMatrix(); polv.setMatrixAt(i*NP+k,Ob.matrix); }
+    }
+    carri.instanceMatrix.needsUpdate=ruote.instanceMatrix.needsUpdate=polv.instanceMatrix.needsUpdate=true;
+    cav.forEach(function(g){ g.instanceMatrix.needsUpdate=true; g.userData.passo.needsUpdate=true; });
+  }
+  /* ---- lo stadio di Domiziano: misure di stadio(B,27.5,10.6,1.9) in js/monumenti.js; la pista larga W*.52, il fondo a 0,12; x verso la curva (nord) ---- */
+  var gS=gruppo(mS), LS=27.5, WS=10.6, HS=1.9;
+  var prS=function(w){ return RM.stadio(LS-(WS-w),w,26,14); };
+  var pubS=pubblico(gS,prS,[[WS*.52,.45,WS-2.7,HS*.55-.3],[WS-2.7,HS*.55,WS-1.1,HS-.25]],86,LEGGERA?100:300);
+  /* i corridori: la figura comune senza veste (la pelle al posto della tunica, a piedi nudi); la parte di sotto della tunica, divisa in due, segue le cosce.
+     La corsa nello shader dei vertici: gambe e braccia (piegate al gomito) oscillano, il ginocchio si piega, il corpo è inclinato in avanti e sobbalza a ogni passo */
+  function corridoreGeo(k){ var g=RM.figuraGeo({orlo:.7, maniche:'corte'},k,LEGGERA?3:5), pa=g.attributes.position.array, ca=g.attributes.color.array, fa=g.attributes.fisso.array, oa=g.attributes.oscilla.array, sa=g.attributes.ombra?g.attributes.ombra.array:null, n=pa.length/3, i, t;
+    var pel=[RM.col(0xc99a76),RM.col(0xb98762),RM.col(0xa57452)][k%3];      // tre carnagioni
+    function sandalo(i){ return Math.abs(ca[i*3]-V_SANDALO.r)+Math.abs(ca[i*3+1]-V_SANDALO.g)+Math.abs(ca[i*3+2]-V_SANDALO.b)<.03; }
+    for(t=0;t<n;t+=3){ var veste=!fa[t], cx=(pa[t*3]+pa[t*3+3]+pa[t*3+6])/3, cy=(pa[t*3+1]+pa[t*3+4]+pa[t*3+7])/3;
+      for(i=t;i<t+3;i++){ var om=sa?sa[i]:1;
+        if(veste||sandalo(i)){ ca[i*3]=pel.r; ca[i*3+1]=pel.g; ca[i*3+2]=pel.b; fa[i]=1; }
+        ca[i*3]*=om; ca[i*3+1]*=om; ca[i*3+2]*=om;
+        if(veste && cy<.09 && Math.abs(oa[i])<.5) oa[i]=cx<0?-1:1; } }      // le due metà dell'orlo seguono le gambe
+    g.attributes.color.needsUpdate=true; return g; }
+  function matCorsa(){ var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.7,metalness:0});
+    m.onBeforeCompile=function(sh){ sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+AN+'attribute float oscilla; attribute vec2 corsa;')
+      .replace('#include <begin_vertex>',['#include <begin_vertex>',
+        '{ float ph=corsa.x, am=corsa.y, ao=abs(oscilla), sg=sign(oscilla); vec3 q; float a, ca, sa;',
+        '  if(ao>0.5 && ao<1.5){ float gin=transformed.y<0.05?1.0:0.0;',      // la gamba: prima il ginocchio, poi l'anca
+        '    a=gin*am*(0.25+0.95*max(0.0,sin(ph-1.1)*sg)); q=transformed; q.y-=0.05; ca=cos(a); sa=sin(a); transformed=vec3(q.x,q.y*ca-q.z*sa+0.05,q.y*sa+q.z*ca);',
+        '    a=sin(ph)*0.62*am*sg; q=transformed; q.y-=0.092; ca=cos(a); sa=sin(a); transformed=vec3(q.x,q.y*ca-q.z*sa+0.092,q.y*sa+q.z*ca); }',
+        '  if(ao>1.5){ if(transformed.y<0.1125){ q=transformed; q.y-=0.1115; a=-1.45*am; ca=cos(a); sa=sin(a); transformed=vec3(q.x,q.y*ca-q.z*sa+0.1115,q.y*sa+q.z*ca); }',      // il braccio: il gomito piegato, poi la spalla
+        '    a=-sin(ph)*0.75*am*sg; q=transformed; q.y-=0.138; ca=cos(a); sa=sin(a); transformed=vec3(q.x,q.y*ca-q.z*sa+0.138,q.y*sa+q.z*ca); }',
+        '  a=0.14*am; ca=cos(a); sa=sin(a); q=transformed; transformed=vec3(q.x,q.y*ca-q.z*sa,q.y*sa+q.z*ca);',      // inclinato in avanti
+        '  transformed.y+=abs(sin(ph))*0.006*am; }'].join(AN)); };
+    return m; }
+  var NC=6, matR=matCorsa(), corr=[], ZC=[-1.05,-.63,-.21,.21,.63,1.05], VC=[.8,.84,.78,.82,.86,.79], XS=-9.6, XF=8.9, SC0=3, ACC=1.4, TBS=2.2;      // sei corsie; velocità (8 m/s circa); la partenza e l'arrivo (185 m: lo stadio di Olimpia, schema)
+  for(var k=0;k<NC;k++){ var gk=istMesh(corridoreGeo(k),matR,1), atc=new THREE.InstancedBufferAttribute(new Float32Array(2),2); atc.setUsage(THREE.DynamicDrawUsage); gk.geometry.setAttribute('corsa',atc); gk.userData.corsa=atc; gS.add(gk); appoggioIstanze(gk,.028,.028); corr.push(gk); }
+  function corrA(i,t){      // strada fatta e velocità del corridore i
+    var v=VC[i], tr=t-SC0; if(tr<=0) return [0,0];
+    var s=tr<ACC?v*tr*tr/(2*ACC):v*(tr-ACC/2), sF=XF-XS; if(s<sF) return [s,tr<ACC?v*tr/ACC:v];
+    var tf=ACC/2+sF/v, tau=tr-tf; if(tau<TBS) return [sF+v*tau-v*tau*tau/(2*TBS),v*(1-tau/TBS)]; return [sF+v*TBS/2,0]; }
+  var CICLOS=SC0+ACC/2+(XF-XS)/.78+TBS+8, T_MENO_S=SC0+ACC/2+(XF-XS)/2/.82, tS=4, fermoS=false;      // 8 s fermi dopo l'arrivo, poi la corsa seguente
+  function disegnaS(t){ t=((t%CICLOS)+CICLOS)%CICLOS; var vis=t<CICLOS-1;
+    for(var i=0;i<NC;i++){ var q=corrA(i,t), am=Math.min(1,q[1]/.5); Ob.position.set(XS+q[0],vis?YA:-50,ZC[i]); Ob.rotation.set(0,Math.PI/2,0); Ob.scale.setScalar(1); Ob.updateMatrix(); corr[i].setMatrixAt(0,Ob.matrix);
+      corr[i].userData.corsa.setXY(0,q[0]/.32*6.2832+i*.9,am); corr[i].instanceMatrix.needsUpdate=true; corr[i].userData.corsa.needsUpdate=true; } }      // un passo intero ogni 3,2 m
+  var accC=false, accS=false;
+  RM.frame.push(function(dt){
+    if(RM.senzaCorse){ gC.visible=gS.visible=false; return; }
+    gC.visible=accC; gS.visible=accS;
+    if(accC){ if(FERMA_C==null && !MENO && !fermoC) tC+=dt; disegnaC(FERMA_C!=null?FERMA_C:MENO?T_MENO:tC); }
+    if(accS){ if(FERMA_C==null && !MENO && !fermoS) tS+=dt; disegnaS(FERMA_C!=null?FERMA_C:MENO?T_MENO_S:tS); }
+  });
+  RM.provaCorse={ circo:function(t){ fermoC=true; tC=t; disegnaC(t); }, stadio:function(t){ fermoS=true; tS=t; disegnaS(t); }, ferma:function(v){ fermoC=fermoS=!!v; },
+    gruppi:{circo:gC, stadio:gS}, carro:function(i,t){ carroA(i,((t%CICLO)+CICLO)%CICLO,oc); var v=new THREE.Vector3(oc.x,YA,oc.z); gC.localToWorld(v); return {x:v.x,y:v.y,z:v.z,dx:oc.dx,dz:oc.dz}; },      // per inquadrare: dove sta il carro i all'istante t, nel mondo
+    corridore:function(i,t){ var q=corrA(i,((t%CICLOS)+CICLOS)%CICLOS); return [XS+q[0],YA,ZC[i]]; },      // nel riferimento dello stadio
+    ciclo:{circo:CICLO, stadio:CICLOS}, arrivi:TF.map(function(x){ return x+T0; }), meno:{circo:T_MENO, stadio:T_MENO_S}, accese:{circo:ACCESE_C, stadio:ACCESE_S},
+    triangoli:function(){ var t=pubC.tri+pubS.tri; [carri,ruote,polv].concat(cav,corr).forEach(function(m){ t+=m.geometry.attributes.position.count/3*(m.count||1); }); return Math.round(t); } };
+  return {aggiorna:function(anno){
+    var c=!!ACCESE_C[anno]&&!RM.senzaCorse, s=!!ACCESE_S[anno]&&!RM.senzaCorse, f=Math.max(.35,Math.min(1,.4+.6*D.interp(pop,anno)/900000));      // il pubblico segue la curva della popolazione (schema)
+    if(c&&!accC){ tC=25; pubC.riempi(f); } if(s&&!accS){ tS=4; pubS.riempi(f); }      // ogni volta che si accende, la corsa è già partita da poco
+    accC=c; accS=s; gC.visible=c; gS.visible=s; if(c) disegnaC(FERMA_C!=null?FERMA_C:MENO?T_MENO:tC); if(s) disegnaS(FERMA_C!=null?FERMA_C:MENO?T_MENO_S:tS); }};
+})();
+if(corse) RM.moduli.push(function(anno){ corse.aggiorna(anno); });      // RM.senzaCorse=true le spegne (per le prove di peso)
+
 /* ---------- tombe dentro le mura ----------
    Fonti (scene-roma-fonti.md, sezione 4, dal Companion to Rome c. 400-c. 1050, Brill 2026: Andrews II pp. 674-676, Spera II pp. 828-836, Stefani II pp. 839-848):
    dal V secolo, rare; nella seconda metà del VI e nel VII quasi la regola; fosse semplici, casse di mattoni, coperture «a cappuccina» di tegole, anfore per i bambini.
