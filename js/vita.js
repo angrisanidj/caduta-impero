@@ -292,7 +292,7 @@ function testaG(lati,fine){
       om-=.18*gau(fi,.35)*gau(y-1.537,.006); }                             // la bocca
     om-=.2*gau(y-1.49,.012)*gau(fi,1.2);                                   // sotto il mento
     return [m,0,om]; }).translate(0,0,.008); }
-function corpo(v,k,d){
+function corpo(v,k,d,tf){      // tf (27 novembre 2026): i lati di una testa più fine, chiesta solo dalle scene per le figure nei primi piani (l'800 dentro San Pietro); senza, nulla cambia
   if(typeof v==='number') v=VECCHIE[v]; else if(typeof v==='string') v=VESTI[v];
   var B=new Parti(), pel=PELLE[k%PELLE.length], cap=CAPELLI[(k>>1)%CAPELLI.length], L=d||6, LL=(L+2)+((L+2)&1), n2=LL/2, LS=L>=5?12:LL, LT2=L>=5?8:6, seduto=!!v.seduto, h=v.orlo, lunga=!seduto&&h<.2, mt=v.manto&&v.manto.t, mc=v.manto&&v.manto.col, S, U;
   U=lunga?[[.153,.9],[.165,1.15],[.17,1.33],[.135,1.41],[.085,1.45],[.045,1.47]]:[[.153,.9],[.163,1.12],[.17,1.33],[.135,1.41],[.085,1.45],[.045,1.47]];      // dalla vita in su: il petto, le spalle spioventi
@@ -330,13 +330,13 @@ function corpo(v,k,d){
     B.metti(new THREE.SphereGeometry(1,5,3).scale(L<5?.04:.048,L<5?.042:.05,L<5?.046:.052).translate(s*(L<5?.172:.176),1.355,0),man,2*s,fis).metti(tratto([s*.186,1.35,0],[s*.198,1.1,gz],.048,.041,LA),man,2*s,fis);      // la spalla tonda e il braccio, nella manica
     B.metti(tratto([s*.199,1.13,gz-.004],[M[0]*1.01,M[1]+.06,M[2]-.02],.04,.03,LA),nudo?pel:man,2*s,nudo||fis);                         // l'avambraccio, appena piegato in avanti: nudo con le maniche corte, nella manica con quelle lunghe
     B.metti(new THREE.SphereGeometry(1,4,3).scale(.024,.042,.03).translate(M[0],M[1],M[2]),pel,2*s,true); });                        // la mano
-  B.metti(tratto([0,1.42,0],[0,1.53,.008],.045,.042,L),pel,0,true);                                                                      // il collo
+  B.metti(tratto([0,1.42,0],[0,1.53,.008],.045,.042,tf?10:L),pel,0,true);                                                                      // il collo
   var barba=v.barba?function(x,y,z){ return (y<1.565&&z>-.01&&y>1.47)?cap.clone().lerp(pel,.25+.5*sm(1.53,1.565,y)):null; }:null;      // la barba corta (VII-IX secolo: Teodoto, Gordiano)
   var fronte=ve&&ve.fascia?function(x,y,z){ return (y>1.655&&y<1.69&&z>.02)?ve.fascia:null; }:null;      // la fascia chiara sulla fronte, sotto il velo (Turtura)
-  B.metti(testaG(LT2,L>=6),pel,0,true,barba||fronte);      // i volumi del volto ai passanti (sei lati: si possono vedere da vicino); le figure delle scene (cinque) hanno la testa più semplice                                                                                    // la testa
+  B.metti(testaG(tf||LT2,!!tf||L>=6),pel,0,true,barba||fronte);      // i volumi del volto ai passanti (sei lati: si possono vedere da vicino); le figure delle scene (cinque) hanno la testa più semplice                                                                                    // la testa
   if(v.elmo){ B.metti(new THREE.SphereGeometry(.093,LS,4,0,Math.PI*2,0,Math.PI*.53).scale(.95,1,1.08).translate(0,1.618,-.004),FERRO,0,true);      // l'elmo
     B.metti(new THREE.BoxGeometry(.022,v.elmo.cresta,.2).translate(0,1.7+v.elmo.cresta/2,-.012),CRINE,0,true); }                        // la cresta
-  else if(!ve) B.metti(new THREE.SphereGeometry(.087,LL,L>=6?4:3,0,Math.PI*2,0,Math.PI*.56).scale(.95,1,1.1).rotateX(-.42).translate(0,1.632,-.004),cap,0,true);      // i capelli, corti
+  else if(!ve) B.metti(new THREE.SphereGeometry(.087,tf||LL,tf?7:L>=6?4:3,0,Math.PI*2,0,Math.PI*.56).scale(.95,1,1.1).rotateX(-.42).translate(0,1.632,-.004),cap,0,true);      // i capelli, corti
   if(v.scudo){ var r=v.scudo.r; B.metti(new THREE.CylinderGeometry(r,r,.03,LS).rotateZ(Math.PI/2).rotateY(-.45).translate(.3,.98,.07),v.scudo.col||LEGNO,0,true);      // lo scudo tondo, al braccio sinistro (legno; nelle scene il colore che distingue le due parti)
     B.metti(new THREE.SphereGeometry(.065,6,3,0,Math.PI*2,0,Math.PI/2).rotateZ(-Math.PI/2).rotateY(-.45).translate(.3+.016*Math.cos(.45),.98,.07+.016*Math.sin(.45)),FERRO,0,true); }      // l'umbone
   if(v.lancia) B.metti(new THREE.CylinderGeometry(.013,.013,2.3,4).translate(-.24,1.15,.11),LEGNO,0,true).metti(new THREE.ConeGeometry(.026,.17,4).translate(-.24,2.38,.11),FERRO,0,true);      // la lancia, nella destra

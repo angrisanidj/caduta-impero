@@ -22,12 +22,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/stile.css?v=20261127-1554">
-<link rel="stylesheet" href="css/carta.css?v=20261127-1554">
-<link rel="stylesheet" href="css/cause.css?v=20261127-1554">
-<link rel="stylesheet" href="css/atti.css?v=20261127-1554">
-<link rel="stylesheet" href="css/ritratti.css?v=20261127-1554">
-<link rel="stylesheet" href="css/infografiche.css?v=20261127-1554">
+<link rel="stylesheet" href="css/stile.css?v=20261127-1631">
+<link rel="stylesheet" href="css/carta.css?v=20261127-1631">
+<link rel="stylesheet" href="css/cause.css?v=20261127-1631">
+<link rel="stylesheet" href="css/atti.css?v=20261127-1631">
+<link rel="stylesheet" href="css/ritratti.css?v=20261127-1631">
+<link rel="stylesheet" href="css/infografiche.css?v=20261127-1631">
 </head>
 <body class="tempo-attesa"><!-- tempo-attesa già qui: la linea del tempo resta nascosta mentre la pagina si carica (dal 26 novembre 2026 la carta si vede prima che js/pagina.js sia arrivato, e la linea compariva sopra la carta, vuota); poi la governa js/pagina.js -->
 <header class="testata">
@@ -204,17 +204,17 @@
       <p class="licenze">Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio (<a href="https://commons.wikimedia.org/wiki/File:Fra-titusbuen.jpg">Wikimedia Commons</a>). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file <a href="https://github.com/angrisanidj/caduta-impero/blob/main/LICENZA.md">LICENZA.md</a>.</p>
     </div>
   </details>
-                                                                                                                                                                                                                                                                                                                                                    <p class="versione">Versione del 27/11/2026, ore 15:54</p>
+                                                                                                                                                                                                                                                                                                                                                      <p class="versione">Versione del 27/11/2026, ore 16:31</p>
 </footer>
 
 <script>/* attesa delle due scene (css/stile.css, «Attesa delle due scene»): le fasi le scrivono i piccoli script qui sotto, fra un file e l'altro; la carta si scopre appena disegnata, prima dei file della città (qui sotto, dopo js/mappa.js), la città dopo il suo primo disegno (js/base.js) */
 window.RM_carica=(function(){ function el(id){ return document.getElementById(id); } function scrivi(id,t){ var e=el(id), p=e&&e.querySelector('.carica-fase'); if(p) p.textContent=t; }
   function via(id){ var e=el(id); if(!e||e.classList.contains('via')) return; e.classList.add('via'); setTimeout(function(){ e.hidden=true; },420); }
   return { citta:function(t){ scrivi('caricaRoma',t); }, carta:function(t){ scrivi('caricaCarta',t); }, cartaPronta:function(){ via('caricaCarta'); }, cittaPronta:function(){ via('caricaRoma'); } }; })();</script>
-<script src="js/dati.js?v=20261127-1554"></script>
-<script src="js/mappa-dati.js?v=20261127-1554"></script>
+<script src="js/dati.js?v=20261127-1631"></script>
+<script src="js/mappa-dati.js?v=20261127-1631"></script>
 <script>RM_carica.carta('La carta'); RM_carica.citta('In attesa della carta');</script>
-<script src="js/mappa.js?v=20261127-1554"></script>
+<script src="js/mappa.js?v=20261127-1631"></script>
 <script>/* La carta prima della città (26 novembre 2026). I file della città, qui sotto, tengono occupato il browser per qualche secondo: la carta della tappa d'apertura si disegna prima,
    appena caricato js/mappa.js, così è sullo schermo mentre la città si costruisce. Che il browser ridisegni qui, prima di js/base.js, non è una regola: Chrome ed Edge lo fanno dopo uno script lungo
    come questo (misurato il 26 novembre 2026 in tutte le aperture provate); Safari non si è potuto provare, e nel caso peggiore la carta compare quando compariva prima.
@@ -240,32 +240,32 @@ window.RM_indirizzi=(function(){ var T=window.RM_DATI.TAPPE;
 RM_carica.citta('Il terreno e la luce');</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-<script src="js/roma-topo.js?v=20261127-1554"></script>
-<script src="js/base.js?v=20261127-1554"></script>
-<script src="js/costruttore.js?v=20261127-1554"></script>
+<script src="js/roma-topo.js?v=20261127-1631"></script>
+<script src="js/base.js?v=20261127-1631"></script>
+<script src="js/costruttore.js?v=20261127-1631"></script>
 <script>RM_carica.citta('I monumenti');</script>
-<script src="js/monumenti.js?v=20261127-1554"></script>
-<script src="js/nuclei.js?v=20261127-1554"></script>
+<script src="js/monumenti.js?v=20261127-1631"></script>
+<script src="js/nuclei.js?v=20261127-1631"></script>
 <script>RM_carica.citta('Le mura e i ponti');</script>
-<script src="js/mura.js?v=20261127-1554"></script>
+<script src="js/mura.js?v=20261127-1631"></script>
 <script>RM_carica.citta('Le case');</script>
-<script src="js/citta.js?v=20261127-1554"></script>
+<script src="js/citta.js?v=20261127-1631"></script>
 <script>RM_carica.citta('La gente e le barche');</script>
-<script src="js/vita.js?v=20261127-1554"></script>
-<script src="js/eventi.js?v=20261127-1554"></script>
-<script src="js/ritratti.js?v=20261127-1554"></script>
-<script src="js/protagonisti.js?v=20261127-1554"></script>
-<script src="js/pagina.js?v=20261127-1554"></script>
+<script src="js/vita.js?v=20261127-1631"></script>
+<script src="js/eventi.js?v=20261127-1631"></script>
+<script src="js/ritratti.js?v=20261127-1631"></script>
+<script src="js/protagonisti.js?v=20261127-1631"></script>
+<script src="js/pagina.js?v=20261127-1631"></script>
 <script>RM_carica.cartaPronta(); RM_carica.citta('Le scene delle tappe');      /* cartaPronta qui non fa nulla se la carta è già scoperta: serve solo se il disegno anticipato non è riuscito */</script>
-<script src="js/scene-tappe.js?v=20261127-1554"></script>
+<script src="js/scene-tappe.js?v=20261127-1631"></script>
 <script>RM_carica.citta('Il primo disegno');</script>
-<script src="js/strade-nomi.js?v=20261127-1554"></script>
-<script src="js/regioni.js?v=20261127-1554"></script>
-<script src="js/infografiche.js?v=20261127-1554"></script>
-<script src="js/atti.js?v=20261127-1554"></script>
-<script src="js/itinerario.js?v=20261127-1554"></script>
-<script src="js/confronto.js?v=20261127-1554"></script>
-<script src="js/cause.js?v=20261127-1554"></script>
-<script src="js/condividi.js?v=20261127-1554"></script>
+<script src="js/strade-nomi.js?v=20261127-1631"></script>
+<script src="js/regioni.js?v=20261127-1631"></script>
+<script src="js/infografiche.js?v=20261127-1631"></script>
+<script src="js/atti.js?v=20261127-1631"></script>
+<script src="js/itinerario.js?v=20261127-1631"></script>
+<script src="js/confronto.js?v=20261127-1631"></script>
+<script src="js/cause.js?v=20261127-1631"></script>
+<script src="js/condividi.js?v=20261127-1631"></script>
 </body>
 </html>
