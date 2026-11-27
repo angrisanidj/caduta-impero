@@ -517,6 +517,17 @@ var TESTACCIO=[[-9.4,-2.1],[-8,-6.6],[1.7,-11.8],[2.6,-13.2],[3.7,-13],[5.5,-8.4
 function piede(x,z,r){ r=r||.8; return Math.min(RM.h(x,z),RM.h(x+r,z),RM.h(x-r,z),RM.h(x,z+r),RM.h(x,z-r)); }
 /* un pezzo di un gruppo che segue il pendio (PENDIO): (X,Z) è l'origine della voce, (x,z) il punto reale in coordinate di scena, r il raggio dell'impronta */
 function luogo(B,X,Z,x,z,ry,r,fn){ return B.dentro(x-X,piede(x,z,r)-quota(X,Z)-.05,z-Z,ry||0,fn); }
+/* un tratto di mura serviane a rudere (27 novembre 2026, voci 'servianetermini' e 'servianeaventino'): (X,Z) l'origine della voce, linee le linee di mezzo [[a,b],…] in coordinate
+   di scena, ciascuna divisa in pezzi di circa 7 m che seguono il terreno, con la cresta di altezza diversa (fra hMin e hMax, più bassa ai capi) e qualche blocco caduto al piede.
+   Spessore 3 m e altezze: schema. Il seme fa sì che ogni tratto abbia il suo profilo. */
+function muroServiano(B,X,Z,linee,seme,hMin,hMax){
+  var rnd=RM.casuale(seme), q0=quota(X,Z);
+  linee.forEach(function(l){ var a=l[0], b=l[1], dx=b[0]-a[0], dz=b[1]-a[1], L=Math.hypot(dx,dz), ang=Math.atan2(-dz,dx), n=Math.max(2,Math.round(L/.7)), k;
+    for(k=0;k<n;k++){ var t=(k+.5)/n, mx=a[0]+dx*t, mz=a[1]+dz*t, yb=piede(mx,mz,.3)-q0-.05, h=hMin+(hMax-hMin)*(.35+.65*rnd())*(k===0||k===n-1?.55:1);
+      B.scatola(L/n+.02,h+.1,.3,mx-X,yb-.1,mz-Z,P.tufo,ang);                                                               // un tratto di filari, con la cresta che sale e scende
+      if(rnd()<.45) B.scatola(.12,.06,.09,mx-X+(rnd()-.5)*.3-Math.sin(ang)*.3,yb,mz-Z-Math.cos(ang)*.3+(rnd()-.5)*.2,P.tufo,rnd()*3); }      // un blocco caduto al piede
+  });
+}
 /* obelisco a sezione quadrata: alto h con la cuspide (un decimo dell'altezza), lato alla base l (se manca, un decimo di h), su un basamento alto hb e largo lb */
 function obelisco(B,h,l,hb,x,z,lb,cb){
   l=l||h*.1; var r=l/Math.SQRT2, hc=h*.1;
@@ -1000,7 +1011,15 @@ var M=[
  }},
  {id:'palatino', nome:'Palazzi del Palatino', x:13,z:47, ry:-.62, altoFisso:5.4, raggioFisso:14.25, zone:[[-7,-1,13],[7,-1,13],[0,6,12]], fa:function(B){
     arcato(B,27,1.5,18,0,-.4,0,P.mattone,2,22);                                                // sostruzioni
-    B.dentro(0,1.1,0,0,function(B){
+    /* Domus Flavia, Domus Augustana con lo stadio e tempio di Apollo sono monumenti a sé dal 27 novembre 2026 (id 'domusflavia', 'domusaugustana', 'apollopalatino', qui sotto):
+       stesso disegno, stesso posto, stessa quota; il gruppo tiene le sostruzioni e le sue misure (altoFisso, raggioFisso) */
+    /* il Settizodio è un monumento a sé dal 26 novembre 2026 (id 'settizodio', qui sotto), spostato all'angolo sud-est del colle */
+ }},
+ /* Palazzi del Palatino resi monumenti a sé il 27 novembre 2026 (l'utente: «Almeno di questi devono esserci tutti»). x, z: il centro di ogni pezzo nelle coordinate del gruppo 'palatino'
+    (x 13, z 47, ry -0,62), portato nella città; dentro, lo stesso disegno di prima spostato di quel centro e alzato di 1,1 come nel gruppo. Fonti in coda a src/testi/topografia-fonti.md,
+    «Mancanti aggiunti, secondo gruppo». */
+ {id:'domusflavia', nome:'Domus Flavia', etichetta:'Domus Flavia', x:8.755,z:40.898, ry:-.62, come:'palatino', zone:[], fa:function(B){      // Platner e Ashby, Domus Augustiana: «almost entirely» di Rabirio, finita nel 92; peristilio, Aula Regia, basilica, larario, triclinio
+    B.dentro(7,1.1,2.5,0,function(B){
       portico(B,8.5,8,-7,0,-1,1.2,P.prato);                                                    // Domus Flavia: peristilio
       B.scatola(4.6,3.4,5,-7,0,-7.6,P.intonaco).falde(5,.9,4.8,-7,3.4,-7.6,P.coppi,PI/2,P.intonaco);          // Aula Regia: la sala delle udienze, altissima, con la facciata a colonne verso l'area Palatina
       B.scatola(2.4,2.4,5,-10.8,0,-7.6,P.intonaco).scatola(2.4,2.4,5,-3.2,0,-7.6,P.intonaco);                 // basilica e larario, ai lati
@@ -1008,6 +1027,10 @@ var M=[
       B.aperture(-8.9,-10.12,-5.1,-10.12,3,2.2,.8,.5);
       B.scatola(5.4,2.6,3.6,-7,0,5,P.intonaco).falde(5.6,.7,3.8,-7,2.6,5,P.coppi,0,P.intonaco);               // triclinio, con i due ninfei ovali ai fianchi
       [-1,1].forEach(function(q){ B.cilindro(.9,.14,-7+q*3.6,0,5,P.marmo,null,14).cilindro(.75,.05,-7+q*3.6,.14,5,P.acqua,null,14); });
+    });
+ }},
+ {id:'domusaugustana', nome:'Domus Augustana e stadio palatino', etichetta:'Domus Augustana', x:17.883,z:50.486, ry:-.62, come:'palatino', zone:[], fa:function(B){      // Platner e Ashby, Domus Augustiana: il palazzo privato e l'«hippodromus Palatii», riparato da Teodorico e Atalarico (bolli dei mattoni)
+    B.dentro(-6,1.1,0,0,function(B){
       arcato(B,9,2.7,13.5,2.6,0,-.5,P.mattone,2,7);                                            // Domus Augustana
       B.scatola(4,.12,4,2.6,2.7,-3.4,P.ombra).scatola(4,.12,4,2.6,2.7,2.6,P.ombra);
       var es=RM.ellisse(4.4,2.2,14,0,PI).map(function(p){ return [p[0]+2.6,p[1]+6.2]; }); B.striscia(es,-1.4,es,2.2,P.mattone,false).fornici(es,-1.1,.8,.5,1,false).fornici(es,.6,.8,.5,1,false);
@@ -1015,9 +1038,10 @@ var M=[
       var cs=RM.ellisse(2.2,1.4,8,0,PI).map(function(p){ return [p[0]+10.6,p[1]+6.8]; }); B.striscia(cs,0,cs,1.6,P.mattone,false);
       B.colonne(9,-6.6,9,6.4,46,.9,.045,.1).colonne(12.2,-6.6,12.2,6.4,46,.9,.045,.1).scatola(.5,.08,13.4,8.75,1,-.1,P.coppi).scatola(.5,.08,13.4,12.45,1,-.1,P.coppi);      // il portico attorno (colonne con le proporzioni di portico(): prima 14 per lato, a 10 m)
       B.scatola(1.6,2.2,2.6,13.6,0,-.2,P.mattone).cupola(1.3,13.6,2.2,-.2,P.intonaco,.5);        // la tribuna imperiale, sul lato est
-      B.tempio(2.4,3.6,1.8,-11.5,3.4,0,{fronte:6});                                            // tempio di Apollo
     });
-    /* il Settizodio è un monumento a sé dal 26 novembre 2026 (id 'settizodio', qui sotto), spostato all'angolo sud-est del colle */
+ }},
+ {id:'apollopalatino', nome:'Tempio di Apollo Palatino', etichetta:'Apollo Palatino', x:1.665,z:43.085, ry:-.62, come:'palatino', zone:[], fa:function(B){      // Platner e Ashby, Apollo Palatinus: «burned down on 18th March, 363 (Amm. XXIII.3.3)»; resta il podio con la scalinata
+    B.dentro(0,1.1,0,0,function(B){ B.tempio(2.4,3.6,1.8,0,0,0,{fronte:6}); });
  }},
  /* Settizodio (203): facciata scenografica a tre ordini di colonne libere, con tre grandi nicchie, verso chi arriva dalla via Appia. Demolito nel 1588-89; forma dai disegni del Cinquecento.
     Fino al 26 novembre 2026 stava in fondo al gruppo 'palatino', sul pianoro, circa 200 m a nord-ovest del suo posto. Ora sta al punto di Wikidata (Q1234446: 41.8856 N, 12.4887 E, con RM.ll
@@ -1355,6 +1379,21 @@ var M=[
       B.aperture(s*9.3,s>0?4:-6,s*9.3,s>0?-6:4,5,1,1.8,.9); B.aperture(s>0?9.3:-3,-6.01,s>0?3:-9.3,-6.01,3,1,1.8,.9); });
     var cv=RM.ellisse(10,6,16,PI,2*PI).map(function(p){ return [p[0],p[1]-6]; });
     B.striscia(cv,.16,cv,1.2,P.mattone,false);
+ }},
+ /* I Dioscuri del Quirinale (27 novembre 2026): i due gruppi colossali di marmo, ciascuno un giovane accanto a un cavallo che s'impenna. Platner e Ashby, Thermae Constantinianae: nel
+    restauro del 443 «it is probable that the colossal statues of the Dioscuri and horses, now in the Piazza del Quirinale, were set up within the thermae». Dal 443 quindi, con la
+    riserva della fonte; dove, dentro le terme, la fonte non lo dice: qui nello spiazzo chiuso dalla linea curva davanti all'ingresso nord (scelta). Misure: la fonte dice solo
+    «colossal»; qui figure alte circa 5,5 m (schema). Le figure sono quelle delle statue del modello (uomo, cavallo), non copie dei gruppi veri. Stessa quota delle terme (come). */
+ {id:'dioscuri', nome:'Dioscuri del Quirinale', etichetta:'Dioscuri', x:22.349,z:-70.09, ry:-.2, come:'termecostantino', zone:[], fa:function(B){
+    var y=.072, M=P.marmo, B0=B;                                                                                      // il piano delle terme (0,16 x 0,45)
+    B=Object.create(B0); B.geo=function(g,c){      // marmo bianco col tipo delle statue (P.statua), come il Marforio
+      if(!g.attributes.color){ var n=g.attributes.position.count, a=new Float32Array(n*3); for(var i=0;i<n;i++){ a[i*3]=M.r; a[i*3+1]=M.g; a[i*3+2]=M.b; } g.setAttribute('color',new THREE.BufferAttribute(a,3)); }
+      return B0.geo.call(this,g,P.statua); };
+    [-1,1].forEach(function(q){ var x=q*1.35;
+      B.scatola(1.05,.28,.75,x,y,0,P.marmo);                                                                          // il basamento
+      cavallo(B,x-q*.12,y+.28,.05,PI+q*.25,2.9,P.statua);                                                             // il cavallo, rivolto verso l'esterno dello spiazzo
+      uomo(B,x+q*.3,y+.28,-.05,2.95,P.statua,PI-q*.3);                                                                // il giovane accanto, verso il centro
+    });
  }},
  {id:'croce', nome:'Santa Croce in Gerusalemme', x:253.3,z:47.6, ry:2.72, zone:[[0,0,4]], fa:function(B){
     var L=3.65, W=2.2, H=2.2;                                                                  // l'aula del palazzo Sessoriano: un vano solo di 36 x 22 m, alto quanto largo, non una basilica a navate
@@ -1821,31 +1860,48 @@ var M=[
     lo sbocco della Cloaca da Nominatim (nodo 4754734734). Ercole Vincitore: venti colonne alte 10,6 m (it.wikipedia). Portuno: tetrastilo, pseudoperiptero, ionico (it.wikipedia), fronte
     a nord verso il fiume; podio e colonne di altezza indicativa. Arco di Giano: 12 m di lato e 16 di altezza, fornici di 10,60 x 5,70, quarantotto nicchie (Platner e Ashby, Ianus Quadrifrons);
     l'attico tolto nel 1827 non c'è. Arco degli Argentari (204): architrave su due piloni, alto 6,15 m, luce 3,30 (Platner e Ashby). Cloaca: arco di circa 4,5 m (a memoria). */
- {id:'foroboario', nome:'Foro Boario', x:-29,z:37, ry:0, zone:[[-8.57,4.76,1.2],[-7.45,-.89,1.3],[8.02,-2.06,1],[9.96,-3.56,.5],[-12.93,3.79,.5]], fa:function(B){
+ {id:'foroboario', nome:'Foro Boario', x:-29,z:37, ry:0, altoFisso:2.0100255, raggioFisso:11.6825, zone:[[-8.57,4.76,1.2],[-7.45,-.89,1.3],[8.02,-2.06,1],[9.96,-3.56,.5],[-12.93,3.79,.5]], fa:function(B){      // altoFisso, raggioFisso: le misure del gruppo prima che i quattro pezzi qui sotto ne uscissero (27 novembre 2026)
     var X=-29, Z=37;
-    luogo(B,X,Z,-37.57,41.76,0,.9,function(B){
+    /* il tempio rotondo, il tempio di Portuno, l'arco di Giano e l'arco degli Argentari sono monumenti a sé dal 27 novembre 2026 (id 'ercolevincitore', 'portuno', 'giano', 'argentari', qui sotto) */
+    luogo(B,X,Z,-41.93,40.79,0,.5,function(B){ B.scatola(.3,.7,1.2,0,-.55,0,P.tufo).vano(-.16,-.55,0,0,1,.45,.5); });
+ }},
+ /* Edifici del Foro Boario resi monumenti a sé il 27 novembre 2026: stesso disegno, stesso posto (il punto che il gruppo dava a luogo()), stessa quota del piede; ora hanno nome,
+    scheda e storia propria. Fonti in coda a src/testi/topografia-fonti.md, «Mancanti aggiunti, secondo gruppo». */
+ {id:'ercolevincitore', nome:'Tempio di Ercole Vincitore', etichetta:'Ercole Vincitore', x:-37.57,z:41.76, ry:0, zone:[], fa:function(B){      // il tempio rotondo, per Platner e Ashby (Hercules Victor, aedes) «the existing round temple which is the church of S. Maria del Sole»; il nome è discusso
+    luogo(B,-37.57,41.76,-37.57,41.76,0,.9,function(B){
       B.cilindro(.92,.12,0,0,0,P.travertino,.88,24).cilindro(.42,1.06,0,.12,0,P.marmo,null,20);
       for(var k=0;k<20;k++){ var a=k*PI/10; B.colonne(.72*Math.cos(a),.72*Math.sin(a),.72*Math.cos(a),.72*Math.sin(a),1,1.06,.045,.12); }
       B.cilindro(.8,.08,0,1.18,0,P.marmo,null,24).cono(.82,.32,0,1.26,0,P.coppi,20);
     });
-    luogo(B,X,Z,-36.45,36.11,-2.845,.9,function(B){ tempietto(B,1.06,1.95,.25,.88,4,0,0,0,false); });
-    luogo(B,X,Z,-20.98,34.94,.314,.7,function(B){
+ }},
+ {id:'portuno', nome:'Tempio di Portuno', etichetta:'Portuno', x:-36.45,z:36.11, ry:0, zone:[], fa:function(B){      // Platner e Ashby lo chiamano tempio di Mater Matuta (Mater Matuta, templum): ionico, tetrastilo, pseudoperiptero, 20 x 12 m, podio di 2,50 m
+    luogo(B,-36.45,36.11,-36.45,36.11,-2.845,.9,function(B){ tempietto(B,1.06,1.95,.25,.88,4,0,0,0,false); });
+ }},
+ {id:'giano', nome:'Arco di Giano', etichetta:'Arco di Giano', x:-20.98,z:34.94, ry:0, zone:[], fa:function(B){      // Platner e Ashby, Ianus Quadrifrons: «12 metres square and 16 high», arcate alte 10,60 e larghe 5,70, «two rows of niches… forty-eight in all»
+    luogo(B,-20.98,34.94,-20.98,34.94,.314,.7,function(B){
       B.scatola(1.2,1.6,1.2,0,0,0,P.marmo);
       [[0,.61,1,0],[.61,0,0,-1],[0,-.61,-1,0],[-.61,0,0,1]].forEach(function(f){
         B.vano(f[0],0,f[1],f[2],f[3],.57,1.06);
         [-1,1].forEach(function(s){ [.3,.68].forEach(function(y){ [-.09,0,.09].forEach(function(q){ var o=s*.45+q; B.vano(f[0]+f[2]*o,y,f[1]+f[3]*o,f[2],f[3],.055,.16); }); }); });   // tre nicchie per pilone, su due file
       });
     });
-    luogo(B,X,Z,-19.04,33.44,0,.4,function(B){ arcoUno(B,.63,.33,.615,.33,.45,0,0,0,0,P.marmo,true); });
-    luogo(B,X,Z,-41.93,40.79,0,.5,function(B){ B.scatola(.3,.7,1.2,0,-.55,0,P.tufo).vano(-.16,-.55,0,0,1,.45,.5); });
+ }},
+ {id:'argentari', nome:'Arco degli Argentari', etichetta:'Argentari', x:-19.04,z:33.44, ry:0, zone:[], fa:function(B){      // Platner e Ashby, Arcus Argentariorum: del 204, «not a true arch, but a flat lintel resting on two piers», alto 6,15 m, luce 3,30
+    luogo(B,-19.04,33.44,-19.04,33.44,0,.4,function(B){ arcoUno(B,.63,.33,.615,.33,.45,0,0,0,0,P.marmo,true); });
  }},
  /* Portico d'Ottavia (dopo il 27 a.C., rifatto da Settimio Severo): «a rectangular area, 118 metres in width and somewhat more in length», con una doppia fila di colonne di granito,
     ventotto per fila sulla fronte (Platner e Ashby, Porticus Octaviae); la lunghezza (132 m) è indicativa. Il propileo, che resta come ingresso di Sant'Angelo in Pescheria (dal 755, a memoria),
     è il centro della fronte sud (OpenStreetMap, way 123530471, che dà anche l'orientamento). Dentro, i templi di Giunone Regina e di Giove Statore: misure e posti indicativi. */
- {id:'ottavia', nome:"Portico d'Ottavia", x:-52.9,z:-5.56, ry:-.488, zone:[[0,-3.3,5.2],[0,3.3,5.2],[0,6.3,1.4],[-4.6,-5.3,2.2],[4.6,-5.3,2.2],[-4.6,5.3,2.2],[4.6,5.3,2.2]], fa:function(B){
+ {id:'ottavia', nome:"Portico d'Ottavia", x:-52.9,z:-5.56, ry:-.488, altoFisso:1.985, raggioFisso:6.8075, zone:[[0,-3.3,5.2],[0,3.3,5.2],[0,6.3,1.4],[-4.6,-5.3,2.2],[4.6,-5.3,2.2],[-4.6,5.3,2.2],[4.6,5.3,2.2]], fa:function(B){      // altoFisso, raggioFisso: le misure di prima che il propileo ne uscisse (27 novembre 2026)
     portico(B,11.8,13.2,0,0,0,.85,P.prato); B.colonne(-5.3,5.4,5.3,5.4,28,.85,.06,.1,P.granito);
-    tempietto(B,1.99,1.29,.12,.95,4,0,6,0,false);                                                     // il propileo
+    /* il propileo è un monumento a sé dal 27 novembre 2026 (id 'ottaviapropileo', qui sotto): resta in piedi mentre il portico cade */
     B.tempio(1.5,2.6,1.1,-2.6,-.6,0,{fronte:6,lati:9,podio:.35}).tempio(1.5,2.6,1.1,2.6,-.6,0,{fronte:6,lati:9,podio:.35});
+ }},
+ /* Il propileo del portico d'Ottavia (Platner e Ashby, Porticus Octaviae): l'ingresso al centro del lato sud-ovest, «a double pronaos, projecting inward and outward», con quattro
+    colonne corinzie di marmo bianco su ogni fronte, alte 8,60 m; due colonne della fronte esterna «have been replaced by a brick arch, perhaps after the earthquake of A.D. 442» (non disegnato).
+    È in piedi oggi, ingresso di Sant'Angelo in Pescheria. Stesso disegno e stesso posto di prima (il punto (0, 6) del portico, portato nella città), stessa quota del portico (come). */
+ {id:'ottaviapropileo', nome:"Propileo del portico d'Ottavia", etichetta:"Propileo d'Ottavia", x:-55.713,z:-.26, ry:-.488, come:'ottavia', zone:[], fa:function(B){
+    tempietto(B,1.99,1.29,.12,.95,4,0,0,0,false);                                                     // il propileo
  }},
  /* Area sacra di largo Argentina: quattro templi repubblicani (III-II secolo a.C.) rivolti a est. Contorni da OpenStreetMap: A (sotto San Nicola de Calcarario, way 125566963), B rotondo
     (way 125566965), C (way 125566967), D (way 125566969); il podio di ciascuno ha la misura del contorno. Altezze di podi e colonne indicative. */
@@ -1885,17 +1941,23 @@ var M=[
  /* Esquilino. Arco di Gallieno: la porta Esquilina rifatta e dedicata a Gallieno nel 262 (Platner e Ashby, Porta Esquilina; OpenStreetMap, way 81741050); misure a memoria, indicative
     (alto circa 8,8 m). Trofei di Mario, la mostra d'acqua di piazza Vittorio (OpenStreetMap, way 345702226): i trofei di marmo vi restano fino al 1590 (Platner e Ashby, Tropaea Marii); massa
     e altezza (circa 20 m) indicative. Auditorium di Mecenate (OpenStreetMap, relazione 5886457): aula absidata in parte sotto il suolo, misure indicative. */
- {id:'esquilino', nome:'Arco di Gallieno e Trofei di Mario', x:140,z:-28, ry:0, zone:[[-6.93,-8.43,.8],[12.14,-2.42,1.9],[-7.21,11.14,1.5]], fa:function(B){
+ {id:'esquilino', nome:'Auditorium di Mecenate', etichetta:'Auditorium di Mecenate', ex:132.79,ez:-16.86, x:140,z:-28, ry:0, altoFisso:2.05, raggioFisso:10.864368, zone:[[-6.93,-8.43,.8],[12.14,-2.42,1.9],[-7.21,11.14,1.5]], fa:function(B){      // fino al 27 novembre 2026 «Arco di Gallieno e Trofei di Mario»: arco e mostra d'acqua sono ora monumenti a sé ('arcogallieno', 'trofeimario', qui sotto); altoFisso, raggioFisso: le misure di prima
     var X=140, Z=-28;
-    luogo(B,X,Z,133.07,-36.43,1.606,.6,function(B){ arcoUno(B,.73,.35,.88,.45,.66,0,0,0,0,P.travertino); });
-    luogo(B,X,Z,152.14,-30.42,.052,1.5,function(B){
-      B.scatola(2.4,.5,3.4,0,0,0,P.mattone).scatola(1.2,1.5,1.5,0,.5,0,P.mattone).vano(-.61,.5,0,0,1,.7,1.1);
-      [-.95,.95].forEach(function(z){ B.scatola(.3,.9,.5,0,.5,z,P.mattone).scatola(.22,.35,.3,0,1.4,z,P.statua); });   // i due trofei, ai lati
-    });
     luogo(B,X,Z,132.79,-16.86,2.548,1.2,function(B){      // l'Auditorium (27 novembre 2026, Platner e Ashby, Auditorium Maecenatis, e Sovrintendenza): lungo 24,10 m con l'abside, largo 10,60 (13 per la Sovrintendenza); il pavimento 7 m sotto il suolo antico, i muri 6 m sopra; volta «probably»; si entra in discesa
       B.scatola(1.88,1.3,1.06,-.26,-.7,0,P.mattone).cilindro(.53,1.3,.68,-.7,0,P.mattone,null,16).volta(1.88,.53,-.26,.6,0,P.mattone).cupola(.53,.68,.6,0,P.mattone,1);      // aula, abside, volta a botte e catino
       [[-2.15,0,.2],[-1.2,-.62,.2],[-1.2,-.62,-.2],[-2.15,0,-.2]].forEach(function(v,i,a){ if(i===0){ B.quad(a[0],a[1],a[2],a[3],P.selce); B.quad(a[3],a[2],a[1],a[0],P.selce); } });      // la rampa in discesa verso l'ingresso (la doppia rampa della Sovrintendenza, qui una)
       [-1,1].forEach(function(q){ B.scatola(.95,.7,.06,-1.68,-.68,q*.23,P.mattone); }); });
+ }},
+ /* L'arco di Gallieno e i Trofei di Mario, resi monumenti a sé il 27 novembre 2026: stesso disegno, stesso posto e stessa quota del piede di quando stavano nel gruppo 'esquilino'.
+    Fonti in coda a src/testi/topografia-fonti.md, «Mancanti aggiunti, secondo gruppo». */
+ {id:'arcogallieno', nome:'Arco di Gallieno', etichetta:'Arco di Gallieno', x:133.07,z:-36.43, ry:0, zone:[], fa:function(B){      // Platner e Ashby, Porta Esquilina: il posto della porta «is marked by the existing Arcus Gallieni»
+    luogo(B,133.07,-36.43,133.07,-36.43,1.606,.6,function(B){ arcoUno(B,.73,.35,.88,.45,.66,0,0,0,0,P.travertino); });
+ }},
+ {id:'trofeimario', nome:'Trofei di Mario (ninfeo di Alessandro)', etichetta:'Trofei di Mario', x:152.14,z:-30.42, ry:0, zone:[], fa:function(B){      // Platner e Ashby, Nymphaeum Alexandri: mostra d'acqua probabilmente di Severo Alessandro, «connected with the aqua Alexandrina»; i trofei portati in Campidoglio nel 1590
+    luogo(B,152.14,-30.42,152.14,-30.42,.052,1.5,function(B){
+      B.scatola(2.4,.5,3.4,0,0,0,P.mattone).scatola(1.2,1.5,1.5,0,.5,0,P.mattone).vano(-.61,.5,0,0,1,.7,1.1);
+      [-.95,.95].forEach(function(z){ B.scatola(.3,.9,.5,0,.5,z,P.mattone).scatola(.22,.35,.3,0,1.4,z,P.statua); });   // i due trofei, ai lati
+    });
  }},
  /* Tempio di Minerva Medica: aula decagona di mattoni, larga circa 24 m e alta 33, con nove nicchie oltre all'ingresso e dieci finestre ad arco sopra; la cupola cade in parte nel 1828
     (Platner e Ashby, Nymphaeum); «presumibilmente» dell'inizio del IV secolo (it.wikipedia): il 320 è una scelta. Le sale aggiunte attorno non ci sono. OpenStreetMap, relazione 13471829. */
@@ -1980,6 +2042,19 @@ var M=[
  {id:'leonine', nome:'Mura leonine', x:-215,z:-92, ry:0, zone:LEO.zone, fa:function(B){
     var y=suTerreno(-215,-92,0);
     LEO.passi.forEach(function(p,j){ var q=y(p.x,p.z); B.scatola(p.len+.15,1.35,.45,p.x,q-.3,p.z,P.tufo,p.ang); if(j%4===0) B.scatola(1,2.1,1,p.x,q-.3,p.z,P.tufo,p.ang).scatola(1.15,.12,1.15,p.x,q+1.8,p.z,P.mattone,p.ang); });
+ }},
+ /* Le mura serviane, due dei tratti che Platner e Ashby (Murus Servii Tullii) dicono ancora in vista: «(b) in the Piazza dei Cinquecento, opposite the station», che era «the retaining
+    wall at the back of the agger», e «a fine piece of wall … in the depression between the greater and the lesser Aventine in the Via di Porta S. Paolo». Il tracciato di ciascuno è il
+    contorno di OpenStreetMap (way 112675404, con Wikidata Q281330, e ways 120880574 e 120880575, «Mura Serviane», sull'Aventino), ridotto alla sua linea di mezzo. Grossi blocchi di tufo
+    di Grotta Oscura in filari di circa 0,60 m (la fonte). Altezza, spessore e profilo della cresta: nessuna fonte letta; qui uno schema (fra 3 e 6 m, spessore 3 m), diverso per ogni
+    tratto. Se fra il 235 e l'852 i due tratti fossero in vista o chiusi fra le case non lo dice nessuna fonte letta: nel modello sono ruderi in vista in tutti gli anni (scelta, detta
+    nella scheda). Gli altri tratti della voce (via delle Finanze, scoperto nel 1907; Palatino, Campidoglio, palazzo Colonna) non ci sono, e l'aggere sull'Esquilino resta quello degli
+    horti di Mecenate. Il disegno sta in muroServiano(), accanto a luogo(). */
+ {id:'servianetermini', nome:'Mura serviane (tratto di Termini)', etichetta:'Mura serviane', x:135.9,z:-103.1, ry:0, zone:[[1.2,2.2,.8],[0,0,.8],[-1.3,-2.4,.8]], fa:function(B){
+    muroServiano(B,135.9,-103.1,[[[137.96,-98.9],[133.8,-107.38]]],235,.42,.6);
+ }},
+ {id:'servianeaventino', nome:"Mura serviane (tratto dell'Aventino)", etichetta:'Mura serviane', x:-21.9,z:135.4, ry:0, zone:[[2.3,.7,.6],[-3.6,-.9,.6]], fa:function(B){
+    muroServiano(B,-21.9,135.4,[[[-21.4,136.2],[-17.56,136.04]],[[-26.92,134.14],[-24.3,134.9]]],409,.3,.5);
  }},
  /* ---------- gli horti, i grandi giardini dei colli (26 novembre 2026; l'utente: «rendile anche più riconoscibili», e sugli horti «Mettici anche laghi fontane etc?») ----------
     Il cerchio di ciascuno è RM.HORTI (js/base.js): lì niente case, il prato e i pini (js/citta.js). Qui, per ciascuno, ciò che dice la sua voce di Platner e Ashby (LacusCurtius,
@@ -2239,7 +2314,8 @@ function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return 
 /* prima le zone: sotto ogni monumento il terreno si spiana alla quota del suo centro; poi si posa il suolo */
 var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1,ospizionaumachia:1};        // complessi che seguono il pendio: niente terrazza
 ['orologio','castrapretorio','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });
-['magnamater','tiberiana'].forEach(function(k){ PENDIO[k]=1; });      // 26 novembre 2026 (sera): sul pianoro del Palatino, che nel modello è la terrazza del gruppo palatino; RM.hGrezza lì sta 6 unità più in basso
+['magnamater','tiberiana'].forEach(function(k){ PENDIO[k]=1; });
+['ercolevincitore','portuno','giano','argentari','arcogallieno','trofeimario','servianetermini','servianeaventino'].forEach(function(k){ PENDIO[k]=1; });      // 27 novembre 2026: pezzi usciti dai gruppi foroboario ed esquilino, che seguono il pendio; ognuno al piede di prima (luogo)      // 26 novembre 2026 (sera): sul pianoro del Palatino, che nel modello è la terrazza del gruppo palatino; RM.hGrezza lì sta 6 unità più in basso
 ['casasallustio','hortilamianistatue','hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'].forEach(function(k){ PENDIO[k]=1; });      // gli horti (26 novembre 2026): ogni pezzo sul suo terreno, senza zona (le case stanno già fuori dal cerchio di RM.HORTI)      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
@@ -2284,7 +2360,7 @@ RM.statoMonumento=function(id,anno){
    r = crolli veri e propri: pochi, e solo decenni dopo la chiusura; alla fine del VI secolo i grandi edifici sono ancora in piedi.
    Fino al 23 novembre 2026 alla chiusura toglieva subito un poco di cima a ogni tratto: sul tetto di Giove Capitolino il colmo si spezzava a blocchi e il tempio sembrava spaccato (l'utente: «fai delle crepe, non che si spacchi a metà»).
    Le basiliche cristiane sono tenute in ordine; il mausoleo di Adriano, ormai fortezza, quasi. */
-var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, ospizionaumachia:0, mulini:0, casenerva:0, foca:.4, focastatua:.4, fiaccola357:.4, curiastatue:.5, adriano:.35, arcocostantino:.5, arcotito:.5, arcoseveroforo:.5, colonnatraiana:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0};
+var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5, pantheonchiesa:0, patriarchio:0, triclinioleone:0, pietro:0, croce:0, lorenzo:0, lorenzopelagio:0, agnese:0, paolo:0, sabina:0, mariamaggiore:0, stefano:0, cosma:0, monasteripietro:0, campanilepietro:0, porticopietro:0, scholae:0, leonine:0, costanza:0, agneseonorio:0, paolocostantino:0, tegolepietro:0, obeliscovaticano:.2, andreapietro:0, petronilla:0, monasteripietro2:0, episcopiapietro:0, scholae2:0, ospizionaumachia:0, mulini:0, casenerva:0, foca:.4, focastatua:.4, fiaccola357:.4, curiastatue:.5, adriano:.35, arcocostantino:.5, arcotito:.5, arcoseveroforo:.5, colonnatraiana:.5, testaccio:.5, colosso:0, obelisco357:.4, fangocirco:0, giano:.5, argentari:.5, arcogallieno:.5, ottaviapropileo:.4};      // 27 novembre 2026: i tre archi usciti dai gruppi, come gli altri archi in uso; il propileo d'Ottavia, che è in piedi oggi con le sue colonne, perde meno pezzi
 /* «abbandonato» (25 novembre 2026, l'utente: «Ok» alla proposta della verifica degli anacronismi, src/testi/audit-anacronismi.md): non più in uso, ma la struttura regge
    per secoli (la cupola di Minerva Medica fino al 1828, il Pantheon fra il 392 e il 609, i templi del Foro Boario diventati chiese). Prende l'incuria della chiusura
    (sporco, crepe, erba, coppi mancanti: uCrepe) ma niente crolli (uRovina resta a zero), finché un evento non li porta (terremoto, incendio, cava). Uno «spogliato»
@@ -2373,7 +2449,7 @@ RM.rovina=function(id,anno){
 RM.TINTA=TINTA;
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
-var SENZA_CANTIERE={curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};
+var SENZA_CANTIERE={dioscuri:1,curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};
 function ponteggio(o,t){
   if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
   if(!o.pont){

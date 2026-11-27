@@ -41,12 +41,12 @@ var REGIONI=[
   nota:'Il nome non può essere più antico del Tempio della Pace di Vespasiano. Il foro di Nerva sta in due cataloghi: in questo come «forum transitorium», in quello della VIII come foro di Nerva.'},
  {n:'V', it:'Esquilie', la:'Esquiliae', cat:[3850,180,22,75,74,15],
   cosa:'Tutta fuori dalle mura serviane, a nord della via Asinaria, con l\'estremità est del Celio. Nel IV secolo il confine seguiva le mura aureliane dalla via Labicana al lato sud dei Castra Pretoria. Molti horti; Properzio chiama le Esquilie «aquosae», per gli acquedotti che entravano da porta Prenestina.',
-  mon:['sessoriano','obeliscoantinoo','*castrense','*castrensemura','*minervamedica','croce','eurisace'], bordo:['laterano','patriarchio','triclinioleone','esquilino'], ancore:[[176,-28],[215,-40],[195,22],[168,-82],[168,5]],
+  mon:['sessoriano','obeliscoantinoo','*castrense','*castrensemura','*minervamedica','croce','eurisace','*trofeimario'], bordo:['laterano','patriarchio','triclinioleone','esquilino','arcogallieno'], ancore:[[176,-28],[215,-40],[195,22],[168,-82],[168,5]],
   luoghi:'Il catalogo nomina anche un «campus Viminalis subager»: il posto non si sa. In origine il nome Esquiliae indicava l\'Oppio e il Cispio, che restano fuori da questa regione (sono nella III e nella IV).',
   nota:'Che la «Minerva medica» del catalogo sia proprio l\'edificio che il modello chiama così non è stato verificato.'},
  {n:'VI', it:'Alta Semita', la:'Alta Semita', cat:[3403,146,18,75,73,16],
   cosa:'Il Quirinale, dai fori imperiali alle mura serviane fra porta Viminale e porta Collina, e gli horti Sallustiani; a nord andava oltre la linea delle mura aureliane. Il nome è quello della strada sul crinale (oggi via XX Settembre). Nel IV secolo il confine girava attorno ai Castra Pretoria.',
-  mon:['*diocleziano','*termecostantino','*obeliscosallustiano','castrapretorio'], bordo:[], ancore:[[20,-70],[66,-121],[95,-95],[122,-152]],
+  mon:['*diocleziano','*termecostantino','*obeliscosallustiano','castrapretorio','dioscuri'], bordo:['servianetermini'], ancore:[[20,-70],[66,-121],[95,-95],[122,-152]],      // il tratto di Termini delle mura serviane sta sulla linea del confine fra VI e V
   nota:'Fuori dalle mura la scena non dà tinta: dove finisse la regione non si sa.'},
  {n:'VII', it:'Via Lata', la:'Via Lata', cat:[3805,120,25,75,76,15],
   cosa:'Fra il tratto sud della via Flaminia, detto via Lata (oggi via del Corso), e la regione VI.',
@@ -57,20 +57,20 @@ var REGIONI=[
   mon:['*fori','*curia','*curiaantica','*curiastatue','*santadriano','*giove','*campidoglio','foca','focastatua','*castori','*saturno','*vesta','arcoseveroforo','*colonnatraiana','*concordia','*vespasiano','divogiulio','*giulia','*rostri','tabularium','*foroaugusto','*forocesare','*forotraiano','marforio','regia','regiacasa'], bordo:['casenerva','mercatitraiano','foronerva'], ancore:[[-6,-22],[-19,-11]]},      // 26 novembre 2026: gli edifici del Foro resi monumenti a sé (con l'asterisco quelli del catalogo della VIII; l'arco di Severo, il Divo Giulio, il Tabularium e i mercati no)
  {n:'IX', it:'Circo Flaminio', la:'Circus Flaminius', cat:[2777,140,25,63,120,20],
   cosa:'Tutto il terreno fra le mura serviane, la via Flaminia e il Tevere: la parte del Campo Marzio a ovest della via Lata.',
-  mon:['*pompeo','*marcello','*balbo','*domiziano','*odeon','*pantheon','*pantheonpiazza','*pantheonchiesa','*termeagrippa','*termenerone','*tempioadriano','*colonnamarco','*iseo','obeliscomacuteo','obeliscominerva','obeliscodogali','saepta','argentina','ottavia','apollo','bellona','orologio','obeliscomausoleo1','obeliscomausoleo2','augusto','arcovalentiniano','olitorio'], bordo:[], ancore:[]},
+  mon:['*pompeo','*marcello','*balbo','*domiziano','*odeon','*pantheon','*pantheonpiazza','*pantheonchiesa','*termeagrippa','*termenerone','*tempioadriano','*colonnamarco','*iseo','obeliscomacuteo','obeliscominerva','obeliscodogali','saepta','argentina','ottavia','apollo','bellona','orologio','obeliscomausoleo1','obeliscomausoleo2','augusto','arcovalentiniano','olitorio','ottaviapropileo'], bordo:[], ancore:[]},
  {n:'X', it:'Palatino', la:'Palatium', cat:[2742,89,48,44,90,20], cur:{0:2642,4:89},
   cosa:'Il Palatino, nei limiti che Tacito (Annali XII 24) dà al primo pomerio.',
-  mon:['*palatino','*settizodio','*magnamater','*tiberiana'], bordo:['arcocostantino'], ancore:[[15,42],[25,35],[5,49],[20,49],[10,35]]},      // il Settizodio è nel catalogo della X («Septizonium divi Severi»)
+  mon:['*palatino','*settizodio','*magnamater','*tiberiana','domusflavia','domusaugustana','*apollopalatino'], bordo:['arcocostantino'], ancore:[[15,42],[25,35],[5,49],[20,49],[10,35]]},      // il Settizodio è nel catalogo della X («Septizonium divi Severi»)
  {n:'XI', it:'Circo Massimo', la:'Circus Maximus', cat:[2500,88,16,15,20,16], cur:{0:2600,1:89},
   cosa:'Molto irregolare: il Circo Massimo e il terreno fra il Tevere e le regioni IX, VIII, X, XII e XIII, col Foro Boario.',
-  mon:['circo','obelisco357','obeliscoflaminio','fiaccola357','fangocirco','*foroboario'], bordo:[], ancore:[[-22,56],[22,86]],
+  mon:['circo','obelisco357','obeliscoflaminio','fiaccola357','fangocirco','*foroboario','ercolevincitore','portuno','giano'], bordo:['argentari'], ancore:[[-22,56],[22,86]],      // 27 novembre 2026: i pezzi del Foro Boario; l'arco degli Argentari, al Velabro, sul confine con la VIII
   nota:'Il catalogo nomina qui un «arcum divi Constantini»; l\'arco del modello sta dove si incontrano le regioni I, II, III, IV e X: le pagine lette non sciolgono la cosa.'},
  {n:'XII', it:'Piscina Pubblica', la:'Piscina Publica', cat:[2487,113,27,63,80,25], cur:{4:81},
   cosa:'La parte est dell\'Aventino. Confinava con la via Appia, con la regione I, con le mura aureliane e con due vicoli, quello della porta Raudusculana e quello della Piscina Pubblica. Il nome è quello di un antico quartiere con una grande vasca pubblica.',
   mon:['*caracalla'], bordo:[], ancore:[[26,128],[25,160]]},
  {n:'XIII', it:'Aventino', la:'Aventinus', cat:[2487,130,35,44,89,20], cur:{3:60},
   cosa:'L\'Aventino e la zona a sud, fra la regione XII, la XI, le mura aureliane e il Tevere, con l\'Emporio sul fiume.',
-  mon:['sabina','emporio','testaccio'], bordo:['piramide'], ancore:[[-42,96],[-25,118],[-40,150],[-15,170]]},
+  mon:['sabina','emporio','testaccio'], bordo:['piramide','servianeaventino'], ancore:[[-42,96],[-25,118],[-40,150],[-15,170]]},      // il tratto di mura serviane fra il grande e il piccolo Aventino sta sul confine con la XII
  {n:'XIV', it:'Trastevere', la:'Transtiberim', cat:[4405,150,22,86,180,24],
   cosa:'Tutta la riva destra del Tevere con l\'isola Tiberina. I limiti non si possono determinare: andava molto oltre le mura aureliane, a sud fino al tempio di Fors Fortuna, a nord fino al Vaticano. Sulla scena, fuori dalle mura, la tinta sfuma senza bordo.',
   mon:['*pietro','*tegolepietro','*obeliscovaticano','esculapio','adriano','adrianostatue','metaromuli','porticopietro','campanilepietro','episcopiapietro','monasteripietro','monasteripietro2','andreapietro','petronilla','scholae','scholae2','ospizionaumachia','leonine'], bordo:['mulini'], ancore:[],

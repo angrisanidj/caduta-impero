@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 05:41:51.
+Generato da `src/testi.mjs` il 27/11/2026, 06:20:09.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -149,7 +149,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.67] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.68] Versione del 27/11/2026, ore 05:03
+[pagina.68] Versione del 27/11/2026, ore 05:47
 
 
 ## 2. Gli atti
@@ -3145,6 +3145,75 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.palatino.certezza-B] Gli scavi hanno permesso di ricostruire la pianta dei palazzi imperiali, la Domus Flavia e la Domus Augustana, e quella dello stadio. Il modello propone un possibile aspetto delle strutture sopra il livello del suolo e del tempio di Apollo. Il Settizodio ha una scheda sua.
 
 
+### Domus Flavia
+
+[scheda.domusflavia.nome] Domus Flavia
+
+[scheda.domusflavia.cosa] La parte di rappresentanza del palazzo di Domiziano sul Palatino. Le sale di Stato stavano attorno a un enorme cortile con colonne di marmo numidico e una vasca al centro: a nord-est tre grandi sale, la più grande oggi detta Aula Regia, una a forma di basilica e una più piccola detta larario; a sud il triclinio, la grandissima sala dei banchetti lodata dal poeta Stazio. Quello che si vede è quasi tutto opera dell'architetto di Domiziano, Rabirio (Platner e Ashby). Le due fontane ai lati del triclinio, nel modello, sono uno schema. Nel modello la pianta segue gli scavi; altezze e tetti sono uno schema.
+
+[scheda.domusflavia.data1-92] Il palazzo è finito sotto Domiziano.
+
+[scheda.domusflavia.data2.quando] dal III secolo
+
+[scheda.domusflavia.data2] Gli imperatori vi abitano sempre più di rado.
+
+[scheda.domusflavia.data3-713] Ultima notizia del palazzo nelle fonti lette. Nel modello da qui è abbandonato, ma in piedi: è una nostra scelta.
+
+[scheda.domusflavia.data4.quando] Medioevo
+
+[scheda.domusflavia.data4] Sul bordo del colle sorgono chiese, ma la parte centrale del palazzo «sembra lasciata quasi del tutto da parte» (Platner e Ashby); le guide medievali la nominano appena.
+
+[scheda.domusflavia.data5.quando] oggi
+
+[scheda.domusflavia.data5] Restano i muri del palazzo.
+
+[scheda.domusflavia.certezza-B] La pianta è nota dagli scavi (Platner e Ashby); altezze, tetti e fontane sono uno schema; lo stato dopo il 713 è una scelta.
+
+
+### Domus Augustana e stadio palatino
+
+[scheda.domusaugustana.nome] Domus Augustana e stadio palatino
+
+[scheda.domusaugustana.cosa] La parte privata del palazzo imperiale, accanto alla Domus Flavia, dalla parte del Circo Massimo. Accanto c'è lo «stadio», un giardino lungo e stretto a forma di circo, circondato da un portico, con una tribuna sul lato est. Nel modello la pianta segue gli scavi; altezze e tetti sono uno schema.
+
+[scheda.domusaugustana.data1-92] Il palazzo è finito sotto Domiziano.
+
+[scheda.domusaugustana.data2.quando] VI secolo
+
+[scheda.domusaugustana.data2] Teodorico e il nipote Atalarico fanno riparare lo stadio: lo dicono i bolli sui mattoni (Platner e Ashby). Forse allora lo stadio è diviso in tre parti da un portico e da un muro, che il modello non disegna.
+
+[scheda.domusaugustana.data3-713] Ultima notizia del palazzo nelle fonti lette. Nel modello da qui è abbandonato, ma in piedi: è una nostra scelta.
+
+[scheda.domusaugustana.data4.quando] oggi
+
+[scheda.domusaugustana.data4] Restano i muri del palazzo e lo stadio, dove si vedono ancora colonne di granito a terra (Platner e Ashby).
+
+[scheda.domusaugustana.certezza-B] La pianta del palazzo e dello stadio è nota dagli scavi; altezze e coperture sono uno schema; lo stato dopo il 713 è una scelta.
+
+
+### Tempio di Apollo Palatino
+
+[scheda.apollopalatino.nome] Tempio di Apollo Palatino
+
+[scheda.apollopalatino.cosa] Il tempio di Apollo che Augusto fece costruire sul Palatino, accanto alla sua casa. Era uno dei templi più ricchi di Roma, con biblioteche e opere d'arte. Dove fosse con esattezza è discusso: Platner e Ashby lo mettono sul podio che guarda a sud-ovest, ed è il posto scelto dal modello. Forme e misure del tempio sono uno schema.
+
+[scheda.apollopalatino.data1.quando] 28 a.C.
+
+[scheda.apollopalatino.data1] Dedicato il 9 ottobre.
+
+[scheda.apollopalatino.data2.quando] IV secolo
+
+[scheda.apollopalatino.data2] I Cataloghi delle regioni lo nominano.
+
+[scheda.apollopalatino.data3-363] Il 18 marzo il tempio brucia (Ammiano Marcellino, XXIII 3, 3). Le fonti lette non dicono che sia stato rifatto: nel modello resta un tempio bruciato fino all'852.
+
+[scheda.apollopalatino.data4.quando] oggi
+
+[scheda.apollopalatino.data4] Resta il podio di calcestruzzo, con una lunga scalinata.
+
+[scheda.apollopalatino.certezza-C] Il posto del tempio è discusso; resta il podio. Forma e misure sono uno schema; l'incendio del 363 è detto da Ammiano.
+
+
 ### Settizodio
 
 [scheda.settizodio.nome] Settizodio
@@ -3660,6 +3729,23 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.termecostantino.data3] Non sappiamo quando chiusero queste terme. Nel modello smettono di funzionare nel 537, al momento del taglio degli acquedotti, come gli altri grandi stabilimenti, e da allora restano abbandonate ma in piedi. Furono abbandonate all'inizio del Medioevo, e nel Cinquecento ne restava ancora abbastanza per disegnarne la pianta.
 
 [scheda.termecostantino.certezza-B] Distrutte fra Seicento e Ottocento; la pianta è nota dai disegni di Palladio e di altri.
+
+
+### Dioscuri del Quirinale
+
+[scheda.dioscuri.nome] Dioscuri del Quirinale
+
+[scheda.dioscuri.cosa] Due gruppi colossali di marmo: in ciascuno un giovane, uno dei Dioscuri, Castore o Polluce, sta accanto a un cavallo che si impenna. Oggi sono in piazza del Quirinale. Dove stessero in origine non si sa. Nel modello le figure sono le statue semplici della città, non copie dei gruppi veri, e sono alte circa 5,5 metri: la fonte dice solo «colossali».
+
+[scheda.dioscuri.data1-443] Le terme di Costantino vengono restaurate dal prefetto della città. È probabile che proprio allora i Dioscuri coi cavalli siano stati messi dentro le terme (Platner e Ashby). Dove, dentro le terme, la fonte non lo dice: nel modello stanno nello spiazzo davanti all'ingresso nord.
+
+[scheda.dioscuri.data2-537] Nel modello le terme smettono di funzionare col taglio degli acquedotti. Le statue restano in piedi.
+
+[scheda.dioscuri.data3.quando] oggi
+
+[scheda.dioscuri.data3] Sono in piazza del Quirinale.
+
+[scheda.dioscuri.certezza-C] Le statue esistono, ma che stessero nelle terme dal 443 è solo «probabile» per la fonte, e il posto dentro le terme e le misure sono una scelta. Le figure sono schematiche.
 
 
 ### Santa Croce in Gerusalemme
@@ -4371,6 +4457,80 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.foroboario.certezza-A] I due templi e i due archi sono in piedi, contorni da OpenStreetMap; l'altezza del podio di Portuno e lo sbocco della Cloaca sono indicativi.
 
 
+### Tempio di Ercole Vincitore
+
+[scheda.ercolevincitore.nome] Tempio di Ercole Vincitore
+
+[scheda.ercolevincitore.cosa] Il tempio rotondo del Foro Boario, vicino al Tevere: una cella tonda circondata da venti colonne, tutto di marmo, su un basamento a gradini. È il più antico edificio di marmo rimasto in piedi a Roma. Platner e Ashby lo identificano con il tempio di Ercole Vincitore; altri studiosi lo chiamano tempio di Ercole Olivario. Il nome resta discusso.
+
+[scheda.ercolevincitore.data1.quando] II secolo a.C.
+
+[scheda.ercolevincitore.data1] Il tempio viene costruito.
+
+[scheda.ercolevincitore.data2-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri: è una nostra scelta. Da qui resta abbandonato, ma in piedi.
+
+[scheda.ercolevincitore.data3-1140] È attestato come chiesa: Santo Stefano Rotondo, più tardi Santa Maria del Sole (Platner e Ashby).
+
+[scheda.ercolevincitore.data4.quando] oggi
+
+[scheda.ercolevincitore.data4] È in piedi: la cella e il giro di colonne.
+
+[scheda.ercolevincitore.certezza-A] Il tempio è in piedi e il contorno viene da OpenStreetMap; il nome è discusso e la chiusura nel 392 è una scelta.
+
+
+### Tempio di Portuno
+
+[scheda.portuno.nome] Tempio di Portuno
+
+[scheda.portuno.cosa] Il tempio rettangolare sul lato nord dell'attuale piazza della Bocca della Verità, vicino al porto del Tevere. È ionico, con quattro colonne sulla fronte e mezze colonne lungo i fianchi della cella, lungo 20 metri e largo 12, su un podio alto 2,50 metri (Platner e Ashby). Oggi lo si chiama di solito tempio di Portuno; Platner e Ashby lo identificavano con il tempio di Mater Matuta. Il nome resta discusso.
+
+[scheda.portuno.data1-392] Nel modello il tempio è chiuso dal 392, come gli altri: è una nostra scelta. Da qui resta abbandonato, ma in piedi.
+
+[scheda.portuno.data2-872] Diventa la chiesa di Santa Maria Egiziaca (Platner e Ashby).
+
+[scheda.portuno.data3.quando] oggi
+
+[scheda.portuno.data3] È intero.
+
+[scheda.portuno.certezza-A] Il tempio è in piedi e il contorno viene da OpenStreetMap; misure del podio da Platner e Ashby; il nome è discusso e la chiusura nel 392 è una scelta.
+
+
+### Arco di Giano
+
+[scheda.giano.nome] Arco di Giano
+
+[scheda.giano.cosa] Un arco di marmo a quattro fronti, all'ingresso del Foro Boario dalla parte del Velabro, costruito proprio sopra la Cloaca Massima. Quattro piloni reggono una volta a crociera; è largo 12 metri per lato e alto 16. Sui quattro lati corrono due file di nicchie per statue, quarantotto in tutto, sedici delle quali mai finite (Platner e Ashby).
+
+[scheda.giano.data1.quando] III-IV secolo
+
+[scheda.giano.data1] L'arco è di età tarda, del III o del IV secolo. Forse è l'«arco del divo Costantino» che i Cataloghi delle regioni nominano nella regione XI: è un'ipotesi. Nel modello c'è già dal 235: è una nostra scelta.
+
+[scheda.giano.data2-1827] Si toglie la parte alta, creduta medievale: forse era l'attico antico.
+
+[scheda.giano.data3.quando] oggi
+
+[scheda.giano.data3] È in piedi, senza l'attico. Sulle chiavi degli archi si vedono ancora Minerva e Roma.
+
+[scheda.giano.certezza-A] L'arco è in piedi; misure da Platner e Ashby. Senza l'attico, che oggi manca; la data esatta non è nota e la presenza nel 235 è una scelta.
+
+
+### Arco degli Argentari
+
+[scheda.argentari.nome] Arco degli Argentari
+
+[scheda.argentari.cosa] Un piccolo arco di marmo accanto alla chiesa di San Giorgio in Velabro, all'ingresso del Foro Boario. Non è un vero arco: è un architrave piatto su due piloni, alto 6,15 metri, con un passaggio largo 3,30. È coperto di rilievi con sacrifici e con la famiglia dell'imperatore (Platner e Ashby).
+
+[scheda.argentari.data1-204] I banchieri e i mercanti di buoi del posto lo dedicano a Settimio Severo e alla sua famiglia.
+
+[scheda.argentari.data2-212] Dopo l'uccisione di Geta il suo nome e la sua figura vengono tolti. L'iscrizione era già stata cambiata dopo la caduta di Plauziano e dopo la morte di Plautilla.
+
+[scheda.argentari.data3.quando] oggi
+
+[scheda.argentari.data3] È intero. Il campanile di San Giorgio poggia in parte su uno dei piloni.
+
+[scheda.argentari.certezza-A] L'arco è in piedi; misure da Platner e Ashby.
+
+
 ### Portico d'Ottavia
 
 [scheda.ottavia.nome] Portico d'Ottavia
@@ -4390,6 +4550,27 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.ottavia.data5-755] Nell'ingresso monumentale sorge la chiesa di Sant'Angelo in Pescheria. La data è indicata a memoria e resta da verificare.
 
 [scheda.ottavia.certezza-B] L'ingresso monumentale si conserva e documenta la posizione e l'orientamento del portico. Conosciamo la piazza grazie all'antica pianta di Roma incisa nel marmo. Nel modello le dimensioni dei due templi interni sono indicative.
+
+
+### Propileo del portico d'Ottavia
+
+[scheda.ottaviapropileo.nome] Propileo del portico d'Ottavia
+
+[scheda.ottaviapropileo.cosa] L'ingresso monumentale del portico d'Ottavia, al centro del lato sud-ovest. Era un doppio pronao, che sporgeva verso l'interno e verso l'esterno: su ogni fronte quattro colonne corinzie di marmo bianco, alte 8,60 metri, con trabeazione e frontone (Platner e Ashby). È la parte del portico che è arrivata fino a noi.
+
+[scheda.ottaviapropileo.data1-203] Settimio Severo e Caracalla rifanno il portico dopo un incendio.
+
+[scheda.ottaviapropileo.data2.quando] V secolo
+
+[scheda.ottaviapropileo.data2] Due colonne della fronte esterna vengono sostituite da un arco di mattoni, forse dopo il terremoto del 442 (Platner e Ashby): il portico è ancora curato. Nel modello l'arco non è disegnato.
+
+[scheda.ottaviapropileo.data3-450] Nel modello il portico è abbandonato verso il 450 (scelta); l'ingresso resta in piedi.
+
+[scheda.ottaviapropileo.data4.quando] oggi
+
+[scheda.ottaviapropileo.data4] Restano la trabeazione, il frontone e due colonne della fronte esterna, e due colonne e mezza della fronte interna. Fa da ingresso alla chiesa di Sant'Angelo in Pescheria.
+
+[scheda.ottaviapropileo.certezza-A] Il propileo è in piedi; posto e orientamento da OpenStreetMap, altezza delle colonne da Platner e Ashby. L'arco di mattoni del V secolo non è disegnato; l'abbandono dal 450 è una scelta.
 
 
 ### Area sacra di largo Argentina
@@ -4441,21 +4622,63 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.saepta.certezza-C] Le fonti non concordano su dove fosse. Gli studi di Guglielmo Gatti lo pongono fra il Pantheon e l'Iseo, ed è la posizione del modello. Platner e Ashby, nel 1929, lo collocavano invece lungo la via Lata. Misure e alzati sono indicativi.
 
 
-### Arco di Gallieno e Trofei di Mario
+### Auditorium di Mecenate
 
-[scheda.esquilino.nome] Arco di Gallieno e Trofei di Mario
+[scheda.esquilino.nome] Auditorium di Mecenate
 
-[scheda.esquilino.cosa] Sull'Esquilino si trovano tre monumenti. L'arco dell'antica porta Esquilina fu dedicato all'imperatore Gallieno. La fontana chiamata Trofei di Mario prende il nome dai trofei in marmo che la decoravano. L'aula in parte sotterranea è conosciuta come Auditorium di Mecenate.
+[scheda.esquilino.cosa] L'aula in parte sotterranea conosciuta come Auditorium di Mecenate, negli horti di Mecenate sull'Esquilino: una sala con un'abside, il pavimento sotto il piano del giardino, si entrava scendendo. L'arco di Gallieno e i Trofei di Mario, che prima stavano in questa scheda, hanno dal 27 novembre 2026 una scheda loro.
 
-[scheda.esquilino.data1-226] La fontana monumentale, chiamata in latino «nymphaeum Alexandri», è attribuita a Severo Alessandro. La data è indicata a memoria e resta da verificare.
+[scheda.esquilino.data1-537] Le fonti lette non dicono quando l'aula fu lasciata. Nel modello da quest'anno è abbandonata, ma non crolla: è una nostra scelta.
 
-[scheda.esquilino.data2-262] Un funzionario, Marco Aurelio Vittore, dedica l'arco a Gallieno e a Salonina. Non è lo storico Aurelio Vittore.
+[scheda.esquilino.data2.quando] oggi
 
-[scheda.esquilino.data3-537] Quando i Goti tagliano gli acquedotti la fontana resta senz'acqua. Nel modello da quest'anno il complesso è abbandonato ma non crolla: l'arco è in piedi ancora oggi.
+[scheda.esquilino.data2] Resta l'aula.
 
-[scheda.esquilino.data4-1590] I trofei vengono portati sulla balaustra del Campidoglio, dove stanno oggi.
+[scheda.esquilino.certezza-B] L'aula è in piedi; il suo aspetto antico, le misure e la data dell'abbandono sono ricostruiti.
 
-[scheda.esquilino.certezza-B] Arco e rudere della mostra d'acqua in piedi; l'aspetto antico della mostra e dell'aula di Mecenate è ricostruito.
+
+### Arco di Gallieno
+
+[scheda.arcogallieno.nome] Arco di Gallieno
+
+[scheda.arcogallieno.cosa] L'arco sull'Esquilino che segna il posto dell'antica porta Esquilina delle mura serviane (Platner e Ashby). Fu dedicato all'imperatore Gallieno. Nel modello è un arco a un fornice di travertino; le misure sono indicative.
+
+[scheda.arcogallieno.data1-262] Un funzionario, Marco Aurelio Vittore, dedica l'arco a Gallieno e a Salonina. Non è lo storico Aurelio Vittore.
+
+[scheda.arcogallieno.data2.quando] dopo il 262
+
+[scheda.arcogallieno.data2] Le fonti lette non dicono nulla del suo stato fino all'852. Nel modello resta in piedi.
+
+[scheda.arcogallieno.data3.quando] oggi
+
+[scheda.arcogallieno.data3] È in piedi.
+
+[scheda.arcogallieno.certezza-B] L'arco è in piedi; nel modello le misure sono indicative e lo stato fra il 235 e l'852 è una scelta, perché nessuna fonte letta lo dice.
+
+
+### Trofei di Mario (ninfeo di Alessandro)
+
+[scheda.trofeimario.nome] Trofei di Mario (ninfeo di Alessandro)
+
+[scheda.trofeimario.cosa] Una grande mostra d'acqua sull'Esquilino, oggi in piazza Vittorio. I Cataloghi del IV secolo nominano nella regione V un «ninfeo del divo Alessandro»; che sia questo è probabile, ma discusso. I muri di mattoni sono probabilmente dell'età di Severo Alessandro, sulle cui monete l'edificio sembra raffigurato (Platner e Ashby). Nelle aperture ai lati stavano due trofei di marmo.
+
+[scheda.trofeimario.data1.quando] III secolo
+
+[scheda.trofeimario.data1] La fontana è costruita, probabilmente sotto Severo Alessandro (222-235).
+
+[scheda.trofeimario.data2-537] Quando i Goti tagliano gli acquedotti la fontana resta senz'acqua: nel modello da quest'anno è abbandonata, ma in piedi. È una nostra scelta.
+
+[scheda.trofeimario.data3.quando] Medioevo
+
+[scheda.trofeimario.data3] Già si crede che il monumento sia legato a Mario e alla vittoria sui Cimbri: un documento del 1176 lo chiama «Cimbrum» (Platner e Ashby).
+
+[scheda.trofeimario.data4-1590] Sisto V fa portare i due trofei sulla balaustra della piazza del Campidoglio, dove stanno oggi.
+
+[scheda.trofeimario.data5.quando] oggi
+
+[scheda.trofeimario.data5] Resta il nucleo di mattoni della fontana.
+
+[scheda.trofeimario.certezza-B] Resta il nucleo di mattoni; che sia il «ninfeo di Alessandro» dei Cataloghi è probabile ma discusso. Massa e altezza del modello sono indicative, la fine dell'acqua nel 537 è una scelta.
 
 
 ### Tempio di Minerva Medica
@@ -4778,6 +5001,52 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.leonine.data3-852] Cerimonia conclusiva il 27 giugno: nasce la «città leonina».
 
 [scheda.leonine.certezza-B] Nei Giardini Vaticani si conservano alcuni tratti delle mura e una torre. A nord il Passetto, costruito più tardi, segue la linea delle mura di Leone IV. A sud il tracciato è ricostruito collegando i punti conosciuti.
+
+
+### Mura serviane (tratto di Termini)
+
+[scheda.servianetermini.nome] Mura serviane (tratto di Termini)
+
+[scheda.servianetermini.cosa] Un tratto delle mura serviane, la cinta più antica di Roma, in piazza dei Cinquecento, davanti alla stazione Termini. Qui le mura attraversavano l'altopiano fra Quirinale, Viminale ed Esquilino e, dove mancava la difesa dei colli, erano rinforzate da un grande terrapieno, l'aggere, con un fossato davanti. Questo tratto era il muro di sostegno sul retro dell'aggere (Platner e Ashby). I blocchi sono di tufo di Grotta Oscura, in filari di circa 60 centimetri. Nel modello altezza, spessore e profilo del rudere sono uno schema.
+
+[scheda.servianetermini.data1.quando] IV secolo a.C.
+
+[scheda.servianetermini.data1] Dopo il sacco dei Galli le mura vengono rifatte in grandi blocchi di tufo: è a questa ricostruzione che appartengono i blocchi rimasti (Platner e Ashby).
+
+[scheda.servianetermini.data2.quando] età imperiale
+
+[scheda.servianetermini.data2] L'aggere, ormai inutile come difesa, è ancora un luogo noto: Orazio lo ricorda come una passeggiata al sole. Le mura non servono più: dal 271 la città è difesa dalle mura di Aureliano.
+
+[scheda.servianetermini.data3.quando] 235-852
+
+[scheda.servianetermini.data3] Le fonti lette non dicono se questo tratto fosse in vista o chiuso fra le case. Nel modello è un rudere in vista per tutti gli anni: è una nostra scelta.
+
+[scheda.servianetermini.data4.quando] oggi
+
+[scheda.servianetermini.data4] Il tratto è in piedi in piazza dei Cinquecento; altri pezzi stanno dentro la stazione.
+
+[scheda.servianetermini.certezza-B] Il tratto esiste e il suo tracciato viene da OpenStreetMap; altezza, spessore e forma del rudere sono uno schema, e che fosse in vista fra il 235 e l'852 è una scelta.
+
+
+### Mura serviane (tratto dell'Aventino)
+
+[scheda.servianeaventino.nome] Mura serviane (tratto dell'Aventino)
+
+[scheda.servianeaventino.cosa] Un tratto delle mura serviane sull'Aventino, nell'avvallamento fra il grande e il piccolo Aventino, nella strada che Platner e Ashby chiamano via di Porta San Paolo. Platner e Ashby lo chiamano «un bel tratto di muro» della cinta del IV secolo a.C., che per la prima volta comprendeva l'Aventino; i blocchi sono quasi tutti di tufo di Grotta Oscura. Nel modello altezza, spessore e profilo del rudere sono uno schema.
+
+[scheda.servianeaventino.data1.quando] IV secolo a.C.
+
+[scheda.servianeaventino.data1] Le mura vengono ricostruite dopo il sacco dei Galli e comprendono l'Aventino (Platner e Ashby).
+
+[scheda.servianeaventino.data2.quando] 235-852
+
+[scheda.servianeaventino.data2] Le mura serviane non servono più da secoli. Le fonti lette non dicono se questo tratto fosse in vista: nel modello è un rudere in vista per tutti gli anni, una nostra scelta.
+
+[scheda.servianeaventino.data3.quando] oggi
+
+[scheda.servianeaventino.data3] Il tratto è in piedi; poco più a nord-ovest, sul grande Aventino, ne è stato scavato il seguito.
+
+[scheda.servianeaventino.certezza-B] I due pezzi esistono e il loro tracciato viene da OpenStreetMap; altezza, spessore e forma del rudere sono uno schema, e che fossero in vista fra il 235 e l'852 è una scelta.
 
 
 ### Horti Sallustiani
