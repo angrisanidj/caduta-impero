@@ -663,3 +663,77 @@ Nessuna delle voci lette dice quali alberi ci fossero, né descrive viali, siepi
 - Abbandono (`js/citta.js`): gli alberi piantati crescono ancora per 250 anni, fino a una volta e mezza; il bosco selvatico di fichi e olmi è sette volte più fitto e copre viali e aiuole; i pezzi restano, coperti di verde dallo shader dell'abbandono. Nessun giardino sparisce.
 - Corretto in `js/citta.js` un `//` a metà riga che spegneva il controllo «albero già a posto» nell'aggiornamento degli alberi: prima ogni albero si ricalcolava a ogni cambio d'anno.
 - Schede e attendibilità dei giardini aggiornate; `MONUMENTI` ha 152 voci.
+
+## I templi, uno per uno (27 novembre 2026)
+
+Richiesta dell'utente: «fai un giro anche di verifica dei templi se sono tutti corretti. Iniziando dal tempio di Claudio». Fonte: Platner e Ashby, *A Topographical Dictionary of Ancient Rome* (1929), su LacusCurtius (`…/PLATOP*/<voce>.html`, scaricate con `curl -g` il 27 novembre 2026). Per i templi resi a sé il 26 novembre (sezione «Monumenti resi a sé») ho solo confrontato il disegno con le frasi già copiate. Regola per la storia: chiusi nel 392 (scelta dichiarata del modello), poi «abbandonato, ma in piedi»; «cava» o «crollato» solo con una fonte.
+
+### Tempio di Claudio (`tempioclaudio`; voce `Templum_Claudii.html`, pp. 120-121; vedi anche la sezione 2)
+
+- Storia: «begun by Agrippina, almost entirely destroyed by Nero, and rebuilt by Vespasian (Suet. Vesp. 9)»; «The last mention of the temple is in the fourth century (Not. Reg. II), though a bull of Honorius III of 1217 speaks of the formae et alia aedificia positae intra clausuram Clodei. Nothing is known of the history of its destruction.»
+- Portico: «There was also a porticus Claudia (Mart. de spect. 2.9-10)»; i frammenti della pianta marmorea «contain no indication of a porticus»; «Nevertheless, it is probable that the porticus Claudia surrounded the temple».
+- Tempio: «prostyle hexastyle, fronting towards the north» solo «if the combination suggested above of the fragments of the forma Urbis is correct» (per l'ovest: sezione 2, Stanford e *Lexicon*).
+- Piattaforma: «stood on a lofty and extensive podium»; «These substructures are different on the different sides of the podium, those on the west consisting of double rows of travertine arches with engaged columns and entablature; those on the north containing what seem to be reservoirs for water; and those on the east consisting of alternately square and semicircular recesses which are separated from the podium by narrow passages … The recesses are divided from one another by narrow semicircular niches in groups of three.» Il ninfeo è «due to the combination of temple and nymphaeum which was the result of Vespasian's restoration»; Rivoira dà a Nerone i muri di mattoni del lato est.
+- Bugnato: Hülsen 1907, pp. 232-234 (sezione 2): a ovest due ordini di arcate di travertino «con lesene a bugne».
+- Misure: Platner non le dà; 180 x 200 m da Turismo Roma (sezione 2).
+
+| | fonte | modello prima | scarto | fatto |
+|---|---|---|---|---|
+| lato ovest | due ordini di arcate di travertino, semicolonne, trabeazione, bugne | ordine basso a vani piatti, senza trabeazione, muro liscio | sì | due file ad arco, una trabeazione sopra ogni ordine, i filari del bugnato (schema) |
+| lato est | nicchie quadre e tonde alternate, fra l'una e l'altra tre nicchie strette | solo le nicchie grandi | sì | aggiunte le terne di nicchie strette, dipinte sul muro |
+| lato nord | cisterne | stanze a volta | no | — |
+| giardino | strisce lunghe e strette (siepi), sentieri sull'asse nord-sud (pianta marmorea, Stanford) | prato liscio | sì | siepi basse attorno al tempio e sentiero nord-sud (numero e misure: schema) |
+| portico | «probable», ma non sulla pianta | assente | — | detto nella scheda |
+| storia | ultima notizia nel IV secolo; nulla sulla distruzione; nel 1217 il recinto si riconosce | chiuso nel 392, poi crolli via via | sì | chiuso nel 392, poi abbandonato ma in piedi |
+
+Resta: nell'800 le siepi restano ordinate (sono parte del disegno del monumento; il verde dell'abbandono le copre solo in parte).
+
+### Gli altri templi
+
+| tempio | fonte letta (Platner e Ashby, salvo dove detto) | modello prima | scarto | corretto |
+|---|---|---|---|---|
+| Venere e Roma (`venere`) | podio 145 x 100 m; decastilo, corinzio, pseudodiptero, colonne di 1,8 m; celle schiena contro schiena; «In 307 the temple was injured by fire and restored by Maxentius … the whole of the superstructure dates from his time»; Leone IV vi costruisce Santa Maria Nova (847-853), argomento per i danni del terremoto dell'847 | forma giusta; nessun incendio nel 307; chiuso (con crolli) dal 392 | sì (storia) | bruciato nel 307, di nuovo in uso dal 312 (durata dei lavori: scelta); abbandonato dal 392; restano lo spoglio del 630 e il terremoto dell'847 (ipotesi, detta nella scheda) |
+| Giove Capitolino (`giove`) | letto il 25-26 novembre (commento: podio «from 4 to 5 metres»); Procopio per il 455 | esastilo, tetto d'oro | no (forma) | chiuso → abbandonato dal 392; lo spoglio del 455 resta |
+| Pantheon (`pantheon`) | «in 609 Boniface IV dedicated the building as the church of S. Maria ad Martyres»; «Constantius II removed the bronze tiles in 663»; «only Gregory III … placed a lead roof over it»; diametro interno e altezza 43,20 m | già così | no | — |
+| Sole (`sole`) | sito discusso (il tempio del Quirinale per altri è di Serapide); «The last reference to it in antiquity is in the sixth century … when eight of the porphyry columns were sent to Constantinople for the church of S. Sophia» | pianta dai disegni di Palladio (Hülsen, incerta); chiuso dal 392, spogliato nel 663 | sì (storia) | abbandonato dal 392; spoglio dal 532 (inizio di Santa Sofia: data scelta) con una voce nella scheda; il 663 resta (bronzi, regola del modello) |
+| Adriano (`tempioadriano`) | «eleven fluted columns … 15 metres in height and 1.44 in diameter»; «It is probable that the temple was octostyle, peripteral, with fifteen columns on a side» | ottastilo periptero, 13 colonne sui fianchi (it.wikipedia), colonne di 15 m | le fonti divergono (15 o 13) | lasciato a 13; chiuso → abbandonato dal 392 |
+| Apollo Sosiano (`apollo`) | Platner (1929) conosce solo il podio sotto Santa Maria in Campitelli, «13 metres long, over 4 high» | esastilo periptero, fronte a nord (it.wikipedia) | no (Platner non dà la forma) | chiuso → abbandonato dal 392 |
+| Bellona (`bellona`) | «No traces … have been found, and its site is not known with certainty»; «probably … faced the east» | accanto ad Apollo, fronte a nord (studi dopo Platner, it.wikipedia) | le fonti divergono | già detto nel commento; chiuso → abbandonato dal 392 |
+| Foro Boario, tempio tondo (`foroboario`) | per Platner è Ercole Vincitore, «a round temple of Hercules in the forum Boarium»; la voce *Portunium* ricorda chi lo dava a Portuno; chiesa di Santo Stefano dal 1140 | venti colonne | no | — |
+| Foro Boario, Portuno (`foroboario`) | il tempio di Portuno stava «ad pontem Aemilium» | tetrastilo pseudoperiptero ionico (it.wikipedia) | no | — |
+| Largo Argentina (`argentina`) | scavata nel 1926-1929: Platner non la descrive | contorni da OpenStreetMap | — | chiuso → abbandonato dal 392 |
+| Iseo (`iseo`) | vedi «Gli obelischi» | recinto e tre obelischi | — | chiuso → abbandonato dal 392 |
+| Esculapio (`esculapio`) | «erected on the island in the Tiber soon after 291 B.C.» | sull'isola, abbandonato dal 392 | no | — |
+| Castori (`castori`) | «octastyle and peripteral, with eleven columns on each side … about 50 metres long by 30 wide»; colonne «12.50 metres in height» | colonne alte 20 m | sì | colonne a 12,5 m |
+| Saturno (`saturno`) | «hexastyle prostyle»; «The columns are 11 metres in height» | colonne alte 17 m | sì | colonne a 11 m |
+| Vesta (`vesta`) | «a circular foundation set in the soil, 15.05 metres in diameter»; «peripteral, with twenty columns» | podio largo 20 m | sì | podio di 15 m, colonne e tetto in proporzione |
+| Antonino e Faustina (`antonino`) | «hexastyle prostyle», colonne «17 metres high» | uguale | no | — |
+| Concordia (`concordia`) | cella larga di traverso, pronao verso il Foro | uguale | no | — |
+| Vespasiano e Tito (`vespasiano`) | «three Corinthian columns … 15.20 metres high and 1.57 in diameter» | colonne di 16 m | piccolo | — |
+| Divo Giulio (`divogiulio`) | ionico, sei colonne | uguale | no | — |
+| Pace (`pace`) | Procopio: distrutto da un fulmine molto tempo prima del VI secolo | bruciato nel 500 (scelta) | no | — |
+| Marte Ultore (`foroaugusto`) | «octostyle, and peripteral except at the north-east end»; colonne di 15,30 m; nessuna data di danni fra IV e IX secolo | cava dal 500, dalla scheda dei Fori (nome di Decio su un blocco; fonte non riletta) | da verificare | non toccato: va letta prima la fonte della scheda dei Fori |
+| Magna Mater (`magnamater`) | «33.18 metres long and 17.10 wide», prostilo esastilo | uguale | no | — |
+| Foro Olitorio (`olitorio`) | tre templi affiancati (Giano, Speranza, Giunone Sospita) | uguale | no | — |
+
+## Gli obelischi (27 novembre 2026)
+
+Richiesta dell'utente: «Gli obelischi verifica quando sono crollati». Fonti: Platner e Ashby, voci `obelisci.html` (pp. 366-371, tutte le voci brevi), `Obeliscus_Augusti.html`, `Obeliscus_Circi_Maximi.html`, `Obeliscus_Constantii.html`, `Obeliscus_Hortorum.html`, `Obeliscus_Vaticanus.html`, `Obeliscus_Isei_Campensis.html`, `Insula_Tiberina.html`, scaricate il 27 novembre 2026. L'Itinerario di Einsiedeln non l'ho riletto: lo cito come lo cita Platner («Eins. 2.5; 4.3», «Eins. 2.7»).
+
+| obelisco (voce del modello) | dove stava | altezza | caduta secondo la fonte | ritrovato | nel modello |
+|---|---|---|---|---|---|
+| di Augusto, meridiana (`orologio`) | Campo Marzio, fra l'Ara Pacis e la colonna di Antonino Pio | «21.79 metres» | «It was standing in the eighth century (Eins. 2.5; 4.3), but was thrown down and broken at some unknown date» | «not discovered until 1512»; scavato nel 1748; rialzato in piazza di Montecitorio nel 1789 | in piedi fino all'852 (lo permette l'Itinerario); scheda: data ignota |
+| di Augusto, Circo Massimo (`obeliscoflaminio`, nuova voce; prima dentro il circo) | «erected on the spina of the circus Maximus» | «23.70 metres» | «Nothing is known of the history of the obelisk after the fourth century until the sixteenth» | «the obelisk itself, broken into three pieces, in 1587»; oggi piazza del Popolo | in piedi fino all'852 (nessun testo dà la caduta); altezza corretta da 26 a 23,7 m |
+| di Costanzo II (`obelisco357`) | spina del Circo Massimo, dal 357 | «32.50 metres» | «It is mentioned in the twelfth century (Mirabilia 25), and again in 1410-17 … but in 1587 it was found, broken into three pieces and buried about 7 metres in the ground» | 1587; Laterano | in piedi fino all'852; tolta dalla scheda la frase «abbattuto, forse a mano», che nessuna fonte letta dice |
+| degli Horti Sallustiani (`obeliscosallustiano`) | negli horti | «13 metres» | «still standing in the eighth century (Eins. 2.7)»; «In the fifteenth century it was lying on the ground, broken into two pieces, near its base» | rialzato a Trinità dei Monti nel 1789 | in piedi fino all'852; scheda: data della caduta ignota |
+| vaticano (`obeliscovaticano`) | spina del circo di Gaio e Nerone | «25.36 metres» | «having stood erect from the time when it was brought to the city» | spostato da Fontana nel 1586 | in piedi (non cadde mai) |
+| del Mausoleo di Augusto, due (`obeliscomausoleo1`, `obeliscomausoleo2`, nuove voci; prima dentro il mausoleo) | «in front of the mausoleum of Augustus»; Ammiano XVII 4, 16 | «a little over 14 metres» | nessuna data | uno «excavated before 1527 behind the church of S. Rocco», oggi dietro Santa Maria Maggiore; l'altro scavato poco prima del 1550, oggi al Quirinale | in piedi fino all'852; altezza da 15,4 a 14,3 m; quale stesse a ovest non si sa |
+| Macuteo, Iseo (`obeliscomacuteo`, nuova voce) | Iseo Campense | «6 metres» | nessuna data; nel Quattrocento «lying in the piazza in front of S. Macuto» | rialzato lì nel Cinquecento; davanti al Pantheon dal 1711 | in piedi fino all'852 |
+| della Minerva, Iseo (`obeliscominerva`, nuova voce) | Iseo Campense | 5,47 m (commento dell'Iseo, da it.wikipedia) | «Nothing was known of it until it was found in 1665» | 1665; elefante di Bernini | in piedi fino all'852 |
+| di Dogali, Iseo (`obeliscodogali`, nuova voce) | Iseo Campense | «about 6 metres» | nessuna data | «found in 1883 under the apse of S. Maria sopra Minerva» | in piedi fino all'852 |
+| di Antinoo (`obeliscoantinoo`, nuova voce; prima dentro il circo Variano) | «just outside the limits of the city»; frammenti rialzati nel 1570 a 360 m dalle mura fuori porta Maggiore; per it.wikipedia sulla spina del circo Variano (ipotesi già nel modello) | «about 9 metres» | nessuna data | frammenti nel 1570; Pincio dal 1822 | in piedi fino all'852 |
+| dell'isola Tiberina (in `js/mura.js`, non è un file di questo lavoro) | l'albero della nave dell'isola: «An obelisk, fragments of which are in the museum at Naples, is thought to have represented the mast» | non data | nessuna data | frammenti a Napoli | invariato, in piedi |
+| Capitolino (non nel modello) | «stood in front of the church of Ara Coeli on the Capitol … until some time between 1555 and 1561, when it fell»; in antico «may have been set up on the Capitoline in connection with the shrine of Isis» | non data | 1555-1561 (fuori dal periodo) | oggi villa Celimontana | non aggiunto: posto antico e misura incerti; da decidere |
+| di Domiziano (Iseo, poi circo di Massenzio) | portato sulla via Appia per il circo di Massenzio | — | «It lay among the ruins of the circus until 1651» | piazza Navona | fuori dalla scena (via Appia) |
+
+Che cosa dicono le fonti, in breve: per nessun obelisco della città le voci lette danno l'anno della caduta. Due erano in piedi nell'VIII secolo secondo l'Itinerario di Einsiedeln (la meridiana di Augusto e quello degli Horti Sallustiani); quello vaticano non cadde mai; gli altri sono solo «ritrovati» fra il Quattrocento e l'Ottocento. Per questo nessuno è stato messo a terra.

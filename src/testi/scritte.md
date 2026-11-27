@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 02:56:57.
+Generato da `src/testi.mjs` il 27/11/2026, 04:06:48.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -147,7 +147,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.66] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.67] Versione del 27/11/2026, ore 02:24
+[pagina.67] Versione del 27/11/2026, ore 03:18
 
 
 ## 2. Gli atti
@@ -2378,9 +2378,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.obelisco357.data3-663] La fiaccola di bronzo dorato in cima, ricordata da Ammiano: quando sia stata tolta non si sa. Nel modello va via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano): è una scelta.
 
-[scheda.obelisco357.data4.quando] data ignota
+[scheda.obelisco357.data4.quando] XII-XV secolo
 
-[scheda.obelisco357.data4] Abbattuto, forse a mano, non si sa quando. Qui resta in piedi fino all'852.
+[scheda.obelisco357.data4] Lo nominano ancora i Mirabilia (XII secolo) e una descrizione di Roma del 1410-1417 (Platner e Ashby), senza dire se fosse in piedi. Quando cadde non si sa: nel modello resta in piedi fino all'852.
 
 [scheda.obelisco357.data5-1587] Ritrovato rotto in tre pezzi, a circa sette metri di profondità. Sisto V lo fa rialzare nel 1588 davanti al Laterano, circa quattro metri più corto.
 
@@ -2861,7 +2861,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.marforio.data7] Sta nel cortile di Palazzo Nuovo, ai Musei Capitolini.
 
-[scheda.marforio.certezza-C] La statua esiste ed è nota; nel modello la posa viene dalle fotografie della statua di oggi, le forme sono semplificate e manca la conchiglia del restauro del 1594 (la mano destra poggia sul ginocchio: scelta). Il posto davanti al Carcere è attestato dal Medioevo; verso l'800 solo se il «Tiberis» dell'Itinerario di Einsiedeln è questa statua, come pensano gli studiosi; prima è un'ipotesi. Punto preciso e orientamento sono una nostra scelta.
+[scheda.marforio.certezza-C] La statua esiste ed è nota; nel modello la posa viene dalle fotografie della statua di oggi (il dio quasi sdraiato sul fianco sinistro, appoggiato al gomito, il mantello sulle gambe), le forme sono semplificate e manca la conchiglia del restauro del 1594 (la mano destra chiusa sul ginocchio: scelta); mancano anche la vasca, i delfini e il mascherone della fontana del 1594. Il posto davanti al Carcere è attestato dal Medioevo; verso l'800 solo se il «Tiberis» dell'Itinerario di Einsiedeln è questa statua, come pensano gli studiosi; prima è un'ipotesi. Punto preciso e orientamento sono una nostra scelta.
 
 
 ### Regia
@@ -3105,7 +3105,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.giove.cosa] Tempio di Giove Ottimo Massimo, sul Campidoglio.
 
-[scheda.giove.data1-392] Nel 391 Teodosio vieta i sacrifici e gli atti di culto nei templi. Nel modello il tempio è chiuso dal 392. La data effettiva della chiusura è incerta.
+[scheda.giove.data1-392] Nel 391 Teodosio vieta i sacrifici e gli atti di culto nei templi. Nel modello il tempio è chiuso dal 392 e poi abbandonato, ma in piedi. La data effettiva della chiusura è incerta.
 
 [scheda.giove.data2-408] Prima di quest'anno Stilicone fa togliere le lamine d'oro dalle porte.
 
@@ -3366,7 +3366,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.venere.cosa] Il tempio più grande di Roma, fra il Foro e il Colosseo. Stava su un podio di 145 per 100 metri, più alto verso il Colosseo per la pendenza del terreno, con una scalinata larga dalla parte del Foro e due scale piccole dalla parte del Colosseo. Nel modello le due scale scendono lungo il muro del podio: la loro forma è una ricostruzione.
 
-[scheda.venere.data1-307] Ricostruito da Massenzio dopo un incendio.
+[scheda.venere.data1-307] Un incendio lo danneggia; Massenzio lo ricostruisce, e tutta la parte che si vede sopra il podio è del suo tempo (Platner e Ashby, dal Cronografo del 354 e da Aurelio Vittore). Nel modello è bruciato nel 307 e di nuovo in uso dal 312, anno della morte di Massenzio: la durata dei lavori è una scelta.
 
 [scheda.venere.data2-392] Nella ricostruzione, dal 392 il tempio di Venere e Roma è ancora in piedi, ma al suo interno non si celebrano più riti. La data in cui il culto cessò davvero è incerta.
 
@@ -3505,7 +3505,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.apollo.cosa] Tempio di Apollo «in circo», rifatto da Gaio Sosio dopo il 34 a.C., accanto al teatro di Marcello.
 
-[scheda.apollo.data1-392] Nel modello è chiuso dopo le leggi di Teodosio, come gli altri templi. La data effettiva è incerta.
+[scheda.apollo.data1-392] Nel modello è chiuso dopo le leggi di Teodosio, come gli altri templi; poi è abbandonato, ma resta in piedi. La data effettiva è incerta.
 
 [scheda.apollo.certezza-B] Restano il podio e tre colonne rialzate nel Novecento. Posizione e contorno vengono da OpenStreetMap. Le altezze sono indicative.
 
@@ -3516,7 +3516,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.bellona.cosa] Tempio di Bellona, la dea della guerra, promesso in voto nel 296 a.C. da Appio Claudio Cieco.
 
-[scheda.bellona.data1-392] Nel modello è chiuso dopo le leggi di Teodosio, come gli altri templi. La data effettiva è incerta.
+[scheda.bellona.data1-392] Nel modello è chiuso dopo le leggi di Teodosio, come gli altri templi; poi è abbandonato, ma resta in piedi. La data effettiva è incerta.
 
 [scheda.bellona.certezza-B] Resta il podio. L'identificazione con Bellona è degli studi successivi al 1929. Prima il sito del tempio non era noto con certezza. Le altezze sono indicative.
 
@@ -3617,13 +3617,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.sole.data1-274] Dedicato da Aureliano dopo la vittoria su Palmira; il giorno, forse il 25 dicembre, non è attestato.
 
-[scheda.sole.data2-392] Il modello colloca in questi anni la fine del culto pubblico nel tempio del Sole. Le leggi vietano i sacrifici. La data di chiusura del singolo edificio resta incerta.
+[scheda.sole.data2-392] Il modello colloca in questi anni la fine del culto pubblico nel tempio del Sole. Le leggi vietano i sacrifici. La data di chiusura del singolo edificio resta incerta; da qui è abbandonato, ma in piedi.
 
-[scheda.sole.data3-663] Di che cosa fosse coperta la cupola della rotonda non lo dice nessuna fonte letta: nel modello è di bronzo dorato, come il tetto del Pantheon, ed è un'ipotesi. Nel modello il bronzo va via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano): è una scelta.
+[scheda.sole.data3.quando] VI secolo
 
-[scheda.sole.data4.quando] VI secolo?
+[scheda.sole.data3] Otto colonne di porfido del tempio vengono mandate a Costantinopoli per la chiesa di Santa Sofia: lo racconta un testo bizantino citato da Platner e Ashby, l'ultima notizia antica del tempio. Nel modello lo spoglio comincia nel 532, l'anno in cui Giustiniano avvia la chiesa: la data è una scelta.
 
-[scheda.sole.data4] Un testo bizantino tardo sulle antichità di Costantinopoli racconta che otto colonne di porfido del tempio furono riutilizzate nella basilica di Santa Sofia. Non sono note testimonianze dirette di quel trasferimento.
+[scheda.sole.data4-663] Di che cosa fosse coperta la cupola della rotonda non lo dice nessuna fonte letta: nel modello è di bronzo dorato, come il tetto del Pantheon, ed è un'ipotesi. Nel modello il bronzo va via nel 663, quando Costante II porta via da Roma «tutto ciò che era di bronzo a ornamento della città» (Liber Pontificalis, vita di Vitaliano): è una scelta.
+
+[scheda.sole.data5.quando] VI secolo?
+
+[scheda.sole.data5] Un testo bizantino tardo sulle antichità di Costantinopoli racconta che otto colonne di porfido del tempio furono riutilizzate nella basilica di Santa Sofia. Non sono note testimonianze dirette di quel trasferimento.
 
 [scheda.sole.certezza-C] Nessun resto sicuro: lo si colloca in questa zona per deduzione dalle fonti. Posizione e forma sono ipotesi.
 
@@ -4133,7 +4137,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.orologio.data4.quando] VIII secolo
 
-[scheda.orologio.data4] L'Itinerario di Einsiedeln ricorda l'obelisco ancora in piedi. Non sappiamo quando cadde e si spezzò. I frammenti furono ritrovati nel 1502 e nel 1748. Dal 1792 l'obelisco si trova in piazza di Montecitorio. L'Ara Pacis è stata ricomposta sul Lungotevere nel 1938.
+[scheda.orologio.data4] L'Itinerario di Einsiedeln ricorda l'obelisco ancora in piedi. Fu abbattuto e spezzato in una data che non si sa (Platner e Ashby): nel modello resta in piedi fino all'852. Ritrovato nel 1512, scavato nel 1748, rialzato in piazza di Montecitorio nel 1789 secondo Platner e Ashby (altre fonti danno il 1502 e il 1792). L'Ara Pacis è stata ricomposta sul Lungotevere nel 1938.
 
 [scheda.orologio.certezza-B] L'obelisco fu ritrovato sotto piazza del Parlamento e l'Ara Pacis sotto palazzo Fiano. La loro posizione è nota con un margine di qualche decina di metri. Della meridiana sono stati scavati solo alcuni tratti, perciò la larghezza e la forma del pavimento restano ipotetiche. Per la posizione della colonna di Antonino Pio il modello segue la voce italiana di Wikipedia.
 
@@ -4150,7 +4154,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.obeliscosallustiano.data2.quando] XV secolo
 
-[scheda.obeliscosallustiano.data2] Giace a terra in due pezzi, accanto alla sua base.
+[scheda.obeliscosallustiano.data2] Giace a terra in due pezzi, accanto alla sua base. Quando cadde non si sa: nel modello resta in piedi fino all'852.
 
 [scheda.obeliscosallustiano.data3-1789] Pio VI lo innalza davanti a Trinità dei Monti, dove sta oggi. La base, ritrovata nel 1843, è sul Campidoglio.
 
@@ -4257,7 +4261,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioadriano.data1-145] Dedicato da Antonino Pio.
 
-[scheda.tempioadriano.data2-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi. Le fonti che abbiamo letto non dicono quando cessò il culto né quando l'edificio cominciò a cadere.
+[scheda.tempioadriano.data2-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi; poi è abbandonato, ma resta in piedi. Le fonti che abbiamo letto non dicono quando cessò il culto né quando l'edificio cominciò a cadere.
 
 [scheda.tempioadriano.data3.quando] oggi
 
@@ -4270,7 +4274,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioclaudio.nome] Tempio di Claudio
 
-[scheda.tempioclaudio.cosa] Il tempio dedicato all'imperatore Claudio dopo la sua morte sorgeva sul Celio, su una piattaforma di 180 per 200 metri, sostenuta da muri alti fino a 15 metri. La facciata aveva sei colonne ed era rivolta a ovest, verso il Palatino, come nel disegno di un pezzo perduto della pianta marmorea; quattro gradini salivano al podio. Sul lato orientale c'era una grande fontana monumentale ornata di nicchie. Nel modello si vedono i lati descritti da Platner e Ashby: due ordini di arcate a ovest, una fila di stanze a volta a nord, le nicchie della fontana a est. Numero e misura delle aperture sono indicativi. Una lettura più vecchia lo voleva rivolto a nord, ed è quella di Platner e Ashby: veniva da un modo di accostare i frammenti della pianta proposto nel 1903. Dal lato nord una scalinata scendeva verso il Colosseo: ne restavano tracce, ma non se ne conoscono misure e posizione esatta. Sul lato sud la pianta marmorea mostra una rampa a gradini. Nel modello le due scale stanno al centro dei due lati: è una stima.
+[scheda.tempioclaudio.cosa] Il tempio dedicato all'imperatore Claudio dopo la sua morte sorgeva sul Celio, su una piattaforma di 180 per 200 metri, sostenuta da muri alti fino a 15 metri. La facciata aveva sei colonne ed era rivolta a ovest, verso il Palatino, come nel disegno di un pezzo perduto della pianta marmorea; quattro gradini salivano al podio. Sul lato orientale c'era una grande fontana monumentale ornata di nicchie. Nel modello si vedono i lati descritti da Platner e Ashby: due ordini di arcate a ovest, una fila di stanze a volta a nord, le nicchie della fontana a est. A ovest le arcate sono di travertino, con semicolonne e una trabeazione sopra ogni ordine e i blocchi lavorati a bugne (Platner e Ashby; Hülsen); a est le nicchie grandi, quadre e tonde alternate, sono separate da gruppi di tre nicchie strette (Platner e Ashby): nel modello sono dipinte sul muro. Numero e misura delle aperture sono indicativi. Un portico, la «porticus Claudia» di Marziale, forse circondava il tempio; la pianta marmorea non lo mostra e nel modello non c'è. Oggi restano le arcate del lato ovest, sotto il campanile dei Santi Giovanni e Paolo, e le nicchie del lato est lungo via Claudia. Una lettura più vecchia lo voleva rivolto a nord, ed è quella di Platner e Ashby: veniva da un modo di accostare i frammenti della pianta proposto nel 1903. Dal lato nord una scalinata scendeva verso il Colosseo: ne restavano tracce, ma non se ne conoscono misure e posizione esatta. Sul lato sud la pianta marmorea mostra una rampa a gradini. Nel modello le due scale stanno al centro dei due lati: è una stima.
 
 [scheda.tempioclaudio.data1-54] Agrippina avvia la costruzione del tempio dedicato al marito Claudio, onorato come un dio dopo la morte.
 
@@ -4282,7 +4286,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.tempioclaudio.data3] Ultima menzione del tempio, negli elenchi delle regioni di Roma (Platner e Ashby). Come e quando sia andato in rovina non si sa.
 
-[scheda.tempioclaudio.data4-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi, e da allora va in rovina. La data è una scelta della ricostruzione.
+[scheda.tempioclaudio.data4-392] Nel modello il tempio è chiuso dal 392, dopo le leggi di Teodosio, come gli altri templi; da allora è abbandonato, ma resta in piedi: nessuna fonte racconta come andò in rovina. La data è una scelta della ricostruzione.
 
 [scheda.tempioclaudio.data5-1217] Una bolla di papa Onorio III nomina ancora gli edifici «dentro il recinto di Claudio»: la piattaforma si riconosce ancora.
 
@@ -4396,7 +4400,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.argentina.data1] I templi più antichi; il B è rotondo.
 
-[scheda.argentina.data2-392] Nel modello i quattro templi sono chiusi dal 392, dopo le leggi di Teodosio. La data è una scelta della ricostruzione.
+[scheda.argentina.data2-392] Nel modello i quattro templi sono chiusi dal 392, dopo le leggi di Teodosio; poi sono abbandonati, ma restano in piedi. La data è una scelta della ricostruzione.
 
 [scheda.argentina.data3.quando] IX secolo?
 
@@ -4413,7 +4417,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.iseo.data1-80] Il santuario brucia nel grande incendio dell'80, sotto Tito. Domiziano lo fa ricostruire.
 
-[scheda.iseo.data2-392] Nel modello il santuario è chiuso dal 392, dopo le leggi di Teodosio. La data è una scelta della ricostruzione: le fonti che abbiamo letto non dicono quando cessò il culto.
+[scheda.iseo.data2-392] Nel modello il santuario è chiuso dal 392, dopo le leggi di Teodosio, e poi abbandonato, ma in piedi. La data è una scelta della ricostruzione: le fonti che abbiamo letto non dicono quando cessò il culto.
 
 [scheda.iseo.data3-1373] Si trova l'obelisco detto Macuteo, in piazza di San Macuto: oggi è sulla fontana davanti al Pantheon.
 
@@ -4534,6 +4538,159 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.sessoriano.data3-1570] L'obelisco, rotto in tre pezzi, viene trovato fuori porta Maggiore; dal 1822 sta sul Pincio.
 
 [scheda.sessoriano.certezza-B] L'anfiteatro si conserva nelle mura. Del circo sono stati scavati i vani da cui partivano i carri, chiamati carceres. La lunghezza della pista e la posizione dell'obelisco sul divisorio centrale restano ipotetiche.
+
+
+### Obelisco di Antinoo
+
+[scheda.obeliscoantinoo.nome] Obelisco di Antinoo
+
+[scheda.obeliscoantinoo.cosa] Obelisco alto circa 9 metri, portato a Roma da Adriano; i geroglifici, incisi forse a Roma, dicono che fu innalzato dove era sepolto Antinoo, il giovane amato dall'imperatore. Nel modello sta sulla spina del circo Variano, dove lo pone una fonte moderna (ipotesi). Oggi sta sul Pincio.
+
+[scheda.obeliscoantinoo.data1.quando] II secolo
+
+[scheda.obeliscoantinoo.data1] Innalzato da Adriano; il posto antico era forse vicino a dove fu ritrovato, fuori porta Maggiore (Platner e Ashby).
+
+[scheda.obeliscoantinoo.data2.quando] data ignota
+
+[scheda.obeliscoantinoo.data2] Quando cadde non si sa: nel modello resta in piedi fino all'852.
+
+[scheda.obeliscoantinoo.data3-1570] I pezzi sono rialzati nella vigna Saccoccia, fuori porta Maggiore; nel 1822 Pio VII lo mette sul Pincio.
+
+[scheda.obeliscoantinoo.certezza-C] L'obelisco si conserva (Pincio). Il posto sulla spina del circo Variano è un'ipotesi di una fonte moderna; Platner e Ashby lo mettono vicino a dove fu ritrovato, fuori porta Maggiore. Quando cadde non si sa: resta in piedi fino all'852.
+
+
+### Obelisco di Augusto nel Circo Massimo
+
+[scheda.obeliscoflaminio.nome] Obelisco di Augusto nel Circo Massimo
+
+[scheda.obeliscoflaminio.cosa] Obelisco di granito alto 23,70 metri, portato da Eliopoli da Augusto insieme a quello della meridiana e messo nel mezzo del divisorio della pista del Circo Massimo, dedicato al Sole. I geroglifici sono dei faraoni Seti I e Ramesse II. Oggi sta in piazza del Popolo.
+
+[scheda.obeliscoflaminio.data1.quando] 10 a.C.
+
+[scheda.obeliscoflaminio.data1] Augusto lo fa innalzare nel circo: la stessa iscrizione sta sulla base dei due obelischi portati con lui (Platner e Ashby).
+
+[scheda.obeliscoflaminio.data2.quando] inizio del VI secolo
+
+[scheda.obeliscoflaminio.data2] Cassiodoro scrive degli obelischi del circo, dedicati al Sole e alla Luna (Platner e Ashby lo citano, dicendo che sbaglia sulla Luna).
+
+[scheda.obeliscoflaminio.data3.quando] dopo il IV secolo
+
+[scheda.obeliscoflaminio.data3] «Non si sa nulla» della sua storia fino al Cinquecento (Platner e Ashby). Quando cadde non si sa: nel modello resta in piedi fino all'852.
+
+[scheda.obeliscoflaminio.data4-1587] Ritrovato rotto in tre pezzi; rialzato in piazza del Popolo.
+
+[scheda.obeliscoflaminio.certezza-B] L'obelisco si conserva (piazza del Popolo) e l'altezza è nota. Stava nel mezzo della spina del Circo Massimo; il punto esatto è indicativo. Quando cadde non si sa: resta in piedi fino all'852.
+
+
+### Obelisco del Mausoleo di Augusto (a ovest dell'ingresso)
+
+[scheda.obeliscomausoleo1.nome] Obelisco del Mausoleo di Augusto (a ovest dell'ingresso)
+
+[scheda.obeliscomausoleo1.cosa] Uno dei due obelischi senza geroglifici, alti poco più di 14 metri, che stavano davanti all'ingresso del Mausoleo di Augusto. Li ricordano Ammiano Marcellino e un elenco della città del IV secolo; Plinio e Strabone non ne parlano, e per questo forse arrivarono dall'Egitto solo con Domiziano. Dei due, uno sta oggi dietro Santa Maria Maggiore, l'altro in piazza del Quirinale: quale stesse a ovest e quale a est non si sa.
+
+[scheda.obeliscomausoleo1.data1.quando] I secolo
+
+[scheda.obeliscomausoleo1.data1] Innalzati davanti al mausoleo, forse sotto Domiziano (Platner e Ashby).
+
+[scheda.obeliscomausoleo1.data2.quando] IV secolo
+
+[scheda.obeliscomausoleo1.data2] Ammiano Marcellino li nomina.
+
+[scheda.obeliscomausoleo1.data3.quando] data ignota
+
+[scheda.obeliscomausoleo1.data3] Quando caddero non si sa: nel modello restano in piedi fino all'852.
+
+[scheda.obeliscomausoleo1.data4.quando] prima del 1527
+
+[scheda.obeliscomausoleo1.data4] Uno è scavato dietro la chiesa di San Rocco e nel 1587 innalzato dietro Santa Maria Maggiore; l'altro, trovato insieme, è tirato fuori poco prima del 1550 e nel 1782 Pio VI lo mette in piazza del Quirinale.
+
+[scheda.obeliscomausoleo1.certezza-B] I due obelischi si conservano e l'altezza è nota; stavano davanti all'ingresso del mausoleo. Il punto esatto è indicativo, e non si sa quale dei due stesse a ovest. Quando caddero non si sa: restano in piedi fino all'852.
+
+
+### Obelisco del Mausoleo di Augusto (a est dell'ingresso)
+
+[scheda.obeliscomausoleo2.nome] Obelisco del Mausoleo di Augusto (a est dell'ingresso)
+
+[scheda.obeliscomausoleo2.cosa] Uno dei due obelischi senza geroglifici, alti poco più di 14 metri, che stavano davanti all'ingresso del Mausoleo di Augusto. Li ricordano Ammiano Marcellino e un elenco della città del IV secolo; Plinio e Strabone non ne parlano, e per questo forse arrivarono dall'Egitto solo con Domiziano. Dei due, uno sta oggi dietro Santa Maria Maggiore, l'altro in piazza del Quirinale: quale stesse a ovest e quale a est non si sa.
+
+[scheda.obeliscomausoleo2.data1.quando] I secolo
+
+[scheda.obeliscomausoleo2.data1] Innalzati davanti al mausoleo, forse sotto Domiziano (Platner e Ashby).
+
+[scheda.obeliscomausoleo2.data2.quando] IV secolo
+
+[scheda.obeliscomausoleo2.data2] Ammiano Marcellino li nomina.
+
+[scheda.obeliscomausoleo2.data3.quando] data ignota
+
+[scheda.obeliscomausoleo2.data3] Quando caddero non si sa: nel modello restano in piedi fino all'852.
+
+[scheda.obeliscomausoleo2.data4.quando] prima del 1527
+
+[scheda.obeliscomausoleo2.data4] Uno è scavato dietro la chiesa di San Rocco e nel 1587 innalzato dietro Santa Maria Maggiore; l'altro, trovato insieme, è tirato fuori poco prima del 1550 e nel 1782 Pio VI lo mette in piazza del Quirinale.
+
+[scheda.obeliscomausoleo2.certezza-B] I due obelischi si conservano e l'altezza è nota; stavano davanti all'ingresso del mausoleo. Il punto esatto è indicativo, e non si sa quale dei due stesse a ovest. Quando caddero non si sa: restano in piedi fino all'852.
+
+
+### Obelisco Macuteo
+
+[scheda.obeliscomacuteo.nome] Obelisco Macuteo
+
+[scheda.obeliscomacuteo.cosa] Piccolo obelisco di granito alto 6 metri, del tempo di Ramesse II, con i geroglifici; stava davanti al tempio del Sole a Eliopoli e a Roma ornava il santuario di Iside nel Campo Marzio. Oggi sta sopra la fontana davanti al Pantheon.
+
+[scheda.obeliscomacuteo.data1.quando] I secolo
+
+[scheda.obeliscomacuteo.data1] Portato a Roma, probabilmente, per l'Iseo, dove gli obelischi stavano a coppie agli ingressi (Platner e Ashby).
+
+[scheda.obeliscomacuteo.data2.quando] data ignota
+
+[scheda.obeliscomacuteo.data2] Quando cadde non si sa: nel modello resta in piedi fino all'852, dove fu ritrovato.
+
+[scheda.obeliscomacuteo.data3.quando] XV secolo
+
+[scheda.obeliscomacuteo.data3] Poggio lo vede a terra nella piazza davanti a San Macuto; nel Cinquecento è già rialzato lì.
+
+[scheda.obeliscomacuteo.data4-1711] Clemente XI lo porta davanti al Pantheon.
+
+[scheda.obeliscomacuteo.certezza-B] L'obelisco si conserva; nel modello sta dove fu ritrovato, in piazza di San Macuto, che era dentro il recinto dell'Iseo. Quando cadde non si sa: resta in piedi fino all'852.
+
+
+### Obelisco della Minerva
+
+[scheda.obeliscominerva.nome] Obelisco della Minerva
+
+[scheda.obeliscominerva.cosa] Piccolo obelisco di granito alto 5,47 metri, fatto innalzare a Sais dal faraone Apries nel VI secolo avanti Cristo, con quattro sole righe di geroglifici. A Roma ornava il santuario di Iside nel Campo Marzio. Oggi sta sull'elefante di Bernini in piazza della Minerva.
+
+[scheda.obeliscominerva.data1.quando] I secolo
+
+[scheda.obeliscominerva.data1] Portato a Roma, probabilmente, per l'Iseo (Platner e Ashby).
+
+[scheda.obeliscominerva.data2.quando] data ignota
+
+[scheda.obeliscominerva.data2] Quando cadde non si sa: nel modello resta in piedi fino all'852, dove fu ritrovato (il punto è stimato).
+
+[scheda.obeliscominerva.data3-1665] Ritrovato presso Santa Maria sopra Minerva; nel 1667 Alessandro VII lo mette sull'elefante di Bernini.
+
+[scheda.obeliscominerva.certezza-C] L'obelisco si conserva; il punto del ritrovamento presso la Minerva è stimato. Quando cadde non si sa: resta in piedi fino all'852.
+
+
+### Obelisco di Dogali
+
+[scheda.obeliscodogali.nome] Obelisco di Dogali
+
+[scheda.obeliscodogali.cosa] Piccolo obelisco di granito alto circa 6 metri, di Ramesse II, da Eliopoli, con i geroglifici. A Roma ornava il santuario di Iside nel Campo Marzio. Oggi sta in viale delle Terme, a ricordo dei caduti di Dogali.
+
+[scheda.obeliscodogali.data1.quando] I secolo
+
+[scheda.obeliscodogali.data1] Portato a Roma, probabilmente, per l'Iseo (Platner e Ashby).
+
+[scheda.obeliscodogali.data2.quando] data ignota
+
+[scheda.obeliscodogali.data2] Quando cadde non si sa: nel modello resta in piedi fino all'852, dove fu ritrovato (il punto è stimato).
+
+[scheda.obeliscodogali.data3-1883] Ritrovato sotto l'abside di Santa Maria sopra Minerva.
+
+[scheda.obeliscodogali.certezza-C] L'obelisco si conserva; il punto del ritrovamento sotto l'abside della Minerva è stimato. Quando cadde non si sa: resta in piedi fino all'852.
 
 
 ### Sepolcro di Eurisace
