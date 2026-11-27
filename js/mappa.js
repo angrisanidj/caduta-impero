@@ -951,7 +951,9 @@ invSi.addEventListener('click',function(e){ e.stopPropagation(); grande(true); }
 invNo.addEventListener('click',function(e){ e.stopPropagation(); try{ sessionStorage.setItem('rm-invito-grande','no'); }catch(er){} invita.hidden=true; });
 if(mqCoricato){ if(mqCoricato.addEventListener) mqCoricato.addEventListener('change',invitoGrande); else if(mqCoricato.addListener) mqCoricato.addListener(invitoGrande); }
 setTimeout(invitoGrande,0);
+var scrollPrima=null;      // dove stava la pagina prima di aprire la carta a tutto schermo
 function grande(si){
+  if(si && !grandeSi) scrollPrima=window.scrollY;
   fermaRegia(); grandeSi=si; legenda.parentNode.style.minHeight=''; setTimeout(function(){ stratoScena.setAttribute('class','m-scena'+(grandeSi||pocoMoto?' viva ferma':'')); },60);      // a tutto schermo la scena dell'evento resta ferma sulla carta (la ridisegna mostraPopoli, con le nuove misure)
   document.body.classList.toggle('impero-grande',si); if(!si) document.body.classList.remove('impero-largo'); invitoGrande();      // queste due istruzioni erano finite per sbaglio dentro il commento della riga sopra
   bGrande.textContent=si?'✕':'⤢'; bGrande.setAttribute('aria-pressed',si?'true':'false'); bGrande.title=si?'Chiudi':'Tutto schermo'; bGrande.setAttribute('aria-label',si?'Esci dallo schermo intero':'Carta a tutto schermo');
@@ -963,7 +965,12 @@ function grande(si){
        e il codice qui sopra rimette già il ritaglio di sempre: per prudenza lo si riscrive da capo al fotogramma dopo e ancora dopo un terzo di secondo, e nei CSS (css/carta.css)
        il disegno non può più allungare il riquadro. Da riprovare su un telefono vero. */
     var rimetti=function(){ if(grandeSi || regia) return; svg.removeAttribute('viewBox'); svg.setAttribute('viewBox',BASE.join(' ')); };
-    requestAnimationFrame(rimetti); setTimeout(rimetti,320); }
+    requestAnimationFrame(rimetti); setTimeout(rimetti,320);
+    /* 27 novembre 2026 (cattura dell'utente dall'iPhone, tappa del 780): tornati dallo schermo intero la legenda restava tagliata ma senza i bottoni «+10» e «+1».
+       A tutto schermo le legende non hanno il limite d'altezza e misuraLegende nasconde i bottoni; all'uscita la larghezza della finestra non cambia e il gestore di
+       resize esce prima di rimisurare. Qui si rimisurano a impaginazione tornata, e la pagina torna dove stava prima di aprire la carta grande. */
+    var scr=scrollPrima, torna=function(){ if(grandeSi) return; misuraLegende(); if(scr!=null && Math.abs(window.scrollY-scr)>2) window.scrollTo(0,scr); };
+    requestAnimationFrame(torna); setTimeout(torna,340); }
   ingr=0; largoSvg=0; window.dispatchEvent(new Event('resize'));                    // il gestore qui sopra rifà misure, legende e cartellini
   if(si) setTimeout(function(){ if(grandeSi && vista.libera && annoVisto!=null && !regia) avviaRegia(luoghiRegia,scenaOra); },500);      // aperta la carta grande, la regia della tappa riparte lì
 }
