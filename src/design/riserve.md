@@ -219,6 +219,19 @@ Fonti di questo elenco: messaggi dei commit dal 26 novembre alle 12 al 27 alle 7
 | 137 | Colature «sotto merli e cornici»: sulle mura scendono dall'alto (più scure vicino ai merli); sui monumenti restano a strisce sparse, non legate alle cornici vere. | Patina, mattone | Un segno per le cornici nella geometria dei monumenti | noi | aperta |
 | 138 | Il ramo del mattone riconosce i muri dalla chiarezza del colore (sotto 0,4-0,56): anche granito, peperino e selce scuri lo prendono; l'intonaco chiaro no. | Patina, mattone | Un tipo di materiale nella geometria | noi | aperta |
 
+## Dagli archi, uno per uno (27 novembre, pomeriggio; da-guardare, scheda 30)
+
+| N | Riserva | Da quale lavoro | Che cosa serve per chiuderla | Chi la chiude | Stato |
+|---|---|---|---|---|---|
+| 139 | Arco di Costantino: Platner e Ashby dicono che la strada verso il Circo «did not, however, run through it»; nel modello la via Appia comincia sotto l'arco (e `RM.strozzature` la stringe nel fornice). | Archi | Spostare l'inizio dell'Appia in `src/roma/genera.mjs` e togliere la strozzatura | noi | aperta |
+| 140 | Arco degli Argentari: nell'800 un edificio dal tetto rosso gli sta addosso (forse San Giorgio in Velabro di `js/nuclei.js`, non verificato) e da vicino la camera ci finisce dentro; nel 330 l'arco sta libero. La fonte dice solo che l'arco sta all'angolo sud-ovest della chiesa. | Archi | Capire chi è l'edificio; se è la chiesa, posarla accanto all'arco | noi | aperta |
+| 141 | Arco di Dolabella: da vicino si legge male sotto gli archi neroniani di `js/mura.js`; la fonte non dà misure, quelle del modello sono indicative. | Archi | Guardarlo insieme all'acquedotto in `js/mura.js` | noi | aperta |
+| 142 | Arco di Arcadio, Onorio e Teodosio (405) alla testa ovest del ponte Neroniano, che il modello dà ridotto alle pile dal 300: le due scelte si contraddicono (detto in scheda). | Archi | Rileggere il ponte Neroniano (Platner, «probably in the fourth [century]») e decidere | noi | aperta |
+| 143 | Archi mancanti col posto noto e non aggiunti: Augusto (fondazioni fra Divo Giulio e Castori: nel modello il posto cade sul podio dei Castori), Tiberio (angolo nord-ovest della basilica Giulia, fra basilica e Saturno), Druso e Germanico ai lati di Marte Ultore. | Archi | Rimisurare quei templi del Foro sul contorno vero e poi posarli | noi | aperta |
+| 144 | Le statue in cima all'arco di Settimio Severo (carro a sei o otto cavalli, quattro cavalieri, dalle monete) non sono disegnate: non si sa quando sparirono. | Archi | Una fonte sulla loro fine | noi | aperta |
+| 145 | La scalinata dell'arco di Settimio Severo dal lato del Foro (fonte) non è disegnata. | Archi | Alzare l'arco sul suo zoccolo e mettere i gradini | noi | aperta |
+| 146 | Voce non raggiunta: Fornix Fabiorum (Platner e Ashby). | Archi | Rileggerla | noi | aperta |
+
 ## Scelte fatte senza chiedere, da confermare
 
 1. Le corse nel Circo Massimo solo in alcune tappe: 235, 260, 301 (il 284 tolto il 27 novembre: è un intermezzo e la città resta al 274), 330, 363, 384, 402, 418, 439, 468, 507 (una sì e una no, saltando quelle con un'altra scena vicina) (86bd7ae).

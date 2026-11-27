@@ -50,14 +50,14 @@ var REGIONI=[
   nota:'Fuori dalle mura la scena non dà tinta: dove finisse la regione non si sa.'},
  {n:'VII', it:'Via Lata', la:'Via Lata', cat:[3805,120,25,75,76,15],
   cosa:'Fra il tratto sud della via Flaminia, detto via Lata (oggi via del Corso), e la regione VI.',
-  mon:['*sole','*arcusnovus','archivialata'], bordo:[], ancore:[],
+  mon:['*sole','*arcusnovus','arcoclaudio','arcoportogallo'], bordo:[], ancore:[],      // 27 novembre 2026: i due archi del gruppo «archivialata», ora voci a sé, ciascuno al suo punto sulla via Lata
   luoghi:'Il catalogo nomina un «campus Agrippae»: dove fosse esattamente, le pagine lette non lo dicono.'},
  {n:'VIII', it:'Foro Romano', la:'Forum Romanum (vel) Magnum', cat:[3480,130,18,86,120,20], cur:{3:85},
   cosa:'Il Foro (non tutta la via Sacra), i fori imperiali, il Campidoglio e la zona a sud, fino a una linea a nord del Foro Boario che attraversava il Velabro.',
   mon:['*fori','*curia','*curiaantica','*curiastatue','*santadriano','*giove','*campidoglio','foca','focastatua','*castori','*saturno','*vesta','arcoseveroforo','*colonnatraiana','*concordia','*vespasiano','divogiulio','*giulia','*rostri','tabularium','*foroaugusto','*forocesare','*forotraiano','marforio','regia','regiacasa'], bordo:['casenerva','mercatitraiano','foronerva'], ancore:[[-6,-22],[-19,-11]]},      // 26 novembre 2026: gli edifici del Foro resi monumenti a sé (con l'asterisco quelli del catalogo della VIII; l'arco di Severo, il Divo Giulio, il Tabularium e i mercati no)
  {n:'IX', it:'Circo Flaminio', la:'Circus Flaminius', cat:[2777,140,25,63,120,20],
   cosa:'Tutto il terreno fra le mura serviane, la via Flaminia e il Tevere: la parte del Campo Marzio a ovest della via Lata.',
-  mon:['*pompeo','*marcello','*balbo','*domiziano','*odeon','*pantheon','*pantheonpiazza','*pantheonchiesa','*termeagrippa','*termenerone','*tempioadriano','*colonnamarco','*iseo','obeliscomacuteo','obeliscominerva','obeliscodogali','saepta','argentina','ottavia','apollo','bellona','orologio','obeliscomausoleo1','obeliscomausoleo2','augusto','arcovalentiniano','olitorio','ottaviapropileo','arapacis','marcoaurelio','pigna'], bordo:[], ancore:[]},      // 27 novembre 2026: l'Ara Pacis, a sé dall'orologio, a ovest della via Lata; la statua di Marco Aurelio presso la colonna e la Pigna nell'Iseo (posti ipotetici, nelle schede)
+  mon:['*pompeo','*marcello','*balbo','*domiziano','*odeon','*pantheon','*pantheonpiazza','*pantheonchiesa','*termeagrippa','*termenerone','*tempioadriano','*colonnamarco','*iseo','obeliscomacuteo','obeliscominerva','obeliscodogali','saepta','argentina','ottavia','apollo','bellona','orologio','obeliscomausoleo1','obeliscomausoleo2','augusto','arcovalentiniano','arcograziano','olitorio','ottaviapropileo','arapacis','marcoaurelio','pigna'], bordo:[], ancore:[]},      // 27 novembre 2026: l'Ara Pacis, a sé dall'orologio, a ovest della via Lata; la statua di Marco Aurelio presso la colonna e la Pigna nell'Iseo (posti ipotetici, nelle schede)
  {n:'X', it:'Palatino', la:'Palatium', cat:[2742,89,48,44,90,20], cur:{0:2642,4:89},
   cosa:'Il Palatino, nei limiti che Tacito (Annali XII 24) dà al primo pomerio.',
   mon:['*palatino','*settizodio','*magnamater','*tiberiana','domusflavia','domusaugustana','*apollopalatino'], bordo:['arcocostantino'], ancore:[[15,42],[25,35],[5,49],[20,49],[10,35]]},      // il Settizodio è nel catalogo della X («Septizonium divi Severi»)
@@ -73,7 +73,7 @@ var REGIONI=[
   mon:['sabina','emporio','testaccio'], bordo:['piramide','servianeaventino'], ancore:[[-42,96],[-25,118],[-40,150],[-15,170]]},      // il tratto di mura serviane fra il grande e il piccolo Aventino sta sul confine con la XII
  {n:'XIV', it:'Trastevere', la:'Transtiberim', cat:[4405,150,22,86,180,24],
   cosa:'Tutta la riva destra del Tevere con l\'isola Tiberina. I limiti non si possono determinare: andava molto oltre le mura aureliane, a sud fino al tempio di Fors Fortuna, a nord fino al Vaticano. Sulla scena, fuori dalle mura, la tinta sfuma senza bordo.',
-  mon:['*pietro','*tegolepietro','*obeliscovaticano','esculapio','isolatiberina','obeliscoisola','adriano','adrianostatue','metaromuli','porticopietro','campanilepietro','episcopiapietro','monasteripietro','monasteripietro2','andreapietro','petronilla','scholae','scholae2','ospizionaumachia','leonine'], bordo:['mulini'], ancore:[],
+  mon:['*pietro','*tegolepietro','*obeliscovaticano','esculapio','isolatiberina','obeliscoisola','adriano','adrianostatue','metaromuli','porticopietro','campanilepietro','episcopiapietro','monasteripietro','monasteripietro2','andreapietro','petronilla','scholae','scholae2','ospizionaumachia','leonine','arcoarcadio'], bordo:['mulini'], ancore:[],
   luoghi:'Il catalogo nomina anche il Gianicolo e i mulini («molinas»): sono i mulini del Gianicolo, non quelli sulle barche del modello, che stanno sul confine del Tevere.'}
 ];
 /* dove il modello non dà un monumento con un nome (parti di altri gruppi), le coordinate stanno nell'elenco M di js/monumenti.js */

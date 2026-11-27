@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 12:13:45.
+Generato da `src/testi.mjs` il 27/11/2026, 13:14:24.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -151,7 +151,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.68] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.69] Versione del 27/11/2026, ore 11:56
+[pagina.69] Versione del 27/11/2026, ore 12:37
 
 
 ## 2. Gli atti
@@ -3460,7 +3460,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcotito.nome] Arco di Tito
 
-[scheda.arcotito.cosa] Arco con un solo passaggio sulla via Sacra, nel punto più alto tra il Foro e la valle del Colosseo. Viene eretto dopo la morte di Tito, avvenuta nell'81, per celebrare la sua vittoria in Giudea.
+[scheda.arcotito.cosa] Arco con un solo passaggio sulla via Sacra, nel punto più alto tra il Foro e la valle del Colosseo. Viene eretto dopo la morte di Tito, avvenuta nell'81, per celebrare la sua vittoria in Giudea. È di marmo pentelico, largo 13,50 metri, alto 15,40 e profondo 4,75; il fornice è alto 8,30 e largo 5,36; sui fianchi ci sono nicchie simili a finestre (Platner e Ashby). Che cosa stesse in cima la fonte non lo dice: nel modello niente.
 
 [scheda.arcotito.data1-800] L'Itinerario di Einsiedeln lo nomina come «Arcus Titi et Vespasiani»: è ancora un punto di riferimento per chi attraversa la città.
 
@@ -3713,7 +3713,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcocostantino.nome] Arco di Costantino
 
-[scheda.arcocostantino.cosa] Arco trionfale accanto al Colosseo.
+[scheda.arcocostantino.cosa] Arco trionfale a tre fornici accanto al Colosseo, di marmo bianco: alto 21 metri, largo 25,70 e profondo 7,40. Fra i fornici e agli angoli otto colonne di giallo antico; sopra ciascuna la statua di un Dace; nell'attico l'iscrizione e otto rilievi; sopra i fornici minori quattro tondi per lato (Platner e Ashby). Nel modello i rilievi sono solo riquadri.
 
 [scheda.arcocostantino.data1-315] Il Senato dedica l'arco a Costantino per celebrare la vittoria su Massenzio. La dedica risale probabilmente al 25 luglio 315, quando cominciano i festeggiamenti per i dieci anni di regno. L'iscrizione attribuisce la vittoria «all'ispirazione della divinità», senza dire di quale divinità si tratti. Molti rilievi provengono da monumenti di tre imperatori precedenti, Traiano, Adriano e Marco Aurelio. Gli studiosi discutono ancora su quali fossero gli edifici di origine. In cima all'arco, sopra le colonne, si vedono otto statue di marmo che raffigurano uomini della Dacia. Le statue provengono quasi certamente dal Foro di Traiano.
 
@@ -4579,9 +4579,9 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.dolabella.data4.quando] oggi
 
-[scheda.dolabella.data4] L'arco è in piedi, accanto alla chiesa di San Tommaso in Formis.
+[scheda.dolabella.data4] L'arco è in piedi, accanto alla chiesa di San Tommaso in Formis. La fonte non ne dà le misure: nel modello sono indicative, confrontate con una fotografia.
 
-[scheda.dolabella.certezza-A] In piedi.
+[scheda.dolabella.certezza-A] In piedi. La fonte non dà misure: nel modello sono indicative, confrontate con una fotografia.
 
 
 ### Ludus Magnus
@@ -4685,13 +4685,17 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.giano.data1] L'arco è di età tarda, del III o del IV secolo. Forse è l'«arco del divo Costantino» che i Cataloghi delle regioni nominano nella regione XI: è un'ipotesi. Nel modello c'è già dal 235: è una nostra scelta.
 
-[scheda.giano.data2-1827] Si toglie la parte alta, creduta medievale: forse era l'attico antico.
+[scheda.giano.data2.quando] fino all'852
 
-[scheda.giano.data3.quando] oggi
+[scheda.giano.data2] Le fonti lette non dicono nulla del suo stato: nel modello resta in piedi, con l'attico. Quanto fosse alto l'attico non si sa: nel modello 2,5 metri, una nostra scelta.
 
-[scheda.giano.data3] È in piedi, senza l'attico. Sulle chiavi degli archi si vedono ancora Minerva e Roma.
+[scheda.giano.data3-1827] Si toglie la parte alta, creduta medievale. Per Hülsen era probabilmente l'attico antico.
 
-[scheda.giano.certezza-A] L'arco è in piedi; misure da Platner e Ashby. Senza l'attico, che oggi manca; la data esatta non è nota e la presenza nel 235 è una scelta.
+[scheda.giano.data4.quando] oggi
+
+[scheda.giano.data4] È in piedi, senza l'attico. Sulle chiavi degli archi si vedono ancora Minerva e Roma.
+
+[scheda.giano.certezza-A] L'arco è in piedi; misure da Platner e Ashby. Nel modello ha l'attico, tolto nel 1827 e per Hülsen antico: la sua altezza (2,5 m) è una nostra scelta. La data esatta non è nota e la presenza nel 235 è una scelta.
 
 
 ### Arco degli Argentari
@@ -4708,7 +4712,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.argentari.data3] È intero. Il campanile di San Giorgio poggia in parte su uno dei piloni.
 
-[scheda.argentari.certezza-A] L'arco è in piedi; misure da Platner e Ashby.
+[scheda.argentari.certezza-A] L'arco è in piedi; misure da Platner e Ashby. I rilievi non sono disegnati, solo le lesene e la cornice.
 
 
 ### Portico d'Ottavia
@@ -4821,7 +4825,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcogallieno.nome] Arco di Gallieno
 
-[scheda.arcogallieno.cosa] L'arco sull'Esquilino che segna il posto dell'antica porta Esquilina delle mura serviane (Platner e Ashby). Fu dedicato all'imperatore Gallieno. Il fornice che resta è di travertino, alto 8,80 metri, largo 7,30 e profondo 3,50 (Platner e Ashby): nel modello ha queste misure. Un disegno del Quattrocento mostra due piccoli archi ai lati, oggi spariti: nel modello non ci sono.
+[scheda.arcogallieno.cosa] L'arco sull'Esquilino che segna il posto dell'antica porta Esquilina delle mura serviane (Platner e Ashby). Fu dedicato all'imperatore Gallieno. Il fornice che resta è di travertino, alto 8,80 metri, largo 7,30 e profondo 3,50. I piloni sono larghi 1,40 metri; fuori ci sono due lesene con capitelli corinzi e sopra una trabeazione alta 2 metri, con la dedica sull'architrave (Platner e Ashby). Un disegno del Quattrocento mostra ancora due piccoli archi ai lati, oggi spariti: nel modello ci sono, ma le loro misure sono nostre.
 
 [scheda.arcogallieno.data1-262] Un funzionario, Marco Aurelio Vittore, dedica l'arco a Gallieno e a Salonina. Non è lo storico Aurelio Vittore.
 
@@ -4833,7 +4837,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcogallieno.data3] È in piedi.
 
-[scheda.arcogallieno.certezza-B] L'arco è in piedi e le misure del fornice vengono da Platner e Ashby, che danno anche l'anno, il 262; mancano i due archi minori che un disegno del Quattrocento mostra ai lati. Lo stato fra il 235 e l'852 è una scelta, perché nessuna fonte letta lo dice.
+[scheda.arcogallieno.certezza-B] L'arco è in piedi; fornice, piloni, lesene e trabeazione hanno le misure di Platner e Ashby, che danno anche l'anno, il 262. I due archi minori ai lati, che un disegno del Quattrocento mostra ancora, ci sono con misure nostre. Lo stato fra il 235 e l'852 è una scelta, perché nessuna fonte letta lo dice.
 
 
 ### Trofei di Mario (ninfeo di Alessandro)
@@ -5123,36 +5127,103 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.eurisace.certezza-A] In piedi, liberato dalla torre nel 1838.
 
 
-### Archi della via Lata
+### Arco di Claudio
 
-[scheda.archivialata.nome] Archi della via Lata
+[scheda.arcoclaudio.nome] Arco di Claudio
 
-[scheda.archivialata.cosa] Due archi attraversavano la via Lata, oggi via del Corso. Il primo celebrava la conquista della Britannia da parte di Claudio e sosteneva il condotto dell'acquedotto Vergine sopra la strada. Il secondo, detto arco di Portogallo, sorgeva vicino all'Ara Pacis.
+[scheda.arcoclaudio.cosa] Un'arcata dell'acquedotto Vergine nel punto in cui passa sopra la via Lata, poco a nord dei Saepta, trasformata in arco trionfale per le vittorie di Claudio in Britannia (Platner e Ashby). La fonte non dice com'era fatto: nel modello un fornice di travertino con la lastra dell'iscrizione, misure nostre.
 
-[scheda.archivialata.data1.quando] 51-52
+[scheda.arcoclaudio.data1.quando] 51-52
 
-[scheda.archivialata.data1] Claudio fa dell'arcata dell'acquedotto un arco trionfale.
+[scheda.arcoclaudio.data1] Claudio fa dell'arcata dell'acquedotto un arco trionfale.
 
-[scheda.archivialata.data2.quando] VIII secolo
+[scheda.arcoclaudio.data2.quando] VIII secolo
 
-[scheda.archivialata.data2] L'arco di Claudio è già in rovina.
+[scheda.arcoclaudio.data2] L'arco «sembra essere già in rovina» (Platner e Ashby). Nel modello crolla nel 700: l'anno è una nostra scelta all'inizio del secolo.
 
-[scheda.archivialata.data3-1662] Alessandro VII demolisce l'arco di Portogallo per allargare il Corso; due rilievi sono ai Musei Capitolini.
+[scheda.arcoclaudio.data3.quando] 1562, 1641, 1869
 
-[scheda.archivialata.certezza-B] Demoliti; le posizioni vengono dai ritrovamenti sotto via del Corso, le forme e le misure sono indicative.
+[scheda.arcoclaudio.data3] Si ritrovano pezzi dell'arco, fra cui parte dell'iscrizione principale.
+
+[scheda.arcoclaudio.certezza-B] Demolito; il posto viene dai ritrovamenti sotto via del Corso. Forma e misure sono nostre; la rovina dall'VIII secolo è nella fonte, l'anno 700 è una scelta.
+
+
+### Arco di Portogallo
+
+[scheda.arcoportogallo.nome] Arco di Portogallo
+
+[scheda.arcoportogallo.cosa] Un arco sulla via Lata, vicino all'Ara Pacis. I disegni del Cinque e del Seicento mostrano un solo fornice con due colonne per parte e una cornice tutt'attorno; due rilievi dell'età di Adriano che lo ornavano sono oggi ai Musei Capitolini (Platner e Ashby). Nel modello ha questa forma; le misure sono nostre.
+
+[scheda.arcoportogallo.data1.quando] data incerta
+
+[scheda.arcoportogallo.data1] L'arco può essere di Marco Aurelio o anche più tardo: per Hülsen è del IV o del V secolo, fatto con pezzi di edifici più vecchi. Nel modello c'è già nel 235: è una nostra scelta.
+
+[scheda.arcoportogallo.data2.quando] XII secolo
+
+[scheda.arcoportogallo.data2] Un lato viene demolito.
+
+[scheda.arcoportogallo.data3-1662] Alessandro VII lo fa togliere per allargare il Corso.
+
+[scheda.arcoportogallo.certezza-B] Demolito nel 1662; posto sull'asse della via Lata, vicino all'Ara Pacis. La forma (un fornice, due colonne per parte) viene dai disegni citati dalla fonte, le misure sono nostre; l'età è incerta.
+
+
+### Arco di Graziano, Valentiniano e Teodosio
+
+[scheda.arcograziano.nome] Arco di Graziano, Valentiniano e Teodosio
+
+[scheda.arcograziano.cosa] L'arco che Graziano, Valentiniano II e Teodosio fecero costruire fra il 379 e il 383 in fondo ai loro grandi portici, vicino al ponte Elio. «Probabilmente» scavalcava la strada che arrivava al ponte da sud (Platner e Ashby). La fonte non dice com'era fatto: nel modello un fornice di marmo con l'iscrizione, misure nostre, poco oltre il piede della rampa del ponte.
+
+[scheda.arcograziano.data1.quando] 379-383
+
+[scheda.arcograziano.data1] Costruito dai tre imperatori (iscrizione). Nel modello c'è dal 381, anno scelto in mezzo.
+
+[scheda.arcograziano.data2.quando] fino all'852
+
+[scheda.arcograziano.data2] Le fonti lette non parlano di danni. Platner e Ashby citano anche l'Itinerario di Einsiedeln, di circa l'800, fra i testi che lo nominano («per arcum»): nel modello è in piedi.
+
+[scheda.arcograziano.data3.quando] XIV secolo
+
+[scheda.arcograziano.data3] Distrutto; nel Cinquecento se ne vedevano ancora tracce.
+
+[scheda.arcograziano.certezza-C] Noto da un'iscrizione e da testi medievali; il posto (vicino al ponte Elio, sulla strada da sud) è dato come probabile dalla fonte. Forma e misure sono nostre.
+
+
+### Arco di Arcadio, Onorio e Teodosio
+
+[scheda.arcoarcadio.nome] Arco di Arcadio, Onorio e Teodosio
+
+[scheda.arcoarcadio.cosa] Un arco di marmo che il Senato dedicò ad Arcadio, Onorio e Teodosio II per le vittorie sui Goti, dopo la battaglia di Pollenzo vinta da Stilicone. Stava alla testa ovest del ponte Neroniano e «probabilmente» ne scavalcava l'accesso (Platner e Ashby). La fonte non dice com'era fatto: nel modello un fornice, misure nostre.
+
+[scheda.arcoarcadio.data1-405] Eretto dal Senato (Platner e Ashby danno il 405).
+
+[scheda.arcoarcadio.data2.quando] dopo il 405
+
+[scheda.arcoarcadio.data2] Nel modello il ponte Neroniano è già ridotto alle pile dal 300, una scelta più vecchia del modello: un arco nuovo alla testa di un ponte rotto è poco probabile, e una delle due scelte andrà rivista.
+
+[scheda.arcoarcadio.data3.quando] XV secolo
+
+[scheda.arcoarcadio.data3] È ancora in piedi, ma senza il rivestimento di marmo.
+
+[scheda.arcoarcadio.certezza-C] Noto da un'iscrizione; stava alla testa ovest del ponte Neroniano. Forma e misure sono nostre.
 
 
 ### Arcus Novus
 
 [scheda.arcusnovus.nome] Arcus Novus
 
-[scheda.arcusnovus.cosa] Arco sulla via Lata per Diocleziano e Massimiano, ornato di rilievi presi da un altare dell'età giulio-claudia.
+[scheda.arcusnovus.cosa] Arco di marmo «ornato di trofei» sulla via Lata, accanto all'angolo nord-est dell'attuale Santa Maria in Via Lata. I Cataloghi delle regioni lo nominano nella regione VII e il Cronografo del 354 lo dà a Diocleziano (Platner e Ashby). Com'era fatto non si sa: nel modello un fornice, misure nostre.
 
-[scheda.arcusnovus.data1-293] Eretto per i primi dieci anni di regno (per altri nel 303-304).
+[scheda.arcusnovus.data1-293] Nel modello compare in quest'anno, per i primi dieci anni di regno di Diocleziano e Massimiano (it.wikipedia). Per Platner e Ashby, se l'iscrizione VOTIS X VOTIS XX è sua, fu costruito nel 303-304.
 
-[scheda.arcusnovus.data2-1491] Demolito per ingrandire Santa Maria in Via Lata.
+[scheda.arcusnovus.data2.quando] fino all'852
 
-[scheda.arcusnovus.certezza-B] L'arco fu demolito nel 1491. Per la posizione il modello segue la voce italiana di Wikipedia. Forma e misure sono indicative.
+[scheda.arcusnovus.data2] Le fonti lette non dicono nulla di danni: nel modello resta in piedi.
+
+[scheda.arcusnovus.data3.quando] 1488-1492
+
+[scheda.arcusnovus.data3] Innocenzo VIII lo fa abbattere; gli ultimi resti spariscono nel 1523.
+
+[scheda.arcusnovus.certezza-B] Demolito fra il 1488 e il 1492. Per la posizione il modello segue la voce italiana di Wikipedia, d'accordo con Platner e Ashby (accanto a Santa Maria in Via Lata). Forma e misure sono nostre.
 
 
 ### Arco di Valentiniano

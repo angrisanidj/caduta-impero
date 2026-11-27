@@ -1110,9 +1110,17 @@ var M=[
  {id:'antonino', nome:'Tempio di Antonino e Faustina', etichetta:'Antonino e Faustina', x:11.6,z:3.7, ry:-.35, come:'fori', zone:[], fa:function(B){
     B.tempio(2.1,3.4,1.7,0,0,0,{fronte:6});                                                                                     // «hexastyle prostyle», colonne di cipollino «17 metres high» (Platner e Ashby, Antoninus et Faustina, templum)
  }},
- {id:'arcoseveroforo', nome:'Arco di Settimio Severo', etichetta:'Arco di Severo', x:-4.6,z:-3.7, ry:-.35, come:'fori', zone:[], fa:function(B){      // tre fornici, colonne su piedistalli, attico (Platner e Ashby, Arcus Septimii Severi: alto 23 m, largo 25, profondo 11,85)
-    muroForato(B,2.3,1.45,1.1,[[0,.68,1.2],[-.78,.34,.76],[.78,.34,.76]],P.marmo); B.scatola(2.42,.13,1.22,0,1.45,0,P.marmo).scatola(2.3,.52,1.1,0,1.58,0,P.marmo);      // i fornici sono aperti (23 novembre 2026)
-    [1,-1].forEach(function(q){ B.colonne(-1.06,q*.66,1.06,q*.66,4,1.2,.06,.25); [-1.06,-.353,.353,1.06].forEach(function(x){ B.scatola(.2,.25,.2,x,0,q*.66,P.marmo); }); });
+ /* Arco di Settimio Severo, rivisto il 27 novembre 2026 sulla voce Arcus Septimii Severi di Platner e Ashby, letta per intero (src/testi/topografia-fonti.md, «Gli archi, uno per uno»):
+    «23 metres high, 25 wide and 11.85 deep, the central archway being 12 metres high and 7 wide, and the side archways 7.80 high and 3 wide»; «four fluted columns … 8.78 metres
+    high … stand free from the arch on projecting pedestals»; «the lofty attic, 5.60 metres in height». Girato: prima ry -0,35 (quella del gruppo dei Fori), con le facce verso
+    sud-sud-ovest; il contorno su OpenStreetMap (way 49824161, rettangolo di 23,3 x 7,7 m) dà il lato lungo a 0,94: le facce guardano il Foro a sud-est e il Campidoglio a nord-ovest,
+    come nelle fotografie. Prima l'arco era alto 21 m, i fornici laterali larghi 3,4 m e le colonne interne stavano sul filo del fornice centrale; ora stanno in mezzo ai piloni.
+    La quadriga a sei o otto cavalli e i quattro cavalieri in cima, noti dalle monete, non sono disegnati: non si sa quando sparirono. Nessuna strada ci passa sotto («never traversed
+    by a road until mediaeval times»): niente strozzatura. */
+ {id:'arcoseveroforo', nome:'Arco di Settimio Severo', etichetta:'Arco di Severo', x:-4.6,z:-3.7, ry:.94, come:'fori', zone:[], fa:function(B){
+    muroForato(B,2.5,1.62,1.185,[[0,.7,1.2],[-.82,.3,.78],[.82,.3,.78]],P.marmo); B.scatola(2.62,.13,1.3,0,1.62,0,P.marmo).scatola(2.5,.56,1.185,0,1.75,0,P.marmo);      // i fornici, la trabeazione che gira tutt'attorno, l'attico
+    [1,-1].forEach(function(q){ var z=q*.71; [-1.11,-.51,.51,1.11].forEach(function(x){ B.scatola(.22,.55,.22,x,0,z,P.marmo).colonne(x,z,x,z,1,.88,.045,.55).scatola(.24,.19,.24,x,1.43,z,P.marmo); B.scatola(.12,1.62,.03,x,0,q*.6,P.marmo); });      // piedistallo con la base (alto 5,5 m: schema), colonna libera (8,78 m, diametro 0,90), il suo tratto di trabeazione; dietro, la lesena
+      B.scatola(1.9,.42,.02,0,1.8,q*.6,P.travertino); [-.82,.82].forEach(function(x){ B.scatola(.5,.42,.02,x,1.0,q*.6,P.travertino).scatola(.4,.07,.02,x,.82,q*.6,P.travertino); }); });      // l'iscrizione dell'attico, i quattro grandi rilievi sopra i fornici laterali e le fasce strette sotto
  }},
  {id:'vesta', nome:'Tempio di Vesta e casa delle Vestali', etichetta:'Vesta', x:7.4,z:9, ry:-.35, come:'fori', zone:[], fa:function(B){
     B.cilindro(.76,.32,0,0,0,P.marmo,null,20).cilindro(.47,1.25,0,.32,0,P.marmo,null,16);                                      // il tempio: rotondo, colonne tutt'attorno, tetto conico con il foro per il fumo; il podio è largo 15 m («a circular foundation … 15.05 metres in diameter», Platner e Ashby, Vesta; 27 novembre 2026: prima 20)
@@ -1315,6 +1323,7 @@ var M=[
        the inscription» (Platner e Ashby, Arcus Titi). Il fornice ora è aperto (23 novembre 2026). Che cosa stesse in cima la voce non lo dice: niente. */
     muroForato(B,1.35,1,.475,[[0,.536,.83]],P.marmo);
     B.scatola(1.45,.1,.58,0,1,0,P.marmo).scatola(1.35,.44,.475,0,1.1,0,P.marmo);
+    [1,-1].forEach(function(q){ B.vano(q*.677,.42,0,0,-q,.13,.26,true); });      // 27 novembre 2026: «the sides of the piers … were adorned with niches like windows» (Platner e Ashby, Arcus Titi): una nicchia per fianco
     [1,-1].forEach(function(q){ [-.58,-.38,.38,.58].forEach(function(x){ B.scatola(.13,.2,.1,x,0,q*.27,P.marmo); }); B.colonne(-.58,q*.27,.58,q*.27,2,.8,.05,.2).colonne(-.38,q*.27,.38,q*.27,2,.8,.05,.2);
       B.scatola(.7,.28,.02,0,1.18,q*.24,P.travertino); });                                                                                        // i piedistalli, le colonne, la lastra dell'iscrizione
  }},
@@ -1470,7 +1479,10 @@ var M=[
     B.scatola(1.5,1.6,1.5,0,0,7.25,P.mattone).falde(1.6,.4,1.6,0,1.6,7.25,P.coppi,0,P.mattone);
     portico(B,5.5,7.5,0,0,11.75,1.2);
  }},
- {id:'arcocostantino', nome:'Arco di Costantino', x:44.5,z:30.4, ry:-.3, zone:[[0,0,3]], fa:function(B){
+ /* 27 novembre 2026, voce riletta per intero e confronto con una fotografia: le colonne ora stanno in mezzo ai piloni (prima a ±0,4 e ±1,2, fuori centro), l'arco è girato come il
+    suo contorno su OpenStreetMap (way 23590989, rettangolo di 25,3 x 6,9 m: ry -0,23, prima -0,3). La voce dice anche che la strada che parte di qui verso il Circo «did not, however,
+    run through it» e che fornici e spiazzo erano lastricati di travertino: la via Appia del modello (src/roma/genera.mjs) invece comincia sotto l'arco; da rivedere là. */
+ {id:'arcocostantino', nome:'Arco di Costantino', x:44.5,z:30.4, ry:-.23, zone:[[0,0,3]], fa:function(B){
     /* Rifatto il 23 novembre 2026 (Platner e Ashby, Arcus Constantini): «21 metres high, 25.70 wide, and 7.40 deep; the central archway is 11.50 high and 6.50 wide, and the two
        lateral arches are 7.40 metres high and 3.36 wide»; «eight fluted Corinthian columns of giallo antico» su piedistalli; «eight statues of Dacians in pavonazzetto… standing on
        the cornice in front of the attic, each above one of the giallo antico columns»; nell'attico l'iscrizione e otto rilievi rettangolari; sopra i fornici laterali, quattro tondi
@@ -1478,7 +1490,7 @@ var M=[
     muroForato(B,2.57,1.5,.74,[[0,.65,1.15],[-.8,.336,.74],[.8,.336,.74]],P.marmo);
     B.scatola(2.69,.14,.86,0,1.5,0,P.marmo).scatola(2.57,.46,.74,0,1.64,0,P.marmo).scatola(2.63,.05,.8,0,2.08,0,P.marmo);                          // cornice, attico, coronamento
     [1,-1].forEach(function(q){ var z=q*.375, ry=q>0?0:Math.PI;
-      [-1.2,-.4,.4,1.2].forEach(function(x){ B.scatola(.2,.4,.2,x,0,q*.47,P.marmo).colonne(x,q*.47,x,q*.47,1,.98,.058,.4,P.sabbia).scatola(.22,.14,.22,x,1.5,q*.47,P.marmo);      // piedistallo, colonna di giallo antico, il suo tratto di trabeazione
+      [-1.13,-.48,.48,1.13].forEach(function(x){ B.scatola(.2,.4,.2,x,0,q*.47,P.marmo).colonne(x,q*.47,x,q*.47,1,.98,.058,.4,P.sabbia).scatola(.22,.14,.22,x,1.5,q*.47,P.marmo);      // piedistallo, colonna di giallo antico, il suo tratto di trabeazione
         uomo(B,x,1.64,q*.49,1.55,P.marmo,ry); });                                                                                                  // i Daci
       B.scatola(.68,.36,.02,0,1.69,z,P.travertino); [-.98,-.62,.62,.98].forEach(function(x){ B.scatola(.3,.36,.02,x,1.69,z,P.travertino); });    // l'iscrizione e i rilievi dell'attico
       [-.9,-.7,.7,.9].forEach(function(x){ disco(B,.085,.02,x,.98,z,ry,P.travertino); });                                                         // i tondi
@@ -2077,16 +2089,24 @@ var M=[
     luogo(B,-36.45,36.11,-36.45,36.11,-2.845,.9,function(B){ tempietto(B,1.06,1.95,.25,.88,4,0,0,0,false); });
  }},
  {id:'giano', nome:'Arco di Giano', etichetta:'Arco di Giano', x:-20.98,z:34.94, ry:0, zone:[], fa:function(B){      // Platner e Ashby, Ianus Quadrifrons: «12 metres square and 16 high», arcate alte 10,60 e larghe 5,70, «two rows of niches… forty-eight in all»
+    /* 27 novembre 2026 (voce riletta per intero, confronto con una fotografia): prima era un blocco pieno con quattro porte dipinte; ora «four piers connected by quadripartite
+       vaulting»: quattro piloni e quattro archi aperti, e sopra l'attico. La parte alta «removed in 1827 as mediaeval, probably belonged to the attic» (Hülsen, in Platner e Ashby):
+       nell'800 l'arco aveva ancora l'attico. Quanto fosse alto la voce non lo dice (alto 2,5 m: schema, detto in scheda); la piramide che Hülsen ci mette sopra è una sua ricostruzione
+       e non si disegna. Orientamento e centro tornano col contorno su OpenStreetMap (way 52924046). */
     luogo(B,-20.98,34.94,-20.98,34.94,.314,.7,function(B){
-      B.scatola(1.2,1.6,1.2,0,0,0,P.marmo);
+      B.dentro(0,0,.4425,0,function(B){ muroForato(B,1.2,1.6,.315,[[0,.57,1.06]],P.marmo); }).dentro(0,0,-.4425,0,function(B){ muroForato(B,1.2,1.6,.315,[[0,.57,1.06]],P.marmo); });      // le due fronti nord e sud, coi piloni
+      [1,-1].forEach(function(q){ B.dentro(q*.4425,0,0,PI/2,function(B){ muroForato(B,.57,1.6,.315,[[0,.57,1.06]],P.marmo); }); });      // i due archi est e ovest, fra i piloni
+      B.scatola(.57,.54,.57,0,1.06,0,P.marmo).scatola(1.24,.06,1.24,0,1.6,0,P.marmo).scatola(1.2,.25,1.2,0,1.66,0,P.marmo);      // sopra la crociera; la cornice e l'attico
       [[0,.61,1,0],[.61,0,0,-1],[0,-.61,-1,0],[-.61,0,0,1]].forEach(function(f){
-        B.vano(f[0],0,f[1],f[2],f[3],.57,1.06);
         [-1,1].forEach(function(s){ [.3,.68].forEach(function(y){ [-.09,0,.09].forEach(function(q){ var o=s*.45+q; B.vano(f[0]+f[2]*o,y,f[1]+f[3]*o,f[2],f[3],.055,.16); }); }); });   // tre nicchie per pilone, su due file
       });
     });
  }},
  {id:'argentari', nome:'Arco degli Argentari', etichetta:'Argentari', x:-19.04,z:33.44, ry:0, zone:[], fa:function(B){      // Platner e Ashby, Arcus Argentariorum: del 204, «not a true arch, but a flat lintel resting on two piers», alto 6,15 m, luce 3,30
-    luogo(B,-19.04,33.44,-19.04,33.44,0,.4,function(B){ arcoUno(B,.63,.33,.615,.33,.45,0,0,0,0,P.marmo,true); });
+    luogo(B,-19.04,33.44,-19.04,33.44,0,.4,function(B){ arcoUno(B,.63,.33,.615,.33,.45,0,0,0,0,P.marmo,true);
+      B.scatola(.63,.04,.33,0,0,0,P.travertino).scatola(.69,.05,.39,0,.565,0,P.marmo);      // 27 novembre 2026: lo zoccolo di travertino («entirely of marble, except the base, which is of travertine») e la cornice in cima, che sporge (fotografia)
+      [-1,1].forEach(function(s){ [-1,1].forEach(function(q){ B.scatola(.05,.5,.02,s*.29,.04,q*.17,P.marmo).scatola(.07,.04,.03,s*.29,.5,q*.17,P.marmo); }); });      // «at the corners of the piers are pilasters with Corinthian capitals»: le lesene sulle due fronti, coi capitelli
+    });
  }},
  /* Portico d'Ottavia (dopo il 27 a.C., rifatto da Settimio Severo): «a rectangular area, 118 metres in width and somewhat more in length», con una doppia fila di colonne di granito,
     ventotto per fila sulla fronte (Platner e Ashby, Porticus Octaviae); la lunghezza (132 m) è indicativa. Il propileo, che resta come ingresso di Sant'Angelo in Pescheria (dal 755, a memoria),
@@ -2149,8 +2169,21 @@ var M=[
  }},
  /* L'arco di Gallieno e i Trofei di Mario, resi monumenti a sé il 27 novembre 2026: stesso disegno, stesso posto e stessa quota del piede di quando stavano nel gruppo 'esquilino'.
     Fonti in coda a src/testi/topografia-fonti.md, «Mancanti aggiunti, secondo gruppo». */
+ /* Arco di Gallieno, rifatto il 27 novembre 2026 sulla voce Arcus Gallieni di Platner e Ashby, letta per intero, e su una fotografia: «The existing single arch is of travertine,
+    8.80 metres high, 7.30 wide, and 3.50 deep. The piers which support it are 1.40 metres wide and 3.50 deep, and outside of them are two pilasters of the same depth, with Corinthian
+    capitals. The entablature is 2 metres high … Beneath the spring of the arch on each side is a simple cornice. A drawing … of the fifteenth century shows small side arches».
+    Prima 7,30 x 8,80 era la misura di tutto l'arco e il fornice era largo 4,5 m; ed era girato di 90 gradi: la strada (la Tiburtina del modello) gli passava nel muro. Ora il fornice
+    è largo 7,30 e alto 8,80, coi piloni, le lesene e la trabeazione di 2 m; il lato lungo segue il contorno su OpenStreetMap (way 81741050, 11,7 x 4,7 m: ry 1,6), e la strada passa
+    sotto. I due archi minori del disegno del Quattrocento erano ancora in piedi allora, quindi anche nell'800: ci sono, ma la loro misura la fonte non la dà (larghi 2,4 m, alti 4,4,
+    in due ali basse: schema, detto in scheda). */
  {id:'arcogallieno', nome:'Arco di Gallieno', etichetta:'Arco di Gallieno', x:133.07,z:-36.43, ry:0, zone:[], fa:function(B){      // Platner e Ashby, Porta Esquilina: il posto della porta «is marked by the existing Arcus Gallieni»
-    luogo(B,133.07,-36.43,133.07,-36.43,1.606,.6,function(B){ arcoUno(B,.73,.35,.88,.45,.66,0,0,0,0,P.travertino); });
+    luogo(B,133.07,-36.43,133.07,-36.43,1.6,.6,function(B){
+      muroForato(B,1.13,.92,.35,[[0,.73,.88]],P.travertino);                                                                     // il fornice di 7,30 x 8,80 fra i piloni di 1,40
+      B.scatola(1.17,.2,.37,0,.92,0,P.travertino).scatola(1.21,.03,.4,0,1.12,0,P.travertino);                                     // la trabeazione di 2 m, con l'iscrizione sull'architrave, e la cornice
+      [-1,1].forEach(function(s){ [-1,1].forEach(function(q){ B.scatola(.07,.92,.02,s*.53,0,q*.18,P.travertino).scatola(.09,.05,.03,s*.53,.87,q*.18,P.travertino); });      // le lesene coi capitelli corinzi
+        B.scatola(.16,.025,.37,s*.435,.495,0,P.travertino);                                                                      // la cornice semplice sotto l'imposta dell'arco
+        B.dentro(s*.835,0,0,0,function(B){ muroForato(B,.54,.44,.3,[[0,.24,.38]],P.travertino); B.scatola(.56,.04,.32,0,.44,0,P.travertino); }); });      // gli archi minori ai lati (schema)
+    });
  }},
  {id:'trofeimario', nome:'Trofei di Mario (ninfeo di Alessandro)', etichetta:'Trofei di Mario', x:152.14,z:-30.42, ry:0, zone:[], fa:function(B){      // Platner e Ashby, Nymphaeum Alexandri: mostra d'acqua probabilmente di Severo Alessandro, «connected with the aqua Alexandrina»; i trofei portati in Campidoglio nel 1590
     luogo(B,152.14,-30.42,152.14,-30.42,.052,1.5,function(B){
@@ -2212,11 +2245,27 @@ var M=[
  /* Archi della via Lata. Arco di Claudio (51-52), sull'acqua Vergine dove passa la via Lata, «in ruins as early as the eighth century» (Platner e Ashby, Arcus Claudii); posizione da it.wikipedia
     (41,89932 N, 12,48110 E): l'acquedotto del modello, interpolato, passa una quarantina di metri più a nord. Arco di Portogallo, «close to the Ara Pacis», di età incerta, con rilievi di Adriano;
     demolito nel 1662 (Platner e Ashby, Arco di Portogallo); posizione da it.wikipedia (41,90310 N, 12,47960 E). Misure di entrambi indicative; i fornici guardano lungo la strada. */
- {id:'archivialata', nome:'Archi della via Lata', x:-41,z:-96.8, ry:0, zone:[[6.19,21.01,.9],[-7,-21,.8]], fa:function(B){
-    var X=-41, Z=-96.8;
-    luogo(B,X,Z,-34.81,-75.79,.285,.7,function(B){ arcoUno(B,1.4,.55,1.3,.6,.85,0,0,0,0,P.travertino); });
-    luogo(B,X,Z,-48,-117.8,.285,.5,function(B){ arcoUno(B,1,.5,1.15,.45,.75,0,0,0,0,P.marmo); });      /* arco di Portogallo: 8 m più a ovest, sull'asse della via del Corso (24 novembre 2026). Il punto di it.wikipedia, per un arco demolito nel 1662, è meno sicuro del tracciato della strada, e che l'arco la scavalcasse è il dato della fonte */
+ /* 27 novembre 2026: il gruppo «Archi della via Lata» è diviso in due voci, perché i due archi hanno storie diverse (voci Arcus Claudii e Arco di Portogallo di Platner e Ashby, lette
+    per intero). Stessi punti, stesse misure, stesse zone di prima. L'arco di Claudio «seems to have been in ruins as early as the eighth century»: crollato dal 700 (anno scelto
+    all'inizio del secolo). L'arco di Portogallo: i disegni del Cinque e Seicento mostrano «a single archway flanked on each side with two columns, and surrounded with a cornice»;
+    l'età è incerta (Adriano, Marco Aurelio, o per Hülsen il IV o il V secolo): nel modello c'è già nel 235, scelta detta in scheda. Un lato fu demolito nel XII secolo, dopo il periodo. */
+ {id:'arcoclaudio', nome:'Arco di Claudio', x:-34.81,z:-75.79, ry:.285, zone:[[0,0,.9]], fa:function(B){ arcoUno(B,1.4,.55,1.3,.6,.85,0,0,0,0,P.travertino);
+    [1,-1].forEach(function(q){ B.scatola(.9,.3,.02,0,.95,q*.285,P.travertino); }); }},      // la lastra dell'iscrizione sulle due fronti (ne furono trovati pezzi: Platner e Ashby)
+ {id:'arcoportogallo', nome:'Arco di Portogallo', x:-48,z:-117.8, ry:.285, zone:[[0,0,.8]], fa:function(B){      /* 8 m più a ovest del punto di it.wikipedia, sull'asse della via del Corso (24 novembre 2026): che l'arco scavalcasse la strada è il dato della fonte */
+    arcoUno(B,1,.5,1.15,.45,.75,0,0,0,0,P.marmo);
+    B.scatola(1.06,.06,.56,0,.86,0,P.marmo);                                                                                    // la cornice che gira tutt'attorno
+    [1,-1].forEach(function(q){ [-.41,-.3,.3,.41].forEach(function(x){ B.scatola(.1,.12,.08,x,0,q*.28,P.marmo).colonne(x,q*.28,x,q*.28,1,.74,.035,.12); }); });      // due colonne per parte del fornice, sulle due fronti (forma dai disegni citati dalla fonte; misure schema)
  }},
+ /* Archi alle teste dei ponti (27 novembre 2026, Platner e Ashby, voce Arcus, letta per intero). Arco di Graziano, Valentiniano e Teodosio: «built between 379 and 383 … as the
+    monumental end of their Porticus Maximae. It stood close to the pons Ælius, and probably spanned its southern approach. It was destroyed in the fourteenth century»: qui dal 381
+    (anno scelto fra il 379 e il 383) alla testa sud del ponte Elio, 8 m oltre il piede della rampa (RM.ponti in js/mura.js; come l'arco di Valentiniano al ponte Aurelio), sull'asse del ponte. Arco di Arcadio, Onorio e Teodosio: «a marble arch erected
+    by the senate after the victory of Stilicho at Pollentia in 405 … It stood at the west end of the Pons Neronianus and probably spanned its approach … It was standing in the
+    fifteenth century, but had been stripped of its marble facing»: dal 405 alla testa ovest del ponte Neroniano, sul suo asse. Il modello dà quel ponte in rovina dal 300 (js/mura.js,
+    scelta più vecchia): l'arco del 405 lo contraddice, detto nella scheda. Di tutti e due la fonte non dà forma né misure: un fornice, misure come gli altri archi (schema, in scheda). */
+ {id:'arcograziano', nome:'Arco di Graziano, Valentiniano e Teodosio', etichetta:'Arco di Graziano', x:-155.49,z:-94.14, ry:.06, zone:[[0,0,.8]], fa:function(B){ arcoUno(B,1.2,.5,1.25,.55,.8,0,0,0,0,P.marmo);
+    B.scatola(1.26,.06,.56,0,.95,0,P.marmo); [1,-1].forEach(function(q){ B.scatola(.7,.2,.02,0,1.02,q*.255,P.travertino); }); }},
+ {id:'arcoarcadio', nome:'Arco di Arcadio, Onorio e Teodosio', etichetta:'Arco di Arcadio', x:-183.14,z:-100.67, ry:.88, zone:[[0,0,.8]], fa:function(B){ arcoUno(B,1.2,.5,1.25,.55,.8,0,0,0,0,P.marmo);
+    B.scatola(1.26,.06,.56,0,.95,0,P.marmo); [1,-1].forEach(function(q){ B.scatola(.7,.2,.02,0,1.02,q*.255,P.travertino); }); }},
  /* Arcus Novus sulla via Lata, per Diocleziano e Massimiano: «fu eretto nel 293» per i decennali e demolito nel 1491 (it.wikipedia «Arcus Novus», dove sta anche la posizione:
     41,89818 N, 12,48153 E). Misure indicative. */
  {id:'arcusnovus', nome:'Arcus Novus', x:-31.24,z:-63.12, ry:.285, zone:[[0,0,.8]], fa:function(B){ arcoUno(B,1.2,.5,1.3,.5,.8,0,0,0,0,P.marmo); }},
@@ -2515,7 +2564,7 @@ var etichette=document.createElement('div'); etichette.className='etichette3d'; 
 function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return [o.x+lx*c+lz*s, o.z-lx*s+lz*c]; }
 /* prima le zone: sotto ogni monumento il terreno si spiana alla quota del suo centro; poi si posa il suolo */
 var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1,ospizionaumachia:1};        // complessi che seguono il pendio: niente terrazza
-['orologio','castrapretorio','castrapretoriorasa','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });
+['orologio','castrapretorio','castrapretoriorasa','foroboario','esquilino','sessoriano','campidoglio'].forEach(function(k){ PENDIO[k]=1; });
 ['magnamater','tiberiana'].forEach(function(k){ PENDIO[k]=1; });
 ['ercolevincitore','portuno','giano','argentari','arcogallieno','trofeimario','servianetermini','servianeaventino'].forEach(function(k){ PENDIO[k]=1; });      // 27 novembre 2026: pezzi usciti dai gruppi foroboario ed esquilino, che seguono il pendio; ognuno al piede di prima (luogo)      // 26 novembre 2026 (sera): sul pianoro del Palatino, che nel modello è la terrazza del gruppo palatino; RM.hGrezza lì sta 6 unità più in basso
 ['casasallustio','hortilamianistatue','hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'].forEach(function(k){ PENDIO[k]=1; });      // gli horti (26 novembre 2026): ogni pezzo sul suo terreno, senza zona (le case stanno già fuori dal cerchio di RM.HORTI)      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
@@ -2530,7 +2579,7 @@ M.forEach(function(o){
 });
 /* dove una strada passa sotto un arco si stringe alla luce del fornice: [x, z, raggio, mezza larghezza] (24 novembre 2026: con strade larghe 16 m e fornici di 5 o 6, anche un arco
    ben centrato sembrava stare «accanto» alla strada) */
-RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.21],[27.2,20.15,1.6,.25],[44.47,30.43,2.4,.3],[81.86,76.56,1.4,.19],[-110.9,-9.2,1.6,.25]];      // Claudio, Portogallo, Arcus Novus, Gallieno, Tito, Costantino, Dolabella, Valentiniano (ponte Aurelio)
+RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.34],[27.2,20.15,1.6,.25],[44.47,30.43,2.4,.3],[81.86,76.56,1.4,.19],[-110.9,-9.2,1.6,.25],[-155.49,-94.14,1.6,.26]];      // Claudio, Portogallo, Arcus Novus, Gallieno (fornice di 7,30 dal 27 novembre 2026), Tito, Costantino, Dolabella, Valentiniano (ponte Aurelio), Graziano (ponte Elio)
 RM.posa();
 var perId={};
 M.forEach(function(o){
@@ -2590,6 +2639,7 @@ var TENUTA={colosseo:0};
 var CROLLI={
   massenzio:{zona:[0,1,-1.45,-1.25], peso:[.05,1.3], base:.45},      // Platner e Ashby, Basilica Constantini (letta il 26 novembre 2026): «The south aisle and the roof of the nave probably collapsed in the earthquake of Leo IV in 847»; «the north wall and the north aisle … are still standing». Qui -z è il nord e la navata nord va da z -3,3 a -1,3: regge lei, con il muro nord e l'abside nord; cade tutto ciò che nella navata centrale e in quella sud sta sopra le volte laterali (base 0,45: sopra 2,4 unità su 4,4, l'imposta delle volte), cioè la volta e le pareti alte della navata, e la navata sud scende ancora, per campate. Che con la volta cadessero anche le pareti alte e quanto in basso arrivi la rottura è una resa; «probably» è di Platner e Ashby
   foroaugusto:{zona:[-1,0,-5.1,-4.6], peso:[0,1]},      // 27 novembre 2026. La scheda: «Restano tre colonne del tempio con l'architrave, alte 15,30 metri, il podio e il grande muro di fondo». Il muro tagliafuoco del modello sta a x da 5,25 a 5,75 (nel riferimento del foro): regge intero (peso 0); portici, esedre e tempio, davanti, prendono il taglio della cava. Prima la cava abbassava anche il muro fino a due terzi
+  arcoclaudio:{zona:[1,0,-.25,.25], peso:[.5,1.4], base:.5},      // 27 novembre 2026. Platner e Ashby, Arcus Claudii: «It seems to have been in ruins as early as the eighth century»: dal 700 metà dell'arco scende a metà altezza. Quale metà e quanto è una resa: la fonte dice solo «in ruins»
   paolo:{zona:[0,0,-2,-1], peso:[1,1], muri:0}      // Annali del regno dei Franchi, 801: «tectum basilicae beati Pauli apostoli magna ex parte cum suis trabibus decidit»: cade il tetto, non i muri
 };
 /* La quota del taglio di rmCrollo (js/costruttore.js) rifatta qui, con le ottave fini al loro valore medio: serve a posare macerie e verde dove la cima è caduta davvero.
