@@ -803,6 +803,7 @@ function applicaFuoco(){
   for(k in vociPopoli) vociPopoli[k].setAttribute('aria-pressed',k===fuocoP?'true':'false');
   legenda.classList.toggle('con-fuoco',!!fuoco); if(legendaPopoli) legendaPopoli.classList.toggle('con-fuoco',!!fuocoP);
   segnaVivi();
+  if(grandeSi && !inMisura) adatta();      // a tutto schermo in verticale la carta prende l'altezza lasciata da ciò che sta sotto in questa tappa (legende, note della tetrarchia e di Verdun, che cambiano col tocco)
 }
 function voceCliccabile(v,fa){
   v.setAttribute('role','button'); v.tabIndex=0; v.setAttribute('aria-pressed','false'); v.addEventListener('click',fa);
@@ -810,7 +811,7 @@ function voceCliccabile(v,fa){
 }
 function bottoneAltre(el){
   var b=document.createElement('button'); b.type='button'; b.className='leg-altre'; b.hidden=true; el.appendChild(b); el._altre=b;
-  b.addEventListener('click',function(){ el.classList.toggle('aperta'); misuraLegende(); });
+  b.addEventListener('click',function(){ el.classList.toggle('aperta'); misuraLegende(); if(grandeSi) adatta(); });
 }
 function misuraLegende(){
   [legenda,legendaPopoli].forEach(function(el){
@@ -913,8 +914,19 @@ function adatta(){
   document.body.classList.remove('impero-largo');                       // le legende si misurano al loro posto, sotto la carta
   var legende=Math.max(legendeMax,legenda.offsetHeight+(legendaPopoli?legendaPopoli.offsetHeight:0))+8;      // lo spazio della tappa con più voci (spazioLegende)
   vista.alto=0; vista.aw=aw;
-  if(aw/Math.max(1,ah-legende)<BASE[2]/G.h){        // telefono in verticale: la carta in alto, le legende sotto
-    vista.alto=Math.max(120,ah-legende); ospite.style.width=aw+'px'; document.body.style.setProperty('--tempo',(tp?tp.offsetHeight:92)+'px'); applicaVista(); return;
+  if(aw/Math.max(1,ah-legende)<BASE[2]/G.h || (aw<700 && aw/ah<BASE[2]/G.h)){        // telefono in verticale: la carta in alto, le legende sotto. 27 novembre 2026: su un telefono stretto lo spazio delle legende della tappa più lunga (legendeMax) superava mezzo schermo e si finiva nel ramo qui sotto, con la carta ferma a 296 punti d'altezza e il vuoto sotto: ora decide la forma dello schermo
+    ospite.style.width=aw+'px'; document.body.style.setProperty('--tempo',(tp?tp.offsetHeight:92)+'px');
+    /* 27 novembre 2026 (l'utente, dall'iPhone: «potresti anche ingrandirla verticalmente su telefonino per ridurre lo spazio vuoto sotto (occhio a quando ci sono tante scritte
+       in legenda però)»): la carta prende tutta l'altezza che resta sopra la linea del tempo, tolto ciò che sta sotto di lei in QUESTA tappa (riga dei luoghi, legende, parti
+       della tetrarchia e di Verdun), misurato al suo posto; prima toglieva lo spazio della tappa con più voci, e nel 235 sotto le due voci restava mezzo schermo vuoto.
+       Si rifà a ogni tappa (aggiornaLegende), quando la legenda si apre e alla rotazione. Se chi guarda non ha mosso la carta, l'ingrandimento la riempie. */
+    var riq=ospite.parentNode, rr=riq.getBoundingClientRect(), ro=ospite.getBoundingClientRect(), fondo=ro.bottom;
+    [].forEach.call(riq.children,function(e){ if(e===ospite) return; var cs=getComputedStyle(e); if(cs.display==='none' || cs.position==='absolute' || cs.position==='fixed' || !e.getClientRects().length) return;
+      var b=e.getBoundingClientRect().bottom+(parseFloat(cs.marginBottom)||0); if(b>fondo) fondo=b; });
+    var sopra=ro.top-rr.top+riq.scrollTop, sotto=fondo-ro.bottom, padB=parseFloat(getComputedStyle(riq).paddingBottom)||ht;
+    vista.alto=Math.max(120,Math.floor(riq.clientHeight-padB-sopra-sotto-4));
+    if(vista.libera && vista.alto*BASE[2]>vista.aw*G.h*vista.k){ vista.k=Math.max(1,BASE[2]*vista.alto/(G.h*vista.aw)); }      // la carta riempie il riquadro più alto (prima della mano di chi guarda)
+    applicaVista(); return;
   }
   var a=aw/ah, aa=Math.max(BASE[2]/G.h,Math.min(G.w/BASE[3],a)), mw=a>aa?ah*aa:aw, mh=a>aa?ah:aw/aa;
   ospite.style.width=Math.round(mw)+'px'; ospite.style.height=Math.round(mh)+'px';

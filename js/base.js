@@ -1230,6 +1230,90 @@ document.addEventListener('DOMContentLoaded',function(){ applicaQ(); });
 RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livello:RM.livello, pr:renderer.getPixelRatio(), ombre:sole.castShadow, leggero:!!RM.leggero, fermo:fermo, noSalita:noSalita, ris:ALTA, qualita:nomeQ()}; },
   alta:{ stato:function(){ return {gradino:nomeQ(), ris:ALTA, adatta:altaAdatta, ritorni:alta.ritorni, spenta:alta.spenta, motivo:alta.motivo, partenza:NOMI_Q[SCALA[alta.partenza]], misura:avvio.fatta, blocco:Math.max(0,Math.round(alta.blocco-performance.now()))}; }, passo:passoAlta,
     azzera:function(){ altaAdatta=!qScelta; avvio.fatta=true; avvio.carico=0; alta.partenza=P_DEF; mettiAlta(P_DEF,'azzera'); riparti(); alta.calmo=true; } } };      // per le prove
+/* ---------- riquadri: le maglie a istanze divise per zona (27 novembre 2026, passaggio di fluidità) ----------
+   Case, rovine, alberi, cumuli, campate degli acquedotti e le altre maglie a istanze grandi avevano frustumCulled=false: si disegnavano intere anche quando la camera
+   ne guardava un angolo (misura: da vicino all'isola Tiberina, nell'800, 2,1 milioni di triangoli disegnati, 0,23 nell'inquadratura). Qui, senza toccare chi le scrive,
+   ogni maglia così (ferma, opaca, grande) ha accanto fino a 5 x 5 copie per zona, che condividono geometria e materiale e portano solo le loro istanze, con una sfera
+   che le contiene tutte: three le scarta da sé fuori dall'inquadratura e fuori dal riquadro delle ombre. Prima di ogni disegno (scene.onBeforeRender): se la maglia è
+   cambiata da poco (un cambio d'anno, una figura che cammina) si disegna l'originale, come prima; se è ferma da dieci disegni le copie si rifanno una volta e, quando
+   l'inquadratura vede meno del 60% dei suoi triangoli, si disegnano le copie al posto dell'originale (che resta visibile fuori dal disegno: raggi, conteggi, scrittori).
+   Cambia solo l'ordine in cui le istanze arrivano alla scheda grafica. ?riquadri=0 lo spegne (per le prove). */
+RM.riquadri=(function(){
+  var SPENTO=/[?&]riquadri=0/.test(location.search), N=5, QUIETE=10, SOGLIA=.6, DISEGNO=8000, giro=0, cand=[], visti=new WeakSet(), fr=new THREE.Frustum(), pm=new THREE.Matrix4(), sf=new THREE.Sphere(), conta={copie:0,usate:0};      // DISEGNO: un disegno in più costa quanto circa 8.000 triangoli (misura del 27 novembre: 0,02-0,03 ms di lavoro di three per disegno, 9 ms per 2 milioni di triangoli)
+  function adatta(o){ if(!o.isInstancedMesh || o.frustumCulled!==false || o.parent!==scene || visti.has(o)) return false; visti.add(o);
+    var m=o.material, g=o.geometry; if(!m || Array.isArray(m) || m.transparent || !g || o.onBeforeRender!==THREE.Object3D.prototype.onBeforeRender) return false;
+    if(o.userData.gruppo==='vita' || o.userData.copiaDi) return false;      // la gente, gli animali e le barche si muovono (e lo shader delle figure sposta i vertici fuori dalla loro forma): restano come sono
+    var n=g.index?g.index.count:(g.attributes.position?g.attributes.position.count:0);
+    return o.instanceMatrix.count>=32 && n/3*o.instanceMatrix.count>=20000; }
+  function cerca(){ for(var i=0;i<scene.children.length;i++){ var o=scene.children[i]; if(adatta(o)) cand.push({o:o, firma:'', fermo:0, fatta:'', copie:[], tri:[]}); } }
+  /* la sfera della geometria, calcolata ogni volta dai vertici (quella di three può essere vecchia, di prima che la geometria fosse riempita) */
+  function sferaGeo(g){ var p=g.attributes.position, s=new THREE.Sphere(); if(!p || !p.count) return s; var b=new THREE.Box3().setFromBufferAttribute(p), v=new THREE.Vector3(), r2=0, i;
+    b.getCenter(s.center); for(i=0;i<p.count;i++){ v.fromBufferAttribute(p,i); r2=Math.max(r2,s.center.distanceToSquared(v)); } s.radius=Math.sqrt(r2); return s; }
+  function firma(o){ var s=o.count+'|'+o.instanceMatrix.version+'|'+(o.instanceColor?o.instanceColor.version:'-')+'|'+o.geometry.id, a=o.geometry.attributes, k;
+    for(k in a) if(a[k].isInstancedBufferAttribute) s+='|'+a[k].version; return s; }
+  /* le copie per zona: le istanze vive si contano per cella di una griglia 5 x 5 sul loro riquadro, in ordine; ogni cella ha la sua geometria (stessi attributi, istanze sue) */
+  function rifai(c){ var o=c.o, g=o.geometry, n=o.count, M=o.instanceMatrix.array, i, k;
+    var gs=sferaGeo(g), gc=gs.center, gr=gs.radius;
+    var X=new Float32Array(n), Z=new Float32Array(n), Y=new Float32Array(n), R=new Float32Array(n), x0=1e9, x1=-1e9, z0=1e9, z1=-1e9;
+    for(i=0;i<n;i++){ var e=i*16, sx=M[e]*M[e]+M[e+1]*M[e+1]+M[e+2]*M[e+2], sy=M[e+4]*M[e+4]+M[e+5]*M[e+5]+M[e+6]*M[e+6], sz=M[e+8]*M[e+8]+M[e+9]*M[e+9]+M[e+10]*M[e+10];
+      X[i]=M[e]*gc.x+M[e+4]*gc.y+M[e+8]*gc.z+M[e+12]; Y[i]=M[e+1]*gc.x+M[e+5]*gc.y+M[e+9]*gc.z+M[e+13]; Z[i]=M[e+2]*gc.x+M[e+6]*gc.y+M[e+10]*gc.z+M[e+14];
+      R[i]=gr*Math.sqrt(Math.max(sx,sy,sz)); if(R[i]<=0) continue; if(X[i]<x0) x0=X[i]; if(X[i]>x1) x1=X[i]; if(Z[i]<z0) z0=Z[i]; if(Z[i]>z1) z1=Z[i]; }
+    var cel=new Int16Array(n), quanti=new Int32Array(N*N), dx=(x1-x0)/N||1, dz=(z1-z0)/N||1;
+    for(i=0;i<n;i++){ if(R[i]<=0){ cel[i]=-1; continue; } k=Math.min(N-1,Math.floor((X[i]-x0)/dx))+N*Math.min(N-1,Math.floor((Z[i]-z0)/dz)); cel[i]=k; quanti[k]++; }
+    var ist=[], a=g.attributes, nome; for(nome in a) if(a[nome].isInstancedBufferAttribute) ist.push(nome);
+    var tri=(g.index?g.index.count:a.position.count)/3;
+    for(k=0;k<N*N;k++){ var q=c.copie[k];
+      if(!quanti[k]){ if(q){ q.count=0; q.visible=false; } continue; }
+      if(!q || q.instanceMatrix.count<quanti[k] || q.userData.geoDi!==g.id || q.userData.ist!==ist.join(',')){      // una copia nuova (o più grande, o di una geometria cambiata)
+        if(q){ scene.remove(q); var gv=q.geometry; gv.index=null; for(nome in gv.attributes) if(!gv.attributes[nome].isInstancedBufferAttribute) delete gv.attributes[nome]; gv.dispose(); q.dispose(); }      // si liberano solo le istanze della copia: posizioni, normali e indici sono dell'originale e restano
+        var cap=Math.max(quanti[k],q?Math.ceil(q.instanceMatrix.count*1.3):0), gq=new THREE.BufferGeometry(); gq.index=g.index; for(nome in a) if(!a[nome].isInstancedBufferAttribute) gq.setAttribute(nome,a[nome]);
+        ist.forEach(function(s){ gq.setAttribute(s,new THREE.InstancedBufferAttribute(new Float32Array(cap*a[s].itemSize),a[s].itemSize)); });
+        gq.groups=g.groups; gq.drawRange=g.drawRange; gq.boundingSphere=new THREE.Sphere();
+        q=new THREE.InstancedMesh(gq,o.material,cap); if(o.instanceColor) q.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(cap*3),3);
+        q.userData={gruppo:o.userData.gruppo, copiaDi:o, geoDi:g.id, ist:ist.join(',')}; q.matrixAutoUpdate=false; q.frustumCulled=true; visti.add(q); scene.add(q); c.copie[k]=q; conta.copie++; }      // three dà frustumCulled=false a ogni InstancedMesh: qui serve vero
+      q.count=0; }
+    var cs=[], ch=[];
+    for(k=0;k<N*N;k++){ cs[k]=[1e9,-1e9,1e9,-1e9,1e9,-1e9]; ch[k]=0; }
+    var C=o.instanceColor?o.instanceColor.array:null;
+    for(i=0;i<n;i++){ k=cel[i]; if(k<0) continue; var q2=c.copie[k], j=q2.count++, d=q2.instanceMatrix.array, s, t;
+      for(t=0;t<16;t++) d[j*16+t]=M[i*16+t];
+      if(C) for(t=0;t<3;t++) q2.instanceColor.array[j*3+t]=C[i*3+t];
+      for(s=0;s<ist.length;s++){ var src=a[ist[s]], dst=q2.geometry.attributes[ist[s]], w=src.itemSize; for(t=0;t<w;t++) dst.array[j*w+t]=src.array[i*w+t]; }
+      var b=cs[k]; if(X[i]-R[i]<b[0]) b[0]=X[i]-R[i]; if(X[i]+R[i]>b[1]) b[1]=X[i]+R[i]; if(Y[i]-R[i]<b[2]) b[2]=Y[i]-R[i]; if(Y[i]+R[i]>b[3]) b[3]=Y[i]+R[i]; if(Z[i]-R[i]<b[4]) b[4]=Z[i]-R[i]; if(Z[i]+R[i]>b[5]) b[5]=Z[i]+R[i]; }
+    var CX=new Float64Array(N*N), CY=new Float64Array(N*N), CZ=new Float64Array(N*N), RR=new Float64Array(N*N);
+    for(k=0;k<N*N;k++){ var b2=cs[k]; CX[k]=(b2[0]+b2[1])/2; CY[k]=(b2[2]+b2[3])/2; CZ[k]=(b2[4]+b2[5])/2; }
+    for(i=0;i<n;i++){ k=cel[i]; if(k<0) continue; var dd=Math.sqrt((X[i]-CX[k])*(X[i]-CX[k])+(Y[i]-CY[k])*(Y[i]-CY[k])+(Z[i]-CZ[k])*(Z[i]-CZ[k]))+R[i]; if(dd>RR[k]) RR[k]=dd; }
+    for(k=0;k<N*N;k++){ var q3=c.copie[k]; if(!q3 || !q3.count) continue;
+      q3.geometry.boundingSphere.center.set(CX[k],CY[k],CZ[k]); q3.geometry.boundingSphere.radius=RR[k]*1.001+.01; ch[k]=q3.count*tri;
+      q3.instanceMatrix.needsUpdate=true; if(q3.instanceColor) q3.instanceColor.needsUpdate=true; ist.forEach(function(s){ q3.geometry.attributes[s].needsUpdate=true; }); }
+    c.tri=ch; c.fatta=c.firma; }
+  var vecchio=scene.onBeforeRender, salvati=[], camPrima=null, pmPrima=new THREE.Matrix4();
+  scene.onBeforeRender=function(r,s,camera){
+    if(vecchio) vecchio.apply(this,arguments);
+    if(SPENTO) return;
+    if((giro++)%120===0) cerca();
+    pm.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse); conta.usate=0;
+    var stessa=camera===camPrima && pm.equals(pmPrima); if(!stessa){ fr.setFromProjectionMatrix(pm); pmPrima.copy(pm); camPrima=camera; }      // camera ferma: le scelte di prima valgono ancora (per le maglie che non sono cambiate)
+    var t0=performance.now();      // le copie si rifanno al più per due millesimi a disegno: all'arrivo di una tappa le maglie cambiate sono decine, e quelle che aspettano si disegnano intere come prima
+    for(var i=0;i<cand.length;i++){ var c=cand[i], o=c.o, f=firma(o), k, q, usa=false;
+      if(f!==c.firma){ c.firma=f; c.fermo=0; } else c.fermo++;
+      if(o.visible && o.parent===scene && c.fermo>=QUIETE && o.count>0 && (c.fatta===c.firma || performance.now()-t0<2)){
+        if(c.fatta!==c.firma){ rifai(c); c.scelta=null; }
+        if(stessa && c.scelta===c.fatta) usa=c.usa;
+        else { c.scelta=c.fatta; var tot=0, dentro=0, nd=0; for(k=0;k<c.copie.length;k++){ q=c.copie[k]; if(!q || !q.count) continue; tot+=c.tri[k]; q.matrix.copy(o.matrix); q.updateMatrixWorld(); sf.copy(q.geometry.boundingSphere).applyMatrix4(q.matrixWorld); if(fr.intersectsSphere(sf)){ dentro+=c.tri[k]; nd++; } }
+        usa=tot>0 && dentro<tot*SOGLIA && (nd-1)*DISEGNO<tot-dentro; c.quota=tot?dentro/tot:0; } }      // conviene solo se i triangoli risparmiati pagano i disegni in più
+      else c.scelta=null;      // non scelta adesso: alla prossima volta si rifà il conto
+      c.usa=usa;
+      for(k=0;k<c.copie.length;k++){ q=c.copie[k]; if(!q) continue; q.visible=usa && q.count>0;
+        if(usa){ q.material=o.material; q.customDepthMaterial=o.customDepthMaterial; q.customDistanceMaterial=o.customDistanceMaterial; q.castShadow=o.castShadow; q.receiveShadow=o.receiveShadow; q.renderOrder=o.renderOrder; if(!q.matrix.equals(o.matrix)){ q.matrix.copy(o.matrix); q.updateMatrixWorld(); } } }
+      if(usa){ o.visible=false; salvati.push(o); conta.usate++; } }
+  };
+  var vecchioDopo=scene.onAfterRender;
+  scene.onAfterRender=function(){ for(var i=0;i<salvati.length;i++) salvati[i].visible=true; salvati.length=0; if(vecchioDopo) vecchioDopo.apply(this,arguments); };
+  return { stato:function(){ return {maglie:cand.length, copie:conta.copie, usate:conta.usate, spento:SPENTO}; }, spegni:function(si){ SPENTO=!!si; if(si) cand.forEach(function(c){ c.copie.forEach(function(q){ if(q) q.visible=false; }); }); },
+    /* spegni(true): per le prove prima e dopo nella stessa pagina */
+    maglie:function(){ return cand.map(function(c){ return {gruppo:c.o.userData.gruppo, istanze:c.o.count, fermo:c.fermo, usa:!!c.usa, quota:c.quota, vis:c.o.visible, copie:c.copie.filter(function(q){ return q&&q.count; }).length}; }); } };
+})();
 var orologio=new THREE.Clock(), somma=0, quanti=0, occhioPrima=new THREE.Vector3(), puntoPrima=new THREE.Vector3();
 /* Quando la scena non è sullo schermo (si è scesi a leggere, o sul telefono si guarda la mappa) non si disegna: la pagina scorre meglio e la batteria ringrazia. */
 RM.fuoriVista=false;
