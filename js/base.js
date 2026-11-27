@@ -493,18 +493,20 @@ function posaSuolo(){
 }
 
 /* nastro steso sul terreno lungo una linea */
-RM.nastro=function(linea,larga,materiale,alza,quotaFissa){
+RM.nastro=function(linea,larga,materiale,alza,quotaFissa,attrib){      // attrib(x,z): un numero per punto del nastro (aTenuta, per le strade)
   var punti=linea.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); }), piena=larga, STR=quotaFissa==null?(RM.strozzature||[]):[];
-  var curva=new THREE.CatmullRomCurve3(punti,false,'catmullrom',.35), n=Math.max(20,Math.round(curva.getLength()/(larga<.5?1:3))), v=[], uv=[], idx=[], k, p, t, nx, nz, y1, y2;
+  var curva=new THREE.CatmullRomCurve3(punti,false,'catmullrom',.35), n=Math.max(20,Math.round(curva.getLength()/(larga<.5?1:3))), v=[], uv=[], idx=[], at=[], k, p, t, nx, nz, y1, y2;
   for(k=0;k<=n;k++){
     p=curva.getPointAt(k/n); t=curva.getTangentAt(k/n); nx=-t.z; nz=t.x;
     larga=piena; for(var q=0;q<STR.length;q++){ var dq=Math.hypot(p.x-STR[q][0],p.z-STR[q][1]); if(dq<STR[q][2]) larga=Math.min(larga,STR[q][3]+(piena-STR[q][3])*RM.sfuma(STR[q][2]*.35,STR[q][2],dq)); }      // sotto un arco la strada si stringe alla luce del fornice      // a passo costante lungo la via: con getPoint i tratti lunghi restavano radi e il terreno copriva la strada
     var hq=RM.hSuolo||RM.h; y1=quotaFissa!=null?quotaFissa:hq(p.x+nx*larga,p.z+nz*larga)+alza; y2=quotaFissa!=null?quotaFissa:hq(p.x-nx*larga,p.z-nz*larga)+alza;
     v.push(p.x+nx*larga,y1,p.z+nz*larga, p.x-nx*larga,y2,p.z-nz*larga); uv.push(0,k/2,1,k/2);
+    if(attrib){ var va=attrib(p.x,p.z); at.push(va,va); }
     if(k<n){ var a=k*2; idx.push(a,a+2,a+1, a+1,a+2,a+3); }
   }
   var g=new THREE.BufferGeometry();
   g.setAttribute('position',new THREE.Float32BufferAttribute(v,3)); g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.setIndex(idx); g.computeVertexNormals();
+  if(attrib) g.setAttribute('aTenuta',new THREE.Float32BufferAttribute(at,1));
   var m=new THREE.Mesh(g,materiale); m.receiveShadow=true; m.userData.gruppo='strade'; scene.add(m); m.userData.curva=curva; return m;
 };
 /* strade (le vie strette del centro prendono la quota ogni 10 m, le altre ogni 30: con 30 m sulla Velia il nastro affondava nel terreno e la via Sacra sembrava a pezzi; 23 novembre 2026) */
@@ -512,23 +514,59 @@ var matStrada=new THREE.MeshStandardMaterial({color:RM.col(0xcdbfa3),roughness:1
 /* Veste del PC: le strade non sono più nastri color crema ma lastricate di basalto («silex»), grigie e scurite dove passano le ruote, con i margini di terra e polvere più chiari;
    da vicino i poligoni del basolato, ognuno col suo tono; nella città che si svuota l'erba le invade a chiazze (dove la gente resta, nei nuclei, la scena non lo sa: è una media).
    I marciapiedi rialzati e le crepidini lungo le vie consolari sono resi solo col colore: uno schema. */
-if(RM.VESTE) matStrada.onBeforeCompile=function(sh){ var A=String.fromCharCode(10), TVs=RM.trameVeste();
-  sh.uniforms.uVeste=RM.vesteU; sh.uniforms.tMacchie={value:TVs.macchie}; sh.uniforms.uErbaS=RM.erba||{value:0};
-  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying vec2 vXZs; varying vec2 vUvS;').replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vXZs=position.xz; vUvS=uv;');
-  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying vec2 vXZs; varying vec2 vUvS; uniform float uVeste; uniform sampler2D tMacchie; uniform float uErbaS;'+A+
-      'vec2 bH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }')
+/* Strade lastricate e strade in rovina (27 novembre 2026; l'utente: «le strade devono essere lastricate appunto. Almeno all'epoca romana»; «Tra le rovine segna anche le strade
+   che vanno in rovina»; fonti in src/testi/vita-roma-fonti.md, «Strade e rovine»). In città le vie si lastricano di selce (Livio XLI 27, 5: «uias sternendas silice in urbe»):
+   poligoni di lava basaltica «fitted and jointed with the greatest nicety», con ai lati marciapiedi rialzati «strewed with gravel» (Smith, voce Viae). Il basolato è una trama
+   disegnata una volta (trameBasoli: poligoni di circa un metro con le fughe) e ripetuta nel mondo: i mipmap la filtrano, così da mezza distanza si leggono ancora le pietre e da
+   lontano resta il loro tono medio, senza moiré. Ai lati la fascia chiara del marciapiede col suo cordolo. Misura dei basoli e larghezza dei marciapiedi sono schema.
+   Il degrado viene dalla città: tStatoV (riempita da js/citta.js, RM.statoVie) dice per ogni punto quanto sono lasciate le case attorno e da quanto (G), quanto erano fitte
+   e alte (B: più macerie nei vicoli) e se attorno ci sono case (A; dove non ce ne sono, fuori, vale uEsternoV); uAnnoV è la manutenzione che cala per tutti dopo il V secolo.
+   Coi decenni: erba nelle fughe, basoli sconnessi e mancanti (i primi a sparire sono sempre gli stessi: la scelta sta nella trama), terra e calcinacci a chiazze, poi la via si
+   stringe a un sentiero di terra battuta in mezzo all'erba. Le vie ancora battute (aTenuta: i percorsi dell'Itinerario di Einsiedeln e del pellegrino, RM.posa) tengono pulita
+   e lastricata la striscia di mezzo. Il modo e il ritmo del degrado sono schema: nessuna fonte letta descrive il lastricato rotto. */
+RM.statoVie={tex:{value:new THREE.DataTexture(new Uint8Array(4),1,1,THREE.RGBAFormat)}, box:{value:new THREE.Vector4(-340,-390,1/680,1/820)}, anno:{value:0}, esterno:{value:0}};
+function trameBasoli(){ var W=512, N=12, r=RM.casuale(4242), C=[], i, j, k, x, y;      // N x N basoli per piastrella, centri a caso in una griglia (poligoni di Voronoi, che si ripetono senza giunte)
+  for(j=0;j<N;j++) for(i=0;i<N;i++) C.push([(i+.5+(r()-.5)*.8)/N,(j+.5+(r()-.5)*.8)/N,.45+.55*r(),r()]);
+  var cv=document.createElement('canvas'); cv.width=cv.height=W; var g=cv.getContext('2d'), im=g.createImageData(W,W), D=im.data, G=.0055;      // G: la fuga, circa 6 cm
+  for(y=0;y<W;y++) for(x=0;x<W;x++){ var u=(x+.5)/W, v=(y+.5)/W, ci=Math.floor(u*N), cj=Math.floor(v*N), d1=9, d2=9, s=0;
+    for(j=-1;j<=1;j++) for(i=-1;i<=1;i++){ var ii=(ci+i+N)%N, jj=(cj+j+N)%N, c=C[jj*N+ii], cx=c[0]+Math.floor((ci+i)/N)-u, cy=c[1]+Math.floor((cj+j)/N)-v, dd=cx*cx+cy*cy;
+      if(dd<d1){ d2=d1; d1=dd; s=jj*N+ii; } else if(dd<d2) d2=dd; }
+    d1=Math.sqrt(d1); d2=Math.sqrt(d2); var e=(d2-d1)/2, fu=1-Math.min(1,Math.max(0,(e-G*.5)/G)), bo=Math.min(1,e/(G*3.2)), o=(y*W+x)*4;
+    D[o]=Math.round(255*(1-fu)*C[s][2]*(.72+.28*bo)); D[o+1]=Math.round(255*fu); D[o+2]=Math.round(255*C[s][3]); D[o+3]=255; }      // R tono della pietra (spigoli consumati più scuri), G la fuga, B un numero per pietra
+  g.putImageData(im,0,0);
+  var t=new THREE.CanvasTexture(cv); t.wrapS=t.wrapT=THREE.RepeatWrapping; t.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy()); return t; }
+if(RM.VESTE) matStrada.onBeforeCompile=function(sh){ var A=String.fromCharCode(10), TVs=RM.trameVeste(), SV=RM.statoVie;
+  sh.uniforms.uVeste=RM.vesteU; sh.uniforms.tMacchie={value:TVs.macchie}; sh.uniforms.tBasoli={value:RM.trameBasoli||(RM.trameBasoli=trameBasoli())};
+  sh.uniforms.tStatoV=SV.tex; sh.uniforms.uBoxV=SV.box; sh.uniforms.uAnnoV=SV.anno; sh.uniforms.uEsternoV=SV.esterno;
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'attribute float aTenuta; varying vec2 vXZs; varying vec2 vUvS; varying float vTen;').replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vXZs=position.xz; vUvS=uv; vTen=aTenuta;');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying vec2 vXZs; varying vec2 vUvS; varying float vTen; uniform float uVeste; uniform sampler2D tMacchie; uniform sampler2D tBasoli; uniform sampler2D tStatoV; uniform vec4 uBoxV; uniform float uAnnoV; uniform float uEsternoV;')
     .replace('#include <color_fragment>',['#include <color_fragment>',
-      'if(uVeste>0.5){ float bx=abs(vUvS.x-0.5)*2.0; vec4 mS=texture2D(tMacchie,vXZs/9.0); vec4 mL=texture2D(tMacchie,vXZs/70.0+0.3);',
-      '  vec3 sel=vec3(0.175,0.168,0.152)*(0.88+0.24*mS.b)*(1.0-0.1*smoothstep(0.25,0.0,abs(bx-0.38)));',      // basolato, più scuro nei solchi delle ruote
-      '  vec3 marg=vec3(0.3,0.26,0.19)*(0.9+0.2*mS.g);',
-      '  diffuseColor.rgb=mix(sel,marg,smoothstep(0.72,0.86,bx));',
-      '  float fwS=max(fwidth(vXZs.x),fwidth(vXZs.y));',
-      '  if(fwS<0.03){ vec2 pq=vXZs/0.075; vec2 n=floor(pq); vec2 f=fract(pq); float d1=8.0; float d2=8.0; vec2 idv=vec2(0.0);',
-      '    for(int j=-1;j<=1;j++){ for(int i=-1;i<=1;i++){ vec2 g=vec2(float(i),float(j)); vec2 o=bH2(n+g); float dd=length(g+o-f); if(dd<d1){ d2=d1; d1=dd; idv=n+g; } else if(dd<d2) d2=dd; } }',
-      '    float kv=1.0-smoothstep(0.012,0.03,fwS); float giunto=1.0-smoothstep(0.03,0.09+fwS*8.0,d2-d1);',
-      '    diffuseColor.rgb*=1.0+kv*(1.0-smoothstep(0.72,0.86,bx))*((bH2(idv).x-0.5)*0.22-0.25*giunto); }',
-      '  float erbaS=uErbaS*smoothstep(0.42,0.72,mL.r*0.6+mS.g*0.4)*(0.55+0.45*smoothstep(0.5,1.0,bx));',
-      '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.2,0.24,0.09)*(0.85+0.3*mS.r),erbaS*0.8); }'].join(A)); };
+      'if(uVeste>0.5){ float sx=(vUvS.x-0.5)*2.0; float bx=abs(sx); vec2 p=vXZs; float fwB=fwidth(vUvS.x)*2.0+0.002;',
+      '  vec4 mS=texture2D(tMacchie,p/9.0); vec4 mL=texture2D(tMacchie,p/70.0+0.3); vec4 mM=texture2D(tMacchie,p/2.7+0.61);',
+      '  vec4 tb=texture2D(tBasoli,p*0.83);',      // una piastrella ogni 12 m, dodici pietre per lato: basoli di circa un metro
+      '  vec4 stv=texture2D(tStatoV,(p-uBoxV.xy)*uBoxV.zw);',
+      '  float dLoc=mix(uEsternoV,stv.g,smoothstep(0.05,0.35,stv.a)); float dg=1.0-(1.0-dLoc)*(1.0-uAnnoV);',
+      '  float ten=vTen; float dd=clamp(dg*(1.0-ten*0.75*(1.0-smoothstep(0.2,0.65,bx)))+(mS.r-0.5)*0.3*dg,0.0,1.0); float rub=stv.b;',      // dd: il degrado in questo punto; sulle vie battute la striscia di mezzo resta tenuta
+      '  float crep=smoothstep(0.8-fwB,0.8+fwB,bx); float cordo=smoothstep(0.765-fwB,0.765+fwB,bx)*(1.0-crep); float solco=1.0-smoothstep(0.0,0.07+fwB,abs(bx-0.36));',      // marciapiede, cordolo, solchi delle ruote
+      '  vec3 sel=vec3(0.075,0.078,0.085)*(0.55+0.7*tb.r)*(1.0+0.14*(mS.b-0.5))*(1.0-0.14*solco);',      // selce: lava basaltica grigio scura, ogni pietra col suo tono
+      '  vec3 col=mix(mix(sel,vec3(0.4,0.39,0.37)*(0.85+0.25*tb.r),cordo),vec3(0.47,0.43,0.36)*(0.88+0.24*mM.r),crep);',
+      '  col=mix(col,vec3(0.32,0.28,0.21)*(0.9+0.2*mS.g),smoothstep(0.955,1.0,bx));',      // l'orlo verso il terreno
+      '  float pav=1.0-crep; vec3 terra=vec3(0.33,0.28,0.2)*(0.85+0.3*mM.r); vec3 erbaV=mix(vec3(0.19,0.23,0.09),vec3(0.29,0.3,0.16),mS.g)*(0.85+0.3*mM.g);',
+      '  col=mix(col,vec3(0.17,0.21,0.08)*(0.85+0.3*mM.b),smoothstep(0.08,0.4,dd)*tb.g*(0.55+0.45*mM.g)*pav);',      // erba nelle fughe
+      '  col=mix(col,col*(0.75+0.5*tb.b),smoothstep(0.15,0.5,dd)*pav);',      // pietre sconnesse: i toni si separano
+      '  float manca=smoothstep(-0.05,0.05,dd*0.78-0.14-tb.b*0.68)*pav;',      // pietre mancanti: sempre le stesse per prime
+      '  col=mix(col,mix(terra,erbaV,smoothstep(0.45,0.8,mM.g)*smoothstep(0.3,0.7,dd)),manca);',
+      '  col=mix(col,erbaV,crep*smoothstep(0.12,0.5,dd+0.25*(mM.b-0.5)));',      // il marciapiede di ghiaia si copre d'erba per primo
+      '  float cop=smoothstep(0.5,0.64,mL.r*0.45+mS.g*0.35+mM.b*0.2+(dd-0.55)*0.95+0.4*rub*dd);',      // terra e calcinacci a chiazze, di più dove le case erano fitte e alte
+      '  vec3 cov=mix(terra,mix(vec3(0.5,0.46,0.39),vec3(0.37,0.32,0.25),mM.r)*(0.8+0.4*tb.r),smoothstep(0.3,0.7,rub+0.3*(mM.g-0.5)));',
+      '  cov=mix(cov,erbaV,smoothstep(0.5,0.95,dd)*smoothstep(0.35,0.65,mL.g+0.25*(mM.b-0.5)));',
+      '  col=mix(col,cov,cop);',
+      '  float off=(mL.b-0.5)*0.8*smoothstep(0.5,0.9,dd); float wp=mix(1.25,(0.22+0.14*ten)*(0.7+0.6*mL.r),smoothstep(0.55,0.95,dg));',      // la via si stringe a un sentiero, che serpeggia
+      '  float fuori=smoothstep(wp-0.07-fwB,wp+0.07+fwB,abs(sx-off)+0.14*(mM.r-0.5));',
+      '  if(fuori>0.5+0.4*(mM.g-0.5)) discard;',      // ai lati la via non c'è più: si vede il terreno, con la sua erba, sotto il nastro
+      '  vec3 batt=mix(vec3(0.27,0.22,0.16),vec3(0.36,0.3,0.22),mM.r)*(0.85+0.3*mS.b); batt=mix(batt,sel,smoothstep(0.66,0.74,tb.b)*(1.0-tb.g)*(1.0-smoothstep(0.8,1.0,dd))*0.85);',      // terra battuta, con qua e là un basolo rimasto
+      '  col=mix(col,erbaV,fuori); col=mix(col,batt,(1.0-fuori)*smoothstep(0.62,0.9,dd)*0.85);',      // erba ai lati, terra battuta nel mezzo
+      '  diffuseColor.rgb=col; }'].join(A)); };
 
 /* Tevere */
 /* Il Tevere è torbido: «flavus», biondo, per i poeti latini. Fino al 23 novembre 2026 era turchese, più bello che vero; ora è un verde-grigio scuro: il giallo fango, provato, dall'alto non si leggeva più come un fiume. L'acqua limpida resta quella degli acquedotti (fontane, vasche). */
@@ -696,7 +734,15 @@ RM.posa=function(){
   /* Le strade si disegnano sul loro tracciato (24 novembre 2026). La curva che le liscia, dove un tratto corto confina con uno lungo, sbordava dalla linea dei dati fino a 38 m e faceva
      cappi: ma porte, case e passanti si calcolano sulla linea, e così la strada passava accanto all'arco di Gallieno invece che sotto. Con un punto ogni 30 m lo scarto resta sotto i 3. */
   function fitta(l){ var o=[l[0]], k, a, b, n, j; for(k=0;k<l.length-1;k++){ a=l[k]; b=l[k+1]; n=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/3)); for(j=1;j<=n;j++) o.push([a[0]+(b[0]-a[0])*j/n,a[1]+(b[1]-a[1])*j/n]); } return o; }
-  RM.STRADE.forEach(function(s,i){ RM.nastro(fitta(s),TOPO.stradeLarghe[i],matStrada,.1); });
+  /* Le vie ancora battute verso l'800 (aTenuta, si veda lo shader delle strade): quelle che i percorsi da porta a porta dell'Itinerario di Einsiedeln seguono nel modello
+     (src/testi/vita-roma-fonti.md, «Strade e rovine»: porta di San Pietro, Flaminia «per porticum usque columna Antonini», Numentana e Salaria, Tiburtina fino alla Suburra,
+     Prenestina, Aurelia, Appia, «uia Lateranense», «uico longo», «uico patricii», «in uia latina intus in ciuitate»), più il Percorso del pellegrino (ITINERARIO di js/dati.js)
+     dovunque passi. Indici di RM_TOPO.strade: 0 Flaminia e via Lata, 1 Appia, 2 Ostiense, 3 Aurelia, 4 Tiburtina, 5 Prenestina, 6 Alta Semita e Nomentana, 7 via di San Pietro,
+     8 vico Longo, 9 Latina, 12 Salaria, 13 la via del Laterano, 14 la via Sacra, 15 vico Patrizio. Le vie brevi del centro, la Portuense (10) e la via fra Trastevere e il Borgo (11) non sono nominate: si guastano con le case. */
+  var TENUTE=[0,1,2,3,4,5,6,7,8,9,12,13,14,15], PEL=((window.RM_DATI||{}).ITINERARIO||{}).via||[];
+  PEL=PEL.map(function(q){ return RM.ll(q[0],q[1]); });
+  function tenuta(i){ return function(x,z){ if(TENUTE.indexOf(i)>=0) return 1; var dm=PEL.length>1?RM.distLinea(x,z,PEL,false):1e9; return 1-RM.sfuma(3,6,dm); }; }
+  RM.STRADE.forEach(function(s,i){ RM.nastro(fitta(s),TOPO.stradeLarghe[i],matStrada,.1,null,tenuta(i)); });
   if(FIUME_VAR){ RM.curvaFiume=new THREE.CatmullRomCurve3(RM.FIUME.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); }),false,'catmullrom',.35); magliaFiume(); }      // la stessa curva che RM.nastro faceva per il fiume
   else RM.curvaFiume=RM.nastro(RM.FIUME,5.6,RM.matFiume,0,-.5).userData.curva;
 };
