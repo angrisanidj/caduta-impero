@@ -54,14 +54,17 @@ var mura=(function(){
     }
   });
   var magliaPorte=istanze(GP.geometria(),mat,Math.max(1,posti.length)); RM.porte=posti;
-  /* La patina del tempo (PATINA in js/costruttore.js), istanza per istanza: un tratto rifatto da un papa riparte pulito dall'anno del restauro e invecchia da lì; i rattoppi
-     di Belisario, di pietre raccolte lì attorno, sono già vecchi. Un solo attributo per cortine, torri e merli (lo stesso passo), uno per le porte. */
-  mat.defines=mat.defines||{}; mat.defines.RM_PATI=''; mat.userData.patinaPropria=true; mat.userData.patina.value=1;
+  /* La patina del tempo (PATINA in js/costruttore.js), istanza per istanza: un tratto rifatto riparte pulito dall'anno del restauro e invecchia da lì; i rattoppi
+     di Belisario, di pietre raccolte lì attorno, sono già vecchi. Un solo attributo per cortine, torri e merli (lo stesso passo), uno per le porte.
+     Restauri che ripuliscono (secondo giro, 27 novembre 2026: la regola di RESTAURI in js/monumenti.js, solo con una fonte letta): Belisario nel 536 sui tratti rovinati
+     (Procopio, Guerra gotica I 14, 15), i papi da Gregorio II a Leone IV (Liber Pontificalis, più sotto), porta Flaminia nel 848; per ipotesi i tre passi di Teodorico nel 493
+     (Anonimo Valesiano 66-67: quale tratto, non è detto; sono gli stessi del ponteggio). Il segno RM_PAT_MURA dà alle mura colature dai merli, piede umido e verde sulle creste. */
+  mat.defines=mat.defines||{}; mat.defines.RM_PATI=''; mat.defines.RM_PAT_MURA=''; mat.userData.patinaPropria=true; mat.userData.patina.value=1;
   var patI=new THREE.InstancedBufferAttribute(new Float32Array(passi.length),1), patP=new THREE.InstancedBufferAttribute(new Float32Array(Math.max(1,posti.length)),1);
   [tratti,torri,merliP,merliA,toppe].forEach(function(m){ m.geometry.setAttribute('aPatina',patI); }); magliaPorte.geometry.setAttribute('aPatina',patP);
   RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'},{maglia:merliP,id:'mura'},{maglia:merliA,id:'mura'},{maglia:toppe,id:'mura'}]);
   /* colore per istanza: le maglie condividono il materiale, quindi tutte lo devono avere (come negli acquedotti) */
-  var BIANCO=new THREE.Color(1,1,1), RICUPERO=new THREE.Color(1.03,.86,.76), PIETRA=new THREE.Color(.95,1.04,1.22), tinta=new THREE.Color();
+  var BIANCO=new THREE.Color(1,1,1), RICUPERO=new THREE.Color(.9,.72,.62),      /* mattone di recupero: mattoni vecchi tolti dalle rovine, più scuri e spenti del mattone nuovo; la patina del tratto riparte comunque da zero (secondo giro, 27 novembre 2026: prima 1,03, 0,86, 0,76, e al sole i lati nord ed est dei Castra sembravano quasi bianchi). Tinta scelta, non misurata */ PIETRA=new THREE.Color(.95,1.04,1.22), tinta=new THREE.Color();
   [tratti,torri,merliP,merliA,toppe].forEach(function(m){ for(var j=0;j<passi.length;j++) m.setColorAt(j,BIANCO); }); for(k=0;k<Math.max(1,posti.length);k++) magliaPorte.setColorAt(k,BIANCO);
   passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; p.riva791=Math.hypot(p.x+117.4,p.z+7.4)<2.4; });      /* 25 novembre 2026: la cinta di riva ora parte dalla testata del ponte (prima 50 m più a valle): il tratto del 791 sono i suoi primi due passi */      // riva791: il tratto di mura sul Tevere presso ponte Sisto che la piena del dicembre 791 abbatte («usque ad pontem Antonini, ipsum evertens murum», Liber Pontificalis, Adriano I 95; ponte Sisto per Duchesne). Lunghezza indicativa; rifatto qui nel 795, anno ignoto     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
   /* Il cantiere. «Rome, which before had no walls, was now surrounded with them. This work was begun in the reign of Aurelianus, and was finished by Probus» (Zosimo I 49,
@@ -143,7 +146,7 @@ var mura=(function(){
       d.rotation.order='XYZ';
       tinta.copy(anno>=p.rifatto?RICUPERO:BIANCO); if(toppa) tinta.multiply(PIETRA);
       tratti.setColorAt(j,tinta); torri.setColorAt(j,tinta); merliA.setColorAt(j,tinta); merliP.setColorAt(j,tinta); toppe.setColorAt(j,BIANCO);
-      var rf=0; p.ev.forEach(function(e){ if(e.a>600&&e.a<9999&&anno>=e.a&&e.a>rf) rf=e.a; }); patI.array[j]=rf?pAn-PA(rf):pAn;      // patina: dall'ultimo restauro di un papa
+      var rf=TEOD.indexOf(j)>=0&&anno>=493.5?493.5:0; p.ev.forEach(function(e){ if(e.a>530&&e.a<9999&&e.tipo!=='totila'&&anno>=e.a&&e.a>rf) rf=e.a; }); patI.array[j]=rf?pAn-PA(rf):pAn;      // patina: dall'ultimo restauro (Teodorico per ipotesi, Belisario nel 536, i papi); la fine della breccia di Totila non è un restauro: il rattoppo è di pietre vecchie
       var suPonteggio=rialzo||(c>.1&&c<1)||(teod&&TEOD.indexOf(j)>=0)||lavori;
       if(lavori) cantPapi=true;
       if(suPonteggio){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);      // ponteggio sui tratti che stanno salendo, un poco più alto del muro
@@ -458,7 +461,7 @@ var acque=(function(){
     RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:gOb, id:'obeliscoisola'},{maglia:gCa, id:'isolatiberina'},{maglia:gCr, id:'isolatiberina'}]);
     RM.MONUMENTI.push({id:'obeliscoisola', nome:"Obelisco dell'isola Tiberina", x:M0.q.x, z:M0.q.z, raggio:1, alto:1.7});
     RM.moduli.push(function(anno){ gCa.visible=anno<600; gCr.visible=anno>=600; gCr.scale.y=1-.55*RM.sfuma(600,700,anno);
-      mCr.userData.patinaPropria=true; mCr.userData.patina.value=Math.max(RM.patinaAnno(anno),.35*RM.sfuma(600,640,anno)); });      // la casa lasciata e scoperchiata prende l'erba anche prima che la patina della città sia forte
+      mCr.userData.patinaPropria=true; mCr.userData.patina.value=RM.patinaSpenta?0:Math.max(RM.patinaAnno(anno),.35*RM.sfuma(600,640,anno)); });      // la casa lasciata e scoperchiata prende l'erba anche prima che la patina della città sia forte
   })();
   var mIs=RM.matPietra('A'); mIs.defines={RM_PAT_ERBA:''}; var gIs=IS.maglia(mIs); gIs.userData.gruppo='monumenti'; RM.scene.add(gIs);
   RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:gIs, id:'isolatiberina'}]);

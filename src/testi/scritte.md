@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 11:52:25.
+Generato da `src/testi.mjs` il 27/11/2026, 12:13:45.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -135,7 +135,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.60] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
 
-[pagina.61] Le case lasciate non spariscono. Prima restano in piedi: cade l'intonaco, mancano le tegole, le finestre restano vuote, cresce l'erba. Poi crollano il tetto e i piani alti. Alla fine restano muri bassi e cumuli di macerie, coperti di rovi. Le fonti parlano di case e chiese «in rovina», di orti accanto alle case e di bestie al pascolo, non di una città tornata campagna. Gli orti e le vigne vengono dalle fonti in quattro luoghi: presso le terme di Agrippa (599), davanti a Santa Sabina (598-599), attorno a Santa Susanna, con un orto a vigna (al tempo di Sergio I, 687-701), e presso il portico di San Pietro (al tempo di Leone IV, 847-855). Nell'atrio di San Paolo, prima che Adriano I lo facesse lastricare, l'erba cresceva e ci pascolavano buoi e cavalli: lo mostriamo dal 715 al 771, perché le date esatte non si sanno. Gli altri orti sono ipotesi. Sono ipotesi anche quali quartieri si svuotano per primi, quanto restano in piedi le case, quanto si abbassano le rovine e quanto in fretta crescono le piante. Nessuna fonte antica dice quali piante crescessero sulle rovine: abbiamo preso fico, olmo, rovo, lentisco, sambuco nano, valeriana rossa ed edera da un elenco delle piante del Colosseo scritto nel 1855. Le rovine cambiano col quartiere: dove le insulae erano alte e fitte, come nella Suburra, restano più spesso alti gusci di mattoni con le macerie nei vicoli; le domus dei colli diventano cumuli bassi con qualche colonna; le case basse dei margini si riducono a tracce. È un'ipotesi del modello: nessuna fonte dice come caddero i singoli quartieri. Anche l’edera, i cespugli e l’erba cresciuti sui monumenti lasciati sono una resa: quanto verde, e in quanto tempo, nessuna fonte lo misura. Ciò che è ancora in piedi oggi, nel modello è in piedi anche nell’800. Nella veduta d’insieme dei secoli tardi i muri dei grandi monumenti sono un poco schiariti e la luce è più bassa, perché le rovine si leggano da lontano; per lo stesso motivo, solo da lontano, le case abitate, i loro orti e le chiese in uso hanno tinte un poco più chiare e vive, e il fumo e i lumi della notte sono più grandi: è una scelta di resa, non un dato. Dal V secolo marmi, travertini e intonaci si scuriscono e si macchiano con gli anni, anche dove l’edificio è in uso: sui ponti, sulle mura, sugli archi, sull’isola Tiberina; nelle chiese curate più piano, e ciò che è rifatto riparte pulito. Quanto e quando è una scelta di resa: nessuna fonte letta descrive il colore delle pietre. Procopio, verso il 550, scrive solo che i Romani avevano conservato gli edifici della città.
+[pagina.61] Le case lasciate non spariscono. Prima restano in piedi: cade l'intonaco, mancano le tegole, le finestre restano vuote, cresce l'erba. Poi crollano il tetto e i piani alti. Alla fine restano muri bassi e cumuli di macerie, coperti di rovi. Le fonti parlano di case e chiese «in rovina», di orti accanto alle case e di bestie al pascolo, non di una città tornata campagna. Gli orti e le vigne vengono dalle fonti in quattro luoghi: presso le terme di Agrippa (599), davanti a Santa Sabina (598-599), attorno a Santa Susanna, con un orto a vigna (al tempo di Sergio I, 687-701), e presso il portico di San Pietro (al tempo di Leone IV, 847-855). Nell'atrio di San Paolo, prima che Adriano I lo facesse lastricare, l'erba cresceva e ci pascolavano buoi e cavalli: lo mostriamo dal 715 al 771, perché le date esatte non si sanno. Gli altri orti sono ipotesi. Sono ipotesi anche quali quartieri si svuotano per primi, quanto restano in piedi le case, quanto si abbassano le rovine e quanto in fretta crescono le piante. Nessuna fonte antica dice quali piante crescessero sulle rovine: abbiamo preso fico, olmo, rovo, lentisco, sambuco nano, valeriana rossa ed edera da un elenco delle piante del Colosseo scritto nel 1855. Le rovine cambiano col quartiere: dove le insulae erano alte e fitte, come nella Suburra, restano più spesso alti gusci di mattoni con le macerie nei vicoli; le domus dei colli diventano cumuli bassi con qualche colonna; le case basse dei margini si riducono a tracce. È un'ipotesi del modello: nessuna fonte dice come caddero i singoli quartieri. Anche l’edera, i cespugli e l’erba cresciuti sui monumenti lasciati sono una resa: quanto verde, e in quanto tempo, nessuna fonte lo misura. Ciò che è ancora in piedi oggi, nel modello è in piedi anche nell’800. Nella veduta d’insieme dei secoli tardi i muri dei grandi monumenti sono un poco schiariti e la luce è più bassa, perché le rovine si leggano da lontano; per lo stesso motivo, solo da lontano, le case abitate, i loro orti e le chiese in uso hanno tinte un poco più chiare e vive, e il fumo e i lumi della notte sono più grandi: è una scelta di resa, non un dato. Dal V secolo le pietre si scuriscono e si macchiano con gli anni, anche dove l’edificio è in uso: marmi, travertini, intonaci, mattoni e tufi, sui ponti, sulle mura, sugli archi, sull’isola Tiberina e nelle chiese. Tornano chiare solo dove una fonte dice che l’edificio fu restaurato, o dove è costruito nuovo. Sulle creste delle mura mai rifatte cresce l’erba. Quanto e quando è una scelta di resa: nessuna fonte letta descrive il colore delle pietre. Procopio, verso il 550, scrive solo che i Romani avevano conservato gli edifici della città.
 
 [pagina.62] Le strade di Roma erano lastricate di selce, cioè di lava basaltica in pietre poligonali, con i marciapiedi ai lati: lo dicono Livio e i resti descritti da Platner e Ashby. La misura delle pietre e dei marciapiedi è uno schema. Le vie le teneva in ordine chi ci abitava: per questo, nel modello, una strada si guasta quando le case attorno vengono lasciate. Prima cresce l'erba fra le pietre, poi le pietre si smuovono e mancano, la terra e le macerie le coprono, e alla fine resta un sentiero in mezzo all'erba. Restano battute le vie dei percorsi da porta a porta dell'Itinerario di Einsiedeln, verso l'800. Come e in quanto tempo un lastricato si rovinasse nessuna fonte lo racconta: è uno schema.
 
@@ -151,7 +151,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.68] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.69] Versione del 27/11/2026, ore 11:31
+[pagina.69] Versione del 27/11/2026, ore 11:56
 
 
 ## 2. Gli atti
@@ -6574,27 +6574,27 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/mura.js
 
-[ui.mura.01-r374] Ponte Elio
+[ui.mura.01-r377] Ponte Elio
 
-[ui.mura.02-r375] Ponte Aurelio
+[ui.mura.02-r378] Ponte Aurelio
 
-[ui.mura.03-r376] Ponte Emilio
+[ui.mura.03-r379] Ponte Emilio
 
-[ui.mura.04-r377] Ponte di Probo
+[ui.mura.04-r380] Ponte di Probo
 
-[ui.mura.05-r378] Ponte Milvio
+[ui.mura.05-r381] Ponte Milvio
 
-[ui.mura.06-r379] Ponte Neroniano
+[ui.mura.06-r382] Ponte Neroniano
 
-[ui.mura.07-r412] Ponte Fabricio
+[ui.mura.07-r415] Ponte Fabricio
 
-[ui.mura.08-r413] Ponte Cestio
+[ui.mura.08-r416] Ponte Cestio
 
-[ui.mura.09-r422] Ponte Sublicio
+[ui.mura.09-r425] Ponte Sublicio
 
-[ui.mura.10-r459] Obelisco dell'isola Tiberina
+[ui.mura.10-r462] Obelisco dell'isola Tiberina
 
-[ui.mura.11-r465] Isola Tiberina
+[ui.mura.11-r468] Isola Tiberina
 
-[ui.mura.12-r475] Tempio di Esculapio (isola Tiberina)
+[ui.mura.12-r478] Tempio di Esculapio (isola Tiberina)
 

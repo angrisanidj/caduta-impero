@@ -913,3 +913,40 @@ Cimitero:
 - Platner, nota 3: «A Christian cemetery of the beginning of the sixth century was also found in the castra (De Rossi, Roma Sott. I.218; Grisar, Geschichte Roms, I.668)». Né il LTUR né la Soprintendenza ne parlano; De Rossi non trovato in rete in dieci minuti. Confermato quindi da una sola fonte letta, che non dà posto, grandezza né durata.
 
 Schema, detto nella scheda: altezze (due piani) e tetti di coppi; le file di caserme aggiunte dove gli scavi non dicono nulla (accanto alle file di Lanciani e nel quadrante nord-est); le vie (larghe 9 m); il posto di quartier generale, armeria e tempietto di Marte; il quadrante dell'horreum; quale tratto del lato ovest resta in piedi dopo il 312 (tre pezzi a 60-150 m dall'angolo nord-ovest); le caserme rase alle fondamenta; il cimitero dal 500, a ovest presso la vecchia porta, con 30 tombe. Non letti: Richmond, PBS X 12-22; CAR III; De Rossi; Lanciani, Storia degli scavi I 243.
+
+## I restauri che ripuliscono la patina (27 novembre 2026, secondo giro)
+
+Regola dell'utente: «Ok ripulisci solo quelli per cui sai che c'è stato un restauro». Tutto invecchia alla stessa velocità (RM.patinaAnno in `js/costruttore.js`); la patina torna indietro solo nell'anno di un restauro attestato da una fonte già letta e annotata nel progetto, e solo per quel monumento (tabella `RESTAURI` in `js/monumenti.js`; mura in `js/mura.js`; chiese minori in `js/nuclei.js`). Ciò che è costruito nuovo parte pulito dal suo anno. La «quota» dice quanto della patina accumulata va via (1: come nuovo); è una scelta nostra, più piccola dove la fonte parla di una parte sola. Nessuna fonte nuova letta in questo giro: tutte le frasi vengono dai file del progetto.
+
+| Monumento | Anno nel modello | Quota | Fonte e frase |
+|---|---|---|---|
+| Basilica Giulia (`giulia`) | 416 | 1 | Platner e Ashby, Basilica Iulia (qui sopra): «restored … again in 416 A.D. by a certain Gabinus Vettius Probianus, prefect of the city, who also adorned it with statues» |
+| Terme di Costantino (`termecostantino`) | 443 | 1 | Platner e Ashby, Thermae Constantinianae (qui sopra): «restored in 443 by the city prefect Petronius Perpenna Magnus Quadratianus (CIL VI.1750)» |
+| Colosseo (`colosseo`) | 445, 470, 508 | 0,5 ciascuno | Platner e Ashby, Amphitheatrum Flavium (`src/testi/scene-roma-fonti.md`): terremoto del 442, restauri negli anni seguenti (445: scelta) e nel 470; dopo un altro terremoto restauri del prefetto Basilio, «probably consul in 508». Riparano i danni, non tutto l'anfiteatro |
+| Rostri (`rostri`) | 470 | 1 | Platner e Ashby, Rostra Augusti (qui sopra): «An inscription which ran the whole length of the enlarged platform recorded a restoration by the praefectus urbi, Junius Valentinus» |
+| Teatro di Pompeo (`pompeo`) | 509 | 0,6 | Platner e Ashby, Theatrum Pompei (qui sopra): «finally by Symmachus at the command of Theodoric between 507 and 511 (Cassiod. Var. IV.51)»; Variae IV 51 (`scene-roma-fonti.md`): va «roboranda», rinforzato. Anno a metà |
+| Terme di Caracalla (`caracalla`) | 510 | 0,4 | Platner e Ashby, Thermae Antoninianae (qui sopra): mattoni col bollo di Teodorico. Quali parti, non è detto; anno scelto nel regno |
+| Domus Augustana e stadio (`domusaugustana`) | 525 | 0,4 | Platner e Ashby, Domus Augustiana (qui sopra): «Repairs by Theodoric and Athalaric are vouched for by brick-stamps (CIL XV.1665 a, 1, 1672)». Anno scelto |
+| Pantheon (`pantheon`) | 735 | 0,1 | Liber Pontificalis, vita di Gregorio III, XCII 12 (`scene-roma-fonti.md`): il tetto rifatto con lastre di piombo. Solo il tetto, che il modello disegna già nuovo |
+| Laterano (`laterano`) | 780 | 0,5 | Liber Pontificalis, vita di Adriano I, cc. LXXI-LXXVIII (Duchesne I, pp. 505-509; `src/testi/vita-roma-fonti.md`): la basilica «in ruinis posita» con i portici, rifatta. Soprattutto tetti e portici; anno scelto nel pontificato (772-795) |
+| San Pietro (`pietro`) | 800 | 0,1 | Liber Pontificalis, vita di Leone III, c. LXXXIX (Duchesne II, p. 28; `vita-roma-fonti.md`): rifà i gradini dell'atrio. Solo i gradini |
+| San Lorenzo in Lucina, San Martino ai Monti, Santa Prisca, Santa Prassede, Santa Pudenziana (chiese minori) | 780 | 0,6 | vita di Adriano I, stessi capitoli: chiese «a priscis temporibus marcuentes in ruinis», Santa Prassede «ex parte ruens», tetti caduti o cadenti, rifatte |
+| San Marcello (chiesa minore) | 780 | 1 | Armellini (qui sopra): «riedificata dal papa Adriano I, titulum s. Marcelli via Lata situm a novo restaurava» |
+| Mura di Aureliano, tratti rovinati prima del 536 | 536-537 | tutta | Procopio, Guerra gotica I 14, 15 (qui sopra, «Mura, ponti e isola nei secoli»): Belisario ripara la cinta «fallen into ruin in many places» |
+| Mura, tre tratti presso il teatro di Pompeo | 493 | tutta | Anonimo Valesiano 66-67 e Platner («Repairs by Theodoric are attested by brick stamps … as well as by Cassiodorus»). Quale tratto, non è detto: i tre passi sono un'ipotesi, gli stessi del ponteggio della scena |
+| Mura, tratti rifatti dai papi | 715-717, 731-741, 776-790, 848-849 | tutta | Liber Pontificalis, vite di Gregorio II, Gregorio III, Adriano I, Leone IV (qui sopra). Già nel modello dal primo giro |
+| Porta Flaminia | 848 | tutta | Leone IV rifà «sed et portas» (qui sopra): che fra queste ci fosse porta Flaminia la fonte non lo dice |
+
+Prima del 400 la patina non c'è, quindi questi restauri, pur letti, non cambiano nulla e non stanno nella tabella: ponte Cestio (369-370), ponte Aurelio (365-366), Venere e Roma rifatto da Massenzio (307-312), Saturno (IV secolo), teatro di Pompeo sotto Arcadio e Onorio, il rialzo delle mura di Onorio (401-403: dose quasi zero). I ponti hanno una patina comune per classe (`js/mura.js`): nessuno ha un restauro letto dopo il 400.
+
+Chi continua un altro (stesse pietre, nuova voce): Sant'Adriano prende la patina della Curia nel 630; la rovina della Basilica Emilia quella della basilica; il Marco Aurelio del Laterano e la Pigna di San Pietro quella di prima del trasporto; la casa nella Regia quella della Regia; i Castra rasi e l'anfiteatro Castrense murato quella di prima (`CONTINUA` in `js/monumenti.js`).
+
+Trovati e lasciati fuori (manca la frase letta, o manca l'anno, o la parte):
+- San Paolo: tetto rifatto da Leone III dopo il terremoto dell'801 (lo dice la scheda; la vita di Leone III non è letta per questo punto).
+- Sant'Adriano: la Curia fatta chiesa da Onorio I nel 630 (vita di Onorio I non letta): nessuna pulitura, continua la patina della Curia.
+- San Pietro: i tetti delle basiliche rifatti da Adriano I (testo della tappa del 780): quali basiliche, nei passi letti, è detto solo per il Laterano e i titoli dell'elenco.
+- Colosseo: i lavori di Eutarico per le cacce del 519-523 (Platner): lavori per gli spettacoli, non un restauro detto.
+- Castra Praetoria: LTUR, «In età bizantina (VI sec.) il recinto fu in parte restaurato»: né anno né parte; i lati nord ed est sono comunque le mura di Aureliano.
+- Basilica Emilia: il portico di facciata forse rifatto dopo il 410, «altri lo negano» (scheda).
+- Acquedotti: Adriano I ne fa riparare quattro (tappa del 780, vita di Adriano I) e Sergio II la Iovia (vita di Sergio II, c. XXI). Le arcate rifatte hanno già il mattone di recupero, ma la patina degli acquedotti è comune a tutte le arcate: per ripulire solo quelle rifatte servirebbe un valore per arcata (non fatto).
+- Santi Quattro Coronati, Santa Prassede di Pasquale I (817), Santa Maria Nova: rifatte o nuove secondo le schede, fonti non lette per questo punto (Santa Maria Nova è un monumento nuovo dell'850 e parte pulita come costruzione nuova).

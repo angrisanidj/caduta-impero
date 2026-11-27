@@ -2650,13 +2650,47 @@ RM.rovina=function(id,anno){
 };
 RM.TINTA=TINTA;
 /* La patina del tempo (27 novembre 2026; PATINA in js/costruttore.js): la dose di RM.patinaAnno accumulata dall'anno in cui il monumento compare (o ricompare dopo essere stato
-   «assente»), più piano (la metà) negli anni in cui qualcuno lo cura: le chiese in uso (CURA a zero, tolti i bronzi e il fango) e ciò che torna in uso dopo il 392, cioè
-   ciò che diventa chiesa (il Pantheon dal 609, la Curia-Sant'Adriano, San Paolo rifatto). Quanto e con che ritmo è una resa, detta nel piede. */
-var NON_CURATI={colosso:1,fangocirco:1,marcoaurelio:1,marcoaureliolat:1,pigna:1,pignapietro:1,tegolepietro:1};
-function curato(id,st,k){ if(st[k][1]!=='uso') return false; if(CURA[id]===0&&!NON_CURATI[id]) return true; return k>0&&st[k-1][1]!=='assente'&&st[k][0]>392; }
-RM.patinaMon=function(id,anno){ var st=D.MONUMENTI[id]||COMPARSA, PA=RM.patinaAnno, p=0, k, a, b;
-  for(k=0;k<st.length;k++){ a=st[k][0]; if(a>=anno) break; if(st[k][1]==='assente'){ p=0; continue; } b=Math.min(k+1<st.length?st[k+1][0]:1e4,anno); p+=(curato(id,st,k)?.5:1)*(PA(b)-PA(a)); }
-  return p; };
+   «assente»: pietra nuova, che parte pulita). Secondo giro, stesso giorno (l'utente: «Ok ripulisci solo quelli per cui sai che c'è stato un restauro»): tutto invecchia alla
+   stessa velocità, chiese comprese; prima le chiese in uso e ciò che tornava in uso dopo il 392 invecchiavano più piano senza una fonte dietro, e non è più così. La patina
+   torna indietro solo nell'anno di un restauro che una fonte letta attesta (RESTAURI): la dose accumulata fino a lì scende della quota «quanto» (1: pulito come nuovo) e poi
+   ricresce. Un restauro ripulisce ciò che la fonte dice: se parla solo del tetto o dei gradini, i muri restano quasi come prima (quota piccola). La quota è una scelta nostra,
+   detta riga per riga; le frasi e gli indirizzi stanno in src/testi/topografia-fonti.md, «I restauri che ripuliscono la patina». I restauri prima del 400 non cambiano nulla
+   (la patina comincia dopo) e qui non stanno: ponte Cestio (369), ponte Aurelio (365-366), Venere e Roma rifatto da Massenzio (307-312), il rialzo di Onorio (401-403, dose quasi zero).
+   Ciò che la fonte non lega a un anno ha l'anno scelto dentro il periodo che dà (detto accanto). Le mura (js/mura.js) e le chiese minori (js/nuclei.js) seguono lo stesso criterio. */
+var RESTAURI=[
+  ['giulia',416,1],      // Platner e Ashby, Basilica Iulia: «restored … again in 416 A.D. by a certain Gabinus Vettius Probianus, prefect of the city, who also adorned it with statues»
+  ['termecostantino',443,1],      // Platner e Ashby, Thermae Constantinianae: «They suffered greatly from fire and earthquake and were restored in 443 by the city prefect Petronius Perpenna Magnus Quadratianus (CIL VI.1750)»
+  ['colosseo',445,.5],      // Platner e Ashby, Amphitheatrum Flavium: terremoto del 442 e restauri «negli anni seguenti» (src/testi/scene-roma-fonti.md): anno scelto; ripara i danni, non tutto l'anfiteatro
+  ['colosseo',470,.5],      // stessa voce: altri restauri nel 470
+  ['colosseo',508,.5],      // stessa voce: dopo un altro terremoto restauri del prefetto Basilio, «probably consul in 508»
+  ['rostri',470,1],      // Platner e Ashby, Rostra Augusti: ultimo restauro verso il 470, di Giunio Valentino, prefetto della città (iscrizione): restaura e allunga la piattaforma
+  ['pompeo',509,.6],      // Platner e Ashby, Theatrum Pompei: restaurato «finally by Symmachus at the command of Theodoric between 507 and 511 (Cassiod. Var. IV.51)»; Variae IV 51: va rinforzato («roboranda»): un rinforzo della struttura, non una pulitura di tutte le facce; anno a metà
+  ['caracalla',510,.4],      // Platner e Ashby, Thermae Antoninianae: mattoni col bollo di Teodorico (493-526): riparazioni, di quali parti non è detto; anno scelto
+  ['domusaugustana',525,.4],      // Platner e Ashby, Domus Augustiana: «Repairs by Theodoric and Athalaric are vouched for by brick-stamps (CIL XV.1665 a, 1, 1672)»; anno scelto fra i due regni (493-534)
+  ['laterano',780,.5],      // Liber Pontificalis, vita di Adriano I, cc. LXXI-LXXVIII (Duchesne I, pp. 505-509): la basilica «in ruinis posita» con i portici, rifatta; anno scelto dentro il pontificato (772-795); soprattutto tetti e portici
+  ['pantheon',735,.1],      // Liber Pontificalis, vita di Gregorio III, XCII 12: il tetto rifatto con lastre di piombo (uPiombo più sotto): solo il tetto, i muri restano quasi come prima
+  ['pietro',800,.1],      // Liber Pontificalis, vita di Leone III, c. LXXXIX (Duchesne II, p. 28): rifà i gradini dell'atrio; anno scelto dentro il pontificato (795-816); solo i gradini
+  /* le chiese minori (js/nuclei.js), per nome: Adriano I rifà le chiese «in ruinis», con i tetti caduti o cadenti (vita di Adriano I, cc. LXXI-LXXVIII, Duchesne I, pp. 505-509,
+     in src/testi/vita-roma-fonti.md); anno scelto dentro il pontificato (772-795); tetti e muri rappezzati, non pietra nuova: quota 0,6 */
+  ['chiesa:San Lorenzo in Lucina',780,.6],      // «a priscis temporibus marcuentes in ruinis», con San Martino
+  ['chiesa:San Martino ai Monti',780,.6],      // San Martino presso San Silvestro, stessa frase
+  ['chiesa:Santa Prisca',780,.6],      // nell'elenco della stessa vita
+  ['chiesa:Santa Prassede',780,.6],      // «ex parte ruens»
+  ['chiesa:Santa Pudenziana',780,.6],      // nell'elenco della stessa vita
+  ['chiesa:San Marcello',780,1]      // Armellini: «titulum s. Marcelli via Lata situm a novo restauravit» (Adriano I): rifatta da capo
+];
+function cresciCon(rs,p,a,b){ var PA=RM.patinaAnno; rs.forEach(function(r){ if(r[1]>=a&&r[1]<b){ p+=PA(r[1])-PA(a); p*=1-r[2]; a=r[1]; } }); return p+PA(b)-PA(a); }      // dentro un tratto: la dose sale fino al restauro, scende, risale
+/* la dose di una cosa fatta pulita nell'anno a0, con i suoi restauri (chiave: id del monumento, o «chiesa:» e il nome): la usano js/nuclei.js e le prove */
+RM.patinaRestauri=function(chiave,a0,anno){ if(a0>=anno) return 0; return cresciCon(RESTAURI.filter(function(r){ return r[0]===chiave&&r[1]<anno; }),0,a0,anno); };
+/* Chi continua un altro (stesse pietre, nuova voce nel modello): prende la patina di quello nell'anno in cui compare, invece di partire pulito. La Curia diventa Sant'Adriano nel 630
+   (la vita di Onorio I non è letta: nessun restauro); la Basilica Emilia bruciata resta in piedi come rovina; statue e pigna portate altrove sono le stesse; la Regia diventa una casa. */
+var CONTINUA={santadriano:'curia', emiliarovina:'emilia', marcoaureliolat:'marcoaurelio', pignapietro:'pigna', regiacasa:'regia', castrapretoriorasa:'castrapretorio', castrensemura:'castrense'};
+RM.RESTAURI=RESTAURI;      // per le prove
+RM.patinaMon=function(id,anno){ var st=D.MONUMENTI[id]||COMPARSA, p=0, k, a, b, rs=RESTAURI.filter(function(r){ return r[0]===id&&r[1]<anno; }), prima=true;
+  for(k=0;k<st.length;k++){ a=st[k][0]; if(a>=anno) break; if(st[k][1]==='assente'){ p=0; continue; }
+    if(prima&&CONTINUA[id]&&p===0&&a>0) p=RM.patinaMon(CONTINUA[id],a); prima=false;
+    b=Math.min(k+1<st.length?st[k+1][0]:1e4,anno); p=cresciCon(rs,p,a,b); }
+  return RM.patinaSpenta?0:p; };
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
 var SENZA_CANTIERE={dioscuri:1,curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1,marcoaureliolat:1,pignapietro:1,castrapretoriorasa:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};

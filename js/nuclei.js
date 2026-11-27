@@ -15,7 +15,9 @@ B.aperture(-1,.63,1,.63,4,.95,.35,.18).aperture(1,-.63,-1,-.63,4,.95,.35,.18);
 var maglia=new THREE.InstancedMesh(B.geometria(),RM.matPietra(((window.RM_DATI.CERTEZZA||{}).chiese||['B'])[0]),elenco.length), d=new THREE.Object3D();
 RM.veduta(maglia.material,{luce:.3,muro:0xe8dcc4,quanta:.4,tetto:0xb84a2c,quantaT:.55});      // veduta dei secoli tardi (RM.veduta in js/base.js): da lontano muri chiari e tetti di un rosso pulito, perché la chiesa in uso si stacchi dai ruderi
 maglia.castShadow=maglia.receiveShadow=true; maglia.frustumCulled=false; maglia.userData.gruppo='citta'; RM.scene.add(maglia);
-/* La patina del tempo (PATINA in js/costruttore.js), chiesa per chiesa: ognuna parte pulita dal suo anno e, curata, invecchia piano (metà della dose della città). Una resa. */
+/* La patina del tempo (PATINA in js/costruttore.js), chiesa per chiesa: ognuna parte pulita dal suo anno e invecchia come tutta la città; torna indietro solo dove una fonte letta
+   dice che fu restaurata (RESTAURI in js/monumenti.js, chiave «chiesa:» e il nome). Nessuna chiesa invecchia più piano
+   delle altre senza una fonte (secondo giro, 27 novembre 2026). Tinte e ritmo sono una resa. */
 var patC=new THREE.InstancedBufferAttribute(new Float32Array(elenco.length),1), patUlt=-1; maglia.geometry.setAttribute('aPatina',patC);
 maglia.material.defines=maglia.material.defines||{}; maglia.material.defines.RM_PATI=''; maglia.material.userData.patinaPropria=true; maglia.material.userData.patina.value=1;
 /* La quota dal terreno come è disegnato (RM.hSuolo), non da RM.h (25 novembre 2026): la maglia del suolo è più rada della funzione, e sui pendii Sant'Anastasia stava 10 m
@@ -34,6 +36,6 @@ RM.moduli.push(function(anno){
     d.position.set(c.x,c.y,c.z); d.rotation.set(0,c.ry,0); d.scale.set(p>.01?1.25:0,Math.max(p*1.25,.001),p>.01?1.25:0); d.updateMatrix(); maglia.setMatrixAt(i,d.matrix);
   });
   if(mosso) maglia.instanceMatrix.needsUpdate=true;
-  var pA=RM.patinaAnno(anno); if(Math.abs(pA-patUlt)>.002){ patUlt=pA; elenco.forEach(function(c,i){ patC.array[i]=.5*Math.max(0,pA-RM.patinaAnno(c.anno)); }); patC.needsUpdate=true; }
+  var pA=RM.patinaAnno(anno); if(Math.abs(pA-patUlt)>.002){ patUlt=pA; elenco.forEach(function(c,i){ patC.array[i]=RM.patinaSpenta?0:RM.patinaRestauri('chiesa:'+c.nome,c.anno,anno); }); patC.needsUpdate=true; }
 });
 })();
