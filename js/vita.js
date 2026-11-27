@@ -754,7 +754,7 @@ PISTRINA.forEach(function(np,r){ var c=isolati.filter(function(b){ return b.reg=
    ma il fumo partiva solo dal lotto, una volta su diciassette, come per le insulae. Con la stessa regola di una casa su diciassette un nucleo acceso di almeno otto case fa un filo,
    dal tetto della quinta casa; si accende con le case e si spegne con loro. Messi in coda, così le fasi del fumo di prima restano le stesse. */
 isolati.forEach(function(b){ if(!b.villa || b.villa.length<8) return; var o=b.villa[4];
-  FONTI.push({x:o.x,y:o.y+o.h+.15,z:o.z,b:b,nucleo:1,n:14,alto:6,larg:.3,forza:.8,q:RM.grana(Math.round(b.x*4.1)-13,Math.round(b.z*3.3)+29)}); });
+  FONTI.push({x:o.x,y:o.y+o.h+.15,z:o.z,b:b,nucleo:1,n:14,alto:6,larg:.3,forza:.68,q:RM.grana(Math.round(b.x*4.1)-13,Math.round(b.z*3.3)+29)}); });
 var geoForno=new RM.Costruttore().cilindro(.6,.55,0,0,0,P.tufo,.48,10).cupola(.48,0,.55,0,P.mattone,.8).scatola(.55,.26,.36,1,0,.25,P.marmo).scatola(.42,.22,.3,1.05,.26,.2,P.marmo).scatola(.5,.2,.3,.85,0,-.5,P.marmo,.6).geometria();
 var magliaForni=new THREE.InstancedMesh(geoForno,RM.matPietra(),Math.max(1,forni.length)), dF=new THREE.Object3D();
 magliaForni.castShadow=true; magliaForni.frustumCulled=false; magliaForni.userData.gruppo='vita'; RM.scene.add(magliaForni);
@@ -776,23 +776,24 @@ var fumo=new THREE.Points(gFumo,matFumo); fumo.frustumCulled=false; fumo.userDat
 var fumoG=RM.col(0xaeb7c2), fumoN=RM.col(0x30343f);      // 27 novembre 2026: grigio-azzurro, il fumo di legna sottile (prima bianco sporco); colonne più sottili e più trasparenti, che si allargano e svaniscono salendo: fili di cucina, non comignoli di fabbrica. Terme e calcare restano più larghe e più dense
 function vivaF(f,qf){ return f.b?(f.b.a0>.5&&f.q<qf&&(!f.nucleo||f.b.qv0>=8)?1:0):f.vivo; }      // fuma? le case finché sono abitate; i nuclei con almeno otto case accese
 /* Veduta dei secoli tardi (RM.vedutaU in js/base.js; come la corrente del fiume, che da lontano va più svelta): oltre 1,2 km dall'occhio, e pieno oltre 4, il filo si fa un poco più
-   alto, largo e denso, e grigio più chiaro contro il bruno dei ruderi, perché dalla vista d'insieme si veda dove si vive. Da vicino e fino al 520 restano i fili sottili di prima. */
+   alto, largo e denso, e grigio più chiaro contro il bruno dei ruderi, perché dalla vista d'insieme si veda dove si vive. Da vicino e fino al 520 restano i fili sottili di prima.
+   Lo stesso giorno l'utente: «Riduci leggermente il fumo della Roma alto medioevale»: larghezza da lontano da 2,8 a 2,25 volte, altezza da 1,7 a 1,55, meno denso e meno bianco, fili dei nuclei un poco più tenui. */
 var fumoV=RM.col(0xd9dde0), occhioF=new THREE.Vector3();
 function muoviFumo(){
   matFumo.uniforms.lato.value=RM.renderer.domElement.height*.5;
   var vU=RM.vedutaU?RM.vedutaU.value:0, k, f;
   matFumo.uniforms.colore.value.copy(fumoG);
-  if(vU>0){ occhioF.copy(RM.camera.position); matFumo.uniforms.colore.value.lerp(fumoV,.6*vU*RM.sfuma(120,400,occhioF.distanceTo(RM.controlli.target))); }
+  if(vU>0){ occhioF.copy(RM.camera.position); matFumo.uniforms.colore.value.lerp(fumoV,.42*vU*RM.sfuma(120,400,occhioF.distanceTo(RM.controlli.target))); }
   matFumo.uniforms.colore.value.lerp(fumoN,RM.notte);
   for(k=0;k<FONTI.length;k++){ f=FONTI[k]; f.lon=vU>0?vU*RM.sfuma(120,400,Math.hypot(f.x-occhioF.x,f.y-occhioF.y,f.z-occhioF.z)):0; }
   var tF=MENO_MOTO?30:tempo, qf=RM.QUALITA.fumo[RM.q]||1;
   for(k=0;k<NFU;k++){
     f=fDi[k]; var o=k*3, v=vivaF(f,qf);
     if(v<=.01){ if(fAlfa[k]!==0){ fAlfa[k]=0; fPos[o+1]=-1e4; } continue; }
-    var L=f.lon*Math.min(1,.4/f.larg), al=f.alto*(1+.7*L), p=(fFase[k]+tF*.05*(1+(k%5)*.08))%1, cu=al*.8*Math.pow(p,1.7), on=Math.sin(tF*.5+k*1.7)*.12*p*f.larg*3;      // sale diritta, poi il vento la piega; un poco di ondeggiare. L: i pennacchi già larghi (calcare, terme) crescono poco, sono i fili sottili delle case che si perdevano
+    var L=f.lon*Math.min(1,.4/f.larg), al=f.alto*(1+.55*L), p=(fFase[k]+tF*.05*(1+(k%5)*.08))%1, cu=al*.8*Math.pow(p,1.7), on=Math.sin(tF*.5+k*1.7)*.12*p*f.larg*3;      // sale diritta, poi il vento la piega; un poco di ondeggiare. L: i pennacchi già larghi (calcare, terme) crescono poco, sono i fili sottili delle case che si perdevano
     fPos[o]=f.x+VENTO[0]*cu+VENTO[1]*on; fPos[o+1]=f.y+Math.pow(p,1.35)*al; fPos[o+2]=f.z+VENTO[1]*cu-VENTO[0]*on;      // più fitto in basso, dove il filo è sottile
-    fMis[k]=f.larg*(.9+3.2*p)*(1+1.8*L);      // si allarga salendo e si disperde (alla bocca i punti si toccano: un filo, non una fila di perle)
-    fAlfa[k]=Math.min(.5+.1*L,Math.sin(Math.PI*Math.sqrt(p))*(1-.7*p)*f.forza*v*(1+.5*L));
+    fMis[k]=f.larg*(.9+3.2*p)*(1+1.25*L);      // si allarga salendo e si disperde (alla bocca i punti si toccano: un filo, non una fila di perle)
+    fAlfa[k]=Math.min(.5+.04*L,Math.sin(Math.PI*Math.sqrt(p))*(1-.7*p)*f.forza*v*(1+.25*L));
   }
   gFumo.attributes.position.needsUpdate=true; gFumo.attributes.alfa.needsUpdate=true; gFumo.attributes.mis.needsUpdate=true;
 }
