@@ -1,0 +1,13 @@
+[out:json][timeout:120];
+(
+  way["man_made"="aqueduct"](41.865,12.440,41.920,12.545);
+  way["historic"="aqueduct"](41.865,12.440,41.920,12.545);
+  relation["man_made"="aqueduct"](41.865,12.440,41.920,12.545);
+  relation["historic"="aqueduct"](41.865,12.440,41.920,12.545);
+  way["historic"]["name"~"[Aa]cquedott|[Aa]qua |[Aa]cqua |Arcus|Archi neroniani|Arco di Druso|Trofei di Mario|Castello dell|Piscina"](41.865,12.440,41.920,12.545);
+  node["historic"]["name"~"[Aa]cquedott|[Aa]qua |[Aa]cqua |Arcus|Archi neroniani|Arco di Druso|Trofei di Mario|Castello dell|Piscina"](41.865,12.440,41.920,12.545);
+  way["name"~"American Academy|Sant'Ignazio|Villa Sciarra"](41.880,12.455,41.905,12.485);
+  nwr["name"~"Caprari|Città dell'[Aa]cqua|Virgo|Vergine|Villa Medici|Capo le Case|Nazareno|Caravita|Galleria Sciarra|Pallantian|Piazza Guglielmo Pepe|Vigna Lais"](41.885,12.470,41.912,12.520);
+  way["highway"]["name"~"^Via (Capo le Case|del Nazareno|del Tritone|della Stamperia|del Corso|del Caravita|di Sant'Ignazio|dei Due Macelli)$"](41.895,12.475,41.910,12.492);
+);
+out tags geom;

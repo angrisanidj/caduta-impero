@@ -1,0 +1,2593 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-27T21:39:35Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 1429382773,
+  "lat": 41.9025010,
+  "lon": 12.4729627,
+  "tags": {
+    "amenity": "drinking_water",
+    "man_made": "water_tap",
+    "name": "Acqua Vergine",
+    "wikidata": "Q76958894"
+  }
+},
+{
+  "type": "node",
+  "id": 1490313730,
+  "lat": 41.9017606,
+  "lon": 12.4550242,
+  "tags": {
+    "historic": "city_gate",
+    "name": "Arcus de Campanis",
+    "name:en": "Arch of the Bells",
+    "name:es": "Arco de las Campanas",
+    "name:fr": "Arc des Cloches",
+    "name:it": "Arco delle Campane",
+    "name:la": "Arcus de Campanis",
+    "wikidata": "Q16529937",
+    "wikimedia_commons": "Category:Arco delle Campane (Vatican City)"
+  }
+},
+{
+  "type": "node",
+  "id": 2112201419,
+  "lat": 41.9126709,
+  "lon": 12.4849723,
+  "tags": {
+    "historic": "memorial",
+    "name": "Mostra dell'Acqua Felix",
+    "source": "Knowledge",
+    "subject:wikidata": "Q14456361",
+    "subject:wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "node",
+  "id": 5398398307,
+  "lat": 41.8995365,
+  "lon": 12.4823012,
+  "tags": {
+    "amenity": "restaurant",
+    "name": "Pizzeria Trattoria Galleria Sciarra"
+  }
+},
+{
+  "type": "node",
+  "id": 5407210321,
+  "lat": 41.9040487,
+  "lon": 12.4850351,
+  "tags": {
+    "addr:housenumber": "53",
+    "addr:street": "Via di Capo le Case",
+    "amenity": "restaurant",
+    "name": "enOsteria cmCapo le Case",
+    "name:en": "enOsteria Capo le Case",
+    "name:fr": "enOsteria Capo le Case",
+    "name:it": "enOsteria cmCapo le Case",
+    "phone": "+390669923644",
+    "website": "https://www.enotecaosteriaroma.it/"
+  }
+},
+{
+  "type": "node",
+  "id": 6908586063,
+  "lat": 41.9004309,
+  "lon": 12.4840951,
+  "tags": {
+    "archaeological_site": "aqueduct",
+    "description:it": "cisterna romana",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "name": "Area archeologica Vicus Caprarius: La Città dell’Acqua",
+    "opening_hours": "Tu-Fr 11:00-17:30, Sa-Su 11:00-19:00",
+    "website": "https://www.vicuscaprarius.com"
+  }
+},
+{
+  "type": "node",
+  "id": 11495762804,
+  "lat": 41.8744243,
+  "lon": 12.5064626,
+  "tags": {
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "name": "Resti dell'Acquedotto Antoniniano"
+  }
+},
+{
+  "type": "node",
+  "id": 12895882547,
+  "lat": 41.9037234,
+  "lon": 12.4845953,
+  "tags": {
+    "bus": "yes",
+    "highway": "bus_stop",
+    "name": "Due Macelli/Capo le Case",
+    "network": "ATAC",
+    "network:wikidata": "Q530087",
+    "network:wikipedia": "it:ATAC",
+    "operator": "ATAC",
+    "public_transport": "platform",
+    "ref": "71394"
+  }
+},
+{
+  "type": "way",
+  "id": 22979103,
+  "bounds": {
+    "minlat": 41.8966771,
+    "minlon": 12.4821569,
+    "maxlat": 41.8967593,
+    "maxlon": 12.4821923
+  },
+  "geometry": [
+    { "lat": 41.8966771, "lon": 12.4821923 },
+    { "lat": 41.8967593, "lon": 12.4821569 }
+  ],
+  "tags": {
+    "bus": "yes",
+    "cycleway": "no",
+    "highway": "unclassified",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle": "private",
+    "name": "Via del Corso",
+    "psv": "yes",
+    "sidewalk": "both",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 23442670,
+  "bounds": {
+    "minlat": 41.9034601,
+    "minlon": 12.4878551,
+    "maxlat": 41.9035146,
+    "maxlon": 12.4879983
+  },
+  "geometry": [
+    { "lat": 41.9035146, "lon": 12.4879983 },
+    { "lat": 41.9034858, "lon": 12.4879455 },
+    { "lat": 41.9034601, "lon": 12.4878551 }
+  ],
+  "tags": {
+    "access": "no",
+    "foot": "yes",
+    "highway": "service",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via del Tritone",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 23442671,
+  "bounds": {
+    "minlat": 41.9080185,
+    "minlon": 12.4821573,
+    "maxlat": 41.9085298,
+    "maxlon": 12.4831912
+  },
+  "geometry": [
+    { "lat": 41.9085298, "lon": 12.4823439 },
+    { "lat": 41.9083831, "lon": 12.4821573 },
+    { "lat": 41.9082248, "lon": 12.4823820 },
+    { "lat": 41.9080185, "lon": 12.4826750 },
+    { "lat": 41.9084245, "lon": 12.4831912 },
+    { "lat": 41.9084851, "lon": 12.4831051 },
+    { "lat": 41.9082259, "lon": 12.4827757 },
+    { "lat": 41.9085298, "lon": 12.4823439 }
+  ],
+  "tags": {
+    "addr:housenumber": "1",
+    "addr:street": "Viale della Trinità dei Monti",
+    "building": "yes",
+    "castle_type": "palace",
+    "historic": "castle",
+    "name": "Villa Medici",
+    "name:fr": "Villa Medicis",
+    "name:ru": "Вилла Медичи",
+    "opening_hours": "Tu-Su 09:30-17:30",
+    "phone": "+39 06 6761 311",
+    "tourism": "attraction",
+    "website": "https://www.villamedici.it/",
+    "wikidata": "Q1362663",
+    "wikimedia_commons": "Category:Villa Medici (Rome)",
+    "wikipedia": "it:Villa Medici"
+  }
+},
+{
+  "type": "way",
+  "id": 23840659,
+  "bounds": {
+    "minlat": 41.8984021,
+    "minlon": 12.4794271,
+    "maxlat": 41.8992033,
+    "maxlon": 12.4801396
+  },
+  "geometry": [
+    { "lat": 41.8984706, "lon": 12.4797823 },
+    { "lat": 41.8984659, "lon": 12.4797419 },
+    { "lat": 41.8984463, "lon": 12.4795757 },
+    { "lat": 41.8988498, "lon": 12.4794852 },
+    { "lat": 41.8991230, "lon": 12.4794271 },
+    { "lat": 41.8991449, "lon": 12.4794526 },
+    { "lat": 41.8991736, "lon": 12.4797199 },
+    { "lat": 41.8992033, "lon": 12.4799967 },
+    { "lat": 41.8990289, "lon": 12.4800397 },
+    { "lat": 41.8988650, "lon": 12.4800801 },
+    { "lat": 41.8986495, "lon": 12.4801332 },
+    { "lat": 41.8986234, "lon": 12.4801396 },
+    { "lat": 41.8986176, "lon": 12.4800877 },
+    { "lat": 41.8985765, "lon": 12.4800981 },
+    { "lat": 41.8985276, "lon": 12.4801085 },
+    { "lat": 41.8985019, "lon": 12.4801140 },
+    { "lat": 41.8984942, "lon": 12.4800248 },
+    { "lat": 41.8984891, "lon": 12.4799841 },
+    { "lat": 41.8984618, "lon": 12.4799826 },
+    { "lat": 41.8984395, "lon": 12.4799712 },
+    { "lat": 41.8984211, "lon": 12.4799510 },
+    { "lat": 41.8984082, "lon": 12.4799242 },
+    { "lat": 41.8984021, "lon": 12.4798933 },
+    { "lat": 41.8984036, "lon": 12.4798614 },
+    { "lat": 41.8984123, "lon": 12.4798317 },
+    { "lat": 41.8984274, "lon": 12.4798071 },
+    { "lat": 41.8984476, "lon": 12.4797901 },
+    { "lat": 41.8984706, "lon": 12.4797823 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "church",
+    "check_date": "2023-08-28",
+    "contact:website": "https://santignazio.gesuiti.it/",
+    "denomination": "roman_catholic",
+    "name": "Sant'Ignazio di Loyola a Campo Marzio",
+    "name:en": "Church of St. Ignatius of Loyola at Campus Martius",
+    "name:es": "Iglesia de San Ignacio de Loyola",
+    "name:fr": "Église Saint-Ignace-de-Loyola",
+    "name:la": "Ecclesia Sancti Ignatii a Loyola in Campo Martio",
+    "opening_hours": "Mo-Sa 07:30-19:00; Su 11:30-18:00",
+    "religion": "christian",
+    "tourism": "attraction",
+    "wheelchair": "yes",
+    "wikidata": "Q1465674",
+    "wikimedia_commons": "Category:Sant'Ignazio (Rome)",
+    "wikipedia": "it:Chiesa di Sant'Ignazio di Loyola in Campo Marzio"
+  }
+},
+{
+  "type": "way",
+  "id": 24650966,
+  "bounds": {
+    "minlat": 41.9096897,
+    "minlon": 12.4802851,
+    "maxlat": 41.9111370,
+    "maxlon": 12.4813929
+  },
+  "geometry": [
+    { "lat": 41.9111370, "lon": 12.4811236 },
+    { "lat": 41.9104975, "lon": 12.4813929 },
+    { "lat": 41.9104220, "lon": 12.4813733 },
+    { "lat": 41.9103584, "lon": 12.4813083 },
+    { "lat": 41.9102596, "lon": 12.4811439 },
+    { "lat": 41.9101241, "lon": 12.4809328 },
+    { "lat": 41.9100590, "lon": 12.4808447 },
+    { "lat": 41.9096897, "lon": 12.4802851 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Viale di Villa Medici",
+    "smoothness": "bad",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 25610749,
+  "bounds": {
+    "minlat": 41.8984009,
+    "minlon": 12.4793833,
+    "maxlat": 41.8991472,
+    "maxlon": 12.4795450
+  },
+  "geometry": [
+    { "lat": 41.8991472, "lon": 12.4793833 },
+    { "lat": 41.8988476, "lon": 12.4794574 },
+    { "lat": 41.8984009, "lon": 12.4795450 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "name": "Via di Sant'Ignazio",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 25632124,
+  "bounds": {
+    "minlat": 41.8993723,
+    "minlon": 12.4810134,
+    "maxlat": 41.8993856,
+    "maxlon": 12.4810953
+  },
+  "geometry": [
+    { "lat": 41.8993856, "lon": 12.4810953 },
+    { "lat": 41.8993755, "lon": 12.4810328 },
+    { "lat": 41.8993723, "lon": 12.4810134 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "footway",
+    "name": "Via del Caravita",
+    "surface": "cobblestone"
+  }
+},
+{
+  "type": "way",
+  "id": 25768186,
+  "bounds": {
+    "minlat": 41.9019302,
+    "minlon": 12.4836818,
+    "maxlat": 41.9022166,
+    "maxlon": 12.4838493
+  },
+  "geometry": [
+    { "lat": 41.9022166, "lon": 12.4838493 },
+    { "lat": 41.9019302, "lon": 12.4836818 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "is_in:city": "Roma",
+    "lanes": "2",
+    "lit": "yes",
+    "motor_vehicle": "private",
+    "name": "Via della Stamperia",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 26785433,
+  "bounds": {
+    "minlat": 41.9097500,
+    "minlon": 12.4766390,
+    "maxlat": 41.9100042,
+    "maxlon": 12.4767476
+  },
+  "geometry": [
+    { "lat": 41.9100042, "lon": 12.4766390 },
+    { "lat": 41.9099653, "lon": 12.4766555 },
+    { "lat": 41.9097500, "lon": 12.4767476 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lanes": "2",
+    "lit": "yes",
+    "motor_vehicle": "destination",
+    "name": "Via del Corso",
+    "oneway:motor_vehicle": "yes",
+    "psv": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 35884332,
+  "bounds": {
+    "minlat": 41.8823715,
+    "minlon": 12.4613766,
+    "maxlat": 41.8850740,
+    "maxlon": 12.4662979
+  },
+  "geometry": [
+    { "lat": 41.8836001, "lon": 12.4662979 },
+    { "lat": 41.8837299, "lon": 12.4660229 },
+    { "lat": 41.8837588, "lon": 12.4659616 },
+    { "lat": 41.8839013, "lon": 12.4657763 },
+    { "lat": 41.8840446, "lon": 12.4656892 },
+    { "lat": 41.8841563, "lon": 12.4656640 },
+    { "lat": 41.8842297, "lon": 12.4656658 },
+    { "lat": 41.8842861, "lon": 12.4654364 },
+    { "lat": 41.8843724, "lon": 12.4653500 },
+    { "lat": 41.8844580, "lon": 12.4650277 },
+    { "lat": 41.8847445, "lon": 12.4651605 },
+    { "lat": 41.8849022, "lon": 12.4648756 },
+    { "lat": 41.8849044, "lon": 12.4647802 },
+    { "lat": 41.8849328, "lon": 12.4635599 },
+    { "lat": 41.8849530, "lon": 12.4631152 },
+    { "lat": 41.8849574, "lon": 12.4625730 },
+    { "lat": 41.8849594, "lon": 12.4621730 },
+    { "lat": 41.8849586, "lon": 12.4621452 },
+    { "lat": 41.8850168, "lon": 12.4621416 },
+    { "lat": 41.8850166, "lon": 12.4621019 },
+    { "lat": 41.8850162, "lon": 12.4620713 },
+    { "lat": 41.8850369, "lon": 12.4620708 },
+    { "lat": 41.8850394, "lon": 12.4617869 },
+    { "lat": 41.8850718, "lon": 12.4617839 },
+    { "lat": 41.8850740, "lon": 12.4616814 },
+    { "lat": 41.8845806, "lon": 12.4614712 },
+    { "lat": 41.8843853, "lon": 12.4613766 },
+    { "lat": 41.8843094, "lon": 12.4615775 },
+    { "lat": 41.8843055, "lon": 12.4615893 },
+    { "lat": 41.8842252, "lon": 12.4618104 },
+    { "lat": 41.8842105, "lon": 12.4618484 },
+    { "lat": 41.8840854, "lon": 12.4621638 },
+    { "lat": 41.8841531, "lon": 12.4622418 },
+    { "lat": 41.8841684, "lon": 12.4622275 },
+    { "lat": 41.8843141, "lon": 12.4624220 },
+    { "lat": 41.8838257, "lon": 12.4630813 },
+    { "lat": 41.8835404, "lon": 12.4634664 },
+    { "lat": 41.8833250, "lon": 12.4637502 },
+    { "lat": 41.8831552, "lon": 12.4634767 },
+    { "lat": 41.8831160, "lon": 12.4634227 },
+    { "lat": 41.8825319, "lon": 12.4637915 },
+    { "lat": 41.8827338, "lon": 12.4644665 },
+    { "lat": 41.8829110, "lon": 12.4644399 },
+    { "lat": 41.8829061, "lon": 12.4650779 },
+    { "lat": 41.8829097, "lon": 12.4652595 },
+    { "lat": 41.8826263, "lon": 12.4652411 },
+    { "lat": 41.8825379, "lon": 12.4654608 },
+    { "lat": 41.8823715, "lon": 12.4658625 },
+    { "lat": 41.8825512, "lon": 12.4659251 },
+    { "lat": 41.8826746, "lon": 12.4659668 },
+    { "lat": 41.8828854, "lon": 12.4660293 },
+    { "lat": 41.8830182, "lon": 12.4660686 },
+    { "lat": 41.8831092, "lon": 12.4660759 },
+    { "lat": 41.8832996, "lon": 12.4660828 },
+    { "lat": 41.8834116, "lon": 12.4660918 },
+    { "lat": 41.8834629, "lon": 12.4661810 },
+    { "lat": 41.8835247, "lon": 12.4662640 },
+    { "lat": 41.8836001, "lon": 12.4662979 }
+  ],
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housename": "12",
+    "addr:postcode": "00152",
+    "addr:street": "Via Dandolo",
+    "addr:unit": "1",
+    "leisure": "park",
+    "name": "Villa Sciarra",
+    "wikidata": "Q14479150",
+    "wikimedia_commons": "Category:Villa Sciarra (Rome)",
+    "wikipedia": "it:Villa Sciarra (Roma)"
+  }
+},
+{
+  "type": "way",
+  "id": 49304929,
+  "bounds": {
+    "minlat": 41.9015935,
+    "minlon": 12.4800639,
+    "maxlat": 41.9018573,
+    "maxlon": 12.4801766
+  },
+  "geometry": [
+    { "lat": 41.9018573, "lon": 12.4800639 },
+    { "lat": 41.9017396, "lon": 12.4801143 },
+    { "lat": 41.9015935, "lon": 12.4801766 }
+  ],
+  "tags": {
+    "foot": "no",
+    "highway": "unclassified",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via del Corso",
+    "name:it": "Via del Corso",
+    "name:zh": "科尔索大街",
+    "oneway": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 49305153,
+  "bounds": {
+    "minlat": 41.9018573,
+    "minlon": 12.4797832,
+    "maxlat": 41.9024786,
+    "maxlon": 12.4800639
+  },
+  "geometry": [
+    { "lat": 41.9024786, "lon": 12.4797832 },
+    { "lat": 41.9024420, "lon": 12.4798210 },
+    { "lat": 41.9018573, "lon": 12.4800639 }
+  ],
+  "tags": {
+    "foot": "no",
+    "highway": "unclassified",
+    "lanes": "2",
+    "lanes:psv:backward": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via del Corso",
+    "oneway": "yes",
+    "oneway:psv": "no",
+    "psv:backward": "yes",
+    "sidewalk": "both",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt",
+    "wikidata": "Q958299",
+    "wikipedia": "fr:Via del Corso (Rome)"
+  }
+},
+{
+  "type": "way",
+  "id": 97834048,
+  "bounds": {
+    "minlat": 41.8957036,
+    "minlon": 12.5070546,
+    "maxlat": 41.8959395,
+    "maxlon": 12.5073526
+  },
+  "geometry": [
+    { "lat": 41.8957036, "lon": 12.5070774 },
+    { "lat": 41.8957194, "lon": 12.5070546 },
+    { "lat": 41.8959395, "lon": 12.5073297 },
+    { "lat": 41.8959237, "lon": 12.5073526 },
+    { "lat": 41.8957036, "lon": 12.5070774 }
+  ],
+  "tags": {
+    "bridge": "aqueduct",
+    "building": "aqueduct",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "name": "Acquedotto Julio",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 107578022,
+  "bounds": {
+    "minlat": 41.9017037,
+    "minlon": 12.4812717,
+    "maxlat": 41.9018116,
+    "maxlon": 12.4814312
+  },
+  "geometry": [
+    { "lat": 41.9017037, "lon": 12.4812717 },
+    { "lat": 41.9017220, "lon": 12.4812857 },
+    { "lat": 41.9017420, "lon": 12.4813056 },
+    { "lat": 41.9017571, "lon": 12.4813248 },
+    { "lat": 41.9017698, "lon": 12.4813447 },
+    { "lat": 41.9017904, "lon": 12.4813835 },
+    { "lat": 41.9018116, "lon": 12.4814312 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via del Tritone",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 108565606,
+  "bounds": {
+    "minlat": 41.8968707,
+    "minlon": 12.4810953,
+    "maxlat": 41.8993856,
+    "maxlon": 12.4821078
+  },
+  "geometry": [
+    { "lat": 41.8968707, "lon": 12.4821078 },
+    { "lat": 41.8968996, "lon": 12.4820954 },
+    { "lat": 41.8973152, "lon": 12.4819249 },
+    { "lat": 41.8973462, "lon": 12.4819116 },
+    { "lat": 41.8973573, "lon": 12.4819077 },
+    { "lat": 41.8982222, "lon": 12.4815527 },
+    { "lat": 41.8984788, "lon": 12.4814503 },
+    { "lat": 41.8987556, "lon": 12.4813386 },
+    { "lat": 41.8989369, "lon": 12.4812659 },
+    { "lat": 41.8989717, "lon": 12.4812523 },
+    { "lat": 41.8992510, "lon": 12.4811413 },
+    { "lat": 41.8993244, "lon": 12.4811137 },
+    { "lat": 41.8993856, "lon": 12.4810953 }
+  ],
+  "tags": {
+    "bus": "yes",
+    "foot": "no",
+    "highway": "unclassified",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle": "private",
+    "name": "Via del Corso",
+    "psv": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 109086145,
+  "bounds": {
+    "minlat": 41.8996240,
+    "minlon": 12.4819693,
+    "maxlat": 41.9000000,
+    "maxlon": 12.4821287
+  },
+  "geometry": [
+    { "lat": 41.8996240, "lon": 12.4821287 },
+    { "lat": 41.8996476, "lon": 12.4821187 },
+    { "lat": 41.8996516, "lon": 12.4821170 },
+    { "lat": 41.8999660, "lon": 12.4819837 },
+    { "lat": 41.8999722, "lon": 12.4819811 },
+    { "lat": 41.9000000, "lon": 12.4819693 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "name": "Galleria Sciarra",
+    "surface": "paving_stones",
+    "tunnel": "building_passage"
+  }
+},
+{
+  "type": "way",
+  "id": 112174949,
+  "bounds": {
+    "minlat": 41.8851250,
+    "minlon": 12.4957778,
+    "maxlat": 41.8851737,
+    "maxlon": 12.4958516
+  },
+  "geometry": [
+    { "lat": 41.8851737, "lon": 12.4957802 },
+    { "lat": 41.8851263, "lon": 12.4957778 },
+    { "lat": 41.8851250, "lon": 12.4958164 },
+    { "lat": 41.8851306, "lon": 12.4958516 },
+    { "lat": 41.8851719, "lon": 12.4958516 },
+    { "lat": 41.8851737, "lon": 12.4957802 }
+  ],
+  "tags": {
+    "building": "yes",
+    "historic": "ruins",
+    "historic:civilization": "ancient_roman",
+    "name": "Acquedotto Neroniano",
+    "ruins": "aqueduct"
+  }
+},
+{
+  "type": "way",
+  "id": 113758266,
+  "bounds": {
+    "minlat": 41.8709452,
+    "minlon": 12.5387042,
+    "maxlat": 41.8714819,
+    "maxlon": 12.5393485
+  },
+  "geometry": [
+    { "lat": 41.8714819, "lon": 12.5387042 },
+    { "lat": 41.8709452, "lon": 12.5393485 }
+  ],
+  "tags": {
+    "barrier": "wall",
+    "historic": "aqueduct",
+    "name": "Acqua Marcia",
+    "ruins": "yes",
+    "wikidata": "Q622943",
+    "wikipedia": "en:Aqua Marcia"
+  }
+},
+{
+  "type": "way",
+  "id": 122187727,
+  "bounds": {
+    "minlat": 41.9028252,
+    "minlon": 12.4855945,
+    "maxlat": 41.9034430,
+    "maxlon": 12.4881602
+  },
+  "geometry": [
+    { "lat": 41.9028252, "lon": 12.4855945 },
+    { "lat": 41.9029032, "lon": 12.4858910 },
+    { "lat": 41.9030430, "lon": 12.4864137 },
+    { "lat": 41.9031113, "lon": 12.4866733 },
+    { "lat": 41.9031265, "lon": 12.4867313 },
+    { "lat": 41.9031762, "lon": 12.4869330 },
+    { "lat": 41.9031926, "lon": 12.4869929 },
+    { "lat": 41.9034047, "lon": 12.4878463 },
+    { "lat": 41.9034121, "lon": 12.4878771 },
+    { "lat": 41.9034284, "lon": 12.4879417 },
+    { "lat": 41.9034367, "lon": 12.4879868 },
+    { "lat": 41.9034402, "lon": 12.4880149 },
+    { "lat": 41.9034425, "lon": 12.4880422 },
+    { "lat": 41.9034430, "lon": 12.4880701 },
+    { "lat": 41.9034424, "lon": 12.4880973 },
+    { "lat": 41.9034390, "lon": 12.4881261 },
+    { "lat": 41.9034322, "lon": 12.4881602 }
+  ],
+  "tags": {
+    "foot": "no",
+    "highway": "tertiary",
+    "is_in:city": "Roma",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via del Tritone",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt",
+    "wikidata": "Q4010823"
+  }
+},
+{
+  "type": "way",
+  "id": 122705896,
+  "bounds": {
+    "minlat": 41.9065412,
+    "minlon": 12.4767476,
+    "maxlat": 41.9097500,
+    "maxlon": 12.4780884
+  },
+  "geometry": [
+    { "lat": 41.9097500, "lon": 12.4767476 },
+    { "lat": 41.9091119, "lon": 12.4770285 },
+    { "lat": 41.9085873, "lon": 12.4772442 },
+    { "lat": 41.9081066, "lon": 12.4774499 },
+    { "lat": 41.9075998, "lon": 12.4776588 },
+    { "lat": 41.9074377, "lon": 12.4777222 },
+    { "lat": 41.9072559, "lon": 12.4777898 },
+    { "lat": 41.9069735, "lon": 12.4779087 },
+    { "lat": 41.9065412, "lon": 12.4780884 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "pedestrian",
+    "lanes": "2",
+    "lit": "yes",
+    "motor_vehicle": "private",
+    "name": "Via del Corso",
+    "oneway:motor_vehicle": "yes",
+    "psv": "yes",
+    "sidewalk:both": "separate",
+    "surface": "asphalt",
+    "wikimedia_commons": "Category:Via del Corso (Rome)"
+  }
+},
+{
+  "type": "way",
+  "id": 125831712,
+  "bounds": {
+    "minlat": 41.8952356,
+    "minlon": 12.4756024,
+    "maxlat": 41.8953729,
+    "maxlon": 12.4756914
+  },
+  "geometry": [
+    { "lat": 41.8952673, "lon": 12.4756049 },
+    { "lat": 41.8952539, "lon": 12.4756024 },
+    { "lat": 41.8952356, "lon": 12.4756738 },
+    { "lat": 41.8953341, "lon": 12.4756862 },
+    { "lat": 41.8953618, "lon": 12.4756914 },
+    { "lat": 41.8953667, "lon": 12.4756562 },
+    { "lat": 41.8953729, "lon": 12.4756175 },
+    { "lat": 41.8952673, "lon": 12.4756049 }
+  ],
+  "tags": {
+    "alt_name": "Chiesa di Gesù Nazareno",
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "catholic",
+    "name": "Gesù Nazareno all’Argentina",
+    "religion": "christian",
+    "wikidata": "Q3669315",
+    "wikimedia_commons": "Category:Gesù Nazareno",
+    "wikipedia": "it:Chiesa di Gesù Nazareno"
+  }
+},
+{
+  "type": "way",
+  "id": 128665314,
+  "bounds": {
+    "minlat": 41.9036889,
+    "minlon": 12.4833923,
+    "maxlat": 41.9038497,
+    "maxlon": 12.4844145
+  },
+  "geometry": [
+    { "lat": 41.9038497, "lon": 12.4844145 },
+    { "lat": 41.9038368, "lon": 12.4843304 },
+    { "lat": 41.9038208, "lon": 12.4842259 },
+    { "lat": 41.9038338, "lon": 12.4841494 },
+    { "lat": 41.9037037, "lon": 12.4834859 },
+    { "lat": 41.9036889, "lon": 12.4833923 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Capo le Case",
+    "oneway": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 128665323,
+  "bounds": {
+    "minlat": 41.9028581,
+    "minlon": 12.4844145,
+    "maxlat": 41.9038497,
+    "maxlon": 12.4855568
+  },
+  "geometry": [
+    { "lat": 41.9028581, "lon": 12.4855568 },
+    { "lat": 41.9029027, "lon": 12.4855076 },
+    { "lat": 41.9030214, "lon": 12.4853639 },
+    { "lat": 41.9036474, "lon": 12.4846452 },
+    { "lat": 41.9037963, "lon": 12.4844753 },
+    { "lat": 41.9038497, "lon": 12.4844145 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via dei Due Macelli",
+    "oneway": "yes",
+    "sidewalk:both": "separate",
+    "surface": "sett",
+    "tourist_bus": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 128665325,
+  "bounds": {
+    "minlat": 41.8992356,
+    "minlon": 12.4799836,
+    "maxlat": 41.8992885,
+    "maxlon": 12.4805917
+  },
+  "geometry": [
+    { "lat": 41.8992885, "lon": 12.4805917 },
+    { "lat": 41.8992445, "lon": 12.4801357 },
+    { "lat": 41.8992356, "lon": 12.4799836 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via del Caravita",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 128665329,
+  "bounds": {
+    "minlat": 41.9007415,
+    "minlon": 12.4803158,
+    "maxlat": 41.9012889,
+    "maxlon": 12.4805457
+  },
+  "geometry": [
+    { "lat": 41.9007415, "lon": 12.4805457 },
+    { "lat": 41.9009694, "lon": 12.4804499 },
+    { "lat": 41.9012205, "lon": 12.4803459 },
+    { "lat": 41.9012889, "lon": 12.4803158 }
+  ],
+  "tags": {
+    "bus": "yes",
+    "foot": "no",
+    "highway": "unclassified",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle:backward": "private",
+    "motor_vehicle:forward": "yes",
+    "name": "Via del Corso",
+    "psv": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 130807531,
+  "bounds": {
+    "minlat": 41.8991449,
+    "minlon": 12.4793954,
+    "maxlat": 41.8995147,
+    "maxlon": 12.4799967
+  },
+  "geometry": [
+    { "lat": 41.8994083, "lon": 12.4795687 },
+    { "lat": 41.8994110, "lon": 12.4795717 },
+    { "lat": 41.8994163, "lon": 12.4795776 },
+    { "lat": 41.8994258, "lon": 12.4795891 },
+    { "lat": 41.8994305, "lon": 12.4795987 },
+    { "lat": 41.8994343, "lon": 12.4796120 },
+    { "lat": 41.8994377, "lon": 12.4796222 },
+    { "lat": 41.8994310, "lon": 12.4796311 },
+    { "lat": 41.8994343, "lon": 12.4796445 },
+    { "lat": 41.8994367, "lon": 12.4796585 },
+    { "lat": 41.8994386, "lon": 12.4796782 },
+    { "lat": 41.8994386, "lon": 12.4796897 },
+    { "lat": 41.8994386, "lon": 12.4796999 },
+    { "lat": 41.8994490, "lon": 12.4797056 },
+    { "lat": 41.8994462, "lon": 12.4797234 },
+    { "lat": 41.8994419, "lon": 12.4797425 },
+    { "lat": 41.8994358, "lon": 12.4797565 },
+    { "lat": 41.8994315, "lon": 12.4797663 },
+    { "lat": 41.8994305, "lon": 12.4797686 },
+    { "lat": 41.8994457, "lon": 12.4797992 },
+    { "lat": 41.8994504, "lon": 12.4798031 },
+    { "lat": 41.8994574, "lon": 12.4798001 },
+    { "lat": 41.8994644, "lon": 12.4797986 },
+    { "lat": 41.8994712, "lon": 12.4797985 },
+    { "lat": 41.8994804, "lon": 12.4798006 },
+    { "lat": 41.8994862, "lon": 12.4798033 },
+    { "lat": 41.8994919, "lon": 12.4798071 },
+    { "lat": 41.8994976, "lon": 12.4798124 },
+    { "lat": 41.8995066, "lon": 12.4798254 },
+    { "lat": 41.8995120, "lon": 12.4798396 },
+    { "lat": 41.8995147, "lon": 12.4798551 },
+    { "lat": 41.8995145, "lon": 12.4798691 },
+    { "lat": 41.8995111, "lon": 12.4798860 },
+    { "lat": 41.8995079, "lon": 12.4798943 },
+    { "lat": 41.8995024, "lon": 12.4799041 },
+    { "lat": 41.8994955, "lon": 12.4799122 },
+    { "lat": 41.8994905, "lon": 12.4799164 },
+    { "lat": 41.8994879, "lon": 12.4799182 },
+    { "lat": 41.8994804, "lon": 12.4799219 },
+    { "lat": 41.8994732, "lon": 12.4799237 },
+    { "lat": 41.8994594, "lon": 12.4799230 },
+    { "lat": 41.8994503, "lon": 12.4799193 },
+    { "lat": 41.8994263, "lon": 12.4799405 },
+    { "lat": 41.8993263, "lon": 12.4799603 },
+    { "lat": 41.8993064, "lon": 12.4799552 },
+    { "lat": 41.8992974, "lon": 12.4799584 },
+    { "lat": 41.8992912, "lon": 12.4799641 },
+    { "lat": 41.8992841, "lon": 12.4799698 },
+    { "lat": 41.8992775, "lon": 12.4799705 },
+    { "lat": 41.8992588, "lon": 12.4799750 },
+    { "lat": 41.8992356, "lon": 12.4799836 },
+    { "lat": 41.8992033, "lon": 12.4799967 },
+    { "lat": 41.8991736, "lon": 12.4797199 },
+    { "lat": 41.8991449, "lon": 12.4794526 },
+    { "lat": 41.8991618, "lon": 12.4794469 },
+    { "lat": 41.8992000, "lon": 12.4794420 },
+    { "lat": 41.8992243, "lon": 12.4794404 },
+    { "lat": 41.8992397, "lon": 12.4794515 },
+    { "lat": 41.8992569, "lon": 12.4794308 },
+    { "lat": 41.8993558, "lon": 12.4794205 },
+    { "lat": 41.8993829, "lon": 12.4794361 },
+    { "lat": 41.8993884, "lon": 12.4794228 },
+    { "lat": 41.8993943, "lon": 12.4794137 },
+    { "lat": 41.8994013, "lon": 12.4794061 },
+    { "lat": 41.8994130, "lon": 12.4793986 },
+    { "lat": 41.8994274, "lon": 12.4793954 },
+    { "lat": 41.8994420, "lon": 12.4793980 },
+    { "lat": 41.8994501, "lon": 12.4794022 },
+    { "lat": 41.8994575, "lon": 12.4794083 },
+    { "lat": 41.8994641, "lon": 12.4794162 },
+    { "lat": 41.8994695, "lon": 12.4794256 },
+    { "lat": 41.8994754, "lon": 12.4794426 },
+    { "lat": 41.8994771, "lon": 12.4794539 },
+    { "lat": 41.8994773, "lon": 12.4794655 },
+    { "lat": 41.8994741, "lon": 12.4794850 },
+    { "lat": 41.8994705, "lon": 12.4794949 },
+    { "lat": 41.8994608, "lon": 12.4795105 },
+    { "lat": 41.8994509, "lon": 12.4795199 },
+    { "lat": 41.8994449, "lon": 12.4795234 },
+    { "lat": 41.8994371, "lon": 12.4795263 },
+    { "lat": 41.8994287, "lon": 12.4795274 },
+    { "lat": 41.8994204, "lon": 12.4795265 },
+    { "lat": 41.8994106, "lon": 12.4795547 },
+    { "lat": 41.8994083, "lon": 12.4795687 }
+  ],
+  "tags": {
+    "area": "yes",
+    "foot": "yes",
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Piazza di Sant'Ignazio",
+    "place": "square",
+    "surface": "sett",
+    "wikidata": "Q1120890",
+    "wikipedia": "it:Piazza Sant'Ignazio"
+  }
+},
+{
+  "type": "way",
+  "id": 130807540,
+  "bounds": {
+    "minlat": 41.8983128,
+    "minlon": 12.4795450,
+    "maxlat": 41.8984009,
+    "maxlon": 12.4795623
+  },
+  "geometry": [
+    { "lat": 41.8984009, "lon": 12.4795450 },
+    { "lat": 41.8983128, "lon": 12.4795623 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "layer": "-1",
+    "maxheight": "default",
+    "name": "Via di Sant'Ignazio",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "sett",
+    "tunnel": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 130807541,
+  "bounds": {
+    "minlat": 41.8977198,
+    "minlon": 12.4795623,
+    "maxlat": 41.8983128,
+    "maxlon": 12.4797198
+  },
+  "geometry": [
+    { "lat": 41.8983128, "lon": 12.4795623 },
+    { "lat": 41.8980677, "lon": 12.4796171 },
+    { "lat": 41.8978059, "lon": 12.4796944 },
+    { "lat": 41.8977198, "lon": 12.4797198 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "foot": "yes",
+    "highway": "service",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Sant'Ignazio",
+    "oneway": "yes",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 130920756,
+  "bounds": {
+    "minlat": 41.8992885,
+    "minlon": 12.4805917,
+    "maxlat": 41.8993723,
+    "maxlon": 12.4810134
+  },
+  "geometry": [
+    { "lat": 41.8993723, "lon": 12.4810134 },
+    { "lat": 41.8992885, "lon": 12.4805917 }
+  ],
+  "tags": {
+    "foot": "yes",
+    "highway": "service",
+    "lit": "yes",
+    "name": "Via del Caravita",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 131235408,
+  "bounds": {
+    "minlat": 41.9012889,
+    "minlon": 12.4801766,
+    "maxlat": 41.9015935,
+    "maxlon": 12.4803158
+  },
+  "geometry": [
+    { "lat": 41.9015935, "lon": 12.4801766 },
+    { "lat": 41.9014653, "lon": 12.4802288 },
+    { "lat": 41.9012889, "lon": 12.4803158 }
+  ],
+  "tags": {
+    "bus": "yes",
+    "cycleway:right": "no",
+    "foot": "no",
+    "highway": "unclassified",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle": "private",
+    "name": "Via del Corso",
+    "oneway": "yes",
+    "psv": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 131235571,
+  "bounds": {
+    "minlat": 41.8996097,
+    "minlon": 12.4818841,
+    "maxlat": 41.9000195,
+    "maxlon": 12.4822527
+  },
+  "geometry": [
+    { "lat": 41.8996097, "lon": 12.4820661 },
+    { "lat": 41.8996412, "lon": 12.4820294 },
+    { "lat": 41.8996939, "lon": 12.4820066 },
+    { "lat": 41.8997324, "lon": 12.4819901 },
+    { "lat": 41.8999782, "lon": 12.4818841 },
+    { "lat": 41.9000000, "lon": 12.4819693 },
+    { "lat": 41.9000195, "lon": 12.4820488 },
+    { "lat": 41.8999320, "lon": 12.4820824 },
+    { "lat": 41.8999387, "lon": 12.4821230 },
+    { "lat": 41.8999329, "lon": 12.4821422 },
+    { "lat": 41.8999194, "lon": 12.4821535 },
+    { "lat": 41.8999010, "lon": 12.4821580 },
+    { "lat": 41.8998867, "lon": 12.4821366 },
+    { "lat": 41.8998783, "lon": 12.4821072 },
+    { "lat": 41.8997332, "lon": 12.4821647 },
+    { "lat": 41.8997450, "lon": 12.4822174 },
+    { "lat": 41.8996643, "lon": 12.4822527 },
+    { "lat": 41.8996388, "lon": 12.4821946 },
+    { "lat": 41.8996240, "lon": 12.4821287 },
+    { "lat": 41.8996097, "lon": 12.4820661 }
+  ],
+  "tags": {
+    "building": "apartments",
+    "name": "Galleria Sciarra",
+    "wikidata": "Q3757697",
+    "wikimedia_commons": "Category:Galleria Sciarra (Rome)",
+    "wikipedia": "it:Galleria Sciarra"
+  }
+},
+{
+  "type": "way",
+  "id": 131704036,
+  "bounds": {
+    "minlat": 41.8871261,
+    "minlon": 12.4891611,
+    "maxlat": 41.8871652,
+    "maxlon": 12.4892683
+  },
+  "geometry": [
+    { "lat": 41.8871652, "lon": 12.4891671 },
+    { "lat": 41.8871612, "lon": 12.4891983 },
+    { "lat": 41.8871562, "lon": 12.4892368 },
+    { "lat": 41.8871522, "lon": 12.4892683 },
+    { "lat": 41.8871261, "lon": 12.4892623 },
+    { "lat": 41.8871302, "lon": 12.4892307 },
+    { "lat": 41.8871352, "lon": 12.4891922 },
+    { "lat": 41.8871392, "lon": 12.4891611 },
+    { "lat": 41.8871652, "lon": 12.4891671 }
+  ],
+  "tags": {
+    "building": "aqueduct",
+    "historic": "aqueduct",
+    "name": "Acquedotto Claudio"
+  }
+},
+{
+  "type": "way",
+  "id": 131704118,
+  "bounds": {
+    "minlat": 41.8870494,
+    "minlon": 12.4893591,
+    "maxlat": 41.8871397,
+    "maxlon": 12.4897455
+  },
+  "geometry": [
+    { "lat": 41.8871102, "lon": 12.4893591 },
+    { "lat": 41.8871397, "lon": 12.4893677 },
+    { "lat": 41.8870790, "lon": 12.4897455 },
+    { "lat": 41.8870494, "lon": 12.4897369 },
+    { "lat": 41.8871102, "lon": 12.4893591 }
+  ],
+  "tags": {
+    "building": "aqueduct",
+    "historic": "aqueduct",
+    "name": "Acquedotto Claudio"
+  }
+},
+{
+  "type": "way",
+  "id": 184476495,
+  "bounds": {
+    "minlat": 41.8751803,
+    "minlon": 12.5406219,
+    "maxlat": 41.8753388,
+    "maxlon": 12.5413188
+  },
+  "geometry": [
+    { "lat": 41.8751803, "lon": 12.5406219 },
+    { "lat": 41.8752834, "lon": 12.5411234 },
+    { "lat": 41.8753275, "lon": 12.5412799 },
+    { "lat": 41.8753322, "lon": 12.5412968 },
+    { "lat": 41.8753388, "lon": 12.5413188 }
+  ],
+  "tags": {
+    "barrier": "wall",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman"
+  }
+},
+{
+  "type": "way",
+  "id": 184476498,
+  "bounds": {
+    "minlat": 41.8753787,
+    "minlon": 12.5414368,
+    "maxlat": 41.8760398,
+    "maxlon": 12.5453637
+  },
+  "geometry": [
+    { "lat": 41.8753787, "lon": 12.5414368 },
+    { "lat": 41.8753945, "lon": 12.5414787 },
+    { "lat": 41.8754116, "lon": 12.5415259 },
+    { "lat": 41.8754666, "lon": 12.5416696 },
+    { "lat": 41.8759572, "lon": 12.5429781 },
+    { "lat": 41.8759513, "lon": 12.5434902 },
+    { "lat": 41.8759509, "lon": 12.5435626 },
+    { "lat": 41.8759532, "lon": 12.5436302 },
+    { "lat": 41.8759530, "lon": 12.5436438 },
+    { "lat": 41.8759539, "lon": 12.5437077 },
+    { "lat": 41.8759541, "lon": 12.5437515 },
+    { "lat": 41.8759597, "lon": 12.5442732 },
+    { "lat": 41.8759599, "lon": 12.5442961 },
+    { "lat": 41.8759879, "lon": 12.5449909 },
+    { "lat": 41.8760038, "lon": 12.5451545 },
+    { "lat": 41.8760398, "lon": 12.5453637 }
+  ],
+  "tags": {
+    "barrier": "wall",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman"
+  }
+},
+{
+  "type": "way",
+  "id": 184686429,
+  "bounds": {
+    "minlat": 41.9046697,
+    "minlon": 12.4787020,
+    "maxlat": 41.9050763,
+    "maxlon": 12.4788676
+  },
+  "geometry": [
+    { "lat": 41.9050763, "lon": 12.4787020 },
+    { "lat": 41.9047508, "lon": 12.4788356 },
+    { "lat": 41.9046697, "lon": 12.4788676 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "bus": "yes",
+    "highway": "living_street",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via del Corso",
+    "oneway": "yes",
+    "oneway:motor_vehicle": "yes",
+    "psv": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 188728063,
+  "bounds": {
+    "minlat": 41.9024786,
+    "minlon": 12.4789222,
+    "maxlat": 41.9045590,
+    "maxlon": 12.4797832
+  },
+  "geometry": [
+    { "lat": 41.9045590, "lon": 12.4789222 },
+    { "lat": 41.9045206, "lon": 12.4789393 },
+    { "lat": 41.9041416, "lon": 12.4791064 },
+    { "lat": 41.9038129, "lon": 12.4792363 },
+    { "lat": 41.9037285, "lon": 12.4792720 },
+    { "lat": 41.9031875, "lon": 12.4794926 },
+    { "lat": 41.9030451, "lon": 12.4795498 },
+    { "lat": 41.9025619, "lon": 12.4797421 },
+    { "lat": 41.9024786, "lon": 12.4797832 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "emergency": "yes",
+    "highway": "pedestrian",
+    "lanes": "2",
+    "lit": "yes",
+    "motor_vehicle": "no",
+    "name": "Via del Corso",
+    "psv": "no",
+    "surface": "asphalt",
+    "taxi": "no",
+    "tourist_bus": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 190022904,
+  "bounds": {
+    "minlat": 41.9028435,
+    "minlon": 12.4832209,
+    "maxlat": 41.9028865,
+    "maxlon": 12.4835193
+  },
+  "geometry": [
+    { "lat": 41.9028435, "lon": 12.4835193 },
+    { "lat": 41.9028768, "lon": 12.4832884 },
+    { "lat": 41.9028865, "lon": 12.4832209 }
+  ],
+  "tags": {
+    "check_date:lit": "2021-09-21",
+    "highway": "pedestrian",
+    "is_in:city": "Roma",
+    "lit": "yes",
+    "name": "Largo del Nazareno",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 190022922,
+  "bounds": {
+    "minlat": 41.9024958,
+    "minlon": 12.4841563,
+    "maxlat": 41.9027880,
+    "maxlon": 12.4852664
+  },
+  "geometry": [
+    { "lat": 41.9027880, "lon": 12.4852664 },
+    { "lat": 41.9027419, "lon": 12.4850860 },
+    { "lat": 41.9025894, "lon": 12.4845031 },
+    { "lat": 41.9024958, "lon": 12.4841563 }
+  ],
+  "tags": {
+    "access": "no",
+    "foot": "yes",
+    "highway": "service",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via del Tritone",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 200350823,
+  "bounds": {
+    "minlat": 41.8875946,
+    "minlon": 12.5066476,
+    "maxlat": 41.8878861,
+    "maxlon": 12.5077270
+  },
+  "geometry": [
+    { "lat": 41.8877481, "lon": 12.5072414 },
+    { "lat": 41.8878709, "lon": 12.5077270 },
+    { "lat": 41.8878861, "lon": 12.5077239 },
+    { "lat": 41.8878751, "lon": 12.5076574 },
+    { "lat": 41.8878621, "lon": 12.5076034 },
+    { "lat": 41.8878199, "lon": 12.5074453 },
+    { "lat": 41.8877630, "lon": 12.5072413 },
+    { "lat": 41.8877584, "lon": 12.5072207 },
+    { "lat": 41.8876078, "lon": 12.5066476 },
+    { "lat": 41.8875946, "lon": 12.5066549 },
+    { "lat": 41.8877481, "lon": 12.5072414 }
+  ],
+  "tags": {
+    "building": "aqueduct",
+    "description:de": "Das Aquädukt des Nero ist eine Abzweigung des Aquädukts des Claudius",
+    "description:en": "The aqueduct of Nero is a branch of the Aqua Claudia",
+    "description:it": "Arcate della diramazione Neroniana dell'Acquedotto Claudio presso il Laterano",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "name": "Aqua Neroniana",
+    "name:it": "Acquedotto di Nerone",
+    "name:la": "Aqua Neroniana",
+    "ruins": "yes",
+    "wikidata": "Q622930",
+    "wikimedia_commons": "Category:Aqua Claudia (Rome)",
+    "wikipedia": "en:Aqua Claudia"
+  }
+},
+{
+  "type": "way",
+  "id": 202072472,
+  "bounds": {
+    "minlat": 41.9058739,
+    "minlon": 12.4869073,
+    "maxlat": 41.9061647,
+    "maxlon": 12.4872148
+  },
+  "geometry": [
+    { "lat": 41.9061419, "lon": 12.4870304 },
+    { "lat": 41.9061510, "lon": 12.4870522 },
+    { "lat": 41.9059340, "lon": 12.4872148 },
+    { "lat": 41.9058739, "lon": 12.4870699 },
+    { "lat": 41.9058995, "lon": 12.4870507 },
+    { "lat": 41.9059757, "lon": 12.4869936 },
+    { "lat": 41.9060359, "lon": 12.4869485 },
+    { "lat": 41.9060908, "lon": 12.4869073 },
+    { "lat": 41.9061012, "lon": 12.4869323 },
+    { "lat": 41.9061239, "lon": 12.4869152 },
+    { "lat": 41.9061647, "lon": 12.4870133 },
+    { "lat": 41.9061419, "lon": 12.4870304 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "church",
+    "denomination": "catholic",
+    "name": "Sant’Isidoro a Capo le Case",
+    "religion": "christian",
+    "source": "Bing, Local knowledge",
+    "wikidata": "Q1099048",
+    "wikimedia_commons": "Category:Sant'Isidoro a Capo le Case",
+    "wikipedia": "it:Chiesa di Sant'Isidoro a Capo le Case"
+  }
+},
+{
+  "type": "way",
+  "id": 202309914,
+  "bounds": {
+    "minlat": 41.9039269,
+    "minlon": 12.4857699,
+    "maxlat": 41.9040828,
+    "maxlon": 12.4862600
+  },
+  "geometry": [
+    { "lat": 41.9040828, "lon": 12.4858008 },
+    { "lat": 41.9040354, "lon": 12.4857850 },
+    { "lat": 41.9039904, "lon": 12.4857699 },
+    { "lat": 41.9039731, "lon": 12.4858636 },
+    { "lat": 41.9039430, "lon": 12.4860261 },
+    { "lat": 41.9039645, "lon": 12.4860333 },
+    { "lat": 41.9039598, "lon": 12.4860586 },
+    { "lat": 41.9039269, "lon": 12.4862363 },
+    { "lat": 41.9039599, "lon": 12.4862473 },
+    { "lat": 41.9039759, "lon": 12.4861608 },
+    { "lat": 41.9040027, "lon": 12.4861698 },
+    { "lat": 41.9039867, "lon": 12.4862563 },
+    { "lat": 41.9039978, "lon": 12.4862600 },
+    { "lat": 41.9040308, "lon": 12.4860816 },
+    { "lat": 41.9040828, "lon": 12.4858008 }
+  ],
+  "tags": {
+    "amenity": "place_of_worship",
+    "building": "yes",
+    "denomination": "catholic",
+    "name": "Chiesa di San Giuseppe a Capo le Case",
+    "religion": "christian",
+    "source": "Bing, Local knowledge",
+    "wikidata": "Q3670675",
+    "wikimedia_commons": "Category:San Giuseppe a Capo le Case (Rome)",
+    "wikipedia": "it:Chiesa di San Giuseppe a Capo le Case"
+  }
+},
+{
+  "type": "way",
+  "id": 203752592,
+  "bounds": {
+    "minlat": 41.9007991,
+    "minlon": 12.4834994,
+    "maxlat": 41.9016229,
+    "maxlon": 12.4836150
+  },
+  "geometry": [
+    { "lat": 41.9016229, "lon": 12.4834994 },
+    { "lat": 41.9013919, "lon": 12.4835104 },
+    { "lat": 41.9011517, "lon": 12.4835713 },
+    { "lat": 41.9011404, "lon": 12.4835742 },
+    { "lat": 41.9010578, "lon": 12.4835841 },
+    { "lat": 41.9008548, "lon": 12.4836083 },
+    { "lat": 41.9007991, "lon": 12.4836150 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lanes": "2",
+    "lit": "yes",
+    "motor_vehicle": "private",
+    "name": "Via della Stamperia",
+    "service": "alley",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 203858795,
+  "bounds": {
+    "minlat": 41.9000000,
+    "minlon": 12.4819519,
+    "maxlat": 41.9000398,
+    "maxlon": 12.4819693
+  },
+  "geometry": [
+    { "lat": 41.9000000, "lon": 12.4819693 },
+    { "lat": 41.9000398, "lon": 12.4819519 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "lit": "yes",
+    "name": "Galleria Sciarra",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 203960983,
+  "bounds": {
+    "minlat": 41.9057213,
+    "minlon": 12.4780884,
+    "maxlat": 41.9065412,
+    "maxlon": 12.4784430
+  },
+  "geometry": [
+    { "lat": 41.9065412, "lon": 12.4780884 },
+    { "lat": 41.9063946, "lon": 12.4781524 },
+    { "lat": 41.9063526, "lon": 12.4781707 },
+    { "lat": 41.9060028, "lon": 12.4783233 },
+    { "lat": 41.9059069, "lon": 12.4783652 },
+    { "lat": 41.9058518, "lon": 12.4783883 },
+    { "lat": 41.9057213, "lon": 12.4784430 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "living_street",
+    "lanes": "1",
+    "lit": "yes",
+    "motor_vehicle": "private",
+    "name": "Via del Corso",
+    "oneway:motor_vehicle": "yes",
+    "psv": "yes",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 204390269,
+  "bounds": {
+    "minlat": 41.9005486,
+    "minlon": 12.4805457,
+    "maxlat": 41.9007415,
+    "maxlon": 12.4806354
+  },
+  "geometry": [
+    { "lat": 41.9005486, "lon": 12.4806354 },
+    { "lat": 41.9007415, "lon": 12.4805457 }
+  ],
+  "tags": {
+    "bus": "yes",
+    "foot": "no",
+    "highway": "unclassified",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle:backward": "private",
+    "motor_vehicle:forward": "yes",
+    "name": "Via del Corso",
+    "psv": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 229645760,
+  "bounds": {
+    "minlat": 41.9050763,
+    "minlon": 12.4784430,
+    "maxlat": 41.9057213,
+    "maxlon": 12.4787020
+  },
+  "geometry": [
+    { "lat": 41.9057213, "lon": 12.4784430 },
+    { "lat": 41.9053403, "lon": 12.4785973 },
+    { "lat": 41.9050763, "lon": 12.4787020 }
+  ],
+  "tags": {
+    "bicycle": "yes",
+    "highway": "living_street",
+    "lanes": "1",
+    "lit": "yes",
+    "motor_vehicle": "private",
+    "name": "Via del Corso",
+    "oneway:motor_vehicle": "yes",
+    "psv": "yes",
+    "sidewalk:both": "separate",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 234894452,
+  "bounds": {
+    "minlat": 41.8737415,
+    "minlon": 12.5013656,
+    "maxlat": 41.8738074,
+    "maxlon": 12.5015081
+  },
+  "geometry": [
+    { "lat": 41.8737868, "lon": 12.5013656 },
+    { "lat": 41.8737415, "lon": 12.5013786 },
+    { "lat": 41.8737544, "lon": 12.5014597 },
+    { "lat": 41.8737622, "lon": 12.5015081 },
+    { "lat": 41.8738074, "lon": 12.5014951 },
+    { "lat": 41.8737997, "lon": 12.5014469 },
+    { "lat": 41.8737868, "lon": 12.5013656 }
+  ],
+  "tags": {
+    "building": "arch",
+    "historic": "archaeological_site",
+    "historic:civilization": "ancient_roman",
+    "man_made": "arch",
+    "name": "Arco di Druso",
+    "wikidata": "Q1107952",
+    "wikimedia_commons": "Category:Arch of Drusus (Rome)",
+    "wikipedia": "it:Arco di Druso"
+  }
+},
+{
+  "type": "way",
+  "id": 236894418,
+  "bounds": {
+    "minlat": 41.9023473,
+    "minlon": 12.4836714,
+    "maxlat": 41.9027028,
+    "maxlon": 12.4851484
+  },
+  "geometry": [
+    { "lat": 41.9023473, "lon": 12.4836714 },
+    { "lat": 41.9024225, "lon": 12.4839902 },
+    { "lat": 41.9024629, "lon": 12.4841543 },
+    { "lat": 41.9025815, "lon": 12.4846382 },
+    { "lat": 41.9027028, "lon": 12.4851484 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via del Tritone",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt",
+    "wikidata": "Q4010823"
+  }
+},
+{
+  "type": "way",
+  "id": 243044347,
+  "bounds": {
+    "minlat": 41.8691056,
+    "minlon": 12.5270778,
+    "maxlat": 41.8859162,
+    "maxlon": 12.5407353
+  },
+  "geometry": [
+    { "lat": 41.8691056, "lon": 12.5407353 },
+    { "lat": 41.8693231, "lon": 12.5405462 },
+    { "lat": 41.8697404, "lon": 12.5401005 },
+    { "lat": 41.8703456, "lon": 12.5394841 },
+    { "lat": 41.8704133, "lon": 12.5394153 },
+    { "lat": 41.8704257, "lon": 12.5394024 },
+    { "lat": 41.8706104, "lon": 12.5392097 },
+    { "lat": 41.8713842, "lon": 12.5383823 },
+    { "lat": 41.8723059, "lon": 12.5373958 },
+    { "lat": 41.8730575, "lon": 12.5366074 },
+    { "lat": 41.8735255, "lon": 12.5364017 },
+    { "lat": 41.8747778, "lon": 12.5358544 },
+    { "lat": 41.8749836, "lon": 12.5357675 },
+    { "lat": 41.8750437, "lon": 12.5357433 },
+    { "lat": 41.8759815, "lon": 12.5353162 },
+    { "lat": 41.8765062, "lon": 12.5350419 },
+    { "lat": 41.8775214, "lon": 12.5345011 },
+    { "lat": 41.8781340, "lon": 12.5346953 },
+    { "lat": 41.8784250, "lon": 12.5344469 },
+    { "lat": 41.8794782, "lon": 12.5336022 },
+    { "lat": 41.8799336, "lon": 12.5332130 },
+    { "lat": 41.8800886, "lon": 12.5330806 },
+    { "lat": 41.8804640, "lon": 12.5327711 },
+    { "lat": 41.8806907, "lon": 12.5325714 },
+    { "lat": 41.8809361, "lon": 12.5323667 },
+    { "lat": 41.8810550, "lon": 12.5322819 },
+    { "lat": 41.8811868, "lon": 12.5322317 },
+    { "lat": 41.8814298, "lon": 12.5321513 },
+    { "lat": 41.8816274, "lon": 12.5320073 },
+    { "lat": 41.8819483, "lon": 12.5317975 },
+    { "lat": 41.8820474, "lon": 12.5317327 },
+    { "lat": 41.8825039, "lon": 12.5314041 },
+    { "lat": 41.8825589, "lon": 12.5313155 },
+    { "lat": 41.8830663, "lon": 12.5309831 },
+    { "lat": 41.8833588, "lon": 12.5307920 },
+    { "lat": 41.8833782, "lon": 12.5307783 },
+    { "lat": 41.8839464, "lon": 12.5300386 },
+    { "lat": 41.8845472, "lon": 12.5294094 },
+    { "lat": 41.8852395, "lon": 12.5286359 },
+    { "lat": 41.8854847, "lon": 12.5281520 },
+    { "lat": 41.8857480, "lon": 12.5276099 },
+    { "lat": 41.8858213, "lon": 12.5274425 },
+    { "lat": 41.8859162, "lon": 12.5270778 }
+  ],
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 254678496,
+  "bounds": {
+    "minlat": 41.8871555,
+    "minlon": 12.4621756,
+    "maxlat": 41.8878169,
+    "maxlon": 12.4629898
+  },
+  "geometry": [
+    { "lat": 41.8878169, "lon": 12.4623423 },
+    { "lat": 41.8876711, "lon": 12.4622630 },
+    { "lat": 41.8876562, "lon": 12.4623077 },
+    { "lat": 41.8874870, "lon": 12.4622185 },
+    { "lat": 41.8874710, "lon": 12.4621997 },
+    { "lat": 41.8873212, "lon": 12.4621756 },
+    { "lat": 41.8871555, "lon": 12.4627527 },
+    { "lat": 41.8872987, "lon": 12.4628282 },
+    { "lat": 41.8873115, "lon": 12.4627843 },
+    { "lat": 41.8874953, "lon": 12.4628811 },
+    { "lat": 41.8874855, "lon": 12.4629148 },
+    { "lat": 41.8876277, "lon": 12.4629898 },
+    { "lat": 41.8878169, "lon": 12.4623423 }
+  ],
+  "tags": {
+    "addr:city": "Roma",
+    "addr:housenumber": "5",
+    "addr:postcode": "00153",
+    "addr:street": "Via Angelo Masina",
+    "building": "foreign_school",
+    "name": "American Academy in Rome",
+    "name:ar": "الأكاديمية الأمريكية في روما",
+    "name:de": "Amerikanische Akademie in Rom",
+    "name:es": "Academia Americana en Roma",
+    "name:fr": "Académie américaine à Rome",
+    "name:no": "Det amerikanske akademi i Roma",
+    "name:ru": "Американская академия в Риме",
+    "wikidata": "Q463271",
+    "wikimedia_commons": "Category:American Academy in Rome",
+    "wikipedia": "it:American Academy in Rome"
+  }
+},
+{
+  "type": "way",
+  "id": 303693269,
+  "bounds": {
+    "minlat": 41.9038497,
+    "minlon": 12.4833757,
+    "maxlat": 41.9047102,
+    "maxlon": 12.4844145
+  },
+  "geometry": [
+    { "lat": 41.9047102, "lon": 12.4833757 },
+    { "lat": 41.9046967, "lon": 12.4833943 },
+    { "lat": 41.9046895, "lon": 12.4834033 },
+    { "lat": 41.9039341, "lon": 12.4843128 },
+    { "lat": 41.9038916, "lon": 12.4843646 },
+    { "lat": 41.9038497, "lon": 12.4844145 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via dei Due Macelli",
+    "oneway": "yes",
+    "surface": "sett",
+    "tourist_bus": "no"
+  }
+},
+{
+  "type": "way",
+  "id": 303693270,
+  "bounds": {
+    "minlat": 41.9038497,
+    "minlon": 12.4844145,
+    "maxlat": 41.9039977,
+    "maxlon": 12.4854480
+  },
+  "geometry": [
+    { "lat": 41.9038497, "lon": 12.4844145 },
+    { "lat": 41.9038555, "lon": 12.4844668 },
+    { "lat": 41.9038846, "lon": 12.4846579 },
+    { "lat": 41.9039929, "lon": 12.4854144 },
+    { "lat": 41.9039977, "lon": 12.4854480 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Capo le Case",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 308868118,
+  "bounds": {
+    "minlat": 41.9018116,
+    "minlon": 12.4814312,
+    "maxlat": 41.9023473,
+    "maxlon": 12.4836714
+  },
+  "geometry": [
+    { "lat": 41.9018116, "lon": 12.4814312 },
+    { "lat": 41.9018833, "lon": 12.4817912 },
+    { "lat": 41.9018975, "lon": 12.4818489 },
+    { "lat": 41.9020250, "lon": 12.4823744 },
+    { "lat": 41.9020360, "lon": 12.4824181 },
+    { "lat": 41.9020514, "lon": 12.4824801 },
+    { "lat": 41.9021085, "lon": 12.4827063 },
+    { "lat": 41.9023335, "lon": 12.4836155 },
+    { "lat": 41.9023473, "lon": 12.4836714 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "lanes": "1",
+    "lit": "yes",
+    "maxspeed": "50",
+    "name": "Via del Tritone",
+    "oneway": "yes",
+    "source:maxspeed": "IT:urban",
+    "surface": "asphalt",
+    "wikidata": "Q4010823"
+  }
+},
+{
+  "type": "way",
+  "id": 308868119,
+  "bounds": {
+    "minlat": 41.9039977,
+    "minlon": 12.4854480,
+    "maxlat": 41.9040286,
+    "maxlon": 12.4856760
+  },
+  "geometry": [
+    { "lat": 41.9039977, "lon": 12.4854480 },
+    { "lat": 41.9040217, "lon": 12.4856254 },
+    { "lat": 41.9040286, "lon": 12.4856760 }
+  ],
+  "tags": {
+    "highway": "residential",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via di Capo le Case",
+    "oneway": "yes",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 338548547,
+  "bounds": {
+    "minlat": 41.9043337,
+    "minlon": 12.4943791,
+    "maxlat": 41.9045106,
+    "maxlon": 12.4946010
+  },
+  "geometry": [
+    { "lat": 41.9045106, "lon": 12.4944732 },
+    { "lat": 41.9044497, "lon": 12.4943791 },
+    { "lat": 41.9044437, "lon": 12.4943862 },
+    { "lat": 41.9044398, "lon": 12.4943908 },
+    { "lat": 41.9044076, "lon": 12.4944290 },
+    { "lat": 41.9044038, "lon": 12.4944335 },
+    { "lat": 41.9043746, "lon": 12.4944681 },
+    { "lat": 41.9043664, "lon": 12.4944778 },
+    { "lat": 41.9043422, "lon": 12.4945066 },
+    { "lat": 41.9043337, "lon": 12.4945167 },
+    { "lat": 41.9043838, "lon": 12.4946010 },
+    { "lat": 41.9044838, "lon": 12.4944922 },
+    { "lat": 41.9044889, "lon": 12.4944983 },
+    { "lat": 41.9045106, "lon": 12.4944732 }
+  ],
+  "tags": {
+    "alt_name": "Fontana del Mosè",
+    "amenity": "fountain",
+    "building": "yes",
+    "building:colour": "white",
+    "building:levels": "5",
+    "flickr": "https://www.flickr.com/photos/122687277@N03/36976848335",
+    "fountain:type": "backed",
+    "historic": "fountain",
+    "name": "Fontana dell'Acqua Felice",
+    "name:de": "Mosesbrunnen",
+    "name:en": "Fountain of Moses",
+    "name:es": "Fuente del Agua Feliz",
+    "name:fr": "Fontana dell'Acqua Felice",
+    "name:it": "Fontana dell'Acqua Felice",
+    "name:ru": "Фонтан Моисея",
+    "name:zh": "摩西喷泉或快乐水道桥喷泉",
+    "note": "if drinkable, insert tag drinkable=yes",
+    "source": "Bing",
+    "survey:date": "2017-08-23",
+    "wikidata": "Q983774",
+    "wikimedia_commons": "Category:Fontana dell'Acqua Felice (Rome)",
+    "wikipedia": "en:Fontana dell'Acqua Felice;it:Fontana dell'Acqua Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 345610052,
+  "bounds": {
+    "minlat": 41.8975195,
+    "minlon": 12.5089973,
+    "maxlat": 41.8982215,
+    "maxlon": 12.5102428
+  },
+  "geometry": [
+    { "lat": 41.8980593, "lon": 12.5089973 },
+    { "lat": 41.8981289, "lon": 12.5090705 },
+    { "lat": 41.8981901, "lon": 12.5091350 },
+    { "lat": 41.8981977, "lon": 12.5091687 },
+    { "lat": 41.8982077, "lon": 12.5092715 },
+    { "lat": 41.8982168, "lon": 12.5093643 },
+    { "lat": 41.8982215, "lon": 12.5094334 },
+    { "lat": 41.8978955, "lon": 12.5097988 },
+    { "lat": 41.8977850, "lon": 12.5099229 },
+    { "lat": 41.8976714, "lon": 12.5100668 },
+    { "lat": 41.8975829, "lon": 12.5101660 },
+    { "lat": 41.8975195, "lon": 12.5102428 }
+  ],
+  "tags": {
+    "barrier": "wall",
+    "bridge": "aqueduct",
+    "historic": "yes",
+    "layer": "1",
+    "name": "Aqua Felice",
+    "wikidata": "Q14456361",
+    "wikipedia": "en:Acqua Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 366692686,
+  "bounds": {
+    "minlat": 41.9001171,
+    "minlon": 12.4806354,
+    "maxlat": 41.9005486,
+    "maxlon": 12.4808310
+  },
+  "geometry": [
+    { "lat": 41.9001171, "lon": 12.4808310 },
+    { "lat": 41.9005486, "lon": 12.4806354 }
+  ],
+  "tags": {
+    "bus": "yes",
+    "foot": "no",
+    "highway": "unclassified",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle": "private",
+    "name": "Via del Corso",
+    "psv": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 366692687,
+  "bounds": {
+    "minlat": 41.8993856,
+    "minlon": 12.4808310,
+    "maxlat": 41.9001171,
+    "maxlon": 12.4810953
+  },
+  "geometry": [
+    { "lat": 41.8993856, "lon": 12.4810953 },
+    { "lat": 41.8997296, "lon": 12.4809819 },
+    { "lat": 41.8997580, "lon": 12.4809732 },
+    { "lat": 41.9000322, "lon": 12.4808684 },
+    { "lat": 41.9000728, "lon": 12.4808529 },
+    { "lat": 41.9001078, "lon": 12.4808356 },
+    { "lat": 41.9001171, "lon": 12.4808310 }
+  ],
+  "tags": {
+    "bus": "yes",
+    "cycleway": "no",
+    "foot": "no",
+    "highway": "unclassified",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle": "private",
+    "name": "Via del Corso",
+    "psv": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 366692688,
+  "bounds": {
+    "minlat": 41.9024958,
+    "minlon": 12.4835193,
+    "maxlat": 41.9028435,
+    "maxlon": 12.4841563
+  },
+  "geometry": [
+    { "lat": 41.9024958, "lon": 12.4841563 },
+    { "lat": 41.9025268, "lon": 12.4841009 },
+    { "lat": 41.9028435, "lon": 12.4835193 }
+  ],
+  "tags": {
+    "highway": "pedestrian",
+    "is_in:city": "Roma",
+    "lit": "yes",
+    "name": "Via del Nazareno",
+    "surface": "asphalt",
+    "wikidata": "Q19545606",
+    "wikipedia": "it:Via del Nazareno"
+  }
+},
+{
+  "type": "way",
+  "id": 366692689,
+  "bounds": {
+    "minlat": 41.9018116,
+    "minlon": 12.4814312,
+    "maxlat": 41.9024958,
+    "maxlon": 12.4841563
+  },
+  "geometry": [
+    { "lat": 41.9024958, "lon": 12.4841563 },
+    { "lat": 41.9024545, "lon": 12.4839789 },
+    { "lat": 41.9023648, "lon": 12.4836031 },
+    { "lat": 41.9021536, "lon": 12.4826847 },
+    { "lat": 41.9021108, "lon": 12.4825132 },
+    { "lat": 41.9020814, "lon": 12.4823973 },
+    { "lat": 41.9019351, "lon": 12.4818333 },
+    { "lat": 41.9018773, "lon": 12.4816107 },
+    { "lat": 41.9018116, "lon": 12.4814312 }
+  ],
+  "tags": {
+    "access": "no",
+    "foot": "yes",
+    "highway": "service",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via del Tritone",
+    "oneway": "yes",
+    "psv": "yes",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 526492204,
+  "bounds": {
+    "minlat": 41.8668489,
+    "minlon": 12.5413326,
+    "maxlat": 41.8682830,
+    "maxlon": 12.5419741
+  },
+  "geometry": [
+    { "lat": 41.8668489, "lon": 12.5418679 },
+    { "lat": 41.8668714, "lon": 12.5418622 },
+    { "lat": 41.8668893, "lon": 12.5419741 },
+    { "lat": 41.8669310, "lon": 12.5419596 },
+    { "lat": 41.8682830, "lon": 12.5413326 }
+  ],
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 575153648,
+  "bounds": {
+    "minlat": 41.8864744,
+    "minlon": 12.4612050,
+    "maxlat": 41.8883691,
+    "maxlon": 12.4635420
+  },
+  "geometry": [
+    { "lat": 41.8864744, "lon": 12.4616595 },
+    { "lat": 41.8864757, "lon": 12.4617503 },
+    { "lat": 41.8865125, "lon": 12.4617552 },
+    { "lat": 41.8865113, "lon": 12.4620386 },
+    { "lat": 41.8866103, "lon": 12.4621573 },
+    { "lat": 41.8870327, "lon": 12.4626705 },
+    { "lat": 41.8878148, "lon": 12.4635420 },
+    { "lat": 41.8881139, "lon": 12.4625285 },
+    { "lat": 41.8881475, "lon": 12.4625422 },
+    { "lat": 41.8883691, "lon": 12.4617985 },
+    { "lat": 41.8882607, "lon": 12.4615385 },
+    { "lat": 41.8877971, "lon": 12.4618490 },
+    { "lat": 41.8877106, "lon": 12.4615731 },
+    { "lat": 41.8877343, "lon": 12.4615589 },
+    { "lat": 41.8877083, "lon": 12.4614713 },
+    { "lat": 41.8874938, "lon": 12.4613889 },
+    { "lat": 41.8869773, "lon": 12.4612050 },
+    { "lat": 41.8864744, "lon": 12.4616595 }
+  ],
+  "tags": {
+    "addr:city": "Roma",
+    "addr:country": "IT",
+    "addr:postcode": "00153",
+    "addr:street": "VIa Angelo Masina",
+    "name": "American Academy in Rome",
+    "name:ar": "الأكاديمية الأمريكية في روما",
+    "name:de": "Amerikanische Akademie in Rom",
+    "name:es": "Academia Americana en Roma",
+    "name:fr": "Académie américaine à Rome",
+    "name:no": "Det amerikanske akademi i Roma",
+    "name:ru": "Американская академия в Риме",
+    "office": "research",
+    "phone": "+39 06 58461",
+    "wikidata": "Q463271",
+    "wikimedia_commons": "Category:American Academy in Rome",
+    "wikipedia": "it:American Academy in Rome"
+  }
+},
+{
+  "type": "way",
+  "id": 801351283,
+  "bounds": {
+    "minlat": 41.8648544,
+    "minlon": 12.5420244,
+    "maxlat": 41.8663035,
+    "maxlon": 12.5423368
+  },
+  "geometry": [
+    { "lat": 41.8648544, "lon": 12.5423368 },
+    { "lat": 41.8663035, "lon": 12.5420244 }
+  ],
+  "tags": {
+    "barrier": "wall",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "ruins": "yes"
+  }
+},
+{
+  "type": "way",
+  "id": 801351285,
+  "bounds": {
+    "minlat": 41.8669380,
+    "minlon": 12.5407353,
+    "maxlat": 41.8691391,
+    "maxlon": 12.5419885
+  },
+  "geometry": [
+    { "lat": 41.8669380, "lon": 12.5419885 },
+    { "lat": 41.8682920, "lon": 12.5413662 },
+    { "lat": 41.8683101, "lon": 12.5414261 },
+    { "lat": 41.8683209, "lon": 12.5414747 },
+    { "lat": 41.8686235, "lon": 12.5412727 },
+    { "lat": 41.8689212, "lon": 12.5410675 },
+    { "lat": 41.8691391, "lon": 12.5409264 },
+    { "lat": 41.8691340, "lon": 12.5409077 },
+    { "lat": 41.8691272, "lon": 12.5408802 },
+    { "lat": 41.8691056, "lon": 12.5407353 }
+  ],
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 836484958,
+  "bounds": {
+    "minlat": 41.9028581,
+    "minlon": 12.4855568,
+    "maxlat": 41.9034601,
+    "maxlon": 12.4878551
+  },
+  "geometry": [
+    { "lat": 41.9034601, "lon": 12.4878551 },
+    { "lat": 41.9033893, "lon": 12.4875746 },
+    { "lat": 41.9032277, "lon": 12.4869768 },
+    { "lat": 41.9031612, "lon": 12.4867244 },
+    { "lat": 41.9031421, "lon": 12.4866575 },
+    { "lat": 41.9029372, "lon": 12.4858769 },
+    { "lat": 41.9028581, "lon": 12.4855568 }
+  ],
+  "tags": {
+    "access": "no",
+    "foot": "yes",
+    "highway": "service",
+    "is_in:city": "Roma",
+    "lanes": "1",
+    "lit": "yes",
+    "name": "Via del Tritone",
+    "oneway": "yes",
+    "psv": "yes",
+    "sidewalk": "both",
+    "surface": "asphalt"
+  }
+},
+{
+  "type": "way",
+  "id": 842351343,
+  "bounds": {
+    "minlat": 41.8620398,
+    "minlon": 12.5419885,
+    "maxlat": 41.8669575,
+    "maxlon": 12.5429886
+  },
+  "geometry": [
+    { "lat": 41.8620398, "lon": 12.5429886 },
+    { "lat": 41.8621320, "lon": 12.5429781 },
+    { "lat": 41.8629316, "lon": 12.5428867 },
+    { "lat": 41.8636197, "lon": 12.5428119 },
+    { "lat": 41.8640792, "lon": 12.5427520 },
+    { "lat": 41.8647383, "lon": 12.5426112 },
+    { "lat": 41.8654030, "lon": 12.5424674 },
+    { "lat": 41.8659929, "lon": 12.5423551 },
+    { "lat": 41.8661580, "lon": 12.5423252 },
+    { "lat": 41.8664044, "lon": 12.5421844 },
+    { "lat": 41.8664714, "lon": 12.5422548 },
+    { "lat": 41.8669575, "lon": 12.5421659 },
+    { "lat": 41.8669380, "lon": 12.5419885 }
+  ],
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 998191581,
+  "bounds": {
+    "minlat": 41.8909311,
+    "minlon": 12.5148492,
+    "maxlat": 41.8925352,
+    "maxlon": 12.5154013
+  },
+  "geometry": [
+    { "lat": 41.8909311, "lon": 12.5148492 },
+    { "lat": 41.8911877, "lon": 12.5150184 },
+    { "lat": 41.8917731, "lon": 12.5154013 },
+    { "lat": 41.8920730, "lon": 12.5152878 },
+    { "lat": 41.8921407, "lon": 12.5152407 },
+    { "lat": 41.8925352, "lon": 12.5149351 }
+  ],
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 1000800330,
+  "bounds": {
+    "minlat": 41.8859162,
+    "minlon": 12.5269346,
+    "maxlat": 41.8859534,
+    "maxlon": 12.5270778
+  },
+  "geometry": [
+    { "lat": 41.8859162, "lon": 12.5270778 },
+    { "lat": 41.8859534, "lon": 12.5269346 }
+  ],
+  "tags": {
+    "bridge": "aqueduct",
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 1000800331,
+  "bounds": {
+    "minlat": 41.8859534,
+    "minlon": 12.5148492,
+    "maxlat": 41.8909311,
+    "maxlon": 12.5269346
+  },
+  "geometry": [
+    { "lat": 41.8859534, "lon": 12.5269346 },
+    { "lat": 41.8861479, "lon": 12.5261873 },
+    { "lat": 41.8861921, "lon": 12.5260173 },
+    { "lat": 41.8862106, "lon": 12.5260010 },
+    { "lat": 41.8861473, "lon": 12.5258408 },
+    { "lat": 41.8862593, "lon": 12.5257819 },
+    { "lat": 41.8864361, "lon": 12.5250719 },
+    { "lat": 41.8864622, "lon": 12.5249688 },
+    { "lat": 41.8867973, "lon": 12.5236680 },
+    { "lat": 41.8869091, "lon": 12.5234420 },
+    { "lat": 41.8866780, "lon": 12.5232833 },
+    { "lat": 41.8870180, "lon": 12.5225576 },
+    { "lat": 41.8873853, "lon": 12.5217576 },
+    { "lat": 41.8874296, "lon": 12.5216617 },
+    { "lat": 41.8874479, "lon": 12.5216422 },
+    { "lat": 41.8874806, "lon": 12.5215713 },
+    { "lat": 41.8875465, "lon": 12.5214304 },
+    { "lat": 41.8875790, "lon": 12.5213589 },
+    { "lat": 41.8875946, "lon": 12.5213204 },
+    { "lat": 41.8876146, "lon": 12.5212692 },
+    { "lat": 41.8876500, "lon": 12.5211799 },
+    { "lat": 41.8881344, "lon": 12.5200998 },
+    { "lat": 41.8883054, "lon": 12.5197543 },
+    { "lat": 41.8886444, "lon": 12.5190313 },
+    { "lat": 41.8888411, "lon": 12.5185982 },
+    { "lat": 41.8888471, "lon": 12.5185847 },
+    { "lat": 41.8890983, "lon": 12.5188446 },
+    { "lat": 41.8894603, "lon": 12.5180568 },
+    { "lat": 41.8898262, "lon": 12.5172617 },
+    { "lat": 41.8904172, "lon": 12.5159990 },
+    { "lat": 41.8906799, "lon": 12.5154087 },
+    { "lat": 41.8909311, "lon": 12.5148492 }
+  ],
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "name": "Acquedotto Felice",
+    "name:de": "Felix-Aquädukt",
+    "name:la": "Aqua Felix",
+    "ruins": "yes",
+    "start_date": "1586",
+    "wikidata": "Q14456361",
+    "wikimedia_commons": "Category:Aqua Felice (Rome)",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "way",
+  "id": 1236333976,
+  "bounds": {
+    "minlat": 41.8967593,
+    "minlon": 12.4821078,
+    "maxlat": 41.8968707,
+    "maxlon": 12.4821569
+  },
+  "geometry": [
+    { "lat": 41.8967593, "lon": 12.4821569 },
+    { "lat": 41.8968038, "lon": 12.4821375 },
+    { "lat": 41.8968420, "lon": 12.4821202 },
+    { "lat": 41.8968707, "lon": 12.4821078 }
+  ],
+  "tags": {
+    "bus": "yes",
+    "foot": "no",
+    "highway": "unclassified",
+    "lanes": "2",
+    "lit": "yes",
+    "maxspeed": "30",
+    "motor_vehicle": "private",
+    "name": "Via del Corso",
+    "psv": "yes",
+    "sidewalk": "both",
+    "surface": "sett"
+  }
+},
+{
+  "type": "way",
+  "id": 1390965274,
+  "bounds": {
+    "minlat": 41.9025298,
+    "minlon": 12.4836344,
+    "maxlat": 41.9026921,
+    "maxlon": 12.4837871
+  },
+  "geometry": [
+    { "lat": 41.9026921, "lon": 12.4837607 },
+    { "lat": 41.9026798, "lon": 12.4837871 },
+    { "lat": 41.9025298, "lon": 12.4836609 },
+    { "lat": 41.9025421, "lon": 12.4836344 },
+    { "lat": 41.9026921, "lon": 12.4837607 }
+  ],
+  "tags": {
+    "area": "yes",
+    "historic": "ruins",
+    "historic:civilization": "ancient_roman",
+    "name": "Acquedotto Vergine",
+    "name:en": "Aqueduct Ruins",
+    "tourism": "attraction",
+    "wikidata": "Q600139",
+    "wikimedia_commons": "Category:Aqua Virgo (Rome)",
+    "wikipedia": "en:Aqua Virgo"
+  }
+},
+{
+  "type": "relation",
+  "id": 1732880,
+  "bounds": {
+    "minlat": 41.8364605,
+    "minlon": 12.4938790,
+    "maxlat": 42.0129776,
+    "maxlon": 12.8924351
+  },
+  "tags": {
+    "disused": "yes",
+    "historic": "aqueduct",
+    "name": "Acquedotti Claudio e Anio novus",
+    "name:it": "Acquedotti Claudio e Anio novus",
+    "name:la": "Aqua Claudia et Anio Novus",
+    "route": "aqueduct",
+    "ruins": "yes",
+    "type": "site",
+    "wikipedia": "it:Acquedotto Claudio;it:Acquedotto Anio novus"
+  }
+},
+{
+  "type": "relation",
+  "id": 1876737,
+  "bounds": {
+    "minlat": 41.8873489,
+    "minlon": 12.5041359,
+    "maxlat": 41.8873724,
+    "maxlon": 12.5042835
+  },
+  "tags": {
+    "building": "aqueduct",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "ruins": "yes",
+    "type": "multipolygon"
+  }
+},
+{
+  "type": "relation",
+  "id": 11077947,
+  "bounds": {
+    "minlat": 41.8710148,
+    "minlon": 12.5406219,
+    "maxlat": 41.8884884,
+    "maxlon": 12.7325333
+  },
+  "tags": {
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "name": "Acquedotto Alessandrino",
+    "old_name": "Aqua Alexandrina",
+    "start_date": "226",
+    "type": "site"
+  }
+},
+{
+  "type": "relation",
+  "id": 13383818,
+  "bounds": {
+    "minlat": 41.8453742,
+    "minlon": 12.5148492,
+    "maxlat": 41.8925352,
+    "maxlon": 12.5650760
+  },
+  "tags": {
+    "historic": "aqueduct",
+    "name": "Acquedotto Felice",
+    "start_date": "1586",
+    "type": "site",
+    "wikidata": "Q14456361",
+    "wikipedia": "it:Acquedotto Felice"
+  }
+},
+{
+  "type": "relation",
+  "id": 13394499,
+  "bounds": {
+    "minlat": 41.8881647,
+    "minlon": 12.5084995,
+    "maxlat": 41.8910705,
+    "maxlon": 12.5148369
+  },
+  "tags": {
+    "building": "aqueduct",
+    "description:de": "Das Aquädukt des Nero ist eine Abzweigung des Aquädukts des Claudius",
+    "description:en": "The aqueduct of Nero is a branch of the Aqua Claudia",
+    "description:it": "Arcate della diramazione Neroniana dell'Acquedotto Claudio",
+    "height": "8.5",
+    "historic": "aqueduct",
+    "historic:civilization": "ancient_roman",
+    "layer": "1",
+    "min_height": "8.49",
+    "name": "Aqua Neroniana",
+    "name:it": "Acquedotto di Nerone",
+    "name:la": "Aqua Neroniana",
+    "ruins": "yes",
+    "type": "multipolygon",
+    "wikidata": "Q622930",
+    "wikipedia": "it:Acquedotto Claudio"
+  }
+},
+{
+  "type": "relation",
+  "id": 14026945,
+  "bounds": {
+    "minlat": 41.9060897,
+    "minlon": 12.4802308,
+    "maxlat": 41.9104407,
+    "maxlon": 12.4858300
+  },
+  "tags": {
+    "leisure": "park",
+    "name": "Giardino di Villa Medici",
+    "source": "Bing, Local knowledge",
+    "type": "multipolygon"
+  }
+}
+
+  ]
+}
