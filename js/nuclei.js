@@ -13,6 +13,7 @@ B.cilindro(.55,1.2,-1.3,0,0,P.mattone,null,10).cono(.6,.35,-1.3,1.2,0,P.coppi,10
 B.scatola(.9,.9,1.6,1.75,0,0,P.mattone).scatola(1,.08,1.7,1.75,.9,0,P.coppi);            // nartece
 B.aperture(-1,.63,1,.63,4,.95,.35,.18).aperture(1,-.63,-1,-.63,4,.95,.35,.18);
 var maglia=new THREE.InstancedMesh(B.geometria(),RM.matPietra(((window.RM_DATI.CERTEZZA||{}).chiese||['B'])[0]),elenco.length), d=new THREE.Object3D();
+RM.veduta(maglia.material,{luce:.3,muro:0xe8dcc4,quanta:.4,tetto:0xb84a2c,quantaT:.55});      // veduta dei secoli tardi (RM.veduta in js/base.js): da lontano muri chiari e tetti di un rosso pulito, perché la chiesa in uso si stacchi dai ruderi
 maglia.castShadow=maglia.receiveShadow=true; maglia.frustumCulled=false; maglia.userData.gruppo='citta'; RM.scene.add(maglia);
 /* La quota dal terreno come è disegnato (RM.hSuolo), non da RM.h (25 novembre 2026): la maglia del suolo è più rada della funzione, e sui pendii Sant'Anastasia stava 10 m
    sotto terra e Santi Giovanni e Paolo 4 m sopra. Sui pendii si scende a metà fra la quota del centro e quella dello spigolo più basso della navata: la chiesa entra un poco

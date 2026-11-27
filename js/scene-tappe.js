@@ -1967,7 +1967,7 @@ var totila546=(function(){
   return {g:maglia(B), da:545.6, a:547};
 })();
 /* da porta Asinaria a Trastevere, che brucia: sette secondi dopo l'arrivo (dal 24 novembre 2026 è una sequenza, che parte con la regia) */
-var seq546=sequenza({fine:9.5, attesa:0, visibile:function(){ return totila546.g.visible; }, disegna:function(){}, righe:[[0,'1 · Di notte Totila entra da porta Asinaria'],[7,'2 · Trastevere brucia']],
+var seq546=sequenza({fine:14, attesa:0, visibile:function(){ return totila546.g.visible; }, disegna:function(){}, righe:[[0,'1 · Di notte Totila entra da porta Asinaria'],[7,'2 · Trastevere brucia'],[10.5,'3 · Poi Totila fa abbattere le mura in molti punti: circa un terzo, secondo Procopio']],      // la terza riga: Procopio, Guerra gotica III 22, 7 (src/testi/topografia-fonti.md, «Mura, ponti e isola nei secoli»); i tratti abbattuti, in js/mura.js, ci sono dal 546,5
   azioni:[[7,function(){ var v=alto(RM.adatta({t:[-118,50],c:[-84,34,90]})); RM.volaA(v.t,v.c); }]]});
 ANIMA[546]=function(){ if(!document.body.classList.contains('roma-grande')) avvia(seq546); };
 

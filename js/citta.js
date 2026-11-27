@@ -654,6 +654,11 @@ function chiaveCasa(mat){ var k=mat.customProgramCacheKey, sua=mat.hasOwnPropert
 [[matMuri,'muro'],[matBasse,'muro'],[matDomus,'muro'],[matTetti,'tetto'],[matCorte,'corte'],[matAtrio,'corte'],[matGiardino,'giardino'],[matArbusti,'giardino'],[matVasca,'vasca'],[matColonne,'colonna']].forEach(function(q){ degradaCasa(q[0],q[1]); });
 [matMuri,matTetti,matBasse,matDomus].forEach(function(m){ RM.tingi(m,'C'); });      // «che cosa sappiamo davvero»: le case sono ipotesi
 [matMuri,matTetti,matBasse,matDomus,matCorte,matAtrio,matGiardino,matArbusti,matVasca,matColonne].forEach(chiaveCasa);      // un programma per specie di materiale: three li riconosce dal testo di onBeforeCompile, che qui è lo stesso
+/* Veduta dei secoli tardi (RM.veduta in js/base.js): da lontano la casa romana ancora abitata, intera o rappezzata, ha i muri un poco più chiari e i coppi del tetto intero più caldi
+   di quelli dei tetti sfondati, che restano come sono. Viva è la casa senza degrado o col segno +2 dell'abitata rappezzata (lo stesso test dei lumi, più su). */
+var VIVA_CASA='(1.0-step(0.0005,vDeg.x)*(1.0-step(1.5,vDeg.w)))';
+[matMuri,matBasse,matDomus].forEach(function(m){ RM.veduta(m,{luce:.22,muro:0xe9d6ae,quanta:.22,tetto:0xc4683f,quantaT:.3,vivo:VIVA_CASA}); });
+RM.veduta(matTetti,{luce:.3,muro:0xc4683f,quanta:.38,vivo:VIVA_CASA});
 var conta=[0,0,0,0,0,0]; isolati.forEach(function(b){ b.ti=conta[b.tipo]++; }); RM.contaCase=conta;
 var MAT_INS=[matMuri,matTetti,matCorte], MAT_BAS=[matBasse,matTetti,matCorte], MATERIALI=[MAT_INS,MAT_INS,MAT_INS,[matDomus,matTetti,matAtrio,matGiardino,matVasca,matColonne,matArbusti],MAT_BAS,MAT_BAS];
 FORME[4]=FORME[0].clone(); FORME[5]=FORME[2].clone();      // le case basse prendono una copia delle forme delle insulae: l'attributo del degrado sta sulla geometria, una per pacco
@@ -780,6 +785,10 @@ var geoPozzo=(function(){ var f=new Forma(), n=8, k;
 var matMed=RM.tingi(appoggio(new THREE.MeshStandardMaterial({map:texMed,roughness:.95,side:THREE.DoubleSide})),'C'), matScandole=RM.tingi(new THREE.MeshStandardMaterial({map:texScandole,roughness:.95,side:THREE.DoubleSide}),'C');
 var matTerra=RM.tingi(appoggio(new THREE.MeshStandardMaterial({map:texTerra,roughness:1,side:THREE.DoubleSide})),'C'), matPaglia=RM.tingi(new THREE.MeshStandardMaterial({map:texPaglia,roughness:1,side:THREE.DoubleSide}),'C');
 var matBuio=new THREE.MeshStandardMaterial({color:RM.col(0x2a2019),roughness:1,side:THREE.DoubleSide});
+/* Veduta dei secoli tardi (RM.veduta in js/base.js): da lontano le case altomedievali, che ci sono solo dove si abita, prendono un poco più di luce, la paglia e le scandole
+   più chiare, così il nucleo si legge come una macchia viva fra i ruderi. Le tinte sono una resa da veduta, non un dato. */
+RM.veduta(matMed,{luce:.5,muro:0xe3d2ad,quanta:.35}); RM.veduta(matTerra,{luce:.45,muro:0xe0c89f,quanta:.35});
+RM.veduta(matScandole,{luce:.5,muro:0xd6b680,quanta:.45}); RM.veduta(matPaglia,{luce:.55,muro:0xecda9c,quanta:.55});
 var MED=[pacco(geoSolarata(true),[matMed,matScandole,matBuio],N),pacco(geoSolarata(false),[matMed,matScandole,matBuio],N),pacco(geoTerrinea(false),[matTerra,matPaglia,matBuio],N*3),pacco(geoTerrinea(true),[matTerra,matPaglia,matBuio],N*3)];
 var medRec=pacco(geoRecinto,[matMed],N), medPoz=pacco(geoPozzo,[matMed,matBuio,matBuio],N);
 medPoz.maglia.castShadow=false; RM.caseAltomedievali=MED;      // per le prove
@@ -901,6 +910,7 @@ if(RM.VESTE){ var trasparenteIncolti=function(){ var si=RM.vesteU.value>.5, m=in
     '  diffuseColor.a*=smoothstep(0.0,0.2,orlo); diffuseColor.rgb*=vec3(0.95,0.96,0.9); }'].join(String.fromCharCode(10))); }; }
 var geoOrto=new THREE.PlaneGeometry(1,1); geoOrto.rotateX(-Math.PI/2);
 var orti=pacco(geoOrto,new THREE.MeshStandardMaterial({map:texOrto,roughness:1,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}),N); orti.maglia.castShadow=false;
+var ortiCasa=pacco(geoOrto,RM.veduta(new THREE.MeshStandardMaterial({map:texOrto,roughness:1,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2}),{luce:.12,muro:0x7d9c4c,quanta:.4}),N); ortiCasa.maglia.castShadow=false;      // l'orto accanto alla casa altomedievale, a parte: nella veduta dei secoli tardi (RM.veduta in js/base.js) da lontano è di un verde vivo, gli orti e le vigne fra i ruderi no
 
 /* Alberi. Rifatti il 24 novembre 2026 (l'utente: «L'erba inesistente… Puoi fare molto di meglio»): prima erano un cono e una palla schiacciata, due sole specie.
    Ora cinque specie della campagna e dei giardini di Roma antica, tutte già presenti allora (nessuna pianta venuta dopo, come il platano d'Oriente nei viali o le palme):
@@ -1000,6 +1010,10 @@ var gLuci=new THREE.BufferGeometry();
 gLuci.setAttribute('position',new THREE.BufferAttribute(pPos,3)); gLuci.setAttribute('color',new THREE.BufferAttribute(pCol,3));
 var luci=new THREE.Points(gLuci,new THREE.PointsMaterial({size:11,map:texAlone,vertexColors:true,blending:THREE.AdditiveBlending,transparent:true,opacity:0,depthWrite:false,sizeAttenuation:true,fog:false}));
 luci.visible=false; luci.frustumCulled=false; RM.scene.add(luci);
+/* Veduta dei secoli tardi (RM.vedutaU in js/base.js): di notte, oltre 1,2 km dall'occhio, l'alone dei lumi cresce fino a due volte e mezza, così dalla vista d'insieme dell'800 si
+   vedono i lumi raccolti nei nuclei abitati; da vicino e fino al 520 resta com'era. Resa da veduta, non un dato. */
+luci.material.onBeforeCompile=function(sh){ sh.uniforms.uVedL=RM.vedutaU;
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+String.fromCharCode(10)+'uniform float uVedL;').replace('#include <clipping_planes_vertex>','gl_PointSize*=1.0+1.5*uVedL*smoothstep(120.0,400.0,-mvPosition.z);'+String.fromCharCode(10)+'#include <clipping_planes_vertex>'); };
 
 var INTONACI=[0xf0dfb8,0xe6c79c,0xf2e9d2,0xe3b89c,0xf6efde,0xe8d2a6].map(RM.col), CAMPI=[0xf2f0e0,0xe6dcae,0xd3dcae,0xd6c896,0xc9c2a0].map(RM.col);
 var MURO_VECCHIO=[0xa47e62,0x9a7a60,0x8e8470,0xa88a6c].map(RM.col), MACERIA=RM.col(0x8e7b68), MACERIA_VECCHIA=RM.col(0x7f786a), ERBE=[0xf2ebe0,0xe6dccb,0xdcd8c2,0xeadcc4].map(RM.col), COPPI_ROTTI=RM.col(0xb8a898);
@@ -1086,8 +1100,8 @@ function aggiorna(anno){
     incolti.setColorAt(i,c.copy(ERBE[(b.sfasa*ERBE.length)|0]).multiplyScalar(.8+.3*b.tono));
     if(med*a>.02){ var oM=b.medP.orto; d.position.set(oM.x,oM.y+.23,oM.z); d.rotation.set(0,oM.ry,0); d.scale.set(oM.w*med,1,oM.d*med); }      // l'orto accanto alla casa altomedievale
     else { d.position.y=b.y+.08; d.scale.set(PASSO*1.02*q,1,PASSO*1.02*q); }
-    d.updateMatrix(); orti.setMatrixAt(i,d.matrix);
-    orti.setColorAt(i,c.copy(CAMPI[(b.sfasa*CAMPI.length)|0]).multiplyScalar((.8+.3*b.tono)*(med*a>.02?.72:1)));      // l'orto di casa più scuro: terra lavorata, non stoppie
+    var oC=med*a>.02?ortiCasa:orti; d.updateMatrix(); oC.setMatrixAt(i,d.matrix); (oC===orti?ortiCasa:orti).setMatrixAt(i,ZERO);      // l'orto di casa nella sua maglia (si veda ortiCasa)
+    oC.setColorAt(i,c.copy(CAMPI[(b.sfasa*CAMPI.length)|0]).multiplyScalar((.8+.3*b.tono)*(med*a>.02?.72:1)));      // l'orto di casa più scuro: terra lavorata, non stoppie
     var l=a*(.3+.7*b.sfasa); pCol[i*3]=l; pCol[i*3+1]=l*.88; pCol[i*3+2]=l*.66;
   }
   alberi.forEach(function(lista,k){
@@ -1100,7 +1114,7 @@ function aggiorna(anno){
     if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;
   });
   if(toccati){
-    vivi.concat([ruderi,gusci,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,portici,colonneRov,medRec,medPoz,vilRec],macerieV,MED,VIL).forEach(function(p){ p.stringi(); });
+    vivi.concat([ruderi,gusci,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,ortiCasa,portici,colonneRov,medRec,medPoz,vilRec],macerieV,MED,VIL).forEach(function(p){ p.stringi(); });
     gLuci.attributes.color.needsUpdate=true; gLuci.attributes.position.needsUpdate=true; aggiornaVie(); statoVie();
   }
   if(RM.statoVie){ RM.statoVie.anno.value=.3*RM.sfuma(450,800,anno); RM.statoVie.esterno.value=.55*RM.sfuma(430,780,anno); }      // la manutenzione che cala per tutti; fuori, dove non ci sono case, le vie consolari

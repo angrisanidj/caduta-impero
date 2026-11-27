@@ -325,6 +325,25 @@ RM.moduli.push(function(anno){ var t=RM.sfuma(560,760,anno); if(Math.abs(t-RM.ta
   SOLE_X.crossVectors(new THREE.Vector3(0,1,0),SOLE_D.clone().negate()).normalize(); SOLE_Y.crossVectors(SOLE_D.clone().negate(),SOLE_X).normalize();
   if(ombraFissa) RM.ombraFissa(ombraFissa); else { ombra.s=-1; ombraIn(ombra.x,ombra.z,Math.max(70,oc.right)); }
   renderer.shadowMap.needsUpdate=true; if(RM.applicaLuce) RM.applicaLuce(RM.notte); });
+/* VEDUTA (27 novembre 2026; l'utente: «La Roma dell'800 deve sembrare al visitatore una città magnifica in rovine», «Le casette nuove son troppo piccole quasi invisibili a volte»).
+   Dalla vista d'insieme dei secoli tardi (la camera sta a 5,7 km dal Foro) i nuclei di case abitate, le chiese e il fumo si perdevano nel bruno dei ruderi. Come MOLE
+   (js/costruttore.js) è una resa da veduta, non un dato, ed è detta nel piede: solo da lontano (da 1,2 km dall'occhio, piena da 4) e solo dal 520 (piena dal 700), le cose vive
+   prendono un poco più di luce e la loro tinta (paglia chiara, orti verdi, tetti interi più caldi). Da vicino, a mezza distanza e fino al 520 nulla cambia: con RM.vedutaU a zero
+   lo shader salta tutto il ramo. RM.veduta(mat,{luce,muro,quanta,tetto,quantaT,vivo}): muro e tetto sono le tinte (tetto per le facce rivolte in su), quanta e quantaT quanto
+   tingono, luce quanto schiariscono, vivo un'espressione GLSL che vale 1 dove la cosa è viva (le case abitate) e 0 altrove. */
+RM.vedutaU={value:0};
+RM.moduli.push(function(anno){ RM.vedutaU.value=RM.sfuma(520,700,anno); });
+RM.veduta=function(mat,o){ var A=String.fromCharCode(10), prima=mat.onBeforeCompile, sua=mat.hasOwnProperty('onBeforeCompile'), kP=mat.customProgramCacheKey, suaK=mat.hasOwnProperty('customProgramCacheKey');
+  var vivo=o.vivo||'1.0', uM={value:RM.col(o.muro||0xffffff)}, uR={value:RM.col(o.tetto||o.muro||0xffffff)}, uK={value:new THREE.Vector3(o.luce||0,o.quanta||0,o.quantaT==null?(o.quanta||0):o.quantaT)};
+  mat.onBeforeCompile=function(sh,r){ if(sua) prima.call(mat,sh,r);
+    sh.uniforms.uVedT=RM.vedutaU; sh.uniforms.uVedM=uM; sh.uniforms.uVedR=uR; sh.uniforms.uVedK=uK;
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'uniform float uVedT; uniform vec3 uVedM; uniform vec3 uVedR; uniform vec3 uVedK;')
+      .replace('#include <roughnessmap_fragment>',['if(uVedT>0.0){ float vedD=uVedT*smoothstep(120.0,400.0,length(vViewPosition))*('+vivo+');',
+        '  if(vedD>0.0){ vec3 vC=diffuseColor.rgb*(1.0+uVedK.x*vedD); float vS=smoothstep(0.35,0.65,(normalize(vNormal)*mat3(viewMatrix)).y);',      // le facce rivolte in su (tetti, orti) prendono la tinta del tetto
+        '    vec3 vT=mix(uVedM,uVedR,vS); float vL=dot(vC,vec3(0.3,0.59,0.11)); vT*=clamp(0.55+0.45*vL/max(dot(vT,vec3(0.3,0.59,0.11)),0.05),0.55,1.3);',      // la tinta tiene un poco della luce della trama
+        '    diffuseColor.rgb=mix(vC,vT,mix(uVedK.y,uVedK.z,vS)*vedD); } }','#include <roughnessmap_fragment>'].join(A)); };
+  mat.customProgramCacheKey=function(){ return 'veduta|'+vivo+'|'+(suaK?kP.call(mat):(sua?prima.toString():'')); };      // three riconosce i programmi dal testo: si distingue da ciò che avvolge
+  return mat; };
 RM.ombraFissa=function(o){
   ombraFissa=o||null; if(!o){ ombra.s=-1; return; }
   var L=o.s||Math.max(o.t||7,sole.shadow.mapSize.x*.005);

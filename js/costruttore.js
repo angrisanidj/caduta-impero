@@ -409,6 +409,13 @@ var NUCLEO=['if(rmRotto>0.5 && vNor.y<-0.6){ vec3 nuC=mix(vec3(0.4,0.37,0.32),ve
    della luce e i piani un terzo in più: una resa da veduta, come la foschia, che non cambia né forma né stato;
    da vicino e fino al 550 nulla cambia. uMole (1) si spegne dove la cosa non è una mole di muratura (il monte Testaccio, di cocci). */
 var MOLE='diffuseColor.rgb*=1.0+uTardoR*uMoleR*smoothstep(120.0,400.0,length(vViewPosition))*(0.3+1.0*(1.0-smoothstep(0.3,0.7,abs(vNor.y))));';
+/* VIVA (27 novembre 2026, stessa veduta; si veda RM.veduta in js/base.js): dalla vista d'insieme degli anni tardi un monumento ancora in uso (senza crolli, spoglio, verde,
+   crepe né intonaco caduto: le chiese, le basiliche, il Pantheon chiesa) ha i muri un poco più chiari e il tetto intero di coppi di un rosso più pulito, così si stacca dalle
+   rovine attorno. Stesse soglie di MOLE (oltre 1,2 km dall'occhio, dal 560): una resa da veduta detta nel piede; da vicino, a mezza distanza e fino al 550 nulla cambia. */
+var VIVA=['{ float vvD=uTardoR*uMoleR*smoothstep(120.0,400.0,length(vViewPosition))*(1.0-smoothstep(0.02,0.1,uRovina+uSpoglio+uVerde+uCrepe+uIntonaco));',
+  '  if(vvD>0.0){ vec3 vvC=diffuseColor.rgb; float vvS=smoothstep(0.35,0.65,abs(vNor.y)); float vvR=vvS*(1.0-smoothstep(0.93,0.99,abs(vNor.y)))*smoothstep(1.8,2.6,vvC.r/max(vvC.g,0.01));',      // le falde di coppi: in pendio (non i piani: l'arena del Circo, i pavimenti) e rosso mattone (non la sabbia né il marmo caldo)
+  '    vec3 vvT=mix(vec3(0.8,0.71,0.55),vec3(0.5,0.085,0.035),vvR); vvT*=clamp(0.55+0.45*dot(vvC,vec3(0.3,0.59,0.11))/dot(vvT,vec3(0.3,0.59,0.11)),0.55,1.3);',      // muri color di calce chiara, coppi rosso mattone (in luce lineare)
+  '    diffuseColor.rgb=mix(vvC,vvT,vvD*mix(0.35*(1.0-vvS),0.6,vvR)); } }'].join(String.fromCharCode(10));
 function innesta(sh,u,colore){
   sh.uniforms.uTardoR=RM.tardoU||{value:0}; sh.uniforms.uMoleR=u.uMole||{value:1};      // la luce degli anni tardi (js/base.js, RM.tardo): si veda MOLE
   sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol; sh.uniforms.uVesteR=RM.vesteU||{value:0}; sh.uniforms.tMacchieR={value:RM.VESTE?RM.trameVeste().macchie:null};      // veste del PC: l'erba fra le lastre prende il verde dell'erba del suolo
@@ -418,7 +425,7 @@ function innesta(sh,u,colore){
   var SCEGLI=LOD_SCEGLI.replace('dpxL<uSogliaCol','dpxL<uSogliaCol*(1.0-step(0.02,uRovina))');      // in rovina niente fascia: il portico è senza tetto e senza muri, e fra i monconi si vede il prato, non l'ombra
   SCEGLI+=NL+MANCA;      // le colonne che mancano, e i rocchi a terra
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA+(colore?NL+STRISCE:''));
-  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,COLORA,DEGRADO,LEGNO,NUCLEO,MOLE,SAP_TINTA].join(NL));
+  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,COLORA,DEGRADO,LEGNO,NUCLEO,MOLE,VIVA,SAP_TINTA].join(NL));
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',[SCEGLI,LOD_OMBRA,taglio(false),'#include <clipping_planes_fragment>'].join(NL));
 }
 RM.matRovina=function(alt){

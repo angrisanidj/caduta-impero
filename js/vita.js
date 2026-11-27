@@ -750,6 +750,11 @@ PISTRINA.forEach(function(np,r){ var c=isolati.filter(function(b){ return b.reg=
   for(var k=0;k<Math.min(c.length,quanti);k++){ var b=c[k][1]; FONTI.push({x:b.x+.8,y:b.y+b.alt,z:b.z-.6,b:b,n:16,alto:11,larg:.42,forza:.85,q:k/quanti,forno:1}); } });      // forni del pane
 ['caracalla','diocleziano','traiano','tito','termecostantino','termenerone','termeagrippa'].forEach(function(id,k){ var m=(RM.MONUMENTI||[]).filter(function(o){ return o.id===id; })[0]; if(!m||m.x==null) return;
   var gr=k<3?1:.7; FONTI.push({x:m.x+1.5,y:RM.h(m.x,m.z)+3.5*gr,z:m.z+1.5,id:id,n:Math.round(26*gr),alto:24*gr,larg:1.5*gr,forza:1.2,q:0}); });      // terme: le tre grandi più delle altre
+/* I nuclei di case altomedievali (27 novembre 2026; l'utente ha chiesto il fumo leggibile dall'alto): ogni nucleo ha una ventina di casette attorno al cortile (b.villa in js/citta.js),
+   ma il fumo partiva solo dal lotto, una volta su diciassette, come per le insulae. Con la stessa regola di una casa su diciassette un nucleo acceso di almeno otto case fa un filo,
+   dal tetto della quinta casa; si accende con le case e si spegne con loro. Messi in coda, così le fasi del fumo di prima restano le stesse. */
+isolati.forEach(function(b){ if(!b.villa || b.villa.length<8) return; var o=b.villa[4];
+  FONTI.push({x:o.x,y:o.y+o.h+.15,z:o.z,b:b,nucleo:1,n:14,alto:6,larg:.3,forza:.8,q:RM.grana(Math.round(b.x*4.1)-13,Math.round(b.z*3.3)+29)}); });
 var geoForno=new RM.Costruttore().cilindro(.6,.55,0,0,0,P.tufo,.48,10).cupola(.48,0,.55,0,P.mattone,.8).scatola(.55,.26,.36,1,0,.25,P.marmo).scatola(.42,.22,.3,1.05,.26,.2,P.marmo).scatola(.5,.2,.3,.85,0,-.5,P.marmo,.6).geometria();
 var magliaForni=new THREE.InstancedMesh(geoForno,RM.matPietra(),Math.max(1,forni.length)), dF=new THREE.Object3D();
 magliaForni.castShadow=true; magliaForni.frustumCulled=false; magliaForni.userData.gruppo='vita'; RM.scene.add(magliaForni);
@@ -769,21 +774,29 @@ var matFumo=new THREE.ShaderMaterial({
 });
 var fumo=new THREE.Points(gFumo,matFumo); fumo.frustumCulled=false; fumo.userData.gruppo='vita'; RM.scene.add(fumo);
 var fumoG=RM.col(0xaeb7c2), fumoN=RM.col(0x30343f);      // 27 novembre 2026: grigio-azzurro, il fumo di legna sottile (prima bianco sporco); colonne più sottili e più trasparenti, che si allargano e svaniscono salendo: fili di cucina, non comignoli di fabbrica. Terme e calcare restano più larghe e più dense
+function vivaF(f,qf){ return f.b?(f.b.a0>.5&&f.q<qf&&(!f.nucleo||f.b.qv0>=8)?1:0):f.vivo; }      // fuma? le case finché sono abitate; i nuclei con almeno otto case accese
+/* Veduta dei secoli tardi (RM.vedutaU in js/base.js; come la corrente del fiume, che da lontano va più svelta): oltre 1,2 km dall'occhio, e pieno oltre 4, il filo si fa un poco più
+   alto, largo e denso, e grigio più chiaro contro il bruno dei ruderi, perché dalla vista d'insieme si veda dove si vive. Da vicino e fino al 520 restano i fili sottili di prima. */
+var fumoV=RM.col(0xd9dde0), occhioF=new THREE.Vector3();
 function muoviFumo(){
   matFumo.uniforms.lato.value=RM.renderer.domElement.height*.5;
-  matFumo.uniforms.colore.value.copy(fumoG).lerp(fumoN,RM.notte);
+  var vU=RM.vedutaU?RM.vedutaU.value:0, k, f;
+  matFumo.uniforms.colore.value.copy(fumoG);
+  if(vU>0){ occhioF.copy(RM.camera.position); matFumo.uniforms.colore.value.lerp(fumoV,.6*vU*RM.sfuma(120,400,occhioF.distanceTo(RM.controlli.target))); }
+  matFumo.uniforms.colore.value.lerp(fumoN,RM.notte);
+  for(k=0;k<FONTI.length;k++){ f=FONTI[k]; f.lon=vU>0?vU*RM.sfuma(120,400,Math.hypot(f.x-occhioF.x,f.y-occhioF.y,f.z-occhioF.z)):0; }
   var tF=MENO_MOTO?30:tempo, qf=RM.QUALITA.fumo[RM.q]||1;
-  for(var k=0;k<NFU;k++){
-    var f=fDi[k], o=k*3, v=f.b?(f.b.a0>.5&&f.q<qf?1:0):f.vivo;
+  for(k=0;k<NFU;k++){
+    f=fDi[k]; var o=k*3, v=vivaF(f,qf);
     if(v<=.01){ if(fAlfa[k]!==0){ fAlfa[k]=0; fPos[o+1]=-1e4; } continue; }
-    var p=(fFase[k]+tF*.05*(1+(k%5)*.08))%1, cu=f.alto*.8*Math.pow(p,1.7), on=Math.sin(tF*.5+k*1.7)*.12*p*f.larg*3;      // sale diritta, poi il vento la piega; un poco di ondeggiare
-    fPos[o]=f.x+VENTO[0]*cu+VENTO[1]*on; fPos[o+1]=f.y+Math.pow(p,1.35)*f.alto; fPos[o+2]=f.z+VENTO[1]*cu-VENTO[0]*on;      // più fitto in basso, dove il filo è sottile
-    fMis[k]=f.larg*(.9+3.2*p);      // si allarga salendo e si disperde (alla bocca i punti si toccano: un filo, non una fila di perle)
-    fAlfa[k]=Math.min(.5,Math.sin(Math.PI*Math.sqrt(p))*(1-.7*p)*f.forza*v);
+    var L=f.lon*Math.min(1,.4/f.larg), al=f.alto*(1+.7*L), p=(fFase[k]+tF*.05*(1+(k%5)*.08))%1, cu=al*.8*Math.pow(p,1.7), on=Math.sin(tF*.5+k*1.7)*.12*p*f.larg*3;      // sale diritta, poi il vento la piega; un poco di ondeggiare. L: i pennacchi già larghi (calcare, terme) crescono poco, sono i fili sottili delle case che si perdevano
+    fPos[o]=f.x+VENTO[0]*cu+VENTO[1]*on; fPos[o+1]=f.y+Math.pow(p,1.35)*al; fPos[o+2]=f.z+VENTO[1]*cu-VENTO[0]*on;      // più fitto in basso, dove il filo è sottile
+    fMis[k]=f.larg*(.9+3.2*p)*(1+1.8*L);      // si allarga salendo e si disperde (alla bocca i punti si toccano: un filo, non una fila di perle)
+    fAlfa[k]=Math.min(.5+.1*L,Math.sin(Math.PI*Math.sqrt(p))*(1-.7*p)*f.forza*v*(1+.5*L));
   }
   gFumo.attributes.position.needsUpdate=true; gFumo.attributes.alfa.needsUpdate=true; gFumo.attributes.mis.needsUpdate=true;
 }
-RM.fumoConta=function(){ var r={fonti:FONTI.length, punti:NFU, case:0, forni:0, terme:0, calcare:0}; FONTI.forEach(function(f){ var v=f.b?(f.b.a0>.5&&f.q<(RM.QUALITA.fumo[RM.q]||1)?1:0):f.vivo; if(v<=.01) return; if(f.forno) r.forni++; else if(f.b) r.case++; else if(f.stato==='cava') r.calcare++; else r.terme++; }); return r; };      // quante colonne fumano ora (per le prove e per il rapporto)
+RM.fumoConta=function(){ var r={fonti:FONTI.length, punti:NFU, case:0, forni:0, terme:0, calcare:0}; FONTI.forEach(function(f){ var v=vivaF(f,RM.QUALITA.fumo[RM.q]||1); if(v<=.01) return; if(f.forno) r.forni++; else if(f.nucleo) r.nuclei=(r.nuclei||0)+1; else if(f.b) r.case++; else if(f.stato==='cava') r.calcare++; else r.terme++; }); return r; };      // quante colonne fumano ora (per le prove e per il rapporto)
 
 /* ---------- barche ----------
    Seguono il filo della corrente a velocità costante, tenendo la destra, e passano sotto i ponti fra una pila e l'altra; in fondo al tratto virano.
@@ -1063,7 +1076,7 @@ RM.moduli.push(function(anno){
   LUOGHI.forEach(function(L){ var on=anno>=L.da && anno<L.a; if(on && L.mon){ var q=RM.statoMonumento(L.mon,anno); on=q.s0==='uso' && !(q.s1!=='uso' && q.t>.5); } L.vis=on?1:0; if(L.porto) banchiVisibili(on && !!L.ok); });
   if(Math.abs(anno-annoVie)>=2) vieDaRifare=true;
   zoneDaRifare=true;
-  var bassaF=1-.42*RM.sfuma(470,720,anno); FONTI.forEach(function(f){ if(f.id){ var q=RM.statoMonumento(f.id,anno), s=f.stato||'uso'; f.vivo=(q.s0===s?1-q.t:0)+(q.s1===s?q.t:0); } else if(f.b) faiTetto(f,anno); });      // il fumo esce dal tetto, che dal V secolo si abbassa con le case
+  var bassaF=1-.42*RM.sfuma(470,720,anno); FONTI.forEach(function(f){ if(f.id){ var q=RM.statoMonumento(f.id,anno), s=f.stato||'uso'; f.vivo=(q.s0===s?1-q.t:0)+(q.s1===s?q.t:0); } else if(f.b && !f.nucleo) faiTetto(f,anno); });      // il fumo esce dal tetto, che dal V secolo si abbassa con le case
   function faiTetto(f,anno){ var b=f.b, cm=b.medP&&b.medP.case&&b.medP.case[0];      // 27 novembre 2026: sulla casa altomedievale il fumo esce dal suo tetto (alta da 5 a 10 m), non 10-17 m più in alto dove stava il tetto della casa romana
     if(f.x0==null){ f.x0=f.x; f.z0=f.z; }
     if(cm && anno>=b.medDa+1.5){ f.x=cm.x; f.z=cm.z; f.y=cm.y+cm.h+.15; }      // la prima casa del lotto: la sua scala in altezza (o.h + 0,15) è quella di scriviMed in js/citta.js
