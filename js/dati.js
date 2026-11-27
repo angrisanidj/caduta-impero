@@ -1223,6 +1223,7 @@ var CERTEZZA={
 };
 SCHEDE.castrensemura=SCHEDE.castrense; CERTEZZA.castrensemura=CERTEZZA.castrense;      // 27 novembre 2026: l'anfiteatro murato nelle mura ha la stessa scheda di quello intero
 SCHEDE.marcoaureliolat=SCHEDE.marcoaurelio; CERTEZZA.marcoaureliolat=CERTEZZA.marcoaurelio; SCHEDE.pignapietro=SCHEDE.pigna; CERTEZZA.pignapietro=CERTEZZA.pigna;      // 27 novembre 2026: le due statue nei due posti hanno una scheda sola
+SCHEDE.curia=SCHEDE.curiaantica=SCHEDE.santadriano; CERTEZZA.curia=CERTEZZA.curiaantica=CERTEZZA.santadriano;      // 27 novembre 2026: la Curia ha il suo nome sulla scena; la scheda è quella di Sant'Adriano, che la racconta
 SCHEDE.emiliarovina=SCHEDE.emilia; CERTEZZA.emiliarovina=CERTEZZA.emilia;     // la rovina dopo il 410 ha la stessa scheda della basilica
 SCHEDE.castrapretoriorasa=SCHEDE.castrapretorio; CERTEZZA.castrapretoriorasa=CERTEZZA.castrapretorio;      // 27 novembre 2026: il campo smantellato dopo il 312 ha la scheda della caserma
 SCHEDE.obeliscomausoleo2=SCHEDE.obeliscomausoleo1; CERTEZZA.obeliscomausoleo2=CERTEZZA.obeliscomausoleo1;     // i due obelischi del mausoleo di Augusto hanno la stessa scheda

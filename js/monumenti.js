@@ -919,7 +919,7 @@ var M=[
     B.tempio(2.4,2.8,1.4,0,0,-PI/2,{fronte:6});
  }},
  {id:'giulia', nome:'Basilica Giulia', x:-4.6,z:6, ry:-.35, come:'fori', zone:[], fa:function(B){ basilica(B,9.6,4.9,1.9,0,0); }},      // «101 metres long and 49 wide» (Platner e Ashby, Basilica Iulia)
- {id:'rostri', nome:'Rostri', x:-5.5,z:-1, ry:-.44, come:'fori', zone:[], fa:function(B){      // la tribuna degli oratori sul lato ovest della piazza: fronte «about 24 metres in length and 3 high» (Platner e Ashby, Rostra Augusti)
+ {id:'rostri', nome:'Rostri', ey:1, x:-5.5,z:-1, ry:-.44, come:'fori', zone:[], fa:function(B){      // la tribuna degli oratori sul lato ovest della piazza: fronte «about 24 metres in length and 3 high» (Platner e Ashby, Rostra Augusti)
     B.scatola(1.3,.32,2.4,0,0,0,P.marmo).scatola(.12,.12,2.4,.6,.32,0,P.marmo).aperture(.66,1.1,.66,-1.1,6,.06,.2,.12,true);
  }},
  {id:'tabularium', nome:'Tabularium', x:-14.5,z:-5.2, ry:-.35, come:'fori', zone:[], fa:function(B){      // l'alto basamento di tufo e, sopra, la galleria ad arcate: «eleven arches, 7.50 metres in height» (Platner e Ashby, Tabularium)
@@ -1115,7 +1115,12 @@ var M=[
  /* la statua di Trajano in cima, «in gilt bronze, of which we have no representation» (Platner e Ashby): forma indicativa. Quando sia stata tolta non si sa: nel modello va via nel 663
     con gli altri bronzi dei Fori (Costante II, Liber Pontificalis, vita di Vitaliano), scelta già dichiarata nella scheda dei Fori e ripetuta in quella della colonna */
  {id:'colonnatraianastatua', x:-8.5216,z:-36.8779, ry:.672, come:'fori', zone:[], fa:function(B){ uomo(B,0,3.6,0,2.1,P.statua); }},
- {id:'antonino', nome:'Tempio di Antonino e Faustina', etichetta:'Antonino e Faustina', x:11.6,z:3.7, ry:-.35, come:'fori', zone:[], fa:function(B){
+ /* Posto e orientamento rifatti il 27 novembre 2026, notte, sul resto vero (prima x 11,6, z 3,7, ry -0,35, l'asse del Foro). Il contorno su OpenStreetMap (relazione 1841090, in
+    grezzi/osm-foro-geom.json) copre solo la parte davanti, 263 metri quadrati: i suoi lati vanno a 32 e a 122 gradi, quindi l'asse del tempio sta a 122 gradi (ry -0,564; prima a 110).
+    La chiesa di San Lorenzo in Miranda, che occupa la cella (Platner e Ashby), ha il centro su OpenStreetMap (relazione 1841086, in grezzi/osm-monumenti.json) esattamente su quell'asse:
+    qui il centro della cella del modello sta sul centro della chiesa. Così il piede della scala cade sul bordo davanti del contorno (meno di 1 m di scarto): il contorno sono scala e pronao.
+    Il contorno intero della chiesa non è stato scaricato (Overpass non rispondeva: richiesta pronta in grezzi/q20.txt); lunghezza del tempio e misure della scala restano quelle del modello. */
+ {id:'antonino', nome:'Tempio di Antonino e Faustina', etichetta:'Antonino e Faustina', x:12.015,z:3.152, ry:-.564, come:'fori', zone:[], fa:function(B){
     B.tempio(2.1,3.4,1.7,0,0,0,{fronte:6});                                                                                     // «hexastyle prostyle», colonne di cipollino «17 metres high» (Platner e Ashby, Antoninus et Faustina, templum)
  }},
  /* Arco di Settimio Severo, rivisto il 27 novembre 2026 sulla voce Arcus Septimii Severi di Platner e Ashby, letta per intero (src/testi/topografia-fonti.md, «Gli archi, uno per uno»):
@@ -1125,7 +1130,7 @@ var M=[
     come nelle fotografie. Prima l'arco era alto 21 m, i fornici laterali larghi 3,4 m e le colonne interne stavano sul filo del fornice centrale; ora stanno in mezzo ai piloni.
     La quadriga a sei o otto cavalli e i quattro cavalieri in cima, noti dalle monete, non sono disegnati: non si sa quando sparirono. Nessuna strada ci passa sotto («never traversed
     by a road until mediaeval times»): niente strozzatura. */
- {id:'arcoseveroforo', nome:'Arco di Settimio Severo', etichetta:'Arco di Severo', x:-4.6,z:-3.7, ry:.94, come:'fori', zone:[], fa:function(B){
+ {id:'arcoseveroforo', nome:'Arco di Settimio Severo', etichetta:'Arco di Severo', ey:2.8, x:-4.6,z:-3.7, ry:.94, come:'fori', zone:[], fa:function(B){
     muroForato(B,2.5,1.62,1.185,[[0,.7,1.2],[-.82,.3,.78],[.82,.3,.78]],P.marmo); B.scatola(2.62,.13,1.3,0,1.62,0,P.marmo).scatola(2.5,.56,1.185,0,1.75,0,P.marmo);      // i fornici, la trabeazione che gira tutt'attorno, l'attico
     [1,-1].forEach(function(q){ var z=q*.71; [-1.11,-.51,.51,1.11].forEach(function(x){ B.scatola(.22,.55,.22,x,0,z,P.marmo).colonne(x,z,x,z,1,.88,.045,.55).scatola(.24,.19,.24,x,1.43,z,P.marmo); B.scatola(.12,1.62,.03,x,0,q*.6,P.marmo); });      // piedistallo con la base (alto 5,5 m: schema), colonna libera (8,78 m, diametro 0,90), il suo tratto di trabeazione; dietro, la lesena
       B.scatola(1.9,.42,.02,0,1.8,q*.6,P.travertino); [-.82,.82].forEach(function(x){ B.scatola(.5,.42,.02,x,1.0,q*.6,P.travertino).scatola(.4,.07,.02,x,.82,q*.6,P.travertino); }); });      // l'iscrizione dell'attico, i quattro grandi rilievi sopra i fornici laterali e le fasce strette sotto
@@ -1137,7 +1142,7 @@ var M=[
     dalle strade del modello (la via Sacra lungo la basilica non c'è). Schema, detto in scheda: quale lato è la fronte (qui verso la piazza, il passaggio sull'asse del Foro), altezza
     (10 m), luce del fornice (4 m), lo zoccolo alto 1,5 m e i tre gradini dal lato della piazza. Né statue né iscrizione: la fonte non ne dà (i frammenti attribuiti non sono suoi).
     Quando sparì non si sa: in piedi fino all'852. Niente strozzatura: nessuna strada del modello ci passa. */
- {id:'arcotiberio', nome:'Arco di Tiberio', etichetta:'Arco di Tiberio', x:-7,z:1, ry:1.221, come:'fori', zone:[], fa:function(B){
+ {id:'arcotiberio', nome:'Arco di Tiberio', etichetta:'Arco di Tiberio', ey:1.5, x:-7,z:1, ry:1.221, come:'fori', zone:[], fa:function(B){
     B.scatola(.9,.15,.63,0,0,0,P.travertino);                                                                                    // lo zoccolo sulle fondazioni di 9 x 6,3 m
     for(var g=0;g<3;g++) B.scatola(.6,.05*(3-g),.09,0,0,.315+.045+g*.09,P.travertino);                                         // i gradini dal piano del Foro (lato +z, verso la piazza)
     B.dentro(0,.15,0,0,function(B){ muroForato(B,.9,.66,.63,[[0,.4,.55]],P.marmo); B.scatola(.96,.06,.67,0,.66,0,P.marmo).scatola(.9,.2,.63,0,.72,0,P.marmo); });      // il fornice, la cornice, l'attico
@@ -1453,10 +1458,12 @@ var M=[
  }},
  /* La Curia prima dell'incendio del 283, al tempo di Carino (voce «Curia Julia» della Wikipedia inglese): la sua forma non è nota, qui è la stessa aula con un portichetto. Brucia nel 283 e,
     ancora bruciata, si vede nel 284; dal 285 al suo posto sale la Curia di Diocleziano (23 novembre 2026, l'utente: «se la Curia è bruciata e viene ricostruita da Diocleziano fallo vedere») */
- {id:'curiaantica', x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
+ /* nome sulla scena (27 novembre 2026; l'utente aveva preso la Curia per i Rostri: fra il 285 e il 630 l'aula non aveva un nome suo); la scheda è quella di Sant'Adriano, che racconta la Curia.
+    ey: il nome sta appena sopra il tetto, non a 70 m come gli altri: a mezza distanza «Rostri», alto sopra la tribuna, finiva sulla Curia. Lo stesso per Rostri, Sant'Adriano e i due archi. */
+ {id:'curiaantica', nome:'Curia', ey:3.5, x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
     curiaAula(B,P.bronzo); B.scatola(1.5,.25,.5,0,0,1.6,P.travertino);
  }},
- {id:'curia', x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
+ {id:'curia', nome:'Curia', ey:3.5, x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
     curiaAula(B,P.bronzo);
     B.scatola(1.96,.85,.04,0,0,1.36,P.marmo).scatola(2.0,.1,2.76,0,2.32,0,P.marmo);                                                  // zoccolo di marmo in facciata e cornice tutt'attorno
     B.scatola(.5,.12,.05,0,1.32,1.37,P.marmo);                                                                                       // architrave della porta
@@ -1467,7 +1474,7 @@ var M=[
  {id:'curiastatue', x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
     B.scatola(.12,.34,.12,0,3.0,1.25,P.bronzo).scatola(.1,.26,.1,-.88,2.4,1.25,P.bronzo).scatola(.1,.26,.1,.88,2.4,1.25,P.bronzo);      // statue di bronzo sul frontone
  }},
- {id:'santadriano', nome:"Sant'Adriano (la Curia)", etichetta:"Sant'Adriano", x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
+ {id:'santadriano', nome:"Sant'Adriano (la Curia)", etichetta:"Sant'Adriano", ey:3.9, x:.8,z:-5.1, ry:-.35, come:'fori', zone:[], fa:function(B){
     /* 24 novembre 2026 (segnalato nelle prove delle infografiche: nel 700 era «una scatola bianca senza dettagli»). È la stessa aula della Curia: la facciata di mattoni, qui senza lo
        stucco a finti blocchi, che non si sa quanto restasse; la cornice, l'architrave della porta e i battenti di bronzo, che dal 1660 stanno in San Giovanni in Laterano e quindi
        c'erano ancora nella chiesa. Niente statue sul frontone e niente portichetto; tetto di coppi e la croce. Quanto stucco e quanto marmo restassero non è detto dalle fonti lette. */
@@ -3127,7 +3134,7 @@ RM.moduli.push(function(anno){
 /* ---------- etichette proiettate ---------- */
 var v=new THREE.Vector3();
 RM.frame.push(function(){
-  var w=riquadro.clientWidth, h=riquadro.clientHeight, messi=[];      // messi: i rettangoli delle etichette già visibili; una che ne coprirebbe un'altra si nasconde (23 novembre 2026: le due scholae si accavallavano)
+  var w=riquadro.clientWidth, h=riquadro.clientHeight, messi=(RM.postiRiservati||[]).slice();      // posti riservati: il nome del Campidoglio (js/strade-nomi.js), a cui i monumenti vicini cedono il posto (27 novembre 2026); messi: i rettangoli delle etichette già visibili; una che ne coprirebbe un'altra si nasconde (23 novembre 2026: le due scholae si accavallavano)
   M.forEach(function(o){
     if(!o.div) return;
     var ex=o.ex!=null?o.ex:o.x, ez=o.ez!=null?o.ez:o.z, ey=o.ey!=null?o.ey:7;      // ex, ez: dove sta il nome, se non al centro del gruppo; ey: a che altezza sopra il gruppo (di norma 70 m; 27 novembre 2026)
@@ -3142,6 +3149,6 @@ RM.frame.push(function(){
     if(o.visEt!==vis){ o.visEt=vis; o.div.style.opacity=vis?1:0; o.div.style.visibility=vis?'visible':'hidden'; }      // si scrive solo ciò che cambia (26 novembre 2026): a camera ferma nessuno stile da ricalcolare
     if(vis){ var tr='translate(-50%,-100%) translate('+px.toFixed(1)+'px,'+py.toFixed(1)+'px)'; if(o.trEt!==tr){ o.trEt=tr; o.div.style.transform=tr; } }
   });
-  RM.etichetteMesse=messi;      // i nomi delle strade (js/strade-nomi.js) li scansano: i monumenti hanno la precedenza
+  RM.etichetteMesse=messi.slice((RM.postiRiservati||[]).length);      // i nomi delle strade (js/strade-nomi.js) li scansano: i monumenti hanno la precedenza
 });
 })();

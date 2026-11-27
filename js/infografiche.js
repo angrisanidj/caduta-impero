@@ -3121,7 +3121,7 @@ function disegnaSacchi(svg,S,W,H){
      Tito e Costantino (nel modello chiudono nel 537), metasudans (la fontana dipendeva dagli acquedotti; la data è dedotta), CERTEZZA dei mulini (numero, posizione e aspetto: ipotesi);
    - tappa del 493 (Teodorico vieta di deviare l'acqua degli acquedotti); voce del 780 (Liber Pontificalis, vita di Adriano I).
    Schemi, detti nel disegno: i tracciati degli acquedotti, i punti dei tagli (le fonti non dicono dove), le posizioni dei campi, i mulini galleggianti (numero e forma), l'acqua che si
-   svuota e torna. Che la Iovia sia il ramo di Caracalla (l'Antoniniano) è l'ipotesi del modello: è detto. Lasciato fuori perché la pagina non lo dice: che cosa fecero i Romani agli
+   svuota e torna. Che la Iovia sia la Marcia è l'ipotesi del modello (dal 27 novembre 2026, come js/mura.js; prima era l'Antoniniano): è detto. Lasciato fuori perché la pagina non lo dice: che cosa fecero i Romani agli
    sbocchi degli acquedotti, quali acquedotti funzionassero fra il 538 e il 776, i nomi degli altri condotti. Le cifre (undici, quattordici per Procopio, diciannove coi rami) vengono dalla scheda degli acquedotti, messa d'accordo il 23 novembre 2026. */
 var ACQUEDOTTI={ titolo:"Gli acquedotti, tagliati e riparati", sotto:"537: i Goti fermano l'acqua di Roma. Verso il 776 papa Adriano I ne fa riparare quattro",      // titolo per le due tappe, 537 e 780 (24 novembre 2026)
   fasi:[["Prima","Gli acquedotti portano a Roma l'acqua per le terme, le fontane e i mulini. I grandi acquedotti sono undici; con i rami, un catalogo del IV secolo arriva a diciannove. Procopio ne conta quattordici."],
@@ -3136,9 +3136,9 @@ var ACQUEDOTTI={ titolo:"Gli acquedotti, tagliati e riparati", sotto:"537: i Got
     ["602","Nel gennaio 602 papa Gregorio Magno scrive che gli acquedotti sono così trascurati da rischiare di andare in rovina del tutto."],
     ["verso il 776","Papa Adriano I fa riparare quattro acquedotti. L'anno è una stima degli studiosi: la fonte non lo dice."],
     ["verso il 776","La Sabbatina, l'antica Traiana, era interrotta da vent'anni e aveva cento arcate crollate. Riparata, porta di nuovo l'acqua a San Pietro e ai mulini del Gianicolo."],
-    ["verso il 776","La Claudia riporta l'acqua al Laterano. La Vergine torna a dissetare quasi tutta la città. Riprende anche la Iovia, forse un ramo della Marcia."],
+    ["verso il 776","La Claudia riporta l'acqua al Laterano. La Vergine torna a dissetare quasi tutta la città. Riprende anche la Iovia: per alcuni studiosi è la Marcia stessa, per altri un suo ramo."],
     ["Dopo","Le grandi terme invece restano chiuse: nel VI e nel VII secolo, in alcune si seppelliscono i morti. I mulini sulle barche resteranno sul Tevere fino al 1870."]],
-  fonte:"Tappe del 493, del 537 e del 780 e intermezzo «La città» di questa pagina; schede degli acquedotti, dei mulini, della Meta Sudans e delle terme; Procopio, Guerre V 19 (i quattordici acquedotti, i mulini sulle barche); Prammatica Sanzione, capitolo 25; Gregorio Magno, Registro XII, 6; Liber Pontificalis, vita di Adriano I. Quanti fossero gli acquedotti: undici i grandi; diciannove con i rami, in un catalogo del IV secolo; quattordici per Procopio, nel 537: il perché, le fonti lette non lo spiegano. La pianta è quella del modello della città: i tracciati degli acquedotti e le loro quote sono una ricostruzione, i punti in cui i Goti li tagliarono non sono noti (i tagli sono segnati fuori dalle mura come schema), e così le posizioni dei sette campi. Che la Iovia sia il ramo costruito da Caracalla per le sue terme è l'ipotesi seguita dal modello. I mulini sulle barche sono disegnati come li descrive Procopio: numero, forma e posizione precisa sono ipotesi. Gli anni dei restauri di Adriano I sono una stima." };
+  fonte:"Tappe del 493, del 537 e del 780 e intermezzo «La città» di questa pagina; schede degli acquedotti, dei mulini, della Meta Sudans e delle terme; Procopio, Guerre V 19 (i quattordici acquedotti, i mulini sulle barche); Prammatica Sanzione, capitolo 25; Gregorio Magno, Registro XII, 6; Liber Pontificalis, vita di Adriano I. Quanti fossero gli acquedotti: undici i grandi; diciannove con i rami, in un catalogo del IV secolo; quattordici per Procopio, nel 537: il perché, le fonti lette non lo spiegano. La pianta è quella del modello della città: i tracciati degli acquedotti e le loro quote sono una ricostruzione, i punti in cui i Goti li tagliarono non sono noti (i tagli sono segnati fuori dalle mura come schema), e così le posizioni dei sette campi. Che la Iovia sia la Marcia è l'ipotesi seguita dal modello, come nella città in 3D; altri studiosi la riconoscono nel ramo costruito da Caracalla per le sue terme. I mulini sulle barche sono disegnati come li descrive Procopio: numero, forma e posizione precisa sono ipotesi. Gli anni dei restauri di Adriano I sono una stima." };
 function disegnaAcquedotti(svg,S,W,H){
   var TP=window.RM_TOPO; if(!TP||!TP.mura||!TP.quote) return;
   var oriz=W/H>=1.15, piccolo=oriz&&W<700, pad=oriz?16:10, defs=el('defs',null,svg), fasi=ACQUEDOTTI.fasi, i;
@@ -3165,17 +3165,22 @@ function disegnaAcquedotti(svg,S,W,H){
   /* gli acquedotti del modello (js/mura.js, LINEE): Claudia, Marcia, Vergine, Traiana, Antoniniano */
   /* i tracciati sono quelli della città in 3D (LINEE in js/mura.js, rifatti il 24 novembre 2026 su OpenStreetMap): la Claudia arriva a porta Maggiore e prosegue con gli archi
      neroniani sul Celio; la Marcia segue le mura fino a porta Tiburtina; la Vergine finisce al suo castello nel Campo Marzio */
-  var LINEE=[{n:'Claudia',p:[[436,228.2],[423.5,210.9],[412.2,177.7],[397.1,139.7],[389.3,127.2],[376.9,101.4],[350.6,75],[336,70.6],[318,63.4],[302.1,56.8],[275.9,40.7],[264.9,29.7],[244.9,17.4],[241,16.6],[234.6,18.1],[226,22],[220,27],[208,36.3],[204.5,39.3],[196.2,45.7],[186,51.3],[176.9,54.4],[156.7,57.1],[120,70],[87.1,81.7],[82.16,76.83],[76.1,71.7],[71.1,66.9],[37,60.4],[32,59.4],[26,54]],r:4,taglio:[302.1,56.8]},
-    {n:'Marcia',p:[[436,224],[423,207],[413.5,176.5],[398.5,138.5],[390.5,126],[378,100.2],[351.6,73.8],[337,69.4],[319,62.2],[303,55.6],[277,39.5],[262,21],[253.5,6.5],[247.55,2.85],[241.1,-12.3],[209.8,-50.8],[205.75,-59.46]],r:0,taglio:[351.6,73.8]},
-    {n:'Vergine',p:[[-16,-121],[-13.2,-112.4],[-17,-93],[-32.7,-76.41],[-36.92,-75.17],[-49,-74.5]],r:6,taglio:[-14.6,-116.7]},
+  /* 27 novembre 2026, notte: ricopiati da LINEE di js/mura.js dopo la verifica linea per linea (solo i tratti in vista: i sotterranei non si disegnano nemmeno là). La Claudia ha il
+     ramo fino alla piscina dietro gli Horti Pallantiani (prima finiva sopra porta Maggiore) e torna fino al Patriarchio; la Marcia ha il ramo della Giulia verso i trofei di Mario,
+     che non torna; la Vergine segue le arcate nuove dall'arco del Nazareno a quello di Claudio. La Iovia è la Marcia, come nella città in 3D (Platner e Ashby): torna lei, non l'Antoniniano */
+  var LINEE=[{n:'Claudia',p:[[436,228.2],[423.5,210.9],[412.2,177.7],[397.1,139.7],[389.3,127.2],[376.9,101.4],[350.6,75],[336,70.6],[318,63.4],[302.1,56.8],[275.9,40.7],[264.9,29.7],[244.9,17.4],[241,16.6],[234.6,18.1],[226,22],[220,27],[208,36.3],[204.5,39.3],[196.2,45.7],[186,51.3],[176.9,54.4],[156.7,57.1],[120,70],[87.1,81.7],[82.16,76.83],[76.1,71.7],[71.1,66.9],[37,60.4],[32,59.4],[26,54]],r:23,taglio:[302.1,56.8],
+      ramo:{p:[[244.9,17.4],[248.12,11.04],[249.48,8.36],[246.6,4.4],[242.5,-4.5],[238.3,-14.4]],torna:true}},
+    {n:'Marcia',p:[[436,224],[423,207],[413.5,176.5],[398.5,138.5],[390.5,126],[378,100.2],[351.6,73.8],[337,69.4],[319,62.2],[303,55.6],[277,39.5],[262,21],[253.5,6.5],[247.55,2.85],[241.1,-12.3],[209.8,-50.8],[205.75,-59.46]],r:17,taglio:[351.6,73.8],
+      ramo:{p:[[215.1,-44.3],[181.5,-36.9],[155.6,-31.2]],torna:false}},
+    {n:'Vergine',p:[[-5.5,-126],[-12.65,-113.2],[-13.7,-111.55],[-13.5,-106.5],[-11.4,-99],[-10.6,-94],[-11.5,-88.5],[-17,-83.5],[-24,-79.5],[-32.7,-76.41],[-34.138,-75.987],[-35.482,-75.593],[-36.92,-75.17],[-48.6,-73.9]],r:14,taglio:[-9.1,-119.6]},
     {n:'Traiana',p:[[-382,40.2],[-356.4,40.6],[-348.3,38.3],[-327.1,38.4],[-305.4,39.4],[-288.4,40.1],[-266.4,38.4],[-251,44.2],[-242.7,50.7],[-236.7,56],[-229.9,57.6],[-222,55.1],[-206,51.5],[-195.3,48.7],[-183,38],[-160,33]],r:7,taglio:[-356.4,40.6]},
-    {n:'Antoniniano',p:[[175.4,200.9],[133.7,208.1],[68,175],[53.5,165.7]],r:4,taglio:[154.5,204.5]}];
+    {n:'Antoniniano',p:[[175.4,200.9],[134.3,207.9],[133.1,208.15],[68,175],[53.5,165.7]],r:0,taglio:[154.5,204.5]}];
   var gL=el('g',null,carta);
-  LINEE.forEach(function(l,j){ var pts=l.p.map(B), d='M'+pts.map(xy).join(' L');
+  LINEE.forEach(function(l,j){ var pts=l.p.map(B), dR=l.ramo?' M'+l.ramo.p.map(B).map(xy).join(' L'):'', d='M'+pts.map(xy).join(' L')+dR;      // il ramo è un secondo tratto dello stesso disegno
     l.g=el('g',{'class':'ig-aq-linea'},gL); el('path',{d:d,'class':'ig-aq-condotto'},l.g);
     l.acqua=el('path',{d:d,'class':'ig-aq-acqua'},l.g); l.L=lungo(l.acqua); l.acqua.style.strokeDasharray=l.L+' '+l.L;
     l.luce=el('path',{d:d,'class':'ig-aq-scorre'},l.g);
-    if(l.r){ var d2='M'+pts.slice(0,l.r).map(xy).join(' L'); l.torna=el('path',{d:d2,'class':'ig-aq-acqua torna'},l.g); scopri(l.torna); l.lt=el('path',{d:d2,'class':'ig-aq-scorre torna'},l.g); }
+    if(l.r){ var d2='M'+pts.slice(0,l.r).map(xy).join(' L')+(l.ramo&&l.ramo.torna?dR:''); l.torna=el('path',{d:d2,'class':'ig-aq-acqua torna'},l.g); scopri(l.torna); l.lt=el('path',{d:d2,'class':'ig-aq-scorre torna'},l.g); }
     var tq=B(l.taglio); l.x=el('g',{'class':'ig-aq-taglio',transform:'translate('+xy(tq)+')'},gL); el('circle',{r:8,'class':'ig-aq-taglio-c'},l.x); el('path',{d:'M-4 -4 L4 4 M4 -4 L-4 4','class':'ig-aq-taglio-x'},l.x); });
   /* i nomi degli acquedotti */
   var NOMI=[[0,[212,94],'Claudia','start'],[1,[166,-58],'Marcia','end'],[2,[-28,-150],'Vergine','end'],[3,[piccolo||!oriz?-282:-330,26],'Traiana','middle'],[4,[180,222],'Antoniniano','middle']];
@@ -3247,10 +3252,10 @@ function disegnaAcquedotti(svg,S,W,H){
     LINEE.forEach(function(l,j){ var tj=tg+j*220; cls(l.x,'vis',t>=tj&&i<10); cls(l.x,'taglia',t>=tj&&t<tj+800);
       var d=E.io(fase(t,tj+400,tj+4200)); fissa(l.acqua,'stroke-dashoffset',r1(-l.L*d)); cls(l.luce,'via',t>=tj); cls(l.g,'secca',d>=1);
       if(l.torna){ var f=j===3?torna[0]:torna[1]; traccia(l.torna,f); cls(l.lt,'vis',f>=1); } });
-    cls(gN,'vis',t>=T[0]+500); [0,1,2,3,4].forEach(function(j){ var n=LINEE[j].nome; cls(n,'acceso',(i===11&&j===3)||(i===12&&(j===0||j===2||j===4))); });
-    if(i>=12) scrivi(LINEE[4].nome,'Iovia? (forse)'); else scrivi(LINEE[4].nome,'Antoniniano');
+    cls(gN,'vis',t>=T[0]+500); [0,1,2,3,4].forEach(function(j){ var n=LINEE[j].nome; cls(n,'acceso',(i===11&&j===3)||(i===12&&(j===0||j===1||j===2))); });
+    if(i>=12) scrivi(LINEE[1].nome,'Marcia (Iovia?)'); else scrivi(LINEE[1].nome,'Marcia');
     if(i===11) scrivi(LINEE[3].nome,'Sabbatina (Traiana)'); else if(i<11) scrivi(LINEE[3].nome,'Traiana');
-    var nn=LINEE[3].nome.textContent+LINEE[4].nome.textContent; if(nn!==nomiOra){ nomiOra=nn; liberaNomi(); }
+    var nn=LINEE[3].nome.textContent+LINEE[1].nome.textContent; if(nn!==nomiOra){ nomiOra=nn; liberaNomi(); }
     var asciutte=t>=T[3]+2400;
     TERME.forEach(function(g,j){ cls(g,'vis',t>=T[0]+300); cls(g,'spente',asciutte); cls(g,'mai',i>=13); cls(g,'ora',i===4&&t<T[5]); });
     cls(meta,'vis',t>=T[0]+300); cls(meta,'spente',asciutte&&!(i>=12&&false)); cls(mulG,'vis',t>=T[0]+300); cls(mulG,'fermo',i>=5&&i<11||(i===3||i===4)&&asciutte); cls(etMul,'vis',i===0||i===5||i===11);

@@ -155,7 +155,7 @@ RM.nomiStrade={ nomi:NOMI, acceso:function(){ return acceso; } };      // per le
    si nascondono da vicino (camera a meno di 70 unità dal punto guardato) e non coprono i nomi dei monumenti, quelli delle strade e i comandi.
    Interruttore «Nomi dei colli» nel menu Strumenti, acceso di norma (sessionStorage «rm-colli»); ?colli=0 li spegne. */
 var COLLI_NOMI=[
-  {n:'Campidoglio', p:[-24,-5]}, {n:'Palatino', p:[15,42]}, {n:'Aventino', p:[-42,96]}, {n:'Celio', p:[96,72]},
+  {n:'Campidoglio', p:[-24,-5], primo:1, altri:[[-37,-5],[-22,-17],[-33,6]]}, {n:'Palatino', p:[15,42]}, {n:'Aventino', p:[-42,96]}, {n:'Celio', p:[96,72]},      // Campidoglio, altri: il fianco ovest, l'Arx (Aracoeli) e il Capitolium, da RM.ll
   {n:'Esquilino', p:[150,-30]}, {n:'Viminale', p:[95,-95]}, {n:'Quirinale', p:[40,-92]}, {n:'Pincio', p:[-30,-192]},
   {n:'Gianicolo', p:[-215,40]},      // sulla cresta della griglia misurata (56 m sopra il fiume, 100 per il rilievo accentuato), fra San Pietro in Montorio e porta San Pancrazio
   {n:'Velia', p:[36,12], m:1}, {n:'Oppio', p:[100,-6], m:1}, {n:'Cispio', p:[108,-55], m:1}
@@ -171,10 +171,10 @@ function spegniC(){ COLLI_NOMI.forEach(function(o){ if(o.vis){ o.vis=false; o.el
 if(btnC) btnC.addEventListener('click',function(){ colliAcceso=!colliAcceso; scriviBtnC(); try{ sessionStorage.setItem('rm-colli',colliAcceso?'1':'0'); }catch(e){} if(!colliAcceso) spegniC(); ultimoC=''; });
 var vC=new THREE.Vector3();
 RM.frame.push(function(){
-  if(!colliAcceso) return;
+  if(!colliAcceso){ RM.postiRiservati=[]; return; }
   var w=riquadro.clientWidth, hh=riquadro.clientHeight, grande=document.body.classList.contains('roma-grande'), dT=RM.camera.position.distanceTo(RM.controlli.target);
   var via=!w || !hh || (window.innerWidth<=700 && !grande) || document.body.classList.contains('impero-grande') || capi || dT<70 || (etM && etM.style.display==='none');
-  if(via){ if(ultimoC!=='via'){ spegniC(); ultimoC='via'; } return; }
+  if(via){ RM.postiRiservati=[]; if(ultimoC!=='via'){ spegniC(); ultimoC='via'; } return; }
   var e=RM.camera.matrixWorld.elements, firma=w+'|'+hh+'|'+e[12].toFixed(1)+'|'+e[13].toFixed(1)+'|'+e[14].toFixed(1)+'|'+e[8].toFixed(3)+'|'+e[9].toFixed(3)+'|'+e[10].toFixed(3)+'|'+(RM.etichetteMesse?RM.etichetteMesse.length:0)+'|'+firmaOst+'|'+rettiStrade.length;
   if(firma===ultimoC) return; ultimoC=firma;
   var h=RM.hSuolo||RM.h, messi=(RM.etichetteMesse||[]).concat(ostacoli,rettiStrade), t=RM.controlli.target, cand=[];
@@ -182,16 +182,23 @@ RM.frame.push(function(){
     if(!o.v){ var p=o.p; if(o.ll) p=RM.ll(o.ll[0],o.ll[1]); o.v=new THREE.Vector3(p[0],h(p[0],p[1])+2,p[1]); }
     if(o.m && dT>380) return;      // Velia, Oppio e Cispio solo da mezza distanza
     vC.copy(o.v).project(RM.camera); if(!isFinite(vC.x) || !isFinite(vC.y) || vC.z>=1 || Math.abs(vC.x)>.92 || vC.y<-.88 || vC.y>.9) return;
-    cand.push({o:o, x:(vC.x+1)*w/2, y:(1-vC.y)*hh/2, d:Math.hypot(o.v.x-t.x,o.v.z-t.z)+(o.m?300:0)}); });
+    var alt=[]; (o.altri||[]).forEach(function(q){ if(!q.v) q.v=new THREE.Vector3(q[0],h(q[0],q[1])+2,q[1]); vC.copy(q.v).project(RM.camera); if(isFinite(vC.x)&&vC.z<1) alt.push([(vC.x+1)*w/2,(1-vC.y)*hh/2]); });
+    vC.copy(o.v).project(RM.camera);
+    cand.push({o:o, alt:alt, x:(vC.x+1)*w/2, y:(1-vC.y)*hh/2, d:o.primo?-1:Math.hypot(o.v.x-t.x,o.v.z-t.z)+(o.m?300:0)}); });      // il Campidoglio (primo) sceglie il posto per primo: in mezzo ai nomi del Foro restava spesso senza (27 novembre 2026)
   cand.sort(function(a,b){ return a.d-b.d; });
   cand.forEach(function(c){ var o=c.o;
     if(!o.lw || o.lwG!==grande){ var ow=o.el.offsetWidth; o.lw=ow||o.n.length*11; o.lh=o.el.offsetHeight||16; o.lwG=ow?grande:null; }
     var prove=[[0,0],[0,-o.lh-4],[0,o.lh+4],[-o.lw*.6,0],[o.lw*.6,0],[0,-2*o.lh-8]];      // il nome può scostarsi di poco dal pianoro se lì c'è il nome di un monumento
-    for(var k=0;k<prove.length;k++){ var px=c.x+prove[k][0], py=c.y+prove[k][1], r=[px-o.lw/2-3,py-o.lh/2-2,px+o.lw/2+3,py+o.lh/2+2];
+    if(o.primo) prove=prove.concat([[-o.lw*1.1,0],[-o.lw*.9,-o.lh-4],[-o.lw*.9,o.lh+4],[0,2*o.lh+8],[-o.lw*1.1,2*o.lh+8],[o.lw*.9,o.lh+4]]);      // il Campidoglio ha più posti, soprattutto verso il fianco ovest, lontano dai nomi del Foro
+    c.alt.forEach(function(q){ [[0,0],[0,-o.lh-4],[0,o.lh+4]].forEach(function(d){ prove.push([q[0]-c.x+d[0],q[1]-c.y+d[1]]); }); });      // poi gli altri punti d'appoggio sul colle (altri)
+    if(o.primo && o.kPrima!=null && o.kPrima<prove.length) prove.unshift(prove[o.kPrima]);      // il posto di prima per primo: non salta avanti e indietro quando i monumenti gli cedono il posto
+    function cerca(lista){ for(var k=0;k<prove.length;k++){ var px=c.x+prove[k][0], py=c.y+prove[k][1], r=[px-o.lw/2-3,py-o.lh/2-2,px+o.lw/2+3,py+o.lh/2+2];
       if(r[0]<4||r[2]>w-4||r[1]<4||r[3]>hh-4) continue;
-      var libero=true; for(var q=0;q<messi.length;q++) if(tocca(r,messi[q])){ libero=false; break; }
+      var libero=true; for(var q=0;q<lista.length;q++) if(tocca(r,lista[q])){ libero=false; break; }
       if(!libero) continue;
-      messi.push(r); o.prossimo={x:px,y:py}; break; } });
+      messi.push(r); o.prossimo={x:px,y:py}; o.rett=r; o.kPrima=(o.primo&&o.kPrima!=null)?(k?k-1:o.kPrima):k; return true; } return false; }
+    if(!cerca(messi) && o.primo) cerca(ostacoli.concat(rettiStrade)); });      // il Campidoglio, se i nomi dei monumenti gli tolgono ogni posto, ne prende uno lo stesso: dal fotogramma dopo i monumenti che lo coprirebbero cedono (RM.postiRiservati)
+  var cap=COLLI_NOMI[0]; RM.postiRiservati=cap.prossimo?[cap.rett]:[]; if(!cap.prossimo) cap.kPrima=null;
   COLLI_NOMI.forEach(function(o){ var p=o.prossimo;
     if(p){ o.el.style.transform='translate('+p.x.toFixed(1)+'px,'+p.y.toFixed(1)+'px) translate(-50%,-50%)'; if(!o.vis){ o.vis=true; o.el.style.visibility='visible'; o.el.style.opacity=1; } }
     else if(o.vis){ o.vis=false; o.el.style.visibility='hidden'; o.el.style.opacity=0; } });
