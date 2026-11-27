@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 01:01:17.
+Generato da `src/testi.mjs` il 27/11/2026, 01:32:04.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -143,7 +143,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.64] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.65] Versione del 27/11/2026, ore 00:29
+[pagina.65] Versione del 27/11/2026, ore 01:02
 
 
 ## 2. Gli atti
@@ -4452,7 +4452,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.minervamedica.nome] Tempio di Minerva Medica
 
-[scheda.minervamedica.cosa] Il cosiddetto «tempio di Minerva Medica» era una grande sala a dieci lati, larga 24 metri e alta 33. Aveva una cupola, dieci finestre e nove nicchie ricavate nelle pareti. Il nome moderno è fuorviante. Forse la sala ospitava una fontana monumentale, oppure faceva parte di un giardino. Viene spesso associata agli Horti Liciniani, antichi giardini romani. Secondo Platner e Ashby, le prove disponibili non bastano a confermare l'identificazione.
+[scheda.minervamedica.cosa] Il cosiddetto «tempio di Minerva Medica» era una grande sala a dieci lati, larga 24 metri e alta 33. Aveva una cupola, dieci finestre e nove nicchie ricavate nelle pareti. Il nome moderno è fuorviante. Forse la sala ospitava una fontana monumentale, oppure faceva parte di un giardino. Viene spesso associata agli Horti Liciniani, antichi giardini romani. Secondo Platner e Ashby, le prove disponibili non bastano a confermare l'identificazione. Nel modello gli Horti Liciniani le stanno attorno.
 
 [scheda.minervamedica.data1.quando] inizio del IV secolo
 
@@ -4621,7 +4621,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortisallustiani.nome] Horti Sallustiani
 
-[scheda.hortisallustiani.cosa] Grandi giardini fra il Quirinale e il Pincio, nella regione VI. Li creò lo storico Sallustio con le ricchezze portate dalla Numidia; da Tiberio furono degli imperatori. Dentro c'erano un ippodromo nella valle, con muri e terrazze sul pendio del Quirinale, un tempio di Venere, tre piscine, un ninfeo e l'obelisco. Le fonti danno solo l'elenco: nel modello forma, misure e posto di ogni parte sono ricostruiti. Il ninfeo sta dove se ne vedono ancora i resti, in piazza Sallustio, accanto a un edificio di quattro piani.
+[scheda.hortisallustiani.cosa] Grandi giardini fra il Quirinale e il Pincio, nella regione VI. Li creò lo storico Sallustio con le ricchezze portate dalla Numidia; da Tiberio furono degli imperatori. Dentro c'erano un ippodromo nella valle, con muri e terrazze sul pendio del Quirinale, un tempio di Venere, tre piscine, un ninfeo e l'obelisco. Le fonti danno solo l'elenco: nel modello forma, misure e posto di ogni parte sono ricostruiti. Il ninfeo sta dove se ne vedono ancora i resti, in piazza Sallustio, accanto a un edificio di quattro piani. Le terrazze salgono verso il Quirinale, parallele alla valle, ognuna col suo viale; nel modello il terreno qui è più piano del vero. Quante fossero le terrazze, e i cipressi lungo la valle e i pini sopra, sono scelte del modello: le fonti non dicono quali alberi ci fossero. Oggi restano il ninfeo e l'edificio a quattro piani; l'obelisco sta davanti a Trinità dei Monti.
 
 [scheda.hortisallustiani.data1.quando] I secolo
 
@@ -4637,7 +4637,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortisallustiani.data4-410] Entrati da porta Salaria, i Goti di Alarico bruciano le case vicino alla porta e la casa di Sallustio. Verso il 550 Procopio scrive che è ancora mezza bruciata.
 
-[scheda.hortisallustiani.data5-440] Nel modello il giardino resta abbandonato, e il verde cresce sulle aiuole e sulle rovine. Quando fu lasciato le fonti lette non lo dicono: l'anno è una scelta.
+[scheda.hortisallustiani.data5-440] Nel modello il giardino resta abbandonato: gli alberi crescono senza cura, un bosco selvatico copre i viali e le terrazze, il verde sale sulle rovine. Quando fu lasciato le fonti lette non lo dicono: l'anno è una scelta.
 
 [scheda.hortisallustiani.data6-537] I Goti tagliano gli acquedotti: nel modello il ninfeo e le piscine restano senz'acqua. Se dopo il 410 qualcuno curasse ancora le fontane non si sa.
 
@@ -4645,14 +4645,14 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortisallustiani.data7] La zona si chiama Sallustricum.
 
-[scheda.hortisallustiani.certezza-C] Certi il luogo e l'elenco delle parti (Platner e Ashby). Forma, misure e posto di palazzo, ippodromo, tempio e piscine sono ricostruiti; il ninfeo sta dove ne restano i ruderi.
+[scheda.hortisallustiani.certezza-C] Certi il luogo e l'elenco delle parti (Platner e Ashby). Forma, misure e posto di palazzo, ippodromo, tempio e piscine sono ricostruiti; il ninfeo sta dove ne restano i ruderi. Le terrazze sul Quirinale sono attestate, numero e forma no; viali e alberi sono uno schema.
 
 
 ### Horti degli Acilii
 
 [scheda.hortiacilii.nome] Horti degli Acilii
 
-[scheda.hortiacilii.cosa] Giardini sul Pincio, chiusi lungo il pendio da alti muri di sostegno ad arcate. A nord della Trinità dei Monti c'era un grande emiciclo aperto verso ovest, con scale che scendevano alla pianura; sotto villa Medici, un ninfeo a otto lati detto Parnaso; sotto terra una cisterna. Nel modello il giardino sta un poco più a nord dei luoghi veri, e forma e misure delle parti sono ricostruite.
+[scheda.hortiacilii.cosa] Giardini sul Pincio, chiusi lungo il pendio da alti muri di sostegno ad arcate. A nord della Trinità dei Monti c'era un grande emiciclo aperto verso ovest, con scale che scendevano alla pianura; sotto villa Medici, un ninfeo a otto lati detto Parnaso; sotto terra una cisterna. Resti sono stati trovati lungo tutto il ciglio del colle, dalla Trinità a Santa Maria del Popolo: nel modello un viale corre lungo il ciglio, e un altro va dall'emiciclo verso est. Il giardino sta un poco più a nord dei luoghi veri; forma e misure delle parti sono ricostruite, i viali sono uno schema, i lecci e i cipressi una scelta. Oggi restano il Muro Torto, nelle mura, e il monte di villa Medici, costruito sui resti del ninfeo.
 
 [scheda.hortiacilii.data1.quando] II secolo
 
@@ -4666,7 +4666,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortiacilii.data3] Passano ai Pincii, poi ad Anicia Faltonia Proba e a Petronio Probo, infine all'imperatore.
 
-[scheda.hortiacilii.data4-537] Le fonti lette non dicono altro. Nel modello da quest'anno il giardino è abbandonato e il ninfeo resta senz'acqua: è un'ipotesi.
+[scheda.hortiacilii.data4-537] Le fonti lette non dicono altro. Nel modello da quest'anno il giardino è abbandonato e il ninfeo resta senz'acqua: è un'ipotesi. Gli alberi crescono senza cura, un bosco selvatico copre i viali, i ruderi restano.
 
 [scheda.hortiacilii.certezza-C] Attestati i muri ad arcate (in parte nelle mura), l'emiciclo e il ninfeo ottagonale; nel modello posti e forme sono approssimati.
 
@@ -4675,7 +4675,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortimaecenatis.nome] Horti di Mecenate
 
-[scheda.hortimaecenatis.cosa] Giardini creati da Mecenate sull'Esquilino, sopra l'argine delle vecchie mura e sulla necropoli vicina. Avevano una torre alta: da lì, si raccontava, Nerone guardò l'incendio del 64. L'altezza della torre nel modello è ricostruita; viali e aiuole sono uno schema.
+[scheda.hortimaecenatis.cosa] Giardini creati da Mecenate sull'Esquilino, sopra l'argine delle vecchie mura e sulla necropoli vicina. Mecenate bonificò il cimitero e riempì il fossato davanti alle mura: un luogo malsano divenne una bella passeggiata. Avevano una torre alta: da lì, si raccontava, Nerone guardò l'incendio del 64. Fra la porta Esquilina e l'Auditorium c'è nel modello la passeggiata, su un terrapieno erboso lungo la linea delle vecchie mura; l'Auditorium è una sala in parte sotto terra, con una gradinata nell'abside che forse era una fontana; forse faceva parte dei giardini, ma è molto incerto. Gli studiosi non sanno se i giardini stessero a nord o a sud della porta: nel modello stanno a sud. Altezza della torre, forma della passeggiata e alberi sono ricostruiti. Oggi resta l'Auditorium, in largo Leopardi.
 
 [scheda.hortimaecenatis.data1.quando] fine del I secolo a.C.
 
@@ -4689,16 +4689,16 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortimaecenatis.data3] Le fonti lette non dicono più nulla. Cassio Dione attribuisce a Mecenate la prima piscina d'acqua calda di Roma, che forse stava qui: è incerto, e nel modello non c'è.
 
-[scheda.hortimaecenatis.data4-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+[scheda.hortimaecenatis.data4-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi. Gli alberi crescono senza cura, un bosco selvatico copre aiuole e viali, i ruderi restano.
 
-[scheda.hortimaecenatis.certezza-C] Luogo approssimato; la torre è attestata, forma e altezza no.
+[scheda.hortimaecenatis.certezza-C] Luogo approssimato; la torre e la passeggiata sull'aggere sono attestate, forma e altezza no; l'Auditorium è descritto dalle fonti, ma che fosse dei giardini è molto incerto.
 
 
 ### Horti Lamiani
 
 [scheda.hortilamiani.nome] Horti Lamiani
 
-[scheda.hortilamiani.cosa] Giardini sull'Esquilino, poco a sud-est di piazza Vittorio. Probabilmente li creò Lucio Elio Lamia, console nel 3 d.C., che li lasciò a Tiberio. Vi si sono trovate molte opere d'arte e pochi resti di edifici: il padiglione del modello ne è solo un segno.
+[scheda.hortilamiani.cosa] Giardini sull'Esquilino, poco a sud-est di piazza Vittorio. Probabilmente li creò Lucio Elio Lamia, console nel 3 d.C., che li lasciò a Tiberio. Il posto si riconosce dalle molte opere d'arte trovate lì, insieme a pochi resti di edifici. Nel modello è un giardino in piano, a riquadri bordati di siepe, con statue sugli incroci dei viali: la forma è uno schema, il padiglione solo un segno dei resti, e numero e posto delle statue sono inventati. Dove finissero le statue non si sa: nel modello dal 537 non ci sono più.
 
 [scheda.hortilamiani.data1-41] Il corpo di Caligola viene bruciato e deposto qui per un tempo.
 
@@ -4706,22 +4706,22 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortilamiani.data2] Restano degli imperatori; le fonti lette non dicono altro.
 
-[scheda.hortilamiani.data3-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+[scheda.hortilamiani.data3-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi. Gli alberi crescono senza cura, un bosco selvatico copre aiuole e viali, i ruderi restano.
 
-[scheda.hortilamiani.certezza-C] Luogo approssimato; nessun edificio descritto dalle fonti lette.
+[scheda.hortilamiani.certezza-C] Luogo approssimato; nessun edificio descritto dalle fonti lette; le molte opere d'arte sono attestate, le statue del modello sono uno schema.
 
 
 ### Horti Liciniani
 
 [scheda.hortiliciniani.nome] Horti Liciniani
 
-[scheda.hortiliciniani.cosa] Giardini dell'imperatore Gallieno sull'Esquilino. Dove fossero non si sa: alcuni studiosi pensano che la grande sala detta tempio di Minerva Medica fosse il loro ninfeo. Nel modello il giardino è messo attorno a quella sala, ed è uno schema con viali e aiuole.
+[scheda.hortiliciniani.cosa] Giardini dell'imperatore Gallieno sull'Esquilino. Dove fossero non si sa: alcuni studiosi pensano che la grande sala detta tempio di Minerva Medica fosse il loro ninfeo. Platner e Ashby scrivono che lo si dice «senza ragioni sufficienti». Nel modello il giardino è messo attorno a quella sala: un viale largo scende il pendio fra due file di pini, ai lati un uliveto, in alto un muro di mattoni. Tutto il disegno è uno schema: le fonti non dicono nulla del giardino.
 
 [scheda.hortiliciniani.data1.quando] 253-268
 
 [scheda.hortiliciniani.data1] Sono di Gallieno, secondo la Storia Augusta, fonte poco sicura.
 
-[scheda.hortiliciniani.data2-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+[scheda.hortiliciniani.data2-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi. Gli alberi crescono senza cura, un bosco selvatico copre aiuole e viali, i ruderi restano.
 
 [scheda.hortiliciniani.certezza-C] Posto ignoto: nel modello attorno a Minerva Medica, come pensano alcuni studiosi.
 
@@ -4730,7 +4730,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortiluculliani.nome] Horti di Lucullo
 
-[scheda.hortiluculliani.cosa] Giardini creati da Lucullo verso il 60 a.C. sul Pincio, sopra il punto in cui l'acqua Vergine usciva dal colle, presso l'odierna Capo le Case. Erano molto belli; una sala si chiamava Apollo. Nel modello il giardino sta più a nord-est del luogo vero, e la sala è ricostruita.
+[scheda.hortiluculliani.cosa] Giardini creati da Lucullo verso il 60 a.C. sul Pincio, sopra il punto in cui l'acqua Vergine usciva dal colle, presso l'odierna Capo le Case. A est arrivavano alla strada che saliva da porta Salutare, a ovest al pendio sopra i Due Macelli. Erano molto belli; una sala si chiamava Apollo. Nel modello il giardino sta più a nord-est del luogo vero; la sala sta in alto, rivolta verso il Campo Marzio, e da lì un viale fra due file di cipressi scende il pendio. Posto e forma della sala, viale, alberi e muro sulla strada sono ricostruiti.
 
 [scheda.hortiluculliani.data1.quando] I secolo
 
@@ -4740,7 +4740,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortiluculliani.data2] Sono fra le proprietà più ricche degli imperatori.
 
-[scheda.hortiluculliani.data3-537] Le fonti lette non dicono altro. Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+[scheda.hortiluculliani.data3-537] Le fonti lette non dicono altro. Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi. Gli alberi crescono senza cura, un bosco selvatico copre aiuole e viali, i ruderi restano.
 
 [scheda.hortiluculliani.certezza-C] Nel modello il giardino è spostato rispetto al luogo vero; la sala è attestata solo per nome.
 
@@ -4749,30 +4749,30 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.hortispeiveteris.nome] Horti Spei Veteris
 
-[scheda.hortispeiveteris.cosa] Giardini nominati una sola volta, nella vita di Elagabalo della Storia Augusta, fonte poco sicura. Nel modello stanno nella zona detta Spes Vetus, presso il palazzo del Sessorio: posto e aspetto sono uno schema.
+[scheda.hortispeiveteris.cosa] Giardini nominati una sola volta, nella vita di Elagabalo della Storia Augusta, fonte poco sicura. Stavano presso Spes Vetus, il punto più alto della città a est, dove entravano gli acquedotti, dentro la futura porta Prenestina. Nel modello sono un bosco fitto di lecci con una radura e un viale diritto verso la porta e gli acquedotti: posto preciso e aspetto sono uno schema.
 
 [scheda.hortispeiveteris.data1.quando] III secolo
 
 [scheda.hortispeiveteris.data1] Unica notizia: la Storia Augusta, vita di Elagabalo, 13.
 
-[scheda.hortispeiveteris.data2-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi.
+[scheda.hortispeiveteris.data2-537] Nel modello il giardino è abbandonato da quest'anno: è un'ipotesi. Gli alberi crescono senza cura, un bosco selvatico copre aiuole e viali, i ruderi restano.
 
-[scheda.hortispeiveteris.certezza-C] Solo il nome: posto e aspetto sono ipotesi.
+[scheda.hortispeiveteris.certezza-C] Solo il nome e la zona: aspetto e posto preciso sono ipotesi.
 
 
 ### Horti di Cesare
 
 [scheda.horticaesaris.nome] Horti di Cesare
 
-[scheda.horticaesaris.cosa] Giardini di Giulio Cesare sulla riva destra del Tevere, lungo la via Portuense. Più avanti, a un miglio dalla porta, c'era il tempio della Fors Fortuna, fuori dal modello. Confini e aspetto non si conoscono: nel modello solo viali e aiuole.
+[scheda.horticaesaris.cosa] Giardini di Giulio Cesare sulla riva destra del Tevere, lungo la via Portuense. Più avanti, a un miglio dalla porta, c'era il tempio della Fors Fortuna, fuori dal modello. Andavano dalla porta Portuense verso sud, lungo la strada. Qui Cesare ospitò Cleopatra nel 44 a.C. Confini e aspetto non si conoscono: nel modello sono un giardino pubblico in lunghezza, con viali paralleli alla strada e al fiume, file di pini, cipressi e pioppi bianchi e una siepe sul lato della strada. Tutto il disegno è uno schema.
 
 [scheda.horticaesaris.data1.quando] 44 a.C.
 
 [scheda.horticaesaris.data1] Cesare li lascia per testamento al popolo romano.
 
-[scheda.horticaesaris.data2-537] Le fonti lette non dicono altro. Nel modello da quest'anno sono abbandonati: è un'ipotesi.
+[scheda.horticaesaris.data2-537] Le fonti lette non dicono altro. Nel modello da quest'anno sono abbandonati: è un'ipotesi. Gli alberi crescono senza cura e un bosco selvatico copre i viali.
 
-[scheda.horticaesaris.certezza-C] Luogo approssimato lungo la via Portuense; aspetto ignoto.
+[scheda.horticaesaris.certezza-C] Luogo approssimato lungo la via Portuense; aspetto ignoto: il disegno del modello è uno schema.
 
 
 ### Mura Aureliane

@@ -653,15 +653,20 @@ isolati.forEach(function(b,i){ var rnd=RM.casuale(b.seme^0x5BD1E995); if(rnd()<(
    E gli alberi che nascono da soli dopo l'abbandono (b -3): fichi e olmi, come fra le rovine delle case, dall'anno in cui js/dati.js lascia il giardino (ipotesi, detta nella scheda). */
 var HORTI_ID=['hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'];      // nell'ordine di RM.HORTI
 function liberoAlbero(x,z){ if(RM.distStrade(x,z)<1.25) return false; var I=RM.hortiIngombri||[]; for(var i=0;i<I.length;i++) if(Math.hypot(x-I[i][0],z-I[i][1])<I[i][2]+.25) return false; return true; }
-RM.HORTI.forEach(function(h,kh){ var rnd=RM.casuale(semePosto(Math.round(h[0]*10),Math.round(h[1]*10),Math.round(h[2]*10),71)); for(var k=0;k<h[2]*h[2]/9;k++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*h[2], sp=rnd()<.4?0:1, al={x:h[0]+r*Math.cos(a),z:h[1]+r*Math.sin(a),s:.8+rnd()*.7,r:rnd()*6.283,b:-1}; if(liberoAlbero(al.x,al.z)) alberi[sp].push(al); }
+/* 27 novembre 2026: ogni giardino ha i suoi alberi, in filari e gruppi con la specie (RM.hortiPiante, js/monumenti.js, «gli horti, uno per uno»): b -4; abbandonato il giardino
+   crescono ancora per due secoli e mezzo (fino a una volta e mezza), e il bosco selvatico (b -3) è sette volte più fitto di prima, con alberi più grandi. Pini e lecci a caso restano solo per un giardino senza piante. */
+RM.HORTI.forEach(function(h,kh){ var rnd=RM.casuale(semePosto(Math.round(h[0]*10),Math.round(h[1]*10),Math.round(h[2]*10),71)), k;
   var st=((D.MONUMENTI||{})[HORTI_ID[kh]]||[]).filter(function(q){ return q[1]!=='uso'; })[0], r2=RM.casuale(semePosto(Math.round(h[0]*10),Math.round(h[1]*10),kh,97));
-  if(st) for(k=0;k<h[2]*h[2]/16;k++){ var a2=r2()*6.283, rr=Math.sqrt(r2())*h[2]*.92, sel={x:h[0]+rr*Math.cos(a2),z:h[1]+rr*Math.sin(a2),s:.6+r2()*.6,r:r2()*6.283,b:-3,dal:st[0]+5+40*r2()}; if(liberoAlbero(sel.x,sel.z)) alberi[1].push(sel); } });
+  var mie=(RM.hortiPiante||[]).filter(function(q){ return q.k===kh; });
+  if(mie.length) mie.forEach(function(q){ var al={x:q.x,z:q.z,s:q.s*(.88+.24*rnd()),r:rnd()*6.283,b:-4,sp:q.sp,cresce:st?st[0]:9999}; if(liberoAlbero(al.x,al.z)) alberi[q.sp===0?0:1].push(al); });
+  else for(k=0;k<h[2]*h[2]/9;k++){ var a=rnd()*6.283, r=Math.sqrt(rnd())*h[2], sp=rnd()<.4?0:1, al={x:h[0]+r*Math.cos(a),z:h[1]+r*Math.sin(a),s:.8+rnd()*.7,r:rnd()*6.283,b:-1}; if(liberoAlbero(al.x,al.z)) alberi[sp].push(al); }
+  if(st) for(k=0;k<h[2]*h[2]/2.2;k++){ var a2=r2()*6.283, rr=Math.sqrt(r2())*h[2]*.92, sel={x:h[0]+rr*Math.cos(a2),z:h[1]+rr*Math.sin(a2),s:.75+r2()*.6,r:r2()*6.283,b:-3,dal:st[0]+5+40*r2()}; if(liberoAlbero(sel.x,sel.z)) alberi[1].push(sel); } });
 (function(){ var rnd=RM.casuale(478); for(var f=0;f<260;f++){ var t=rnd(), pf=RM.curvaFiume.getPoint(.12+t*.76), lato=rnd()<.5?-1:1, tg=RM.curvaFiume.getTangent(.12+t*.76); alberi[1].push({x:pf.x-tg.z*lato*(9+rnd()*4),z:pf.z+tg.x*lato*(9+rnd()*4),s:.6+rnd()*.5,r:rnd()*6.283,b:-2}); } })();   // rive: una fila a sé, che dipende solo dal fiume
 /* dalle due liste di prima alle sette specie, per posto: lungo il fiume pioppi; negli horti pini e lecci; negli orti ulivi, pini e lecci; fra le rovine fichi e olmi
    (fino al 25 novembre 2026 lecci e pini: ma sui muri di Roma gli alberi autoctoni come il leccio sono sempre stati scarsi, Celesti-Grapow e Ricotta 2021) */
 alberi=(function(){ var L=[alberi[0],[],[],[],[],[],[]];
   alberi[1].forEach(function(a){ var g=RM.grana(Math.floor(a.x*3.1),Math.floor(a.z*2.7)), sp;
-    if(a.b===-2) sp=4; else if(a.b===-1) sp=g<.62?1:3; else if(a.b===-3) sp=g<.55?5:6; else if(isolati[a.b].orto) sp=g<.5?2:g<.72?1:3; else sp=g<.55?5:6;
+    if(a.b===-2) sp=4; else if(a.b===-4) sp=a.sp; else if(a.b===-1) sp=g<.62?1:3; else if(a.b===-3) sp=g<.55?5:6; else if(isolati[a.b].orto) sp=g<.5?2:g<.72?1:3; else sp=g<.55?5:6;
     L[sp].push(a); });
   return L; })();
 var detAlberi=RM.QUALITA.alberi[RM.q]||0;
@@ -776,7 +781,8 @@ function aggiorna(anno){
   alberi.forEach(function(lista,k){
     var mosso=false;
     lista.forEach(function(al,j){
-      var qa=al.b===-3?RM.sfuma(al.dal,al.dal+70,anno):al.b<0?1:isolati[al.b].alb;      // gli alberi selvatici degli horti crescono in settant'anni dall'abbandono if(Math.abs(qa-al.q0)<.002) return;
+      var qa=al.b===-3?RM.sfuma(al.dal,al.dal+70,anno):al.b===-4?1+.5*RM.sfuma(al.cresce,al.cresce+250,anno):al.b<0?1:isolati[al.b].alb;      // gli alberi selvatici degli horti crescono in settant'anni dall'abbandono; quelli piantati, lasciati a sé, continuano a crescere
+      if(Math.abs(qa-al.q0)<.002) return;      // (fino al 27 novembre 2026 questa riga stava dentro il commento qui sopra, spenta: ogni albero si ricalcolava a ogni cambio d'anno)
       al.q0=qa; mosso=true; d.rotation.set(0,al.r,0); d.position.set(al.x,al.y-.05,al.z); d.scale.setScalar(al.s*qa*1.25); d.updateMatrix(); magliaAlberi[k].setMatrixAt(j,d.matrix);
     });
     if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;

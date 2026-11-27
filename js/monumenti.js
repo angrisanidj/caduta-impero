@@ -1870,7 +1870,10 @@ var M=[
       B.scatola(2.4,.5,3.4,0,0,0,P.mattone).scatola(1.2,1.5,1.5,0,.5,0,P.mattone).vano(-.61,.5,0,0,1,.7,1.1);
       [-.95,.95].forEach(function(z){ B.scatola(.3,.9,.5,0,.5,z,P.mattone).scatola(.22,.35,.3,0,1.4,z,P.statua); });   // i due trofei, ai lati
     });
-    luogo(B,X,Z,132.79,-16.86,2.548,1.2,function(B){ B.scatola(2.2,.55,1.06,-.12,-.25,0,P.mattone).cilindro(.53,.55,1,-.25,0,P.mattone,null,16).falde(2.3,.18,1.1,-.1,.3,0,P.coppi,0,P.mattone); });
+    luogo(B,X,Z,132.79,-16.86,2.548,1.2,function(B){      // l'Auditorium (27 novembre 2026, Platner e Ashby, Auditorium Maecenatis, e Sovrintendenza): lungo 24,10 m con l'abside, largo 10,60 (13 per la Sovrintendenza); il pavimento 7 m sotto il suolo antico, i muri 6 m sopra; volta «probably»; si entra in discesa
+      B.scatola(1.88,1.3,1.06,-.26,-.7,0,P.mattone).cilindro(.53,1.3,.68,-.7,0,P.mattone,null,16).volta(1.88,.53,-.26,.6,0,P.mattone).cupola(.53,.68,.6,0,P.mattone,1);      // aula, abside, volta a botte e catino
+      [[-2.15,0,.2],[-1.2,-.62,.2],[-1.2,-.62,-.2],[-2.15,0,-.2]].forEach(function(v,i,a){ if(i===0){ B.quad(a[0],a[1],a[2],a[3],P.selce); B.quad(a[3],a[2],a[1],a[0],P.selce); } });      // la rampa in discesa verso l'ingresso (la doppia rampa della Sovrintendenza, qui una)
+      [-1,1].forEach(function(q){ B.scatola(.95,.7,.06,-1.68,-.68,q*.23,P.mattone); }); });
  }},
  /* Tempio di Minerva Medica: aula decagona di mattoni, larga circa 24 m e alta 33, con nove nicchie oltre all'ingresso e dieci finestre ad arco sopra; la cupola cade in parte nel 1828
     (Platner e Ashby, Nymphaeum); «presumibilmente» dell'inizio del IV secolo (it.wikipedia): il 320 è una scelta. Le sale aggiunte attorno non ci sono. OpenStreetMap, relazione 13471829. */
@@ -1949,6 +1952,7 @@ var M=[
  {id:'hortiacilii', nome:'Horti degli Acilii', etichetta:'Horti Aciliorum', x:RM.HORTI[1][0],z:RM.HORTI[1][1], ry:0, fa:function(B){ horti(B,1); }},
  {id:'hortimaecenatis', nome:'Horti di Mecenate', x:RM.HORTI[2][0],z:RM.HORTI[2][1], ry:0, fa:function(B){ horti(B,2); }},
  {id:'hortilamiani', nome:'Horti Lamiani', x:RM.HORTI[3][0],z:RM.HORTI[3][1], ry:0, fa:function(B){ horti(B,3); }},
+ {id:'hortilamianistatue', x:RM.HORTI[3][0],z:RM.HORTI[3][1], ry:0, fa:function(B){ statueLamiani(B); }},      // le statue dei Lamiani (27 novembre 2026), a parte perché si tolgono nel 537 e il giardino resta
  {id:'hortiliciniani', nome:'Horti Liciniani', x:RM.HORTI[4][0],z:RM.HORTI[4][1], ry:0, fa:function(B){ horti(B,4); }},
  {id:'hortiluculliani', nome:'Horti di Lucullo', x:RM.HORTI[5][0],z:RM.HORTI[5][1], ry:0, fa:function(B){ horti(B,5); }},
  {id:'hortispeiveteris', nome:'Horti Spei Veteris', x:RM.HORTI[6][0],z:RM.HORTI[6][1], ry:0, fa:function(B){ horti(B,6); }},
@@ -1976,6 +1980,7 @@ function padiglione(B,H,p,w,d,h,ry,colonnato){ luogo(B,H[0],H[1],p[0],p[1],ry,Ma
   [.25,.6].forEach(function(f){ if(h*f<h-.15) B.aperture(-w/2+.15,d/2+.005,w/2-.15,d/2+.005,Math.max(2,Math.round(w/.6)),h*f,.18,.1); }); }); }
 /* un viale di ghiaia, largo w, lungo una fila di punti [x, z] del mondo, sul terreno disegnato; si salta dove non è libero */
 function viale(B,H,pts,w){ var Y0=quota(H[0],H[1]), k, j;
+  for(k=0;k<pts.length-1;k++) VIALI_H.push([pts[k][0],pts[k][1],pts[k+1][0],pts[k+1][1],w]);      // per tenere gli alberi fuori dai viali (pianta)
   for(k=0;k<pts.length-1;k++){ var a=pts[k], b=pts[k+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.ceil(L/.8));
     for(j=0;j<n;j++){ var x0=a[0]+(b[0]-a[0])*j/n, z0=a[1]+(b[1]-a[1])*j/n, x1=a[0]+(b[0]-a[0])*(j+1)/n, z1=a[1]+(b[1]-a[1])*(j+1)/n, nx=-(z1-z0)/(L/n)*w/2, nz=(x1-x0)/(L/n)*w/2;
       if(!liberoH(x0,z0,w/2,H) || !liberoH(x1,z1,w/2,H)) continue;
@@ -2006,7 +2011,44 @@ function piscina(B,H,p,w,d,ry,k){ var y0=piede(p[0],p[1],Math.max(w,d)/2)-.05;
   luogo(B,H[0],H[1],p[0],p[1],ry,Math.max(w,d)/2,function(B){
     B.scatola(w,.08,d,0,-.1,0,P.selce).scatola(w+.12,.24,.06,0,-.1,d/2+.03,P.marmo).scatola(w+.12,.24,.06,0,-.1,-d/2-.03,P.marmo).scatola(.06,.24,d,w/2+.03,-.1,0,P.marmo).scatola(.06,.24,d,-w/2-.03,-.1,0,P.marmo); });
   ACQUE_HORTI.push({tipo:'specchio', x:p[0], y:y0+.06, z:p[1], w:w, d:d, ry:ry, k:k}); }
-var CASA_SALL=null;
+/* ---------- gli horti, uno per uno (27 novembre 2026) ----------
+   Fino al 26 novembre tutti gli horti avevano lo stesso disegno (muro sul giro del cerchio, viale ad anello, croce di viali, quattro aiuole, pini e lecci a caso): «troppo con
+   lo stampino». Ora ognuno ha il suo, da ciò che dice la sua voce di Platner e Ashby (letta di nuovo il 27 novembre 2026; passi e tabella in src/testi/topografia-fonti.md,
+   «Gli horti, uno per uno»): la forma del terreno, i pezzi noti, i confini. Nessuna voce letta descrive viali, siepi o alberi: dove la fonte tace il disegno è uno schema,
+   diverso da giardino a giardino, e la scheda lo dice. Gli alberi li mette qui ogni giardino (PIANTE_HORTI, RM.hortiPiante) e li pianta js/citta.js; specie: 0 cipresso,
+   1 pino, 2 ulivo, 3 leccio, 4 pioppo bianco, 5 fico, 6 olmo (scelte del modello). */
+var VIALI_H=[], PIANTE_HORTI=[]; RM.hortiPiante=PIANTE_HORTI;
+function dSeg(x,z,s){ var dx=s[2]-s[0], dz=s[3]-s[1], L=dx*dx+dz*dz, t=L?Math.max(0,Math.min(1,((x-s[0])*dx+(z-s[1])*dz)/L)):0; return Math.hypot(x-s[0]-t*dx,z-s[1]-t*dz); }
+function pianta(k,H,x,z,sp,s){ if(Math.hypot(x-H[0],z-H[1])>H[2]-.7 || !liberoH(x,z,.3,H)) return;
+  for(var i=0;i<VIALI_H.length;i++) if(dSeg(x,z,VIALI_H[i])<VIALI_H[i][4]/2+.3) return;
+  PIANTE_HORTI.push({k:k,x:x,z:z,sp:sp,s:s||1}); }
+/* un filare lungo una fila di punti: lato 0, una fila sola sulla linea; altrimenti due file, a destra e a sinistra */
+function filare(k,H,pts,passo,lato,sp,s){ for(var i=0;i<pts.length-1;i++){ var a=pts[i], b=pts[i+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(L/passo)), nx=-(b[1]-a[1])/L, nz=(b[0]-a[0])/L;
+  for(var j=0;j<n;j++){ var t=(j+.5)/n, x=a[0]+(b[0]-a[0])*t, z=a[1]+(b[1]-a[1])*t; if(!lato) pianta(k,H,x,z,sp,s); else { pianta(k,H,x+nx*lato,z+nz*lato,sp,s); pianta(k,H,x-nx*lato,z-nz*lato,sp,s); } } } }
+/* un gruppo d'alberi in un cerchio, con le specie date (numeri a caso da un seme fisso del giardino) */
+function boschetto(k,H,cx,cz,r,n,specie,seme){ var rnd=RM.casuale(seme); for(var i=0;i<n;i++){ var a=rnd()*6.283, d=Math.sqrt(rnd())*r, sp=specie[Math.floor(rnd()*specie.length)], s=.8+rnd()*.5; pianta(k,H,cx+d*Math.cos(a),cz+d*Math.sin(a),sp,s); } }
+/* un rettangolo come fila chiusa di punti del mondo, girato di a (come globale()) */
+function rett(cx,cz,w,d,a){ var c=Math.cos(a), s=Math.sin(a); return [[-1,-1],[1,-1],[1,1],[-1,1],[-1,-1]].map(function(p){ var lx=p[0]*w/2, lz=p[1]*d/2; return [cx+lx*c+lz*s, cz-lx*s+lz*c]; }); }
+function inMondo(cx,cz,a,lx,lz){ var c=Math.cos(a), s=Math.sin(a); return [cx+lx*c+lz*s, cz-lx*s+lz*c]; }
+/* un muro (o una siepe: colore P.chioma, più spessa) lungo una fila di punti, sul terreno; si salta dove non è libero */
+function muroLinea(B,H,pts,h,col,sp){ var Y0=quota(H[0],H[1]);
+  for(var i=0;i<pts.length-1;i++){ var a=pts[i], b=pts[i+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.ceil(L/1.3));
+    for(var j=0;j<n;j++) (function(x0,z0,x1,z1){ if(!liberoH(x0,z0,sp/2+.1,H) || !liberoH(x1,z1,sp/2+.1,H)) return; var y=Math.min(hS(x0,z0),hS(x1,z1));
+      B.dentro((x0+x1)/2-H[0],y-Y0-.35,(z0+z1)/2-H[1],Math.atan2(-(z1-z0),x1-x0),function(B){ B.scatola(Math.hypot(x1-x0,z1-z0)+.04,h+.35+Math.abs(hS(x0,z0)-hS(x1,z1)),sp,0,0,0,col); }); })(a[0]+(b[0]-a[0])*j/n,a[1]+(b[1]-a[1])*j/n,a[0]+(b[0]-a[0])*(j+1)/n,a[1]+(b[1]-a[1])*(j+1)/n); } }
+/* un muro di terrazza: regge il terreno a monte (alto quanto serve per arrivare a «su» sopra il punto più basso) con un parapetto; lungo una fila di punti */
+function terrazza(B,H,pts,su,col){ var Y0=quota(H[0],H[1]);
+  for(var i=0;i<pts.length-1;i++){ var a=pts[i], b=pts[i+1], L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.ceil(L/1.1));
+    for(var j=0;j<n;j++) (function(x0,z0,x1,z1){ if(!liberoH(x0,z0,.2,H) || !liberoH(x1,z1,.2,H)) return; var y=Math.min(hS(x0,z0),hS(x1,z1));
+      B.dentro((x0+x1)/2-H[0],y-Y0-.3,(z0+z1)/2-H[1],Math.atan2(-(z1-z0),x1-x0),function(B){ var l=Math.hypot(x1-x0,z1-z0)+.04; B.scatola(l,su+.3,.16,0,0,0,col).scatola(l,.06,.2,0,su+.3,0,P.travertino); }); })(a[0]+(b[0]-a[0])*j/n,a[1]+(b[1]-a[1])*j/n,a[0]+(b[0]-a[0])*(j+1)/n,a[1]+(b[1]-a[1])*(j+1)/n); } }
+/* statue su un piedistallo, in punti [x, z, rotazione] del mondo */
+function statueH(B,H,pts,col){ var Y0=quota(H[0],H[1]); pts.forEach(function(p){ if(!liberoH(p[0],p[1],.12,H)) return; var y=hS(p[0],p[1])-Y0;
+  B.scatola(.13,.17,.13,p[0]-H[0],y-.05,p[1]-H[1],P.marmo); uomo(B,p[0]-H[0],y+.12,p[1]-H[1],1.3,col||P.marmo,p[2]||0); }); }
+/* aiuole rettangolari basse (prato rialzato bordato di bosso, schema), in un rettangolo cx, cz, w, d girato di a, divise in nx per nz riquadri */
+function parterre(B,H,cx,cz,w,d,a,nx,nz){ var Y0=quota(H[0],H[1]), i, j, pw=w/nx, pd=d/nz;
+  for(i=0;i<nx;i++) for(j=0;j<nz;j++){ var lx=-w/2+pw*(i+.5), lz=-d/2+pd*(j+.5), p=inMondo(cx,cz,a,lx,lz); if(!liberoH(p[0],p[1],Math.hypot(pw,pd)/2-.15,H)) continue;
+    B.dentro(p[0]-H[0],hS(p[0],p[1])-Y0-.1,p[1]-H[1],a,function(B){ B.scatola(pw-.45,.13,pd-.45,0,0,0,P.prato).scatola(pw-.4,.1,.05,0,.02,(pd-.4)/2,P.chioma).scatola(pw-.4,.1,.05,0,.02,-(pd-.4)/2,P.chioma).scatola(.05,.1,pd-.4,(pw-.4)/2,.02,0,P.chioma).scatola(.05,.1,pd-.4,-(pw-.4)/2,.02,0,P.chioma); }); } }
+var CASA_SALL=null, STATUE_LAMIA=[];
+function statueLamiani(B){ statueH(B,RM.HORTI[3],STATUE_LAMIA,P.marmo); }      // a parte: le statue si tolgono nel 537 (js/dati.js), il giardino resta
 function casaSallustio(B){ var H=RM.HORTI[0], p=CASA_SALL; if(!p) return; var c3=Math.cos(.3), s3=Math.sin(.3);      // un corpo col colonnato e un'ala dietro; forma e misure ignote
   padiglione(B,H,p,4.6,2.6,1.15,.3,true);
   luogo(B,H[0],H[1],p[0]-1.9*s3,p[1]-1.9*c3,.3,1.6,function(B){ B.scatola(2.6,1.6,1.4,0,-.25,0,P.intonaco).falde(2.7,.4,1.5,0,1.35,0,P.coppi,0,P.intonaco); B.aperture(-1.1,.705,1.1,.705,4,.5,.25,.14); }); }
@@ -2038,6 +2080,15 @@ function horti(B,k){
         var yc=hy(0,-W/2-.35)+ql; B.colonne(-L/2+1.3,-W/2-.3,L/2-1.6,-W/2-.3,14,.42,.035,yc,P.marmo); B.scatola(L-2.8,.06,.4,-.15,yc+.42,-W/2-.3,P.marmo); }); }
     if((p=postoH(70,-178,1.4,H))) luogo(B,H[0],H[1],p[0],p[1],-.4,1.3,function(B){ B.tempio(1.1,1.8,.85,0,0,0,{fronte:4,podio:.3}); });      // il tempio di Venere: forma ignota
     [[72,-160],[75.5,-157.6],[79,-155.2]].forEach(function(q){ if((p=postoH(q[0],q[1],1.05,H))) piscina(B,H,p,1.7,.85,asse,k); });      // le tre piscine: posto e misura ignoti
+    /* 27 novembre 2026: le terrazze sul pendio del Quirinale («walls and terraces extending up the slope of the latter hill»), a sud-est della valle, parallele all'ippodromo,
+       ognuna col suo viale. Nel modello il terreno qui sale appena (un dislivello di una decina di metri), più piano del vero: i muri sono disegnati come se la valle ci fosse.
+       Numero, altezza e distanza delle terrazze sono uno schema; i cipressi lungo la valle e i pini sulle terrazze una scelta. */
+    var o=ip||[vx-5.5,vz+3], ax=[Math.cos(asse),-Math.sin(asse)], az=[Math.sin(asse),Math.cos(asse)];
+    function corda(d,m){ var cx=o[0]+az[0]*d-H[0], cz=o[1]+az[1]*d-H[1], b=cx*ax[0]+cz*ax[1], c=cx*cx+cz*cz-(R-m)*(R-m), D=b*b-c; if(D<=0) return null; var t0=-b-Math.sqrt(D), t1=-b+Math.sqrt(D), q=[];
+      for(var t=t0;t<=t1+.01;t+=(t1-t0)/8) q.push([H[0]+cx+ax[0]*t,H[1]+cz+ax[1]*t]); return q; }
+    [3.4,6,8.6,11.2].forEach(function(d,i){ var c=corda(d,1.2), cv=corda(d+.9,1.4), ca=corda(d+2,1.6); if(c) terrazza(B,H,c,.45+.08*i,P.tufo); if(cv) viale(B,H,cv,.34); if(ca && i%2===0) filare(k,H,ca,2.6,0,1,1.1); });
+    var cl=corda(-2.6,1.5); if(cl){ viale(B,H,cl,.4); filare(k,H,cl,.75,.5,0,1.15); }      // il viale lungo la valle, sul lato del Pincio, coi cipressi
+    boschetto(k,H,H[0]-az[0]*9,H[1]-az[1]*9,6,26,[1,1,3],901);      // verso il Pincio, pini e lecci
   } else if(k===1){
     /* Horti degli Acilii (Platner e Ashby, «Horti Aciliorum»): sul Pincio, chiusi a nord, ovest ed est da muri di sostegno lungo il pendio, «lofty arcades with massive intervening
        piers» in opera reticolata; a est e a nord Aureliano li prese nelle mura (il Muro Torto). A nord della Trinità un grande emiciclo aperto a ovest con rampe di scale verso
@@ -2050,7 +2101,7 @@ function horti(B,k){
       var len=(R-1.3)*6.283/n+.05, hgt=cad+.45, yb=hS(xo,zo)-Y0-.25;
       B.dentro(xm-H[0],yb,zm-H[1],-a-PI/2,function(B){ arcato(B,len,hgt,.4,0,0,0,P.tufo,hgt>1.3?2:1,2); }); }
     var tr=RM.ll(41.9060,12.4832), tx=tr.x!=null?tr.x:tr[0], tz=tr.z!=null?tr.z:tr[1], dl=Math.hypot(tx-H[0],tz-H[1]);
-    if((p=postoH(H[0]+(tx-H[0])/dl*(R-3.2),H[1]+(tz-H[1])/dl*(R-3.2),1.6,H))) luogo(B,H[0],H[1],p[0],p[1],-PI/2,1.4,function(B){      // l'emiciclo, aperto a ovest (verso +z locale), con le rampe
+    var em=null; if((p=em=postoH(H[0]+(tx-H[0])/dl*(R-3.2),H[1]+(tz-H[1])/dl*(R-3.2),1.6,H))) luogo(B,H[0],H[1],p[0],p[1],-PI/2,1.4,function(B){      // l'emiciclo, aperto a ovest (verso +z locale), con le rampe
       var arc=[]; for(var q=0;q<=12;q++){ var t2=PI*q/12; arc.push([1.3*Math.cos(t2),-1.3*Math.sin(t2)]); }
       B.striscia(arc,-.2,arc,.6,P.tufo,false).striscia(arc,.6,arc.map(function(c){ return [c[0]*.88,c[1]*.88]; }),.6,P.marmo,false);
       for(var g=0;g<4;g++) B.scatola(2.4-g*.2,.42-g*.12,.32,0,-.3,.25+g*.32,P.travertino); });
@@ -2060,28 +2111,87 @@ function horti(B,k){
         B.striscia(o,-.2,o,.75,P.mattone).striscia(o2,-.2,o2,.75,P.mattone).striscia(o,.75,o2,.75,P.marmo).cilindro(.72,.1,0,-.05,0,P.selce,.72,8).cilindro(.12,.45,0,0,0,P.marmo,.08,8);
         for(var q2=0;q2<8;q2+=2){ var t4=(q2+.5)*PI/4; B.vano(.9*Math.cos(t4),.1,.9*Math.sin(t4),-Math.sin(t4),Math.cos(t4),.3,.5); } });
       ACQUE_HORTI.push({tipo:'vasca', x:p[0], y:y8+.1, z:p[1], r:.7, lati:8, ry:PI/8, k:k}); }
+    /* 27 novembre 2026: i ruderi stanno «all along the brow of the hill»; qui un viale che segue il ciglio del pianoro, 25 m dentro il punto dove il terreno comincia a
+       scendere, e un viale diritto dall'emiciclo verso est. Sul pianoro lecci a gruppi, sul ciglio cipressi radi: viali e alberi sono uno schema e una scelta. */
+    var hc=hS(H[0],H[1]), giro=[], pezzi=[];
+    for(var q5=0;q5<=60;q5++){ var a5=q5/60*6.283, r5=null; for(var rr=2;rr<R-.8;rr+=.35){ if(hS(H[0]+rr*Math.cos(a5),H[1]+rr*Math.sin(a5))<hc-.4){ r5=rr; break; } }
+      if(r5!==null && r5>4.5){ giro.push([H[0]+(r5-2.5)*Math.cos(a5),H[1]+(r5-2.5)*Math.sin(a5)]); } else if(giro.length){ pezzi.push(giro); giro=[]; } }
+    if(giro.length) pezzi.push(giro);
+    pezzi.forEach(function(g){ if(g.length<3) return; viale(B,H,g,.34); filare(k,H,g,2.2,-.55,0,1); });
+    if(em){ var ve=[[em[0]+1.6,em[1]],[em[0]+R*.9,em[1]+1]]; viale(B,H,ve,.4); filare(k,H,ve,1.3,.55,1,1.1); }
+    boschetto(k,H,H[0]+4,H[1]-3,5,26,[3,3,3,1],911); boschetto(k,H,H[0]-3,H[1]+5,4,16,[3,3,1],912);
   } else if(k===2){
     /* Horti di Mecenate (Platner e Ashby, «Horti Maecenatis»): sull'Esquilino, sull'aggere serviano e sulla necropoli vicina; la «turris Maecenatiana» da cui Nerone guardò
        l'incendio, forse la mole «propinquam nubibus arduis» di Orazio; imperiali dopo Mecenate. Il primo bagno caldo di Roma, che Cassio Dione dà a Mecenate, «may have been»
        nei giardini: incerto, non c'è. L'Auditorium (aula absidata, «may have been a sort of conservatory») è nel gruppo esquilino. Qui la torre: alta 30 m, misura ignota. */
     if((p=postoH(H[0]+2,H[1]+3,.9,H))) luogo(B,H[0],H[1],p[0],p[1],.2,.8,function(B){ B.scatola(1.1,3.2,1.1,0,-.3,0,P.mattone).scatola(1.25,.1,1.25,0,2.9,0,P.travertino).cono(.88,.5,0,3,0,P.coppi,4);
       [.6,1.3,2,2.55].forEach(function(y){ B.aperture(-.4,.555,.4,.555,2,y,.22,.12).aperture(.4,-.555,-.4,-.555,2,y,.22,.12); }); });
+    /* 27 novembre 2026: la passeggiata. I giardini nascono «on the Servian agger and the adjacent necropolis, thus transforming this unsavoury region into a beautiful
+       promenade» (Platner e Ashby, da Orazio, Satire I 8, 14); la Sovrintendenza: Mecenate bonificò il sepolcreto e riempì il fossato davanti alle mura. Nel modello il giardino
+       sta a sud della porta Esquilina (arco di Gallieno), dove la linea delle mura serviane passa sotto l'Auditorium: la passeggiata corre in cima a quella linea, su un
+       terrapieno erboso alto tre metri, dalla porta all'Auditorium. Larghezza, altezza e alberi sono uno schema; i pini sulla passeggiata e i cipressi sparsi una scelta. */
+    var Y2=quota(H[0],H[1]), ag=[[133.05,-33.6],[133.0,-26],[132.9,-19.2]];
+    for(var s2=0;s2<ag.length-1;s2++){ var a2=ag[s2], b2=ag[s2+1], L2=Math.hypot(b2[0]-a2[0],b2[1]-a2[1]), n2=Math.ceil(L2/.9);
+      for(var j2=0;j2<n2;j2++){ var x2=a2[0]+(b2[0]-a2[0])*(j2+.5)/n2, z2=a2[1]+(b2[1]-a2[1])*(j2+.5)/n2; if(!liberoH(x2,z2,.55,H)) continue;
+        B.dentro(x2-H[0],hS(x2,z2)-Y2-.2,z2-H[1],Math.atan2(-(b2[1]-a2[1]),b2[0]-a2[0]),function(B){ B.scatola(L2/n2+.03,.5,1.25,0,0,0,P.prato).scatola(L2/n2+.03,.03,.42,0,.5,0,P.sabbia).scatola(L2/n2+.03,.36,.12,0,.05,.68,P.prato).scatola(L2/n2+.03,.36,.12,0,.05,-.68,P.prato); }); } }
+    ag.forEach(function(q){ INGOMBRI_HORTI.push([q[0],q[1],.8]); });
+    filare(k,H,ag,2.3,1.05,1,1.15);
+    var tor=INGOMBRI_HORTI.filter(function(q){ return Math.abs(q[0]-H[0]-2)<3 && Math.abs(q[1]-H[1]-3)<3 && q[2]===.9; })[0];
+    if(tor){ var vt=[[133.9,(tor[1]+ag[1][1])/2],[tor[0]-.7,tor[1]]]; viale(B,H,vt,.3); }
+    boschetto(k,H,H[0]+6,H[1]-4,4.5,14,[1,0,1],921); boschetto(k,H,H[0]+5,H[1]+7,3.5,9,[0,1],922);
   } else if(k===3){
     /* Horti Lamiani (Platner e Ashby, «Horti Lamiani»): poco a sud-est di piazza Vittorio, «numerous works of art and a few structural remains»; di L. Elio Lamia, poi di Tiberio
        e degli imperatori; vi fu deposto per un tempo il corpo di Caligola. Nessun edificio descritto: un padiglione col colonnato, come segno dei resti, forma ignota. */
     if((p=postoH(H[0],H[1],1.6,H))) padiglione(B,H,p,2.6,1.6,.8,.5,true);
+    /* 27 novembre 2026: il luogo dei Lamiani si riconosce dalle «numerous works of art» trovate lì. Qui un giardino in piano, a riquadri bordati di siepe, chiuso da una
+       siepe con i cipressi, e le statue sugli incroci dei viali (a parte, hortilamianistatue: si tolgono nel 537). La forma a riquadri, la siepe, il numero e il posto delle
+       statue sono uno schema: la fonte dice solo che lì si trovarono molte opere d'arte. */
+    var a3=.5, W3=15, D3=10, nx3=5, nz3=3, i3, j3;
+    parterre(B,H,H[0],H[1],W3,D3,a3,nx3,nz3);
+    for(i3=0;i3<=nx3;i3++) viale(B,H,[inMondo(H[0],H[1],a3,-W3/2+W3*i3/nx3,-D3/2-.3),inMondo(H[0],H[1],a3,-W3/2+W3*i3/nx3,D3/2+.3)],.3);
+    for(j3=0;j3<=nz3;j3++) viale(B,H,[inMondo(H[0],H[1],a3,-W3/2-.3,-D3/2+D3*j3/nz3),inMondo(H[0],H[1],a3,W3/2+.3,-D3/2+D3*j3/nz3)],.3);
+    for(i3=0;i3<=nx3;i3++) for(j3=0;j3<=nz3;j3++){ var s3=inMondo(H[0],H[1],a3,-W3/2+W3*i3/nx3,-D3/2+D3*j3/nz3); if(liberoH(s3[0],s3[1],.15,H)) STATUE_LAMIA.push([s3[0],s3[1],a3+(i3<nx3/2?PI/2:-PI/2)]); }
+    var sie=rett(H[0],H[1],W3+1.3,D3+1.3,a3); muroLinea(B,H,sie,.22,P.chioma,.24); filare(k,H,rett(H[0],H[1],W3+2.6,D3+2.6,a3),1.1,0,0,1);
+    boschetto(k,H,H[0]+inMondo(0,0,a3,0,7.8)[0],H[1]+inMondo(0,0,a3,0,7.8)[1],2.5,6,[3],931); boschetto(k,H,H[0]-inMondo(0,0,a3,0,7.8)[0],H[1]-inMondo(0,0,a3,0,7.8)[1],2.5,6,[3],932);
   } else if(k===5){
     /* Horti di Lucullo (Platner e Ashby, «Horti Luculliani»): sopra il punto dove l'acqua Vergine esce dal colle, presso Capo le Case; di Lucullo verso il 60 a.C., poi di Valerio
        Asiatico, poi di Messalina, che vi fu uccisa; «among the richest of the imperial properties»; «these horti were very beautiful», e una sala si chiamava Apollo.
        Qui la sala, forma ignota. Nel modello il cerchio del giardino sta più a nord-est del luogo vero. */
-    if((p=postoH(H[0],H[1],1.8,H))) padiglione(B,H,p,3,1.8,1,-.3,true);
+    /* 27 novembre 2026: sul pendio occidentale del Pincio (a ovest il confine stava «on the slope of the hill above the Due Macelli», a est la strada della porta Salutare).
+       La sala in alto, rivolta a ovest verso il Campo Marzio, e da lì un lungo viale diritto che scende il pendio fra due file di cipressi; un muro sul lato della strada.
+       La fonte dà solo il nome della sala, Apollo: posto, forma e orientamento della sala, viale, cipressi e muro sono uno schema; i pini a gruppi una scelta. */
+    var p5=postoH(H[0]+4.2,H[1]-.5,1.8,H);
+    if(p5){ padiglione(B,H,p5,3,1.8,1,-PI/2,true);
+      var asse5=[[p5[0]-1.5,p5[1]],[H[0]-R+.8,p5[1]+.6]]; viale(B,H,asse5,.5); filare(k,H,asse5,1,.75,0,1.15);
+      var bel=[[p5[0]-1.9,p5[1]-R*.55],[p5[0]-1.9,p5[1]+R*.55]]; viale(B,H,bel,.3); }
+    muroLinea(B,H,[[H[0]+R*.62,H[1]-R*.72],[H[0]+R*.84,H[1]-R*.35],[H[0]+R*.9,H[1]],[H[0]+R*.84,H[1]+R*.35],[H[0]+R*.62,H[1]+R*.72]],.4,P.tufo,.1);
+    boschetto(k,H,H[0]-2,H[1]-7,4,14,[1,1,3],951); boschetto(k,H,H[0]-2,H[1]+7,4,14,[1,1,3],952);
+  } else if(k===4){
+    /* Horti Liciniani: luogo ignoto; nel modello attorno al ninfeo di Minerva Medica, che alcuni attribuiscono a questi horti «without adequate reason» (Platner e Ashby,
+       Nymphaeum 2). 27 novembre 2026: la sala decagona in alto, un viale largo che scende il pendio verso sud-est e, ai lati, un uliveto a quinconce; muro di mattoni sul giro
+       in alto. Tutto è uno schema: la fonte non dice nulla del giardino. Gli ulivi una scelta. */
+    var mm=[220.27,-16.27], d4=[.62,.78], perp=[-d4[1],d4[0]];
+    var ax4=[[mm[0]+d4[0]*2.4,mm[1]+d4[1]*2.4],[mm[0]+d4[0]*20,mm[1]+d4[1]*20]]; viale(B,H,ax4,.55); filare(k,H,ax4,1.2,.75,1,1.1);
+    [-1,1].forEach(function(q){ for(var u4=1;u4<9;u4++) for(var w4=1;w4<6;w4++){ var x4=H[0]+d4[0]*(u4*1.35-4)+perp[0]*q*(w4*1.35+.35*(u4%2)), z4=H[1]+d4[1]*(u4*1.35-4)+perp[1]*q*(w4*1.35+.35*(u4%2)); pianta(k,H,x4,z4,2,.95); } });
+    muroLinea(B,H,(function(){ var g=[]; for(var q=0;q<=14;q++){ var a=Math.atan2(-d4[1],-d4[0])-1.3+2.6*q/14; g.push([H[0]+(R-.9)*Math.cos(a),H[1]+(R-.9)*Math.sin(a)]); } return g; })(),.35,P.mattone,.12);
+  } else if(k===6){
+    /* Horti Spei Veteris: «mentioned only once» (Storia Augusta, Elagabalo 13), presso Spes Vetus, «the district just inside the later Porta Praenestina, where several
+       aqueducts met», «the highest point on the east side of the city». Nessun edificio, nessuna forma. 27 novembre 2026: un bosco fitto di lecci con una radura e un solo
+       viale diritto verso nord, verso la porta e gli acquedotti. Bosco, radura e viale sono uno schema, i lecci una scelta. */
+    var v6=[[H[0]-.5,H[1]+R-1],[H[0]+1.2,H[1]-R+1]]; viale(B,H,v6,.34);
+    boschetto(k,H,H[0]-3.5,H[1],4.5,34,[3,3,3,6],961); boschetto(k,H,H[0]+4.5,H[1]+1,4,28,[3,3,6],962);
+    var Y6=quota(H[0],H[1]); B.dentro(0,hS(H[0]+.3,H[1]-.2)-Y6-.08,0,0,function(B){ B.cilindro(1.9,.1,.3,0,-.2,P.prato,1.9,20); });      // la radura
+  } else if(k===7){
+    /* Horti di Cesare (Platner e Ashby, Caesaris 2): sulla riva destra, «from a point near the porta Portuensis southwards along the via Portuensis»; lasciati al popolo
+       romano. Il terreno scende verso il Tevere. 27 novembre 2026: un giardino pubblico in lunghezza, con tre viali paralleli alla via Portuense e viali di traverso, le file
+       di pioppi bianchi verso il fiume e di pini lungo la strada, una siepe sul lato della strada. Tutto è uno schema: la fonte non descrive il giardino. */
+    var t7, tb=0, dm=1e9; for(t7=0;t7<=400;t7++){ var pf=RM.curvaFiume.getPoint(t7/400), dd=Math.hypot(pf.x-H[0],pf.z-H[1]); if(dd<dm){ dm=dd; tb=t7/400; } }
+    var tg=RM.curvaFiume.getTangent(tb), dx7=[tg.x/Math.hypot(tg.x,tg.z),tg.z/Math.hypot(tg.x,tg.z)], pz7=[-dx7[1],dx7[0]], sg=hS(H[0]+pz7[0]*5,H[1]+pz7[1]*5)<hS(H[0]-pz7[0]*5,H[1]-pz7[1]*5)?1:-1;      // la via Portuense corre lungo la riva: i viali vanno come il fiume nel punto più vicino; sg: il lato più basso, verso il fiume
+    [-4,0,4].forEach(function(o7,i){ var o=o7*sg, l=[[H[0]+pz7[0]*o-dx7[0]*R,H[1]+pz7[1]*o-dx7[1]*R],[H[0]+pz7[0]*o+dx7[0]*R,H[1]+pz7[1]*o+dx7[1]*R]]; viale(B,H,l,i===1?.45:.3); filare(k,H,l,1.25,.6,i===0?1:i===1?0:4,1.05); });
+    [-6,-2,2,6].forEach(function(o7){ viale(B,H,[[H[0]+dx7[0]*o7-pz7[0]*7,H[1]+dx7[1]*o7-pz7[1]*7],[H[0]+dx7[0]*o7+pz7[0]*7,H[1]+dx7[1]*o7+pz7[1]*7]],.25); });
+    var o8=-7.6*sg; muroLinea(B,H,[[H[0]+pz7[0]*o8-dx7[0]*R,H[1]+pz7[1]*o8-dx7[1]*R],[H[0]+pz7[0]*o8+dx7[0]*R,H[1]+pz7[1]*o8+dx7[1]*R]],.18,P.chioma,.22);      // la siepe sul lato della strada
   }
-  /* Liciniani (k 4: di Gallieno, «no indication of their location»; per alcuni il ninfeo detto tempio di Minerva Medica era loro), Spei Veteris (k 6: nominati una volta sola,
-     Storia Augusta, Elagabalo 13) e di Cesare (k 7: sulla riva destra lungo la via Portuense; lasciati da Cesare al popolo romano): solo recinto, viali e aiuole */
-  var ring=[]; for(var q=0;q<=40;q++){ var aa=q/40*6.283; ring.push([H[0]+R*.62*Math.cos(aa),H[1]+R*.62*Math.sin(aa)]); }
-  viale(B,H,ring,.32);
-  [fi,fi+Math.PI/2].forEach(function(a){ viale(B,H,[[H[0]-Math.cos(a)*R*.88,H[1]-Math.sin(a)*R*.88],[H[0]+Math.cos(a)*R*.88,H[1]+Math.sin(a)*R*.88]],.36); });
-  aiuole(B,H,fi); recinto(B,H);
+  /* fino al 26 novembre 2026 qui c'era per tutti lo stesso disegno: viale ad anello, croce di viali, quattro aiuole e il muro sul giro (aiuole() e recinto(), non più usate) */
 }
 
 /* ---------- messa in scena ---------- */
@@ -2092,7 +2202,7 @@ function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return 
 var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1,ospizionaumachia:1};        // complessi che seguono il pendio: niente terrazza
 ['orologio','castrapretorio','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });
 ['magnamater','tiberiana'].forEach(function(k){ PENDIO[k]=1; });      // 26 novembre 2026 (sera): sul pianoro del Palatino, che nel modello è la terrazza del gruppo palatino; RM.hGrezza lì sta 6 unità più in basso
-['casasallustio','hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'].forEach(function(k){ PENDIO[k]=1; });      // gli horti (26 novembre 2026): ogni pezzo sul suo terreno, senza zona (le case stanno già fuori dal cerchio di RM.HORTI)      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
+['casasallustio','hortilamianistatue','hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'].forEach(function(k){ PENDIO[k]=1; });      // gli horti (26 novembre 2026): ogni pezzo sul suo terreno, senza zona (le case stanno già fuori dal cerchio di RM.HORTI)      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
 M.forEach(function(o){
   var h=PENDIO[o.id]?null:RM.hGrezza(o.x,o.z)-.05; o.quota=h;
   var st=D.MONUMENTI&&D.MONUMENTI[o.id], dal=st&&st[0][1]==='assente'&&st.length>1?(D.CANTIERI&&D.CANTIERI[o.id]?D.CANTIERI[o.id]-1:st[1][0]-8):0;      // monumento non ancora costruito: fino all'apertura del cantiere (otto anni prima) sul sito ci sono case (js/citta.js)
