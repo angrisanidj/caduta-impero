@@ -171,8 +171,8 @@ var N=RM.N_ISOLATI=isolati.length; RM.isolati=isolati;
        più spesso gusci alti di mattoni, più alti, con più macerie al piede che invadono i vicoli; le domus dei colli diventano cumuli bassi e larghi con qualche colonna del
        peristilio; le case basse ai margini e fuori le mura si riducono quasi sempre a tracce. Le quote sono una resa: nessuna fonte letta dice come caddero i quartieri. */
     b.fit=b.dentro&&b.tipo<3?Math.min(1,Math.max(b.sub*1.6,(b.alt-1.2)/.5,0)):0;
-    b.fato=!b.dentro?(b.sorte<.2?1:2):b.tipo===3?(b.sorte<.55?1:2):b.tipo>3?(b.sorte<.35?1:2):(b.sorte<.3+.42*b.fit?0:b.sorte<.82?1:2);          // 0 guscio alto, 1 rudere basso, 2 rudere molto basso (fra i suoi monconi, a volte, un orto). Dal 26 novembre 2026, sera: la domus, bassa e con mezza pianta a giardino, non lascia mai un guscio alto; dal 27 le insulae dei quartieri fitti lo lasciano spesso (fino a sette volte su dieci), le case basse mai
-    b.hFin=b.fato===0?.5+.3*b.tono+.12*b.fit:b.tipo===3?(b.fato===1?.2+.15*b.tono:.1+.08*b.tono):b.fato===1?b.rudere+.06:(b.dentro&&b.tipo<4?.12+.1*b.tono:.07+.06*b.tono);    // quanto resta in piedi, in quota dell'altezza; la domus scende a un cumulo di uno o due metri; le case basse a tracce
+    b.fato=!b.dentro?(b.sorte<.2?1:2):b.tipo===3?(b.sorte<.55?1:2):b.tipo>3?(b.sorte<.35?1:2):(b.sorte<.28+.5*b.fit?0:b.sorte<.8+.12*b.fit?1:2);          // 0 guscio alto, 1 rudere basso, 2 rudere molto basso (fra i suoi monconi, a volte, un orto). Dal 26 novembre 2026, sera: la domus, bassa e con mezza pianta a giardino, non lascia mai un guscio alto; dal 27 le insulae dei quartieri fitti lo lasciano spesso (fino a quasi otto volte su dieci, e pochi muretti rasoterra: 27 novembre 2026, sera), le case basse mai
+    b.hFin=b.fato===0?Math.min(1,.58+.3*b.tono+.12*b.fit):b.tipo===3?(b.fato===1?.2+.15*b.tono:.1+.08*b.tono):b.fato===1?b.rudere+.06:(b.dentro&&b.tipo<4?.12+.1*b.tono:.07+.06*b.tono);    // quanto resta in piedi, in quota dell'altezza; la domus scende a un cumulo di uno o due metri; le case basse a tracce
     b.mv=b.tipo===3?2:b.fit>.5?1:RM.grana(Math.round(b.x*2.9)+5,Math.round(b.z*3.3)-9)<.5?0:3;      // quale cumulo di macerie (geoMacerieVar): largo e basso per la domus, lungo i muri e nei vicoli per le insulae fitte, gli altri due a caso dal posto
     b.giro=(b.sorte*977)|0;                                                   // quarti di giro: quattro profili di rovina diversi
     b.orto=b.dentro?(b.fato===2 && b.tono<.6):b.fato===2;                    // orto o vigna fra i monconi, come ipotesi: dentro le mura circa un isolato su otto (prima uno su cinque, e dopo due-tre secoli quasi tutti i ruderi bassi)
@@ -353,6 +353,19 @@ var geoRudere=(function(){ var f=new Forma(), n=4, lati=[[-s,s,s,s],[s,s,s,-s],[
     f.qu(0,[x0,0,z0],[x1,0,z1],[x1,h[1],z1],[x0,h[0],z0],[[k/2,0],[(k+1)/2,0],[(k+1)/2,h[1]],[k/2,h[0]]]); } });      /* prima ogni tratto prendeva la trama intera, alta o bassa che fosse: sui muri bassi le finestre si schiacciavano, sui tramezzi si stiravano (23 novembre 2026) */
   f.qu(0,[-.12,0,-s],[-.12,0,s],[-.12,.5,s],[-.12,.84,-s],[[0,0],[2,0],[2,.5],[0,.84]]).qu(0,[-.12,0,.1],[s,0,.1],[s,.34,.1],[-.12,.62,.1],[[0,0],[1.24,0],[1.24,.34],[0,.62]]);
   return f.fine(); })();
+/* Guscio alto delle insulae (fato 0; 27 novembre 2026, chi ha guardato le catture: «da mezza distanza la Suburra è una distesa di muretti»). Prima i gusci usavano la forma dei
+   ruderi bassi: un foglio di muro, che dall'alto è una linea, con due file di finestre stirate su tutta l'altezza (un muro di dieci metri sembrava di un piano solo). Ora:
+   quattro file di finestre vuote sull'altezza intera (circa un piano ogni tre metri nei gusci più alti), gli angoli più alti dei tratti di mezzo, un lato quasi caduto
+   (quale, cambia col quarto di giro del posto: b.giro), e sulla cresta di ogni tratto una lastra larga quaranta centimetri che prende la luce, perché dall'alto si veda
+   lo spessore. Quanto restasse in piedi e come è una resa: nessuna fonte letta descrive le insulae in rovina. 84 triangoli invece di 36. */
+var geoGuscio=(function(){ var f=new Forma(), n=5, lati=[[-s,s,s,s],[s,s,s,-s],[s,-s,-s,-s],[-s,-s,-s,s]],
+    alt=[[[1,.97],[.86,.9],[.94,.82],[.8,.88],[.93,1]],[[.98,.9],[.66,.58],[.44,.36],[.5,.62],[.86,.95]],[[.95,.9],[.78,.84],[.9,.7],[.62,.72],[.8,1]],[[1,.56],[.3,.2],[.16,.2],[.24,.34],[.5,.62]]];
+  lati.forEach(function(l,i){ var ex=(l[2]-l[0])/n, ez=(l[3]-l[1])/n, ln=Math.hypot(ex,ez), nx=-ez/ln*.018, nz=ex/ln*.018;
+    for(var k=0;k<n;k++){ var x0=l[0]+ex*k, z0=l[1]+ez*k, x1=x0+ex, z1=z0+ez, h=alt[i][k];
+      f.qu(0,[x0,0,z0],[x1,0,z1],[x1,h[1],z1],[x0,h[0],z0],[[k*.4,0],[(k+1)*.4,0],[(k+1)*.4,h[1]*2],[k*.4,h[0]*2]]);
+      f.q(0,[x0-nx,h[0],z0-nz],[x1-nx,h[1],z1-nz],[x1+nx,h[1],z1+nz],[x0+nx,h[0],z0+nz],1); } });      // il muro e la sua cresta
+  f.qu(0,[-.1,0,-s],[-.1,0,s],[-.1,.46,s],[-.1,.78,-s],[[0,0],[2,0],[2,.92],[0,1.56]]).qu(0,[-.1,0,.12],[s,0,.12],[s,.3,.12],[-.1,.58,.12],[[0,0],[1.2,0],[1.2,.6],[0,1.16]]);      // due tramezzi, più bassi
+  return f.fine(); })();
 /* quel che resta del tetto subito dopo l'abbandono: una falda e mezza, sfondata */
 var geoTettoRotto=(function(){ var f=new Forma();
   f.q(0,[-o,.74,o],[.12,.74,o],[-.05,1,0],[-o,1,0]).t(0,[.12,.74,o],[.34,.8,.3],[-.05,1,0]).q(0,[-.2,.74,-o],[-o,.74,-o],[-o,1,0],[-.3,1,0]);
@@ -363,16 +376,22 @@ var geoTettoRotto=(function(){ var f=new Forma();
    Le piante: rovi, lentisco, edera, come nella sezione «Le piante dell'incolto» (confronto dichiarato con la flora del Colosseo del 1855). Dettaglio (RM.QUALITA.incolto):
    0 nessuna pianta, 1 una per cumulo, 2 fino a tre. Misure e disposizioni sono una resa. */
 var MACERIE_VAR=[[[-.12,-.08,.38,.8],[.2,.2,.26,.7]],[[-.3,-.36,.22,.8],[0,-.42,.26,.95],[.3,-.34,.2,.75],[.36,.08,.18,.55],[-.36,.2,.15,.5]],[[0,0,.52,.5],[-.3,.3,.2,.45],[.32,-.26,.22,.4]],[[-.3,.25,.16,.6],[.25,.3,.14,.5],[.05,-.2,.3,.85],[-.35,-.3,.12,.45]]];
-function geoMacerieVar(v,det){ var r=RM.casuale(99+v*17), P=[], AP=[], AC=[], np=det>1?3:det>0?1:0, k, j;
-  function tri(a,b,c,ap,ac){ [a,b,c].forEach(function(p){ P.push(p[0],p[1],p[2]); AP.push(ap); AC.push(ac[0],ac[1],ac[2]); }); }
-  MACERIE_VAR[v].forEach(function(c,ic){ var n=c[2]>.3?6:5, est=[], int=[], alto=c[3]*(.75+.25*r());
-    for(k=0;k<n;k++){ var a=k/n*6.283+r(), re=c[2]*(.8+.4*r()), ri=c[2]*(.35+.3*r()); est.push([c[0]+Math.cos(a)*re,0,c[1]+Math.sin(a)*re]); int.push([c[0]+Math.cos(a)*ri,alto*(.6+.4*r()),c[1]+Math.sin(a)*ri]); }
-    for(k=0;k<n;k++){ j=(k+1)%n; tri(est[k],int[k],est[j],0,[0,0,0]); tri(est[j],int[k],int[j],0,[0,0,0]); tri(int[k],[c[0],alto*.85,c[1]],int[j],0,[0,0,0]); }
+/* 27 novembre 2026 (chi ha guardato le catture: «poliedri a faccette con macchie verdi, a tuta mimetica»): il cumulo ha sette lati invece di cinque o sei, un profilo a cupola
+   (l'anello di mezzo a sei decimi dell'altezza e del raggio) e le normali lisce, calcolate dalla forma di una cupola schiacciata con il centro sotto terra, invece di quelle
+   piatte delle facce (il materiale non ha più flatShading): da lontano si legge un mucchio smussato, non un sasso tagliato. 21 triangoli per cumulo invece di 15-18. */
+function geoMacerieVar(v,det){ var r=RM.casuale(99+v*17), P=[], AP=[], AC=[], NN=[], np=det>1?3:det>0?1:0, k, j;
+  function tri(a,b,c,ap,ac,nr){ [a,b,c].forEach(function(p,q){ P.push(p[0],p[1],p[2]); AP.push(ap); AC.push(ac[0],ac[1],ac[2]); var m=nr[q]; NN.push(m[0],m[1],m[2]); }); }
+  function norC(p,c,re,alto){ var x=(p[0]-c[0])/(re*re), y=(p[1]+alto*.5)/(2.25*alto*alto), z=(p[2]-c[1])/(re*re), l=Math.hypot(x,y,z)||1; return [x/l,y/l,z/l]; }      // la normale di una cupola schiacciata col centro mezzo cumulo sotto terra
+  MACERIE_VAR[v].forEach(function(c,ic){ var n=7, est=[], int=[], alto=c[3]*(.75+.25*r()), cima=[c[0]+(r()-.5)*c[2]*.2,alto,c[1]+(r()-.5)*c[2]*.2];
+    for(k=0;k<n;k++){ var a=k/n*6.283+r()*.5, re=c[2]*(.82+.36*r()), ri=re*(.55+.15*r()); est.push([c[0]+Math.cos(a)*re,0,c[1]+Math.sin(a)*re]); int.push([c[0]+Math.cos(a)*ri,alto*(.55+.15*r()),c[1]+Math.sin(a)*ri]); }
+    var nE=est.map(function(p){ return norC(p,c,c[2],alto); }), nI=int.map(function(p){ return norC(p,c,c[2],alto); }), nC=[0,1,0];
+    for(k=0;k<n;k++){ j=(k+1)%n; tri(est[k],int[k],est[j],0,[0,0,0],[nE[k],nI[k],nE[j]]); tri(est[j],int[k],int[j],0,[0,0,0],[nE[j],nI[k],nI[j]]); tri(int[k],cima,int[j],0,[0,0,0],[nI[k],nC,nI[j]]); }
     if(ic<np){ var px=c[0]+(r()-.5)*c[2]*.5, pz=c[1]+(r()-.5)*c[2]*.5, py=alto*.55, rr=c[2]*(.45+.25*r()), hh=.3+.25*r(), soglia=[.12,.32,.5][ic], m=5, cen=[px,py-.05,pz], cima=[px,py+hh,pz], an=[];      // un cespuglio basso e largo, a cupola
       for(k=0;k<m;k++){ var b2=k/m*6.283+ic; an.push([px+Math.cos(b2)*rr,py+hh*.45,pz+Math.sin(b2)*rr*(.8+.3*r())]); }
-      for(k=0;k<m;k++){ j=(k+1)%m; tri(an[k],cima,an[j],soglia,cen); } } });      // la base delle piante sta dentro il cumulo: niente fianchi sotto (cinque triangoli per pianta)
+      var nP=function(p){ var x=p[0]-px, y=p[1]-py+hh*.3, z=p[2]-pz, l=Math.hypot(x,y,z)||1; return [x/l,y/l,z/l]; };      // anche la pianta liscia, a cupola
+      for(k=0;k<m;k++){ j=(k+1)%m; tri(an[k],cima,an[j],soglia,cen,[nP(an[k]),[0,1,0],nP(an[j])]); } } });      // la base delle piante sta dentro il cumulo: niente fianchi sotto (cinque triangoli per pianta)
   var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(P,3)); g.setAttribute('aPianta',new THREE.Float32BufferAttribute(AP,1)); g.setAttribute('aCentro',new THREE.Float32BufferAttribute(AC,3));
-  g.setAttribute('uv',new THREE.Float32BufferAttribute(new Float32Array(P.length/3*2),2)); g.computeVertexNormals(); return g; }
+  g.setAttribute('uv',new THREE.Float32BufferAttribute(new Float32Array(P.length/3*2),2)); g.setAttribute('normal',new THREE.Float32BufferAttribute(NN,3)); return g; }      // normali lisce date (si veda sopra), non quelle delle facce
 /* L'incolto fra le rovine (26 novembre 2026; l'utente: «più vegetazione incolta nella zona della città abbandonata… come realisticamente dovrebbe apparire»).
    Nessuna fonte antica elenca le piante delle rovine di Roma: dicono «erba», «arbusta», «dumi et vepres», cioè cespugli e rovi (vite di Adriano I e di Gregorio II nel Liber Pontificalis).
    Le specie vengono, come confronto dichiarato, dalla flora del Colosseo di Deakin (1855): rovo, lentisco, sambuco nano (erba alta a ombrelle bianche), valeriana rossa,
@@ -534,12 +553,15 @@ var RUDERE_F=['if(vDeg.x>0.0){ vec3 nA=abs(normalize(vNC)); vec2 cA=nA.x>nA.z?ve
   '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.13,0.19,0.08)*(0.75+0.5*cN(vec3(cA*9.0,7.0))),iv*0.9)*(1.0-0.12*vDeg.y); }'].join(NLc);
 var MACERIE_F=['if(vPianta>0.5){ float nP=cN(vec3(vLC*2.2+vDeg.w*13.0)); vec3 pc=mix(vec3(0.09,0.15,0.05),vec3(0.2,0.25,0.1),nP);',      // cespugli, rovi, lentisco: verdi scuri e lucidi, a chiazze
   '  pc=mix(pc,vec3(0.27,0.27,0.13),smoothstep(0.72,0.9,cN(vec3(vLC*6.0+1.0)))); diffuseColor.rgb=pc*(0.8+0.4*cN(vec3(vLC*11.0))); }',
-  'else if(vDeg.x>0.0){ vec3 nV=normalize(cross(dFdx(vViewPosition),dFdy(vViewPosition))); float su=clamp((nV*mat3(viewMatrix)).y,0.0,1.0);',
-  '  float nM=cN(vec3(vLC*3.2+vDeg.w*11.0)); float nF=cN(vec3(vLC*9.0+2.0));',
-  '  diffuseColor.rgb*=0.72+0.56*nF; diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.5,0.27,0.17)*(0.8+0.4*nF),smoothstep(0.6,0.74,cN(vec3(vLC*14.0+5.0)))*0.55);',      // sassi, malta e cocci di mattone
-  '  float gM=smoothstep(0.5,0.62,nM*0.7+nF*0.3+0.45*vDeg.x+0.15*su-0.3);',      // erba e rovi dove il cumulo guarda in su, sempre di più coi decenni
-  '  diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.12,0.16,0.06),vec3(0.25,0.26,0.12),nF)*(0.8+0.3*su),gM*0.9);',
-  '  float iE=smoothstep(0.56,0.68,cN(vec3(vLC*5.0+vDeg.w*5.0))+0.3*vDeg.x-0.18)*(1.0-0.5*su); diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.055,0.095,0.03)*(0.8+0.4*nM),iE*0.9); }'].join(NLc);      // edera scura che stende le sue lingue sui fianchi
+  /* 27 novembre 2026, contro la «tuta mimetica»: la normale liscia della cupola (non più quella delle facce), tinte larghe e morbide di mattone, tufo e calcinaccio, e il verde
+     come una coltre continua che parte dalla cima e scende coi decenni (erba, poi rovi), con l'orlo morbido; le macchie del rumore spostano solo l'orlo. */
+  'else if(vDeg.x>0.0){ float su=clamp((normalize(vNormal)*mat3(viewMatrix)).y*(gl_FrontFacing?1.0:-1.0),0.0,1.0);',
+  '  float nM=cN(vec3(vLC*1.7+vDeg.w*11.0)); float nF=cN(vec3(vLC*6.0+2.0)); float zT=cN(vec3(vLC*1.1+vDeg.w*5.0+3.0));',
+  '  diffuseColor.rgb*=mix(vec3(1.32,0.86,0.68),vec3(1.12,1.04,0.8),smoothstep(0.3,0.7,zT))*(0.9+0.18*nF);',      // mattone e tufo a zone di alcuni metri (la luce del cielo e del prato, verdastra, sui fianchi lisci li spegneva: tinte più calde)
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.72,0.7,0.64),smoothstep(0.62,0.85,nM)*0.35);',      // calcinaccio
+  '  float gM=smoothstep(0.45,0.9,vDeg.x*(0.15+0.85*su*su)+0.3*(nM-0.5)+0.12*(nF-0.5))*0.8;',      // erba e rovi: coltre continua, dove guarda in su e coi decenni
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.24,0.26,0.12),vec3(0.13,0.17,0.07),smoothstep(0.3,0.8,vDeg.x*nF+0.3*nM))*(0.85+0.25*su),gM*0.88);',      // erba secca e verde, poi rovi più scuri
+  '  float iE=smoothstep(0.66,0.9,0.6*cN(vec3(vLC*2.6+vDeg.w*5.0))+0.4*vDeg.x)*(1.0-su)*vDeg.x*0.7; diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.07,0.11,0.04)*(0.85+0.3*nM),iE*0.8); }'].join(NLc);      // edera scura che stende le sue lingue sui fianchi
 var MACERIE_VD='attribute float aPianta; attribute vec3 aCentro; varying float vPianta;', MACERIE_V='vPianta=aPianta>0.0?1.0:0.0; if(aPianta>0.0){ float gP=clamp((aDeg.x-aPianta)/0.3,0.0,1.0); transformed=mix(aCentro,transformed,gP); }';      // la pianta cresce dal suo piede: prima della sua soglia è un punto
 function verdeRovina(mat,corpo,nome,vert){ var prima=mat.onBeforeCompile, sua=mat.hasOwnProperty('onBeforeCompile');
   mat.onBeforeCompile=function(sh,r){ if(sua) prima.call(mat,sh,r); vertCasa(sh); sh.uniforms.uDegC=uDegC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
@@ -576,13 +598,14 @@ RM.tingi(matPortici,'C');
 var portici=pacco(porticoGeo(detPortici),matPortici,Math.max(1,listaPor.length)); listaPor.forEach(function(b,i){ b.pi=i; b.pq=-1; }); RM.porticiCase=portici.maglia;      // per le prove
 if(RM.qualita) RM.qualita.quando(function(g){ var d=RM.QUALITA.portici[g]||0; if(d===detPortici) return; detPortici=d; var v=portici.maglia.geometry; portici.maglia.geometry=porticoGeo(d); v.dispose(); });
 var matRuderi=verdeRovina(appoggio(new THREE.MeshStandardMaterial({map:texRudere,roughness:1,side:THREE.DoubleSide})),RUDERE_F,'muri'); RM.tingi(matRuderi,'C'); chiaveCasa(matRuderi);
-var ruderi=pacco(geoRudere,matRuderi,N,true);
+var ZERO=new THREE.Matrix4().makeScale(0,0,0);
+var ruderi=pacco(geoRudere,matRuderi,N,true), gusci=pacco(geoGuscio,matRuderi,N,true);      // i gusci alti (fato 0) hanno la loro forma (geoGuscio)
 var tettiRotti=pacco(geoTettoRotto,RM.tingi(new THREE.MeshStandardMaterial({map:texCoppi,roughness:1,side:THREE.DoubleSide}),'C'),N);
-var matMacerie=verdeRovina(new THREE.MeshStandardMaterial({roughness:1,side:THREE.DoubleSide,flatShading:true}),MACERIE_F,'macerie',[MACERIE_VD,MACERIE_V]); RM.tingi(matMacerie,'C'); chiaveCasa(matMacerie);
+var matMacerie=verdeRovina(new THREE.MeshStandardMaterial({roughness:1,side:THREE.DoubleSide}),MACERIE_F,'macerie',[MACERIE_VD,MACERIE_V]); RM.tingi(matMacerie,'C'); chiaveCasa(matMacerie);
 var ombraMac=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking,side:THREE.DoubleSide});      // l'ombra delle piante che crescono: la stessa crescita
 ombraMac.onBeforeCompile=function(sh){ sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+NLc+'attribute vec4 aDeg; '+MACERIE_VD).replace('#include <project_vertex>',MACERIE_V+NLc+'#include <project_vertex>'); };
 ombraMac.customProgramCacheKey=function(){ return 'ombra-macerie'; };
-var macerieV=MACERIE_VAR.map(function(q,v){ var p=pacco(geoMacerieVar(v,detIncolto),matMacerie,N,true); p.maglia.customDepthMaterial=ombraMac; return p; });
+var macerieV=MACERIE_VAR.map(function(q,v){ var p=pacco(geoMacerieVar(v,detIncolto),matMacerie,N,true); p.maglia.customDepthMaterial=ombraMac; p.maglia.castShadow=false; return p; });      // 27 novembre 2026: i cumuli, bassi e lisci, non gettano ombra (la ricevono): circa 180.000 triangoli in meno nella mappa delle ombre dell'800, che pagano i gusci, i cumuli più rotondi e il verde dei monumenti
 if(RM.qualita) RM.qualita.quando(function(g){ var d=RM.QUALITA.incolto[g]||0; macerieV.forEach(function(p,v){ var m=p.maglia, o=m.geometry; if(o.userData.det===d) return; var n=geoMacerieVar(v,d); n.userData.det=d; n.setAttribute('aDeg',o.getAttribute('aDeg')); m.geometry=n; o.dispose(); }); });
 macerieV.forEach(function(p){ p.maglia.geometry.userData.det=detIncolto; });
 /* Colonne del peristilio rimaste in piedi fra i cumuli delle domus (27 novembre 2026): tre o quattro fusti spezzati ad altezze diverse, dove stava il colonnato
@@ -793,7 +816,7 @@ var ultimaBassa=-1;
 /* quanto resta in piedi di una rovina (in frazioni dell'altezza della casa) dopo eta anni: i muri crollano nei primi decenni fino a b.hFin, poi nei secoli si abbassano
    ancora di un quarto (prima di due quinti); vicino alle cave dei monumenti, dove si cuoce la calce, anche i ruderi delle case vengono spogliati. Una resa, non una misura. */
 function altezzaRovina(b,eta,anno){ var cr=b.fato===2?RM.sfuma(5,60,eta):RM.sfuma(8,95,eta), sp=b.cava&&anno>b.cava?RM.sfuma(b.cava,b.cava+120,anno):0;
-  return (1-(1-b.hFin)*cr)*(1-.25*RM.sfuma(150,450,eta))*(1-.45*sp); }
+  return (1-(1-b.hFin)*cr)*(1-(b.fato===0?.12:.25)*RM.sfuma(150,450,eta))*(1-.45*sp); }      // i gusci alti (27 novembre 2026) si abbassano meno nei secoli: i muri esterni di mattoni, rimasti senza solai, reggono
 /* l'altezza dei muri della rovina dalla base dell'istanza, che sta 1,5 m sotto il suolo (come le case): almeno un metro fuori terra. Fino al 25 novembre 2026 i ruderi bassi
    finivano quasi sotto terra (hm senza quel metro e mezzo): da lontano restava il prato */
 function altezzaMuri(b,eta,anno){ return .15+Math.max(.1,b.alt*(b.nasce?1:b.bassa0)*altezzaRovina(b,eta,anno)); }
@@ -837,9 +860,10 @@ function aggiorna(anno){
     /* rovina: dopo lo stadio 2 (o subito, se è bruciata); appena lasciata ha il colore dell'intonaco, poi resta il mattone */
     hm=inPiedi?0:v*altezzaMuri(b,eta,anno); if(q>0) hm=Math.min(hm,hm*(1-q)+q*(.27+.05*b.tono));      // attorno a un orto i monconi si abbassano a muretti (1-2 m fuori terra)
     d.rotation.set(0,b.ry+b.giro*Math.PI/2,0);
-    d.scale.set(hm>.01?b.w:0,hm,hm>.01?b.d:0); d.updateMatrix(); ruderi.setMatrixAt(i,d.matrix);
-    ruderi.setColorAt(i,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar(.9).lerp(MURO_VECCHIO[(b.sfasa*MURO_VECCHIO.length)|0],RM.sfuma(3,70,eta)).multiplyScalar((.82+.3*b.tono)*(1-.55*arso*(1-RM.sfuma(0,30,eta)))));    // annerito se è bruciato da poco
-    ruderi.setDegAt(i,v*RM.sfuma(25,250,eta)*(b.tono>.2?1:.4),RM.sfuma(20,200,eta),1,b.sfasa);      // edera e sporco
+    var pR=b.fato===0?gusci:ruderi; (b.fato===0?ruderi:gusci).setMatrixAt(i,ZERO);      // il guscio alto o il rudere basso: l'altra forma resta vuota
+    d.scale.set(hm>.01?b.w:0,hm,hm>.01?b.d:0); d.updateMatrix(); pR.setMatrixAt(i,d.matrix);
+    pR.setColorAt(i,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar(.9).lerp(MURO_VECCHIO[(b.sfasa*MURO_VECCHIO.length)|0],RM.sfuma(3,70,eta)).multiplyScalar((.82+.3*b.tono)*(1-.55*arso*(1-RM.sfuma(0,30,eta)))));    // annerito se è bruciato da poco
+    pR.setDegAt(i,v*RM.sfuma(25,250,eta)*(b.tono>.2?1:.4),RM.sfuma(20,200,eta),1,b.sfasa);      // edera e sporco
     /* il tetto bruciato cede nei primi trent'anni (solo le case sventrate da un incendio: le altre perdono il tetto nello shader) */
     m=sventrata?v*(1-RM.sfuma(10,34,eta))*(1-arso):0; d.scale.set(m>.02?b.w:0,b.alt*(.35+.65*m),m>.02?b.d:0); d.updateMatrix(); tettiRotti.setMatrixAt(i,d.matrix);
     tettiRotti.setColorAt(i,c.copy(bianco).lerp(COPPI_ROTTI,RM.sfuma(0,25,eta)).multiplyScalar(.8+.25*b.tono));
@@ -872,7 +896,7 @@ function aggiorna(anno){
     if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;
   });
   if(toccati){
-    vivi.concat([ruderi,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,portici,colonneRov],macerieV).forEach(function(p){ p.stringi(); });
+    vivi.concat([ruderi,gusci,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,portici,colonneRov],macerieV).forEach(function(p){ p.stringi(); });
     gLuci.attributes.color.needsUpdate=true; aggiornaVie(); statoVie();
   }
   if(RM.statoVie){ RM.statoVie.anno.value=.3*RM.sfuma(450,800,anno); RM.statoVie.esterno.value=.55*RM.sfuma(430,780,anno); }      // la manutenzione che cala per tutti; fuori, dove non ci sono case, le vie consolari

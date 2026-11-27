@@ -740,16 +740,16 @@ var PISTRINA=[20,15,16,15,15,16,15,20,20,20,16,25,20,24];      // regioni I-XIV,
 var forni=[];
 (RM.MONUMENTI||[]).forEach(function(m){
   var st=D.MONUMENTI[m.id]||[]; if(m.x==null || !st.some(function(q){ return q[1]==='cava'; })) return;
-  var x=m.x+(m.raggio||6)*.95+1.6, z=m.z+(m.raggio||6)*.45, f={x:x,y:RM.h(x,z)+.9,z:z,id:m.id,stato:'cava',n:16,alto:17,larg:2.4,forza:1.5,vivo:0,q:0};
+  var x=m.x+(m.raggio||6)*.95+1.6, z=m.z+(m.raggio||6)*.45, f={x:x,y:RM.h(x,z)+.9,z:z,id:m.id,stato:'cava',n:18,alto:17,larg:1.2,forza:1.3,vivo:0,q:0};
   FONTI.push(f); forni.push(f);
 });
 for(i=0;i<130+130*4+3*16+forni.length*8;i++) rnd();      // i numeri a caso che il fumo di prima prendeva da rnd: consumati lo stesso, così le barche (che vengono dopo) restano dove erano
 isolati.forEach(function(b){ var g=RM.grana(Math.round(b.x*3.7)+101,Math.round(b.z*2.9)-77), p=.06*(b.tipo<3?.5+.5*b.alt:b.tipo===3?.7:.55)*(1+1.4*(b.sub||0));      // case: fuochi di cucina
-  if(g<p) FONTI.push({x:b.x,y:b.y+b.alt,z:b.z,b:b,n:14,alto:8+4*(g/p),larg:1.3+.3*(g/p),forza:1,q:g/p}); });
+  if(g<p) FONTI.push({x:b.x,y:b.y+b.alt,z:b.z,b:b,n:22,alto:7+4*(g/p),larg:.3+.08*(g/p),forza:.8,q:g/p}); });      // 27 novembre 2026: un filo largo tre metri alla bocca, non più sbuffi di tredici-sedici metri
 PISTRINA.forEach(function(np,r){ var c=isolati.filter(function(b){ return b.reg===r && b.tipo<3; }).map(function(b){ return [RM.grana(Math.round(b.x*5.9)-31,Math.round(b.z*4.3)+53),b]; }).sort(function(a,b){ return a[0]-b[0]; }), quanti=Math.round(np/4);
-  for(var k=0;k<Math.min(c.length,quanti);k++){ var b=c[k][1]; FONTI.push({x:b.x+.8,y:b.y+b.alt,z:b.z-.6,b:b,n:16,alto:13,larg:1.9,forza:1.5,q:k/quanti,forno:1}); } });      // forni del pane
+  for(var k=0;k<Math.min(c.length,quanti);k++){ var b=c[k][1]; FONTI.push({x:b.x+.8,y:b.y+b.alt,z:b.z-.6,b:b,n:16,alto:11,larg:.42,forza:.85,q:k/quanti,forno:1}); } });      // forni del pane
 ['caracalla','diocleziano','traiano','tito','termecostantino','termenerone','termeagrippa'].forEach(function(id,k){ var m=(RM.MONUMENTI||[]).filter(function(o){ return o.id===id; })[0]; if(!m||m.x==null) return;
-  var gr=k<3?1:.7; FONTI.push({x:m.x+1.5,y:RM.h(m.x,m.z)+3.5*gr,z:m.z+1.5,id:id,n:Math.round(26*gr),alto:24*gr,larg:3.4*gr,forza:1.3,q:0}); });      // terme: le tre grandi più delle altre
+  var gr=k<3?1:.7; FONTI.push({x:m.x+1.5,y:RM.h(m.x,m.z)+3.5*gr,z:m.z+1.5,id:id,n:Math.round(26*gr),alto:24*gr,larg:1.5*gr,forza:1.2,q:0}); });      // terme: le tre grandi più delle altre
 var geoForno=new RM.Costruttore().cilindro(.6,.55,0,0,0,P.tufo,.48,10).cupola(.48,0,.55,0,P.mattone,.8).scatola(.55,.26,.36,1,0,.25,P.marmo).scatola(.42,.22,.3,1.05,.26,.2,P.marmo).scatola(.5,.2,.3,.85,0,-.5,P.marmo,.6).geometria();
 var magliaForni=new THREE.InstancedMesh(geoForno,RM.matPietra(),Math.max(1,forni.length)), dF=new THREE.Object3D();
 magliaForni.castShadow=true; magliaForni.frustumCulled=false; magliaForni.userData.gruppo='vita'; RM.scene.add(magliaForni);
@@ -768,7 +768,7 @@ var matFumo=new THREE.ShaderMaterial({
   fragmentShader:['uniform sampler2D map; uniform vec3 colore; varying float vA;','void main(){ gl_FragColor=vec4(colore,texture2D(map,gl_PointCoord).a*vA);','#include <encodings_fragment>','}'].join(NL)
 });
 var fumo=new THREE.Points(gFumo,matFumo); fumo.frustumCulled=false; fumo.userData.gruppo='vita'; RM.scene.add(fumo);
-var fumoG=RM.col(0xd2cec7), fumoN=RM.col(0x30343f);
+var fumoG=RM.col(0xaeb7c2), fumoN=RM.col(0x30343f);      // 27 novembre 2026: grigio-azzurro, il fumo di legna sottile (prima bianco sporco); colonne più sottili e più trasparenti, che si allargano e svaniscono salendo: fili di cucina, non comignoli di fabbrica. Terme e calcare restano più larghe e più dense
 function muoviFumo(){
   matFumo.uniforms.lato.value=RM.renderer.domElement.height*.5;
   matFumo.uniforms.colore.value.copy(fumoG).lerp(fumoN,RM.notte);
@@ -777,9 +777,9 @@ function muoviFumo(){
     var f=fDi[k], o=k*3, v=f.b?(f.b.a0>.5&&f.q<qf?1:0):f.vivo;
     if(v<=.01){ if(fAlfa[k]!==0){ fAlfa[k]=0; fPos[o+1]=-1e4; } continue; }
     var p=(fFase[k]+tF*.05*(1+(k%5)*.08))%1, cu=f.alto*.8*Math.pow(p,1.7), on=Math.sin(tF*.5+k*1.7)*.12*p*f.larg*3;      // sale diritta, poi il vento la piega; un poco di ondeggiare
-    fPos[o]=f.x+VENTO[0]*cu+VENTO[1]*on; fPos[o+1]=f.y+p*f.alto; fPos[o+2]=f.z+VENTO[1]*cu-VENTO[0]*on;
-    fMis[k]=f.larg*(.4+1.8*p);
-    fAlfa[k]=Math.min(.7,Math.sin(Math.PI*Math.sqrt(p))*(1-.45*p)*f.forza*v);
+    fPos[o]=f.x+VENTO[0]*cu+VENTO[1]*on; fPos[o+1]=f.y+Math.pow(p,1.35)*f.alto; fPos[o+2]=f.z+VENTO[1]*cu-VENTO[0]*on;      // più fitto in basso, dove il filo è sottile
+    fMis[k]=f.larg*(.9+3.2*p);      // si allarga salendo e si disperde (alla bocca i punti si toccano: un filo, non una fila di perle)
+    fAlfa[k]=Math.min(.5,Math.sin(Math.PI*Math.sqrt(p))*(1-.7*p)*f.forza*v);
   }
   gFumo.attributes.position.needsUpdate=true; gFumo.attributes.alfa.needsUpdate=true; gFumo.attributes.mis.needsUpdate=true;
 }

@@ -320,7 +320,7 @@ var COLORA=[
   '  float fw=max(fwidth(cp.x),fwidth(cp.y))*1.8+0.0001; float largo=max(0.03,fw*0.7);',      // (24 novembre 2026) la larghezza del pixel si stima dalle coordinate, non dalla crepa: così la crepa si calcola solo dove può comparire
   '  float zona=rmN(vec3(cp*0.45+1.3,5.0));',
   '  float kz=clamp(0.4/fw,0.0,1.0)*smoothstep(0.0,0.1,0.12+uCrepe*0.48-zona); float riga=0.0;',
-  '  if(kz>0.0){ float e=rmCrepa(cp*1.1+3.7); riga=(1.0-smoothstep(largo*0.5,largo,e))*kz*smoothstep(0.3,0.5,rmN(vec3(cp*2.3,7.0))); }',      // il diagramma delle celle (nove prove) solo nelle zone crepate: prima si pagava su tutti i muri degradati
+  '  if(kz>0.0){ float e=rmCrepa((piano?cp*1.1:vec2(cp.x*1.5,cp.y*0.45))+3.7); riga=(1.0-smoothstep(largo*0.5,largo,e))*kz*smoothstep(0.3,0.5,rmN(vec3(cp*2.3,7.0))); }',      // il diagramma delle celle (nove prove) solo nelle zone crepate: prima si pagava su tutti i muri degradati
   '  diffuseColor.rgb*=1.0-0.52*riga;',
   '  if(piano){',
   '    float kE=1.0-smoothstep(0.015,0.045,fwidth(vLoc.x)+fwidth(vLoc.z));',                                                                                // la grana fine dell'erba sfuma da lontano (24 novembre 2026)
@@ -338,7 +338,7 @@ var COLORA=[
   'if(vTipo>2.5){ float pa=rmN(vec3(vLoc.xz*0.9,11.0)); float pb=rmN(vec3(vLoc.xz*4.3,12.0)); float pc=rmN(vec3(vLoc.xz*17.0,13.0));',                    // prato: chiazze larghe, ciuffi, filo d'erba
   '  float fwP=fwidth(vLoc.x)+fwidth(vLoc.z); float kcP=1.0-smoothstep(0.012,0.035,fwP); float kbP=1.0-smoothstep(0.05,0.14,fwP);',                       // ciuffi e fili si spengono quando il loro passo scende sotto i tre pixel: da lontano brulicavano (24 novembre 2026)
   '  diffuseColor.rgb*=0.82+0.22*pa+0.12*kbP*(pb-0.5)+0.1*kcP*(pc-0.5);',
-  '  diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.36,0.34,0.17),vec3(0.2,0.21,0.1),step(0.001,uVerde))*(0.8+0.5*pb),clamp(uCrepe*1.1,0.0,0.85)*(1.0-uPulito)*smoothstep(0.25,0.65,pa+0.3*pb)); }',                // lasciato a sé stesso ingiallisce e si fa incolto; nei recinti abbandonati (uVerde) erba alta e rovi, più scuri: prima paglia chiara a chiazze sul verde (25 novembre 2026)
+  '  diffuseColor.rgb=mix(diffuseColor.rgb,mix(vec3(0.36,0.34,0.17),vec3(0.2,0.21,0.1),step(0.001,uVerde))*(0.8+0.5*pb),clamp(uCrepe*1.1,0.0,0.85)*(1.0-uPulito)*mix(smoothstep(0.25,0.65,pa+0.3*pb),0.6+0.4*smoothstep(0.1,0.9,pa+0.3*pb),step(0.001,uVerde))); }',      // (27 novembre 2026) nei recinti abbandonati l'erba alta copre quasi tutto, con l'orlo morbido: sui cortili grandi delle terme le chiazze nette facevano la tuta mimetica                // lasciato a sé stesso ingiallisce e si fa incolto; nei recinti abbandonati (uVerde) erba alta e rovi, più scuri: prima paglia chiara a chiazze sul verde (25 novembre 2026)
   'if(vTipo<1.5) diffuseColor.rgb*=mix(0.74,1.0,smoothstep(0.0,0.2,rq2));'].join(NL);      // ombra d'appoggio al piede
 /* abbandono (25 novembre 2026; l'utente sullo stato «abbandonato»: «Ok fai vedere erba e crepe però»): un edificio che nessuno cura più, ma che non crolla.
    uVerde (0-1): erba e muschio dove si fermano l'acqua e la terra: la coltre segue quanto la superficie guarda in su (normale nel mondo, dal lato che si vede),
@@ -383,11 +383,12 @@ var DEGRADO=[
   '    diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.74,0.8,0.66),uVerde*0.45*(1.0-uPulito)*smoothstep(0.55,0.75,mA.g+0.1*fr)*(0.3+0.7*nord)*(1.0-0.6*rq2));',      // muschio: in basso e sui muri a nord
   '    float lI=smoothstep(0.38,0.55,dot(vColor,vec3(0.3,0.59,0.11)))*(1.0-smoothstep(0.3,0.55,su));',      // l'intonaco cade dai muri chiari (intonaco, marmo, travertino), non dal mattone a vista né dal dorso delle volte
   '    float nI=0.62*mA.g+0.38*mB.b+0.2*fr; float eI=fwidth(nI)+0.006; float fwY=fwidth(vLoc.y);',      // le derivate fuori dai rami
-  '    if(lI>0.0){ float tI=0.86-0.26*uIntonaco;',      // intonaco caduto: poche chiazze grandi
+  '    if(lI>0.0){ float tI=0.86-0.26*uIntonaco-0.2*uSpoglio*min(1.0,uIntonaco*3.0);',      // intonaco caduto: poche chiazze grandi; dove il monumento è stato spogliato (27 novembre 2026) le lastre e l'intonaco mancano di più e si vede il nucleo di mattoni
   '      float cI=smoothstep(tI-eI,tI+eI,nI)*lI; float bI=(1.0-smoothstep(0.0,0.02+eI,tI-nI))*step(nI,tI)*lI;',      // bI: l'orlo dell'intonaco rimasto, appena in ombra (prima più scuro: con le macchie del verde faceva la tuta mimetica)
   '      float lw=dot(diffuseColor.rgb,vec3(0.3,0.59,0.11)); vec3 mI=mix(vec3(0.95,0.5,0.34),vec3(0.9,0.78,0.58),smoothstep(0.55,0.7,mA.r))*lw*(0.66+0.26*mB.r);',      // mattone, a tratti tufo: tinta relativa al muro (che lo stato del monumento già scurisce), più scura di lui
   '      float kB=(1.0-smoothstep(0.003,0.008,fwY))*kF; if(kB>0.0) mI*=1.0-0.22*kB*smoothstep(0.35,0.5,abs(fract(vLoc.y*28.0)-0.5));',      // da vicino i filari (corsi di circa 35 cm: più grossi del vero, perché si leggano)
-  '      diffuseColor.rgb=mix(diffuseColor.rgb,mI,cI*0.9); diffuseColor.rgb*=1.0-0.18*bI*smoothstep(0.0,0.2,uIntonaco); }',
+  '      diffuseColor.rgb=mix(diffuseColor.rgb,mI,cI*0.9); diffuseColor.rgb*=1.0-0.18*bI*smoothstep(0.0,0.2,uIntonaco);',
+  '      if(kF>0.0 && uSpoglio>0.0){ vec2 gq=cA/0.13; vec2 gf=(fract(gq)-0.5)*vec2(1.0,1.5); float gh=rmH(vec3(floor(gq),41.0)); diffuseColor.rgb*=1.0-0.6*cI*kF*uSpoglio*step(0.5,gh)*(1.0-smoothstep(0.05,0.08,length(gf))); } }',      // i fori delle grappe che tenevano le lastre, sul mattone rimasto a vista (schema: una fila ogni 1,3 m, metà dei posti; solo da vicino)
   '    if(kF>0.0 && uIntonaco>0.15){ float eC=rmCrepa(vec2(cA.x*0.9,cA.y*0.3)+11.0); float wC=max(0.012,fwA*0.7);',      // crepe grandi, quasi verticali, a tratti
   '      float lC=(1.0-smoothstep(wC*0.5,wC,eC))*smoothstep(0.55,0.7,mA.b)*kF; diffuseColor.rgb*=1.0-0.6*lC*min(1.0,uIntonaco*1.4); }',
   '    }',

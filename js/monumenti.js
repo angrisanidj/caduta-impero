@@ -2296,12 +2296,22 @@ var CURA={laterano:0, santamarianova:0, santadriano:0, curia:.5, curiaantica:.5,
    come gli altri (erba sui gradoni e sulle cornici, muschio e umido sulla rotonda, intonaco caduto a chiazze; dal 609 ripulito per gradi, con una parte dei segni che resta: si veda RIUSO), ma niente crolli
    e niente tegole cadute (uCoppi a zero: le tegole di bronzo ci sono fino al 663, quando le toglie Costante II; la scheda: «nel 609 il papa riceve un edificio intero»).
    Prima nel 500 e nel 600 la calotta mostrava buchi dove mancavano le tegole: un crollo che le fonti non dicono. */
-var MISURA_V={pantheon:.9, foroboario:.45, metasudans:.5, esquilino:.7}, MISURA_I={pantheon:.9, foroboario:.4, metasudans:.6, esquilino:.6};
+var MISURA_V={pantheon:.9, foroboario:.45, metasudans:.5, esquilino:.7, colosseo:.85}, MISURA_I={pantheon:.9, foroboario:.4, metasudans:.6, esquilino:.6, colosseo:.25, marcello:.35};      // colosseo e Marcello (27 novembre 2026): facciate di travertino pieno, senza intonaco da far cadere; il poco che cade è dei muri di mattoni interni
+/* VERDE_OVUNQUE (27 novembre 2026; l'utente: «La Roma dell'800 deve sembrare al visitatore una città magnifica in rovine… anche le macerie, tipo con le edere ed altre piante sopra»).
+   Fino a oggi il verde (v), l'intonaco caduto (i) e i cespugli e l'edera dei ruderi venivano solo dallo stato «abbandonato»: il Colosseo, i Fori, il Circo, lo stadio di Domiziano,
+   i monumenti «chiusi» o usati come cava restavano puliti per secoli, come pietra appena tagliata. Ora contano gli anni da quando il monumento è uscito dall'uso, qualunque sia lo
+   stato (chiuso, cava, spogliato, bruciato, crollato). Quanto verde e in quanto tempo resta una resa, uguale per tutti: nessuna fonte letta misura il verde sui monumenti nell'800;
+   le fonti dicono solo «erba», «arbusta», «dumi et vepres» (src/testi/vita-roma-fonti.md, «Le piante dell'incolto»). */
+/* TENUTA (27 novembre 2026): quota dei crolli (r) che un monumento prende davvero. Regola: ciò che resta in piedi oggi nell'800 c'era; dove il taglio uniforme di rmCrollo
+   abbassava una parte che oggi è in piedi, qui si toglie. Colosseo: l'anello esterno a nord è ancora intero fino all'attico (Platner e Ashby, Amphitheatrum Flavium); la
+   cava del VI-IX secolo resta sul solo fronte sud (uSud, più sotto). Prima il modello lo abbassava tutto attorno di un quarto. */
+var TENUTA={colosseo:0};
 /* Quale parte cade, dove una fonte letta lo dice (26 novembre 2026; lo shader in taglio e rmCrollo, js/costruttore.js). zona: [dx, dz, da, a] in coordinate del monumento,
    il piano che divide la parte che regge (prima di «da») da quella che cade (dopo «a»); peso: [chi regge, chi cade]; base: taglio fisso in più nella parte che cade,
    in frazioni dell'altezza, che arriva col crollo; muri: 0 se cadde solo il tetto. Gli altri monumenti crollano col campo continuo, uguale ovunque. */
 var CROLLI={
   massenzio:{zona:[0,1,-1.45,-1.25], peso:[.05,1.3], base:.45},      // Platner e Ashby, Basilica Constantini (letta il 26 novembre 2026): «The south aisle and the roof of the nave probably collapsed in the earthquake of Leo IV in 847»; «the north wall and the north aisle … are still standing». Qui -z è il nord e la navata nord va da z -3,3 a -1,3: regge lei, con il muro nord e l'abside nord; cade tutto ciò che nella navata centrale e in quella sud sta sopra le volte laterali (base 0,45: sopra 2,4 unità su 4,4, l'imposta delle volte), cioè la volta e le pareti alte della navata, e la navata sud scende ancora, per campate. Che con la volta cadessero anche le pareti alte e quanto in basso arrivi la rottura è una resa; «probably» è di Platner e Ashby
+  foroaugusto:{zona:[-1,0,-5.1,-4.6], peso:[0,1]},      // 27 novembre 2026. La scheda: «Restano tre colonne del tempio con l'architrave, alte 15,30 metri, il podio e il grande muro di fondo». Il muro tagliafuoco del modello sta a x da 5,25 a 5,75 (nel riferimento del foro): regge intero (peso 0); portici, esedre e tempio, davanti, prendono il taglio della cava. Prima la cava abbassava anche il muro fino a due terzi
   paolo:{zona:[0,0,-2,-1], peso:[1,1], muri:0}      // Annali del regno dei Franchi, 801: «tectum basilicae beati Pauli apostoli magna ex parte cum suis trabibus decidit»: cade il tetto, non i muri
 };
 /* La quota del taglio di rmCrollo (js/costruttore.js) rifatta qui, con le ottave fini al loro valore medio: serve a posare macerie e verde dove la cima è caduta davvero.
@@ -2325,8 +2335,8 @@ function grezza(id,anno){      // il degrado senza i ritorni in uso graduali (si
     if(q==='cava'){ if(anno>=y-3 && da==null) da=y; scavo=RM.sfuma(y,y+200,anno); spoglio=Math.max(spoglio,.6*RM.sfuma(y,y+40,anno)); }   // smontato poco a poco, dall'alto: prima le coperture e i rivestimenti
   }
   var d0=da==null?dc:(dc==null?da:Math.min(da,dc)), chiuso=d0==null?0:RM.sfuma(0,70,anno-d0), eta=da==null?0:anno-da, regge=da==null&&dc!=null;      // regge: abbandonato, la struttura resta in piedi
-  var ea=dc==null?0:anno-dc, mv=MISURA_V[id]==null?1:MISURA_V[id], mi=MISURA_I[id]==null?1:MISURA_I[id];      // anni d'abbandono
-  return {v:dc==null?0:mv*(.25+.75*RM.sfuma(0,300,ea))*RM.sfuma(0,25,ea), i:dc==null?0:mi*(.25+.75*RM.sfuma(20,260,ea))*RM.sfuma(5,40,ea), r:(da==null?0:.15*RM.sfuma(20,120,eta)+.04*RM.sfuma(120,320,eta))+(regge?0:.07*spoglio)+.2*fuoco+.2*crollo+.1*scavo, s:spoglio,
+  var ea=d0==null?0:anno-d0, mv=MISURA_V[id]==null?1:MISURA_V[id], mi=MISURA_I[id]==null?1:MISURA_I[id];      // anni d'abbandono: dal 27 novembre 2026 da qualunque stato che non sia l'uso (si veda VERDE_OVUNQUE)
+  return {v:d0==null?0:mv*(.25+.75*RM.sfuma(0,300,ea))*RM.sfuma(0,25,ea), i:d0==null?0:mi*(.25+.75*RM.sfuma(20,260,ea))*RM.sfuma(5,40,ea), r:(da==null?0:.15*RM.sfuma(20,120,eta)+.04*RM.sfuma(120,320,eta))+(regge?0:.07*spoglio)+.2*fuoco+.2*crollo+.1*scavo, s:spoglio,
           c:Math.min(1,Math.max(.45*crollo,cura*(rinato?.35:1)*(.62*RM.sfuma(390,570,anno)+.45*chiuso+.2*spoglio+.5*fuoco+.3*scavo))), k:crollo, dk:dk, dv:dc};
 }
 /* Ritorno in uso (26 novembre 2026; l'utente: il Pantheon nel 610 «più nuovo che nel 390» non è credibile; e sulla regola generale: «Ok a meno che le fonti non dicano altro»).
@@ -2351,7 +2361,9 @@ RM.rovina=function(id,anno){
     if(st[k][1]==='uso' && st[k-1][1]!=='assente' && anno>=st[k][0]+da){ yr=st[k][0]; prima=st[k-1][1]; }
     if(st[k][1]==='uso' && st[k-1][1]==='assente' && tb && tb.da_chi && anno>=st[k][0]+da){ yr=st[k][0]; prima='uso'; }
   }
+  if(TENUTA[id]!=null) b.r*=TENUTA[id];      // si veda TENUTA
   if(yr==null) return b;
+  for(k=0;k<st.length;k++) if(st[k][0]>yr && anno>=st[k][0]-3 && st[k][1]!=='uso') return b;      // di nuovo fuori uso dopo il ritorno (Venere e Roma: rifatto nel 312, chiuso nel 392): contano i segni del nuovo abbandono, non la pulizia di allora (27 novembre 2026: prima uPulito restava a 1 e nell'800 il tempio non aveva verde)
   var pre=grezza(tb&&tb.da_chi||id,yr-.001), p=RM.sfuma(yr+da,yr+da+(tb&&tb.durata!=null?tb.durata:3.5),anno);
   var anni=pre.dk==null?0:yr-pre.dk, resta=(tb&&tb.resta!=null)?tb.resta:.25+.25*RM.sfuma(0,300,anni), ri=(tb&&tb.intonaco!=null)?tb.intonaco:.6, rp=(tb&&tb.ripara!=null)?tb.ripara:1;
   function verso(a,z){ return a+(z-a)*p; }
@@ -2398,12 +2410,15 @@ RM.moduli.push(function(anno){
    Che fossero cespugli, fichi o edera, e quanti, nessuna fonte lo dice: è una resa dell'abbandono, non una misura. MISURA: il Pantheon fino al 609 e i templi del
    Foro Boario, che arrivano a noi interi, ne prendono meno. */
 (function(){
-  var MISURA=MISURA_V, QUANTI={diocleziano:400, caracalla:400, pompeo:220, sessoriano:160, massenzio:130, pantheon:50, minervamedica:35, foroboario:50, esquilino:50, metasudans:14, hortisallustiani:170, casasallustio:45, hortiacilii:110, hortimaecenatis:60, hortilamiani:55, hortiliciniani:55, hortiluculliani:60, hortispeiveteris:35, horticaesaris:55};      // horti: arbusti sulle aiuole e sui pezzi, a giardino lasciato      // MISURA: la stessa del verde nello shader (RM.rovina)
-  var ruderi=M.filter(function(o){ var st=D.MONUMENTI[o.id]; return o.g&&st&&st.some(function(q){ return q[1]==='abbandonato'; }); });
+  var MISURA=MISURA_V, QUANTI={diocleziano:400, caracalla:400, pompeo:220, sessoriano:160, massenzio:130, pantheon:50, minervamedica:35, foroboario:50, esquilino:50, metasudans:14, hortisallustiani:170, casasallustio:45, hortiacilii:110, hortimaecenatis:60, hortilamiani:55, hortiliciniani:55, hortiluculliani:60, hortispeiveteris:35, horticaesaris:55,
+    colosseo:220, venere:110, traiano:190, termecostantino:90, termenerone:90, termeagrippa:80, mercatitraiano:80, marcello:100, tabularium:45, giulia:55, settizodio:45, augusto:70, sole:80, tempioclaudio:80, forotraiano:90, forocesare:55, foronerva:40, foroaugusto:70, odeon:45,
+    circo:110, fori:90, palatino:140, tiberiana:55, domiziano:85, balbo:50, ottavia:50, pace:50, tito:60, saepta:50, ludusmagnus:35, emporio:55, emiliarovina:30};      // 27 novembre 2026: anche i monumenti chiusi, cavati, spogliati (VERDE_OVUNQUE), con la quantità a misura della mole      // horti: arbusti sulle aiuole e sui pezzi, a giardino lasciato      // MISURA: la stessa del verde nello shader (RM.rovina)
+  var ruderi=M.filter(function(o){ var st=D.MONUMENTI[o.id]; return o.g&&st&&CURA[o.id]!==0&&(o.raggio==null||o.raggio>=1.5)&&st.some(function(q){ return q[1]!=='uso'&&q[1]!=='assente'; }); });      // dal 27 novembre 2026 ogni monumento uscito dall'uso, non solo gli «abbandonati» (VERDE_OVUNQUE); non le chiese tenute (CURA 0) né le cose piccole
   if(!ruderi.length) return;
   var tel=RM.piccolo, quota=tel?.35:1, cespi=[], viti=[], seme=7;
   function rnd(){ seme=(seme*16807)%2147483647; return (seme-1)/2147483646; }
-  ruderi.forEach(function(o){
+  function semeDi(id){ var h=2166136261, k; for(k=0;k<id.length;k++){ h^=id.charCodeAt(k); h=Math.imul(h,16777619)>>>0; } return 1+h%2147483645; }      // ogni monumento il suo seme (27 novembre 2026): prima un solo filo di numeri per tutti, e aggiungere un monumento spostava il verde di tutti gli altri
+  ruderi.forEach(function(o){ seme=semeDi(o.id);
     var g=o.g.geometry, P0=g.attributes.position.array, T=g.attributes.tipo, alti=[], muri=[], corti=[], at=0, am=0, ac=0, i;
     for(i=0;i<P0.length;i+=9){
       var tp=T?Math.round(T.array[i/3])%10%5:0; if(tp!==0&&tp!==3) continue;                                // murature e prati dei cortili: niente coppi, chiome
@@ -2421,19 +2436,23 @@ RM.moduli.push(function(anno){
     var kS=Math.min(1,.5+(o.raggio||5)/10);      // sui monumenti piccoli (Minerva Medica) arbusti più piccoli: prima facevano un cappello di palle
     if(alti.length) for(k=0;k<n;k++){ var p=punto(pesca(alti,at)[1]); cespi.push({o:o, p:mondo(p), l:[p[0],p[2]], y:p[1], soglia:rnd(), sc:(.7+rnd()*1.2)*kS, ry:rnd()*6.28, q:rnd()}); }
     if(corti.length) for(k=0;k<Math.round(n*.3);k++){ var pc=punto(pesca(corti,ac)[1]); cespi.push({o:o, p:mondo(pc), l:[pc[0],pc[2]], y:pc[1], soglia:rnd(), sc:1+rnd()*1.4, ry:rnd()*6.28, q:rnd()}); }      // nei cortili gli arbusti si fanno più grandi
-    if(muri.length) for(k=0;k<Math.round(n*.5);k++){ var w=pesca(muri,am), j=w[1], top=Math.max(P0[j+1],P0[j+4],P0[j+7]), q=punto(j), h=.3+rnd()*.6;
-      q[1]=Math.min(q[1]+h*.6,top)-h*.5; viti.push({o:o, p:mondo([q[0]+w[2]*.012,q[1],q[2]+w[3]*.012]), l:[q[0],q[2]], y:q[1]+h*.5, soglia:rnd(), h:h, ry:Math.atan2(w[2]*c+w[3]*s,-w[2]*s+w[3]*c), q:rnd()}); }
+    /* edera (27 novembre 2026): metà scende dalle creste dei muri, lunga, metà sale dal piede, più larga; più spessa sui muri che guardano a nord, dove il sole non asciuga
+       (la normale del muro nel mondo: z va a sud). Prima le macchie stavano a quota a caso, tutte uguali. Le proporzioni sono una resa. */
+    if(muri.length) for(k=0;k<Math.round(n*.5);k++){ var w=pesca(muri,am), t2;
+      for(t2=0;t2<3;t2++){ if(rnd()<.35+.65*Math.max(0,w[2]*s-w[3]*c)) break; w=pesca(muri,am); }
+      var j=w[1], top=Math.max(P0[j+1],P0[j+4],P0[j+7]), bot=Math.min(P0[j+1],P0[j+4],P0[j+7]), q=punto(j), h=.3+rnd()*.6, appesa=rnd()<.55, fx=appesa?.8+rnd()*.4:1.1+rnd()*.5, fy=appesa?1.4+rnd()*.9:.8+rnd()*.5, mezzo=h*fy*.5;
+      q[1]=appesa?top-mezzo*.92:Math.min(bot+mezzo*.95,top-mezzo); viti.push({o:o, p:mondo([q[0]+w[2]*.012,q[1],q[2]+w[3]*.012]), l:[q[0],q[2]], y:q[1]+mezzo, soglia:rnd(), h:h, fx:fx, fy:fy, ry:Math.atan2(w[2]*c+w[3]*s,-w[2]*s+w[3]*c), q:rnd()}); }
   });
   if(!cespi.length&&!viti.length) return;
   var Bc=new RM.Costruttore(), Bv=new RM.Costruttore(), sg=tel?[5,2]:[6,3], rovo=RM.col(0x4c5a30), secco=RM.col(0x75744a), edera=RM.col(0x3a4f2a);
   Bc.geo(new THREE.SphereGeometry(.14,sg[0],sg[1]).scale(1.3,.75,1.1).translate(0,.05,0),rovo);                       // un cespuglio largo da tre a sette metri
   if(!tel) Bc.geo(new THREE.SphereGeometry(.09,5,2).scale(1.2,.9,1).translate(.13,.06,.05),secco);
-  Bv.geo(new THREE.SphereGeometry(.5,5,4).scale(.6,1,.08),edera);                                                      // una macchia d'edera alta da tre a nove metri
+  Bv.geo(new THREE.SphereGeometry(.5,6,3).scale(.6,1,.08),edera);                                                      // una macchia d'edera alta da tre a nove metri (27 novembre 2026: sei spicchi e tre fasce, 24 triangoli invece di 30: è piatta, le fasce non si vedono)
   function maglia(B,N,ombra){ var m=new THREE.InstancedMesh(B.geometria(),RM.matPietra(),Math.max(1,N)); m.castShadow=ombra; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='monumenti'; RM.scene.add(m); return m; }
   var mc=maglia(Bc,cespi.length,!tel), mv=maglia(Bv,viti.length,false), d=new THREE.Object3D(), ultimo=-1;
   /* quanto verde c'è in quell'anno: da zero all'abbandono a pieno trecento anni dopo; zero se l'edificio torna in uso (il Pantheon chiesa) */
-  function crescita(o,anno){ var rv=RM.rovina(o.id,anno), a=rv.ritorno!=null?Math.min(anno,rv.ritorno-.01):anno, st=D.MONUMENTI[o.id], dc=null, k;      // tornato in uso (RIUSO): il verde di quel momento, tolto via via che si pulisce (26 novembre 2026: prima spariva in un istante)
-    for(k=0;k<st.length;k++){ if(a<st[k][0]) break; if(st[k][1]==='uso') dc=null; else if(st[k][1]==='abbandonato'&&dc==null) dc=st[k][0]; }
+  function crescita(o,anno){ var rv=RM.rovina(o.id,anno), a=rv.ritorno!=null?Math.min(anno,rv.ritorno-.01):anno, st=D.MONUMENTI[o.id], dc=null, k;      // rv.ritorno c'è solo se il monumento è ancora in uso (si veda RM.rovina)      // tornato in uso (RIUSO): il verde di quel momento, tolto via via che si pulisce (26 novembre 2026: prima spariva in un istante)
+    for(k=0;k<st.length;k++){ if(a<st[k][0]) break; if(st[k][1]==='uso') dc=null; else if(st[k][1]!=='assente'&&dc==null) dc=st[k][0]; }      // dal 27 novembre 2026 da qualunque uscita dall'uso (VERDE_OVUNQUE)
     return dc==null||!o.g.visible?0:(MISURA[o.id]||1)*(.15+.85*RM.sfuma(0,300,a-dc))*RM.sfuma(0,25,a-dc)*(1-(rv.pulito||0)); }
   /* Si disegnano solo le istanze che si vedono, in fila (m.count): prima si disegnavano tutte, anche quelle a grandezza zero (circa 110.000 triangoli nel caso peggiore).
      Il gradino della qualità ne tiene una parte (RM.QUALITA.verde: 45% in «bassa», 70% sul «telefono»), scelta a caso una volta per tutte (campo q). */
@@ -2441,7 +2460,7 @@ RM.moduli.push(function(anno){
     var g={}, rc={}, j=0; el.forEach(function(e){
       var o=e.o; if(g[o.id]==null){ g[o.id]=crescita(o,anno); rc[o.id]=RM.rovina(o.id,anno); }
       var v=Math.max(0,Math.min(1,(g[o.id]-e.soglia)*5)); if(e.y>o.alto*(1-crolloJS(o,e.l[0],e.l[1],rc[o.id])) || e.q>=fr) v=0; if(v<=0) return;      // sopra la quota del taglio dello shader la cima è caduta: lì niente verde
-      d.position.set(e.p[0],e.p[1],e.p[2]); d.rotation.set(0,e.ry,0); var sc=(alto?e.h:e.sc)*(.35+.65*v); d.scale.set(sc,sc,sc); d.updateMatrix(); m.setMatrixAt(j++,d.matrix); });
+      d.position.set(e.p[0],e.p[1],e.p[2]); d.rotation.set(0,e.ry,0); var sc=(alto?e.h:e.sc)*(.35+.65*v); d.scale.set(sc*(e.fx||1),sc*(e.fy||1),sc); d.updateMatrix(); m.setMatrixAt(j++,d.matrix); });
     m.count=j; m.visible=j>0; m.instanceMatrix.needsUpdate=true; }
   var qUltimo=-1;
   function quotaQ(){ var t=RM.QUALITA&&RM.QUALITA.verde; return t&&t[RM.q]!=null?t[RM.q]:1; }
