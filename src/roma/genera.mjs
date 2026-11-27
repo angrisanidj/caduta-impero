@@ -67,6 +67,10 @@ const trastevere=[[X(12.4722),Z(41.8822)],porte['Porta Portese'],[X(12.4655),Z(4
 const campoMarzio=riva(inizio[1]-8,ponteSisto[1],7).reverse();                                           // da ponte Sisto su per l'ansa fino all'altezza di porta del Popolo
 let mura=superstiti.concat(testaccio,trastevere,semplifica(campoMarzio,1.5));
 mura=mura.map(p=>[r1(p[0]),r1(p[1])]).filter((p,i,a)=>!i||Math.hypot(p[0]-a[i-1][0],p[1]-a[i-1][1])>1.5);
+/* Angolo nord-ovest dei Castra Praetoria (27 novembre 2026): il tracciato di OpenStreetMap ha qui un punto (153,0, -172,3) 21 m a nord del lato nord del campo, e la cinta
+   faceva un moncone che sporgeva dall'angolo (153,6, -170,3, lo spigolo dei Castra in js/monumenti.js). Il punto va sulla retta fra il vertice prima e lo spigolo, a una distanza
+   scelta perché i due lati diano gli stessi passi di prima in js/mura.js (quattro e uno): così non cambia la numerazione dei passi, da cui dipendono danni e restauri presi dal posto. */
+mura=mura.map(p=>Math.hypot(p[0]-153,p[1]+172.3)<.3?[151.1,-171.3]:p);
 
 /* ---------- strade ----------
    Ogni via ha uno scheletro tracciato a mano fra punti noti (porte, ponti, piazze) e l'elenco delle vie moderne che la ricalcano.
@@ -75,7 +79,7 @@ mura=mura.map(p=>[r1(p[0]),r1(p[1])]).filter((p,i,a)=>!i||Math.hypot(p[0]-a[i-1]
    Non è un rilievo delle strade antiche: è il loro erede moderno, che in città può scostarsi di qualche decina di metri. */
 const VIE=[
   {nome:'via Lata e Flaminia', p:[[-22,-37],[-77,-211],[-110,-330],[-152,-478],[-165,-600]], vie:['Via del Corso','Via Flaminia','Ponte Milvio']},
-  {nome:'Appia', p:[[42,25.9],[44.47,30.43],[43.87,35.04],[35,61],[43,96],[126,172],[134,211],[200,330],[294,448],[420,560]], vie:['Via di San Gregorio','Via di Porta San Sebastiano','Via Appia Antica'], fissi:[[44.47,30.43,1]]},      /* dal 24 novembre 2026 comincia dalla valle del Colosseo e passa sotto l'arco di Costantino (contorno dell'arco su OpenStreetMap, way 23590989): prima cominciava 320 m più a sud e l'arco restava senza strada */
+  {nome:'Appia', p:[[42,25.9],[42.25,29.7],[42.4,32.3],[43.87,35.04],[35,61],[43,96],[126,172],[134,211],[200,330],[294,448],[420,560]], vie:['Via di San Gregorio','Via di Porta San Sebastiano','Via Appia Antica'], fissi:[[42,25.9,.5],[42.25,29.7,1],[42.4,32.3,1]]},      /* dal 24 novembre 2026 comincia dalla valle del Colosseo (prima cominciava 320 m più a sud). Dal 27 novembre 2026 passa ACCANTO all'arco di Costantino, dal lato del Palatino, non sotto: Platner e Ashby, Arcus Constantini: l'arco «stands at the beginning of the road which traverses the valley between the Palatine and the Caelian from the Colosseum to the south-east end of the circus Maximus […] The road did not, however, run through it, and indeed lay at a somewhat lower level». Il lato (ovest) è una scelta: la fonte non lo dice; contorno dell'arco su OpenStreetMap, way 23590989 */
   {nome:'Ostiense', p:[[-31.4,40.4],[-35.1,53.5],[-42,62],[-58,84],[-70,106],[-55,150],[-32,176],[-42,280],[-48,320],[-58,376],[-100,560]], vie:['Via Marmorata','Via Ostiense'], fissi:[[-32.1,176.1,12],[-32.3,173.13,2],[-32.79,178.1,2],[-35.1,53.5,1.5]]},      // dal 25 novembre 2026 comincia sulla strada del Foro Boario (prima sul tempio rotondo) e passa dal piede del ponte Sublicio
   {nome:'Aurelia', p:[[-58.9,44.3],[-70.2,37.4],[-110,45],[-198,46],[-300,40],[-458,28]], vie:['Via della Lungaretta','Via Aurelia Antica'], fissi:[[-58.9,44.3,1.5],[-70.2,37.4,2],[-198,45.5,12],[-196.17,47.2,2],[-199.85,43.81,2]]},      /* parte dalla testa di Trastevere del ponte dell'isola: prima partiva a metà del ponte Emilio e correva per cento metri sull'acqua (24 novembre 2026).
      Dal 25 novembre 2026 comincia al piede della rampa del ponte Emilio e passa dal piede di quella del ponte Cestio (le due coordinate vengono da RM.ponti di js/mura.js): «For a

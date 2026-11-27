@@ -217,21 +217,26 @@ function lodUniformi(sh){ var U=RM.vistaU; sh.uniforms.uOcchio=U.uOcchio; sh.uni
 var PAT_VD=['#ifdef RM_PATI','attribute float aPatina;','#endif','varying float vPatI;'].join(String.fromCharCode(10));
 var PAT_V=['#ifdef RM_PATI','vPatI=aPatina;','#else','vPatI=1.0;','#endif'].join(String.fromCharCode(10));
 /* uPatQ: RM.degradoQ (0 «bassa», 0,5 «telefono», 1 da «media»): sotto «media» niente colature, muschio né verde sulle creste (costo misurato da vicino nell'800, secondo giro) */
-var PAT_FD=['uniform float uPatina; uniform float uPatQ; varying float vPatI;','float ptH(vec2 p){ return fract(sin(dot(p,vec2(41.3,289.1)))*45758.5453); }',
+var PAT_FD=['uniform float uPatina; uniform float uPatTetto; uniform float uPatQ; varying float vPatI;','float ptH(vec2 p){ return fract(sin(dot(p,vec2(41.3,289.1)))*45758.5453); }',
   'float ptN(vec2 p){ vec2 i=floor(p); vec2 f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(ptH(i),ptH(i+vec2(1.0,0.0)),f.x),mix(ptH(i+vec2(0.0,1.0)),ptH(i+vec2(1.0,1.0)),f.x),f.y); }'].join(String.fromCharCode(10));
 function patina(o){ o=o||{}; return [
-  '{ float ptP=uPatina*vPatI;',
+  '{ float ptP=((vTipo>0.5&&uPatTetto>=0.0)?uPatTetto:uPatina)*vPatI;',      // terzo giro (27 novembre 2026): i coppi hanno la loro dose (uPatTetto, RM.patinaTetto in js/monumenti.js): un tetto rifatto riparte pulito anche se i muri no; -1: come i muri
   o.riduci?'  ptP*=1.0-0.45*clamp(uVerde*1.5+uRovina*2.0+uIntonaco,0.0,1.0);':'',      // sui monumenti già segnati dal degrado la patina si aggiunge di meno: non si somma fino al nero
   'if(ptP>0.001 && vTipo<1.5){',
   '  vec3 ptNw=(gl_FrontFacing?1.0:-1.0)*normalize(vNormal)*mat3(viewMatrix); float ptSu=clamp(ptNw.y,0.0,1.0); float ptNord=smoothstep(0.0,0.8,-ptNw.z)*(1.0-ptSu);',      // la normale nel mondo, dal lato che si vede; z va a sud
+  '  float ptSo=0.6;',
+  '  #if NUM_DIR_LIGHTS > 0',
+  '  ptSo=smoothstep(0.05,0.4,dot((gl_FrontFacing?1.0:-1.0)*normalize(vNormal),directionalLights[0].direction));',      // terzo giro: 1 sulle facce rivolte al sole, 0 su quelle nella loro ombra (la sola luce direzionale è il sole, js/base.js)
+  '  #endif',
   '  float ptL=dot(vColor,vec3(0.3,0.59,0.11)); float ptM=(1.0-smoothstep(0.4,0.56,ptL))*step(vTipo,0.5);',      // ptM: i muri scuri (mattone, tufo, peperino, granito), che hanno un ramo loro (secondo giro, 27 novembre 2026: prima cambiavano poco)
   '  float ptK=mix(0.35+0.65*smoothstep(0.35,0.75,ptL),0.85,ptM);',      // la pietra chiara più del mattone; il mattone ora quasi quanto lei, ma a modo suo (più grigio, più scuro, colature nere)
-  '  if(vTipo>0.5) ptK*=0.45*(1.0-smoothstep(0.4,0.5,vColor.g/max(vColor.r,0.001)));',      // i coppi meno, il metallo (bronzo, oro) no: lo brunisce DEGRADO quando l'edificio è lasciato
+  '  if(vTipo>0.5) ptK*=0.7*(1.0-smoothstep(0.4,0.5,vColor.g/max(vColor.r,0.001)));',      // i coppi meno (terzo giro: 0,7, prima 0,45, perché un tetto vecchio si stacchi da uno rifatto), il metallo (bronzo, oro) no: lo brunisce DEGRADO quando l'edificio è lasciato
   '  float ptA=0.5; float ptB=0.5; float ptV=0.5; if(uPatQ>0.75){ ptA=ptN(vMondo.xz*0.13+7.1); ptB=ptN(vMondo.xz*0.041+2.3); ptV=ptN(vMondo.xz*2.3+vMondo.y); }',      // da un edificio all'altro: quanta patina (80 m) e se ingiallisce o ingrigisce (250 m); ptV la grana dei piani. Sotto «media» un rumore solo
   '  float ptQ=clamp(ptP*ptK*(1.0-0.6*smoothstep(120.0,400.0,length(vViewPosition)))*(0.65+0.7*ptA),0.0,1.2);',
   '  vec3 ptC=diffuseColor.rgb; float ptLum=dot(ptC,vec3(0.3,0.59,0.11));',
   '  vec3 ptT=mix(ptLum*0.8*mix(vec3(1.04,0.92,0.72),vec3(0.92,0.92,0.88),ptB),ptLum*0.74*vec3(0.92,0.91,0.9),ptM);',      // la pietra chiara ingiallisce o ingrigisce; mattone e tufo perdono il rosso e si fanno grigi
-  '  ptC=mix(ptC,ptT,mix(0.6,0.55,ptM)*min(1.0,ptQ)); ptC*=1.0-0.36*ptQ;',      // e si scuriscono: il marmo bianco al sole arriva a circa due terzi della luce di prima
+  '  ptC=mix(ptC,ptT,mix(0.6,0.55,ptM)*min(1.0,ptQ)); ptC*=1.0-mix(0.04,0.4,ptSo)*ptQ;',      // terzo giro: nell'ombra si scurisce meno (la curva dei toni, ACES, porta gli scuri quasi al nero), al sole di più (lì li schiaccia verso il bianco)
+  '  ptC=mix(ptC,ptC*vec3(1.2,1.0,0.76),0.75*(1.0-ptSo)*min(1.0,ptQ)*(1.0-0.6*ptM));',      // la pietra vecchia nell'ombra: grigio scuro caldo, non grigio freddo (la luce del cielo, azzurra, lo raffredda)      // e si scuriscono: il marmo bianco al sole arriva a circa due terzi della luce di prima
   '  #ifdef RM_PAT_MURA',
   '  float ptAl=0.55+0.9*smoothstep(0.35,0.95,vLoc.y);',      // le mura (vLoc.y: 0 al piede, 1 sotto i merli): le colature nere partono dai merli e dal cammino di ronda e scendono schiarendo
   '  #else',
@@ -239,11 +244,11 @@ function patina(o){ o=o||{}; return [
   '  #endif',
   '  if(ptSu<0.5 && uPatQ>0.75){ vec3 ptAn=abs(vNor); float ptX=ptAn.x>ptAn.z?vMondo.z:vMondo.x; float ptKs=1.0-smoothstep(0.012,0.05,fwidth(ptX)+fwidth(vMondo.y));',      // colature: strisce di circa un metro, lunghe dieci; si spengono sotto i tre pixel
   '    float ptS=0.34; if(ptKs>0.0) ptS=mix(0.34,smoothstep(0.52,0.8,ptN(vec2(ptX*9.0,vMondo.y*0.7+ptX*0.3)))*smoothstep(0.25,0.6,ptN(vec2(ptX*2.1+5.0,vMondo.y*1.6))),ptKs);',
-  '    ptC*=1.0-min(0.8,(0.45+0.2*ptM)*ptAl)*ptQ*ptS; }',      // sul mattone più nere
+  '    ptC*=1.0-min(0.8,(0.45+0.2*ptM)*ptAl)*ptQ*ptS*mix(0.35,1.0,ptSo); }',      // sul mattone più nere
   '  float ptDu=min(1.0,ptQ)*ptSu; ptC=mix(ptC,dot(ptC,vec3(0.3,0.59,0.11))*vec3(0.98,0.93,0.84),0.45*ptDu);',      // piani, cornici e cime: polvere, licheni grigi e pietra consumata, dove l'acqua non lava
   '  ptC*=1.0-0.55*min(1.0,ptQ)*ptSu*(0.75+0.5*ptV);',      // (secondo giro: prima 0,3, e al sole il piano dei ponti e i basamenti restavano quasi bianchi)
-  '  float ptCap=mix(1.0,0.38,min(1.0,ptQ)*(0.55+0.45*ptSu)); float ptLc=dot(ptC,vec3(0.3,0.59,0.11)); if(ptLc>ptCap) ptC*=ptCap/ptLc;',      // il tetto di chiarezza della pietra invecchiata: più basso sui piani, che il sole sbianca
-  '  if(uPatQ>0.75) ptC=mix(ptC,ptC*vec3(0.8,0.87,0.72),min(1.0,ptQ)*(0.55+0.2*ptM)*ptNord*smoothstep(0.4,0.7,ptA+0.35*ptN(vMondo.xz*0.9+vMondo.y*0.5)));',      // muschio sui muri a nord, a zone
+  '  float ptCap=min(mix(1.0,0.38,min(1.0,ptQ)*(0.55+0.45*ptSu)),mix(1.0,0.2,min(1.0,ptQ)*ptSo*(1.0-ptSu))); float ptLc=dot(ptC,vec3(0.3,0.59,0.11)); if(ptLc>ptCap) ptC*=ptCap/ptLc;',      // il tetto di chiarezza della pietra invecchiata: più basso sui piani, che il sole sbianca; terzo giro: anche sulle facce verticali al sole (ponte Elio, mausoleo, arco di Tito), che ricevono il doppio della luce dei piani: 0,2 sul colore vale al sole un poco più del piano
+  '  if(uPatQ>0.75) ptC=mix(ptC,ptC*vec3(0.8,0.87,0.72),min(1.0,ptQ)*(0.4+0.2*ptM)*ptNord*smoothstep(0.4,0.7,ptA+0.35*ptN(vMondo.xz*0.9+vMondo.y*0.5)));',      // muschio sui muri a nord, a zone
   '  #ifdef RM_PAT_MURA',
   '  ptC=mix(ptC,ptC*vec3(0.68,0.75,0.6),min(1.0,ptQ)*0.6*(1.0-smoothstep(0.0,0.14+0.1*ptA,vLoc.y))*(1.0-ptSu));',      // al piede delle mura: umido di risalita e muschio
   '  if(ptSu>0.6 && uPatQ>0.75){ float ptCr=smoothstep(0.55,0.95,ptQ)*smoothstep(0.6,0.9,ptSu)*smoothstep(0.38,0.62,ptN(vMondo.xz*0.55+3.3)+0.3*ptA);',      // sulle creste dei tratti mai rifatti (la dose dell'istanza è alta) erba e muschio, a tratti
@@ -255,6 +260,11 @@ function patina(o){ o=o||{}; return [
   '  if(ptSu>0.8 && vTipo<0.5){ float ptE=1.0-smoothstep(0.02,0.08,fwidth(vMondo.x)+fwidth(vMondo.z)); float ptG=0.6*ptN(vMondo.xz*1.7)+0.4*mix(0.5,ptN(vMondo.xz*7.3),ptE);',      // erba fra le pietre dei piani; la grana fine solo da vicino
   '    ptC=mix(ptC,vec3(0.2,0.23,0.1)*(0.8+0.4*ptA),min(1.0,ptP*1.3)*0.8*smoothstep(0.5-0.15*ptP,0.72,ptG)); }',
   '  #endif',
+  '  if(vTipo>0.5){ float ptCo=(1.0-smoothstep(0.4,0.5,vColor.g/max(vColor.r,0.001)))*min(1.0,ptP*(0.75+0.5*ptA))*(1.0-0.5*smoothstep(120.0,400.0,length(vViewPosition)));',      // terzo giro: i coppi vecchi (non il metallo). Prima prendevano un quarto della patina e un tetto rifatto non si distingueva
+  '    float ptLi=uPatQ>0.75?smoothstep(0.52,0.78,ptN(vMondo.xz*3.1+vMondo.y)):0.3;',      // chiazze di licheni, a zone di qualche metro
+  '    vec3 ptCv=dot(ptC,vec3(0.3,0.59,0.11))*vec3(1.12,0.8,0.62)*0.75;',      // il coppo vecchio: bruno, spento, più scuro
+  '    ptCv=mix(ptCv,vec3(0.2,0.19,0.13)*(0.8+0.4*ptA),0.5*ptLi);',      // licheni grigio-giallastri e annerimento
+  '    ptC=mix(ptC,ptCv,0.9*ptCo); }',
   '  diffuseColor.rgb=ptC; } }'].join(String.fromCharCode(10)); }
 /* La dose di patina accumulata fino all'anno a (0 fino al 400, 0,25 nel 500, 0,6 nel 650, 1 nell'800, poi piano): una resa. Procopio, scrivendo verso il 550, dice che i Romani
    «preserved the buildings of the city and the most of its adornments» (Guerra gotica IV 22, 6): fino al VI secolo gli edifici erano tenuti, e la patina resta lieve; dopo cresce.
@@ -264,11 +274,12 @@ RM.patinaAnno=function(a){ if(a<=400||RM.patinaSpenta) return 0; if(a<=500){ var
 RM.patinaMat=[];      // i materiali di pietra con la patina comune (si veda conConci); chi ha userData.patinaPropria la regola da sé
 RM.moduli.push(function(anno){ var p=RM.patinaAnno(anno); RM.patinaMat.forEach(function(m){ if(!m.userData.patinaPropria) m.userData.patina.value=p; }); });
 function lodVertice(sh){ sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+String.fromCharCode(10)+LOD_VD+String.fromCharCode(10)+PAT_VD).replace('#include <begin_vertex>','#include <begin_vertex>'+String.fromCharCode(10)+LOD_V+String.fromCharCode(10)+PAT_V); }
+var PAT_TETTO_NO={value:-1};      // senza dose propria del tetto: i coppi seguono uPatina
 function conConci(mat){
   var A=String.fromCharCode(10), uP={value:0};
   mat.userData.patina=uP; RM.patinaMat.push(mat);
   mat.onBeforeCompile=function(sh){
-    lodUniformi(sh); lodVertice(sh); sh.uniforms.uPatina=uP; sh.uniforms.uPatQ=RM.degradoQ;
+    lodUniformi(sh); lodVertice(sh); sh.uniforms.uPatina=uP; sh.uniforms.uPatTetto=PAT_TETTO_NO; sh.uniforms.uPatQ=RM.degradoQ;
     sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+LOD_FD+A+PAT_FD)
       .replace('#include <color_fragment>',['#include <color_fragment>',LOD_SCEGLI_SE,LOD_COLORE,CONCI,patina()].join(A));
   };
@@ -487,13 +498,13 @@ function innesta(sh,u,colore){
   lodUniformi(sh); lodVertice(sh);
   var SCEGLI=LOD_SCEGLI.replace('dpxL<uSogliaCol','dpxL<uSogliaCol*(1.0-step(0.02,uRovina))');      // in rovina niente fascia: il portico è senza tetto e senza muri, e fra i monconi si vede il prato, non l'ombra
   SCEGLI+=NL+MANCA;      // le colonne che mancano, e i rocchi a terra
-  sh.uniforms.uPatina=u.uPatina; sh.uniforms.uPatQ=RM.degradoQ;      // la patina del tempo (si veda PATINA): RM.patinaMon in js/monumenti.js
+  sh.uniforms.uPatina=u.uPatina; sh.uniforms.uPatTetto=u.uPatTetto||PAT_TETTO_NO; sh.uniforms.uPatQ=RM.degradoQ;      // la patina del tempo (si veda PATINA): RM.patinaMon in js/monumenti.js
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA+NL+PAT_FD+(colore?NL+STRISCE:''));
   if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,patina({riduci:true,piede:true}),COLORA,DEGRADO,LEGNO,NUCLEO,MOLE,VIVA,SAP_TINTA].join(NL));
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',[SCEGLI,LOD_OMBRA,taglio(false),'#include <clipping_planes_fragment>'].join(NL));
 }
 RM.matRovina=function(alt){
-  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)},uVerde:{value:0},uIntonaco:{value:0},uCoppi:{value:1},uPulito:{value:0},uCrZona:{value:new THREE.Vector4(0,0,-2,-1)},uCrPeso:{value:new THREE.Vector4(1,1,0,1)},uMole:{value:1},uPatina:{value:0}};      // uCrZona (0,0,-2,-1): tutto nella parte che cade, con peso 1
+  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)},uVerde:{value:0},uIntonaco:{value:0},uCoppi:{value:1},uPulito:{value:0},uCrZona:{value:new THREE.Vector4(0,0,-2,-1)},uCrPeso:{value:new THREE.Vector4(1,1,0,1)},uMole:{value:1},uPatina:{value:0},uPatTetto:{value:-1}};      // uCrZona (0,0,-2,-1): tutto nella parte che cade, con peso 1
   var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
   m.onBeforeCompile=function(sh){ innesta(sh,u,true); };
   m.userData.u=u;

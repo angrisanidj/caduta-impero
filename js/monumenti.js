@@ -1481,7 +1481,8 @@ var M=[
  }},
  /* 27 novembre 2026, voce riletta per intero e confronto con una fotografia: le colonne ora stanno in mezzo ai piloni (prima a ±0,4 e ±1,2, fuori centro), l'arco è girato come il
     suo contorno su OpenStreetMap (way 23590989, rettangolo di 25,3 x 6,9 m: ry -0,23, prima -0,3). La voce dice anche che la strada che parte di qui verso il Circo «did not, however,
-    run through it» e che fornici e spiazzo erano lastricati di travertino: la via Appia del modello (src/roma/genera.mjs) invece comincia sotto l'arco; da rivedere là. */
+    run through it» e che fornici e spiazzo erano lastricati di travertino. Dal 27 novembre 2026 (sera) la via Appia del modello (src/roma/genera.mjs) passa accanto all'arco, dal
+    lato del Palatino (il lato è una scelta), e qui non c'è più la strozzatura; lo spiazzo lastricato non è disegnato. */
  {id:'arcocostantino', nome:'Arco di Costantino', x:44.5,z:30.4, ry:-.23, zone:[[0,0,3]], fa:function(B){
     /* Rifatto il 23 novembre 2026 (Platner e Ashby, Arcus Constantini): «21 metres high, 25.70 wide, and 7.40 deep; the central archway is 11.50 high and 6.50 wide, and the two
        lateral arches are 7.40 metres high and 3.36 wide»; «eight fluted Corinthian columns of giallo antico» su piedistalli; «eight statues of Dacians in pavonazzetto… standing on
@@ -2579,7 +2580,7 @@ M.forEach(function(o){
 });
 /* dove una strada passa sotto un arco si stringe alla luce del fornice: [x, z, raggio, mezza larghezza] (24 novembre 2026: con strade larghe 16 m e fornici di 5 o 6, anche un arco
    ben centrato sembrava stare «accanto» alla strada) */
-RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.34],[27.2,20.15,1.6,.25],[44.47,30.43,2.4,.3],[81.86,76.56,1.4,.19],[-110.9,-9.2,1.6,.25],[-155.49,-94.14,1.6,.26]];      // Claudio, Portogallo, Arcus Novus, Gallieno (fornice di 7,30 dal 27 novembre 2026), Tito, Costantino, Dolabella, Valentiniano (ponte Aurelio), Graziano (ponte Elio)
+RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.34],[27.2,20.15,1.6,.25],[81.86,76.56,1.4,.19],[-110.9,-9.2,1.6,.25],[-155.49,-94.14,1.6,.26]];      // Claudio, Portogallo, Arcus Novus, Gallieno (fornice di 7,30 dal 27 novembre 2026), Tito, Dolabella (Costantino tolto il 27 novembre 2026: la strada gli passa accanto, si veda l'arco), Valentiniano (ponte Aurelio), Graziano (ponte Elio)
 RM.posa();
 var perId={};
 M.forEach(function(o){
@@ -2717,7 +2718,14 @@ var RESTAURI=[
   ['pompeo',509,.6],      // Platner e Ashby, Theatrum Pompei: restaurato «finally by Symmachus at the command of Theodoric between 507 and 511 (Cassiod. Var. IV.51)»; Variae IV 51: va rinforzato («roboranda»): un rinforzo della struttura, non una pulitura di tutte le facce; anno a metà
   ['caracalla',510,.4],      // Platner e Ashby, Thermae Antoninianae: mattoni col bollo di Teodorico (493-526): riparazioni, di quali parti non è detto; anno scelto
   ['domusaugustana',525,.4],      // Platner e Ashby, Domus Augustiana: «Repairs by Theodoric and Athalaric are vouched for by brick-stamps (CIL XV.1665 a, 1, 1672)»; anno scelto fra i due regni (493-534)
-  ['laterano',780,.5],      // Liber Pontificalis, vita di Adriano I, cc. LXXI-LXXVIII (Duchesne I, pp. 505-509): la basilica «in ruinis posita» con i portici, rifatta; anno scelto dentro il pontificato (772-795); soprattutto tetti e portici
+  ['laterano',780,.5,1],      // Liber Pontificalis, vita di Adriano I, cc. LXXI-LXXVIII (Duchesne I, pp. 505-509): la basilica «in ruinis posita» con i portici, rifatta; anno scelto dentro il pontificato (772-795); soprattutto tetti e portici. Terzo giro: c. LXX (Duchesne I, p. 507) «a noviter sicut ecclesias beatorum principum Petri et Pauli renovavit, in qua et mutavit trabes maiores numero XV»: il tetto nuovo (quarto valore)
+  /* Terzo giro (27 novembre 2026), Liber Pontificalis nell'edizione Duchesne letto su archive.org (duchesne01, duchesne02). Il quarto valore, se c'è, è la quota del tetto (i coppi:
+     uPatTetto in js/costruttore.js): dove la fonte dice rifatte le travi e il tetto, i coppi ripartono puliti anche se i muri si ripuliscono poco. */
+  ['pietro',780,.1,1],      // vita di Adriano I, cc. LXIV-LXV (Duchesne I, p. 505): «mutavit ibidem trabes numero XIIII; atque totum eiusdem basilice tectum et portica a noviter restauravit»; anno scelto (772-795)
+  ['paolo',780,.3,1],      // vita di Adriano I, c. LXVII (Duchesne I, p. 506): travi «ad modicumque ruituras […] totam a noviter restauravit. In qua et mutavit trabes maiores numero XXXV»; anno scelto
+  ['paolo',806,.5,1],      // vita di Leone III, c. XXXI (Duchesne II, p. 9): il terremoto del 30 aprile 801, «omnia sarta tecta ruerunt»; il papa «tota aecclesia marmoravit et eius portica renovavit […] sarta tecta omnia noviter restauravit». 806: l'anno in cui nella scena (terremoto801, js/scene-tappe.js) spariscono le macerie, scelto
+  ['mariamaggiore',780,.5,1],      // vita di Adriano I, c. LXXIV (Duchesne I, p. 508): la basilica «ad Praesepe quae a priscis temporibus tota marcuerat, ultro citroque restauravit, et in sarta tecta eiusdem ecclesiae posuit trabes maiores XX»; anno scelto
+  ['santadriano',780,.8],      // vita di Adriano I, c. LXXXI (Duchesne I, pp. 509-510): «basilicas, scilicet beati Adriani martyris seu sanctorum Cosme et Damiani, quas noviter restauravit»; anno scelto. Onorio I (c. VI, Duchesne I, p. 324) «Fecit ecclesiam beati Adriani in Tribus Fatis»: fa la chiesa, non dice di restauri; non entra
   ['pantheon',735,.1],      // Liber Pontificalis, vita di Gregorio III, XCII 12: il tetto rifatto con lastre di piombo (uPiombo più sotto): solo il tetto, i muri restano quasi come prima
   ['pietro',800,.1],      // Liber Pontificalis, vita di Leone III, c. LXXXIX (Duchesne II, p. 28): rifà i gradini dell'atrio; anno scelto dentro il pontificato (795-816); solo i gradini
   /* le chiese minori (js/nuclei.js), per nome: Adriano I rifà le chiese «in ruinis», con i tetti caduti o cadenti (vita di Adriano I, cc. LXXI-LXXVIII, Duchesne I, pp. 505-509,
@@ -2727,20 +2735,30 @@ var RESTAURI=[
   ['chiesa:Santa Prisca',780,.6],      // nell'elenco della stessa vita
   ['chiesa:Santa Prassede',780,.6],      // «ex parte ruens»
   ['chiesa:Santa Pudenziana',780,.6],      // nell'elenco della stessa vita
-  ['chiesa:San Marcello',780,1]      // Armellini: «titulum s. Marcelli via Lata situm a novo restauravit» (Adriano I): rifatta da capo
+  ['chiesa:San Marcello',780,1],      // Armellini: «titulum s. Marcelli via Lata situm a novo restauravit» (Adriano I): rifatta da capo
+  /* terzo giro (27 novembre 2026), Duchesne letto su archive.org; le chiese minori non hanno una dose a parte per il tetto: un tetto rifatto vale 0,6 come sopra */
+  ['chiesa:San Marco',780,.6],      // vita di Adriano I (Duchesne I, p. 500): «Ecclesia vero beati Marci, cuius tectum iam vetustate […] depositis vetustissimis travibus et aliis fortissimis inpositis, a noviter ipsum tectum atque portica»
+  ['chiesa:Santa Susanna',780,.6],      // vita di Adriano I, c. LXX (Duchesne I, p. 507): «tectum tituli beate Susanne martyris […] que iam casurum erat et in ruinis positum, a noviter restauravit»
+  ['chiesa:San Pietro in Vincoli',780,.8],      // vita di Adriano I, c. LXXV (Duchesne I, p. 508): «titulum Apostolorum quae appellatur Eudoxiae ad vincula, totam eius noviter restauravit ecclesiam»
+  ['chiesa:Sant\'Eusebio',780,.8],      // vita di Adriano I, c. LXXIV (Duchesne I, p. 508): «basilicam sancti Eusebii undique renovans restauravit»
+  ['chiesa:San Giovanni a Porta Latina',780,.8],      // vita di Adriano I, c. LXXVI (Duchesne I, p. 508): «ecclesiam beati Iohannis Baptistae sitam iuxta portam Latinam, ruinis praeventam, in omnibus noviter renovavit»
+  ['chiesa:Santi Quattro Coronati',780,.6],      // vita di Adriano I (Duchesne I, p. 512): «sarta tecta tituli sanctorum Quattuor Coronatorum, quae in ruinis existebant, trabes ibidem plures imponens, omnia noviter restauravit»
+  ['chiesa:Santa Prassede',820,1],      // vita di Pasquale I (817-824), Duchesne II, p. 54: la chiesa «ita ut fundamentis casura ruinam sui minaretur […] in alio non longe demutans loco, in meliorem eam quam dudum fuerat erexit statum»: rifatta da capo, poco lontano. Anno scelto; nel modello resta al suo punto (CHIESE)
+  ['chiesa:Santa Cecilia',820,1]      // vita di Pasquale I, Duchesne II, p. 56: le mura «a fundamentis ruitura», il papa «novam construere ecclesiam cepit et perficere satis meliorem quam fuerat studuit»; anno scelto
 ];
-function cresciCon(rs,p,a,b){ var PA=RM.patinaAnno; rs.forEach(function(r){ if(r[1]>=a&&r[1]<b){ p+=PA(r[1])-PA(a); p*=1-r[2]; a=r[1]; } }); return p+PA(b)-PA(a); }      // dentro un tratto: la dose sale fino al restauro, scende, risale
+function cresciCon(rs,p,a,b,qt){ var PA=RM.patinaAnno; rs.forEach(function(r){ if(r[1]>=a&&r[1]<b){ p+=PA(r[1])-PA(a); p*=1-(qt&&r[3]!=null?r[3]:r[2]); a=r[1]; } }); return p+PA(b)-PA(a); }      // dentro un tratto: la dose sale fino al restauro, scende, risale; qt: la quota del tetto (quarto valore), dove c'è
 /* la dose di una cosa fatta pulita nell'anno a0, con i suoi restauri (chiave: id del monumento, o «chiesa:» e il nome): la usano js/nuclei.js e le prove */
 RM.patinaRestauri=function(chiave,a0,anno){ if(a0>=anno) return 0; return cresciCon(RESTAURI.filter(function(r){ return r[0]===chiave&&r[1]<anno; }),0,a0,anno); };
 /* Chi continua un altro (stesse pietre, nuova voce nel modello): prende la patina di quello nell'anno in cui compare, invece di partire pulito. La Curia diventa Sant'Adriano nel 630
    (la vita di Onorio I non è letta: nessun restauro); la Basilica Emilia bruciata resta in piedi come rovina; statue e pigna portate altrove sono le stesse; la Regia diventa una casa. */
 var CONTINUA={santadriano:'curia', emiliarovina:'emilia', marcoaureliolat:'marcoaurelio', pignapietro:'pigna', regiacasa:'regia', castrapretoriorasa:'castrapretorio', castrensemura:'castrense'};
 RM.RESTAURI=RESTAURI;      // per le prove
-RM.patinaMon=function(id,anno){ var st=D.MONUMENTI[id]||COMPARSA, p=0, k, a, b, rs=RESTAURI.filter(function(r){ return r[0]===id&&r[1]<anno; }), prima=true;
+RM.patinaMon=function(id,anno,qt){ var st=D.MONUMENTI[id]||COMPARSA, p=0, k, a, b, rs=RESTAURI.filter(function(r){ return r[0]===id&&r[1]<anno; }), prima=true;
   for(k=0;k<st.length;k++){ a=st[k][0]; if(a>=anno) break; if(st[k][1]==='assente'){ p=0; continue; }
-    if(prima&&CONTINUA[id]&&p===0&&a>0) p=RM.patinaMon(CONTINUA[id],a); prima=false;
-    b=Math.min(k+1<st.length?st[k+1][0]:1e4,anno); p=cresciCon(rs,p,a,b); }
+    if(prima&&CONTINUA[id]&&p===0&&a>0) p=RM.patinaMon(CONTINUA[id],a,qt); prima=false;
+    b=Math.min(k+1<st.length?st[k+1][0]:1e4,anno); p=cresciCon(rs,p,a,b,qt); }
   return RM.patinaSpenta?0:p; };
+RM.patinaTetto=function(id,anno){ return RM.patinaMon(id,anno,true); };      // terzo giro: la dose dei coppi, con la quota del tetto dei restauri (quarto valore di RESTAURI)
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
 var SENZA_CANTIERE={dioscuri:1,curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1,marcoaureliolat:1,pignapietro:1,castrapretoriorasa:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};
@@ -2762,7 +2780,7 @@ RM.moduli.push(function(anno){
     o.mat.color.copy(TINTA[q.s0]).lerp(TINTA[q.s1],q.t);
     o.presenza=p; o.g.visible=p>.01; o.g.scale.y=cant?1:Math.max(p,.001); o.mat.userData.u.uCant.value=cant?q.t:1; ponteggio(o,cant?q.t:0);
     var rv=RM.rovina(o.id,anno); o.mat.userData.u.uRovina.value=rv.r; o.mat.userData.u.uSpoglio.value=rv.s; o.mat.userData.u.uCrepe.value=rv.c; o.mat.userData.u.uVerde.value=rv.v; o.mat.userData.u.uIntonaco.value=rv.i;
-    o.mat.userData.u.uPatina.value=RM.patinaMon(o.id,anno);      // la patina del tempo (si veda RM.patinaMon)
+    o.mat.userData.u.uPatina.value=RM.patinaMon(o.id,anno); o.mat.userData.u.uPatTetto.value=RM.patinaTetto(o.id,anno);      // la patina del tempo (si veda RM.patinaMon); i coppi a parte (RM.patinaTetto)
     o.mat.userData.u.uPulito.value=rv.pulito||0; if(rv.prima) o.mat.color.copy(TINTA.uso).lerp(TINTA[rv.prima]||TINTA.uso,rv.tinta);      // tornato in uso: si ripulisce per gradi (RIUSO)
     else if(q.s1==='uso' && q.s0!=='uso' && q.s0!=='assente') o.mat.color.copy(TINTA[q.s0]);      // e non schiarisce nei sei anni prima, come faceva la sfumatura degli stati
     var cr=CROLLI[o.id]; if(cr){ var uz=o.mat.userData.u; uz.uCrZona.value.set(cr.zona[0],cr.zona[1],cr.zona[2],cr.zona[3]); uz.uCrPeso.value.set(cr.peso[0],cr.peso[1],(cr.base||0)*(rv.k||0),cr.muri==null?1:cr.muri); }

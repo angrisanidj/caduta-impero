@@ -64,7 +64,15 @@ var mura=(function(){
   [tratti,torri,merliP,merliA,toppe].forEach(function(m){ m.geometry.setAttribute('aPatina',patI); }); magliaPorte.geometry.setAttribute('aPatina',patP);
   RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'},{maglia:merliP,id:'mura'},{maglia:merliA,id:'mura'},{maglia:toppe,id:'mura'}]);
   /* colore per istanza: le maglie condividono il materiale, quindi tutte lo devono avere (come negli acquedotti) */
-  var BIANCO=new THREE.Color(1,1,1), RICUPERO=new THREE.Color(.9,.72,.62),      /* mattone di recupero: mattoni vecchi tolti dalle rovine, più scuri e spenti del mattone nuovo; la patina del tratto riparte comunque da zero (secondo giro, 27 novembre 2026: prima 1,03, 0,86, 0,76, e al sole i lati nord ed est dei Castra sembravano quasi bianchi). Tinta scelta, non misurata */ PIETRA=new THREE.Color(.95,1.04,1.22), tinta=new THREE.Color();
+  var BIANCO=new THREE.Color(1,1,1), RICUPERO=new THREE.Color(.7,.6,.56),      /* terzo giro (27 novembre 2026): più scuro e grigio (prima 0,9, 0,72, 0,62), perché resti distinto dal mattone più rosso della cinta (MATTONI qui sotto) */      /* mattone di recupero: mattoni vecchi tolti dalle rovine, più scuri e spenti del mattone nuovo; la patina del tratto riparte comunque da zero (secondo giro, 27 novembre 2026: prima 1,03, 0,86, 0,76, e al sole i lati nord ed est dei Castra sembravano quasi bianchi). Tinta scelta, non misurata */ PIETRA=new THREE.Color(.95,1.04,1.22), tinta=new THREE.Color();
+  /* Il mattone della cinta (27 novembre 2026, terzo giro della patina; scelta della sessione, da confermare dall'utente). Platner e Ashby, Muri Aureliani: «They are built of concrete
+     faced with brick», e «The material used for the walls was largely older brick»: una cortina di laterizi in buona parte di recupero, quindi di cotture e tinte diverse. Prima la
+     cinta aveva il solo P.mattone e al sole sembrava travertino (beige-ocra, circa 219, 174, 110); qui un mattone più rosso, con cinque tinte che cambiano da un tratto all'altro (a
+     coppie di passi, dal posto: RM.grana) e un poco di luce in più o in meno per passo. Tinte scelte, non misurate. ?mura=prima rimette il colore di prima (per le prove). */
+  var MURA_PRIMA=/[?&]mura=prima/.test(location.search), MATTONI=[[.98,.62,.58],[.84,.56,.52],[1.0,.76,.62],[.9,.64,.6],[1.02,.66,.54]];      // rosso, rosso scuro, giallastro, bruno, arancio (moltiplicano P.mattone)
+  passi.forEach(function(p,j){ var t=MATTONI[Math.floor(RM.grana(Math.floor(j/2),77)*MATTONI.length)%MATTONI.length], l=.9+.2*RM.grana(j,78);
+    p.mattone=MURA_PRIMA?BIANCO:new THREE.Color(t[0]*l,t[1]*l,t[2]*l); });
+  if(MURA_PRIMA) RICUPERO.setRGB(.9,.72,.62);      // anche il mattone di recupero come prima
   [tratti,torri,merliP,merliA,toppe].forEach(function(m){ for(var j=0;j<passi.length;j++) m.setColorAt(j,BIANCO); }); for(k=0;k<Math.max(1,posti.length);k++) magliaPorte.setColorAt(k,BIANCO);
   passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; p.riva791=Math.hypot(p.x+117.4,p.z+7.4)<2.4; });      /* 25 novembre 2026: la cinta di riva ora parte dalla testata del ponte (prima 50 m più a valle): il tratto del 791 sono i suoi primi due passi */      // riva791: il tratto di mura sul Tevere presso ponte Sisto che la piena del dicembre 791 abbatte («usque ad pontem Antonini, ipsum evertens murum», Liber Pontificalis, Adriano I 95; ponte Sisto per Duchesne). Lunghezza indicativa; rifatto qui nel 795, anno ignoto     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
   /* Il cantiere. «Rome, which before had no walls, was now surrounded with them. This work was begun in the reign of Aurelianus, and was finished by Probus» (Zosimo I 49,
@@ -144,7 +152,7 @@ var mura=(function(){
       if(toppa&&anno<553){ paliSu=true; d.rotation.set(0,p.ang,p.pend,'YZX'); d.scale.set(p.len/Math.cos(p.pend),1,1); d.updateMatrix(); pali.setMatrixAt(j,d.matrix); } else zero(pali,j);      // i pali di Belisario: quando li si tolse non è scritto, qui con la fine della guerra
       d.position.set(p.x-Math.cos(p.ang)*p.len/2,p.yt,p.z+Math.sin(p.ang)*p.len/2); d.rotation.set(0,p.ang,0,'YZX'); d.scale.set(1,torreGiu?h*.12:sy,1); d.updateMatrix(); torri.setMatrixAt(j,d.matrix);      // una torre a ogni passo; a terra resta il moncone
       d.rotation.order='XYZ';
-      tinta.copy(anno>=p.rifatto?RICUPERO:BIANCO); if(toppa) tinta.multiply(PIETRA);
+      tinta.copy(anno>=p.rifatto?RICUPERO:p.mattone); if(toppa) tinta.multiply(PIETRA);
       tratti.setColorAt(j,tinta); torri.setColorAt(j,tinta); merliA.setColorAt(j,tinta); merliP.setColorAt(j,tinta); toppe.setColorAt(j,BIANCO);
       var rf=TEOD.indexOf(j)>=0&&anno>=493.5?493.5:0; p.ev.forEach(function(e){ if(e.a>530&&e.a<9999&&e.tipo!=='totila'&&anno>=e.a&&e.a>rf) rf=e.a; }); patI.array[j]=rf?pAn-PA(rf):pAn;      // patina: dall'ultimo restauro (Teodorico per ipotesi, Belisario nel 536, i papi); la fine della breccia di Totila non è un restauro: il rattoppo è di pietre vecchie
       var suPonteggio=rialzo||(c>.1&&c<1)||(teod&&TEOD.indexOf(j)>=0)||lavori;
@@ -192,7 +200,7 @@ var acque=(function(){
        (OpenStreetMap, via 1390965274); passa la via Lata sull'arco di Claudio (js/monumenti.js: l'arco porta il canale, nessuna campata fra i suoi spigoli, a 0,7 unità dal centro
        lungo la direzione del muro); le arcate finiscono «near the north-west angle of the church of S. Ignazio», dove stava il castello (coordinate della chiesa a memoria). */
     {passo:1.5, min:.4, castello:true, p:[[-22,-175,4.15,'s'],[-19,-150,4.12,'s'],[-16,-121,4.1,'a'],[-13.2,-112.4,4.08,'a'],[-17,-93,4.05,'a'],[-32.7,-76.41,4.01,'a'],
-      [-34.138,-75.987,4.0,'q',1.3],[-35.482,-75.593,4.0,'a'],[-36.92,-75.17,3.99,'a'],[-49,-74.5,3.97]]},
+      [-34.138,-75.987,4.0,'q',1.3,null,null,700],[-35.482,-75.593,4.0,'a'],[-36.92,-75.17,3.99,'a'],[-49,-74.5,3.97]]},
     /* 3. Traiana (Sabbatina). OpenStreetMap, vie 1331087548-1331087558 «Acquedotto Traiano» lungo l'Aurelia antica, dove oggi corre l'acqua Paola; il castello presso la porta
        Aurelia, poi San Pancrazio (it.wikipedia, «Acquedotto Traiano»): qui passa le mura una quarantina di metri a sud del fornice, che sta sull'angolo della cinta; poi giù dal Gianicolo verso i mulini e Trastevere (schema). */
     {passo:1.6, suolo:.5, p:[[-382,40.2,0,'m'],[-356.4,40.6,0,'m'],[-348.3,38.3,0,'m'],[-327.1,38.4,0,'m'],[-305.4,39.4,0,'m'],[-288.4,40.1,0,'m'],[-266.4,38.4,0,'m'],[-251,44.2,0,'m'],
@@ -206,16 +214,23 @@ var acque=(function(){
        vie 200350823 e 112174949 sul Celio, 131704036 e 131704118 ai piedi del Palatino; il punto 120,70, lungo via di Santo Stefano Rotondo, è un'ipotesi. Scavalca l'arco di Dolabella
        (js/monumenti.js). Fino al Patriarchio (x 156) è la Claudia che serve il Laterano e Adriano I la rifà; oltre, per ipotesi, resta in rovina dopo il 537. */
     {passo:3.2, min:.8, morto:function(x){ return x<156; }, p:[[244.9,17.4,9.74,'a'],[241,16.6,9.73,'a'],[234.6,18.1,9.71,'a'],[226,22,9.69,'a'],[220,27,9.67,'a'],[208,36.3,9.63,'a'],
-      [204.5,39.3,9.62,'a'],[196.2,45.7,9.59,'a'],[186,51.3,9.56,'a'],[176.9,54.4,9.53,'a'],[156.7,57.1,9.46,'a'],[120,70,9.2,'a'],[87.1,81.7,8.9,'a'],[82.16,76.83,8.87,'q',.65],
+      [204.5,39.3,9.62,'a'],[196.2,45.7,9.59,'a'],[186,51.3,9.56,'a'],[176.9,54.4,9.53,'a'],[156.7,57.1,9.46,'a'],[120,70,9.2,'a'],[87.1,81.7,8.9,'a'],[82.16,76.83,8.87,'q',.65,.89,.52],
       [81.56,76.29,8.86,'a'],[76.1,71.7,8.82,'a'],[71.1,66.9,8.78,'a'],[37,60.4,8.45,'a'],[32,59.4,8.4,'a'],[26,54,8.3]]}];
-  var el=[], rnd=RM.casuale(537), CIMA=.48, PEZZI=new RM.Costruttore();
+  var el=[], rnd=RM.casuale(537), CIMA=.48, PEZZI=new RM.Costruttore(), ATTICI_CADUTI=[];
   /* attico sopra una porta o sopra un arco: da sopra il fornice (alto «sotto») fino alla sommità del canale; per le porte anche le due pile ai lati del passaggio */
+  /* Sopra un arco che c'era già (a[5]: il suo orientamento, a[6]: la sua profondità; 27 novembre 2026, l'arco di Dolabella): la muratura sta sulla pianta dell'arco, di mattone come
+     gli archi neroniani, e non più larga di lui; prima era un blocco di travertino più profondo dell'arco (0,95 contro 0,52) e girato sul tracciato, che da vicino lo copriva come
+     un pilone. Platner e Ashby, Arcus Dolabellae et Silani: l'arco «is usually supposed to have been built to support a branch of the aqua Marcia …, and afterwards to have been used
+     by Nero in his extension of the aqua Claudia, the arcus Neroniani»: il canale gli passava sopra. Il contorno dell'arco su OpenStreetMap (Nominatim, «Porta Caelimontana») dà
+     l'orientamento del modello (0,89). Altezza e forma della muratura sopra l'arco sono uno schema. */
   function attico(a,b,sotto,pile){
-    var mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, L=Math.hypot(b[0]-a[0],b[1]-a[1]), y0=RM.h(mx,mz)-.3, su=(a[2]+b[2])/2-y0;
+    var mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, L=Math.hypot(b[0]-a[0],b[1]-a[1]), y0=RM.h(mx,mz)-.3, su=(a[2]+b[2])/2-y0, sopraArco=a[5]!=null, dp=sopraArco?a[6]:.95;
     if(su<sotto+.05) return;
-    PEZZI.dentro(mx,y0,mz,Math.atan2(-(b[1]-a[1]),b[0]-a[0]),function(B){
+    var dove=PEZZI; if(a[7]){ dove=new RM.Costruttore(); ATTICI_CADUTI.push({B:dove,fino:a[7]}); }      // a[7]: l'anno in cui l'attico cade con l'arco (la Vergine sull'arco di Claudio)
+    dove.dentro(mx,y0,mz,sopraArco?a[5]:Math.atan2(-(b[1]-a[1]),b[0]-a[0]),function(B){
       if(pile) B.scatola(.62,sotto,.95,-(L/2-.31),0,0,P.travertino).scatola(.62,sotto,.95,L/2-.31,0,0,P.travertino);
-      B.scatola(L,su-sotto,.95,0,sotto,0,P.travertino).scatola(L+.12,.07,1.05,0,su-.07,0,P.travertino);
+      if(sopraArco) B.scatola(L-.04,su-sotto-.12,dp-.06,0,sotto,0,P.mattone).scatola(L,.12,dp,0,su-.12,0,P.travertino);      // muratura neroniana appena arretrata dal filo dell'arco (20-30 cm), il canale in cima
+      else B.scatola(L,su-sotto,.95,0,sotto,0,P.travertino).scatola(L+.12,.07,1.05,0,su-.07,0,P.travertino);
     });
   }
   /* castello d'acqua alla fine di una linea: posizione dalle fonti dette sopra, forma e misure indicative */
@@ -249,6 +264,15 @@ var acque=(function(){
     e.rotto756=VENTI[e.li]&&b[1]<.45?756+b[3]*.4:9999;
     e.rifatto=e.perso?9999:774+b[3]*5.5;
   });
+  /* La Vergine sulla via Lata (27 novembre 2026). Platner e Ashby, Arcus Claudii (2): l'arco «formed part of the aqua Virgo, where this aqueduct crossed the via Lata, just north
+     of the Saepta. It seems to have been in ruins as early as the eighth century»; Aqua Virgo: «It was repaired by Hadrian I», e il Liber Pontificalis (vita di Adriano I, c. LXV,
+     Duchesne I, p. 505) dice la forma Virginis «demolita atque a ruinis plena», tanto che «vix modica aqua in urbe Roma ingrediebat», rifatta «a noviter» fino a dissetare «poene
+     totam civitatem». Prima il modello faceva crollare l'arco nel 700 e lasciava il canale intatto ai suoi lati e sopra. Ora con l'arco (700, anno scelto) cadono la campata
+     che lo tocca da ogni lato e l'attico; le arcate oltre la via Lata, verso i Saepta, restano senza canale e Adriano I non le rifà, perché l'arco resta in rovina: dove portasse
+     l'acqua rifatta da Adriano, la fonte non lo dice. Sono scelte, dette nella scheda dell'arco. */
+  el.forEach(function(e){ if(e.li!==2) return; var dA=Math.hypot(e.x+34.81,e.z+75.79);
+    if(dA<2.6){ e.cede=Math.min(e.cede,700); e.rifatto=9999; e.cadeArco=true; }
+    if(e.x<-35){ e.spentaDa=700; e.rifatto=9999; } });
   el=el.filter(function(e){ return e.vis; }); RM.campateAcquedotti=el;          // sotto le arcate non si costruisce (js/citta.js)
   /* arcata: due mezze pile, arco a tutto sesto, canale; senza canale per i tratti in rovina. Pila: le due mezze pile sotto l'imposta, allungate fino al suolo */
   var r=.3, c=.36, k, a0, a1;
@@ -266,6 +290,7 @@ var acque=(function(){
   var R=new RM.Costruttore().scatola(.42,.5,.95,0,0,0,P.tufo); R.quad([-.21,.5,.47],[.21,.5,.47],[.21,.5,-.47],[-.21,.95,-.47],P.tufo).tri([-.21,.5,.47],[-.21,.95,-.47],[-.21,.5,-.47],P.tufo);   // moncone
   var mat=RM.matPietra(classe('acquedotti')), N=el.length, arcate=istanze(arcata(true),mat,N*2), spente=istanze(arcata(false),mat,N*2), pile=istanze(Pl.geometria(),mat,N), monconi=istanze(R.geometria(),mat,N), ultimo=-1, tinta=new THREE.Color(), MATTONE=RM.col(0xe4c6b2), BIANCO=new THREE.Color(1,1,1);
   var pezzi=PEZZI.maglia(mat); pezzi.castShadow=pezzi.receiveShadow=true; RM.scene.add(pezzi);
+  ATTICI_CADUTI.forEach(function(o){ o.m=o.B.maglia(mat); o.m.castShadow=o.m.receiveShadow=true; RM.scene.add(o.m); });
   function quale(c){ var e=el[c.instanceId%N]; return e&&e.li===4?'antoniniano':'acquedotti'; }
   RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:arcate,id:quale},{maglia:spente,id:quale},{maglia:pile,id:quale},{maglia:monconi,id:quale},{maglia:pezzi,id:'acquedotti'}]);
   for(k=0;k<N;k++) monconi.setColorAt(k,BIANCO);                                 // le maglie condividono il materiale: tutte devono avere il colore per istanza
@@ -273,6 +298,7 @@ var acque=(function(){
   function vicino(i,j){ return j>=0&&j<el.length&&el[j].li===el[i].li&&Math.abs(el[j].ord-el[i].ord)===1; }
   return function(anno){
     var passo=Math.round(anno*4); if(passo===ultimo) return; ultimo=passo;
+    ATTICI_CADUTI.forEach(function(o){ o.m.visible=anno<o.fino; });
     var st=el.map(function(e){
       var riparato=e.ripara<9999, perIncuria=e.cede<9999&&!(riparato&&e.cede<e.ripara);        // un crollo precedente alla riparazione viene rimesso su con quella
       var giuTaglio=anno>=e.taglio&&!(anno>=e.ripara), giuIncuria=anno>=e.cede&&(perIncuria||anno<e.ripara), caduto=giuTaglio||giuIncuria||anno>=e.rotto756;
@@ -288,7 +314,7 @@ var acque=(function(){
       i=j+1;
     }
     el.forEach(function(e,j){
-      var s=st[j], rotto=s.rotto, spenta=e.perso&&anno>=537, ar=spenta?spente:arcate, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
+      var s=st[j], rotto=s.rotto, spenta=(e.perso&&anno>=537)||anno>=(e.spentaDa||9999), ar=spenta?spente:arcate, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
       d.rotation.set(0,e.ang,0);
       zero(spenta?arcate:spente,j); zero(spenta?arcate:spente,N+j);
       if(rotto){ zero(ar,j); zero(ar,N+j); zero(pile,j); }
