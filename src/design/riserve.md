@@ -198,6 +198,17 @@ Fonti di questo elenco: messaggi dei commit dal 26 novembre alle 12 al 27 alle 7
 | 126 | Le due case dell'isola: nessuna fonte; lasciate nel 550, senza tetto dal 600, muri che calano fino al 700 (scelte, dette nella scheda). | Isola Tiberina | Una fonte sull'isola fra VI e IX secolo | noi | aperta |
 | 127 | `PIANTA_REG` in `js/citta.js` non è rifatta: in `js/regioni.js` la regione XIV ha due punti nuovi sull'isola (`isolatiberina`, `obeliscoisola`), accanto a `esculapio`; il confine attorno all'isola potrebbe muoversi di poco. | Isola Tiberina | Rifare la pianta con lo script dello scratchpad e confrontare | noi | aperta |
 
+## Dal lavoro sui Castra Praetoria (27 novembre, mezzogiorno; da-guardare, scheda 28)
+
+| N | Riserva | Da quale lavoro | Che cosa serve per chiuderla | Chi la chiude | Stato |
+|---|---|---|---|---|---|
+| 128 | Cimitero del VI secolo: una sola riga di Platner (nota 3, da De Rossi, Roma Sotterranea I 218, e Grisar). Né il LTUR né la Soprintendenza ne parlano. Posto (a ovest, presso la vecchia porta), estensione, 30 tombe e anno 500 sono schema, detti in scheda. | Castra Praetoria | Leggere De Rossi, Roma Sotterranea I 218 (non trovato in rete in dieci minuti) | noi | aperta |
+| 129 | Interno: misurati negli scavi solo gli otto edifici del quadrante sud-est, le tre file di Lanciani, l'horreum, l'edificio a cortile, la stanza di Fortuna (LTUR e pianta di Buzzetti); le file lungo il lato nord sono tratteggiate nella pianta; le altre file, le vie, il quartier generale, l'armeria e il sacello di Marte sono schema (le fonti li nominano ma non dicono dove). Altezze (due piani) e tetti: schema. | Castra Praetoria | Richmond, PBS X 12-22, e CAR III (non letti) | noi | aperta |
+| 130 | Dopo il 312: «presumably» in Platner (i muri interni non usati da Aureliano). Che le caserme siano rase alle fondamenta e quale tratto del lato ovest resti in piedi (nel modello tre pezzi a 60-150 m dall'angolo nord-ovest) sono scelte. | Castra Praetoria | Lanciani, Storia degli scavi I 243 (non letta) | noi | aperta |
+| 131 | Angolo nord-ovest: il moncone che sporge a nord è il tratto 14-15 di `RM_TOPO.mura` (da OpenStreetMap): le mura di Aureliano arrivano 21 m a nord del lato nord dei Castra e scendono fino all'angolo. Non toccato: `js/roma-topo.js` è generato e `RM.MURA` serve anche a `dentroMura`, alle case e ai cantieri. | Castra Praetoria | Decidere in `src/roma/genera.mjs` se il punto 14 va spostato sull'allineamento del lato nord, poi rigenerare e riprovare le case vicine | noi, poi l'utente | aperta |
+| 132 | Il restauro bizantino del recinto (VI secolo, finestre chiuse) e il lato sud forse rifatto con blocchi di tufo (LTUR) non sono nel modello; sono mura di Aureliano (`js/mura.js`). | Castra Praetoria | Lavoro su `js/mura.js` | noi | aperta |
+| 133 | Le mura di Aureliano sui lati nord ed est (`js/mura.js`) da vicino restano chiare, quasi bianche, accanto al mattone più scuro del lato ovest. | Castra Praetoria | Guardarle con l'utente; tinta in `js/mura.js` | noi, poi l'utente | aperta |
+
 ## Scelte fatte senza chiedere, da confermare
 
 1. Le corse nel Circo Massimo solo in alcune tappe: 235, 260, 301 (il 284 tolto il 27 novembre: è un intermezzo e la città resta al 274), 330, 363, 384, 402, 418, 439, 468, 507 (una sì e una no, saltando quelle con un'altra scena vicina) (86bd7ae).

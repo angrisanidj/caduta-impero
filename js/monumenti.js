@@ -630,14 +630,91 @@ function arcoUno(B,w,p,h,f,hf,x,y,z,ry,col,quadro){
 }
 /* Castra Praetoria: gli spigoli sono quelli delle mura del modello (js/roma-topo.js, da OpenStreetMap): nord-ovest, nord-est, sud-est; sud-ovest ricavato; SU è dove la cinta Aureliana
    lascia il lato sud. muri = lato ovest e metà ovest del lato sud (quelli che Aureliano non usa); camere = la fila di camere lungo l'interno dei quattro lati */
-var CASTRA=(function(){ var C=[179,-156.5], NO=[153.6,-170.3], NE=[189.1,-183.2], SE=[204.4,-142.7], SO=[168.9,-129.8], SU=[181.1,-132.4], muri=[], camere=[], zone=[];
-  function passi(a,b,dentro,lista){ var len=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(len/3)), mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, ix=C[0]-mx, iz=C[1]-mz, m=Math.hypot(ix,iz);
+var CASTRA=(function(){ var C=[179,-156.5], NO=[153.6,-170.3], NE=[189.1,-183.2], SE=[204.4,-142.7], SO=[168.9,-129.8], SU=[181.1,-132.4], S18=[198.7,-137.3], muri=[], camere=[], zone=[];
+  function passi(a,b,dentro,lista,tiene){ var len=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(len/3)), mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, ix=C[0]-mx, iz=C[1]-mz, m=Math.hypot(ix,iz);
     for(var k=0;k<n;k++){ var t=(k+.5)/n, x=a[0]+(b[0]-a[0])*t+ix/m*dentro, z=a[1]+(b[1]-a[1])*t+iz/m*dentro;
-      lista.push({x:x,z:z,len:len/n,ang:Math.atan2(-(b[1]-a[1]),b[0]-a[0])}); if(k%2===0) zone.push([x-C[0],z-C[1],1.3]); } }
+      lista.push({x:x,z:z,len:len/n,ang:Math.atan2(-(b[1]-a[1]),b[0]-a[0]),tiene:!!tiene}); if(k%2===0) zone.push([x-C[0],z-C[1],1.3]); } }
   passi(NO,SO,0,muri); passi(SO,SU,0,muri);
-  [[NO,NE],[NE,SE],[SE,SO],[SO,NO]].forEach(function(l){ passi(l[0],l[1],.45,camere); });
+  /* 27 novembre 2026: le camere del lato sud seguono il muro vero (SE, la piega S18 e SU, gli stessi punti delle mura di js/mura.js): prima andavano diritte da SE a SO e vicino a SU
+     restavano fino a 20 m staccate dal muro. «tiene»: le camere addossate ai lati entrati nelle mura di Aureliano, che restano dopo il 312 (quelle dei lati nord ed est si vedono ancora) */
+  [[NO,NE,1],[NE,SE,1],[SE,S18,1],[S18,SU,1],[SU,SO,0],[SO,NO,0]].forEach(function(l){ passi(l[0],l[1],.45,camere,l[2]); });
   var t=19/Math.hypot(SO[0]-NO[0],SO[1]-NO[1]);                                                    // la porta ovest, a 190 m dal lato nord
-  return {C:C, muri:muri, camere:camere, zone:zone, porta:[NO[0]+(SO[0]-NO[0])*t, NO[1]+(SO[1]-NO[1])*t], ang:Math.atan2(-(SO[1]-NO[1]),SO[0]-NO[0])}; })();
+  return {C:C, NO:NO, NE:NE, SE:SE, SO:SO, muri:muri, camere:camere, zone:zone, porta:[NO[0]+(SO[0]-NO[0])*t, NO[1]+(SO[1]-NO[1])*t], ang:Math.atan2(-(SO[1]-NO[1]),SO[0]-NO[0])}; })();
+/* Castra Praetoria, dentro (27 novembre 2026; l'utente, sul campo vuoto a prato del 300: «Questo spazio in alto cosa è?»). Fonti lette, in coda a src/testi/topografia-fonti.md,
+   «Castra Praetoria, dentro»: Platner e Ashby, Castra Praetoria; LTUR I (1993), 251-254, voce di E. Lissi Caronna, con la pianta di C. Buzzetti del 1975 (fig. 145).
+   Misurati negli scavi (LTUR): gli otto edifici del quadrante sud-est, lunghi 76,65 m e larghi 12, a doppia fila di camere, con l'asse est-ovest (scavi 1960-66); altri con l'asse
+   nord-sud a est e a ovest di quelli; le tre file di celle di Lanciani lungo viale Castro Pretorio (celle di 3,65 x 5,37 m in due file con la parete di fondo comune, asse nord-sud,
+   scalette a due rampe con pianerottoli di 2,10 x 1,10 m); un horreum semisotterraneo largo 17 m, visto per 48, con le stanze aperte a nord e un ambulacro a est; nel nord
+   un edificio largo 21 m con cortile e due bracci di una sola fila di camere, e una vasca lunga e stretta sul lato est; la stanza dell'altare di Fortuna Restitutrix, a est della
+   porta nord (Platner). Le posizioni sono prese dalla pianta di Buzzetti (n = metri dal lato nord, e = metri dal lato est). Lungo il lato nord le file di edifici sono
+   tratteggiate nella pianta: qui le teniamo, come schema. SCHEMA, detto nella scheda: altezze e tetti (due piani, coppi), le file aggiunte per riempire i quadranti dove gli scavi
+   non dicono nulla, le vie (via principalis da nord a sud e porta praetoria a ovest secondo Richmond, in Platner), principia, armeria e tempietto di Marte: le fonti li nominano
+   (iscrizioni, Tacito) ma non dicono dove stavano. */
+var CASTRA_DENTRO=(function(){ var NO=CASTRA.NO, NE=CASTRA.NE, SE=CASTRA.SE, SO=CASTRA.SO;
+  function campo(n,e){ var fu=(380-e)/380, fv=n/440, a=[NO[0]+(NE[0]-NO[0])*fu, NO[1]+(NE[1]-NO[1])*fu], b=[SO[0]+(SE[0]-SO[0])*fu, SO[1]+(SE[1]-SO[1])*fu]; return [a[0]+(b[0]-a[0])*fv, a[1]+(b[1]-a[1])*fv]; }
+  var E=[], i;
+  for(i=0;i<8;i++) E.push({n:214+i*19.3, e:123.5, L:76.65, W:12, asse:'ew', h:6, scavo:1});                                      // gli otto edifici degli scavi 1960-66
+  E.push({n:247.5,e:36,L:65,W:12,asse:'ns',h:6,scavo:1},{n:320,e:36,L:65,W:12,asse:'ns',h:6,scavo:1},{n:252,e:172,L:75,W:12,asse:'ns',h:6,scavo:1});      // a est e a ovest degli otto (lunghezze: schema)
+  [[140,88],[262,78],[362,60]].forEach(function(q){ E.push({n:q[0], e:295, L:q[1], W:12.7, asse:'ns', h:6.5, scale:1, scavo:1}); });      // le tre file di Lanciani (la terza, vista per 43 m, allungata: schema)
+  [[140,88],[262,78],[362,60]].forEach(function(q){ [245,345].forEach(function(e){ E.push({n:q[0], e:e, L:q[1]-6, W:12.7, asse:'ns', h:6.5, scale:1}); }); });      // file parallele: schema
+  [62,89,116,143,170,224].forEach(function(e){ E.push({n:43, e:e, L:50, W:13, asse:'ns', h:6}); });                               // lungo il lato nord, tratteggiate nella pianta di Buzzetti: schema
+  [82,101,120,139,162].forEach(function(n){ E.push({n:n, e:83.5, L:72, W:12, asse:'ew', h:6}); });                                 // nel quadrante nord-est, come gli otto: schema
+  E.push({n:95, e:26, L:58, W:21, asse:'ns', tipo:'cortile', scavo:1});                                                             // l'edificio a cortile con la vasca a est
+  E.push({n:12, e:180, L:8, W:8, asse:'ew', tipo:'stanza', scavo:1});                                                              // la stanza dell'altare di Fortuna Restitutrix
+  E.push({n:378, e:104, L:48, W:17, asse:'ew', tipo:'horrea', scavo:1});                                                           // l'horreum semisotterraneo (posto nel quadrante: schema)
+  E.push({n:176, e:153.5, L:57, W:52, asse:'ew', tipo:'principia'}, {n:132, e:156, L:43, W:24, asse:'ew', tipo:'armeria'}, {n:104, e:156, L:9, W:14, asse:'ew', tipo:'tempietto'});      // schema
+  var vie=[[[6,190],[434,190]],[[190,196],[190,374]],[[190,6],[190,125]],[[9,5],[9,40]]];                                           // [n,e]: principalis, praetoria, decumana; l'ultima, la strada basolata di 35 m di Lanciani davanti alle celle, all'angolo nord-est
+  return {campo:campo, EW:Math.atan2(-(NE[1]-NO[1]),NE[0]-NO[0]), NS:CASTRA.ang, edifici:E, vie:vie}; })();
+/* un tratto del muro ovest o sud-ovest (fuori = +z locale), intero o rasato (dopo il 312). Colori più scuri dei comuni: con la luce della scena il mattone chiaro e la selce
+   dall'alto si leggevano come un nastro bianco */
+var CORNICE_C=RM.col(0x87604a), MATT_C=RM.col(0x9c7158), RETIC_C=RM.col(0xa08b6c), CAMMINO_C=RM.col(0x857867), VIE_C=RM.col(0x8a7d6a);
+function castraMuro(B,p,raso){
+  if(raso){ B.scatola(p.len+.05,.08+.06*((p.x*7.1)%1+1)%1,.3,0,-.05,0,MATT_C); return; }
+  B.scatola(p.len+.1,.35,.3,0,-.05,0,MATT_C).scatola(p.len+.1,.025,.34,0,.3,0,CORNICE_C).scatola(p.len+.1,.06,.06,0,.325,.12,MATT_C).scatola(p.len+.1,.035,.04,0,.325,-.13,MATT_C).scatola(p.len+.1,.005,.2,0,.325,0,CAMMINO_C);
+  var n=Math.max(1,Math.round(p.len/.3)); for(var k=0;k<n;k++) B.scatola(.15,.06,.06,-p.len/2+(k+.5)*p.len/n,.385,.12,MATT_C);      // i merli, a 3 m
+}
+/* una fila di camere addossate al muro (dentro = +z locale): intere, o rasate (dopo il 312, sui lati che Aureliano non usa) */
+function castraCamere(B,p,raso){
+  if(raso){ B.scatola(p.len,.1,.4,0,-.05,0,RETIC_C); return; }
+  B.scatola(p.len+.05,.33,.4,0,-.03,0,RETIC_C).scatola(p.len+.05,.02,.42,0,.3,0,CAMMINO_C);
+  var n=Math.max(1,Math.round(p.len/.42)); for(var k=0;k<n;k++) B.vano(-p.len/2+(k+.5)*p.len/n,0,.204,1,0,.16,.22,true);      // una porta per cella
+}
+/* disegna un edificio del campo: intero (caserma) o raso alle fondamenta (dopo il 312) */
+function castraEdificio(B,X,Z,o,raso){
+  var p=CASTRA_DENTRO.campo(o.n,o.e), ry=o.asse==='ns'?CASTRA_DENTRO.NS:CASTRA_DENTRO.EW, L=o.L/10, W=o.W/10, h=(o.h||6)/10;
+  var v=Math.abs(Math.sin(o.n*12.9898+o.e*78.233)*43758.5)%1, muro=v<.5?RETIC_C:MATT_C, t=o.tipo||'caserma';      // reticolato di tufo o mattone, alternati (schema)
+  var P={coppi:RM.P.coppi, selce:VIE_C, acqua:RM.P.acqua, marmo:RM.P.marmo, travertino:RM.P.travertino, intonaco:RM.P.intonaco};      // i coppi restano P.coppi: il Costruttore riconosce il tetto dal colore (tipoDi)
+  luogo(B,X,Z,p[0],p[1],ry,Math.min(L,W)/2,function(B){
+    if(raso){ var hr=.05+.06*v, sp=.067;                                                                                          // muri di 67 cm (LTUR) rasati a 0,5-1,1 m
+      [[0,W/2-sp/2],[0,-W/2+sp/2]].forEach(function(q,k){ var tre=L/3; for(var j=0;j<3;j++) if((j+k+Math.floor(v*7))%4!==0) B.scatola(tre-.02,hr+.1,sp,-L/2+tre*(j+.5),-.1,q[1],muro); });
+      if(t==='caserma') B.scatola(L*.8,hr*.7+.1,sp,0,-.1,0,muro);                                                                 // la parete di fondo comune
+      [-1,1].forEach(function(s){ B.scatola(sp,hr+.1,W,s*(L/2-sp/2),-.1,0,muro); });
+      return; }
+    if(t==='caserma'){
+      B.scatola(L,h+.3,W,0,-.3,0,muro).falde(L+.06,W*.24,W+.1,0,h,0,P.coppi,0,muro);
+      var n=Math.max(2,Math.floor(L/.432)), k;
+      for(k=0;k<n;k++){ var x=-L/2+(k+.5)*L/n; B.vano(x,0,W/2+.004,1,0,.15,.22,true).vano(x,0,-W/2-.004,-1,0,.15,.22,true); if(h>.55 && k%2) B.vano(x,.36,W/2+.004,1,0,.08,.1,true); }      // una porta per cella sui due lati; al piano di sopra una finestra ogni due
+      if(o.scale) for(k=3;k<n-1;k+=6){ var xs=-L/2+(k+.5)*L/n; B.scatola(.21,.3,.11,xs,0,W/2+.06,muro); }                     // le scalette, con pianerottoli di 2,10 x 1,10 m
+    } else if(t==='cortile'){
+      [-1,1].forEach(function(s){ B.scatola(L,.42,.5,0,-.3,s*(W/2-.25),muro).falde(L+.04,.12,.56,0,.12,s*(W/2-.25),P.coppi,0,muro); });      // i due bracci di una sola fila di camere
+      B.scatola(.3,.4,W-1,L/2-.15,-.3,0,muro).scatola(.3,.4,W-1,-L/2+.15,-.3,0,muro).scatola(L-.6,.02,W-1,0,-.01,0,P.selce);
+      B.scatola(L*.8,.04,.18,0,-.02,-W/2-.22,P.selce).scatola(L*.78,.03,.12,0,.0,-W/2-.22,P.acqua);                             // la vasca lunga e stretta sul lato est
+    } else if(t==='stanza'){ B.scatola(L,.42,W,0,-.3,0,muro).falde(L+.04,.16,W+.06,0,.12,0,P.coppi,0,muro);
+    } else if(t==='horrea'){                                                                                                        // semisotterraneo: sporge poco dal suolo
+      B.scatola(L,.42,W,0,-.3,0,muro).falde(L+.04,.18,W+.06,0,.12,0,P.coppi,0,muro);
+      for(var j=0;j<8;j++) B.vano(-L/2+(j+.5)*L/8,0,-W/2-.004,-1,0,.28,.09,true);                                                 // otto stanze aperte a nord
+      B.scatola(.3,.38,W,L/2+.15,-.3,0,muro);                                                                                      // l'ambulacro a est
+    } else if(t==='principia'){                                                                                                     // fronte verso la via principalis, a ovest (-x)
+      B.scatola(L,.02,W,0,-.01,0,P.selce);
+      [-1,1].forEach(function(s){ B.scatola(L,.95,.8,0,-.3,s*(W/2-.4),muro).falde(L+.04,.2,.86,0,.65,s*(W/2-.4),P.coppi,0,muro); });
+      [-1,1].forEach(function(s){ B.scatola(.8,.95,1.5,-L/2+.4,-.3,s*1.05,muro).falde(1.54,.2,.86,-L/2+.4,.65,s*1.05,P.coppi,PI/2,muro); });      // fronte con l'ingresso in mezzo
+      B.scatola(.8,.95,W-1.6,L/2-.4,-.3,0,muro).falde(W-1.56,.2,.86,L/2-.4,.65,0,P.coppi,PI/2,muro);
+      B.scatola(1.3,1.35,1.5,L/2-.95,-.3,0,muro).falde(1.36,.32,1.56,L/2-.95,1.05,0,P.coppi,0,muro);                            // il sacello delle insegne
+      B.scatola(.5,.18,.9,L/2-1.95,-.03,0,P.marmo);                                                                                  // il tribunale
+    } else if(t==='armeria'){ B.scatola(L,.95,W,0,-.3,0,muro).falde(L+.06,.34,W+.1,0,.65,0,P.coppi,0,muro); B.vano(-L/2-.004,0,0,0,1,.4,.45);
+    } else if(t==='tempietto'){ B.scatola(L,.38,W,0,-.3,0,P.travertino).scatola(L*.7,.5,W*.7,.05,.08,0,P.intonaco).falde(L*.74,.18,W*.74,.05,.58,0,P.coppi,0,P.intonaco); }
+  });
+}
 /* circo Variano: asse dai carceres verso nord-nord-est (vedi la voce sessoriano); zone lungo l'asse, relative all'anfiteatro Castrense */
 var VARIANO={x:277.7, z:25.3, ry:1.065};
 
@@ -1862,14 +1939,32 @@ var M=[
  /* Niente insulae dentro il campo (25 novembre 2026; prima ce n'erano 33 nel 300, quando era una caserma). Dentro c'erano gli alloggi lungo le mura, le vie, i sacelli e l'armeria
     (Platner e Ashby); dopo il 312 Costantino «dismantled their barracks», e nel campo si è trovato un cimitero cristiano dell'inizio del VI secolo: case non ne dice nessuno,
     e il recinto resta vuoto in ogni anno. La zona è il rettangolo dei quattro spigoli, girato come il campo (0,348 rad). */
+ /* 27 novembre 2026: i muri sono di mattone fino alla cornice di mattoni sagomati (2,96 m), poi parapetto e merli per 1,20 m, i merli a 3 m l'uno dall'altro (LTUR, per i lati
+    nord ed est; il lato ovest era più spesso); prima avevano una copertina di tufo, e con le camere intonacate in cima dall'alto si leggevano come un nastro bianco. Le camere:
+    reticolato di tufo, una porta per cella (larghe 3,60 m in media, alte 3), il camminamento lastricato sopra. Dentro, le caserme e il resto (CASTRA_DENTRO, più sopra). */
  {id:'castrapretorio', nome:'Castra Praetoria', x:179,z:-156.5, ry:0, zone:CASTRA.zone.concat([[0,0,[16.4,19.1],0,.348]]), fa:function(B){
     var X=CASTRA.C[0], Z=CASTRA.C[1];
-    CASTRA.muri.forEach(function(p){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ B.scatola(p.len+.1,.52,.3,0,-.05,0,P.mattone).scatola(p.len+.1,.06,.36,0,.47,0,P.tufo); }); });
-    CASTRA.camere.forEach(function(p){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ B.scatola(p.len+.05,.33,.4,0,-.03,0,P.intonaco); }); });
+    CASTRA.muri.forEach(function(p){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ castraMuro(B,p,false); }); });
+    CASTRA.camere.forEach(function(p){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ castraCamere(B,p,false); }); });
     luogo(B,X,Z,CASTRA.porta[0],CASTRA.porta[1],CASTRA.ang,.6,function(B){
       [-1,1].forEach(function(s){ B.scatola(.5,.75,.6,s*.55,-.05,0,P.mattone); });
       B.scatola(.6,.62,.36,0,-.05,0,P.mattone).vano(0,-.05,.19,1,0,.36,.45).vano(0,-.05,-.19,-1,0,.36,.45);
     });
+    CASTRA_DENTRO.edifici.forEach(function(o){ castraEdificio(B,X,Z,o,false); });
+    CASTRA_DENTRO.vie.forEach(function(v){ var a=CASTRA_DENTRO.campo(v[0][0],v[0][1]), b=CASTRA_DENTRO.campo(v[1][0],v[1][1]), L=Math.hypot(b[0]-a[0],b[1]-a[1]), n=Math.max(1,Math.round(L/2)), ang=Math.atan2(-(b[1]-a[1]),b[0]-a[0]);
+      for(var k=0;k<n;k++){ var t=(k+.5)/n, x=a[0]+(b[0]-a[0])*t, z=a[1]+(b[1]-a[1])*t; B.dentro(x-X,Math.max(RM.h(x,z),RM.h(x+.8,z),RM.h(x-.8,z),RM.h(x,z+.8),RM.h(x,z-.8))-quota(X,Z)-.05,z-Z,ang,function(B){ B.scatola(L/n+.05,.2,L<5?.5:.9,0,-.12,0,VIE_C); }); } });      // vie di 9 m (strada di Lanciani 5 m), posate sul punto più alto del tratto: schema
+ }},
+ /* Dopo il 312: «Constantine disbanded the praetorian guard and dismantled their barracks, presumably by destroying the inner walls that had not been used by Aurelian»
+    (Platner e Ashby, da Zosimo II 17: «destroyed the fortresses in which they used to reside»). Qui: il lato ovest e la metà ovest del lato sud rasati a monconi, salvo un
+    tratto in piedi («a part of the west wall is reported as standing in the sixteenth century»: quale tratto non si sa, schema); le caserme rase alle fondamenta, che l'erba
+    copre con gli anni (lo stato «abbandonato»); le camere addossate ai lati nord, est e sud-est, entrati nelle mura di Aureliano, restano. Dopo, per la Soprintendenza, il campo
+    resta «sostanzialmente non occupato dall'età medievale sino al XVII secolo». Dall'inizio del VI secolo il cimitero cristiano (TOMBE in js/scene-tappe.js). */
+ {id:'castrapretoriorasa', nome:'Castra Praetoria', x:179,z:-156.5, ry:0, zone:[], fa:function(B){
+    var X=CASTRA.C[0], Z=CASTRA.C[1];
+    CASTRA.muri.forEach(function(p,i){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ if(i>=2&&i<=4) castraMuro(B,p,false); else if(i%5!==3) castraMuro(B,p,true); }); });
+    CASTRA.camere.forEach(function(p,i){ luogo(B,X,Z,p.x,p.z,p.ang,.6,function(B){ if(p.tiene) castraCamere(B,p,false); else if(i%4) castraCamere(B,p,true); }); });
+    luogo(B,X,Z,CASTRA.porta[0],CASTRA.porta[1],CASTRA.ang,.6,function(B){ [-1,1].forEach(function(s){ B.scatola(.5,.2,.6,s*.55,-.05,0,P.mattone); }); });
+    CASTRA_DENTRO.edifici.forEach(function(o){ castraEdificio(B,X,Z,o,true); });
  }},
  /* Terme di Nerone (62 o 64), rifatte da Alessandro Severo nel 227 e da allora dette Alessandrine: «a rectangular area extending from the north-west corner of the Pantheon to the stadium
     of Domitian, an area of about 190 by 120 metres, and fronted north», con il caldarium che sporge dal centro del lato sud (Platner e Ashby, Thermae Neronianae). Il riquadro sta fra lo stadio
@@ -2420,7 +2515,7 @@ var etichette=document.createElement('div'); etichette.className='etichette3d'; 
 function globale(o,lx,lz){ var c=Math.cos(o.ry||0), s=Math.sin(o.ry||0); return [o.x+lx*c+lz*s, o.z-lx*s+lz*c]; }
 /* prima le zone: sotto ogni monumento il terreno si spiana alla quota del suo centro; poi si posa il suolo */
 var PENDIO={campanilepietro:1,monasteripietro:1,porticopietro:1,scholae:1,leonine:1,mulini:1,monasteripietro2:1,andreapietro:1,petronilla:1,episcopiapietro:1,scholae2:1,obeliscovaticano:1,ospizionaumachia:1};        // complessi che seguono il pendio: niente terrazza
-['orologio','castrapretorio','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });
+['orologio','castrapretorio','castrapretoriorasa','foroboario','esquilino','sessoriano','archivialata','campidoglio'].forEach(function(k){ PENDIO[k]=1; });
 ['magnamater','tiberiana'].forEach(function(k){ PENDIO[k]=1; });
 ['ercolevincitore','portuno','giano','argentari','arcogallieno','trofeimario','servianetermini','servianeaventino'].forEach(function(k){ PENDIO[k]=1; });      // 27 novembre 2026: pezzi usciti dai gruppi foroboario ed esquilino, che seguono il pendio; ognuno al piede di prima (luogo)      // 26 novembre 2026 (sera): sul pianoro del Palatino, che nel modello è la terrazza del gruppo palatino; RM.hGrezza lì sta 6 unità più in basso
 ['casasallustio','hortilamianistatue','hortisallustiani','hortiacilii','hortimaecenatis','hortilamiani','hortiliciniani','hortiluculliani','hortispeiveteris','horticaesaris'].forEach(function(k){ PENDIO[k]=1; });      // gli horti (26 novembre 2026): ogni pezzo sul suo terreno, senza zona (le case stanno già fuori dal cerchio di RM.HORTI)      // i gruppi dell'inventario del 22 novembre 2026: pezzi lontani, ognuno sul suo terreno
@@ -2564,7 +2659,7 @@ RM.patinaMon=function(id,anno){ var st=D.MONUMENTI[id]||COMPARSA, PA=RM.patinaAn
   return p; };
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
-var SENZA_CANTIERE={dioscuri:1,curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1,marcoaureliolat:1,pignapietro:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};
+var SENZA_CANTIERE={dioscuri:1,curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1,marcoaureliolat:1,pignapietro:1,castrapretoriorasa:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};
 function ponteggio(o,t){
   if(!t||SENZA_PONTEGGI[o.id]||o.raggio>22){ if(o.pont) o.pont.visible=false; return; }
   if(!o.pont){

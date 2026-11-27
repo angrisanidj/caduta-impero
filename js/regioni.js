@@ -46,7 +46,7 @@ var REGIONI=[
   nota:'Che la «Minerva medica» del catalogo sia proprio l\'edificio che il modello chiama così non è stato verificato.'},
  {n:'VI', it:'Alta Semita', la:'Alta Semita', cat:[3403,146,18,75,73,16],
   cosa:'Il Quirinale, dai fori imperiali alle mura serviane fra porta Viminale e porta Collina, e gli horti Sallustiani; a nord andava oltre la linea delle mura aureliane. Il nome è quello della strada sul crinale (oggi via XX Settembre). Nel IV secolo il confine girava attorno ai Castra Pretoria.',
-  mon:['*diocleziano','*termecostantino','*obeliscosallustiano','castrapretorio','dioscuri'], bordo:['servianetermini'], ancore:[[20,-70],[66,-121],[95,-95],[122,-152]],      // il tratto di Termini delle mura serviane sta sulla linea del confine fra VI e V
+  mon:['*diocleziano','*termecostantino','*obeliscosallustiano','castrapretorio','castrapretoriorasa','dioscuri'], bordo:['servianetermini'], ancore:[[20,-70],[66,-121],[95,-95],[122,-152]],      // il tratto di Termini delle mura serviane sta sulla linea del confine fra VI e V
   nota:'Fuori dalle mura la scena non dà tinta: dove finisse la regione non si sa.'},
  {n:'VII', it:'Via Lata', la:'Via Lata', cat:[3805,120,25,75,76,15],
   cosa:'Fra il tratto sud della via Flaminia, detto via Lata (oggi via del Corso), e la regione VI.',

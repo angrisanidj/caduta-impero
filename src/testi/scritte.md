@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 11:16:53.
+Generato da `src/testi.mjs` il 27/11/2026, 11:52:25.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -151,7 +151,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.68] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.69] Versione del 27/11/2026, ore 11:08
+[pagina.69] Versione del 27/11/2026, ore 11:31
 
 
 ## 2. Gli atti
@@ -4421,7 +4421,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.castrapretorio.nome] Castra Praetoria
 
-[scheda.castrapretorio.cosa] Caserma dei pretoriani, la guardia dell'imperatore. Sorgeva sul punto più alto della città. Il recinto rettangolare, di 440 per 380 metri, aveva mura merlate e porte difese da torri.
+[scheda.castrapretorio.cosa] Caserma dei pretoriani, la guardia dell'imperatore. Sorgeva su uno dei punti più alti della città. Il recinto, di 440 per 380 metri, aveva muri di mattone merlati e porte con le torri. Contro i muri, dalla parte di dentro, correva una fila di camere a volta alte circa 3 metri, e sopra le camere il camminamento delle guardie. Dentro c'erano le caserme: gli scavi hanno trovato file di celle con la parete di fondo in comune e scalette a due rampe, otto grandi edifici lunghi 76,65 metri e larghi 12, un magazzino semisotterraneo, un edificio con cortile e una vasca (Lissi Caronna, nel Lexicon Topographicum Urbis Romae). Le iscrizioni ricordano il sacello delle insegne, un tribunale, un sacello di Marte e l'armeria. Nel modello gli edifici trovati negli scavi stanno al loro posto, presi dalla pianta di Buzzetti (1975). Sono invece uno schema le altezze, i tetti, le file di caserme aggiunte dove gli scavi non dicono nulla, le vie e il posto del quartier generale, dell'armeria e del sacello di Marte: le fonti lette non dicono dove stavano.
 
 [scheda.castrapretorio.data1.quando] 21-23
 
@@ -4429,15 +4429,46 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.castrapretorio.data2.quando] 271-275
 
-[scheda.castrapretorio.data2] Aureliano usa i lati nord ed est e metà del lato sud come mura della città, e li alza.
+[scheda.castrapretorio.data2] Aureliano fa entrare nelle mura della città il lato nord, il lato est e metà del lato sud. Li alza e chiude le porte nord ed est.
 
-[scheda.castrapretorio.data3-312] Costantino scioglie i pretoriani, che avevano combattuto per Massenzio, e abbatte i muri interni del campo.
+[scheda.castrapretorio.data3-312] Costantino scioglie i pretoriani, che avevano combattuto per Massenzio, e distrugge «le fortezze in cui abitavano» (Zosimo). Per Platner e Ashby abbatte forse i muri che Aureliano non aveva usato: il lato ovest e la metà ovest del lato sud. Nel modello le caserme sono rase alle fondamenta e quei due lati ridotti a monconi. Un pezzo del lato ovest era ancora in piedi nel Cinquecento: quale pezzo non si sa, e quello in piedi nel modello è una scelta. Le camere dei lati entrati nelle mura restano: quelle dei lati nord ed est si vedono ancora oggi.
 
-[scheda.castrapretorio.data4.quando] inizio del VI secolo
+[scheda.castrapretorio.data4.quando] dopo il 312
 
-[scheda.castrapretorio.data4] Dentro il vecchio campo si è trovato un cimitero cristiano di questi anni (Platner e Ashby). Nessuna fonte parla di case: nel modello il recinto resta vuoto.
+[scheda.castrapretorio.data4] Il campo resta vuoto. Per la Soprintendenza fu «sostanzialmente non occupato» dal Medioevo fino al Seicento. Nel modello l'erba copre le fondamenta con gli anni.
 
-[scheda.castrapretorio.certezza-A] Tre lati della caserma si conservano nelle mura Aureliane e permettono di misurare il recinto. Gli scavi hanno rivelato tratti dei muri interni e degli alloggi. Nel modello la forma della porta e gli spessori dei muri sono indicativi.
+[scheda.castrapretorio.data5.quando] inizio del VI secolo
+
+[scheda.castrapretorio.data5] Dentro il vecchio campo si è trovato un cimitero cristiano di questi anni (Platner e Ashby, che rimandano a De Rossi). La fonte non dice dove fosse, quanto fosse grande né fino a quando servì. Nel modello le tombe compaiono nel 500, a ovest, vicino alla vecchia porta: anno, posto e numero delle tombe sono uno schema. Sono coperte a cappuccina, come le altre tombe della città.
+
+[scheda.castrapretorio.certezza-B] Tre lati della caserma si conservano nelle mura Aureliane e permettono di misurare il recinto. Gli scavi hanno trovato parte delle caserme, che nel modello stanno al loro posto. Il resto dell'interno è uno schema: le file aggiunte, le vie, il quartier generale, l'armeria, le altezze e i tetti. Sono indicativi anche la forma della porta e lo spessore dei muri. Il cimitero del VI secolo è certo, ma posto e grandezza no.
+
+
+### Castra Praetoria
+
+[scheda.castrapretoriorasa.nome] Castra Praetoria
+
+[scheda.castrapretoriorasa.cosa] Caserma dei pretoriani, la guardia dell'imperatore. Sorgeva su uno dei punti più alti della città. Il recinto, di 440 per 380 metri, aveva muri di mattone merlati e porte con le torri. Contro i muri, dalla parte di dentro, correva una fila di camere a volta alte circa 3 metri, e sopra le camere il camminamento delle guardie. Dentro c'erano le caserme: gli scavi hanno trovato file di celle con la parete di fondo in comune e scalette a due rampe, otto grandi edifici lunghi 76,65 metri e larghi 12, un magazzino semisotterraneo, un edificio con cortile e una vasca (Lissi Caronna, nel Lexicon Topographicum Urbis Romae). Le iscrizioni ricordano il sacello delle insegne, un tribunale, un sacello di Marte e l'armeria. Nel modello gli edifici trovati negli scavi stanno al loro posto, presi dalla pianta di Buzzetti (1975). Sono invece uno schema le altezze, i tetti, le file di caserme aggiunte dove gli scavi non dicono nulla, le vie e il posto del quartier generale, dell'armeria e del sacello di Marte: le fonti lette non dicono dove stavano.
+
+[scheda.castrapretoriorasa.data1.quando] 21-23
+
+[scheda.castrapretoriorasa.data1] Costruita da Tiberio, su consiglio di Seiano.
+
+[scheda.castrapretoriorasa.data2.quando] 271-275
+
+[scheda.castrapretoriorasa.data2] Aureliano fa entrare nelle mura della città il lato nord, il lato est e metà del lato sud. Li alza e chiude le porte nord ed est.
+
+[scheda.castrapretoriorasa.data3-312] Costantino scioglie i pretoriani, che avevano combattuto per Massenzio, e distrugge «le fortezze in cui abitavano» (Zosimo). Per Platner e Ashby abbatte forse i muri che Aureliano non aveva usato: il lato ovest e la metà ovest del lato sud. Nel modello le caserme sono rase alle fondamenta e quei due lati ridotti a monconi. Un pezzo del lato ovest era ancora in piedi nel Cinquecento: quale pezzo non si sa, e quello in piedi nel modello è una scelta. Le camere dei lati entrati nelle mura restano: quelle dei lati nord ed est si vedono ancora oggi.
+
+[scheda.castrapretoriorasa.data4.quando] dopo il 312
+
+[scheda.castrapretoriorasa.data4] Il campo resta vuoto. Per la Soprintendenza fu «sostanzialmente non occupato» dal Medioevo fino al Seicento. Nel modello l'erba copre le fondamenta con gli anni.
+
+[scheda.castrapretoriorasa.data5.quando] inizio del VI secolo
+
+[scheda.castrapretoriorasa.data5] Dentro il vecchio campo si è trovato un cimitero cristiano di questi anni (Platner e Ashby, che rimandano a De Rossi). La fonte non dice dove fosse, quanto fosse grande né fino a quando servì. Nel modello le tombe compaiono nel 500, a ovest, vicino alla vecchia porta: anno, posto e numero delle tombe sono uno schema. Sono coperte a cappuccina, come le altre tombe della città.
+
+[scheda.castrapretoriorasa.certezza-B] Tre lati della caserma si conservano nelle mura Aureliane e permettono di misurare il recinto. Gli scavi hanno trovato parte delle caserme, che nel modello stanno al loro posto. Il resto dell'interno è uno schema: le file aggiunte, le vie, il quartier generale, l'armeria, le altezze e i tetti. Sono indicativi anche la forma della porta e lo spessore dei muri. Il cimitero del VI secolo è certo, ma posto e grandezza no.
 
 
 ### Terme di Nerone e di Alessandro

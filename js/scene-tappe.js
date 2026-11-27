@@ -2313,7 +2313,8 @@ var TOMBE=[      // [x, z, raggio, numero, dal anno, nome]
   [-78,160,1,5,455,'via Marmorata e Porticus Aemilia'],[-78,160,1.7,12,568,'via Marmorata e Porticus Aemilia'],
   [27,32,1.9,44,526,'Vigna Barberini, sul Palatino'],
   [73,146,2.4,26,568,'recinto delle terme di Caracalla, lato est'],
-  [10,11,1.2,6,593,'atrio di Santa Maria Antiqua e casa delle Vestali']];
+  [10,11,1.2,6,593,'atrio di Santa Maria Antiqua e casa delle Vestali'],
+  [166.15,-153.4,1.6,30,500,'cimitero nei Castra Praetoria']];      // 27 novembre 2026: «A Christian cemetery of the beginning of the sixth century was also found in the castra» (Platner e Ashby, Castra Praetoria, nota 3, da De Rossi, Roma Sotterranea I 218); dove, quanto grande e quante tombe non lo dice: qui a ovest, presso la vecchia porta (n 205 m, e 322 m nel campo, CASTRA_DENTRO), dal 500; schema detto nella scheda
 /* 24 novembre 2026, l'utente: «di tombe non se ne vede nessuna» (la regia arrivava su una chiazza a spicchi con qualche segnetto arancione). Rifatte:
    - le coperture a cappuccina avevano il colmo di traverso (80 cm di colmo, 2,1 m di falda): ora il colmo corre lungo il corpo, 2,1 m, larghe 75 cm, alte 40 cm,
      su un piccolo rialzo di terra e con la fila di coppi scuri sul colmo; poi casse di mattoni chiuse da una lastra e, per i bambini, anfore spezzate coricate (Spera, p. 830);
