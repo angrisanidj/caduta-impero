@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 13:14:24.
+Generato da `src/testi.mjs` il 27/11/2026, 17:17:34.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -127,7 +127,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.56] Le persone in città cambiano veste con l'epoca. Abbiamo disegnato solo ciò che le fonti mostrano: capi, lunghezze, mantelli, copricapi. Per il III secolo seguiamo il fregio dell'arco di Costantino: tunica al ginocchio, mantello sulle spalle, toga per i senatori; i soldati hanno elmo con cresta, scudo tondo e lancia. Per il IV-VI secolo seguiamo il Codice Teodosiano (tunica e mantello chiuso, il cappuccio degli schiavi) e i mosaici romani datati (Santa Maria Maggiore, la vedova Turtura nella catacomba di Commodilla). Per il VII-IX secolo seguiamo gli affreschi e i mosaici di Roma (Santa Maria Antiqua, Santa Prassede, San Marco), la descrizione dei ritratti nella vita di Gregorio Magno e, per i Franchi, Eginardo. Sono ipotesi le vesti delle donne del III secolo, dei poveri, dei preti e dei soldati dopo il VI secolo: per loro usiamo forme semplici e i colori della lana non tinta. Anche gli altri colori sono di lana non tinta, tranne quelli che le fonti danno: le vesti scure delle donne nel IV-VI secolo, i mantelli castagna e rosso-bruno, il velo bianco e la dalmatica bianca dei secoli VII-IX. Pose e volti sono indicativi.
 
-[pagina.57] Anche la gente per strada segue le fonti. Il numero delle figure dipende dalla stima della popolazione: ogni figura vale molte persone, nella stessa proporzione in ogni secolo. Per questo nel III e nel IV secolo le strade sono piene e dal VI secolo quasi vuote. Le figure camminano sulle vie principali e vicino alle case abitate; dove le case sono abbandonate non passa quasi nessuno. Quante figure ci sono in ogni strada è un'ipotesi. Dalle fonti vengono i luoghi dove la gente si raccoglieva, e fino a quando: i fori; le terme, frequentate secondo Ammiano e il Digesto e chiuse quando i Goti tagliano gli acquedotti nel 537 (Procopio); l'Emporio sul Tevere, il mercato del vino, dell'olio e del grano, finché il modello lo tiene in uso; i mendicanti davanti a San Pietro, a cui Teodorico dava il grano (Procopio); i poveri e i pellegrini ai gradini di San Pietro al tempo di Leone III e l'ospizio di Belisario sulla via Lata (Liber Pontificalis). I banchi, le anfore e i sacchi dell'Emporio sono uno schema. Chi stava davanti alle diaconie è un'ipotesi. Altri mercati sono attestati, come il foro dei maiali e il mercato di Livia, ma non li disegniamo: nel modello al loro posto ci sono le case. Non disegniamo nemmeno il pane distribuito «dai gradini»: le leggi lo nominano, ma non dicono dove. Una legge della tarda Repubblica, la Tabula Heracleensis, vietava i carri in città di giorno, salvo quelli per i templi, le opere pubbliche, le macerie e il letame. Non sappiamo se valesse ancora nel III secolo. Per questo di giorno ci sono pochi carri, soprattutto accanto ai cantieri, e di notte qualcuno in più. Carri a buoi, muli col basto e banchi hanno forme generiche. Di notte la città è buia: nessuna fonte parla di luci per le strade. Le ronde dei vigili compaiono solo di notte e solo nel III secolo, perché le descrive il Digesto; dopo, le fonti lette non le nominano più. Negli anni degli assedi (408-410, 472, 537-538, 545-546, 593) la gente per strada si dirada; dopo il dicembre 546 Roma resta vuota per «quaranta giorni o più», come scrive Marcellino Conte. Se sul dispositivo sono ridotte le animazioni, la gente c'è ma sta ferma.
+[pagina.57] Anche la gente per strada segue le fonti. Il numero delle figure dipende dalla stima della popolazione: ogni figura vale molte persone, nella stessa proporzione in ogni secolo. Per questo nel III e nel IV secolo le strade sono piene e dal VI secolo quasi vuote. Le figure camminano sulle vie principali e vicino alle case abitate; dove le case sono abbandonate non passa quasi nessuno. Quante figure ci sono in ogni strada è un'ipotesi. Dalle fonti vengono i luoghi dove la gente si raccoglieva, e fino a quando: i fori; le terme, frequentate secondo Ammiano e il Digesto e chiuse quando i Goti tagliano gli acquedotti nel 537 (Procopio); l'Emporio sul Tevere, il mercato del vino, dell'olio e del grano, finché il modello lo tiene in uso; i mendicanti davanti a San Pietro, a cui Teodorico dava il grano (Procopio); i poveri e i pellegrini ai gradini di San Pietro al tempo di Leone III e l'ospizio di Belisario sulla via Lata (Liber Pontificalis). I banchi, le anfore e i sacchi dell'Emporio sono uno schema. Chi stava davanti alle diaconie è un'ipotesi. Altri mercati sono attestati, come il foro dei maiali e il mercato di Livia, ma non li disegniamo: nel modello al loro posto ci sono le case. Non disegniamo nemmeno il pane distribuito «dai gradini»: le leggi lo nominano, ma non dicono dove. Una legge della tarda Repubblica, la Tabula Heracleensis, vietava i carri in città di giorno, salvo quelli per i templi, le opere pubbliche, le macerie e il letame. Non sappiamo se valesse ancora nel III secolo. Per questo di giorno ci sono pochi carri, soprattutto accanto ai cantieri, e di notte qualcuno in più. Carri a buoi, muli col basto e banchi hanno forme generiche. Di notte la città è buia: nessuna fonte parla di luci per le strade. Le ronde dei vigili compaiono solo di notte e solo nel III secolo, perché le descrive il Digesto; dopo, le fonti lette non le nominano più. Una parte dalla caserma della prima coorte, sulla via Lata, e scende fino al Foro; l'altra parte dal posto di guardia di Trastevere, presso San Crisogono, e va verso il fiume. I due posti sono certi; il percorso è uno schema. Il Digesto dice che il prefetto gira tutta la notte con uncini e asce, e questi li portano. Il lume invece non lo nomina nessuna fonte letta: c'è solo perché di notte la ronda si veda. Negli anni degli assedi (408-410, 472, 537-538, 545-546, 593) la gente per strada si dirada; dopo il dicembre 546 Roma resta vuota per «quaranta giorni o più», come scrive Marcellino Conte. Se sul dispositivo sono ridotte le animazioni, la gente c'è ma sta ferma.
 
 [pagina.58] In alcune tappe, una sì e una no fra il 235 e il 507, nel Circo Massimo si corre: quattro quadrighe, una per ciascuna delle quattro squadre (verde, rossa, azzurra, bianca), partono dai cancelli a ovest e fanno sette giri tenendo la spina a sinistra, come scrivono Cassiodoro e il dizionario di Smith. Velocità, sorpassi, chi vince, la forma dei carri, la polvere e quanta gente sta sulle gradinate sono uno schema. Dopo il 507 non mostriamo corse: l'ultima notizia, Totila che guarda le corse nel 549 o 550, non dice dove si corse. Nello stadio di Domiziano, solo nel 235, sei atleti nudi corrono a piedi: Svetonio dice che lì si facevano le corse dell'agone Capitolino, e Censorino che l'agone si teneva ancora nel 238; fino a quando si gareggiò non lo sappiamo.
 
@@ -135,11 +135,11 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.60] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
 
-[pagina.61] Le case lasciate non spariscono. Prima restano in piedi: cade l'intonaco, mancano le tegole, le finestre restano vuote, cresce l'erba. Poi crollano il tetto e i piani alti. Alla fine restano muri bassi e cumuli di macerie, coperti di rovi. Le fonti parlano di case e chiese «in rovina», di orti accanto alle case e di bestie al pascolo, non di una città tornata campagna. Gli orti e le vigne vengono dalle fonti in quattro luoghi: presso le terme di Agrippa (599), davanti a Santa Sabina (598-599), attorno a Santa Susanna, con un orto a vigna (al tempo di Sergio I, 687-701), e presso il portico di San Pietro (al tempo di Leone IV, 847-855). Nell'atrio di San Paolo, prima che Adriano I lo facesse lastricare, l'erba cresceva e ci pascolavano buoi e cavalli: lo mostriamo dal 715 al 771, perché le date esatte non si sanno. Gli altri orti sono ipotesi. Sono ipotesi anche quali quartieri si svuotano per primi, quanto restano in piedi le case, quanto si abbassano le rovine e quanto in fretta crescono le piante. Nessuna fonte antica dice quali piante crescessero sulle rovine: abbiamo preso fico, olmo, rovo, lentisco, sambuco nano, valeriana rossa ed edera da un elenco delle piante del Colosseo scritto nel 1855. Le rovine cambiano col quartiere: dove le insulae erano alte e fitte, come nella Suburra, restano più spesso alti gusci di mattoni con le macerie nei vicoli; le domus dei colli diventano cumuli bassi con qualche colonna; le case basse dei margini si riducono a tracce. È un'ipotesi del modello: nessuna fonte dice come caddero i singoli quartieri. Anche l’edera, i cespugli e l’erba cresciuti sui monumenti lasciati sono una resa: quanto verde, e in quanto tempo, nessuna fonte lo misura. Ciò che è ancora in piedi oggi, nel modello è in piedi anche nell’800. Nella veduta d’insieme dei secoli tardi i muri dei grandi monumenti sono un poco schiariti e la luce è più bassa, perché le rovine si leggano da lontano; per lo stesso motivo, solo da lontano, le case abitate, i loro orti e le chiese in uso hanno tinte un poco più chiare e vive, e il fumo e i lumi della notte sono più grandi: è una scelta di resa, non un dato. Dal V secolo le pietre si scuriscono e si macchiano con gli anni, anche dove l’edificio è in uso: marmi, travertini, intonaci, mattoni e tufi, sui ponti, sulle mura, sugli archi, sull’isola Tiberina e nelle chiese. Tornano chiare solo dove una fonte dice che l’edificio fu restaurato, o dove è costruito nuovo. Sulle creste delle mura mai rifatte cresce l’erba. Quanto e quando è una scelta di resa: nessuna fonte letta descrive il colore delle pietre. Procopio, verso il 550, scrive solo che i Romani avevano conservato gli edifici della città.
+[pagina.61] Le case lasciate non spariscono. Prima restano in piedi: cade l'intonaco, mancano le tegole, le finestre restano vuote, cresce l'erba. Poi crollano il tetto e i piani alti. Alla fine restano muri bassi e cumuli di macerie, coperti di rovi. Le fonti parlano di case e chiese «in rovina», di orti accanto alle case e di bestie al pascolo, non di una città tornata campagna. Gli orti e le vigne vengono dalle fonti in quattro luoghi: presso le terme di Agrippa (599), davanti a Santa Sabina (598-599), attorno a Santa Susanna, con un orto a vigna (al tempo di Sergio I, 687-701), e presso il portico di San Pietro (al tempo di Leone IV, 847-855). Nell'atrio di San Paolo, prima che Adriano I lo facesse lastricare, l'erba cresceva e ci pascolavano buoi e cavalli: lo mostriamo dal 715 al 771, perché le date esatte non si sanno. Gli altri orti sono ipotesi. Sono ipotesi anche quali quartieri si svuotano per primi, quanto restano in piedi le case, quanto si abbassano le rovine e quanto in fretta crescono le piante. Nessuna fonte antica dice quali piante crescessero sulle rovine: abbiamo preso fico, olmo, rovo, lentisco, sambuco nano, valeriana rossa ed edera da un elenco delle piante del Colosseo scritto nel 1855. Le rovine cambiano col quartiere: dove le insulae erano alte e fitte, come nella Suburra, restano più spesso alti gusci di mattoni con le macerie nei vicoli; le domus dei colli diventano cumuli bassi con qualche colonna; le case basse dei margini si riducono a tracce. È un'ipotesi del modello: nessuna fonte dice come caddero i singoli quartieri. Anche l’edera, i cespugli e l’erba cresciuti sui monumenti lasciati sono una resa: quanto verde, e in quanto tempo, nessuna fonte lo misura. Ciò che è ancora in piedi oggi, nel modello è in piedi anche nell’800. Nella veduta d’insieme dei secoli tardi i muri dei grandi monumenti sono un poco schiariti e la luce è più bassa, perché le rovine si leggano da lontano; per lo stesso motivo, solo da lontano, le case abitate, i loro orti e le chiese in uso hanno tinte un poco più chiare e vive, e il fumo e i lumi della notte sono più grandi: è una scelta di resa, non un dato. Dal V secolo le pietre si scuriscono e si macchiano con gli anni, anche dove l’edificio è in uso: marmi, travertini, intonaci, mattoni e tufi, sui ponti, sulle mura, sugli archi, sull’isola Tiberina e nelle chiese. Tornano chiare solo dove una fonte dice che l’edificio fu restaurato, o dove è costruito nuovo; dove la fonte dice rifatti il tetto e le travi, come a San Pietro, San Paolo, al Laterano e a Santa Maria Maggiore sotto Adriano I, i coppi tornano nuovi anche se i muri restano vecchi. Il colore delle mura di Aureliano, un mattone rosso che cambia da un tratto all’altro, è una nostra scelta: la fonte dice solo che il paramento era di mattoni, in gran parte di recupero. Sulle creste delle mura mai rifatte cresce l’erba. Quanto e quando è una scelta di resa: nessuna fonte letta descrive il colore delle pietre. Procopio, verso il 550, scrive solo che i Romani avevano conservato gli edifici della città.
 
 [pagina.62] Le strade di Roma erano lastricate di selce, cioè di lava basaltica in pietre poligonali, con i marciapiedi ai lati: lo dicono Livio e i resti descritti da Platner e Ashby. La misura delle pietre e dei marciapiedi è uno schema. Le vie le teneva in ordine chi ci abitava: per questo, nel modello, una strada si guasta quando le case attorno vengono lasciate. Prima cresce l'erba fra le pietre, poi le pietre si smuovono e mancano, la terra e le macerie le coprono, e alla fine resta un sentiero in mezzo all'erba. Restano battute le vie dei percorsi da porta a porta dell'Itinerario di Einsiedeln, verso l'800. Come e in quanto tempo un lastricato si rovinasse nessuna fonte lo racconta: è uno schema.
 
-[pagina.63] Le case sono di tre specie. Le insulae, i caseggiati d'affitto, non superano i 60 piedi, circa 18 metri: è il limite di Traiano, che però conosciamo da una sola fonte, scritta tre secoli dopo. A terra hanno le botteghe con la finestrella del mezzanino, come negli scavi di Ostia; lungo le vie più larghe hanno un portico, come vuole Tacito dopo l'incendio del 64, ma quali vie lo avessero è un'ipotesi. Le domus dei ricchi sono basse, chiuse verso la strada, con l'atrio e il giardino a colonne: il fronte cieco è quello delle case di Pompei. I cataloghi del IV secolo contano 1.790 domus e 46.602 insulae, ma un'insula era forse un appartamento e non un palazzo: per questo nel modello c'è una domus ogni venti case, più spesso sui colli e nelle regioni dove i cataloghi ne contano di più. Gli horti, i grandi giardini dei colli, hanno gli edifici e l'acqua che le fonti nominano per ciascuno; forme, misure e posti sono ricostruiti, e quando le fonti tacciono abbiamo supposto che fossero abbandonati nel 537.
+[pagina.63] Le case sono di tre specie. Le insulae, i caseggiati d'affitto, non superano i 60 piedi, circa 18 metri: è il limite di Traiano, che però conosciamo da una sola fonte, scritta tre secoli dopo. A terra hanno le botteghe con la finestrella del mezzanino, come negli scavi di Ostia; lungo le vie più larghe hanno un portico, come vuole Tacito dopo l'incendio del 64, ma quali vie lo avessero è un'ipotesi. Nelle insulae c'era molto legno. Vitruvio parla dei muri a graticcio, di travi e intonaco, che «bruciano come torce». Erodiano racconta che nell'incendio del 238 il fuoco corse per la città perché molte case erano in gran parte di legno, e molte avevano balconi di legno. Per questo una parte delle insulae, soprattutto le più alte, ha l'ultimo piano a graticcio, e alcune hanno un balcone di legno al primo piano, come quello trovato a Ostia. Quante fossero, dove stessero il graticcio e il balcone e che forma avessero è uno schema. Quando la casa è lasciata il legno cade per primo; nei muri in rovina restano i buchi delle travi. Le domus dei ricchi sono basse, chiuse verso la strada, con l'atrio e il giardino a colonne: il fronte cieco è quello delle case di Pompei. I cataloghi del IV secolo contano 1.790 domus e 46.602 insulae, ma un'insula era forse un appartamento e non un palazzo: per questo nel modello c'è una domus ogni venti case, più spesso sui colli e nelle regioni dove i cataloghi ne contano di più. Gli horti, i grandi giardini dei colli, hanno gli edifici e l'acqua che le fonti nominano per ciascuno; forme, misure e posti sono ricostruiti, e quando le fonti tacciono abbiamo supposto che fossero abbandonati nel 537.
 
 [pagina.64] Dall'VIII secolo le case abitate non sono più insulae né domus: sono case semplici a uno o due piani, come quelle scavate nel Foro di Nerva (metà del IX secolo), nella Basilica Emilia e nel Foro di Cesare da Roberto Meneghini e Riccardo Santangeli Valenzani, con il piano terra di blocchi presi dai monumenti, il piano di sopra di mattoni e la scala esterna, oppure una stanza sola con i muri di argilla, e attorno l'orto e il pozzo. Quando le case romane siano state sostituite gli scavi non lo dicono: nel modello avviene casa per casa fra il 690 e l'805, e prima le case ancora abitate si abbassano e si rappezzano; misure, finestre, colori, il tetto di scandole (da una carta del 1012) o di paglia e le case costruite dentro i muri di case romane in rovina sono uno schema. Ogni gruppo di case attorno a un cortile sta per le famiglie di un isolato: quante case abbia è uno schema (la gente dell'anno divisa per gli isolati abitati, con otto persone per casa, nostra stima, finché c'è posto).
 
@@ -151,7 +151,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.68] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.69] Versione del 27/11/2026, ore 12:37
+[pagina.69] Versione del 27/11/2026, ore 16:31
 
 
 ## 2. Gli atti
@@ -3040,6 +3040,27 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.arcoseveroforo.certezza-A] In piedi, con misure note (Platner e Ashby). Nel modello rilievi, statue in cima e lettere di bronzo non sono disegnati; lo stato fino all'852 è «in piedi» perché nessuna fonte letta parla di danni.
 
 
+### Arco di Tiberio
+
+[scheda.arcotiberio.nome] Arco di Tiberio
+
+[scheda.arcotiberio.cosa] L'arco che Tiberio fece innalzare nel Foro nel 16 d.C. per le insegne riprese ai Germani, perse con la sconfitta di Varo. Stava all'angolo nord-ovest della basilica Giulia, sul lato nord della via Sacra, che lì fu ristretta piegando il marciapiede verso sud; Tacito lo dice vicino al tempio di Saturno. Aveva un solo fornice, come mostra un rilievo dell'arco di Costantino, e ci si saliva con dei gradini dal piano del Foro. Restano le fondazioni, lunghe 9 metri e larghe 6,3 (Platner e Ashby). Nel modello l'altezza (10 metri), la luce del fornice, lo zoccolo, i gradini verso la piazza e il lato della fronte sono una nostra scelta.
+
+[scheda.arcotiberio.data1-16] Eretto per il ritorno delle insegne di Varo (Tacito, Annali II 41).
+
+[scheda.arcotiberio.data2.quando] dopo il III secolo
+
+[scheda.arcotiberio.data2] Le fonti lette non dicono nulla. Quando cadde non si sa: nel modello resta in piedi fino all'852.
+
+[scheda.arcotiberio.data3.quando] 1835 e 1848
+
+[scheda.arcotiberio.data3] Si trovano frammenti dell'arco e di un'iscrizione che però, notano Platner e Ashby, non gli appartiene.
+
+[scheda.arcotiberio.data4-1900] Scavate le fondazioni di calcestruzzo.
+
+[scheda.arcotiberio.certezza-C] Restano le fondazioni (9 x 6,3 m) e pochi frammenti; il posto e il fornice unico sono sicuri (Platner e Ashby). Altezza, larghezza del fornice, zoccolo, gradini e il lato della fronte sono nostri. Quando cadde non si sa: nel modello è in piedi fino all'852.
+
+
 ### Tempio di Vesta e casa delle Vestali
 
 [scheda.vesta.nome] Tempio di Vesta e casa delle Vestali
@@ -4565,7 +4586,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.dolabella.nome] Arco di Dolabella e Silano
 
-[scheda.dolabella.cosa] Un arco semplice di travertino, senza decorazioni, sul Celio, all'angolo nord dell'area dei Castra Peregrina. Lo fecero i consoli Publio Cornelio Dolabella e Gaio Giunio Silano. Di solito si pensa che reggesse un ramo dell'acqua Marcia e che poi Nerone lo abbia usato per gli archi del suo prolungamento dell'acqua Claudia, che gli passano sopra.
+[scheda.dolabella.cosa] Un arco semplice di travertino, senza decorazioni, sul Celio, all'angolo nord dell'area dei Castra Peregrina. Lo fecero i consoli Publio Cornelio Dolabella e Gaio Giunio Silano. Di solito si pensa che reggesse un ramo dell'acqua Marcia e che poi Nerone lo abbia usato per gli archi del suo prolungamento dell'acqua Claudia, che gli passano sopra. La stessa fonte dice che dove l'acquedotto attraversava una strada gli archi erano più larghi e più imponenti, e cita questo. I resti segnati su OpenStreetMap mostrano gli archi neroniani che arrivano da sud-est e ripartono verso nord-ovest lungo l'asse dell'arco: la strada di oggi, via di San Paolo della Croce, passa sotto l'arco quasi nella stessa direzione e incrocia l'acquedotto proprio lì, con un angolo stretto. Nel modello sopra l'arco c'è la muratura di mattoni degli archi neroniani, con il canale in cima a circa 15 metri e mezzo da terra. La fonte non dà l'altezza in questo punto: dà 16 metri come altezza massima degli archi di Nerone, che hanno luci di 7,75 metri e pile spesse 2,10. Abbiamo usato la stessa altezza delle arcate accanto. Forma di questa parte e quota esatta sono nostre.
 
 [scheda.dolabella.data1.quando] 10 d.C.
 
@@ -4575,11 +4596,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.dolabella.data2] Gli archi neroniani dell'acqua Claudia lo incorporano, secondo l'opinione più diffusa.
 
-[scheda.dolabella.data3-537] I Goti tagliano gli acquedotti: l'acqua smette di passare, l'arco resta in piedi.
+[scheda.dolabella.data3.quando] inizio del III secolo
 
-[scheda.dolabella.data4.quando] oggi
+[scheda.dolabella.data3] Settimio Severo rinforza gli archi di Nerone, che un'iscrizione chiama arcus Caelimontani (Platner e Ashby). Se il rinforzo toccò anche questo punto, la fonte non lo dice.
 
-[scheda.dolabella.data4] L'arco è in piedi, accanto alla chiesa di San Tommaso in Formis. La fonte non ne dà le misure: nel modello sono indicative, confrontate con una fotografia.
+[scheda.dolabella.data4-537] I Goti tagliano gli acquedotti: l'acqua smette di passare, l'arco resta in piedi.
+
+[scheda.dolabella.data5.quando] oggi
+
+[scheda.dolabella.data5] L'arco è in piedi, accanto alla chiesa di San Tommaso in Formis. La fonte non ne dà le misure: nel modello sono indicative, confrontate con una fotografia.
 
 [scheda.dolabella.certezza-A] In piedi. La fonte non dà misure: nel modello sono indicative, confrontate con una fotografia.
 
@@ -5139,11 +5164,15 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.arcoclaudio.data2.quando] VIII secolo
 
-[scheda.arcoclaudio.data2] L'arco «sembra essere già in rovina» (Platner e Ashby). Nel modello crolla nel 700: l'anno è una nostra scelta all'inizio del secolo.
+[scheda.arcoclaudio.data2] L'arco «sembra essere già in rovina» (Platner e Ashby). Nel modello crolla nel 700: l'anno è una nostra scelta all'inizio del secolo. Con l'arco cadono anche le arcate dell'acquedotto che lo toccano, e oltre la via Lata il canale resta senz'acqua: anche questa è una nostra scelta.
 
-[scheda.arcoclaudio.data3.quando] 1562, 1641, 1869
+[scheda.arcoclaudio.data3.quando] dal 772 al 795
 
-[scheda.arcoclaudio.data3] Si ritrovano pezzi dell'arco, fra cui parte dell'iscrizione principale.
+[scheda.arcoclaudio.data3] Papa Adriano I rifà l'acquedotto Vergine, che era «pieno di rovine» e portava a Roma pochissima acqua (Liber Pontificalis). L'arco però resta in rovina. Dove portasse l'acqua dopo il restauro la fonte non lo dice: nel modello le arcate oltre la via Lata non vengono rifatte.
+
+[scheda.arcoclaudio.data4.quando] 1562, 1641, 1869
+
+[scheda.arcoclaudio.data4] Si ritrovano pezzi dell'arco, fra cui parte dell'iscrizione principale.
 
 [scheda.arcoclaudio.certezza-B] Demolito; il posto viene dai ritrovamenti sotto via del Corso. Forma e misure sono nostre; la rovina dall'VIII secolo è nella fonte, l'anno 700 è una scelta.
 
@@ -6645,27 +6674,32 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/mura.js
 
-[ui.mura.01-r377] Ponte Elio
+[ui.mura.01-r413] Ponte Elio
 
-[ui.mura.02-r378] Ponte Aurelio
+[ui.mura.02-r414] Ponte Aurelio
 
-[ui.mura.03-r379] Ponte Emilio
+[ui.mura.03-r415] Ponte Emilio
 
-[ui.mura.04-r380] Ponte di Probo
+[ui.mura.04-r416] Ponte di Probo
 
-[ui.mura.05-r381] Ponte Milvio
+[ui.mura.05-r417] Ponte Milvio
 
-[ui.mura.06-r382] Ponte Neroniano
+[ui.mura.06-r418] Ponte Neroniano
 
-[ui.mura.07-r415] Ponte Fabricio
+[ui.mura.07-r451] Ponte Fabricio
 
-[ui.mura.08-r416] Ponte Cestio
+[ui.mura.08-r452] Ponte Cestio
 
-[ui.mura.09-r425] Ponte Sublicio
+[ui.mura.09-r461] Ponte Sublicio
 
-[ui.mura.10-r462] Obelisco dell'isola Tiberina
+[ui.mura.10-r498] Obelisco dell'isola Tiberina
 
-[ui.mura.11-r468] Isola Tiberina
+[ui.mura.11-r504] Isola Tiberina
 
-[ui.mura.12-r478] Tempio di Esculapio (isola Tiberina)
+[ui.mura.12-r514] Tempio di Esculapio (isola Tiberina)
+
+
+### js/nuclei.js
+
+[ui.nuclei.01-r31] San Giorgio al Velabro
 

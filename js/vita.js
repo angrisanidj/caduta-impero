@@ -564,10 +564,45 @@ function scegliCarri(anno){
 var nCarCant=0;
 /* Le ronde dei vigili (Digesto I 15, 3: sette coorti, una ogni due regioni; il prefetto «per totam noctem vigilare»; graffiti di un posto di guardia in Trastevere dal 215 al 245,
    Platner, Cohortium Vigilum Stationes). Solo di notte e solo nel III secolo: dopo, le fonti lette non descrivono ronde per le vie di Roma. Vesti e attrezzi non sono descritti:
-   la stessa veste di lana non tinta della gente comune, niente lanterne (nessuna fonte le dà). */
-var RONDE=[]; (function(){ var lista=[]; vie.forEach(function(v,k){ if(v.larga<.75) return; var d=0; v.p.forEach(function(q){ if(RM.dentroMura(q.x,q.z)) d++; }); if(d>30) lista.push([k,d]); });
-  lista.sort(function(a,b){ return b[1]-a[1]; }); [0,1].forEach(function(g){ var L=lista[g]; if(!L) return; var v=vie[L[0]], ci=0, n=0; v.p.forEach(function(q,i){ if(RM.dentroMura(q.x,q.z)){ ci+=i; n++; } });
-    RONDE.push({v:L[0], c:ci/n, r:Math.min(40,n/2-2), t:0, vel:.05*(g?1:-1)}); }); })();
+   la stessa veste di lana non tinta della gente comune.
+   27 novembre 2026 (l'utente: vederli meglio, con un lume, in un punto preciso del centro; fonti rilette in coda a src/testi/vita-roma-fonti.md, «Le ronde dei vigili»):
+   - da dove partono: Platner e Ashby, «Cohortium Vigilum Stationes», danno per certe quattro caserme (I «on the east side of the via Lata, directly opposite the Saepta»;
+     II sull'Esquilino; IV sull'Aventino presso San Saba; V sul Celio accanto al Macellum Magnum) e il posto di guardia della VII coorte in Trastevere, presso San Crisogono,
+     coi graffiti dal 215 al 245. La prima ronda esce dalla caserma della via Lata, scende la via fino al Campidoglio e per il clivo arriva al Foro, poi torna; la seconda
+     esce dal posto di Trastevere e va lungo la via fino al fiume, verso l'isola, e torna. I punti vengono dalle coordinate di oggi (piazza dei Santi Apostoli, monte de' Fiori):
+     le caserme non sono disegnate e la ronda parte dalla via davanti; il percorso è uno schema (il Digesto dice solo che il prefetto gira tutta la notte);
+   - che cosa portano: il Digesto I 15, 3, 3 (Paolo) vuole il prefetto «per totam noctem vigilare … et coerrare calciatum cum hamis et dolabris»: in giro, calzato, con
+     uncini e asce. Qui due uomini per ronda portano l'uncino in cima a un'asta e due l'ascia (forme e misure: schema);
+   - il lume: nessuna fonte letta dà torce o lanterne ai vigili (Cassiodoro, Variae VII 7, descrive anzi un lavoro «sub profunda caligine»). Il lume che porta il primo,
+     un punto caldo con l'alone a terra, c'è solo perché la ronda si veda di notte anche dalla vista d'insieme: è detto nel piede della pagina. */
+var RONDE=[], PUNTI_RONDE=[{da:RM.ll(41.8987,12.4822), meta:[[-22,-37],[0,-8]], min:.75}, {da:RM.ll(41.8889,12.4733), meta:[RM.ll(41.8907,12.4776)], min:.55, max:24}];      // caserma della I coorte (via Lata) e posto di guardia della VII (Trastevere); mete: il piede della via Lata, il Foro; l'isola Tiberina
+(function(){
+  function vicinoSu(k,x,z){ var v=vie[k], m=1e9, r=0; v.p.forEach(function(q,i){ var d=(q.x-x)*(q.x-x)+(q.z-z)*(q.z-z); if(d<m){ m=d; r=i; } }); return [r,Math.sqrt(m)]; }
+  function piuVicina(x,z,min,salta){ var best=-1, bd=1e9; vie.forEach(function(v,k){ if(v.larga<min || k===salta) return; var r=vicinoSu(k,x,z); if(r[1]<bd){ bd=r[1]; best=k; } }); return [best,bd]; }
+  PUNTI_RONDE.forEach(function(R){
+    var P=[], Y=[], k=piuVicina(R.da[0],R.da[1],R.min,-1)[0]; if(k<0) return;
+    var i0=vicinoSu(k,R.da[0],R.da[1])[0], cur=k, ultima=null;
+    R.meta.forEach(function(m,n){
+      if(n>0){ var q=P[P.length-1], s=piuVicina(q.x,q.z,.4,cur); if(s[0]<0 || s[1]>3) return; cur=s[0]; i0=vicinoSu(cur,q.x,q.z)[0]; }      // il tratto dopo: la via che comincia dove finisce questa (al più 30 m)
+      var i1=vicinoSu(cur,m[0],m[1])[0], st=i1>=i0?1:-1, i, v=vie[cur];
+      if(R.max) i1=i0+st*Math.min(R.max,Math.abs(i1-i0));
+      for(i=i0;;i+=st){ if(!(ultima && ultima===v.p[i])){ P.push(v.p[i]); Y.push(v.y[i]); } ultima=v.p[i]; if(i===i1) break; } });
+    if(P.length>4) RONDE.push({v:{p:P, y:new Float32Array(Y), larga:.6}, t:0, fine:P.length-1.001, vel:.05, ferma:0}); });
+})();
+/* il lume e l'alone a terra (vedi sopra: schema per vedere la ronda) */
+var texLume=RM.tela(32,32,function(g){ var q=g.createRadialGradient(16,16,0,16,16,16); q.addColorStop(0,'rgba(255,236,190,1)'); q.addColorStop(.22,'rgba(255,214,150,.95)'); q.addColorStop(.5,'rgba(255,170,80,.4)'); q.addColorStop(1,'rgba(255,140,50,0)'); g.fillStyle=q; g.fillRect(0,0,32,32); },false);
+var pLume=new Float32Array(6), gLume=new THREE.BufferGeometry(); gLume.setAttribute('position',new THREE.BufferAttribute(pLume,3));
+var lumiR=[new THREE.Points(gLume,new THREE.PointsMaterial({size:24,sizeAttenuation:false,map:texLume,color:0xffe8c0,blending:THREE.AdditiveBlending,transparent:true,depthWrite:false,fog:false})),      // da lontano: sempre ventiquattro pixel (il nucleo chiaro ne occupa circa la metà), più chiaro e più grande dei lumi delle finestre (11 pixel, arancio), che sono centinaia
+  new THREE.Points(gLume,new THREE.PointsMaterial({size:.6,sizeAttenuation:true,map:texLume,color:0xffb060,blending:THREE.AdditiveBlending,transparent:true,depthWrite:false,fog:false}))];      // da vicino: un fuoco di circa sei metri di luce
+var aloneR=new THREE.InstancedMesh(new THREE.PlaneGeometry(2.4,2.4).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({map:texLume,color:0xffa858,blending:THREE.AdditiveBlending,transparent:true,depthWrite:false,fog:false,polygonOffset:true,polygonOffsetFactor:-4,polygonOffsetUnits:-4}),2);      // la luce a terra, 15 m
+lumiR.concat([aloneR]).forEach(function(m){ m.visible=false; m.frustumCulled=false; m.renderOrder=3; m.userData.gruppo='vita'; RM.scene.add(m); });
+/* uncini e asce (Digesto I 15, 3, 3): due per ronda di ciascuno, in mano a chi segue il primo */
+var geoUncino=new RM.Costruttore().scatola(.007,.25,.007,0,.03,0,RM.col(0x6b5236)).scatola(.006,.006,.03,0,.272,.012,RM.col(0x4a4a4c)).scatola(.006,.02,.006,0,.255,.025,RM.col(0x4a4a4c)).geometria();      // asta di circa 2,5 m e l'uncino di ferro
+var geoAscia=new RM.Costruttore().scatola(.006,.08,.006,0,.06,0,RM.col(0x6b5236)).scatola(.005,.014,.032,0,.13,.004,RM.col(0x4a4a4c)).geometria();      // manico e testa
+var attrR=[new THREE.InstancedMesh(geoUncino,RM.matPietra(),4), new THREE.InstancedMesh(geoAscia,RM.matPietra(),4)];
+attrR.forEach(function(m){ m.count=0; m.visible=false; m.frustumCulled=false; m.castShadow=true; m.userData.gruppo='vita'; RM.scene.add(m); });
+var oR=new THREE.Object3D();
+function rondeSpente(){ lumiR.forEach(function(m){ m.visible=false; }); aloneR.visible=false; attrR.forEach(function(m){ m.visible=false; }); }
 
 /* ---------- le scene hanno la precedenza ----------
    Le messe in scena delle tappe (js/scene-tappe.js) e gli eventi stanno dopo la vita fra i figli della scena: quelle accese segnano una griglia di celle di 20 m (i loro vertici e
@@ -709,14 +744,23 @@ function muoviCarri(dt,fr,nt){
 }
 function F_(){ return RM.vitaFattore==null?1:RM.vitaFattore; }
 function muoviRonde(dt,nt){
-  var on=annoOra>=235 && annoOra<330 && nt>.35, g, m, j, o;
+  var on=annoOra>=235 && annoOra<330 && nt>.35, g, m, j, o, nU=0, nA=0, nL=0, kL=Math.min(1,(nt-.35)/.25);
   for(g=0;g<2;g++){ var R=RONDE[g];
     for(m=0;m<7;m++){ j=I_R+g*7+m; o=j*3;
       if(!on || !R){ pos[o+1]=-60; continue; }
-      if(m===0){ R.t+=R.vel*dt; if(R.t>R.r||R.t<-R.r){ R.vel=-R.vel; R.t=Math.max(-R.r,Math.min(R.r,R.t)); } }
-      var v=vie[R.v], dir=R.vel>0?1:-1, t=R.c+R.t-dir*(m?(.35+Math.floor((m-1)/2)*.32):0), lat=m?((m%2)?-.07:.07):0;      // il primo davanti, gli altri a due a due dietro
-      sulla(v,t,lat,o,j); if(occupato(pos[o],pos[o+2])) pos[o+1]=-60;
+      if(m===0){ if(R.ferma>0) R.ferma-=dt; else { R.t+=R.vel*dt; if(R.t>R.fine||R.t<0){ R.vel=-R.vel; R.t=Math.max(0,Math.min(R.fine,R.t)); R.ferma=6; } } }      // in fondo e alla caserma si fermano qualche secondo e tornano indietro
+      var v=R.v, dir=R.vel>0?1:-1, t=R.t-dir*(m?(.35+Math.floor((m-1)/2)*.32):0), lat=m?((m%2)?-.07:.07):0;      // il primo davanti, gli altri a due a due dietro (in punti della via: uno ogni 20 m circa)
+      sulla(v,t,lat,o,j); if(occupato(pos[o],pos[o+2])){ pos[o+1]=-60; continue; }
+      var ang=Math.atan2(tX*dir,tZ*dir), sx=Math.sin(ang), sz=Math.cos(ang);
+      if(m===0){ R.dove=[pos[o],pos[o+2]]; pLume[nL*3]=pos[o]+sz*.035+sx*.02; pLume[nL*3+1]=piedi[j]+.155; pLume[nL*3+2]=pos[o+2]-sx*.035+sz*.02;      // il lume, nella mano destra all'altezza della spalla; R.dove: dov'è il primo, per le prove (RM.vitaProve.ronde)
+        oR.position.set(pos[o],piedi[j]+.035,pos[o+2]); oR.rotation.set(0,0,0); oR.scale.setScalar(1); oR.updateMatrix(); aloneR.setMatrixAt(nL,oR.matrix); nL++; }
+      else if(m<5){ var uc=m<3, M=uc?attrR[0]:attrR[1], c=uc?nU++:nA++;      // il secondo e il terzo l'uncino, il quarto e il quinto l'ascia
+        oR.position.set(pos[o]+sz*.026,piedi[j],pos[o+2]-sx*.026); oR.rotation.set(0,ang,0); oR.updateMatrix(); M.setMatrixAt(c,oR.matrix); }
     } }
+  attrR[0].count=nU; attrR[1].count=nA; attrR.forEach(function(M){ M.visible=M.count>0; if(M.count) M.instanceMatrix.needsUpdate=true; });
+  gLume.setDrawRange(0,nL); gLume.attributes.position.needsUpdate=true; aloneR.count=nL; if(nL) aloneR.instanceMatrix.needsUpdate=true;
+  var tr=MENO_MOTO?1:.85+.15*Math.sin(tempo*11.3)*Math.sin(tempo*4.7+1.3);      // la fiamma trema un poco; ferma con «meno animazioni»
+  lumiR.forEach(function(L){ L.visible=nL>0; L.material.opacity=kL*tr; }); aloneR.visible=nL>0; aloneR.material.opacity=.7*kL*tr;
 }
 
 /* ---------- fumo ----------
@@ -1091,13 +1135,13 @@ RM.frame.push(function(dt){
   provaLuoghi(annoOra,1.5);      // i posti liberi dei luoghi affollati, al più un millesimo e mezzo per fotogramma
   LUOGHI.forEach(function(L){ if(L.porto) banchiVisibili(L.vis && !!L.ok && !!L.banchi); });
   matGente.opacity=1-.8*RM.notte;
-  if(RM.leggero){ if(gente.visible){ gente.visible=false; fumo.visible=false; figure.forEach(function(m){ m.visible=false; }); if(ombraFig) ombraFig.visible=false; mCarri.visible=false; mMuli.visible=false; } }       // regolatore al terzo grado: si rinuncia a passanti e fumo
+  if(RM.leggero){ if(gente.visible){ gente.visible=false; fumo.visible=false; figure.forEach(function(m){ m.visible=false; }); if(ombraFig) ombraFig.visible=false; mCarri.visible=false; mMuli.visible=false; rondeSpente(); } }       // regolatore al terzo grado: si rinuncia a passanti e fumo
   else { if(!gente.visible){ gente.visible=true; fumo.visible=true; } muoviGente(dt); muoviFumo(); }
   muoviBarche(dt); frameFermi();
 });
 /* per le prove: ?notte=1 accende la notte all'avvio (le catture senza finestra non possono premere «Notte») */
 if(/[?&]notte=1/.test(location.search)) setTimeout(function(){ var b=document.getElementById('btnNotte'); if(b && b.getAttribute('aria-pressed')!=='true') b.click(); else if(RM.applicaLuce) RM.applicaLuce(1); },1500);      // 27 novembre 2026: come il bottone, così la regia rifà anche i moduli (finestre accese di js/citta.js); prima si cambiava solo la luce
-RM.vitaProve={luoghi:LUOGHI, ronde:RONDE, vie:vie, libero:liberoQui, suIsolato:suIsolato, ostacoli:ostacoli, occupato:occupato, carri:mCarri};      // per le prove
+RM.vitaProve={luoghi:LUOGHI, ronde:RONDE, lumiRonde:lumiR, aloneRonde:aloneR, attrezziRonde:attrR, vie:vie,libero:liberoQui, suIsolato:suIsolato, ostacoli:ostacoli, occupato:occupato, carri:mCarri};      // per le prove
 RM.vitaConta=function(){ var c={persone:0, carri:mCarri.count, muli:mMuli.count, mercato:mMerc.visible?mMerc.count:0}, k; for(k=0;k<NP;k++) if(pos[k*3+1]>-50) c.persone++;
   figure.forEach(function(m){ c.persone+=m.count; }); c.luoghi={}; LUOGHI.forEach(function(L){ if(L.vis) c.luoghi[L.id]=L.nOk||0; }); return c; };      // quante figure ci sono ora (per le prove e per il rapporto)
 })();

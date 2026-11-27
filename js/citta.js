@@ -336,6 +336,7 @@ var texRudere=RM.tela(64,64,function(g,W,H){                     // muro scrosta
   for(var y=0;y<H;y+=4){ g.fillStyle='rgba(90,60,40,.07)'; g.fillRect(0,y,W,1); }
   g.fillStyle='#3a2d24'; [[12,8],[42,8],[12,36],[42,36]].forEach(function(f){ g.fillRect(f[0],f[1],9,12); });
   g.fillStyle='rgba(60,50,40,.35)'; g.fillRect(0,58,W,6);
+  g.fillStyle='rgba(40,30,24,.8)'; for(var x=1;x<W;x+=5){ g.fillRect(x,29,2,2); g.fillRect(x+2,2,2,2); }      // i fori delle travi dei solai (27 novembre 2026): il legno se n'è andato per primo, nei muri restano i buchi; nessun numero a caso, la fila degli altri non cambia
 });
 var texIncolto=RM.tela(64,64,function(g,W,H){                    // il suolo fra le rovine (26 novembre 2026): terra e calcinacci grigio-bruni, sassi e cocci, erba secca e ciuffi verdi a chiazze; prima era un prato giallo-verde
   g.fillStyle='#9a9278'; g.fillRect(0,0,W,H);
@@ -507,7 +508,7 @@ var matCorte=new THREE.MeshStandardMaterial({color:RM.col(0x8f7f6a),roughness:1}
 function appoggio(mat,mattoni){ var A=String.fromCharCode(10), f=function(sh){
   sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying float vAlto;').replace('#include <begin_vertex>','#include <begin_vertex>'+A+'vAlto=position.y;');
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+'varying float vAlto;').replace('#include <color_fragment>','#include <color_fragment>'+A+'diffuseColor.rgb*=mix(0.6,1.0,smoothstep(0.0,0.5,vAlto));'); };
-  mat.onBeforeCompile=mattoni&&RM.VESTE?function(sh){ f(sh); vesteMuri(sh); }:f; return mat; }      // due testi diversi: three riconosce i programmi dal testo di onBeforeCompile
+  mat.onBeforeCompile=mattoni?(RM.VESTE?function(sh){ f(sh); vesteMuri(sh); legnoMuri(sh); }:function(sh){ f(sh); hashIstanza(sh); legnoMuri(sh); }):f; return mat; }      // due testi diversi: three riconosce i programmi dal testo di onBeforeCompile; le insulae (mattoni) hanno anche il piano di legno (legnoMuri)
 /* Veste del PC (24 novembre 2026): una parte delle insulae ha la facciata di mattoni a vista, come a Ostia, dove le cortine laterizie dei caseggiati restavano per lo più senza intonaco;
    le altre sono intonacate nelle tinte di prima. Quante fossero a Roma, e dove, non si sa: qui circa due su cinque, a caso. Il tipo si sceglie dal posto dell'istanza, non da rnd. */
 function hashIstanza(sh){ var A=String.fromCharCode(10);
@@ -519,6 +520,37 @@ function vesteMuri(sh){ hashIstanza(sh);
   sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',
     'if(uVeste>0.5 && vHi<0.42){ float lm=dot(diffuseColor.rgb,vec3(0.3,0.59,0.11)); vec3 mt=vec3(0.62,0.33,0.2)*(0.82+0.36*fract(vHi*17.3));',      // cortina di mattoni: le finestre (scure) restano scure
     '  diffuseColor.rgb=mt*smoothstep(0.02,0.5,lm)*1.15; }'].join(String.fromCharCode(10))); }
+/* Il legno delle insulae (27 novembre 2026; l'utente: «gli edifici non dovrebbero essere molti in legno? Soprattutto le insulae?»; fonti in coda a src/testi/vita-roma-fonti.md,
+   «Il legno delle case»). Vitruvio II 8, 20: i muri a graticcio, «craticii», fatti di ritti e traversi («arrectariorum et transversariorum dispositione») e intonacati, presi
+   per fretta o povertà e per i tramezzi «in pendenti loco», bruciano «uti faces»; II 8, 17: i caseggiati alti di Roma hanno pilastri di pietra e muri di mattone legati da
+   solai fitti («contignationibus crebris coaxatae»). Erodiano VII 12, 5-6, per il 238 (dentro il periodo della pagina): «a great number of houses were made chiefly of wood».
+   Qui: in una parte delle insulae l'ultimo piano (nelle più alte a volte gli ultimi due) è a graticcio, intelaiatura scura di ritti e traversi con i riquadri intonacati;
+   più spesso nelle insulae alte, cioè nei quartieri fitti e nella Suburra (la quota cresce con l'altezza della casa). Che il graticcio stesse in alto e non in basso,
+   quante case lo avessero e il disegno dell'intelaiatura (ritti ai lati delle finestre, traversi a davanzale, architrave e solaio) sono uno schema: Vitruvio non dà piante.
+   Nessuna fonte letta dice che il legno cambi fra il III e il IX secolo: resta uguale finché la casa è abitata. Lasciata la casa, il riempimento cade a chiazze e resta
+   l'intelaiatura, poi il piano di legno cade prima dei muri (resa). L'altezza della casa si legge dalla scala dell'istanza divisa per l'abbassamento dei secoli tardi
+   (uLegno, che aggiorna() tiene uguale a «bassa»): così una casa non cambia scelta da un anno all'altro. */
+var uLegno={value:1};
+var LEGNO_FN=['varying float vSyL; uniform float uBassaL;',
+  'float lBarF(float x,float a,float b,float f){ return clamp((min(x+0.5*f,b)-max(x-0.5*f,a))/f,0.0,1.0); }'].join(String.fromCharCode(10));
+var LEGNO_F=['{ float altL=(vSyL-0.15)/max(uBassaL,0.3); float gL=fract(vHi*91.7+0.37); float pL=0.1+0.5*smoothstep(1.0,1.7,altL);',      // quante: dal 10% delle insulae basse al 60% delle più alte
+  '  float yL=(1.0-vUvR.y)*256.0; float bL=(fract(vHi*53.1)<0.35 && altL>1.45)?83.0:50.0; float fwL=fwidth(vUvR.x)+fwidth(vUvR.y);',      // yL: pixel della trama dalla gronda in giù; bL: dove finisce il piano di legno (uno o due piani)
+  '  if(gL<pL && yL<bL && vUvR.y<1.001 && fwL>0.000001 && abs(vNC.y)<0.5){',      // non le pareti della corte interna, che hanno la trama ferma
+  '    float fY=max(fwidth(yL),0.0001); float px=vUvR.x*256.0; float fP=max(fwidth(px),0.0001); float cx=mod(px,25.6); float cm=mod(px-24.3,25.6);',
+  '    float tL=max(max(lBarF(yL,47.0,50.5,fY),lBarF(yL,38.3,40.6,fY)),max(lBarF(yL,21.4,23.8,fY),lBarF(yL,2.2,4.4,fY)));',      // i traversi: solaio, davanzale, architrave, trave di gronda
+  '    if(bL>60.0) tL=max(tL,max(lBarF(yL,80.0,83.5,fY),max(lBarF(yL,74.2,76.5,fY),lBarF(yL,52.4,54.8,fY))));',
+  '    tL=max(tL,max(max(lBarF(cx,4.4,6.8,fP),lBarF(cx,18.2,20.6,fP)),lBarF(cm,0.0,2.1,fP)));',      // i ritti: ai lati di ogni finestra e uno nel mezzo
+  '    float finL=1.0-smoothstep(0.08,0.3,texelColor.g);',      // le finestre restano buie
+  '    vec3 legC=vec3(0.07,0.047,0.03)*(0.75+0.5*fract(vHi*29.3)); vec3 infC=vec3(0.6,0.52,0.38)*(0.86+0.24*fract(vHi*7.7));',      // legno scurito, riquadri d'intonaco grigio-ocra: tinte di resa (valori lineari: 0,07 è un bruno scuro sullo schermo)
+  '    vec3 cL=mix(mix(infC,diffuseColor.rgb,finL),legC,tL);',
+  '    if(vDeg.x>0.0 && vDeg.w<1.5){ float nL=cN(vec3(vLC.xz*1.7+vDeg.w*11.0,vLC.y*3.0));',      // casa lasciata: prima cade il riempimento, poi il piano di legno
+  '      if(tL<0.5 && finL<0.5 && nL<vDeg.x*0.85-0.12) discard;',
+  '      if(vDeg.y>0.3+0.4*nL) discard;',
+  '      cL=mix(cL,vec3(dot(cL,vec3(0.33)))*0.85,0.5*vDeg.x); }',
+  '    diffuseColor.rgb=cL; } }'].join(String.fromCharCode(10));
+function legnoMuri(sh){ var A=String.fromCharCode(10); sh.uniforms.uBassaL=uLegno;
+  sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+A+'varying float vSyL;').replace('#include <begin_vertex>',['#include <begin_vertex>','vSyL=1.0;','#ifdef USE_INSTANCING','vSyL=length(instanceMatrix[1].xyz);','#endif'].join(A));
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+LEGNO_FN).replace('#include <alphamap_fragment>',LEGNO_F+A+'#include <alphamap_fragment>'); }
 /* tetti con la veste: il coppo meno arancione e più cotto; da un tetto all'altro tinte diverse (nuovo, bruno, sbiadito dal sole, ingrigito dai licheni) e la gronda più sporca */
 function vesteTetti(mat){ if(!RM.VESTE) return mat; mat.onBeforeCompile=function(sh){ hashIstanza(sh);
   sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',
@@ -684,6 +716,35 @@ var matPortici=RM.matPietra(), lontanoPor={value:160};
 RM.tingi(matPortici,'C');
 var portici=pacco(porticoGeo(detPortici),matPortici,Math.max(1,listaPor.length)); listaPor.forEach(function(b,i){ b.pi=i; b.pq=-1; }); RM.porticiCase=portici.maglia;      // per le prove
 if(RM.qualita) RM.qualita.quando(function(g){ var d=RM.QUALITA.portici[g]||0; if(d===detPortici) return; detPortici=d; var v=portici.maglia.geometry; portici.maglia.geometry=porticoGeo(d); v.dispose(); });
+/* I balconi di legno (27 novembre 2026; fonti in coda a src/testi/vita-roma-fonti.md, «Il legno delle case»). Erodiano VII 12, 5, per il 238: i pretoriani appiccano il fuoco
+   alle «houses that had wooden balconies (and there were many of this type in the city)»; a Ostia, nel Caseggiato di Diana, «a narrow balcony» al primo piano, trovato
+   crollato sulla strada (scheda di J. T. Bakker, da Calza). Qui un ballatoio di legno al primo piano, sopra le botteghe e il mezzanino (dove la trama ha la fascia), su una parte
+   delle insulae dentro le mura, più spesso sulle alte (dal 12 al 45%). Lato, lunghezza e forma (tavolato su mensole, asse di parapetto e corrimano) sono uno schema, scelti
+   dal posto con RM.grana: nessun numero a caso delle case cambia. Mai sul lato del portico. C'è finché la casa è abitata; lasciata, cade nei primi anni, prima dei muri.
+   Circa 60 triangoli a balcone col dettaglio 2 (cinque mensole), 36 col dettaglio 1; al gradino «bassa» nessuno. */
+RM.QUALITA.balconi=[0,2,2,2,1];      // bassa, media, alta, massima, telefono
+var listaBal=[], detBal=RM.QUALITA.balconi[RM.q]||0;
+isolati.forEach(function(b){
+  if(!b.dentro || b.tipo>2 || b.nasce) return;
+  var g1=RM.grana(Math.round(b.x*4.9)+83,Math.round(b.z*3.3)-47), g2=RM.grana(Math.round(b.z*5.7)+29,Math.round(b.x*2.9)+71), g3=RM.grana(Math.round(b.x*6.3)-13,Math.round(b.z*7.1)+5);
+  if(g1>=.12+.33*RM.sfuma(1.05,1.7,b.alt)) return;
+  var lati=b.tipo===0?[0,2,3]:[0,1,2,3]; if(b.por) lati=lati.filter(function(f){ return f!==b.por[0]; }); if(!lati.length) return;      // nella casa a due corpi solo sul corpo alto
+  var f=lati[Math.min(lati.length-1,Math.floor(g2*lati.length))], lun, cen=0;
+  if(b.tipo===0 && f!==3){ lun=.62*b.w; cen=(f===0?-.19:.19)*b.w; } else lun=f%2?b.d:b.w;      // il corpo alto va da -0,5 a 0,12 lungo x (FORME[0]); sul lato -z l'asse del balcone è girato
+  var L=lun*(.4+.45*g3); cen+=(lun-L)*.5*(2*((g3*7.31)%1)-1);
+  var aB=b.ry+f*Math.PI/2, eB=(f%2?b.w:b.d)/2+.05, hq=RM.hSuolo||RM.h, gF=-1e9;
+  [-.45,0,.45].forEach(function(s){ var lx=cen+s*L; gF=Math.max(gF,hq(b.x+Math.sin(aB)*eB+Math.cos(aB)*lx,b.z+Math.cos(aB)*eB-Math.sin(aB)*lx)); });      // il suolo più alto sotto il balcone
+  b.bal=[f,L,cen,b.tipo===0?.78:b.tipo===1?.9:.72,gF]; b.bi=listaBal.length; listaBal.push(b); });      // l'altezza dei muri della forma (0,78, 0,9, 0,72): il balcone sta su una linea di solaio della trama (si veda aggiorna)
+var SOLAI=[.42,.547,.676];      // le linee della trama sopra il mezzanino, il primo e il secondo piano (v): la casa sta 1,5 m sotto terra, e in pendenza il primo piano può essere a filo del suolo
+function balconeGeo(det){ var B=new RM.Costruttore(), LG=RM.col(0x6a5038), LG2=RM.col(0x56402e), n=det>1?5:2, k;
+  if(det<1) return B.geo(new THREE.PlaneGeometry(.001,.001),LG).geometria();
+  B.scatola(1,.014,.085,0,-.014,.0425,LG);                                    // il tavolato, 85 cm fuori dal muro
+  B.scatola(1,.045,.006,0,0,.082,LG); B.scatola(1,.012,.012,0,.086,.08,LG2);  // l'asse del parapetto e il corrimano
+  B.scatola(.01,.1,.012,-.495,0,.08,LG2); B.scatola(.01,.1,.012,.495,0,.08,LG2);
+  for(k=0;k<n;k++) B.scatola(.01,.04,.065,-.45+.9*k/(n-1),-.054,.033,LG2);     // le mensole
+  return B.geometria(); }
+var matBal=RM.tingi(RM.matPietra(),'C'), balconi=pacco(balconeGeo(detBal),matBal,Math.max(1,listaBal.length)); RM.balconiCase=balconi.maglia;      // per le prove
+if(RM.qualita) RM.qualita.quando(function(g){ var d=RM.QUALITA.balconi[g]||0; if(d===detBal) return; detBal=d; var v=balconi.maglia.geometry; balconi.maglia.geometry=balconeGeo(d); v.dispose(); });
 var matRuderi=verdeRovina(appoggio(new THREE.MeshStandardMaterial({map:texRudere,roughness:1,side:THREE.DoubleSide})),RUDERE_F,'muri'); RM.tingi(matRuderi,'C'); chiaveCasa(matRuderi);
 var ZERO=new THREE.Matrix4().makeScale(0,0,0);
 var ruderi=pacco(geoRudere,matRuderi,N,true), gusci=pacco(geoGuscio,matRuderi,N,true);      // i gusci alti (fato 0) hanno la loro forma (geoGuscio)
@@ -1031,6 +1092,7 @@ function altezzaMuri(b,eta,anno){ return .15+Math.max(.1,b.alt*(b.nasce?1:b.bass
 function aggiorna(anno){
   var fr=D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno)), soglia=1-fr, numVivi=0, toccati=false, i, b, a, q, eta, v, crollo, H, hm, m;
   var bassa=1-.42*RM.sfuma(470,720,anno), forza=Math.abs(bassa-ultimaBassa)>.01; if(forza) ultimaBassa=bassa;      // le case a più piani lasciano il posto a case basse, a uno o due piani
+  uLegno.value=bassa;      // il piano di legno delle insulae (legnoMuri) legge l'altezza della casa senza l'abbassamento dei secoli tardi
   var qVil=quanteVilla(anno);      // quante case per lotto abitato, in quest'anno (si veda NUCLEO_PERSONE)
   for(i=0;i<N;i++){
     b=isolati[i];
@@ -1070,6 +1132,10 @@ function aggiorna(anno){
     if(b.por){ var pk=inPiedi?1-RM.sfuma(b.t1,b.t1+.6*(b.t2-b.t1),eta):aR>.5?1:0, fP=b.por[0], aP=b.ry+fP*Math.PI/2, eP=(fP%2?b.w:b.d)/2;      // il portico: con la casa abitata; lasciata, cade nei primi anni dello stadio 2
       d.rotation.set(0,aP,0); d.position.set(b.x+Math.sin(aP)*eP,b.porY-.15,b.z+Math.cos(aP)*eP); if(pk>.02) d.scale.set((fP%2?b.d:b.w)*.92,.6*pk,b.por[1]); else d.scale.set(0,0,0); d.updateMatrix();
       portici.setMatrixAt(b.pi,d.matrix); portici.setColorAt(b.pi,c.copy(INTONACI[(b.tono*INTONACI.length)|0]).multiplyScalar(.95+.1*b.sfasa)); d.position.set(b.x,b.y-.15,b.z); }
+    if(b.bal){ var kB=inPiedi?1-RM.sfuma(0,Math.max(2,.35*b.t1),eta):aR>.5?1:0, fB=b.bal[0], aB=b.ry+fB*Math.PI/2, eB=(fB%2?b.w:b.d)/2+.004, syB=inPiedi?Y:b.alt*aR*(b.nasce?1:bassa)+.15, yB=0, sB;      // il balcone: con la casa abitata; lasciata, cade per primo
+      for(sB=0;sB<SOLAI.length;sB++){ yB=b.y-.15+SOLAI[sB]*b.bal[3]*syB; if(yB>=b.bal[4]+.3) break; } if(sB===SOLAI.length) kB=0;      // il primo solaio almeno 3 m sopra la strada
+      d.rotation.set(0,aB,0); d.position.set(b.x+Math.sin(aB)*eB+Math.cos(aB)*b.bal[2],yB,b.z+Math.cos(aB)*eB-Math.sin(aB)*b.bal[2]); if(kB>.02) d.scale.set(b.bal[1],1,1); else d.scale.set(0,0,0); d.updateMatrix();
+      balconi.setMatrixAt(b.bi,d.matrix); balconi.setColorAt(b.bi,c.copy(bianco).multiplyScalar(.8+.3*b.sfasa)); d.position.set(b.x,b.y-.15,b.z); }
     /* rovina: dopo lo stadio 2 (o subito, se è bruciata); appena lasciata ha il colore dell'intonaco, poi resta il mattone */
     var eR=eta, vR=v, bassoM=med>0&&b.medRud&&!b.medRotta;      // la casa altomedievale dentro i muri rimasti: di una rovina vecchia (eR dall'abbandono) o della casa romana ridotta a muri bassi
     if(med>0 && b.medRud){ vR=Math.max(v,med*a); eR=b.medRotta?Math.max(0,anno-da0):80; }
@@ -1114,7 +1180,7 @@ function aggiorna(anno){
     if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;
   });
   if(toccati){
-    vivi.concat([ruderi,gusci,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,ortiCasa,portici,colonneRov,medRec,medPoz,vilRec],macerieV,MED,VIL).forEach(function(p){ p.stringi(); });
+    vivi.concat([ruderi,gusci,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,ortiCasa,portici,balconi,colonneRov,medRec,medPoz,vilRec],macerieV,MED,VIL).forEach(function(p){ p.stringi(); });
     gLuci.attributes.color.needsUpdate=true; gLuci.attributes.position.needsUpdate=true; aggiornaVie(); statoVie();
   }
   if(RM.statoVie){ RM.statoVie.anno.value=.3*RM.sfuma(450,800,anno); RM.statoVie.esterno.value=.55*RM.sfuma(430,780,anno); }      // la manutenzione che cala per tutti; fuori, dove non ci sono case, le vie consolari
