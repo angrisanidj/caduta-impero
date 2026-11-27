@@ -213,16 +213,25 @@ var acque=(function(){
     /* 5. Archi neroniani, il ramo della Claudia sul Celio, e il prolungamento di Domiziano fino al Palatino. OpenStreetMap, relazioni 13394499 «Aqua Neroniana», 1876737 e 1900744,
        vie 200350823 e 112174949 sul Celio, 131704036 e 131704118 ai piedi del Palatino; il punto 120,70, lungo via di Santo Stefano Rotondo, è un'ipotesi. Scavalca l'arco di Dolabella
        (js/monumenti.js). Fino al Patriarchio (x 156) è la Claudia che serve il Laterano e Adriano I la rifà; oltre, per ipotesi, resta in rovina dopo il 537. */
-    {passo:3.2, min:.8, morto:function(x){ return x<156; }, p:[[244.9,17.4,9.74,'a'],[241,16.6,9.73,'a'],[234.6,18.1,9.71,'a'],[226,22,9.69,'a'],[220,27,9.67,'a'],[208,36.3,9.63,'a'],
-      [204.5,39.3,9.62,'a'],[196.2,45.7,9.59,'a'],[186,51.3,9.56,'a'],[176.9,54.4,9.53,'a'],[156.7,57.1,9.46,'a'],[120,70,9.2,'a'],[87.1,81.7,8.9,'a'],[82.16,76.83,8.87,'q',.65,.89,.52],
-      [81.56,76.29,8.86,'a'],[76.1,71.7,8.82,'a'],[71.1,66.9,8.78,'a'],[37,60.4,8.45,'a'],[32,59.4,8.4,'a'],[26,54,8.3]]}];
-  var el=[], rnd=RM.casuale(537), CIMA=.48, PEZZI=new RM.Costruttore(), ATTICI_CADUTI=[];
+    /* Misure (27 novembre 2026, sera; Platner e Ashby, Arcus Neroniani, letta quel giorno): «The arches have a span of 7.75 metres and the piers are 2.30 long and 2.10 thick, the
+       maximum height being 16 metres». Prima questa linea aveva le campate delle altre (passo 3,2: arcate di 32 m, spesse 8) e sopra l'arco di Dolabella il canale stava a 21 m
+       dal suolo: la muratura sopra l'arco era alta più del doppio dell'arco e sembrava una torre. Ora: passo di 10 m (luce più pila), spessore 2,3 m (larga), e dal punto 87,1,81,7
+       fino al Palatino il canale scende a 15,6 m sopra il suolo dell'arco, sotto il massimo della fonte (al Palatino il terreno del modello non lo lascia scendere di più). Altrove
+       le arcate del modello restano più alte di 16 m: è il rilievo accentuato 1,8 volte. Il tracciato attorno all'arco sta sui resti di OpenStreetMap (vie 140343272, 375849541,
+       375705486 a nord-ovest dell'arco, 112174949 a sud-est; grezzi/osm-celio-foro.json, query q17.txt): corre lungo l'asse dell'arco e incrocia la via di San Paolo della Croce
+       sull'arco con un angolo di circa venti gradi, da nord della strada a ovest a sud della strada a est. Gruppo 3: i crolli si decidono per tratti lunghi come prima.
+       fila2: una sola fila di arcate su pile alte, come i resti; la seconda fila solo dove la pila supera i 25 m (la valle fra Celio e Palatino, «with two tiers of arches»). */
+    {passo:1, larga:.23, gruppo:3, fila2:2.5, min:.8, morto:function(x){ return x<156; }, p:[[244.9,17.4,9.74,'a'],[241,16.6,9.73,'a'],[234.6,18.1,9.71,'a'],[226,22,9.69,'a'],[220,27,9.67,'a'],[208,36.3,9.63,'a'],
+      [204.5,39.3,9.62,'a'],[196.2,45.7,9.59,'a'],[186,51.3,9.56,'a'],[176.9,54.4,9.53,'a'],[156.7,57.1,9.46,'a'],[120,70,9.2,'a'],[87.1,81.7,8.4,'a'],[82.16,76.83,8.35,'q',.65,.89,.52],
+      [81.56,76.29,8.348,'a'],[76.1,71.7,8.34,'a'],[71.1,66.9,8.335,'a'],[37,60.4,8.32,'a'],[32,59.4,8.31,'a'],[26,54,8.3]]}];
+  var el=[], rnd=RM.casuale(537), rndN=RM.casuale(5375), CIMA=.48, PEZZI=new RM.Costruttore(), ATTICI_CADUTI=[];
   /* attico sopra una porta o sopra un arco: da sopra il fornice (alto «sotto») fino alla sommità del canale; per le porte anche le due pile ai lati del passaggio */
   /* Sopra un arco che c'era già (a[5]: il suo orientamento, a[6]: la sua profondità; 27 novembre 2026, l'arco di Dolabella): la muratura sta sulla pianta dell'arco, di mattone come
      gli archi neroniani, e non più larga di lui; prima era un blocco di travertino più profondo dell'arco (0,95 contro 0,52) e girato sul tracciato, che da vicino lo copriva come
      un pilone. Platner e Ashby, Arcus Dolabellae et Silani: l'arco «is usually supposed to have been built to support a branch of the aqua Marcia …, and afterwards to have been used
      by Nero in his extension of the aqua Claudia, the arcus Neroniani»: il canale gli passava sopra. Il contorno dell'arco su OpenStreetMap (Nominatim, «Porta Caelimontana») dà
-     l'orientamento del modello (0,89). Altezza e forma della muratura sopra l'arco sono uno schema. */
+     l'orientamento del modello (0,89). Altezza e forma della muratura sopra l'arco sono uno schema. Dal 27 novembre 2026, sera, il canale sopra l'arco sta a 15,6 m dal suolo
+     (prima 21): la fonte dà 16 m come altezza massima degli archi neroniani e nessuna altezza in questo punto; è la stessa delle arcate accanto. */
   function attico(a,b,sotto,pile){
     var mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, L=Math.hypot(b[0]-a[0],b[1]-a[1]), y0=RM.h(mx,mz)-.3, su=(a[2]+b[2])/2-y0, sopraArco=a[5]!=null, dp=sopraArco?a[6]:.95;
     if(su<sotto+.05) return;
@@ -248,7 +257,8 @@ var acque=(function(){
       for(var k=0;k<n;k++){
         var t=(k+.5)/n, x=a[0]+(b[0]-a[0])*t, z=a[1]+(b[1]-a[1])*t, len=L/n, y=RM.h(x,z), ya=RM.h(x-ux*len/2,z-uz*len/2), yb=RM.h(x+ux*len/2,z+uz*len/2), m=tipo==='m', giu=m?y:Math.min(y,ya,yb);
         var cima=m?y+l.suolo:Math.max(a[2]+(b[2]-a[2])*t,y+(l.min||0)), morto=typeof l.morto==='function'?l.morto(x,z):!!l.morto;
-        el.push({li:li,ord:ord++,perso:morto,x:x,z:z,ang:ang,len:len,y:giu-.2,cima:cima,suolo:m,pend:m?Math.atan2(yb-ya,len):0,vis:m||cima-y>.3,rot:rnd(),blocco:li*1000+i*100+Math.floor(k/6),blocchetto:li*1000+i*100+Math.floor(k/(morto?6:3))});
+        var gr=l.gruppo||1, cas=li===5?rndN:rnd;      // gli archi neroniani (27 novembre 2026) hanno un loro generatore: le loro campate più fitte non spostano i numeri a caso delle altre linee
+        el.push({li:li,ord:ord++,perso:morto,x:x,z:z,ang:ang,len:len,y:giu-.2,cima:cima,suolo:m,larga:l.larga,fila2:l.fila2,pend:m?Math.atan2(yb-ya,len):0,vis:m||cima-y>.3,rot:cas(),blocco:li*1000+i*100+Math.floor(k/(6*gr)),blocchetto:li*1000+i*100+Math.floor(k/((morto?6:3)*gr))});
       }
     }
     if(l.castello) castello(l.p[l.p.length-1],l.p[l.p.length-2][3]);
@@ -257,7 +267,7 @@ var acque=(function(){
      Liber Pontificalis, la Marcia (Iobia) e la Sabbatina, di nuovo rotte probabilmente nell'assedio di Astolfo. I tratti in rovina (perso) non si riparano e cedono di più. */
   var sorte={}, RIPARA=[.5,.85,.4,1,0,.5], INCURIA=[.3,.2,.35,.1,.2,.3], VENTI={1:1,3:1};
   el.forEach(function(e){
-    var b=sorte[e.blocco]||(sorte[e.blocco]=[rnd(),rnd(),rnd(),rnd()]), c=sorte['c'+e.blocchetto]||(sorte['c'+e.blocchetto]=[rnd(),rnd()]);
+    var cas=e.li===5?rndN:rnd, b=sorte[e.blocco]||(sorte[e.blocco]=[cas(),cas(),cas(),cas()]), c=sorte['c'+e.blocchetto]||(sorte['c'+e.blocchetto]=[cas(),cas()]);
     e.taglio=b[0]<.4?536.5+b[1]*.48:9999;
     e.ripara=e.taglio<9999&&!e.perso&&b[2]<RIPARA[e.li]?556+b[3]*50:9999;
     e.cede=c[0]<(e.perso?.45:INCURIA[e.li])?570+c[1]*190:9999;
@@ -314,7 +324,7 @@ var acque=(function(){
       i=j+1;
     }
     el.forEach(function(e,j){
-      var s=st[j], rotto=s.rotto, spenta=(e.perso&&anno>=537)||anno>=(e.spentaDa||9999), ar=spenta?spente:arcate, T=CIMA*e.len, larga=e.suolo?.6:.8, H=e.cima-e.y, Hp=H-T;
+      var s=st[j], rotto=s.rotto, spenta=(e.perso&&anno>=537)||anno>=(e.spentaDa||9999), ar=spenta?spente:arcate, T=CIMA*e.len, larga=e.larga||(e.suolo?.6:.8), H=e.cima-e.y, Hp=H-T;
       d.rotation.set(0,e.ang,0);
       zero(spenta?arcate:spente,j); zero(spenta?arcate:spente,N+j);
       if(rotto){ zero(ar,j); zero(ar,N+j); zero(pile,j); }
@@ -322,7 +332,7 @@ var acque=(function(){
       else{
         d.position.set(e.x,e.cima-T,e.z); d.scale.set(e.len,e.len,larga); d.updateMatrix(); ar.setMatrixAt(j,d.matrix);
         if(Hp>.02){ d.position.y=e.y; d.scale.set(e.len,Hp,larga); d.updateMatrix(); pile.setMatrixAt(j,d.matrix); } else zero(pile,j);
-        if(Hp>T*1.7){ d.position.y=e.y+Hp*.5-T*.5; d.scale.set(e.len,e.len,larga); d.updateMatrix(); ar.setMatrixAt(N+j,d.matrix); } else zero(ar,N+j);
+        if(Hp>Math.max(T*1.7,e.fila2||0)){ d.position.y=e.y+Hp*.5-T*.5; d.scale.set(e.len,e.len,larga); d.updateMatrix(); ar.setMatrixAt(N+j,d.matrix); } else zero(ar,N+j);
       }
       if(rotto){ d.position.set(e.x-Math.cos(e.ang)*e.len/2,e.y,e.z+Math.sin(e.ang)*e.len/2); d.scale.set(e.len,H*(.25+.6*e.rot)*(1-.45*RM.sfuma(0,220,anno-s.da)),larga); d.updateMatrix(); monconi.setMatrixAt(j,d.matrix); }
       else zero(monconi,j);

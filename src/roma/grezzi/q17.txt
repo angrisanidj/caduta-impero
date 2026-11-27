@@ -1,0 +1,10 @@
+[out:json][timeout:90];
+(
+  way["man_made"="aqueduct"](41.8830,12.4880,41.8880,12.5060);
+  way["historic"](41.8840,12.4920,41.8870,12.4975);
+  way["highway"](41.8840,12.4920,41.8870,12.4975);
+  relation["historic"](41.8840,12.4920,41.8870,12.4975);
+  way["highway"]["name"~"^(Via Sacra|Clivus Capitolinus|Clivo Capitolino|Vicus Iugarius|Vico Jugario|Vicus Tuscus)$"](41.8905,12.4815,41.8945,12.4880);
+  way["historic"]["name"~"Tiberio|Rostr|Saturno|Regia|Divo Giulio|Basilica Iulia|Castor|Concordia|Vespasiano"](41.8905,12.4815,41.8945,12.4880);
+);
+out tags geom;

@@ -733,7 +733,12 @@ function maglia(B){ var g=B.maglia(RM.matPietra()); g.visible=false; g.castShado
    scudo tondo con umbone, tunica corta stretta in vita, mantello corto, lancia; i colori non sono noti (lana non tinta, scudi color legno). Il percorso, l'ultimo tratto della
    via Sacra dall'arco di Tito verso il Campidoglio, è uno schema: Eutropio non lo dà. */
 var trionfo274=(function(){
-  var B=new RM.Costruttore(), i, p, via=spezzata([[42,25.9],[28.1,20.6],[25.9,16.7],[21.9,12.3],[19.3,10.7],[12.5,7.5],[6.2,3],[-1.6,-1.7],[-4.4,-2.5],[-8.9,-1.7],[-13,2.2],[-18.4,5.1],[-23,3.6],[-25,2]]);      // la via Sacra di js/roma-topo.js, poi verso il tempio
+  var B=new RM.Costruttore(), i, p, via=spezzata([[42,25.9],[28.1,20.6],[25.9,16.7],[21.9,12.3],[19.3,10.7],[12.5,7.5],[5.1,2.3],[-1.6,-1.7],[-4.6,-2],[-5.6,-2.5],[-8.6,-2.1],[-10,-1.2],[-13.9,3.1],[-16.4,5.1],[-18.4,5.1],[-23,3.6],[-25,2]]);      // la via Sacra di js/roma-topo.js (rifatta il 27 novembre 2026, sera: nel mezzo fra l'arco di Severo e i Rostri), poi verso il tempio
+  /* la folla non sta dentro gli edifici (27 novembre 2026, sera; prima una parte entrava nel Divo Giulio, in Saturno e nei Rostri): un raggio dall'alto sui monumenti che nel 274
+     ci sono; chi cadrebbe sopra un edificio non si disegna (circa 200 su 900, metà sulla piattaforma di Venere e Roma). I numeri a caso si consumano lo stesso, così le scene che seguono restano uguali */
+  var RAG=new THREE.Raycaster(), GIU=new THREE.Vector3(0,-1,0), SU=new THREE.Vector3(), EDIF=(RM.MONUMENTI||[]).filter(function(o){
+    if(!o.g||o.x==null||o.x<-40||o.x>60||o.z<-25||o.z>40) return false; var s=RM.statoMonumento?RM.statoMonumento(o.id,274):null; return !s||s.s0!=='assente'; }).map(function(o){ o.g.updateMatrixWorld(true); return o.g; });
+  function sopraEdificio(x,z){ var y=H(x,z); SU.set(x,y+40,z); RAG.set(SU,GIU); var c=RAG.intersectObjects(EDIF,true); return c.length>0&&c[0].point.y>y+.12; }
   var pc=via(.64,0), pe=via(.47,0), LG=RM.lanaGrezza||{crema:C.tunica,bruno:C.grigio,grigio:C.grigio}, SCUDO=RM.col(0x7d6446);
   vicine(B,'274',[pc.x,pc.z],function(){      // Tetrico, Zenobia e Aureliano: prima di tutto
   p=via(.665,-.08); uomo(B,p.x,p.z,p.y,LG.bruno,null,p.ry); p=via(.665,.08); uomo(B,p.x,p.z,p.y,LG.crema,null,p.ry,'donna');                      // Tetrico e Zenobia, a piedi davanti al carro (Eutropio); le vesti non sono dette (lana non tinta)
@@ -746,7 +751,7 @@ var trionfo274=(function(){
   },1);
   for(i=0;i<120;i++) rnd();      // i numeri a caso dei cavalieri corazzati tolti: le scene che seguono restano uguali
   vicine(B,'274',[pc.x,pc.z],function(){      // la folla ai lati
-  for(i=0;i<900;i++){ var lat=(rnd()<.5?-1:1)*(.85+rnd()*.6); p=via(rnd(),lat); uomo(B,p.x,p.z,p.y,C.folla[(rnd()*C.folla.length)|0],null,p.ry+(lat>0?-1:1)*Math.PI/2+(rnd()-.5),'folla'); }
+  for(i=0;i<900;i++){ var lat=(rnd()<.5?-1:1)*(.85+rnd()*.6); p=via(rnd(),lat); var tinta=C.folla[(rnd()*C.folla.length)|0], giro=p.ry+(lat>0?-1:1)*Math.PI/2+(rnd()-.5); if(!sopraEdificio(p.x,p.z)) uomo(B,p.x,p.z,p.y,tinta,null,giro,'folla'); else contaP++; }      // contaP: come se la figura ci fosse, le vesti delle scene dopo non cambiano
   },2);
   var pT=via(.665,-.08), pZ=via(.665,.08);
   return {g:maglia(B), da:273.6, a:275, capi:{aureliano:[pc.x,pc.y+.07,pc.z], tetrico:[pT.x,pT.y,pT.z], zenobia:[pZ.x,pZ.y,pZ.z]}};

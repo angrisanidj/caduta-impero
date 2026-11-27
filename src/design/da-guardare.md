@@ -307,6 +307,15 @@ Scorciatoia di prova: `?guarda=<monumento>&anno=<anno>&dist=<distanza in decine 
 - **Che cosa sarebbe un difetto**: un tempio sopra una strada (ce ne sono già: il clivo su Saturno, la via Sacra sui Rostri e sulla Regia, riserva 155); il corteo del 274 che passa nei templi (già prima, riserva 156); l'arco di Tiberio dentro qualcosa.
 - **Scelte da confermare**: l'altezza dell'arco di Tiberio (10 m), la fronte verso la piazza, i gradini; lasciare fuori l'arco di Augusto finché non si trova una pianta degli scavi (riserva 153).
 
+## 33. L'arco di Dolabella e gli archi neroniani; le strade del Foro (27 novembre, sera)
+
+- **Che cosa è cambiato**: sopra l'arco di Dolabella il blocco di mattone è più basso (il canale a 15,6 m da terra invece di 21: la fonte dà 16 m come altezza massima degli archi di Nerone). Gli archi neroniani hanno le misure della fonte: arcate di circa 10 m invece di 32, pile spesse 2,3 m invece di 8, una sola fila su pile alte. Il tracciato non è cambiato: i resti su OpenStreetMap dicono che l'acquedotto corre lungo l'asse dell'arco e incrocia la strada proprio lì, con un angolo stretto (circa venti gradi), non di traverso. Nel Foro: il vico Tusco non tocca più i Castori, il vico Iugario non passa più sul podio di Saturno e accanto all'arco di Tiberio si stringe (la fonte dice che la via lì era più stretta), la via Sacra passa nel mezzo fra l'arco di Severo e i Rostri invece che sotto l'arco. La folla del trionfo del 274 non sta più dentro i templi.
+- **Dove guardare**: https://angrisanidj.github.io/caduta-impero/?guarda=dolabella&anno=300&dist=20 , poi `&anno=800`; `?guarda=arcotiberio&anno=300&dist=25`; la tappa del 274 (`#274`). Fogli nello scratchpad del lavoro, cartella DS: `foglio-dolabella.png` (fotografia di oggi, prima e dopo dallo stesso lato, di fianco, dalla strada, dall'alto) e `foglio-strade-foro.png` (pianta con gli ingombri dei monumenti e i resti veri, il Foro dall'alto prima e dopo, il corteo del 274).
+- **Su quale dispositivo**: PC; poi l'iPhone per gli archi neroniani (più campate: circa 170 in più).
+- **Che cosa dovresti vedere**: l'arco di Dolabella con sopra una muratura poco più alta dell'arco e, ai due lati, le arcate che continuano alla stessa altezza; dall'alto, la strada che passa sotto l'acquedotto proprio all'arco.
+- **Che cosa sarebbe un difetto**: un acquedotto che sembra una torre o una fila di trampoli; arcate sulla strada a est dell'arco (le prime pile stanno a pochi metri dal bordo); una strada del Foro dentro un tempio fuori dai due punti noti (Saturno con Vespasiano, la Regia con la scala di Antonino: riserve 159 e 160).
+- **Scelte da confermare**: che l'acquedotto corra lungo l'asse dell'arco come dicono i resti, e non di traverso; l'altezza della muratura sopra l'arco (schema: la stessa delle arcate accanto); la via accanto all'arco di Tiberio stretta a 3 m (la fonte non dice di quanto); nell'800 sono cambiati i tratti crollati degli archi neroniani (riserva 158).
+
 ## Cose che puoi dirci solo tu
 
 1. Sul tuo PC: dove la città va a scatti (all'apertura, nei voli, muovendo il mouse), e se l'800 va più lento del 301.

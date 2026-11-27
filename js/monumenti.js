@@ -2598,7 +2598,7 @@ M.forEach(function(o){
 });
 /* dove una strada passa sotto un arco si stringe alla luce del fornice: [x, z, raggio, mezza larghezza] (24 novembre 2026: con strade larghe 16 m e fornici di 5 o 6, anche un arco
    ben centrato sembrava stare «accanto» alla strada) */
-RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.34],[27.2,20.15,1.6,.25],[81.86,76.56,1.4,.19],[-110.9,-9.2,1.6,.25],[-155.49,-94.14,1.6,.26]];      // Claudio, Portogallo, Arcus Novus, Gallieno (fornice di 7,30 dal 27 novembre 2026), Tito, Dolabella (Costantino tolto il 27 novembre 2026: la strada gli passa accanto, si veda l'arco), Valentiniano (ponte Aurelio), Graziano (ponte Elio)
+RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.34],[27.2,20.15,1.6,.25],[81.86,76.56,1.4,.19],[-110.9,-9.2,1.6,.25],[-155.49,-94.14,1.6,.26],[-7.53,.64,.9,.3]];      // Claudio, Portogallo, Arcus Novus, Gallieno (fornice di 7,30 dal 27 novembre 2026), Tito, Dolabella (Costantino tolto il 27 novembre 2026: la strada gli passa accanto, si veda l'arco), Valentiniano (ponte Aurelio), Graziano (ponte Elio); l'ultima, 27 novembre 2026 (sera), la via accanto all'arco di Tiberio: Platner e Ashby, Arcus Tiberii, «on the north side of the Sacra Via, which was made narrower at this point by having its curb bent toward the south»; di quanto, la fonte non lo dice (qui 3 m)
 RM.posa();
 var perId={};
 M.forEach(function(o){
