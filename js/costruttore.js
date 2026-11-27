@@ -288,7 +288,7 @@ function taglio(colore){ return [
   'if(uSud>0.001){ vec2 qs=vLoc.xz/uSudR; float ro=length(qs); if(ro>0.94 || (ro>0.74 && vLoc.y>3.09)){ float an=acos(clamp(dot(qs/ro,uSudDir),-1.0,1.0)); if(an<3.1416*uSud*(0.9+0.2*rmH(vec3(floor(vLoc.xz*0.9),6.0)))) discard; } }'].join(NL); }
 /* quota del pixel coperta da strisce larghe w ogni p (integrale della fila di strisce su una finestra larga un pixel); solo nel colore, dove ci sono le derivate */
 var STRISCE='float rmStr(float x,float p,float w){ float f=max(fwidth(x),0.00001)/p; float y0=x/p+0.5*w/p-0.5*f; float y1=y0+f; float k=w/p; return clamp((floor(y1)*k+min(fract(y1),k)-floor(y0)*k-min(fract(y0),k))/f,0.0,1.0); }';
-var DICHIARA=[SAP_DICH,'uniform float uVesteR; uniform sampler2D tMacchieR;','uniform float uRovina; uniform float uCant; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR; uniform float uVerde; uniform float uIntonaco; uniform float uDegQ; uniform float uCoppi; uniform float uPulito; uniform vec4 uCrZona; uniform vec4 uCrPeso;',LOD_FD,
+var DICHIARA=[SAP_DICH,'uniform float uVesteR; uniform sampler2D tMacchieR; uniform float uTardoR; uniform float uMoleR;','uniform float uRovina; uniform float uCant; uniform float uSpoglio; uniform float uPiombo; uniform float uAlt; uniform float uCrepe; uniform float uSud; uniform vec2 uSudDir; uniform vec2 uSudR; uniform float uVerde; uniform float uIntonaco; uniform float uDegQ; uniform float uCoppi; uniform float uPulito; uniform vec4 uCrZona; uniform vec4 uCrPeso;',LOD_FD,
   'float rmH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453); }',
   'vec2 rmH2(vec2 p){ return fract(sin(vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3))))*43758.5453); }',
   'float rmN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f);',
@@ -403,7 +403,14 @@ var NUCLEO=['if(rmRotto>0.5 && vNor.y<-0.6){ vec3 nuC=mix(vec3(0.4,0.37,0.32),ve
   '  float fwN=fwidth(vLoc.x)+fwidth(vLoc.z); float kN=1.0-smoothstep(0.02,0.06,fwN); nuC*=0.68+0.45*mix(0.5,rmN(vec3(vLoc.xz*5.0,33.0)),1.0-smoothstep(0.05,0.15,fwN));',      // mucchi e avvallamenti di due metri; le scaglie solo da vicino: da lontano brulicherebbero
   '  if(kN>0.0){ float sN=rmN(vec3(vLoc*24.0+3.1)); nuC=mix(nuC,mix(vec3(0.3,0.27,0.23),sN>0.62?vec3(0.6,0.36,0.25):vec3(0.62,0.55,0.4),smoothstep(0.55,0.7,sN)),kN*0.6*abs(sN-0.5)*2.0); }',
   '  diffuseColor.rgb=nuC*diffuse; }'].join(NL);
+/* MOLE (27 novembre 2026; l'utente: «La Roma dell'800 deve sembrare al visitatore una città magnifica in rovine»). Dalla veduta larga dell'800 le grandi moli, di mattone
+   scurito e coperte di verde, avevano lo stesso tono del tappeto dei ruderi delle case e non se ne staccavano. Negli anni tardi (uTardoR, da zero nel 560 a uno nel 760) e solo
+   da lontano (oltre 1,2 km dall'occhio, piene oltre 4: la vista d'insieme, non la mezza distanza) i muri dei monumenti prendono il doppio
+   della luce e i piani un terzo in più: una resa da veduta, come la foschia, che non cambia né forma né stato;
+   da vicino e fino al 550 nulla cambia. uMole (1) si spegne dove la cosa non è una mole di muratura (il monte Testaccio, di cocci). */
+var MOLE='diffuseColor.rgb*=1.0+uTardoR*uMoleR*smoothstep(120.0,400.0,length(vViewPosition))*(0.3+1.0*(1.0-smoothstep(0.3,0.7,abs(vNor.y))));';
 function innesta(sh,u,colore){
+  sh.uniforms.uTardoR=RM.tardoU||{value:0}; sh.uniforms.uMoleR=u.uMole||{value:1};      // la luce degli anni tardi (js/base.js, RM.tardo): si veda MOLE
   sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol; sh.uniforms.uVesteR=RM.vesteU||{value:0}; sh.uniforms.tMacchieR={value:RM.VESTE?RM.trameVeste().macchie:null};      // veste del PC: l'erba fra le lastre prende il verde dell'erba del suolo
   sh.uniforms.uRovina=u.uRovina; sh.uniforms.uCant=u.uCant; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uPiombo=u.uPiombo; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe; sh.uniforms.uSud=u.uSud; sh.uniforms.uSudDir=u.uSudDir; sh.uniforms.uSudR=u.uSudR;
   sh.uniforms.uVerde=u.uVerde; sh.uniforms.uIntonaco=u.uIntonaco; sh.uniforms.uDegQ=RM.degradoQ; sh.uniforms.uCoppi=u.uCoppi; sh.uniforms.uPulito=u.uPulito; sh.uniforms.uCrZona=u.uCrZona; sh.uniforms.uCrPeso=u.uCrPeso;
@@ -411,11 +418,11 @@ function innesta(sh,u,colore){
   var SCEGLI=LOD_SCEGLI.replace('dpxL<uSogliaCol','dpxL<uSogliaCol*(1.0-step(0.02,uRovina))');      // in rovina niente fascia: il portico è senza tetto e senza muri, e fra i monconi si vede il prato, non l'ombra
   SCEGLI+=NL+MANCA;      // le colonne che mancano, e i rocchi a terra
   sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA+(colore?NL+STRISCE:''));
-  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,COLORA,DEGRADO,LEGNO,NUCLEO,SAP_TINTA].join(NL));
+  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,COLORA,DEGRADO,LEGNO,NUCLEO,MOLE,SAP_TINTA].join(NL));
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',[SCEGLI,LOD_OMBRA,taglio(false),'#include <clipping_planes_fragment>'].join(NL));
 }
 RM.matRovina=function(alt){
-  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)},uVerde:{value:0},uIntonaco:{value:0},uCoppi:{value:1},uPulito:{value:0},uCrZona:{value:new THREE.Vector4(0,0,-2,-1)},uCrPeso:{value:new THREE.Vector4(1,1,0,1)}};      // uCrZona (0,0,-2,-1): tutto nella parte che cade, con peso 1
+  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)},uVerde:{value:0},uIntonaco:{value:0},uCoppi:{value:1},uPulito:{value:0},uCrZona:{value:new THREE.Vector4(0,0,-2,-1)},uCrPeso:{value:new THREE.Vector4(1,1,0,1)},uMole:{value:1}};      // uCrZona (0,0,-2,-1): tutto nella parte che cade, con peso 1
   var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
   m.onBeforeCompile=function(sh){ innesta(sh,u,true); };
   m.userData.u=u;

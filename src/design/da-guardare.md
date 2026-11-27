@@ -226,6 +226,15 @@ Scorciatoia di prova: `?guarda=<monumento>&anno=<anno>&dist=<distanza in decine 
 - **Che cosa sarebbe un difetto**: casette che si toccano o entrano nei ruderi vicini; gruppi tutti uguali; fotogrammi più bassi nell'800.
 - **Scelte da confermare**: otto persone per casa (stima nostra, detta nel piede); un gruppo non esce dal suo isolato più di un metro e mezzo, quindi nell'800 le case sono circa 1.900 per 30.000 persone; le uova di Cassiodoro (salgono) e non di Varrone (scendono); siepi del tempio di Claudio inselvatichite dal 440 e riquadri dei Lamiani spariti dal 600 (anni scelti); la foschia più leggera negli anni tardi (scelta di resa, non una notizia); San Giovanni a Porta Latina dal 496 (Gelasio I, Armellini).
 
+## 24. La veduta larga dell'800 e i mulini sulle barche (27 novembre, mattina)
+
+- **Che cosa è cambiato**: dal 560 al 760 la luce si fa più bassa (il sole scende da 27,5 a 24 gradi), più calda e un poco più forte: le ombre delle moli si allungano. Solo nella veduta larga (oltre 1,2 km dall'occhio) i muri dei monumenti prendono più luce, perché si stacchino dal tappeto dei ruderi; le sagome alte hanno il contorno scuro anche da lontano; le vie ancora battute si schiariscono di polvere e quelle lasciate restano tracce d'erba più scura; l'erba della città lasciata è un poco meno paglia. Dentro le terme, nelle arene, sulle piste e nei fori crescono alberi veri, alti da 12 a 20 m (196 nell'800). I mulini del 537: cinque coppie di barche affiancate, legate in fila, con le macine sotto tettoie di tavole, la ruota che gira fra le due barche e le funi tese dalle due rive alla prima coppia, sotto il ponte Aurelio.
+- **Dove guardare**: https://angrisanidj.github.io/caduta-impero/#800 e #300 (veduta d'insieme, da confrontare); https://angrisanidj.github.io/caduta-impero/?guarda=caracalla&anno=800&dist=70 ; https://angrisanidj.github.io/caduta-impero/?guarda=diocleziano&anno=800&dist=70 ; https://angrisanidj.github.io/caduta-impero/?guarda=mulini&anno=600&dist=10 (poi un clic per la scheda).
+- **Su quale dispositivo**: PC e iPhone, la veduta d'insieme su tutti e due.
+- **Che cosa dovresti vedere**: nell'800 le terme, il Circo, il Colosseo un poco più chiari e più netti sul fondo; ombre lunghe da mezza distanza; nel 300 nulla di cambiato; le ruote dei mulini che girano piano (ferme con «Riduci movimento» e nelle piene del 589 e del 791).
+- **Che cosa sarebbe un difetto**: muri dei monumenti che da lontano sembrano illuminati da un faro; alberi che bucano i tetti; barche sulla riva; fotogrammi più bassi nell'800.
+- **Scelte da confermare**: la luce degli anni tardi e la luce in più dei muri da lontano sono resa, non notizie (dette nei commenti, non in pagina: dicci se vanno dette nel piede); gli alberi nei ruderi (nessuna fonte li conta); nei mulini numero delle coppie, misure, tettoie e posto delle funi sulle rive (detti nella scheda); che nelle piene le ruote si fermino.
+
 ## Cose che puoi dirci solo tu
 
 1. Sul tuo PC: dove la città va a scatti (all'apertura, nei voli, muovendo il mouse), e se l'800 va più lento del 301.

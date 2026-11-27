@@ -5,6 +5,20 @@
 'use strict';
 var RM=window.RM; if(!RM||RM.guasto) return;
 var D=window.RM_DATI, P=RM.P, PI=Math.PI;
+/* i mulini sulle barche (si veda 'mulini' più sotto): dove stanno le coppie lungo la corrente, lo scafo e le funi */
+var MULINI_X=[-6,-3.4,-.8,1.8,4.4];      // il centro di ogni coppia, in unità lungo il fiume (verso valle: +x); a 26 m l'una dall'altra, SCHEMA
+function scafoMulino(L,W,H,Dk){      // scafo aperto, a sezioni a U che si stringono ai capi; l'orlo a H sopra l'acqua, la chiglia a Dk sotto (y=0 il pelo dell'acqua)
+  var pos=[], idx=[], NS=10, PR=[[-1,1],[-.97,.45],[-.62,0],[.62,0],[.97,.45],[1,1]], k, j;
+  for(k=0;k<=NS;k++){ var t=k/NS*2-1, w=W/2*Math.sqrt(Math.max(.06,1-Math.pow(Math.abs(t),3))), rim=H+.04*Math.pow(Math.abs(t),3), kl=-Dk*(1-.6*Math.pow(Math.abs(t),4));
+    PR.forEach(function(q){ pos.push(t*L/2, kl+(rim-kl)*q[1], q[0]*w); }); }
+  for(k=0;k<NS;k++) for(j=0;j<PR.length-1;j++){ var a=k*PR.length+j, b=a+PR.length; idx.push(a,b,a+1, a+1,b,b+1); }
+  [0,NS].forEach(function(k){ var o=k*PR.length; for(j=1;j<PR.length-1;j++) idx.push(o,o+j,o+j+1); });      // le due testate
+  var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); g.setIndex(idx); g.computeVertexNormals(); return g; }
+function funeMulino(B,a,b,r,col){      // una fune da a a b, un poco lenta: due tratti col mezzo più basso
+  var m=[(a[0]+b[0])/2,(a[1]+b[1])/2-.015*Math.hypot(b[0]-a[0],b[2]-a[2]),(a[2]+b[2])/2];
+  [[a,m],[m,b]].forEach(function(s){ var p=new THREE.Vector3(s[0][0],s[0][1],s[0][2]), q=new THREE.Vector3(s[1][0],s[1][1],s[1][2]), d=q.clone().sub(p), l=d.length(); if(l<1e-4) return;
+    var g=new THREE.CylinderGeometry(r,r,l,4); g.applyMatrix4(new THREE.Matrix4().makeRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize())));
+    g.translate((p.x+q.x)/2,(p.y+q.y)/2,(p.z+q.z)/2); B.geo(g,col); }); }
 var TINTA={ uso:new THREE.Color(1,1,1), chiuso:RM.col(0xb5ad9e), abbandonato:RM.col(0xb2ae98), spogliato:RM.col(0x8c7e70), bruciato:RM.col(0x6f655c), crollato:RM.col(0xa69d90), cava:RM.col(0xa39584), assente:new THREE.Color(1,1,1) };
 
 /* ---------- elementi ricorrenti ---------- */
@@ -1573,12 +1587,29 @@ var M=[
  }},
  /* Procopio (Guerra gotica I 19): «Just below the bridge» legato alle mura, dove la corrente esce dall'arcata, due barche «side by side and two feet apart», con «two mills on either boat»
     e la ruota appesa in mezzo; sotto, altre coppie in fila «for a great distance». Qui cinque coppie, subito a valle di ponte Aurelio; misure delle barche e della ruota indicative. */
+ /* Rifatti il 27 novembre 2026 sul testo (Procopio, Guerra gotica I 19, 19-25, traduzione Loeb su LacusCurtius): Belisario «fastened ropes from the two banks of the river
+    and stretched them as tight as he could», vi legò «two boats side by side and two feet apart, where the flow of the water comes down from the arch of the bridge with the
+    greatest force», mise «two mills on either boat» e appese fra le due barche il meccanismo che fa girare i mulini; dietro, altre barche «each attached to the one next behind
+    in order», con le ruote fra l'una e l'altra «for a great distance», e la corrente faceva girare ogni ruota da sé. SCHEMA, detto nella scheda: quante coppie (qui cinque),
+    misure di barche (18 x 4 m) e ruote (4 m di diametro, otto pale), le macine sotto una tettoia di tavole, dove le funi toccano le rive. La ruota gira (MULINI_RUOTE, più sotto). */
  {id:'mulini', nome:'Mulini sul Tevere', x:-111.7,z:4.6, ry:-.37, fa:function(B){
-    [-6,-3,0,3,6].forEach(function(lx){ var y=.72;
-      B.scatola(2,.26,.45,lx,y,-.26,P.tronco).scatola(2,.26,.45,lx,y,.26,P.tronco);
-      B.geo(new THREE.CylinderGeometry(.3,.3,.06,10).rotateX(PI/2).translate(lx-.2,y+.25,0),P.tronco);
-      [-.26,.26].forEach(function(z){ B.scatola(.8,.5,.4,lx+.5,y+.26,z,P.intonaco).falde(.9,.22,.48,lx+.5,y+.76,z,P.coppi,0,P.intonaco); });
+    var W0=.74, fune=RM.col(0x8a7a5a), legno=RM.col(0x6e553c), legnoS=RM.col(0x4f3d2b), pietra=RM.col(0x9a948a), tavole=RM.col(0x7d6a52);      // W0: il pelo dell'acqua, in unità del monumento
+    MULINI_X.forEach(function(lx,k){
+      [-1,1].forEach(function(lato){ var zc=lato*.24;      // due barche affiancate, sessanta centimetri d'acqua fra l'una e l'altra («two feet apart»)
+        B.geo(scafoMulino(1.8,.42,.15,.09).translate(lx,W0,zc),legno);
+        B.scatola(1.5,.03,.34,lx,W0+.11,zc,legnoS);                                                     // il tavolato
+        [-.38,.32].forEach(function(dx){ var mx=lx+dx;                                                  // due mulini per barca: macina sopra macina, la tramoggia, una tettoia su quattro pali
+          B.geo(new THREE.CylinderGeometry(.075,.075,.04,10).translate(mx,W0+.16,zc),pietra).geo(new THREE.CylinderGeometry(.07,.07,.035,10).translate(mx,W0+.198,zc),pietra);
+          B.geo(new THREE.CylinderGeometry(.06,.015,.07,4).translate(mx,W0+.27,zc),legno);
+          [[-.2,-.13],[-.2,.13],[.2,-.13],[.2,.13]].forEach(function(q){ B.scatola(.025,.3,.025,mx+q[0],W0+.14,zc+q[1],legnoS); });
+          B.falde(.5,.1,.34,mx,W0+.44,zc,tavole,0,legno); });
+      });
+      B.geo(new THREE.CylinderGeometry(.025,.025,.62,6).rotateX(PI/2).translate(lx,W0+.14,0),legnoS);  // l'albero della ruota, di traverso sulle due barche
+      [-1,1].forEach(function(lato){ funeMulino(B,[lx+.88,W0+.12,lato*.24],[lx+.88+(MULINI_X[k+1]!=null?MULINI_X[k+1]-lx-1.76:0),W0+.12,lato*.24],.012,fune); });      // ogni coppia legata a quella che le sta dietro
     });
+    var a=MULINI_X[0]-.88;      // le funi tese dalle due rive alla prima coppia, sotto l'arcata del ponte (le rive: misurate sul terreno del modello)
+    funeMulino(B,[-8.6,W0+.42,-5.2],[a,W0+.13,-.24],.016,fune); funeMulino(B,[-8.6,W0+.42,6.1],[a,W0+.13,.24],.016,fune);
+    B.scatola(.06,.45,.06,-8.6,W0,-5.2,legnoS).scatola(.06,.45,.06,-8.6,W0,6.1,legnoS);      // i pali a riva
  }},
  {id:'casenerva', nome:'Case nel foro di Nerva', x:10.7,z:-8.9, ry:.672, come:'fori', fa:function(B){
     casa(B,.1,-2.2,.2,3.4,2.2,1.7); B.aperture(-3.6,1.33,-.8,1.33,4,.1,.75,.4);        // domus a due piani con portico ad arcate
@@ -2567,11 +2598,16 @@ RM.moduli.push(function(anno){
     circo:110, fori:90, palatino:140, tiberiana:55, domiziano:85, balbo:50, ottavia:50, pace:50, tito:60, saepta:50, ludusmagnus:35, emporio:55, emiliarovina:30};      // 27 novembre 2026: anche i monumenti chiusi, cavati, spogliati (VERDE_OVUNQUE), con la quantità a misura della mole      // horti: arbusti sulle aiuole e sui pezzi, a giardino lasciato      // MISURA: la stessa del verde nello shader (RM.rovina)
   var ruderi=M.filter(function(o){ var st=D.MONUMENTI[o.id]; return o.g&&st&&CURA[o.id]!==0&&(o.raggio==null||o.raggio>=1.5)&&st.some(function(q){ return q[1]!=='uso'&&q[1]!=='assente'; }); });      // dal 27 novembre 2026 ogni monumento uscito dall'uso, non solo gli «abbandonati» (VERDE_OVUNQUE); non le chiese tenute (CURA 0) né le cose piccole
   if(!ruderi.length) return;
-  var tel=RM.piccolo, quota=tel?.35:1, cespi=[], viti=[], seme=7;
+  var tel=RM.piccolo, quota=tel?.35:1, cespi=[], viti=[], alberi=[], seme=7;
+  /* Alberi veri dentro i ruderi (27 novembre 2026; l'utente: «La Roma dell'800 deve sembrare al visitatore una città magnifica in rovine»): dalla veduta larga i cespugli
+     sono puntini e il verde si leggeva a macchie uguali. Quanti per monumento: pochi e grandi, a misura della mole e dello spazio scoperto (cortili delle terme, arene,
+     piste, fori). Che specie fossero e quanti, nessuna fonte letta lo dice: è una resa dell'abbandono, come i cespugli; crescono dopo una cinquantina d'anni fuori uso. */
+  var ALBERI={caracalla:26, diocleziano:24, traiano:16, termecostantino:7, colosseo:12, circo:14, domiziano:9, fori:10, forotraiano:8, foroaugusto:5, forocesare:5, pace:8, palatino:14,
+    marcello:5, pompeo:10, balbo:5, ottavia:5, saepta:8, ludusmagnus:4, venere:5, emiliarovina:4, sessoriano:6, tiberiana:5, emporio:6};
   function rnd(){ seme=(seme*16807)%2147483647; return (seme-1)/2147483646; }
   function semeDi(id){ var h=2166136261, k; for(k=0;k<id.length;k++){ h^=id.charCodeAt(k); h=Math.imul(h,16777619)>>>0; } return 1+h%2147483645; }      // ogni monumento il suo seme (27 novembre 2026): prima un solo filo di numeri per tutti, e aggiungere un monumento spostava il verde di tutti gli altri
   ruderi.forEach(function(o){ seme=semeDi(o.id);
-    var g=o.g.geometry, P0=g.attributes.position.array, T=g.attributes.tipo, alti=[], muri=[], corti=[], at=0, am=0, ac=0, i;
+    var g=o.g.geometry, P0=g.attributes.position.array, T=g.attributes.tipo, alti=[], muri=[], corti=[], bassi=[], at=0, am=0, ac=0, ab=0, i;
     for(i=0;i<P0.length;i+=9){
       var tp=T?Math.round(T.array[i/3])%10%5:0; if(tp!==0&&tp!==3) continue;                                // murature e prati dei cortili: niente coppi, chiome
       if(tp===3){ var qy=(P0[i+1]+P0[i+4]+P0[i+7])/3, qa=Math.abs((P0[i+3]-P0[i])*(P0[i+8]-P0[i+2])-(P0[i+5]-P0[i+2])*(P0[i+6]-P0[i])); if(qa>1e-6&&qy<o.alto*.12){ ac+=qa; corti.push([ac,i]); } continue; }      // cortili e giardini dentro il recinto (25 novembre 2026)
@@ -2579,6 +2615,7 @@ RM.moduli.push(function(anno){
       var ux=bx-ax,uy=by-ay,uz=bz-az,vx=cx-ax,vy=cy-ay,vz=cz-az, nx=uy*vz-uz*vy, ny=uz*vx-ux*vz, nz=ux*vy-uy*vx, a2=Math.hypot(nx,ny,nz); if(a2<1e-6) continue;
       var my=(ay+by+cy)/3;
       if(Math.abs(ny)/a2>.5 && my>o.alto*.12){ at+=a2; alti.push([at,i]); }                                  // piani in alto (le due facce della lastra: la normale può guardare giù)
+      else if(ny/a2>.8 && my<=o.alto*.12 && ALBERI[o.id]){ ab+=a2; bassi.push([ab,i]); }                     // piani bassi rivolti in su (arene, piste, pavimenti delle aule): qui crescono gli alberi
       else if(Math.abs(ny)/a2<.25 && Math.max(ay,by,cy)>o.alto*.3){ am+=a2; muri.push([am,i,nx/a2,nz/a2]); }  // pareti abbastanza alte per un rampicante
     }
     function pesca(l,tot){ var x=rnd()*tot, lo=0, hi=l.length-1; while(lo<hi){ var m=(lo+hi)>>1; if(l[m][0]<x) lo=m+1; else hi=m; } return l[lo]; }
@@ -2594,6 +2631,9 @@ RM.moduli.push(function(anno){
       for(t2=0;t2<3;t2++){ if(rnd()<.35+.65*Math.max(0,w[2]*s-w[3]*c)) break; w=pesca(muri,am); }
       var j=w[1], top=Math.max(P0[j+1],P0[j+4],P0[j+7]), bot=Math.min(P0[j+1],P0[j+4],P0[j+7]), q=punto(j), h=.3+rnd()*.6, appesa=rnd()<.55, fx=appesa?.8+rnd()*.4:1.1+rnd()*.5, fy=appesa?1.4+rnd()*.9:.8+rnd()*.5, mezzo=h*fy*.5;
       q[1]=appesa?top-mezzo*.92:Math.min(bot+mezzo*.95,top-mezzo); viti.push({o:o, p:mondo([q[0]+w[2]*.012,q[1],q[2]+w[3]*.012]), l:[q[0],q[2]], y:q[1]+mezzo, soglia:rnd(), h:h, fx:fx, fy:fy, ry:Math.atan2(w[2]*c+w[3]*s,-w[2]*s+w[3]*c), q:rnd()}); }
+    /* alberi (27 novembre 2026): nei cortili, nelle arene, sulle piste e sui pavimenti delle aule, pochi e grandi, ognuno al suo posto (seme del monumento) */
+    var na=Math.round((ALBERI[o.id]||0)*(tel?.5:1)), lb=corti.length?corti:bassi, tb=corti.length?ac:ab;
+    if(lb.length) for(k=0;k<na;k++){ var pa=punto(pesca(lb,tb)[1]); alberi.push({o:o, p:mondo(pa), l:[pa[0],pa[2]], y:pa[1], soglia:rnd(), sc:1.2+rnd()*.6, fx:.8+rnd()*.5, fz:.8+rnd()*.5, ry:rnd()*6.28, q:rnd()}); }
   });
   if(!cespi.length&&!viti.length) return;
   var Bc=new RM.Costruttore(), Bv=new RM.Costruttore(), sg=tel?[5,2]:[6,3], rovo=RM.col(0x4c5a30), secco=RM.col(0x75744a), edera=RM.col(0x3a4f2a);
@@ -2619,7 +2659,44 @@ RM.moduli.push(function(anno){
   RM.moduli.push(function(anno){ var fr=quotaQ(); if(Math.abs(anno-ultimo)<.05 && fr===qUltimo) return; ultimo=anno; qUltimo=fr; posa(mc,cespi,anno,false,fr); posa(mv,viti,anno,true,fr); });
   RM.frame.push(function(){ var t=RM.QUALITA&&RM.QUALITA.degrado, dq=t&&t[RM.q]!=null?t[RM.q]:1; if(dq!==RM.degradoQ.value) RM.degradoQ.value=dq;      // il dettaglio dello shader dell'abbandono segue il gradino
     if(quotaQ()!==qUltimo && ultimo>=0){ qUltimo=quotaQ(); posa(mc,cespi,ultimo,false,qUltimo); posa(mv,viti,ultimo,true,qUltimo); RM.renderer.shadowMap.needsUpdate=true; } });
-  RM.verdeRuderi={cespugli:mc, rampicanti:mv, quanti:cespi.length+viti.length};      // per le prove: nasconderli mostra lo stato «abbandonato» senza il verde
+  /* gli alberi: un tronco e una chioma di cinque masse a faccette (non una palla), due verdi; alti da 12 a 20 m (lecci e fichi dei ruderi arrivano a tanto). Spuntano quando il verde del monumento è avanti (crescita oltre
+     0,35-0,65 secondo l'albero), poi crescono. */
+  var Ba=new RM.Costruttore(), fogA=RM.col(0x3d5629), fogB=RM.col(0x56683a), legno=RM.col(0x4b3c2b), ma=null;
+  if(alberi.length){
+    Ba.geo(new THREE.CylinderGeometry(.035,.06,.62,5).translate(0,.31,0),legno);
+    [[0,.78,0,.32,.26,fogA],[.2,.66,.1,.24,.2,fogB],[-.18,.7,-.08,.25,.21,fogA],[.05,.62,-.22,.22,.18,fogB],[-.06,.95,.06,.2,.17,fogB]].forEach(function(b){
+      Ba.geo(new THREE.IcosahedronGeometry(1,0).scale(b[3],b[4],b[3]*.95).rotateY(b[0]*7).translate(b[0],b[1],b[2]),b[5]); });
+    ma=maglia(Ba,alberi.length,!tel);
+  }
+  var ultimoA=-1, qA=-1;
+  function posaAlberi(anno,fr){ if(!ma) return; var g={}, rc={}, j=0;
+    alberi.forEach(function(e){ var o=e.o; if(g[o.id]==null){ g[o.id]=crescita(o,anno); rc[o.id]=RM.rovina(o.id,anno); }
+      var v=Math.max(0,Math.min(1,(g[o.id]-(.35+.3*e.soglia))*4)); if(e.y>o.alto*(1-crolloJS(o,e.l[0],e.l[1],rc[o.id])) || e.q>=fr) v=0; if(v<=0) return;
+      var sc=e.sc*(.4+.6*v); d.position.set(e.p[0],e.p[1],e.p[2]); d.rotation.set(0,e.ry,0); d.scale.set(sc*e.fx,sc,sc*e.fz); d.updateMatrix(); ma.setMatrixAt(j++,d.matrix); });
+    ma.count=j; ma.visible=j>0; ma.instanceMatrix.needsUpdate=true; }
+  RM.moduli.push(function(anno){ var fr=quotaQ(); if(Math.abs(anno-ultimoA)<.05 && fr===qA) return; ultimoA=anno; qA=fr; posaAlberi(anno,fr); });
+  RM.frame.push(function(){ if(ultimoA>=0 && quotaQ()!==qA){ qA=quotaQ(); posaAlberi(ultimoA,qA); } });
+  M.forEach(function(o){ if(o.id==='testaccio'&&o.mat&&o.mat.userData.u.uMole) o.mat.userData.u.uMole.value=0; });      // il monte di cocci non prende la luce delle moli (MOLE in js/costruttore.js)
+  RM.verdeRuderi={cespugli:mc, rampicanti:mv, alberi:ma, listaAlberi:alberi, quanti:cespi.length+viti.length+alberi.length};      // per le prove: nasconderli mostra lo stato «abbandonato» senza il verde
+})();
+/* MULINI_RUOTE (27 novembre 2026): la ruota a pale fra le due barche di ogni coppia, che la corrente fa girare (Procopio, Guerra gotica I 19, 22: «all the wheels, one after
+   the other, were made to revolve independently»). Una maglia a parte, figlia del monumento (ne segue la visibilità), che gira attorno al suo albero; ferma con «meno
+   animazioni» e negli anni delle piene (EVENTI con piena), quando il Tevere in piena portava via tutto: che allora i mulini si fermassero è una scelta del modello. Forma, otto pale e velocità
+   (mezzo giro ogni sei secondi circa, una corrente di un metro al secondo) sono SCHEMA. */
+(function(){
+  var o=M.filter(function(q){ return q.id==='mulini'&&q.g; })[0]; if(!o) return;
+  var legno=RM.col(0x5e4831), r=.21, k, parti=[];
+  for(k=0;k<8;k++){ var a=k*PI/4, gB=new THREE.BoxGeometry(.012,.07,.06).translate(0,r-.035,0).rotateZ(a); parti.push(gB); var gR=new THREE.BoxGeometry(.014,r,.012).translate(0,r/2,0).rotateZ(a); parti.push(gR); }
+  var B2=new RM.Costruttore(); B2.geo(new THREE.CylinderGeometry(.04,.04,.08,8).rotateX(PI/2),legno); parti.forEach(function(g){ B2.geo(g,legno); });
+  var geo=B2.geometria(), mat=RM.matPietra(), ruote=[];
+  var im=new THREE.InstancedMesh(geo,mat,MULINI_X.length), d=new THREE.Object3D(), ang=0; im.castShadow=true; im.receiveShadow=true; im.frustumCulled=false; o.g.add(im);      // le cinque ruote in un solo disegno
+  function posa(){ MULINI_X.forEach(function(lx,i){ d.position.set(lx,.74+.14,0); d.rotation.set(0,0,ang+lx); d.updateMatrix(); im.setMatrixAt(i,d.matrix); }); im.instanceMatrix.needsUpdate=true; }
+  posa(); ruote.push(im);
+  var MENO=!!(window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) && !/[?&]moto=1/.test(location.search);
+  var PIENE=(D.EVENTI||[]).filter(function(e){ return e.piena; }), ferme=false;
+  RM.moduli.push(function(anno){ ferme=PIENE.some(function(e){ return anno>=e.da-.5 && anno<e.a+.5; }); });
+  RM.frame.push(function(dt){ if(MENO||ferme||!o.g.visible) return; ang+=.5*Math.min(dt,.1); posa(); });      // il fondo della ruota va con la corrente, verso +x
+  RM.muliniRuote=ruote;      // per le prove
 })();
 
 /* ---------- le macerie dei crolli ----------

@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 08:53:43.
+Generato da `src/testi.mjs` il 27/11/2026, 09:41:18.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -135,7 +135,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.60] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
 
-[pagina.61] Le case lasciate non spariscono. Prima restano in piedi: cade l'intonaco, mancano le tegole, le finestre restano vuote, cresce l'erba. Poi crollano il tetto e i piani alti. Alla fine restano muri bassi e cumuli di macerie, coperti di rovi. Le fonti parlano di case e chiese «in rovina», di orti accanto alle case e di bestie al pascolo, non di una città tornata campagna. Gli orti e le vigne vengono dalle fonti in quattro luoghi: presso le terme di Agrippa (599), davanti a Santa Sabina (598-599), attorno a Santa Susanna, con un orto a vigna (al tempo di Sergio I, 687-701), e presso il portico di San Pietro (al tempo di Leone IV, 847-855). Nell'atrio di San Paolo, prima che Adriano I lo facesse lastricare, l'erba cresceva e ci pascolavano buoi e cavalli: lo mostriamo dal 715 al 771, perché le date esatte non si sanno. Gli altri orti sono ipotesi. Sono ipotesi anche quali quartieri si svuotano per primi, quanto restano in piedi le case, quanto si abbassano le rovine e quanto in fretta crescono le piante. Nessuna fonte antica dice quali piante crescessero sulle rovine: abbiamo preso fico, olmo, rovo, lentisco, sambuco nano, valeriana rossa ed edera da un elenco delle piante del Colosseo scritto nel 1855. Le rovine cambiano col quartiere: dove le insulae erano alte e fitte, come nella Suburra, restano più spesso alti gusci di mattoni con le macerie nei vicoli; le domus dei colli diventano cumuli bassi con qualche colonna; le case basse dei margini si riducono a tracce. È un'ipotesi del modello: nessuna fonte dice come caddero i singoli quartieri. Anche l’edera, i cespugli e l’erba cresciuti sui monumenti lasciati sono una resa: quanto verde, e in quanto tempo, nessuna fonte lo misura. Ciò che è ancora in piedi oggi, nel modello è in piedi anche nell’800.
+[pagina.61] Le case lasciate non spariscono. Prima restano in piedi: cade l'intonaco, mancano le tegole, le finestre restano vuote, cresce l'erba. Poi crollano il tetto e i piani alti. Alla fine restano muri bassi e cumuli di macerie, coperti di rovi. Le fonti parlano di case e chiese «in rovina», di orti accanto alle case e di bestie al pascolo, non di una città tornata campagna. Gli orti e le vigne vengono dalle fonti in quattro luoghi: presso le terme di Agrippa (599), davanti a Santa Sabina (598-599), attorno a Santa Susanna, con un orto a vigna (al tempo di Sergio I, 687-701), e presso il portico di San Pietro (al tempo di Leone IV, 847-855). Nell'atrio di San Paolo, prima che Adriano I lo facesse lastricare, l'erba cresceva e ci pascolavano buoi e cavalli: lo mostriamo dal 715 al 771, perché le date esatte non si sanno. Gli altri orti sono ipotesi. Sono ipotesi anche quali quartieri si svuotano per primi, quanto restano in piedi le case, quanto si abbassano le rovine e quanto in fretta crescono le piante. Nessuna fonte antica dice quali piante crescessero sulle rovine: abbiamo preso fico, olmo, rovo, lentisco, sambuco nano, valeriana rossa ed edera da un elenco delle piante del Colosseo scritto nel 1855. Le rovine cambiano col quartiere: dove le insulae erano alte e fitte, come nella Suburra, restano più spesso alti gusci di mattoni con le macerie nei vicoli; le domus dei colli diventano cumuli bassi con qualche colonna; le case basse dei margini si riducono a tracce. È un'ipotesi del modello: nessuna fonte dice come caddero i singoli quartieri. Anche l’edera, i cespugli e l’erba cresciuti sui monumenti lasciati sono una resa: quanto verde, e in quanto tempo, nessuna fonte lo misura. Ciò che è ancora in piedi oggi, nel modello è in piedi anche nell’800. Nella veduta d’insieme dei secoli tardi i muri dei grandi monumenti sono un poco schiariti e la luce è più bassa, perché le rovine si leggano da lontano: è una scelta di resa, non un dato.
 
 [pagina.62] Le strade di Roma erano lastricate di selce, cioè di lava basaltica in pietre poligonali, con i marciapiedi ai lati: lo dicono Livio e i resti descritti da Platner e Ashby. La misura delle pietre e dei marciapiedi è uno schema. Le vie le teneva in ordine chi ci abitava: per questo, nel modello, una strada si guasta quando le case attorno vengono lasciate. Prima cresce l'erba fra le pietre, poi le pietre si smuovono e mancano, la terra e le macerie le coprono, e alla fine resta un sentiero in mezzo all'erba. Restano battute le vie dei percorsi da porta a porta dell'Itinerario di Einsiedeln, verso l'800. Come e in quanto tempo un lastricato si rovinasse nessuna fonte lo racconta: è uno schema.
 
@@ -151,7 +151,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.68] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.69] Versione del 27/11/2026, ore 07:53
+[pagina.69] Versione del 27/11/2026, ore 08:58
 
 
 ## 2. Gli atti
@@ -4079,7 +4079,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [scheda.mulini.cosa] Mulini montati su barche ancorate nella corrente del Tevere.
 
-[scheda.mulini.data1-537] Quando i Goti interrompono gli acquedotti, l'acqua smette di far girare i mulini del Gianicolo. Secondo Procopio, per continuare a macinare il grano Belisario fa ormeggiare sul Tevere alcune coppie di barche, subito a valle di un ponte. Tra una barca e l'altra la corrente fa girare una ruota collegata alla macina. Probabilmente il ponte si trovava nel punto in cui sorge oggi ponte Sisto.
+[scheda.mulini.data1-537] Quando i Goti interrompono gli acquedotti, l'acqua smette di far girare i mulini del Gianicolo. Secondo Procopio, per continuare a macinare il grano Belisario fa ormeggiare sul Tevere alcune coppie di barche, subito a valle di un ponte. Belisario tende funi dall'una all'altra riva e lega due barche affiancate, a due piedi di distanza, dove l'acqua scende più forte dall'arcata del ponte. Su ogni barca mette due mulini e fra le due barche appende la ruota, che la corrente fa girare. Dietro lega altre barche, una dopo l'altra, per un lungo tratto. Probabilmente il ponte si trovava nel punto in cui sorge oggi ponte Sisto. I Goti gettano nel fiume alberi e cadaveri, che spezzano le ruote; Belisario tende allora catene di ferro sopra il ponte. Nella scena sono uno schema il numero delle coppie (cinque), le misure di barche e ruote, le macine sotto una tettoia di tavole e il punto in cui le funi toccano le rive.
 
 [scheda.mulini.data2.quando] VIII-IX secolo
 
@@ -6457,11 +6457,11 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/base.js
 
-[ui.base.01-r1066] , piena definizione
+[ui.base.01-r1082] , piena definizione
 
-[ui.base.02-r1076] Qualità della città: automatica, bassa, telefono, media, alta, massima
+[ui.base.02-r1092] Qualità della città: automatica, bassa, telefono, media, alta, massima
 
-[ui.base.03-r1179] fine prova
+[ui.base.03-r1195] fine prova
 
 
 ### js/vita.js
