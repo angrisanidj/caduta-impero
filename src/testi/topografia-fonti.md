@@ -868,3 +868,22 @@ Richiesta dell'utente: «Verifica anche se le mura crollano nel periodo in ogget
 - **Pons Sublicius**: «standing as late as the fifth century»; nel modello fino al 500 (ipotesi già detta nella scheda).
 - **Ponte Milvio**: Procopio, Guerra gotica I 19, 3 (537): i Goti temono che i Romani distruggano «the bridge which bears the name of Mulvius» e mettono un campo nel Campo di Nerone «in order that the bridge might be between their two armies»; III 24, 31-32 (547): Totila se ne va «having torn down practically all the bridges over the Tiber […]. One bridge, however, which bears the name of Mulvius, they were quite unable to destroy, since it was very close to the city». Quali ponti, Procopio non lo dice: quelli dentro le mura erano in mano a Belisario. Nel modello restano tutti. Procopio, Guerra gotica I 17, 13-14: Belisario aveva costruito una torre con porte su «a bridge over the Tiber River» a quattordici stadi da Roma, abbandonata dalla guardia all'arrivo dei Goti; la nota 24 di Dewing dice «The Mulvian Bridge», ma il testo non lo nomina e Vitige veniva dalla Sabina: la torre non si disegna, la scheda lo dice.
 - **Isola Tiberina** (Platner e Ashby): nulla fra il 500 e l'852, salvo il nome medievale «insula Lycaonia». Nel modello nulla cambia.
+
+## La patina del tempo e l'isola Tiberina (27 novembre 2026)
+
+Richiesta dell'utente: «E l'isola Tiberina?» e «Anche il bianco ha poco senso durante la rovina?». Fonti lette il 27 novembre 2026 (in tutto circa un quarto d'ora; le Variae di Cassiodoro e la Novella 4 di Maioriano non sono state lette).
+
+### Fino a quando gli edifici furono tenuti
+
+- Procopio, Guerra gotica IV 22, 5-6 (Wars VIII 22, traduzione Dewing su LacusCurtius, penelope.uchicago.edu/Thayer/E/Roman/Texts/Procopius/Wars/8E*.html): «Yet the Romans love their city above all the men we know, and they are eager to protect all their ancestral treasures and to preserve them, so that nothing of the ancient glory of Rome may be obliterated. For even though they were for a long period under barbarian sway, they preserved the buildings of the city and the most of its adornments». Scritto verso il 550.
+- Uso nel modello: fino al 400 nessuna patina, nel 500 lieve (un quarto), nel 650 sei decimi, nell'800 piena (RM.patinaAnno in js/costruttore.js). Procopio dice solo che gli edifici erano conservati verso il 550: che il colore delle pietre cambiasse e quanto, nessuna fonte letta lo dice. Ritmo, tinte, colature, licheni e muschio sono una resa, detta nel piede.
+
+### L'isola Tiberina (Platner e Ashby, voce Insula Tiberina, riletta per intero; penelope.uchicago.edu/Thayer/E/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/_Texts/PLATOP*/Insula_Tiberina.html)
+
+- La nave: «A stone platform was built round it, and upon this a wall was erected which in shape reproduced exactly the sides of a Roman ship»; «A considerable part of the travertine stern can still be seen at the east end of the island» (la nota di Thayer dice prua). La forma riguardava tutta l'isola: il modello resta com'era.
+- L'obelisco: «An obelisk, fragments of which are in the museum at Naples, is thought to have represented the mast». Nessuna misura, nessun posto, nessuna data di caduta. La voce «Obeliscus Insulanus» dell'indice rimanda qui. Nel modello: a metà dell'isola, alto 14 m, in piedi fino all'852; tutto detto nella scheda obeliscoisola.
+- Gli altri culti: «shrines to Iupiter, Faunus, Tiberinus, and Semo Sancus were afterwards built on it», senza posto.
+- Aedes Fauni (voce letta): «situated at the north end of the island in the Tiber»; «no traces have been found». L'isola corre da ovest a est: «north end» non indica un capo preciso (il capo a monte, a ovest, o il lato nord). Non aggiunto.
+- Aedes Veiovis (voce letta): «on the island in the Tiber», nessun posto più preciso; la lettura «Vediovis» per «Iovis» in Livio XXXIV 53, 7 è un'emendazione, Besnier non l'accetta. Non aggiunto.
+- Età tarda: la voce dà solo il nome medievale «insula Lycaonia». Nessuna parola su case o abitanti: le due case del modello restano indicative; dal 550 lasciate, dal 600 senza tetto, i muri calano fino al 700 (scelte dette nella scheda isolatiberina).
+- Non trovata una voce di Platner e Ashby per Tiberinus sull'isola; non cercata oltre.

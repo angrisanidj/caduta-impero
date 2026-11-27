@@ -15,6 +15,9 @@ B.aperture(-1,.63,1,.63,4,.95,.35,.18).aperture(1,-.63,-1,-.63,4,.95,.35,.18);
 var maglia=new THREE.InstancedMesh(B.geometria(),RM.matPietra(((window.RM_DATI.CERTEZZA||{}).chiese||['B'])[0]),elenco.length), d=new THREE.Object3D();
 RM.veduta(maglia.material,{luce:.3,muro:0xe8dcc4,quanta:.4,tetto:0xb84a2c,quantaT:.55});      // veduta dei secoli tardi (RM.veduta in js/base.js): da lontano muri chiari e tetti di un rosso pulito, perché la chiesa in uso si stacchi dai ruderi
 maglia.castShadow=maglia.receiveShadow=true; maglia.frustumCulled=false; maglia.userData.gruppo='citta'; RM.scene.add(maglia);
+/* La patina del tempo (PATINA in js/costruttore.js), chiesa per chiesa: ognuna parte pulita dal suo anno e, curata, invecchia piano (metà della dose della città). Una resa. */
+var patC=new THREE.InstancedBufferAttribute(new Float32Array(elenco.length),1), patUlt=-1; maglia.geometry.setAttribute('aPatina',patC);
+maglia.material.defines=maglia.material.defines||{}; maglia.material.defines.RM_PATI=''; maglia.material.userData.patinaPropria=true; maglia.material.userData.patina.value=1;
 /* La quota dal terreno come è disegnato (RM.hSuolo), non da RM.h (25 novembre 2026): la maglia del suolo è più rada della funzione, e sui pendii Sant'Anastasia stava 10 m
    sotto terra e Santi Giovanni e Paolo 4 m sopra. Sui pendii si scende a metà fra la quota del centro e quella dello spigolo più basso della navata: la chiesa entra un poco
    nel monte e dal lato a valle non resta sospesa più di qualche metro (lo zoccolo è uno schema, non c'è). */
@@ -31,5 +34,6 @@ RM.moduli.push(function(anno){
     d.position.set(c.x,c.y,c.z); d.rotation.set(0,c.ry,0); d.scale.set(p>.01?1.25:0,Math.max(p*1.25,.001),p>.01?1.25:0); d.updateMatrix(); maglia.setMatrixAt(i,d.matrix);
   });
   if(mosso) maglia.instanceMatrix.needsUpdate=true;
+  var pA=RM.patinaAnno(anno); if(Math.abs(pA-patUlt)>.002){ patUlt=pA; elenco.forEach(function(c,i){ patC.array[i]=.5*Math.max(0,pA-RM.patinaAnno(c.anno)); }); patC.needsUpdate=true; }
 });
 })();

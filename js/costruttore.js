@@ -201,13 +201,58 @@ var LOD_COLORE=['if(vFascia>0.5){ float xs=vFila+0.5; float fwL=max(fwidth(xs),0
   '  diffuseColor.rgb*=mix(0.45,1.0,clamp((F1-F0)/fwL,0.0,1.0)); }'].join(String.fromCharCode(10));
 var LOD_OMBRA='if(vFascia>0.5 && abs(fract(vFila+0.5)-0.5)>vWf*0.5) discard;';      // nell'ombra la fascia lascia passare la luce fra le colonne
 function lodUniformi(sh){ var U=RM.vistaU; sh.uniforms.uOcchio=U.uOcchio; sh.uniforms.uPxScala=U.uPxScala; sh.uniforms.uSogliaCol=U.uSogliaCol; }
-function lodVertice(sh){ sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+String.fromCharCode(10)+LOD_VD).replace('#include <begin_vertex>','#include <begin_vertex>'+String.fromCharCode(10)+LOD_V); }
+/* PATINA (27 novembre 2026; l'utente: «Anche il bianco ha poco senso durante la rovina?»). Fino a qui una cosa in uso restava bianca come nel 235 anche nell'800: il degrado
+   (COLORA, DEGRADO) parte solo quando il monumento esce dall'uso, e ponti, isola, mura e chiese non ci passano nemmeno. Ora marmo, travertino, intonaco, tufo e mattone invecchiano
+   con gli anni anche se l'edificio è in uso: solo la superficie, niente crepe né crolli (quelli restano a RM.rovina). La pietra chiara ingiallisce o ingrigisce (secondo il posto),
+   si scurisce un poco; sui muri colature scure verticali (da vicino a strisce, da lontano un velo medio, così non brulicano); i piani e le cime grigi di licheni; muschio sui muri
+   rivolti a nord; al piede dei monumenti sporco e umido (piede); dove la pietra sta nel fiume, fino a quattro metri sopra il pelo dell'acqua del modello, scura e verdastra.
+   Quanto: uPatina (per materiale) per vPatI (per istanza, dove il materiale ha il segno RM_PATI e la geometria l'attributo aPatina: mura e chiese, che hanno anni diversi
+   da un'istanza all'altra). È la «dose» di RM.patinaAnno accumulata dall'anno in cui la cosa è fatta o rifatta; dove qualcuno cura (le chiese in uso) cresce più piano.
+   Con il valore a zero (tutti gli anni fino al 400) lo shader salta il ramo: il 235 e il 300 restano identici. Da lontano (oltre 1,2 km dall'occhio) la patina cala di sei decimi,
+   perché nella veduta d'insieme dei secoli tardi la luce delle moli (MOLE) e della veduta (RM.veduta) non torni un tappeto bruno. Varia da un edificio all'altro con due rumori
+   del posto (80 e 250 m). Tinte, quantità e ritmo sono una resa, detta nel piede: nessuna fonte letta descrive il colore delle pietre di Roma nei secoli. RM_PAT_ERBA (solo il piano
+   dell'isola Tiberina e le case lasciate) aggiunge l'erba fra le pietre dei piani. Costo: quattro o cinque rumori a due dimensioni per pixel, solo dove la patina c'è. */
+var PAT_VD=['#ifdef RM_PATI','attribute float aPatina;','#endif','varying float vPatI;'].join(String.fromCharCode(10));
+var PAT_V=['#ifdef RM_PATI','vPatI=aPatina;','#else','vPatI=1.0;','#endif'].join(String.fromCharCode(10));
+var PAT_FD=['uniform float uPatina; varying float vPatI;','float ptH(vec2 p){ return fract(sin(dot(p,vec2(41.3,289.1)))*45758.5453); }',
+  'float ptN(vec2 p){ vec2 i=floor(p); vec2 f=fract(p); f=f*f*(3.0-2.0*f); return mix(mix(ptH(i),ptH(i+vec2(1.0,0.0)),f.x),mix(ptH(i+vec2(0.0,1.0)),ptH(i+vec2(1.0,1.0)),f.x),f.y); }'].join(String.fromCharCode(10));
+function patina(o){ o=o||{}; return [
+  '{ float ptP=uPatina*vPatI;',
+  o.riduci?'  ptP*=1.0-0.45*clamp(uVerde*1.5+uRovina*2.0+uIntonaco,0.0,1.0);':'',      // sui monumenti già segnati dal degrado la patina si aggiunge di meno: non si somma fino al nero
+  'if(ptP>0.001 && vTipo<1.5){',
+  '  vec3 ptNw=(gl_FrontFacing?1.0:-1.0)*normalize(vNormal)*mat3(viewMatrix); float ptSu=clamp(ptNw.y,0.0,1.0); float ptNord=smoothstep(0.0,0.8,-ptNw.z)*(1.0-ptSu);',      // la normale nel mondo, dal lato che si vede; z va a sud
+  '  float ptL=dot(vColor,vec3(0.3,0.59,0.11)); float ptK=0.35+0.65*smoothstep(0.35,0.75,ptL);',      // la pietra chiara più del mattone
+  '  if(vTipo>0.5) ptK*=0.45*(1.0-smoothstep(0.4,0.5,vColor.g/max(vColor.r,0.001)));',      // i coppi meno, il metallo (bronzo, oro) no: lo brunisce DEGRADO quando l'edificio è lasciato
+  '  float ptA=ptN(vMondo.xz*0.13+7.1); float ptB=ptN(vMondo.xz*0.041+2.3);',      // da un edificio all'altro: quanta patina (80 m) e se ingiallisce o ingrigisce (250 m)
+  '  float ptQ=clamp(ptP*ptK*(1.0-0.6*smoothstep(120.0,400.0,length(vViewPosition)))*(0.65+0.7*ptA),0.0,1.2);',
+  '  vec3 ptC=diffuseColor.rgb; float ptLum=dot(ptC,vec3(0.3,0.59,0.11));',
+  '  ptC=mix(ptC,ptLum*0.8*mix(vec3(1.04,0.92,0.72),vec3(0.92,0.92,0.88),ptB),0.6*min(1.0,ptQ)); ptC*=1.0-0.28*ptQ;',      // ingiallisce o ingrigisce, e si scurisce: il marmo bianco al sole arriva a circa due terzi della luce di prima (prima di questo era così chiaro da bruciare in bianco)
+  '  if(ptSu<0.5){ vec3 ptAn=abs(vNor); float ptX=ptAn.x>ptAn.z?vMondo.z:vMondo.x; float ptKs=1.0-smoothstep(0.012,0.05,fwidth(ptX)+fwidth(vMondo.y));',      // colature: strisce di circa un metro, lunghe dieci; si spengono sotto i tre pixel
+  '    float ptS=0.34; if(ptKs>0.0) ptS=mix(0.34,smoothstep(0.52,0.8,ptN(vec2(ptX*9.0,vMondo.y*0.7+ptX*0.3)))*smoothstep(0.25,0.6,ptN(vec2(ptX*2.1+5.0,vMondo.y*1.6))),ptKs);',
+  '    ptC*=1.0-0.45*ptQ*ptS; }',
+  '  ptC*=1.0-0.3*ptQ*ptSu*(0.7+0.6*ptN(vMondo.xz*2.3+vMondo.y));',      // piani, cornici e cime: polvere e licheni grigi, dove l'acqua non lava (al sole, prima, il marmo dei piani restava bianco)
+  '  ptC=mix(ptC,ptC*vec3(0.8,0.87,0.72),min(1.0,ptQ)*0.55*ptNord*smoothstep(0.4,0.7,ptA+0.35*ptN(vMondo.xz*0.9+vMondo.y*0.5)));',      // muschio sui muri a nord, a zone
+  o.piede?'  float ptPi=1.0-smoothstep(0.0,0.25+0.2*ptA,vLoc.y); ptC=mix(ptC,ptC*vec3(0.72,0.75,0.66),min(1.0,ptQ)*0.6*ptPi*(1.0-ptSu));':'',      // al piede dei monumenti: sporco e umido di risalita (vLoc: coordinate del monumento, base a zero)
+  '  float ptF=1.0-smoothstep(-0.42,-0.05+0.08*ptN(vMondo.xz*1.3),vMondo.y); if(ptF>0.0) ptC=mix(ptC,ptC*vec3(0.5,0.57,0.45),ptF*min(1.0,ptP*1.5)*(1.0-0.5*ptSu));',      // nel fiume: dal pelo dell'acqua (-0,5) a quattro metri sopra, scuro e verdastro, con l'orlo irregolare
+  '  #ifdef RM_PAT_ERBA',
+  '  if(ptSu>0.8 && vTipo<0.5){ float ptE=1.0-smoothstep(0.02,0.08,fwidth(vMondo.x)+fwidth(vMondo.z)); float ptG=0.6*ptN(vMondo.xz*1.7)+0.4*mix(0.5,ptN(vMondo.xz*7.3),ptE);',      // erba fra le pietre dei piani; la grana fine solo da vicino
+  '    ptC=mix(ptC,vec3(0.2,0.23,0.1)*(0.8+0.4*ptA),min(1.0,ptP*1.3)*0.8*smoothstep(0.5-0.15*ptP,0.72,ptG)); }',
+  '  #endif',
+  '  diffuseColor.rgb=ptC; } }'].join(String.fromCharCode(10)); }
+/* La dose di patina accumulata fino all'anno a (0 fino al 400, 0,25 nel 500, 0,6 nel 650, 1 nell'800, poi piano): una resa. Procopio, scrivendo verso il 550, dice che i Romani
+   «preserved the buildings of the city and the most of its adornments» (Guerra gotica IV 22, 6): fino al VI secolo gli edifici erano tenuti, e la patina resta lieve; dopo cresce.
+   Una cosa fatta o rifatta nell'anno d prende RM.patinaAnno(a)-RM.patinaAnno(d). */
+RM.patinaAnno=function(a){ if(a<=400) return 0; if(a<=500){ var t=(a-400)/100; return .25*t*t; } if(a<=650) return .25+.35*(a-500)/150; if(a<=800) return .6+.4*(a-650)/150; return 1+.15*Math.min(1,(a-800)/150); };
+RM.patinaMat=[];      // i materiali di pietra con la patina comune (si veda conConci); chi ha userData.patinaPropria la regola da sé
+RM.moduli.push(function(anno){ var p=RM.patinaAnno(anno); RM.patinaMat.forEach(function(m){ if(!m.userData.patinaPropria) m.userData.patina.value=p; }); });
+function lodVertice(sh){ sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+String.fromCharCode(10)+LOD_VD+String.fromCharCode(10)+PAT_VD).replace('#include <begin_vertex>','#include <begin_vertex>'+String.fromCharCode(10)+LOD_V+String.fromCharCode(10)+PAT_V); }
 function conConci(mat){
-  var A=String.fromCharCode(10);
+  var A=String.fromCharCode(10), uP={value:0};
+  mat.userData.patina=uP; RM.patinaMat.push(mat);
   mat.onBeforeCompile=function(sh){
-    lodUniformi(sh); lodVertice(sh);
-    sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+LOD_FD)
-      .replace('#include <color_fragment>',['#include <color_fragment>',LOD_SCEGLI_SE,LOD_COLORE,CONCI].join(A));
+    lodUniformi(sh); lodVertice(sh); sh.uniforms.uPatina=uP;
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+LOD_FD+A+PAT_FD)
+      .replace('#include <color_fragment>',['#include <color_fragment>',LOD_SCEGLI_SE,LOD_COLORE,CONCI,patina()].join(A));
   };
   return mat;
 }
@@ -424,12 +469,13 @@ function innesta(sh,u,colore){
   lodUniformi(sh); lodVertice(sh);
   var SCEGLI=LOD_SCEGLI.replace('dpxL<uSogliaCol','dpxL<uSogliaCol*(1.0-step(0.02,uRovina))');      // in rovina niente fascia: il portico è senza tetto e senza muri, e fra i monconi si vede il prato, non l'ombra
   SCEGLI+=NL+MANCA;      // le colonne che mancano, e i rocchi a terra
-  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA+(colore?NL+STRISCE:''));
-  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,COLORA,DEGRADO,LEGNO,NUCLEO,MOLE,VIVA,SAP_TINTA].join(NL));
+  sh.uniforms.uPatina=u.uPatina;      // la patina del tempo (si veda PATINA): RM.patinaMon in js/monumenti.js
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA+NL+PAT_FD+(colore?NL+STRISCE:''));
+  if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,patina({riduci:true,piede:true}),COLORA,DEGRADO,LEGNO,NUCLEO,MOLE,VIVA,SAP_TINTA].join(NL));
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',[SCEGLI,LOD_OMBRA,taglio(false),'#include <clipping_planes_fragment>'].join(NL));
 }
 RM.matRovina=function(alt){
-  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)},uVerde:{value:0},uIntonaco:{value:0},uCoppi:{value:1},uPulito:{value:0},uCrZona:{value:new THREE.Vector4(0,0,-2,-1)},uCrPeso:{value:new THREE.Vector4(1,1,0,1)},uMole:{value:1}};      // uCrZona (0,0,-2,-1): tutto nella parte che cade, con peso 1
+  var u={uSapCol:{value:RM.sapere.COL.C.clone()},uRovina:{value:0},uCant:{value:1},uSpoglio:{value:0},uPiombo:{value:0},uAlt:{value:alt||1},uCrepe:{value:0},uSud:{value:0},uSudDir:{value:new THREE.Vector2(0,1)},uSudR:{value:new THREE.Vector2(1,1)},uVerde:{value:0},uIntonaco:{value:0},uCoppi:{value:1},uPulito:{value:0},uCrZona:{value:new THREE.Vector4(0,0,-2,-1)},uCrPeso:{value:new THREE.Vector4(1,1,0,1)},uMole:{value:1},uPatina:{value:0}};      // uCrZona (0,0,-2,-1): tutto nella parte che cade, con peso 1
   var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
   m.onBeforeCompile=function(sh){ innesta(sh,u,true); };
   m.userData.u=u;

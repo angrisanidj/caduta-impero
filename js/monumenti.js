@@ -2554,6 +2554,14 @@ RM.rovina=function(id,anno){
           s:Math.max(b.s,pre.s), k:verso(pre.k,pre.k*(1-rp)), dk:b.dk, dv:b.dv, pulito:p, prima:prima, tinta:1-p*(1-.3*resta), resta:resta, ritorno:yr};      // tinta: quanto resta della tinta dello stato di prima
 };
 RM.TINTA=TINTA;
+/* La patina del tempo (27 novembre 2026; PATINA in js/costruttore.js): la dose di RM.patinaAnno accumulata dall'anno in cui il monumento compare (o ricompare dopo essere stato
+   «assente»), più piano (la metà) negli anni in cui qualcuno lo cura: le chiese in uso (CURA a zero, tolti i bronzi e il fango) e ciò che torna in uso dopo il 392, cioè
+   ciò che diventa chiesa (il Pantheon dal 609, la Curia-Sant'Adriano, San Paolo rifatto). Quanto e con che ritmo è una resa, detta nel piede. */
+var NON_CURATI={colosso:1,fangocirco:1,marcoaurelio:1,marcoaureliolat:1,pigna:1,pignapietro:1,tegolepietro:1};
+function curato(id,st,k){ if(st[k][1]!=='uso') return false; if(CURA[id]===0&&!NON_CURATI[id]) return true; return k>0&&st[k-1][1]!=='assente'&&st[k][0]>392; }
+RM.patinaMon=function(id,anno){ var st=D.MONUMENTI[id]||COMPARSA, PA=RM.patinaAnno, p=0, k, a, b;
+  for(k=0;k<st.length;k++){ a=st[k][0]; if(a>=anno) break; if(st[k][1]==='assente'){ p=0; continue; } b=Math.min(k+1<st.length?st[k+1][0]:1e4,anno); p+=(curato(id,st,k)?.5:1)*(PA(b)-PA(a)); }
+  return p; };
 /* Un edificio in costruzione non è l'edificio finito schiacciato: i muri salgono dal basso, a tratti (uCant nello shader, js/costruttore.js), dentro un ponteggio di legno.
    Che aspetto avesse ciascun cantiere non si sa: è uno schema, uguale per tutti. Restano fuori i monoliti alzati in un giorno e le cose che non si costruiscono (fango, tegole, mulini). */
 var SENZA_CANTIERE={dioscuri:1,curiastatue:1,focastatua:1,fiaccola357:1,metasudansvasca:1,santadriano:1, curiaantica:1, pantheonchiesa:1, emiliarovina:1,obelisco357:1,fangocirco:1,tegolepietro:1,foca:1,mulini:1,marcoaureliolat:1,pignapietro:1}, SENZA_PONTEGGI={casenerva:1,monasteripietro:1,monasteripietro2:1,scholae:1,scholae2:1,episcopiapietro:1,leonine:1,ospizionaumachia:1};
@@ -2575,6 +2583,7 @@ RM.moduli.push(function(anno){
     o.mat.color.copy(TINTA[q.s0]).lerp(TINTA[q.s1],q.t);
     o.presenza=p; o.g.visible=p>.01; o.g.scale.y=cant?1:Math.max(p,.001); o.mat.userData.u.uCant.value=cant?q.t:1; ponteggio(o,cant?q.t:0);
     var rv=RM.rovina(o.id,anno); o.mat.userData.u.uRovina.value=rv.r; o.mat.userData.u.uSpoglio.value=rv.s; o.mat.userData.u.uCrepe.value=rv.c; o.mat.userData.u.uVerde.value=rv.v; o.mat.userData.u.uIntonaco.value=rv.i;
+    o.mat.userData.u.uPatina.value=RM.patinaMon(o.id,anno);      // la patina del tempo (si veda RM.patinaMon)
     o.mat.userData.u.uPulito.value=rv.pulito||0; if(rv.prima) o.mat.color.copy(TINTA.uso).lerp(TINTA[rv.prima]||TINTA.uso,rv.tinta);      // tornato in uso: si ripulisce per gradi (RIUSO)
     else if(q.s1==='uso' && q.s0!=='uso' && q.s0!=='assente') o.mat.color.copy(TINTA[q.s0]);      // e non schiarisce nei sei anni prima, come faceva la sfumatura degli stati
     var cr=CROLLI[o.id]; if(cr){ var uz=o.mat.userData.u; uz.uCrZona.value.set(cr.zona[0],cr.zona[1],cr.zona[2],cr.zona[3]); uz.uCrPeso.value.set(cr.peso[0],cr.peso[1],(cr.base||0)*(rv.k||0),cr.muri==null?1:cr.muri); }

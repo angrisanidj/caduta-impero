@@ -54,6 +54,11 @@ var mura=(function(){
     }
   });
   var magliaPorte=istanze(GP.geometria(),mat,Math.max(1,posti.length)); RM.porte=posti;
+  /* La patina del tempo (PATINA in js/costruttore.js), istanza per istanza: un tratto rifatto da un papa riparte pulito dall'anno del restauro e invecchia da lì; i rattoppi
+     di Belisario, di pietre raccolte lì attorno, sono già vecchi. Un solo attributo per cortine, torri e merli (lo stesso passo), uno per le porte. */
+  mat.defines=mat.defines||{}; mat.defines.RM_PATI=''; mat.userData.patinaPropria=true; mat.userData.patina.value=1;
+  var patI=new THREE.InstancedBufferAttribute(new Float32Array(passi.length),1), patP=new THREE.InstancedBufferAttribute(new Float32Array(Math.max(1,posti.length)),1);
+  [tratti,torri,merliP,merliA,toppe].forEach(function(m){ m.geometry.setAttribute('aPatina',patI); }); magliaPorte.geometry.setAttribute('aPatina',patP);
   RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'},{maglia:merliP,id:'mura'},{maglia:merliA,id:'mura'},{maglia:toppe,id:'mura'}]);
   /* colore per istanza: le maglie condividono il materiale, quindi tutte lo devono avere (come negli acquedotti) */
   var BIANCO=new THREE.Color(1,1,1), RICUPERO=new THREE.Color(1.03,.86,.76), PIETRA=new THREE.Color(.95,1.04,1.22), tinta=new THREE.Color();
@@ -114,7 +119,10 @@ var mura=(function(){
     var r791=anno>=790.9&&anno<795?1:0, rialzo=alt>1.004&&alt<1.496, teod=anno>=492.6&&anno<494?1:0, porteSu=alt*Math.min(1,cant/.8);      // le porte salgono con la cinta; «rialzo»: i lavori di Onorio (401-403), con i ponteggi su tutta la cinta
     var flamGiu=anno>=790.9&&anno<848?1:0;      // Leone IV fa rifare le mura «sed et portas» (Duchesne II, p. 115): che fra queste ci fosse porta Flaminia la fonte non lo dice; qui torna su nel 848
     var passo=anno>=500?Math.round(anno*8):0;      // dal 500 lo stato dei tratti cambia con gli anni (danni e restauri), un ottavo d'anno alla volta
+    var PA=RM.patinaAnno, pAn=PA(anno); if(anno>400&&anno<500) passo=-Math.round(anno*4);      // fra il 400 e il 500 cambia solo la patina
     if(Math.abs(alt-ultima)<.002 && Math.abs(cant-ultimoCant)<.002 && r791===ultimo791 && flamGiu===ultimaFlam && teod===ultimoTeod && passo===ultimoPasso) return; ultima=alt; ultimoCant=cant; ultimo791=r791; ultimaFlam=flamGiu; ultimoTeod=teod; ultimoPasso=passo;
+    for(var jp=0;jp<patP.count;jp++) patP.array[jp]=o2p(jp); patP.needsUpdate=true;
+    function o2p(jp){ return posti[jp]&&posti[jp].flaminia&&anno>=848?pAn-PA(848):pAn; }      // porta Flaminia rifatta nel 848 (si veda flamGiu)
     posti.forEach(function(o,j){ var sy=o.flaminia&&flamGiu?0:porteSu; d.position.set(o.x,o.y,o.z); d.rotation.set(0,o.ang,0); if(sy>.01) d.scale.set(1,sy,1); else d.scale.set(0,0,0); d.updateMatrix(); magliaPorte.setMatrixAt(j,d.matrix); });
     magliaPorte.instanceMatrix.needsUpdate=true;
     var cantPapi=false, paliSu=false, ala=anno>=536.9;
@@ -135,6 +143,7 @@ var mura=(function(){
       d.rotation.order='XYZ';
       tinta.copy(anno>=p.rifatto?RICUPERO:BIANCO); if(toppa) tinta.multiply(PIETRA);
       tratti.setColorAt(j,tinta); torri.setColorAt(j,tinta); merliA.setColorAt(j,tinta); merliP.setColorAt(j,tinta); toppe.setColorAt(j,BIANCO);
+      var rf=0; p.ev.forEach(function(e){ if(e.a>600&&e.a<9999&&anno>=e.a&&e.a>rf) rf=e.a; }); patI.array[j]=rf?pAn-PA(rf):pAn;      // patina: dall'ultimo restauro di un papa
       var suPonteggio=rialzo||(c>.1&&c<1)||(teod&&TEOD.indexOf(j)>=0)||lavori;
       if(lavori) cantPapi=true;
       if(suPonteggio){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);      // ponteggio sui tratti che stanno salendo, un poco più alto del muro
@@ -142,7 +151,7 @@ var mura=(function(){
     });
     var inCantiere=(cant>0&&cant<1)||rialzo||teod||cantPapi;
     [tratti,torri,merliP,merliA,toppe,pali,ponteggi].forEach(function(m){ m.instanceMatrix.needsUpdate=true; });
-    [tratti,torri,merliP,merliA,toppe].forEach(function(m){ m.instanceColor.needsUpdate=true; });
+    [tratti,torri,merliP,merliA,toppe].forEach(function(m){ m.instanceColor.needsUpdate=true; }); patI.needsUpdate=true;
     ponteggi.visible=inCantiere; pali.visible=paliSu;
     tratti.visible=torri.visible=merliP.visible=merliA.visible=toppe.visible=alt>.01&&cant>0; magliaPorte.visible=porteSu>.01&&posti.length>0;
   };
@@ -416,8 +425,13 @@ var acque=(function(){
     var su=anno>=s.dal&&!(s.fino&&anno>=s.fino), r=(s.rotto&&anno>=s.rotto)||(s.taglio&&anno>=s.taglio[0]&&anno<s.taglio[1]), pi=s.pile&&anno>=s.pile;      // taglio: un varco solo in quegli anni (ponte Milvio nel 312)
     s.intero.visible=su&&!r&&!pi; if(s.mezzo) s.mezzo.visible=su&&r; if(s.resti) s.resti.visible=pi; });
     cantieri.forEach(function(c){ c.g.visible=anno>=c.da&&anno<c.a; }); });
-  /* l'isola: fiancate di travertino e piano */
-  B=PC.A;
+  /* l'isola: fiancate di travertino e piano.
+     27 novembre 2026 (l'utente: «E l'isola Tiberina?»; voce Insula Tiberina di Platner e Ashby riletta lo stesso giorno, src/testi/topografia-fonti.md, «La patina del tempo»):
+     isola, obelisco e case hanno ora maglie loro, fuori dalla maglia comune dei ponti. L'isola (scheda isolatiberina) prende la patina comune e l'erba fra le pietre del
+     piano (RM_PAT_ERBA): quando smise di essere curata nessuna fonte letta lo dice, e la patina segue il ritmo di tutta la città. La voce dice che la forma di nave era di
+     tutta l'isola («a wall was erected which in shape reproduced exactly the sides of a Roman ship») e che oggi ne resta una parte di travertino al capo est: la forma resta
+     com'era. Lo stesso materiale delle fiancate di prima, così negli anni romani nulla cambia. */
+  var IS=new RM.Costruttore(); B=IS;
   (function(){ var i;
     for(i=0;i<NI*2;i++){ var a=isS[i], b=isS[i+1], e=isD[i], f=isD[i+1];
       B.quad([b[0],-.5,b[1]],[a[0],-.5,a[1]],[a[2],.35,a[3]],[b[2],.35,b[3]],P.travertino).quad([e[0],-.5,e[1]],[f[0],-.5,f[1]],[f[2],.35,f[3]],[e[2],.35,e[3]],P.travertino);      // le fiancate di travertino
@@ -426,12 +440,30 @@ var acque=(function(){
     var pf=(RM.ponti.filter(function(p){ return p.id==='pontefabricio'; })[0].piedi||[])[1], pc=(RM.ponti.filter(function(p){ return p.id==='pontecestio'; })[0].piedi||[])[0];
     if(pf&&pc){ var dx=pc.x-pf.x, dz=pc.z-pf.z, l=Math.hypot(dx,dz)||1, nx=-dz/l*.32, nz=dx/l*.32, via=RM.col(0x6e685d);
       B.quad([pf.x+nx,.37,pf.z+nz],[pc.x+nx,.37,pc.z+nz],[pc.x-nx,.37,pc.z-nz],[pf.x-nx,.37,pf.z-nz],via); }
-    /* l'obelisco, l'albero della nave, a metà dell'isola; due case a monte (indicative) */
-    var M0=asse(tIs);
-    B.dentro(M0.q.x,.35,M0.q.z,Math.atan2(M0.tg[0],M0.tg[1]),function(B){
-      B.scatola(.3,.3,.3,0,0,0,P.marmo).cilindro(.1,1.4,0,.3,0,P.granito,.05,4);
+    /* L'obelisco (scheda obeliscoisola). Platner e Ashby, Insula Tiberina: «An obelisk, fragments of which are in the museum at Naples, is thought to have represented the mast».
+       La voce non dà misure, né il posto, né quando cadde: qui a metà dell'isola (dove starebbe l'albero), alto 14 m sul suo basamento come prima, ed è uno schema detto nella scheda;
+       resta in piedi fino all'852 («non si sa quando cadde», come gli altri obelischi). Due case a monte (indicative): nessuna fonte letta parla di case sull'isola; qui sono
+       lasciate dal 550 come tante case della città, perdono il tetto nel 600 e i muri calano fino al 700 (scelte dette nella scheda dell'isola). */
+    var M0=asse(tIs), rM0=Math.atan2(M0.tg[0],M0.tg[1]), OB=new RM.Costruttore(), CA=new RM.Costruttore(), CR=new RM.Costruttore();
+    OB.dentro(M0.q.x,.35,M0.q.z,rM0,function(B){ B.scatola(.3,.3,.3,0,0,0,P.marmo).cilindro(.1,1.4,0,.3,0,P.granito,.05,4); });
+    CA.dentro(M0.q.x,.35,M0.q.z,rM0,function(B){
       B.scatola(2.2,.9,2.2,.2,0,-4.2,P.intonaco).falde(2.4,.5,2.2,.2,.9,-4.2,P.coppi); B.scatola(1.5,.7,2.2,-.1,0,-7.3,P.intonaco).falde(2.2,.4,1.7,-.1,.7,-7.3,P.coppi,Math.PI/2); });
+    CR.dentro(M0.q.x,.35,M0.q.z,rM0,function(B){      // le stesse due case senza tetto: muri sottili di altezza diversa, a pezzi
+      [[2.2,.12,.2,-5.24,.9],[2.2,.12,.2,-3.16,.62],[.12,2.2,1.24,-4.2,.8],[.12,1.3,-.84,-4.75,.55],[.12,.6,-.84,-3.5,.3]].forEach(function(w){ B.scatola(w[0],w[4],w[1],w[2],0,w[3],P.intonaco); });
+      [[1.5,.12,-.1,-8.34,.7],[1.5,.12,-.1,-6.26,.4],[.12,2.2,-.79,-7.3,.62],[.12,1.1,.59,-7.85,.5]].forEach(function(w){ B.scatola(w[0],w[4],w[1],w[2],0,w[3],P.intonaco); });
+      B.scatola(1.1,.06,.9,.3,0,-4.4,P.tufo).scatola(.8,.05,.7,-.2,0,-7.1,P.tufo); });      // i calcinacci a terra
+    var gOb=OB.maglia(RM.matPietra(classe('obeliscoisola'))), gCa=CA.maglia(RM.matPietra('C')), mCr=RM.matPietra('C'); mCr.defines={RM_PAT_ERBA:''}; var gCr=CR.maglia(mCr);
+    gCr.visible=false; [gOb,gCa,gCr].forEach(function(g){ g.userData.gruppo='monumenti'; RM.scene.add(g); });
+    gCr.position.y=.35; gCr.geometry.translate(0,-.35,0);      // i muri calano verso il piano dell'isola
+    RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:gOb, id:'obeliscoisola'},{maglia:gCa, id:'isolatiberina'},{maglia:gCr, id:'isolatiberina'}]);
+    RM.MONUMENTI.push({id:'obeliscoisola', nome:"Obelisco dell'isola Tiberina", x:M0.q.x, z:M0.q.z, raggio:1, alto:1.7});
+    RM.moduli.push(function(anno){ gCa.visible=anno<600; gCr.visible=anno>=600; gCr.scale.y=1-.55*RM.sfuma(600,700,anno);
+      mCr.userData.patinaPropria=true; mCr.userData.patina.value=Math.max(RM.patinaAnno(anno),.35*RM.sfuma(600,640,anno)); });      // la casa lasciata e scoperchiata prende l'erba anche prima che la patina della città sia forte
   })();
+  var mIs=RM.matPietra('A'); mIs.defines={RM_PAT_ERBA:''}; var gIs=IS.maglia(mIs); gIs.userData.gruppo='monumenti'; RM.scene.add(gIs);
+  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:gIs, id:'isolatiberina'}]);
+  RM.MONUMENTI.push({id:'isolatiberina', nome:'Isola Tiberina', x:M0x(), z:M0z(), raggio:12, alto:.9});
+  function M0x(){ return asse(tIs).q.x; } function M0z(){ return asse(tIs).q.z; }
   /* Il tempio di Esculapio: «probably occupied the site of the present church of S. Bartolomeo» (Platner e Ashby, Aedes Aesculapii, letto il 25 novembre 2026), che sta «toward the E end,
      or prow, of the island» (Insula Tiberina): qui a valle dei ponti, con la fronte verso di loro, come la chiesa di oggi sulla sua piazza. Forma e misure non sono nella voce
      («There are no certain remains of this temple»): il tempio è uno schema. Ha una sua maglia per avere lo stato (MONUMENTI.esculapio in js/dati.js): chiuso al culto nel 392
@@ -442,11 +474,11 @@ var acque=(function(){
     RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:g, id:'esculapio'}]);
     RM.MONUMENTI.push({id:'esculapio', nome:'Tempio di Esculapio (isola Tiberina)', x:T.q.x, z:T.q.z, raggio:5, alto:1.5});
     RM.moduli.push(function(anno){ var q=RM.statoMonumento('esculapio',anno), rv=RM.rovina('esculapio',anno), u=mt.userData.u, TN=RM.TINTA;
-      mt.color.copy(TN[q.s0]||TN.uso).lerp(TN[q.s1]||TN.uso,q.t); u.uRovina.value=rv.r; u.uSpoglio.value=rv.s; u.uCrepe.value=rv.c; u.uVerde.value=rv.v; u.uIntonaco.value=rv.i; u.uPulito.value=rv.pulito||0; });
+      mt.color.copy(TN[q.s0]||TN.uso).lerp(TN[q.s1]||TN.uso,q.t); u.uRovina.value=rv.r; u.uSpoglio.value=rv.s; u.uCrepe.value=rv.c; u.uVerde.value=rv.v; u.uIntonaco.value=rv.i; u.uPulito.value=rv.pulito||0; u.uPatina.value=RM.patinaMon('esculapio',anno); });
   })();
   ['A','B','C'].forEach(function(k){ var g=PC[k].maglia(RM.matPietra(k)); RM.scene.add(g);
     /* un clic sui ponti della maglia comune apre la scheda del ponte più vicino; sull'isola quella del tempio */
-    RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:g, id:function(h){ var x=h.point.x, z=h.point.z, m=1e9, id=null; if(k==='A'&&sullIsola(x,z)) return 'esculapio';
+    RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:g, id:function(h){ var x=h.point.x, z=h.point.z, m=1e9, id=null; if(k==='A'&&sullIsola(x,z)) return 'isolatiberina';
       RM.ponti.forEach(function(p){ if(p.comune!==k) return; var d=Math.hypot(p.x-x,p.z-z); if(d<m){ m=d; id=p.id; } }); return id; }}]); });
   RM.ponti.forEach(function(p){ RM.MONUMENTI.push({id:p.id, nome:p.nome, x:p.x, z:p.z, raggio:8, alto:1}); });
 })();

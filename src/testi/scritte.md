@@ -1,6 +1,6 @@
 # Come finisce un impero · tutte le scritte
 
-Generato da `src/testi.mjs` il 27/11/2026, 10:49:08.
+Generato da `src/testi.mjs` il 27/11/2026, 11:16:53.
 
 **Come correggere.** Ogni scritta sta su una riga e comincia con la sua sigla fra parentesi quadre. Cambia liberamente il testo dopo la sigla; non toccare la sigla e non unire due righe.
 Le citazioni («Voci di allora», citazioni degli storici) sono traduzioni da fonti lette: lì conviene ritoccare solo l'italiano, non il contenuto.
@@ -135,7 +135,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.60] Nel grafico la linea continua indica i valori misurati, quella tratteggiata le stime. Nel novembre 2026 abbiamo confrontato con le fonti i testi delle tappe, le schede dei monumenti e le didascalie degli eventi. Le schede indicano anche i punti su cui mancano informazioni o gli studiosi sono divisi.
 
-[pagina.61] Le case lasciate non spariscono. Prima restano in piedi: cade l'intonaco, mancano le tegole, le finestre restano vuote, cresce l'erba. Poi crollano il tetto e i piani alti. Alla fine restano muri bassi e cumuli di macerie, coperti di rovi. Le fonti parlano di case e chiese «in rovina», di orti accanto alle case e di bestie al pascolo, non di una città tornata campagna. Gli orti e le vigne vengono dalle fonti in quattro luoghi: presso le terme di Agrippa (599), davanti a Santa Sabina (598-599), attorno a Santa Susanna, con un orto a vigna (al tempo di Sergio I, 687-701), e presso il portico di San Pietro (al tempo di Leone IV, 847-855). Nell'atrio di San Paolo, prima che Adriano I lo facesse lastricare, l'erba cresceva e ci pascolavano buoi e cavalli: lo mostriamo dal 715 al 771, perché le date esatte non si sanno. Gli altri orti sono ipotesi. Sono ipotesi anche quali quartieri si svuotano per primi, quanto restano in piedi le case, quanto si abbassano le rovine e quanto in fretta crescono le piante. Nessuna fonte antica dice quali piante crescessero sulle rovine: abbiamo preso fico, olmo, rovo, lentisco, sambuco nano, valeriana rossa ed edera da un elenco delle piante del Colosseo scritto nel 1855. Le rovine cambiano col quartiere: dove le insulae erano alte e fitte, come nella Suburra, restano più spesso alti gusci di mattoni con le macerie nei vicoli; le domus dei colli diventano cumuli bassi con qualche colonna; le case basse dei margini si riducono a tracce. È un'ipotesi del modello: nessuna fonte dice come caddero i singoli quartieri. Anche l’edera, i cespugli e l’erba cresciuti sui monumenti lasciati sono una resa: quanto verde, e in quanto tempo, nessuna fonte lo misura. Ciò che è ancora in piedi oggi, nel modello è in piedi anche nell’800. Nella veduta d’insieme dei secoli tardi i muri dei grandi monumenti sono un poco schiariti e la luce è più bassa, perché le rovine si leggano da lontano; per lo stesso motivo, solo da lontano, le case abitate, i loro orti e le chiese in uso hanno tinte un poco più chiare e vive, e il fumo e i lumi della notte sono più grandi: è una scelta di resa, non un dato.
+[pagina.61] Le case lasciate non spariscono. Prima restano in piedi: cade l'intonaco, mancano le tegole, le finestre restano vuote, cresce l'erba. Poi crollano il tetto e i piani alti. Alla fine restano muri bassi e cumuli di macerie, coperti di rovi. Le fonti parlano di case e chiese «in rovina», di orti accanto alle case e di bestie al pascolo, non di una città tornata campagna. Gli orti e le vigne vengono dalle fonti in quattro luoghi: presso le terme di Agrippa (599), davanti a Santa Sabina (598-599), attorno a Santa Susanna, con un orto a vigna (al tempo di Sergio I, 687-701), e presso il portico di San Pietro (al tempo di Leone IV, 847-855). Nell'atrio di San Paolo, prima che Adriano I lo facesse lastricare, l'erba cresceva e ci pascolavano buoi e cavalli: lo mostriamo dal 715 al 771, perché le date esatte non si sanno. Gli altri orti sono ipotesi. Sono ipotesi anche quali quartieri si svuotano per primi, quanto restano in piedi le case, quanto si abbassano le rovine e quanto in fretta crescono le piante. Nessuna fonte antica dice quali piante crescessero sulle rovine: abbiamo preso fico, olmo, rovo, lentisco, sambuco nano, valeriana rossa ed edera da un elenco delle piante del Colosseo scritto nel 1855. Le rovine cambiano col quartiere: dove le insulae erano alte e fitte, come nella Suburra, restano più spesso alti gusci di mattoni con le macerie nei vicoli; le domus dei colli diventano cumuli bassi con qualche colonna; le case basse dei margini si riducono a tracce. È un'ipotesi del modello: nessuna fonte dice come caddero i singoli quartieri. Anche l’edera, i cespugli e l’erba cresciuti sui monumenti lasciati sono una resa: quanto verde, e in quanto tempo, nessuna fonte lo misura. Ciò che è ancora in piedi oggi, nel modello è in piedi anche nell’800. Nella veduta d’insieme dei secoli tardi i muri dei grandi monumenti sono un poco schiariti e la luce è più bassa, perché le rovine si leggano da lontano; per lo stesso motivo, solo da lontano, le case abitate, i loro orti e le chiese in uso hanno tinte un poco più chiare e vive, e il fumo e i lumi della notte sono più grandi: è una scelta di resa, non un dato. Dal V secolo marmi, travertini e intonaci si scuriscono e si macchiano con gli anni, anche dove l’edificio è in uso: sui ponti, sulle mura, sugli archi, sull’isola Tiberina; nelle chiese curate più piano, e ciò che è rifatto riparte pulito. Quanto e quando è una scelta di resa: nessuna fonte letta descrive il colore delle pietre. Procopio, verso il 550, scrive solo che i Romani avevano conservato gli edifici della città.
 
 [pagina.62] Le strade di Roma erano lastricate di selce, cioè di lava basaltica in pietre poligonali, con i marciapiedi ai lati: lo dicono Livio e i resti descritti da Platner e Ashby. La misura delle pietre e dei marciapiedi è uno schema. Le vie le teneva in ordine chi ci abitava: per questo, nel modello, una strada si guasta quando le case attorno vengono lasciate. Prima cresce l'erba fra le pietre, poi le pietre si smuovono e mancano, la terra e le macerie le coprono, e alla fine resta un sentiero in mezzo all'erba. Restano battute le vie dei percorsi da porta a porta dell'Itinerario di Einsiedeln, verso l'800. Come e in quanto tempo un lastricato si rovinasse nessuna fonte lo racconta: è uno schema.
 
@@ -151,7 +151,7 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 
 [pagina.68] Il codice si può riutilizzare secondo la licenza MIT. Per riutilizzare testi, schede, confini della carta e tabelle dei dati occorre citare la fonte e distribuire gli adattamenti con la stessa licenza (CC BY-SA 4.0). I dati topografici di Roma provengono da OpenStreetMap (© OpenStreetMap contributors, licenza ODbL). Accanto a ogni immagine tratta da Wikimedia Commons trovi il nome dell'autore e la licenza. La foto del rilievo dell'arco di Tito, nella tappa del 534, è di Gunnar Bach Pedersen, che l'ha rilasciata nel pubblico dominio ( Wikimedia Commons ). Le immagini con l'etichetta «Ricostruzione» sono state generate per questa pagina sulla base delle fonti. I volti sono immaginari. Le didascalie delle immagini di Commons riprendono le descrizioni dei file. Non le abbiamo confrontate con le schede dei musei. Per i dettagli consulta il file LICENZA.md .
 
-[pagina.69] Versione del 27/11/2026, ore 10:14
+[pagina.69] Versione del 27/11/2026, ore 11:08
 
 
 ## 2. Gli atti
@@ -5593,6 +5593,46 @@ Se una riga va tolta del tutto, lascia la sigla e scrivi `TOGLIERE`. Per un dubb
 [scheda.esculapio.data5] Sorge la chiesa di San Bartolomeo, voluta dall'imperatore Ottone III, secondo Turismo Roma, il sito del Comune; Platner e Ashby non danno la data. È dopo il periodo raccontato, e per questo nel modello la chiesa non c'è.
 
 
+### isolatiberina
+
+[scheda.isolatiberina.cosa] L'isola in mezzo al Tevere, sacra a Esculapio. Attorno all'isola fu costruito un basamento di pietra, e sopra un muro che aveva la forma dei fianchi di una nave romana (Platner e Ashby). Oggi di quel muro di travertino resta una buona parte al capo est. Nel modello la nave ha i due capi a punta: quale fosse la prua la fonte non lo dice in modo chiaro. Due ponti la legano alle rive: il Fabricio e il Cestio. Sull'isola c'erano anche santuari di Giove, Fauno, Tiberino e Semo Sanco; la fonte non dice dove, e per questo nel modello non ci sono. Le due case sono indicative.
+
+[scheda.isolatiberina.data1.quando] inizio del III secolo a.C.
+
+[scheda.isolatiberina.data1] Arriva il culto di Esculapio. Il tempio e l'isola, sua area sacra, gli sono dedicati.
+
+[scheda.isolatiberina.data2.quando] fine della repubblica
+
+[scheda.isolatiberina.data2] Il muro a forma di nave è dello stesso tempo dei due ponti, secondo i resti.
+
+[scheda.isolatiberina.data3-550] Nel modello le due case sono lasciate, come tante case della città; nel 600 perdono il tetto e poi i muri calano. Nessuna fonte letta parla di case sull'isola: è una nostra scelta.
+
+[scheda.isolatiberina.data4.quando] dal V secolo
+
+[scheda.isolatiberina.data4] Nel modello la pietra si scurisce con gli anni e sul piano cresce l'erba fra le pietre. Quando l'isola smise di essere curata nessuna fonte letta lo dice: è una resa.
+
+[scheda.isolatiberina.data5.quando] Medioevo
+
+[scheda.isolatiberina.data5] L'isola si chiama Licaonia.
+
+[scheda.isolatiberina.certezza-A] L'isola e una parte del muro di travertino a forma di nave ci sono ancora; la forma intera della nave è ricostruita.
+
+
+### obeliscoisola
+
+[scheda.obeliscoisola.cosa] Un obelisco stava sull'isola Tiberina. Secondo Platner e Ashby si pensa che fosse l'albero della nave di pietra; alcuni suoi pezzi sono nel museo di Napoli.
+
+[scheda.obeliscoisola.data1.quando] data ignota
+
+[scheda.obeliscoisola.data1] La fonte non dà né le misure né il posto. Nel modello sta a metà dell'isola, dove starebbe l'albero della nave, ed è alto 14 metri: posto e misure sono uno schema.
+
+[scheda.obeliscoisola.data2.quando] data ignota
+
+[scheda.obeliscoisola.data2] Quando cadde non si sa: nel modello resta in piedi fino all'852.
+
+[scheda.obeliscoisola.certezza-C] Dell'obelisco restano pezzi a Napoli. Che fosse l'albero della nave lo si pensa soltanto; il posto e l'altezza nel modello sono uno schema. Quando cadde non si sa: resta in piedi fino all'852.
+
+
 ### regiacasa
 
 [scheda.regiacasa.certezza-C] I gradini e la fila di colonne di cipollino della casa medievale sono descritti da Platner e Ashby; il numero delle colonne, la trave e l'anno sono una nostra scelta.
@@ -6503,23 +6543,27 @@ Bottoni, legende, etichette, messaggi. L'estrazione è automatica: se una riga n
 
 ### js/mura.js
 
-[ui.mura.01-r365] Ponte Elio
+[ui.mura.01-r374] Ponte Elio
 
-[ui.mura.02-r366] Ponte Aurelio
+[ui.mura.02-r375] Ponte Aurelio
 
-[ui.mura.03-r367] Ponte Emilio
+[ui.mura.03-r376] Ponte Emilio
 
-[ui.mura.04-r368] Ponte di Probo
+[ui.mura.04-r377] Ponte di Probo
 
-[ui.mura.05-r369] Ponte Milvio
+[ui.mura.05-r378] Ponte Milvio
 
-[ui.mura.06-r370] Ponte Neroniano
+[ui.mura.06-r379] Ponte Neroniano
 
-[ui.mura.07-r403] Ponte Fabricio
+[ui.mura.07-r412] Ponte Fabricio
 
-[ui.mura.08-r404] Ponte Cestio
+[ui.mura.08-r413] Ponte Cestio
 
-[ui.mura.09-r413] Ponte Sublicio
+[ui.mura.09-r422] Ponte Sublicio
 
-[ui.mura.10-r443] Tempio di Esculapio (isola Tiberina)
+[ui.mura.10-r459] Obelisco dell'isola Tiberina
+
+[ui.mura.11-r465] Isola Tiberina
+
+[ui.mura.12-r475] Tempio di Esculapio (isola Tiberina)
 

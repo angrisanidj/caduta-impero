@@ -73,7 +73,7 @@ var REGIONI=[
   mon:['sabina','emporio','testaccio'], bordo:['piramide','servianeaventino'], ancore:[[-42,96],[-25,118],[-40,150],[-15,170]]},      // il tratto di mura serviane fra il grande e il piccolo Aventino sta sul confine con la XII
  {n:'XIV', it:'Trastevere', la:'Transtiberim', cat:[4405,150,22,86,180,24],
   cosa:'Tutta la riva destra del Tevere con l\'isola Tiberina. I limiti non si possono determinare: andava molto oltre le mura aureliane, a sud fino al tempio di Fors Fortuna, a nord fino al Vaticano. Sulla scena, fuori dalle mura, la tinta sfuma senza bordo.',
-  mon:['*pietro','*tegolepietro','*obeliscovaticano','esculapio','adriano','adrianostatue','metaromuli','porticopietro','campanilepietro','episcopiapietro','monasteripietro','monasteripietro2','andreapietro','petronilla','scholae','scholae2','ospizionaumachia','leonine'], bordo:['mulini'], ancore:[],
+  mon:['*pietro','*tegolepietro','*obeliscovaticano','esculapio','isolatiberina','obeliscoisola','adriano','adrianostatue','metaromuli','porticopietro','campanilepietro','episcopiapietro','monasteripietro','monasteripietro2','andreapietro','petronilla','scholae','scholae2','ospizionaumachia','leonine'], bordo:['mulini'], ancore:[],
   luoghi:'Il catalogo nomina anche il Gianicolo e i mulini («molinas»): sono i mulini del Gianicolo, non quelli sulle barche del modello, che stanno sul confine del Tevere.'}
 ];
 /* dove il modello non dà un monumento con un nome (parti di altri gruppi), le coordinate stanno nell'elenco M di js/monumenti.js */
