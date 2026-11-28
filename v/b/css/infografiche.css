@@ -1,0 +1,1837 @@
+/* Infografiche animate (js/infografiche.js, 23 novembre 2026; rifatte lo stesso giorno). L'invito sotto il testo della tappa e la finestra con la regia.
+   Il palco è disegnato in pixel veri (viewBox = misure del riquadro): le scritte hanno qui la loro grandezza reale. */
+
+/* ---------- l'invito ---------- */
+.ig-inviti{margin:16px 0 6px;max-width:44em;display:flex;flex-wrap:wrap;gap:10px}
+.ig-inviti[hidden]{display:none}
+.ig-invito{position:relative;display:flex;align-items:center;gap:12px;min-height:62px;padding:8px 12px 8px 8px;font:inherit;font-family:var(--ui);color:var(--ink);text-align:left;cursor:pointer;
+  background:linear-gradient(180deg,#fff,#FBF8F2);border:1px solid var(--line);border-radius:12px;box-shadow:var(--ombra);transition:transform .2s ease,box-shadow .25s ease,border-color .2s ease}
+.ig-invito:hover{transform:translateY(-1px);border-color:var(--gold2);box-shadow:0 2px 4px rgba(34,28,24,.06),0 14px 28px -16px rgba(122,31,43,.5)}
+.ig-invito:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.ig-inv-icona{flex:none;width:46px;height:46px;border-radius:10px;display:grid;place-items:center;color:var(--gold3);
+  background:radial-gradient(120% 120% at 30% 18%,var(--vino-chiaro,#6E1A26),var(--vino,#4A1119) 58%,var(--vino-scuro,#22070B));box-shadow:inset 0 0 0 1px rgba(241,217,154,.18)}
+.ig-inv-icona svg{width:28px;height:28px}
+.ig-testi{display:flex;flex-direction:column;gap:1px;min-width:0}
+.ig-inv-occh{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;color:var(--oro-t)}
+.ig-testi b{font-family:var(--cap);font-size:15px;font-weight:600;color:var(--porpora);line-height:1.2}
+.ig-inv-sotto{font-size:12.5px;color:var(--muted)}
+.ig-play{flex:none;margin-left:6px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--porpora);box-shadow:0 4px 10px -4px rgba(122,31,43,.7);transition:transform .2s}
+.ig-play svg{width:16px;height:16px;margin-left:2px}
+.ig-invito:hover .ig-play{transform:scale(1.08)}
+
+/* ---------- la finestra ---------- */
+.ig-finestra{width:min(1080px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);margin:auto;padding:0;border:0;border-radius:16px;background:var(--carta,#F6F4EF);color:var(--ink);
+  box-shadow:0 30px 80px -20px rgba(20,10,6,.65);overflow:auto;overscroll-behavior:contain}
+.ig-finestra::backdrop{background:radial-gradient(120% 90% at 50% 40%,rgba(46,22,18,.66),rgba(12,6,4,.86))}
+.ig-finestra[open]{animation:ig-apri .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes ig-apri{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+.ig-corpo{display:flex;flex-direction:column;padding:14px 22px 18px}
+.ig-testa{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.ig-testa-t{flex:1;min-width:0}
+.ig-occhiello{margin:0;font-family:var(--ui);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--oro-t)}
+.ig-titolo{margin:2px 0 0;font-family:var(--cap);font-size:20px;font-weight:600;color:var(--porpora);line-height:1.2}
+.ig-chiudi{flex:none;width:44px;height:44px;margin:-4px -10px 0 0;padding:0;border:0;border-radius:50%;background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.ig-chiudi svg{width:22px;height:22px}
+.ig-chiudi:hover{background:rgba(34,28,24,.07)}
+.ig-finestra button:focus-visible,.ig-scorri input:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+
+/* il palco: carta appena granulosa, luce dall'alto */
+.ig-palco{position:relative;height:clamp(300px,calc(100dvh - 372px),600px);border-radius:12px;overflow:hidden;isolation:isolate;
+  background-color:#FBF8F1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .24 0 0 0 0 .16 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),radial-gradient(130% 100% at 50% 0%,#FFFDF8 0%,#F5EEE1 100%);
+  box-shadow:inset 0 0 0 1px rgba(34,28,24,.08),inset 0 -50px 70px -60px rgba(122,31,43,.16)}
+.ig-grafico{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible;z-index:1}
+.ig-strato{position:absolute;z-index:2}
+.ig-strato.ig-carta{z-index:0}
+.ig-palco.subito *{transition:none!important}
+
+/* la copertina */
+.ig-copertina{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:inherit;
+  transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.2,1),visibility 0s 0s}
+.ig-copertina.via{opacity:0;transform:scale(1.05);visibility:hidden;transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.2,1),visibility 0s .8s}
+.ig-copertina.gira>*{animation:ig-su .8s cubic-bezier(.2,.8,.2,1) both}
+.ig-copertina.gira>.ig-cop-tit{animation-delay:.1s}
+.ig-copertina.gira>.ig-cop-filo{animation-name:ig-filo;animation-delay:.3s}
+.ig-copertina.gira>.ig-cop-sotto{animation-delay:.38s}
+.ig-cop-occh{font-family:var(--ui);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--oro-t)}
+.ig-cop-tit{display:block;margin-top:10px;font-family:var(--cap);font-size:clamp(28px,5vw,54px);font-weight:600;line-height:1.08;color:var(--porpora)}
+.ig-cop-filo{display:block;width:130px;height:2px;margin:18px 0 14px;background:linear-gradient(90deg,transparent,var(--gold2),transparent)}
+.ig-cop-sotto{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.2vw,23px);line-height:1.35;color:var(--muted);max-width:28em}
+@keyframes ig-su{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ig-filo{from{opacity:0;transform:scaleX(0)}to{opacity:1;transform:scaleX(1)}}
+
+/* la frase, i comandi, le fonti */
+.ig-lato{display:flex;flex-direction:column;min-width:0}
+.ig-frase{display:flex;gap:12px;align-items:baseline;min-height:2.9em;margin:14px 2px 10px;font-family:var(--serif);font-size:21px;line-height:1.38;color:var(--ink)}
+.ig-frase-anno{flex:none;font-family:var(--cap);font-weight:700;font-size:17px;letter-spacing:.04em;color:var(--porpora)}
+.ig-frase-anno:empty,.ig-frase[hidden]{display:none}
+.ig-frase.entra .ig-frase-anno,.ig-frase.entra .ig-frase-testo{animation:ig-su .6s cubic-bezier(.2,.8,.2,1) both}
+.ig-frase.entra .ig-frase-testo{animation-delay:.07s}
+.ig-comandi{display:flex;align-items:center;gap:6px}
+.ig-comandi[hidden]{display:none}
+.ig-b{flex:none;width:44px;height:44px;padding:0;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:border-color .2s,background .2s,transform .15s}
+.ig-b svg{width:20px;height:20px}
+.ig-b:hover{border-color:var(--gold2)}
+.ig-b:active{transform:scale(.93)}
+.ig-b-play{width:48px;height:48px;color:#fff;background:var(--porpora);border-color:var(--porpora);box-shadow:0 8px 16px -8px rgba(122,31,43,.75)}
+.ig-b-play:hover{background:var(--vino-chiaro,#6E1A26);border-color:var(--vino-chiaro,#6E1A26)}
+.ig-b-play svg{width:22px;height:22px}
+.ig-scorri{position:relative;flex:1;min-width:90px;height:44px;margin:0 6px}
+.ig-scorri input{--p:0%;position:absolute;inset:0;width:100%;height:44px;margin:0;padding:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:pointer}
+.ig-scorri input::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--porpora) var(--p),#DED6C8 var(--p))}
+.ig-scorri input::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-7px;border-radius:50%;background:#fff;border:3px solid var(--porpora);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.ig-scorri input::-moz-range-track{height:4px;border-radius:2px;background:#DED6C8}
+.ig-scorri input::-moz-range-progress{height:4px;border-radius:2px;background:var(--porpora)}
+.ig-scorri input::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--porpora);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.ig-tacche{position:absolute;left:9px;right:9px;top:50%;height:0;pointer-events:none}
+.ig-tacche i{position:absolute;top:6px;width:2px;height:6px;margin-left:-1px;border-radius:1px;background:var(--gold)}
+.ig-fonte{margin:14px 2px 0;font-family:var(--ui);font-size:12.5px;line-height:1.5;color:var(--muted)}
+.ig-fonte b{color:var(--ink);font-weight:600}
+.ig-elenco{list-style:none;margin:14px 0 2px;padding:0;display:grid;gap:9px}
+.ig-elenco li{padding:2px 0 2px 14px;border-left:2px solid var(--gold2);font-family:var(--serif);font-size:17.5px;line-height:1.4}
+.ig-elenco b{font-family:var(--cap);font-weight:700;color:var(--porpora);margin-right:4px}
+.ig-fermo .ig-copertina{display:none}
+.ig-fermo *{transition:none!important;animation:none!important}
+.ig-legenda.fermo{display:flex;flex-wrap:wrap;gap:6px 12px;margin:14px 0 0;opacity:1}
+
+/* ---------- elementi comuni del disegno ---------- */
+.ig-asse{font-family:var(--ui);font-size:12px;fill:#5F554B;font-variant-numeric:tabular-nums;paint-order:stroke;stroke:rgba(251,248,241,.85);stroke-width:3px;stroke-linejoin:round}
+.ig-griglia{stroke:rgba(34,28,24,.1);stroke-width:1}
+.ig-base{stroke:rgba(34,28,24,.42);stroke-width:1}
+.ig-assi,.ig-spia,.ig-conta,.ig-citta-leg,.ig-mosaico-testi{opacity:0;transition:opacity .8s ease}
+.ig-assi.vis,.ig-spia.vis,.ig-conta.vis,.ig-citta-leg.vis,.ig-mosaico-testi.vis{opacity:1}
+.ig-fascia{fill:rgba(122,31,43,.11)}
+.ig-fascia-nome{font-family:var(--serif);font-style:italic;font-size:14px;fill:#7A5A52;opacity:0;transition:opacity .8s}
+.ig-fascia-nome.vis{opacity:1}
+.ig-linea{fill:none;stroke:var(--porpora,#7A1F2B);stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.ig-linea.sottile{stroke-width:2.2}
+.ig-linea.metallo{stroke:url(#ig-agl);stroke-width:3.2}
+.ig-linea.mare{stroke:#2F5864;stroke-width:2.4}
+.ig-segno{fill:#D4AE55;stroke:#fff;stroke-width:1.6;opacity:0;transform:scale(.2);transform-box:fill-box;transform-origin:center;transition:opacity .3s,transform .5s cubic-bezier(.3,1.6,.5,1)}
+.ig-segno.vis{opacity:1;transform:none}
+.ig-cursore{opacity:0;transition:opacity .4s}
+.ig-cursore.vis{opacity:1}
+.ig-cur-linea{stroke:rgba(122,31,43,.42);stroke-width:1;stroke-dasharray:2 3}
+.ig-cur-alone{fill:rgba(122,31,43,.15);transform-box:fill-box;transform-origin:center;animation:ig-pulsa 1.8s ease-in-out infinite}
+.ig-cur-punto{fill:var(--porpora,#7A1F2B);stroke:#fff;stroke-width:2.2}
+.ig-cur-punto.metallo{fill:#8A5A3A}
+.ig-cur-punto.mare{fill:#2F5864;opacity:0;transition:opacity .4s}
+.ig-cur-punto.mare.vis{opacity:1}
+@keyframes ig-pulsa{0%,100%{transform:scale(.8);opacity:.9}50%{transform:scale(1.5);opacity:.25}}
+.ig-nota{opacity:0;transform:translateY(6px);transition:opacity .35s ease,transform .55s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.ig-nota.vis{opacity:1;transform:none}
+.ig-nota-linea{fill:none;stroke:#A87B2A;stroke-width:1.2}
+.ig-nota-fondo{fill:#fff;stroke:rgba(34,28,24,.1);filter:drop-shadow(0 6px 10px rgba(34,28,24,.13))}
+.ig-nota-filo{fill:var(--gold2,#D4AE55)}
+.ig-nota-anno{font-family:var(--cap);font-weight:700;font-size:13px;letter-spacing:.05em;fill:var(--porpora,#7A1F2B)}
+.ig-nota-testo{font-family:var(--ui);font-size:13px;fill:var(--ink,#221C18)}
+.ig-k-anno{font-family:var(--ui);font-size:12px;font-weight:700;letter-spacing:.16em;fill:var(--oro-t,#7A5617)}
+.ig-k-num{font-family:var(--cap);font-weight:600;fill:var(--ink,#221C18);font-variant-numeric:tabular-nums}
+.ig-k-lab{font-family:var(--ui);font-size:13.5px;fill:var(--muted,#5F554B)}
+.ig-k-lab2{font-family:var(--ui);font-size:12.5px;fill:var(--muted,#5F554B)}
+.ig-sintesi{opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.ig-sintesi.vis{opacity:1;transform:none}
+.ig-sint-1{font-family:var(--serif);font-style:italic;font-size:22px;fill:var(--muted,#5F554B)}
+.ig-sint-2{font-family:var(--serif);font-size:27px;font-weight:600;fill:var(--porpora,#7A1F2B)}
+.ig-legenda{display:flex;flex-wrap:wrap;gap:6px 12px;align-content:flex-start;overflow:hidden;opacity:0;transition:opacity .5s}
+.ig-legenda.vis{opacity:1}
+.ig-legenda.in-riga{gap:3px 14px}
+.ig-legenda.in-riga .ig-chip{font-size:12px;line-height:16px}
+.ig-legenda.due{display:grid;grid-template-columns:1fr 1fr;gap:5px 12px;align-items:start}
+.ig-legenda.due .ig-chip{align-items:flex-start;font-size:12px}
+.ig-legenda.due .ig-chip i{margin-top:1px}
+.ig-chip{display:inline-flex;align-items:center;gap:6px;font-family:var(--ui);font-size:12.5px;line-height:1.25;color:var(--ink)}
+.ig-chip i{flex:none;width:13px;height:13px;border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.14)}
+
+/* ---------- 1. la città di punti ---------- */
+.ig-citta-fondo{fill:url(#ig-suolo);stroke:rgba(34,28,24,.08)}
+.ig-tevere{fill:none;stroke:#8FB2C0;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.ig-tevere-alone{fill:none;stroke:rgba(143,178,192,.22);stroke-width:11;stroke-linecap:round;stroke-linejoin:round}
+.ig-mura-citta{fill:none;stroke:#8A7356;stroke-width:2.2;stroke-linejoin:round;opacity:0}
+.ig-mura-citta.vis{opacity:1}
+.ig-mura-fondo{fill:rgba(205,188,155,.2);stroke:none;opacity:0;transition:opacity 1.2s}
+.ig-mura-fondo.vis{opacity:1}
+.ig-leg-mura{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#6E5A40;opacity:0;transition:opacity .7s}
+.ig-leg-mura.vis{opacity:1}
+.ig-leg-tevere{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#4A6F7E}
+.ig-leg{font-family:var(--ui);font-size:12px;fill:var(--muted,#5F554B)}
+.ig-leg-dove{font-style:italic}
+.ig-ab{fill:var(--porpora,#7A1F2B);stroke:rgba(122,31,43,0);stroke-width:1.3;opacity:0;transform:scale(.1);transform-box:fill-box;transform-origin:center;
+  transition:opacity .45s ease,transform .6s cubic-bezier(.3,1.5,.5,1),fill .5s ease,stroke .5s ease}
+.ig-ab.pieno{opacity:1;transform:none}
+.ig-ab.vuoto{opacity:1;transform:scale(.9);fill:rgba(255,255,255,0);stroke:rgba(122,31,43,.55)}
+.ig-ab.fisso{transition:none}
+
+/* ---------- 2. il mosaico dell'Occidente ---------- */
+.ig-tes{fill:currentColor;color:var(--st-perso);opacity:0;transform:scale(.55);transform-box:fill-box;transform-origin:center;
+  transition:color .7s ease,fill .7s ease,opacity .5s ease,transform .8s cubic-bezier(.2,.9,.3,1.15)}
+.ig-tes.vis{opacity:1;transform:none}
+.ig-tes.roma{color:var(--st-roma)} .ig-tes.usurpatore{color:var(--st-usurpatore)} .ig-tes.federati{color:var(--st-federati)} .ig-tes.regno{color:var(--st-regno)}
+.ig-tes.oriente{color:var(--st-oriente)} .ig-tes.perso{color:var(--st-perso)} .ig-tes.califfato{color:var(--st-califfato)} .ig-tes.carolingio{color:var(--st-carolingio)} .ig-tes.chiesa{color:var(--st-chiesa)}
+.ig-tes.conteso{fill:url(#ig-trama)}
+.ig-tes-luce{fill:rgba(255,246,220,.3);stroke:#F1D99A;stroke-width:2.6;opacity:0;transition:opacity .6s ease;pointer-events:none}
+.ig-tes-luce.vis{opacity:1;animation:ig-lampo 1.9s ease-out both}
+@keyframes ig-lampo{0%{fill:rgba(255,250,232,.75)}100%{fill:rgba(255,246,220,.12)}}
+.ig-tes-nome{font-family:var(--ui);font-size:11.5px;font-weight:600;fill:#fff;paint-order:stroke;stroke:rgba(34,28,24,.55);stroke-width:3px;stroke-linejoin:round;opacity:0;transition:opacity .5s}
+.ig-tes-nome.vis{opacity:1}
+.ig-tes-anno{font-family:var(--cap);font-size:12px;font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(34,28,24,.62);stroke-width:3px;stroke-linejoin:round;opacity:0;transform:translateY(-4px);transition:opacity .5s,transform .6s}
+.ig-tes-anno.vis{opacity:1;transform:none}
+.ig-gr-nome{font-family:var(--cap);font-size:11.5px;font-weight:700;letter-spacing:.1em;fill:#fff;paint-order:stroke;stroke:rgba(34,28,24,.62);stroke-width:3.2px;stroke-linejoin:round}
+
+/* ---------- 3. la moneta ---------- */
+.ig-mon-posto{opacity:0;transition:opacity .4s}
+.ig-mon-posto.vis{opacity:1}
+.ig-mon-ombra{fill:rgba(34,28,24,.2);filter:blur(5px)}
+.ig-luccica{mix-blend-mode:soft-light;pointer-events:none}
+.ig-ag-area{opacity:.5}
+.ig-barra-rame{fill:#B8693A;opacity:.85}
+.ig-barra-ag{fill:#D4D7DC;stroke:#7D838C;stroke-width:.8}
+.ig-solido{opacity:0;transition:opacity .5s}
+.ig-solido.vis{opacity:1}
+.ig-sol-1{font-family:var(--serif);font-style:italic;font-size:18px;fill:#7A5617;opacity:0;transition:opacity .7s}
+.ig-sol-2{font-family:var(--cap);font-weight:700;font-size:15px;letter-spacing:.05em;fill:#7A5617;opacity:0;transition:opacity .7s .15s}
+.ig-sol-1.vis,.ig-sol-2.vis{opacity:1}
+
+/* ---------- 4. la notte del 410 ---------- */
+.ig-notte .ig-palco{background-color:#120D0A;background-image:radial-gradient(120% 100% at 55% 45%,#2C211A 0%,#17110D 58%,#0B0806 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+.ig-notte .ig-copertina{background:#150F0B}
+.ig-notte .ig-cop-tit{color:#F1D99A}
+.ig-notte .ig-cop-sotto{color:#D9CBB4}
+.ig-notte .ig-cop-occh{color:#D4AE55}
+.ig-mondo{opacity:0;transition:opacity 1.2s ease}
+.ig-mondo.vis{opacity:1}
+.ig-n-fiume{fill:none;stroke:#4E7A8C;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.ig-n-fiume-alone{fill:none;stroke:rgba(78,122,140,.2);stroke-width:12;stroke-linecap:round;stroke-linejoin:round}
+.ig-n-strade{fill:none;stroke:rgba(232,196,128,.3);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.ig-n-mura{fill:rgba(217,185,122,.05);stroke:#D9B97A;stroke-width:1.8;stroke-linejoin:round}
+.ig-n-mura-alone{fill:none;stroke:rgba(217,185,122,.14);stroke-width:8;stroke-linejoin:round}
+.ig-luogo{opacity:0;transition:opacity .7s ease}
+.ig-luogo.vis{opacity:1}
+.ig-icona{transform:scale(.3);transition:transform .8s cubic-bezier(.3,1.5,.5,1)}
+.ig-luogo.vis .ig-icona{transform:none}
+.ig-luogo-lab{transition:opacity .4s}
+.ig-luogo-lab.via{opacity:0}
+.ig-luogo.tevere{opacity:1}
+.ig-n-nome{font-family:var(--ui);font-size:13px;font-weight:600;fill:#F6EBD6;paint-order:stroke;stroke:rgba(10,7,5,.88);stroke-width:3.5px;stroke-linejoin:round}
+.ig-luogo.tevere .ig-n-nome{font-family:var(--serif);font-style:italic;font-weight:400;font-size:14px;fill:#9CC0CF}
+.ig-n-sotto{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#E6D2AA;paint-order:stroke;stroke:rgba(10,7,5,.88);stroke-width:3.5px;stroke-linejoin:round}
+.ig-n-guida{stroke:rgba(246,235,214,.5);stroke-width:1}
+.ig-tenda{fill:#E9D7B0;stroke:#120D0A;stroke-width:.8;stroke-linejoin:round}
+.ig-porta-punto{fill:#F6EBD6}
+.ig-porta-onda{fill:none;stroke:#F6EBD6;stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:ig-onda-porta 2.2s ease-out infinite}
+@keyframes ig-onda-porta{from{transform:scale(.6);opacity:.9}to{transform:scale(2.6);opacity:0}}
+.ig-fiamma{mix-blend-mode:screen;transform-box:fill-box;transform-origin:center;animation:ig-guizzo 1.3s ease-in-out infinite alternate}
+.ig-fuoco.incerto .ig-fiamma{opacity:.75}
+@keyframes ig-guizzo{0%{transform:scale(.9);opacity:.8}45%{transform:scale(1.06);opacity:1}100%{transform:scale(.97);opacity:.88}}
+.ig-brace{fill:#FFF6DC}
+.ig-incerto{fill:none;stroke:#F1D99A;stroke-width:1.4;stroke-dasharray:3 3.5}
+.ig-alone{mix-blend-mode:screen;transform-box:fill-box;transform-origin:center;animation:ig-respira 3.4s ease-in-out infinite}
+@keyframes ig-respira{0%,100%{transform:scale(.92);opacity:.85}50%{transform:scale(1.1);opacity:1}}
+.ig-croce{stroke:#FFF0C6;stroke-width:2.2;stroke-linecap:round;fill:none}
+.ig-ingresso{opacity:0;transition:opacity .4s}
+.ig-ingresso.vis{opacity:1}
+.ig-freccia-linea{fill:none;stroke:#F6EBD6;stroke-width:3;stroke-linecap:round}
+.ig-freccia-punta{fill:#F6EBD6}
+.ig-data{opacity:0;transition:opacity .9s ease}
+.ig-data.vis{opacity:1}
+.ig-data-1{font-family:var(--cap);font-size:20px;font-weight:700;letter-spacing:.08em;fill:#E8C877}
+.ig-data-2{font-family:var(--ui);font-size:12.5px;fill:#CDBFA6}
+.ig-orologio{opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-orologio.vis{opacity:1;transform:none}
+.ig-orologio-fondo{fill:rgba(16,11,8,.8);stroke:rgba(241,217,154,.2)}
+.ig-arco-vuoto{fill:none;stroke:rgba(255,255,255,.1);stroke-width:9}
+.ig-arco{fill:none;stroke-width:9}
+.ig-arco.orosio,.ig-sw.orosio{stroke:#E8A640;fill:#E8A640}
+.ig-arco.marcellino{stroke:#B98FC9}
+.ig-sw.marcellino{fill:#B98FC9}
+.ig-arco{fill:none}
+.ig-oro-num{font-family:var(--cap);font-size:26px;font-weight:700;fill:#FFF3D6}
+.ig-oro-lab{font-family:var(--ui);font-size:11px;letter-spacing:.1em;fill:#CDBFA6}
+.ig-oro-voce{opacity:0;transition:opacity .6s}
+.ig-oro-voce.vis{opacity:1}
+.ig-oro-t{font-family:var(--ui);font-size:12.5px;fill:#F0E4CC}
+.ig-oro-nota{font-family:var(--serif);font-style:italic;font-size:14.5px;fill:#E8C877;opacity:0;transition:opacity .9s}
+.ig-oro-nota.vis{opacity:1}
+
+/* ---------- 5. la flotta ---------- */
+.ig-onda{fill:none;stroke:#fff;stroke-width:1;stroke-linecap:round}
+.ig-onda.scura{stroke:#0B2229;opacity:.2}
+.ig-scintilla{stroke:#FFF3D6;stroke-width:1.2;stroke-linecap:round;opacity:.35;animation:ig-scintilla 3.2s ease-in-out infinite alternate}
+@keyframes ig-scintilla{from{opacity:.08}to{opacity:.5}}
+.ig-fila{animation:ig-dondola 3.4s ease-in-out infinite alternate}
+@keyframes ig-dondola{from{transform:translateY(0)}to{transform:translateY(-1.6px)}}
+.ig-n{opacity:0;transform:translateY(8px);transition:opacity .9s ease,transform 1.2s cubic-bezier(.4,0,.7,.2)}
+.ig-n.su{opacity:1;transform:none;transition:opacity .5s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-n.via{opacity:0;transform:translateY(6px)}
+.ig-r{opacity:0;transition:opacity 1.2s ease .6s}
+.ig-r.via{opacity:1}
+.ig-k-leg{font-family:var(--ui);font-size:12px;fill:#E7DDCB}
+.ig-fermo .ig-fila,.ig-fermo .ig-scintilla{animation:none}
+@media (prefers-reduced-motion:reduce){.ig-fila,.ig-scintilla{animation:none}}
+.ig-conta.chiaro .ig-k-anno{fill:#F1D99A}
+.ig-conta.chiaro .ig-k-num{fill:#FFF8EA}
+.ig-conta.chiaro .ig-k-lab{fill:#E7DDCB}
+.ig-k-su{font-family:var(--cap);font-size:20px;font-weight:600;fill:#E7DDCB}
+.ig-k-prima{font-family:var(--serif);font-style:italic;font-size:18px;fill:#F3EBDC}
+
+/* ---------- 6. la carta che cambia ---------- */
+.ig-carta{opacity:0;transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.ig-carta.vis{opacity:1}
+.ig-carta.via{opacity:0;transform:scale(.95)}
+.ig-carta svg{display:block;width:100%;height:100%;border-radius:8px;box-shadow:0 14px 30px -20px rgba(34,28,24,.7),0 0 0 1px rgba(34,28,24,.08)}
+.ig-mini .m-mini-nome{display:none}
+.ig-mini .m-regione{transition:color .9s ease,fill .9s ease,opacity .3s ease}
+.ig-mini-luce{fill:rgba(255,244,214,.42);opacity:0;transition:opacity 1.4s ease;pointer-events:none}
+.ig-mini-luce.vis{opacity:1;transition:opacity .25s ease .5s}
+.ig-regno{font-family:var(--ui);font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(34,28,24,.66);stroke-linejoin:round;opacity:0;transition:opacity .6s ease}
+.ig-regni-f.vis .ig-regno{opacity:1}
+.ig-regni-f:not(.vis) .ig-regno{transition-delay:0s!important}
+.ig-pannello{display:flex;flex-direction:column;gap:10px;overflow:hidden;opacity:0;transition:opacity .7s ease}
+.ig-pannello.vis{opacity:1}
+.ig-pannello.via{opacity:0}
+.ig-pannello.sopra{padding:8px 10px;border-radius:10px;background:rgba(251,248,241,.92);box-shadow:0 6px 16px -10px rgba(34,28,24,.5);gap:6px}
+.ig-p-anno{font-family:var(--cap);font-weight:600;font-size:clamp(44px,6vw,76px);line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.ig-pannello.sopra .ig-p-anno{font-size:30px}
+.ig-pannello.sotto{overflow-y:auto;gap:6px}
+.ig-pannello.sotto .ig-p-anno{font-size:40px}
+.ig-pannello.sotto .ig-p-titolo{font-size:16px}
+.ig-p-titolo{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.3;color:var(--muted)}
+.ig-p-titolo[hidden]{display:none}
+.ig-legenda.dentro{opacity:1;transition:opacity .35s ease}
+.ig-legenda.dentro.cambia{opacity:0}
+.ig-legenda-fuori{margin:12px 0 0}
+.ig-legenda-fuori .ig-legenda.dentro{gap:4px 12px}
+.ig-legenda.dentro.via{opacity:0}
+.ig-quattro{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;align-content:center;visibility:hidden}
+.ig-quattro.riga{grid-template-columns:repeat(4,1fr)}
+.ig-quattro.vis{visibility:visible}
+.ig-q{margin:0;min-width:0;opacity:0;transform:translateY(16px) scale(.95);transition:opacity .8s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-quattro.vis .ig-q{opacity:1;transform:none}
+.ig-quattro:not(.vis) .ig-q{transition-delay:0s!important}
+.ig-q svg{display:block;width:100%;height:auto;aspect-ratio:810/518;border-radius:6px;box-shadow:0 10px 22px -16px rgba(34,28,24,.7),0 0 0 1px rgba(34,28,24,.08)}
+.ig-q figcaption{display:flex;gap:8px;align-items:baseline;margin-top:6px;font-family:var(--ui);font-size:12px;line-height:1.3;color:var(--muted)}
+.ig-quattro.stretta figcaption span{display:none}
+.ig-q figcaption b{flex:none;font-family:var(--cap);font-size:18px;font-weight:700;color:var(--porpora)}
+
+/* ---------- telefoni in piedi ---------- */
+@media (max-width:600px){
+  .ig-finestra{width:100vw;height:100dvh;max-height:100dvh;margin:0;border-radius:0}
+  .ig-corpo{padding:8px 12px 18px}
+  .ig-testa{margin-bottom:8px}
+  .ig-titolo{font-size:17px}
+  .ig-palco{height:clamp(300px,56dvh,520px);border-radius:10px}
+  .ig-frase{flex-direction:column;gap:2px;min-height:5.4em;margin:12px 2px 8px;font-size:17.5px}
+  .ig-frase-anno{font-size:15px}
+  .ig-comandi{gap:4px}
+  .ig-scorri{margin:0 2px;min-width:70px}
+  .ig-sint-1{font-size:17px}
+  .ig-sint-2{font-size:20px}
+  .ig-p-titolo{font-size:16px}
+  .ig-quattro.stretta figcaption span{display:none}
+.ig-q figcaption b{font-size:16px}
+}
+/* ---------- telefoni coricati: il disegno a sinistra, il testo a destra ---------- */
+@media (max-height:500px) and (min-width:601px){
+  .ig-finestra{width:100vw;height:100dvh;max-height:100dvh;margin:0;border-radius:0;overflow:hidden}
+  .ig-corpo{display:grid;grid-template-columns:minmax(0,1fr) 290px;grid-template-rows:auto minmax(0,1fr);column-gap:16px;padding:10px 12px;height:100%;box-sizing:border-box}
+  .ig-palco{grid-column:1;grid-row:1/span 2;height:calc(100dvh - 20px)}
+  .ig-testa{grid-column:2;grid-row:1;margin-bottom:2px}
+  .ig-titolo{font-size:16px}
+  .ig-lato{grid-column:2;grid-row:2;overflow:auto;min-height:0}
+  .ig-lato>*{flex:none}      /* le frasi lunghe (ponte Milvio) non si schiacciano sotto i comandi: la colonna scorre */
+  .ig-frase{flex-direction:column;gap:2px;min-height:6.2em;margin:4px 0 8px;font-size:16.5px}
+  .ig-frase-anno{font-size:14px}
+  .ig-comandi{flex-wrap:wrap;gap:6px}
+  .ig-scorri{order:5;flex-basis:100%;margin:0}
+  .ig-cop-tit{font-size:30px}
+  .ig-cop-sotto{font-size:17px}
+}
+@media (prefers-reduced-motion:reduce){ .ig-finestra[open]{animation:none} .ig-invito,.ig-play{transition:none} }
+
+/* ---------- 7. la cattura di Valeriano (js/infografiche.js, disegnaValeriano) ---------- */
+.ig-v-carta{opacity:0;transition:opacity 1s ease}
+.ig-v-carta.vis{opacity:1}
+.ig-v-mare{fill:#C7D6D3}
+.ig-v-terra{fill:#E9DFC9}
+.ig-v-roma{fill:#9A2F2A;fill-opacity:.3}
+.ig-v-fiume{fill:none;stroke:#6E9FB3;stroke-width:1.6;stroke-opacity:.9}
+.ig-v-costa{fill:none;stroke:#7d6f5a;stroke-width:1;stroke-opacity:.6}
+.ig-v-luogo{opacity:0;transition:opacity .7s ease}
+.ig-v-luogo.vis{opacity:1}
+.ig-v-punto{fill:#221C18;stroke:#FBF6EA;stroke-width:1.6}
+.ig-v-luogo .ig-v-punto{transition:opacity .4s}
+.ig-v-luogo.in-segno .ig-v-punto{opacity:0}      /* la città su cui sta il segno di battaglia: il segno ne prende il posto, il nome resta */
+.ig-v-filo{fill:none;stroke:#221C18;stroke-width:1.1;stroke-linecap:round;opacity:.75}      /* il filo dal punto al suo nome, dove due città stanno vicine */
+.ig-v-nome{font-family:var(--ui);font-size:13px;font-weight:600;fill:#221C18;paint-order:stroke;stroke:rgba(251,246,234,.92);stroke-width:3.5px;stroke-linejoin:round}
+.ig-v-freccia{opacity:0;transition:opacity .4s}
+.ig-v-freccia.vis{opacity:1}
+.ig-v-linea{fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.ig-v-freccia.roma .ig-v-linea{stroke:#7A1F2B} .ig-v-freccia.roma .ig-v-punta{fill:#7A1F2B}
+.ig-v-freccia.persia .ig-v-linea{stroke:#8a6a2c} .ig-v-freccia.persia .ig-v-punta{fill:#8a6a2c}
+.ig-v-freccia.prigionieri .ig-v-linea{stroke:#3b322b} .ig-v-freccia.prigionieri .ig-v-punta{fill:#3b322b}
+.ig-v-punta{opacity:0;transition:opacity .3s}
+.ig-v-punta.vis{opacity:1}
+.ig-v-assedio{opacity:0;transition:opacity .6s}
+.ig-v-assedio.vis{opacity:1}
+.ig-v-assedio.spento{opacity:.25}
+.ig-v-anello{fill:none;stroke:#8a6a2c;stroke-width:2.4;stroke-dasharray:3 3}
+.ig-v-scontro{opacity:0;transition:opacity .5s}
+.ig-v-scontro.vis{opacity:1}
+.ig-spade path{fill:#7A1F2B;stroke:#FBF6EA;stroke-width:1.1;stroke-linejoin:round;paint-order:stroke}      /* le due spade incrociate del segno di battaglia (24 novembre 2026) */
+.ig-v-lampo{fill:rgba(251,246,234,.85);stroke:#C9A14A;stroke-width:2}
+.ig-v-verso{font-family:var(--serif);font-style:italic;font-size:14px;fill:#3b322b;opacity:0;transition:opacity .7s;paint-order:stroke;stroke:rgba(251,246,234,.9);stroke-width:3px}
+.ig-v-verso.vis{opacity:1}
+.ig-v-data1{font-family:'Cinzel',serif;font-size:24px;font-weight:700;fill:#7A1F2B}
+.ig-v-data2{font-family:var(--ui);font-size:12px;letter-spacing:.08em;text-transform:uppercase;fill:#5b4f45}
+.ig-v-numero{opacity:0;transition:opacity .6s}
+.ig-v-numero.vis{opacity:1}
+.ig-v-num{font-family:'Cinzel',serif;font-size:30px;font-weight:700;fill:#221C18}
+.ig-v-num-lab{font-family:var(--ui);font-size:11.5px;fill:#5b4f45}
+.ig-v-rilievo{opacity:0;transition:opacity 1s ease}
+.ig-v-rilievo.vis{opacity:1}
+.ig-v-roccia{fill:#C4B293;stroke:#8c785e;stroke-width:1}
+.ig-v-fig{fill:#8c785e;stroke:#6e5c46;stroke-width:1}
+.ig-v-fig.r{fill:#a08b6c}
+.ig-v-ril-lab{font-family:var(--ui);font-size:11.5px;fill:#5b4f45}
+@media (prefers-reduced-motion:reduce){ .ig-v-carta,.ig-v-luogo,.ig-v-freccia,.ig-v-assedio,.ig-v-scontro,.ig-v-numero,.ig-v-rilievo,.ig-v-punta,.ig-v-verso{transition:none} }
+
+/* ---------- comuni alle infografiche 8-10 (ponte Milvio, Pantheon, Curia) ---------- */
+.ig-atto{opacity:0;visibility:hidden;transition:opacity .8s ease,visibility 0s .8s}
+.ig-atto.vis{opacity:1;visibility:visible;transition:opacity .8s ease,visibility 0s 0s}
+.ig-f{opacity:0;transition:opacity .6s ease}
+.ig-f.vis{opacity:1}
+.ig-omino{fill:#4A4D55;stroke:#4A4D55;stroke-linecap:round;opacity:0;transition:opacity .3s}
+.ig-omino.vis{opacity:1}
+.ig-omino.giu{opacity:0;transition:opacity .5s}
+
+/* ---------- 8. ponte Milvio ---------- */
+.ig-m-cornice{fill:none;stroke:rgba(34,28,24,.14);stroke-width:1}
+.ig-m-rilievo{mix-blend-mode:overlay;opacity:.95;pointer-events:none}
+.ig-m-misura{fill:none;stroke:none}
+.ig-m-tratto{fill:none;stroke:#9A2F2A;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;opacity:0}
+.ig-m-tratto.vis{opacity:1}
+.ig-m-punto{fill:#9A2F2A;opacity:0;transition:opacity .25s}
+.ig-m-punto.vis{opacity:.85}
+.ig-v-luogo.tenue .ig-v-punto{fill:#7d6f5a;stroke-width:1.2}
+.ig-v-luogo.tenue .ig-v-nome{font-weight:400;font-style:italic;fill:#5b4f45}
+.ig-v-punto.roma{fill:#7A1F2B}
+.ig-v-nome.roma{font-family:var(--cap);font-size:15px;font-weight:700;fill:#7A1F2B}
+.ig-v-luogo .ig-v-punto{transition:transform .5s cubic-bezier(.3,1.6,.5,1);transform-box:fill-box;transform-origin:center}
+.ig-v-luogo.ora .ig-v-punto{transform:scale(1.6)}
+.ig-m-onda{fill:none;stroke:#7A1F2B;stroke-width:1.6;opacity:0;transform-box:fill-box;transform-origin:center}
+.ig-m-onda.vis{animation:ig-onda-porta 2s ease-out infinite}
+.ig-m-onda.acqua{stroke:#F4F8F9;stroke-width:2}
+.ig-m-testa{opacity:0;transition:opacity .3s}
+.ig-m-testa.vis{opacity:1}
+.ig-m-alone{fill:rgba(154,47,42,.2);transform-box:fill-box;transform-origin:center;animation:ig-pulsa 1.4s ease-in-out infinite}
+.ig-m-capo{fill:#9A2F2A;stroke:#fff;stroke-width:2}
+.ig-m-avverte{font-family:var(--ui);font-size:11.5px;fill:#6b5f53;opacity:0;transition:opacity .8s}
+.ig-m-avverte.vis,.ig-m-lato .ig-m-avverte{opacity:1}
+.ig-m-avverte.su-carta{paint-order:stroke;stroke:rgba(246,240,226,.9);stroke-width:3px;stroke-linejoin:round}
+.ig-m-testata{font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.16em;fill:var(--oro-t,#7A5617)}
+.ig-m-sotto{font-family:var(--serif);font-style:italic;font-size:14.5px;fill:var(--muted,#5F554B)}
+.ig-m-riga{opacity:0;transform:translateX(-10px);transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.ig-m-riga.vis{opacity:.62;transform:none}
+.ig-m-riga.ora{opacity:1}
+.ig-m-riga-luce{fill:#fff;filter:drop-shadow(0 4px 10px rgba(34,28,24,.1));opacity:0;transition:opacity .4s,transform .6s cubic-bezier(.2,.8,.2,1)}
+.ig-m-riga-luce.vis{opacity:1}
+.ig-m-segno{fill:#9A2F2A}
+.ig-m-riga.ipotesi .ig-m-segno,.ig-m-riga.schema .ig-m-segno{fill:#fff;stroke:#9A2F2A;stroke-width:1.4;stroke-dasharray:2 1.6}
+.ig-m-nome{font-family:var(--cap);font-weight:700;font-size:15px;fill:var(--porpora,#7A1F2B);dominant-baseline:middle}
+.ig-m-nome.grande{font-size:22px;dominant-baseline:auto}
+.ig-m-nota{font-family:var(--serif);font-style:italic;font-size:15.5px;fill:var(--ink,#221C18);dominant-baseline:middle}
+.ig-m-scheda .ig-m-nota{dominant-baseline:auto}
+.ig-m-fonte{font-family:var(--ui);font-size:11.5px;fill:#5F554B;dominant-baseline:middle}
+.ig-m-fonte.stretta{font-size:10.5px}
+.ig-m-scheda .ig-m-fonte{dominant-baseline:auto;font-size:12px}
+.ig-m-riga.ipotesi .ig-m-nome,.ig-m-riga.schema .ig-m-nome,.ig-m-scheda.tenue .ig-m-nome{fill:#6b5f53;font-style:italic}
+.ig-m-filo{stroke:rgba(34,28,24,.08)}
+.ig-m-scheda{opacity:0;transition:opacity .4s}
+.ig-m-scheda.vis{opacity:1}
+.ig-m-scia{font-family:var(--ui);font-size:11.5px;fill:#7d6f5a}
+.ig-m-pianta{transition:opacity .7s ease}
+.ig-m-pianta.via{opacity:.12}
+.ig-m-lato{transition:opacity .6s ease}
+.ig-m-lato.via{opacity:0}
+.ig-m-urbe{fill:rgba(154,47,42,.07)}
+.ig-m-mura{fill:none;stroke:#8A7356;stroke-width:2.4;stroke-linejoin:round}
+.ig-m-tevere{fill:none;stroke:#7FA8B8;stroke-linecap:round;stroke-linejoin:round}
+.ig-m-tevere-alone{fill:none;stroke:rgba(127,168,184,.22);stroke-linecap:round;stroke-linejoin:round}
+.ig-m-via-bordo{fill:none;stroke:#C9B48A;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
+.ig-m-via{fill:none;stroke:#FFFCF4;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ig-m-ponte-b{stroke:#5b4f45;stroke-width:7;stroke-linecap:butt}
+.ig-m-ponte{stroke:#EFE7D6;stroke-width:4.4}
+.ig-m-et{font-family:var(--ui);font-size:12px;font-weight:600;fill:#3b322b;paint-order:stroke;stroke:rgba(248,243,232,.92);stroke-width:3.5px;stroke-linejoin:round}
+.ig-m-et-fiume{font-family:var(--serif);font-style:italic;font-size:15px;fill:#4A6F7E;paint-order:stroke;stroke:rgba(248,243,232,.85);stroke-width:3px}
+.ig-m-et-roma{font-family:var(--cap);font-size:15px;font-weight:700;letter-spacing:.3em;fill:rgba(122,31,43,.55)}
+.ig-m-sx-linea{fill:none;stroke:#7A1F2B;stroke-width:1.6;stroke-dasharray:4 4}
+.ig-m-sx-punta{fill:#7A1F2B}
+.ig-m-sx{font-family:var(--ui);font-size:12.5px;font-weight:700;fill:#7A1F2B;paint-order:stroke;stroke:rgba(248,243,232,.92);stroke-width:3.5px;stroke-linejoin:round}
+.ig-m-sx2{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#3b322b;paint-order:stroke;stroke:rgba(248,243,232,.92);stroke-width:3.5px;stroke-linejoin:round}
+.ig-m-nord path{fill:#5b4f45}
+.ig-m-scala{fill:none;stroke:#5b4f45;stroke-width:1.4}
+.ig-m-blocco{opacity:0;transition:opacity .5s ease}
+.ig-m-blocco.vis{opacity:1}
+.ig-m-blocco.mass{fill:#6E7178;stroke:#F6F1E6;stroke-width:.8}
+.ig-m-blocco.mass.rotto{opacity:0;transition:opacity 1.4s ease}
+.ig-m-blocco.cost{fill:#9A2F2A;stroke:#F6F1E6;stroke-width:.8}
+.ig-m-fuggiasco{fill:#55585F;opacity:0}
+.ig-m-fuggiasco.va{opacity:.9}
+.ig-m-fuggiasco.via{opacity:.4;transition:opacity 1.2s ease}
+.ig-m-fuggiasco.giu{opacity:0;transition:opacity .9s ease}
+.ig-m-massenzio{opacity:0;transition:opacity .4s}
+.ig-m-massenzio.vis{opacity:1}
+.ig-m-massenzio circle{fill:#3E4148;stroke:#fff;stroke-width:2}
+.ig-m-massenzio.annega circle{fill:rgba(62,65,72,.35);stroke:rgba(255,255,255,.6);transition:fill 1s,stroke 1s}
+.ig-m-et-mx{font-family:var(--ui);font-size:12.5px;font-weight:700;fill:#2E3036;paint-order:stroke;stroke:rgba(248,243,232,.95);stroke-width:3.5px;stroke-linejoin:round;transition:opacity .4s}
+.ig-m-et-mx.via{opacity:0}
+.ig-m-et-es{font-family:var(--cap);font-size:13px;font-weight:700;letter-spacing:.08em;paint-order:stroke;stroke:rgba(248,243,232,.95);stroke-width:3.5px;stroke-linejoin:round;opacity:0;transition:opacity .6s}
+.ig-m-et-es.vis{opacity:1}
+.ig-m-et-es.mass{fill:#4A4D55}
+.ig-m-et-es.cost{fill:#9A2F2A}
+.ig-m-alle{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#2F5864;paint-order:stroke;stroke:rgba(248,243,232,.95);stroke-width:3.5px;stroke-linejoin:round}
+.ig-m-data{font-family:var(--cap);font-weight:700;letter-spacing:.06em;fill:var(--porpora,#7A1F2B)}
+.ig-m-leg.cost{fill:#9A2F2A}
+.ig-m-leg.mass{fill:#6E7178}
+.ig-m-leg-t{font-family:var(--ui);font-size:12.5px;fill:var(--ink,#221C18)}
+.ig-m-cita{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-m-cita.vis{opacity:1;transform:none}
+.ig-m-cita-filo{fill:var(--gold2,#D4AE55)}
+.ig-m-cita-t{font-family:var(--serif);font-style:italic;font-size:19px;fill:var(--ink,#221C18)}
+.ig-m-cita-chi{font-family:var(--ui);font-size:11.5px;fill:#5F554B}
+.ig-m-carta{opacity:0;transform:translateY(14px);transition:opacity .8s ease,transform 1s cubic-bezier(.2,.8,.2,1)}
+.ig-m-carta.vis{opacity:.55;transform:none}
+.ig-m-carta.vis.pieno{opacity:1}
+.ig-m-carta-fondo{filter:drop-shadow(0 12px 22px rgba(34,28,24,.28))}
+.ig-m-c-tit{font-family:var(--cap);font-size:15px;font-weight:700;letter-spacing:.14em;fill:#F1D99A}
+.ig-m-carta.eusebio .ig-m-c-tit,.ig-m-c-tit.dark{fill:var(--porpora,#7A1F2B)}
+.ig-m-c-sot{font-family:var(--ui);font-size:11.5px;fill:#CDBFA6}
+.ig-m-carta.eusebio .ig-m-c-sot,.ig-m-c-sot.dark{fill:#5F554B}
+.ig-m-stella{fill:#F6EBD6;opacity:.7}
+.ig-m-luna{fill:#F1E3B5}
+.ig-m-scudo-ombra{fill:rgba(0,0,0,.32)}
+.ig-m-scudo-bordo{stroke:#C9A14A;stroke-width:3}
+.ig-m-scudo-filo{fill:none;stroke:rgba(241,217,154,.35);stroke-width:1}
+.ig-m-segno-d{fill:none;stroke:#FBF3DE;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;opacity:0;filter:drop-shadow(0 0 4px rgba(255,236,190,.6))}
+.ig-m-segno-d.vis{opacity:1}
+.ig-m-raggi line{stroke:rgba(242,185,78,.75);stroke-width:2.2;stroke-linecap:round}
+.ig-m-sole{fill:#FFF1C6;stroke:#F2C25E;stroke-width:2}
+.ig-m-croce{opacity:0;transition:opacity 1.4s ease}
+.ig-m-croce.vis{opacity:1}
+.ig-m-croce-l{fill:none;stroke:#fff;stroke-width:5.5;stroke-linecap:round;filter:drop-shadow(0 0 6px rgba(255,220,140,.95))}
+.ig-m-vinci{font-family:var(--cap);font-size:14px;font-weight:700;letter-spacing:.22em;fill:#7A5617;opacity:0;transition:opacity 1s ease}
+.ig-m-vinci.vis{opacity:1}
+.ig-m-passo{opacity:0;transition:opacity .6s}
+.ig-m-passo.vis{opacity:1}
+.ig-m-passo-n{fill:#F1D99A}
+.ig-m-carta.eusebio .ig-m-passo-n{fill:#7A1F2B}
+.ig-m-passo-c{font-family:var(--ui);font-size:11px;font-weight:700;fill:#22070B}
+.ig-m-carta.eusebio .ig-m-passo-c{fill:#fff}
+.ig-m-passo-t{font-family:var(--ui);font-size:12.5px;fill:#F0E4CC}
+.ig-m-carta.eusebio .ig-m-passo-t{fill:#3b322b}
+.ig-m-c-nota{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#CDBFA6;opacity:0;transition:opacity .8s}
+.ig-m-carta.eusebio .ig-m-c-nota{fill:#6b5230}
+.ig-m-c-nota.vis{opacity:1}
+.ig-m-pann{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-m-pann.vis{opacity:.6;transform:none}
+.ig-m-pann.vis.ora{opacity:1}
+.ig-m-pann-fondo{fill:#fff;stroke:rgba(34,28,24,.08);filter:drop-shadow(0 8px 18px rgba(34,28,24,.12))}
+.ig-m-pann-dida{font-family:var(--serif);font-style:italic;font-size:16px;fill:var(--ink,#221C18)}
+.ig-m-cielo{fill:#F4EEE2}
+.ig-m-riva{fill:#D8C9A8}
+.ig-m-erba{fill:none;stroke:#9DA874;stroke-width:3}
+.ig-m-schema{font-family:var(--ui);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;fill:#8a7d6c}
+.ig-m-pila{fill:#8A7356}
+.ig-m-piano{fill:#7B5A3C;stroke:#4E3824;stroke-width:.8}
+.ig-m-piano.rotto{fill:#8C6646}
+.ig-m-spruzzo{fill:none;stroke:#fff;stroke-width:1.6;opacity:0;transform-box:fill-box;transform-origin:center}
+.ig-m-spruzzo.vis{animation:ig-spruzzo 1.2s ease-out infinite}
+@keyframes ig-spruzzo{from{opacity:.9;transform:scale(.4)}to{opacity:0;transform:scale(1.5)}}
+.ig-m-scafo{fill:#5E432C;stroke:#3a2817;stroke-width:.8}
+.ig-m-palo{stroke:#4E3824;stroke-width:1.6}
+.ig-m-cavalletto{fill:none;stroke:#6A4C31;stroke-width:2.2;stroke-linejoin:round}
+.ig-m-ferro{fill:#2E3036;stroke:#9aa0a8;stroke-width:.6}
+.ig-m-ferri g{transition:opacity .4s}
+.ig-m-ferri g.via{opacity:0}
+.ig-m-ferri-luce{fill:rgba(255,160,70,.35);opacity:0;transition:opacity .4s;transform-box:fill-box;transform-origin:center}
+.ig-m-ferri-luce.vis{opacity:1;animation:ig-pulsa 1s ease-in-out infinite}
+.ig-m-arco{opacity:0;transition:opacity 1s ease}
+.ig-m-arco.vis{opacity:1}
+.ig-m-a-base{fill:#D9CDB6}
+.ig-m-a-corpo{fill:url(#ig-m-marmo);stroke:rgba(90,70,50,.25);stroke-width:.8}
+.ig-m-a-cornice{fill:#EDE4D2;stroke:rgba(90,70,50,.3);stroke-width:.8}
+.ig-m-a-attico{fill:#EFE7D6;stroke:rgba(90,70,50,.25);stroke-width:.8}
+.ig-m-fornice{fill:#3B322B;stroke:rgba(90,70,50,.4);stroke-width:1}
+.ig-m-tondo{fill:#E2D6BF;stroke:rgba(90,70,50,.35);stroke-width:1}
+.ig-m-a-plinto{fill:#E6DCC8;stroke:rgba(90,70,50,.3);stroke-width:.7}
+.ig-m-a-colonna{fill:#D9B98A;stroke:rgba(90,70,50,.3);stroke-width:.7}
+.ig-m-a-capitello,.ig-m-a-risalto{fill:#F1E9D9;stroke:rgba(90,70,50,.3);stroke-width:.7}
+.ig-m-a-statua{fill:#B89A83}
+.ig-m-a-rilievo{fill:#E4D9C3;stroke:rgba(90,70,50,.28);stroke-width:.7}
+.ig-m-a-isc{fill:#E9DFC9;stroke:rgba(90,70,50,.4);stroke-width:.8;transition:fill .8s}
+.ig-m-a-isc.luce{fill:#F7EED7}
+.ig-m-a-riga{fill:#A89A84;opacity:0;transition:opacity .4s}
+.ig-m-a-riga.vis{opacity:.55}
+.ig-m-a-riga.chiave.vis{opacity:0}
+.ig-m-a-lettere{font-family:var(--cap);font-weight:700;fill:#8A5A14;opacity:0;transition:opacity .8s}
+.ig-m-a-lettere.vis{opacity:1}
+.ig-m-arco-testo{opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.ig-m-arco-testo.vis{opacity:1;transform:none}
+.ig-m-arco-q{font-family:var(--serif);font-style:italic;fill:var(--porpora,#7A1F2B)}
+.ig-m-arco-lat{font-family:var(--cap);font-size:15px;font-weight:700;letter-spacing:.16em;fill:#8A5A14}
+.ig-m-arco-n{font-family:var(--serif);font-size:17px;fill:var(--ink,#221C18)}
+.ig-m-arco-f{font-family:var(--ui);font-size:11.5px;fill:#5F554B}
+.ig-m-a-ombra{fill:rgba(34,28,24,.16);filter:blur(4px)}
+.ig-m-a-braccia{fill:none;stroke:#8E735E;stroke-width:2;stroke-linecap:round}
+.ig-m-a-scanal{stroke:rgba(120,90,50,.28);stroke-width:.8}
+.ig-m-a-ghiera{fill:none;stroke:#E6DBC6;stroke-width:4}
+.ig-m-a-chiave{fill:#EFE6D3;stroke:rgba(90,70,50,.35);stroke-width:.7}
+.ig-m-colli{fill:#E8DDC6}
+.ig-m-pelo{stroke:rgba(255,255,255,.7);stroke-width:1.2}
+.ig-m-sovr{fill:rgba(251,248,241,.94);stroke:rgba(34,28,24,.1);filter:drop-shadow(0 4px 10px rgba(34,28,24,.15))}
+.ig-m-schema.ig-f{opacity:0}
+
+/* ---------- fumetti sulle fotografie (9 e 10) ---------- */
+.ig-fum{opacity:0;transition:opacity .5s ease;pointer-events:none}
+.ig-fum.vis{opacity:1}
+.ig-fum-linea{fill:none;stroke:#FFF8E8;stroke-width:1.6;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.45))}
+.ig-fum-punto{fill:#7A1F2B;stroke:#fff;stroke-width:2}
+.ig-fum-fondo{fill:rgba(251,248,241,.96);stroke:rgba(34,28,24,.12);filter:drop-shadow(0 4px 10px rgba(20,10,6,.28))}
+.ig-fum-t{font-family:var(--ui);font-size:12.5px;font-weight:600;fill:#2b231d}
+
+/* ---------- l'alzato vettoriale ---------- */
+.ig-alz{transition:opacity .7s ease}
+.ig-p-foto .ig-alz{opacity:0}
+.ig-p-foto .ig-alz.vis{opacity:1}
+.ig-alz-suolo{stroke:rgba(90,70,50,.35);stroke-width:1}
+.ig-alz-muro{fill:#EFE6D5;stroke:rgba(90,70,50,.3);stroke-width:.8}
+.ig-alz-cornice{fill:#F7F1E5;stroke:rgba(90,70,50,.3);stroke-width:.6}
+.ig-alz-marmo{fill:#F4EEE2;stroke:rgba(90,70,50,.3);stroke-width:.6}
+.ig-alz-tetto,.ig-alz-cupola{stroke:rgba(60,40,20,.35);stroke-width:.7;transition:fill .8s}
+.ig-alz-frontone{fill:#F4EEE2;stroke:rgba(90,70,50,.35);stroke-width:.8}
+.ig-alz-porta{fill:#4A3A2C}
+.ig-alz-podio{fill:#E3D8C3;stroke:rgba(90,70,50,.3);stroke-width:.6}
+.ig-alz-colonna{fill:#A6A39C;stroke:rgba(60,50,40,.35);stroke-width:.6}
+.ig-alz-capitello{fill:#F1EADC;stroke:rgba(90,70,50,.3);stroke-width:.5}
+.ig-alz-trabeazione{fill:#F4EEE2;stroke:rgba(90,70,50,.35);stroke-width:.7}
+.ig-alz-iscr{fill:rgba(120,100,70,.28)}
+.ig-alz-croce{fill:none;stroke:#C9A14A;stroke-width:2;stroke-linecap:round;opacity:0;transition:opacity .6s}
+.ig-alz-croce.vis{opacity:1}
+.ig-alz-velo{fill:#8C8478;opacity:0;mix-blend-mode:multiply;transition:opacity .8s}
+.ig-alz-velo.vis{opacity:.28}
+
+/* ---------- 9. il Pantheon nel tempo ---------- */
+.ig-p-foto{opacity:0;transition:opacity .9s ease}
+.ig-p-foto.vis{opacity:1}
+.ig-p-foto-fondo{fill:#F1EADD;filter:drop-shadow(0 16px 26px rgba(34,28,24,.26))}
+.ig-p-img{opacity:0;transition:opacity 1.1s ease}
+.ig-p-img.vis{opacity:1}
+.ig-p-dida{font-family:var(--ui);font-size:11px;letter-spacing:.1em;text-transform:uppercase;fill:#8a7d6c;opacity:0;transition:opacity .5s}
+.ig-p-dida.vis{opacity:1}
+.ig-p-dida-f{opacity:0;transition:opacity .6s}
+.ig-p-dida-f.vis{opacity:1}
+.ig-p-dida-fondo{fill:rgba(20,14,10,.55)}
+.ig-p-dida-t{font-family:var(--ui);font-size:11.5px;fill:#FBF3E2;letter-spacing:.02em}
+.ig-p-pianta{opacity:0;transition:opacity .8s ease}
+.ig-p-pianta.vis{opacity:1}
+.ig-p-carta{fill:#FBF8F1;stroke:rgba(34,28,24,.1)}
+.ig-p-nettuno{fill:rgba(205,188,155,.16);stroke:rgba(138,115,86,.35);stroke-width:1;stroke-dasharray:3 3}
+.ig-p-nettuno-t{font-family:var(--serif);font-style:italic;font-size:13px;fill:#8a7356}
+.ig-p-tratto{fill:rgba(230,218,196,.35);stroke:#7A5E3C;stroke-width:2.2;stroke-linejoin:round;opacity:0}
+.ig-p-tratto.sottile{fill:none;stroke-width:1.2}
+.ig-p-tratto.vis{opacity:1}
+.ig-p-occhio{fill:rgba(255,255,255,.9);stroke:#7A5E3C;stroke-width:1.2;stroke-dasharray:3 2.5;opacity:0;transition:opacity .6s}
+.ig-p-occhio.vis{opacity:1}
+.ig-p-col{stroke:#fff;stroke-width:1;opacity:0;transform:scale(.2);transform-box:fill-box;transform-origin:center;transition:opacity .3s,transform .5s cubic-bezier(.3,1.6,.5,1)}
+.ig-p-col.vis,.ig-p-pleg .ig-p-col{opacity:1;transform:none}
+.ig-p-col.grigia{fill:#8E8B86}
+.ig-p-col.rosa{fill:#B98C7C}
+.ig-p-quota{opacity:0;transition:opacity .6s}
+.ig-p-quota.vis{opacity:1}
+.ig-p-quota path{fill:none;stroke:#7A1F2B;stroke-width:1.2}
+.ig-p-quota .ig-p-nord{fill:#7A1F2B;stroke:none}
+.ig-p-quota-t{font-family:var(--ui);font-size:12.5px;font-weight:700;fill:#7A1F2B;paint-order:stroke;stroke:#FBF8F1;stroke-width:3.5px;stroke-linejoin:round}
+.ig-p-pleg{opacity:0;transition:opacity .7s}
+.ig-p-pleg.vis{opacity:1}
+.ig-p-pleg-tit{font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.16em;fill:var(--oro-t,#7A5617)}
+.ig-p-pleg-sot{font-family:var(--serif);font-style:italic;font-size:14px;fill:#5F554B}
+.ig-p-pleg-t{font-family:var(--ui);font-size:12.5px;fill:var(--ink,#221C18)}
+.ig-p-nastro{opacity:0;transition:opacity .8s}
+.ig-p-nastro.vis{opacity:1}
+.ig-p-n-et{font-family:var(--ui);font-size:10px;font-weight:700;letter-spacing:.12em;fill:#7d6f5a}
+.ig-p-b{opacity:0;transition:opacity .6s}
+.ig-p-b.vis{opacity:.5}
+.ig-p-b.vis.ora{opacity:1}
+.ig-p-b.tempio rect{fill:#C9A14A}
+.ig-p-b.chiuso rect{fill:#A9A196}
+.ig-p-b.chiesa rect{fill:#7A1F2B}
+.ig-p-b.bronzo rect{fill:#B58A3C}
+.ig-p-b.senza rect{fill:#D9CFBD}
+.ig-p-b.piombo rect{fill:#7F8891}
+.ig-p-b-t{font-family:var(--ui);font-size:10.5px;font-weight:700;fill:#fff}
+.ig-p-b.senza .ig-p-b-t{fill:#5F554B}
+.ig-p-silenzio{opacity:0;transition:opacity .8s}
+.ig-p-silenzio.vis{opacity:1}
+.ig-p-sil-t{font-family:var(--serif);font-style:italic;font-size:12.5px;fill:#3b322b;paint-order:stroke;stroke:#F2ECE0;stroke-width:3px}
+.ig-p-n-anno{font-family:var(--ui);font-size:11px;font-variant-numeric:tabular-nums;fill:#5F554B}
+.ig-p-cur-l{stroke:#221C18;stroke-width:1.4}
+.ig-p-cur-p{fill:#221C18;stroke:#fff;stroke-width:1.6}
+.ig-p-col-d{opacity:0;transition:opacity .7s}
+.ig-p-col-d.vis{opacity:1}
+.ig-p-anno{font-family:var(--cap);font-weight:600;fill:var(--ink,#221C18);font-variant-numeric:tabular-nums}
+.ig-p-stato{font-family:var(--cap);font-size:15px;font-weight:700;letter-spacing:.1em;fill:var(--porpora,#7A1F2B)}
+.ig-p-cita-t{font-family:var(--serif);font-style:italic;fill:var(--ink,#221C18)}
+.ig-p-sch-filo{stroke:rgba(34,28,24,.1)}
+.ig-p-sch-k{font-family:var(--ui);font-size:10.5px;font-weight:700;letter-spacing:.12em;fill:#7d6f5a}
+.ig-p-sch-v{font-family:var(--serif);font-size:17px;fill:var(--ink,#221C18)}
+.ig-p-pd{opacity:0;transition:opacity .9s ease}      /* il prima e dopo finale del Pantheon (24 novembre 2026) */
+.ig-p-pd.vis{opacity:1}
+.ig-p-tre{opacity:0;transition:opacity .9s ease}
+.ig-p-tre.vis{opacity:1}
+.ig-p-tre-i{opacity:0;transform:translateY(12px);transition:opacity .8s ease,transform 1s cubic-bezier(.2,.8,.2,1)}
+.ig-p-tre-i.vis{opacity:1;transform:none}
+.ig-p-tre-a{font-family:var(--cap);font-size:13.5px;font-weight:700;fill:var(--porpora,#7A1F2B)}
+.ig-p-tre-t{font-family:var(--ui);font-size:11.5px;fill:#5F554B}
+
+/* ---------- 10. la Curia nel tempo ---------- */
+.ig-c-tavola{opacity:0;transition:opacity .9s ease}
+.ig-c-tavola.vis{opacity:1}
+.ig-c-fondo{filter:drop-shadow(0 16px 26px rgba(34,28,24,.22))}
+.ig-c-suolo{fill:#E3D7BF}
+.ig-c-prima{opacity:0;transition:opacity .8s}
+.ig-c-prima.vis{opacity:1}
+.ig-c-contorno{fill:rgba(60,40,25,.08);stroke:#6b5a49;stroke-width:1.4;stroke-dasharray:5 4}
+.ig-c-fuoco{opacity:0;transition:opacity 1s}
+.ig-c-fuoco.vis{opacity:1}
+.ig-c-bagliore{fill:rgba(255,150,60,.28);filter:blur(10px)}
+.ig-c-fiamma{transform-box:fill-box;transform-origin:50% 100%;animation:ig-guizzo 1.2s ease-in-out infinite alternate}
+.ig-c-notte{opacity:.62}
+.ig-c-annerito{fill:rgba(38,24,16,.5);stroke:#2A1A10;stroke-width:1.4;stroke-dasharray:5 4}      /* la Curia di prima: un contorno, la sua forma non si disegna */
+.ig-c-fiamma.dentro{animation-duration:.9s;mix-blend-mode:screen}
+.ig-c-letto{transform-box:fill-box;transform-origin:50% 100%;animation:ig-c-lingue 1.7s ease-in-out infinite alternate}
+.ig-c-letto.basso{mix-blend-mode:screen;animation-duration:1.1s}
+@keyframes ig-c-lingue{0%{transform:scaleY(.88)}100%{transform:scaleY(1.08)}}
+.ig-c-fumo-n{fill:rgba(52,42,36,.5);filter:blur(4px);transform-box:fill-box;transform-origin:center;animation:ig-c-fumo 7.4s linear infinite}
+.ig-c-fumo-f{fill:rgba(56,45,38,.45);filter:blur(5px)}
+@keyframes ig-c-fumo{0%{transform:translate(0,0) scale(.7);opacity:0}15%{opacity:.85}100%{transform:translate(var(--fx),var(--fy)) scale(2.1);opacity:0}}
+.ig-c-faville circle{fill:#FFC65A;animation:ig-c-favilla 2.6s ease-out infinite}
+@keyframes ig-c-favilla{0%{transform:translate(0,0);opacity:0}10%{opacity:1}100%{transform:translate(var(--fx),var(--fy));opacity:0}}
+@media (prefers-reduced-motion:reduce){ .ig-c-fiamma,.ig-c-letto,.ig-c-fumo-n,.ig-c-faville circle{animation:none} .ig-c-fumo-n{opacity:.6} }      /* l'incendio del 283, 24 novembre 2026 */
+.ig-c-stucco{fill:#EDE3D0;stroke:rgba(90,70,50,.35);stroke-width:.8}
+.ig-c-blocchi{opacity:0;transition:opacity 1s}
+.ig-c-blocchi.vis{opacity:1}
+.ig-c-blocchi path{fill:none;stroke:rgba(150,128,96,.45);stroke-width:.7}
+.ig-c-marmo{fill:#F6F1E7;stroke:rgba(90,70,50,.35);stroke-width:.7}
+.ig-c-luce{fill:url(#ig-c-luce);stroke:none;pointer-events:none}
+.ig-c-sottocornice{fill:url(#ig-c-sotto);stroke:none}
+.ig-c-giunti{fill:none;stroke:rgba(150,128,96,.35);stroke-width:.7}
+.ig-c-cornice{fill:#F6F1E7;stroke:rgba(90,70,50,.4);stroke-width:.8}
+.ig-c-frontone{fill:#EDE3D0;stroke:rgba(90,70,50,.4);stroke-width:.9}
+.ig-c-timpano{fill:none;stroke:rgba(150,128,96,.4);stroke-width:.7}
+.ig-c-finestre path{fill:#4A3D31;stroke:#F6F1E7;stroke-width:1.6}
+.ig-c-vano{fill:#2E241C}
+.ig-c-porte{transition:opacity .6s}
+.ig-c-porte.via{opacity:0}
+.ig-c-battente{stroke:#4E3A1E;stroke-width:.8}
+.ig-c-formella{fill:none;stroke:rgba(255,235,190,.35);stroke-width:.8}
+.ig-c-gradini{fill:#DDD2BC;stroke:rgba(90,70,50,.3);stroke-width:.6;transition:opacity .8s}
+.ig-c-gradini.via{opacity:0}
+.ig-c-gradini.chiesa{opacity:0}
+.ig-c-gradini.chiesa.vis{opacity:1}
+.ig-c-portico{opacity:0;transition:opacity 1s ease}
+.ig-c-portico.vis{opacity:.82}
+.ig-c-tettuccio{fill:#C9704A;stroke:rgba(90,40,20,.4);stroke-width:.7;stroke-dasharray:3 2}
+.ig-c-colonna{fill:#F3EDE1;stroke:rgba(90,70,50,.45);stroke-width:.8;stroke-dasharray:3 2}
+.ig-c-statue{fill:#6F5129;opacity:0;transition:opacity 1s ease}
+.ig-c-statue.vis{opacity:1}
+.ig-c-croce{fill:none;stroke:#C9A14A;stroke-width:2.4;stroke-linecap:round;opacity:0;transition:opacity .8s}
+.ig-c-croce.vis{opacity:1}
+.ig-c-ponteggio{opacity:0;transition:opacity .7s}
+.ig-c-ponteggio.vis{opacity:1}
+.ig-c-ponteggio path{fill:none;stroke:#8C6A44;stroke-width:1.1}
+.ig-c-velo{fill:#2A221C;opacity:0;transition:opacity 1.2s ease}
+.ig-c-velo.vis{opacity:.62}
+.ig-c-lama{opacity:0;transition:opacity .5s}
+.ig-c-lama.vis{opacity:1}
+.ig-c-lama line{stroke:#fff;stroke-width:2.5;filter:drop-shadow(0 0 3px rgba(0,0,0,.5))}
+.ig-c-lama circle{fill:#fff;filter:drop-shadow(0 2px 6px rgba(0,0,0,.35))}
+.ig-c-lama-f{fill:none;stroke:#7A1F2B;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ig-c-wipe-t{font-family:var(--cap);font-size:13px;font-weight:700;letter-spacing:.06em;fill:#fff;paint-order:stroke;stroke:rgba(20,12,8,.72);stroke-width:4px;stroke-linejoin:round;opacity:0;transition:opacity .6s}
+.ig-c-wipe-t.vis{opacity:1}
+.ig-c-voce{opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-c-voce.vis{opacity:1;transform:none}
+.ig-c-voce-fondo{fill:rgba(255,253,248,.97);stroke:rgba(34,28,24,.1);filter:drop-shadow(0 10px 20px rgba(34,28,24,.25))}
+.ig-c-voce.sx .ig-c-voce-fondo{stroke:#C9A14A}
+.ig-c-voce.dx .ig-c-voce-fondo{stroke:#7A1F2B}
+.ig-c-voce-t{font-family:var(--serif);font-style:italic;font-size:16.5px;fill:var(--ink,#221C18)}
+.ig-c-voce-chi{font-family:var(--ui);font-size:11.5px;font-weight:600;fill:#5F554B}
+.ig-c-dove{opacity:0;transition:opacity 1.2s ease}
+.ig-c-dove.vis{opacity:1}
+.ig-c-dove-t{font-family:var(--serif);font-style:italic;fill:#FBF3E2}
+.ig-c-dove-chi{font-family:var(--ui);font-size:12px;letter-spacing:.08em;fill:#E6D2AA}
+.ig-c-b.senato{fill:#9A2F2A}
+.ig-c-b.cantiere{fill:url(#ig-c-trat)}
+.ig-c-b.altare{fill:#C9A14A}
+.ig-c-b.forse{fill:#E8D7A8;stroke:#C9A14A;stroke-width:1;stroke-dasharray:3 2}
+.ig-c-b.chiesa{fill:#5A3F78}
+.ig-c-b-t{font-family:var(--ui);font-size:10px;font-weight:700;fill:#7A5617}
+.ig-c-salto{fill:none;stroke:#8a7d6c;stroke-width:1.2}
+.ig-c-altare-box{opacity:0;transition:opacity .7s}
+.ig-c-altare-box.vis{opacity:1}
+.ig-c-altare{fill:#D4B26A;stroke:#8A6A2C;stroke-width:1;transition:opacity .9s ease,transform 1s cubic-bezier(.4,0,.2,1)}
+.ig-c-altare .ig-c-altare-rilievo{fill:rgba(255,245,220,.45);stroke:none}
+.ig-c-altare.via{opacity:0;transform:translateX(30px)}
+.ig-c-altare.forse{opacity:.55}
+.ig-c-altare-ombra{fill:none;stroke:#8A6A2C;stroke-width:1.1;stroke-dasharray:3 2.5;opacity:0;transition:opacity .6s}
+.ig-c-altare-ombra .ig-c-altare-rilievo{stroke:none}
+.ig-c-altare-ombra.vis{opacity:.8}
+.ig-c-altare-fondo{fill:rgba(251,248,241,.94);stroke:rgba(34,28,24,.1);filter:drop-shadow(0 4px 10px rgba(34,28,24,.15))}
+.ig-c-alt-tit{font-family:var(--serif);font-style:italic;font-size:16px;fill:var(--ink,#221C18)}
+.ig-c-porte-via{opacity:0;transition:opacity .6s}
+.ig-c-porte-via-f{fill:rgba(255,252,245,.95);stroke:#B48A4A;stroke-width:1.2;filter:drop-shadow(0 4px 10px rgba(34,28,24,.18))}
+.ig-c-porte-via-t{font-family:var(--ui);font-weight:600;fill:#5A3F1E}
+.ig-c-porte-via.vis{opacity:1}
+.ig-c-alt-st{font-family:var(--ui);font-size:12.5px;font-weight:600;fill:#7A1F2B}
+.ig-m-schema.ig-f.vis{opacity:1}
+
+/* ---------- aiuti delle infografiche 11-13 (finestra sulla carta, rotte, segni) ---------- */
+.ig-fin-reg{fill-opacity:.3;transition:fill-opacity .8s ease}
+.ig-fin-reg.acceso{fill-opacity:.78;animation:ig-acceso 1.6s ease-in-out infinite}
+@keyframes ig-acceso{0%,100%{fill-opacity:.78}50%{fill-opacity:.5}}
+.ig-v-fiume.forte{stroke-width:2.2}
+.ig-rt{--c:#3B2F26;opacity:0;transition:opacity .4s}
+.ig-rt.vis{opacity:1}
+.ig-rt-l{fill:none;stroke:var(--c);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.ig-rt-l.schema{stroke-width:2.6;stroke-dasharray:6 5;stroke-linecap:butt}
+.ig-rt-maschera{fill:none;stroke:#fff;stroke-width:12;stroke-linecap:round}
+.ig-rt-p{fill:var(--c);opacity:0;transition:opacity .25s}
+.ig-rt-p.vis{opacity:1}
+.ig-rt-nome{font-family:var(--ui);font-size:12px;font-weight:700;fill:var(--c);paint-order:stroke;stroke:rgba(251,246,234,.94);stroke-width:3.5px;stroke-linejoin:round;opacity:0;transition:opacity .5s}
+.ig-rt-nome.vis{opacity:1}
+.ig-sg{opacity:0;transition:opacity .5s}
+.ig-sg.vis{opacity:1}
+.ig-sg-fiamma{fill:#D9531E;stroke:#FFF1D6;stroke-width:1.2}
+.ig-sg-alone{fill:rgba(240,138,46,.28);transform-box:fill-box;transform-origin:center;animation:ig-pulsa 1.6s ease-in-out infinite}
+.ig-v-luogo.grande .ig-v-punto{stroke-width:2}
+.ig-m-passo.chiaro .ig-m-passo-n{fill:#F1D99A}
+.ig-m-passo.chiaro .ig-m-passo-c{fill:#22070B}
+.ig-m-passo.chiaro .ig-m-passo-t{fill:#F0E4CC}
+
+/* ---------- 11. Adrianopoli (js/infografiche.js, disegnaAdrianopoli) ---------- */
+.ig-ad-fiume{font-family:var(--serif);font-style:italic;font-size:14px;fill:#2F5864;paint-order:stroke;stroke:rgba(246,240,226,.9);stroke-width:3px}
+.ig-ad-mare{font-family:var(--serif);font-style:italic;font-size:13.5px;letter-spacing:.06em;fill:#3E6A78}
+.ig-ad-zona{fill:rgba(59,47,38,.08);stroke:#3B2F26;stroke-width:1.4;stroke-dasharray:3 3}
+.ig-ad-zona-t{font-family:var(--serif);font-style:italic;font-size:13px;fill:#3B2F26;paint-order:stroke;stroke:rgba(246,240,226,.92);stroke-width:3px}
+.ig-ad-riga{opacity:0;transform:translateX(-10px);transition:opacity .5s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.ig-ad-riga.vis{opacity:.5;transform:none}
+.ig-ad-riga.ora{opacity:1}
+.ig-ad-anno{font-family:var(--cap);font-size:27px;font-weight:700;fill:var(--porpora,#7A1F2B);font-variant-numeric:tabular-nums}
+.ig-ad-rn{font-family:var(--cap);font-size:15px;font-weight:700;fill:var(--ink,#221C18)}
+.ig-ad-rs{font-family:var(--serif);font-style:italic;font-size:15.5px;fill:#4A4038}
+.ig-ad-scheda{opacity:0;transition:opacity .4s}
+.ig-ad-scheda.vis{opacity:1}
+.ig-ad-num{opacity:0;transform:translateY(8px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-ad-num.vis{opacity:1;transform:none}
+.ig-ad-num-n{font-family:var(--cap);font-size:42px;font-weight:700;fill:#3B2F26;font-variant-numeric:tabular-nums}
+.ig-ad-num-t{font-family:var(--ui);font-size:13px;fill:#5F554B}
+.ig-ad-strada-b{fill:none;stroke:#C9AE7C;stroke-linecap:round;stroke-linejoin:round}
+.ig-ad-strada{fill:none;stroke:#FBF4E2;stroke-linecap:round;stroke-linejoin:round}
+.ig-ad-colonna{fill:none;stroke:#9A2F2A;stroke-linecap:butt;opacity:0;transition:opacity .6s}
+.ig-ad-colonna.vis{opacity:.9}
+.ig-ad-quota{fill:none;stroke:rgba(140,108,58,.22);stroke-width:1}
+.ig-ad-citta{fill:#E8D9B8;stroke:#8A7356;stroke-width:2.2;stroke-linejoin:round}
+.ig-ad-casa{fill:#C9B08A}
+.ig-ad-bagaglio{fill:#8A6A3A;stroke:#F6EEDC;stroke-width:.6}
+.ig-ad-et{font-family:var(--ui);font-size:12px;font-weight:600;fill:#3b322b;paint-order:stroke;stroke:rgba(246,238,216,.94);stroke-width:3.5px;stroke-linejoin:round}
+.ig-ad-et.forte{font-family:var(--cap);font-size:13px;font-weight:700;fill:#7A1F2B}
+.ig-ad-tag{opacity:0;transition:opacity .5s}
+.ig-ad-tag.vis{opacity:1}
+.ig-ad-tag.piccola{font-size:11.5px}
+.ig-ad-tag.scuro{fill:#22170F}
+.ig-ad-tag.notte{font-family:var(--serif);font-style:italic;font-size:14px;font-weight:400;fill:#E9E2D0;stroke:rgba(14,20,36,.6)}
+.ig-ad-carro{opacity:0;transition:opacity .35s}
+.ig-ad-carro.vis{opacity:1}
+.ig-ad-cassa{fill:#7A5530;stroke:#3E2A16;stroke-width:.8}
+.ig-ad-ruota{fill:#3E2A16}
+.ig-ad-goto{fill:#5E4B3C;opacity:.7}
+.ig-ad-caldo{opacity:0;transition:opacity 2s ease;mix-blend-mode:multiply}
+.ig-ad-caldo.vis{opacity:.6}
+.ig-ad-fuoco{opacity:0;transition:opacity .6s}
+.ig-ad-fuoco.vis{opacity:1}
+.ig-ad-fiamma{fill:#E2601F;stroke:#FFE3A8;stroke-width:1}
+.ig-ad-fiamma.grande{fill:#E8621C;stroke:none;filter:drop-shadow(0 0 8px rgba(255,150,50,.85))}
+.ig-ad-fiamma.cuore{fill:#FFD27A;stroke:none}
+.ig-ad-asta{stroke:#4A5068;stroke-width:1.3;stroke-linecap:round}
+.ig-ad-fumo{fill:rgba(110,96,84,.35);transform-box:fill-box;transform-origin:center;animation:ig-ad-fumo 2.7s linear infinite}
+@keyframes ig-ad-fumo{0%{transform:translate(0,0) scale(.5);opacity:0}20%{opacity:.8}100%{transform:translate(-7px,-26px) scale(2.2);opacity:0}}
+.ig-ad-u{opacity:0;transition:opacity .5s ease}
+.ig-ad-u.vis{opacity:1}
+.ig-ad-u.roma{fill:#9A2F2A;stroke:#F6F1E6;stroke-width:.9}
+.ig-ad-u.goti{fill:#5E4B3C;stroke:#F6F1E6;stroke-width:.9}
+.ig-ad-u.goti.cav{fill:#2E241C}
+.ig-ad-u.stretti{stroke:#3a0f0c;stroke-width:1.3}
+.ig-ad-u.travolto{opacity:0;transition:opacity 1s ease}
+.ig-ad-u.rotto{opacity:0;transition:opacity 1.6s ease}
+.ig-ad-inviato{fill:#fff;stroke:#3B2F26;stroke-width:1.4;opacity:0;transition:opacity .3s}
+.ig-ad-inviato.vis{opacity:1}
+.ig-ad-ricomere{fill:#7A1F2B;stroke:#fff;stroke-width:1.6;opacity:0;transition:opacity .3s}
+.ig-ad-ricomere.vis{opacity:1}
+.ig-ad-ricomere.fermo{stroke-dasharray:2 2}
+.ig-ad-arciere{fill:#C0473C;stroke:#fff;stroke-width:.8;opacity:0;transition:opacity .3s}
+.ig-ad-arciere.vis{opacity:1}
+.ig-ad-freccia{stroke:#2E241C;stroke-width:1.2;stroke-linecap:round;opacity:0}
+.ig-ad-freccia.vis{animation:ig-ad-piove 1.6s linear infinite}
+@keyframes ig-ad-piove{0%{opacity:0;transform:translate(10px,-8px)}30%{opacity:.85}100%{opacity:0;transform:translate(-6px,6px)}}
+.ig-ad-polvere{pointer-events:none}
+.ig-ad-fuggiasco{fill:#9A2F2A;opacity:0;transition:opacity .6s}
+.ig-ad-fuggiasco.vis{opacity:.85}
+.ig-ad-buio{fill:#0E1424;pointer-events:none}
+.ig-ad-lente{opacity:0;transition:opacity .6s ease}
+.ig-ad-lente.vis{opacity:1}
+.ig-ad-lente-bordo{fill:#fff;stroke:#7A1F2B;stroke-width:2;filter:drop-shadow(0 8px 16px rgba(34,28,24,.3))}
+.ig-ad-lente-fondo{fill:#EADBB8}
+.ig-omino.roma{fill:#9A2F2A;stroke:#9A2F2A}
+.ig-omino.porpora{fill:#B04A9A;stroke:#B04A9A}
+.ig-omino.porpora-chiaro{fill:#F1D99A;stroke:#F1D99A}
+.ig-omino.ig-ad-ombra{fill:#2A3248;stroke:#2A3248}
+.ig-ad-carta.casa .ig-omino.ig-ad-ombra{fill:#120804;stroke:#120804}
+.ig-ad-sole line{stroke:#E59A2C;stroke-width:2;stroke-linecap:round;transition:opacity .6s}
+.ig-ad-sole circle{fill:#F7C24E;stroke:#fff;stroke-width:1.6;transition:fill 1s,stroke 1s}
+.ig-ad-sole.notte line{opacity:0}
+.ig-ad-sole.notte circle{fill:#1B2238;stroke:#8B93AB}
+.ig-ad-ora-l{stroke:rgba(34,28,24,.35);stroke-width:1.2}
+.ig-ad-ora-t{font-family:var(--ui);font-size:11.5px;fill:#7d6f5a;transition:fill .4s}
+.ig-ad-ora-t.ora{fill:#7A1F2B;font-weight:700}
+.ig-ad-cita{opacity:0;transform:translateY(8px);transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-ad-cita.vis{opacity:1;transform:none}
+.ig-ad-c-suolo{fill:#070A12}
+.ig-ad-c-suolo.caldo{fill:#1A0D08}
+.ig-ad-c-et{font-family:var(--ui);font-size:12px;font-weight:700;fill:#E7C6E0;opacity:0;transition:opacity .5s}
+.ig-ad-c-et.vis{opacity:1}
+.ig-ad-scia{fill:none;stroke:rgba(241,217,154,.85);stroke-width:1.6;opacity:0}
+.ig-ad-scia.vis{opacity:1}
+.ig-ad-punta{fill:#F1D99A;opacity:0}
+.ig-ad-punta.vis{opacity:1}
+.ig-ad-carta g.via{opacity:0;transition:opacity 1.2s ease}
+.ig-ad-perso{opacity:0;transition:opacity 1.2s ease}
+.ig-ad-perso.vis{opacity:1}
+.ig-ad-perso .ig-omino{fill:none;stroke:rgba(241,217,154,.7);stroke-dasharray:2 2}
+.ig-ad-c-nota-r{font-family:var(--serif);font-style:italic;font-size:13px;fill:#9AA3BB}
+.ig-ad-c-nota{font-family:var(--serif);font-style:italic;font-size:15.5px;fill:#F1D99A;opacity:0;transition:opacity .8s}
+.ig-ad-c-nota.vis{opacity:1}
+.ig-ad-vampa{mix-blend-mode:screen}
+.ig-ad-muro{fill:#CDB894;stroke:#6E5838;stroke-width:1;transition:fill 1.4s ease}
+.ig-ad-muro.alto{fill:#D8C6A2}
+.ig-ad-tetto{fill:#7A4A2C;stroke:#4E2E18;stroke-width:1;transition:fill 1.4s ease}
+.ig-ad-porta,.ig-ad-fin{fill:#2A1A10}
+.ig-ad-balcone{fill:none;stroke:#4E2E18;stroke-width:2.2;stroke-linecap:round}
+.ig-ad-arco{fill:none;stroke:#120804;stroke-width:1.2}
+.ig-ad-casa2.bruciata .ig-ad-muro{fill:#5A3E2C}
+.ig-ad-casa2.bruciata .ig-ad-tetto{fill:#2A1810}
+.ig-ad-fascina{fill:#C9A050;stroke:#5E4318;stroke-width:.8;opacity:0;transition:opacity .4s}
+.ig-ad-fascina.vis{opacity:1}
+.ig-ad-traiett{fill:none;stroke:none}
+.ig-ad-terzo{font-family:var(--cap);font-weight:700;fill:var(--porpora,#7A1F2B)}
+.ig-ad-conto-t{font-family:var(--serif);font-style:italic;font-size:18px;fill:var(--ink,#221C18)}
+.ig-ad-conto-n{font-family:var(--ui);font-size:14px;fill:#4A4038}
+.ig-omino.perso{fill:none;stroke:rgba(154,47,42,.32);transition:fill .6s,stroke .6s}
+.ig-ad-filo{stroke:#7A1F2B;stroke-width:1.4;stroke-dasharray:3 3;opacity:0;transition:opacity .6s}
+.ig-ad-filo.vis{opacity:1}
+.ig-ad-canne{opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.ig-ad-canne.vis{opacity:1;transform:none}
+.ig-ad-canne-q{font-family:var(--serif);font-style:italic;font-size:22px;fill:var(--porpora,#7A1F2B)}
+.ig-ad-sovr .ig-m-sovr{fill:rgba(251,248,241,.92)}
+@media (max-width:600px){ .ig-ad-canne-q{font-size:18px} .ig-ad-anno{font-size:22px} .ig-ad-num-n{font-size:32px} .ig-ad-rs{font-size:14px} }
+@media (prefers-reduced-motion:reduce){ .ig-ad-fumo,.ig-ad-freccia.vis,.ig-fin-reg.acceso,.ig-sg-alone{animation:none} }
+
+/* ---------- 12. Campi Catalaunici (js/infografiche.js, disegnaCatalaunici) ---------- */
+.ig-ca-zona{fill:rgba(122,31,43,.07);stroke:#7A1F2B;stroke-width:1.6;stroke-dasharray:4 3}
+.ig-ca-zona-n{font-family:var(--cap);font-size:14px;font-weight:700;fill:#7A1F2B;paint-order:stroke;stroke:rgba(246,240,226,.94);stroke-width:3.5px;stroke-linejoin:round}
+.ig-ca-chi-b{fill:#7A1F2B;stroke:#fff;stroke-width:2}
+.ig-ca-chi-p{fill:#fff;stroke:#7A1F2B;stroke-width:2}
+.ig-ca-chi-n{font-family:var(--cap);font-size:13px;font-weight:700;fill:var(--ink,#221C18)}
+.ig-ca-chi-t{font-family:var(--ui);font-size:11.5px;fill:#5F554B}
+.ig-ca-cresta{fill:none;stroke:#8C6C3A;stroke-width:1.6;stroke-dasharray:2 3;opacity:0;transition:opacity .6s}
+.ig-ca-cresta.vis{opacity:1}
+.ig-ca-rivo-b{fill:none;stroke:rgba(90,120,130,.18);stroke-linecap:round}
+.ig-ca-rivo{fill:none;stroke:#7FA8B8;stroke-linecap:round;transition:stroke 2.4s ease}
+.ig-ca-rivo.sangue{stroke:#8E1E1A}
+.ig-ca-u{--c:#555;opacity:0;transition:opacity .5s ease}
+.ig-ca-u.vis{opacity:1}
+.ig-ca-u rect{fill:var(--c);stroke:#F6F1E6;stroke-width:.9}
+.ig-ca-u.scuro rect{stroke:rgba(246,241,230,.35)}
+.ig-ca-chiuso{fill:none;stroke:#C9A14A;stroke-width:1.8;stroke-dasharray:3 2.5;opacity:0;transition:opacity .6s}
+.ig-ca-chiuso.vis{opacity:1}
+.ig-ca-et{font-family:var(--ui);font-size:12px;font-weight:700;paint-order:stroke;stroke:rgba(246,240,224,.95);stroke-width:3.5px;stroke-linejoin:round}
+.ig-ca-capo{--c:#333;opacity:0;transition:opacity .4s}
+.ig-ca-capo.vis{opacity:1}
+.ig-ca-capo circle{fill:var(--c);stroke:#F1D99A;stroke-width:2.2}
+.ig-ca-capo-t{font-family:var(--ui);font-size:12px;font-weight:700;fill:var(--c);paint-order:stroke;stroke:rgba(246,240,224,.95);stroke-width:3.5px;stroke-linejoin:round}
+.ig-ca-croce{opacity:0;transition:opacity .6s}
+.ig-ca-croce.vis{opacity:1}
+.ig-ca-croce-l{fill:none;stroke:#3B2F26;stroke-width:2.4;stroke-linecap:round}
+.ig-ca-tenda{fill:#26222A}
+.ig-ca-fuoco-lontano{fill:#F2A341;animation:ig-ca-tremola 1.4s ease-in-out infinite}
+@keyframes ig-ca-tremola{0%,100%{opacity:.9}50%{opacity:.35}}
+.ig-ca-cassa{fill:#5A3E26;stroke:#2A1C10;stroke-width:1}
+.ig-ca-telo{fill:#8C7A5C;stroke:#2A1C10;stroke-width:1}
+.ig-ca-carro.dietro .ig-ca-cassa{fill:#3E2C1C}
+.ig-ca-carro.dietro .ig-ca-telo{fill:#5E5240}
+.ig-ca-ruota{fill:none;stroke:#2A1C10;stroke-width:1.8}
+.ig-ca-mozzo{fill:#2A1C10}
+.ig-ca-sella{opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.ig-ca-sella.vis{opacity:1;transform:none}
+.ig-ca-sella-c{fill:#7A4E2A;stroke:#2E1A0C;stroke-width:1}
+.ig-ca-sella-l{fill:none;stroke:#C9A060;stroke-width:1}
+.ig-ca-brace{mix-blend-mode:screen;pointer-events:none}
+.ig-omino.ig-ca-ombra{fill:#0E0B09;stroke:#0E0B09}
+.ig-omino.ig-ca-ombra-oro{fill:#1A130C;stroke:#C9A14A;stroke-width:.6}
+.ig-ca-attila{opacity:0;transition:opacity .8s}
+.ig-ca-attila.vis{opacity:1}
+.ig-ca-dardo{stroke:#F1D99A;stroke-width:1.3;stroke-linecap:round;animation:ig-ca-dardo 1.6s linear infinite}
+@keyframes ig-ca-dardo{0%{opacity:0;transform:translate(0,0)}20%{opacity:1}100%{opacity:0;transform:translate(0,-10px)}}
+.ig-ca-tromba{opacity:0;transition:opacity .5s}
+.ig-ca-tromba.vis{opacity:1}
+.ig-ca-onda{fill:none;stroke:rgba(241,217,154,.75);stroke-width:1.6;opacity:0;animation:ig-ca-squillo 1.8s ease-out infinite}
+@keyframes ig-ca-squillo{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+.ig-ca-et-n{font-family:var(--serif);font-style:italic;font-size:15px;fill:#F1D99A;opacity:0;transition:opacity .8s}
+.ig-ca-et-n.vis,.ig-ca-corteo .ig-ca-et-n{opacity:1}
+.ig-ca-corteo{opacity:0;transition:opacity .8s}
+.ig-ca-corteo.vis{opacity:1}
+.ig-ca-bara{fill:#C9A14A}
+.ig-ca-torcia{stroke:#8C6C3A;stroke-width:1.6}
+.ig-ca-fiammella{fill:#FFB45A;filter:drop-shadow(0 0 4px rgba(255,170,60,.9))}
+.ig-ca-scritta{opacity:0;transform:translateY(8px);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-ca-scritta.vis{opacity:1;transform:none}
+.ig-ca-q{font-family:var(--serif);font-style:italic;fill:#F4E9D2}
+.ig-ca-q-chi{font-family:var(--ui);font-size:11.5px;fill:#B9AE98}
+.ig-ca-num{font-family:var(--cap);font-weight:700;fill:var(--porpora,#7A1F2B);font-variant-numeric:tabular-nums}
+.ig-ca-bollo{opacity:0;transform:scale(1.3) rotate(-4deg);transform-box:fill-box;transform-origin:center;transition:opacity .3s,transform .5s cubic-bezier(.3,1.6,.5,1)}
+.ig-ca-bollo.vis{opacity:1;transform:rotate(-2deg)}
+.ig-ca-bollo-r{fill:none;stroke:#7A1F2B;stroke-width:2}
+.ig-ca-bollo-t{font-family:var(--ui);font-size:12px;font-weight:800;letter-spacing:.12em;fill:#7A1F2B}
+.ig-ca-linea{opacity:0;transition:opacity .6s}
+.ig-ca-linea.vis{opacity:1}
+.ig-ca-asse{stroke:rgba(34,28,24,.45);stroke-width:1.4}
+.ig-ca-arco{fill:none;stroke:#C9A14A;stroke-width:2;stroke-dasharray:4 4;opacity:0}
+.ig-ca-arco.vis{opacity:1}
+.ig-ca-sec{font-family:var(--serif);font-style:italic;font-size:16px;fill:#7A5617;opacity:0;transition:opacity .6s}
+.ig-ca-sec.vis{opacity:1}
+.ig-ca-ev{opacity:0;transform:translateY(6px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-ca-ev.vis{opacity:1;transform:none}
+.ig-ca-ev circle{fill:#fff;stroke:#7A1F2B;stroke-width:2.2}
+.ig-ca-ev.batt circle{fill:#7A1F2B}
+.ig-ca-ev-n{font-family:var(--cap);font-size:15px;font-weight:700;fill:var(--porpora,#7A1F2B)}
+.ig-ca-ev-t{font-family:var(--serif);font-style:italic;font-size:14.5px;fill:var(--ink,#221C18)}
+@media (prefers-reduced-motion:reduce){ .ig-ca-fuoco-lontano,.ig-ca-dardo,.ig-ca-onda{animation:none} .ig-ca-onda{opacity:.6} }
+.ig-ca-croce-f{fill:#fff;stroke:#8054C3;stroke-width:2}
+.ig-ca-capo-t.viola{fill:#5A3596}
+
+/* ---------- 13. Capo Bon (js/infografiche.js, disegnaCapobon) ---------- */
+.ig-cb-num{font-family:var(--cap);font-weight:700;fill:var(--porpora,#7A1F2B);font-variant-numeric:tabular-nums}
+.ig-cb-num-t{font-family:var(--serif);font-style:italic;font-size:16px;fill:var(--ink,#221C18)}
+.ig-cb-num-n{font-family:var(--ui);font-size:11.5px;fill:#5F554B}
+.ig-cb-fr-n{font-family:var(--cap);font-size:14px;font-weight:700;fill:var(--ink,#221C18)}
+.ig-cb-fr-t{font-family:var(--serif);font-style:italic;font-size:15px;fill:#4A4038}
+.ig-cb-nave{opacity:0;transition:opacity .5s,fill .8s}
+.ig-cb-nave.vis{opacity:1}
+.ig-cb-scafo{fill:#7A4E2C;stroke:#3A2414;stroke-width:.8;transition:fill 1s ease}
+.ig-cb-vela{fill:none;stroke:#F3EAD6;stroke-width:2;stroke-linecap:round}
+.ig-cb-nave.vandali .ig-cb-scafo{fill:#3B2E22}
+.ig-cb-nave.vandali .ig-cb-vela{stroke:#C9A060}
+.ig-cb-nave.vuota .ig-cb-scafo{fill:rgba(240,230,210,.25);stroke:#F3EAD6;stroke-dasharray:2 1.5}
+.ig-cb-nave.vuota .ig-cb-vela{stroke:rgba(243,234,214,.6)}
+.ig-cb-nave.arde .ig-cb-scafo{fill:#B23A16}
+.ig-cb-nave.bruciata .ig-cb-scafo{fill:#2A1D14}
+.ig-cb-nave.bruciata .ig-cb-vela{stroke:#4A3A2C}
+.ig-cb-nave.speronata .ig-cb-scafo{fill:#2A1D14}
+.ig-cb-tempio{fill:#F4EEE0;stroke:#3B322B;stroke-width:1.2}
+.ig-cb-tempio-t{font-family:var(--serif);font-style:italic;font-size:12.5px;fill:#3B322B;paint-order:stroke;stroke:rgba(246,240,226,.92);stroke-width:3px}
+.ig-cb-dist{fill:none;stroke:#7A1F2B;stroke-width:1.6;stroke-dasharray:4 3}
+.ig-cb-dist-t{font-family:var(--ui);font-size:12px;font-weight:700;fill:#7A1F2B;paint-order:stroke;stroke:rgba(246,240,226,.94);stroke-width:3.5px;stroke-linejoin:round}
+.ig-cb-et{font-family:var(--ui);font-size:12px;font-weight:700;fill:#22313A;paint-order:stroke;stroke:rgba(246,240,226,.94);stroke-width:3.5px;stroke-linejoin:round;opacity:0;transition:opacity .5s}
+.ig-cb-et.vis{opacity:1}
+.ig-cb-et.scuro{fill:#1A1410}
+.ig-cb-vento{opacity:0;transition:opacity .8s}
+.ig-cb-vento.vis{opacity:1}
+.ig-cb-vento-l{fill:none;stroke:rgba(255,255,255,.85);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:14 40;animation:ig-cb-soffia 2.2s linear infinite}
+.ig-cb-vento-l.fermo{stroke:#4D7684;animation:none;stroke-dasharray:none}
+@keyframes ig-cb-soffia{from{stroke-dashoffset:54}to{stroke-dashoffset:0}}
+.ig-cb-giorno-r{fill:#fff;stroke:rgba(34,28,24,.2);transition:fill .5s,stroke .5s}
+.ig-cb-giorno-n{font-family:var(--cap);font-size:14px;font-weight:700;fill:#8a7d6c;transition:fill .5s}
+.ig-cb-giorno.pieno .ig-cb-giorno-r{fill:#7A1F2B;stroke:#7A1F2B}
+.ig-cb-giorno.pieno .ig-cb-giorno-n{fill:#fff}
+.ig-cb-moneta{fill:#E5C26A;stroke:#9A7424;stroke-width:1}
+.ig-cb-onda{fill:none;stroke:rgba(200,225,232,.16);stroke-width:1.2;stroke-linecap:round}
+.ig-cb-fuoco{opacity:0;transition:opacity .5s}
+.ig-cb-fuoco.vis{opacity:1}
+.ig-cb-fumo{fill:rgba(60,52,48,.55);transform-box:fill-box;transform-origin:center;animation:ig-cb-fumo 2.6s linear infinite}
+@keyframes ig-cb-fumo{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:.85}100%{transform:translate(26px,-18px) scale(2.6);opacity:0}}
+.ig-cb-cavo{stroke:rgba(243,234,214,.75);stroke-width:1.2;stroke-dasharray:3 2;opacity:0}
+.ig-cb-cavo.vis{opacity:1}
+.ig-cb-pertica{stroke:#E9D8B4;stroke-width:1.6;stroke-linecap:round;opacity:0;transition:opacity .4s;transform-box:fill-box;transform-origin:right center}
+.ig-cb-pertica.vis{opacity:1;animation:ig-cb-spinge .9s ease-in-out infinite alternate}
+@keyframes ig-cb-spinge{from{transform:translateX(0)}to{transform:translateX(-5px)}}
+.ig-atto g.giu{opacity:0;transition:opacity 2s ease}
+.ig-cb-q-fondo{fill:rgba(12,20,26,.55)}
+.ig-m-schema.chiaro{fill:rgba(230,240,242,.7)}
+.ig-cb-fumo-lontano{fill:rgba(90,80,74,.22)}
+.ig-cb-l-scafo{fill:#6B4A2E;stroke:#2E1E10;stroke-width:2}
+.ig-cb-lato.vandali .ig-cb-l-scafo{fill:#3B2E22}
+.ig-cb-l-ponte{stroke:#C9A060;stroke-width:3}
+.ig-cb-l-remo{stroke:#4E3824;stroke-width:3;stroke-linecap:round}
+.ig-cb-l-albero{stroke:#3E2A16;stroke-width:5}
+.ig-cb-l-vela{fill:#F1E6CE;stroke:#8C7A5C;stroke-width:2}
+.ig-cb-lato.vandali .ig-cb-l-vela{fill:#C9A87A}
+.ig-omino.ig-cb-ombra{fill:#1A1410;stroke:#1A1410}
+.ig-cb-braccio{fill:none;stroke:#1A1410;stroke-width:2.2;stroke-linecap:round}
+.ig-cb-giov{font-family:var(--serif);font-style:italic;fill:var(--porpora,#7A1F2B)}
+.ig-cb-giov-n{font-family:var(--serif);font-size:17px;fill:var(--ink,#221C18)}
+.ig-cb-ic{fill:#7A1F2B;stroke:#7A1F2B}
+.ig-cb-es-n{font-family:var(--cap);font-size:16px;font-weight:700;fill:var(--porpora,#7A1F2B)}
+.ig-cb-es-t{font-family:var(--serif);font-style:italic;font-size:16.5px;fill:var(--ink,#221C18)}
+.ig-cb-fine{font-family:var(--serif);font-weight:600;fill:var(--porpora,#7A1F2B)}
+@media (prefers-reduced-motion:reduce){ .ig-cb-vento-l,.ig-cb-fumo,.ig-cb-pertica.vis{animation:none} }
+.ig-m-velo{fill:rgba(18,12,8,.6)}
+.ig-m-banda{fill:rgba(255,246,220,.14)}
+.ig-m-banda-l{fill:none;stroke:#E8C46A;stroke-width:2;opacity:0}
+.ig-m-banda-l.vis{opacity:1}
+.ig-m-banda-l.luce{filter:drop-shadow(0 0 5px rgba(241,217,154,.95));animation:ig-m-brilla 2.4s ease-in-out infinite}
+@keyframes ig-m-brilla{0%,100%{stroke-opacity:1}50%{stroke-opacity:.55}}
+@media (prefers-reduced-motion:reduce){ .ig-m-banda-l.luce{animation:none} }
+.ig-m-foto-fondo{fill:#3a6fb0}
+.ig-cb-vento-l.scuro{stroke:#2F5864;stroke-width:2.2}
+
+/* ---------- 14. l'altare della Vittoria (js/infografiche.js, disegnaAltare; gruppo 3, 23 novembre 2026) ---------- */
+.ig-al-tavola{opacity:0;transition:opacity 1s ease}
+.ig-al-tavola.vis{opacity:1}
+.ig-al-muro{fill:#BCA983;stroke:#8F7B55;stroke-width:1.2;filter:drop-shadow(0 10px 18px rgba(34,28,24,.22))}
+.ig-al-fondo{fill:#E9E1D1}
+.ig-al-gradino{stroke:rgba(255,255,255,.7);stroke-width:1}
+.ig-al-gradino.g0{fill:#F3EEE3}
+.ig-al-gradino.g1{fill:#EAE2D2}
+.ig-al-gradino.g2{fill:#DDD2BD}
+.ig-al-tribuna{fill:#F4EFE5;stroke:#C9B894;stroke-width:1}
+.ig-al-fascia1{fill:#7A1F2B}
+.ig-al-fascia2{fill:#D4BD86}
+.ig-al-fascia3{fill:#3E6150}
+.ig-al-soglia{fill:#DCCFB3}
+.ig-al-porta-l{stroke:#3E2A12;stroke-width:1.4}
+.ig-al-sen .ig-al-toga{fill:#F7F2E7;stroke:#9C8A6C;stroke-width:.9;transition:fill .7s ease,stroke .7s ease}
+.ig-al-testa{fill:#B08663;stroke:#5E4632;stroke-width:.8}
+.ig-al-sen{transition:opacity .6s}
+.ig-al-sen.pagano .ig-al-toga,.ig-al-voce.pagano .ig-al-toga{fill:#D9A441;stroke:#8C6420}
+.ig-al-sen.cristiano .ig-al-toga,.ig-al-voce.cristiano .ig-al-toga{fill:#4F6F9A;stroke:#2C4565}
+.ig-al-sen.ignoto .ig-al-toga,.ig-al-voce.ignoto .ig-al-toga{fill:#B8B2A8;stroke:#7d756a;stroke-dasharray:2 1.5}
+.ig-al-altare{opacity:0;transition:opacity .5s}
+.ig-al-altare.vis{opacity:1}
+.ig-al-blocco{fill:#EFE7D7;stroke:#A88E66;stroke-width:1}
+.ig-al-piano{fill:#7A1F2B}
+.ig-al-fuoco{fill:#F08A2E;stroke:#FFE7A8;stroke-width:1}
+.ig-al-fuoco-a{transform-box:fill-box;transform-origin:50% 90%;animation:ig-al-trema 1.1s ease-in-out infinite alternate}
+.ig-al-bagliore{animation:ig-pulsa 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.ig-al-altare.forse .ig-al-blocco{stroke-dasharray:3 2}
+@keyframes ig-al-trema{from{transform:scale(.92,1)}to{transform:scale(1.06,1.12)}}
+.ig-al-port{opacity:0;transition:opacity .4s}
+.ig-al-port.vis{opacity:1}
+.ig-al-ombra{opacity:0;transition:opacity .6s}
+.ig-al-ombra.vis{opacity:1}
+.ig-al-ombra-r{fill:rgba(122,31,43,.06);stroke:#7A1F2B;stroke-width:1.4;stroke-dasharray:4 3}
+.ig-al-ombra.eugenio .ig-al-ombra-r{fill:rgba(217,164,65,.22);stroke:#8C6420}
+.ig-al-dubbio{font-family:var(--cap);font-size:16px;font-weight:700;fill:#7A1F2B;opacity:0;transition:opacity .5s}
+.ig-al-dubbio.vis{opacity:1}
+.ig-al-bollo-r{fill:rgba(251,248,241,.92)}
+.ig-al-leg{opacity:0;transition:opacity .6s}
+.ig-al-leg.vis{opacity:1}
+.ig-al-voce{opacity:.45;transition:opacity .5s}
+.ig-al-voce.ora{opacity:1}
+.ig-al-voce .ig-al-toga{stroke-width:1}
+.ig-al-voce-t{font-family:var(--ui);font-size:12px;font-weight:600;fill:#3b322b}
+.ig-al-voce-t.nota{font-weight:400;font-style:italic;fill:#6b5f53}
+.ig-al-voce-t.piccola{font-size:10.5px;font-weight:600;fill:#5F554B}
+.ig-al-b.dentro{fill:#C9A14A}
+.ig-al-b.fuori{fill:#EFE6D4;stroke:#B8A98E;stroke-width:1}
+.ig-al-b.forse{fill:url(#ig-al-sfuma);stroke:#C9A14A;stroke-width:1;stroke-dasharray:3 2}
+.ig-al-b.muto{fill:none;stroke:#B8A98E;stroke-width:1;stroke-dasharray:2 3}
+.ig-al-b-t{font-family:var(--ui);font-size:10px;font-weight:700;fill:#7A5617}
+.ig-al-fine{font-family:var(--serif);font-style:italic;fill:var(--ink,#221C18)}
+@media (prefers-reduced-motion:reduce){ .ig-al-fuoco-a,.ig-al-bagliore{animation:none} .ig-al-sen .ig-al-toga{transition:none} }
+
+/* ---------- 15. i sacchi di Roma a confronto (js/infografiche.js, disegnaSacchi; gruppo 3) ---------- */
+.ig-sc-schede{opacity:0;transition:opacity .8s ease}
+.ig-sc-schede.vis{opacity:1}
+.ig-sc-schede.via{opacity:0;pointer-events:none}
+.ig-sc-scheda{--c:#7A5617;opacity:0;transform:translateY(10px);transition:opacity .7s ease,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-sc-scheda.vis{opacity:1;transform:none}
+.ig-sc-scheda.spenta{opacity:.42}
+.ig-sc-fondo{fill:rgba(255,253,248,.88);stroke:rgba(34,28,24,.1);filter:drop-shadow(0 8px 18px rgba(34,28,24,.12))}
+.ig-sc-scheda.ora .ig-sc-fondo{stroke:var(--c);stroke-width:1.4}
+.ig-sc-filo{fill:var(--c)}
+.ig-sc-anno{font-family:var(--cap);font-weight:700;fill:var(--c);font-variant-numeric:tabular-nums}
+.ig-sc-chi{font-family:var(--ui);font-size:13px;font-weight:700;fill:#2b231d}
+.ig-sc-giorno{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#5F554B}
+.ig-sc-pianta{opacity:0;transition:opacity .7s}
+.ig-sc-pianta.vis{opacity:1}
+.ig-sc-mura{fill:rgba(233,223,201,.75);stroke:#6b5f53;stroke-width:1.6;stroke-linejoin:round}
+.ig-sc-fiume{fill:none;stroke:#6E9FB3;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.ig-sc-ingr,.ig-sc-fuoco,.ig-sc-rif,.ig-sc-campo,.ig-sc-tetto,.ig-sc-brecce,.ig-sc-nome{opacity:0;transition:opacity .6s}
+.ig-sc-ingr.vis,.ig-sc-fuoco.vis,.ig-sc-rif.vis,.ig-sc-campo.vis,.ig-sc-tetto.vis,.ig-sc-brecce.vis,.ig-sc-nome.vis{opacity:1}
+.ig-sc-ingr-l{fill:none;stroke:var(--c);stroke-width:2.6;stroke-linecap:round}
+.ig-sc-ingr.schema .ig-sc-ingr-l{stroke-dasharray:5 4}
+.ig-sc-ingr.via .ig-sc-ingr-l{stroke:#8C6420;stroke-dasharray:2 4;stroke-width:2}
+.ig-sc-ingr.via .ig-sc-ingr-p{fill:#8C6420}
+.ig-sc-ingr-p{fill:var(--c)}
+.ig-sc-ingr.notte .ig-sc-ingr-l{stroke:#22070B}
+.ig-sc-ingr.notte .ig-sc-ingr-p{fill:#22070B}
+.ig-sc-nome{font-family:var(--ui);font-size:11.5px;font-weight:600;fill:#2b231d;paint-order:stroke;stroke:rgba(255,253,248,.95);stroke-width:3px;stroke-linejoin:round}
+.ig-sc-nome.piccolo{font-size:10.5px;font-weight:500}
+.ig-sc-vampa{transform-box:fill-box;transform-origin:center;animation:ig-pulsa 1.6s ease-in-out infinite}
+.ig-sc-rif-c{fill:rgba(241,217,154,.55);stroke:#B48A3C;stroke-width:1.2}
+.ig-sc-giu{fill:none;stroke:#7A5617;stroke-width:1.6;stroke-linecap:round}
+.ig-sc-tetto-a{fill:#E3C27A;stroke:#8C6420;stroke-width:1}
+.ig-sc-tetto-b{fill:#FBF6EA;stroke:#8C6420;stroke-width:1;stroke-dasharray:2 1.5}
+.ig-sc-tetto-c{fill:#EFE7D7;stroke:#8C6420;stroke-width:1}
+.ig-sc-breccia{stroke:#22070B;stroke-width:5;stroke-dasharray:3 3;stroke-linecap:butt}
+.ig-sc-dur,.ig-sc-cose,.ig-sc-fine{opacity:0;transition:opacity .6s}
+.ig-sc-dur.vis,.ig-sc-cose.vis,.ig-sc-fine.vis{opacity:1}
+.ig-sc-num{font-family:var(--cap);font-weight:700;fill:var(--c);font-variant-numeric:tabular-nums}
+.ig-sc-num-t{font-family:var(--ui);font-size:13px;font-weight:600;fill:#5F554B}
+.ig-sc-g{opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:center;transition:opacity .25s,transform .4s cubic-bezier(.3,1.6,.5,1)}
+.ig-sc-g.vis{opacity:1;transform:none}
+.ig-sc-g.pieno{fill:var(--c)}
+.ig-sc-g.forse{fill:url(#ig-sc-trat);stroke:var(--c);stroke-width:1}
+.ig-sc-g.vuoto{fill:#F6F1E6;stroke:#8a7d6c;stroke-width:1;stroke-dasharray:2 1.6}
+.ig-sc-nota{font-family:var(--ui);font-size:11.5px;fill:#5F554B}
+.ig-sc-cosa{opacity:0;transform:translateX(-8px);transition:opacity .5s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.ig-sc-cosa.vis{opacity:1;transform:none}
+.ig-sc-cosa-t{font-family:var(--ui);fill:#2b231d}
+.ig-sc-ic{fill:var(--c);stroke:none}
+.ig-sc-ic.croce,.ig-sc-ic.lettera{fill:none;stroke:var(--c);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ig-sc-ic.fuoco{fill:#D9531E}
+.ig-sc-ic.forse{fill:none;stroke:#D9531E;stroke-width:1.4;stroke-dasharray:2 1.5}
+.ig-sc-fine-t{font-family:var(--serif);font-style:italic;fill:var(--c)}
+.ig-sc-corsia{--c:#7A5617;opacity:0;transition:opacity .6s}
+.ig-sc-corsia.vis{opacity:1}
+.ig-sc-c-anno{font-family:var(--cap);font-weight:700;fill:var(--c)}
+.ig-sc-c-base{stroke:rgba(34,28,24,.28);stroke-width:1.2}
+.ig-sc-c-ev{fill:var(--c);stroke:#fff;stroke-width:2}
+.ig-sc-fonte{opacity:0;transition:opacity .5s}
+.ig-sc-fonte.vis{opacity:1}
+.ig-sc-f-arco{fill:none;stroke:var(--c);stroke-width:2;stroke-linecap:round;opacity:.85}
+.ig-sc-f-p{fill:#fff;stroke:var(--c);stroke-width:2.2}
+.ig-sc-f-sec{fill:var(--c);opacity:.14}
+.ig-sc-f-n{font-family:var(--ui);font-size:12px;font-weight:700;fill:#2b231d;paint-order:stroke;stroke:rgba(251,248,241,.95);stroke-width:3px;stroke-linejoin:round}
+.ig-sc-f-s{font-family:var(--serif);font-style:italic;font-size:12.5px;fill:#5F554B;paint-order:stroke;stroke:rgba(251,248,241,.95);stroke-width:3px;stroke-linejoin:round}
+.ig-sc-verd{opacity:0;transition:opacity .6s}
+.ig-sc-verd.vis{opacity:1}
+.ig-sc-verd-t{font-family:var(--ui);font-size:12px;font-weight:700;letter-spacing:.02em;fill:var(--c)}
+@media (prefers-reduced-motion:reduce){ .ig-sc-vampa{animation:none} .ig-sc-g,.ig-sc-cosa{transition:none} }
+.ig-sc-num-o{font-family:var(--serif);font-style:italic;font-weight:400;font-size:.62em;fill:#5F554B}
+.ig-sc-croce{fill:none;stroke:#7A5617;stroke-width:1.8;stroke-linecap:round}
+.ig-sc-incerto{fill:none;stroke:#D9531E;stroke-width:1.2;stroke-dasharray:2.5 2.5}
+.ig-sc-c-riga{stroke:rgba(34,28,24,.07);stroke-width:1}
+.ig-sc-c-asse{stroke:var(--c);stroke-width:1.4;stroke-dasharray:2 2;opacity:.6}
+.ig-sc-f-ignoto{fill:none;stroke:var(--c);stroke-width:2;stroke-dasharray:3 4;opacity:.6}
+.ig-sc-f-q{font-family:var(--cap);font-size:14px;font-weight:700;fill:var(--c)}
+.ig-sc-f-arco{stroke-width:3}
+
+/* ---------- 16. gli acquedotti tagliati (js/infografiche.js, disegnaAcquedotti; gruppo 3) ---------- */
+.ig-aq-tavola{opacity:0;transition:opacity 1s ease}
+.ig-aq-tavola.vis{opacity:1}
+.ig-aq-fondo{fill:#E9DFC9}
+.ig-aq-rilievo{opacity:.95}
+.ig-aq-tevere-a{fill:none;stroke:rgba(251,248,241,.7);stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.ig-aq-tevere{fill:none;stroke:#6E9FB3;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.ig-aq-mura{fill:rgba(251,246,234,.32);stroke:#5b4f45;stroke-width:1.6;stroke-linejoin:round}
+.ig-aq-condotto{fill:none;stroke:#8C7A5E;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.ig-aq-acqua{fill:none;stroke:#3E8FB0;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ig-aq-acqua.torna{stroke:#2F7FA6;stroke-width:3}
+.ig-aq-scorre{fill:none;stroke:#E8F6FB;stroke-width:1.4;stroke-linecap:round;stroke-dasharray:2 10;animation:ig-aq-scorre 1.1s linear infinite;transition:opacity .6s}
+.ig-aq-scorre.via{opacity:0}
+.ig-aq-scorre.torna{opacity:0}
+.ig-aq-scorre.torna.vis{opacity:1}
+@keyframes ig-aq-scorre{to{stroke-dashoffset:-12}}
+.ig-aq-linea.secca .ig-aq-condotto{stroke:#A8977A}
+.ig-aq-taglio{opacity:0;transition:opacity .4s}
+.ig-aq-taglio.vis{opacity:1}
+.ig-aq-taglio-c{fill:#FBF6EA;stroke:#7A1F2B;stroke-width:1.8}
+.ig-aq-taglio-x{stroke:#7A1F2B;stroke-width:2.2;stroke-linecap:round}
+.ig-aq-taglio.taglia .ig-aq-taglio-c{animation:ig-pulsa .8s ease-in-out 1}
+.ig-aq-nomi{opacity:0;transition:opacity .8s}
+.ig-aq-nomi.vis{opacity:1}
+.ig-aq-nome{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#3E5A66;paint-order:stroke;stroke:rgba(251,246,234,.9);stroke-width:3px;stroke-linejoin:round;transition:fill .5s}
+.ig-aq-nome.acceso{fill:#1F6E93;font-weight:700}
+.ig-aq-terme,.ig-aq-fontana,.ig-aq-mulino,.ig-aq-luogo,.ig-aq-barche,.ig-aq-campi,.ig-aq-et{opacity:0;transition:opacity .6s}
+.ig-aq-terme.vis,.ig-aq-fontana.vis,.ig-aq-mulino.vis,.ig-aq-luogo.vis,.ig-aq-barche.vis,.ig-aq-campi.vis,.ig-aq-et.vis{opacity:1}
+.ig-aq-terme-r{fill:#F4EEE2;stroke:#3E8FB0;stroke-width:1.6;transition:stroke .6s,fill .6s}
+.ig-aq-terme.spente .ig-aq-terme-r{stroke:#8a7d6c;fill:#E6DDCB}
+.ig-aq-terme.mai .ig-aq-terme-r{stroke:#5F554B;stroke-dasharray:2 1.5}
+.ig-aq-terme.ora .ig-aq-terme-r{stroke:#7A1F2B;stroke-width:2.2}
+.ig-aq-vap{fill:none;stroke:#7FB3C8;stroke-width:1.2;stroke-linecap:round;opacity:.8;animation:ig-aq-vap 2.4s ease-in-out infinite}
+.ig-aq-terme.spente .ig-aq-vapore{opacity:0;transition:opacity 1.2s}
+@keyframes ig-aq-vap{0%{transform:translateY(2px);opacity:0}40%{opacity:.85}100%{transform:translateY(-4px);opacity:0}}
+.ig-aq-fontana-c{fill:#F4EEE2;stroke:#3E8FB0;stroke-width:1.6}
+.ig-aq-zampillo path{fill:none;stroke:#3E8FB0;stroke-width:1.2;stroke-linecap:round;transition:opacity .8s}
+.ig-aq-fontana.spente .ig-aq-zampillo path{opacity:0}
+.ig-aq-fontana.spente .ig-aq-fontana-c{stroke:#8a7d6c}
+.ig-aq-ruota{animation:ig-aq-gira 2.4s linear infinite;transform-box:fill-box;transform-origin:center}
+.ig-aq-mulino.fermo .ig-aq-ruota{animation-play-state:paused}
+.ig-aq-ruota-c{fill:#F4EEE2;stroke:#5b4f45;stroke-width:1.4}
+.ig-aq-ruota-r{stroke:#5b4f45;stroke-width:1}
+@keyframes ig-aq-gira{to{transform:rotate(360deg)}}
+.ig-aq-et{font-family:var(--ui);font-size:11px;font-weight:600;fill:#2b231d;paint-order:stroke;stroke:rgba(251,246,234,.92);stroke-width:3px;stroke-linejoin:round}
+.ig-aq-luogo .ig-aq-et{opacity:1}
+.ig-aq-croce{fill:none;stroke:#7A5617;stroke-width:1.8;stroke-linecap:round}
+.ig-aq-barche-p{fill:#1F6E93;stroke:#fff;stroke-width:1.4}
+.ig-aq-tenda{fill:#E9D7B0;stroke:#5b4f45;stroke-width:.9;stroke-linejoin:round}
+.ig-aq-vign{opacity:0;transform:translateY(8px);transition:opacity .7s,transform .9s cubic-bezier(.2,.8,.2,1)}
+.ig-aq-vign.vis{opacity:1;transform:none}
+.ig-aq-guida{fill:none;stroke:#1F6E93;stroke-width:1.2;stroke-dasharray:3 3}
+.ig-aq-v-acqua{fill:#5E93A8}
+.ig-aq-v-onda{fill:none;stroke:rgba(232,246,251,.45);stroke-width:1.2;animation:ig-aq-onda 2.6s linear infinite}
+@keyframes ig-aq-onda{to{transform:translateY(12px)}}
+.ig-aq-v-ponte{fill:#CDBB97}
+.ig-aq-v-ponte-t{font-family:var(--ui);font-size:10px;font-weight:700;letter-spacing:.08em;fill:#5b4f45}
+.ig-aq-v-barca{fill:#8A6232;stroke:#4E3518;stroke-width:1.4}
+.ig-aq-v-casa{fill:#E9D7B0;stroke:#4E3518;stroke-width:1}
+.ig-aq-v-ruota{animation:ig-aq-pale .9s linear infinite}
+.ig-aq-v-ruota-o{fill:#6B4A26;stroke:#3a2614;stroke-width:1}
+.ig-aq-v-pala{stroke:#E9D7B0;stroke-width:1.6}
+.ig-aq-v-asse{stroke:#3a2614;stroke-width:2.4}
+@keyframes ig-aq-pale{to{transform:translateY(4.5px)}}
+.ig-aq-v-t{font-family:var(--ui);font-size:10.5px;font-weight:600;fill:#F4F8F9;paint-order:stroke;stroke:rgba(30,60,72,.6);stroke-width:2.5px}
+.ig-aq-v-tit{font-family:var(--ui);font-size:12px;font-weight:700;fill:#1F4E63;paint-order:stroke;stroke:rgba(251,246,234,.95);stroke-width:3.5px;stroke-linejoin:round}
+.ig-aq-v-cornice{fill:none;stroke:rgba(255,255,255,.7);stroke-width:2;filter:drop-shadow(0 6px 14px rgba(20,40,50,.35))}
+.ig-aq-q{opacity:0;transition:opacity .6s}
+.ig-aq-q.vis{opacity:1}
+.ig-aq-q-luce{fill:#C9BFAE;transition:fill .6s}
+.ig-aq-q.su .ig-aq-q-luce{fill:#3E8FB0;filter:drop-shadow(0 0 4px rgba(62,143,176,.8))}
+.ig-aq-q.giu .ig-aq-q-luce{fill:#C9BFAE;stroke:#7A1F2B;stroke-width:1.4}
+.ig-aq-q.mai .ig-aq-q-luce{fill:#5F554B}
+.ig-aq-q-v{font-family:var(--serif);font-size:16px;fill:var(--ink,#221C18)}
+.ig-aq-q.giu .ig-aq-q-v,.ig-aq-q.mai .ig-aq-q-v{fill:#7A1F2B;font-style:italic}
+.ig-aq-num{font-family:var(--cap);font-weight:700;fill:#1F6E93}
+.ig-aq-num-t{font-family:var(--ui);font-size:11.5px;fill:#5F554B}
+.ig-aq-num-n{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#5F554B}
+@media (prefers-reduced-motion:reduce){ .ig-aq-scorre,.ig-aq-vap,.ig-aq-ruota,.ig-aq-v-onda,.ig-aq-v-ruota{animation:none} }
+
+/* ---------- 17. i barbari (js/infografiche.js, disegnaBarbari; gruppo 3) ---------- */
+.ig-bb-unni{fill:#67664E;fill-opacity:.55;transition:fill-opacity .8s}
+.ig-bb-unni.acceso{fill-opacity:.8;animation:none}
+.ig-bb-pop{--c:#3B2F26;opacity:0;transition:opacity .5s}
+.ig-bb-pop.vis{opacity:1}
+.ig-bb-pop.vis.spento{opacity:.35}
+.ig-bb-pop-a{fill:var(--c);opacity:.22;transform-box:fill-box;transform-origin:center;animation:ig-pulsa 2.2s ease-in-out infinite}
+.ig-bb-pop-p{fill:var(--c);stroke:#FBF6EA;stroke-width:1.6}
+.ig-bb-pop-n{font-family:var(--ui);font-size:12px;font-weight:700;fill:var(--c);paint-order:stroke;stroke:rgba(251,246,234,.95);stroke-width:3.5px;stroke-linejoin:round}
+.ig-bb-data{opacity:0;transition:opacity .6s}
+.ig-bb-data.vis{opacity:1}
+.ig-bb-data-1{font-family:var(--cap);font-weight:700;fill:#7A1F2B;paint-order:stroke;stroke:rgba(251,246,234,.92);stroke-width:4px;stroke-linejoin:round}
+.ig-bb-data-2{font-family:var(--ui);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;fill:#3b322b;paint-order:stroke;stroke:rgba(251,246,234,.92);stroke-width:3px;stroke-linejoin:round}
+.ig-bb-notte{fill:#0E1A2A;opacity:0;pointer-events:none;transition:opacity 1.2s}
+.ig-bb-notte.vis{opacity:.42}
+.ig-bb-fiume{font-family:var(--serif);font-style:italic;font-size:15px;fill:#DCEBF2;paint-order:stroke;stroke:rgba(14,26,42,.55);stroke-width:3px}
+.ig-m-avverte.chiaro{fill:#F1E6CF;stroke:rgba(14,26,42,.6)}
+.ig-bb-tag{opacity:0;transition:opacity .45s}
+.ig-bb-tag.vis{opacity:1}
+.ig-bb-tag-r{fill:#FBF6EA;stroke:#7A1F2B;stroke-width:1.2;filter:drop-shadow(0 2px 4px rgba(34,28,24,.25))}
+.ig-bb-tag-t{font-family:var(--ui);font-size:11.5px;font-weight:700;fill:#7A1F2B}
+.ig-bb-cita-fondo{fill:rgba(255,253,248,.94);stroke:rgba(34,28,24,.1);filter:drop-shadow(0 6px 14px rgba(34,28,24,.2))}
+.ig-bb-dist{opacity:0;transition:opacity .6s}
+.ig-bb-dist.vis{opacity:1}
+.ig-bb-dist-l{fill:none;stroke:#3b322b;stroke-width:1.6;stroke-dasharray:4 4}
+.ig-bb-dist-t{font-family:var(--serif);font-style:italic;font-size:14px;fill:#3b322b;paint-order:stroke;stroke:rgba(251,246,234,.95);stroke-width:3.5px;stroke-linejoin:round}
+.ig-bb-leg{opacity:0;transition:opacity .6s}
+.ig-bb-leg.vis,.ig-bb-leg-r{opacity:1}
+.ig-bb-leg-r .ig-bb-r-alle,.ig-bb-leg-r .ig-bb-r-regno{--c:#7A6A55}
+.ig-bb-leg-r rect{stroke:rgba(0,0,0,.15)}
+rect.ig-bb-leg-r{stroke:rgba(0,0,0,.2)}
+.ig-bb-leg-r.ig-bb-unni{fill:#67664E;fill-opacity:.8}
+.ig-bb-leg-r.roma{fill:#9A2F2A;fill-opacity:.55}
+.ig-bb-leg-t{font-family:var(--ui);font-size:11.5px;font-weight:600;fill:#3b322b;paint-order:stroke;stroke:rgba(251,246,234,.92);stroke-width:3px;stroke-linejoin:round}
+.ig-bb-tappa{opacity:0;transition:opacity .5s}
+.ig-bb-tappa.vis{opacity:1}
+.ig-bb-tappa-p{fill:#967E56;stroke:#FBF6EA;stroke-width:1.8}
+.ig-bb-tappa-a{font-family:var(--cap);font-size:15px;font-weight:700;fill:#5E4A2C;paint-order:stroke;stroke:rgba(251,246,234,.95);stroke-width:3.5px;stroke-linejoin:round}
+.ig-bb-tappa-n{font-family:var(--ui);font-size:11px;font-weight:600;fill:#3b322b;paint-order:stroke;stroke:rgba(251,246,234,.95);stroke-width:3px;stroke-linejoin:round}
+.ig-bb-riga{--c:#3B2F26;opacity:0;transition:opacity .5s}
+.ig-bb-riga.vis{opacity:1}
+.ig-bb-r-n{font-family:var(--ui);font-size:12.5px;font-weight:700;fill:var(--c)}
+.ig-bb-r-mov{fill:none;stroke:var(--c);stroke-width:2.4;stroke-dasharray:4 3;stroke-linecap:round}
+.ig-bb-r-alle{fill:url(#ig-bb-trat);stroke:var(--c);stroke-width:1}
+.ig-bb-r-regno{fill:var(--c)}
+.ig-bb-r-fine{stroke:#221C18;stroke-width:2}
+.ig-bb-r-anno{font-family:var(--ui);font-size:11px;font-weight:700;fill:#221C18}
+.ig-bb-r-oltre{fill:none;stroke:var(--c);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ig-bb-r-note{opacity:0;transition:opacity .6s}
+.ig-bb-r-note.vis{opacity:1}
+.ig-bb-r-pt{fill:#FBF6EA;stroke:#221C18;stroke-width:1.2}
+.ig-bb-r-nota{font-family:var(--serif);font-style:italic;font-size:11.5px;fill:#4A4038}
+.ig-bb-riga.evid .ig-bb-r-fine{stroke:#7A1F2B;stroke-width:3}
+.ig-bb-riga.evid .ig-bb-r-anno{fill:#7A1F2B;font-size:12.5px}
+.ig-bb-num{font-family:var(--cap);font-weight:700;fill:#5E4A2C;font-variant-numeric:tabular-nums}
+.ig-bb-num-t{font-family:var(--ui);font-size:12.5px;fill:#5F554B;opacity:1;transition:opacity .6s}
+.ig-bb-comp{fill:#E9DFC9;stroke:#967E56;stroke-width:1;opacity:0;transform:scale(.4);transform-box:fill-box;transform-origin:center;transition:opacity .25s,transform .4s cubic-bezier(.3,1.6,.5,1),fill .5s}
+.ig-bb-comp.vis{opacity:1;transform:none}
+.ig-bb-comp.capo{fill:#967E56}
+.ig-bb-scala{opacity:0;transition:opacity .6s}
+.ig-bb-scala.vis{opacity:1}
+.ig-bb-s-vit{fill:#E9DFC9;stroke:#967E56;stroke-width:1}
+.ig-bb-s-hea{fill:#5E4A2C;opacity:0;transition:opacity .6s}
+.ig-bb-s-hea.vis{opacity:1}
+.ig-bb-s-fam{stroke:#5E4A2C;stroke-width:1.4;stroke-dasharray:2 3}
+.ig-bb-s-t{font-family:var(--ui);font-size:12px;font-weight:600;fill:#3b322b}
+.ig-bb-s-n{font-family:var(--serif);font-style:italic;font-size:13px;fill:#5F554B}
+.ig-bb-card{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-bb-card.vis{opacity:1;transform:none}
+.ig-bb-card-r{fill:rgba(255,253,248,.92);stroke:rgba(34,28,24,.12);filter:drop-shadow(0 8px 16px rgba(34,28,24,.12))}
+.ig-bb-card.ric .ig-bb-card-r{stroke:#967E56;stroke-width:1.4}
+.ig-bb-card-k{font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.14em;fill:#7A5617}
+.ig-bb-card-t{font-family:var(--serif);font-size:16px;fill:var(--ink,#221C18)}
+@media (prefers-reduced-motion:reduce){ .ig-bb-pop-a{animation:none} .ig-bb-comp,.ig-bb-tag{transition:none} }
+
+/* Sagome, galee, fumo, rogo: le scene ridisegnate di Capo Bon e dei Campi Catalaunici (24 novembre 2026) */
+/* sagome d'uomo (guerriero) */
+.ig-gu-c{fill:#1E1610}
+.ig-gu-mant{fill:#3A2A1E}
+.ig-gu-braccio{fill:none;stroke:#1E1610;stroke-width:6.5;stroke-linecap:round}
+.ig-gu-asta{fill:#1E1610;stroke:#1E1610;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.ig-gu-scudo{fill:#7A4E2A;stroke:#1E1610;stroke-width:2.4}
+.ig-gu-umbone{fill:#D9B46A}
+.ig-gu-arco{fill:none;stroke:#2A1C10;stroke-width:3.2;stroke-linecap:round}
+.ig-gu-corda{fill:none;stroke:#D8C69C;stroke-width:1.1}
+.ig-gu.porpora .ig-gu-mant{fill:#8E2A4E}
+.ig-gu.porpora .ig-gu-scudo{fill:#9A2F2A}
+.ig-gu.vandalo .ig-gu-mant{fill:#6E5634}
+.ig-gu.notte .ig-gu-c,.ig-gu.notte .ig-gu-mant{fill:#0F0B08;stroke:rgba(214,170,84,.75);stroke-width:2.2;paint-order:stroke;stroke-linejoin:round}
+.ig-gu.notte .ig-gu-braccio{stroke:#0F0B08}
+.ig-gu.notte .ig-gu-arco{stroke:#5A3E22}
+.ig-gu.oro .ig-gu-mant{fill:#2A1E14}
+/* galee viste di lato */
+.ig-gl-scafo{fill:#5E3E24;stroke:#24160C;stroke-width:2;stroke-linejoin:round}
+.ig-gl.vandali .ig-gl-scafo{fill:#3A2C20}
+.ig-gl-cinta{fill:none;stroke:#C9A060;stroke-width:3.2;stroke-linecap:round}
+.ig-gl.vandali .ig-gl-cinta{stroke:#8C6A3A}
+.ig-gl-foro{fill:#140C06}
+.ig-gl-parapetto{fill:none;stroke:#2E1E10;stroke-width:2.2;stroke-linecap:round}
+.ig-gl-remo{fill:none;stroke:#3E2A16;stroke-width:2.8;stroke-linecap:round}
+.ig-gl-timone{fill:none;stroke:#2E1E10;stroke-width:4.5;stroke-linecap:round}
+.ig-gl-pala{fill:#2E1E10}
+.ig-gl-albero{fill:none;stroke:#3E2A16;stroke-width:5;stroke-linecap:round}
+.ig-gl-pennone{fill:none;stroke:#3E2A16;stroke-width:4;stroke-linecap:round}
+.ig-gl-sartia{fill:none;stroke:rgba(46,30,16,.5);stroke-width:1.2}
+.ig-gl-vela{fill:#F4EAD3;stroke:#8C7A5C;stroke-width:1.6;stroke-linejoin:round}
+.ig-gl.vandali .ig-gl-vela{fill:#D3B482}
+.ig-gl-vela-ombra{fill:rgba(110,84,50,.17)}
+.ig-gl-cucitura{fill:none;stroke:rgba(110,84,50,.3);stroke-width:1.1}
+.ig-gl-fiamma{fill:#9A2F2A}
+.ig-gl.vandali .ig-gl-fiamma{fill:#6E5634}
+.ig-gl-orn{fill:none;stroke:#24160C;stroke-width:4;stroke-linecap:round}
+.ig-gl.lontana{opacity:.7}
+.ig-gl-rifl{opacity:.14;pointer-events:none}
+.ig-cb-onda2{fill:none;stroke:#EAF2F2;stroke-width:1.1;stroke-linecap:round}
+.ig-cb-orizzonte{fill:rgba(255,250,235,.55)}
+.ig-cb-fumo-col path{fill:#5E544E}
+/* la nave dall'alto (naveAlto): ora la vela è piena */
+.ig-cb-remi{fill:none;stroke:#3A2414;stroke-width:.9;stroke-linecap:round}
+.ig-cb-ponte{fill:none;stroke:rgba(243,234,214,.45);stroke-width:.8}
+.ig-cb-vela{fill:#F3EAD6;stroke:#8C7A5C;stroke-width:.6}
+.ig-cb-nave.vandali .ig-cb-vela{fill:#C9A060;stroke:#6E5634}
+.ig-cb-nave.vuota .ig-cb-vela{fill:none;stroke:rgba(243,234,214,.7);stroke-dasharray:2 1.5}
+.ig-cb-nave.vuota .ig-cb-remi{stroke:rgba(243,234,214,.45)}
+.ig-cb-nave.bruciata .ig-cb-vela{fill:#4A3A2C;stroke:#2A1D14}
+.ig-cb-nave.bruciata .ig-cb-remi,.ig-cb-nave.speronata .ig-cb-remi{opacity:.3}
+/* il recinto di Attila */
+.ig-ca-legno{fill:#4A2E18;stroke:#1C1008;stroke-width:1}
+.ig-ca-legno-t{fill:#8A5A32;stroke:#1C1008;stroke-width:.8}
+.ig-ca-sella-c{fill:#7E5230;stroke:#2A170A;stroke-width:1}
+.ig-ca-sella.sotto .ig-ca-sella-c{fill:#5E3C22}
+.ig-ca-sella-l{fill:none;stroke:#D9B070;stroke-width:1.1;stroke-linecap:round}
+.ig-ca-sella-cinghia{fill:none;stroke:#2A170A;stroke-width:1.2;stroke-linecap:round}
+.ig-ca-centina{fill:none;stroke:rgba(42,28,16,.55);stroke-width:1}
+.ig-ca-raggi{fill:none;stroke:#2A1C10;stroke-width:.9}
+.ig-ca-timone{fill:none;stroke:#2A1C10;stroke-width:1.6;stroke-linecap:round}
+.ig-ca-drappo{fill:#7A1F2B;stroke:#C9A14A;stroke-width:.8}
+/* chi governa l'Occidente, telefono in piedi: niente si taglia (al più il pannello scorre), anno e titolo sulla stessa riga */
+.ig-pannello.sotto>*{flex:none}
+@media (max-width:600px){
+  .ig-pannello.sotto{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;align-content:start;column-gap:12px;row-gap:6px}
+  .ig-pannello.sotto .ig-p-anno{font-size:34px}
+  .ig-pannello.sotto .ig-p-titolo{font-size:15px;line-height:1.25}
+  .ig-pannello.sotto .ig-legenda{grid-column:1/-1;gap:4px 10px}
+  .ig-pannello.sotto .ig-chip{font-size:12px}
+}
+/* l'altare della Vittoria, ridisegno: marmi, ombre, figure sedute, altare con pulvini e fuoco, bollo piccolo */
+.ig-al-venature{filter:url(#ig-al-marmo);opacity:.32;pointer-events:none}
+.ig-al-v-pav{opacity:.2}
+.ig-al-spigolo{fill:none;stroke:#fff;stroke-opacity:.75;stroke-width:1}
+.ig-al-riquadro{fill:none;stroke:#C9B894;stroke-width:1}
+.ig-al-formella{fill:none;stroke:#C99A3A;stroke-width:.8}
+.ig-al-seggio{fill:url(#ig-al-legno);stroke:#4A2E14;stroke-width:.5;opacity:.85}
+.ig-al-sen-ombra{fill:#2A1A0C;fill-opacity:.28}
+.ig-al-lucefig{pointer-events:none}
+.ig-al-piega{fill:none;stroke:#FFFDF6;stroke-opacity:.75;stroke-width:1.1;stroke-linecap:round}
+.ig-al-sen.cristiano .ig-al-piega,.ig-al-sen.ignoto .ig-al-piega{stroke-opacity:.45}
+.ig-al-capo{stroke:rgba(40,25,12,.55);stroke-width:.6}
+.ig-al-capo-luce{fill:#fff;fill-opacity:.28}
+.ig-al-zoccolo{fill:#D8CBB0;stroke:#9C8460;stroke-width:1;filter:drop-shadow(1.5px 2.5px 2px rgba(40,25,10,.4))}
+.ig-al-pulvino{fill:#E9DDC2;stroke:#9C8460;stroke-width:.7}
+.ig-al-rosetta{fill:#C9A14A;stroke:#8C6420;stroke-width:.5}
+.ig-al-focolare{fill:#3B2216}
+.ig-al-brace{fill:#E8622C}
+.ig-al-fuoco2{fill:#FFB347}
+.ig-al-fuoco3{fill:#FFF3C4}
+.ig-al-scintilla{fill:#FFD36A;animation:ig-al-sale 1.4s ease-out infinite}
+@keyframes ig-al-sale{from{transform:translateY(0);opacity:1}to{transform:translateY(-16px);opacity:0}}
+.ig-al-bollo .ig-ca-bollo-t{font-family:var(--cap);font-weight:700;letter-spacing:.08em}
+.ig-al-bollo-r2{fill:none;stroke:#7A1F2B;stroke-width:.8}
+@media (prefers-reduced-motion:reduce){ .ig-al-scintilla{animation:none;opacity:0} }
+/* chi governa l'Occidente: legenda che non ci sta sotto la carta (telefono in piedi) */
+.ig-legenda.fitta{display:grid;grid-template-columns:1fr 1fr;gap:3px 10px}
+.ig-legenda.fitta .ig-chip{font-size:11px;line-height:1.2;align-items:flex-start}
+.ig-legenda.fitta .ig-chip i{margin-top:1px;width:11px;height:11px}
+
+/* ---------- Poitiers (js/infografiche.js, disegnaPoitiers; 24 novembre 2026) ---------- */
+/* la carta e il registro */
+.ig-po-ico-l{fill:none;stroke:#2F8A75;stroke-width:2.4;stroke-linecap:round}
+.ig-po-ico-p{fill:#2F8A75}
+.ig-po-ico-meta{fill:none;stroke:#2F8A75;stroke-width:1.6;stroke-dasharray:3 2}
+.ig-po-testa{transition:opacity .5s}
+.ig-po-testa.via{opacity:0}
+.ig-po-due{opacity:0;transition:opacity .7s}
+.ig-po-due.vis{opacity:1}
+.ig-po-racc-b{fill:#C9A14A}
+.ig-po-racc.franca .ig-po-racc-b{fill:#405D83}
+/* il campo */
+.ig-po-colle-l{fill:#C3BBA4}
+.ig-po-colle-v{fill:#ADA387}
+.ig-po-solco{stroke:rgba(70,56,34,.13);stroke-width:1}
+.ig-po-telo{fill:#E6DBC1;stroke:#7E6C50;stroke-width:1;stroke-linejoin:round;transition:fill 1s,opacity 1s}
+.ig-po-palo{stroke:#5A4630;stroke-width:1.2;stroke-linecap:round}
+.ig-po-porta{fill:#3A2E22;transition:fill .8s}
+.ig-po-tenda.vuota .ig-po-porta{fill:#F6E2B4}
+.ig-po-tenda.vuota .ig-po-telo{fill:#F1E9D6;opacity:.82}
+.ig-poitiers .ig-gu .ig-gu-c,.ig-poitiers .ig-gu .ig-gu-mant,.ig-poitiers .ig-gu .ig-gu-scudo{transition:fill 1.6s ease,stroke 1.6s ease}
+.ig-gu.franco .ig-gu-mant{fill:#405D83}
+.ig-gu.arabo .ig-gu-mant{fill:#2F8A75}
+.ig-gu.arabo.re .ig-gu-mant{fill:#48A48C;stroke:#E2B24A;stroke-width:3}
+.ig-po-gelato .ig-gu.franco .ig-gu-c{fill:#58788F}
+.ig-po-gelato .ig-gu.franco .ig-gu-mant{fill:#9CC3DA}
+.ig-po-gelato .ig-gu.franco .ig-gu-scudo{fill:#D4EAF6;stroke:#58788F}
+.ig-po-alone{opacity:0;transition:opacity 1.8s ease;pointer-events:none}
+.ig-po-alone.vis{opacity:1}
+.ig-po-gelo{opacity:0;transition:opacity 1.2s}
+.ig-po-gelo.vis{opacity:1}
+.ig-po-scint{fill:#F4FBFF;animation:ig-po-brilla 2.4s ease-in-out infinite}
+@keyframes ig-po-brilla{0%,100%{opacity:.1}50%{opacity:1}}
+.ig-po-a{opacity:0;transition:opacity .5s}
+.ig-po-a.vis{opacity:1}
+.ig-po-polvere{fill:#B3A07C;pointer-events:none}
+.ig-po-buio{fill:#070B18;pointer-events:none}
+.ig-omino.ig-po-fug{fill:#0E0B08;stroke:rgba(226,190,110,.85);stroke-width:.9}
+.ig-po-et-fr{fill:#2E4566}
+.ig-po-et-ar{fill:#1F5F50}
+.ig-po-croce-f{fill:#fff;stroke:#2F8A75;stroke-width:2}
+.ig-ca-capo-t.ig-po-verde{fill:#1F5F50}
+.ig-po-cerca{fill:none;stroke:#7A5617;stroke-width:1.4;stroke-dasharray:4 3;opacity:0;transition:opacity .5s;animation:ig-po-gira 2s linear infinite}
+.ig-po-cerca.vis{opacity:1}
+@keyframes ig-po-gira{to{stroke-dashoffset:-14}}
+.ig-po-fagotto{fill:#B88A4A;stroke:#3A2614;stroke-width:1}
+.ig-po-chip{fill:rgba(251,246,234,.9);stroke:rgba(34,28,24,.1)}
+.ig-po-dot{fill:none;stroke:#7A5617;stroke-width:1.4;transition:fill .3s}
+.ig-po-dot.on{fill:#C9A14A}
+.ig-po-cart{fill:rgba(251,246,234,.94);stroke:rgba(34,28,24,.1);filter:drop-shadow(0 4px 10px rgba(14,10,6,.18))}
+/* le schede finali */
+.ig-po-card{opacity:0;transform:translateY(10px);transition:opacity .6s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.ig-po-card.vis{opacity:1;transform:none}
+.ig-po-card-r{fill:rgba(255,253,248,.95);stroke:rgba(34,28,24,.12);filter:drop-shadow(0 8px 16px rgba(34,28,24,.1))}
+.ig-po-big{font-family:var(--cap);font-weight:700;fill:var(--porpora,#7A1F2B);font-variant-numeric:tabular-nums}
+.ig-po-corpo{font-family:var(--serif);font-style:italic;fill:#3A322B}
+.ig-po-fonte{font-family:var(--ui);fill:#4A4038}
+.ig-po-barra{stroke:#7A1F2B;stroke-width:3;stroke-linecap:round;opacity:0}
+.ig-po-barra.vis{opacity:1}
+.ig-po-card.scura .ig-po-card-r{fill:#4A1A22;stroke:rgba(226,194,122,.4)}
+.ig-po-card.scura .ig-m-testata{fill:#E2C27A}
+.ig-po-gq{font-family:var(--serif);font-style:italic;fill:#F6EBD3}
+.ig-po-gq2{font-family:var(--serif);font-style:italic;fill:#DCCBAA}
+.ig-po-gchi{font-family:var(--ui);fill:#CDB894}
+.ig-po-gchi.chiaro{fill:#6B5F53}
+.ig-po-lt{font-family:var(--serif);fill:#2A231D}
+.ig-po-lt.forte{font-weight:700;fill:#7A1F2B}
+.ig-po-sopr{font-family:var(--serif);font-style:italic;fill:#2A231D}
+@media (prefers-reduced-motion:reduce){ .ig-po-scint,.ig-po-cerca{animation:none} }
+/* Campi Catalaunici: il rogo di selle grande al centro del recinto, col suo cartellino (24 novembre 2026) */
+.ig-ca-rogo-ombra{fill:#000;opacity:.45}
+.ig-ca-et-rogo{opacity:0;transition:opacity .8s}
+.ig-ca-et-rogo.vis{opacity:1}
+.ig-ca-et-n.grande{font-size:17px;paint-order:stroke;stroke:#14100C;stroke-width:3px;stroke-linejoin:round}
+.ig-ca-et-sotto{font-family:var(--ui);font-size:11.5px;letter-spacing:.02em;fill:#E8D6B0;paint-order:stroke;stroke:#14100C;stroke-width:3px;stroke-linejoin:round}
+.ig-ca-filo{fill:none;stroke:#F1D99A;stroke-width:1;opacity:.75}
+.ig-ca-sella-c{fill:#94633A}
+.ig-ca-sella.sotto .ig-ca-sella-c{fill:#704829}
+/* finestre sulla carta: il bordo largo sotto le regioni, che riempie lo scarto fra regione e costa (24 novembre 2026) */
+.ig-fin-orlo{fill:none;stroke-width:6;stroke-opacity:.3;stroke-linejoin:round}
+/* il cursore «prima e dopo» sopra due fotogrammi (Curia): tutto il riquadro risponde al trascinamento in orizzontale; la maniglia, sopra la lama disegnata, prende il fuoco (24 novembre 2026) */
+.ig-strato.ig-pd{z-index:3;display:none;touch-action:pan-y;cursor:ew-resize;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.ig-strato.ig-pd.vis{display:block}
+.ig-pd-maniglia{position:absolute;top:50%;left:50%;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;touch-action:none;outline:none;cursor:grab}
+.ig-pd-maniglia:active{cursor:grabbing}
+.ig-pd-maniglia:focus-visible{box-shadow:0 0 0 3px #fff,0 0 0 6px #7A1F2B}
+.ig-po-ucciso{fill:#2F8A75}
+.ig-aq-nome.coperto{opacity:0}
+/* «Senza soldi non c'è esercito», rifatta il 24 novembre 2026: il giro terra → tasse → paga → soldati, gli anelli che si toccano, la legenda che accende le regioni */
+.ig-tr-giro,.ig-tr-centro{opacity:0;transition:opacity .7s ease}
+.ig-tr-giro.vis,.ig-tr-centro.vis{opacity:1}
+.ig-tr-orbita{fill:none;stroke:#E3D8C4;stroke-width:1.2;stroke-dasharray:3 5}
+.ig-tr-arco{opacity:0;transition:opacity .5s}
+.ig-tr-arco.vis{opacity:1}
+.ig-tr-arco path:first-child{fill:none;stroke:#B9A88C;stroke-width:3;stroke-linecap:round;transition:stroke .4s,stroke-width .4s}
+.ig-tr-punta{fill:#B9A88C;transition:fill .4s}
+.ig-tr-arco.attivo path:first-child{stroke:#9A2F2A;stroke-width:4.5}
+.ig-tr-arco.attivo .ig-tr-punta{fill:#9A2F2A}
+.ig-tr-nodo{opacity:0;transition:opacity .6s;cursor:pointer;outline:none}
+.ig-tr-nodo.vis{opacity:1}
+.ig-tr-nodo-c{fill:#FFFDF8;stroke:#B9A88C;stroke-width:2;transition:fill .4s,stroke .4s,stroke-width .4s}
+.ig-tr-nodo:hover .ig-tr-nodo-c{stroke:#7A1F2B}
+.ig-tr-nodo:focus-visible .ig-tr-nodo-c{stroke:#7A1F2B;stroke-width:3.5}
+.ig-tr-nodo.evento .ig-tr-nodo-c{fill:#9A2F2A;stroke:#7A1F2B}
+.ig-tr-nodo.evento .ig-tr-nodo-n,.ig-tr-nodo.evento .ig-tr-nodo-s{fill:#FFF8EA}
+.ig-tr-nodo.scelto .ig-tr-nodo-c{stroke:#C79931;stroke-width:4}
+.ig-tr-nodo-n{font-family:var(--cap);font-weight:700;letter-spacing:.06em;fill:#2A231D;pointer-events:none}
+.ig-tr-nodo-s{font-family:var(--ui);fill:#6B5F53;pointer-events:none}
+.ig-tr-palla{fill:#C79931;stroke:#FFF8EA;stroke-width:2;opacity:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.3))}
+.ig-tr-palla.vis{opacity:1}
+.ig-tr-c-anno{font-family:var(--cap);font-weight:600;fill:#2A231D}
+.ig-tr-c-tit{font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;fill:#7A1F2B}
+.ig-tr-c-riga{font-family:var(--serif);font-style:italic;font-size:13.5px;fill:#3E352D}
+.ig-tr-c-fonte{font-family:var(--ui);font-size:10.5px;fill:#7B6E61}
+.ig-tr-frase{font-family:var(--serif);font-style:italic;font-size:15px;fill:#7A1F2B}
+.ig-tes.spento{opacity:.22}
+.ig-tes.acceso{stroke:#2A231D;stroke-width:1.5}
+.ig-chip-b{background:none;border:1px solid #DCCFB8;border-radius:999px;padding:3px 9px 3px 6px;cursor:pointer;text-align:left}
+.ig-chip-b:hover{border-color:#B9A88C}
+.ig-chip-b[aria-pressed="true"]{background:#2A231D;color:#FFF8EA;border-color:#2A231D}
+.ig-chip-b:focus-visible{outline:2px solid #7A1F2B;outline-offset:2px}
+.ig-tr-leg{gap:5px 6px}
+.ig-fuori.ig-tr-leg{margin:10px 0 0;opacity:1}
+.ig-tr-scheda{margin:10px 0 0;padding:10px 12px;border-left:3px solid #C79931;background:#FFFDF8;border-radius:0 8px 8px 0;font-family:var(--serif);color:#2A231D}
+.ig-tr-scheda b{font-family:var(--cap);font-size:14px;color:#7A1F2B}
+.ig-tr-scheda p{margin:4px 0;font-size:15px;line-height:1.35}
+.ig-tr-scheda-f{font-family:var(--ui);font-size:11.5px;color:#6B5F53}
+.ig-p-sch-v.iscr{font-family:var(--cap);letter-spacing:.04em;font-style:normal}
+/* «Il Cristianesimo a Roma» (24 novembre 2026): la pianta con le chiese che compaiono e i templi che chiudono, il nastro del potere */
+.ig-cr-tavola,.ig-cr-nastro{opacity:0;transition:opacity .8s}
+.ig-cr-tavola.vis,.ig-cr-nastro.vis{opacity:1}
+.ig-cr-tempio{opacity:0;transition:opacity .6s}
+.ig-cr-tempio.vis{opacity:1}
+.ig-cr-tempio rect,.ig-cr-leg-tempio{fill:#C79931;stroke:#7A5617;stroke-width:1;transition:fill .8s,stroke .8s}
+.ig-cr-tempio.chiuso rect,.ig-cr-leg-chiuso{fill:#CFC6B5;stroke:#8E8270;stroke-width:1}
+.ig-cr-curia{opacity:0;transition:opacity .6s}
+.ig-cr-curia.vis{opacity:1}
+.ig-cr-curia rect{fill:#E3D8C4;stroke:#7A5617;stroke-width:1}
+.ig-cr-chiesa{opacity:0;transition:opacity .5s}
+.ig-cr-chiesa.vis{opacity:1}
+.ig-cr-chiesa path{fill:none;stroke:#7A1F2B;stroke-linecap:round}
+.ig-cr-chiesa.minore path{stroke-width:1.6;stroke:#9A2F2A}
+.ig-cr-chiesa.grande path{stroke-width:2.6}
+.ig-cr-chiesa.nasce{animation:ig-cr-nasce .9s ease-out}
+@keyframes ig-cr-nasce{0%{opacity:0;transform:translateY(-6px) scale(1.8)}60%{opacity:1}100%{transform:none}}
+.ig-cr-leonine{fill:none;stroke:#7A1F2B;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.ig-cr-tegole{fill:none;stroke:#C79931;stroke-width:2.4;stroke-dasharray:5 4;opacity:0;transition:opacity .4s}
+.ig-cr-tegole.vis{opacity:1}
+.ig-cr-luogo.ora .ig-v-nome{fill:#7A1F2B}
+.ig-cr-nome{font-size:12px}
+.ig-cr-leg-t{font-family:var(--ui);font-size:11px;fill:#5F554B}
+.ig-cr-f{fill:#DCCFB8}
+.ig-cr-f.pers{fill:#4A3A2C} .ig-cr-f.libero{fill:#C79931} .ig-cr-f.impero{fill:#9A2F2A} .ig-cr-f.papa{fill:#5A3F78}
+.ig-cr-f-t{font-family:var(--ui);font-size:10.5px;font-weight:700;letter-spacing:.04em;fill:#FFF8EA}
+.ig-cr-f-t.libero{fill:#2A231D}
+.ig-cr-scudo{fill:#B48A4A;stroke:#5E3F1C;stroke-width:1.6}
+.ig-cr-segno{fill:none;stroke:#FFF8EA;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ig-cr-cielo{fill:#3E4C70}
+.ig-cr-luce{fill:none;stroke:#FFE7A8;stroke-width:3;stroke-linecap:round;filter:drop-shadow(0 0 4px #FFE7A8)}
+.ig-cr-segni-t{font-family:var(--ui);font-size:11px;fill:#5F554B}
+@media (prefers-reduced-motion:reduce){ .ig-cr-chiesa.nasce{animation:none} }
+/* «Il Cristianesimo a Roma», seconda veste (24 novembre 2026): segni con forma, nastro del potere a fasce, contatore, disegni dei quadri, prima e dopo */
+.ig-cr-tavola{opacity:0;transition:opacity .9s}
+.ig-cr-tavola.vis{opacity:1}
+.ig-cr-tempio .ig-cr-t-pieno{fill:#D9A93F;stroke:#7A5617;stroke-width:.9;transition:fill .9s,stroke .9s}
+.ig-cr-tempio.chiuso .ig-cr-t-pieno{fill:#CDC3B1;stroke:#8E8270}
+.ig-cr-crepa{fill:none;stroke:#5F554B;stroke-width:1.1;opacity:0;transition:opacity .9s .4s}
+.ig-cr-tempio.chiuso .ig-cr-crepa{opacity:1}
+.ig-cr-c-corpo{fill:#9A2F2A;stroke:#5E1712;stroke-width:1}
+.ig-cr-c-croce{fill:none;stroke:#7A1F2B;stroke-width:2.1;stroke-linecap:round}
+.ig-cr-chiesa.minore .ig-cr-c-croce{stroke:#9A2F2A;stroke-width:2}
+.ig-cr-chiesa.grande .ig-cr-c-croce{stroke:#5E1712}
+.ig-cr-chiesa.nasce .ig-cr-c-in{animation:ig-cr-nasce2 .9s cubic-bezier(.2,1.5,.4,1)}
+@keyframes ig-cr-nasce2{0%{transform:scale(0)}100%{transform:scale(1)}}
+.ig-cr-muta{fill:none;stroke:#C79931;stroke-width:3;opacity:0}
+.ig-cr-muta.vis{animation:ig-cr-onda 1.4s ease-out infinite}
+@keyframes ig-cr-onda{0%{opacity:.95;transform:scale(.4)}100%{opacity:0;transform:scale(1.8)}}
+.ig-cr-muta{transform-box:fill-box;transform-origin:center}
+.ig-cr-fase-r{fill:#EFE7D8;stroke:#DCCFB8;transition:fill .6s,stroke .6s}
+.ig-cr-fase-t{font-family:var(--ui);font-weight:700;letter-spacing:.03em;fill:#8E8270;transition:fill .6s}
+.ig-cr-fase.passata .ig-cr-fase-r{fill:#E3D8C4}
+.ig-cr-fase.ora.pers .ig-cr-fase-r{fill:#4A3A2C;stroke:#4A3A2C} .ig-cr-fase.ora.libero .ig-cr-fase-r{fill:#C79931;stroke:#C79931}
+.ig-cr-fase.ora.impero .ig-cr-fase-r{fill:#9A2F2A;stroke:#9A2F2A} .ig-cr-fase.ora.papa .ig-cr-fase-r{fill:#5A3F78;stroke:#5A3F78}
+.ig-cr-fase.ora .ig-cr-fase-t{fill:#FFF8EA}
+.ig-cr-asse{stroke:#CDBFA6;stroke-width:1.5}
+.ig-cr-anno-p{font-family:var(--ui);font-size:10.5px;fill:#7B6E61}
+.ig-cr-conta-t{font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.06em;fill:#5F554B;text-transform:uppercase}
+.ig-cr-conta-c{fill:none;stroke:#E3D8C4;stroke-width:1.6;stroke-linecap:round;transition:stroke .3s}
+.ig-cr-conta-c.on{stroke:#9A2F2A}
+.ig-cr-conta-t2{fill:#CDC3B1;stroke:#CDC3B1;stroke-width:.8;transition:fill .5s,stroke .5s}
+.ig-cr-conta .on .ig-cr-conta-t2{fill:#D9A93F;stroke:#7A5617}
+.ig-cr-v-fondo{fill:#F4ECDD;stroke:#DCCFB8}
+.ig-cr-v-fondo.scuro{fill:#2E2620;stroke:#2E2620}
+.ig-cr-v-libro{fill:#E9DFC9;stroke:#5E3F1C;stroke-width:1.4;stroke-linejoin:round}
+.ig-cr-v-riga{stroke:#5E3F1C;stroke-width:1.2}
+.ig-cr-v-fiamma{fill:#E8622C}
+.ig-cr-v-altare{fill:#D9CFBF;stroke:#5F554B;stroke-width:1.4}
+.ig-cr-v-via{fill:none;stroke:#9A2F2A;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ig-cr-v-sacco{fill:#D2B07A;stroke:#7A5617;stroke-width:1.2}
+.ig-cr-v-corona{fill:#D9A93F;stroke:#7A5617;stroke-width:1.2;stroke-linejoin:round}
+.ig-cr-v-mura{fill:#B9A88C;stroke:#E9DFC9;stroke-width:1}
+.ig-cr-v-croce{fill:none;stroke:#F1D99A;stroke-width:2.2;stroke-linecap:round}
+.ig-cr-v-porta{fill:#5E1712}
+.ig-cr-mini-t{font-family:var(--serif);font-style:italic;font-size:14px;fill:#3E352D}
+.ig-cr-segni-t{font-size:12.5px}
+.ig-cr-chiesa.vis.velata{opacity:.22}
+/* i comandi comuni (24 novembre 2026): «Inizio» e «Fine» con la scritta, le tacche dei quadri che si toccano, l'avviso dell'apertura a metà */
+.ig-comandi{flex-wrap:wrap;row-gap:4px}
+.ig-b.ig-b-testo{width:auto;min-width:44px;padding:0 14px 0 10px;border-radius:22px;display:inline-flex;align-items:center;gap:4px;font-family:var(--ui);font-size:14px;font-weight:700;color:var(--porpora,#7A1F2B)}
+.ig-b.ig-b-testo.fine{padding:0 10px 0 14px}
+.ig-b.ig-b-testo svg{width:18px;height:18px}
+.ig-comandi{padding-bottom:18px}
+.ig-scorri{height:62px;margin-bottom:-18px}
+.ig-scorri input{height:44px}
+.ig-tacche{top:40px;height:22px;left:9px;right:9px;pointer-events:none}
+.ig-tacca{position:absolute;top:0;width:26px;height:22px;margin-left:-13px;padding:0;border:0;background:none;cursor:pointer;pointer-events:auto}
+.ig-tacca::before{content:"";position:absolute;left:12px;top:1px;width:2px;height:8px;border-radius:1px;background:var(--gold)}
+.ig-tacca:hover::before,.ig-tacca:focus-visible::before{background:var(--porpora,#7A1F2B);height:11px;width:3px;left:11.5px}
+.ig-tacca::after{content:attr(data-et);position:absolute;bottom:24px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--ui);font-size:11.5px;font-weight:700;color:#FFF8EA;background:#2A231D;border-radius:6px;padding:2px 7px;opacity:0;pointer-events:none;transition:opacity .15s}
+.ig-tacca:hover::after,.ig-tacca:focus-visible::after{opacity:1}
+.ig-da{display:inline-flex;align-items:center;gap:6px;margin:8px 0 0;padding:8px 14px;min-height:40px;border:1px solid #C79931;border-radius:20px;background:#FFF6E2;font-family:var(--ui);font-size:13.5px;font-weight:600;color:#7A1F2B;cursor:pointer}
+.ig-da:hover{background:#FBEBC8}
+.ig-da[hidden]{display:none}
+@media (max-width:700px){
+  .ig-comandi{justify-content:space-between}
+  .ig-scorri{order:-1;flex-basis:100%;margin:0}
+}
+@media (max-height:500px) and (min-width:601px){
+  .ig-scorri{order:-1;flex-basis:100%;margin:0 0 -18px}
+  .ig-comandi{gap:4px;justify-content:space-between;padding-bottom:0}
+  .ig-comandi .ig-b:not(.ig-b-testo){width:38px;height:38px} .ig-comandi .ig-b.ig-b-play{width:44px;height:44px} .ig-b.ig-b-testo{height:38px}
+  .ig-b.ig-b-testo{padding:0 8px 0 5px;font-size:12.5px;gap:2px} .ig-b.ig-b-testo.fine{padding:0 5px 0 8px} .ig-comandi{gap:3px} .ig-lato{overflow-x:hidden}
+  .ig-scorri{margin-bottom:0}
+}
+/* «Il cielo, il fiume, la malattia» (24 novembre 2026) */
+.ig-ci-tavola,.ig-ci-fili,.ig-ci-col{opacity:0;transition:opacity .8s}
+.ig-ci-tavola.vis,.ig-ci-fili.vis,.ig-ci-col.vis{opacity:1}
+.ig-ci-acqua{opacity:0;transition:opacity 1.2s}
+.ig-ci-acqua.vis{opacity:1}
+.ig-ci-acqua.leggera.vis{opacity:.45}
+.ig-ci-piena{fill:#6E9FB3;opacity:.55}
+.ig-ci-s{opacity:0;transition:opacity .6s}
+.ig-ci-s.vis{opacity:1}
+.ig-ci-s-fondo{fill:#FFFDF8;stroke:#5F554B;stroke-width:1.2}
+.ig-ci-s.terra .ig-ci-s-fondo{stroke:#8A5A2B} .ig-ci-s.fiume .ig-ci-s-fondo{stroke:#3E6F86} .ig-ci-s.leggenda .ig-ci-s-fondo{stroke:#9E8BB0;stroke-dasharray:3 2}
+.ig-ci-g{fill:#5F554B;stroke:none}
+.ig-ci-g.linea{fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ig-ci-g.malattia{fill:#9A2F2A} .ig-ci-g.fiume{stroke:#3E6F86} .ig-ci-g.terra{stroke:#8A5A2B} .ig-ci-g.cielo{fill:#B8A04A} .ig-ci-g.leggenda{stroke:#7A6A8E;fill:none}
+.ig-ci-g.chiaro.malattia{fill:#FFF8EA}
+.ig-ci-g.malattia.onda{fill:none;stroke:#9A2F2A;stroke-linecap:round} .ig-ci-g.chiaro.malattia.onda{fill:none;stroke:#FFF8EA}      /* i cerchi spezzati (e i fili) del segno della malattia, 24 novembre 2026 */ .ig-ci-g.chiaro.fiume,.ig-ci-g.chiaro.terra{stroke:#FFF8EA} .ig-ci-g.chiaro.cielo{fill:#FFF8EA}
+.ig-ci-velo{stroke:#9E9583;stroke-width:1.4;opacity:.8}
+.ig-ci-pop-f{fill:#E6DCCB;opacity:.75}
+.ig-ci-pop{fill:none;stroke:#C2B49B;stroke-width:1.6}
+.ig-ci-pop-t{font-family:var(--ui);font-size:10.5px;fill:#8E8270}
+.ig-ci-filo{stroke:#DCCFB8;stroke-width:1.2}
+.ig-ci-filo-t{font-family:var(--ui);font-size:11.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase}
+.ig-ci-filo-t.malattia{fill:#9A2F2A} .ig-ci-filo-t.fiume{fill:#3E6F86} .ig-ci-filo-t.terra{fill:#8A5A2B} .ig-ci-filo-t.cielo{fill:#8A7A2E}
+.ig-ci-anno-p{font-family:var(--ui);font-size:10.5px;fill:#7B6E61}
+.ig-ci-ev{opacity:0;transition:opacity .5s}
+.ig-ci-ev.vis{opacity:1}
+.ig-ci-ev-c{stroke:#FFF8EA;stroke-width:1.5}
+.ig-ci-ev-c.malattia{fill:#9A2F2A} .ig-ci-ev-c.fiume{fill:#3E6F86} .ig-ci-ev-c.terra{fill:#8A5A2B} .ig-ci-ev-c.cielo{fill:#B8A04A}
+.ig-ci-ev.ora .ig-ci-ev-c{stroke:#2A231D;stroke-width:2.5}
+.ig-ci-durata{opacity:.55} .ig-ci-durata.malattia{fill:#9A2F2A} .ig-ci-durata.terra{fill:none;stroke:#8A5A2B;stroke-width:1.5;stroke-dasharray:3 3}
+.ig-ci-cur{stroke:#2A231D;stroke-width:1.2;opacity:.5}
+.ig-ci-nome{font-size:12px}
+/* «Il cielo, il fiume, la malattia», seconda veste (24 novembre 2026) */
+.ig-ci-pianta{transition:opacity .6s}
+.ig-ci-pianta.spenta{opacity:0}
+.ig-ci-acqua{opacity:0;transition:opacity 1s}
+.ig-ci-acqua.vis{opacity:.78}
+.ig-ci-acqua.cala.vis{opacity:.35}
+.ig-ci-fascia{display:none}
+.ig-ci-fascia.vis{display:inline}
+.ig-ci-mura{fill:rgba(251,246,234,.18)}
+.ig-ci-corteo{opacity:0;transition:opacity .5s}
+.ig-ci-corteo.vis{opacity:1}
+.ig-ci-corteo path{fill:none;stroke:#7A1F2B;stroke-width:2.2;stroke-linecap:round;stroke-dasharray:1 0}
+.ig-ci-corteo-p{fill:#FFF8EA;stroke:#7A1F2B;stroke-width:1.5}
+.ig-ci-mal{opacity:0;transition:opacity .8s,transform .8s}
+.ig-ci-mal.vis{opacity:.9}
+.ig-ci-mal.piccolo.vis{opacity:.35}
+.ig-ci-mal-a{fill:#9A2F2A;opacity:.12}
+.ig-ci-dida{opacity:0;transition:opacity .5s}
+.ig-ci-dida.vis{opacity:1}
+.ig-ci-disegni .ig-ci-dis{opacity:0;transition:opacity .7s}
+.ig-ci-disegni .ig-ci-dis.vis{opacity:1}
+.ig-ci-dis-fondo{fill:#F4ECDD}
+.ig-ci-dis-fondo.malattia{fill:#F3E7E2}
+.ig-ci-dis-segno{opacity:.55}
+.ig-ci-dis-q{font-family:var(--serif);font-style:italic;fill:#2A231D}
+.ig-ci-dis-chi{font-family:var(--ui);font-size:12px;fill:#6B5F53}
+/* il mezzogiorno del 536 (scena536 in js/infografiche.js; 24 novembre 2026): le opacità che cambiano col velo stanno negli attributi, qui solo colori e fill-opacity */
+.ig-c5-raggi{stroke:#FFF3CC;stroke-linecap:round;fill:none}
+.ig-c5-sole{fill:#FFFBEA}
+.ig-c5-solev{fill:#D2DDE3;stroke:#A6BAC4}
+.ig-c5-alonev{fill:#E6ECEA;fill-opacity:.5}
+.ig-c5-lontano{fill:#D3BF98}
+.ig-c5-muro{fill:#E6CEA0}
+.ig-c5-colonna{fill:#EDDCB8}
+.ig-c5-tetto{fill:#B5704A}
+.ig-c5-buio{fill:#6A4B2F}
+.ig-c5-cornice{fill:#C9AB78}
+.ig-c5-cornici{stroke:#C4A472;fill:none}
+.ig-c5-spirale{stroke:#B89466;fill:none}
+.ig-c5-propria{fill:#4E3520;fill-opacity:.3}
+.ig-c5-ombra{fill:#4A321B;fill-opacity:.42}
+.ig-c5-fant{fill:none;stroke:#3E3A35;stroke-dasharray:3 2.5}
+.ig-c5-piatto{fill:#A7A394}
+.ig-c5-foschia{fill:#A9B3B7}
+.ig-c5-gambe{stroke:#5A4030;stroke-width:2.2;stroke-linecap:round;fill:none}
+.ig-c5-braccio{stroke:#B98259;stroke-width:2;stroke-linecap:round;fill:none}
+.ig-c5-bastone{stroke:#6A4B2F;stroke-width:1.2;stroke-linecap:round;fill:none}
+.ig-c5-testa{fill:#B98259}
+.ig-c5-anfora{fill:#B5704A}
+.ig-c5-bg{opacity:0;transition:opacity .7s}
+.ig-c5-bg.vis{opacity:1}
+.ig-c5-bg-f{fill:rgba(251,247,238,.92);stroke:rgba(90,70,50,.18)}
+.ig-c5-bar{fill:#B8A04A}
+.ig-c5-q{font-family:var(--serif);font-style:italic;fill:#2A231D}
+.ig-c5-n{font-family:var(--ui);fill:#2A231D}
+.ig-c5-chi{font-family:var(--ui);font-size:11px;fill:#5F554B}
+.ig-c5-schema{font-family:var(--ui);font-size:10px;letter-spacing:.12em;text-transform:uppercase;fill:#4F4030}
+.ig-c5-fermo{margin:14px 0 6px}
+.ig-c5-fermo svg{display:block;width:100%;height:auto;max-width:520px;border-radius:12px}
+.ig-c5-riq{fill:none;stroke:#FBF6EA;stroke-width:2}
+.ig-c5-did{font-family:var(--ui);font-size:13px;line-height:1.45;color:#5F554B;margin:8px 0 6px}
+.ig-c5-cit{font-family:var(--serif);font-size:16px;line-height:1.4;color:#2A231D;margin:0 0 6px}
+.ig-ci-banda{fill:#F6F0E4;stroke:#E8DDC8}
+.ig-ci-banda.malattia{fill:#F6ECE6} .ig-ci-banda.fiume{fill:#EAF0F0} .ig-ci-banda.terra{fill:#F3ECE0} .ig-ci-banda.cielo{fill:#F2F0E2}
+.ig-ci-filo-t{font-size:11px}
+.ig-ci-pop-f{fill:#D9CDB7;opacity:.55}
+.ig-ci-pop{stroke:#B3A486;stroke-width:1.8}
+.ig-ci-pop-t{font-size:11px;fill:#6B5F53}
+.ig-ci-ev-a{font-family:var(--ui);font-size:10.5px;font-weight:700;fill:#5F554B}
+.ig-ci-ev.ora .ig-ci-ev-a{font-size:14px;fill:#2A231D}
+.ig-ci-ev.ora .ig-ci-ev-c{stroke:#2A231D;stroke-width:2.5}
+.ig-ci-ev .ig-ci-ev-c{transition:r .3s}
+.ig-ci-oppure{fill:none;stroke:#8A5A2B;stroke-width:1.4;stroke-dasharray:3 3}
+.ig-ci-cur.via{opacity:0}
+.ig-ci-cop{width:220px;height:52px;margin-bottom:14px}
+.ig-copertina.gira>.ig-ci-cop{animation:ig-su .8s cubic-bezier(.2,.8,.2,1) both}
+.ig-ci-ev-a.nascosto{display:none}
+.ig-ci-ev-a{paint-order:stroke;stroke:#FBF6EA;stroke-width:3px;stroke-linejoin:round}

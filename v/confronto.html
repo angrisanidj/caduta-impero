@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Confronto fra le versioni della città</title>
+<style>
+  html,body{margin:0;height:100%;background:#F6F4EF;color:#221C18;font:16px/1.4 system-ui,-apple-system,sans-serif}
+  #riquadro{position:fixed;left:0;top:0;width:100vw;height:100vh;height:100dvh;border:0;display:block}
+  #stato{position:fixed;z-index:10;left:8px;right:8px;top:calc(8px + env(safe-area-inset-top,0px));background:rgba(255,255,255,.96);border:2px solid #7A1F2B;border-radius:10px;padding:8px 12px;font-weight:600}
+  #stato small{display:block;font-weight:400;color:#5F554B}
+  #pagina{position:relative;z-index:5;padding:calc(16px + env(safe-area-inset-top,0px)) 14px 30px;max-width:640px;margin:0 auto}
+  h1{font-size:20px;margin:0 0 8px;color:#7A1F2B}
+  button{font:600 16px/1 system-ui,sans-serif;padding:13px 20px;border-radius:999px;border:1px solid #7A1F2B;background:#7A1F2B;color:#fff;min-height:46px;margin:8px 8px 0 0}
+  button.due{background:#fff;color:#7A1F2B}
+  table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums;margin:10px 0}
+  th,td{padding:6px 4px;border-bottom:1px solid #E3DDD2;text-align:right} th:first-child,td:first-child{text-align:left}
+  textarea{width:100%;height:150px;font-size:11px;box-sizing:border-box}
+</style>
+</head>
+<body>
+<!-- Confronto fra le versioni (28 novembre 2026). L'utente: «Inizialmente andava a 60 anche in qualità massima ora invece scatta». Tre tabelle della prova delle cause
+     non hanno trovato il freno (né pixel sotto una soglia, né disegni, né triangoli). Qui si fa la prova più semplice: la stessa vista dell'800, alla qualità massima,
+     nelle versioni della pagina dal 25 novembre a oggi, una dopo l'altra in un riquadro, e si contano i fotogrammi. Dice in quale giorno la città ha cominciato a
+     rallentare su questo dispositivo. Le versioni vecchie stanno nelle cartelle a, b, c, d, e (solo index.html, js e css: le immagini della pagina mancano, alla città non servono).
+     Nulla va in rete. ?rapido=1 accorcia i tempi (per le prove sul PC). -->
+<div id="pagina">
+  <h1>Confronto fra le versioni della città</h1>
+  <p>La stessa vista di Roma nell'800, alla qualità massima, nelle versioni dal 25 novembre a oggi, una dopo l'altra. Dura circa quattro minuti. Tieni il telefono fermo, lo schermo acceso, e non toccare nulla finché non compare la tabella.</p>
+  <button id="via" type="button">Avvia</button>
+</div>
+<script>
+(function(){
+'use strict';
+var RAPIDO=/[?&]rapido=1/.test(location.search), ASSESTA=RAPIDO?3500:9000, MISURA=RAPIDO?3000:14000;
+var VISTA='?guarda=punto&x=0&z=0&dist=450&da=so&anno=800&qualita=massima';
+var GIRI=[
+  {k:'A', n:'25 nov, 00:45', u:'a/'},
+  {k:'F', n:'oggi, tutti i pixel, senza preparazione', u:'../', piu:'&densita=fissa&prepara=0'},
+  {k:'C', n:'26 nov, 22:01', u:'c/'},
+  {k:'E', n:'27 nov, 19:27', u:'e/'},
+  {k:'B', n:'25 nov, 19:20', u:'b/'},
+  {k:'D', n:'27 nov, 07:53', u:'d/'},
+  {k:'G', n:'oggi, com\'è in rete', u:'../'},
+  {k:'A2', n:'25 nov, di nuovo', u:'a/'}
+];
+function dorme(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
+function cifra(v,d){ return (+v).toFixed(d==null?1:d).replace('.',','); }
+var esiti=[];
+function conta(ms){ return new Promise(function(fatto){ var iv=[], p=0, t0=0;
+  function g(ts){ if(p) iv.push(ts-p); p=ts; if(!t0) t0=ts; if(ts-t0<ms) requestAnimationFrame(g); else fatto(iv); }
+  requestAnimationFrame(g); }); }
+async function giro(G,stato){
+  var f=document.createElement('iframe'); f.id='riquadro'; f.setAttribute('title','La città, versione '+G.n);
+  var pronto=new Promise(function(r){ f.addEventListener('load',r); setTimeout(r,30000); });
+  f.src=G.u+VISTA+(G.piu||'')+'&c='+Date.now(); document.body.appendChild(f);
+  stato.firstChild.textContent=G.k+' · '+G.n+': carico'; await pronto;
+  stato.firstChild.textContent=G.k+' · '+G.n+': aspetto che si assesti'; await dorme(ASSESTA);
+  var w=null, RMf=null, c={n:0,tri:0,dis:0}, vecchio=null;
+  try{ w=f.contentWindow; RMf=w.RM; var R=RMf.renderer; vecchio=R.render;
+    R.render=function(s){ vecchio.apply(R,arguments); if(s===RMf.scene){ c.n++; c.tri+=R.info.render.triangles; c.dis+=R.info.render.calls; } }; }catch(e){}
+  stato.firstChild.textContent=G.k+' · '+G.n+': misuro'; var iv=await conta(MISURA);
+  var s=0, mx=0, lunghi=0, i; for(i=0;i<iv.length;i++){ s+=iv[i]; if(iv[i]>mx) mx=iv[i]; if(iv[i]>25) lunghi++; }
+  var e={k:G.k, n:G.n, fps:s?1000*iv.length/s:0, citta:s?1000*c.n/s:0, peg:mx, lunghi:iv.length?100*lunghi/iv.length:0, tri:c.n?c.tri/c.n/1e6:0, dis:c.n?c.dis/c.n:0, tela:'?', prog:0, scala:''};
+  try{ var cv=RMf.renderer.domElement; e.tela=cv.width+' x '+cv.height; e.prog=(RMf.renderer.info.programs||[]).length;
+    if(RMf.scalaAdatta && RMf.scalaAdatta.scala) e.scala=cifra(RMf.scalaAdatta.scala(),2);
+    if(vecchio) RMf.renderer.render=vecchio;
+    var x=RMf.renderer.getContext().getExtension('WEBGL_lose_context'); if(x) x.loseContext(); }catch(e2){}      // il contesto si lascia subito: otto città di fila in memoria farebbero chiudere la pagina al telefono
+  f.remove(); esiti.push(e); await dorme(1500); }
+function testo(){ var L=['Come finisce un impero, confronto fra le versioni','Browser: '+navigator.userAgent,'Schermo: '+screen.width+' x '+screen.height+' punti, densità '+(window.devicePixelRatio||1),
+  'Versione | fotogrammi al secondo | disegni della città al secondo | peggiore ms | oltre 25 ms % | tela | milioni di triangoli | disegni per fotogramma | programmi | scala'];
+  esiti.forEach(function(e){ L.push(e.k+' '+e.n+' | '+cifra(e.fps)+' | '+cifra(e.citta)+' | '+Math.round(e.peg)+' | '+Math.round(e.lunghi)+' | '+e.tela+' | '+cifra(e.tri,2)+' | '+Math.round(e.dis)+' | '+e.prog+' | '+(e.scala||'—')); });
+  return L.join('\n'); }
+function fine(stato){ stato.remove(); var p=document.getElementById('pagina'); p.textContent=''; var h=document.createElement('h1'); h.textContent='Confronto: risultato'; p.appendChild(h);
+  var tb=document.createElement('table'), tr=document.createElement('tr'); ['Versione','f/s','peggiore','oltre 25 ms','M tri','disegni'].forEach(function(t){ var th=document.createElement('th'); th.textContent=t; tr.appendChild(th); }); tb.appendChild(tr);
+  esiti.forEach(function(e){ var r=document.createElement('tr'); [e.k+' · '+e.n,cifra(e.fps),Math.round(e.peg)+' ms',Math.round(e.lunghi)+'%',cifra(e.tri,2),Math.round(e.dis)].forEach(function(t){ var td=document.createElement('td'); td.textContent=t; r.appendChild(td); }); tb.appendChild(r); });
+  p.appendChild(tb); var t=testo(), a=document.createElement('textarea'); a.value=t; a.setAttribute('readonly','');
+  var cp=document.createElement('button'); cp.type='button'; cp.textContent='Copia';
+  cp.addEventListener('click',function(){ var ok=function(){ cp.textContent='Copiato'; setTimeout(function(){ cp.textContent='Copia'; },1600); }, vecchio=function(){ a.select(); try{ document.execCommand('copy'); }catch(e){} ok(); };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok,vecchio); else vecchio(); });
+  p.appendChild(cp); p.appendChild(a); }
+document.getElementById('via').addEventListener('click',async function(){
+  document.getElementById('pagina').style.display='none';
+  var stato=document.createElement('div'); stato.id='stato'; stato.appendChild(document.createTextNode('')); var sm=document.createElement('small'); stato.appendChild(sm); document.body.appendChild(stato);
+  for(var i=0;i<GIRI.length;i++){ sm.textContent='Versione '+(i+1)+' di '+GIRI.length+'. Non toccare lo schermo.'; await giro(GIRI[i],stato); }
+  document.getElementById('pagina').style.display=''; fine(stato); });
+window.RM_confronto={esiti:esiti, testo:testo};
+})();
+</script>
+</body>
+</html>

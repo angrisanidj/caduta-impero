@@ -1,0 +1,223 @@
+/* Aggiunte alla carta dell'Impero: la riga che dice che cosa accade nei luoghi segnati dal rombo (js/mappa.js, scriviLuoghi). */
+.legenda-luoghi{margin:0;padding:7px 10px;min-height:33px;border-top:1px solid var(--line);font-family:var(--ui,sans-serif);font-size:12.5px;line-height:1.4;display:flex;flex-wrap:wrap;gap:3px 16px;color:var(--ink)}
+.legenda-luoghi[hidden]{display:flex;visibility:hidden}
+.legenda-luoghi span::before{content:"";display:inline-block;width:7px;height:7px;margin:0 8px 0 2px;background:var(--ink);transform:rotate(45deg);vertical-align:1px}
+.legenda-luoghi b{font-weight:600}
+body.impero-grande .legenda-luoghi{align-self:stretch;flex:none}      /* non si lascia schiacciare: su due righe coprirebbe la legenda */
+body.impero-largo .legenda-luoghi{position:absolute;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top,0px));z-index:2;min-height:0;max-width:min(520px,52vw);padding:5px 10px;border:0;border-radius:6px;background:rgba(251,246,234,.92);font-size:12px}
+body.impero-largo .legenda-luoghi[hidden]{display:none}
+/* la didascalia che accompagna lo zoom della carta sui luoghi dell'evento (js/mappa.js, avviaRegia) */
+.m-didascalia{position:absolute;left:10px;right:58px;bottom:10px;max-width:520px;margin:0;padding:7px 11px;display:flex;flex-direction:column;gap:2px;font-family:var(--ui,sans-serif);font-size:13px;line-height:1.35;color:#FBF6EA;
+  background:rgba(36,30,26,.9);border-left:3px solid var(--gold2);border-radius:3px;opacity:0;transition:opacity .45s;pointer-events:none;z-index:2}
+.m-didascalia.viva{opacity:1}
+.m-didascalia.in-alto{top:10px;bottom:auto;left:auto;right:10px;width:max-content;max-width:min(520px,calc(100% - 96px))}      /* in alto a destra: a sinistra c'è l'anno */
+.m-didascalia b{font-weight:600;color:var(--gold3)}
+/* dal 23 novembre 2026 la regia c'è anche a tutto schermo: didascalia in basso al centro, sopra la barra dei passi (se c'è); in alto al centro quando la scena sta in basso */
+body.impero-grande .m-didascalia{left:50%;right:auto;transform:translateX(-50%);width:max-content;max-width:min(560px,calc(100% - 24px));bottom:12px}
+body.impero-grande .m-didascalia:not(.in-alto):has(~.m-passi:not([hidden])){bottom:54px}
+body.impero-grande .m-didascalia.in-alto{top:12px;bottom:auto}
+/* a tutto schermo i comandi − + ✕ sono fissi in alto a destra (css/stile.css): 144 punti più 12 di margine sul telefono, 126 più 12 sul PC.
+   La didascalia in alto resta centrata e non ci passa sotto (24 novembre 2026, cattura dell'utente sul 711: la × della didascalia stava sotto il ✕ del tutto schermo) */
+body.impero-grande .m-didascalia.in-alto{--cm:138px;max-width:min(560px,calc(100% - 24px),calc(100vw - 2*var(--cm) - 16px))}
+@media (max-width:700px){ body.impero-grande .m-didascalia.in-alto{--cm:156px} }
+/* telefono in piedi: così sarebbe troppo stretta; scende sotto i comandi e prende tutta la larghezza */
+@media (max-width:640px){ body.impero-grande .m-didascalia.in-alto{top:calc(64px + env(safe-area-inset-top,0px));max-width:calc(100% - 24px)} }
+body.impero-largo.carta-in-regia .legenda-luoghi{opacity:0;pointer-events:none}
+@media (max-width:700px){ .m-didascalia{font-size:12px;padding:6px 9px;right:60px} }
+/* la scena dell'evento sulla carta (js/mappa.js, disegnaScena): le marce si tracciano, poi compaiono la punta della freccia e i segni di scontro, assedio e sacco */
+.m-scena{pointer-events:none}
+.m-scena .marcia{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.5s ease .15s}
+.m-scena .mare{stroke-dasharray:.035 .03;opacity:0;transition:opacity .9s ease .3s}
+.m-scena .mare.sotto{stroke-dasharray:none;opacity:0}
+.m-scena .punta{opacity:0;transition:opacity .3s ease 1.5s}
+.m-scena .scontro,.m-scena .assedio,.m-scena .fuoco{opacity:0;transition:opacity .4s ease 1.7s}
+.m-scena.viva .marcia{stroke-dashoffset:0}
+.m-scena.viva .mare{opacity:1} .m-scena.viva .mare.sotto{opacity:.55}
+.m-scena.viva .punta,.m-scena.viva .scontro,.m-scena.viva .assedio,.m-scena.viva .fuoco{opacity:1}
+.m-scena:not(.viva):not(.passi) *{transition-delay:0s;transition-duration:.35s}
+.m-scena.ferma *{transition:none}
+@media (prefers-reduced-motion:reduce){ .m-scena *{transition:none} }
+/* nomi sulle frecce e morti (js/mappa.js, disegnaScena): compaiono dopo la linea */
+.m-scena .m-nome-freccia{font-family:var(--ui,sans-serif);font-weight:600;stroke:#FBF6EA;stroke-linejoin:round;paint-order:stroke;opacity:0;transition:opacity .4s ease 1.2s}
+.m-scena .morte{opacity:0;transition:opacity .4s ease 1.5s}
+.m-scena.viva .m-nome-freccia,.m-scena.viva .morte{opacity:1}
+/* durante i passi i popoli (punti, cartellini, rotte) si nascondono: dicono dove stanno i gruppi nell'anno della tappa, non in quello del passo */
+svg.in-passi .m-rotte,svg.in-passi .m-popoli,svg.in-passi .m-luogo>g{opacity:0;transition:opacity .4s}      /* anche i cartellini dei luoghi della tappa: i rombi restano */
+.m-luogo>g{transition:opacity .4s}
+.m-rotte,.m-popoli{transition:opacity .4s}
+/* scene a passi: il passo in corso si disegna, quelli già visti restano chiari e senza nomi né segni, i seguenti non si vedono. Fuori dalla regia (a tutto schermo, o con meno animazioni) il passo in corso è l'ultimo */
+.m-scena .passo{transition:opacity .5s}
+.m-scena:is(.passi,.viva) .passo.viva .marcia,.m-scena:is(.passi,.viva) .passo.prima .marcia{stroke-dashoffset:0}
+.m-scena:is(.passi,.viva) .passo.viva .mare,.m-scena:is(.passi,.viva) .passo.prima .mare{opacity:1} .m-scena:is(.passi,.viva) .passo.viva .mare.sotto,.m-scena:is(.passi,.viva) .passo.prima .mare.sotto{opacity:.55}
+.m-scena:is(.passi,.viva) .passo.viva :is(.punta,.scontro,.assedio,.fuoco,.morte,.m-nome-freccia),.m-scena:is(.passi,.viva) .passo.prima .punta{opacity:1}
+.m-scena .passo.prima :is(.scontro,.assedio,.fuoco,.morte,.m-nome-freccia){opacity:0}      /* dei passi già visti restano le linee: segni e nomi solo per il passo in corso */
+.m-scena .passo.prima{opacity:.4} .m-scena .passo.prima *{transition:none}
+/* la barra dei passi, sotto la carta come la riga dei luoghi; a tutto schermo in alto a destra, sopra la carta, dove non ci sono le legende */
+.m-passi{margin:0;padding:6px 10px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;align-items:center;gap:4px 5px;font-family:var(--ui,sans-serif)}
+.m-passi[hidden]{display:none}
+.m-passi>b{font:600 11px/1 var(--ui,sans-serif);letter-spacing:.06em;text-transform:uppercase;color:var(--oro-t,#7A5A1E);margin-right:4px}
+.m-passi button{font:600 12px/1 var(--ui,sans-serif);color:#241E1A;background:#FBF6EA;border:1px solid rgba(36,30,26,.28);border-radius:999px;padding:5px 9px;cursor:pointer;min-height:26px}
+.m-passi button:hover{border-color:#241E1A}
+.m-passi button:focus-visible{outline:2px solid var(--gold2);outline-offset:1px}
+.m-passi button[aria-current]{background:#241E1A;color:#FBF6EA;border-color:#241E1A}
+.m-passi .m-passo-via{padding:5px 8px;font-size:10px}
+body.impero-grande .m-passi{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:3;border:0;padding:0;justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;width:max-content;max-width:calc(100% - 24px)}      /* una riga sola: sul telefono scorre di lato */
+body.impero-grande .m-passi button{flex:none}
+body.impero-grande .m-passi>b{display:none}
+body.impero-grande .m-passi button{background:rgba(251,246,234,.94)}
+body.impero-grande .m-passi button[aria-current]{background:#241E1A}
+@media (max-width:700px){ .m-passi{gap:4px;padding:6px 8px} .m-passi button{font-size:11.5px;padding:5px 8px;min-height:28px} }
+/* La legenda risponde (js/mappa.js): ogni voce è un bottone a pastiglia. Toccata, tiene vive sulla carta le sole regioni di quel colore, o i soli popoli con quel rapporto. */
+.legenda-mappa,.legenda-popoli{gap:5px 6px}
+/* «Legenda» davanti alle voci degli stati, come «I popoli» davanti a quelle dei popoli */
+.legenda-mappa{align-items:center}
+.legenda-mappa>b{font-family:var(--ui);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+@media (max-height:559px){ body.impero-largo .legenda-mappa>b{display:none} }      /* telefono coricato a tutto schermo: la legenda sta sulla carta e ogni riga conta */
+body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{gap:4px}
+.legenda-mappa span,#legendaPopoli span{min-height:26px;padding:2px 10px 2px 7px;border:1px solid var(--line);border-radius:999px;background:var(--carta2);color:var(--ink);line-height:1.2;cursor:pointer;
+  user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;transition:opacity .25s ease,border-color .2s ease,box-shadow .2s ease}
+.legenda-mappa i{flex:none;width:13px;height:13px;border-radius:3px}
+#legendaPopoli i{flex:none;width:11px;height:11px}
+#legendaPopoli b{margin-right:4px}
+.legenda-mappa span:hover,#legendaPopoli span:hover{border-color:#B9AE9E}
+.legenda-mappa span:focus-visible,#legendaPopoli span:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+.legenda-mappa span[aria-pressed="true"],#legendaPopoli span[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);font-weight:600}
+.legenda-mappa.con-fuoco span[aria-pressed="false"],#legendaPopoli.con-fuoco span[aria-pressed="false"]{opacity:.5}
+.legenda-mappa span.indicata{border-color:var(--porpora);box-shadow:0 0 0 2px rgba(122,31,43,.22)}
+.m-regione{transition:color .9s ease,opacity .35s ease}
+#mappa svg.m-fuoco .m-regione:not(.acceso){opacity:.16}
+#mappa svg.m-fuoco .m-popolo:not(.via),#mappa svg.m-fuoco .m-rotta:not(.via),#mappa svg.m-fuoco .m-rotta-f:not(.via){opacity:.3}
+#mappa svg[data-fuoco] .m-popolo:not(.via),#mappa svg[data-fuoco] .m-rotta:not(.via){opacity:.18}
+#mappa svg[data-fuoco="fuori"] .m-popolo.fuori,#mappa svg[data-fuoco="accordo"] .m-popolo.accordo,#mappa svg[data-fuoco="armi"] .m-popolo.armi,#mappa svg[data-fuoco="regno"] .m-popolo.regno,
+#mappa svg[data-fuoco="fuori"] .m-rotta.fuori,#mappa svg[data-fuoco="accordo"] .m-rotta.accordo,#mappa svg[data-fuoco="armi"] .m-rotta.armi{opacity:1}
+@media (prefers-reduced-motion:reduce){ .m-regione{transition:none} }
+/* il cartellino della regione toccata */
+.m-chi{position:absolute;z-index:3;margin:0;padding:5px 10px 6px;max-width:min(260px,80%);transform:translate(-50%,-100%);font-family:var(--ui,sans-serif);font-size:12.5px;line-height:1.3;color:#FBF6EA;background:rgba(36,30,26,.94);
+  border-radius:7px;box-shadow:0 4px 14px -4px rgba(0,0,0,.5);pointer-events:none;text-align:center}
+.m-chi.sotto{transform:translate(-50%,0)}
+.m-chi[hidden]{display:none}
+.m-chi b{display:block;font-weight:600;font-size:13.5px;color:var(--gold3,#F1D99A)}
+/* «+N»: le voci che non stanno nelle due righe del telefono */
+.leg-altre{position:absolute;right:8px;bottom:5px;min-width:40px;height:26px;padding:0 10px;font-family:var(--ui,sans-serif);font-size:12px;font-weight:700;color:#fff;background:var(--ink);border:0;border-radius:999px;box-shadow:-10px 0 10px 2px var(--carta2)}
+.leg-altre[hidden]{display:none}
+/* Telefoni, carta in linea: le legende non riservano più lo spazio della tappa con più voci (lasciava mezzo schermo bianco). Stanno su tre righe al massimo (due quella dei popoli), con le voci intere;
+   se ce ne sono altre, il bottone «+N» le apre. La nota in corsivo sta su due righe e si apre con un tocco. */
+@media (max-width:700px){
+  body:not(.impero-grande) .legenda-mappa,body:not(.impero-grande) #legendaPopoli{position:relative;inset:auto;height:auto;min-height:0!important;max-height:70px;overflow:hidden;font-size:12px;padding:7px 10px 5px;align-items:center;align-content:flex-start}
+  body:not(.impero-grande) .legenda-mappa{max-height:101px}      /* tre righe per gli stati, due per i popoli: il bordo di 1, 7 sopra, 26 per riga, 5 fra le righe e 5 sotto, così la riga nascosta non affiora (prima 67 tagliava la seconda riga dei popoli) */
+  body:not(.impero-grande) .legenda-mappa span,body:not(.impero-grande) #legendaPopoli span{padding:2px 8px 2px 6px}
+  .legenda-mappa,#legendaPopoli{gap:5px 6px}
+  .legenda-mappa>b,#legendaPopoli>b{font-size:11px;letter-spacing:.05em;margin-right:2px}      /* «Legenda» e «I popoli» più stretti: le prime due voci stanno sulla stessa riga */
+  body:not(.impero-grande) .legenda-mappa.tagliata,body:not(.impero-grande) #legendaPopoli.tagliata{padding-right:58px}
+  body:not(.impero-grande) .legenda-mappa.aperta,body:not(.impero-grande) #legendaPopoli.aperta{max-height:none;padding-bottom:36px}
+  body:not(.impero-grande) .legenda-nota{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;cursor:pointer}
+  body:not(.impero-grande) .legenda-nota.aperta{-webkit-line-clamp:unset;display:block}
+  .legenda-luoghi{min-height:0}
+}
+/* il disegno riempie il riquadro della carta senza poterlo allungare: l'altezza la decide il riquadro (rapporto 1000/640 in pagina, misure scritte da js/mappa.js a tutto schermo),
+   non il ritaglio del disegno. Su Safari un ritaglio alto e stretto rimasto dopo lo schermo intero faceva crescere il riquadro. */
+#mappa svg{position:absolute;left:0;top:0}
+/* La tetrarchia (293-305, js/mappa.js, strato m-tetra): le aree di comando dei quattro, nello stile delle linee di Verdun; a trattini, più sottili, dove l'attribuzione è discussa */
+.m-tetra{transition:opacity .9s ease;pointer-events:none} .m-tetra.via{opacity:0}
+.m-tetra path{fill:none;stroke:#FBF6EA;stroke-width:1.6;stroke-dasharray:1 3.2;stroke-linecap:round}
+.m-tetra path.discussa{stroke-width:1.2;stroke-dasharray:2.6 3;stroke-linecap:butt;opacity:.85}
+.m-tetra text{font-family:var(--serif);font-style:italic;font-weight:600;font-size:10.5px;text-anchor:middle;fill:#FBF6EA;paint-order:stroke;stroke:rgba(52,16,16,.78);stroke-width:2.8px;stroke-linejoin:round}
+.m-tetra .rango{font-size:8.5px;letter-spacing:.06em}
+/* i nomi dei quattro si toccano: il nome acceso diventa oro, gli altri si attenuano; le regioni di attribuzione discussa restano più chiare */
+/* sui telefoni crescono come i cartellini dei popoli (--pf, js/mappa.js), per restare leggibili e toccabili */
+.m-tetra text{pointer-events:auto;cursor:pointer;transition:opacity .3s,fill .3s;font-size:max(10.5px,calc(var(--pf,11.5px)*.86))} .m-tetra .rango{font-size:.8em} .m-tetra.via text{pointer-events:none}
+.m-tetra text[aria-pressed="true"]{fill:#F1D99A;stroke:rgba(40,14,14,.6)}
+.m-tetra.con-fuoco text[aria-pressed="false"]{opacity:.6}
+.m-tetra text:focus{outline:none} .m-tetra text:focus-visible{outline:1.5px solid #F1D99A;outline-offset:2px}
+#mappa svg.m-fuoco .m-regione.acceso.incerto{opacity:.5}
+.legenda-luoghi span.tetra{color:var(--ink2,var(--ink))}
+/* le residenze dei tetrarchi si toccano (js/mappa.js, SEDI): pastiglia come le voci della legenda */
+.legenda-luoghi span.sede{position:relative;cursor:pointer;padding:5px 12px 5px 27px;margin-left:-2px;border:1px solid var(--line);border-radius:10px;background:#fff;transition:background .15s,border-color .15s}
+.legenda-luoghi span.sede::before{position:absolute;left:10px;top:calc(5px + .7em - 3.5px);margin:0}      /* il rombo resta fisso a sinistra anche quando la riga va a capo (23 novembre 2026: sul telefono le pastiglie ovali si deformavano) */
+.legenda-luoghi span.sede:hover{border-color:var(--gold2)}
+.legenda-luoghi span.sede[aria-pressed="true"]{background:#F4E6C8;border-color:var(--gold2)}
+.legenda-luoghi span.sede:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.legenda-luoghi span.tetra::before{width:16px;height:0;margin:0 7px 0 1px;background:none;border-top:2px dotted currentColor;transform:none;vertical-align:3px}
+
+/* La didascalia della regia si chiude (js/mappa.js, 23 novembre 2026): × in alto a destra, poi una «i» rotonda che la riporta */
+.m-didascalia{padding-right:38px}
+.m-did-testo{display:flex;flex-direction:column;gap:2px}
+.m-did-chiudi,.m-did-riapri{pointer-events:auto;cursor:pointer;color:#FBF6EA;border:0;font-family:var(--ui,sans-serif);line-height:1}
+.m-did-chiudi{position:absolute;top:1px;right:1px;width:34px;height:34px;font-size:21px;background:transparent;border-radius:50%;opacity:.85}
+.m-did-chiudi:hover,.m-did-chiudi:focus-visible{opacity:1;background:rgba(255,255,255,.12)}
+.m-did-riapri{display:none}
+.m-didascalia.chiusa{padding:0;background:none;border:0;right:auto;width:auto;max-width:none}
+.m-didascalia.chiusa .m-did-testo,.m-didascalia.chiusa .m-did-chiudi{display:none}
+.m-didascalia.chiusa .m-did-riapri{display:grid;place-items:center;width:34px;height:34px;font-size:16px;font-weight:700;font-style:italic;font-family:Georgia,serif;
+  background:rgba(36,30,26,.9);border:1px solid var(--gold2);border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.m-didascalia:not(.viva) .m-did-chiudi,.m-didascalia:not(.viva) .m-did-riapri{pointer-events:none;visibility:hidden}      /* didascalia spenta: niente bottoni invisibili da toccare */
+.m-did-chiudi:focus-visible,.m-did-riapri:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+@media (max-width:700px){ .m-didascalia{padding-right:36px} }
+.m-didascalia.in-alto.chiusa{right:10px}
+
+/* «Continua a est ▸»: la scena esce dalla carta d'insieme (js/mappa.js, segnaFuori; 23 novembre 2026) */
+.m-fuori{position:absolute;z-index:2;display:inline-flex;align-items:center;min-height:32px;padding:5px 11px;font-family:var(--ui,sans-serif);font-size:12.5px;font-weight:600;color:#221C18;
+  background:rgba(251,246,234,.95);border:1px solid var(--gold2);border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer;white-space:nowrap}
+.m-fuori[hidden]{display:none}
+.m-via{left:50%;bottom:14px;transform:translateX(-50%);color:#FBF6EA;background:var(--porpora,#5E1A2B);border-color:var(--gold2)}      /* all'apertura la regia aspetta il via (js/mappa.js, aspetta) */
+.m-via:hover{background:#7A2438}
+.m-fuori[data-lato="est"]{right:10px;transform:translateY(-50%)}
+.m-fuori[data-lato="ovest"]{left:10px;transform:translateY(-50%)}
+.m-fuori[data-lato="nord"]{top:52px!important;transform:translateX(-50%)}
+.m-fuori[data-lato="sud"]{bottom:10px;transform:translateX(-50%)}
+.m-fuori:hover{background:#fff}
+.m-fuori:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+body.carta-in-regia .m-fuori{display:none}
+@media (max-width:700px){ .m-fuori{font-size:12px;min-height:30px;padding:4px 9px} }
+/* Ritocco del 23 novembre 2026 (audit del design): sui dispositivi al tocco i bottoni «Passo per passo» salgono da 28 a 34 punti, più facili da prendere col dito */
+@media (pointer:coarse){ .m-passi button{min-height:34px} }
+
+/* pastiglie della legenda: al tocco la zona sensibile è più alta di qualche punto, senza cambiare l'aspetto né lo spazio che la legenda occupa (audit del design, proposta 1; 23 novembre 2026) */
+@media (pointer:coarse){ .legenda-mappa span,#legendaPopoli span{position:relative} .legenda-mappa span::after,#legendaPopoli span::after{content:"";position:absolute;inset:-3px -3px} }
+/* telefono coricato: un invito a mettere la carta a tutto schermo (js/mappa.js, invitoGrande) */
+.m-invita{position:absolute;z-index:3;left:50%;top:12px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:4px 6px 4px 14px;border:1px solid var(--gold2);border-radius:999px;
+  background:rgba(36,30,26,.92);color:#F6E4B0;font-family:var(--ui,sans-serif);font-size:13px;font-weight:600;box-shadow:0 2px 10px rgba(0,0,0,.3);white-space:nowrap}
+.m-invita[hidden]{display:none}
+.m-invita button{all:unset;cursor:pointer;display:inline-flex;align-items:center;min-height:30px;padding:0 4px}
+.m-invita .no{width:28px;justify-content:center;border-radius:50%;font-size:17px;color:#D9CBB4}
+.m-invita button:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+
+/* Telefono, carta in pagina (24 novembre 2026, l'utente: «La mappa dell'impero deve essere più visibile da mobile»): da bordo a bordo, senza i 16 punti di margine né il bordo ai lati;
+   legende più basse (due righe gli stati, una i popoli: «+N» apre le altre; la nota dei popoli su una riga); i passi su una riga che scorre; nomi più grandi */
+@media (max-width:700px){
+  body:not(.impero-grande) .riquadro.impero{margin-left:-16px;margin-right:-16px;border-left:0;border-right:0;border-radius:0}
+  body:not(.impero-grande) .legenda-mappa{max-height:70px}
+  body:not(.impero-grande) #legendaPopoli{max-height:39px}
+  body:not(.impero-grande) .legenda-nota{-webkit-line-clamp:1}
+  body:not(.impero-grande) .m-passi{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  body:not(.impero-grande) .m-passi button{flex:none}
+  body:not(.impero-grande) .m-nome{font-size:14px;letter-spacing:.08em}
+  body:not(.impero-grande) .m-citta text{font-size:15px}
+}
+
+/* Verdun (843, js/mappa.js; 24 novembre 2026): le parti dei tre fratelli, velature (Carlo più chiaro e un po' più freddo, Ludovico più scuro, Lotario nel viola pieno).
+   Misurate con le formule di src/prove/daltonismo.mjs (CIEDE2000, visione normale e tre daltonismi) contro gli altri colori delle tappe 843-852: differenza minima 10,3
+   (Carlo e principato di Moravia); con il bianco puro Carlo scendeva a 8 contro i Bulgari e Lotario e Ludovico a 6,5. Il rilievo sopra cambia un poco i colori veri;
+   il confine ricalcolato sulle parti (a trattini quello della Frisia) e i nomi, che si toccano come quelli dei tetrarchi. Prevalgono sulle regole di css/stile.css (.m-verdun) */
+.m-verdun-parti{pointer-events:none;transition:opacity .9s ease} .m-verdun-parti.via{opacity:0}
+.m-verdun-parti .tinta{stroke:none;transition:fill-opacity .35s ease} .m-verdun-parti .tinta.carlo{fill:#C8E0FF;fill-opacity:.22} .m-verdun-parti .tinta.ludovico{fill:#000;fill-opacity:.42}
+.m-verdun-parti.con-fuoco .tinta{fill-opacity:0}
+.m-verdun-parti .pezzo{fill:var(--st-perso);fill-opacity:0;stroke:none;transition:fill-opacity .35s ease} .m-verdun-parti .pezzo.spento{fill-opacity:.84}
+.m-verdun{pointer-events:none}
+.m-verdun path{stroke-width:2}
+.m-verdun path.discussa{stroke-width:1.4;stroke-dasharray:2.6 3;stroke-linecap:butt;opacity:.85}
+.m-verdun text{pointer-events:auto;cursor:pointer;font-weight:600;paint-order:stroke;stroke:rgba(40,22,58,.8);stroke-width:2.8px;stroke-linejoin:round;
+  font-size:max(10.5px,calc(var(--pf,11.5px)*.86));transition:opacity .3s,fill .3s}
+.m-verdun .rango{font-size:.8em;letter-spacing:.06em}
+.m-verdun.via text{pointer-events:none}
+.m-verdun text[aria-pressed="true"]{fill:#F1D99A}
+.m-verdun.con-fuoco text[aria-pressed="false"]{opacity:.6}
+.m-verdun text:focus{outline:none} .m-verdun text:focus-visible{outline:1.5px solid #F1D99A;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){ .m-verdun-parti .tinta,.m-verdun-parti .pezzo{transition:none} }
+/* le tre pastiglie dei fratelli nella riga sotto la carta: come le residenze dei tetrarchi (.sede), senza rombo */
+.legenda-luoghi span.fratello{cursor:pointer;padding:5px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;transition:background .15s,border-color .15s}
+.legenda-luoghi span.fratello::before{display:none}
+.legenda-luoghi span.fratello:hover{border-color:var(--gold2)}
+.legenda-luoghi span.fratello[aria-pressed="true"]{background:#F4E6C8;border-color:var(--gold2)}
+.legenda-luoghi span.fratello:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+#mappa svg text{text-rendering:geometricPrecision}      /* 24 novembre 2026: le scritte non si reimpaginano a ogni cambio del viewBox (zoom a tutto schermo a 1920: filo principale da 31 a 9 ms per fotogramma); in Edge la carta ferma è uguale al pixel, sull'iPhone l'utente non vede differenze */

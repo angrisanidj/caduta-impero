@@ -1,0 +1,73 @@
+/* Ritratti dei protagonisti (js/protagonisti.js; indice in js/ritratti.js).
+   Elenco: colonna fissa delle miniature a sinistra, testo allineato a destra; sotto il testo, in piccolo, tipo d'immagine e riserva.
+   Vista grande: un <dialog> con immagine, didascalia, autore, licenza e collegamento a Wikimedia Commons. */
+
+/* ---------- elenco ---------- */
+.protagonisti ul.con-ritratti li{display:grid;grid-template-columns:84px 1fr;gap:0 12px;align-items:start;padding:8px 0 0;margin:8px 0 0;border-top:1px solid var(--line)}
+.protagonisti ul.con-ritratti li:first-child{border-top:0;padding-top:4px}
+.protagonisti ul.con-ritratti li::before{display:none}
+.rit-col{display:flex;justify-content:center;min-height:40px}
+.prot-testo{min-width:0}
+.prot-riga{margin:0}
+
+.rit-mini{display:block;padding:0;margin:0;border:0;background:none;cursor:zoom-in;border-radius:5px;line-height:0;position:relative}
+.rit-mini img{display:block;width:calc(var(--l)*1px);height:calc(var(--a)*1px);object-fit:contain;border-radius:4px;box-shadow:0 0 0 1px var(--line),0 3px 8px -5px rgba(34,28,24,.5);background:var(--carta)}
+.rit-mini.rit-taglia img{object-fit:cover;object-position:50% 18%}      /* busti e figure intere: la miniatura mostra la parte alta, la vista grande l'intera immagine */
+.rit-mini:hover img{box-shadow:0 0 0 1px var(--gold2),0 4px 10px -5px rgba(34,28,24,.55)}
+.rit-mini:focus-visible{outline:2px solid var(--porpora);outline-offset:3px}
+
+/* chi non ha immagine: un riquadro vuoto e dichiarato, che non sembri un ritratto */
+.rit-vuoto{display:flex;align-items:center;justify-content:center;width:64px;height:40px;box-sizing:border-box;border:1px dashed #CFC6B6;border-radius:4px;font-family:var(--ui);font-size:10px;line-height:1.15;text-align:center;color:var(--muted);padding:0 4px}
+
+/* riga piccola: segno + tipo, poi la riserva */
+.rit-nota{margin:3px 0 0;font-family:var(--ui);font-size:12px;line-height:1.4;color:var(--muted)}
+.rit-tipo{display:inline-flex;align-items:baseline;gap:5px;font-weight:600;color:var(--oro-t);white-space:nowrap;margin-right:8px}
+.rit-segno{display:inline-block;width:8px;height:8px;box-sizing:border-box;flex:none;position:relative;top:-.05em}
+.rit-coevo .rit-segno{border-radius:50%;background:var(--gold)}      /* pieno: del tempo */
+.rit-posteriore .rit-segno{border-radius:50%;border:1.5px solid var(--gold);background:linear-gradient(90deg,var(--gold) 50%,transparent 50%)}      /* mezzo: più tardo */
+.rit-oggetto .rit-segno{border:1.5px solid var(--muted);border-radius:1px;transform:rotate(45deg) scale(.85)}      /* rombo vuoto: non è un ritratto */
+.rit-ricostruzione .rit-segno{border-radius:50%;border:1.5px dashed var(--porpora)}      /* tratteggio: ricostruito oggi */
+.rit-ricostruzione{color:var(--porpora)}
+.rit-posteriore{color:#6B5A44}
+.rit-oggetto{color:var(--muted)}
+.rit-riserva{color:var(--ink)}
+.rit-attento{display:inline-flex;align-items:center;justify-content:center;width:13px;height:13px;margin-right:5px;border-radius:50%;background:var(--porpora);color:#fff;font-style:normal;font-size:9.5px;font-weight:700;line-height:1;position:relative;top:-.08em}
+
+/* ---------- vista grande ---------- */
+.rit-vista{border:0;padding:0;margin:auto;max-width:min(760px,calc(100vw - 32px));max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);border-radius:10px;background:var(--carta2);color:var(--ink);box-shadow:0 20px 60px -20px rgba(20,10,8,.6);overflow:auto;overscroll-behavior:contain}
+.rit-vista::backdrop{background:rgba(34,7,11,.62)}
+.rit-vista[open]{animation:ritApre .22s ease-out}
+.rit-vista[open]::backdrop{animation:ritVelo .22s ease-out}
+@keyframes ritApre{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes ritVelo{from{opacity:0}to{opacity:1}}
+.rit-vista figure{margin:0;display:grid;grid-template-columns:auto minmax(250px,1fr);align-items:start}
+.rit-grande{background:#EFEBE3;padding:18px;display:flex;align-items:center;justify-content:center;align-self:stretch}
+.rit-grande img{display:block;max-width:min(330px,100%);width:auto;height:auto;max-height:calc(100vh - 100px);max-height:calc(100dvh - 100px);object-fit:contain}
+.rit-vista figcaption{padding:20px 22px 20px;font-family:var(--serif);font-size:17px;line-height:1.45}
+.rit-nome{margin:0 26px 6px 0;font-family:var(--cap);font-size:19px;line-height:1.2}
+.rit-nome b{font-weight:600}
+.rit-nome .date{display:block;margin-top:3px;font-family:var(--ui);font-size:12.5px;color:var(--muted)}
+.rit-cosa{margin:8px 0 10px}
+.rit-nota-grande{font-size:12.5px;margin:0}
+.rit-nota-grande .rit-tipo{white-space:normal;display:inline}
+.rit-nota-grande .rit-segno{margin-right:6px}
+.rit-spiega{font-weight:400;color:var(--muted)}
+.riquadro-riserva{display:block;margin:10px 0 0;padding:8px 12px;border-left:3px solid var(--porpora);background:#F8F1EE;border-radius:0 6px 6px 0;font-family:var(--ui);font-size:13px;line-height:1.45}
+.rit-credito{margin:14px 0 0;padding-top:10px;border-top:1px solid var(--line);font-family:var(--ui);font-size:12px;color:var(--muted)}
+.rit-link{margin:4px 0 0;font-family:var(--ui);font-size:12.5px}
+.rit-link a{color:var(--porpora)}
+.rit-link a:focus-visible,.rit-chiudi:focus-visible{outline:2px solid var(--porpora);outline-offset:2px}
+.rit-chiudi{position:absolute;top:8px;right:8px;z-index:1;width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);font-size:16px;line-height:1;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.rit-chiudi:hover{background:#fff;color:var(--porpora)}
+
+@media (max-width:620px){
+  .protagonisti ul.con-ritratti li{grid-template-columns:70px 1fr;gap:0 10px}
+  .rit-mini img{width:calc(var(--l)*.82px);height:calc(var(--a)*.82px)}
+  .rit-vuoto{width:56px;height:36px;font-size:9.5px}
+  .rit-nota{font-size:11.5px}
+  .rit-vista figure{grid-template-columns:1fr}
+  .rit-grande{padding:14px}
+  .rit-grande img{max-height:46vh;max-height:46dvh}
+  .rit-vista figcaption{padding:14px 16px 16px;font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){ .rit-vista[open],.rit-vista[open]::backdrop{animation:none} }

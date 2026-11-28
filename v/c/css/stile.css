@@ -1,0 +1,1118 @@
+:root{
+  --cap:'Cinzel','Trajan Pro',Georgia,'Times New Roman',serif;
+  --serif:'EB Garamond','Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;
+  --gold:#A87B2A;--gold2:#D4AE55;--gold3:#F1D99A;--oro-t:#7A5617;      /* --oro-t: l'oro delle scritte piccole, scurito perché si legga sul fondo (contrasto 6 a 1) */
+  --ink:#221C18;--carta:#F6F4EF;--carta2:#FFFFFF;--line:#E3DDD2;--muted:#5F554B;      /* fondo «travertino»: chiaro e quasi neutro, perché i colori stiano tutti nelle due scene */
+  --ui:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;      /* scritte di servizio: etichette, legende, bottoni, note */
+  --ombra:0 1px 2px rgba(34,28,24,.06),0 6px 18px -10px rgba(34,28,24,.22);
+  --porpora:#7A1F2B;--vetro:rgba(33,25,18,.8);
+  --vino:#4A1119;--vino-chiaro:#6E1A26;--vino-scuro:#22070B;--crema:#EBDCC8;      /* l'apertura e il piede, come nel Senato */
+  /* stati delle regioni */
+  --st-roma:#9A2F2A;--st-usurpatore:#F2C85A;--st-federati:#94AC84;--st-regno:#4D6B7C;--st-oriente:#B8B3BB;--st-califfato:#48A48C;--st-carolingio:#5A3F78;--st-perso:#DCD0B8;--st-chiesa:#E6C55A;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--carta);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.45}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.etichetta{margin:0;font-family:var(--cap);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--oro-t)}
+
+.testata,main,.piede{max-width:1280px;margin:0 auto;padding:0 24px}
+.testata{padding-top:28px;padding-bottom:18px}
+.occhiello{margin:0;font-family:var(--cap);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--oro-t)}
+h1{margin:4px 0 6px;font-family:var(--cap);font-weight:600;font-size:clamp(28px,4.2vw,46px);line-height:1.05;letter-spacing:.02em}
+.sommario{margin:0;max-width:44em;font-size:20px;color:var(--muted)}
+
+/* ---- le due scene ---- */
+.scene{display:grid;grid-template-columns:1.32fr 1fr;gap:14px;align-items:stretch}
+.schede{display:none}
+.riquadro{position:relative;margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--carta2);min-height:0}
+.riquadro.impero{aspect-ratio:1000/640}
+#mappa,#mappa svg{display:block;width:100%;height:100%}
+#scena{position:absolute;inset:0}
+#scena canvas{display:block;width:100%;height:100%;touch-action:none}
+.riquadro.roma{background:#d8c9a8}
+
+.etichette3d{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.etichette3d span{position:absolute;left:0;top:0;opacity:0;white-space:nowrap;font-family:var(--cap);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:#fff;text-shadow:0 1px 4px rgba(20,14,8,.95),0 0 10px rgba(20,14,8,.7);transition:opacity .3s}
+.conta{position:absolute;left:12px;top:10px;margin:0;display:flex;flex-direction:column;color:#fff;text-shadow:0 1px 8px rgba(20,14,8,.9);pointer-events:none;font-size:14px;line-height:1.2}
+.conta .etichetta{color:var(--gold3)}
+.conta b{font-family:var(--cap);font-weight:600;font-size:28px;font-variant-numeric:tabular-nums}
+.notte{position:absolute;right:10px;top:10px;font-family:var(--cap);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:999px;padding:6px 14px}
+.notte[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+.grande{position:absolute;right:10px;bottom:10px;width:36px;height:36px;font-size:18px;line-height:1;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:50%;padding:0}
+.grande[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+/* scena a tutto schermo: la linea del tempo resta a portata di mano */
+body.roma-grande{overflow:hidden}
+body.roma-grande .riquadro.roma{display:block!important;position:fixed;inset:0;z-index:50;border:0;border-radius:0;aspect-ratio:auto}
+body.roma-grande .tempo,body.impero-grande .tempo{position:fixed;left:16px;right:16px;bottom:12px;z-index:60;margin:0;background:rgba(251,246,234,.92)}
+body.roma-grande .grande{bottom:auto;top:52px}
+body.roma-grande .etichette3d span{font-size:11px}
+/* didascalia dell'evento in corso (sacco, assedio) */
+.evento{position:absolute;left:12px;bottom:10px;right:58px;max-width:540px;margin:0;padding:8px 12px;font-size:14.5px;line-height:1.35;color:#fff;background:rgba(46,18,13,.82);border-left:3px solid #D0563A;border-radius:3px;opacity:0;transition:opacity .5s;pointer-events:none}
+.evento.vivo{opacity:1}
+body.roma-grande .evento{left:20px;bottom:104px;font-size:16px}
+/* scheda del monumento */
+.scheda{position:absolute;left:12px;top:84px;width:min(300px,calc(100% - 24px));max-height:calc(100% - 150px);overflow:auto;padding:12px 14px 10px;background:rgba(251,246,234,.96);color:var(--ink);border:1px solid rgba(160,130,60,.5);border-radius:4px;box-shadow:0 6px 24px rgba(20,14,8,.35);font-size:14.5px;line-height:1.35}
+.scheda[hidden]{display:none}
+.scheda h3{margin:0 26px 2px 0;font-family:var(--cap);font-size:17px;font-weight:600;line-height:1.2}
+.scheda .chiudi{position:absolute;right:6px;top:6px;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:15px;cursor:pointer}
+.scheda .chiudi:hover{background:rgba(0,0,0,.07)}
+.scheda .stato{margin:0 0 6px;font-size:13px;color:var(--muted)}
+.scheda .stato .st{font-weight:600}
+.scheda .cosa{margin:0 0 8px}
+.scheda ul{list-style:none;margin:0;padding:8px 0 0;border-top:1px solid rgba(160,130,60,.35)}
+.scheda li{display:grid;grid-template-columns:auto 1fr;gap:8px;padding:2px 0}
+.scheda li b{font-family:var(--cap);font-weight:600;font-size:12.5px;min-width:34px;font-variant-numeric:tabular-nums;padding-top:1px}
+.scheda li.futura{opacity:.42}
+body.roma-grande .scheda{top:96px;left:20px;max-height:calc(100% - 220px)}
+.etichette3d span{pointer-events:auto;cursor:pointer}
+.suggerimento{font-family:'EB Garamond',Georgia,serif;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12.5px}
+.monumenti li{cursor:pointer;border-radius:3px}
+.monumenti li:hover>span,.monumenti li.scelto>span{text-decoration:underline;text-decoration-color:var(--gold2);text-underline-offset:3px}
+.monumenti li:focus-visible{outline:2px solid var(--gold2);outline-offset:1px}
+.errore{position:absolute;inset:0;display:grid;place-items:center;margin:0;padding:20px;text-align:center;background:var(--carta2)}
+.errore[hidden]{display:none}
+
+/* ---- mappa ---- */
+#mappa{position:relative}
+.m-acque{fill:none;stroke:#F4FAF6;stroke-linejoin:round}
+.m-terra{fill:var(--st-perso)}
+.m-nome-mare{font-family:var(--serif);font-style:italic;font-size:14px;letter-spacing:.34em;fill:#6E8F93;fill-opacity:.75;text-anchor:middle;pointer-events:none}
+.m-grana{mix-blend-mode:multiply;opacity:.2;pointer-events:none}
+.m-costa{fill:none;stroke:rgba(62,46,30,.55);stroke-width:.7;stroke-linejoin:round;pointer-events:none}
+.m-fiumi path{fill:none;stroke:#8FC0CF;stroke-opacity:.9;stroke-width:.95;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
+.m-fiumi path.forte{stroke:#A6D6E3;stroke-opacity:1;stroke-width:1.9}
+.m-rilievo{mix-blend-mode:overlay;opacity:.92;pointer-events:none}
+.m-anno{position:absolute;left:14px;top:8px;margin:0;font-family:var(--cap);font-weight:600;font-size:clamp(26px,4.4vw,56px);line-height:1;letter-spacing:.02em;color:rgba(43,36,32,.8);text-shadow:0 1px 0 rgba(251,246,234,.7);pointer-events:none}
+.m-battito{fill:none;stroke:#FBF6EA;stroke-width:1.4;transform-box:fill-box;transform-origin:center;animation:battito 2.6s ease-out infinite;pointer-events:none}
+@keyframes battito{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.4);opacity:0}}
+@keyframes scorre{to{stroke-dashoffset:-17}}
+#mappa::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 60px rgba(70,45,20,.28)}      /* l'ombra ai bordi sta sulla carta, non sul riquadro: così finisce sempre dove finisce la carta, qualunque altezza abbia */
+.m-regione{color:var(--st-perso);fill:currentColor;stroke:currentColor;stroke-width:1.1;stroke-linejoin:round;transition:color .9s ease}
+.m-regione.roma{color:var(--st-roma)} .m-regione.usurpatore{color:var(--st-usurpatore)} .m-regione.federati{color:var(--st-federati)}
+.m-regione.regno{color:var(--st-regno)} .m-regione.oriente{color:var(--st-oriente)} .m-regione.perso{color:var(--st-perso)}
+.m-regione.conteso{fill:url(#trama-conteso);stroke:url(#trama-conteso)} .m-regione.califfato{color:var(--st-califfato)} .m-regione.carolingio{color:var(--st-carolingio)}
+.m-nome{font-family:var(--cap);font-size:11px;letter-spacing:.12em;text-transform:uppercase;fill:#fff;text-anchor:middle;paint-order:stroke;stroke:rgba(43,36,32,.55);stroke-width:2.4px;pointer-events:none}
+.m-nome.chiaro{fill:var(--ink);stroke:rgba(251,246,234,.8)}
+.m-citta circle{fill:var(--carta2);stroke:var(--ink);stroke-width:1.2}
+.m-citta text{font-family:var(--serif);font-style:italic;font-size:12.5px;fill:var(--ink);paint-order:stroke;stroke:rgba(251,246,234,.85);stroke-width:2.6px}
+.legenda-mappa{position:absolute;left:10px;bottom:8px;display:flex;flex-wrap:wrap;gap:3px 12px;font-size:13px;background:rgba(251,246,234,.86);border-radius:6px;padding:4px 8px}
+.legenda-mappa span{display:inline-flex;align-items:center;gap:5px}
+.legenda-mappa i{width:11px;height:11px;border-radius:2px;border:1px solid rgba(43,36,32,.25)}
+
+/* ---- linea del tempo ---- */
+.tempo{display:flex;align-items:stretch;gap:14px;margin:14px 0 0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--carta2);position:sticky;bottom:8px;z-index:5}
+.comandi{display:flex;gap:6px;align-items:center;flex:none}
+.comandi button{font-family:var(--cap);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:transparent;border:1px solid var(--line);border-radius:8px;padding:8px 12px;min-height:40px}
+.comandi button:hover{border-color:var(--gold)}
+#btnPrima,#btnDopo{font-size:20px;line-height:1;padding:6px 14px}
+.linea{flex:1;display:flex;gap:10px;min-width:0}
+.atto-gruppo{flex:var(--n) 1 0;min-width:0}
+.atto-gruppo p{margin:0 0 4px;font-family:var(--cap);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.atto-gruppo div{display:flex;gap:3px;border-top:2px solid var(--line);padding-top:6px}
+.atto-gruppo.attivo div{border-color:var(--porpora)} .atto-gruppo.attivo p{color:var(--porpora)}
+.linea button{flex:1;min-width:0;height:22px;padding:0;border:0;border-radius:3px;background:var(--line);position:relative}
+.linea button.intermezzo{background:repeating-linear-gradient(135deg,var(--line) 0 3px,transparent 3px 6px);border:1px solid var(--line)}
+.linea button:hover{background:var(--gold2)}
+.linea button[aria-current="true"]{background:var(--porpora)}
+.linea button.passata{background:#C4A9A0}
+
+/* ---- testo e cruscotto ---- */
+.colonne{display:grid;grid-template-columns:1.32fr 1fr;gap:28px;margin-top:22px;align-items:start}
+.atto{margin:0;font-family:var(--cap);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--porpora)}
+.atto b{font-weight:700;font-size:26px;letter-spacing:.02em;margin-right:10px;color:var(--ink)}
+h2{margin:2px 0 8px;font-family:var(--cap);font-weight:600;font-size:clamp(22px,2.6vw,30px);line-height:1.15}
+.testo{margin:0;font-size:21px;max-width:34em}
+.storici{margin:18px 0 0;padding:12px 16px;border-left:3px solid var(--gold2);background:var(--carta2);border-radius:0 8px 8px 0;max-width:38em}
+.storici p:last-child{margin:4px 0 0}
+.storici.leggenda{border-left-color:#7F95A3}
+/* i protagonisti della tappa: un elenco leggero, senza riquadro, fra il testo e le voci */
+.protagonisti{margin:16px 0 0;max-width:38em}
+.protagonisti ul{list-style:none;margin:4px 0 0;padding:0}
+.protagonisti li{margin:5px 0 0;padding-left:14px;position:relative;font-size:.95em;line-height:1.4}
+.protagonisti li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--gold2)}
+.protagonisti b{font-weight:600}
+.protagonisti .date{margin:0 .45em 0 .4em;font-size:.86em;color:var(--muted)}      /* le date ora sono scritte per esteso («dal 772 al 795»): devono poter andare a capo, o sul telefono escono dalla pagina */
+.protagonisti .date::after{content:" ·"}
+.voce{margin:18px 0 0;padding:12px 16px;border-left:3px solid var(--porpora);background:var(--carta2);border-radius:0 8px 8px 0;max-width:38em}
+.voce blockquote{margin:4px 0 0;font-style:italic}
+.voce .chi{margin:8px 0 0;font-size:.86em;opacity:.8}
+.voce .chi+blockquote{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+.fonti{margin:16px 0 0;font-size:15px;font-style:italic;color:var(--muted)}
+
+.cruscotto{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.spia{border:1px solid var(--line);border-radius:8px;background:var(--carta2);padding:10px 12px 8px}
+.spia b{display:block;font-family:var(--cap);font-weight:600;font-size:24px;line-height:1.15;font-variant-numeric:tabular-nums}
+.spia small{display:block;font-size:13px;line-height:1.25;color:var(--muted);min-height:2.5em}
+.spia svg{display:block;width:100%;height:40px;margin-top:4px;overflow:visible}
+.spia path{fill:none;stroke:var(--porpora);stroke-width:1.6;vector-effect:non-scaling-stroke}
+.spia.stima path{stroke-dasharray:4 3}
+.spia line{stroke:var(--ink);stroke-width:1;vector-effect:non-scaling-stroke;opacity:.45}
+
+.stato-roma{margin-top:16px}
+.monumenti{list-style:none;margin:8px 0 0;padding:0;font-size:15.5px;columns:2;column-gap:18px}
+.monumenti li{display:flex;align-items:center;gap:8px;padding:2px 0;break-inside:avoid}
+.monumenti li::before,.st::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:currentColor}
+.monumenti li>span{color:var(--ink)}
+.uso{color:#C29A32}.chiuso{color:#9C948A}.abbandonato{color:#557083}.spogliato{color:#B0563F}.bruciato{color:#4A3F38}.assente{color:#D8CCB6}
+.monumenti li.assente>span{color:#A99C86}
+.legenda{display:flex;flex-wrap:wrap;gap:4px 12px;margin:8px 0 0;font-size:13px}
+.st{display:inline-flex;align-items:center;gap:5px}
+.st>*,.st{color:inherit}
+.legenda .st{color:var(--muted)}
+.legenda .st::before{width:7px;height:7px}
+.legenda .uso::before{background:#C29A32}.legenda .chiuso::before{background:#9C948A}.legenda .abbandonato::before{background:#557083}.legenda .spogliato::before{background:#B0563F}.legenda .bruciato::before{background:#4A3F38}.legenda .assente::before{background:#D8CCB6}
+
+.cause{margin:44px 0 0;padding-top:22px;border-top:1px solid var(--line);max-width:46em}
+.cause h2{margin:4px 0 10px}
+.cause h3{margin:26px 0 6px;font-family:var(--cap);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--oro-t)}
+.cause p{margin:0 0 12px}
+.cause .elenco{font-size:15px;color:var(--muted)}
+.piede{padding-top:26px;padding-bottom:90px;font-size:14.5px;font-style:italic;color:var(--muted)}
+.piede p{margin:0;max-width:60em}
+
+@media (max-width:1000px){
+  body{font-size:17px}
+  .testata,main,.piede{padding-left:16px;padding-right:16px}
+  .sommario{font-size:17px}
+  .scene{grid-template-columns:1fr;gap:8px}
+  .schede{display:flex;gap:6px}
+  .schede button{flex:1;font-family:var(--cap);font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--carta2)}
+  .schede button[aria-selected="true"]{background:var(--ink);color:var(--carta);border-color:var(--ink)}
+  .scene[data-vista="impero"] .riquadro.roma,.scene[data-vista="roma"] .riquadro.impero{display:none}
+  .riquadro.roma{aspect-ratio:1000/720;min-height:66vw}      /* min-height: sui telefoni che non conoscono aspect-ratio il riquadro, che ha solo figli assoluti, resterebbe alto zero */
+  .riquadro.impero{aspect-ratio:auto}
+  #mappa{aspect-ratio:1000/640;height:auto}
+  .legenda-mappa{position:static;font-size:12.5px;gap:2px 10px;background:none;padding:6px 10px 8px}
+  .colonne{grid-template-columns:1fr;gap:20px}
+  .testo{font-size:19px}
+  .tempo{flex-direction:column;gap:8px;padding:8px}
+  .comandi button{flex:1}
+  .atto-gruppo p{font-size:9px}
+  .linea{gap:5px}
+  .linea button{height:26px}
+}
+@media (max-width:520px){
+  .atto-gruppo p{display:none}
+  .linea{gap:3px}
+  .atto-gruppo div{gap:2px}
+  .monumenti{columns:1}
+}
+@media (prefers-reduced-motion:reduce){ .m-regione{transition:none} }
+
+/* pallino di stato sempre del suo colore, anche dove il testo è grigio; «abbandonato» (25 novembre 2026) è un grigio azzurro, l'unica tinta fredda fra gli stati: non si confonde con il grigio caldo di «in disuso» né con il rosso di «spogliato», anche per chi non distingue rosso e verde; 5 a 1 sul bianco */
+.st.uso::before{background:#C29A32}.st.chiuso::before{background:#9C948A}.st.abbandonato::before{background:#557083}.st.spogliato::before{background:#B0563F}.st.bruciato::before{background:#4A3F38}.st.assente::before{background:#D8CCB6}
+/* su schermi stretti la scheda è un foglio in basso, non un riquadro dentro la scena */
+@media (max-width:700px){
+  .scheda,body.roma-grande .scheda{position:fixed;left:8px;right:8px;top:auto;bottom:8px;width:auto;max-height:46vh;z-index:70}
+  .evento{font-size:13px;padding:6px 9px;right:54px}
+}
+
+.crollato{color:#B0563F}.st.crollato::before{background:#B0563F}
+
+.cava{color:#7A5C3E}.st.cava::before{background:#7A5C3E}
+
+/* forchetta delle stime dietro la linea */
+.spia path.banda{fill:rgba(142,42,42,.14);stroke:none}
+
+/* percorso del pellegrino */
+.pellegrino{position:absolute;right:10px;top:44px;font-family:var(--cap);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:999px;padding:6px 11px;cursor:pointer}
+.pellegrino[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+body.roma-grande .pellegrino{top:98px}
+.stazioni3d{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.stazioni3d[hidden]{display:none}
+.stazioni3d button{position:absolute;left:0;top:0;width:24px;height:24px;padding:0;border-radius:50%;border:2px solid #3a2a10;background:#ffc94a;color:#2B2420;font-family:var(--cap);font-weight:700;font-size:12px;line-height:1;pointer-events:auto;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.45)}
+.stazioni3d button.qui{background:#fff;transform-origin:center;outline:3px solid #ffc94a}
+.scheda.itinerario .lato{margin:0 0 5px}
+.scheda.itinerario .lato b{display:block;font-family:var(--cap);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--oro-t)}
+.scheda .passi{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:8px;border-top:1px solid rgba(160,130,60,.35);font-size:13px;color:var(--muted)}
+.scheda .passi button{font-family:var(--cap);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid rgba(160,130,60,.6);background:#fff;color:var(--ink);cursor:pointer}
+.scheda .passi button[disabled]{opacity:.35;cursor:default}
+@media (max-width:700px){ .pellegrino{font-size:9.5px;padding:5px 9px} }
+
+.scheda{z-index:4}.evento{z-index:2}.stazioni3d{z-index:1}
+
+/* vignettatura calda attorno alla scena */
+.riquadro.roma::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 46%,rgba(0,0,0,0) 58%,rgba(70,40,12,.3) 100%)}
+.conta,.notte,.grande,.pellegrino{z-index:3}
+
+.versione{margin:6px 0 0;font-size:12px;color:var(--muted);opacity:.8}
+
+/* prima e dopo: stessa inquadratura, cursore sugli anni */
+.confronta{top:74px}
+body.roma-grande .confronta{top:128px}
+/* che cosa sappiamo davvero */
+.sapere{top:104px}
+body.roma-grande .sapere{top:158px}
+.legenda-sapere{position:absolute;left:10px;top:80px;padding:6px 9px;background:rgba(251,246,234,.93);color:var(--ink);border:1px solid rgba(160,130,60,.5);border-radius:4px;font-size:11.5px;line-height:1.3;z-index:3}
+.legenda-sapere[hidden]{display:none}
+.legenda-sapere p,.scheda .certezza{display:grid;grid-template-columns:auto 1fr;gap:7px;margin:0 0 3px}
+.legenda-sapere p:nth-last-child(2){margin-bottom:0}
+.legenda-sapere em{display:none;font-style:normal}
+.legenda-sapere .nota{display:none;margin:6px 0 0;padding-top:6px;border-top:1px solid rgba(160,130,60,.35);color:var(--muted)}
+.legenda-sapere i,.scheda .certezza i{width:12px;height:12px;margin-top:2px;border-radius:2px;border:1px solid rgba(43,36,32,.35)}
+.cA{background:#9a3f2f}.cB{background:#e2b254}.cC{background:#d6d1c6}
+/* a tutto schermo, su schermi larghi, la legenda spiega le tre classi */
+@media (min-width:701px){
+  body.roma-grande .legenda-sapere{left:auto;right:10px;top:192px;width:250px;padding:9px 11px;font-size:12.5px}
+  body.roma-grande .legenda-sapere p{margin-bottom:5px}
+  body.roma-grande .legenda-sapere em{display:inline}
+  body.roma-grande .legenda-sapere .nota{display:block}
+}
+.scheda .certezza{margin:0 0 8px;font-size:13px}
+
+.confronto{position:absolute;left:12px;right:58px;bottom:10px;max-width:560px;z-index:3;display:flex;flex-direction:column;gap:4px;padding:6px 9px;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:8px}
+.confronto[hidden]{display:none}
+.confronto .viste{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.confronto .viste button{font-family:var(--cap);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--carta);background:transparent;border:1px solid rgba(212,174,85,.45);border-radius:999px;padding:4px 9px;cursor:pointer}
+.confronto .viste button[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+.confronto .viste .chiudi{margin-left:auto;border-radius:50%;width:26px;height:26px;padding:0}
+.confronto .cursore{display:flex;align-items:center;gap:8px;font-size:12px;font-variant-numeric:tabular-nums}
+.confronto input[type=range]{flex:1;min-width:0;accent-color:var(--gold2)}
+.confronto output{font-family:var(--cap);font-weight:600;font-size:19px;min-width:2.6em;text-align:right}
+body.roma-grande .confronto{left:20px;bottom:104px}
+.riquadro.roma.confronto-attivo .evento{bottom:100px}
+body.roma-grande .riquadro.roma.confronto-attivo .evento{bottom:196px}
+
+/* ---------- comandi della scena ----------
+   In alto a destra il menu «Strumenti» (aperto e fisso solo a tutto schermo su schermi larghi); in basso a destra zoom, vista d'insieme e schermo intero.
+   Didascalie e barre stanno sopra la riga dei comandi, mai sotto. A tutto schermo tutto si alza dell'altezza della linea del tempo (--tempo, misurata da js/pagina.js). */
+.strumenti{position:absolute;right:10px;top:10px;z-index:5;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.strumenti button{position:static;top:auto;right:auto;font-family:var(--cap);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:999px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+.strumenti button[aria-pressed="true"],.strumenti .apri[aria-expanded="true"],.strumenti .apri.attivo{background:var(--gold2);color:var(--ink)}
+.strumenti .voci{display:none;flex-direction:column;align-items:flex-end;gap:6px}
+.strumenti.aperto .voci{display:flex}
+body.roma-grande .strumenti button{top:auto}
+.comandi-scena{position:absolute;right:10px;bottom:10px;z-index:5;display:flex;gap:6px}
+.comandi-scena button,body.roma-grande .comandi-scena button{position:static;top:auto;bottom:auto;right:auto;width:38px;height:38px;padding:0;display:grid;place-items:center;font-size:21px;line-height:1;color:var(--carta);background:var(--vetro);border:1px solid rgba(212,174,85,.45);border-radius:50%;cursor:pointer}
+.comandi-scena button[hidden]{display:none}
+.comandi-scena .grande[aria-pressed="true"]{background:var(--gold2);color:var(--ink)}
+.esplora{display:none}
+.evento{bottom:58px;right:12px}
+.confronto{bottom:58px;right:12px}
+.riquadro.roma.confronto-attivo .evento{bottom:150px}
+body.roma-grande .tempo,body.impero-grande .tempo{bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+body.roma-grande .strumenti{top:12px;right:12px}
+body.roma-grande .comandi-scena{right:16px;bottom:calc(var(--tempo,92px) + 28px + env(safe-area-inset-bottom,0px))}
+body.roma-grande .evento,body.roma-grande .confronto{bottom:calc(var(--tempo,92px) + 78px + env(safe-area-inset-bottom,0px))}
+body.roma-grande .riquadro.roma.confronto-attivo .evento{bottom:calc(var(--tempo,92px) + 172px + env(safe-area-inset-bottom,0px))}
+@media (min-width:701px){
+  body.roma-grande .strumenti .apri{display:none}
+  body.roma-grande .strumenti .voci{display:flex}
+  body.roma-grande .legenda-sapere{top:172px;right:12px}
+}
+/* telefoni e schermi stretti */
+@media (max-width:700px){
+  .conta{font-size:12px}.conta b{font-size:23px}
+  .etichette3d{display:none}
+  body.roma-grande .etichette3d{display:block}
+  body.roma-grande .etichette3d span{font-size:10px}
+  .strumenti button{font-size:11px;padding:9px 13px}
+  .comandi-scena button,body.roma-grande .comandi-scena button{width:44px;height:44px;font-size:23px}
+  .legenda-sapere{top:72px}
+  body.roma-grande .tempo,body.impero-grande .tempo{left:8px;right:8px}
+  body.roma-grande .comandi-scena{right:10px}
+  body.roma-grande .evento,body.roma-grande .confronto{left:10px;right:10px}
+  .scheda,body.roma-grande .scheda{bottom:calc(8px + env(safe-area-inset-bottom,0px))}
+  /* a tutto schermo la scheda sta sopra la linea del tempo e la riga dei comandi, non sotto; la didascalia dell'evento le cede il posto */
+  body.roma-grande .scheda{bottom:calc(var(--tempo,111px) + 84px + env(safe-area-inset-bottom,0px));max-height:36vh}
+  .riquadro.roma.con-scheda .evento{display:none}
+}
+/* dispositivi al tocco: fuori dallo schermo intero la scena non cattura il dito (la pagina deve poter scorrere); un tocco la apre */
+body.tocco:not(.roma-grande) #btnPiu,body.tocco:not(.roma-grande) #btnMeno,body.tocco:not(.roma-grande) #btnInsieme{display:none}
+body.tocco:not(.roma-grande) .esplora{display:block;position:absolute;left:10px;bottom:10px;z-index:5;font-family:var(--cap);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--gold2);border:0;border-radius:999px;padding:10px 14px;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+body.tocco:not(.roma-grande) .evento,body.tocco:not(.roma-grande) .confronto{bottom:62px}
+/* sul telefono, nella finestra piccola, la didascalia dell'evento copriva tutta la scena: tre righe, il resto a tutto schermo (23 novembre 2026) */
+@media (max-width:1000px){ body:not(.roma-grande) .evento{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden;padding-bottom:0;border-bottom:6px solid transparent} }      /* il margine in basso come bordo: lì la quarta riga non spunta */
+
+/* ---------- i popoli sulla mappa ---------- */
+.m-verdun{transition:opacity .9s ease} .m-verdun.via{opacity:0}
+.m-verdun path{fill:none;stroke:#FBF6EA;stroke-width:1.6;stroke-dasharray:1 3.2;stroke-linecap:round}
+.m-verdun text{font-family:var(--serif);font-style:italic;font-size:10.5px;text-anchor:middle;fill:#FBF6EA}
+.m-popolo{transition:transform 1.8s ease,opacity .8s ease}
+.m-popolo.via{opacity:0}
+.m-punto{stroke:#FBF6EA;stroke-width:1.8;transition:fill .9s ease}
+.m-cartello{transition:transform .9s ease}
+.m-cartello rect{fill:rgba(251,246,234,.95);stroke-width:1.5;transition:stroke .9s ease}
+.m-cartello text{font-family:var(--serif);font-style:italic;font-size:var(--pf,11.5px);text-anchor:middle;fill:var(--ink)}
+.m-rotta{fill:none;stroke-width:1.6;stroke-dasharray:5 3.5;stroke-linecap:round;stroke-linejoin:round;animation:scorre 1.5s linear infinite;transition:opacity .6s ease}
+.m-rotta-f{fill:none;stroke:rgba(251,246,234,.8);stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round;transition:opacity .6s ease}
+.m-rotta.via,.m-rotta-f.via{opacity:0}
+.m-popolo.fuori .m-punto,.legenda-popoli .p-fuori{fill:#2B2420;background:#2B2420} .m-popolo.fuori rect,.m-rotta.fuori{stroke:#2B2420}
+.m-popolo.accordo .m-punto,.legenda-popoli .p-accordo{fill:var(--st-federati);background:var(--st-federati)} .m-popolo.accordo rect,.m-rotta.accordo{stroke:var(--st-federati)}
+.m-popolo.armi .m-punto,.legenda-popoli .p-armi{fill:#D2401C;background:#D2401C} .m-popolo.armi rect,.m-rotta.armi{stroke:#D2401C}
+.m-rotta.regno{stroke:#2B2420}
+.m-popolo.regno .m-punto,.legenda-popoli .p-regno{fill:#FBF6EA;background:#FBF6EA;stroke:#2B2420} .m-popolo.regno rect{stroke:#2B2420}
+.legenda-mappa [hidden],.legenda-popoli [hidden]{display:none}
+.legenda-mappa,.legenda-popoli{align-content:flex-start}
+.legenda-popoli{position:absolute;left:10px;top:8px;right:10px;width:fit-content;max-width:calc(100% - 20px);margin:0;padding:4px 8px;display:flex;flex-wrap:wrap;gap:3px 12px;align-items:center;font-size:12.5px;background:rgba(251,246,234,.86);border-radius:6px}
+.legenda-popoli b{font-family:var(--cap);font-weight:600;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.legenda-popoli span{display:inline-flex;align-items:center;gap:5px}
+.legenda-popoli i{width:10px;height:10px;border-radius:50%;border:1px solid rgba(43,36,32,.45)}
+@media (prefers-reduced-motion:reduce){ .m-popolo{transition:none} .m-rotta,.m-battito{animation:none} }
+@media (max-width:860px){ .legenda-popoli{position:static;width:auto;max-width:none;background:none;border-top:1px solid var(--line);border-radius:0;padding:6px 10px 8px} }
+/* le due legende della mappa stanno sotto la carta, non sopra: su schermi piccoli la coprivano */
+.riquadro.impero{aspect-ratio:auto;display:flex;flex-direction:column}
+#mappa{aspect-ratio:1000/640;height:auto;flex:none}
+.legenda-mappa,.legenda-popoli{position:static;width:auto;max-width:none;background:none;border-radius:0;padding:6px 10px;border-top:1px solid var(--line);font-size:12.5px;gap:3px 12px}
+.legenda-popoli em{color:var(--muted);font-size:12px}
+.m-regione.chiesa{color:var(--st-chiesa)}
+.m-regione{stroke-width:.7}
+.spia path.altra{stroke:#8A7399;stroke-dasharray:3 2.5;stroke-width:1.1;fill:none;opacity:.9}
+
+/* ---- carta dell'Impero a tutto schermo: riempie la finestra, si ingrandisce e si trascina (js/mappa.js); la linea del tempo resta in basso ----
+   Su schermi alti e stretti le legende stanno sotto la carta; quando sotto non c'è posto (classe impero-largo) vanno sopra la carta, a sinistra, sull'Oceano. */
+.comandi-mappa .zoom{display:none}
+body.impero-grande{overflow:hidden}
+body.impero-grande .riquadro.impero{display:flex!important;position:fixed;inset:0;z-index:50;border:0;border-radius:0;align-items:center;justify-content:flex-start;overflow-y:auto;
+  padding-bottom:calc(var(--tempo,92px) + 24px + env(safe-area-inset-bottom,0px))}
+body.impero-grande #mappa::after{display:none}
+body.impero-grande #mappa{aspect-ratio:auto;flex:none;max-width:100%}
+body.impero-grande #mappa svg{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+body.impero-grande .comandi-mappa{position:fixed;right:12px;top:calc(12px + env(safe-area-inset-top,0px));bottom:auto;z-index:65}
+body.impero-grande .comandi-mappa .zoom{display:grid}
+body.impero-grande .legenda-mappa,body.impero-grande .legenda-popoli{align-self:stretch}
+body.impero-grande .legenda-popoli:last-of-type{display:none}
+body.impero-largo .riquadro.impero{overflow:hidden;padding-bottom:0}
+body.impero-largo .legenda-mappa,body.impero-largo .legenda-popoli{position:absolute;left:12px;z-index:2;align-self:auto;width:auto;max-width:230px;min-height:0!important;flex-direction:column;flex-wrap:nowrap;align-items:flex-start;gap:2px;
+  background:rgba(251,246,234,.88);border:0;border-radius:6px;padding:6px 9px;font-size:12px}
+body.impero-largo .legenda-mappa{top:clamp(46px,6.2vw,78px);right:auto;bottom:auto}
+body.impero-largo .legenda-popoli{top:auto;right:auto;bottom:calc(var(--tempo,92px) + 36px + env(safe-area-inset-bottom,0px))}
+@media (max-height:559px){ body.impero-largo .legenda-popoli{display:none} body.impero-largo .legenda-mappa{font-size:11px;max-width:190px;top:44px} }
+/* telefono coricato, a tutto schermo (carta o città): la linea del tempo torna su una riga sola, come sugli schermi larghi, per non coprire un terzo dello schermo */
+@media (max-height:559px) and (orientation:landscape){
+  body.impero-grande .tempo,body.roma-grande .tempo{flex-direction:row;align-items:center;gap:10px;padding:5px 8px}
+  body.impero-grande .tempo .comandi button,body.roma-grande .tempo .comandi button{flex:none;min-height:36px;padding:6px 10px}
+  body.impero-grande .tempo .linea button,body.roma-grande .tempo .linea button{height:20px}
+}
+/* a tutto schermo il riquadro della città è alto quanto la finestra: senza questo, su un telefono coricato l'altezza minima di 66vw lo fa uscire in basso, con i comandi */
+body.roma-grande .riquadro.roma{min-height:0}
+/* a tutto schermo le due dita ingrandiscono la carta, non la pagina: fuori dalla carta resta solo lo scorrimento verticale delle legende */
+body.impero-grande .riquadro.impero{touch-action:pan-y}
+body.impero-grande .tempo,body.roma-grande .tempo{touch-action:manipulation}
+
+
+/* =====================================================================================================
+   VESTE (rifatta il 22 novembre 2026, sul modello del «Senato da Silla ad Augusto")
+   Sopra stanno struttura e comportamenti delle due scene; da qui in giù l'aspetto, che prevale.
+   Regole: prima il telefono; nessuna scritta sotto i 12 punti; scritte piccole con contrasto di almeno 4,5 a 1;
+   bersagli per il dito di almeno 40 punti. Cinzel per titoli e numeri, Garamond per il racconto,
+   il carattere del dispositivo (--ui) per etichette, legende e bottoni.
+   ===================================================================================================== */
+
+body{background:var(--carta);color:var(--ink);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(212,174,85,.35)}
+a{color:var(--porpora);text-decoration-color:rgba(122,31,43,.35);text-underline-offset:3px}
+a:hover{text-decoration-color:currentColor}
+a:focus-visible,button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* scritte di servizio */
+.etichetta,.occhiello,.cause h3{font-family:var(--ui);font-weight:600;font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--oro-t)}
+.atto{font-family:var(--ui);font-weight:600;font-size:12px;letter-spacing:.09em}
+.atto b{font-family:var(--cap)}
+.suggerimento{font-family:var(--ui);font-weight:400;font-size:12px;color:var(--muted)}
+.legenda-mappa,.legenda-popoli,.legenda,.spia small,.versione,.piede .licenze,.voce .chi,.protagonisti .date,.scheda .stato,.scheda .certezza,.legenda-sapere,.fumetto{font-family:var(--ui)}
+.comandi button,.schede button,.tutti,.atto-gruppo p,.strumenti button,.pellegrino,.confronto .viste button,.scheda .passi button,body.tocco:not(.roma-grande) .esplora{font-family:var(--ui);font-weight:600;letter-spacing:.05em}
+
+/* ---------- l'apertura ---------- */
+.testata{max-width:none;margin:0;padding:0;background:none;color:inherit}
+.apertura{position:relative;overflow:hidden;isolation:isolate;color:var(--crema);background:var(--vino-scuro);
+  background-image:radial-gradient(110% 150% at 10% 0%,#7E2230 0%,var(--vino) 46%,var(--vino-scuro) 100%);box-shadow:inset 0 -1px 0 rgba(212,174,85,.55)}
+.apertura::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(50% 80% at 82% 45%,rgba(212,174,85,.16),transparent 70%),radial-gradient(140% 80% at 50% 125%,rgba(0,0,0,.5),transparent 60%)}
+.apertura::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.18;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* la figura: Roma nel 476 vista dal modello 3D della pagina, virata in oro (img/apertura.webp); se manca, l'apertura regge da sola */
+.apertura-figura{position:absolute;top:0;right:0;bottom:0;width:64%;z-index:-1;pointer-events:none;
+  background:url(../img/apertura.webp) 50% 30%/cover no-repeat;mix-blend-mode:screen;opacity:.5;
+  -webkit-mask-image:radial-gradient(70% 100% at 76% 40%,#000 30%,rgba(0,0,0,.4) 60%,transparent 80%);mask-image:radial-gradient(70% 100% at 76% 40%,#000 30%,rgba(0,0,0,.4) 60%,transparent 80%)}
+.apertura-dentro{position:relative;max-width:1280px;margin:0 auto;padding:46px 24px 40px}
+.apertura .occhiello{display:flex;align-items:center;gap:12px;margin:0;font-family:var(--cap);font-weight:600;font-size:12.5px;letter-spacing:.22em;color:var(--gold2)}
+.apertura .stemma{flex:none;display:block;width:36px;height:36px;border-radius:8px;box-shadow:0 6px 14px rgba(0,0,0,.4)}
+.apertura h1{max-width:16em;margin:16px 0 14px;text-wrap:balance;font-family:var(--cap);font-weight:700;font-size:clamp(32px,5.2vw,60px);line-height:1.04;letter-spacing:.015em;color:var(--gold3);
+  background:linear-gradient(180deg,#FFF3CF 0%,#F0D38A 42%,#C9973E 80%,#A87B2A 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 0 rgba(30,6,10,.85))}
+.apertura .sommario{max-width:33em;margin:0;font-family:var(--serif);font-size:20px;line-height:1.45;color:var(--crema)}
+.numeri{display:flex;flex-wrap:wrap;gap:14px 0;margin:26px 0 0;padding:0;list-style:none}
+.numeri li{display:flex;flex-direction:column;padding:0 24px;border-left:1px solid rgba(212,174,85,.38)}
+.numeri li:first-child{padding-left:0;border-left:0}
+.numeri b{font-family:var(--cap);font-weight:700;font-size:28px;line-height:1.1;color:var(--gold3);font-variant-numeric:lining-nums tabular-nums;white-space:nowrap}
+.numeri b i{font-style:normal;font-size:.75em;margin:0 .2em;color:var(--gold2)}
+.numeri li>span{margin-top:5px;font-family:var(--ui);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#D2C0A8}
+
+/* la fascia chiara sotto l'apertura: le sezioni a sinistra, la condivisione a destra */
+.fascia{background:var(--carta2);border-bottom:1px solid var(--line);box-shadow:0 6px 16px -14px rgba(34,28,24,.4)}
+.fascia-dentro{max-width:1280px;margin:0 auto;padding:8px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.menu{display:flex;gap:2px;margin-left:-12px;background:none;border:0}
+.menu a{display:flex;align-items:center;min-height:44px;padding:0 12px;font-family:var(--ui);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;border-radius:6px}
+.menu a:hover{color:var(--porpora);background:rgba(122,31,43,.06)}
+
+/* ---------- pulsanti per condividere (js/condividi.js) ---------- */
+.condividi{position:relative;display:flex;align-items:center;gap:12px}
+.condividi-titolo{margin:0;font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.condividi-tasti{display:flex;gap:8px;margin:0;padding:0;list-style:none}
+.condividi .tasto{box-sizing:border-box;width:40px;height:40px;display:flex;align-items:center;justify-content:center;padding:0;border-radius:50%;
+  border:1px solid #D8CCB6;background:#FBF8F2;color:#6B4A26;cursor:pointer;box-shadow:0 1px 2px rgba(60,40,15,.08);transition:color .2s,border-color .2s,background .2s,box-shadow .2s}
+.condividi .tasto svg{width:17px;height:17px;fill:currentColor}
+.condividi .tasto .tratto{fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.condividi .tasto:hover,.condividi .tasto:focus-visible{color:#F6E4B0;border-color:var(--porpora);background:var(--porpora);box-shadow:0 8px 16px -8px rgba(122,31,43,.7)}
+.condividi-ok{position:absolute;right:0;top:calc(100% + 6px);z-index:20;white-space:nowrap;font-family:var(--ui);font-size:13px;font-weight:600;color:#fff;background:var(--ink);
+  padding:6px 10px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s}
+.condividi-ok.su{opacity:1}
+
+/* ---------- le due scene ---------- */
+main{margin-top:22px}
+.scene{gap:16px}
+.riquadro{border:1px solid var(--line);border-radius:10px;box-shadow:var(--ombra)}
+.legenda-mappa,.legenda-popoli,.legenda{font-size:12.5px}
+.legenda-popoli b{font-family:var(--ui);font-size:12px;letter-spacing:.08em}
+.legenda-popoli em{font-family:var(--serif);font-size:14px;color:var(--muted)}
+/* comandi dentro la città: niente sotto i 12 punti */
+.etichette3d span{font-size:12px}
+body.roma-grande .etichette3d span{font-size:12.5px}
+.strumenti button{font-size:12px;min-height:34px}
+.confronto .viste button{font-size:12px;min-height:30px;padding:5px 11px}
+.legenda-sapere{font-size:12px}
+.scheda{border-radius:8px;border-color:rgba(160,130,60,.45);background:rgba(255,253,248,.97)}
+.scheda .chiudi{width:40px;height:40px;right:2px;top:2px;font-size:16px}
+.scheda h3{margin-right:38px}
+.scheda .passi button{font-size:12px;min-height:36px;padding:6px 12px}
+
+/* sui telefoni le due scene si scelgono con un selettore a due voci */
+@media (max-width:1000px){
+  .schede{display:flex;gap:4px;padding:4px;background:#E9E4DA;border-radius:10px}
+  .schede button{flex:1;min-height:40px;padding:8px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:transparent;border:0;border-radius:7px}
+  .schede button[aria-selected="true"]{color:var(--porpora);background:var(--carta2);box-shadow:0 1px 3px rgba(34,28,24,.18)}
+}
+
+/* ---------- linea del tempo ---------- */
+.tempo{gap:16px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.97);box-shadow:0 1px 2px rgba(34,28,24,.06),0 10px 24px -14px rgba(34,28,24,.35)}
+body.roma-grande .tempo,body.impero-grande .tempo{background:rgba(255,255,255,.95)}
+.comandi{gap:6px}
+.comandi button{min-height:40px;min-width:40px;padding:8px 14px;font-size:12.5px;color:var(--ink);background:var(--carta2);border:1px solid var(--line);border-radius:8px}
+.comandi button:hover{border-color:var(--porpora);color:var(--porpora)}
+#btnPlay{color:#F6E4B0;background:var(--porpora);border-color:var(--porpora)}
+#btnPlay:hover{color:#fff;background:#621822}
+#btnPrima,#btnDopo{font-size:22px;line-height:1;padding:4px 12px}
+.atto-gruppo p{display:flex;gap:6px;margin:0 0 5px;font-size:12px;font-weight:500;letter-spacing:.03em;color:var(--muted)}
+.atto-gruppo p b{flex:none;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.atto-gruppo p span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.atto-gruppo p b.fine{margin-left:auto}
+.atto-gruppo div{border-top:2px solid var(--line)}
+.atto-gruppo.attivo div{border-color:var(--porpora)} .atto-gruppo.attivo p,.atto-gruppo.attivo p b{color:var(--porpora)}
+.linea{touch-action:pan-y}
+.linea button{height:24px;border-radius:3px;background:#DDD6CA}
+.linea button.intermezzo{background:repeating-linear-gradient(135deg,#DDD6CA 0 3px,transparent 3px 6px);border:1px solid #DDD6CA}
+.linea button.passata{background:#CFAFA9}
+.linea button:hover,.linea button.mira{background:var(--gold2)}
+.linea button[aria-current="true"]{background:var(--porpora)}
+/* il dito o il mouse scorre sulla linea: un fumetto dice anno e titolo della tappa che ha sotto (js/pagina.js) */
+.fumetto{position:absolute;left:0;bottom:calc(100% + 8px);z-index:2;transform:translateX(-50%);margin:0;max-width:min(320px,calc(100vw - 24px));padding:6px 11px;border-radius:6px;background:rgba(33,25,18,.94);color:#fff;
+  font-size:13.5px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.fumetto[hidden]{display:none}
+.fumetto b{margin-right:8px;font-family:var(--cap);font-weight:600;color:var(--gold3);font-variant-numeric:tabular-nums}
+
+/* ---------- la tappa ---------- */
+.colonne{margin-top:30px;gap:36px}
+.atto{color:var(--porpora)}
+.atto b{font-size:28px;color:var(--ink)}
+.tappa h2{margin:4px 0 10px;font-size:clamp(25px,2.8vw,34px);line-height:1.12}
+.testo{font-size:21px;line-height:1.5}
+.protagonisti{margin-top:20px}
+.protagonisti .date{font-size:12.5px}
+.voce,.storici{margin-top:20px;padding:14px 18px;background:var(--carta2);border:1px solid var(--line);border-left:3px solid var(--porpora);border-radius:4px 10px 10px 4px;box-shadow:var(--ombra)}
+.storici{border-left-color:var(--gold2)}
+.storici.leggenda{border-left-color:#7F95A3}
+.voce .chi{font-size:12.5px;line-height:1.45;opacity:1;color:var(--muted)}
+
+/* ---------- cruscotto ---------- */
+.cruscotto{gap:12px}
+.spia{padding:12px 14px 10px;border:1px solid var(--line);border-radius:10px;background:var(--carta2);box-shadow:var(--ombra)}
+.spia b{font-size:26px}
+.spia small{font-size:12.5px;line-height:1.4;color:var(--muted)}
+.spia[hidden]{display:none}
+.cruscotto.tre .spia:first-child{grid-column:1/-1}
+
+/* ---------- i monumenti ---------- */
+.stato-roma{margin-top:22px;padding:14px 16px 12px;background:var(--carta2);border:1px solid var(--line);border-radius:10px;box-shadow:var(--ombra)}
+.stato-roma .legenda{margin:8px 0 4px}
+.monumenti{font-family:var(--ui);font-size:13.5px}
+.monumenti li{padding:3px 0}
+.monumenti li.assente>span{color:#7B7064}
+.monumenti li[hidden],.st[hidden],.tutti[hidden]{display:none}
+.tutti{display:none}
+/* Sul PC il riquadro dei monumenti è alto quanto il testo accanto; le voci che non ci stanno si aprono con «Mostra altri (N)» (js/pagina.js, cerca «mostraVoce»).
+   25 novembre 2026, l'utente: «Riesci a fare in modo che si eviti lo spazio bianco sotto e che la grandezza della finestra "monumenti di Roma" dipenda da quella affianco
+   e se manca qualcosa c'è da cliccare "mostra altri"?». Stessa veste del bottone dei telefoni. */
+@media (min-width:1001px){
+  .stato-roma.taglia .tutti:not([hidden]){display:block;width:100%;min-height:40px;margin:10px 0 0;padding:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink);background:var(--carta);border:1px solid var(--line);border-radius:8px;cursor:pointer}
+  .stato-roma.taglia .tutti:hover{border-color:var(--gold2)}
+  .stato-roma.taglia .tutti:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+}
+
+/* ---------- perché cadde, con la colonna per condividere ---------- */
+/* la colonna sta subito a destra del testo, quanto che sia largo (la larghezza della sezione la decide .cause) */
+.cause-cornice{display:flex;align-items:flex-start;gap:36px;margin:52px 0 0;padding-top:28px;border-top:1px solid var(--line)}
+.cause{flex:0 1 auto;min-width:0;margin:0;padding:0;border:0;max-width:46em}
+.cause h3{margin:28px 0 8px}
+.cause .elenco{font-size:15.5px;color:var(--muted)}
+.condividi-lato{flex:none;position:sticky;top:20px;margin-top:4px}
+.condividi-lato .condividi{flex-direction:column;gap:10px}
+.condividi-lato .condividi-titolo{writing-mode:vertical-rl;transform:rotate(180deg);margin-bottom:4px}
+.condividi-lato .condividi-tasti{flex-direction:column}
+.condividi-lato .condividi-ok{right:calc(100% + 10px);top:auto;bottom:0}
+
+/* ---------- piede: una fascia scura che chiude la pagina, come l'apertura la apre ---------- */
+.piede{max-width:1280px;margin:56px auto 0;padding:34px 24px calc(40px + env(safe-area-inset-bottom,0px));border:0;font-style:normal;font-size:14.5px;line-height:1.6;color:#D9C6AE;
+  background:var(--vino-scuro);box-shadow:0 0 0 100vmax var(--vino-scuro);clip-path:inset(0 -100vmax)}
+.piede p{max-width:62em;margin:0}
+.piede .piede-marchio{display:flex;align-items:center;gap:12px;margin:0 0 22px;font-family:var(--cap);font-weight:700;font-size:20px;letter-spacing:.03em;color:var(--gold3)}
+.piede .piede-marchio img{border-radius:7px}
+.piede .etichetta{margin:0 0 8px;color:var(--gold2)}
+.piede .licenze{margin-top:18px;padding-top:16px;border-top:1px solid rgba(212,174,85,.25);font-size:13px;color:#D9C6AE}
+.piede a{color:var(--gold3);text-decoration-color:rgba(241,217,154,.45)}
+.piede a:hover{text-decoration-color:var(--gold3)}
+.versione{margin:8px 0 0;font-size:12.5px;color:#BFA98E;opacity:1}
+
+/* sul desktop, come in «Senato Roma»: la colonna per condividere sta sempre sul bordo sinistro della finestra, a metà altezza, e «Perché cadde» prende tutta la larghezza.
+   Dove il margine non basta (fino a circa 1390 punti) il contenuto si scosta di quanto serve: 76 punti dal bordo. La fascia sotto l'apertura non ripete i pulsanti. */
+@media (min-width:1001px){
+  main,.piede,.apertura-dentro,.fascia-dentro{padding-left:max(24px,calc(76px - (100vw - 1280px) / 2))}
+  .fascia .condividi{display:none}
+  .cause-cornice{display:block}
+  .cause{max-width:none}
+  .condividi-lato{position:fixed;z-index:40;top:50%;left:max(14px,calc(50% - 640px - 50px));transform:translateY(-50%);margin:0}
+  .condividi-lato .condividi-ok{right:auto;left:calc(100% + 10px)}
+  body.roma-grande .condividi-lato,body.impero-grande .condividi-lato{display:none}
+  /* la finestra di Roma non supera lo spazio sopra la linea del tempo, che sta incollata in fondo: i comandi in basso restano sempre scoperti
+     (110 = linea del tempo 76 + i suoi margini). Scorre con la carta: niente «sticky», l'utente non vuole che resti ferma mentre la carta sale */
+  .riquadro.roma{max-height:calc(100vh - 110px)}
+  body.roma-grande .riquadro.roma{max-height:none}
+}
+
+/* =================== schermi medi e stretti =================== */
+@media (max-width:1000px){
+  body{font-size:17px}
+  .apertura-dentro{padding:34px 16px 30px}
+  .fascia-dentro{padding:6px 16px}
+  .testo{font-size:19px}
+  .tempo{flex-direction:column;gap:8px;padding:8px}
+  .comandi button{flex:1;min-height:44px}
+  #btnPrima,#btnDopo{flex:0 0 64px}
+  .atto-gruppo p{font-size:12px}
+  .linea{gap:5px}
+  .linea button{height:30px}
+  .colonne{gap:24px;margin-top:24px}
+  .cause-cornice{margin-top:40px}
+  .piede{padding:30px 16px calc(36px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:900px){ .fascia .condividi-titolo{display:none} .menu a{padding:0 9px} .menu{margin-left:-9px} }
+@media (max-width:760px){
+  /* l'apertura si stringe: sul telefono le scene devono comparire nella prima schermata */
+  .apertura-dentro{padding:20px 16px 18px}
+  .apertura-figura{width:100%;opacity:.4;background-position:60% 20%;
+    -webkit-mask-image:linear-gradient(200deg,#000 10%,rgba(0,0,0,.35) 45%,transparent 75%);mask-image:linear-gradient(200deg,#000 10%,rgba(0,0,0,.35) 45%,transparent 75%)}
+  .apertura .occhiello{gap:10px;font-size:12px;letter-spacing:.16em}
+  .apertura .stemma{width:30px;height:30px;border-radius:7px}
+  .apertura h1{margin:10px 0 8px;font-size:31px;line-height:1.06}
+  .apertura .sommario{font-size:16.5px;line-height:1.4}
+  .numeri{display:grid;grid-template-columns:auto auto 1fr;gap:0;margin-top:14px}
+  .numeri li{padding:0 12px}
+  .numeri b{font-size:20px}
+  .numeri li>span{font-size:12px;letter-spacing:.04em;text-transform:none;line-height:1.25}
+  /* nella fascia restano solo i pulsanti: le sezioni si raggiungono scorrendo */
+  .menu{display:none}
+  .fascia-dentro{justify-content:center;padding:8px 12px}
+  .condividi-titolo{display:none}
+  .condividi-tasti{gap:7px}
+  .condividi .tasto{width:42px;height:42px}
+  main{margin-top:14px}
+  /* accanto alle cause, sui telefoni: una riga in fondo alla sezione */
+  .cause-cornice{flex-direction:column;align-items:stretch;gap:0;margin-top:34px;padding-top:22px}
+  .condividi-lato{position:static;margin-top:18px;padding:14px 0 0;border-top:1px solid var(--line)}
+  .condividi-lato .condividi{flex-direction:column;align-items:flex-start;gap:10px}
+  .condividi-lato .condividi-titolo{display:block;writing-mode:horizontal-tb;transform:none;margin:0}
+  .condividi-lato .condividi-tasti{flex-direction:row;flex-wrap:wrap}
+  .condividi-lato .condividi-ok{left:0;right:auto;top:auto;bottom:calc(100% + 6px)}
+  .stato-roma{padding:12px 12px 10px}
+}
+@media (max-width:520px){
+  .apertura h1{font-size:29px}
+  .numeri li{padding:0 10px}
+  .numeri b{font-size:18px}
+  .atto-gruppo p{display:flex;gap:0;margin-bottom:4px}
+  .atto-gruppo p span{display:none}
+  .linea{gap:3px}
+  .atto-gruppo div{gap:2px}
+  .monumenti{columns:2;column-gap:12px;font-size:13.5px}
+  .monumenti li{align-items:flex-start;line-height:1.25;padding:3px 0}
+  .monumenti li::before{margin-top:.3em}
+  .stato-roma.corto .monumenti li[data-oltre]{display:none}      /* niente altezza bloccata: con le colonne, le voci in più finirebbero in colonne nascoste a destra (Safari le mostrava aprendo l'elenco) */
+  .tutti{display:block;width:100%;min-height:44px;margin:10px 0 0;padding:9px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--carta);border:1px solid var(--line);border-radius:8px}
+  .piede .piede-marchio{font-size:18px}
+}
+/* dita: i bottoni della scena e delle schede non scendono sotto i 40 punti */
+@media (pointer:coarse){
+  .strumenti button{min-height:40px;padding:9px 14px}
+  .confronto .viste button{min-height:40px}
+  .scheda .passi button{min-height:40px}
+  body.tocco:not(.roma-grande) .esplora{min-height:40px}
+  .monumenti li{min-height:32px}
+}
+@media (max-width:1000px) and (min-width:521px){ .tutti{display:none} }
+/* telefono coricato a tutto schermo (carta o città): la linea del tempo su una riga sola, solo gli anni */
+@media (max-height:559px) and (orientation:landscape){
+  body.impero-grande .tempo,body.roma-grande .tempo{flex-direction:row;align-items:center;gap:10px;padding:5px 8px}
+  body.impero-grande .tempo .comandi button,body.roma-grande .tempo .comandi button{flex:none;min-height:40px;padding:6px 10px}
+  body.impero-grande .tempo .linea button,body.roma-grande .tempo .linea button{height:22px}
+  body.impero-grande .atto-gruppo p span,body.roma-grande .atto-gruppo p span{display:none}
+}
+@media (prefers-reduced-motion:reduce){ .condividi .tasto{transition:none} }
+@media print{ .fascia,.condividi-lato,.tempo,.apertura-figura{display:none} }
+
+/* telefono: il bottone che porta dalla scena al racconto della tappa e ritorno (js/pagina.js) */
+.salta-giu{position:fixed;right:12px;bottom:14px;z-index:30;min-height:40px;padding:0 16px;border:1px solid rgba(212,174,85,.6);border-radius:999px;background:rgba(36,30,26,.92);color:#F6E4B0;
+  font-family:var(--ui);font-size:13px;font-weight:600;letter-spacing:.02em;box-shadow:0 6px 16px -6px rgba(0,0,0,.5);cursor:pointer;-webkit-tap-highlight-color:transparent}
+.salta-giu[hidden]{display:none}
+/* anche sul PC (23 novembre 2026, l'utente: «anche da desktop dovresti darmi indicazione di scendere giù per leggere ad ogni tappa»): a ogni tappa nuova il bottone pulsa due volte */
+.salta-giu.pulsa{animation:salta-pulsa 1.1s ease-in-out 2}
+@keyframes salta-pulsa{0%,100%{box-shadow:0 6px 16px -6px rgba(0,0,0,.5)} 50%{box-shadow:0 0 0 6px rgba(212,174,85,.35),0 6px 16px -6px rgba(0,0,0,.5)}}
+@media (prefers-reduced-motion:reduce){ .salta-giu.pulsa{animation:none} }
+@media (min-width:1001px){ .salta-giu{font-size:14px;min-height:42px;padding:0 20px} }
+@media print{ .salta-giu{display:none} }
+
+/* piede a voci che si aprono (23 novembre 2026, chiesto dall'utente: «mettila ad apertura in maniera carina»): Fonti, Come è fatta questa pagina, Licenze.
+   Ogni voce è un <details>: titolo in Cinzel dorato, una riga che dice che cosa c'è dentro, un segno + che diventa −. I collegamenti del menu (#fonti, #licenze) la aprono (js/pagina.js). */
+.piede .piede-voce{border-top:1px solid rgba(212,174,85,.28)}
+.piede .piede-voce:last-of-type{border-bottom:1px solid rgba(212,174,85,.28)}
+.piede .piede-voce summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:16px;padding:15px 2px 14px;-webkit-tap-highlight-color:transparent}
+.piede .piede-voce summary::-webkit-details-marker{display:none}
+.piede .piede-voce summary::after{content:"+";grid-column:2;grid-row:1 / span 2;align-self:center;width:30px;height:30px;border:1px solid rgba(212,174,85,.5);border-radius:50%;display:grid;place-items:center;
+  font:400 19px/1 var(--ui,sans-serif);color:var(--gold3);transition:transform .25s,background .2s}
+.piede .piede-voce[open] summary::after{content:"−";background:rgba(212,174,85,.14)}
+.piede .piede-voce summary:hover::after{background:rgba(212,174,85,.2)}
+.piede .piede-voce summary:focus-visible{outline:2px solid var(--gold2);outline-offset:3px;border-radius:4px}
+.piede .piede-titolo{font-family:var(--cap);font-weight:700;font-size:16px;letter-spacing:.06em;color:var(--gold3)}
+.piede .piede-sotto{grid-column:1;font-family:var(--ui,sans-serif);font-size:13px;color:#BFA98E;margin-top:3px}
+.piede .piede-corpo{padding:2px 2px 20px;display:grid;gap:12px;animation:piede-apri .28s ease}
+.piede .piede-corpo p{font-size:14.5px;line-height:1.65;color:#E6D6C0}
+.piede .piede-corpo .elenco{font-size:14.5px;color:#E6D6C0}
+.piede .piede-corpo b{color:var(--gold3);font-weight:600}
+.piede .piede-corpo .licenze{margin:0;padding:0;border:0;font-size:14px}
+.piede .versione{margin-top:16px}
+@keyframes piede-apri{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .piede .piede-corpo{animation:none} .piede .piede-voce summary::after{transition:none} }
+@media (max-width:700px){ .piede .piede-titolo{font-size:15px} .piede .piede-sotto{font-size:12.5px} .piede .piede-corpo p{font-size:14px} }
+
+/* «Da leggere in questa tappa» (js/pagina.js, daLeggere): un invito per ogni riquadro della tappa, nel colore del riquadro (porpora le voci, grigio azzurro la leggenda, oro gli storici).
+   Toccato, porta al riquadro, che risalta per un momento (risalta). */
+.da-leggere{margin:16px 0 4px;max-width:44em}
+.da-leggere[hidden]{display:none}
+.dl-etichetta{margin:0 0 8px;font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--oro-t)}
+.da-leggere ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.da-leggere li{flex:1 1 210px;max-width:100%;display:flex}
+.dl-invito{flex:1;display:flex;align-items:flex-start;gap:10px;text-align:left;cursor:pointer;padding:9px 13px 10px 11px;min-height:44px;
+  font-family:var(--ui);color:var(--ink);background:#fff;border:1px solid var(--line);border-left:3px solid var(--porpora);border-radius:4px 10px 10px 4px;box-shadow:var(--ombra);
+  transition:transform .15s,box-shadow .15s,border-color .15s}
+.dl-invito:hover{transform:translateY(-1px);box-shadow:0 6px 16px -8px rgba(58,38,20,.45)}
+.dl-invito:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.dl-leggenda{border-left-color:#7F95A3} .dl-storici{border-left-color:var(--gold2)}
+.dl-segno{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--cap);font-weight:700;font-size:14px;color:#fff;background:var(--porpora);margin-top:1px}
+.dl-leggenda .dl-segno{background:#7F95A3} .dl-storici .dl-segno{background:var(--gold2);color:var(--vino-scuro)}
+.dl-testi{display:flex;flex-direction:column;gap:2px;min-width:0}
+.dl-testi b{font-size:14px;font-weight:600}
+.dl-sotto{font-size:12.5px;line-height:1.35;color:var(--muted)}
+.voce.risalta,.storici.risalta{animation:dl-risalta 1.6s ease}
+@keyframes dl-risalta{0%{box-shadow:0 0 0 0 rgba(212,174,85,.0)}20%{box-shadow:0 0 0 6px rgba(212,174,85,.55)}100%{box-shadow:var(--ombra)}}
+@media (prefers-reduced-motion:reduce){ .voce.risalta,.storici.risalta{animation:none;outline:2px solid var(--gold2)} .dl-invito{transition:none} }
+@media print{ .da-leggere{display:none} }
+/* «A Roma, in quest'anno» (js/pagina.js, inCitta): solo dove la città non sta accanto alla carta */
+.in-citta{margin:16px 0 4px;max-width:44em}
+.in-citta[hidden]{display:none}
+.ic-bottone{width:100%;display:flex;align-items:flex-start;gap:11px;text-align:left;cursor:pointer;padding:11px 14px 12px 12px;min-height:44px;font:inherit;color:var(--ink);
+  background:#fff;border:1px solid var(--line);border-left:3px solid var(--porpora);border-radius:4px 10px 10px 4px;box-shadow:var(--ombra)}
+.ic-bottone:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.ic-segno{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--porpora);margin-top:1px}
+.ic-testi{display:flex;flex-direction:column;gap:3px;min-width:0}
+.ic-testi b{font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--oro-t)}
+.ic-sotto{font-size:15px;line-height:1.4}
+.ic-vai{font-family:var(--ui);font-size:14px;font-weight:600;color:var(--porpora);margin-top:2px}
+@media (min-width:1001px){ .in-citta{display:none} }
+@media print{ .in-citta{display:none} }
+
+/* la linea del tempo aspetta il primo scorrimento (js/pagina.js, tempo-attesa): scivola giù fuori dallo schermo e torna su quando si scende */
+.tempo{transition:transform .35s ease,opacity .3s ease,visibility 0s}
+body.tempo-attesa .tempo{transform:translateY(calc(100% + 24px));opacity:0;visibility:hidden;transition:transform .35s ease,opacity .3s ease,visibility 0s .35s}
+@media (prefers-reduced-motion:reduce){ .tempo,body.tempo-attesa .tempo{transition:none} }
+
+/* «Condividi» nella colonna fissa del PC: sopra il porpora della testata la scritta grigia non si leggeva (cattura dell'utente, 23 novembre 2026).
+   Ora sta in una pastiglia color carta, leggibile su qualunque fondo, come i tondi dei tasti sotto. */
+@media (min-width:1001px){
+  .condividi-lato .condividi-titolo{padding:9px 5px;border:1px solid var(--line);border-radius:999px;background:rgba(251,246,234,.96);color:var(--oro-t);
+    box-shadow:0 1px 2px rgba(34,28,24,.12);font-weight:600;letter-spacing:.14em}
+}
+
+/* «A ogni tappa cambiano insieme: L'Impero · Roma» (23 novembre 2026, l'utente: dire in alto che si vedono sia la trasformazione di Roma sia quella dell'impero).
+   Due pastiglie leggere sotto i numeri dell'apertura; toccate portano alle scene (sul telefono aprono la scheda giusta: js/pagina.js). */
+.due-scene{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:22px 0 0}
+.ds-guida{font-family:var(--ui);font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:#D2C0A8;margin-right:4px}
+.ds-voce{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:5px 13px 5px 11px;font-family:var(--ui);font-size:13.5px;color:var(--crema);text-decoration:none;
+  background:rgba(255,255,255,.06);border:1px solid rgba(212,174,85,.42);border-radius:999px;transition:background .15s,border-color .15s}
+.ds-voce svg{flex:none;color:var(--gold2)}
+.ds-voce b{font-weight:600;color:var(--gold3)}
+.ds-voce:hover{background:rgba(255,255,255,.12);border-color:var(--gold2)}
+.ds-voce:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+@media (max-width:760px){ .due-scene{margin-top:14px;gap:6px 8px} .ds-guida{width:100%;font-size:11.5px;letter-spacing:.06em} .ds-voce{font-size:13.5px;min-height:36px} .ds-cosa{display:none} }
+@media (prefers-reduced-motion:reduce){ .ds-voce{transition:none} }
+
+/* Didascalia dell'evento nella città: si chiude con la ×, resta una «i» che la riporta (js/eventi.js, 23 novembre 2026) */
+.evento{padding-right:40px}
+.ev-chiudi,.ev-riapri{pointer-events:auto;cursor:pointer;font-family:var(--ui);line-height:1;color:#fff;border:0}
+.ev-chiudi{position:absolute;top:2px;right:2px;width:36px;height:36px;font-size:22px;background:transparent;border-radius:50%;opacity:.85}
+.ev-chiudi:hover,.ev-chiudi:focus-visible{opacity:1;background:rgba(255,255,255,.12)}
+.ev-riapri{display:none}
+.evento.chiusa{padding:0;background:none;border:0;right:auto;width:auto;max-width:none;overflow:visible}
+.evento.chiusa .ev-testo,.evento.chiusa .ev-chiudi{display:none}
+.evento.chiusa .ev-riapri{display:grid;place-items:center;width:36px;height:36px;font-size:17px;font-weight:700;font-style:italic;font-family:var(--serif);
+  background:rgba(46,18,13,.82);border:1px solid rgba(208,86,58,.8);border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.ev-chiudi:focus-visible,.ev-riapri:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+@media (max-width:1000px){ body:not(.roma-grande) .evento.chiusa{display:block;border-bottom:0} }
+.evento:not(.vivo) .ev-chiudi,.evento:not(.vivo) .ev-riapri{pointer-events:none;visibility:hidden}      /* didascalia spenta: niente bottoni invisibili da toccare */
+/* A tutto schermo sui dispositivi stretti la didascalia parte raccolta, con «continua ▾» / «riduci ▴» (js/eventi.js, 24 novembre 2026); sul PC resta intera */
+.ev-continua{display:none}
+@media (max-width:1000px),(max-height:559px) and (orientation:landscape){
+  body.roma-grande .evento.raccolta:not(.chiusa) .ev-testo{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+  body.roma-grande .evento:not(.raccolta):not(.chiusa) .ev-testo{display:block;max-height:46vh;overflow-y:auto;overscroll-behavior:contain;pointer-events:auto}      /* aperta: se è più lunga di metà schermo scorre dentro di sé */
+  body.roma-grande .evento.tronca:not(.chiusa) .ev-continua{display:flex;align-items:center;min-height:40px;margin:2px 0 -4px -6px;padding:0 10px;pointer-events:auto;cursor:pointer;
+    font-family:var(--ui);font-size:13.5px;font-weight:600;letter-spacing:.02em;color:var(--gold3);background:none;border:0;border-radius:6px}
+  body.roma-grande .evento .ev-continua:focus-visible{outline:2px solid var(--gold2);outline-offset:0}
+  body.roma-grande .evento:not(.vivo) .ev-continua{pointer-events:none;visibility:hidden}
+}
+@media (max-height:559px) and (orientation:landscape){ body.roma-grande .evento.raccolta:not(.chiusa) .ev-testo{-webkit-line-clamp:2;line-clamp:2}
+  body.roma-grande .evento:not(.raccolta):not(.chiusa) .ev-testo{max-height:26vh} }      /* telefono coricato, aperta: quattro righe che scorrono, sotto il numero degli abitanti */
+/* La didascalia breve sul PC (js/eventi.js, RM.didascaliaBreve; 25 novembre 2026, l'800): una riga larga e bassa con fonte e riserve del tempo in corso, e «Tutta la didascalia ▾» */
+.ev-tutta{display:none}
+.evento.breve:not(.chiusa){max-width:min(860px,calc(100% - 90px));padding:6px 40px 6px 12px;font-size:13.5px;line-height:1.38}
+.evento.breve:not(.chiusa) .ev-tutta{display:inline-block;margin-left:8px;padding:2px 6px;pointer-events:auto;cursor:pointer;font-family:var(--ui);font-size:12.5px;font-weight:600;letter-spacing:.02em;
+  color:var(--gold3);background:none;border:0;border-radius:5px;white-space:nowrap}
+.evento.breve .ev-tutta:focus-visible{outline:2px solid var(--gold2);outline-offset:0}
+.evento.breve-tutta:not(.chiusa) .ev-testo{display:block;max-height:46vh;overflow-y:auto;overscroll-behavior:contain;pointer-events:auto}
+.evento.breve-tutta:not(.chiusa) .ev-tutta{margin:4px 0 0 -6px}
+.evento:not(.vivo) .ev-tutta{pointer-events:none;visibility:hidden}
+/* telefono coricato, carta a tutto schermo: la legenda lunga (il 451) finiva sotto la linea del tempo; ora si ferma sopra e il resto scorre (23 novembre 2026) */
+@media (max-height:559px){ body.impero-largo .legenda-mappa{max-height:calc(100vh - 44px - var(--tempo,92px) - 22px - env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin} }
+
+/* ===== Ritocchi di veste del 23 novembre 2026 (audit del design: src/design/audit-design.md) ===== */
+/* Telefono coricato, carta e città dentro la pagina: la linea del tempo incollata in fondo occupava circa 150 dei 375 punti d'altezza e copriva quasi tutta la carta.
+   Ora sta su una riga sola, come già a tutto schermo: comandi a sinistra, poi le tacche, sopra solo gli anni degli atti. */
+@media (max-height:559px) and (orientation:landscape) and (max-width:1000px){
+  .tempo{flex-direction:row;align-items:center;gap:10px;padding:5px 8px}
+  .tempo .comandi button{flex:none;min-height:40px;padding:6px 10px}
+  .tempo .linea button{height:22px}
+  .atto-gruppo p span{display:none}
+}
+/* Telefono: le spie del cruscotto una sotto l'altra. In due colonne da 166 punti la nota dei «Commerci» andava su dieci righe strette e la spia accanto restava mezza vuota. */
+@media (max-width:520px){ .cruscotto{grid-template-columns:1fr} .cruscotto .spia small{min-height:0} }
+/* Protagonisti: il punto dopo le date non va più a capo da solo all'inizio della riga (spazio unificatore prima, spazio normale dopo) */
+.protagonisti .date{margin-right:.15em}
+.protagonisti .date::after{content:"\00a0· "}
+/* Telefono e tablet: il bottone fluttuante «Torna alla carta e alla città» copriva la riga della versione in fondo al piede; il piede gli lascia posto */
+@media (max-width:1000px){ .piede{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))} }
+/* «Leggi la tappa» / «Torna alla carta e alla città»: ora sale davvero sopra la linea del tempo incollata (js/pagina.js) e sta al centro, non a destra,
+   dove copriva il bottone del tutto schermo della carta e i comandi della città */
+.salta-giu{right:auto;left:50%;transform:translateX(-50%);white-space:nowrap}
+/* Telefoni stretti (360 punti, molti Android): l'occhiello «Infografica interattiva · 235-852» andava su due righe con «852» da solo; spaziatura un po' più stretta */
+@media (max-width:374px){ .apertura .occhiello{letter-spacing:.12em} }
+
+/* Intermezzi (24 novembre 2026, js/pagina.js): carta e città non cambiano. Su ciascuna scena un velo chiaro (sotto i comandi, che restano nitidi) e al centro un avviso
+   che porta al testo; con la × diventa una pastiglia in alto e il velo se ne va. Sulla carta l'avviso copre solo il disegno, non le legende sotto. */
+.ia-velo{position:absolute;inset:0;z-index:1;pointer-events:none;background:rgba(246,244,239,.5)}
+.ia-avviso{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:12px;pointer-events:none}
+.riquadro.impero>.ia-velo,.riquadro.impero>.ia-avviso{bottom:auto;aspect-ratio:1000/640}
+.ia-velo[hidden],.ia-avviso[hidden]{display:none}
+.ia-carta{position:relative;pointer-events:auto;max-width:min(340px,100%);background:rgba(255,255,255,.97);border:1px solid var(--line);border-top:3px solid var(--porpora);border-radius:6px 6px 12px 12px;
+  box-shadow:0 14px 32px -16px rgba(34,28,24,.55);animation:ia-entra .3s ease both}
+.ia-leggi{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;margin:0;padding:13px 36px 14px;font:inherit;text-align:center;color:var(--ink);background:none;border:0;border-radius:inherit;cursor:pointer}
+.ia-occhio{font-family:var(--ui);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--oro-t)}
+.ia-frase{font-family:var(--ui);font-size:14.5px;line-height:1.35;color:var(--ink)}
+.ia-vai{margin-top:5px;display:inline-flex;align-items:center;min-height:38px;padding:0 18px;border-radius:999px;font-family:var(--ui);font-size:14px;font-weight:600;color:#F6E4B0;background:var(--porpora)}
+.ia-leggi:hover .ia-vai{background:#621822;color:#fff}
+.ia-leggi:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.ia-chiudi{position:absolute;top:3px;right:3px;width:34px;height:34px;padding:0;border:0;border-radius:50%;background:none;color:var(--muted);font:400 22px/1 var(--ui);cursor:pointer}
+.ia-chiudi:hover,.ia-chiudi:focus-visible{color:var(--porpora);background:rgba(122,31,43,.07)}
+/* ridotto: una pastiglia in alto al centro, «Intermezzo · La moneta  Leggi ↓» */
+.ia-avviso.piccolo{place-items:start center;padding-top:10px}
+.ia-avviso.piccolo .ia-carta{border-top-width:1px;border-left:3px solid var(--porpora);border-radius:4px 999px 999px 4px;animation:none}
+.ia-avviso.piccolo .ia-leggi{flex-direction:row;gap:10px;padding:4px 5px 4px 12px}
+.ia-avviso.piccolo .ia-frase,.ia-avviso.piccolo .ia-chiudi{display:none}
+.ia-avviso.piccolo .ia-vai{margin:0;min-height:32px;padding:0 13px;font-size:13px}
+/* a tutto schermo l'avviso sta sopra la finestra, non dentro la carta che scorre; e sopra la linea del tempo */
+body.impero-grande .riquadro.impero>.ia-velo,body.impero-grande .riquadro.impero>.ia-avviso{position:fixed;inset:0;aspect-ratio:auto}
+body.impero-grande .ia-avviso,body.roma-grande .ia-avviso{padding-bottom:calc(var(--tempo,92px) + 20px + env(safe-area-inset-bottom,0px))}
+body.impero-grande .ia-avviso.piccolo{padding-top:calc(68px + env(safe-area-inset-top,0px))}      /* sotto i comandi della carta, che a tutto schermo stanno in alto a destra */
+.riquadro.roma>.ia-avviso.piccolo{padding-top:74px}      /* nella città sta sotto il numero degli abitanti, che è in alto a sinistra, e sotto «Strumenti» */
+body.roma-grande .riquadro.roma>.ia-avviso.piccolo{padding-top:calc(78px + env(safe-area-inset-top,0px))}
+#tAtto{scroll-margin-top:14px}      /* «Leggi» porta al testo con un po' d'aria sopra */
+@keyframes ia-entra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){ .ia-carta{animation:none} }
+@media (max-width:520px){ .ia-leggi{padding:11px 30px 12px} .ia-frase{font-size:14px} }
+@media (max-height:559px) and (orientation:landscape){ .ia-leggi{padding:9px 30px 10px;gap:3px} .ia-vai{min-height:34px}
+  body:not(.impero-grande):not(.roma-grande) .ia-avviso:not(.piccolo){place-items:start center;padding-top:62px} }      /* telefono coricato, scene nella pagina: la carta è più alta dello schermo e al centro l'avviso finiva sotto la linea del tempo incollata; sta in alto, sotto l'invito al tutto schermo */
+@media print{ .ia-velo,.ia-avviso{display:none} }
+/* linea del tempo: l'intermezzo è una tacca più bassa e tonda, non un rettangolo come le tappe; il fumetto aggiunge «si legge sotto» */
+.linea button.intermezzo{align-self:center;height:12px;border-radius:999px}
+.linea button.intermezzo[aria-current="true"]{box-shadow:0 0 0 2px #fff,0 0 0 3.5px var(--porpora)}
+@media (max-height:559px) and (orientation:landscape){ .linea button.intermezzo,body.impero-grande .tempo .linea button.intermezzo,body.roma-grande .tempo .linea button.intermezzo{height:11px} }
+.fumetto i{font-style:normal;color:#E6D6C0}
+/* l'immagine del riquadro «Fra storia e leggenda» (js/pagina.js, figuraLeggenda): entra solo a immagine caricata */
+.lg-figura{margin:12px 0 2px}
+.lg-figura[hidden]{display:none}
+.lg-figura img{display:block;width:100%;height:auto;border-radius:6px;border:1px solid var(--line)}
+.lg-figura figcaption{margin-top:6px;font-family:var(--ui);font-size:12.5px;line-height:1.4;color:var(--muted)}
+.lg-credito{color:var(--muted);white-space:nowrap}
+.lg-apri{display:block;width:100%;margin:0;padding:0;border:0;background:none;cursor:zoom-in;border-radius:6px}
+.lg-apri:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* la vista grande (js/pagina.js, vistaLeggenda) usa il <dialog> dei ritratti; qui l'immagine è larga: una colonna sola, foto sopra e didascalia sotto */
+.rit-vista.lg-vista{max-width:min(1000px,calc(100vw - 32px))}
+.rit-vista.lg-vista figure{grid-template-columns:1fr}
+.rit-vista.lg-vista .rit-grande{padding:0;background:#2A231D}
+.rit-vista.lg-vista .rit-grande img{max-width:100%;max-height:calc(100vh - 190px);max-height:calc(100dvh - 190px)}
+.rit-vista.lg-vista .rit-cosa{margin:0 30px 0 0}
+/* il bottone fluttuante negli intermezzi: acceso (porpora) finché non si è scesi al testo */
+/* «Leggi la tappa ↓» sta nella linea del tempo, accanto a ‹ ▶ › (js/pagina.js, 24 novembre 2026): si muove con lei e non copre nulla.
+   Negli intermezzi è acceso (porpora). Sul telefono e col telefono coricato dice solo «Leggi ↓»; a tutto schermo non c'è (lì il testo non si vede). */
+.comandi .leggi-tappa{white-space:nowrap;color:var(--porpora);background:#FBF6EA;border-color:rgba(122,31,43,.4)}
+.comandi .leggi-tappa:hover{color:#fff;background:var(--porpora);border-color:var(--porpora)}
+.comandi .leggi-tappa.acceso{color:#fff;background:var(--porpora);border-color:var(--gold2)}
+.leggi-tappa .lt-corto{display:none}
+/* il richiamo (js/pagina.js, richiama): un alone morbido nel colore del bottone che respira (0,9 s su, pausa, 2,2 s il ciclo) e la freccia che scende di tre punti e torna.
+   Solo opacity e transform: niente cambi di misura, la riga non si muove. Nell'intermezzo (porpora acceso) l'alone è dorato. Con prefers-reduced-motion un alone fermo. */
+.comandi .leggi-tappa{position:relative}
+.leggi-tappa .lt-freccia{display:inline-block}
+.leggi-tappa::after{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;opacity:0;
+  box-shadow:0 0 0 4px rgba(122,31,43,.26),0 0 18px 3px rgba(122,31,43,.28)}
+.leggi-tappa.acceso::after{box-shadow:0 0 0 4px rgba(212,174,85,.42),0 0 16px 3px rgba(212,174,85,.34)}
+.leggi-tappa.richiama::after{animation:lt-respiro 2.2s ease-in-out infinite;will-change:opacity}
+.leggi-tappa.richiama .lt-freccia{animation:lt-scende 2.2s ease-in-out infinite;will-change:transform}
+@keyframes lt-respiro{0%{opacity:0}35%{opacity:1}70%,100%{opacity:0}}
+@keyframes lt-scende{0%,60%,100%{transform:translateY(0)}28%{transform:translateY(3px)}}
+body.tempo-attesa .leggi-tappa.richiama::after,body.tempo-attesa .leggi-tappa.richiama .lt-freccia{animation:none}      /* linea del tempo ancora nascosta: niente lavoro inutile */
+@media (prefers-reduced-motion:reduce){
+  .leggi-tappa.richiama::after{animation:none;opacity:1;box-shadow:0 0 0 2px rgba(122,31,43,.45)}
+  .leggi-tappa.acceso.richiama::after{box-shadow:0 0 0 2px rgba(212,174,85,.7)}
+  .leggi-tappa.richiama .lt-freccia{animation:none}
+}
+@media (max-width:1000px),(max-height:559px) and (orientation:landscape){ .leggi-tappa .lt-lungo{display:none} .leggi-tappa .lt-corto{display:inline} }
+@media (max-width:1000px){ .comandi .leggi-tappa{flex:none;padding:8px 12px} }
+@media (min-width:1001px){ .comandi .leggi-tappa{min-width:184px} }      /* «Leggi l'intermezzo» è più lungo di «Leggi la tappa»: la stessa larghezza, così le tacche della linea non si spostano */
+body.roma-grande .comandi .leggi-tappa,body.impero-grande .comandi .leggi-tappa{display:none}
+/* Inizio e fine della linea del tempo (js/pagina.js, capi): «⏮ 235» e «852 ⏭» al posto dei due anni ai capi, come pastiglie; spenti quando ci si è già */
+.atto-gruppo.ha-inizio,.atto-gruppo.ha-fine{position:relative}
+.atto-gruppo.ha-inizio p>b:first-child,.atto-gruppo.ha-fine p>b.fine{display:none}
+.atto-gruppo.ha-inizio p>span{display:none}
+.atto-gruppo.ha-inizio p::after{content:"\00a0"}      /* la riga resta alta quanto le altre: senza, le tacche del primo atto salivano */      /* il primo atto è stretto: accanto a «⏮ 235» del nome restava una lettera; la sua scheda si apre da «L'atto in breve» accanto al titolo della tappa */
+.atto-gruppo.ha-inizio p{padding-left:52px}
+.atto-gruppo.ha-fine p{padding-right:52px}
+/* .linea .capo e non .capo: le regole delle tacche (.linea button) varrebbero anche qui */
+.linea .capo{position:absolute;top:-3px;z-index:1;display:inline-flex;flex:none;align-items:center;justify-content:center;gap:4px;width:auto;min-width:0;height:22px;padding:0 7px;margin:0;
+  font-family:var(--ui);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em;color:var(--porpora);background:#FBF6EA;border:1px solid rgba(122,31,43,.4);border-radius:999px;cursor:pointer}
+.linea .capo-inizio{left:0} .linea .capo-fine{right:0}
+.linea .capo:hover:not(:disabled){color:#fff;background:var(--porpora);border-color:var(--porpora)}
+.linea .capo:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.linea .capo:disabled{color:var(--muted);background:transparent;border-color:var(--line);opacity:.75;cursor:default}
+.linea .capo::before{content:"";position:absolute;inset:-6px -4px}      /* bersaglio un po' più grande della pastiglia */
+/* telefono: il primo atto è largo poco più di trenta punti; la pastiglia ci sta stretta e il bersaglio si allarga verso il bordo della linea e in giù, sulle tacche che portano comunque al capo */
+@media (max-width:520px){
+  .atto-gruppo.ha-inizio p{padding-left:36px} .atto-gruppo.ha-fine p{padding-right:42px}
+  .linea .capo{height:20px;padding:0 4px;gap:1px;font-size:11.5px;top:-2px}
+  .linea .capo svg{width:7px;height:7px}
+  .linea .capo-inizio{left:-7px} .linea .capo-fine{right:-7px}      /* sporge nel margine della linea del tempo: così non tocca l'anno dell'atto seguente */
+  .linea .capo-inizio::before{inset:-9px -4px -17px -14px} .linea .capo-fine::before{inset:-9px -14px -17px -4px}
+}
+/* telefono coricato e tutto schermo stretto: la riga degli anni è sottile */
+@media (max-height:559px) and (orientation:landscape){ .linea .capo{height:20px;top:-2px;padding:0 5px;gap:2px} .linea .capo-inizio{left:-6px} .linea .capo-fine{right:-6px} }
+.linea .capo .capo-riga{display:inline-flex;align-items:center;gap:inherit}
+.linea .capo small{display:none}
+/* PC (24 novembre 2026, l'utente: «Fallo più carino da pc»): due comandi veri, vestiti come ‹ › (fondo bianco, bordo, angoli di 8 punti), con il segno in porpora.
+   Provata anche la versione alta quanto la linea, con «Inizio» e «Fine» scritti: toglieva 140 punti alla linea e tagliava di più i nomi degli atti II-V. Questa sta nello
+   stesso posto degli anni di prima (sporge di 8 punti nel margine della linea del tempo), così nessun nome si accorcia e le tacche restano dove sono. */
+@media (min-width:1001px) and (min-height:560px){
+  .linea .capo{top:-7px;height:28px;padding:0 9px 0 8px;gap:5px;border-radius:8px;color:var(--ink);background:var(--carta2);border:1px solid var(--line);
+    box-shadow:0 1px 2px rgba(34,28,24,.08);font-family:var(--ui);font-size:13px;font-weight:700;letter-spacing:.02em;transition:color .15s,border-color .15s,background .15s,box-shadow .15s}
+  .linea .capo-inizio{left:-8px} .linea .capo-fine{right:-8px}
+  .linea .capo .capo-riga{color:var(--porpora)}
+  .linea .capo svg{width:10px;height:10px}
+  .linea .capo:hover:not(:disabled){color:var(--porpora);background:#FBF6EA;border-color:var(--porpora);box-shadow:0 3px 8px -4px rgba(122,31,43,.45)}
+  .linea .capo:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+  .linea .capo:disabled{color:#9C9186;background:transparent;border-style:dashed;box-shadow:none;opacity:1}
+  .linea .capo:disabled .capo-riga{color:#B5AA9E}
+  .linea .capo::before{inset:-4px -3px}
+}
+/* «La crisi», il nome del primo atto, torna dove ha posto accanto alla pastiglia: provato, a 1280 e a 1920 resterebbero 1 e 7 punti; non torna (il primo atto è largo 70-130 punti) */
+/* PC stretto (da 1001 a 1199 punti): il primo atto è largo una quarantina di punti. «Leggi ↓» corto dà spazio alla linea, e la pastiglia si stringe, così non copre «284» */
+@media (min-width:1001px) and (max-width:1199px){
+  .leggi-tappa .lt-lungo{display:none} .leggi-tappa .lt-corto{display:inline}
+  .comandi .leggi-tappa{min-width:0}
+}
+@media (min-width:1001px) and (max-width:1199px) and (min-height:560px){
+  .linea .capo{height:26px;top:-6px;padding:0 6px;gap:3px;font-size:12px}
+  .linea .capo svg{width:8px;height:8px}
+  .atto-gruppo.ha-inizio p>span{display:none} .atto-gruppo.ha-inizio p::after{content:"\00a0"} .atto-gruppo.ha-inizio p{padding-left:52px}      /* qui il nome non ci sta */
+}
+@media (min-width:1001px) and (min-height:560px) and (prefers-reduced-motion:reduce){ .linea .capo{transition:none} }
+/* «↑ Torna alla carta e alla città»: fluttuante, sempre alla stessa quota; mai a tutto schermo */
+.salta-giu{bottom:14px}
+body.roma-grande .salta-giu,body.impero-grande .salta-giu{display:none}
+
+/* Telefono, comandi della linea del tempo rifiniti (24 novembre 2026, cattura dell'utente su iPhone: «▶ RIPRODUCI» andava a capo, i quattro comandi avevano altezze
+   e pesi diversi, le pastiglie dei capi uscivano dalla linea). Ora: una riga sola, tutti alti 44 punti con gli stessi angoli; ‹ › quadrati; «▶ Riproduci» e «Leggi ↓»
+   in minuscolo e senza spaziatura larga (su iPhone le maiuscole spaziate sono più larghe che in Edge: misurato con un margine del 10%), mai a capo. */
+@media (max-width:1000px){
+  .tempo .comandi{display:flex;flex-wrap:nowrap;gap:6px;align-items:stretch}
+  .tempo .comandi button{height:44px;min-height:44px;margin:0;padding:0 13px;border-radius:10px;font-family:var(--ui);font-size:14px;font-weight:600;letter-spacing:.01em;
+    text-transform:none;white-space:nowrap;line-height:1;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+  .tempo .comandi #btnPrima,.tempo .comandi #btnDopo{flex:0 0 44px;width:44px;padding:0;font-size:25px;font-weight:600;padding-bottom:2px}
+  .tempo .comandi #btnPlay{flex:1 1 auto;min-width:0;overflow:hidden}
+  .tempo .comandi .leggi-tappa{flex:0 0 auto;padding:0 14px}
+  /* i capi stanno dentro la linea, allineati ai suoi bordi. Con la linea a righello (25 novembre 2026) il primo atto è più stretto della pastiglia «235»: l'anno «284»
+     si sposta a destra (anniAtti in js/pagina.js) e la pastiglia è compatta, 4 punti di margine interno; il bersaglio resta alto 40 punti (10 sopra, 9 sotto) senza
+     scendere sulle tacche del secondo atto, che la pastiglia sovrasta */
+  .atto-gruppo.ha-inizio p{padding-left:0} .atto-gruppo.ha-fine p{padding-right:48px}
+  .linea .capo,.linea .capo-inizio,.linea .capo-fine{top:-2px;height:21px;padding:0 4px;gap:1px;font-size:12px}
+  .linea .capo-inizio{left:0} .linea .capo-fine{right:0}
+  .linea .capo-inizio::before{inset:-10px 0 -9px -8px} .linea .capo-fine::before{inset:-10px -8px -9px 0}
+}
+/* telefoni stretti (360 punti): con le scritte più larghe dell'iPhone «Riproduci» si tagliava; frecce di 40 punti e margini interni più stretti */
+@media (max-width:379px){
+  .tempo .comandi{gap:5px}
+  .tempo .comandi button{padding:0 9px;gap:5px}
+  .tempo .comandi #btnPrima,.tempo .comandi #btnDopo{flex-basis:40px;width:40px}
+  .tempo .comandi .leggi-tappa{padding:0 10px}
+  .linea .capo,.linea .capo-inizio,.linea .capo-fine{padding:0 4px;gap:1px}
+}
+/* telefono coricato: la riga è una sola anche con la linea accanto; i comandi alti 40 */
+@media (max-height:559px) and (orientation:landscape) and (max-width:1000px){
+  .tempo .comandi button{height:40px;min-height:40px}
+  .tempo .comandi #btnPrima,.tempo .comandi #btnDopo{flex:0 0 40px;width:40px}
+  .tempo .comandi #btnPlay{flex:0 0 auto}
+}
+
+/* nomi delle strade sulla scena di Roma (js/strade-nomi.js, 25 novembre 2026): corsivo, chiari e quieti, più piccoli dei nomi dei monumenti e sotto di loro; non si toccano */
+.strade3d{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.strade3d span{position:absolute;left:0;top:0;visibility:hidden;opacity:0;white-space:nowrap;font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:14px;line-height:1;letter-spacing:.03em;
+  color:#f4e9cf;text-shadow:0 0 3px rgba(28,20,10,.95),0 0 7px rgba(28,20,10,.6);transition:opacity .3s}
+body.roma-grande .strade3d span{font-size:15px}
+@media (max-width:700px){ .strade3d{display:none} body.roma-grande .strade3d{display:block} body.roma-grande .strade3d span{font-size:13px} }
+
+/* regioni e quartieri sulla scena di Roma (js/regioni.js, 25 novembre 2026): numero e nome delle regioni in maiuscoletto, i quartieri in corsivo, più piccoli; si toccano */
+.regioni3d{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.regioni3d button{position:absolute;left:0;top:0;visibility:hidden;opacity:0;margin:0;padding:2px 4px;border:0;background:none;cursor:pointer;pointer-events:auto;white-space:nowrap;text-align:center;
+  color:#fbf3df;text-shadow:0 0 3px rgba(28,20,10,.95),0 0 8px rgba(28,20,10,.7);transition:opacity .3s;-webkit-tap-highlight-color:transparent}
+.regioni3d .rg-nome{font-family:var(--cap);font-size:12.5px;font-weight:600;letter-spacing:.08em;line-height:1.15;text-transform:uppercase}
+.regioni3d .rg-nome b{font-weight:700;color:#ffe2a0}
+.regioni3d .rg-nome small{display:block;font-family:'EB Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:12px;letter-spacing:.02em;text-transform:none;opacity:.9}
+.regioni3d .rg-q{font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:14px;letter-spacing:.02em;color:#ffe9b8}
+.regioni3d button:hover,.regioni3d button:focus-visible{color:#fff;outline:1px dashed rgba(255,240,200,.7);outline-offset:1px}
+body.roma-grande .regioni3d .rg-nome{font-size:13.5px}
+body.roma-grande .regioni3d .rg-q{font-size:15px}
+.rg-nota{position:absolute;right:10px;top:52px;z-index:3;max-width:250px;margin:0;padding:5px 9px;font-family:var(--ui);font-size:11.5px;line-height:1.3;color:var(--ink);
+  background:rgba(251,246,234,.9);border:1px solid rgba(160,130,60,.45);border-radius:4px;pointer-events:none}
+.rg-nota[hidden]{display:none}
+body.roma-grande .rg-nota{top:56px;right:12px}
+@media (min-width:701px){ .rg-nota,body.roma-grande .rg-nota{right:auto;left:12px;top:74px} }      /* dove il menu Strumenti è aperto di norma, la nota sta a sinistra, sotto il numero degli abitanti */
+@media (max-width:700px){ .regioni3d,.rg-nota{display:none} body.roma-grande .regioni3d{display:block} body.roma-grande .rg-nota{display:block;max-width:200px;font-size:11px} body.roma-grande .rg-nota[hidden]{display:none}
+  body.roma-grande .regioni3d .rg-nome{font-size:12px} body.roma-grande .regioni3d .rg-q{font-size:13.5px} }
+/* la scheda della regione: come quella dei monumenti */
+.scheda.regione .rg-tipo{margin:0 26px 2px 0;font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--oro-t)}
+.scheda.regione h3 small{font-family:'EB Garamond',Georgia,serif;font-style:italic;font-weight:400;font-size:14px;color:var(--muted);letter-spacing:0}
+.scheda.regione .rg-num{display:inline-block;min-width:1.6em;padding:0 4px;margin-right:2px;border-radius:3px;text-align:center;color:var(--ink);background:color-mix(in srgb,var(--rg) 35%,#fff);border:1px solid color-mix(in srgb,var(--rg) 70%,#000)}
+.scheda.regione h4{margin:10px 0 4px;padding-top:8px;border-top:1px solid rgba(160,130,60,.35);font-family:var(--ui);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.scheda.regione .rg-luoghi{margin:0 0 6px;font-size:13.5px}
+.scheda.regione .rg-riserva{margin:4px 0 6px;font-size:12.5px;line-height:1.35;color:var(--muted)}
+.scheda.regione .rg-case{margin:6px 0;font-size:13.5px}
+.scheda.regione .rg-cat{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;margin:0}
+.scheda.regione .rg-cat div{display:flex;justify-content:space-between;gap:6px;padding:2px 0;border-bottom:1px dotted rgba(160,130,60,.35);font-size:13px}
+.scheda.regione .rg-cat dt{color:var(--muted)}
+.scheda.regione .rg-cat dd{margin:0;font-family:var(--cap);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.scheda.regione .rg-bordo{margin:6px 0 2px;font-size:12.5px;color:var(--muted)}
+.scheda.regione .rg-mon{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 4px}
+.scheda.regione .rg-mon button{font-family:var(--ui);font-size:12.5px;padding:4px 9px;border-radius:999px;border:1px solid rgba(160,130,60,.55);background:#fff;color:var(--ink);cursor:pointer;line-height:1.2}
+.scheda.regione .rg-mon button.cat::before{content:'◆ ';color:var(--oro-t);font-size:10px}
+.scheda.regione .rg-mon button:hover{background:#f6ecd4}
+@media (max-width:420px){ .scheda.regione .rg-cat{grid-template-columns:1fr} }
+/* linea del tempo a righello (js/pagina.js, tacche() e anniAtti()): ogni tacca, intermezzi compresi, è larga --tacca e lo spazio è lo stesso ovunque, anche fra gli atti.
+   Gli anni possono sporgere dal loro gruppo (spostati a destra dove la scritta di prima li urterebbe): la riga degli anni non taglia. La lineetta di ogni atto è rientrata
+   di un punto per parte, così fra due atti c'è un taglio visibile anche se le tacche sono equidistanti. */
+.linea.tacche-uguali .atto-gruppo>p{overflow:visible}
+.linea.tacche-uguali .atto-gruppo:not(.ha-fine)>p{padding-right:8px}      /* il nome troncato dell'atto non arriva all'anno del seguente */
+.linea.tacche-uguali .atto-gruppo>div{justify-content:space-between;--lin:var(--line);border-top-color:transparent;
+  background:linear-gradient(var(--lin),var(--lin)) 1px 0/calc(100% - 2px) 2px no-repeat;background-origin:border-box}
+.linea.tacche-uguali .atto-gruppo.attivo>div{--lin:var(--porpora)}
+.linea.tacche-uguali .atto-gruppo>div>button{flex:0 0 var(--tacca,8px);box-sizing:border-box}
+.riquadro.roma:has(.legenda-sapere:not([hidden])) .rg-nota{display:none}      /* con «Che cosa sappiamo» acceso la nota cede il posto alla sua legenda; resta nella scheda di ogni regione */
+/* ---------- Attesa delle due scene all'apertura (26 novembre 2026; l'utente: «Animazione di caricamento delle due mappe all'inizio») ----------
+   Un velo color carta copre la carta dell'Impero e la città finché non sono disegnate davvero (index.html, RM_carica; la città lo toglie in js/base.js dopo il primo
+   disegno completo), poi sparisce in un terzo di secondo. Le scritte dicono che cosa il codice sta costruendo in quel momento (le aggiornano piccoli script fra un file
+   e l'altro di index.html): nessuna percentuale. Il segno che si muove è una barretta d'oro che scorre su un filo: solo transform e opacity, che il browser anima
+   anche mentre il filo principale costruisce la città (all'apertura due blocchi di oltre un secondo). Il contenuto del velo compare dopo un quarto di secondo:
+   se la scena è pronta prima, non lampeggia. Con prefers-reduced-motion la barretta sta ferma al centro. Le scritte stanno in alto (il riquadro della città, sul PC,
+   è più alto della finestra: al centro non si vedrebbero). */
+.carica{position:absolute;inset:0;z-index:40;display:grid;place-items:start center;padding-top:clamp(24px,15vh,150px);margin:0;background:var(--carta);transition:opacity .35s ease}
+.carica[hidden]{display:none}
+.carica.via{opacity:0;pointer-events:none}
+.riquadro.roma .carica{background:#EFE8DA}      /* un tono più caldo, come il fondo del riquadro della città */
+.carica-dentro{display:flex;flex-direction:column;align-items:center;gap:7px;padding:16px 20px;text-align:center;opacity:0;animation:carica-entra .4s .25s ease forwards}
+.carica-titolo{margin:0;font-family:var(--cap);font-size:15px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--porpora)}
+.carica-fase{margin:0;min-height:1.35em;font-family:var(--ui);font-size:13px;line-height:1.35;color:var(--muted)}
+.carica-filo{position:relative;display:block;width:132px;height:2px;margin-top:5px;border-radius:2px;background:var(--line);overflow:hidden}
+.carica-filo i{position:absolute;left:0;top:0;width:40px;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));will-change:transform;animation:carica-scorre 1.5s cubic-bezier(.45,0,.55,1) infinite alternate}
+@keyframes carica-entra{to{opacity:1}}
+@keyframes carica-scorre{from{transform:translateX(0)}to{transform:translateX(92px)}}
+@media (prefers-reduced-motion:reduce){
+  .carica-dentro{animation:none;opacity:1}
+  .carica-filo i{animation:none;transform:translateX(46px)}
+  .carica{transition:none}
+}
+@media (max-width:420px){ .carica-titolo{font-size:13.5px} .carica-fase{font-size:12.5px} }
+
+/* ---------- Barre di scorrimento in tinta (26 novembre 2026; l'utente: «Le barre laterali di scorrimento devono essere di un colore adeguato al resto») ----------
+   Solo dove c'è un mouse (sui telefoni le barre sono quelle sottili del sistema, che spariscono da sole). Sul fondo chiaro un cursore bruno dorato (#8C6B3A: contrasto
+   4,3 a 1 sul fondo carta, 4,6 sul bianco; passandoci sopra più scuro) su un binario carta per la pagina, trasparente nei riquadri; sui fondi scuri (didascalie della città,
+   regia della carta, apertura e piede color vino) il cursore è oro chiaro su un binario appena visibile. Firefox e Chromium leggono scrollbar-color e scrollbar-width;
+   Safari le regole ::-webkit-scrollbar (Chromium, se c'è scrollbar-color, le ignora). Le barre nascoste apposta (la fila dei passi della carta, le tappe della scheda
+   dell'atto) restano nascoste: per Safari, che con le regole qui sotto mostrerebbe una barra, si nascondono anche col suo selettore. */
+@media (hover:hover) and (pointer:fine){
+  html{scrollbar-color:#8C6B3A var(--carta)}
+  *{scrollbar-color:#8C6B3A transparent;scrollbar-width:thin}
+  html{scrollbar-width:auto}
+  .evento,.evento *,.m-didascalia,.m-didascalia *,.apertura,.apertura *,.piede,.piede *,.atto-scheda .as-testa,.atto-scheda .as-testa *{scrollbar-color:rgba(226,196,120,.8) rgba(255,255,255,.08)}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:#8C6B3A;border:2px solid transparent;border-radius:999px;background-clip:padding-box}
+  ::-webkit-scrollbar-thumb:hover{background-color:#6E4F1E}
+  ::-webkit-scrollbar-corner{background:transparent}
+  html::-webkit-scrollbar{width:12px}
+  html::-webkit-scrollbar-track{background:var(--carta)}
+  :is(.evento,.m-didascalia,.apertura,.piede,.atto-scheda .as-testa) ::-webkit-scrollbar-thumb{background-color:rgba(226,196,120,.8)}
+  :is(.evento,.m-didascalia,.apertura,.piede,.atto-scheda .as-testa) ::-webkit-scrollbar-track{background:rgba(255,255,255,.08)}
+  body.impero-grande .m-passi::-webkit-scrollbar{display:none}
+}
+@media (hover:hover) and (pointer:fine) and (max-width:700px){ body:not(.impero-grande) .m-passi::-webkit-scrollbar{display:none} }      /* le stesse condizioni di css/carta.css */
+/* Sui telefoni e sulle tavolette (26 novembre 2026; l'utente: «Perché non anche sul telefonino?»): solo il colore, con le stesse tinte. Niente scrollbar-width né ::-webkit-scrollbar:
+   lì le barre sono sottili, sopra il testo e spariscono da sole, e quelle regole le renderebbero fisse (una barra fissa ruba spazio al riquadro).
+   Che cosa ne fanno i browser (MDN e caniuse, letti il 26 novembre 2026): Chrome per Android dalla 121 colora il cursore della barra sovrapposta mentre si scorre, il binario
+   non si vede (developer.chrome.com, «Scrollbar styling»: sulle barre sovrapposte il colore del binario non ha effetto); Safari per iPhone legge scrollbar-color solo dalla 26.2
+   (su iOS 18 non cambia nulla) e il binario dipende dal sistema; la WebView di Android non lo legge. Chromium ignora ::-webkit-scrollbar dove scrollbar-color non è «auto»:
+   le file nascoste apposta (passi della carta, tappe della scheda dell'atto) tornano ad «auto», così il loro ::-webkit-scrollbar{display:none} vale ancora, insieme a scrollbar-width:none. */
+@media not ((hover:hover) and (pointer:fine)){
+  html{scrollbar-color:#8C6B3A var(--carta)}
+  *{scrollbar-color:#8C6B3A transparent}
+  .evento,.evento *,.m-didascalia,.m-didascalia *,.apertura,.apertura *,.piede,.piede *,.atto-scheda .as-testa,.atto-scheda .as-testa *{scrollbar-color:rgba(226,196,120,.8) rgba(255,255,255,.08)}
+  .m-passi,.as-scorre{scrollbar-color:auto}
+}
