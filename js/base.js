@@ -165,7 +165,7 @@ var contenitore=document.getElementById('scena'), renderer;
 /* Con WebGL2 la scena è disegnata su una tela intermedia e i bordi li liscia la passata finale (FXAA): l'antialias della tela vera non toccherebbe la scena
    e costerebbe solo memoria e tempo (quattro campioni per pixel). Resta acceso dove la passata finale non c'è (WebGL1). 23 novembre 2026 */
 var GL2=!!window.WebGL2RenderingContext;
-try{ renderer=new THREE.WebGLRenderer({antialias:!GL2}); }
+try{ renderer=new THREE.WebGLRenderer({antialias:!GL2, powerPreference:'high-performance'}); }      // 28 novembre 2026, quinto giro: la scheda grafica più veloce dove ce ne sono due (portatili); preserveDrawingBuffer resta spento (la norma di three)
 catch(e){ document.getElementById('errore').hidden=false; RM.guasto=true; if(window.RM_carica) RM_carica.cittaPronta(); return; }
 var piccolo=Math.min(window.innerWidth,window.innerHeight)<700; RM.piccolo=piccolo;
 RM.largW=window.innerWidth; window.addEventListener('resize',function(){ RM.largW=window.innerWidth; },{passive:true});      // la larghezza della finestra per chi la guarda a ogni fotogramma (28 novembre 2026): leggere window.innerWidth dopo che i nomi dei monumenti hanno scritto i loro stili obbliga il browser a rifare l'impaginazione in mezzo al fotogramma
@@ -864,7 +864,7 @@ RM.applicaLuce(0);
    Serve WebGL2; altrimenti si disegna direttamente, con l'antialias della tela. */
 /* nella passata dei contorni, con la veste: l'occlusione (quattro letture che coprono la scacchiera 2x2 della mezza risoluzione) e la foschia della distanza (non sul cielo) */
 var VESTE_POST_C=['  if(uVeste>0.5){',
-  '    if(uAO>0.0){ vec2 ua=vUv*aoK; float ao=0.25*(texture2D(tAO,ua+px).r+texture2D(tAO,ua-px).r+texture2D(tAO,ua+vec2(px.x,-px.y)).r+texture2D(tAO,ua+vec2(-px.x,px.y)).r);',      // aoK: la mezza risoluzione è arrotondata per eccesso, così ogni suo pixel copre esattamente due pixel della tela (25 novembre 2026)
+  '    if(uAO>0.0){ vec2 ua=vUv*aoK; float ao=0.25*(texture2D(tAO,min(ua+px,uLimA)).r+texture2D(tAO,min(ua-px,uLimA)).r+texture2D(tAO,min(ua+vec2(px.x,-px.y),uLimA)).r+texture2D(tAO,min(ua+vec2(-px.x,px.y),uLimA)).r);',      // aoK: la mezza risoluzione è arrotondata per eccesso, così ogni suo pixel copre esattamente due pixel della tela (25 novembre 2026); con la scala adattiva aoK porta anche la parte usata e uLimA ferma le letture dentro (a scala 1 vale 2: nessun limite)
   '      c*=mix(1.0,ao,uAO*(1.0-0.5*notte)*(1.0-0.35*smoothstep(250.0,700.0,p))); }',      // da lontano più leggera: dalla vista d'insieme scuriva i vicoli fino a sporcare la città
   '    float hz=(1.0-exp(-max(0.0,p-120.0)*0.0005))*0.36*uHazeK*step(p,3000.0);',      // uHazeK (27 novembre 2026): negli anni tardi la foschia si alleggerisce, perché le moli in rovina si stacchino dalla veduta larga; fino al 550 vale 1
   '    c=mix(c,uHaze,hz); contorno*=1.0-min(1.0,hz*1.5); }'].join(String.fromCharCode(10));
@@ -882,19 +882,22 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
   var PREC='precision highp float; precision highp sampler2D;';      // le trame lette nelle passate (profondità compresa) a piena precisione: in WebGL2 i campionatori sono «lowp» se non lo si dice, e le schede grafiche Apple lo rispettano
   var tela2=new THREE.WebGLRenderTarget(4,4,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat,depthBuffer:false,stencilBuffer:false});
   tela2.texture.generateMipmaps=false;
+  var uS={value:new THREE.Vector2(1,1)}, uLim={value:new THREE.Vector2(2,2)}, uLimA={value:new THREE.Vector2(2,2)}, uMaxT={value:new THREE.Vector2(3,3)}, scalaUsata=1, PIENA={W:4,H:4};      // la scala adattiva (28 novembre 2026, quinto giro; si veda RM.scalaAdatta): parte della tela usata, limite delle letture (2: nessuno), lo stesso nella mezza risoluzione, ultimo pixel per l'occlusione
   var uPx={value:new THREE.Vector2(1,1)}, uSfoca={value:1}, uNotte={value:0}, uDens={value:1}, uScala={value:1}, uLarga={value:1}, uAoK={value:new THREE.Vector2(1,1)};      // condivisi dalle due passate; uScala: pixel della tela per pixel dello schermo; uLarga: densità di disegno rispetto a quella di base (la linea dei contorni resta larga uguale in punti); uAoK: tela piena / due volte la mezza
   var VS='varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.0,1.0); }';
   var FUOCO='float fuoco=smoothstep(0.24,0.52,abs(vUv.y-0.46))*sfoca;';                             // 0 al centro, 1 ai bordi alto e basso
   var matC=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
-    uniforms:{ tCol:{value:tela.texture}, tProf:{value:tela.depthTexture}, px:uPx, vicino:{value:camera.near}, lontano:{value:camera.far}, notte:uNotte, sfoca:uSfoca, scala:uScala, larga:uLarga, aoK:uAoK, uTardo:RM.tardoU },
+    uniforms:{ tCol:{value:tela.texture}, tProf:{value:tela.depthTexture}, px:uPx, vicino:{value:camera.near}, lontano:{value:camera.far}, notte:uNotte, sfoca:uSfoca, scala:uScala, larga:uLarga, aoK:uAoK, uTardo:RM.tardoU, uS:uS, uLim:uLim, uLimA:uLimA },
     vertexShader:VS,
     fragmentShader:[
       PREC,
-      'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; uniform float sfoca; uniform float scala; uniform float larga; uniform vec2 aoK; uniform float uTardo; varying vec2 vUv;',
+      'uniform sampler2D tCol; uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform float notte; uniform float sfoca; uniform float scala; uniform float larga; uniform vec2 aoK; uniform float uTardo; uniform vec2 uS; uniform vec2 uLim; uniform vec2 uLimA; varying vec2 vUv;',
       RM.VESTE?'uniform sampler2D tAO; uniform float uAO; uniform vec3 uHaze; uniform float uHazeK; uniform float uVeste;':'',
-      'float prof(vec2 uv){ float z=texture2D(tProf,uv).x*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',
+      'vec2 dV;',      // scala adattiva (28 novembre 2026): la scena occupa la parte uS della tela; dV sposta le letture dalla coordinata dello schermo a quella della tela (a scala 1 vale zero)
+      'float prof(vec2 uv){ float z=texture2D(tProf,min(uv+dV,uLim)).x*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',
       'void main(){',
-      '  vec3 c=texture2D(tCol,vUv).rgb;',
+      '  dV=vUv*uS-vUv;',
+      '  vec3 c=texture2D(tCol,min(vUv+dV,uLim)).rgb;',
       '  '+FUOCO,
       /* Dal 24 novembre 2026 la linea sta da un lato solo, sul pixel più lontano (fuori dalla sagoma), ed è un po' più chiara: con i due lati ogni spigolo
          faceva una riga di due pixel che scattava avanti e indietro mentre la camera si muoveva (sui Fori da vicino il tremolio misurato cala di circa un decimo). La distanza che la
@@ -916,19 +919,19 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
     telaAO=new THREE.WebGLRenderTarget(4,4,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat,depthBuffer:false,stencilBuffer:false}); telaAO.texture.generateMipmaps=false;
     matC.uniforms.tAO={value:telaAO.texture}; matC.uniforms.uAO=uAO; matC.uniforms.uHaze=RM.hazeU; matC.uniforms.uHazeK=RM.hazeK; matC.uniforms.uVeste=RM.vesteU;
     matAO=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
-      uniforms:{ tProf:{value:tela.depthTexture}, px:uPx, vicino:{value:camera.near}, lontano:{value:camera.far}, uTan:uTan, uPxS:uPxS, uNAO:uNAO },
+      uniforms:{ tProf:{value:tela.depthTexture}, px:uPx, vicino:{value:camera.near}, lontano:{value:camera.far}, uTan:uTan, uPxS:uPxS, uNAO:uNAO, uS:uS, uLim:uLim, uMaxT:uMaxT },
       vertexShader:VS,
       fragmentShader:[
         PREC,
-        'uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform vec2 uTan; uniform float uPxS; uniform float uNAO; varying vec2 vUv;',
+        'uniform sampler2D tProf; uniform vec2 px; uniform float vicino; uniform float lontano; uniform vec2 uTan; uniform float uPxS; uniform float uNAO; uniform vec2 uS; uniform vec2 uLim; uniform vec2 uMaxT; varying vec2 vUv;',
         'float lin(float zt){ float z=zt*2.0-1.0; return 2.0*vicino*lontano/(lontano+vicino-z*(lontano-vicino)); }',
-        'float prof(vec2 uv){ return lin(textureLod(tProf,uv,0.0).x); }',      // textureLod: nel giro delle prove la lettura non chiede derivate (WebGL2, come tutta questa passata)
-        'vec3 posV(vec2 uv,float d){ return vec3((uv*2.0-1.0)*uTan*d,-d); }',
+        'float prof(vec2 uv){ return lin(textureLod(tProf,min(uv,uLim),0.0).x); }',      // textureLod: nel giro delle prove la lettura non chiede derivate (WebGL2, come tutta questa passata); uLim: con la scala adattiva le letture restano nella parte disegnata
+        'vec3 posV(vec2 uv,float d){ return vec3((uv/uS*2.0-1.0)*uTan*d,-d); }',      // uv/uS: la posizione nella parte disegnata (a scala 1 uS vale 1)
         'void main(){',
         /* Il punto di partenza è un pixel preciso della tela piena, il primo del blocco 2x2 (25 novembre 2026). Prima si leggeva la profondità al centro del pixel della mezza
            risoluzione, cioè esattamente sul confine fra quattro pixel della tela: quale dei quattro si prende lo decide l'arrotondamento della scheda grafica, e sugli iPhone
            cambiava da una riga all'altra. Le normali, prese dalle differenze fra pixel vicini, saltavano su quelle righe: righe orizzontali ferme sullo schermo. */
-        '  ivec2 tx=min(ivec2(gl_FragCoord.xy)*2,textureSize(tProf,0)-1); vec2 u0=(vec2(tx)+0.5)*px;',
+        '  ivec2 tx=min(ivec2(gl_FragCoord.xy)*2,ivec2(uMaxT)); vec2 u0=(vec2(tx)+0.5)*px;',      // uMaxT: l'ultimo pixel della parte disegnata (a scala 1 quello della tela)
         '  float d=lin(texelFetch(tProf,tx,0).x); if(d>3000.0){ gl_FragColor=vec4(1.0); return; }',
         '  vec3 P=posV(u0,d); vec3 N=normalize(cross(dFdx(P),dFdy(P)));',
         '  float R=0.16+d*0.0042; float rpx=min(R*uPxS/d,70.0);',                                    // raggio nel mondo e sullo schermo (pixel della tela piena)
@@ -941,14 +944,17 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
   }
   /* FXAA nella forma breve di Timothy Lottes (nove letture): cerca la direzione del bordo dai quattro angoli e media lungo quella */
   var mat=new THREE.ShaderMaterial({ depthTest:false, depthWrite:false, toneMapped:false,
-    uniforms:{ tCol:{value:tela2.texture}, px:uPx, sfoca:uSfoca, dens:uDens, notte:uNotte, scala:uScala },
+    uniforms:{ tCol:{value:tela2.texture}, px:uPx, sfoca:uSfoca, dens:uDens, notte:uNotte, scala:uScala, uS:uS, uLim:uLim },
     vertexShader:VS,
     fragmentShader:[
       PREC,
-      'uniform sampler2D tCol; uniform vec2 px; uniform float sfoca; uniform float dens; uniform float scala; varying vec2 vUv;',
+      'uniform sampler2D tCol; uniform vec2 px; uniform float sfoca; uniform float dens; uniform float scala; uniform vec2 uS; uniform vec2 uLim; varying vec2 vUv;',
       RM.VESTE?'uniform float uVeste; uniform float uGrado;':'',
+      'vec2 dV;',
+      '#define TC(u) texture2D(tCol,min((u)+dV,uLim))',      // scala adattiva: ogni lettura della tela si sposta nella parte disegnata e non ne esce; l'ultima passata così la ingrandisce sulla tela della pagina col filtro lineare (a scala 1 dV vale zero e uLim 2: le letture sono quelle di prima)
       'float lum(vec3 c){ return dot(c,vec3(0.299,0.587,0.114)); }',
       'void main(){',
+      '  dV=vUv*uS-vUv;',
       '  vec3 c;',
       '  if(scala>1.01){ vec2 o=px*scala*0.25;',                                                     // tela più grande dello schermo («alta qualità»): ogni pixel è la media di quattro letture bilineari, al posto dell'FXAA
       '    c=0.25*(texture2D(tCol,vUv-o).rgb+texture2D(tCol,vUv+vec2(o.x,-o.y)).rgb+texture2D(tCol,vUv+vec2(-o.x,o.y)).rgb+texture2D(tCol,vUv+o).rgb); } else {',
@@ -970,22 +976,32 @@ RM.occhio=function(cam,H){ RM.vistaU.uOcchio.value.copy(cam.position); RM.vistaU
       RM.VESTE?'  if(uVeste>0.5){ c=clamp(c,0.0,1.0); c=mix(c,c*c*(3.0-2.0*c),uGrado); }':'',      // veste: una curva a S leggera, più contrasto nei toni medi
       '  c+=(fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(0.06711056,0.00583715))))-0.5)/255.0;',      // un filo di retino (mezzo gradino degli 8 bit, fermo sullo schermo): nelle penombre (l'interno di San Pietro nell'800) le sfumature scure non fanno più scalini di colore sugli schermi OLED (25 novembre 2026)
       '  gl_FragColor=vec4(c,1.0);',
-      '}'].join(NL) });
+      '}'].join(NL).split('texture2D(tCol,').join('TC(').replace('#define TC(u) TC(','#define TC(u) texture2D(tCol,') });
   if(RM.VESTE){ mat.uniforms.uVeste=RM.vesteU; mat.uniforms.uGrado=RM.gradoU={value:.32}; }
   var quadro=new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat); quadro.frustumCulled=false;
   var scena2=new THREE.Scene(), camera2=new THREE.OrthographicCamera(-1,1,1,-1,0,1); scena2.add(quadro);
   post={ tela:tela, mat:mat, scena:scena2, camera:camera2, attivo:true, dens:uDens,
     /* misure in pixel veri delle due tele */
-    misura:function(W,H){ W=Math.round(W); H=Math.round(H); tela.setSize(W,H); tela2.setSize(W,H); uPx.value.set(1/W,1/H);
-      if(telaAO){ var wa=Math.max(2,(W+1)>>1), ha=Math.max(2,(H+1)>>1); telaAO.setSize(wa,ha); uAoK.value.set(W/(2*wa),H/(2*ha)); } },      // la mezza risoluzione per eccesso: con una tela dispari l'ultimo pixel ha il suo
+    misura:function(W,H){ W=Math.round(W); H=Math.round(H); PIENA.W=W; PIENA.H=H; tela.setSize(W,H); tela2.setSize(W,H); uPx.value.set(1/W,1/H);
+      if(telaAO){ var wa=Math.max(2,(W+1)>>1), ha=Math.max(2,(H+1)>>1); telaAO.setSize(wa,ha); uAoK.value.set(W/(2*wa),H/(2*ha)); } scalaUsata=-1; },      // la mezza risoluzione per eccesso: con una tela dispari l'ultimo pixel ha il suo
     ao:uAO, aoN:uNAO, larga:uLarga, telaAO:telaAO,
-    /* la scena e le due passate, sulla tela della pagina. Chi disegna fuori dal ciclo (i fotogrammi delle infografiche, le prove) passa di qui */
-    disegna:function(sc,cam){
-      uScala.value=Math.max(1,tela.width/Math.max(1,renderer.domElement.width));
-      if(cam.isPerspectiveCamera) RM.occhio(cam,tela.height/uScala.value);      // in pixel dello schermo: la soglia dei colonnati non cambia con la tela
+    /* la parte della tela in cui si disegna (scala adattiva, 28 novembre 2026): le tele restano della grandezza piena, la scena si disegna nel rettangolo in basso a sinistra
+       di s volte i lati (viewport e scissor di three, che con lo scissor pulisce solo quello) e le passate leggono lì; l'ultima ingrandisce sulla tela della pagina */
+    parte:function(s){ var W=PIENA.W, H=PIENA.H, w=s>=1?W:Math.max(2,Math.round(W*s)), h=s>=1?H:Math.max(2,Math.round(H*s)); if(w===W && h===H) s=1;
+      var k=s<1?w+'x'+h:1; if(k===scalaUsata) return; scalaUsata=k; var taglia=s<1;
+      [tela,tela2].forEach(function(t){ t.viewport.set(0,0,w,h); t.scissor.set(0,0,w,h); t.scissorTest=taglia; });
+      uS.value.set(w/W,h/H); uMaxT.value.set(w-1,h-1); if(taglia) uLim.value.set((w-.5)/W,(h-.5)/H); else uLim.value.set(2,2);
+      if(telaAO){ var WA=telaAO.width, HA=telaAO.height, wa=taglia?Math.max(2,(w+1)>>1):WA, ha=taglia?Math.max(2,(h+1)>>1):HA; telaAO.viewport.set(0,0,wa,ha); telaAO.scissor.set(0,0,wa,ha); telaAO.scissorTest=taglia;
+        uAoK.value.set(w/(2*WA),h/(2*HA)); if(taglia) uLimA.value.set((wa-.5)/WA,(ha-.5)/HA); else uLimA.value.set(2,2); } },
+    /* la scena e le due passate, sulla tela della pagina. Chi disegna fuori dal ciclo (i fotogrammi delle infografiche, le prove) passa di qui, a scala 1; il ciclo dà la sua (s) */
+    disegna:function(sc,cam,s){
+      post.parte(s>0?s:1);
+      var piena=Math.max(1,tela.width/Math.max(1,renderer.domElement.width));
+      uScala.value=piena*uS.value.y;      // pixel della parte disegnata per pixel dello schermo: contorni, sfocatura e riduzione dell'«alta qualità» restano della stessa larghezza sullo schermo
+      if(cam.isPerspectiveCamera) RM.occhio(cam,tela.height/piena);      // in pixel dello schermo: la soglia dei colonnati non cambia con la tela (né con la scala adattiva: le colonne non devono cambiare forma mentre la scala si muove)
       if(cam.isPerspectiveCamera && matC.uniforms.vicino.value!==cam.near){ matC.uniforms.vicino.value=cam.near; if(matAO) matAO.uniforms.vicino.value=cam.near; }      // il piano vicino può scendere per i primi piani (800, js/scene-tappe.js): le passate leggono la profondità con quello vero
       renderer.setRenderTarget(tela); renderer.render(sc,cam);
-      if(telaAO && uAO.value>0 && cam.isPerspectiveCamera){ var ty=Math.tan(cam.fov*Math.PI/360)/(cam.zoom||1); uTan.value.set(ty*cam.aspect,ty); uPxS.value=tela.height/(2*ty);
+      if(telaAO && uAO.value>0 && cam.isPerspectiveCamera){ var ty=Math.tan(cam.fov*Math.PI/360)/(cam.zoom||1); uTan.value.set(ty*cam.aspect,ty); uPxS.value=tela.height*uS.value.y/(2*ty);
         if(RM.q===1) uNAO.value=tela.width*tela.height>1.6e6?4:RM.QUALITA.aoN[1];      // «media» su uno schermo grande (1920x1080): quattro prove invece di sei, perché il gradino non costi di più dove i pixel sono più del doppio
         quadro.material=matAO; renderer.setRenderTarget(telaAO); renderer.render(scena2,camera2); }
       quadro.material=matC; renderer.setRenderTarget(tela2); renderer.render(scena2,camera2);
@@ -1100,19 +1116,21 @@ RM.QUALITA={ ris:[1,1,1.25,1.5,1], ombra:[1536,2048,4096,4096,2048], prato:[0,1,
    solo dopo cinque secondi tranquilli a ritmo pieno senza un solo fotogramma lungo; scendendo sono i primi a cadere. Con la densità alta la tela degli effetti non si
    allarga più (al più 2,25 pixel per punto in tutto: a densità 2 la scena costa quanto «massima» di prima, ma lo schermo la mostra più nitida; a densità 3 si disegna
    un pixel per pixel dello schermo). Un tetto ai pixel della tela della pagina (TETTO) tiene a bada tablet e schermi grandi. Sul PC a densità 1 o 2 non cambia nulla. */
+var SCALA_FISSA=!post || /[?&]densita=fissa/.test(location.search);      // ?densita=fissa: niente scala adattiva (la scena sempre a tutta la tela, e nei voli la densità che torna alla base come prima del 28 novembre 2026), per confronto
 var DPR=window.devicePixelRatio||1, DPIENA=Math.min(DPR,3), DPASSI=[PR0], TETTO=4.5e6, DENS=PR0, densMano=null, densProva=null, rifai=false;      // DPASSI: le densità della scala in automatica, dalla base; densMano: scelta dalla prova («Usa questo gradino»); rifai: la tela della pagina si rifà all'inizio del fotogramma seguente, non dopo averlo disegnato (si vedrebbe vuota)
 if(DPIENA>PR0+.05){ if(DPIENA>2.05 && PR0<1.95) DPASSI.push(2); DPASSI.push(DPIENA); }
 function limita(d,w,h){ if(d<=PR0+.001) return d; w=w||contenitore.clientWidth||1; h=h||contenitore.clientHeight||1;      // il tetto dei pixel, mai sotto la densità di base
   return Math.max(PR0,Math.min(d,Math.floor(Math.sqrt(TETTO/(w*h))*100)/100)); }
 var TEL_Q={figScena:52000};      // il «telefono» nelle file a quattro gradini dei moduli: sui telefoni le scene preparano solo le persone di «bassa» (js/scene-tappe.js) e le mostrano tutte
 function completaQ(){ for(var k in RM.QUALITA){ var v=RM.QUALITA[k]; if(Array.isArray(v) && v.length<5) v[4]=(k in TEL_Q)?TEL_Q[k]:v[0]; } }
+var TARDO=1.35;      // 28 novembre 2026, quinto giro: sul banco da telefono la scheda grafica nell'800 sul Foro costa da 1,5 («telefono») a 1,75 volte («massima») il 300; si conta un terzo in più, il resto lo tiene la scala adattiva
 var COSTO=[.95,1,1.15,1.5,1.9];      // costo di un fotogramma per gradino, nell'ordine della scala, rispetto al «telefono»: sulla Radeon a 393 x 852 (densità 3) 0,95 / 1 / 1,05 / 1,2 / 1,35, con la scena che pesa quasi tutto il fotogramma; qui alzati per le schede che pagano soprattutto i pixel (alta 1,56 e massima 2,25 volte i pixel)
 var TOCCO_Q=(navigator.maxTouchPoints>0) || (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
 var LATO_SCH=0; try{ LATO_SCH=Math.min(screen.width,screen.height)||0; }catch(e){}
 var PC_Q=!TOCCO_Q && LATO_SCH>=700;      // il PC (25 novembre 2026, si veda in testa al blocco): nessun tocco e uno schermo non piccolo; conta lo schermo, non la finestra (un portatile a 1366 x 768 ha meno di 700 punti d'altezza dentro il browser)
 var PC_SALE=1/42, PC_SCENDE=1/35, PC_PAVIMENTO=1/24, PC_LUNGO=.045, PC_N=90, PC_REGOLA='pc2';      // le soglie del PC, in secondi per fotogramma (si veda in testa al blocco); PC_LUNGO: un fotogramma da 50 millesimi a 60 Hz; PC_N: i fotogrammi guardati per scendere (tutta la finestra, più di due secondi a 40 al secondo: con venti, fra 16,7 e 33,3 millesimi mescolati, la media balla di 4 millesimi e un gradino da 39 al secondo scenderebbe per caso); PC_REGOLA: la versione della regola, nella firma del gradino ricordato
 var SENZA_AO=/[?&]ao=0/.test(location.search), FIRMA='';      // ?ao=0 spegne l'occlusione d'ambiente (per le prove: le righe orizzontali dell'iPhone, 25 novembre 2026)
-try{ FIRMA=[screen.width,screen.height,Math.round((window.devicePixelRatio||1)*100)].join('x')+(PC_Q?'-'+PC_REGOLA:''); }catch(e){}      // sul PC la firma porta la versione della regola: i gradini ricordati con la regola dei telefoni (fino al 25 novembre 2026) non valgono più
+try{ FIRMA=[screen.width,screen.height,Math.round((window.devicePixelRatio||1)*100)].join('x')+(PC_Q?'-'+PC_REGOLA:'')+'-s5'; }catch(e){}      // -s5 (28 novembre 2026, quinto giro): i gradini ricordati prima della scala adattiva erano scelti nel 235 senza margine per i secoli tardi: si rimisura      // sul PC la firma porta la versione della regola: i gradini ricordati con la regola dei telefoni (fino al 25 novembre 2026) non valgono più
 var P_DEF=PC_Q?2:(piccolo||TOCCO_Q)?1:2, qScelta=null, qUrl=(/[?&]qualita=(bassa|telefono|media|alta|massima)/.exec(location.search)||[])[1], memAuto=null;      // senza misura: «telefono» sui dispositivi al tocco e sugli schermi piccoli, «media» sul PC
 try{ var qMem=localStorage.getItem('rm-qualita'); if(NOMI_Q.indexOf(qMem)>=0){ qScelta=qMem; var dm=+localStorage.getItem('rm-qualita-dens'); if(dm>0) densMano=dm; }
   var ma=JSON.parse(localStorage.getItem('rm-qualita-auto')||'null'), et=ma?Date.now()-ma.t:-1; if(ma && NOMI_Q.indexOf(ma.g)>=0 && ma.s===FIRMA && et>=0 && et<7*864e5) memAuto=ma; }catch(e){}
@@ -1133,16 +1151,17 @@ function rigaDens(g){ return Math.max(PR0,Math.min(DPIENA,RM.QUALITA.dens[g]||0)
 function densQ(nominale){
   if(provaQ) return densProva||PR0;
   if(qScelta) return Math.max(PR0,Math.min(DPIENA,densMano||rigaDens(alta.g)));
-  if(altaAdatta && !alta.calmoD && !nominale) return PR0;
+  if(altaAdatta && !alta.calmoD && !nominale && SCALA_FISSA) return PR0;      // 28 novembre 2026, quinto giro: nei voli e nei gesti la densità non torna più alla base rifacendo la tela; lo fa la scala adattiva (RM.scalaAdatta, capMoto), senza rifare nulla. Con ?densita=fissa resta la regola di prima
   return DPASSI[dpDi(alta.p)]||PR0; }
-/* la tela degli effetti: in automatica al più 2,25 pixel per punto e 1 nei voli (come prima); con la densità alzata anche a mano */
-function risQ(){ var r=RM.QUALITA.ris[alta.g], d=limita(densQ());
-  if(altaAdatta) return alta.calmo?Math.min(r,Math.max(1,2.25/d)):1;
+/* la tela degli effetti: in automatica al più 2,25 pixel per punto e 1 nei voli (come prima: con la scala adattiva lo «1 nei voli» è il tetto capMoto, la tela non si rifà); con la densità alzata anche a mano */
+function risQ(nominale){ var r=RM.QUALITA.ris[alta.g], d=limita(densQ(nominale));
+  if(altaAdatta) return (alta.calmo || nominale || !SCALA_FISSA)?Math.min(r,Math.max(1,2.25/d)):1;
   return d>PR0+.001?Math.min(r,Math.max(1,2.25/d)):r; }
-/* rimette densità e tela al gradino: la tela della pagina al fotogramma seguente, quella degli effetti subito (non si vede) */
-function aggiornaMisura(){ var d=densQ(), r=risQ();
-  if(Math.abs(d-DENS)>.001){ DENS=d; ALTA=r; rifai=true; return true; }
-  if(r!==ALTA){ ALTA=r; if(!rifai) misura(); return true; }
+/* rimette densità e tela al gradino: la tela della pagina al fotogramma seguente, quella degli effetti subito (non si vede). Con la scala adattiva, a un cambio di gradino
+   la scala riparte dal valore che dà lo stesso numero di pixel disegnati di prima (RM.scalaAdatta.compensa): il salto non si vede */
+function aggiornaMisura(){ var d=densQ(), r=risQ(), E0=limita(DENS)*ALTA;
+  if(Math.abs(d-DENS)>.001){ DENS=d; ALTA=r; rifai=true; if(RM.scalaAdatta) RM.scalaAdatta.compensa(E0/(limita(DENS)*ALTA)); return true; }
+  if(r!==ALTA){ ALTA=r; if(!rifai) misura(); if(RM.scalaAdatta) RM.scalaAdatta.compensa(E0/(limita(DENS)*ALTA)); return true; }
   return false; }
 function nomeQ(){ return NOMI_Q[alta.g]; }
 function densTesto(){ var d=limita(densQ(true)); return d>PR0+.001?(d>=DPIENA-.01?', piena definizione':', densità '+String(Math.round(d*100)/100).replace('.',',')):''; }
@@ -1187,7 +1206,7 @@ function misuraAvvio(dt,lavoro,ora,calmo,T){
     fineAvvio(alta.p); return; }
   if(pulito && a.carico<2){ a.carico=2; return; }
   var regge=pulito?a.carico:a.carico-1, m=1+.5*regge, c0=COSTO[Math.min(alta.p,NS-1)], p=Math.min(alta.p,NS-1);      // la scena disegnata k volte in più costa quasi k fotogrammi: ne contiamo metà, per prudenza
-  while(p<SCALA.length-1 && COSTO[p+1]<=c0*m) p++;
+  while(p<SCALA.length-1 && COSTO[p+1]*TARDO<=c0*m) p++;      // TARDO: la misura si fa all'apertura, di solito nel 235, quando la città pesa meno; il gradino scelto deve reggere anche i secoli tardi
   fineAvvio(p);
 }
 /* le soglie del PC per fotogramma, col periodo di riferimento T (più larghe se lo schermo batte più piano): sale sotto i 42 al secondo, scende sopra i 35, a «media» solo sopra i 24 */
@@ -1226,23 +1245,25 @@ function giudica(dt,lavoro,ora,calmo){
   if(!avvio.fatta){ if(!sc) misuraAvvio(dt,lavoro,ora,calmo,T); return; }      // in scena la misura aspetta (disegnerebbe la scena due o tre volte per fotogramma)
   if(alta.verifica && f.length>=80){ var v=alta.verifica; alta.verifica=null; for(k=0;k<f.length;k+=2) s+=f[k]; s/=f.length/2;      // una discesa a scena tranquilla che non ha migliorato il ritmo: il freno è altrove, si torna su e non si scende più
     if(s>v.prima*.93 && s>(PC_Q?giuPC(T):T*1.09)){ mettiAlta(alta.p+1,'inutile'); alta.partenza=alta.p; alta.giuFermo=true; alta.spenta=true; return; } s=0; }
-  if(alta.p>0 && !alta.giuFermo && !alta.verifica && (calmo || alta.p>alta.partenza)){      // con una verifica in corso non si scende ancora: prima si vede se la discesa è servita
+  var BLOCCO_GIU=SCALA_FISSA?90000:20000;      // dopo una discesa non si risale per novanta secondi; con la scala adattiva venti (nel frattempo il ritmo lo tiene lei, e il calore non si distingue più dal peso degli anni tardi)
+  var puoGiu=SCALA_FISSA?(calmo || alta.p>alta.partenza):(calmo && RM.scalaAdatta.lascia(sc?3000:2000));      // con la scala adattiva (28 novembre 2026) si scende di gradino solo a camera ferma e quando la scala è al minimo da due secondi (o il freno è il processore, che la scala non toglie): fino ad allora i 60 li tiene lei
+  if(alta.p>0 && !alta.giuFermo && !alta.verifica && puoGiu){      // con una verifica in corso non si scende ancora: prima si vede se la discesa è servita
     var mx=0; n=Math.min(PC_Q?PC_N:20,f.length/2); for(k=0;k<n;k++){ var fk=f[f.length-2-2*k]; s+=fk; if(fk>mx) mx=fk; if(fk>(PC_Q?PC_LUNGO:T*1.09)) l++; }
     var giu=PC_Q?lentoPC((s-mx)/(n-1)>giuPC(T) || (alta.p>P_MEDIA && l>=n*.13),n):(n>=12 && (s-mx)/(n-1)>T*1.09 && l>=4);
     if(sc) giu=n>=20 && (s-mx)/(n-1)>T*1.25 && l>=8;      // in scena: solo se proprio non regge      // sul PC: novanta fotogrammi sotto i 35 al secondo di media (a «media» sotto i 24) o, sopra «media», uno su otto da 50 millesimi o più, due volte di fila
     if(giu){      // lento davvero: media alta anche senza il fotogramma più lungo, e almeno quattro lunghi, perché un singolo inciampo (la memoria che si libera, la barra di Safari) non basti
       var tenuto=ora-alta.cambio, prima=s/n, sotto=alta.p<=alta.partenza, dalla=alta.p>NS-1;
-      if(dalla){ mettiAlta(calmo?alta.p-1:NS-2,'lento'); alta.densFerma=true; alta.blocco=ora+90000; return; }      // la densità alta scende per prima e non si riprova; nei voli non è accesa: è «massima» stessa a non reggere
-      mettiAlta(alta.p-1,'lento'); if(ora-alta.discesa>3000) alta.ritorni++; alta.discesa=ora; alta.blocco=ora+90000; if(alta.ritorni>=2) alta.spenta=true;      // due discese di fila (da «massima» a «media») sono un ritorno solo
+      if(dalla){ mettiAlta(calmo?alta.p-1:NS-2,'lento'); alta.densFerma=true; alta.blocco=ora+BLOCCO_GIU; return; }      // la densità alta scende per prima e non si riprova; nei voli non è accesa: è «massima» stessa a non reggere
+      mettiAlta(alta.p-1,'lento'); if(ora-alta.discesa>3000) alta.ritorni++; alta.discesa=ora; alta.blocco=ora+BLOCCO_GIU; if(alta.ritorni>=2) alta.spenta=true;      // due discese di fila (da «massima» a «media») sono un ritorno solo
       if(PC_Q) alta.tetto=Math.min(alta.tetto||1e9,alta.p+1);      // sul PC un gradino che non ha retto non si riprova per tutta la visita: una prova sola, niente altalena
-      if(tenuto>45000){ alta.spenta=true; alta.calore=true; alta.motivo='calore'; }      // dopo tre quarti di minuto senza inciampi: il telefono si scalda o risparmia; si scende e non si risale
+      if(tenuto>45000 && SCALA_FISSA){ alta.spenta=true; alta.calore=true; alta.motivo='calore'; }      // dopo tre quarti di minuto senza inciampi: il telefono si scalda o risparmia; si scende e non si risale
       if(sotto){ alta.partenza=alta.p; alta.verifica={prima:prima}; }
       return; }
     s=0; l=0;
   }
   ricorda(ora);
   var suDens=alta.p>=NS-1;      // il passo seguente è la densità: più prudenza
-  if(sc || alta.spenta || !calmo || RM.livello>0 || alta.p>=TOP || ora<alta.blocco || (suDens && (alta.densFerma || !alta.calmoD)) || (PC_Q && alta.p+1>=(alta.tetto||1e9))){ alta.calma=0; return; }      // spenta: scende ancora se serve, ma non sale più
+  if(sc || alta.spenta || !calmo || RM.livello>0 || alta.p>=TOP || ora<alta.blocco || (!SCALA_FISSA && !RM.scalaAdatta.piena(2500)) || (suDens && (alta.densFerma || !alta.calmoD)) || (PC_Q && alta.p+1>=(alta.tetto||1e9))){ alta.calma=0; return; }      // spenta: scende ancora se serve, ma non sale più
   alta.calma+=dt; if(alta.calma<(suDens?5:2.5) || f.length<180) return;
   var lunghi=0, l50=0; n=f.length/2; for(k=0;k<f.length;k+=2){ s+=f[k]; l+=f[k+1]; if((suDens || k>=f.length-40) && f[k]>T*1.09) lunghi++; if(f[k]>PC_LUNGO) l50++; }
   if(PC_Q && !suDens){ if(s/n<suPC(T) && l/n<T*.63 && l50<=1) mettiAlta(alta.p+1,'margine'); return; }      // sul PC: almeno 42 al secondo nei novanta fotogrammi, al più uno da 50 millesimi; verso la densità valgono le soglie piene, qui sotto
@@ -1268,7 +1289,7 @@ RM.qualita={ nomi:NOMI_Q, scala:SCALA.map(function(g){ return NOMI_Q[g]; }), gra
   rimisura:function(){ try{ localStorage.removeItem('rm-qualita-auto'); }catch(e){} memAuto=null; if(!qScelta) RM.qualita.scegli(null); },
   stato:function(){ var cv=renderer.domElement; return {gradino:nomeQ(), passoDens:dpDi(alta.p), dens:renderer.getPixelRatio(), densAdesso:limita(densQ()), densMano:densMano, tela:[cv.width,cv.height], effetti:post?[post.tela.width,post.tela.height]:null, occl:(post&&post.telaAO)?[post.telaAO.width,post.telaAO.height]:null, densFerma:alta.densFerma,
     automatica:!qScelta, prova:!!provaQ, partenza:NOMI_Q[SCALA[alta.partenza]], misura:{fatta:avvio.fatta, carico:avvio.carico, esito:avvio.esito||null, ultima:avvio.ultima||null},
-    ricordato:memAuto?memAuto.g+(memAuto.d?' a densità '+String(DPASSI[Math.min(memAuto.d,ND)]).replace('.',','):''):null, periodo:+(TQ()*1000).toFixed(2), schermo:periodoV?+(periodoV*1000).toFixed(2):null, ris:ALTA, pr:renderer.getPixelRatio(), ritorni:alta.ritorni, spenta:alta.spenta, calore:alta.calore, motivo:alta.motivo, livello:RM.livello, regola:PC_Q?'PC':'telefono', tetto:(alta.tetto||1e9)<NS?NOMI_Q[SCALA[alta.tetto]]:null}; } };
+    ricordato:memAuto?memAuto.g+(memAuto.d?' a densità '+String(DPASSI[Math.min(memAuto.d,ND)]).replace('.',','):''):null, periodo:+(TQ()*1000).toFixed(2), schermo:periodoV?+(periodoV*1000).toFixed(2):null, ris:ALTA, pr:renderer.getPixelRatio(), ritorni:alta.ritorni, spenta:alta.spenta, calore:alta.calore, motivo:alta.motivo, livello:RM.livello, regola:PC_Q?'PC':'telefono', tetto:(alta.tetto||1e9)<NS?NOMI_Q[SCALA[alta.tetto]]:null, scala:RM.scalaAdatta?RM.scalaAdatta.stato().s:1}; } };
 /* il bottone nel menu «Strumenti» (index.html): a ogni tocco il gradino seguente, automatica → bassa → telefono → media → alta → massima → automatica */
 (function(){ var b=document.getElementById('btnQualita'); if(!b) return;
   b.addEventListener('click',function(){ var i=qScelta?posDi(qScelta)+1:0; RM.qualita.scegli(i<SCALA.length?NOMI_Q[SCALA[i]]:null); }); })();
@@ -1278,6 +1299,75 @@ document.addEventListener('DOMContentLoaded',function(){ applicaQ(); });
 RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livello:RM.livello, pr:renderer.getPixelRatio(), ombre:sole.castShadow, leggero:!!RM.leggero, fermo:fermo, noSalita:noSalita, ris:ALTA, qualita:nomeQ()}; },
   alta:{ stato:function(){ return {gradino:nomeQ(), ris:ALTA, adatta:altaAdatta, ritorni:alta.ritorni, spenta:alta.spenta, motivo:alta.motivo, partenza:NOMI_Q[SCALA[alta.partenza]], misura:avvio.fatta, blocco:Math.max(0,Math.round(alta.blocco-performance.now()))}; }, passo:passoAlta,
     azzera:function(){ altaAdatta=!qScelta; avvio.fatta=true; avvio.carico=0; alta.partenza=P_DEF; mettiAlta(P_DEF,'azzera'); riparti(); alta.calmo=true; } } };      // per le prove
+/* ---- La scala adattiva (28 novembre 2026, quinto giro della fluidità sul telefono; l'utente dall'iPhone: «Inizialmente andava a 60 FPS anche in qualità massima ora invece
+   scatta soprattutto nelle scene avanzate alto medievali», «trova una soluzione… ma trovala»).
+   Sui telefoni recenti il freno dei secoli tardi è la scheda grafica: a densità 3 (1179 x 2556 pixel) gli shader dei ruderi costano il doppio del 300 (sul banco da 13,7 a 30
+   millesimi nell'800 sul Foro, a «massima»). Prima lo teneva solo il regolatore a gradini, che rifaceva tele e ombre a ogni passo (uno scatto), aspettava novanta secondi e risaliva.
+   Ora le tele degli effetti restano della grandezza del gradino e la scena si disegna, a ogni fotogramma, in un rettangolo s volte più piccolo (RM.post.parte; l'ultima passata lo
+   ingrandisce sulla tela della pagina col filtro lineare): niente da rifare, e s cambia del 3% al più per fotogramma, a scatti che l'occhio non vede.
+   - Il metro: dove c'è (Edge, Chrome) il tempo della scheda grafica, con le query a tempo (EXT_disjoint_timer_query_webgl2) attorno al disegno, letto due o tre fotogrammi dopo;
+     si scende sopra il 90% del periodo (15 millesimi a 60 al secondo), si sale sotto il 78% (13). Dove non c'è (Safari) il tempo fra due fotogrammi: si scende del 3% a
+     fotogramma finché, degli ultimi otto, due durano più di 1,25 periodi (e almeno tre degli ultimi venti); si sale dello 0,5% a fotogramma dopo un secondo senza un fotogramma
+     lungo, non per quattro secondi dopo una discesa e, per venti secondi, non oltre il punto in cui si è dovuto scendere.
+   - In tutti e due i casi si scende solo se il lavoro del processore sta sotto il 62% del periodo (10,3 millesimi): se il freno è il processore, disegnare meno pixel non serve.
+     Non si giudica nei fotogrammi di un cambio d'anno, dell'arrivo a pezzi (js/pagina.js) e della scrittura delle case (js/citta.js): lì il lavoro è del processore.
+     E dopo una discesa senza tempo della scheda grafica si controlla, un secondo e mezzo dopo, se il ritmo è migliorato: se si è scesi di almeno il 15% e non è migliorato
+     si torna dove si era e per dieci secondi non si riprova (il freno è altrove: il processore, un telefono in risparmio, Safari che aspetta la scheda grafica dentro il JavaScript).
+   - Limiti: mai sopra il gradino (s = 1), mai sotto il 62% dei lati né sotto 1,5 pixel per punto (la densità del gradino «telefono»; 1 sugli schermi a densità 1), scelti
+     guardando il foglio del 28 novembre (src/prove/banco-telefono/foglio-scala.png): a «massima» sul telefono il 62% dà 1,86 pixel per punto, più del gradino «telefono»;
+     da vicino si perde la grana fine del terreno e gli spigoli si ammorbidiscono, all'81% quasi nulla.
+   - Nei voli e nei gesti, in automatica, il tetto (capMoto) è quello che prima si otteneva rifacendo le tele (densità di base, tela degli effetti a 1): ora ci si arriva a passi.
+   - Il regolatore a gradini resta, ma scende solo a camera ferma con la scala al minimo da due secondi (o col processore come freno) e sale solo con la scala piena; a ogni
+     cambio la scala riparte dallo stesso numero di pixel di prima (compensa). Ferma durante la misura d'avvio, la prova della qualità e in «bassa» (lì c'è il regolatore di prima).
+   ?densita=fissa la spegne (scala 1 sempre, e nei voli la densità di prima); ?tempoGpu=0 fa finta che il tempo della scheda grafica non ci sia (la regola di Safari). */
+RM.scalaAdatta=(function(){
+  var gl=renderer.getContext(), ext=null; try{ if(GL2 && !SCALA_FISSA && !/[?&]tempoGpu=0/.test(location.search)) ext=gl.getExtension('EXT_disjoint_timer_query_webgl2'); }catch(e){ ext=null; }
+  var MIN_LATO=.62, MIN_PX=Math.min(1.5,DPR), GIU=.97, SU_GPU=1.01, SU_RITMO=1.005, RAMPA_GIU=.96, RAMPA_SU=1.02;
+  var Q={s:1, t:1, cap:1, gpu:0, gpuE:0, gpuOra:-1e9, ivE:1/60, lavE:0, iv:[], verifica:null, noGiu:0, fermoSu:0, alMinDa:-1, pienaDa:-1, query:[], attiva:null, giu:0, su:0, n:0};
+  function attiva(){ return !SCALA_FISSA && !provaQ && post && post.attivo && alta.g!==0 && !(altaAdatta && !avvio.fatta); }
+  function minimo(){ var E=limita(DENS)*ALTA; return Math.min(1,Math.max(MIN_LATO,MIN_PX/Math.max(.01,E))); }
+  function capMoto(){ if(!altaAdatta) return 1; var E=limita(DENS)*ALTA, d=alta.calmoD?limita(DENS):PR0, r=alta.calmo?ALTA:1; return Math.min(1,(d*r)/E); }
+  var api={
+    /* la scala di questo fotogramma (chiamata dal ciclo prima del disegno): s insegue min(t, tetto dei voli) a passi */
+    scala:function(){ if(Q.forzata && post){ Q.s=Q.forzata; return Q.s; }      // per le prove (il foglio delle tre scale): una scala tenuta ferma
+      if(!attiva()){ Q.s=1; return 1; }
+      var mn=minimo(), meta=Math.max(mn,Math.min(Q.t,capMoto())); Q.cap=capMoto();
+      if(Q.s>meta) Q.s=Math.max(meta,Q.s*RAMPA_GIU); else if(Q.s<meta) Q.s=Math.min(meta,Q.s*RAMPA_SU);
+      if(Q.s>.999) Q.s=1; return Q.s; },
+    inizio:function(){ if(!ext || Q.attiva || !attiva() || minimo()>=.999) return; var q=Q.query.length>3?null:gl.createQuery(); if(!q) return; gl.beginQuery(ext.TIME_ELAPSED_EXT,q); Q.attiva=q; },      // dove la scala non può scendere (gradino «telefono» sui telefoni, densità 1 sul PC) niente query
+    fine:function(){ if(!Q.attiva) return; gl.endQuery(ext.TIME_ELAPSED_EXT); Q.query.push(Q.attiva); Q.attiva=null; },
+    /* dopo il fotogramma: iv e lavoro in secondi, calmo come per il regolatore */
+    passo:function(iv,lav,ora,calmo){
+      while(ext && Q.query.length){ var q=Q.query[0]; if(!gl.getQueryParameter(q,gl.QUERY_RESULT_AVAILABLE)) break; Q.query.shift();
+        var dis=gl.getParameter(ext.GPU_DISJOINT_EXT), v=gl.getQueryParameter(q,gl.QUERY_RESULT)/1e9; gl.deleteQuery(q);
+        if(!dis && v>0 && v<.25){ Q.gpu=v; Q.gpuE=Q.gpuOra>ora-500?Q.gpuE*.8+v*.2:v; Q.gpuOra=ora; } }
+      if(!attiva()){ Q.t=1; Q.alMinDa=-1; Q.pienaDa=ora; Q.verifica=null; return; }
+      var T=PC_Q?Math.max(PC_SALE,TQ()):TQ(); if(!(iv>0) || iv>.25){ return; }      // sul PC il periodo è quello delle sue soglie (42 al secondo: chi guarda preferisce il dettaglio, si veda «Sul PC» più sopra), sui telefoni 1/60
+      Q.n++; Q.ivE=Q.ivE*.9+iv*.1; Q.lavE=Q.lavE*.9+lav*.1; Q.iv.push(iv); if(Q.iv.length>60) Q.iv.shift();
+      var mn=minimo(), conGpu=ora-Q.gpuOra<300, disturbo2=ora-disturbo<500 || ora-ultimoAnno<600 || (RM.arrivoInCorso && RM.arrivoInCorso()) || (RM.caseLavoro && RM.caseLavoro()), k, lunghi20=0, lunghi60=0;
+      var lunghi8=0; for(k=0;k<Q.iv.length;k++){ var x=Q.iv[k]; if(x>(PC_Q?PC_LUNGO:T*1.25)){ lunghi60++; if(k>=Q.iv.length-20) lunghi20++; if(k>=Q.iv.length-8) lunghi8++; } }      // sul PC «lungo» vuol dire 50 millesimi (PC_LUNGO), come per il regolatore
+      var cpuOk=Q.lavE<TQ()*.62;
+      if(Q.verifica){ var vf=Q.verifica; if(++vf.n>=90){ Q.verifica=null; if(Q.ivE>vf.iv*.95 && Q.t<vf.t*.85){ Q.t=vf.t; Q.noGiu=ora+10000; } } }      // un secondo e mezzo dopo l'inizio della discesa, scesi di almeno il 15%, il ritmo non è migliorato: il freno non è la scheda grafica, si torna dove si era
+      if(!disturbo2){
+        if(conGpu){
+          if(Q.gpuE>T*.9 && cpuOk){ if(Q.t>mn){ Q.t=Math.max(mn,Q.t*GIU); Q.giu++; } Q.fermoSu=ora+1500; }
+          else if(Q.gpuE<T*.78 && lunghi20===0 && ora>Q.fermoSu && Q.t<1){ Q.t=Math.min(1,Q.t*SU_GPU); Q.su++; } }
+        else {
+          if(lunghi8>=2 && lunghi20>=3 && cpuOk && ora>Q.noGiu){ if(Q.t>mn){ var t0=Q.t; Q.t=Math.max(mn,Q.t*GIU); Q.giu++; if(!Q.verifica && (!Q.giuDa || ora-Q.giuDa>1000)){ Q.verifica={t:t0, iv:Q.ivE, n:0}; Q.tetto=t0*GIU; Q.tettoFino=ora+20000; } Q.giuDa=ora; } Q.fermoSu=ora+4000; }      // si scende finché gli ultimi otto fotogrammi ne hanno di lunghi (non i venti: si scenderebbe troppo); tetto: per venti secondi non si risale oltre il punto in cui si è dovuto scendere, così le prove all'insù (qualche fotogramma lungo ognuna) sono una ogni venti secondi
+          else if(lunghi60===0 && Q.iv.length>=60 && Q.ivE<T*1.03 && ora>Q.fermoSu && Q.t<1){ Q.t=Math.min(ora<(Q.tettoFino||0)?Math.max(Q.t,Q.tetto):1,Q.t*SU_RITMO); Q.su++; } } }
+      if(Q.t<=mn+.001){ if(Q.alMinDa<0) Q.alMinDa=ora; } else Q.alMinDa=-1;
+      if(Q.s>=.999 && Q.t>=.999 && (!conGpu || PC_Q || Q.gpuE<T*.6)){ if(Q.pienaDa<0) Q.pienaDa=ora; } else Q.pienaDa=-1;      // per salire di gradino sui telefoni, con il tempo della scheda grafica, serve anche il margine (il gradino sopra costa fino a una volta e mezza); sul PC come prima
+      Q.ora=ora; },
+    /* per il regolatore a gradini: si può scendere (la scala è al minimo da ms millesimi, o il freno è il processore); si può salire (scala piena da ms millesimi) */
+    lascia:function(ms){ if(!attiva()) return true; return (Q.alMinDa>=0 && (Q.ora||0)-Q.alMinDa>=ms) || Q.lavE>=TQ()*.62 || minimo()>=.999; },      // minimo 1: la scala non può scendere (sul PC a densità 1), decide il regolatore come prima
+    piena:function(ms){ if(!attiva()) return true; return Q.pienaDa>=0 && (Q.ora||0)-Q.pienaDa>=ms; },
+    /* dopo un cambio di gradino: f = pixel per punto di prima / di adesso; la scala riparte da lì (anche il valore corrente, perché il salto non si veda) */
+    compensa:function(f){ if(!attiva() || !(f>0)) return; var mn=minimo(); Q.s=Math.max(mn,Math.min(1,Q.s*f)); Q.t=Math.max(mn,Math.min(1,Q.t*f)); Q.alMinDa=-1; Q.pienaDa=-1; },
+    stato:function(){ return {s:+Q.s.toFixed(3), t:+Q.t.toFixed(3), cap:+Q.cap.toFixed(3), min:+minimo().toFixed(3), gpu:+(Q.gpu*1000).toFixed(2), gpuE:+(Q.gpuE*1000).toFixed(2), metro:ext?'scheda grafica':'ritmo', attiva:attiva(), giu:Q.giu, su:Q.su, px:+(limita(DENS)*ALTA*Q.s).toFixed(2)}; },
+    forza:function(s){ Q.forzata=s>0?Math.max(.3,Math.min(1,s)):null; },      // per le prove: forza(0,7) tiene la scala a 0,7; forza() la rilascia
+    fissa:SCALA_FISSA };
+  return api;
+})();
 /* ---------- riquadri: le maglie a istanze divise per zona (27 novembre 2026, passaggio di fluidità) ----------
    Case, rovine, alberi, cumuli, campate degli acquedotti e le altre maglie a istanze grandi avevano frustumCulled=false: si disegnavano intere anche quando la camera
    ne guardava un angolo (misura: da vicino all'isola Tiberina, nell'800, 2,1 milioni di triangoli disegnati, 0,23 nell'inquadratura). Qui, senza toccare chi le scrive,
@@ -1573,12 +1663,15 @@ var tsPrima=0;
     post.mat.uniforms.notte.value=RM.notte||0;
     post.mat.uniforms.sfoca.value=RM.sfuma(70,260,camera.position.distanceTo(controlli.target));      // l'effetto «plastico» sfoca i bordi solo da lontano: da vicino si vuole vedere nitido
     for(var ci=0;ci<avvio.carico;ci++){ renderer.setRenderTarget(post.tela); renderer.render(scene,camera); }      // la misura d'avvio: la scena disegnata una o due volte in più, di nascosto (la tela si ridisegna qui sotto)
-    post.disegna(scene,camera);
+    var sAd=RM.scalaAdatta.scala(); RM.scalaAdatta.inizio();
+    post.disegna(scene,camera,sAd); RM.scalaAdatta.fine();      // la scala adattiva (si veda RM.scalaAdatta): la parte della tela in cui si disegna questo fotogramma
   } else { RM.occhio(camera,renderer.domElement.height); renderer.render(scene,camera); }
   if(post && post.attivo && !document.hidden && grezzo<.4){      // la camera si muove piano? (spostamento in quota della distanza, al secondo)
     var dd=camera.position.distanceTo(controlli.target)||1, mv=(camera.position.distanceTo(occhioPrima)+controlli.target.distanceTo(puntoPrima))/dd/Math.max(dt,.001);
     occhioPrima.copy(camera.position); puntoPrima.copy(controlli.target);
-    passoAlta(iv>0&&iv<.4?iv:grezzo,(performance.now()-ora)/1000,ora,!volo && ora-ultimoAnno>1500 && mv<.15);
+    var lavF=(performance.now()-ora)/1000, calmoF=!volo && ora-ultimoAnno>1500 && mv<.15;
+    passoAlta(iv>0&&iv<.4?iv:grezzo,lavF,ora,calmoF);
+    RM.scalaAdatta.passo(iv,lavF,ora,calmoF);
   }
   if(!RM.disegnata && document.readyState!=='loading' && contenitore.clientWidth>40 && contenitore.clientHeight>40){ RM.disegnata=true; if(window.RM_carica) RM_carica.cittaPronta(); }      // il primo disegno della città intera (tutti i file eseguiti): si toglie il velo dell'attesa (index.html). Sul telefono con la scheda della carta aperta la città non si disegna: il velo resta finché non la si apre
   RM.lavoro=performance.now()-ora;      // millesimi di lavoro del processore in questo fotogramma (per la prova della qualità)

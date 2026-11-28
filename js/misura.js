@@ -15,6 +15,9 @@
   window.addEventListener('pointerdown',function(){ giu++; },{capture:true,passive:true}); ['pointerup','pointercancel'].forEach(function(n){ window.addEventListener(n,function(){ giu=Math.max(0,giu-1); },{capture:true,passive:true}); });
   function mossa(){ var c=RM.camera&&RM.camera.position, t=RM.controlli&&RM.controlli.target; if(!c||!t) return false; var v=[c.x,c.y,c.z,t.x,t.y,t.z], d=0, i; for(i=0;i<6;i++){ d+=Math.abs(v[i]-occhio[i]); occhio[i]=v[i]; } return giu>0 || d>.002; }
   function stato(){ var q=RM.qualita&&RM.qualita.stato?RM.qualita.stato():null; return q?{g:q.gradino+(q.dens?' '+String(Math.round(q.dens*100)/100).replace('.',','):''), d:q.dens}:{g:'?',d:0}; }
+  /* 28 novembre 2026, quinto giro: la scala adattiva (js/base.js, RM.scalaAdatta): quanto dei lati della tela si disegna, e con quale metro */
+  function scala(){ var a=RM.scalaAdatta&&RM.scalaAdatta.stato?RM.scalaAdatta.stato():null; return a?a:{s:1,metro:'—',px:0}; }
+  function dieci(x){ return String(Math.round(x*100)/100).replace('.',','); }
   nuova();
   if(window.RM_pagina && RM_pagina.quando) RM_pagina.quando(function(i,t){ nuova(t); });
   if(RM.qualita && RM.qualita.quando) RM.qualita.quando(function(){ cambi++; if(cur) cur.cambi++; });
@@ -27,7 +30,7 @@
   function giro(ts){
     requestAnimationFrame(giro);
     var mv=mossa();
-    if(prima){ var d=ts-prima; if(d>0 && d<2000 && !document.hidden){ ultimi.push([ts,d]); var c=cur; c.n++; c.s+=d; if(d>c.mx) c.mx=d; if(d>33.4) c.o33++; if(d>100) c.o100++; var s=stato(); c.gradini[s.g]=(c.gradini[s.g]||0)+1;
+    if(prima){ var d=ts-prima; if(d>0 && d<2000 && !document.hidden){ ultimi.push([ts,d]); var c=cur; c.n++; c.s+=d; if(d>c.mx) c.mx=d; if(d>33.4) c.o33++; if(d>100) c.o100++; var s=stato(); c.gradini[s.g]=(c.gradini[s.g]||0)+1; var sa=scala().s; c.ss=(c.ss||0)+sa; c.smin=Math.min(c.smin==null?1:c.smin,sa);
       if(mv){ var m=c.m; m.n++; m.s+=d; if(d>m.mx) m.mx=d; if(d>33.4) m.o33++; if(d>50.1) m.o50++; } } }
     prima=ts;
     while(ultimi.length && ts-ultimi[0][0]>2000) ultimi.shift();
@@ -35,15 +38,16 @@
   requestAnimationFrame(giro);
   setInterval(function(){ if(!ultimi.length) return; var s=0, mx=0; ultimi.forEach(function(u){ s+=u[1]; if(u[1]>mx) mx=u[1]; });
     var fps=1000*ultimi.length/Math.max(1,s), st=stato();
-    riga.textContent=Math.round(fps)+' f/s · peggiore '+Math.round(mx)+' ms · '+st.g+' · '+(tri/1e6).toFixed(2).replace('.',',')+' M tri'; },500);
+    var sa=scala(); riga.textContent=Math.round(fps)+' f/s · peggiore '+Math.round(mx)+' ms · '+st.g+' · scala '+dieci(sa.s)+' · '+(tri/1e6).toFixed(2).replace('.',',')+' M tri'; },500);
   function testo(){
     var gl=R.getContext(), e=gl.getExtension('WEBGL_debug_renderer_info'), sg=e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):'?', cv=R.domElement;
     var L=['Come finisce un impero, misura della fluidità ('+(RM.versione||'versione ignota')+')',
       'Browser: '+navigator.userAgent, 'Schermo: '+screen.width+' x '+screen.height+' punti, densità '+(window.devicePixelRatio||1)+'; tela della città adesso '+cv.width+' x '+cv.height+' (1 x 1 se è nascosta); scheda grafica: '+sg,
       'Qualità: '+(RM.qualita&&RM.qualita.automatica&&RM.qualita.automatica()?'automatica, ':'scelta a mano, ')+stato().g+'; cambi del regolatore in tutto: '+cambi,
-      'Tappa (anno) | fotogrammi | media f/s | peggiore ms | oltre 33 ms | oltre 100 ms | gradini | cambi | con la camera che si muove: fotogrammi, media f/s, peggiore ms, oltre 33, oltre 50'];
+      'Scala adattiva: adesso '+dieci(scala().s)+' dei lati, '+dieci(scala().px||0)+' pixel per punto, metro: '+scala().metro+(RM.scalaAdatta&&RM.scalaAdatta.fissa?' (spenta con ?densita=fissa)':''),
+      'Tappa (anno) | fotogrammi | media f/s | peggiore ms | oltre 33 ms | oltre 100 ms | gradini | cambi | con la camera che si muove: fotogrammi, media f/s, peggiore ms, oltre 33, oltre 50 | scala adattiva media, minima'];
     tappe.forEach(function(c){ if(!c.n) return; var g=Object.keys(c.gradini).map(function(k){ return k+' '+Math.round(100*c.gradini[k]/c.n)+'%'; }).join(', '), m=c.m;
-      L.push(c.anno+' | '+c.n+' | '+(1000*c.n/c.s).toFixed(1)+' | '+Math.round(c.mx)+' | '+c.o33+' | '+c.o100+' | '+g+' | '+c.cambi+' | '+(m.n?m.n+', '+(1000*m.n/m.s).toFixed(1)+', '+Math.round(m.mx)+', '+m.o33+', '+m.o50:'—')); });
+      L.push(c.anno+' | '+c.n+' | '+(1000*c.n/c.s).toFixed(1)+' | '+Math.round(c.mx)+' | '+c.o33+' | '+c.o100+' | '+g+' | '+c.cambi+' | '+(m.n?m.n+', '+(1000*m.n/m.s).toFixed(1)+', '+Math.round(m.mx)+', '+m.o33+', '+m.o50:'—')+' | '+dieci((c.ss||c.n)/c.n)+', '+dieci(c.smin==null?1:c.smin)); });
     return L.join('\n'); }
   copia.addEventListener('click',function(){ var t=testo();
     function vecchio(){ var a=document.createElement('textarea'); a.value=t; a.setAttribute('readonly',''); a.style.cssText='position:fixed;left:-9999px;top:0'; document.body.appendChild(a); a.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(a); }
