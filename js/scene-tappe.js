@@ -1774,9 +1774,10 @@ var interno800=(function(){
   function compila(){
     if(compilato || acceso || !RM.renderer || !RM.renderer.compile) return; compilato=true;
     var L=[g,finestre,corona].concat(mobili,effetti), prima=L.map(function(m){ return m.visible; }), pf=[];
+    var conTaglio=[pie.g].concat(teg?[teg]:[]);      // 27 novembre 2026, notte: anche San Pietro e le tegole col taglio (i piani che aprono il tetto): il loro programma con i due piani nasceva all'entrata nella basilica, un fermo di un secondo sul banco; ora nasce qui, al primo passo (provato e scartato: il taglio dentro lo shader dei monumenti, che rendeva quattro volte più lenta la compilazione di tutti i loro programmi su Direct3D)
     folla.forEach(function(F){ MAGLIE.forEach(function(t){ pf.push([F[t],F[t].visible]); F[t].visible=true; }); });
     L.forEach(function(m){ m.visible=true; });
-    try{ RM.renderer.compile(RM.scene,RM.camera); }catch(e){}
+    try{ if(RM.prepara) RM.prepara(conTaglio.concat(L,pf.map(function(q){ return q[0]; })),true); else RM.renderer.compile(RM.scene,RM.camera); }catch(e){}      // 27 novembre 2026, notte: renderer.compile preparava i programmi di tutta la scena con chiavi diverse da quelle del disegno (sul banco 1,2 secondi di compilazioni che poi non servivano, e quelle vere arrivavano lo stesso dentro la scena): ora si disegnano davvero, una volta, solo queste cose (RM.prepara in js/base.js)
     L.forEach(function(m,i){ m.visible=prima[i]; }); pf.forEach(function(q){ q[0].visible=q[1]; }); }
   return {mostra:mostra, taglio:taglio, posa:posa, VE:VE, regia:regia, compila:compila, pos:pos, Y:Y, X0:X0, Z0:Z0, chiave:chiave, ritratti:{carlo:rC, papa:rP, figlio:rF}, corona:corona, attivo:function(){ return acceso; }, k:function(){ return kT; }};
 })();
@@ -2513,10 +2514,11 @@ var CAPI=[
   {nome:'Carlo il Giovane', corto:'Il figlio', riga:'Il figlio di Carlo: quel giorno il papa lo unge re (Liber Pontificalis, vita di Leone III).', vis:dentro800, p:function(){ return [interno800.pos.figlio[0],interno800.Y,interno800.pos.figlio[2]]; }, lontano:30, vicino:1.1, su:.2},
   {nome:'Leone IV', riga:'Sopra la porta che guarda a San Pellegrino recita la prima preghiera; il clero gira le mura scalzo (vita di Leone IV, 72-73).', vis:function(){ return leone852.g.visible; }, p:function(){ var q=leone852.porta; return [q[0],RM.h(q[0],q[1])+1.05,q[1]]; }}
 ];
-var capiEl=null, vC=new THREE.Vector3(), contaF=0, rettM=[];
+var capiEl=null, capiW=-1, capiH=-1, vC=new THREE.Vector3(), contaF=0, rettM=[];
 function capiPrepara(){
   var riq=document.querySelector('.riquadro.roma'); if(!riq) return false;
   capiEl=document.createElement('div'); capiEl.className='capi3d'; capiEl.style.cssText='position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:3'; riq.appendChild(capiEl);
+  if(window.ResizeObserver) new ResizeObserver(function(){ capiW=capiEl.clientWidth; capiH=capiEl.clientHeight; }).observe(capiEl);      // 27 novembre 2026, notte: la misura letta quando cambia, non a ogni fotogramma
   CAPI.forEach(function(c){
     var s=document.createElement('span'), r=document.createElement('i'), n=document.createElement('b'), st=document.createElement('div'), oro=c.gruppo?'rgba(239,232,218,.8)':'rgba(244,210,124,.95)';
     s.setAttribute('role','button'); s.tabIndex=0; s.setAttribute('aria-expanded','false');
@@ -2540,7 +2542,7 @@ function capiPrepara(){
 function tocca2(a,b){ return a[0]<b[2]&&a[2]>b[0]&&a[1]<b[3]&&a[3]>b[1]; }
 RM.frame.push(function(){
   if(!capiEl && !capiPrepara()) return;
-  var w=capiEl.clientWidth, h=capiEl.clientHeight, tel=window.innerWidth<700, messi=[], quanti=0; if(!w||!h) return;
+  var w=capiW>=0?capiW:capiEl.clientWidth, h=capiH>=0?capiH:capiEl.clientHeight, tel=window.innerWidth<700, messi=[], quanti=0; if(!w||!h) return;
   if((contaF++)%6===0){ rettM=[]; var rq=capiEl.getBoundingClientRect();      // i nomi dei monumenti visibili (js/monumenti.js), letti ogni sei fotogrammi
     var et=document.querySelectorAll('.etichette3d span'); for(var i=0;i<et.length;i++){ if(et[i].style.visibility!=='visible') continue; var b=et[i].getBoundingClientRect(); if(b.width) rettM.push([b.left-rq.left-2,b.top-rq.top-2,b.right-rq.left+2,b.bottom-rq.top+2]); }
     var sopra=document.querySelectorAll('.riquadro.roma .evento, .riquadro.roma .riga-tempo');      // la didascalia dell'evento e la riga dei tempi: i nomi non ci vanno sopra

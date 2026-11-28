@@ -3132,9 +3132,10 @@ RM.moduli.push(function(anno){
 })();
 
 /* ---------- etichette proiettate ---------- */
-var v=new THREE.Vector3();
+var v=new THREE.Vector3(), rqW=-1, rqH=-1;
+if(window.ResizeObserver) new ResizeObserver(function(){ rqW=riquadro.clientWidth; rqH=riquadro.clientHeight; }).observe(riquadro);      // 27 novembre 2026, notte: la misura del riquadro letta solo quando cambia, non a ogni fotogramma (una lettura dell'impaginazione nel ciclo, dopo gli stili scritti dalle etichette, obbliga il browser a ricalcolarli)
 RM.frame.push(function(){
-  var w=riquadro.clientWidth, h=riquadro.clientHeight, messi=(RM.postiRiservati||[]).slice();      // posti riservati: il nome del Campidoglio (js/strade-nomi.js), a cui i monumenti vicini cedono il posto (27 novembre 2026); messi: i rettangoli delle etichette già visibili; una che ne coprirebbe un'altra si nasconde (23 novembre 2026: le due scholae si accavallavano)
+  var w=rqW>=0?rqW:riquadro.clientWidth, h=rqH>=0?rqH:riquadro.clientHeight, messi=(RM.postiRiservati||[]).slice();      // posti riservati: il nome del Campidoglio (js/strade-nomi.js), a cui i monumenti vicini cedono il posto (27 novembre 2026); messi: i rettangoli delle etichette già visibili; una che ne coprirebbe un'altra si nasconde (23 novembre 2026: le due scholae si accavallavano)
   M.forEach(function(o){
     if(!o.div) return;
     var ex=o.ex!=null?o.ex:o.x, ez=o.ez!=null?o.ez:o.z, ey=o.ey!=null?o.ey:7;      // ex, ez: dove sta il nome, se non al centro del gruppo; ey: a che altezza sopra il gruppo (di norma 70 m; 27 novembre 2026)

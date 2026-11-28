@@ -1330,6 +1330,28 @@ RM.riquadri=(function(){
     /* spegni(true): per le prove prima e dopo nella stessa pagina */
     maglie:function(){ return cand.map(function(c){ return {gruppo:c.o.userData.gruppo, istanze:c.o.count, fermo:c.fermo, usa:!!c.usa, quota:c.quota, vis:c.o.visible, copie:c.copie.filter(function(q){ return q&&q.count; }).length}; }); } };
 })();
+/* RM.prepara(oggetti): i programmi della scheda grafica per queste cose, preparati disegnandole davvero una volta (27 novembre 2026, notte; l'utente: «rendere più fluido tutto
+   dal cell»). renderer.compile di three prepara i programmi di tutta la scena con lo stato che trova, e le chiavi non coincidevano con quelle del disegno vero (istanze, luci,
+   tela d'arrivo): sul banco da telefono la scena dell'800 pagava 1,2 secondi di compilazioni che poi non servivano. Qui tutto il resto si nasconde per un attimo, queste cose si
+   disegnano sulla tela degli effetti con la camera vera e senza scarti fuori inquadratura, poi si rimette ogni cosa com'era; il fotogramma seguente ridisegna la tela da capo,
+   quindi sullo schermo non si vede nulla. La mappa delle ombre non si tocca (nessun rifacimento). */
+/* Con poco=true (la scena dell'800) le cose si preparano una per fotogramma, all'inizio del fotogramma: ogni programma nuovo blocca il filo principale finché la scheda grafica
+   non l'ha compilato (three ne legge subito l'esito), e in fila sono tanti piccoli intoppi invece di un fermo lungo (sul banco 0,8 secondi tutti insieme). */
+var daPreparare=[];
+RM.frame.push(function(){ if(!daPreparare.length) return; var o=daPreparare.shift(); if(o && o.parent) RM.prepara([o]); });
+RM.prepara=function(oggetti,poco){
+  if(poco){ var visti={}; oggetti.forEach(function(o){ if(o) o.traverse(function(m){ if(!(m.isMesh||m.isPoints||m.isLine) || !m.material) return;      // una maglia per materiale (e per tipo: con istanze o no), una per fotogramma
+      var k=(Array.isArray(m.material)?m.material.map(function(x){ return x.uuid; }).join(','):m.material.uuid)+(m.isInstancedMesh?'i':'s'); if(!visti[k]){ visti[k]=1; daPreparare.push(m); } }); }); return; }
+  var dentro=new Set(), antenati=new Set(), salv=[], cull=[];
+  oggetti.forEach(function(o){ if(!o) return; dentro.add(o); if(!o.visible){ o.visible=true; salv.push([o,false]); } var p=o.parent; while(p && p!==scene){ antenati.add(p); p=p.parent; } });
+  function nascondi(nodo){ nodo.children.forEach(function(c){ if(c.isLight || dentro.has(c)) return; if(antenati.has(c)){ if(!c.visible){ salv.push([c,false]); c.visible=true; } nascondi(c); return; } if(c.visible){ c.visible=false; salv.push([c,true]); } }); }
+  nascondi(scene);
+  dentro.forEach(function(o){ o.traverse(function(m){ if((m.isMesh||m.isPoints||m.isLine) && m.frustumCulled){ m.frustumCulled=false; cull.push(m); } }); });
+  var rt=renderer.getRenderTarget(), sm=renderer.shadowMap, nu=sm.needsUpdate, au=sm.autoUpdate;
+  sm.needsUpdate=false; sm.autoUpdate=false;      // la mappa delle ombre non si rifà con la scena quasi vuota: un rifacimento chiesto in questo fotogramma resta per il disegno vero
+  try{ renderer.setRenderTarget(post?post.tela:null); renderer.render(scene,camera); }
+  finally{ renderer.setRenderTarget(rt); sm.needsUpdate=nu; sm.autoUpdate=au; salv.forEach(function(s){ s[0].visible=s[1]; }); cull.forEach(function(m){ m.frustumCulled=true; }); }
+};
 var orologio=new THREE.Clock(), somma=0, quanti=0, occhioPrima=new THREE.Vector3(), puntoPrima=new THREE.Vector3();
 /* Quando la scena non è sullo schermo (si è scesi a leggere, o sul telefono si guarda la mappa) non si disegna: la pagina scorre meglio e la batteria ringrazia. */
 RM.fuoriVista=false;
@@ -1348,7 +1370,7 @@ var tsPrima=0;
   }
   for(var i=0;i<RM.frame.length;i++) RM.frame[i](dt);
   controlli.update();
-  if(ombraChiesta && ora-ombraFatta>66){ renderer.shadowMap.needsUpdate=true; ombraChiesta=false; ombraFatta=ora; }
+  if(ombraChiesta && ora-ombraFatta>(TOCCO_Q?200:66)){ renderer.shadowMap.needsUpdate=true; ombraChiesta=false; ombraFatta=ora; }      // sui dispositivi al tocco (27 novembre 2026, notte) nel viaggio la mappa delle ombre si rifà cinque volte al secondo, non quindici: sul banco da telefono ogni rifacimento costava da 5 a 24 millesimi di scheda grafica; all'arrivo si rifà sempre una volta dopo l'ultimo cambio, come prima
   if(rifai){ rifai=false; misura(); }      // un cambio di densità chiesto dopo il fotogramma di prima: la tela della pagina si rifà qui, prima di disegnare, e non resta vuota sullo schermo
   if(post && post.attivo){
     if(Math.abs(post.tela.width-renderer.domElement.width*ALTA)>renderer.domElement.width*ALTA*.02) misura();      // chi ha disegnato fuori dal ciclo (i fotogrammi delle infografiche) ha rimesso la tela a 1
@@ -1367,6 +1389,7 @@ var tsPrima=0;
 })();
 /* ?prova=qualita: la prova dei gradini sul telefono (js/prova-qualita.js), caricata solo a richiesta, con la versione di questo file */
 (function(){ var sc=document.currentScript, v=sc && /\?v=[^&#]+/.exec(sc.src||''); RM.versione=v?v[0].slice(3):'';
+  if(/[?&]misura=1/.test(location.search)) window.addEventListener('load',function(){ var s=document.createElement('script'); s.src='js/misura.js'+(v?v[0]:''); document.body.appendChild(s); });      // ?misura=1: il registratore della fluidità per il telefono vero (js/misura.js)
   var pr=/[?&]prova=(qualita|scena)/.exec(location.search); if(!pr) return;      // ?prova=scena&anno=800: la prova di una scena animata (js/prova-scena.js)
   window.addEventListener('load',function(){ var s=document.createElement('script'); s.src='js/prova-'+pr[1]+'.js'+(v?v[0]:''); document.body.appendChild(s); }); })();
 

@@ -319,10 +319,21 @@ function vai(i,subito){
   if(subito) applica();
 }
 var ultimaLista=-1e9;
-function applica(){
+/* La città coperta (27 novembre 2026, notte; l'utente: «rendere più fluido tutto dal cell»). Sul telefono, con la scheda «L'Impero» aperta, la città non si vede e non si disegna,
+   ma a ogni cambio di tappa i suoi moduli rifacevano case, verde, strade e gente per tutto il viaggio: sul banco da telefono (processore rallentato quattro volte) era la voce
+   più cara dei cambi di tappa, con compiti da 100-200 millesimi mentre la carta faceva la sua regia. Ora, finché la città è coperta, i moduli aspettano (cittaDopo) e si applicano
+   una volta sola, all'anno di quel momento, quando la scheda «Roma» si apre (vistaCitta). La prima applicazione, all'apertura, si fa sempre (la città si prepara sotto il velo);
+   RM_pagina.anno(y) (infografiche, «Prima e dopo») applica sempre. Sul PC le due scene stanno insieme e nulla cambia. */
+var cittaCoperta=false, cittaDopo=false, primaApplica=true;
+function vistaCitta(){ var sc=$('scene'), s=document.querySelector('.schede');
+  cittaCoperta=!!(sc && s && sc.getAttribute('data-vista')!=='roma' && !document.body.classList.contains('roma-grande') && getComputedStyle(s).display!=='none');
+  if(!cittaCoperta && cittaDopo){ cittaDopo=false; applica(true); } }
+function applica(forza){
   var viaggio=anno!==meta, ora=performance.now();
+  if(cittaCoperta && !forza && !primaApplica) cittaDopo=true;
+  else { primaApplica=false; cittaDopo=false;
   RM.inViaggio=viaggio;      // nel viaggio fra due tappe i moduli pesanti possono saltare un passo (RM.saltaPasso in js/base.js); all'arrivo mai
-  try{ for(var i=0;i<RM.moduli.length;i++) RM.moduli[i](anno); } finally{ RM.inViaggio=false; }
+  try{ for(var i=0;i<RM.moduli.length;i++) RM.moduli[i](anno); } finally{ RM.inViaggio=false; } }
   scriviSpie();
   if(voci.length && !(viaggio && ora-ultimaLista<125)){ ultimaLista=ora; scriviMonumenti(); scriviScheda(); }      // l'elenco dei monumenti rimisura la pagina (circa 6 millesimi): nel viaggio al più otto volte al secondo, all'arrivo sempre
 }
@@ -384,8 +395,11 @@ window.addEventListener('keydown',function(ev){ if(ev.key==='Escape'){ if(scheda
     $('scene').setAttribute('data-vista',b.getAttribute('data-vista'));
     window.dispatchEvent(new Event('resize'));          // il riquadro appena mostrato va rimisurato, anche dove manca ResizeObserver
     [].forEach.call(document.querySelectorAll('.schede button'),function(o){ o.setAttribute('aria-selected',o===b?'true':'false'); });
+    vistaCitta();      // aperta la scheda «Roma»: i moduli rimasti in attesa si applicano adesso
   });
 });
+window.addEventListener('resize',function(){ vistaCitta(); });      // telefono girato o finestra allargata: le due scene possono tornare insieme
+vistaCitta();
 
 /* ---------- ciclo ---------- */
 var ultimo=performance.now(), contaGiri=0;
@@ -415,7 +429,7 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
   var cerca=function(k){ var r=new RegExp('[?&]'+k+'=([^&#]+)').exec(location.search); return r?decodeURIComponent(r[1]):null; }, id=cerca('guarda'); if(!id||!RM.volaA) return;
   var mo=(RM.MONUMENTI||[]).filter(function(x){ return x.id===id; })[0], x=mo?mo.x:parseFloat(cerca('x')), z=mo?mo.z:parseFloat(cerca('z')); if(isNaN(x)||isNaN(z)) return;
   var d=parseFloat(cerca('dist'))||40, dir={n:[0,-1],s:[0,1],e:[1,0],o:[-1,0],so:[-.6,.8],se:[.6,.8],no:[-.6,-.8],ne:[.6,-.8]}[cerca('da')||'so']||[-.6,.8], a=parseFloat(cerca('anno'));
-  setTimeout(function(){ grande(true); if(!isNaN(a)){ anno=meta=a; applica(); } var tp=document.querySelector('.tempo'); if(tp) tp.style.display='none';
+  setTimeout(function(){ grande(true); if(!isNaN(a)){ anno=meta=a; applica(true); } var tp=document.querySelector('.tempo'); if(tp) tp.style.display='none';
     RM.renderer.domElement.dispatchEvent(new Event('pointerdown'));      // ferma il volo d'apertura: qui la camera va messa subito al suo posto
     var q=RM.h(x,z)+1; RM.controlli.target.set(x,q,z); RM.camera.position.set(x+dir[0]*d*.82,q+d*.56,z+dir[1]*d*.82); RM.controlli.update(); },400);
 })();
@@ -520,7 +534,7 @@ window.addEventListener('hashchange',function(){ var i=tappaDaIndirizzo(location
   quandoLetto.push(scrivi);      // letto: via avviso e velo
   scrivi();
 })();
-window.RM_pagina={vai:vai, ferma:ferma, spie:SPIE, quando:function(f){ ascolto.push(f); }, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
+window.RM_pagina={vai:vai, ferma:ferma, spie:SPIE, quando:function(f){ ascolto.push(f); }, tappa:function(){ return idx; }, annoOra:function(){ return anno; }, anno:function(y){ anno=meta=y; applica(true); }};      // anno(y): porta la scena a un anno qualsiasi senza cambiare tappa (js/confronto.js)
 })();
 
 /* il piede a voci che si aprono: un collegamento a #fonti, #come o #licenze (il menu in testa, un indirizzo con l'ancora) apre la voce e ci porta */
