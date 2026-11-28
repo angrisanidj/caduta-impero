@@ -80,12 +80,26 @@ function fine(stato){ stato.remove(); var p=document.getElementById('pagina'); p
   cp.addEventListener('click',function(){ var ok=function(){ cp.textContent='Copiato'; setTimeout(function(){ cp.textContent='Copia'; },1600); }, vecchio=function(){ a.select(); try{ document.execCommand('copy'); }catch(e){} ok(); };
     if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(ok,vecchio); else vecchio(); });
   p.appendChild(cp); p.appendChild(a); }
-document.getElementById('via').addEventListener('click',async function(){
-  document.getElementById('pagina').style.display='none';
-  var stato=document.createElement('div'); stato.id='stato'; stato.appendChild(document.createTextNode('')); var sm=document.createElement('small'); stato.appendChild(sm); document.body.appendChild(stato);
-  for(var i=0;i<GIRI.length;i++){ sm.textContent='Versione '+(i+1)+' di '+GIRI.length+'. Non toccare lo schermo.'; await giro(GIRI[i],stato); }
-  document.getElementById('pagina').style.display=''; fine(stato); });
-window.RM_confronto={esiti:esiti, testo:testo};
+/* Una versione per caricamento della pagina (28 novembre 2026, ore 16:30). L'utente dall'iPhone: «blocca e torna ad avvio quando passo alla c»: tre città di fila nella
+   stessa pagina finivano la memoria e Safari la ricaricava. Ora, misurata una versione, il risultato va in localStorage e la pagina si ricarica da sola: la memoria della
+   città di prima se ne va con lei. Se Safari la chiude lo stesso, alla riapertura si riprende dalla versione rimasta (due tentativi, poi «non misurata»). */
+var CHIAVE='rm-confronto', st=null;
+function leggi(){ try{ var s=JSON.parse(localStorage.getItem(CHIAVE)||'null'); return (s && Date.now()-s.t<15*60000)?s:null; }catch(e){ return null; } }
+function scrivi(){ try{ st.t=Date.now(); localStorage.setItem(CHIAVE,JSON.stringify(st)); }catch(e){} }
+function barra(){ var stato=document.createElement('div'); stato.id='stato'; stato.appendChild(document.createTextNode('')); var sm=document.createElement('small'); stato.appendChild(sm); document.body.appendChild(stato); return stato; }
+async function avanti(){
+  document.getElementById('pagina').style.display='none'; var stato=barra(), sm=stato.lastChild, i=st.i, G=GIRI[i];
+  if((st.prove[i]||0)>=2){ st.esiti.push({k:G.k, n:G.n+' (NON MISURATA: la pagina si è chiusa due volte)', fps:0, citta:0, peg:0, lunghi:0, tri:0, dis:0, tela:'?', prog:0, scala:''}); st.i++; scrivi(); location.reload(); return; }
+  st.prove[i]=(st.prove[i]||0)+1; scrivi();
+  sm.textContent='Versione '+(i+1)+' di '+GIRI.length+'. Non toccare lo schermo: la pagina si ricarica da sola a ogni versione.';
+  await giro(G,stato); st.esiti.push(esiti[esiti.length-1]); st.i++; scrivi(); await dorme(300); location.reload(); }
+function mostra(){ esiti.length=0; st.esiti.forEach(function(e){ esiti.push(e); }); var stato=barra(); fine(stato);
+  var di=document.createElement('button'); di.type='button'; di.className='due'; di.textContent='Ricomincia da capo'; di.addEventListener('click',function(){ try{ localStorage.removeItem(CHIAVE); }catch(e){} location.reload(); }); document.getElementById('pagina').appendChild(di); }
+document.getElementById('via').addEventListener('click',function(){ st={i:0, esiti:[], prove:{}}; scrivi(); avanti(); });
+st=leggi();
+if(st && st.i>=GIRI.length) mostra();
+else if(st) setTimeout(avanti,800);
+window.RM_confronto={esiti:esiti, testo:testo, stato:function(){ return st; }};
 })();
 </script>
 </body>
