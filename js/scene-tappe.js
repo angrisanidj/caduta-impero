@@ -2543,13 +2543,14 @@ function tocca2(a,b){ return a[0]<b[2]&&a[2]>b[0]&&a[1]<b[3]&&a[3]>b[1]; }
 RM.frame.push(function(){
   if(!capiEl && !capiPrepara()) return;
   var w=capiW>=0?capiW:capiEl.clientWidth, h=capiH>=0?capiH:capiEl.clientHeight, tel=window.innerWidth<700, messi=[], quanti=0; if(!w||!h) return;
+  var qualcuno=false; CAPI.forEach(function(c){ var p=null; try{ p=c.vis()&&c.p(); }catch(e){ p=null; } c.__p=p; if(p || c.el.style.display!=='none') qualcuno=true; });      // 28 novembre 2026, notte: senza nomi da mostrare né da spegnere non si legge l'impaginazione (sul banco da telefono un terzo di millesimo a fotogramma a 4x); al primo nome si rilegge subito
+  if(!qualcuno){ contaF=0; return; }
   if((contaF++)%6===0){ rettM=[]; var rq=capiEl.getBoundingClientRect();      // i nomi dei monumenti visibili (js/monumenti.js), letti ogni sei fotogrammi
     var et=document.querySelectorAll('.etichette3d span'); for(var i=0;i<et.length;i++){ if(et[i].style.visibility!=='visible') continue; var b=et[i].getBoundingClientRect(); if(b.width) rettM.push([b.left-rq.left-2,b.top-rq.top-2,b.right-rq.left+2,b.bottom-rq.top+2]); }
     var sopra=document.querySelectorAll('.riquadro.roma .evento, .riquadro.roma .riga-tempo');      // la didascalia dell'evento e la riga dei tempi: i nomi non ci vanno sopra
     for(i=0;i<sopra.length;i++){ var s2=getComputedStyle(sopra[i]); if(s2.display==='none'||+s2.opacity<.05) continue; var b2=sopra[i].getBoundingClientRect(); if(b2.width) rettM.push([b2.left-rq.left-4,b2.top-rq.top-4,b2.right-rq.left+4,b2.bottom-rq.top+4].concat([1])); } }
   CAPI.forEach(function(c){
-    var p=null, ok=false;
-    try{ p=c.vis()&&c.p(); }catch(e){ p=null; }
+    var p=c.__p, ok=false;
     if(p && (!tel||quanti<2)){
       vC.set(p[0],p[1],p[2]);
       var dC=vC.distanceTo(RM.camera.position); if(dC<(c.lontano||75) && !(c.vicino && dC<c.vicino)){      // vicino: nei primi piani dell'800 il nome coprirebbe i volti (lo dice la riga dei tempi)

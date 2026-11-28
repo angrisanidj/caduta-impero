@@ -777,6 +777,22 @@ function magliaFiume(){
   var g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(v,3)); g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2)); g.setIndex(idx); g.computeVertexNormals();
   var m=new THREE.Mesh(g,RM.matFiume); m.receiveShadow=true; m.userData.gruppo='strade'; m.frustumCulled=false; scene.add(m); return m;
 }
+/* Le strade in un disegno solo (28 novembre 2026, notte; l'utente: «rendere più fluido tutto dal cell»). Erano un nastro per strada, ventisette disegni nella vista d'insieme,
+   tutti con lo stesso materiale, fermi all'origine: three li disegnava uno dopo l'altro nell'ordine in cui erano nati (stesso materiale, stessa distanza). Qui i nastri si
+   cuciono in una geometria sola nello stesso ordine: i triangoli arrivano alla scheda grafica nella stessa sequenza, quindi dove due strade si sovrappongono (gli incroci)
+   vince la stessa. Da vicino si disegnano anche i tratti fuori dall'inquadratura (pochi triangoli, che la scheda scarta). ?strade1=1 lascia i nastri separati. */
+function unisciStrade(pezzi){
+  var nV=0, nI=0, chiavi=null, ok=pezzi.length>1;
+  pezzi.forEach(function(m){ var g=m.geometry, k=Object.keys(g.attributes).sort().join(','); if(chiavi===null) chiavi=k; if(k!==chiavi || !g.index || m.material!==pezzi[0].material || m.parent!==scene || m.position.lengthSq()!==0 || m.quaternion.w!==1 || m.scale.x!==1 || m.scale.y!==1 || m.scale.z!==1) ok=false; nV+=g.attributes.position.count; nI+=g.index?g.index.count:0; });
+  if(!ok) return;
+  var nomi=chiavi.split(','), dati={}, idx=nV>65535?new Uint32Array(nI):new Uint16Array(nI), oV=0, oI=0;
+  nomi.forEach(function(n){ dati[n]=new Float32Array(nV*pezzi[0].geometry.attributes[n].itemSize); });
+  pezzi.forEach(function(m){ var g=m.geometry, a=g.index.array, i;
+    nomi.forEach(function(n){ var at=g.attributes[n]; dati[n].set(at.array,oV*at.itemSize); });
+    for(i=0;i<a.length;i++) idx[oI+i]=a[i]+oV; oI+=a.length; oV+=g.attributes.position.count;
+    scene.remove(m); g.dispose(); });
+  var G=new THREE.BufferGeometry(); nomi.forEach(function(n){ G.setAttribute(n,new THREE.BufferAttribute(dati[n],pezzi[0].geometry.attributes[n].itemSize)); }); G.setIndex(new THREE.BufferAttribute(idx,1));
+  var M=new THREE.Mesh(G,pezzi[0].material); M.receiveShadow=true; M.userData.gruppo='strade'; scene.add(M); RM.magliaStrade=M; }
 RM.posa=function(){
   if(RM.suolo) return;
   posaSuolo();
@@ -791,7 +807,8 @@ RM.posa=function(){
   var TENUTE=[0,1,2,3,4,5,6,7,8,9,12,13,14,15], PEL=((window.RM_DATI||{}).ITINERARIO||{}).via||[];
   PEL=PEL.map(function(q){ return RM.ll(q[0],q[1]); });
   function tenuta(i){ return function(x,z){ if(TENUTE.indexOf(i)>=0) return 1; var dm=PEL.length>1?RM.distLinea(x,z,PEL,false):1e9; return 1-RM.sfuma(3,6,dm); }; }
-  RM.STRADE.forEach(function(s,i){ RM.nastro(fitta(s),TOPO.stradeLarghe[i],matStrada,.1,null,tenuta(i)); });
+  var pezzi=RM.STRADE.map(function(s,i){ return RM.nastro(fitta(s),TOPO.stradeLarghe[i],matStrada,.1,null,tenuta(i)); });
+  if(!/[?&]strade1=1/.test(location.search)) unisciStrade(pezzi);
   if(FIUME_VAR){ RM.curvaFiume=new THREE.CatmullRomCurve3(RM.FIUME.map(function(p){ return new THREE.Vector3(p[0],0,p[1]); }),false,'catmullrom',.35); magliaFiume(); }      // la stessa curva che RM.nastro faceva per il fiume
   else RM.curvaFiume=RM.nastro(RM.FIUME,5.6,RM.matFiume,0,-.5).userData.curva;
 };
@@ -1330,6 +1347,136 @@ RM.riquadri=(function(){
     /* spegni(true): per le prove prima e dopo nella stessa pagina */
     maglie:function(){ return cand.map(function(c){ return {gruppo:c.o.userData.gruppo, istanze:c.o.count, fermo:c.fermo, usa:!!c.usa, quota:c.quota, vis:c.o.visible, copie:c.copie.filter(function(q){ return q&&q.count; }).length}; }); } };
 })();
+/* ---------- disegni vuoti e matrici ferme (28 novembre 2026, notte; l'utente: «rendere più fluido tutto dal cell mantenendo tutto quello che abbiamo fatto») ----------
+   Sul banco da telefono un fotogramma faceva da 17 a 45 disegni che non disegnano nulla: maglie a istanze con zero istanze (i pacchi delle case di un tipo che in
+   quell'anno non c'è, le figure ferme) e geometrie vuote. three le prepara lo stesso (programma, uniformi, attributi: per le maglie a istanze tutti, a ogni disegno) e
+   poi disegna zero triangoli. Qui, prima di ogni disegno della scena, si nascondono per quel disegno e si rimettono subito dopo: lo schermo non cambia (non avevano nulla
+   da mostrare né ombre da gettare). Non durante RM.prepara, che le disegna apposta per preparare i programmi. ?vuoti=1 lo spegne (per le prove). */
+var preparando=false;
+RM.fluido={vuoti:!/[?&]vuoti=1/.test(location.search), istanze:!/[?&]istanze=1/.test(location.search), matrici:!/[?&]matrici=1/.test(location.search), comune:!/[?&]comune=1/.test(location.search)};      // i tre interruttori di questo blocco, anche a pagina aperta (per le prove prima e dopo nella stessa pagina)
+(function(){
+  var cand=[], giro=0, nascoste=[];
+  function nVert(g){ return g.index?g.index.count:(g.attributes.position?g.attributes.position.count:0); }
+  /* le candidate: le maglie a istanze, i punti e le linee (il loro conto cambia) e le maglie che all'ultima ricerca erano vuote; le altre hanno una geometria fatta una volta */
+  function cerca(){ cand.length=0; scene.traverse(function(o){ if(o.isInstancedMesh||o.isPoints||o.isLine||(o.isMesh && o.geometry && (nVert(o.geometry)===0 || o.geometry.drawRange.count===0 || o.geometry.isInstancedBufferGeometry))) cand.push(o); }); }
+  function vuota(o){ if(o.isInstancedMesh && o.count===0) return true; var g=o.geometry; if(!g) return false;
+    return nVert(g)===0 || g.drawRange.count===0 || (g.isInstancedBufferGeometry && g.instanceCount===0); }
+  var prima=scene.onBeforeRender, dopo=scene.onAfterRender;
+  scene.onBeforeRender=function(){
+    if(prima) prima.apply(this,arguments);
+    if(preparando || !RM.fluido.vuoti) return;
+    if((giro++)%60===0) cerca();
+    for(var i=0;i<cand.length;i++){ var o=cand[i]; if(o.visible && vuota(o)){ o.visible=false; nascoste.push(o); } } };
+  scene.onAfterRender=function(){ for(var i=0;i<nascoste.length;i++) nascoste[i].visible=true; nascoste.length=0; if(dopo) dopo.apply(this,arguments); };
+})();
+/* Le maglie a istanze fuori dall'inquadratura. Quasi tutte hanno frustumCulled=false (three le scarterebbe con la sfera della sola geometria, che non contiene le istanze),
+   e quindi si disegnano anche quando nessuna istanza è nell'inquadratura: sul banco, da vicino (il Foro, l'isola), da 46 a 73 disegni su 90-150 erano di maglie tutte fuori.
+   Qui, per la durata del disegno, una maglia ferma da otto fotogrammi riceve la sfera che contiene tutte le sue istanze (con un margine di dieci metri e del 5% per ciò che
+   lo shader muove: zampe, braccia, piante che crescono) e three la scarta da sé quando è tutta fuori: dall'inquadratura nel disegno, dal riquadro della luce nella mappa
+   delle ombre. Ciò che si vede non cambia. Le maglie grandi che cambiano (le case nel viaggio fra due tappe) restano come prima finché non stanno ferme; quelle con poche
+   istanze (le figure vicine, le barche) hanno la sfera rifatta a ogni disegno; le copie dei riquadri hanno già
+   le loro sfere; le geometrie usate da più maglie restano fuori. Fuori dal disegno la geometria ha di nuovo la sua sfera (per i raggi dei clic). ?scarta=1 lo spegne. */
+RM.fluido.scarta=!/[?&]scarta=1/.test(location.search);
+(function(){
+  var QUIETE=8, cand=[], giro=0, stato=new WeakMap(), scambi=[];
+  function sferaBase(g){ var p=g.attributes.position, s=g.__sfB; if(s && s.__p===p && s.__v===p.version) return s;
+    s=new THREE.Sphere(); s.__p=p; s.__v=p?p.version:0; g.__sfB=s; if(!p || !p.count) return s;
+    var b=new THREE.Box3().setFromBufferAttribute(p), v=new THREE.Vector3(), r2=0, i; b.getCenter(s.center); for(i=0;i<p.count;i++){ v.fromBufferAttribute(p,i); r2=Math.max(r2,s.center.distanceToSquared(v)); } s.radius=Math.sqrt(r2); return s; }
+  var X=new Float64Array(64), Y=new Float64Array(64), Z=new Float64Array(64), Rr=new Float64Array(64);
+  function sferaTutte(o,base,s){ var n=o.count, M=o.instanceMatrix.array, c=base.center, i, e;
+    if(X.length<n){ var L=Math.max(n,X.length*2); X=new Float64Array(L); Y=new Float64Array(L); Z=new Float64Array(L); Rr=new Float64Array(L); }
+    var x0=1e30, x1=-1e30, y0=1e30, y1=-1e30, z0=1e30, z1=-1e30;
+    for(i=0;i<n;i++){ e=i*16; var sx=M[e]*M[e]+M[e+1]*M[e+1]+M[e+2]*M[e+2], sy=M[e+4]*M[e+4]+M[e+5]*M[e+5]+M[e+6]*M[e+6], sz=M[e+8]*M[e+8]+M[e+9]*M[e+9]+M[e+10]*M[e+10];
+      X[i]=M[e]*c.x+M[e+4]*c.y+M[e+8]*c.z+M[e+12]; Y[i]=M[e+1]*c.x+M[e+5]*c.y+M[e+9]*c.z+M[e+13]; Z[i]=M[e+2]*c.x+M[e+6]*c.y+M[e+10]*c.z+M[e+14]; Rr[i]=base.radius*Math.sqrt(Math.max(sx,sy,sz));
+      if(X[i]-Rr[i]<x0) x0=X[i]-Rr[i]; if(X[i]+Rr[i]>x1) x1=X[i]+Rr[i]; if(Y[i]-Rr[i]<y0) y0=Y[i]-Rr[i]; if(Y[i]+Rr[i]>y1) y1=Y[i]+Rr[i]; if(Z[i]-Rr[i]<z0) z0=Z[i]-Rr[i]; if(Z[i]+Rr[i]>z1) z1=Z[i]+Rr[i]; }
+    if(!s) s=new THREE.Sphere(); s.center.set((x0+x1)/2,(y0+y1)/2,(z0+z1)/2); var R=0;
+    for(i=0;i<n;i++){ var d=Math.sqrt((X[i]-s.center.x)*(X[i]-s.center.x)+(Y[i]-s.center.y)*(Y[i]-s.center.y)+(Z[i]-s.center.z)*(Z[i]-s.center.z))+Rr[i]; if(d>R) R=d; }
+    s.radius=R*1.05+1; return s; }
+  function cerca(){ cand.length=0; var usi=new Map(), tutte=[]; scene.traverse(function(o){ if(o.isInstancedMesh && !o.userData.copiaDi){ tutte.push(o); usi.set(o.geometry,(usi.get(o.geometry)||0)+1); } });
+    tutte.forEach(function(o){ if(usi.get(o.geometry)===1) cand.push(o); }); }
+  var prima=scene.onBeforeRender, dopo=scene.onAfterRender;
+  scene.onBeforeRender=function(){
+    if(prima) prima.apply(this,arguments);
+    if(preparando || !RM.fluido.scarta) return;
+    if((giro++)%60===0) cerca();
+    var t0=performance.now();
+    for(var i=0;i<cand.length;i++){ var o=cand[i]; if(!o.visible || o.frustumCulled!==false || o.count===0) continue;
+      var g=o.geometry, p=g.attributes.position, st=stato.get(o); if(!st){ st={v:-1,n:-1,g:null,pv:-1,fermo:0,sf:null,fatta:false,prima:null}; stato.set(o,st); }
+      var piccola=o.count<=64;      // le maglie con poche istanze (le figure vicine, che si muovono a ogni fotogramma) hanno la sfera rifatta a ogni disegno: costa poco
+      if(st.v!==o.instanceMatrix.version || st.n!==o.count || st.g!==g || st.pv!==(p?p.version:-2)){ st.v=o.instanceMatrix.version; st.n=o.count; st.g=g; st.pv=p?p.version:-2; st.fermo=0; st.fatta=false; if(!piccola) continue; }
+      else if(!piccola && st.fermo<QUIETE){ st.fermo++; continue; }
+      if(!st.fatta){ if(!piccola && performance.now()-t0>1.5) continue; st.sf=sferaTutte(o,sferaBase(g),st.sf); st.fatta=true; }      // al più un millesimo e mezzo a disegno per le sfere nuove delle maglie grandi
+      st.prima=g.boundingSphere; g.boundingSphere=st.sf; o.frustumCulled=true; scambi.push(o,st); } };
+  scene.onAfterRender=function(){ for(var i=0;i<scambi.length;i+=2){ var o=scambi[i]; o.geometry.boundingSphere=scambi[i+1].prima; o.frustumCulled=false; } scambi.length=0; if(dopo) dopo.apply(this,arguments); };
+})();
+/* Le maglie a istanze (case, rovine, cumuli, alberi, mura, acquedotti, gente: da 90 a 160 disegni a fotogramma). In three r128 ogni disegno di una InstancedMesh rifà da capo
+   tutti gli attributi dei vertici (WebGLBindingStates.setup: «if(object.isInstancedMesh===true) updateBuffers=true»: per ognuno bindBuffer, vertexAttribPointer, divisori),
+   mentre una maglia semplice ritrova il suo stato già pronto (vertex array object). Sul banco da telefono a 4x era il 28% del lavoro di three in un fotogramma.
+   Qui, solo dentro il disegno, la maglia a istanze passa per la strada che three ha per le geometrie a istanze (InstancedBufferGeometry): una geometria gemella per
+   ogni maglia, con gli stessi attributi (stessi oggetti, quindi stessi buffer), la matrice e il colore delle istanze presi dalla maglia come prima, e il materiale con
+   USE_INSTANCING scritto nelle sue definizioni invece che dato da three (una «variante» che eredita tutto dal materiale vero: uniformi, colori, versione, onBeforeCompile).
+   Lo shader è lo stesso, riga per riga, e anche l'ordine dei disegni (la lista di three porta il materiale vero): lo schermo non cambia. three rifà gli attributi solo
+   quando cambiano (geometria, attributi, matrici delle istanze). Solo con WebGL2; i materiali ShaderMaterial e quelli col colore delle istanze ma senza colori dei
+   vertici restano come prima. ?istanze=1 lo spegne (per le prove). */
+if(renderer.capabilities.isWebGL2) (function(){
+  var ORIG=renderer.renderBufferDirect, GEMELLE=new WeakMap(), VAR=[new WeakMap(),new WeakMap()];
+  function gemella(o,g){ var p=GEMELLE.get(o), a=g.attributes, k, n=0;
+    if(p && p.__g===g && p.__im===o.instanceMatrix && p.__ic===o.instanceColor && p.index===g.index){ var ok=true; for(k in a){ n++; if(p.attributes[k]!==a[k]){ ok=false; break; } } if(ok && n===p.__n) return p; }
+    p=new THREE.InstancedBufferGeometry(); for(k in a) p.attributes[k]=a[k]; p.__n=0; for(k in a) p.__n++;
+    p.attributes.__imx=o.instanceMatrix; if(o.instanceColor) p.attributes.__icx=o.instanceColor;      // non li legge lo shader: servono a three per sapere quando rifare gli attributi
+    p.index=g.index; p.drawRange=g.drawRange; p.groups=g.groups; p.boundingSphere=g.boundingSphere; p.boundingBox=g.boundingBox; p._maxInstanceCount=Infinity;
+    p.__g=g; p.__im=o.instanceMatrix; p.__ic=o.instanceColor; GEMELLE.set(o,p); return p; }
+  function variante(m,col){ var W=VAR[col?1:0], v=W.get(m);
+    if(v && v.__df===m.defines) return v;
+    if(!v){ v=Object.create(m); v._listeners={}; W.set(m,v); m.addEventListener('dispose',function(){ v.dispatchEvent({type:'dispose'}); }); }
+    var d=Object.create(m.defines||null); d.USE_INSTANCING=''; if(col) d.USE_INSTANCING_COLOR='';      // le definizioni del materiale vero restano sotto: se ne aggiunge una, la variante la vede
+    v.defines=d; v.__df=m.defines; return v; }
+  /* I monumenti col materiale comune (RM.unoPerTutti in js/costruttore.js). Ogni RM.matRovina ha lo stesso shader ma uniformi sue (rovina, crepe, verde, patina, crolli…) e il
+     suo colore: per three ogni monumento era un materiale nuovo, e a ognuno ricaricava tutte le uniformi del programma (luci, ombre, trame: una novantina di valori). Qui il
+     monumento si disegna col materiale comune, dopo averci copiato le sue uniformi e il suo colore; se il disegno di prima era già col materiale comune (quindi col suo
+     programma attivo) si caricano solo quelle, coi setter di three (che saltano i valori uguali). La lista dei disegni porta ancora il materiale del monumento: ordine e
+     scarti restano quelli. Solo se le altre proprietà del materiale sono uguali a quelle del comune (lato, trasparenza, mappa, nebbia…); se no si disegna come prima. */
+  var PROPRIE=['side','transparent','opacity','depthWrite','depthTest','visible','polygonOffset','polygonOffsetFactor','polygonOffsetUnits','colorWrite','alphaTest','fog','vertexColors','roughness','metalness','flatShading','wireframe','blending','toneMapped','map','alphaMap','emissiveMap','normalMap','envMap','lightMap','aoMap','bumpMap','roughnessMap','metalnessMap','displacementMap','emissiveIntensity','shadowSide','clipShadows','clippingPlanes','clipIntersection','premultipliedAlpha','dithering','depthPacking','morphTargets','skinning','stencilWrite'];
+  var OMBRA_P=['visible','wireframe','side','clipShadows','clippingPlanes','clipIntersection','wireframeLinewidth','linewidth'];      // ciò che three scrive sul materiale dell'ombra prima di ogni disegno (WebGLShadowMap.getDepthMaterial)
+  var ultimo=null, gl=renderer.getContext();
+  function uguali(m,c){ for(var i=0;i<PROPRIE.length;i++){ var k=PROPRIE[i]; if(m[k]!==c[k]) return false; }
+    if(m.emissive && !m.emissive.equals(c.emissive)) return false; if(m.onBeforeCompile!==m.userData.rovina) return false;
+    var d=m.defines, n=0, k2; for(k2 in d){ n++; if(!c.defines || d[k2]!==c.defines[k2]) return false; } for(k2 in c.defines) n--; return n===0; }
+  function comune(m){ if(!RM.fluido.comune || !RM.unoPerTutti) return null; var C=RM.unoPerTutti(), c=m.isMeshDepthMaterial?C.userData.ombra:C;
+    if(m===c || m.version!==c.version || !m.userData.u) return null;
+    if(m.isMeshDepthMaterial){ for(var i=0;i<OMBRA_P.length;i++) c[OMBRA_P[i]]=m[OMBRA_P[i]]; }
+    return uguali(m,c)?c:null; }
+  function copia(m,c){ var u=m.userData.u, uc=c.userData.u, k, v, pu=null;
+    if(ultimo===c){ var pr=renderer.properties.get(c).currentProgram; pu=pr?pr.getUniforms():null; }
+    for(k in u){ v=u[k].value; if(typeof v==='number') uc[k].value=v; else uc[k].value.copy(v); if(pu) pu.setValue(gl,k,uc[k].value); }
+    if(m.color){ c.color.copy(m.color); if(pu) pu.setValue(gl,'diffuse',c.color); } }
+  renderer.renderBufferDirect=function(camera,sc,geometry,material,object,group){
+    if(object.isInstancedMesh!==true && material && material.userData && material.userData.rovina){ var cm=comune(material);
+      if(cm){ copia(material,cm); ultimo=null; ORIG.call(this,camera,sc,geometry,cm,object,group); ultimo=cm; return; } }
+    ultimo=null;
+    if(object.isInstancedMesh===true && RM.fluido.istanze && material && !material.isShaderMaterial && geometry && !geometry.isInstancedBufferGeometry){
+      var prof=material.isMeshDepthMaterial||material.isMeshDistanceMaterial, col=object.instanceColor!==null;
+      if(!col || prof || material.vertexColors===true){
+        var p=gemella(object,geometry); p.instanceCount=object.count;
+        object.isInstancedMesh=false;
+        try{ ORIG.call(this,camera,sc,p,variante(material,col),object,group); } finally{ object.isInstancedMesh=true; }
+        return; } }
+    return ORIG.apply(this,arguments); };
+})();
+/* Le matrici: three a ogni disegno ricompone la matrice di ogni oggetto (1.200 nella città) da posizione, rotazione e scala, e la moltiplica per quella del genitore, anche
+   se nulla si è mosso (sul banco a 4x da 0,8 a 1,9 millesimi a disegno). Qui la stessa regola di three (Object3D.updateMatrixWorld), ma la matrice si ricompone solo
+   quando posizione, rotazione o scala sono cambiate da quella di prima, e quindi il mondo si rifà solo dove serve: i numeri sono gli stessi. Chi ha un updateMatrixWorld
+   suo (le camere) lo usa. ?matrici=1 lo spegne. */
+(function(){
+  var PROTO=THREE.Object3D.prototype.updateMatrixWorld;
+  function passo(o,force){
+    if(o.matrixAutoUpdate){ var p=o.position, q=o.quaternion, s=o.scale, c=o.__mc;
+      if(!c || c[0]!==p.x || c[1]!==p.y || c[2]!==p.z || c[3]!==q._x || c[4]!==q._y || c[5]!==q._z || c[6]!==q._w || c[7]!==s.x || c[8]!==s.y || c[9]!==s.z){
+        if(!c) c=o.__mc=new Float64Array(10); o.updateMatrix(); c[0]=p.x; c[1]=p.y; c[2]=p.z; c[3]=q._x; c[4]=q._y; c[5]=q._z; c[6]=q._w; c[7]=s.x; c[8]=s.y; c[9]=s.z; } }
+    if(o.matrixWorldNeedsUpdate || force){ if(o.parent===null) o.matrixWorld.copy(o.matrix); else o.matrixWorld.multiplyMatrices(o.parent.matrixWorld,o.matrix); o.matrixWorldNeedsUpdate=false; force=true; }
+    var ch=o.children; for(var i=0,l=ch.length;i<l;i++){ var c2=ch[i]; if(c2.updateMatrixWorld===PROTO) passo(c2,force); else c2.updateMatrixWorld(force); } }
+  scene.updateMatrixWorld=function(force){ if(RM.fluido.matrici) passo(this,force); else PROTO.call(this,force); };
+})();
 /* RM.prepara(oggetti): i programmi della scheda grafica per queste cose, preparati disegnandole davvero una volta (27 novembre 2026, notte; l'utente: «rendere più fluido tutto
    dal cell»). renderer.compile di three prepara i programmi di tutta la scena con lo stato che trova, e le chiavi non coincidevano con quelle del disegno vero (istanze, luci,
    tela d'arrivo): sul banco da telefono la scena dell'800 pagava 1,2 secondi di compilazioni che poi non servivano. Qui tutto il resto si nasconde per un attimo, queste cose si
@@ -1349,8 +1496,8 @@ RM.prepara=function(oggetti,poco){
   dentro.forEach(function(o){ o.traverse(function(m){ if((m.isMesh||m.isPoints||m.isLine) && m.frustumCulled){ m.frustumCulled=false; cull.push(m); } }); });
   var rt=renderer.getRenderTarget(), sm=renderer.shadowMap, nu=sm.needsUpdate, au=sm.autoUpdate;
   sm.needsUpdate=false; sm.autoUpdate=false;      // la mappa delle ombre non si rifà con la scena quasi vuota: un rifacimento chiesto in questo fotogramma resta per il disegno vero
-  try{ renderer.setRenderTarget(post?post.tela:null); renderer.render(scene,camera); }
-  finally{ renderer.setRenderTarget(rt); sm.needsUpdate=nu; sm.autoUpdate=au; salv.forEach(function(s){ s[0].visible=s[1]; }); cull.forEach(function(m){ m.frustumCulled=true; }); }
+  try{ preparando=true; renderer.setRenderTarget(post?post.tela:null); renderer.render(scene,camera); }
+  finally{ preparando=false; renderer.setRenderTarget(rt); sm.needsUpdate=nu; sm.autoUpdate=au; salv.forEach(function(s){ s[0].visible=s[1]; }); cull.forEach(function(m){ m.frustumCulled=true; }); }
 };
 var orologio=new THREE.Clock(), somma=0, quanti=0, occhioPrima=new THREE.Vector3(), puntoPrima=new THREE.Vector3();
 /* Quando la scena non è sullo schermo (si è scesi a leggere, o sul telefono si guarda la mappa) non si disegna: la pagina scorre meglio e la batteria ringrazia. */

@@ -3134,8 +3134,15 @@ RM.moduli.push(function(anno){
 /* ---------- etichette proiettate ---------- */
 var v=new THREE.Vector3(), rqW=-1, rqH=-1;
 if(window.ResizeObserver) new ResizeObserver(function(){ rqW=riquadro.clientWidth; rqH=riquadro.clientHeight; }).observe(riquadro);      // 27 novembre 2026, notte: la misura del riquadro letta solo quando cambia, non a ogni fotogramma (una lettura dell'impaginazione nel ciclo, dopo gli stili scritti dalle etichette, obbliga il browser a ricalcolarli)
+var firmaEt=new Float64Array(26), firmaNuova=new Float64Array(26);      // 28 novembre 2026, notte: a camera ferma (stessa camera, stesso riquadro, stessi posti riservati, stesse presenze) le etichette restano dove sono e il conto si salta: sul banco da telefono mezzo millesimo a fotogramma a 4x
 RM.frame.push(function(){
-  var w=rqW>=0?rqW:riquadro.clientWidth, h=rqH>=0?rqH:riquadro.clientHeight, messi=(RM.postiRiservati||[]).slice();      // posti riservati: il nome del Campidoglio (js/strade-nomi.js), a cui i monumenti vicini cedono il posto (27 novembre 2026); messi: i rettangoli delle etichette già visibili; una che ne coprirebbe un'altra si nasconde (23 novembre 2026: le due scholae si accavallavano)
+  var w0=rqW>=0?rqW:riquadro.clientWidth, h0=rqH>=0?rqH:riquadro.clientHeight, cm=RM.camera.matrixWorld.elements, cp=RM.camera.projectionMatrix.elements, pr=RM.postiRiservati||[], f=firmaNuova, i0, pres=0;
+  for(i0=0;i0<16;i0++) f[i0]=cm[i0]; f[16]=cp[0]; f[17]=cp[5]; f[18]=cp[8]; f[19]=cp[9]; f[20]=w0; f[21]=h0;
+  for(i0=0;i0<M.length;i0++) if(M[i0].div) pres+=(M[i0].presenza||0)*(i0+1);
+  f[22]=pres; f[23]=pr.length; f[24]=pr.length?pr[0][0]+3.1*pr[0][1]+7.3*pr[0][2]+11.7*pr[0][3]:0; f[25]=RM.scene.position.y;
+  var uguale=true; for(i0=0;i0<26;i0++) if(f[i0]!==firmaEt[i0]){ uguale=false; break; }
+  if(uguale) return; firmaEt.set(f);
+  var w=w0, h=h0, messi=pr.slice();      // posti riservati: il nome del Campidoglio (js/strade-nomi.js), a cui i monumenti vicini cedono il posto (27 novembre 2026); messi: i rettangoli delle etichette già visibili; una che ne coprirebbe un'altra si nasconde (23 novembre 2026: le due scholae si accavallavano)
   M.forEach(function(o){
     if(!o.div) return;
     var ex=o.ex!=null?o.ex:o.x, ez=o.ez!=null?o.ez:o.z, ey=o.ey!=null?o.ey:7;      // ex, ez: dove sta il nome, se non al centro del gruppo; ey: a che altezza sopra il gruppo (di norma 70 m; 27 novembre 2026)

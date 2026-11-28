@@ -1144,9 +1144,15 @@ RM.frame.push(function(dt){
   LUOGHI.forEach(function(L){ if(L.porto) banchiVisibili(L.vis && !!L.ok && !!L.banchi); });
   matGente.opacity=1-.8*RM.notte;
   if(RM.leggero){ if(gente.visible){ gente.visible=false; fumo.visible=false; figure.forEach(function(m){ m.visible=false; }); if(ombraFig) ombraFig.visible=false; mCarri.visible=false; mMuli.visible=false; rondeSpente(); } }       // regolatore al terzo grado: si rinuncia a passanti e fumo
-  else { if(!gente.visible){ gente.visible=true; fumo.visible=true; } muoviGente(dt); muoviFumo(); }
+  else { if(!gente.visible){ gente.visible=true; fumo.visible=true; }
+    if(ALTERNA_V && !(RM.fluido && RM.fluido.alterna===false)){ pariV=!pariV; dtGente+=dt; if(pariV){ muoviGente(dtGente); dtGente=0; } else muoviFumo(); }
+    else { muoviGente(dt); muoviFumo(); } }
   muoviBarche(dt); frameFermi();
 });
+/* 28 novembre 2026, notte (l'utente: «rendere più fluido tutto dal cell»): sui dispositivi al tocco i passanti e il fumo si muovono a fotogrammi alterni, ognuno trenta volte
+   al secondo, i passanti col tempo di due fotogrammi: sul banco da telefono erano da 3 a 5 millesimi a fotogramma a 4x, il lavoro più grosso dei RM.frame. Un passo di
+   trenta al secondo è di 5 cm per chi cammina e di meno per il fumo, che sale lento. Le barche restano a ogni fotogramma (da vicino si vedrebbero a scatti). */
+var ALTERNA_V=(navigator.maxTouchPoints>0)||!!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches), pariV=false, dtGente=0;
 /* per le prove: ?notte=1 accende la notte all'avvio (le catture senza finestra non possono premere «Notte») */
 if(/[?&]notte=1/.test(location.search)) setTimeout(function(){ var b=document.getElementById('btnNotte'); if(b && b.getAttribute('aria-pressed')!=='true') b.click(); else if(RM.applicaLuce) RM.applicaLuce(1); },1500);      // 27 novembre 2026: come il bottone, così la regia rifà anche i moduli (finestre accese di js/citta.js); prima si cambiava solo la luce
 RM.vitaProve={luoghi:LUOGHI, ronde:RONDE, lumiRonde:lumiR, aloneRonde:aloneR, attrezziRonde:attrR, vie:vie,libero:liberoQui, suIsolato:suIsolato, ostacoli:ostacoli, occupato:occupato, carri:mCarri};      // per le prove

@@ -510,8 +510,13 @@ RM.matRovina=function(alt){
   m.userData.u=u;
   m.userData.ombra=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking,side:THREE.DoubleSide});
   m.userData.ombra.onBeforeCompile=function(sh){ innesta(sh,u,false); };
+  m.userData.rovina=m.onBeforeCompile; m.userData.ombra.userData.rovina=m.userData.ombra.onBeforeCompile; m.userData.ombra.userData.u=u;      // il segno per il disegno col materiale comune (RM.unoPerTutti, qui sotto, e js/base.js): chi cambia onBeforeCompile esce da lì
   return m;
 };
+/* Il materiale comune dei monumenti (28 novembre 2026, notte): ogni monumento ha il suo RM.matRovina con le sue uniformi, ma lo shader è lo stesso per tutti. js/base.js disegna
+   i monumenti con questo (o con la sua ombra, per la mappa delle ombre), dopo averci copiato i valori del monumento: three non ricarica a ogni monumento tutte le uniformi
+   del programma, solo quelle del monumento. */
+RM.unoPerTutti=function(){ if(!RM.unoPerTutti.m) RM.unoPerTutti.m=RM.matRovina(1); return RM.unoPerTutti.m; };
 /* profili */
 RM.ellisse=function(rx,rz,quanti,a0,a1){
   var o=[], da=(a1==null?Math.PI*2:a1-(a0||0)), pieni=a1==null?quanti:quanti+1;
