@@ -1,0 +1,14 @@
+[out:json][timeout:120];
+(
+  way["building"](around:12,41.8882,12.4841);
+  way["building"](around:12,41.8893,12.4976);
+  way["building"](around:12,41.89648,12.4892);
+  way["building"](around:12,41.89093,12.48555);
+  way["building"](around:12,41.89808,12.48347);
+  way["building"](around:12,41.8855,12.4906);
+  way["building"](around:12,41.8904,12.4848);
+  way["building"](around:12,41.9031,12.4806);
+  way["building"](around:12,41.8805,12.4959);
+  way["building"](around:12,41.8931,12.4844);
+);
+out tags geom;

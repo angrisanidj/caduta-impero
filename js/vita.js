@@ -82,7 +82,7 @@ var LUOGHI=[
   {id:'pietro800', x:-241,z:-112.5,ax:1.6,az:1.4, n:18, da:800, a:853, fisso:true},     // Leone III: casa e bagno «pro subsidiis Christi pauperum atque peregrinorum» a destra dei gradini dell'atrio (Liber Pontificalis, Leone III, c. LXXXIX); la casa non è nel modello
   {id:'trivio', x:-12.4,z:-92.2,ax:1.7,az:1.7, anello:.4, n:8, da:537, a:800, fisso:true}      // «fecit autem Belisarius xenodochium in via Lata» (Liber Pontificalis, Vigilio 2, in Platner, Xenodochia), presso Santa Maria in Trivio; fino a quando non è detto
 ];
-(D.CHIESE||[]).forEach(function(c){ if(c[4]!=='diaconia') return; var p=RM.ll(c[1],c[2]);      // le diaconie (Liber Pontificalis, vita di Leone III: doni a San Giorgio, San Teodoro, Santa Maria in Cosmedin…): chi stava davanti è IPOTESI, poche figure
+(D.CHIESE||[]).forEach(function(c){ if(c[4]!=='diaconia') return; var p=RM.ll(c[1],c[2]), ch=(RM.CHIESE||[]).filter(function(q){ return q.nome===c[0]&&q.davanti; })[0]; if(ch) p=ch.davanti;      // davanti alla facciata della chiesa disegnata (js/nuclei.js, 28 novembre 2026)      // le diaconie (Liber Pontificalis, vita di Leone III: doni a San Giorgio, San Teodoro, Santa Maria in Cosmedin…): chi stava davanti è IPOTESI, poche figure
   LUOGHI.push({id:'diaconia '+c[0], x:p[0], z:p[1], ax:1.8, az:1.8, anello:.45, n:6, da:Math.max(600,c[3]), a:853, fisso:true}); });
 var SCALA_L=RM.piccolo?.55:1, NL=0;
 LUOGHI.forEach(function(L,k){ L.max=Math.ceil(L.n*SCALA_L*GMAX); L.i0=NL; NL+=L.max; L.da=L.da||0; L.a=L.a||9999; L.vis=0; L.ok=null; L.annoOk=-1e9; L.seme=901+k*37; });

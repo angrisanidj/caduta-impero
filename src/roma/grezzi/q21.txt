@@ -1,0 +1,8 @@
+[out:json][timeout:120];
+(
+  way["building"~"^(church|basilica|chapel|cathedral)$"](41.872,12.462,41.908,12.512);
+  relation["building"~"^(church|basilica|chapel|cathedral)$"](41.872,12.462,41.908,12.512);
+  way["amenity"="place_of_worship"]["religion"="christian"](41.872,12.462,41.908,12.512);
+  relation["amenity"="place_of_worship"]["religion"="christian"](41.872,12.462,41.908,12.512);
+);
+out tags geom;

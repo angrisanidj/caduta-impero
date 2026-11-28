@@ -1,0 +1,5 @@
+[out:json][timeout:120];
+(
+  nwr["name"~"(Anastasia|San Clemente|Agata dei Goti|Maria Antiqua|Santi( XII)? Apostoli|Gregorio (Magno|al Celio)|San Teodoro|Silvestro in Capite|Sisto Vecchio|Eusebio|Luca e Martina|Santa Martina)"](41.872,12.462,41.908,12.512);
+);
+out tags geom;

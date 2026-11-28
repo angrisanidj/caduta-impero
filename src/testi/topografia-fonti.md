@@ -1238,3 +1238,114 @@ Richiesta: le porte delle mura di Aureliano erano tutte la stessa forma (un bloc
 - Porta Chiusa (posterula a sud dei Castra Praetoria): nessun punto sicuro nel modello. Porta Ardeatina: la fonte dice che non è mai nominata. Porta Cornelia e le porte della città leonina: la vita di Leone IV non è stata letta per le porte (San Pellegrino resta nella scena dell'852). La posterula presso la Nomentana e quella oltre la piramide.
 - I battenti abbattuti da Totila nel 546 («all the gates are said to have been destroyed», «an exaggeration»): il modello non disegna battenti.
 - Le fotografie delle porte in piedi oggi (Appia, Latina, Asinaria, Ostiense, Tiburtina, Maggiore, Pinciana, Metronia murata) non sono state confrontate.
+
+## Le chiese minori, una per una (28 novembre 2026)
+
+Richiesta: le 44 chiese di `CHIESE` erano la stessa chiesetta girata a caso (`js/nuclei.js`). Ora ogni chiesa è composta di pezzi (aula a una navata, basilica a tre navate, abside, portico, atrio a quadriportico, chiostro di monastero, rotonda) messi a misura, con le fasi che la fonte dà (tabella `FORME` in `js/nuclei.js`).
+
+Fonti lette in questa sessione: Mariano Armellini, *Le chiese di Roma dal secolo IV al XIX* (1891), su LacusCurtius, `https://penelope.uchicago.edu/Thayer/I/Gazetteer/Places/Europe/Italy/Lazio/Roma/Rome/churches/_Texts/Armellini/ARMCHI*/2/<rione>.html` (Monti/1-3, Trevi, Colonna, Campomarzio, Ponte, Parione, Pigna, Campitelli, S.Angelo, Ripa, Trastevere, Esquilino) e la parte I (`ARMCHI*/1.html`). Le righe del Liber Pontificalis già in `RESTAURI` di `js/monumenti.js` non sono state rilette. Contorni: OpenStreetMap, richieste `src/roma/grezzi/q21.txt` (edifici di culto cristiani e chiese nel riquadro del modello), `q21b.txt` (per nome), `q21c.txt` (edifici sotto i punti senza contorno); asse e misure dal rettangolo più piccolo che contiene il contorno; il lato dell'abside è quello curvo o più stretto del contorno (curvo e quindi sicuro per San Lorenzo in Lucina, San Vitale, San Pietro in Vincoli, Santi Giovanni e Paolo, Santi Quattro Coronati, San Martino ai Monti, Santa Maria in Aquiro, San Bonifacio, Sant'Eustachio, San Marcello, San Giorgio al Velabro; per le altre è una scelta).
+
+### Le frasi usate
+
+- **Parte I, cap. III** (titoli del 499): «col catalogo di quelli esistenti in Roma alla fine del secolo V, quale appunto risulta da un insigne documento che è il concilio romano adunato sotto il papa Simmaco nella basilica vaticana il giorno 1 di marzo dell'anno 499»; nell'elenco «Titulus Praxedis», «Titulus s. Ceciliae». Santa Cecilia e Santa Prassede passano in `CHIESE` dal 499 (prima 450 e 490, senza fonte letta).
+- **San Marco** (Pigna, «S. Marco de Pallacine»): «Il papa Gregorio IV che era stato prete della medesima (827‑844) la ricostruì quasi a nuovo perchè rovinosa e disabbellita, e di Gregorio resta ancora l'abside». Il portico dal 780 viene dalla riga di Adriano I già in `RESTAURI` («tectum atque portica»).
+- **Santa Maria in Trastevere**: «circa il 340 la edificò dai fondamenti»; «Adriano I ampliò la basilica aggiungendo due navi»; «Gregorio IV nell'828 edificò presso la chiesa un ampio monastero».
+- **Santi Nereo e Achilleo**: «A tempo di Leone III la basilica della via nuova era una delle romane diaconie»; il mosaico dell'arco «è opera di Leone III». Forma non descritta.
+- **Sant'Anastasia**: «Era anticamente divisa in tre navi da trenta colonne».
+- **San Lorenzo in Damaso**: «Innanzi la facciata vi era un duplice porticato, e l'interno era distributio nelle consuete tre navi»; la nave traversa «non correva innanzi all'abside, come in tutte le altre basiliche, ma dietro alla medesima a modo di portico postìco»; «Adriano I e Leone III la restaurarono, ma non mutò la sua forma»; il cardinale Riario «fattala atterrare, eresse la odierna lungi dalla prima» (quindi il contorno di oggi non serve: la chiesa sta al punto di `CHIESE`).
+- **Santa Susanna**: epigrafe di Leone III, «AVLA COANGVSTO ET TETRO EXISTENS LOCO … A FVNDAMENTIS ERIGENS»; «nell'800 Leone III suo successore la rinnovò quasi per intiero»; «il modello della basilica da lui riedificata».
+- **San Crisogono**: «è assai probabile che sotto il livello dell'attuale basilica di Crisogono restino le tracce dell'antica chiesa costantiniana»; «Circa l'anno 731, il papa Gregorio III … ne restaurò il tetto»; «Fondò inoltre presso la basilica un monastero».
+- **San Clemente**: la basilica di cui parla Girolamo, «presso il suo portico»; «basilica sotterranea» con pitture «dal secolo V all'XI».
+- **Santa Pudenziana**: i preti Ilicio e Leopardo «rifondarono a loro spese l'aula principale, il prete Massimo tolse sopra di sè la cura della annessa cappella appellata di s. Pietro nelle terme di Novato».
+- **Santi Giovanni e Paolo**: «Prima dei restauri di Leone III, la chiesa fu rinnovata da Simmaco nel V secolo»; le tre navi con 21 colonne sono descritte per il Cinquecento.
+- **Santa Balbina**: Leone III «ne restaurò il tetto che minacciava di ruinare». Forma non descritta (il contorno di oggi è stretto: aula).
+- **San Vitale** (Monti, parte 2): «L'antico portico che precedeva la chiesa, sorretto da quattro colonne»; dedicata da Innocenzo I «fra gli anni 401 e 402».
+- **San Pietro in Vincoli**: «la basilica che, circa gli anni 442, la pia Eudossia edificò nel sito dove tuttora sorge»; «È divisa in tre navi sostituite da due ordini di 22 grosse colonne baccellate» (misure del contorno di oggi).
+- **Santa Cecilia**: «Pasquale I la rinnovò dai fondamenti, essendo ormai fatiscente per vecchiezza, e vi fabbricò un gran monastero»; «Il monumento nello stato attuale conserva ancora il carattere della riedificazione dei tempi di Pasquale»; «la basilica è preceduta dall'atrium, nel centro del quale stava il grande cantharus»; «Il portico esteriore della chiesa è sostenuto da quattro antiche colonne»; reliquie portate «nell'822».
+- **Santi Quattro Coronati**: «Onorio I la rinnovò dalle fondamenta»; «L'edificio originale di Onorio sventuratamente sparve»; «Leone IV, che ne fu cardinale, la ricostruì, e dei suoi lavori resta ancora l'ambulacro dietro la tribuna».
+- **Sant'Agata dei Goti** («S. Agata in Capite Suburrae»): «celeberrima diaconia»; Ricimero «ne adornò di musaici l'abside». Forma non descritta.
+- **Santa Bibiana**: «la chiesa fu tutta rinnovata per cura del papa Urbano VIII». Forma antica non descritta.
+- **Santa Prassede**: Pasquale «rinnovò la chiesa, anzi che la mutò di luogo, facendone un'altra non lungi»; «questo sacro tempio, come oggi si vede, è opera di Pasquale I»; «vi aggiunse due oratorj, uno a destra e l'altro a sinistra»; «dietro l'abside edificò un monastero».
+- **San Martino ai Monti** («S. Martino in Thermis»): «il papa Simmaco nel secolo V edificò l'attuale»; il carme «SERGIUS HANC CAEPIT … PAPA LEO QUARTUS … PERFECIT»; «Mantiene la chiesa il suo tipo basilicale, essendo divisa in tre navi da due ordini di dodici colonne».
+- **Santa Maria in Cosmedin**: «Sulle rovine d'un antico tempio di Cerere, di cui restano tuttora in piedi alcune colonne»; «nelle mura della nostra chiesa restano incastrate alcune delle colonne»; «sul volgere del secolo VI era annoverata fra le diaconie»; «Adriano I la riedificò, poichè la primitiva era troppo angusta e fatiscente». (Che il tempio fosse di Cerere è l'opinione di Armellini; il modello mostra solo colonne nei muri.)
+- **Santi Apostoli**: «L'antica basilica era a tre navi sostenute da due file di colonne»; «Più nulla rimane dell'antica chiesa».
+- **San Gregorio al Celio**: Gregorio «edificò un monastero … e dove eresse una chiesa»; Gregorio II «vi rimise i monaci e vi eresse un'altra chiesa»; «Nell'atrio di quel monastero».
+- **San Teodoro**: «Questa antichissima chiesa di forma circolare»; Niccolò V «la rifece un poco più in là e poco minore che non era»; «nè sembra sia un antico edifizio romano»; «i musaici esistenti ancora nella tribuna».
+- **Santa Lucia in Selci** («S. Lucia in Orfea»): «La diaconia è antichissima, poichè le sue origini risalgono al papa Simmaco»; «Fu restaurata da Onorio I, e poi da Leone III». Forma non descritta.
+- **San Saba**: «Quivi fu il monastero chiamato Cella nuova»; «La chiesa ed il monastero, col nome di Cella nuova, sono ricordati dal libro pontificale nella vita di Leone III».
+- **Santa Maria in via Lata**: «fu diaconia cardinalizia»; «al livello dell'antica via lata precisamente sotto la chiesa attuale, restano tracce d'un edifizio romano del secolo III incirca» (non nel modello).
+- **Santa Maria in Domnica**: «fu la prima tra le Diaconie»; Pasquale I «la riedificò dalle fondamenta, ampliandola»; «tre navi … divise da diciotto colonne di granito»; il mosaico dell'abside «fu compiuto nell'817».
+- **Sant'Eustachio**: «fino dal 795 è ricordata in Leone III, come antica diaconia»; «La chiesa è di struttura antichissima lunga palmi 152, larga 81¼ con tre navi»; «Ha il suo cimitero sotto il portico». Misure del modello: 34 x 18 m (palmo romano di 22,34 cm, conversione nostra).
+- **Santa Maria in Aquiro**: Gregorio III, «in qua antea diaconia et arvum oratorium fuit: a fundamentis longiorem et latiorem construxit»; «l'antica fosse assai più piccola dell'odierna».
+- **San Giorgio al Velabro**: «Zaccaria riedificò quasi dai fondamenti la chiesa»; «Gregorio IV ne ornò l'abside di musaici ed aggiunse due portici». Posto: Platner, arco degli Argentari (già in `FISSE`).
+- **Santa Maria in Campo Marzio**: «la chiesa e il monastero»; rifatta più tardi «a croce greca». Forma antica non descritta.
+- **Sant'Angelo in Pescheria** (rione S. Angelo): «portico di Ottavia, dove sorge tuttora questa insigne ed antichissima diaconia»; Teodoro zio di Adriano I «A SOLO EDIFICAVIT». Nel modello la chiesa è addossata al propileo.
+- **San Silvestro in Capite** («inter duos hortos»): Paolo I «edificò nella propria casa un monastero»; «oraculum in superioribus quidem monasterii moeniis aedificavit»; «entro l'ámbito del monastero costruì una chiesa».
+- **Sant'Apollinare** (Ponte): «Il papa Adriano I circa l'anno 780, edificò adunque questa chiesa»; «La chiesuola era divisa in tre piccole navi da tre colonne per lato, aveva una nave traversa nel fondo».
+- **San Vito** («ad Lunam»): l'annesso «monastero maggiore», senza data. Forma non descritta.
+- **San Bonifacio** («Ss. Alessio e Bonifacio»): diaconia nel Liber Pontificalis; il grande monastero è del 977 (dopo l'852, quindi non c'è).
+- **Santa Maria Domine Rose** («S. Caterina de' Funari o della Rosa»): la bolla del 1192 e la «domina Rosa» forse del 967: Armellini non dà nulla per il IX secolo. Il modello tiene l'850 degli scavi della Crypta Balbi (scheda già in `CHIESE`).
+- **Santa Prisca**: «Essa è divisa in tre navi con quattordici colonne antiche» (descrizione dell'edificio di oggi).
+- **San Sisto Vecchio** («S. Sisto in Piscina»): «vi era l'antichissimo monasterium Corsarum, di cui più volte fa menzione il Libro pontificale, specialmente nella vita di Leone IV»; Innocenzo III «la riedificò perchè ruinosa».
+- **San Marcello**: Adriano I, «titulum s. Marcelli via Lata situm a novo restauravit». Forma non descritta.
+- **Sant'Eusebio**: «Circa l'anno 750, rovinato il tetto della basilica, il papa Zaccaria la ripristinò». Il punto di `CHIESE` (Wikidata) stava 150 m a sud-est della chiesa: ora è quello di OpenStreetMap.
+- **San Giovanni a Porta Latina**: «fu eretta da Gelasio I (492‑496) e riedificata da Adriano I nel 772»; «La chiesa è divisa in tre navi sostenute da dieci colonne»; il puteale «dell'atrio, oggi distrutto» è del X secolo (l'atrio non è disegnato).
+- **Santa Martina**: «Sulle rovine di un edifizio senatorio che fino dal secolo V si chiamò Secretarium Senatus»; «nel posto della primitiva basilica si costruì la elegante e ricca chiesa sotterranea». Il Secretarium non è nel modello.
+- **Santa Maria Antiqua**: Armellini (1891, prima degli scavi del 1900) la confonde con Santa Maria Nova; nessuna fonte letta sulla sua forma.
+
+### Fonte, modello, scarto (misure in metri; «OSM» = contorno di oggi)
+
+| Chiesa | Fonte | Modello | Schema |
+|---|---|---|---|
+| San Marco | rifatta da Gregorio IV; portico sotto Adriano I | basilica 60 x 28 (OSM), portico dal 780 | tre navate (la fonte non le conta); il rifacimento di Gregorio IV non cambia la forma |
+| Santa Maria in Trastevere | basilica di Giulio I; Adriano I aggiunge due navi; monastero 828 | dal 340 una navata larga 20 m; dal 780 tre navate 74 x 39 (OSM); chiostro dall'828 | «aggiungendo due navi» letto come: prima una navata; lato del monastero |
+| San Lorenzo in Lucina | nulla sulla forma | aula 61 x 23 (OSM) col portico | forma |
+| Santi Nereo e Achilleo | nulla sulla forma | aula 34 x 20 (OSM) col portico | forma |
+| Sant'Anastasia | tre navi, trenta colonne | basilica 45 x 22 | misure e asse (nessun contorno) |
+| San Lorenzo in Damaso | doppio portico, tre navi, nave traversa dietro l'abside; la chiesa di oggi sta altrove | basilica 38 x 22, due portici, corpo basso dietro l'abside, al punto di `CHIESE` | posto vero ignoto; misure; asse |
+| Santa Susanna | aula «angusta», rifatta da capo da Leone III (800) | aula 22 x 11; dal 800 basilica 36 x 20 | misure; asse (il contorno di oggi è quasi quadrato) |
+| San Crisogono | chiesa antica sotto quella di oggi; monastero di Gregorio III (731) | aula 38 x 18; chiostro dal 731 | forma e misure |
+| San Clemente | basilica con portico | basilica 38 x 22 col portico | misure; asse |
+| Santa Pudenziana | aula principale e cappella di San Pietro | aula 40 x 20 e cappella sul fianco | misure; lato della cappella |
+| Santi Giovanni e Paolo | rinnovata da Simmaco; tre navi nel Cinquecento | basilica 57 x 28 | tre navate |
+| Santa Balbina | nulla sulla forma | aula 41 x 16 (OSM) | forma |
+| San Vitale | portico di quattro colonne | aula 59 x 22 (OSM) col portico | una navata |
+| San Pietro in Vincoli | basilica di Eudossia dove sta oggi, tre navi | basilica 66 x 37 (OSM) | altezze |
+| Santa Cecilia | titolo nel 499; Pasquale I rifà, atrio col cantharus, portico, monastero | aula 30 x 14 dal 499; dal 820 basilica 53 x 24 (OSM), portico, atrio con la vasca, chiostro | forma del titolo; anno 820; lato del monastero |
+| Santi Quattro Coronati | Onorio I rifà; Leone IV ricostruisce con l'ambulacro dietro la tribuna | aula 28 x 14; dal 630 basilica 36 x 18 (OSM); dal 850 corpo basso dietro l'abside | forme prima di Leone IV; anno 850 |
+| Sant'Agata dei Goti | diaconia, abside di Ricimero | aula 32 x 16 col portico | forma, misure, asse |
+| Santa Bibiana | rifatta da Urbano VIII | aula 23 x 12 col portico | forma |
+| Santa Prassede | titolo nel 499; Pasquale I la rifà «non lungi», due oratori, monastero dietro l'abside | aula 26 x 13 dal 499; dal 820 basilica 47 x 26, due oratori, chiostro dietro l'abside | posto del titolo vecchio (qui dove sorgerà la nuova); larghezza |
+| San Martino ai Monti | chiesa di Simmaco; Sergio II e Leone IV, tre navi | aula 36 x 16; dal 849 basilica 51 x 27 (OSM) | forma di Simmaco; anno 849 |
+| Santa Maria in Cosmedin | diaconia fra le colonne di un tempio; Adriano I la rifà più grande | dal 550 diaconia 28 x 15; dal 780 basilica 53 x 26 (OSM); colonne lungo i due fianchi | forme; anno 780 |
+| Santa Maria Antiqua | nessuna fonte letta | diaconia 24 x 14 | tutto |
+| Santi Apostoli | tre navi | basilica 48 x 26 | misure, asse |
+| San Gregorio al Celio | monastero e chiesa; seconda chiesa di Gregorio II | monastero (aula e chiostro); seconda aula dal 720 | misure; anno 720 dentro il pontificato; asse |
+| San Teodoro | chiesa circolare con tribuna | rotonda di 18 m con abside | misure; asse |
+| Santa Lucia in Selci | diaconia, nulla sulla forma | diaconia 30 x 15 | forma |
+| San Saba | monastero Cella nova | monastero, aula 30 x 16 e chiostro | misure; lato |
+| Santa Maria in via Lata | diaconia sopra un edificio romano | diaconia 34 x 15 | il corpo basso |
+| Santa Maria in Domnica | diaconia; Pasquale I la rifà più grande, tre navi | diaconia 24 x 13; dal 818 basilica 40 x 26 | anno 818 |
+| Sant'Eustachio | 152 x 81¼ palmi, tre navi, portico | basilica 34 x 18 col portico | altezze |
+| Santa Maria in Aquiro | piccolo oratorio; Gregorio III la rifà più lunga e larga | aula 15 x 9; dal 738 diaconia 30 x 16 | misure; anno 738 |
+| San Giorgio al Velabro | Zaccaria la rifà; Gregorio IV aggiunge due portici | basilica 38 x 21 (OSM) dal 745, portico dal 835 | tre navate; un portico solo; anno 835 |
+| Santa Maria in Campo Marzio | chiesa e monastero | monastero, aula 26 x 13 e chiostro | forma |
+| Sant'Angelo in Pescheria | diaconia nel portico d'Ottavia | diaconia 23 x 13 addossata al propileo | il corpo basso |
+| San Silvestro in Capite | monastero nella casa di Paolo I, oratorio al piano alto, chiesa | monastero con oratorio sul corpo più lontano | misure; asse |
+| Sant'Apollinare | chiesuola a tre navi piccole, nave traversa | basilica 24 x 15 con transetto | misure |
+| San Vito | nulla sulla forma | aula 31 x 14 (OSM) col portico | forma |
+| San Bonifacio | diaconia | diaconia 30 x 15 | forma |
+| Santa Maria Domine Rose | nulla per il IX secolo | aula 18 x 9 | tutto |
+| Santa Prisca | tre navi (oggi) | basilica 35 x 20 (OSM) | forma |
+| San Sisto Vecchio | monasterium Corsarum nella vita di Leone IV | aula 30 x 15, chiostro dal 850 | forma; anno 850 |
+| San Marcello | rifatta da Adriano I | aula 55 x 16 col portico | forma |
+| Sant'Eusebio | basilica, tetto rifatto da Zaccaria | aula 52 x 20 (OSM) col portico | forma |
+| San Giovanni a Porta Latina | Gelasio I; Adriano I la rifà nel 772, tre navi, dieci colonne | aula 22 x 12; dal 772 basilica 25 x 22 (OSM) | forma di Gelasio |
+| Santa Martina | sulle rovine del Secretarium Senatus | aula 20 x 12 | tutto |
+
+### Che cosa non c'è
+
+- Campanili (romanici, dal XII secolo), facciate e cupole moderne.
+- Gli edifici antichi che ospitavano le diaconie di via Lata e di Santa Martina e l'aula di Santa Maria Antiqua: non sono nel modello.
+- Il posto del titolo antico di Santa Prassede («non lungi») e quello della prima San Lorenzo in Damaso.
+- Le vite del Liber Pontificalis non già citate in `RESTAURI`: non lette in questa sessione.
