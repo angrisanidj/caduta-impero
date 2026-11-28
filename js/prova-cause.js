@@ -69,7 +69,6 @@ var PASSI=[
   {k:'punti', n:'senza i punti lontani (gente e fumo)', su:function(){ nascondi=vita(true); }, giu:function(){ nascondi=[]; }},
   {k:'case', n:'senza le case e le rovine', su:function(){ nascondi=gruppo('citta'); }, giu:function(){ nascondi=[]; }},
   {k:'monumenti', n:'senza i monumenti', su:function(){ nascondi=gruppo('monumenti'); }, giu:function(){ nascondi=[]; }},
-  {k:'fusi', n:'monumenti non fusi (conta solo con ?fusi=1 nell\'indirizzo: senza, i monumenti non sono fusi e la riga non cambia nulla)', su:function(){ salva.fu=RM.fluido.fusi; RM.fluido.fusi=false; }, giu:function(){ RM.fluido.fusi=salva.fu; }},
   {k:'altro', n:'senza ciò che non ha gruppo (scene, mura, chiese, acqua)', su:function(){ nascondi=sc.children.filter(function(o){ return !o.isLight && !(o.userData&&o.userData.gruppo); }); }, giu:function(){ nascondi=[]; }},
   {k:'scritte', n:'senza le scritte sulla scena (nomi, cartellini, didascalie)', su:function(){ document.body.classList.add('pc-senza-scritte'); }, giu:function(){ document.body.classList.remove('pc-senza-scritte'); }},
   {k:'ombre', n:'mappa delle ombre mai rifatta', su:function(){ ombreFerme=true; }, giu:function(){ ombreFerme=false; R.shadowMap.needsUpdate=true; }},

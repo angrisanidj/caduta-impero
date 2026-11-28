@@ -1473,7 +1473,6 @@ RM.riquadri=(function(){
    poi disegna zero triangoli. Qui, prima di ogni disegno della scena, si nascondono per quel disegno e si rimettono subito dopo: lo schermo non cambia (non avevano nulla
    da mostrare né ombre da gettare). Non durante RM.prepara, che le disegna apposta per preparare i programmi. ?vuoti=1 lo spegne (per le prove). */
 var preparando=false;
-RM.preparandoOra=function(){ return preparando; };      // per i monumenti fusi (js/monumenti.js): nel disegno di prova di RM.prepara le loro righe non si toccano
 RM.fluido={vuoti:!/[?&]vuoti=1/.test(location.search), istanze:!/[?&]istanze=1/.test(location.search), matrici:!/[?&]matrici=1/.test(location.search), comune:!/[?&]comune=1/.test(location.search)};      // i tre interruttori di questo blocco, anche a pagina aperta (per le prove prima e dopo nella stessa pagina)
 (function(){
   var cand=[], giro=0, nascoste=[];
