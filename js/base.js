@@ -1323,9 +1323,18 @@ RM.regolatore={ gradini:GRADINI, regola:regola, stato:function(){ return {livell
 RM.scalaAdatta=(function(){
   var gl=renderer.getContext(), ext=null; try{ if(GL2 && !SCALA_FISSA && !/[?&]tempoGpu=0/.test(location.search)) ext=gl.getExtension('EXT_disjoint_timer_query_webgl2'); }catch(e){ ext=null; }
   var MIN_LATO=.62, MIN_PX=Math.min(1.5,DPR), GIU=.97, SU_GPU=1.01, SU_RITMO=1.005, RAMPA_GIU=.96, RAMPA_SU=1.02;
-  var Q={s:1, t:1, cap:1, gpu:0, gpuE:0, gpuOra:-1e9, ivE:1/60, lavE:0, iv:[], verifica:null, noGiu:0, fermoSu:0, alMinDa:-1, pienaDa:-1, query:[], attiva:null, giu:0, su:0, n:0};
+  /* 28 novembre 2026, sera: il confronto fra le versioni fatto dall'utente sull'iPhone (v/confronto.html: stessa vista dell'800 a «massima») dice che lì il tempo del
+     fotogramma segue i PIXEL: la versione del 25 novembre mattina, con la tela a 1,5 pixel per punto, faceva 34-35 fotogrammi al secondo; tutte le seguenti, con la tela
+     a 3 pixel per punto, da 15 a 20, qualunque cosa avessero in più. Circa 9 millesimi fissi più 10 per ogni milione di pixel disegnati: per i sessanta servono 0,75
+     milioni di pixel, cioè 1,5 pixel per punto, e il limite di 0,62 dei lati fermava la scala a 1,7 milioni (26 millesimi: trenta al secondo, non sessanta). Sui
+     dispositivi al tocco il limite dei lati scende a 0,4 (MIN_BASSO): resta quello di 1,5 pixel per punto. Se in fondo alla discesa i sessanta non arrivano lo stesso
+     (rinuncia), il limite torna 0,62 per 45 secondi, poi 2 minuti, poi 5: meglio trenta fotogrammi nitidi che trenta sfocati. ?scala=prima rimette 0,62. */
+  var MIN_BASSO=(TOCCO_Q && !/[?&]scala=prima/.test(location.search))?.4:MIN_LATO, ATTESE=[45000,120000,300000];
+  (function(){ var m=/[?&]minpx=([\d.]+)/.exec(location.search); if(m) MIN_PX=+m[1]; })();      // per le prove su uno schermo meno denso di un telefono: ?minpx=0.5 lascia scendere la scala fino al limite dei lati
+  var Q={s:1, t:1, cap:1, gpu:0, gpuE:0, gpuOra:-1e9, ivE:1/60, lavE:0, iv:[], verifica:null, noGiu:0, fermoSu:0, alMinDa:-1, pienaDa:-1, query:[], attiva:null, giu:0, su:0, n:0, rinFino:0, rinN:0};
   function attiva(){ return !SCALA_FISSA && !provaQ && post && post.attivo && alta.g!==0 && !(altaAdatta && !avvio.fatta); }
-  function minimo(){ var E=limita(DENS)*ALTA; return Math.min(1,Math.max(MIN_LATO,MIN_PX/Math.max(.01,E))); }
+  function minimo(){ var E=limita(DENS)*ALTA, lato=Q.rinFino>(Q.ora||0)?MIN_LATO:MIN_BASSO; return Math.min(1,Math.max(lato,MIN_PX/Math.max(.01,E))); }
+  function rinuncia(ora){ Q.rinFino=ora+ATTESE[Math.min(Q.rinN,ATTESE.length-1)]; Q.rinN++; Q.ora=ora; Q.t=Math.max(Q.t,minimo()); Q.alMinDa=-1; }
   function capMoto(){ if(!altaAdatta) return 1; var E=limita(DENS)*ALTA, d=alta.calmoD?limita(DENS):PR0, r=alta.calmo?ALTA:1; return Math.min(1,(d*r)/E); }
   var api={
     /* la scala di questo fotogramma (chiamata dal ciclo prima del disegno): s insegue min(t, tetto dei voli) a passi */
@@ -1347,7 +1356,7 @@ RM.scalaAdatta=(function(){
       var mn=minimo(), conGpu=ora-Q.gpuOra<300, disturbo2=ora-disturbo<500 || ora-ultimoAnno<600 || (RM.arrivoInCorso && RM.arrivoInCorso()) || (RM.caseLavoro && RM.caseLavoro()), k, lunghi20=0, lunghi60=0;
       var lunghi8=0; for(k=0;k<Q.iv.length;k++){ var x=Q.iv[k]; if(x>(PC_Q?PC_LUNGO:T*1.25)){ lunghi60++; if(k>=Q.iv.length-20) lunghi20++; if(k>=Q.iv.length-8) lunghi8++; } }      // sul PC «lungo» vuol dire 50 millesimi (PC_LUNGO), come per il regolatore
       var cpuOk=Q.lavE<TQ()*.62;
-      if(Q.verifica){ var vf=Q.verifica; if(++vf.n>=90){ Q.verifica=null; if(Q.ivE>vf.iv*.95 && Q.t<vf.t*.85){ Q.t=vf.t; Q.noGiu=ora+10000; } } }      // un secondo e mezzo dopo l'inizio della discesa, scesi di almeno il 15%, il ritmo non è migliorato: il freno non è la scheda grafica, si torna dove si era
+      if(Q.verifica){ var vf=Q.verifica; if(++vf.n>=90){ Q.verifica=null; if(Q.ivE>vf.iv*.95 && Q.t<vf.t*.85){ Q.t=vf.t; Q.noGiu=ora+10000; if(MIN_BASSO<MIN_LATO && vf.t<=MIN_LATO+.05) rinuncia(ora); } } }      // un secondo e mezzo dopo l'inizio della discesa, scesi di almeno il 15%, il ritmo non è migliorato: il freno non è la scheda grafica, si torna dove si era
       if(!disturbo2){
         if(conGpu){
           if(Q.gpuE>T*.9 && cpuOk){ if(Q.t>mn){ Q.t=Math.max(mn,Q.t*GIU); Q.giu++; } Q.fermoSu=ora+1500; }
@@ -1356,6 +1365,7 @@ RM.scalaAdatta=(function(){
           if(lunghi8>=2 && lunghi20>=3 && cpuOk && ora>Q.noGiu){ if(Q.t>mn){ var t0=Q.t; Q.t=Math.max(mn,Q.t*GIU); Q.giu++; if(!Q.verifica && (!Q.giuDa || ora-Q.giuDa>1000)){ Q.verifica={t:t0, iv:Q.ivE, n:0}; Q.tetto=t0*GIU; Q.tettoFino=ora+20000; } Q.giuDa=ora; } Q.fermoSu=ora+4000; }      // si scende finché gli ultimi otto fotogrammi ne hanno di lunghi (non i venti: si scenderebbe troppo); tetto: per venti secondi non si risale oltre il punto in cui si è dovuto scendere, così le prove all'insù (qualche fotogramma lungo ognuna) sono una ogni venti secondi
           else if(lunghi60===0 && Q.iv.length>=60 && Q.ivE<T*1.03 && ora>Q.fermoSu && Q.t<1){ Q.t=Math.min(ora<(Q.tettoFino||0)?Math.max(Q.t,Q.tetto):1,Q.t*SU_RITMO); Q.su++; } } }
       if(Q.t<=mn+.001){ if(Q.alMinDa<0) Q.alMinDa=ora; } else Q.alMinDa=-1;
+      if(MIN_BASSO<MIN_LATO && mn<MIN_LATO-.001 && Q.alMinDa>=0 && ora-Q.alMinDa>2500 && Q.ivE>T*1.35 && !disturbo2) rinuncia(ora);      // in fondo alla discesa da due secondi e mezzo e ancora oltre 22 millesimi a fotogramma: i sessanta non arrivano, si torna al limite di prima
       if(Q.s>=.999 && Q.t>=.999 && (!conGpu || PC_Q || Q.gpuE<T*.6)){ if(Q.pienaDa<0) Q.pienaDa=ora; } else Q.pienaDa=-1;      // per salire di gradino sui telefoni, con il tempo della scheda grafica, serve anche il margine (il gradino sopra costa fino a una volta e mezza); sul PC come prima
       Q.ora=ora; },
     /* per il regolatore a gradini: si può scendere (la scala è al minimo da ms millesimi, o il freno è il processore); si può salire (scala piena da ms millesimi) */
@@ -1621,7 +1631,10 @@ function giroQuieto(scad){ quietoInCorso=false; if(!quieti.length) return;
   if(quieti.length){ quietoInCorso=true; ozio(giroQuieto); } }
 /* tutto ciò che sta nella scena, anche ciò che si accende solo in altri anni o nelle scene delle tappe: una maglia per materiale, a pagina ferma (js/pagina.js lo chiede
    dopo l'apertura). Sul telefono, finché la città sta sotto il velo, anche le ombre. */
-RM.preparaTutto=function(){ if(/[?&]prepara=0/.test(location.search)) return; RM.prepara(scene.children.filter(function(o){ return !o.isLight && !(o.userData && o.userData.copiaDi); }),'quieto',true); };
+/* 28 novembre 2026, sera: su Safari per iPhone (al tocco e senza requestIdleCallback) la preparazione di tutti i programmi NON parte più: nel confronto fra le versioni fatto
+   dall'utente, la pagina di oggi «com'è in rete» faceva 11 fotogrammi al secondo con fermi oltre il secondo per decine di secondi dopo il caricamento (89 programmi
+   contro 54, la scena disegnata una volta e mezza per fotogramma), peggio che con tutti i pixel e senza preparazione (20). ?prepara=1 la riaccende lì. */
+RM.preparaTutto=function(){ if(/[?&]prepara=0/.test(location.search) || (TOCCO_Q && !window.requestIdleCallback && !/[?&]prepara=1/.test(location.search))) return;RM.prepara(scene.children.filter(function(o){ return !o.isLight && !(o.userData && o.userData.copiaDi); }),'quieto',true); };
 RM.preparaAffretta=function(){ while(quieti.length){ var e=quieti.shift(); if(e.m.parent) daPreparare.push(e.m); } };
 RM.preparaQuieti=function(){ return quieti.length; };      // per le prove
 RM.prepara=function(oggetti,poco,ombre){
