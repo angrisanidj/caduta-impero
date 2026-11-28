@@ -589,8 +589,11 @@ function rampe(B,q,rot,mezzo,yTop,larga,colore,suolo){
 /* avanzamento del cantiere delle mura (0-1): aperto nel 271, il grosso fatto alla morte di Aureliano, finito sotto Probo (vedi sopra); alla tappa del 271 è appena cominciato */
 var CANTIERE_MURA=[[270.6,0],[271,.3],[275,.85],[280,1]];
 var passoMura={};      // nel viaggio fra due tappe al più otto volte al secondo; all'arrivo sempre (RM.saltaPasso in js/base.js)
-RM.moduli.push(function(anno){ if(RM.saltaPasso && RM.saltaPasso(passoMura,125)) return;
-  mura(Math.max(D.interp(D.MURA_ALTE,anno),anno>=270.6?1:0),anno,D.interp(CANTIERE_MURA,anno));   // brecce di Totila, rattoppi, danni e restauri dei papi: anno per anno nei passi (sopra)
+var modMura=function(anno){ if(RM.saltaPasso && RM.saltaPasso(passoMura,125)) return;
+  if(RM.aPezzi){ if(modMura.fatto!==anno){ modMura.fatto=anno; mura(Math.max(D.interp(D.MURA_ALTE,anno),anno>=270.6?1:0),anno,D.interp(CANTIERE_MURA,anno)); return false; }      // all'arrivo a pezzi (js/pagina.js): le mura in un fotogramma, gli acquedotti nel seguente
+    modMura.fatto=null; acque(anno); return; }
+  modMura.fatto=null; mura(Math.max(D.interp(D.MURA_ALTE,anno),anno>=270.6?1:0),anno,D.interp(CANTIERE_MURA,anno));   // brecce di Totila, rattoppi, danni e restauri dei papi: anno per anno nei passi (sopra)
   acque(anno);
-});
+};
+modMura.arrivo=0; RM.moduli.push(modMura);      // sul telefono nel viaggio fra due tappe non lavora (28 novembre 2026)
 })();

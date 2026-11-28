@@ -1900,7 +1900,7 @@ var M=[
         o.g.geometry.setAttribute('uv',new THREE.BufferAttribute(uv,2)); o.mat.map=tx; o.mat.needsUpdate=true; }
       var tq=RM.QUALITA&&RM.QUALITA.verde, fr=tq&&tq[RM.q]!=null?tq[RM.q]:1;
       vivo.visible=anno<265.5;
-      if(Math.abs(anno-ultimo)<.05 && fr===qU) return; ultimo=anno; qU=fr;
+      if(fr===qU && (anno===ultimo || (RM.inViaggio && Math.abs(anno-ultimo)<.05))) return; ultimo=anno; qU=fr;      // all'arrivo l'anno esatto (28 novembre 2026)
       var v=verde(anno);
       var nn=0; cespi.forEach(function(e){ var w=Math.max(0,Math.min(1,(v-.3-.6*e.soglia)*4)); if(w<=0||e.q>=fr) return;
         dm.position.set(e.x,e.y,e.z); dm.rotation.set(0,e.ry,0); var sc=e.sc*(.35+.65*w); dm.scale.set(sc,sc,sc); dm.updateMatrix(); mc.setMatrixAt(nn++,dm.matrix); });
@@ -2807,8 +2807,19 @@ function ponteggio(o,t){
   }
   o.pont.visible=true; o.pont.scale.y=Math.min(1,t*.95+.12);      // il ponteggio sta sempre un poco più su dei muri
 }
-RM.moduli.push(function(anno){
-  M.forEach(function(o){
+/* lo stato dei monumenti in un anno. All'arrivo a pezzi (js/pagina.js, 28 novembre 2026) il giro si spezza quando il fotogramma ha finito il suo tempo (RM.scadenza) e
+   riprende al fotogramma seguente; nel viaggio sul telefono si rifà al più ogni 300 millesimi. Ogni monumento riceve lo stesso anno: il risultato non cambia. */
+var modStato=function(anno){
+  if(RM.inViaggio && TOCCO_M){ var n=Math.ceil(M.length/6), k0=modStato.jv||0, k;      // sul telefono nel viaggio: un sesto dei monumenti a ogni fotogramma, a giro, con l'anno di quel fotogramma (prima tutti ogni 300 ms: un fotogramma lungo)
+    for(k=0;k<n;k++) statoUno(M[(k0+k)%M.length],anno); modStato.jv=(k0+n)%M.length; return; }
+  var j=RM.aPezzi && modStato.anno===anno ? modStato.j : 0; modStato.anno=anno;
+  for(;j<M.length;j++){ statoUno(M[j],anno);
+    if(RM.aPezzi && (j&7)===7 && j<M.length-1 && performance.now()>RM.scadenza){ modStato.j=j+1; return false; } }
+  modStato.anno=null; };
+var TOCCO_M=(navigator.maxTouchPoints>0)||!!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+RM.moduli.push(modStato);
+function statoUno(o,anno){
+  {
     var q=RM.statoMonumento(o.id,anno), p=(q.s0==='assente'?0:1)*(1-q.t)+(q.s1==='assente'?0:1)*q.t;
     var cant=q.s0==='assente'&&q.s1!=='assente'&&q.t>0&&q.t<1&&!SENZA_CANTIERE[o.id];
     o.mat.color.copy(TINTA[q.s0]).lerp(TINTA[q.s1],q.t);
@@ -2822,8 +2833,8 @@ RM.moduli.push(function(anno){
     if(o.id==='pantheon'){ o.mat.userData.u.uCoppi.value=0; o.mat.userData.u.uSpoglio.value=RM.sfuma(662.6,663.3,anno)*(1-RM.sfuma(734,736,anno)); o.mat.userData.u.uPiombo.value=RM.sfuma(734,736,anno); }   // la chiesa resta in uso: cambia solo il tetto. Bronzo tolto da Costante II (LP LXXVIII 3), piombo di Gregorio III (LP XCII 12)
     if(o.id==='colosseo'){ var us=o.mat.userData.u; us.uSudDir.value.set(-Math.sin(o.ry),Math.cos(o.ry)); us.uSudR.value.set(9.4,7.8);
       us.uSud.value=.2*RM.sfuma(523,800,anno)+.3*RM.sfuma(846.6,847,anno); us.uRovina.value*=.4; }      // il fronte sud: cava dal VI secolo; nell'847, secondo il Parco del Colosseo, cade quel che ne resta
-  });
-});
+  }
+}
 
 /* ---------- il verde sui ruderi abbandonati ----------
    25 novembre 2026, l'utente sullo stato «abbandonato»: «Ok fai vedere erba e crepe però». Lo shader del degrado (js/costruttore.js) mette l'erba solo sui piani bassi
@@ -2897,7 +2908,8 @@ RM.moduli.push(function(anno){
   var qUltimo=-1;
   function quotaQ(){ var t=RM.QUALITA&&RM.QUALITA.verde; return t&&t[RM.q]!=null?t[RM.q]:1; }
   var passoVerde={};      // nel viaggio fra due tappe al più otto volte al secondo; all'arrivo sempre (RM.saltaPasso in js/base.js)
-  RM.moduli.push(function(anno){ var fr=quotaQ(); if(Math.abs(anno-ultimo)<.05 && fr===qUltimo) return; if(RM.saltaPasso && RM.saltaPasso(passoVerde,125)) return; ultimo=anno; qUltimo=fr; posa(mc,cespi,anno,false,fr); posa(mv,viti,anno,true,fr); });
+  var modVerde=function(anno){ var fr=quotaQ(); if(anno===ultimo && fr===qUltimo) return; if(RM.inViaggio && Math.abs(anno-ultimo)<.05 && fr===qUltimo) return; if(RM.saltaPasso && RM.saltaPasso(passoVerde,125)) return; ultimo=anno; qUltimo=fr; posa(mc,cespi,anno,false,fr); posa(mv,viti,anno,true,fr); };      // all'arrivo l'anno esatto (fino al 28 novembre 2026 restava quello di un passo del viaggio entro cinque centesimi)
+  modVerde.arrivo=0; RM.moduli.push(modVerde);      // sul telefono nel viaggio non lavora (js/pagina.js)
   RM.frame.push(function(){ var t=RM.QUALITA&&RM.QUALITA.degrado, dq=t&&t[RM.q]!=null?t[RM.q]:1; if(dq!==RM.degradoQ.value) RM.degradoQ.value=dq;      // il dettaglio dello shader dell'abbandono segue il gradino
     if(quotaQ()!==qUltimo && ultimo>=0){ qUltimo=quotaQ(); posa(mc,cespi,ultimo,false,qUltimo); posa(mv,viti,ultimo,true,qUltimo); RM.renderer.shadowMap.needsUpdate=true; } });
   /* gli alberi: un tronco e una chioma di cinque masse a faccette (non una palla), due verdi; alti da 12 a 20 m (lecci e fichi dei ruderi arrivano a tanto). Spuntano quando il verde del monumento è avanti (crescita oltre
@@ -2915,7 +2927,8 @@ RM.moduli.push(function(anno){
       var v=Math.max(0,Math.min(1,(g[o.id]-(.35+.3*e.soglia))*4)); if(e.y>o.alto*(1-crolloJS(o,e.l[0],e.l[1],rc[o.id])) || e.q>=fr) v=0; if(v<=0) return;
       var sc=e.sc*(.4+.6*v); d.position.set(e.p[0],e.p[1],e.p[2]); d.rotation.set(0,e.ry,0); d.scale.set(sc*e.fx,sc,sc*e.fz); d.updateMatrix(); ma.setMatrixAt(j++,d.matrix); });
     ma.count=j; ma.visible=j>0; ma.instanceMatrix.needsUpdate=true; }
-  RM.moduli.push(function(anno){ var fr=quotaQ(); if(Math.abs(anno-ultimoA)<.05 && fr===qA) return; ultimoA=anno; qA=fr; posaAlberi(anno,fr); });
+  var modAlberi=function(anno){ var fr=quotaQ(); if(fr===qA && (anno===ultimoA || (RM.inViaggio && Math.abs(anno-ultimoA)<.05))) return; ultimoA=anno; qA=fr; posaAlberi(anno,fr); };      // all'arrivo l'anno esatto
+  modAlberi.arrivo=0; RM.moduli.push(modAlberi);
   RM.frame.push(function(){ if(ultimoA>=0 && quotaQ()!==qA){ qA=quotaQ(); posaAlberi(ultimoA,qA); } });
   M.forEach(function(o){ if(o.id==='testaccio'&&o.mat&&o.mat.userData.u.uMole) o.mat.userData.u.uMole.value=0; });      // il monte di cocci non prende la luce delle moli (MOLE in js/costruttore.js)
   RM.verdeRuderi={cespugli:mc, rampicanti:mv, alberi:ma, listaAlberi:alberi, quanti:cespi.length+viti.length+alberi.length};      // per le prove: nasconderli mostra lo stato «abbandonato» senza il verde
@@ -2972,10 +2985,11 @@ RM.moduli.push(function(anno){
   var m=new THREE.InstancedMesh(B.geometria(),RM.matPietra(),el.length); m.castShadow=!tel; m.receiveShadow=true; m.frustumCulled=false; m.userData.gruppo='monumenti'; RM.scene.add(m);
   var NUC=RM.col(0xc9bca6), MAT=RM.col(0xc49478), cc=new THREE.Color(), d=new THREE.Object3D(), ultimo=-1;
   el.forEach(function(e,j){ e.col=new THREE.Color().copy(NUC).lerp(MAT,e.t*.6); m.setColorAt(j,e.col); });      // calcestruzzo e mattone: il nucleo e il paramento dei muri caduti (i colori ci sono prima del primo disegno: three r128 non rifà il programma se arrivano dopo)
-  RM.moduli.push(function(anno){ if(Math.abs(anno-ultimo)<.05) return; ultimo=anno; var j=0;
+  var modMacerie=function(anno){ if(anno===ultimo || (RM.inViaggio && Math.abs(anno-ultimo)<.05)) return; ultimo=anno; var j=0;      // all'arrivo l'anno esatto
     el.forEach(function(e){ var v=e.o.g.visible?RM.sfuma(e.yc-.4,e.yc+.1,anno):0; if(v<=0) return;      // arrivano con il crollo
       d.position.set(e.p[0],e.p[1],e.p[2]); d.rotation.set(0,e.ry,0); d.scale.set(e.w*v,e.h*v,e.w*.8*v); d.updateMatrix(); m.setColorAt(j,cc.copy(e.col).multiply(e.o.mat.color)); m.setMatrixAt(j++,d.matrix); });
-    m.count=j; m.visible=j>0; m.instanceMatrix.needsUpdate=true; if(m.instanceColor) m.instanceColor.needsUpdate=true; });
+    m.count=j; m.visible=j>0; m.instanceMatrix.needsUpdate=true; if(m.instanceColor) m.instanceColor.needsUpdate=true; };
+  modMacerie.arrivo=0; RM.moduli.push(modMacerie);      // sul telefono nel viaggio non lavora (js/pagina.js)
   RM.macerieCrolli={maglia:m, quante:el.length};      // per le prove
 })();
 

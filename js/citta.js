@@ -597,6 +597,9 @@ var CASA_RUM=['float cH(vec3 p){ return fract(sin(dot(p,vec3(127.1,311.7,74.7)))
   'float cTaglio(){ float hT=vDeg.z; if(hT>0.999) return 9.0; float A=min(0.42,(1.0-hT)*1.2); float q1=floor(cN(vec3(vLC.xz*0.55+vDeg.w*17.0,1.0))*3.0)*0.5; float q2=cN(vec3(vLC.xz*2.6+vDeg.w*5.0,2.0)); return hT+A*(q1-0.5)+0.25*A*(q2-0.5); }',      // piani interi che cadono (tre gradini) e l'orlo spezzato
   'float cBuco(){ return vDeg.x*0.3+vDeg.y*1.9-(0.5+1.35*(0.6*cN(vec3(vLC.xz*1.1+vDeg.w*9.0,2.0))+0.4*cN(vec3(vLC.xz*4.3,2.5))-0.5))-9.0*step(1.5,vDeg.w); }',      // coppi caduti: positivo dentro la chiazza; mai nella casa abitata rappezzata (vDeg.w oltre 2)
   'float cAb(){ return step(1.5,vDeg.w); }'].join(NLc);      // 1 per la casa romana ancora abitata e rappezzata (27 novembre 2026)
+/* il rumore già pronto (28 novembre 2026; si veda RUM3 in js/costruttore.js): dove c'è WebGL2 cN legge la trama 3D invece di fare otto seni per pixel; stessa grana e scala */
+var RUMC=RM.rumore3||null;
+if(RUMC) CASA_RUM=CASA_RUM.replace(/float cN\(vec3 p\)\{[^}]*\}/,'uniform highp sampler3D tRumC; float cN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f); return texture(tRumC,(i+f+0.5)*0.015625).r; }');
 var CASA_VD='attribute vec4 aDeg; varying vec4 vDeg; varying vec3 vLC; varying vec3 vNC; varying float vYC;';
 var CASA_V=['vDeg=aDeg; vYC=position.y; vec3 scC=vec3(1.0);','#ifdef USE_INSTANCING','scC=vec3(length(instanceMatrix[0].xyz),length(instanceMatrix[1].xyz),length(instanceMatrix[2].xyz));','#endif',
   'vLC=position*scC; vNC=normal/max(scC,vec3(0.0001));'].join(NLc);      // in unità della scena, nell'orientamento della casa
@@ -644,7 +647,7 @@ var CASA_ALTRO={
 function degradaCasa(mat,tipo){
   var prima=mat.onBeforeCompile, sua=mat.hasOwnProperty('onBeforeCompile');
   mat.onBeforeCompile=function(sh,r){ if(sua) prima.call(mat,sh,r);
-    vertCasa(sh); sh.uniforms.uDegC=uDegC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
+    vertCasa(sh); sh.uniforms.uDegC=uDegC; if(RUMC) sh.uniforms.tRumC=RUMC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
     sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NLc+CASA_FD+(tipo==='tetto'||tipo==='muro'?NLc+CASA_STR:''))
       .replace('#include <alphamap_fragment>',['float cLeg=0.0; vec3 cLegC=vec3(0.0);','if(vDeg.x>0.0){ float s1=vDeg.x; float s2=vDeg.y;','  if(vYC>cTaglio()) discard;',
         tipo==='tetto'?CASA_TETTO:tipo==='muro'?CASA_MURO:CASA_ALTRO[tipo],'}','#include <alphamap_fragment>'].join(NLc))
@@ -658,7 +661,7 @@ var CASA_OMBRA=['if(vDeg.x>0.0){ if(vYC>cTaglio()) discard; vec3 nT=normalize(vN
   '    float vL=step(dC,0.035); float vR=step(dC,0.08+0.14*hR); float vA=step(dC,0.16+0.2*hA);',
   '    if(abs(fract(wT/0.045+0.5)-0.5)*0.045>0.008*vL && abs(fract(uT/0.12+0.5)-0.5)*0.12>0.015*vR && abs(fract(wT/0.4+0.5)-0.5)*0.4>0.025*vA) discard; } } }'].join(NLc);
 function ombraCasa(){ var m=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking,side:THREE.DoubleSide});
-  m.onBeforeCompile=function(sh){ vertCasa(sh); sh.uniforms.uDegC=uDegC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
+  m.onBeforeCompile=function(sh){ vertCasa(sh); sh.uniforms.uDegC=uDegC; if(RUMC) sh.uniforms.tRumC=RUMC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
     sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NLc+CASA_FD).replace('#include <clipping_planes_fragment>',CASA_OMBRA+NLc+'#include <clipping_planes_fragment>'); };
   return m; }
 /* rovine: l'edera sale dal piede dei muri a lingue (x: quanta, w: il posto), e i muri anneriscono (y); macerie: rovi e erba sui cumuli, dove guardano in su (x) */
@@ -679,7 +682,7 @@ var MACERIE_F=['if(vPianta>0.5){ float nP=cN(vec3(vLC*2.2+vDeg.w*13.0)); vec3 pc
   '  float iE=smoothstep(0.66,0.9,0.6*cN(vec3(vLC*2.6+vDeg.w*5.0))+0.4*vDeg.x)*(1.0-su)*vDeg.x*0.7; diffuseColor.rgb=mix(diffuseColor.rgb,vec3(0.07,0.11,0.04)*(0.85+0.3*nM),iE*0.8); }'].join(NLc);      // edera scura che stende le sue lingue sui fianchi
 var MACERIE_VD='attribute float aPianta; attribute vec3 aCentro; varying float vPianta;', MACERIE_V='vPianta=aPianta>0.0?1.0:0.0; if(aPianta>0.0){ float gP=clamp((aDeg.x-aPianta)/0.3,0.0,1.0); transformed=mix(aCentro,transformed,gP); }';      // la pianta cresce dal suo piede: prima della sua soglia è un punto
 function verdeRovina(mat,corpo,nome,vert){ var prima=mat.onBeforeCompile, sua=mat.hasOwnProperty('onBeforeCompile');
-  mat.onBeforeCompile=function(sh,r){ if(sua) prima.call(mat,sh,r); vertCasa(sh); sh.uniforms.uDegC=uDegC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
+  mat.onBeforeCompile=function(sh,r){ if(sua) prima.call(mat,sh,r); vertCasa(sh); sh.uniforms.uDegC=uDegC; if(RUMC) sh.uniforms.tRumC=RUMC; if(TEXC) sh.uniforms.tMacC={value:RM.trameVeste().macchie};
     if(vert) sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>'+NLc+vert[0]).replace('#include <project_vertex>',vert[1]+NLc+'#include <project_vertex>');
     sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NLc+CASA_FD+(vert?NLc+'varying float vPianta;':'')).replace('#include <alphamap_fragment>',corpo+NLc+'#include <alphamap_fragment>'); };
   mat.userData.chiaveCasa='rovina|'+nome+'|'+(sua?prima.toString():''); return mat; }
@@ -916,13 +919,15 @@ var VIE_ERBA=[], vieMin=null, vieMag=null;
    e alte le case lasciate (Suburra, insulae alte: più macerie nei vicoli); A quante case ci sono attorno (dove nessuna, la via è di campagna). Ogni casa pesa con la distanza
    (circa 60 m). Si rifà quando cambiano le case, quindi a passi d'anno: il degrado sale senza scatti. Con la veste le strisce d'erba sulle vie (VIE_ERBA) non servono più. */
 var SVW=136, SVH=164, svDati=new Uint8Array(SVW*SVH*4), svG=new Float32Array(SVW*SVH), svB=new Float32Array(SVW*SVH), svA=new Float32Array(SVW*SVH), svTex=null;
-function statoVie(){ if(!RM.statoVie) return; var i, j, k, b, cx, cz;
-  svG.fill(0); svB.fill(0); svA.fill(0);
-  for(k=0;k<N;k++){ b=isolati[k]; if(!b.vX) continue;
+function statoVie(){ if(!RM.statoVie) return; statoVieInizio(); statoVieCase(0,N); statoVieFine(); }
+function statoVieInizio(){ svG.fill(0); svB.fill(0); svA.fill(0); }      // a pezzi nell'arrivo (lavoro, più sotto): stesse somme nello stesso ordine
+function statoVieCase(k0,k1){ var i, j, k, b, cx, cz;
+  for(k=k0;k<k1;k++){ b=isolati[k]; if(!b.vX) continue;
     var lasc=1-b.vA, dec=lasc*RM.sfuma(4,230,b.vE)*(.75+.5*b.sfasa), den=lasc*Math.min(1,Math.max(b.sub*1.5,(b.alt-1.05)/.6,0))*RM.sfuma(15,160,b.vE);
     cx=(b.x+340)/5; cz=(b.z+390)/5;
     for(j=Math.max(0,Math.floor(cz-2));j<=Math.min(SVH-1,Math.ceil(cz+2));j++) for(i=Math.max(0,Math.floor(cx-2));i<=Math.min(SVW-1,Math.ceil(cx+2));i++){
-      var dx=i+.5-cx, dz=j+.5-cz, w=Math.exp(-(dx*dx+dz*dz)/2.6), o=j*SVW+i; svA[o]+=w; svG[o]+=w*dec; svB[o]+=w*den; } }
+      var dx=i+.5-cx, dz=j+.5-cz, w=Math.exp(-(dx*dx+dz*dz)/2.6), o=j*SVW+i; svA[o]+=w; svG[o]+=w*dec; svB[o]+=w*den; } } }
+function statoVieFine(){ var k;
   for(k=0;k<SVW*SVH;k++){ var a=svA[k], o4=k*4; svDati[o4]=0; svDati[o4+1]=a>1e-4?Math.round(255*Math.min(1,svG[k]/a)):0; svDati[o4+2]=a>1e-4?Math.round(255*Math.min(1,svB[k]/a)):0; svDati[o4+3]=Math.round(255*Math.min(1,a/1.6)); }
   if(!svTex){ svTex=new THREE.DataTexture(svDati,SVW,SVH,THREE.RGBAFormat); svTex.magFilter=svTex.minFilter=THREE.LinearFilter; RM.statoVie.tex.value=svTex; }
   svTex.needsUpdate=true; }
@@ -1090,30 +1095,51 @@ function altezzaRovina(b,eta,anno){ var cr=b.fato===2?RM.sfuma(5,60,eta):RM.sfum
 /* l'altezza dei muri della rovina dalla base dell'istanza, che sta 1,5 m sotto il suolo (come le case): almeno un metro fuori terra. Fino al 25 novembre 2026 i ruderi bassi
    finivano quasi sotto terra (hm senza quel metro e mezzo): da lontano restava il prato */
 function altezzaMuri(b,eta,anno){ return .15+Math.max(.1,b.alt*(b.nasce?1:b.bassa0)*altezzaRovina(b,eta,anno)); }
-var daStringere=false;      // una scrittura leggera (soglia430) ha toccato i pacchi: la prossima scrittura intera li rimanda alla scheda grafica
-function aggiorna(anno,soglia430){
-  var fr=D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno)), soglia=1-fr, numVivi=0, toccati=false, i, b, a, q, eta, v, crollo, H, hm, m;
-  var bassa=1-.42*RM.sfuma(470,720,anno), forza=!soglia430 && Math.abs(bassa-ultimaBassa)>.01; if(forza) ultimaBassa=bassa;      // le case a più piani lasciano il posto a case basse, a uno o due piani
-  uLegno.value=bassa;      // il piano di legno delle insulae (legnoMuri) legge l'altezza della casa senza l'abbassamento dei secoli tardi
-  var qVil=quanteVilla(anno);      // quante case per lotto abitato, in quest'anno (si veda NUCLEO_PERSONE)
-  for(i=0;i<N;i++){
-    b=isolati[i];
-    if(soglia430){ var d0=b.lasciato+b.sfasa*12; if(b.fuoco!=null && b.fuoco<d0) d0=b.fuoco; if(!(b.e0<=430 && b.a0<.999 && anno-d0>430)) continue; }      // scrittura leggera del viaggio: solo le case che in questo passo superano i 430 anni d'abbandono, perché da lì non si riscrivono più (si veda la condizione qui sotto) e devono restare scritte all'anno in cui li superano, come prima
-    a=RM.sfuma(-.02,.02,rango(b,anno)-soglia);             // 1 abitato, 0 abbandonato
-    var arso=0, da0=b.lasciato+b.sfasa*12;
-    if(b.fuoco!=null && anno>b.fuoco-.4){
-      if(anno<b.fuocoFine){ arso=RM.sfuma(b.fuoco-.4,b.fuoco,anno)*(1-RM.sfuma(b.fuocoFine-Math.min(5,(b.fuocoFine-b.fuoco)*.5),b.fuocoFine,anno)); a*=1-arso; }   // poi, se il quartiere è ancora vivo, si ricostruisce
-      if(b.fuoco<da0) da0=b.fuoco;
-    }
-    var dm=b.via?RM.sfuma(b.via-3*b.sfasa-1,b.via-3*b.sfasa,anno):0; if(dm>0) a*=1-dm;       // demolita per far posto a un monumento: non restano rovine
-    if(b.nasce) a=RM.sfuma(b.nasce-5,b.nasce,anno)*(1-arso); // casa del Borgo: prima della sua data non c'è nulla, nemmeno rovine
-    if(a>.5) numVivi++;
-    eta=a>.999?0:b.nasce?(arso>0?Math.max(0,anno-b.fuoco):0):Math.max(0,anno-da0);          // anni passati dall'abbandono (o dall'incendio)
-    b.vA=a; b.vE=eta; b.vX=(b.nasce&&anno<b.nasce-2.5)||dm>.5?0:1;      // per lo stato delle vie (statoVie): una casa non ancora nata o demolita per un monumento non conta
-    var med=anno>=b.medDa && a>.01 && dm<.001 ? RM.sfuma(b.medDa,b.medDa+3,anno) : 0, rip=a>.5 && med<1 ? .2*RM.sfuma(550,720,anno) : 0, mS=med*3+rip;      // med: quanto la casa è già del tipo altomedievale; rip: la casa romana abitata, rappezzata (si veda dove si preparano le case altomedievali)
-    var qV=med>0&&b.villa.length?Math.min(b.villa.length,Math.max(0,qVil-b.medP.case.length)):0;      // quante case del nucleo (27 novembre 2026)
-    if(!(forza&&a>.01) && Math.abs(a-b.a0)<.002 && Math.abs(mS-b.m0)<.002 && Math.abs(qV-b.qv0)<.02 && (a>.999 || Math.abs(eta-b.e0)<1.5 || (eta>430&&b.e0>430))) continue;
-    b.a0=a; b.e0=eta; b.m0=mS; b.qv0=qV; toccati=true; v=b.nasce?arso:(1-a)*(1-dm);
+/* LO STATO DELLE CASE È FUNZIONE DEL SOLO ANNO (28 novembre 2026, terzo giro della fluidità sul telefono). Fino a ieri una casa si riscriveva solo se era cambiata
+   «abbastanza» (un anno e mezzo d'età, due millesimi d'abitato, e mai più dopo i 430 anni d'abbandono): l'arrivo a una tappa dipendeva dagli anni del viaggio scritti per
+   strada, e due viaggi verso lo stesso anno davano case un poco diverse (fino al 3-10% dei pixel). Ora ogni casa ha la sua firma: tutti i numeri che la scrittura legge
+   (abitato, incendio, demolizione, età fermata a 451 anni, dove ogni sfumatura della rovina è finita, casa altomedievale, rappezzi, casette del nucleo, altezza dei secoli tardi,
+   cava vicina, soglie degli anni); una casa si riscrive se la firma cambia anche di poco, e quella scritta è identica a quella di un'apertura diretta sull'anno.
+   Così la scrittura si può anche spezzare su più fotogrammi (lavoro, più sotto). */
+var FIRMA=11, FW=new Float64Array(N*FIRMA), FC=new Float64Array(FIRMA), ETAX=451, S={};
+for(var iF=0;iF<FW.length;iF++) FW[iF]=NaN;
+function contesto(anno){ var fr=D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno));
+  return {anno:anno, soglia:1-fr, bassa:1-.42*RM.sfuma(470,720,anno), qVil:quanteVilla(anno)}; }      // bassa: le case a più piani lasciano il posto a case basse, a uno o due piani; qVil: quante case per lotto abitato, in quest'anno (si veda NUCLEO_PERSONE)
+/* i numeri di una casa in un anno (in S) e la sua firma (in FC) */
+function statoCasa(b,ctx){ var anno=ctx.anno;
+  var a=RM.sfuma(-.02,.02,rango(b,anno)-ctx.soglia);             // 1 abitato, 0 abbandonato
+  var arso=0, da0=b.lasciato+b.sfasa*12;
+  if(b.fuoco!=null && anno>b.fuoco-.4){
+    if(anno<b.fuocoFine){ arso=RM.sfuma(b.fuoco-.4,b.fuoco,anno)*(1-RM.sfuma(b.fuocoFine-Math.min(5,(b.fuocoFine-b.fuoco)*.5),b.fuocoFine,anno)); a*=1-arso; }   // poi, se il quartiere è ancora vivo, si ricostruisce
+    if(b.fuoco<da0) da0=b.fuoco;
+  }
+  var dm=b.via?RM.sfuma(b.via-3*b.sfasa-1,b.via-3*b.sfasa,anno):0; if(dm>0) a*=1-dm;       // demolita per far posto a un monumento: non restano rovine
+  if(b.nasce) a=RM.sfuma(b.nasce-5,b.nasce,anno)*(1-arso); // casa del Borgo: prima della sua data non c'è nulla, nemmeno rovine
+  var eta=a>.999?0:b.nasce?(arso>0?Math.max(0,anno-b.fuoco):0):Math.max(0,anno-da0);          // anni passati dall'abbandono (o dall'incendio)
+  var med=anno>=b.medDa && a>.01 && dm<.001 ? RM.sfuma(b.medDa,b.medDa+3,anno) : 0, rip=a>.5 && med<1 ? .2*RM.sfuma(550,720,anno) : 0;      // med: quanto la casa è già del tipo altomedievale; rip: la casa romana abitata, rappezzata (si veda dove si preparano le case altomedievali)
+  var qV=med>0&&b.villa.length?Math.min(b.villa.length,Math.max(0,ctx.qVil-b.medP.case.length)):0;      // quante case del nucleo (27 novembre 2026)
+  S.a=a; S.arso=arso; S.da0=da0; S.dm=dm; S.eta=eta; S.med=med; S.rip=rip; S.qV=qV;
+  FC[0]=a; FC[1]=arso; FC[2]=dm; FC[3]=Math.min(eta,ETAX); FC[4]=med; FC[5]=rip; FC[6]=qV; FC[7]=a>.01?ctx.bassa:-1;      // oltre i 451 anni ogni sfumatura dell'età è finita (la più lunga, altezzaRovina, a 450)
+  FC[8]=b.cava&&anno>b.cava?RM.sfuma(b.cava,b.cava+120,anno):0;
+  FC[9]=(anno>=b.medDa?1:0)+(b.ortoDal&&anno>=b.ortoDal?2:0)+(b.fuoco!=null&&anno>b.fuoco-.4?4:0)+(anno>=775&&b.villa.length?8:0);
+  FC[10]=b.medRotta?Math.min(Math.max(0,anno-da0),ETAX):0; }
+function firmaUguale(i){ var o=i*FIRMA; for(var k=0;k<FIRMA;k++) if(FW[o+k]!==FC[k]) return false; return true; }
+function firmaScritta(i){ var o=i*FIRMA; for(var k=0;k<FIRMA;k++) FW[o+k]=FC[k]; }
+/* il primo passo, per tutte le case, leggero: lo stato che leggono gli altri (vita: fumo, fontane, vicoli; statoVie) e la lista delle case da riscrivere */
+function primoPasso(ctx){ var numVivi=0, da=[], i, b;
+  for(i=0;i<N;i++){ b=isolati[i]; statoCasa(b,ctx);
+    if(S.a>.5) numVivi++;
+    b.vA=S.a; b.vE=S.eta; b.vX=(b.nasce&&ctx.anno<b.nasce-2.5)||S.dm>.5?0:1;      // per lo stato delle vie (statoVie): una casa non ancora nata o demolita per un monumento non conta
+    b.a0=S.a;      // lo stato di quest'anno, subito per tutte (lo legge js/vita.js), anche se la casa si riscrive più tardi
+    if(!firmaUguale(i)) da.push(i); }
+  RM.quotaAbitati=numVivi/N; return da; }
+var daStringere=false;
+function scriviCasa(i,ctx){
+  var b=isolati[i], anno=ctx.anno, bassa=ctx.bassa, q, v, crollo, H, hm, m;
+  statoCasa(b,ctx); firmaScritta(i);
+  var a=S.a, arso=S.arso, da0=S.da0, dm=S.dm, eta=S.eta, med=S.med, rip=S.rip, qV=S.qV, mS=med*3+rip;
+  {
+    b.e0=eta; b.m0=mS; b.qv0=qV; v=b.nasce?arso:(1-a)*(1-dm);
     var sventrata=b.fuoco!=null && anno>b.fuoco-.4 && b.fuoco<=da0+.01;                       // lasciata per un incendio: niente stadio in piedi, resta subito il guscio bruciato
     var inPiedi=!b.nasce && !sventrata && dm<.001 && v>.001 && eta<b.t2 && !(anno>=b.medDa && da0>=b.medDa); b.gv=v*RM.sfuma(15,70,eta);      // gv: quanto l'erba prende le vie attorno (aggiornaVie); stadi 1 e 2: la casa abbandonata, ancora in piedi (si veda in testa); una casa già altomedievale, lasciata, non ripassa dalla casa romana in piedi
     crollo=b.fato===2?RM.sfuma(5,60,eta):RM.sfuma(8,95,eta); H=altezzaRovina(b,eta,anno);
@@ -1173,27 +1199,63 @@ function aggiorna(anno,soglia430){
     oC.setColorAt(i,c.copy(CAMPI[(b.sfasa*CAMPI.length)|0]).multiplyScalar((.8+.3*b.tono)*(med*a>.02?.72:1)));      // l'orto di casa più scuro: terra lavorata, non stoppie
     var l=a*(.3+.7*b.sfasa); pCol[i*3]=l; pCol[i*3+1]=l*.88; pCol[i*3+2]=l*.66;
   }
-  if(soglia430){ if(toccati) daStringere=true; return; }      // la scrittura leggera finisce qui: alberi, pacchi, vie e lumi li rifà la prossima scrittura intera
-  alberi.forEach(function(lista,k){
-    var mosso=false;
-    lista.forEach(function(al,j){
-      var qa=al.b===-3?RM.sfuma(al.dal,al.dal+70,anno):al.b===-4?1+.5*RM.sfuma(al.cresce,al.cresce+250,anno):al.b<0?1:isolati[al.b].alb;      // gli alberi selvatici degli horti crescono in settant'anni dall'abbandono; quelli piantati, lasciati a sé, continuano a crescere
-      if(Math.abs(qa-al.q0)<.002) return;      // (fino al 27 novembre 2026 questa riga stava dentro il commento qui sopra, spenta: ogni albero si ricalcolava a ogni cambio d'anno)
-      al.q0=qa; mosso=true; d.rotation.set(0,al.r,0); d.position.set(al.x,al.y-.05,al.z); d.scale.setScalar(al.s*qa*1.25); d.updateMatrix(); magliaAlberi[k].setMatrixAt(j,d.matrix);
-    });
-    if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true;
+}
+/* alberi delle case e degli horti: si riscrive l'albero la cui grandezza cambia (uguaglianza esatta: fino al 28 novembre 2026 sotto i due millesimi restava quella di prima) */
+function scriviAlberi(anno,k){
+  var lista=alberi[k], mosso=false;
+  lista.forEach(function(al,j){
+    var qa=al.b===-3?RM.sfuma(al.dal,al.dal+70,anno):al.b===-4?1+.5*RM.sfuma(al.cresce,al.cresce+250,anno):al.b<0?1:isolati[al.b].alb;      // gli alberi selvatici degli horti crescono in settant'anni dall'abbandono; quelli piantati, lasciati a sé, continuano a crescere
+    if(qa===al.q0) return;
+    al.q0=qa; mosso=true; d.rotation.set(0,al.r,0); d.position.set(al.x,al.y-.05,al.z); d.scale.setScalar(al.s*qa*1.25); d.updateMatrix(); magliaAlberi[k].setMatrixAt(j,d.matrix);
   });
-  if(toccati || daStringere){ daStringere=false;
-    vivi.concat([ruderi,gusci,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,ortiCasa,portici,balconi,colonneRov,medRec,medPoz,vilRec],macerieV,MED,VIL).forEach(function(p){ p.stringi(); });
-    gLuci.attributes.color.needsUpdate=true; gLuci.attributes.position.needsUpdate=true; aggiornaVie(); statoVie();
-  }
+  if(mosso) magliaAlberi[k].instanceMatrix.needsUpdate=true; }
+function PACCHI(){ return vivi.concat([ruderi,gusci,tettiRotti,macchiaD,macchiaF,vigne,incolti,orti,ortiCasa,portici,balconi,colonneRov,medRec,medPoz,vilRec],macerieV,MED,VIL); }
+function fineAnno(anno){      // ciò che non dipende dalle singole case: uniformi della manutenzione, lumi della notte, erba
+  uLegno.value=1-.42*RM.sfuma(470,720,anno);      // il piano di legno delle insulae (legnoMuri) legge l'altezza della casa senza l'abbassamento dei secoli tardi
   if(RM.statoVie){ RM.statoVie.anno.value=.3*RM.sfuma(450,800,anno); RM.statoVie.esterno.value=.55*RM.sfuma(430,780,anno); }      // la manutenzione che cala per tutti; fuori, dove non ci sono case, le vie consolari
   matMuri.emissiveIntensity=matBasse.emissiveIntensity=RM.notte*2.2; luci.material.opacity=RM.notte; luci.visible=RM.notte>.02;
-  RM.quotaAbitati=numVivi/N;
   if(RM.erba) RM.erba.value=.6*(1-D.interp(D.ABITATI,D.interp(D.CURVE.popolazione.punti,anno-30)));   // l'erba arriva una trentina d'anni dopo; dal 26 novembre 2026 meno piena: fra le rovine il suolo è terra e calcinacci (gli isolati), non un prato
 }
-var passoCase={};      // nel viaggio fra due tappe le case si riscrivono al più otto volte al secondo; all'arrivo sempre (RM.saltaPasso in js/base.js, 27 novembre 2026)
-RM.moduli.push(function(anno){ if(RM.saltaPasso && RM.saltaPasso(passoCase,125)){ aggiorna(anno,true); return; } aggiorna(anno); });      // fra due scritture intere, a ogni passo, la leggera: le case che superano i 430 anni restano scritte all'anno in cui li superano, come quando si riscriveva tutto a ogni passo
+/* la scrittura intera, tutta in una volta (PC, aperture, RM_pagina.anno per infografiche e «Prima e dopo») */
+function aggiorna(anno){
+  var ctx=contesto(anno), da=primoPasso(ctx), k;
+  for(k=0;k<da.length;k++) scriviCasa(da[k],ctx);
+  for(k=0;k<alberi.length;k++) scriviAlberi(anno,k);
+  if(da.length || daStringere){ daStringere=false;
+    PACCHI().forEach(function(p){ p.stringi(); });
+    gLuci.attributes.color.needsUpdate=true; gLuci.attributes.position.needsUpdate=true; aggiornaVie(); statoVie();
+  }
+  fineAnno(anno);
+}
+/* LA SCRITTURA A PEZZI (28 novembre 2026; l'utente: «rendere più fluido tutto dal cell»). Sui dispositivi al tocco, all'arrivo a una tappa (js/pagina.js chiama i moduli con
+   RM.aPezzi), il primo passo si fa subito e la scrittura vera si spezza su più fotogrammi, al più RM.PEZZO_MS millesimi l'uno: prima le case più vicine al punto guardato,
+   poi gli alberi, i pacchi (stringi), le vie e lo stato delle vie. Finché non si è finito i pacchi sullo schermo restano quelli di prima; finiti, si chiede l'ombra nuova.
+   Nel viaggio fra due tappe, sul telefono, le case non si toccano (RM.inViaggio): restano quelle della partenza fino all'arrivo. Il risultato è lo stesso della scrittura intera. */
+var lavoro=null;
+RM.PEZZO_MS=RM.PEZZO_MS||6;
+function iniziaLavoro(anno){
+  var ctx=contesto(anno), da=primoPasso(ctx), t=RM.controlli?RM.controlli.target:{x:0,z:0}, tx=t.x, tz=t.z;
+  da.sort(function(p,q){ var A=isolati[p], B=isolati[q]; return ((A.x-tx)*(A.x-tx)+(A.z-tz)*(A.z-tz))-((B.x-tx)*(B.x-tx)+(B.z-tz)*(B.z-tz)); });      // dal centro dell'inquadratura verso fuori
+  lavoro={ctx:ctx, da:da, k:0, fase:0, j:0, pacchi:null, scritte:da.length>0||daStringere};
+  fineAnno(anno); }
+function avanzaLavoro(scad){ var L=lavoro, n;
+  while(performance.now()<scad){
+    if(L.fase===0){ for(n=0;n<6 && L.k<L.da.length;n++) scriviCasa(L.da[L.k++],L.ctx); if(L.k>=L.da.length){ L.fase=1; L.j=0; } }
+    else if(L.fase===1){ if(L.j<alberi.length) scriviAlberi(L.ctx.anno,L.j++); else { L.fase=L.scritte?2:5; L.pacchi=PACCHI(); L.j=0; } }
+    else if(L.fase===2){ if(L.j<L.pacchi.length) L.pacchi[L.j++].stringi(); else { daStringere=false; gLuci.attributes.color.needsUpdate=true; gLuci.attributes.position.needsUpdate=true; L.fase=3; } }
+    else if(L.fase===3){ aggiornaVie(); L.fase=4; }
+    else if(L.fase===4){ if(!RM.statoVie) L.fase=5; else { statoVieInizio(); L.j=0; L.fase=6; } }
+    else if(L.fase===6){ statoVieCase(L.j,Math.min(N,L.j+300)); L.j+=300; if(L.j>=N) L.fase=7; }      // lo stato delle vie a pacchi di 300 case
+    else if(L.fase===7){ statoVieFine(); L.fase=5; }
+    else { lavoro=null; if(RM.chiediOmbra) RM.chiediOmbra(); if(RM.caseFatte) RM.caseFatte.forEach(function(f){ f(L.ctx.anno); }); return; } } }
+RM.caseLavoro=function(){ return !!lavoro; };      // per js/pagina.js e per le prove
+RM.frame.push(function(){ if(lavoro && !(RM.arrivoInCorso && RM.arrivoInCorso())) avanzaLavoro(performance.now()+RM.PEZZO_MS); });      // dopo gli altri moduli dell'arrivo (js/pagina.js), così le scene della tappa non aspettano le case
+var passoCase={}, TOCCO_C=(navigator.maxTouchPoints>0)||!!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+RM.moduli.push(function(anno){
+  if(RM.inViaggio){ if(TOCCO_C){ if(lavoro){ if(lavoro.k>0) daStringere=true; lavoro=null; } return; }      // sul telefono nel viaggio le case aspettano l'arrivo; un lavoro a metà si lascia (le case già scritte hanno la firma nuova: la prossima scrittura ripassa dai pacchi)
+    if(RM.saltaPasso && RM.saltaPasso(passoCase,125)) return; }      // sul PC nel viaggio la scrittura intera al più otto volte al secondo; all'arrivo sempre (RM.saltaPasso in js/base.js, 27 novembre 2026)
+  if(RM.aPezzi){ if(lavoro && lavoro.k>0) daStringere=true; iniziaLavoro(anno); return; }
+  lavoro=null; aggiorna(anno); });
 /* Per lo strumento «Regioni e quartieri» (26 novembre 2026): quante case ci sono in una zona in un dato anno. dentro(x, z) dice se un punto è nella zona.
    abitate; abbandonate ma ancora in piedi (stadi 1 e 2); rovine; e fra abitate e abbandonate in piedi quante domus e quante insulae (le case basse, tipi 4 e 5, in nessuna delle due).
    Non conta le case non ancora nate (il Borgo) né quelle demolite per un monumento. Rifà i conti di aggiorna() senza toccare nulla; costa solo quando la si chiama. */

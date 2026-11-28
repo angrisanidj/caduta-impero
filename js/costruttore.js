@@ -279,8 +279,8 @@ function conConci(mat){
   var A=String.fromCharCode(10), uP={value:0};
   mat.userData.patina=uP; RM.patinaMat.push(mat);
   mat.onBeforeCompile=function(sh){
-    lodUniformi(sh); lodVertice(sh); sh.uniforms.uPatina=uP; sh.uniforms.uPatTetto=PAT_TETTO_NO; sh.uniforms.uPatQ=RM.degradoQ;
-    sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+LOD_FD+A+PAT_FD)
+    lodUniformi(sh); lodVertice(sh); sh.uniforms.uPatina=uP; sh.uniforms.uPatTetto=PAT_TETTO_NO; sh.uniforms.uPatQ=RM.degradoQ; if(PAT_FD3) sh.uniforms.tRum3P=RUM3;      // il rumore già pronto (si veda RUM3, più sotto)
+    sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+A+LOD_FD+A+(PAT_FD3||PAT_FD))
       .replace('#include <color_fragment>',['#include <color_fragment>',LOD_SCEGLI_SE,LOD_COLORE,CONCI,patina()].join(A));
   };
   return mat;
@@ -490,7 +490,28 @@ var VIVA=['{ float vvD=uTardoR*uMoleR*smoothstep(120.0,400.0,length(vViewPositio
   '  if(vvD>0.0){ vec3 vvC=diffuseColor.rgb; float vvS=smoothstep(0.35,0.65,abs(vNor.y)); float vvR=vvS*(1.0-smoothstep(0.93,0.99,abs(vNor.y)))*smoothstep(1.8,2.6,vvC.r/max(vvC.g,0.01));',      // le falde di coppi: in pendio (non i piani: l'arena del Circo, i pavimenti) e rosso mattone (non la sabbia né il marmo caldo)
   '    vec3 vvT=mix(vec3(0.8,0.71,0.55),vec3(0.5,0.085,0.035),vvR); vvT*=clamp(0.55+0.45*dot(vvC,vec3(0.3,0.59,0.11))/dot(vvT,vec3(0.3,0.59,0.11)),0.55,1.3);',      // muri color di calce chiara, coppi rosso mattone (in luce lineare)
   '    diffuseColor.rgb=mix(vvC,vvT,vvD*mix(0.35*(1.0-vvS),0.6,vvR)); } }'].join(String.fromCharCode(10));
+/* IL RUMORE GIÀ PRONTO (28 novembre 2026, terzo giro della fluidità; l'utente: «prima reggeva i 60 anche in qualità massima»). Sul banco a «massima» la scheda grafica
+   spendeva 4-6,6 millesimi per ciascuno dei rami del degrado dei ruderi (crepe, rovina, verde, intonaco): ogni rmN, il rumore a valori, faceva otto seni per pixel, e un
+   pixel di rudere ne chiede da sei a dieci. Dove c'è WebGL2 rmN legge una trama 3D di 64 x 64 x 64 valori, fatti una volta con la stessa formula di rmH, e la sfumatura
+   fra un nodo e l'altro la fa il filtro lineare della scheda grafica, letto nel punto spostato dalla stessa curva f*f*(3-2f): è lo stesso rumore (stessa grana, stessa scala,
+   stessa distribuzione), con altri numeri nei nodi (i seni del JavaScript non sono quelli della scheda grafica) e che si ripete ogni 64 nodi (da 280 m in su secondo la scala
+   del ramo). Le macchie restano dello stesso tipo, grandezza e quantità, in posti diversi. ?rumore=calcolo rimette il rumore calcolato (per le prove). */
+var RUM3=null;
+if(RM.VESTE && THREE.DataTexture3D && !/[?&]rumore=calcolo/.test(location.search)){
+  var R3=64, d3=new Uint8Array(R3*R3*R3), x3, y3, z3;
+  for(z3=0;z3<R3;z3++) for(y3=0;y3<R3;y3++) for(x3=0;x3<R3;x3++){ var s3=Math.sin(x3*127.1+y3*311.7+z3*74.7)*43758.5453; d3[(z3*R3+y3)*R3+x3]=Math.round(255*(s3-Math.floor(s3))); }
+  var t3=new THREE.DataTexture3D(d3,R3,R3,R3); t3.format=THREE.RedFormat; t3.type=THREE.UnsignedByteType; t3.minFilter=t3.magFilter=THREE.LinearFilter;
+  t3.wrapS=t3.wrapT=t3.wrapR=THREE.RepeatWrapping; t3.unpackAlignment=1; t3.generateMipmaps=false; t3.needsUpdate=true; RUM3={value:t3};
+}
+var DICHIARA3=RUM3?DICHIARA.replace(/float rmN\(vec3 p\)\{[^}]*\}/,'uniform highp sampler3D tRum3; float rmN(vec3 p){ vec3 i=floor(p); vec3 f=fract(p); f=f*f*(3.0-2.0*f); return texture(tRum3,(i+f+0.5)*0.015625).r; }'):DICHIARA;
+RM.rumorePronto=!!RUM3 && DICHIARA3!==DICHIARA;      // per le prove
+RM.rumore3=RM.rumorePronto?RUM3:null;      // anche per il degrado delle case (cN in js/citta.js)
+/* lo stesso per ptN, il rumore piano della patina (mura, chiese, ponti e monumenti): la fetta z=0 della stessa trama */
+var PAT_FD3=RM.rumorePronto?PAT_FD.replace(/float ptN\(vec2 p\)\{[^}]*\}/,'uniform highp sampler3D tRum3P; float ptN(vec2 p){ vec2 i=floor(p); vec2 f=fract(p); f=f*f*(3.0-2.0*f); return texture(tRum3P,vec3((i+f+0.5)*0.015625,0.0078125)).r; }'):PAT_FD;
+if(PAT_FD3===PAT_FD) PAT_FD3=null;
 function innesta(sh,u,colore){
+  if(RM.rumorePronto) sh.uniforms.tRum3=RUM3;
+  if(PAT_FD3) sh.uniforms.tRum3P=RUM3;
   sh.uniforms.uTardoR=RM.tardoU||{value:0}; sh.uniforms.uMoleR=u.uMole||{value:1};      // la luce degli anni tardi (js/base.js, RM.tardo): si veda MOLE
   sh.uniforms.uSapQ=RM.sapere.q; sh.uniforms.uSapCol=u.uSapCol; sh.uniforms.uVesteR=RM.vesteU||{value:0}; sh.uniforms.tMacchieR={value:RM.VESTE?RM.trameVeste().macchie:null};      // veste del PC: l'erba fra le lastre prende il verde dell'erba del suolo
   sh.uniforms.uRovina=u.uRovina; sh.uniforms.uCant=u.uCant; sh.uniforms.uSpoglio=u.uSpoglio; sh.uniforms.uPiombo=u.uPiombo; sh.uniforms.uAlt=u.uAlt; sh.uniforms.uCrepe=u.uCrepe; sh.uniforms.uSud=u.uSud; sh.uniforms.uSudDir=u.uSudDir; sh.uniforms.uSudR=u.uSudR;
@@ -499,7 +520,7 @@ function innesta(sh,u,colore){
   var SCEGLI=LOD_SCEGLI.replace('dpxL<uSogliaCol','dpxL<uSogliaCol*(1.0-step(0.02,uRovina))');      // in rovina niente fascia: il portico è senza tetto e senza muri, e fra i monconi si vede il prato, non l'ombra
   SCEGLI+=NL+MANCA;      // le colonne che mancano, e i rocchi a terra
   sh.uniforms.uPatina=u.uPatina; sh.uniforms.uPatTetto=u.uPatTetto||PAT_TETTO_NO; sh.uniforms.uPatQ=RM.degradoQ;      // la patina del tempo (si veda PATINA): RM.patinaMon in js/monumenti.js
-  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA+NL+PAT_FD+(colore?NL+STRISCE:''));
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>'+NL+DICHIARA3+NL+(PAT_FD3||PAT_FD)+(colore?NL+STRISCE:''));
   if(colore) sh.fragmentShader=sh.fragmentShader.replace('#include <color_fragment>',['#include <color_fragment>',SCEGLI,taglio(true),LOD_COLORE,CONCI,patina({riduci:true,piede:true}),COLORA,DEGRADO,LEGNO,NUCLEO,MOLE,VIVA,SAP_TINTA].join(NL));
   else sh.fragmentShader=sh.fragmentShader.replace('#include <clipping_planes_fragment>',[SCEGLI,LOD_OMBRA,taglio(false),'#include <clipping_planes_fragment>'].join(NL));
 }

@@ -38,10 +38,10 @@ RM.CHIESE=elenco;
 RM.moduli.push(function(anno){
   var mosso=false;
   elenco.forEach(function(c,i){
-    var p=RM.sfuma(c.anno-6,c.anno,anno)*(1-RM.sfuma(c.fine-2,c.fine,anno)); if(Math.abs(p-c.p0)<.002) return; c.p0=p; mosso=true;
+    var p=RM.sfuma(c.anno-6,c.anno,anno)*(1-RM.sfuma(c.fine-2,c.fine,anno)); if(p===c.p0 || (RM.inViaggio && Math.abs(p-c.p0)<.002)) return; c.p0=p; mosso=true;      // all'arrivo il valore esatto (28 novembre 2026)
     d.position.set(c.x,c.y,c.z); d.rotation.set(0,c.ry,0); d.scale.set(p>.01?1.25*(c.sx||1):0,Math.max(p*1.25,.001),p>.01?1.25:0); d.updateMatrix(); maglia.setMatrixAt(i,d.matrix);
   });
   if(mosso) maglia.instanceMatrix.needsUpdate=true;
-  var pA=RM.patinaAnno(anno); if(Math.abs(pA-patUlt)>.002){ patUlt=pA; elenco.forEach(function(c,i){ patC.array[i]=RM.patinaSpenta?0:RM.patinaRestauri('chiesa:'+c.nome,c.anno,anno); }); patC.needsUpdate=true; }
+  var pA=RM.patinaAnno(anno); if(anno!==patUlt && !(RM.inViaggio && Math.abs(pA-RM.patinaAnno(patUlt))<=.002)){ patUlt=anno; elenco.forEach(function(c,i){ patC.array[i]=RM.patinaSpenta?0:RM.patinaRestauri('chiesa:'+c.nome,c.anno,anno); }); patC.needsUpdate=true; }      // patUlt è l'anno scritto: la patina di ogni chiesa dipende anche dai suoi restauri, non solo dalla patina comune (28 novembre 2026)
 });
 })();

@@ -328,15 +328,38 @@ var cittaCoperta=false, cittaDopo=false, primaApplica=true;
 function vistaCitta(){ var sc=$('scene'), s=document.querySelector('.schede');
   cittaCoperta=!!(sc && s && sc.getAttribute('data-vista')!=='roma' && !document.body.classList.contains('roma-grande') && getComputedStyle(s).display!=='none');
   if(!cittaCoperta && cittaDopo){ cittaDopo=false; applica(true); } }
+/* L'ARRIVO A PEZZI (28 novembre 2026, terzo giro della fluidità sul telefono; l'utente: «rendere più fluido tutto dal cell… trova una soluzione asincrona»). Sul banco da
+   telefono (processore rallentato quattro volte) il viaggio fra due tappe con la città visibile dava da 5 a 12 fotogrammi oltre i 100 millesimi: a ogni passo d'anno tutti i
+   moduli insieme (case 30-130 ms, vita 10-16, monumenti 14-20, mura 10-20, verde 5-12). Ora, sui dispositivi al tocco:
+   - nel viaggio i moduli segnati «arrivo» non lavorano (case, vita, mura, verde e macerie dei monumenti), o lavorano al più ogni «arrivo» millesimi; i monumenti fanno un sesto della lista a ogni fotogramma (js/monumenti.js), la mappa delle ombre aspetta l'arrivo (js/base.js);
+   - all'arrivo tutti i moduli, nello stesso ordine di sempre, si chiamano con l'anno della tappa uno dopo l'altro, al più RM.PEZZO_MS millesimi per fotogramma (avanzaArrivo);
+     un modulo che risponde false va richiamato (ha ancora lavoro); le case finiscono la loro scrittura a pezzi dopo (js/citta.js, lavoro).
+   Il risultato all'arrivo è lo stesso della chiamata di tutti i moduli in una volta: ognuno riceve l'anno della tappa, nello stesso ordine. Sul PC, all'apertura,
+   per RM_pagina.anno (infografiche, «Prima e dopo») e all'apertura della scheda «Roma» tutto resta in una volta. ?pezzi=0 spegne i pezzi (per le prove). */
+var PEZZI=((navigator.maxTouchPoints>0)||!!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches)) && !/[?&]pezzi=0/.test(location.search), arrivo=null;
+if(RM.PEZZO_MS==null) RM.PEZZO_MS=6;
+function avanzaArrivo(){ var a=arrivo; if(!a) return; var scad=performance.now()+RM.PEZZO_MS;
+  RM.aPezzi=true; RM.scadenza=scad;
+  try{ do { if(RM.moduli[a.i](a.anno)!==false) a.i++; } while(a.i<RM.moduli.length && performance.now()<scad); }
+  finally{ RM.aPezzi=false; }
+  if(a.i>=RM.moduli.length && arrivo===a){ if(a.ancora){ a.ancora=false; a.i=0; } else { arrivo=null; if(listaDopo){ listaDopo=false; if(voci.length){ ultimaLista=performance.now(); scriviMonumenti(); scriviScheda(); } } } } }      // ancora: chi ha chiesto di nuovo lo stesso anno mentre si lavorava (la notte che sfuma) lo riavrà da capo; poi l'elenco dei monumenti (si veda applica)
+RM.arrivoInCorso=function(){ return !!arrivo; };
 function applica(forza){
-  var viaggio=anno!==meta, ora=performance.now();
+  var viaggio=anno!==meta, ora=performance.now(), i, f;
   if(cittaCoperta && !forza && !primaApplica) cittaDopo=true;
-  else { primaApplica=false; cittaDopo=false;
-  RM.inViaggio=viaggio;      // nel viaggio fra due tappe i moduli pesanti possono saltare un passo (RM.saltaPasso in js/base.js); all'arrivo mai
-  try{ for(var i=0;i<RM.moduli.length;i++) RM.moduli[i](anno); } finally{ RM.inViaggio=false; } }
+  else { var tutto=forza||primaApplica||!PEZZI; primaApplica=false; cittaDopo=false;
+  if(tutto){ arrivo=null;
+    RM.inViaggio=viaggio;      // nel viaggio fra due tappe i moduli pesanti possono saltare un passo (RM.saltaPasso in js/base.js); all'arrivo mai
+    try{ for(i=0;i<RM.moduli.length;i++) RM.moduli[i](anno); } finally{ RM.inViaggio=false; } }
+  else if(viaggio){ arrivo=null; RM.inViaggio=true;
+    try{ for(i=0;i<RM.moduli.length;i++){ f=RM.moduli[i]; if(f.arrivo!=null){ if(!(f.arrivo>0) || ora-(f.tViaggio||-1e9)<f.arrivo) continue; f.tViaggio=ora; } f(anno); } } finally{ RM.inViaggio=false; } }
+  else if(arrivo && arrivo.anno===anno){ arrivo.ancora=true; avanzaArrivo(); }
+  else { arrivo={anno:anno, i:0}; avanzaArrivo(); } }
   scriviSpie();
+  if(arrivo && !viaggio){ listaDopo=true; return; }      // all'arrivo a pezzi l'elenco dei monumenti si scrive quando i moduli hanno finito (avanzaArrivo): non nello stesso fotogramma del primo pezzo
   if(voci.length && !(viaggio && ora-ultimaLista<125)){ ultimaLista=ora; scriviMonumenti(); scriviScheda(); }      // l'elenco dei monumenti rimisura la pagina (circa 6 millesimi): nel viaggio al più otto volte al secondo, all'arrivo sempre
 }
+var listaDopo=false;
 
 /* ---------- comandi ---------- */
 var fermati=[];      // chi vuole sapere quando «Riproduci» si ferma (il richiamo di «Leggi»)
@@ -411,12 +434,14 @@ var ultimo=performance.now(), contaGiri=0;
   if(sapere!==metaSapere && RM.sapere){ var ps=dt/.5; sapere=Math.abs(metaSapere-sapere)<=ps?metaSapere:sapere+Math.sign(metaSapere-sapere)*ps; RM.sapere.q.value=sapere*sapere*(3-2*sapere); }
   if(RM.inVistaInsieme && (contaGiri=(contaGiri+1)%12)===0){ var via=!RM.inVistaInsieme(); if($('btnInsieme').hidden===via) $('btnInsieme').hidden=!via; }      // il pulsante per tornare alla vista d'insieme c'è solo quando serve
   if(mosso) applica();
+  else if(arrivo) avanzaArrivo();      // l'arrivo a pezzi continua (si veda avanzaArrivo)
 })();
 
 /* ---------- avvio ---------- */
 /* Gli indirizzi delle tappe (chiaveTappa, tappaDaIndirizzo, con i vecchi #tappa-N) stanno in index.html (RM_indirizzi) dal 26 novembre 2026: lì si disegna la carta d'apertura, prima della città.
    Qui MAPPA.mostra trova quella carta già disegnata per la stessa tappa e non la rifà (js/mappa.js, anticipo). */
 var daIndirizzo=tappaDaIndirizzo(location.hash);
+setTimeout(function(){ if(RM.preparaTutto) RM.preparaTutto(); },2500);      // i programmi della scheda grafica di tutta la città, a pagina ferma (js/base.js, 28 novembre 2026): sul telefono mentre la città sta sotto il velo, così la prima apertura di «Roma» e le scene delle tappe non li compilano tutti insieme
 if(daIndirizzo>=0){ vai(daIndirizzo,true); }
 else{                                   // apertura dalla fine: la città del 550, poi il riavvolgimento
   anno=550; vai(0); vel=(550-T[0].anno)/4.5; applica();

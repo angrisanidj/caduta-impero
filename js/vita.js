@@ -1119,13 +1119,23 @@ function acquaVasche(anno){ var q=RM.statoMonumento?RM.statoMonumento('acquedott
   vasche.forEach(function(v){ if(!su || (anno>=537 && !(v.b.a0>.5))) return; o.position.set(v.x,v.y-.01,v.z); o.rotation.set(0,v.ry,0); o.updateMatrix(); magliaAcqua.setMatrixAt(n++,o.matrix); });
   magliaAcqua.count=n; magliaAcqua.instanceMatrix.needsUpdate=true; RM.vascheConta={vasche:vasche.length, conAcqua:n}; }      // per le prove
 
-RM.moduli.push(function(anno){
+var modVita=function(anno){
+  if(RM.aPezzi){ var p=modVita.anno===anno?modVita.passo:0; modVita.anno=anno;      // all'arrivo a pezzi (js/pagina.js, 28 novembre 2026): tre fotogrammi invece di uno; stessi conti, stesso ordine
+    if(p===0){ modVita.passo=1; acquaVasche(anno); annoOra=anno; vestiEpoca(anno); VA=vitaAnno(anno); quotaGente=Math.min(1,D.interp(D.CURVE.popolazione.punti,anno)/900000);
+      quotaBarche=Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60); epocaBarche(anno); trattoTiro(anno); annoFermi(anno); return false; }
+    if(p===1){ modVita.passo=2; quotaPellegrini=D.interp(PELLEGRINI_NEL_TEMPO,anno); luoghiFonti(anno); return false; }
+    modVita.anno=null; mostraForni(); vicoli(); return; }
+  modVita.anno=null;
   acquaVasche(anno);
   annoOra=anno; vestiEpoca(anno);
   VA=vitaAnno(anno);      // assedi e città vuota (VITA_ANNI): il 546 di prima ora sta lì
   quotaGente=Math.min(1,D.interp(D.CURVE.popolazione.punti,anno)/900000);      // una figura ogni tante persone: la stessa proporzione in ogni secolo
   quotaBarche=Math.min(1,D.interp(D.CURVE.commerci.punti,anno)/60); epocaBarche(anno); trattoTiro(anno); annoFermi(anno);      // 26 novembre 2026: tolto l'aumento a 16 barche nell'846 (era per le navi saracene, che dal 23 novembre stanno in js/scene-tappe.js; le chiatte coi buoi non sono navi saracene)
   quotaPellegrini=D.interp(PELLEGRINI_NEL_TEMPO,anno);
+  luoghiFonti(anno);
+  mostraForni(); vicoli();
+};
+function luoghiFonti(anno){
   LUOGHI.forEach(function(L){ var on=anno>=L.da && anno<L.a; if(on && L.mon){ var q=RM.statoMonumento(L.mon,anno); on=q.s0==='uso' && !(q.s1!=='uso' && q.t>.5); } L.vis=on?1:0; if(L.porto) banchiVisibili(on && !!L.ok); });
   if(Math.abs(anno-annoVie)>=2) vieDaRifare=true;
   zoneDaRifare=true;
@@ -1134,8 +1144,8 @@ RM.moduli.push(function(anno){
     if(f.x0==null){ f.x0=f.x; f.z0=f.z; }
     if(cm && anno>=b.medDa+1.5){ f.x=cm.x; f.z=cm.z; f.y=cm.y+cm.h+.15; }      // la prima casa del lotto: la sua scala in altezza (o.h + 0,15) è quella di scriviMed in js/citta.js
     else { f.x=f.x0; f.z=f.z0; f.y=b.y+b.alt*(b.nasce?1:bassaF)+.15; } }
-  mostraForni(); vicoli();
-});
+}
+modVita.arrivo=0; RM.moduli.push(modVita);      // sul telefono nel viaggio fra due tappe non lavora: all'arrivo, a pezzi (js/pagina.js, 28 novembre 2026)
 RM.frame.push(function(dt){
   tempo+=dt; if(!MENO_MOTO) uPasso.value=tempo;
   if(vieDaRifare){ vieDaRifare=false; scegliVie(annoOra); scegliCarri(annoOra); }

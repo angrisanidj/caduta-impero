@@ -326,7 +326,7 @@ function ombraIn(x,z,L){ var c=aggancia(x,z,L); sole.target.position.copy(c); so
    L'erba della città lasciata (VESTE_SUOLO_A, uTardo) si fa un poco meno paglia, perché il mattone delle moli, caldo, se ne stacchi.
    È una scelta di resa, non una notizia (l'ora del giorno della scena non è un fatto); fino al 550 la luce è identica a prima. */
 RM.tardo=0; RM.tardoU={value:0};      // lo stesso numero per gli shader (il suolo: erba della città lasciata più verde e più scura negli anni tardi)
-RM.moduli.push(function(anno){ var t=RM.sfuma(560,760,anno); if(Math.abs(t-RM.tardo)<.002) return; RM.tardo=t;
+RM.moduli.push(function(anno){ var t=RM.sfuma(560,760,anno); if(t===RM.tardo || (RM.inViaggio && Math.abs(t-RM.tardo)<.002)) return; RM.tardo=t;      // all'arrivo il valore esatto (28 novembre 2026: prima restava quello di un passo del viaggio entro due millesimi)
   RM.tardoU.value=t; SOLE_OFF[1]=330-60*t; SOLE_D.set(-SOLE_OFF[0],-SOLE_OFF[1],-SOLE_OFF[2]).normalize();
   SOLE_X.crossVectors(new THREE.Vector3(0,1,0),SOLE_D.clone().negate()).normalize(); SOLE_Y.crossVectors(SOLE_D.clone().negate(),SOLE_X).normalize();
   if(ombraFissa) RM.ombraFissa(ombraFissa); else { ombra.s=-1; ombraIn(ombra.x,ombra.z,Math.max(70,oc.right)); }
@@ -371,6 +371,7 @@ RM.frame.push(function(){
    del viaggio. Ora si rifà al massimo quindici volte al secondo, e sempre una volta dopo l'ultimo cambio (23 novembre 2026). */
 var ombraChiesta=false, ombraFatta=0, ultimoAnno=0;
 RM.moduli.push(function(){ ombraChiesta=true; ultimoAnno=performance.now(); });
+RM.chiediOmbra=function(){ ombraChiesta=true; ultimoAnno=performance.now(); };      // chi finisce un lavoro a pezzi dopo l'arrivo (le case di js/citta.js) chiede la mappa delle ombre nuova
 
 /* ---- terreno: maglia fitta sulla città, larga in campagna. Si posa dopo che i monumenti hanno dichiarato le loro terrazze (RM.posa) ---- */
 /* campagna: grano e stoppie, maggese, pascolo, vigna, oliveto; meno verde brillante di prima (23 novembre 2026: sembrava un prato all'inglese) */
@@ -1484,18 +1485,48 @@ if(renderer.capabilities.isWebGL2) (function(){
    quindi sullo schermo non si vede nulla. La mappa delle ombre non si tocca (nessun rifacimento). */
 /* Con poco=true (la scena dell'800) le cose si preparano una per fotogramma, all'inizio del fotogramma: ogni programma nuovo blocca il filo principale finché la scheda grafica
    non l'ha compilato (three ne legge subito l'esito), e in fila sono tanti piccoli intoppi invece di un fermo lungo (sul banco 0,8 secondi tutti insieme). */
-var daPreparare=[];
+var daPreparare=[], quieti=[], quietiVisti={};
 RM.frame.push(function(){ if(!daPreparare.length) return; var o=daPreparare.shift(); if(o && o.parent) RM.prepara([o]); });
-RM.prepara=function(oggetti,poco){
+function chiaveMat(m){ return (Array.isArray(m.material)?m.material.map(function(x){ return x.uuid; }).join(','):m.material.uuid)+(m.isInstancedMesh?'i':'s'); }
+/* A PAGINA FERMA (28 novembre 2026, terzo giro della fluidità sul telefono). RM.prepara(oggetti,'quieto') mette le maglie in una fila che si prepara solo quando la pagina è ferma:
+   nessun tocco, rotella, tasto o scorrimento da mezzo secondo, nessun cambio d'anno, nessuna regia della carta, nessun arrivo a pezzi, nessuna scena in corso; una maglia per volta
+   in un momento d'ozio del navigatore (requestIdleCallback), e al primo tocco la fila aspetta. Una maglia il cui programma c'è già costa un disegno di una cosa sola: in un
+   momento d'ozio se ne fanno più d'una, finché non ne nasce uno nuovo. RM.preparaAffretta() passa ciò che resta alla fila di un fotogramma per volta (chi ne ha bisogno subito).
+   Serve a: la prima apertura della scheda «Roma» sul telefono (la città sotto il velo, si veda js/pagina.js), la scena dell'800 e le altre scene delle tappe (js/scene-tappe.js).
+   ombre:true prepara anche i programmi della mappa delle ombre (disegnandola con quella sola maglia): solo dove la città non si vede, poi la mappa si rifà. */
+var ultimoTocco=0, quietoInCorso=false, quietoOmbre=false, ombraSporca=false;
+['pointerdown','touchstart','wheel','keydown','scroll'].forEach(function(t){ window.addEventListener(t,function(){ ultimoTocco=performance.now(); },{capture:true,passive:true}); });
+function ferma(){ var t=performance.now();
+  return !document.hidden && t-ultimoTocco>500 && t-ultimoAnno>500 && !volo && !(window.RM_mappa && RM_mappa.inRegia && RM_mappa.inRegia()) &&
+    !(RM.arrivoInCorso && RM.arrivoInCorso()) && !(RM.caseLavoro && RM.caseLavoro()) && !(RM.scenaInCorso && RM.scenaInCorso()) && !daPreparare.length; }
+var ozio=window.requestIdleCallback||function(f){ return setTimeout(function(){ f({timeRemaining:function(){ return 10; }}); },60); };
+function giroQuieto(scad){ quietoInCorso=false; if(!quieti.length) return;
+  if(!ferma()){ quietoInCorso=true; setTimeout(function(){ ozio(giroQuieto); },250); return; }
+  var p0=(renderer.info.programs||[]).length, n=0;
+  while(quieti.length && (n===0 || scad.timeRemaining()>6)){ var e=quieti.shift(); n++; if(!e.m.parent) continue;
+    RM.prepara([e.m],false,e.ombre && RM.fuoriVista);      // i programmi delle ombre solo se la città non si vede: la mappa disegnata con una maglia sola non deve comparire
+    if((renderer.info.programs||[]).length!==p0) break; }      // ne è nato uno: si cede il passo
+  if(!quieti.length && quietoOmbre){ quietoOmbre=false; RM.chiediOmbra(); }
+  if(quieti.length){ quietoInCorso=true; ozio(giroQuieto); } }
+/* tutto ciò che sta nella scena, anche ciò che si accende solo in altri anni o nelle scene delle tappe: una maglia per materiale, a pagina ferma (js/pagina.js lo chiede
+   dopo l'apertura). Sul telefono, finché la città sta sotto il velo, anche le ombre. */
+RM.preparaTutto=function(){ if(/[?&]prepara=0/.test(location.search)) return; RM.prepara(scene.children.filter(function(o){ return !o.isLight && !(o.userData && o.userData.copiaDi); }),'quieto',true); };
+RM.preparaAffretta=function(){ while(quieti.length){ var e=quieti.shift(); if(e.m.parent) daPreparare.push(e.m); } };
+RM.preparaQuieti=function(){ return quieti.length; };      // per le prove
+RM.prepara=function(oggetti,poco,ombre){
+  if(poco==='quieto'){ oggetti.forEach(function(o){ if(o) o.traverse(function(m){ if(!(m.isMesh||m.isPoints||m.isLine) || !m.material) return; var k=chiaveMat(m)+(ombre?'o':'');
+      if(!quietiVisti[k]){ quietiVisti[k]=1; quieti.push({m:m, ombre:!!ombre}); if(ombre) quietoOmbre=true; } }); });
+    if(!quietoInCorso && quieti.length){ quietoInCorso=true; ozio(giroQuieto); } return; }
   if(poco){ var visti={}; oggetti.forEach(function(o){ if(o) o.traverse(function(m){ if(!(m.isMesh||m.isPoints||m.isLine) || !m.material) return;      // una maglia per materiale (e per tipo: con istanze o no), una per fotogramma
-      var k=(Array.isArray(m.material)?m.material.map(function(x){ return x.uuid; }).join(','):m.material.uuid)+(m.isInstancedMesh?'i':'s'); if(!visti[k]){ visti[k]=1; daPreparare.push(m); } }); }); return; }
+      var k=chiaveMat(m); if(!visti[k]){ visti[k]=1; daPreparare.push(m); } }); }); return; }
   var dentro=new Set(), antenati=new Set(), salv=[], cull=[];
   oggetti.forEach(function(o){ if(!o) return; dentro.add(o); if(!o.visible){ o.visible=true; salv.push([o,false]); } var p=o.parent; while(p && p!==scene){ antenati.add(p); p=p.parent; } });
   function nascondi(nodo){ nodo.children.forEach(function(c){ if(c.isLight || dentro.has(c)) return; if(antenati.has(c)){ if(!c.visible){ salv.push([c,false]); c.visible=true; } nascondi(c); return; } if(c.visible){ c.visible=false; salv.push([c,true]); } }); }
   nascondi(scene);
   dentro.forEach(function(o){ o.traverse(function(m){ if((m.isMesh||m.isPoints||m.isLine) && m.frustumCulled){ m.frustumCulled=false; cull.push(m); } }); });
   var rt=renderer.getRenderTarget(), sm=renderer.shadowMap, nu=sm.needsUpdate, au=sm.autoUpdate;
-  sm.needsUpdate=false; sm.autoUpdate=false;      // la mappa delle ombre non si rifà con la scena quasi vuota: un rifacimento chiesto in questo fotogramma resta per il disegno vero
+  if(ombre){ sm.needsUpdate=true; ombraChiesta=true; ombraSporca=true; }      // ombraSporca: al primo disegno vero la mappa si rifà subito, senza aspettare      // anche i programmi delle ombre: la mappa si disegna con questa sola maglia e si rifà al primo disegno vero
+  else { sm.needsUpdate=false; sm.autoUpdate=false; }      // la mappa delle ombre non si rifà con la scena quasi vuota: un rifacimento chiesto in questo fotogramma resta per il disegno vero
   try{ preparando=true; renderer.setRenderTarget(post?post.tela:null); renderer.render(scene,camera); }
   finally{ preparando=false; renderer.setRenderTarget(rt); sm.needsUpdate=nu; sm.autoUpdate=au; salv.forEach(function(s){ s[0].visible=s[1]; }); cull.forEach(function(m){ m.frustumCulled=true; }); }
 };
@@ -1517,7 +1548,7 @@ var tsPrima=0;
   }
   for(var i=0;i<RM.frame.length;i++) RM.frame[i](dt);
   controlli.update();
-  if(ombraChiesta && ora-ombraFatta>(TOCCO_Q?200:66)){ renderer.shadowMap.needsUpdate=true; ombraChiesta=false; ombraFatta=ora; }      // sui dispositivi al tocco (27 novembre 2026, notte) nel viaggio la mappa delle ombre si rifà cinque volte al secondo, non quindici: sul banco da telefono ogni rifacimento costava da 5 a 24 millesimi di scheda grafica; all'arrivo si rifà sempre una volta dopo l'ultimo cambio, come prima
+  if(ombraChiesta && (ombraSporca || (ora-ombraFatta>(TOCCO_Q?200:66) && !(TOCCO_Q && ora-ultimoAnno<150)))){ renderer.shadowMap.needsUpdate=true; ombraChiesta=false; ombraSporca=false; ombraFatta=ora; }      // 28 novembre 2026: sui dispositivi al tocco nel viaggio fra due tappe la mappa delle ombre aspetta l'arrivo (ogni rifacimento è un secondo disegno di tutta la città). Prima (27 novembre 2026, notte) nel viaggio la mappa delle ombre si rifaceva cinque volte al secondo, non quindici: sul banco da telefono ogni rifacimento costava da 5 a 24 millesimi di scheda grafica; all'arrivo si rifà sempre una volta dopo l'ultimo cambio, come prima
   if(rifai){ rifai=false; misura(); }      // un cambio di densità chiesto dopo il fotogramma di prima: la tela della pagina si rifà qui, prima di disegnare, e non resta vuota sullo schermo
   if(post && post.attivo){
     if(Math.abs(post.tela.width-renderer.domElement.width*ALTA)>renderer.domElement.width*ALTA*.02) misura();      // chi ha disegnato fuori dal ciclo (i fotogrammi delle infografiche) ha rimesso la tela a 1

@@ -180,6 +180,9 @@ function ritardo(f){ var t=tempiScena[f.ev.id]; return (f.rit==null||t==null)?1:
 RM.passoCarta=function(y,anno){ fuocoMira=(y!=null && anno!=null && y<Math.floor(anno))?0:1; RM.passoCartaOra=y; RM.suPassoCarta.forEach(function(f){ f(y,anno); }); };      // passoCartaOra e suPassoCarta: anche la messa in scena del 410 aspetta il suo passo (js/scene-tappe.js)
 RM.passoCartaOra=null; RM.suPassoCarta=[];
 var acceso=false;
+/* 28 novembre 2026 (fluidità sul telefono): la maglia della piena nasceva al primo anno di piena attraversato, nel mezzo del viaggio fra due tappe (sul banco a 4x un
+   fotogramma da 120 millesimi, più il suo programma). Ora nasce in un momento d'ozio dopo l'apertura, nascosta, prima che la pagina prepari i programmi (RM.preparaTutto) */
+(window.requestIdleCallback||function(f){ return setTimeout(f,1200); })(function(){ if(!piena){ posaPiena(); piena.visible=false; } },{timeout:2000});
 RM.moduli.push(function(anno){
   scrivi(anno); pienaEVelo();
   acceso=false; EV.forEach(function(ev){ if(ev.q>.01 && ((ev.fuochi&&ev.fuochi.length)||ev.campi)) acceso=true; });
