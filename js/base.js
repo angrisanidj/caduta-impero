@@ -1647,8 +1647,10 @@ var orologio=new THREE.Clock(), somma=0, quanti=0, occhioPrima=new THREE.Vector3
 RM.fuoriVista=false;
 if(window.IntersectionObserver) new IntersectionObserver(function(v){ RM.fuoriVista=!v[v.length-1].isIntersecting; },{rootMargin:'80px'}).observe(contenitore);
 var tsPrima=0;
+RM.ritmo30=/[?&]ritmo=30/.test(location.search);      // 28 novembre 2026, per le prove (js/prova-cause.js e ?ritmo=30): la città si disegna al più ogni 25 millesimi, cioè un battito sì e uno no su uno schermo a 60; spento di norma
 (function ciclo(ts){
   requestAnimationFrame(ciclo);
+  if(RM.ritmo30 && ts && tsPrima && ts-tsPrima<25) return;
   var iv=(ts && tsPrima)?(ts-tsPrima)/1000:0; tsPrima=ts||0;      // l'intervallo vero fra due fotogrammi, dal tempo che dà requestAnimationFrame (più fedele dell'orologio, che legge l'ora a metà del lavoro)
   if(RM.fuoriVista || document.body.classList.contains('impero-grande')){ orologio.getDelta();      // sotto la carta a tutto schermo la città è coperta: disegnarla costava 6 ms a fotogramma (misura del 24 novembre 2026)
     if(iv>0 && iv<.2 && !document.hidden){ vuoti.push(iv); if(vuoti.length>60) vuoti.shift(); if(vuoti.length>=30 && vuoti.length%10===0) periodoV=mediana(vuoti); }      // senza disegnare: il battito dello schermo

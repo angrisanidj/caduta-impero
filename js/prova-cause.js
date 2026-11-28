@@ -50,6 +50,18 @@ function figureScene(){ var L=[], P=(RM.figureScene&&RM.figureScene.parti)||{};
   return L; }
 function vita(punti){ return gruppo('vita').filter(function(o){ return punti?o.isPoints:!o.isPoints; }); }
 var salva={};
+/* 28 novembre 2026, pomeriggio (seconda prova dall'iPhone: fusi o no, 122 o 224 disegni, stessi fotogrammi; e dopo tre minuti tutto rallenta di tre volte insieme).
+   Due misure in più: i triangoli disegnati a ogni fotogramma, con tre righe che ne disegnano un quarto lasciando oggetti e disegni come sono (le forme si vedono a pezzi:
+   è una misura, non un'immagine); e un caso lungo, una riga ogni dieci secondi, per vedere se il telefono rallenta col tempo a scena uguale. */
+var nDis=0, triOra=0, rendi=R.render;
+R.render=function(s){ rendi.apply(R,arguments); if(s===sc){ nDis++; triOra=R.info.render.triangles; } };
+var ridotte=[];
+function quarto(L){ var viste=new Set();      // le maglie a istanze: un quarto delle istanze (la strada veloce delle istanze non guarda l'intervallo da disegnare: provato); le altre: un quarto dei triangoli
+  L.forEach(function(o){ o.traverse(function(m){ var g=m.geometry; if(!g || !m.isMesh || !g.attributes || !g.attributes.position) return;
+    if(m.isInstancedMesh){ ridotte.push({m:m, c:m.count}); m.count=Math.floor(m.count/4); return; }
+    if(viste.has(g)) return; viste.add(g);
+    var n=g.index?g.index.count:g.attributes.position.count; ridotte.push({g:g, s:g.drawRange.start, c:g.drawRange.count}); g.setDrawRange(0,Math.floor(n/12)*3); }); }); }
+function intero(){ ridotte.forEach(function(r){ if(r.m) r.m.count=r.c; else r.g.setDrawRange(r.s,r.c); }); ridotte=[]; R.shadowMap.needsUpdate=true; }
 var PASSI=[
   {k:'tutto', n:'tutto acceso', su:function(){}, giu:function(){}},
   {k:'figure', n:'senza le figure delle scene (e le corse, i giochi)', su:function(){ nascondi=figureScene(); salva.g=RM.senzaGiochi; RM.senzaGiochi=true; }, giu:function(){ nascondi=[]; RM.senzaGiochi=salva.g; }},
@@ -65,29 +77,34 @@ var PASSI=[
   {k:'patina', n:'senza patina', su:function(){ salva.pt=(RM.patinaMat||[]).map(function(m){ var v=m.userData.patina.value; m.userData.patina.value=0; return v; }); }, giu:function(){ (RM.patinaMat||[]).forEach(function(m,i){ m.userData.patina.value=salva.pt[i]; }); }},
   {k:'veste', n:'senza veste', su:function(){ if(RM.vesteU){ salva.v=RM.vesteU.value; RM.vesteU.value=0; } }, giu:function(){ if(RM.vesteU) RM.vesteU.value=salva.v; }},
   {k:'fluido', n:'senza le ottimizzazioni di RM.fluido', su:function(){ salva.f={}; for(var k in RM.fluido){ salva.f[k]=RM.fluido[k]; RM.fluido[k]=false; } }, giu:function(){ for(var k in salva.f) RM.fluido[k]=salva.f[k]; }},
-  {k:'piena', n:'scala adattiva ferma a 1 (tutti i pixel)', su:function(){ if(RM.scalaAdatta) RM.scalaAdatta.forza(1); }, giu:function(){ if(RM.scalaAdatta) RM.scalaAdatta.forza(); }},
-  {k:'meta', n:'metà dei lati (un quarto dei pixel)', su:function(){ if(RM.scalaAdatta) RM.scalaAdatta.forza(.5); }, giu:function(){ if(RM.scalaAdatta) RM.scalaAdatta.forza(); }},
   {k:'prep', n:'preparazione dei programmi ferma', su:function(){ RM.preparaPausa=true; }, giu:function(){ RM.preparaPausa=false; }},
-  {k:'gpu', n:'attesa della scheda grafica (gl.finish dopo il disegno)', su:function(){ finisci=true; attesaGpu=[]; }, giu:function(){ finisci=false; }},
+  {k:'triCase', n:'case e rovine con un quarto dei triangoli', su:function(){ quarto(gruppo('citta')); }, giu:intero},
+  {k:'triMon', n:'monumenti con un quarto dei triangoli', su:function(){ quarto(gruppo('monumenti')); }, giu:intero},
+  {k:'triTutto', n:'tutta la città con un quarto dei triangoli', su:function(){ quarto(sc.children.filter(function(o){ return !o.isLight; })); }, giu:intero},
+  {k:'tutto1', n:'tutto acceso, a metà prova', su:function(){}, giu:function(){}},
+  {k:'meta', n:'metà dei lati (un quarto dei pixel)', su:function(){ if(RM.scalaAdatta) RM.scalaAdatta.forza(.5); }, giu:function(){ if(RM.scalaAdatta) RM.scalaAdatta.forza(); }},
+  {k:'piena', n:'scala adattiva ferma a 1 (tutti i pixel)', su:function(){ if(RM.scalaAdatta) RM.scalaAdatta.forza(1); }, giu:function(){ if(RM.scalaAdatta) RM.scalaAdatta.forza(); }},
   {k:'effetti', n:'senza effetti a tutto schermo (per ultimo)', attesa:2500, su:function(){ if(RM.post){ salva.p=RM.post.attivo; RM.post.attivo=false; } }, giu:function(){ if(RM.post) RM.post.attivo=salva.p; }},
   {k:'tutto2', n:'tutto acceso, di nuovo', su:function(){}, giu:function(){}}
 ];
 var CASI=[
   {k:'800', n:'800, scena ferma', anno:800, ferma:true, vista:{t:[-236,-112], d:95, az:140, el:28}},
-  {k:'439', n:'439, durante la corsa nel Circo', anno:439, ferma:true, mon:'circo', d:36, el:34},
+  {k:'durata', n:'800 fermo per tre minuti a ritmo libero, poi due minuti a 30 al secondo (il telefono rallenta col tempo?)', anno:800, ferma:true, durata:true, vista:{t:[-236,-112], d:95, az:140, el:28}},
+  {k:'439', n:'439, durante la corsa nel Circo', anno:439, ferma:true, mon:'circo', d:36, el:34, scelta:false},
   {k:'846', n:'846, durante la scena', anno:846, scena:846, scelta:false},
   {k:'852', n:'852, durante la scena', anno:852, scena:852, scelta:false}
 ];
 
 /* ---- la misura: intervalli fra due fotogrammi (requestAnimationFrame), lavoro del ciclo, disegni e byte ---- */
 var stop=false;
-function misura(ms){ return new Promise(function(fatto){ var iv=[], lav=[], prima=0, t0=0, d0=CG.d, b0=CG.b;
-  function giro(ts){ if(prima){ iv.push(ts-prima); if(RM.lavoro!=null) lav.push(RM.lavoro); } prima=ts; if(!t0) t0=ts;
-    if(gira){ var c=RM.camera.position, t=RM.controlli.target, a=.00007*Math.min(50,iv.length?iv[iv.length-1]:16), dx=c.x-t.x, dz=c.z-t.z, ca=Math.cos(a), sa=Math.sin(a); c.x=t.x+dx*ca-dz*sa; c.z=t.z+dx*sa+dz*ca; RM.controlli.update(); }      // la camera gira piano (circa 4 gradi al secondo)
+function misura(ms){ return new Promise(function(fatto){ var iv=[], lav=[], prima=0, t0=0, d0=CG.d, b0=CG.b, ndP=nDis, resi=0, tr=0;
+  function giro(ts){ var reso=nDis!==ndP; ndP=nDis;      // la città è stata disegnata dall'ultimo battito? (col passo a 30 un battito sì e uno no)
+    if(prima){ iv.push(ts-prima); if(reso){ resi++; tr+=triOra; if(RM.lavoro!=null) lav.push(RM.lavoro); } } prima=ts; if(!t0) t0=ts;
+    if(gira && base){ var c=RM.camera.position, t=RM.controlli.target, a=.06*Math.sin((ts-t0)/(ms/Math.max(1,Math.round(ms/3000)))*2*Math.PI), ca=Math.cos(a), sa=Math.sin(a); c.x=t.x+base.dx*ca-base.dz*sa; c.z=t.z+base.dx*sa+base.dz*ca; RM.controlli.update(); }      // la camera oscilla di tre gradi e mezzo attorno alla stessa vista, un'andata e ritorno ogni tre secondi: ogni riga guarda la stessa città (prima girava sempre nello stesso verso, quattro gradi al secondo, e in un minuto le righe guardavano pezzi di città diversi, da 0,6 a 1,3 milioni di triangoli: le righe lontane fra loro non erano confrontabili)
     if(finisci){ var f0=performance.now(); gl.finish(); attesaGpu.push(performance.now()-f0); }
     if(ts-t0<ms && !stop) requestAnimationFrame(giro); else { var n=iv.length, s=0, mx=0, l=0, i; for(i=0;i<n;i++){ s+=iv[i]; if(iv[i]>mx) mx=iv[i]; } for(i=0;i<lav.length;i++) l+=lav[i];
       var g=0; for(i=0;i<attesaGpu.length;i++) g+=attesaGpu[i];
-      fatto({n:n, fps:s?1000*n/s:0, peg:mx, lav:lav.length?l/lav.length:0, d:n?(CG.d-d0)/(n+1):0, kb:n?(CG.b-b0)/(n+1)/1024:0, gpu:attesaGpu.length?g/attesaGpu.length:null}); } }
+      fatto({n:n, fps:s?1000*resi/s:0, bat:s?1000*n/s:0, peg:mx, lav:lav.length?l/lav.length:0, d:resi?(CG.d-d0)/resi:0, kb:resi?(CG.b-b0)/resi/1024:0, tri:resi?tr/resi/1e6:0}); } }
   requestAnimationFrame(giro); }); }
 
 function apriCitta(){ var bt=document.querySelector('.schede button[data-vista="roma"]'); if(bt) bt.click();
@@ -101,16 +118,17 @@ async function prepara(c){
   if(c.ferma){ await arriva(c.anno); if(RM.scenaProva && RM.scenaProva.finisci) RM.scenaProva.finisci();
     if(c.mon){ var m=(RM.MONUMENTI||[]).filter(function(x){ return x.id===c.mon; })[0]; if(m) guarda(m.x,m.z,c.d,215,c.el); }
     else guarda(c.vista.t[0],c.vista.t[1],c.vista.d,c.vista.az,c.vista.el);
+    var cc=RM.camera.position, tt=RM.controlli.target; base={dx:cc.x-tt.x, dz:cc.z-tt.z};
     gira=true; await dorme(800); return; }
   gira=false; await arriva(c.anno); }
 async function passo(c,P){
   if(c.scena && RM.scenaProva){ RM.scenaProva.avvia(c.scena); await dorme(2300); }      // la scena da capo: si misura lo stesso tratto (dal mezzo secondo al terzo e mezzo)
   P.su(); await dorme(P.attesa||600); var r=await misura(3000); P.giu(); await dorme(300); return r; }
 
-var esiti=[], corso=null;
+var esiti=[], corso=null, RITMO0=!!RM.ritmo30, base=null;
 function pannello(){ var d=$('div','pc pc-corso'); d.setAttribute('role','status'); d.setAttribute('aria-live','polite');
   d.appendChild($('h2',null,'Prova delle cause'));
-  var r=$('p','pc-riga','Che cosa rallenta la città su questo dispositivo'), s=$('p','pc-sotto','Alla qualità scelta adesso ('+((RM.qualita&&RM.qualita.stato)?RM.qualita.stato().gradino:'?')+'). Tieni il telefono fermo e lo schermo acceso; non toccare la città. Circa un minuto per caso.');
+  var r=$('p','pc-riga','Che cosa rallenta la città su questo dispositivo'), s=$('p','pc-sotto','Alla qualità scelta adesso ('+((RM.qualita&&RM.qualita.stato)?RM.qualita.stato().gradino:'?')+'). Tieni il telefono fermo e lo schermo acceso; non toccare la città. Il primo caso dura un minuto e mezzo, il secondo cinque minuti.');
   d.appendChild(r); d.appendChild(s);
   var scelte=CASI.map(function(c){ var l=$('label'), i=$('input'); i.type='checkbox'; i.checked=c.scelta!==false; l.appendChild(i); l.appendChild(document.createTextNode(c.n)); d.appendChild(l); return i; });
   var via=$('button','pc-primo','Avvia'), x=$('button',null,'Interrompi'); via.type=x.type='button'; x.hidden=true; d.appendChild(via); d.appendChild(x);
@@ -121,19 +139,22 @@ async function vai(casi,r,s){
   apriCitta(); await dorme(1200);
   for(var i=0;i<casi.length && !stop;i++){ var c=casi[i]; r.textContent=c.n+': preparo'; s.textContent='';
     await prepara(c);
-    for(var j=0;j<PASSI.length && !stop;j++){ var P=PASSI[j]; r.textContent=c.n+' ('+(j+1)+' di '+PASSI.length+')'; s.textContent=P.n;
+    if(c.durata){ for(var q=0;q<30 && !stop;q++){ RM.ritmo30=q>=18; r.textContent='800 fermo, '+(q*10)+' secondi su 300'; s.textContent=q<18?'a ritmo libero':'a 30 fotogrammi al secondo';
+        var u=await misura(10000); u.caso=c.n; u.k='durata'; u.passo=(q<18?'ritmo libero':'30 al secondo')+', da '+(q*10)+' a '+(q*10+10)+' s'; esiti.push(u); }
+      RM.ritmo30=RITMO0; continue; }
+    for(var j=0;j<PASSI.length && !stop;j++){ var P=PASSI[j]; if(P.k==='fusi' && !(RM.fluido && RM.fluido.fusi)) continue; r.textContent=c.n+' ('+(j+1)+' di '+PASSI.length+')'; s.textContent=P.n;
       var e=await passo(c,P); e.caso=c.n; e.passo=P.n; e.k=P.k; esiti.push(e); } }
   gira=false; nascondi=[]; ombreFerme=false; finisci=false; RM.senzaGiro=false; fine(); }
 function testo(){ var cv=R.domElement, e=gl.getExtension('WEBGL_debug_renderer_info'), sg=e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):'?';
   var L=['Come finisce un impero, prova delle cause ('+(RM.versione||'?')+')','Browser: '+navigator.userAgent,'Schermo: '+screen.width+' x '+screen.height+' punti, densità '+(window.devicePixelRatio||1)+'; tela '+cv.width+' x '+cv.height+'; scheda grafica: '+sg,
     'Qualità: '+((RM.qualita&&RM.qualita.stato)?RM.qualita.stato().gradino:'?')+'; programmi della scheda grafica: '+((R.info.programs||[]).length),
-    'Caso | che cosa è spento | f/s | peggiore ms | lavoro del ciclo ms | disegni per fotogramma | kB caricati per fotogramma | attesa scheda grafica ms'];
-  esiti.forEach(function(x){ L.push(x.caso+' | '+x.passo+' | '+cifra(x.fps)+' | '+Math.round(x.peg)+' | '+cifra(x.lav)+' | '+Math.round(x.d)+' | '+cifra(x.kb)+' | '+(x.gpu==null?'—':cifra(x.gpu))); });
+    'Caso | che cosa è spento | f/s disegnati | battiti dello schermo al secondo | peggiore ms | lavoro del ciclo ms | disegni per fotogramma | kB caricati per fotogramma | milioni di triangoli per fotogramma'];
+  esiti.forEach(function(x){ L.push(x.caso+' | '+x.passo+' | '+cifra(x.fps)+' | '+cifra(x.bat)+' | '+Math.round(x.peg)+' | '+cifra(x.lav)+' | '+Math.round(x.d)+' | '+cifra(x.kb)+' | '+cifra(x.tri,2)); });
   return L.join('\n'); }
 function fine(){ if(corso) corso.remove(); var d=$('div','pc pc-fine'), k=$('div'); d.appendChild($('h2',null,'Prova delle cause: risultato'));
-  var tb=$('table'), h=$('tr'); ['Che cosa è spento','f/s','peggiore','ciclo ms','disegni','kB','gpu ms'].forEach(function(t){ h.appendChild($('th',null,t)); }); tb.appendChild(h);
+  var tb=$('table'), h=$('tr'); ['Che cosa è spento','f/s','peggiore','ciclo ms','disegni','kB','M tri'].forEach(function(t){ h.appendChild($('th',null,t)); }); tb.appendChild(h);
   var caso=null; esiti.forEach(function(x){ if(x.caso!==caso){ caso=x.caso; var tr0=$('tr'), td0=$('th',null,caso); td0.colSpan=7; td0.style.textAlign='left'; tr0.appendChild(td0); tb.appendChild(tr0); }
-    var tr=$('tr'); [x.passo,cifra(x.fps),Math.round(x.peg),cifra(x.lav),Math.round(x.d),cifra(x.kb),x.gpu==null?'—':cifra(x.gpu)].forEach(function(t){ tr.appendChild($('td',null,String(t))); }); tb.appendChild(tr); });
+    var tr=$('tr'); [x.passo,cifra(x.fps),Math.round(x.peg),cifra(x.lav),Math.round(x.d),cifra(x.kb),cifra(x.tri,2)].forEach(function(t){ tr.appendChild($('td',null,String(t))); }); tb.appendChild(tr); });
   d.appendChild(tb); var t=testo(), a=$('textarea'); a.value=t; a.setAttribute('readonly','');
   var cp=$('button','pc-primo','Copia'), ch=$('button',null,'Chiudi'); cp.type=ch.type='button';
   cp.addEventListener('click',function(){ function vecchio(){ a.select(); try{ document.execCommand('copy'); }catch(e){} } var ok=function(){ cp.textContent='Copiato'; setTimeout(function(){ cp.textContent='Copia'; },1600); };
