@@ -1467,7 +1467,8 @@ RM.fluido={vuoti:!/[?&]vuoti=1/.test(location.search), istanze:!/[?&]istanze=1/.
   function nVert(g){ return g.index?g.index.count:(g.attributes.position?g.attributes.position.count:0); }
   /* le candidate: le maglie a istanze, i punti e le linee (il loro conto cambia) e le maglie che all'ultima ricerca erano vuote; le altre hanno una geometria fatta una volta */
   function cerca(){ cand.length=0; scene.traverse(function(o){ if(o.isInstancedMesh||o.isPoints||o.isLine||(o.isMesh && o.geometry && (nVert(o.geometry)===0 || o.geometry.drawRange.count===0 || o.geometry.isInstancedBufferGeometry))) cand.push(o); }); }
-  function vuota(o){ if(o.isInstancedMesh && o.count===0) return true; var g=o.geometry; if(!g) return false;
+  function vuota(o){ if(o.children.length) return false;      // 28 novembre 2026: chi ha figli non si nasconde (nascosto, nasconde anche loro). Le scene di js/scene-tappe.js appendono la maglia delle persone alla pedina e, quando si vedono le persone, danno alla pedina zero triangoli: la pedina nascosta portava via le persone (il corteo dell'800 spariva a «massima»)
+    if(o.isInstancedMesh && o.count===0) return true; var g=o.geometry; if(!g) return false;
     return nVert(g)===0 || g.drawRange.count===0 || (g.isInstancedBufferGeometry && g.instanceCount===0); }
   var prima=scene.onBeforeRender, dopo=scene.onAfterRender;
   scene.onBeforeRender=function(){
