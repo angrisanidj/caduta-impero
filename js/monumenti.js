@@ -3160,9 +3160,10 @@ RM.frame.push(function(){
   M.forEach(function(o){
     if(!o.div) return;
     var ex=o.ex!=null?o.ex:o.x, ez=o.ez!=null?o.ez:o.z, ey=o.ey!=null?o.ey:7;      // ex, ez: dove sta il nome, se non al centro del gruppo; ey: a che altezza sopra il gruppo (di norma 70 m; 27 novembre 2026)
-    v.set(ex,o.g.position.y+ey,ez).applyMatrix4(RM.camera.matrixWorldInverse); var davanti=v.z<-2;      // dietro la camera non si proietta
-    v.set(ex,o.g.position.y+ey,ez).project(RM.camera);
-    var vis=o.presenza>.5 && davanti && v.z<1 && Math.abs(v.x)<.8 && v.y>-.9 && v.y<.88 && !(v.y>.3 && v.x<-.1) && (o.et || Math.hypot(RM.camera.position.x-o.x,RM.camera.position.y,RM.camera.position.z-o.z)<(o.raggio>6?150:95));   // non sui bordi né sopra il contatore; i monumenti minori hanno il nome solo da vicino
+    var vis=o.presenza>.5 && (o.et || Math.hypot(RM.camera.position.x-o.x,RM.camera.position.y,RM.camera.position.z-o.z)<(o.raggio>6?150:95));      // i monumenti minori hanno il nome solo da vicino; chi non c'è o è lontano non si proietta (28 novembre 2026: stesso esito, meno conti mentre la camera si muove)
+    if(vis){ v.set(ex,o.g.position.y+ey,ez).applyMatrix4(RM.camera.matrixWorldInverse); var davanti=v.z<-2;      // dietro la camera non si proietta
+      v.set(ex,o.g.position.y+ey,ez).project(RM.camera);
+      vis=davanti && v.z<1 && Math.abs(v.x)<.8 && v.y>-.9 && v.y<.88 && !(v.y>.3 && v.x<-.1); }      // non sui bordi né sopra il contatore
     var px=(v.x+1)*w/2, py=(1-v.y)*h/2;
     if(vis){ if(!o.lw){ o.lw=o.div.offsetWidth||o.div.textContent.length*7; o.lh=o.div.offsetHeight||16; }
       var r=[px-o.lw/2-4,py-o.lh-2,px+o.lw/2+4,py+2];

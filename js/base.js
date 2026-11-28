@@ -168,6 +168,7 @@ var GL2=!!window.WebGL2RenderingContext;
 try{ renderer=new THREE.WebGLRenderer({antialias:!GL2}); }
 catch(e){ document.getElementById('errore').hidden=false; RM.guasto=true; if(window.RM_carica) RM_carica.cittaPronta(); return; }
 var piccolo=Math.min(window.innerWidth,window.innerHeight)<700; RM.piccolo=piccolo;
+RM.largW=window.innerWidth; window.addEventListener('resize',function(){ RM.largW=window.innerWidth; },{passive:true});      // la larghezza della finestra per chi la guarda a ogni fotogramma (28 novembre 2026): leggere window.innerWidth dopo che i nomi dei monumenti hanno scritto i loro stili obbliga il browser a rifare l'impaginazione in mezzo al fotogramma
 /* La «veste» (24 novembre 2026, fase 2; l'utente: «dobbiamo fare in modo davvero che migliori l'aspetto di Roma almeno da pc»): suolo, erba, luce, occlusione, acqua, tetti e muri.
    Dal 24 novembre 2026, sera, anche sui telefoni (l'utente: «Secondo te non si può migliorare la qualità della città anche su telefonino?»): il codice nuovo degli shader si compila
    dovunque ci sia WebGL2 (RM.VESTE; ?veste=0 lo toglie, per le prove) e si accende e si spegne col gradino della qualità (RM.vesteU: 0 in «bassa», che resta l'aspetto di prima,
@@ -247,13 +248,13 @@ RM.adatta=function(v){ var k=RM.fattoreVista(); if(k===1||!v||!v.t) return v; va
   return {t:v.t, c:[v.t[0]+(v.c[0]-v.t[0])*k, y0+(v.c[1]-y0)*k, v.t[1]+(v.c[2]-v.t[1])*k]}; };
 /* La scena può scorrere dentro il suo riquadro, in pixel: quando una scheda o la linea del tempo ne coprono una parte, ciò che si guarda
    deve restare al centro di quel che si vede, non al centro del riquadro. x positivo sposta la scena a destra, y positivo in alto. */
-var spost={x:0,y:0,mx:0,my:0};
+var spost={x:0,y:0,mx:0,my:0}, misW=0, misH=0;
 RM.sposta=function(x,y){ spost.mx=Math.round(x); spost.my=Math.round(y); };
 RM.frame.push(function(dt){
   if(!spost.x && !spost.y && !spost.mx && !spost.my) return;
   var k=Math.min(1,dt*6); spost.x+=(spost.mx-spost.x)*k; spost.y+=(spost.my-spost.y)*k;
   if(Math.abs(spost.mx-spost.x)<.5) spost.x=spost.mx; if(Math.abs(spost.my-spost.y)<.5) spost.y=spost.my;
-  var w=contenitore.clientWidth||1, h=contenitore.clientHeight||1;
+  var w=misW||contenitore.clientWidth||1, h=misH||contenitore.clientHeight||1;      // la misura dell'ultima misura() (28 novembre 2026: leggerla qui a ogni fotogramma, a tutto schermo, faceva ricalcolare stili e impaginazione mentre il dito muoveva la città)
   if(!spost.x && !spost.y) camera.clearViewOffset(); else camera.setViewOffset(w,h,-spost.x,spost.y,w,h);
 });
 /* zoom a passi: ci si avvicina o ci si allontana dal punto che si sta guardando */
@@ -357,11 +358,24 @@ RM.ombraFissa=function(o){
   ombraIn(o.x,o.z,L);
   oc.left=-L; oc.right=L; oc.top=L; oc.bottom=-L; oc.updateProjectionMatrix(); sole.shadow.normalBias=o.s?Math.max(.14,.5*L/420):Math.max(.012,5*L/sole.shadow.mapSize.x);      // un riquadro grande come quello che segue la camera; uno stretto: due pixel e mezzo della mappa
   renderer.shadowMap.needsUpdate=true; };
+/* La camera che si muove (28 novembre 2026, quarto giro della fluidità sul telefono; l'utente: «Va troppo a scatti»). Trascinando, pizzicando o nei voli il riquadro si rifaceva
+   a ogni quinto del suo lato: ogni volta la città intera disegnata una seconda volta nello stesso fotogramma (sul banco da telefono 13-18 millesimi di processore a 4x, più la scheda
+   grafica: i fotogrammi da 50-67 millesimi dei gesti). Ora, finché il punto guardato o la distanza cambiano, il riquadro di prima resta se copre ancora ciò che
+   serve (avvicinandosi copre sempre: è più largo); quando non copre più se ne fa uno due gradini più largo del necessario, che basta per un tratto lungo; a camera ferma da 180 millesimi
+   si rifà quello giusto, una volta. Le ombre restano tutte nell'inquadratura durante il gesto; più morbide finché il riquadro è più largo. Il giro lento (solo rotazione) non muove nulla.
+   Solo sui dispositivi al tocco (TOCCO_Q). RM.ombreSempre=true rimette la regola di prima (per le prove nella stessa pagina). */
+var ombraMoto=-1e9, ombraVista={x:1e9,z:1e9,d:0};
 RM.frame.push(function(){
   if(!sole.castShadow || ombraFissa) return;
-  var dist=camera.position.distanceTo(controlli.target), lato=Math.max(70,Math.min(420,dist*1.25)), x=lato>=420?10:controlli.target.x, z=lato>=420?0:controlli.target.z;
+  var dist=camera.position.distanceTo(controlli.target), lato=Math.max(70,Math.min(420,dist*1.25)), x=lato>=420?10:controlli.target.x, z=lato>=420?0:controlli.target.z, ora=performance.now();
+  if(Math.abs(x-ombraVista.x)+Math.abs(z-ombraVista.z)>dist*4e-4 || Math.abs(dist-ombraVista.d)>dist*4e-4) ombraMoto=ora;      // si muove ciò da cui dipende il riquadro: il punto guardato e la distanza (non la sola rotazione; non il dito giù e fermo: «premuto» può restare acceso, per esempio dopo il pointerdown finto di ?guarda)
+  ombraVista.x=x; ombraVista.z=z; ombraVista.d=dist;
   if(Math.abs(lato-ombra.s)<ombra.s*.2 && Math.hypot(x-ombra.x,z-ombra.z)<ombra.s*.22) return;
-  lato=lato>=420?420:Math.min(420,70*Math.pow(1.25,Math.round(Math.log(lato/70)/Math.log(1.25))));      // a gradini fissi: 70, 87,5, 109… fino a 420
+  var passo=lato>=420?99:Math.round(Math.log(lato/70)/Math.log(1.25));      // a gradini fissi: 70, 87,5, 109… fino a 420
+  if(TOCCO_Q && ora-ombraMoto<180 && !RM.ombreSempre){      // in movimento, sui dispositivi al tocco (sul PC il riquadro segue la camera come prima: lì le ombre restano nitide anche durante il gesto)
+    if(ombra.s>=lato && Math.max(Math.abs(x-ombra.x),Math.abs(z-ombra.z))+lato<=ombra.s) return;      // il riquadro di prima copre ancora: si aspetta la camera ferma
+    passo+=2; if(70*Math.pow(1.25,passo)>=420){ passo=99; x=10; z=0; } }      // due gradini più largo, perché basti per un tratto
+  lato=passo>=99?420:Math.min(420,70*Math.pow(1.25,passo));
   ombra.x=x; ombra.z=z; ombra.s=lato;
   ombraIn(x,z,lato);
   oc.left=-lato; oc.right=lato; oc.top=lato; oc.bottom=-lato; oc.updateProjectionMatrix(); sole.shadow.normalBias=Math.max(.14,.5*lato/420);
@@ -982,7 +996,7 @@ RM.post=post;
 /* le misure della tela della pagina e delle tele degli effetti. La densità di disegno (pixel della tela per punto) è quella della scala della qualità (DENS, più sotto)
    o, sotto la densità di base, quella del regolatore di prima (prReg); la tela della pagina si rifà solo se cambia davvero, perché rifarla la svuota */
 function misura(){
-  var w=contenitore.clientWidth||1, h=contenitore.clientHeight||1, cv=renderer.domElement;
+  var w=contenitore.clientWidth||1, h=contenitore.clientHeight||1, cv=renderer.domElement; misW=w; misH=h;
   var pr=(DENS>PR0+.001)?limita(DENS,w,h):(prReg||renderer.getPixelRatio());
   if(Math.abs(renderer.getPixelRatio()-pr)>.001 || cv.width!==Math.floor(w*pr) || cv.height!==Math.floor(h*pr)){ renderer.setPixelRatio(pr); renderer.setSize(w,h,false); }
   camera.aspect=w/h; camera.updateProjectionMatrix();
@@ -1324,7 +1338,7 @@ RM.riquadri=(function(){
   var vecchio=scene.onBeforeRender, salvati=[], camPrima=null, pmPrima=new THREE.Matrix4();
   scene.onBeforeRender=function(r,s,camera){
     if(vecchio) vecchio.apply(this,arguments);
-    if(SPENTO) return;
+    if(SPENTO || preparando) return;      // nel disegno di prova di RM.prepara le copie restano nascoste (28 novembre 2026: prima la scelta si rifaceva anche lì, due millesimi a 4x per niente)
     if((giro++)%120===0) cerca();
     pm.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse); conta.usate=0;
     var stessa=camera===camPrima && pm.equals(pmPrima); if(!stessa){ fr.setFromProjectionMatrix(pm); pmPrima.copy(pm); camPrima=camera; }      // camera ferma: le scelte di prima valgono ancora (per le maglie che non sono cambiate)
@@ -1334,7 +1348,10 @@ RM.riquadri=(function(){
       if(o.visible && o.parent===scene && c.fermo>=QUIETE && o.count>0 && (c.fatta===c.firma || performance.now()-t0<2)){
         if(c.fatta!==c.firma){ rifai(c); c.scelta=null; }
         if(stessa && c.scelta===c.fatta) usa=c.usa;
-        else { c.scelta=c.fatta; var tot=0, dentro=0, nd=0; for(k=0;k<c.copie.length;k++){ q=c.copie[k]; if(!q || !q.count) continue; tot+=c.tri[k]; q.matrix.copy(o.matrix); q.updateMatrixWorld(); sf.copy(q.geometry.boundingSphere).applyMatrix4(q.matrixWorld); if(fr.intersectsSphere(sf)){ dentro+=c.tri[k]; nd++; } }
+        else { c.scelta=c.fatta;
+          if(c.swF!==c.fatta || !c.swM.equals(o.matrix)){ c.swF=c.fatta; c.swM=(c.swM||new THREE.Matrix4()).copy(o.matrix); c.sw=[];      // le sfere delle copie nel mondo, rifatte solo quando cambiano le copie o la maglia (28 novembre 2026: prima a ogni fotogramma in cui la camera si muoveva, un migliaio di matrici per fotogramma)
+            for(k=0;k<c.copie.length;k++){ q=c.copie[k]; if(!q || !q.count){ c.sw[k]=null; continue; } q.matrix.copy(o.matrix); q.updateMatrixWorld(); c.sw[k]=new THREE.Sphere().copy(q.geometry.boundingSphere).applyMatrix4(q.matrixWorld); } }
+          var tot=0, dentro=0, nd=0; for(k=0;k<c.copie.length;k++){ if(!c.sw[k]) continue; tot+=c.tri[k]; if(fr.intersectsSphere(c.sw[k])){ dentro+=c.tri[k]; nd++; } }
         usa=tot>0 && dentro<tot*SOGLIA && (nd-1)*DISEGNO<tot-dentro; c.quota=tot?dentro/tot:0; } }      // conviene solo se i triangoli risparmiati pagano i disegni in più
       else c.scelta=null;      // non scelta adesso: alla prossima volta si rifà il conto
       c.usa=usa;
@@ -1527,8 +1544,9 @@ RM.prepara=function(oggetti,poco,ombre){
   var rt=renderer.getRenderTarget(), sm=renderer.shadowMap, nu=sm.needsUpdate, au=sm.autoUpdate;
   if(ombre){ sm.needsUpdate=true; ombraChiesta=true; ombraSporca=true; }      // ombraSporca: al primo disegno vero la mappa si rifà subito, senza aspettare      // anche i programmi delle ombre: la mappa si disegna con questa sola maglia e si rifà al primo disegno vero
   else { sm.needsUpdate=false; sm.autoUpdate=false; }      // la mappa delle ombre non si rifà con la scena quasi vuota: un rifacimento chiesto in questo fotogramma resta per il disegno vero
+  var su=scene.autoUpdate; scene.autoUpdate=false;      // 28 novembre 2026, quarto giro: il disegno di prova non rifà le matrici di tutta la città (le ha rifatte l'ultimo disegno vero; qui conta solo il programma): sul banco a 4x un millesimo e mezzo a prova, nel viaggio verso l'800 una prova per fotogramma
   try{ preparando=true; renderer.setRenderTarget(post?post.tela:null); renderer.render(scene,camera); }
-  finally{ preparando=false; renderer.setRenderTarget(rt); sm.needsUpdate=nu; sm.autoUpdate=au; salv.forEach(function(s){ s[0].visible=s[1]; }); cull.forEach(function(m){ m.frustumCulled=true; }); }
+  finally{ preparando=false; scene.autoUpdate=su; renderer.setRenderTarget(rt); sm.needsUpdate=nu; sm.autoUpdate=au; salv.forEach(function(s){ s[0].visible=s[1]; }); cull.forEach(function(m){ m.frustumCulled=true; }); }
 };
 var orologio=new THREE.Clock(), somma=0, quanti=0, occhioPrima=new THREE.Vector3(), puntoPrima=new THREE.Vector3();
 /* Quando la scena non è sullo schermo (si è scesi a leggere, o sul telefono si guarda la mappa) non si disegna: la pagina scorre meglio e la batteria ringrazia. */

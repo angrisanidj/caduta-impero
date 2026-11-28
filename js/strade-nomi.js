@@ -80,17 +80,27 @@ var v=new THREE.Vector3(), ultimo='', conta=0, capi=false, MAX=20, ostacoli=[], 
 /* i comandi e le scritte sopra la scena (menu, zoom, didascalia, scheda, contatore): i nomi non ci vanno sotto */
 var SOPRA='.strumenti .apri, .strumenti .voci, .comandi-scena, .evento, .ev-i, .conta, .scheda, .riga-tempo, .legenda-sapere, .esplora';
 function tocca(a,b){ return a[0]<b[2]&&a[2]>b[0]&&a[1]<b[3]&&a[3]>b[1]; }
+/* Le letture dell'impaginazione (28 novembre 2026, quarto giro della fluidità sul telefono). Mentre la camera si muove i nomi dei monumenti (js/monumenti.js) scrivono i loro stili a ogni
+   fotogramma; leggere dopo di loro la misura del riquadro (a ogni fotogramma, qui e nei nomi dei colli) o i rettangoli dei comandi obbligava il browser a ricalcolare stili e impaginazione
+   in mezzo al fotogramma, una o tre volte (sul banco da telefono, trascinando, un millesimo e mezzo o due a fotogramma a 4x). Ora la misura del riquadro arriva da un ResizeObserver e
+   i rettangoli si leggono all'inizio del fotogramma, prima di ogni scrittura (RM.frame.unshift), ogni sei fotogrammi come prima. */
+var rqW=-1, rqH=-1;
+if(window.ResizeObserver) new ResizeObserver(function(){ rqW=riquadro.clientWidth; rqH=riquadro.clientHeight; }).observe(riquadro);
+function misuraRq(){ if(rqW<0){ return [riquadro.clientWidth,riquadro.clientHeight]; } return [rqW,rqH]; }
+RM.frame.unshift(function(){
+  if(!acceso && !colliAcceso) return;
+  if((conta++)%6!==0) return;
+  var w=misuraRq()[0]; capi=false; var c=document.querySelector('.capi3d'); if(c){ for(var i=0;i<c.children.length;i++) if(c.children[i].style.display==='block'){ capi=true; break; } }
+  if(w){ ostacoli=[]; var rq=riquadro.getBoundingClientRect(), el=riquadro.querySelectorAll(SOPRA);
+    for(i=0;i<el.length;i++){ var b=el[i].getBoundingClientRect(); if(!b.width||!b.height) continue; var cs=getComputedStyle(el[i]); if(cs.visibility==='hidden'||+cs.opacity<.05) continue;
+      ostacoli.push([b.left-rq.left-4,b.top-rq.top-4,b.right-rq.left+4,b.bottom-rq.top+4]); }
+    firmaOst=ostacoli.map(function(r){ return r.map(Math.round).join(','); }).join(';'); } });
 RM.frame.push(function(){
   if(!acceso && !colliAcceso) return;      // gli ostacoli servono anche ai nomi dei colli
-  var w=riquadro.clientWidth, hh=riquadro.clientHeight, grande=document.body.classList.contains('roma-grande');
-  if((conta++)%6===0){ capi=false; var c=document.querySelector('.capi3d'); if(c){ for(var i=0;i<c.children.length;i++) if(c.children[i].style.display==='block'){ capi=true; break; } }
-    if(w){ ostacoli=[]; var rq=riquadro.getBoundingClientRect(), el=riquadro.querySelectorAll(SOPRA);
-      for(i=0;i<el.length;i++){ var b=el[i].getBoundingClientRect(); if(!b.width||!b.height) continue; var cs=getComputedStyle(el[i]); if(cs.visibility==='hidden'||+cs.opacity<.05) continue;
-        ostacoli.push([b.left-rq.left-4,b.top-rq.top-4,b.right-rq.left+4,b.bottom-rq.top+4]); }
-      firmaOst=ostacoli.map(function(r){ return r.map(Math.round).join(','); }).join(';'); } }
+  var mq=misuraRq(), w=mq[0], hh=mq[1], grande=document.body.classList.contains('roma-grande');
   if(!acceso){ rettiStrade=[]; return; }
   var dT=RM.camera.position.distanceTo(RM.controlli.target);
-  var via=!w || !hh || (window.innerWidth<=700 && !grande) || document.body.classList.contains('impero-grande') || capi || dT<30 || (etM && etM.style.display==='none');
+  var via=!w || !hh || ((RM.largW||window.innerWidth)<=700 && !grande) || document.body.classList.contains('impero-grande') || capi || dT<30 || (etM && etM.style.display==='none');
   if(via){ rettiStrade=[]; if(ultimo!=='via'){ spegni(); ultimo='via'; } return; }
   /* si ricalcola solo se la camera o il riquadro sono cambiati */
   var e=RM.camera.matrixWorld.elements, firma=w+'|'+hh+'|'+e[12].toFixed(1)+'|'+e[13].toFixed(1)+'|'+e[14].toFixed(1)+'|'+e[8].toFixed(3)+'|'+e[9].toFixed(3)+'|'+e[10].toFixed(3)+'|'+(RM.etichetteMesse?RM.etichetteMesse.length:0)+'|'+firmaOst;
@@ -172,8 +182,8 @@ if(btnC) btnC.addEventListener('click',function(){ colliAcceso=!colliAcceso; scr
 var vC=new THREE.Vector3();
 RM.frame.push(function(){
   if(!colliAcceso){ RM.postiRiservati=[]; return; }
-  var w=riquadro.clientWidth, hh=riquadro.clientHeight, grande=document.body.classList.contains('roma-grande'), dT=RM.camera.position.distanceTo(RM.controlli.target);
-  var via=!w || !hh || (window.innerWidth<=700 && !grande) || document.body.classList.contains('impero-grande') || capi || dT<70 || (etM && etM.style.display==='none');
+  var mq=misuraRq(), w=mq[0], hh=mq[1], grande=document.body.classList.contains('roma-grande'), dT=RM.camera.position.distanceTo(RM.controlli.target);
+  var via=!w || !hh || ((RM.largW||window.innerWidth)<=700 && !grande) || document.body.classList.contains('impero-grande') || capi || dT<70 || (etM && etM.style.display==='none');
   if(via){ RM.postiRiservati=[]; if(ultimoC!=='via'){ spegniC(); ultimoC='via'; } return; }
   var e=RM.camera.matrixWorld.elements, firma=w+'|'+hh+'|'+e[12].toFixed(1)+'|'+e[13].toFixed(1)+'|'+e[14].toFixed(1)+'|'+e[8].toFixed(3)+'|'+e[9].toFixed(3)+'|'+e[10].toFixed(3)+'|'+(RM.etichetteMesse?RM.etichetteMesse.length:0)+'|'+firmaOst+'|'+rettiStrade.length;
   if(firma===ultimoC) return; ultimoC=firma;

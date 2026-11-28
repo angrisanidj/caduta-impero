@@ -628,6 +628,32 @@ function zoneScene(forza){
     segnaOggetto(c); }
   RM.vitaEvita.forEach(function(e){ if(e && e.x!=null) segna(e.x,e.z,e.r||2); });
 }
+/* Il rifacimento di ogni tre secondi a pezzi (28 novembre 2026, quarto giro della fluidità sul telefono; l'utente: «scatta soprattutto nelle scene avanzate alto medievali»).
+   Con una scena accesa che si muove (il corteo dell'800) la griglia si rifaceva tutta in un fotogramma: centinaia di maglie, fino a 1.500 vertici l'una (sul banco da telefono
+   a 4x da 20 a 43 millesimi, uno scatto ogni tre secondi, anche a camera ferma). Ora la griglia nuova si scrive a parte, al più un millesimo per fotogramma, una maglia per volta,
+   con gli stessi vertici di prima; finché non è finita vale quella di prima, poi si scambiano. Al cambio di ciò che è acceso (zoneDaRifare) resta tutto in un fotogramma, come prima. */
+var zP=null, occB=new Uint8Array(ONX*ONZ);
+function segnaUno(o){ var g=o.geometry, P=g&&g.attributes&&g.attributes.position, j, st;      // segnaOggetto senza i figli
+  if(!P || !(o.isMesh||o.isLine)) return;
+  if(o.isInstancedMesh){ st=Math.max(1,Math.floor(o.count/1500)); for(j=0;j<o.count;j+=st){ o.getMatrixAt(j,mT); vT.setFromMatrixPosition(mT).applyMatrix4(o.matrixWorld); segna(vT.x,vT.z,1.5); } }
+  else { st=Math.max(1,Math.floor(P.count/1500)); for(j=0;j<P.count;j+=st){ vT.fromBufferAttribute(P,j).applyMatrix4(o.matrixWorld); segna(vT.x,vT.z,1.5); } } }
+function raccogli(o,q){ if(!o.visible) return; q.push(o); for(var j=0;j<o.children.length;j++) raccogli(o.children[j],q); }
+function zoneAvvia(){ var ch=RM.scene.children, firma='', k, c, lista=[];
+  for(k=IDX_VITA;k<ch.length;k++){ c=ch[k]; if(c.visible && c.userData.gruppo!=='vita' && !c.isPoints && !c.userData.noZona) firma+=k+','; }
+  occFirma=firma+'|'+RM.vitaEvita.length;
+  for(k=IDX_VITA;k<ch.length;k++){ c=ch[k]; if(!c.visible || c.userData.gruppo==='vita' || c.isPoints || c.isSprite || c.isLight || c.userData.noZona) continue; lista.push(c); }
+  occB.fill(0); zP={lista:lista, i:0, coda:[], n:0}; }
+function zonePasso(ms){ var t0=performance.now(), vecchia=occ, vecchioN=occN, fatto=false, c; occ=occB; occN=zP.n;      // segna scrive nella griglia nuova
+  while(performance.now()-t0<ms){
+    if(zP.coda.length){ segnaUno(zP.coda.pop()); continue; }
+    if(zP.i>=zP.lista.length){ RM.vitaEvita.forEach(function(e){ if(e && e.x!=null) segna(e.x,e.z,e.r||2); }); fatto=true; break; }
+    c=zP.lista[zP.i++]; c.updateMatrixWorld(true); bT.setFromObject(c); if(bT.isEmpty() || (bT.max.x-bT.min.x>200 && bT.max.z-bT.min.z>200)) continue;
+    raccogli(c,zP.coda); }
+  if(fatto){ occB=vecchia; zP=null; } else { zP.n=occN; occ=vecchia; occN=vecchioN; } }
+RM.zoneProva=function(confronta){ if(!confronta) return {aPezzi:!!zP, segni:occN};      // per le prove; con confronta: la griglia rifatta in un colpo e a pezzi nello stesso istante, cella per cella
+  var salva=occ.slice(), sN=occN, i, n1=0, n2=0, div=0; zP=null; zoneScene(true); var A=occ.slice(), nA=occN; occ.set(salva); occN=sN;
+  zoneAvvia(); while(zP) zonePasso(1e9);
+  for(i=0;i<A.length;i++){ if(A[i]) n1++; if(occ[i]) n2++; if(A[i]!==occ[i]) div++; } return {celleInUnColpo:n1, celleAPezzi:n2, diverse:div, segniInUnColpo:nA, segniAPezzi:occN}; };
 
 /* ---------- a ogni fotogramma ---------- */
 var VA={quota:1,carri:1,assedio:false,nota:''}, vieDaRifare=true, zoneDaRifare=true;
@@ -1149,7 +1175,9 @@ modVita.arrivo=0; RM.moduli.push(modVita);      // sul telefono nel viaggio fra 
 RM.frame.push(function(dt){
   tempo+=dt; if(!MENO_MOTO) uPasso.value=tempo;
   if(vieDaRifare){ vieDaRifare=false; scegliVie(annoOra); scegliCarri(annoOra); }
-  if(zoneDaRifare || (occN && tempo-occT>3)){ occT=tempo; zoneScene(!zoneDaRifare); zoneDaRifare=false; }      // le scene accese tengono libero il loro posto (e se si muovono, ogni tre secondi)
+  if(zoneDaRifare){ occT=tempo; zP=null; zoneScene(false); zoneDaRifare=false; }      // le scene accese tengono libero il loro posto (e se si muovono, ogni tre secondi: a pezzi, zoneAvvia e zonePasso)
+  else if(occN && tempo-occT>3){ occT=tempo; if(!zP) zoneAvvia(); }
+  if(zP) zonePasso(1);
   provaLuoghi(annoOra,1.5);      // i posti liberi dei luoghi affollati, al più un millesimo e mezzo per fotogramma
   LUOGHI.forEach(function(L){ if(L.porto) banchiVisibili(L.vis && !!L.ok && !!L.banchi); });
   matGente.opacity=1-.8*RM.notte;

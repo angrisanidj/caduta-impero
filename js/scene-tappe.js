@@ -371,7 +371,7 @@ RM.frame.push(function(dt){
   var o=corrente; if(!o||!o.righe||MENO||FERMA!=null||o.t==null){ if(rigaEl&&rigaEl.style.display!=='none'&&(!o||o.t==null)) riga(null); if(!MENO && breveOra && (!o||o.t==null)) breve(null); return; }
   if(!o.visibile()){ riga(null); breve(null); return; }
   if(o.t>=o.fine){ dopo+=dt; if(dopo>4){ riga(null); breve(null); corrente=null; } return; }
-  var r=null, f=null, st=window.innerWidth<700; o.righe.forEach(function(q){ if(o.t>=q[0]){ r=(st&&q[2])||q[1]; f=q[3]||null; } }); riga(r); breve(f);      // q[2]: la riga corta per il telefono (la frase intera resta nella didascalia)
+  var r=null, f=null, st=(RM.largW||window.innerWidth)<700; o.righe.forEach(function(q){ if(o.t>=q[0]){ r=(st&&q[2])||q[1]; f=q[3]||null; } }); riga(r); breve(f);      // q[2]: la riga corta per il telefono (la frase intera resta nella didascalia)
 });
 function quadro(o){ if(o.attende){ o.disegna(0); giornoDiNuovo(); return; }      // aspetta il passo della carta (410, più sotto): la città prima del sacco, alla luce scelta da chi guarda
   o.disegna(FERMA!=null?Math.min(o.fine,FERMA):o.quadroT!=null?o.quadroT:o.fine); }      // la scena ferma, prima che parta o dopo (quadroT: un altro istante, se la fine non è il quadro giusto: l'800)
@@ -2540,15 +2540,22 @@ function capiPrepara(){
   return true;
 }
 function tocca2(a,b){ return a[0]<b[2]&&a[2]>b[0]&&a[1]<b[3]&&a[3]>b[1]; }
+/* Le letture dell'impaginazione all'inizio del fotogramma (28 novembre 2026, quarto giro della fluidità sul telefono): i nomi dei monumenti visibili, la didascalia e la riga dei tempi
+   si leggono prima che i nomi dei monumenti scrivano i loro stili (RM.frame.unshift), ogni sei fotogrammi come prima. Prima si leggevano dopo quelle scritture: mentre la camera si
+   muoveva il browser doveva ricalcolare stili e impaginazione in mezzo al fotogramma. Ora i rettangoli sono quelli del fotogramma prima (prima erano vecchi fino a cinque). */
+var capiVivi=false;
+function leggiRett(){ rettM=[]; var rq=capiEl.getBoundingClientRect();      // i nomi dei monumenti visibili (js/monumenti.js)
+  var et=document.querySelectorAll('.etichette3d span'); for(var i=0;i<et.length;i++){ if(et[i].style.visibility!=='visible') continue; var b=et[i].getBoundingClientRect(); if(b.width) rettM.push([b.left-rq.left-2,b.top-rq.top-2,b.right-rq.left+2,b.bottom-rq.top+2]); }
+  var sopra=document.querySelectorAll('.riquadro.roma .evento, .riquadro.roma .riga-tempo');      // la didascalia dell'evento e la riga dei tempi: i nomi non ci vanno sopra
+  for(i=0;i<sopra.length;i++){ var s2=getComputedStyle(sopra[i]); if(s2.display==='none'||+s2.opacity<.05) continue; var b2=sopra[i].getBoundingClientRect(); if(b2.width) rettM.push([b2.left-rq.left-4,b2.top-rq.top-4,b2.right-rq.left+4,b2.bottom-rq.top+4].concat([1])); } }
+RM.frame.unshift(function(){ if(capiEl && capiVivi && (contaF%6)===0) leggiRett(); });
 RM.frame.push(function(){
   if(!capiEl && !capiPrepara()) return;
-  var w=capiW>=0?capiW:capiEl.clientWidth, h=capiH>=0?capiH:capiEl.clientHeight, tel=window.innerWidth<700, messi=[], quanti=0; if(!w||!h) return;
+  var w=capiW>=0?capiW:capiEl.clientWidth, h=capiH>=0?capiH:capiEl.clientHeight, tel=(RM.largW||window.innerWidth)<700, messi=[], quanti=0; if(!w||!h) return;
   var qualcuno=false; CAPI.forEach(function(c){ var p=null; try{ p=c.vis()&&c.p(); }catch(e){ p=null; } c.__p=p; if(p || c.el.style.display!=='none') qualcuno=true; });      // 28 novembre 2026, notte: senza nomi da mostrare né da spegnere non si legge l'impaginazione (sul banco da telefono un terzo di millesimo a fotogramma a 4x); al primo nome si rilegge subito
-  if(!qualcuno){ contaF=0; return; }
-  if((contaF++)%6===0){ rettM=[]; var rq=capiEl.getBoundingClientRect();      // i nomi dei monumenti visibili (js/monumenti.js), letti ogni sei fotogrammi
-    var et=document.querySelectorAll('.etichette3d span'); for(var i=0;i<et.length;i++){ if(et[i].style.visibility!=='visible') continue; var b=et[i].getBoundingClientRect(); if(b.width) rettM.push([b.left-rq.left-2,b.top-rq.top-2,b.right-rq.left+2,b.bottom-rq.top+2]); }
-    var sopra=document.querySelectorAll('.riquadro.roma .evento, .riquadro.roma .riga-tempo');      // la didascalia dell'evento e la riga dei tempi: i nomi non ci vanno sopra
-    for(i=0;i<sopra.length;i++){ var s2=getComputedStyle(sopra[i]); if(s2.display==='none'||+s2.opacity<.05) continue; var b2=sopra[i].getBoundingClientRect(); if(b2.width) rettM.push([b2.left-rq.left-4,b2.top-rq.top-4,b2.right-rq.left+4,b2.bottom-rq.top+4].concat([1])); } }
+  if(!qualcuno){ contaF=0; capiVivi=false; return; }
+  if(!capiVivi){ capiVivi=true; contaF=0; leggiRett(); }      // il primo nome: si legge subito, come prima
+  contaF++;
   CAPI.forEach(function(c){
     var p=c.__p, ok=false;
     if(p && (!tel||quanti<2)){
