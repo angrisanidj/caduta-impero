@@ -378,7 +378,7 @@ function quadro(o){ if(o.attende){ o.disegna(0); giornoDiNuovo(); return; }     
 RM.frame.push(function(dt){
   SEQ.forEach(function(o){
     if(o.t==null || FERMA!=null || o.t>=o.fine || !o.visibile()) return;
-    o.t+=dt;
+    o.t+=(RM.dtScena!=null?RM.dtScena:dt);      // il tempo vero (js/base.js, RM.dtScena): sul telefono lento la scena non si allunga
     while(o.fatte<o.azioni.length && o.t>=o.azioni[o.fatte][0]){ if(!o.toccato && !MENO) o.azioni[o.fatte][1](); o.fatte++; }
     o.disegna(Math.max(0,Math.min(o.fine,o.t)));
   });
@@ -1018,8 +1018,8 @@ var S852=(function(){
     var pv=t>TC+.3&&t<TC+6.5; mp.opacity=pv?.42*RM.sfuma(TC+.3,TC+1.2,t)*(1-RM.sfuma(TC+3.5,TC+6.5,t)):0;
     polvere.forEach(function(m,j){ m.visible=pv; var g=.6+1.2*RM.sfuma(TC+.3,TC+4,t)+(j%3)*.2; m.scale.set(g,g*.7,g); m.position.y=y0+1.2+1.2*RM.sfuma(TC+.3,TC+5,t); });
     var km=Math.max(.02,RM.sfuma(MURA0,MURA1,t)); leo.mat.userData.u.uCant.value=km>=1?1:km; leo.g.scale.y=1; leo.g.visible=true;
-    if(anni){ var su=t>MURA0-.6&&t<PROC+.6&&FERMA==null; anni.style.display=su?'block':'none';
-      if(su) anni.innerHTML=(848+Math.min(4,Math.floor(4.999*RM.sfuma(MURA0,MURA1,t))))+'<div style="font:500 12px/1.3 system-ui,sans-serif;margin-top:2px">le mura leonine salgono: quattro anni in pochi secondi</div>'; }
+    if(anni){ var su=t>MURA0-.6&&t<PROC+.6&&FERMA==null, dis=su?'block':'none'; if(anni.style.display!==dis) anni.style.display=dis;      // si scrive solo quando cambia (sesto giro: a ogni fotogramma la pagina rifaceva lo stile)
+      var an=848+Math.min(4,Math.floor(4.999*RM.sfuma(MURA0,MURA1,t))); if(su && anni.__a!==an){ anni.__a=an; anni.innerHTML=an+'<div style="font:500 12px/1.3 system-ui,sans-serif;margin-top:2px">le mura leonine salgono: quattro anni in pochi secondi</div>'; } }
     leone852.g.visible=t>=PROC;
   }
   var VC=mira(W(9.4*1.05*Math.cos(dir),7.8*1.05*Math.sin(dir))[0],W(9.4*1.05*Math.cos(dir),7.8*1.05*Math.sin(dir))[1],(function(){ var c=W(9.4*4.3*Math.cos(dir-.5),7.8*4.3*Math.sin(dir-.5)); return [c[0],y0+13,c[1]]; })());
@@ -1940,7 +1940,7 @@ RM.frame.push(function(){
 var meno800=null;
 RM.prova800={seq:carlo800.seq, T2:carlo800.T2, FINE:carlo800.FINE, interno:interno800, lumi:LUMI800};      // per le prove senza finestra (catture della sequenza): a che punto è la scena
 /* per la prova delle scene sul telefono (js/prova-scena.js, ?prova=scena&anno=800): fa partire la scena animata di un anno come la regia, e dice a che punto è */
-RM.scenaProva={ avvia:function(anno){ fermaTutte(); var f=ANIMA[anno]; if(!f) return false; f(); return true; },
+RM.scenaProva={ avvia:function(anno){ fermaTutte(); var f=ANIMA[anno]; if(!f) return false; f(); return true; }, finisci:fermaTutte,      // finisci: tutte le scene al loro quadro (js/prova-cause.js)
   corrente:function(){ return corrente || SEQ.filter(function(o){ return o.t!=null && o.t<o.fine; })[0] || null; }, anni:function(){ return Object.keys(ANIMA).map(Number); } };
 /* una scena animata è in corso (e si vede): js/base.js tiene ferma la qualità finché dura (si veda giudica) */
 RM.scenaInCorso=function(){ for(var i=0;i<SEQ.length;i++){ var o=SEQ[i]; if(o.t!=null && o.t<o.fine && o.visibile()) return true; } return false; };

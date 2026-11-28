@@ -422,6 +422,12 @@ if(MAXF){
   ombraFig.instanceMatrix.setUsage(THREE.DynamicDrawUsage); ombraFig.count=0; ombraFig.visible=false; ombraFig.frustumCulled=false; ombraFig.userData.gruppo='vita'; RM.scene.add(ombraFig);
 }
 var dirF=new Float32Array(NP), prima=new Float32Array(NP*2), mF=new THREE.Matrix4(), qF=new THREE.Quaternion(), vF=new THREE.Vector3(), sF=new THREE.Vector3(), eF=new THREE.Euler();
+/* 28 novembre 2026, sesto giro (le prime misure dall'iPhone): si carica sulla scheda grafica solo la parte usata di un attributo, i primi k valori (le istanze disegnate),
+   non tutto l'attributo, che è grande quanto il gradino più alto. Prima le figure vicine caricavano circa 300 kB a ogni fotogramma anche con poche persone in vista; su Safari ogni
+   caricamento passa a un altro processo. La scheda grafica legge solo le istanze contate: l'immagine non cambia. */
+if(RM.fluido) RM.fluido.parziale=!/[?&]parziale=0/.test(location.search);      // ?parziale=0 lo spegne (per le prove; anche a pagina aperta con RM.fluido.parziale=false)
+function parziale(a,k){ if(RM.fluido && RM.fluido.parziale===false){ a.updateRange.count=-1; a.needsUpdate=true; return; } a.updateRange.offset=0; a.updateRange.count=Math.min(k,a.array.length); a.needsUpdate=true; }
+RM.parziale=parziale;
 function figureVicine(n){
   var max=MAXF?(RM.QUALITA.figure[RM.q]||0):0, i, k;
   if(!max){ if(MAXF && (figure.some(function(m){ return m.count; })||ombraFig.count||ombraFig.visible)){ figure.forEach(function(m){ m.count=0; m.visible=false; }); ombraFig.count=0; ombraFig.visible=false; } return; }      // spente: in «bassa» non si compilano né si disegnano
@@ -440,8 +446,8 @@ function figureVicine(n){
     pos[o+1]=-60;                                                                                                           // il punto lontano si spegne
   }
   var S2=SET[EP]||[];
-  for(k=0;k<S2.length;k++){ var mm=S2[k], ck=conta?conta[k]:0; mm.count=ck; mm.visible=ck>0; if(ck){ mm.instanceMatrix.needsUpdate=true; mm.instanceColor.needsUpdate=true; mm.geometry.attributes.fase.needsUpdate=true; mm.geometry.attributes.moto.needsUpdate=true; mm.geometry.attributes.posa.needsUpdate=true; } }
-  ombraFig.count=tot; ombraFig.visible=tot>0; if(tot) ombraFig.instanceMatrix.needsUpdate=true;
+  for(k=0;k<S2.length;k++){ var mm=S2[k], ck=conta?conta[k]:0; mm.count=ck; mm.visible=ck>0; if(ck){ var ga=mm.geometry.attributes; parziale(mm.instanceMatrix,ck*16); parziale(mm.instanceColor,ck*3); parziale(ga.fase,ck); parziale(ga.moto,ck); parziale(ga.posa,ck*3); } }
+  ombraFig.count=tot; ombraFig.visible=tot>0; if(tot) parziale(ombraFig.instanceMatrix,tot*16);
 }
 
 /* ---------- carri, bestie da soma, banchi dell'Emporio, ronde (25 novembre 2026, notte) ----------
@@ -766,7 +772,7 @@ function muoviCarri(dt,fr,nt){
     var sx=Math.sin(ang), sz=Math.cos(ang), av=mulo?.13:.16, la=mulo?.03:-.11;
     pos[o]=x+sx*av+sz*la; pos[o+2]=z+sz*av-sx*la; piedi[j]=y; pos[o+1]=y+.2; if(cVira[k]>0) dirF[j]=ang;
   }
-  [[mCarri,cc],[mMuli,cm]].forEach(function(q){ var m=q[0], n=q[1]; m.count=n; m.visible=n>0; if(n){ m.instanceMatrix.needsUpdate=true; m.instanceColor.needsUpdate=true; var A=m.geometry.attributes; A.fase.needsUpdate=true; A.moto.needsUpdate=true; A.tipo.needsUpdate=true; } });
+  [[mCarri,cc],[mMuli,cm]].forEach(function(q){ var m=q[0], n=q[1]; m.count=n; m.visible=n>0; if(n){ parziale(m.instanceMatrix,n*16); parziale(m.instanceColor,n*3); var A=m.geometry.attributes; parziale(A.fase,n*A.fase.itemSize); parziale(A.moto,n*A.moto.itemSize); parziale(A.tipo,n*A.tipo.itemSize); } });      // solo le istanze contate (sesto giro, si veda parziale)
 }
 function F_(){ return RM.vitaFattore==null?1:RM.vitaFattore; }
 function muoviRonde(dt,nt){
@@ -1075,7 +1081,7 @@ function muoviBarche(dt){
       pB.set(b.x+st.x,-.497,b.z+st.z); sB.set(lg,1,lr); mB2.compose(pB,qB,sB); mScie.setMatrixAt(nS++,mB2); sB.set(1,1,1); }
   });
   mCV.count=nC; mCL.count=nCL; mPV.count=nP; mPL.count=nPL; mRemi.count=nR; mBuoi.count=nBv; mBuoiL.count=nBl; mScie.count=nS; mCorde.count=nBu; mBov.count=nBo; mBovL.count=nBoL;
-  [mCV,mCL,mPV,mPL,mRemi,mBuoi,mBuoiL,mScie,mCorde,mBov,mBovL].forEach(function(m){ m.visible=m.count>0; if(m.count) m.instanceMatrix.needsUpdate=true; });
+  [mCV,mCL,mPV,mPL,mRemi,mBuoi,mBuoiL,mScie,mCorde,mBov,mBovL].forEach(function(m){ m.visible=m.count>0; if(m.count) parziale(m.instanceMatrix,m.count*16); });
   if(nBo){ var GB=mBov.geometry.attributes; GB.fase.needsUpdate=true; GB.moto.needsUpdate=true; GB.posa.needsUpdate=true; }
   [geoBuoi,geoBuoiL].forEach(function(g){ g.attributes.fase.needsUpdate=true; g.attributes.moto.needsUpdate=true; });
   matScia.color.setScalar(1-.75*(RM.notte||0));
@@ -1118,7 +1124,7 @@ function annoFermi(anno){ if(!fermi) fermi=postiFermi(); var q=RM.statoMonumento
 function frameFermi(){ if(!fermi) return; var cam=RM.camera.position, cnt=[[0,0,0],[0,0,0]];
   fermi.forEach(function(f){ if(!f.on) return; var l=(RM.q!==0 && Math.hypot(f.x-cam.x,f.z-cam.z,-.5-cam.y)<60)?0:1, m=mFermi[l][f.tipo];
     oF.position.set(f.x,-.5,f.z); oF.rotation.set(0,f.ry,0); oF.scale.setScalar(1); oF.updateMatrix(); m.setMatrixAt(cnt[l][f.tipo]++,oF.matrix); });      // ferme: niente beccheggio, il fiume qui è calmo (SCHEMA)
-  mFermi.forEach(function(L,l){ L.forEach(function(m,t){ m.count=cnt[l][t]; m.visible=m.count>0; if(m.count) m.instanceMatrix.needsUpdate=true; }); }); }
+  mFermi.forEach(function(L,l){ L.forEach(function(m,t){ m.count=cnt[l][t]; m.visible=m.count>0; if(m.count) parziale(m.instanceMatrix,m.count*16); }); }); }
 RM.portoProva={ posti:function(){ return fermi; }, conta:function(){ return {fermi:nFermi, ok:fermi?fermi.filter(function(f){ return f.ok; }).length:0, accese:fermi?fermi.filter(function(f){ return f.on; }).length:0, mucchi:mMucchi.map(function(m){ return m.count; }), cime:mCime.count}; } };      // per le prove
 RM.barcheProva={ lista:function(){ return dati.map(function(b){ return {i:b.i, x:b.x, z:b.z, ry:b.ry, tipo:b.c.tipo, corsa:b.nome, vis:b.vis, mov:b.mov, bx:b.bx, bz:b.bz, by:b.by, f:b.f}; }); },      // per le prove
   conta:function(){ return {visibili:dati.filter(function(b){ return b.vis; }).length, vere:mCV.count+mPV.count, buoi:mBuoi.count+mBuoiL.count, buoiVicini:mBuoi.count, bovari:mBov.count, bovariSagoma:mBovL.count, triBue:Math.round(geoBuoi.attributes.position.count/3/2), triBueL:Math.round(geoBuoiL.attributes.position.count/3/2)}; },

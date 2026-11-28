@@ -1605,9 +1605,9 @@ function chiaveMat(m){ return (Array.isArray(m.material)?m.material.map(function
 var ultimoTocco=0, quietoInCorso=false, quietoOmbre=false, ombraSporca=false;
 ['pointerdown','touchstart','wheel','keydown','scroll'].forEach(function(t){ window.addEventListener(t,function(){ ultimoTocco=performance.now(); },{capture:true,passive:true}); });
 function ferma(){ var t=performance.now();
-  return !document.hidden && t-ultimoTocco>500 && t-ultimoAnno>500 && !volo && !(window.RM_mappa && RM_mappa.inRegia && RM_mappa.inRegia()) &&
+  return !RM.preparaPausa && !document.hidden && t-ultimoTocco>500 && t-ultimoAnno>500 && !volo && !(window.RM_mappa && RM_mappa.inRegia && RM_mappa.inRegia()) &&
     !(RM.arrivoInCorso && RM.arrivoInCorso()) && !(RM.caseLavoro && RM.caseLavoro()) && !(RM.scenaInCorso && RM.scenaInCorso()) && !daPreparare.length; }
-var ozio=window.requestIdleCallback||function(f){ return setTimeout(function(){ f({timeRemaining:function(){ return 10; }}); },60); };
+var ozio=window.requestIdleCallback||function(f){ return setTimeout(function(){ var fine=performance.now()+8; f({timeRemaining:function(){ return Math.max(0,fine-performance.now()); }}); },60); };      // senza requestIdleCallback (Safari): otto millesimi veri per giro (28 novembre 2026, sesto giro: prima il tempo restante era sempre 10 e un giro poteva preparare decine di maglie in fila, sul banco fino a 35 disegni di prova in un fotogramma)
 function giroQuieto(scad){ quietoInCorso=false; if(!quieti.length) return;
   if(!ferma()){ quietoInCorso=true; setTimeout(function(){ ozio(giroQuieto); },250); return; }
   var p0=(renderer.info.programs||[]).length, n=0;
@@ -1651,6 +1651,7 @@ var tsPrima=0;
     if(iv>0 && iv<.2 && !document.hidden){ vuoti.push(iv); if(vuoti.length>60) vuoti.shift(); if(vuoti.length>=30 && vuoti.length%10===0) periodoV=mediana(vuoti); }      // senza disegnare: il battito dello schermo
     return; }
   var grezzo=orologio.getDelta(), dt=Math.min(grezzo,.1), ora=performance.now();
+  RM.dtScena=Math.min(grezzo,.25);      // 28 novembre 2026, sesto giro: il tempo delle scene delle tappe (js/scene-tappe.js) col tetto di un quarto di secondo, non di un decimo: a 9 fotogrammi al secondo la scena non dura di più; il tetto resta contro i salti dopo un cambio di finestra
   if(!document.hidden && grezzo<.4 && ora-ultimoAnno>400){      // le pause (scheda nascosta, caricamento) e il viaggio fra due tappe non contano
     if(scalda>0) scalda--; else if(!provaQ && !inScena() && avvio.fatta && ALTA===1 && DENS<=PR0+.001 && (altaAdatta?alta.p===0:true)){ somma+=grezzo; quanti++; }      // il regolatore di prima: in automatica solo in «bassa» (sopra, il ritmo lo guarda la scala della qualità), con una scelta a mano dove la tela è a 1
     if(quanti>=50){ regola(somma/quanti); somma=0; quanti=0; }
@@ -1680,7 +1681,7 @@ var tsPrima=0;
 /* ?prova=qualita: la prova dei gradini sul telefono (js/prova-qualita.js), caricata solo a richiesta, con la versione di questo file */
 (function(){ var sc=document.currentScript, v=sc && /\?v=[^&#]+/.exec(sc.src||''); RM.versione=v?v[0].slice(3):'';
   if(/[?&]misura=1/.test(location.search)) window.addEventListener('load',function(){ var s=document.createElement('script'); s.src='js/misura.js'+(v?v[0]:''); document.body.appendChild(s); });      // ?misura=1: il registratore della fluidità per il telefono vero (js/misura.js)
-  var pr=/[?&]prova=(qualita|scena)/.exec(location.search); if(!pr) return;      // ?prova=scena&anno=800: la prova di una scena animata (js/prova-scena.js)
+  var pr=/[?&]prova=(qualita|scena|cause)/.exec(location.search); if(!pr) return;      // ?prova=scena&anno=800: la prova di una scena animata (js/prova-scena.js); ?prova=cause: che cosa rallenta la città su questo dispositivo (js/prova-cause.js)
   window.addEventListener('load',function(){ var s=document.createElement('script'); s.src='js/prova-'+pr[1]+'.js'+(v?v[0]:''); document.body.appendChild(s); }); })();
 
 })();

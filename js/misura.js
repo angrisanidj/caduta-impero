@@ -7,6 +7,15 @@
   if(!window.RM || !RM.renderer) return;
   var R=RM.renderer, tri=0, rendi=R.render;
   R.render=function(sc,cam){ rendi.apply(R,arguments); if(sc===RM.scene) tri=R.info.render.triangles; };      // i triangoli del disegno della città (le passate degli effetti ne hanno due)
+  /* 28 novembre 2026, sesto giro: le chiamate alla scheda grafica, contate nel modo più leggero (solo disegni e byte caricati; lo stesso contatore di js/prova-cause.js),
+     e il lavoro del processore nel ciclo della città (RM.lavoro): se i fotogrammi sono lunghi e il lavoro è corto, il freno è la scheda grafica o il browser */
+  var CG=window.RM_contaGL||(window.RM_contaGL=(function(){ var c={d:0,b:0};
+    [window.WebGL2RenderingContext,window.WebGLRenderingContext].forEach(function(K){ if(!K) return; var P=K.prototype;
+      ['drawElements','drawArrays','drawElementsInstanced','drawArraysInstanced','drawRangeElements'].forEach(function(n){ var f=P[n]; if(!f||f.__rm) return; P[n]=function(){ c.d++; return f.apply(this,arguments); }; P[n].__rm=1; });
+      ['bufferData','bufferSubData','texImage2D','texSubImage2D','texImage3D','texSubImage3D'].forEach(function(n){ var f=P[n]; if(!f||f.__rm) return;
+        P[n]=function(){ for(var i=arguments.length-1;i>=0;i--){ var x=arguments[i]; if(x && x.byteLength!==undefined){ c.b+=(n==='bufferSubData'&&arguments.length>=5&&arguments[4])?arguments[4]*(x.BYTES_PER_ELEMENT||1):x.byteLength; break; } if(x && x.width){ c.b+=x.width*x.height*4; break; } } return f.apply(this,arguments); }; P[n].__rm=1; }); });
+    return c; })());
+  var d0=CG.d, b0=CG.b, ultD=[], ultB=[];
   var prima=0, ultimi=[], tappe=[], cur=null, cambi=0;
   function nomeTappa(tp){ var D=window.RM_DATI, i=window.RM_pagina?RM_pagina.tappa():-1, T=tp||(D&&D.TAPPE&&D.TAPPE[i]); return {i:i, anno:T?T.anno+(T.intermezzo?' ('+T.titolo+')':''):(window.RM_pagina?Math.round(RM_pagina.annoOra()):0)}; }      // l'anno della tappa scelta (nel viaggio l'anno della scena è ancora quello di prima)
   function nuova(tp){ var t=nomeTappa(tp); cur={tappa:t.i, anno:t.anno, n:0, s:0, mx:0, o33:0, o100:0, cambi:0, gradini:{}, t0:performance.now(), m:{n:0, s:0, mx:0, o33:0, o50:0}}; tappe.push(cur); }
@@ -31,23 +40,25 @@
     requestAnimationFrame(giro);
     var mv=mossa();
     if(prima){ var d=ts-prima; if(d>0 && d<2000 && !document.hidden){ ultimi.push([ts,d]); var c=cur; c.n++; c.s+=d; if(d>c.mx) c.mx=d; if(d>33.4) c.o33++; if(d>100) c.o100++; var s=stato(); c.gradini[s.g]=(c.gradini[s.g]||0)+1; var sa=scala().s; c.ss=(c.ss||0)+sa; c.smin=Math.min(c.smin==null?1:c.smin,sa);
-      if(mv){ var m=c.m; m.n++; m.s+=d; if(d>m.mx) m.mx=d; if(d>33.4) m.o33++; if(d>50.1) m.o50++; } } }
-    prima=ts;
+      if(mv){ var m=c.m; m.n++; m.s+=d; if(d>m.mx) m.mx=d; if(d>33.4) m.o33++; if(d>50.1) m.o50++; }
+      var dd=CG.d-d0, db=CG.b-b0; c.dis=(c.dis||0)+dd; c.kb=(c.kb||0)+db/1024; c.lav=(c.lav||0)+(RM.lavoro||0); ultD.push(dd); ultB.push(db); if(ultD.length>120){ ultD.shift(); ultB.shift(); } } }
+    prima=ts; d0=CG.d; b0=CG.b;
     while(ultimi.length && ts-ultimi[0][0]>2000) ultimi.shift();
   }
   requestAnimationFrame(giro);
   setInterval(function(){ if(!ultimi.length) return; var s=0, mx=0; ultimi.forEach(function(u){ s+=u[1]; if(u[1]>mx) mx=u[1]; });
     var fps=1000*ultimi.length/Math.max(1,s), st=stato();
-    var sa=scala(); riga.textContent=Math.round(fps)+' f/s · peggiore '+Math.round(mx)+' ms · '+st.g+' · scala '+dieci(sa.s)+' · '+(tri/1e6).toFixed(2).replace('.',',')+' M tri'; },500);
+    var sa=scala(), sd=0, sb=0; ultD.forEach(function(x){ sd+=x; }); ultB.forEach(function(x){ sb+=x; }); var nn=Math.max(1,ultD.length);
+    riga.textContent=Math.round(fps)+' f/s · peggiore '+Math.round(mx)+' ms · '+st.g+' · scala '+dieci(sa.s)+' · '+(tri/1e6).toFixed(2).replace('.',',')+' M tri · '+Math.round(sd/nn)+' dis · '+Math.round(sb/nn/1024)+' kB · ciclo '+dieci(RM.lavoro||0)+' ms'; },500);
   function testo(){
     var gl=R.getContext(), e=gl.getExtension('WEBGL_debug_renderer_info'), sg=e?gl.getParameter(e.UNMASKED_RENDERER_WEBGL):'?', cv=R.domElement;
     var L=['Come finisce un impero, misura della fluidità ('+(RM.versione||'versione ignota')+')',
       'Browser: '+navigator.userAgent, 'Schermo: '+screen.width+' x '+screen.height+' punti, densità '+(window.devicePixelRatio||1)+'; tela della città adesso '+cv.width+' x '+cv.height+' (1 x 1 se è nascosta); scheda grafica: '+sg,
       'Qualità: '+(RM.qualita&&RM.qualita.automatica&&RM.qualita.automatica()?'automatica, ':'scelta a mano, ')+stato().g+'; cambi del regolatore in tutto: '+cambi,
       'Scala adattiva: adesso '+dieci(scala().s)+' dei lati, '+dieci(scala().px||0)+' pixel per punto, metro: '+scala().metro+(RM.scalaAdatta&&RM.scalaAdatta.fissa?' (spenta con ?densita=fissa)':''),
-      'Tappa (anno) | fotogrammi | media f/s | peggiore ms | oltre 33 ms | oltre 100 ms | gradini | cambi | con la camera che si muove: fotogrammi, media f/s, peggiore ms, oltre 33, oltre 50 | scala adattiva media, minima'];
+      'Tappa (anno) | fotogrammi | media f/s | peggiore ms | oltre 33 ms | oltre 100 ms | gradini | cambi | con la camera che si muove: fotogrammi, media f/s, peggiore ms, oltre 33, oltre 50 | scala adattiva media, minima | lavoro del ciclo ms, disegni, kB caricati per fotogramma (medie)'];
     tappe.forEach(function(c){ if(!c.n) return; var g=Object.keys(c.gradini).map(function(k){ return k+' '+Math.round(100*c.gradini[k]/c.n)+'%'; }).join(', '), m=c.m;
-      L.push(c.anno+' | '+c.n+' | '+(1000*c.n/c.s).toFixed(1)+' | '+Math.round(c.mx)+' | '+c.o33+' | '+c.o100+' | '+g+' | '+c.cambi+' | '+(m.n?m.n+', '+(1000*m.n/m.s).toFixed(1)+', '+Math.round(m.mx)+', '+m.o33+', '+m.o50:'—')+' | '+dieci((c.ss||c.n)/c.n)+', '+dieci(c.smin==null?1:c.smin)); });
+      L.push(c.anno+' | '+c.n+' | '+(1000*c.n/c.s).toFixed(1)+' | '+Math.round(c.mx)+' | '+c.o33+' | '+c.o100+' | '+g+' | '+c.cambi+' | '+(m.n?m.n+', '+(1000*m.n/m.s).toFixed(1)+', '+Math.round(m.mx)+', '+m.o33+', '+m.o50:'—')+' | '+dieci((c.ss||c.n)/c.n)+', '+dieci(c.smin==null?1:c.smin)+' | '+dieci((c.lav||0)/c.n)+', '+Math.round((c.dis||0)/c.n)+', '+Math.round((c.kb||0)/c.n)); });
     return L.join('\n'); }
   copia.addEventListener('click',function(){ var t=testo();
     function vecchio(){ var a=document.createElement('textarea'); a.value=t; a.setAttribute('readonly',''); a.style.cssText='position:fixed;left:-9999px;top:0'; document.body.appendChild(a); a.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(a); }
