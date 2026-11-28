@@ -38,31 +38,144 @@ var mura=(function(){
   var mat=RM.matPietra(classe('mura')), tratti=istanze(T.geometria(),mat,passi.length), torri=istanze(W.geometria(),mat,passi.length);
   var merliP=istanze(MP.geometria(),mat,passi.length), merliA=istanze(MA.geometria(),mat,passi.length), toppe=istanze(TP.geometria(),mat,passi.length), pali=istanze(PA.geometria(),RM.matPietra(),passi.length); pali.visible=false;
 
-  /* porte dove le vie attraversano la cinta */
-  /* Dal 24 novembre 2026 ogni porta è un'istanza con la sua base: prima erano una maglia sola, scalata in altezza attorno al livello del fiume, e così le porte sui colli
-     si staccavano da terra dopo il rialzo del 403 (porta Salaria di 49 m) e sprofondavano durante il cantiere. Sono tutte uguali: la forma è uno schema. */
-  var GP=new RM.Costruttore(), posti=[];
-  GP.scatola(3,1.25,1.1,0,0,0,P.travertino).aperture(-.8,.56,.8,.56,1,0,.85,1).aperture(.8,-.56,-.8,-.56,1,0,.85,1);
-  [-1,1].forEach(function(k){ GP.cilindro(1,1.7,k*2,0,-.3,P.mattone,null,14).cilindro(1.08,.12,k*2,1.7,-.3,P.tufo,null,14); });
-  RM.STRADE.forEach(function(s){
-    for(var i=0;i<s.length-1;i++) for(var j=0;j<M.length;j++){
-      if(sulFiume(j)) continue;
-      var p=s[i], r=[s[i+1][0]-p[0],s[i+1][1]-p[1]], q=M[j], w=M[(j+1)%M.length], sv=[w[0]-q[0],w[1]-q[1]], den=r[0]*sv[1]-r[1]*sv[0]; if(Math.abs(den)<1e-6) continue;
-      var t=((q[0]-p[0])*sv[1]-(q[1]-p[1])*sv[0])/den, u=((q[0]-p[0])*r[1]-(q[1]-p[1])*r[0])/den; if(t<0||t>1||u<0||u>1) continue;
-      var x=p[0]+r[0]*t, z=p[1]+r[1]*t; if(posti.some(function(o){ return Math.hypot(o.x-x,o.z-z)<6; })) continue;      // una strada che taglia la cinta su uno spigolo darebbe due porte (25 novembre 2026: da 3 a 6 unità; la Portuense, che ora parte dal ponte Emilio, a porta Portese corre quasi lungo il muro e lo tagliava due volte a 5 m)
-      posti.push({x:x, z:z, y:RM.h(x,z)-.3, ang:Math.atan2(-sv[1],sv[0]), flaminia:Math.hypot(x+74,z+211)<15});      // la Flaminia a parte: la piena del 791 la porta via
-    }
+  /* ---------- le porte, una per una (28 novembre 2026) ----------
+     Fino a oggi tutte le porte erano la stessa forma ripetuta (un blocco di travertino fra due torri tonde). L'utente: ogni porta riconoscibile per ciò che le fonti dicono di lei.
+     Fonte: Platner e Ashby, la voce «Muri Aureliani» e le voci delle singole porte, lette il 28 novembre 2026 (frasi e tabella «fonte / modello / scarto» in
+     src/testi/topografia-fonti.md, «Le porte delle mura, una per una»). Che cosa dice la fonte, in breve: le quattro porte principali, Appia, Flaminia, Ostiense e Portuense,
+     avevano due fornici, le altre uno solo («The four principal gates … had double arches; while the other gates all had single arches»); Appia e Flaminia avevano fornici di
+     travertino divisi da un pilone e torri semicircolari di mattone; Onorio nel 401-403 rifà porte e torri (iscrizioni sulla Portuense, la Prenestina e la Tiburtina) e dà ad
+     alcune torri quadrate rivestite di marmo e un cortile. Per ogni porta le fasi sono quelle che la voce dà per lei; dove non dà la data, la scelta è detta nella scheda (SCHEDE in
+     js/dati.js). Misure di fornici, cortine e torri: la fonte non ne dà, salvo per porta Maggiore e l'altezza delle torri di porta Appia (28 m); sono uno schema, detto nelle schede.
+     Ogni porta ha la sua maglia per fase (al più tre), con lo stesso materiale delle mura (stesso programma della scheda grafica); se ne vede una per volta.
+     Il posto (RM.portePosti) si calcola in js/monumenti.js, prima delle strade, per stringere la strada nei fornici. Locale: x lungo la cinta, -z fuori, y da 3 m sotto il suolo. */
+  var posti=(RM.portePosti||[]).slice(), MURA_PR=/[?&]mura=prima/.test(location.search);
+  var MAT=MURA_PR?P.mattone:P.mattone.clone().multiply(new THREE.Color(.95,.64,.58)), TRAV=P.travertino, MARMO=P.marmo, PIET=RM.col(0xb9ad98);      // MAT: il mattone della cinta (MATTONI qui sotto), già nella geometria
+  var areaM=0; M.forEach(function(p,i){ var q=M[(i+1)%M.length]; areaM+=p[0]*q[1]-q[0]*p[1]; });
+  if(areaM<0) posti.forEach(function(o){ o.ang+=PI; });      // -z locale sempre fuori dalla città: lo dice il verso del poligono della cinta (una prova col punto fuori sbagliava a porta Portese, che sta su uno spigolo)
+  /* pezzi */
+  function merli(B,x0,x1,y,z,col,n){ n=n||Math.max(2,Math.round((x1-x0)/.25)); for(var k=0;k<n;k++) B.scatola(.11,.12,.1,x0+(x1-x0)*(k+.5)/n,y,z,col); }
+  function finestre(B,x0,x1,y,h,w,n,zf){ B.aperture(x1,zf+.07,x0,zf+.07,n,y,h,w); }      // vani scuri sulla faccia esterna (zf), da x0 a x1
+  function tonda(B,x,r,h,col,o){ o=o||{}; var zc=o.zc!=null?o.zc:-.17, y0=o.base||0;      // torre semicircolare che sporge fuori dalla cortina; o.zoc: zoccolo [colore, altezza]; o.fin: file di finestre
+    if(o.zoc) B.cilindro(r+.01,o.zoc[1],x,y0,zc,o.zoc[0],null,16);
+    B.cilindro(r,h-y0,x,y0,zc,col,null,16).cilindro(r+.03,.05,x,h,zc,col,null,16);
+    for(var k=0;k<5;k++){ var a=PI*(1.12+k*.19); B.scatola(.1,.12,.1,x+Math.cos(a)*(r-.04),h+.05,zc+Math.sin(a)*(r-.04),col); }
+    (o.fin||[]).forEach(function(y){ [-.55,0,.55].forEach(function(a){ var ax=x+Math.sin(a)*(r+.004), az=zc-Math.cos(a)*(r+.004); B.dentro(ax,0,az,-a,function(C){ C.vano(0,y,0,1,0,.07,.16); }); }); });
+  }
+  function quadra(B,x,w,dp,h,col,o){ o=o||{}; var zc=-.17-dp/2+.12, y0=0;      // torre o bastione quadrato che sporge fuori; o.zoc: rivestimento in basso [colore, altezza]
+    if(o.zoc){ B.scatola(w+.02,o.zoc[1],dp+.02,x,0,zc,o.zoc[0]); y0=o.zoc[1]; if(o.bugne) for(var i=0;i<3;i++) for(var j=0;j<3;j++) B.geo(new THREE.CylinderGeometry(.04,.04,.025,8).rotateX(PI/2).translate(x-w*.3+i*w*.3,.5+j*.25,zc-dp/2-.02),o.zoc[0]); }      // i tondi in rilievo sui blocchi di marmo («circular bosses», Platner e Ashby, Porta Appia e Porta Flaminia)
+    if(h>y0) B.scatola(w,h-y0,dp,x,y0,zc,col);
+    merli(B,x-w/2,x+w/2,h,zc-dp/2+.05,col,4);
+    (o.fin||[]).forEach(function(y){ finestre(B,x-w*.3,x+w*.3,y,.15,.07,2,zc-dp/2); });
+  }
+  function cortina(B,W,H,dc,forn,col,o){ o=o||{};      // il muro della porta coi fornici aperti; o.basso: [colore, altezza] la parte bassa (travertino o marmo), il resto col
+    if(o.basso){ RM.muroForato(B,W,o.basso[1],dc,forn,o.basso[0],0); if(H>o.basso[1]) B.scatola(W,H-o.basso[1],dc,0,o.basso[1],0,col); }
+    else RM.muroForato(B,W,H,dc,forn,col,0);
+    if(o.merli!==false) merli(B,-W/2+.06,W/2-.06,H,-dc/2+.05,o.merliCol||col);
+  }
+  function muretti(B,H){ [[-2.1,-1.5],[1.5,2.8]].forEach(function(q){ B.scatola(q[1]-q[0],H,.34,(q[0]+q[1])/2,0,0,MAT); merli(B,q[0]+.06,q[1]-.06,H,-.12,MAT); }); }      // porta Maggiore: la cinta fino ai fianchi dell'arco di Claudio
+  function due(l,h,p){ return [[-(l+p)/2,l,h],[(l+p)/2,l,h]]; }      // due fornici divisi da un pilone largo p
+  function uno(l,h){ return [[0,l,h]]; }
+  /* fasi tipiche: Aurelio a due fornici di travertino con torri semicircolari (Appia, Flaminia; probabile per l'Ostiense; la Portuense le somigliava) */
+  function aurelioDoppia(B){ cortina(B,1.45,1.3,.45,due(.38,.85,.22),MAT,{basso:[TRAV,.98]}); tonda(B,-1.02,.4,1.5,MAT); tonda(B,1.02,.4,1.5,MAT); }
+  function aurelioSemplice(B,o){ o=o||{}; cortina(B,1.0,1.3,.45,uno(.42,.85),MAT,{basso:o.trav?[TRAV,.95]:null}); tonda(B,-.78,.38,1.5,MAT); tonda(B,.78,.38,1.5,MAT);
+    if(o.tre) finestre(B,-.36,.36,.98,.22,.13,3,-.225); }
+  var FORME={
+    portaflaminia:[[0,aurelioDoppia],[402,function(B){      // Onorio: bastioni quadrati rivestiti di blocchi di marmo presi dalle tombe, coi tondi in rilievo (come all'Appia)
+      cortina(B,1.45,1.85,.45,due(.38,.85,.22),MAT,{basso:[TRAV,.98]}); quadra(B,-1.17,.9,.8,2.05,MAT,{zoc:[MARMO,1.25],bugne:true}); quadra(B,1.17,.9,.8,2.05,MAT,{zoc:[MARMO,1.25],bugne:true}); }],
+      [790.9,function(B){ B.scatola(1.5,.36,.8,0,0,-.1,PIET).scatola(.9,.2,.6,-1.1,.3,-.3,MAT).scatola(.7,.16,.5,1.0,.3,-.25,MAT); }],      // dicembre 791: la piena la strappa dalle fondamenta (Liber Pontificalis, Adriano I 94); restano macerie basse e il varco nella cinta (schema)
+      [848,function(B){      // rifatta da Leone IV (scelta: la fonte non dice come): stessa pianta, mattone di recupero sopra il marmo
+      cortina(B,1.45,1.85,.45,due(.38,.85,.22),MAT,{basso:[TRAV,.98]}); quadra(B,-1.17,.9,.8,2.05,MAT,{zoc:[MARMO,1.25]}); quadra(B,1.17,.9,.8,2.05,MAT,{zoc:[MARMO,1.25]}); }]],
+    portaappia:[[0,aurelioDoppia],[402,function(B){      // un fornice fra torri quadrate rivestite di marmo; sopra mattone, due file di sette archetti; le torri salgono quasi tonde per due piani con cinque finestre; 28 m
+      cortina(B,1.15,2.0,.5,uno(.56,.95),MAT,{basso:[MARMO,1.25]}); finestre(B,-.5,.5,1.36,.15,.07,7,-.25); finestre(B,-.5,.5,1.65,.15,.07,7,-.25);
+      [-1,1].forEach(function(k){ quadra(B,k*1.05,.95,.85,1.9,MAT,{zoc:[MARMO,1.25],bugne:true}); tonda(B,k*1.05,.44,3.1,MAT,{base:1.9,fin:[2.15,2.6]}); }); }]],
+    portaostiense:[[0,aurelioDoppia],[402,function(B){      // fuori un fornice solo di travertino con una cortina molto larga fra torri semicircolari rinforzate; dentro due fornici di travertino affiancati (il cortile)
+      cortina(B,1.7,1.8,.45,uno(.5,.9),MAT,{basso:[TRAV,1.0]}); tonda(B,-1.28,.48,2.0,MAT); tonda(B,1.28,.48,2.0,MAT);
+      B.dentro(0,0,1.0,0,function(C){ cortina(C,1.4,1.2,.4,due(.4,.85,.24),TRAV,{merli:false}); }); B.scatola(.3,1.2,.85,-.85,0,.6,MAT).scatola(.3,1.2,.85,.85,0,.6,MAT); }]],
+    portaaurelia:[[0,function(B){ aurelioSemplice(B); }],[402,function(B){ cortina(B,1.0,1.8,.45,uno(.42,.85),MAT); tonda(B,-.78,.38,2.0,MAT); tonda(B,.78,.38,2.0,MAT); }]],      // la forma non è nota: lo schema comune delle porte di Aureliano, detto in scheda
+    portasanpietro:[[0,function(B){ aurelioSemplice(B); }],[402,function(B){ cortina(B,1.0,1.8,.45,uno(.42,.85),MAT); tonda(B,-.78,.38,2.0,MAT); tonda(B,.78,.38,2.0,MAT); }]],      // idem
+    portatiburtina:[[0,function(B){ tonda(B,-1.85,.4,1.5,MAT); tonda(B,1.85,.4,1.5,MAT); }],      // Aureliano affianca con due torri l'arco di Augusto dei tre acquedotti (l'arco lo disegna l'acquedotto, più sotto)
+      [402,function(B){      // Onorio: l'arco esterno di pietra con l'iscrizione, l'arco interno di pietra (il cortile), forse le grandi torri quadrate fuori
+      B.dentro(0,0,-.7,0,function(C){ cortina(C,1.5,1.7,.4,uno(.5,.9),TRAV); C.scatola(1.1,.14,.02,0,1.15,-.21,MARMO); });
+      B.dentro(0,0,.85,0,function(C){ cortina(C,1.3,1.3,.4,uno(.5,.9),TRAV,{merli:false}); }); B.scatola(.25,1.3,1.2,-.66,0,.2,MAT).scatola(.25,1.3,1.2,.66,0,.2,MAT);
+      quadra(B,-1.85,.95,1.1,2.05,MAT); quadra(B,1.85,.95,1.1,2.05,MAT); }]],
+    portaprenestina:[[0,function(B){ muretti(B,1); }],[402,function(B){ muretti(B,1.5);      // Onorio: fuori dagli archi di Claudio una cortina con due aperture (il cortile), torri quadrate ai capi e una torre semicircolare in mezzo, sopra la tomba di Eurisace
+      /* nel modello la tomba sta 20 m a lato del centro dell'arco e 9 m fuori (js/monumenti.js, eurisace): la torre tonda le sta sopra, la cortina corre 11,5 m fuori dagli archi; la
+         sola strada del modello passa dall'apertura di sinistra (a 4,5 m dal centro), l'altra apertura resta per la Labicana, che il modello non ha */
+      B.dentro(.35,0,-1.15,0,function(C){ cortina(C,4.5,1.75,.4,[[-.8,.5,.85],[.6,.5,.85]],MAT); tonda(C,1.65,.55,2.0,MAT,{zc:-.05}); quadra(C,-2.6,.8,.8,2.05,MAT); quadra(C,2.65,.8,.8,2.05,MAT); });
+      B.scatola(.3,1.75,1.0,-1.9,0,-.65,MAT).scatola(.3,1.75,1.0,2.6,0,-.65,MAT); }]],
+    portanomentana:[[0,function(B){ aurelioSemplice(B,{tre:true}); B.scatola(.8,.55,.7,-.78,0,-.3,MAT); B.scatola(.8,.55,.7,.78,0,-.3,TRAV); }],      // le torri sulle tombe (quella di destra su Q. Haterius); tre finestre sopra il fornice, per analogia con la Salaria
+      [402,function(B){ cortina(B,1.0,1.8,.45,uno(.42,.85),MAT); finestre(B,-.36,.36,.98,.22,.13,3,-.225); tonda(B,-.78,.38,2.0,MAT); tonda(B,.78,.38,2.0,MAT); B.scatola(.8,.55,.7,-.78,0,-.3,MAT); B.scatola(.8,.55,.7,.78,0,-.3,TRAV); }]],      // mai rivestita: come salisse col rialzo non si sa (schema)
+    portalatina:[[0,function(B){ aurelioSemplice(B); }],[402,function(B){      // Onorio: fornice di blocchi irregolari di travertino, cinque finestre e una sesta di mattone, merli di pietra; torri semicircolari che non superano la cortina
+      cortina(B,1.15,1.75,.45,uno(.42,.98),TRAV,{merliCol:TRAV});      // l'arco più alto che largo, come nella fotografia di oggi (Wikimedia Commons, «Porta Latina de Rome») finestre(B,-.5,.3,1.25,.2,.08,5,-.225); finestre(B,.38,.5,1.25,.2,.08,1,-.225); B.scatola(.2,.32,.02,.44,1.2,-.23,MAT);
+      tonda(B,-.85,.38,1.7,MAT); tonda(B,.85,.38,1.7,MAT); }]],
+    portaportuense:[[0,aurelioDoppia],[402,function(B){ cortina(B,1.45,1.8,.45,due(.38,.85,.22),MAT,{basso:[TRAV,.98]}); tonda(B,-1.02,.4,2.0,MAT); tonda(B,1.02,.4,2.0,MAT); B.scatola(.9,.12,.02,0,1.05,-.23,MARMO); }]],      // due fornici e torri semicircolari, come le altre tre principali; nel 403 l'iscrizione di Onorio
+    portasettimiana:[[0,function(B){ cortina(B,.65,1.15,.4,uno(.32,.7),MAT); }],[402,function(B){ cortina(B,.65,1.65,.4,uno(.32,.7),MAT); }]],      // forse solo una posterula: nessuna torre (schema)
+    portasalaria:[[0,function(B){ aurelioSemplice(B,{trav:true,tre:true}); B.scatola(.8,.5,.7,.78,0,-.3,MARMO); }],      // fornice di pietra, torri semicircolari di mattone; sotto la torre est la tomba di Q. Sulpicio Massimo
+      [402,function(B){ cortina(B,1.0,1.85,.45,uno(.42,.85),MAT,{basso:[TRAV,.95]}); finestre(B,-.4,.4,1.15,.3,.1,4,-.225); tonda(B,-.78,.38,2.05,MAT); tonda(B,.78,.38,2.05,MAT); B.scatola(.8,.5,.7,.78,0,-.3,MARMO); }]],      // un'arcata di mattone sopra il fornice
+    portaasinaria:[[0,function(B){ cortina(B,1.0,1.3,.45,uno(.42,.85),MAT); tonda(B,-.74,.34,1.45,MAT); tonda(B,.74,.34,1.45,MAT); }],      // la forma di Aureliano non è nota: schema, col parapetto merlato poi coperto dalla camera
+      [402,function(B){      // due lunghi bastioni a fronte semicircolare con tre file di finestre, affiancati da torri quadrate delle scale; sopra il fornice la camera con due file di finestre
+      cortina(B,1.0,2.05,.45,uno(.42,.85),MAT); finestre(B,-.4,.4,1.3,.15,.08,4,-.225); finestre(B,-.4,.4,1.62,.15,.08,4,-.225);
+      [-1,1].forEach(function(k){ B.scatola(.62,2.2,.6,k*.84,0,-.3,MAT); tonda(B,k*.84,.31,2.2,MAT,{zc:-.6,fin:[1.05,1.45,1.85]}); quadra(B,k*1.32,.4,.55,2.35,MAT); }); }]],
+    portapinciana:[[0,function(B){ cortina(B,.55,1.05,.38,uno(.3,.6),MAT,{merli:false}); }],      // in origine una posterula
+      [402,function(B){ cortina(B,.9,1.75,.42,uno(.4,.8),MAT,{basso:[TRAV,.9]}); tonda(B,-.7,.36,1.95,MAT); tonda(B,.7,.36,1.95,MAT); }],      // Onorio ne fa una porta: arco di travertino, a destra la torre quadrata resa semicircolare, a sinistra una torre tonda nuova
+      [810,function(B){ cortina(B,.9,1.75,.42,uno(.4,.8),MAT,{basso:[TRAV,.9]}); B.scatola(.4,.82,.36,0,0,0,PIET); tonda(B,-.7,.36,1.95,MAT); tonda(B,.7,.36,1.95,MAT); }]],      // chiusa nel IX secolo: 810 è una scelta
+    portametronia:[[0,function(B){ cortina(B,.5,1.0,.38,uno(.28,.6),MAT,{merli:false,basso:[TRAV,.66]}); }],[402,function(B){ cortina(B,.5,1.5,.38,uno(.28,.6),MAT,{merli:false,basso:[TRAV,.66]}); }]]      // posterula senza torri
+  };
+  /* le porte senza strada sono vani chiusi da un muro pieno dietro (dentro non c'è via): un fondo scuro nel fornice */
+  /* Il muro della cinta passava sopra il fornice: i tratti (passi) sono scatole che attraversano la porta. Ora i passi che toccano una porta non si disegnano (p.taglio) e la porta
+     porta con sé i pezzi di muro che mancano fra lei e il passo dopo, merlati, alti quanto la cinta della sua fase; le torri dei passi che cadono sulla porta non si disegnano. */
+  passi.forEach(function(p){ p.taglio=false; p.senzaTorre=false; });
+  posti.forEach(function(o,j){
+    var f=FORME[o.id]||[[0,function(B){ aurelioSemplice(B); }]], hs=RM.hSuolo||RM.h, c=Math.cos(o.ang), s=Math.sin(o.ang), lo=1e9, hi=-1e9, bx=new THREE.Box3(), v3=new THREE.Vector3();
+    o.fasi=[];
+    var BB=f.map(function(fa){ var B=new RM.Costruttore(); fa[1](B); if(o.senzaStrada) B.scatola(.36,.8,.04,0,0,.12,P.ombra); return B; });
+    var s0=1e9, s1=-1e9, sp=[];      // quanto la porta occupa lungo la cinta (i punti a meno di 60 cm dalla linea del muro): in tutte le fasi (s0, s1) e fase per fase (sp)
+    BB.forEach(function(B){ var a0=1e9, a1=-1e9; for(var q=0;q<B.pos.length;q+=3){ v3.set(B.pos[q],B.pos[q+1],B.pos[q+2]); bx.expandByPoint(v3); if(Math.abs(v3.z)<.6){ a0=Math.min(a0,v3.x); a1=Math.max(a1,v3.x); } }
+      if(o.id==='portaprenestina'||o.id==='portatiburtina'){ a0=Math.min(a0,-1.5); a1=Math.max(a1,1.5); }      // l'arco dell'acquedotto, largo 30 m
+      if(a0>a1){ if(sp.length){ a0=sp[sp.length-1][0]; a1=sp[sp.length-1][1]; } else { a0=0; a1=0; } }      // una fase vuota: il varco resta largo quanto la porta di prima
+      sp.push([a0,a1]); s0=Math.min(s0,a0); s1=Math.max(s1,a1); });
+    var tagliati=[];
+    passi.forEach(function(p){ var dx=p.x-o.x, dz=p.z-o.z, u=dx*c-dz*s, w=dx*s+dz*c; if(Math.abs(w)>.6||Math.abs(u)>p.len/2+s1-s0+1) return;
+      var a=u-p.len/2, b=u+p.len/2; if(b<=s0||a>=s1) return;
+      p.taglio=true; if(a>s0-.35&&a<s1+.35) p.senzaTorre=true;      // la torre del passo sta al suo capo «a»
+      tagliati.push([a,b]); });
+    /* i pezzi di muro di ogni fase: il tratto tagliato meno ciò che la porta di quella fase occupa (una posterula è più stretta della porta che ne fa Onorio) */
+    var pezziF=sp.map(function(r){ var L=[]; tagliati.forEach(function(t){ if(t[0]<r[0]) L.push([t[0],Math.min(t[1],r[0])]); if(t[1]>r[1]) L.push([Math.max(t[0],r[1]),t[1]]); }); return L; });
+    /* la base: il punto più basso del suolo disegnato sotto la porta (tutte le fasi, senza i pezzi di muro), meno i 3 m di fondazione; così nessuna parte resta sospesa, anche sui pendii */
+    function suolo(lx,lz){ return hs(o.x+lx*c+lz*s,o.z-lx*s+lz*c); }
+    for(var i=0;i<=6;i++) for(var k=0;k<=4;k++){ var y=suolo(bx.min.x+(bx.max.x-bx.min.x)*i/6,bx.min.z+(bx.max.z-bx.min.z)*k/4); lo=Math.min(lo,y); hi=Math.max(hi,y); }
+    o.y=lo-.3; o.dislivello=hi-lo; o.nucleo=[bx.min.x,bx.min.z,bx.max.x,bx.max.z];
+    tagliati.forEach(function(q){ bx.expandByPoint(v3.set(q[0],0,-.17)); bx.expandByPoint(v3.set(q[1],0,.17)); }); o.ingombro=[bx.min.x,bx.min.z,bx.max.x,bx.max.z];
+    BB.forEach(function(B,k){ var H=f[k][0]<400?1:1.5;      // i pezzi di cinta accanto alla porta, come i tratti: spessi 3,4 m, merlati sul filo esterno; scendono e salgono col suolo sotto di loro
+      pezziF[k].forEach(function(q){ var L=q[1]-q[0]; if(L<.02) return; var g0=1e9, g1=-1e9;
+        for(var t=0;t<=4;t++) [-.17,0,.17].forEach(function(z){ var y=suolo(q[0]+L*t/4,z); g0=Math.min(g0,y); g1=Math.max(g1,y); });
+        var y0=Math.min(0,g0-lo), top=H+Math.max(0,g1-lo);
+        B.scatola(L+.04,top-y0,.34,(q[0]+q[1])/2,y0,0,MAT); merli(B,q[0]+.06,q[1]-.06,top,-.12,MAT); }); });
+    BB.forEach(function(B,k){ var fa=f[k], g=B.geometria();
+      var m=istanze(g,mat,1); m.setColorAt(0,new THREE.Color(1,1,1)); m.userData.porta=o.id; o.fasi.push({da:fa[0],m:m,a:f[k+1]?f[k+1][0]:1e9}); });
   });
-  var magliaPorte=istanze(GP.geometria(),mat,Math.max(1,posti.length)); RM.porte=posti;
+  RM.porte=posti;
+  /* il nome sulla scena, come i monumenti (le etichette le mette js/monumenti.js, che legge RM.etichetteExtra); un tocco sul nome apre la scheda */
+  var contEt=document.querySelector('.etichette3d'); RM.etichetteExtra=RM.etichetteExtra||[];
+  posti.forEach(function(o){ if(!o.nome||!contEt) return; var dv=document.createElement('span'); dv.textContent=o.nome; contEt.appendChild(dv);
+    dv.addEventListener('click',function(){ if(RM.apriScheda) RM.apriScheda(o.id); });
+    RM.etichetteExtra.push({div:dv, x:o.x, z:o.z, y:o.y, ey:2.4, raggio:2, presenza:0, porta:o}); });
+  /* la scheda: stato nell'anno (in uso, murata, abbattuta, non ancora costruita), letto dalle fasi */
+  RM.statoPorta=function(id,anno){ var o=posti.filter(function(q){ return q.id===id; })[0]; if(!o) return 'uso';
+    if(anno<270.6) return 'assente'; if(o.flaminia&&anno>=790.9&&anno<848) return 'crollato';
+    if(id==='portapinciana'&&anno>=810) return 'chiuso'; return 'uso'; };
+  RM.porteVoci={}; posti.forEach(function(o){ if(o.id) RM.porteVoci[o.id]={id:o.id, nome:o.nome, x:o.x, z:o.z, raggio:2, porta:true}; });
   /* La patina del tempo (PATINA in js/costruttore.js), istanza per istanza: un tratto rifatto riparte pulito dall'anno del restauro e invecchia da lì; i rattoppi
      di Belisario, di pietre raccolte lì attorno, sono già vecchi. Un solo attributo per cortine, torri e merli (lo stesso passo), uno per le porte.
      Restauri che ripuliscono (secondo giro, 27 novembre 2026: la regola di RESTAURI in js/monumenti.js, solo con una fonte letta): Belisario nel 536 sui tratti rovinati
      (Procopio, Guerra gotica I 14, 15), i papi da Gregorio II a Leone IV (Liber Pontificalis, più sotto), porta Flaminia nel 848; per ipotesi i tre passi di Teodorico nel 493
      (Anonimo Valesiano 66-67: quale tratto, non è detto; sono gli stessi del ponteggio). Il segno RM_PAT_MURA dà alle mura colature dai merli, piede umido e verde sulle creste. */
   mat.defines=mat.defines||{}; mat.defines.RM_PATI=''; mat.defines.RM_PAT_MURA=''; mat.userData.patinaPropria=true; mat.userData.patina.value=1;
-  var patI=new THREE.InstancedBufferAttribute(new Float32Array(passi.length),1), patP=new THREE.InstancedBufferAttribute(new Float32Array(Math.max(1,posti.length)),1);
-  [tratti,torri,merliP,merliA,toppe].forEach(function(m){ m.geometry.setAttribute('aPatina',patI); }); magliaPorte.geometry.setAttribute('aPatina',patP);
-  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:magliaPorte,id:'mura'},{maglia:merliP,id:'mura'},{maglia:merliA,id:'mura'},{maglia:toppe,id:'mura'}]);
+  var patI=new THREE.InstancedBufferAttribute(new Float32Array(passi.length),1);
+  [tratti,torri,merliP,merliA,toppe].forEach(function(m){ m.geometry.setAttribute('aPatina',patI); });
+  posti.forEach(function(o){ o.fasi.forEach(function(f){ f.pat=new THREE.InstancedBufferAttribute(new Float32Array(1),1); f.m.geometry.setAttribute('aPatina',f.pat); }); });      // la patina di ogni porta, fase per fase
+  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:tratti,id:'mura'},{maglia:torri,id:'mura'},{maglia:merliP,id:'mura'},{maglia:merliA,id:'mura'},{maglia:toppe,id:'mura'}]);
+  posti.forEach(function(o){ o.fasi.forEach(function(f){ RM.cliccabili.push({maglia:f.m,id:o.id||'mura'}); }); });      // ogni porta apre la sua scheda
   /* colore per istanza: le maglie condividono il materiale, quindi tutte lo devono avere (come negli acquedotti) */
   var BIANCO=new THREE.Color(1,1,1), RICUPERO=new THREE.Color(.7,.6,.56),      /* terzo giro (27 novembre 2026): più scuro e grigio (prima 0,9, 0,72, 0,62), perché resti distinto dal mattone più rosso della cinta (MATTONI qui sotto) */      /* mattone di recupero: mattoni vecchi tolti dalle rovine, più scuri e spenti del mattone nuovo; la patina del tratto riparte comunque da zero (secondo giro, 27 novembre 2026: prima 1,03, 0,86, 0,76, e al sole i lati nord ed est dei Castra sembravano quasi bianchi). Tinta scelta, non misurata */ PIETRA=new THREE.Color(.95,1.04,1.22), tinta=new THREE.Color();
   /* Il mattone della cinta (27 novembre 2026, terzo giro della patina; scelta della sessione, da confermare dall'utente). Platner e Ashby, Muri Aureliani: «They are built of concrete
@@ -73,8 +186,7 @@ var mura=(function(){
   passi.forEach(function(p,j){ var t=MATTONI[Math.floor(RM.grana(Math.floor(j/2),77)*MATTONI.length)%MATTONI.length], l=.9+.2*RM.grana(j,78);
     p.mattone=MURA_PRIMA?BIANCO:new THREE.Color(t[0]*l,t[1]*l,t[2]*l); });
   if(MURA_PRIMA) RICUPERO.setRGB(.9,.72,.62);      // anche il mattone di recupero come prima
-  [tratti,torri,merliP,merliA,toppe].forEach(function(m){ for(var j=0;j<passi.length;j++) m.setColorAt(j,BIANCO); }); for(k=0;k<Math.max(1,posti.length);k++) magliaPorte.setColorAt(k,BIANCO);
-  passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; p.riva791=Math.hypot(p.x+117.4,p.z+7.4)<2.4; });      /* 25 novembre 2026: la cinta di riva ora parte dalla testata del ponte (prima 50 m più a valle): il tratto del 791 sono i suoi primi due passi */      // riva791: il tratto di mura sul Tevere presso ponte Sisto che la piena del dicembre 791 abbatte («usque ad pontem Antonini, ipsum evertens murum», Liber Pontificalis, Adriano I 95; ponte Sisto per Duchesne). Lunghezza indicativa; rifatto qui nel 795, anno ignoto     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
+  [tratti,torri,merliP,merliA,toppe].forEach(function(m){ for(var j=0;j<passi.length;j++) m.setColorAt(j,BIANCO); });  passi.forEach(function(p,j){ p.rotto=RM.grana(Math.floor(j/10),7)<.3; p.riva791=Math.hypot(p.x+117.4,p.z+7.4)<2.4; });      /* 25 novembre 2026: la cinta di riva ora parte dalla testata del ponte (prima 50 m più a valle): il tratto del 791 sono i suoi primi due passi */      // riva791: il tratto di mura sul Tevere presso ponte Sisto che la piena del dicembre 791 abbatte («usque ad pontem Antonini, ipsum evertens murum», Liber Pontificalis, Adriano I 95; ponte Sisto per Duchesne). Lunghezza indicativa; rifatto qui nel 795, anno ignoto     // i tratti che Totila fa abbattere nel 546: circa un terzo, a blocchi di 300 m
   /* Il cantiere. «Rome, which before had no walls, was now surrounded with them. This work was begun in the reign of Aurelianus, and was finished by Probus» (Zosimo I 49,
      letto il 22 novembre 2026 nella traduzione del 1814, tertullian.org). L'anno della fine non è scritto: nel modello il 280, a metà del regno di Probo (276-282); che il grosso
      fosse in piedi alla morte di Aureliano (275) è l'opinione corrente, non un dato. In che ordine salissero i tratti non si sa: qui a blocchi di circa 240 m, in ordine casuale.
@@ -132,10 +244,15 @@ var mura=(function(){
     var passo=anno>=500?Math.round(anno*8):0;      // dal 500 lo stato dei tratti cambia con gli anni (danni e restauri), un ottavo d'anno alla volta
     var PA=RM.patinaAnno, pAn=PA(anno); if(anno>400&&anno<500) passo=-Math.round(anno*4);      // fra il 400 e il 500 cambia solo la patina
     if(Math.abs(alt-ultima)<.002 && Math.abs(cant-ultimoCant)<.002 && r791===ultimo791 && flamGiu===ultimaFlam && teod===ultimoTeod && passo===ultimoPasso) return; ultima=alt; ultimoCant=cant; ultimo791=r791; ultimaFlam=flamGiu; ultimoTeod=teod; ultimoPasso=passo;
-    for(var jp=0;jp<patP.count;jp++) patP.array[jp]=o2p(jp); patP.needsUpdate=true;
-    function o2p(jp){ return posti[jp]&&posti[jp].flaminia&&anno>=848?pAn-PA(848):pAn; }      // porta Flaminia rifatta nel 848 (si veda flamGiu)
-    posti.forEach(function(o,j){ var sy=o.flaminia&&flamGiu?0:porteSu; d.position.set(o.x,o.y,o.z); d.rotation.set(0,o.ang,0); if(sy>.01) d.scale.set(1,sy,1); else d.scale.set(0,0,0); d.updateMatrix(); magliaPorte.setMatrixAt(j,d.matrix); });
-    magliaPorte.instanceMatrix.needsUpdate=true;
+    /* le porte: si vede la fase dell'anno; quelle di Aureliano salgono col cantiere e col rialzo, quelle rifatte da Onorio (402) sono già alte 1,5 volte */
+    posti.forEach(function(o){ o.vis=false;
+      o.fasi.forEach(function(f){
+        var su=anno>=f.da&&anno<f.a, sy=f.da<400?porteSu:Math.min(1,porteSu/1.5);      // porta Flaminia dal 790,9 al 848 ha una fase sua: le macerie e il varco (FORME)
+        f.m.visible=su&&sy>.01; if(!f.m.visible) return; o.vis=sy>.5;
+        d.position.set(o.x,o.y,o.z); d.rotation.set(0,o.ang,0); d.scale.set(1,sy,1); d.updateMatrix(); f.m.setMatrixAt(0,d.matrix); f.m.instanceMatrix.needsUpdate=true;
+        f.pat.array[0]=o.flaminia&&anno>=848?pAn-PA(848):pAn; f.pat.needsUpdate=true;      // porta Flaminia rifatta nel 848 (si veda flamGiu); le altre invecchiano dal 271 (la patina comincia dopo il 400)
+      });
+    });
     var cantPapi=false, paliSu=false, ala=anno>=536.9;
     passi.forEach(function(p,j){
       if(p.y==null){ var cx=Math.cos(p.ang)*p.len/2, cz=-Math.sin(p.ang)*p.len/2, ya=RM.h(p.x-cx,p.z-cz), yb=RM.h(p.x+cx,p.z+cz); p.y=(ya+yb)/2-.3; p.yt=ya-.3; p.pend=Math.atan2(yb-ya,p.len); }   // sui pendii la cortina segue il terreno invece di salire a gradoni
@@ -159,12 +276,14 @@ var mura=(function(){
       if(lavori) cantPapi=true;
       if(suPonteggio){ d.position.set(p.x,y,p.z); d.rotation.set(0,p.ang,p.pend); d.scale.set(p.len/Math.cos(p.pend),alt*Math.min(1,c+.2),1); } else d.scale.set(0,0,0);      // ponteggio sui tratti che stanno salendo, un poco più alto del muro
       d.updateMatrix(); ponteggi.setMatrixAt(j,d.matrix);
+      if(p.taglio){ zero(tratti,j); zero(merliA,j); zero(merliP,j); zero(toppe,j); zero(pali,j); zero(ponteggi,j); }      // il passo che attraversa una porta: il muro accanto lo porta la porta (più sopra)
+      if(p.senzaTorre) zero(torri,j);
     });
     var inCantiere=(cant>0&&cant<1)||rialzo||teod||cantPapi;
     [tratti,torri,merliP,merliA,toppe,pali,ponteggi].forEach(function(m){ m.instanceMatrix.needsUpdate=true; });
     [tratti,torri,merliP,merliA,toppe].forEach(function(m){ m.instanceColor.needsUpdate=true; }); patI.needsUpdate=true;
     ponteggi.visible=inCantiere; pali.visible=paliSu;
-    tratti.visible=torri.visible=merliP.visible=merliA.visible=toppe.visible=alt>.01&&cant>0; magliaPorte.visible=porteSu>.01&&posti.length>0;
+    tratti.visible=torri.visible=merliP.visible=merliA.visible=toppe.visible=alt>.01&&cant>0;
   };
 })();
 
@@ -267,8 +386,20 @@ var acque=(function(){
     var mx=(a[0]+b[0])/2, mz=(a[1]+b[1])/2, L=Math.hypot(b[0]-a[0],b[1]-a[1]), y0=RM.h(mx,mz)-.3, su=(a[2]+b[2])/2-y0, sopraArco=a[5]!=null, dp=sopraArco?a[6]:.95;
     if(su<sotto+.05) return;
     var dove=PEZZI; if(a[7]){ dove=new RM.Costruttore(); ATTICI_CADUTI.push({B:dove,fino:a[7]}); }      // a[7]: l'anno in cui l'attico cade con l'arco (la Vergine sull'arco di Claudio)
+    /* Le due porte che sono archi d'acquedotto (28 novembre 2026; Platner e Ashby, Porta Praenestina e Porta Tiburtina): prima qui c'erano due pile e un vano piatto. Porta Maggiore:
+       «a double arch of the Aqua Claudia and Anio Novus … The whole structure is of travertine, 32 metres high and 24 wide, and the two principal arches are 14 metres high, 6.35
+       wide»; nel pilone di mezzo un archetto basso, sopra di lui e nei piloni dei lati altre aperture ad arco con semicolonne; l'attico diviso in tre fasce. Qui è larga quanto
+       il tratto dell'acquedotto, 30 m invece di 24 (detto in scheda). Porta Tiburtina: l'arco di Augusto dei tre acquedotti; luce e altezza non sono date (schema). */
+    var forma=pile&&Math.hypot(mx-248.8,mz-9.7)<2?'claudio':pile&&Math.hypot(mx-207.7,mz+55.3)<2?'augusto':null;
+    if(forma) sotto=forma==='claudio'?1.75:1.35;
+    if(su<sotto+.05) return;
     dove.dentro(mx,y0,mz,sopraArco?a[5]:Math.atan2(-(b[1]-a[1]),b[0]-a[0]),function(B){
-      if(pile) B.scatola(.62,sotto,.95,-(L/2-.31),0,0,P.travertino).scatola(.62,sotto,.95,L/2-.31,0,0,P.travertino);
+      if(forma==='claudio'){ RM.muroForato(B,L,sotto,.95,[[-.5675,.635,1.7],[.5675,.635,1.7]],P.travertino,0);
+        [-1,1].forEach(function(k){ [0,-(L/2-.3),L/2-.3].forEach(function(x){ B.aperture(x-k*.12,k*.48,x+k*.12,k*.48,1,1.05,.42,.18); }); });      // le aperture con le semicolonne, sopra l'archetto e nei piloni dei lati
+        [.6,1.2].forEach(function(y){ B.scatola(L+.1,.05,1.0,0,sotto+y,0,P.travertino); });      // le fasce che dividono l'attico in tre
+      }
+      else if(forma==='augusto') RM.muroForato(B,L,sotto,.95,[[0,.55,1.0]],P.travertino,0);
+      else if(pile) B.scatola(.62,sotto,.95,-(L/2-.31),0,0,P.travertino).scatola(.62,sotto,.95,L/2-.31,0,0,P.travertino);
       if(sopraArco) B.scatola(L-.04,su-sotto-.12,dp-.06,0,sotto,0,P.mattone).scatola(L,.12,dp,0,su-.12,0,P.travertino);      // muratura neroniana appena arretrata dal filo dell'arco (20-30 cm), il canale in cima
       else B.scatola(L,su-sotto,.95,0,sotto,0,P.travertino).scatola(L+.12,.07,1.05,0,su-.07,0,P.travertino);
     });
@@ -338,7 +469,8 @@ var acque=(function(){
   var pezzi=PEZZI.maglia(mat); pezzi.castShadow=pezzi.receiveShadow=true; RM.scene.add(pezzi);
   ATTICI_CADUTI.forEach(function(o){ o.m=o.B.maglia(mat); o.m.castShadow=o.m.receiveShadow=true; RM.scene.add(o.m); });
   function quale(c){ var e=el[c.instanceId%N]; return e&&e.li===4?'antoniniano':'acquedotti'; }
-  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:arcate,id:quale},{maglia:spente,id:quale},{maglia:pile,id:quale},{maglia:monconi,id:quale},{maglia:muri,id:quale},{maglia:pezzi,id:'acquedotti'}]);
+  RM.cliccabili=(RM.cliccabili||[]).concat([{maglia:arcate,id:quale},{maglia:spente,id:quale},{maglia:pile,id:quale},{maglia:monconi,id:quale},{maglia:muri,id:quale},{maglia:pezzi,id:function(c){      // l'arco di Claudio (porta Maggiore) e quello di Augusto (porta Tiburtina) aprono la scheda della porta (28 novembre 2026)
+    var p=c.point, q=(RM.porte||[]).filter(function(o){ return (o.id==='portaprenestina'||o.id==='portatiburtina')&&Math.hypot(p.x-o.x,p.z-o.z)<2.2; })[0]; return q?q.id:'acquedotti'; }}]);
   for(k=0;k<N;k++){ monconi.setColorAt(k,BIANCO); muri.setColorAt(k,BIANCO); }                                // le maglie condividono il materiale: tutte devono avere il colore per istanza
   function zero(maglia,j){ d.scale.set(0,0,0); d.updateMatrix(); maglia.setMatrixAt(j,d.matrix); }
   function vicino(i,j){ return j>=0&&j<el.length&&el[j].li===el[i].li&&Math.abs(el[j].ord-el[i].ord)===1; }

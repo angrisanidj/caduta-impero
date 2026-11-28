@@ -2615,6 +2615,41 @@ M.forEach(function(o){
 /* dove una strada passa sotto un arco si stringe alla luce del fornice: [x, z, raggio, mezza larghezza] (24 novembre 2026: con strade larghe 16 m e fornici di 5 o 6, anche un arco
    ben centrato sembrava stare «accanto» alla strada) */
 RM.strozzature=[[-34.81,-75.79,2,.28],[-48,-117.8,2,.21],[-31.24,-63.12,2,.23],[133.07,-36.43,1.6,.34],[27.2,20.15,1.6,.25],[81.86,76.56,1.4,.19],[-110.9,-9.2,1.6,.25],[-155.49,-94.14,1.6,.26],[-7.53,.64,.9,.3]];      // Claudio, Portogallo, Arcus Novus, Gallieno (fornice di 7,30 dal 27 novembre 2026), Tito, Dolabella (Costantino tolto il 27 novembre 2026: la strada gli passa accanto, si veda l'arco), Valentiniano (ponte Aurelio), Graziano (ponte Elio); l'ultima, 27 novembre 2026 (sera), la via accanto all'arco di Tiberio: Platner e Ashby, Arcus Tiberii, «on the north side of the Sacra Via, which was made narrower at this point by having its curb bent toward the south»; di quanto, la fonte non lo dice (qui 3 m)
+/* Le porte delle mura di Aureliano (28 novembre 2026): dove una strada taglia la cinta (prima in js/mura.js, che ora legge RM.portePosti), col nome antico e la mezza larghezza
+   della strada sotto i fornici. I nomi: Platner e Ashby, le voci delle singole porte (frasi in src/testi/topografia-fonti.md, «Le porte delle mura, una per una»); il punto
+   viene da OpenStreetMap (RM_TOPO.porte) o, per Aurelia e Prenestina, dal solo incrocio con la strada. Le porte senza strada (Pinciana, Metronia) stanno sul punto di OpenStreetMap. */
+(function(){
+  var M2=RM.MURA, posti=[];
+  function sulFiume(j){ var p=M2[j], q=M2[(j+1)%M2.length]; return RM.distFiume((p[0]+q[0])/2,(p[1]+q[1])/2)<2.5; }
+  RM.STRADE.forEach(function(s){
+    for(var i=0;i<s.length-1;i++) for(var j=0;j<M2.length;j++){
+      if(sulFiume(j)) continue;
+      var p=s[i], r=[s[i+1][0]-p[0],s[i+1][1]-p[1]], q=M2[j], w=M2[(j+1)%M2.length], sv=[w[0]-q[0],w[1]-q[1]], den=r[0]*sv[1]-r[1]*sv[0]; if(Math.abs(den)<1e-6) continue;
+      var t=((q[0]-p[0])*sv[1]-(q[1]-p[1])*sv[0])/den, u=((q[0]-p[0])*r[1]-(q[1]-p[1])*r[0])/den; if(t<0||t>1||u<0||u>1) continue;
+      var x=p[0]+r[0]*t, z=p[1]+r[1]*t; if(posti.some(function(o){ return Math.hypot(o.x-x,o.z-z)<6; })) continue;      // una strada che taglia la cinta su uno spigolo darebbe due porte (25 novembre 2026: da 3 a 6 unità)
+      posti.push({x:x, z:z, ang:Math.atan2(-sv[1],sv[0]), flaminia:Math.hypot(x+74,z+211)<15, lato:j});
+    }
+  });
+  /* senza strada: la Pinciana («originally a postern», poi porta con Onorio, chiusa nel IX secolo) e la Metronia («in origin only a postern, as it has no towers»); il punto di
+     OpenStreetMap portato sul lato più vicino della cinta */
+  var TP=(window.RM_TOPO||{}).porte||{};
+  ['Porta Pinciana','Porta Metronia'].forEach(function(n){ var g=TP[n]; if(!g) return; var best=null;
+    for(var j=0;j<M2.length;j++){ if(sulFiume(j)) continue; var a=M2[j], b=M2[(j+1)%M2.length], dx=b[0]-a[0], dz=b[1]-a[1], L2=dx*dx+dz*dz, t=Math.max(0,Math.min(1,((g[0]-a[0])*dx+(g[1]-a[1])*dz)/L2)), x=a[0]+dx*t, z=a[1]+dz*t, d=Math.hypot(x-g[0],z-g[1]);
+      if(!best||d<best.d) best={d:d,x:x,z:z,ang:Math.atan2(-dz,dx),lato:j}; }
+    if(best) posti.push({x:best.x, z:best.z, ang:best.ang, lato:best.lato, senzaStrada:true}); });
+  /* nome e mezza larghezza della strada nel fornice (unità di 10 m): [x, z del punto, id, nome, mezza larghezza o 0 se non c'è strada] */
+  var NOMI=[[-77.2,-211.3,'portaflaminia','Porta Flaminia',.45],[134.4,211.2,'portaappia','Porta Appia',.26],[-32.1,175.7,'portaostiense','Porta Ostiense',.24],
+    [-198,45.5,'portaaurelia','Porta Aurelia',.19],[207.7,-55.3,'portatiburtina','Porta Tiburtina',.23],[248.8,9.7,'portaprenestina','Porta Prenestina',.6],
+    [139.4,-178.7,'portanomentana','Porta Nomentana',.19],[-155.7,-97.8,'portasanpietro','Porta di San Pietro',.19],[141.9,179.1,'portalatina','Porta Latina',.19],
+    [-94.3,95.9,'portaportuense','Porta Portuense',.45],[-145.8,3,'portasettimiana','Porta Settimiana',.16],[106.2,-202.7,'portasalaria','Porta Salaria',.19],
+    [194.4,76.3,'portaasinaria','Porta Asinaria',.19],[25.5,-188.6,'portapinciana','Porta Pinciana',0],[110.5,113.1,'portametronia','Porta Metronia',0]];
+  posti.forEach(function(o){ var best=null, bd=1e9; NOMI.forEach(function(n){ var d=Math.hypot(n[0]-o.x,n[1]-o.z); if(d<bd){ bd=d; best=n; } });
+    if(best&&bd<8){ o.id=best[2]; o.nome=best[3]; o.luce=best[4]; } });
+  RM.portePosti=posti;
+  posti.forEach(function(o){ if(o.luce&&!o.senzaStrada) RM.strozzature.push([o.x,o.z,2,o.luce]); });      // la strada sta dentro i fornici
+  posti.forEach(function(o){ if(o.id!=='portaprenestina') return; var c=Math.cos(o.ang), s=Math.sin(o.ang), lx=-.45, lz=-1.15; RM.strozzature.push([o.x+lx*c+lz*s,o.z-lx*s+lz*c,.9,.23]); });      // porta Maggiore: anche l'apertura della cortina di Onorio, 11,5 m fuori dagli archi (js/mura.js)
+})();
+RM.muroForato=muroForato;      // per le porte delle mura (js/mura.js)
 RM.posa();
 var perId={};
 M.forEach(function(o){
@@ -3153,6 +3188,7 @@ RM.frame.push(function(){
   var w0=rqW>=0?rqW:riquadro.clientWidth, h0=rqH>=0?rqH:riquadro.clientHeight, cm=RM.camera.matrixWorld.elements, cp=RM.camera.projectionMatrix.elements, pr=RM.postiRiservati||[], f=firmaNuova, i0, pres=0;
   for(i0=0;i0<16;i0++) f[i0]=cm[i0]; f[16]=cp[0]; f[17]=cp[5]; f[18]=cp[8]; f[19]=cp[9]; f[20]=w0; f[21]=h0;
   for(i0=0;i0<M.length;i0++) if(M[i0].div) pres+=(M[i0].presenza||0)*(i0+1);
+  var ex0=RM.etichetteExtra||[]; for(i0=0;i0<ex0.length;i0++) if(ex0[i0].porta&&ex0[i0].porta.vis) pres+=.001*(i0+1);      // le porte (js/mura.js)
   f[22]=pres; f[23]=pr.length; f[24]=pr.length?pr[0][0]+3.1*pr[0][1]+7.3*pr[0][2]+11.7*pr[0][3]:0; f[25]=RM.scene.position.y;
   var uguale=true; for(i0=0;i0<26;i0++) if(f[i0]!==firmaEt[i0]){ uguale=false; break; }
   if(uguale) return; firmaEt.set(f);
@@ -3170,6 +3206,18 @@ RM.frame.push(function(){
       for(var k=0;k<messi.length;k++){ var q=messi[k]; if(r[0]<q[2]&&r[2]>q[0]&&r[1]<q[3]&&r[3]>q[1]){ vis=false; break; } }
       if(vis) messi.push(r); }
     if(o.visEt!==vis){ o.visEt=vis; o.div.style.opacity=vis?1:0; o.div.style.visibility=vis?'visible':'hidden'; }      // si scrive solo ciò che cambia (26 novembre 2026): a camera ferma nessuno stile da ricalcolare
+    if(vis){ var tr='translate(-50%,-100%) translate('+px.toFixed(1)+'px,'+py.toFixed(1)+'px)'; if(o.trEt!==tr){ o.trEt=tr; o.div.style.transform=tr; } }
+  });
+  (RM.etichetteExtra||[]).forEach(function(o){      // i nomi delle porte delle mura (js/mura.js, 28 novembre 2026): dopo i monumenti, che hanno la precedenza; solo da vicino
+    var vis=!!(o.porta&&o.porta.vis) && Math.hypot(RM.camera.position.x-o.x,RM.camera.position.y,RM.camera.position.z-o.z)<95;
+    if(vis){ v.set(o.x,o.y+o.ey,o.z).applyMatrix4(RM.camera.matrixWorldInverse); var davanti=v.z<-2; v.set(o.x,o.y+o.ey,o.z).project(RM.camera);
+      vis=davanti && v.z<1 && Math.abs(v.x)<.8 && v.y>-.9 && v.y<.88 && !(v.y>.3 && v.x<-.1); }
+    var px=(v.x+1)*w/2, py=(1-v.y)*h/2;
+    if(vis){ if(!o.lw){ o.lw=o.div.offsetWidth||o.div.textContent.length*7; o.lh=o.div.offsetHeight||16; }
+      var r=[px-o.lw/2-4,py-o.lh-2,px+o.lw/2+4,py+2];
+      for(var k=0;k<messi.length;k++){ var q=messi[k]; if(r[0]<q[2]&&r[2]>q[0]&&r[1]<q[3]&&r[3]>q[1]){ vis=false; break; } }
+      if(vis) messi.push(r); }
+    if(o.visEt!==vis){ o.visEt=vis; o.div.style.opacity=vis?1:0; o.div.style.visibility=vis?'visible':'hidden'; }
     if(vis){ var tr='translate(-50%,-100%) translate('+px.toFixed(1)+'px,'+py.toFixed(1)+'px)'; if(o.trEt!==tr){ o.trEt=tr; o.div.style.transform=tr; } }
   });
   RM.etichetteMesse=messi.slice((RM.postiRiservati||[]).length);      // i nomi delle strade (js/strade-nomi.js) li scansano: i monumenti hanno la precedenza

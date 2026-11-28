@@ -780,10 +780,13 @@ var S410=(function(){
   var VERSO_DENTRO=Math.atan2(verso[0],verso[1]), VERSO_PORTA=Math.atan2(-fuori[0],-fuori[1]);
   /* i battenti, sulla porta com'è disegnata (RM.porte, js/mura.js): il passaggio largo 8,5 m al centro dell'istanza, che ruota di «ang» */
   var po=(RM.porte||[]).reduce(function(m,q){ return !m||Math.hypot(q.x-G[0],q.z-G[1])<Math.hypot(m.x-G[0],m.z-G[1])?q:m; },null)||{x:G[0],z:G[1],y:H(G[0],G[1])-.3,ang:Math.atan2(-laF[1],laF[0])};
+  if(po.id) G=[po.x,po.z];      // 28 novembre 2026: la colonna passa dal centro del fornice, dove la strada taglia la cinta (il punto di OpenStreetMap sta 6 m più in là, e 3 m di lato: col fornice di 4,2 m i Goti entravano nel muro)
   var zl=[Math.sin(po.ang),Math.cos(po.ang)], dentroZ=(zl[0]*verso[0]+zl[1]*verso[1])>0?1:-1;      // da che parte del riferimento della porta sta la città
-  var legno=RM.col(0x4a3524), batt=[-1,1].map(function(k){ var Bb=new RM.Costruttore(); Bb.scatola(.42,.95,.05,-k*.21,0,0,legno).scatola(.42,.04,.06,-k*.21,.25,0,RM.col(0x2e241b)).scatola(.42,.04,.06,-k*.21,.7,0,RM.col(0x2e241b));
+  /* 28 novembre 2026: porta Salaria ha la sua forma (js/mura.js, FORME): un fornice largo 4,2 m nella cortina spessa 4,5 m; i battenti stanno nel fornice, sul filo verso la città
+     (prima 8,4 m di battenti per il blocco comune di tutte le porte) */
+  var legno=RM.col(0x4a3524), batt=[-1,1].map(function(k){ var Bb=new RM.Costruttore(); Bb.scatola(.21,.55,.05,-k*.105,0,0,legno).scatola(.21,.04,.06,-k*.105,.15,0,RM.col(0x2e241b)).scatola(.21,.04,.06,-k*.105,.42,0,RM.col(0x2e241b));
     var m=Bb.maglia(RM.matPietra()); m.castShadow=true; m.visible=false;
-    var piv=new THREE.Group(); piv.position.set(po.x,po.y+.3,po.z); piv.rotation.y=po.ang; m.position.set(k*.42,0,dentroZ*.585); piv.add(m); piv.userData={k:k}; RM.scene.add(piv); return piv; });      // i battenti sul fronte verso la città: il corpo della porta è pieno
+    var piv=new THREE.Group(); piv.position.set(po.x,po.y+.3,po.z); piv.rotation.y=po.ang; m.position.set(k*.21,0,dentroZ*.2); piv.add(m); piv.userData={k:k}; RM.scene.add(piv); return piv; });      // i battenti sul fronte verso la città
   /* le guardie romane: in piedi dentro la porta, poi a terra; i giovani che aprono */
   var GU=[[-1.1,-.25],[-1.1,.25],[-1.6,-.3],[-1.6,.3]], gIn=new RM.Costruttore(), gGiu=new RM.Costruttore(), gio=new RM.Costruttore(), ROSSO=C.rosso;
   vicine(gIn,'410',G,function(){
@@ -805,7 +808,7 @@ var S410=(function(){
   function posa(f,t){
     var s=f.s0, ry=f.ry;
     if(t>f.ts){ s=Math.max(f.s1,f.s0-(t-f.ts)*f.v); ry=s>0?VERSO_PORTA:VERSO_DENTRO; }
-    var a=Math.abs(s), stretto=Math.min(1,Math.max(.1,(a-1)*.25)), p=punto(s,f.w0*stretto);
+    var a=Math.abs(s), stretto=Math.min(1,Math.max(.06,(a-1)*.25)), p=punto(s,f.w0*stretto);      // nel fornice al più 1,9 m di lato (28 novembre 2026: il fornice di porta Salaria è largo 4,2 m; prima 0,1, per il passaggio comune di 8,5 m)
     var y=H(p[0],p[1]); metti(f.g,f.k,p[0],y,p[1],ry);
     if(f.fiaccola!=null) metti(fiaccole,f.fiaccola,p[0]+.04*Math.cos(ry),y+.24,p[1]-.04*Math.sin(ry),ry);
   }
@@ -2005,8 +2008,9 @@ ANIMA[846]=function(){ avvia(seq846); };
    che brucia (23 novembre 2026, l'utente: «fai vedere che entra da qui e l'incendio in Trastevere»). Numero e ordine della colonna sono uno schema. */
 var totila546=(function(){
   var B=new RM.Costruttore(), G=[193.8,75.8], d=[.93,.36], n=[-.36,.93], i, f, x, z, fiamma=RM.col(0xffa040);
+  var poA=(RM.porte||[]).filter(function(q){ return q.id==='portaasinaria'; })[0]; if(poA) G=[poA.x,poA.z];      // 28 novembre 2026: dal centro del fornice di porta Asinaria (js/mura.js), largo 4,2 m: prima la colonna, larga 9 m, passava per il blocco comune
   vicine(B,'546',G,function(){
-  for(i=0;i<320;i++){ f=rnd(); var lat=(rnd()-.5)*.9, lung=16-f*30;       // da 16 unità fuori a 14 dentro
+  for(i=0;i<320;i++){ f=rnd(); var lung=16-f*30, lat=(rnd()-.5)*.9*Math.min(1,Math.max(.4,(Math.abs(lung)-.8)*.3));       // da 16 unità fuori a 14 dentro; vicino alla porta la colonna si stringe nel fornice
     x=G[0]+d[0]*lung+n[0]*lat; z=G[1]+d[1]*lung+n[1]*lat;
     var y=H(x,z); uomo(B,x,z,y,rnd()<.5?C.ferro:C.grigio,rnd()<.6?C.cavalloB:null,Math.atan2(-d[0],-d[1]));
     if(i%9===0) B.scatola(.012,.12,.012,x+.03,y+.12,z,P.tronco).scatola(.03,.04,.03,x+.03,y+.25,z,fiamma);      // fiaccole

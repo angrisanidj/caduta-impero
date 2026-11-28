@@ -64,7 +64,8 @@ function scriviSpie(){
 /* ---------- monumenti ---------- */
 var NOMI_CERTEZZA={A:'posizione e forma certe',B:'posizione certa, forma ricostruita',C:'ipotesi'};
 var NOMI_STATO={uso:'in uso',chiuso:'in disuso',abbandonato:'abbandonato, ma in piedi',spogliato:'spogliato',bruciato:'bruciato',crollato:'danneggiato da un terremoto',cava:'usato come cava',assente:'non ancora costruito'};
-function nomeStato(m,st){ var s=(D.MONUMENTI||{})[m.id]; return st==='assente'&&s&&s[0][1]!=='assente'?'scomparso':NOMI_STATO[st]; }      // «assente» dopo essere esistito vuol dire sparito, non «non ancora costruito»
+var NOMI_PORTA={uso:'in uso',chiuso:'murata',crollato:'abbattuta dalla piena',assente:'non ancora costruita'};      // le porte delle mura (js/mura.js, RM.statoPorta)
+function nomeStato(m,st){ if(m.porta) return NOMI_PORTA[st]||NOMI_STATO[st]; var s=(D.MONUMENTI||{})[m.id]; return st==='assente'&&s&&s[0][1]!=='assente'?'scomparso':NOMI_STATO[st]; }      // «assente» dopo essere esistito vuol dire sparito, non «non ancora costruito»
 var voci=(RM.MONUMENTI||[]).map(function(m){
   var li=document.createElement('li'), s=document.createElement('span'); li.appendChild(s); $('elencoMonumenti').appendChild(li); return {m:m,li:li,s:s,st:''};
 });
@@ -131,7 +132,7 @@ var schedaDi=null, schedaChiave='';
 function esc(t){ return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 function scriviScheda(){
   if(!schedaDi) return;
-  var m=schedaDi, q=RM.statoMonumento(m.id,anno), st=q.t>.5?q.s1:q.s0, sc=(D.SCHEDE||{})[m.id]||{}, ce=(D.CERTEZZA||{}).provvisorio?null:(D.CERTEZZA||{})[m.id], chiave=m.id+st+Math.round(anno);
+  var m=schedaDi, q=m.porta&&RM.statoPorta?{s0:RM.statoPorta(m.id,anno),t:0}:RM.statoMonumento(m.id,anno), st=q.t>.5?q.s1:q.s0, sc=(D.SCHEDE||{})[m.id]||{}, ce=(D.CERTEZZA||{}).provvisorio?null:(D.CERTEZZA||{})[m.id], chiave=m.id+st+Math.round(anno);
   if(chiave===schedaChiave) return; schedaChiave=chiave;
   var righe=(sc.date||[]).map(function(r){ var futura=typeof r[0]==='number'&&r[0]>anno+.5; return '<li'+(futura?' class="futura"':'')+'><b>'+esc(r[0])+'</b><span>'+esc(r[1])+'</span></li>'; }).join('');
   $('scheda').innerHTML='<button type="button" class="chiudi" aria-label="Chiudi la scheda">✕</button><h3>'+esc(m.nome)+'</h3>'+
@@ -164,7 +165,7 @@ voci.forEach(function(v){
   v.li.addEventListener('click',function(){ apriScheda(v.m); });
   v.li.addEventListener('keydown',function(ev){ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); apriScheda(v.m); } });
 });
-RM.apriScheda=function(id){ voci.forEach(function(v){ if(v.m.id===id) apriScheda(v.m); }); };
+RM.apriScheda=function(id){ var c=false; voci.forEach(function(v){ if(v.m.id===id){ c=true; apriScheda(v.m); } }); if(!c && RM.porteVoci && RM.porteVoci[id]) apriScheda(RM.porteVoci[id]); };      // le porte delle mura (js/mura.js) hanno la scheda ma non stanno nell'elenco dei monumenti
 /* Nell'elenco stanno solo i monumenti che in quell'anno ci sono, anche in disuso o in rovina: quelli non ancora costruiti e quelli scomparsi non compaiono. La legenda mostra solo gli stati presenti. */
 var legendaStati=[].slice.call(document.querySelectorAll('.stato-roma .legenda .st'));
 function scriviMonumenti(){
