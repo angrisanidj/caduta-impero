@@ -538,6 +538,44 @@ RM.matRovina=function(alt){
    i monumenti con questo (o con la sua ombra, per la mappa delle ombre), dopo averci copiato i valori del monumento: three non ricarica a ogni monumento tutte le uniformi
    del programma, solo quelle del monumento. */
 RM.unoPerTutti=function(){ if(!RM.unoPerTutti.m) RM.unoPerTutti.m=RM.matRovina(1); return RM.unoPerTutti.m; };
+/* I monumenti fusi (28 novembre 2026, settimo giro della fluidità sul telefono; sull'iPhone dell'utente il costo di un fotogramma segue il numero dei disegni, e i monumenti
+   erano da 95 a 115 disegni nella vista d'insieme). Lo stesso shader di RM.matRovina, riga per riga, per una maglia che porta molti monumenti insieme: ogni vertice ha il
+   numero del suo monumento (aMon) e la posizione nel riferimento del monumento, come prima; dove prima c'erano le uniformi del monumento (rovina, crepe, verde, patina,
+   crolli, colore…) qui ci sono variabili con lo stesso nome, lette all'inizio del frammento da una riga della trama tMonDati (si veda RM.fusi in js/monumenti.js). Nel
+   vertice si leggono la matrice dell'oggetto (colonne 0-2: gli stessi numeri che three manderebbe come modelMatrix, moltiplicati nello stesso modo, così vMondo e il rumore
+   che ne dipende restano quelli), «si vede», «getta ombra» e la scala in y (colonna 3: la normale con l'inversa trasposta). Solo con WebGL2 (texelFetch, flat). */
+var MON_F=[['uRovina','float',4,'x'],['uCant','float',4,'y'],['uSpoglio','float',4,'z'],['uPiombo','float',4,'w'],['uAlt','float',5,'x'],['uCrepe','float',5,'y'],['uSud','float',5,'z'],['uVerde','float',5,'w'],
+  ['uIntonaco','float',6,'x'],['uCoppi','float',6,'y'],['uPulito','float',6,'z'],['uMoleR','float',6,'w'],['uPatina','float',7,'x'],['uPatTetto','float',7,'y'],['uSudDir','vec2',7,'zw'],['uSudR','vec2',8,'xy'],
+  ['diffuse','vec3',-1,''],['uSapCol','vec3',9,'yzw'],['uCrZona','vec4',10,'xyzw'],['uCrPeso','vec4',11,'xyzw']];      // [nome nello shader, tipo, colonna della trama, componenti]; diffuse (il colore del materiale) sta a cavallo fra le colonne 8 e 9
+RM.fusiErrore=null;      // per le prove: perché lo shader non si è potuto adattare
+function fondi(sh,colore,tex){
+  var NL=String.fromCharCode(10), vs=sh.vertexShader, fs=sh.fragmentShader, i, letti={}, uso=[], ok=true;
+  sh.uniforms.tMonDati={value:tex};
+  for(i=0;i<MON_F.length;i++) if(new RegExp('uniform\\s+'+MON_F[i][1]+'\\s+'+MON_F[i][0]+'\\s*;').test(vs)){ ok=false; RM.fusiErrore='uniforme nel vertice: '+MON_F[i][0]; }
+  vs=vs.replace('#include <common>','#include <common>'+NL+'attribute float aMon; uniform highp sampler2D tMonDati; flat varying float vMonI; mat4 rmMM; vec4 rmF;'+NL+
+    'void rmMonLeggi(){ int rmR=int(aMon+0.5); vec4 a=texelFetch(tMonDati,ivec2(0,rmR),0); vec4 b=texelFetch(tMonDati,ivec2(1,rmR),0); vec4 c=texelFetch(tMonDati,ivec2(2,rmR),0);'+
+    ' rmMM=mat4(vec4(a.xyz,0.0),vec4(b.xyz,0.0),vec4(c.xyz,0.0),vec4(a.w,b.w,c.w,1.0)); rmF=texelFetch(tMonDati,ivec2(3,rmR),0); vMonI=aMon; }');
+  if(colore) vs=vs.replace('#include <beginnormal_vertex>','#include <beginnormal_vertex>'+NL+'rmMonLeggi(); objectNormal=mat3(rmMM)*vec3(objectNormal.x,objectNormal.y/max(rmF.z*rmF.z,1e-12),objectNormal.z);');      // rotazione per scala in y: l'inversa trasposta è la stessa matrice con la y divisa due volte per la scala
+  vs=vs.replace('#include <begin_vertex>','#include <begin_vertex>'+NL+'rmMonLeggi(); transformed=(rmMM*vec4(transformed,1.0)).xyz;');      // prima di LOD_V: vMondo è il mondo, vLoc resta la posizione nel monumento
+  vs=vs.replace('#include <project_vertex>','#include <project_vertex>'+NL+(colore?'if(rmF.x<0.5) gl_Position=vec4(2.0,2.0,2.0,1.0);':'if(rmF.x<0.5||rmF.y<0.5) gl_Position=vec4(2.0,2.0,2.0,1.0);'));      // un monumento che non si vede (o che non getta ombra, nella mappa delle ombre): i suoi triangoli fuori dallo schermo
+  fs=fs.replace('#include <common>','#include <common>'+NL+'flat varying float vMonI; uniform highp sampler2D tMonDati;');
+  for(i=0;i<MON_F.length;i++){ var re=new RegExp('uniform\\s+'+MON_F[i][1]+'\\s+'+MON_F[i][0]+'\\s*;'); if(re.test(fs)){ fs=fs.replace(re,MON_F[i][1]+' '+MON_F[i][0]+';'); uso.push(MON_F[i]); } }      // le uniformi del monumento diventano variabili dello shader, con lo stesso nome
+  var col={}, assegna=[];
+  uso.forEach(function(q){ if(q[2]>=0) col[q[2]]=1; else { col[8]=1; col[9]=1; } });
+  Object.keys(col).forEach(function(c){ assegna.push('vec4 rmT'+c+'=texelFetch(tMonDati,ivec2('+c+',rmR),0);'); });
+  uso.forEach(function(q){ assegna.push(q[2]>=0?q[0]+'=rmT'+q[2]+'.'+q[3]+';':q[0]+'=vec3(rmT8.z,rmT8.w,rmT9.x);'); });
+  if(fs.indexOf('void main() {')<0){ ok=false; RM.fusiErrore='main non trovato'; }
+  fs=fs.replace('void main() {','void main() {'+NL+'{ int rmR=int(vMonI+0.5); '+assegna.join(' ')+' }');
+  if(vs.indexOf('rmMonLeggi(); transformed')<0 || vs.indexOf('gl_Position=vec4(2.0')<0){ ok=false; RM.fusiErrore='vertice non adattato'; }
+  sh.vertexShader=vs; sh.fragmentShader=fs; if(!ok && window.console) console.warn('RM.fusi: '+RM.fusiErrore);
+}
+RM.matRovinaFusa=function(tex){
+  var u=RM.matRovina(1).userData.u;      // le uniformi di un monumento finto: lo shader le dichiara, qui non servono (si leggono dalla trama)
+  var m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.92,metalness:0,side:THREE.DoubleSide});
+  m.onBeforeCompile=function(sh){ innesta(sh,u,true); fondi(sh,true,tex); };
+  var o=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking,side:THREE.DoubleSide});
+  o.onBeforeCompile=function(sh){ innesta(sh,u,false); fondi(sh,false,tex); };
+  m.userData.fusa=true; o.userData.fusa=true; m.userData.ombra=o; return m; };
 /* profili */
 RM.ellisse=function(rx,rz,quanti,a0,a1){
   var o=[], da=(a1==null?Math.PI*2:a1-(a0||0)), pieni=a1==null?quanti:quanti+1;

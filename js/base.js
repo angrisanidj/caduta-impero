@@ -1376,8 +1376,10 @@ RM.scalaAdatta=(function(){
    cambiata da poco (un cambio d'anno, una figura che cammina) si disegna l'originale, come prima; se è ferma da dieci disegni le copie si rifanno una volta e, quando
    l'inquadratura vede meno del 60% dei suoi triangoli, si disegnano le copie al posto dell'originale (che resta visibile fuori dal disegno: raggi, conteggi, scrittori).
    Cambia solo l'ordine in cui le istanze arrivano alla scheda grafica. ?riquadri=0 lo spegne (per le prove). */
+/* Sui dispositivi al tocco (28 novembre 2026, settimo giro): sull'iPhone dell'utente il costo segue il numero dei disegni, non i triangoli (0,4 milioni non lo frenano): al più
+   3 x 3 copie, e un disegno in più vale quanto 60.000 triangoli (TOCCO_R); ?riquadri=pc rimette le copie del PC anche lì. */
 RM.riquadri=(function(){
-  var SPENTO=/[?&]riquadri=0/.test(location.search), N=5, QUIETE=10, SOGLIA=.6, DISEGNO=8000, giro=0, cand=[], visti=new WeakSet(), fr=new THREE.Frustum(), pm=new THREE.Matrix4(), sf=new THREE.Sphere(), conta={copie:0,usate:0};      // DISEGNO: un disegno in più costa quanto circa 8.000 triangoli (misura del 27 novembre: 0,02-0,03 ms di lavoro di three per disegno, 9 ms per 2 milioni di triangoli)
+  var SPENTO=/[?&]riquadri=0/.test(location.search), TOCCO_R=TOCCO_Q && !/[?&]riquadri=pc/.test(location.search), N=TOCCO_R?3:5, QUIETE=10, SOGLIA=.6, DISEGNO=TOCCO_R?60000:8000, giro=0, cand=[], visti=new WeakSet(), fr=new THREE.Frustum(), pm=new THREE.Matrix4(), sf=new THREE.Sphere(), conta={copie:0,usate:0};      // DISEGNO: un disegno in più costa quanto circa 8.000 triangoli (misura del 27 novembre: 0,02-0,03 ms di lavoro di three per disegno, 9 ms per 2 milioni di triangoli)
   function adatta(o){ if(!o.isInstancedMesh || o.frustumCulled!==false || o.parent!==scene || visti.has(o)) return false; visti.add(o);
     var m=o.material, g=o.geometry; if(!m || Array.isArray(m) || m.transparent || !g || o.onBeforeRender!==THREE.Object3D.prototype.onBeforeRender) return false;
     if(o.userData.gruppo==='vita' || o.userData.copiaDi) return false;      // la gente, gli animali e le barche si muovono (e lo shader delle figure sposta i vertici fuori dalla loro forma): restano come sono
@@ -1461,6 +1463,7 @@ RM.riquadri=(function(){
    poi disegna zero triangoli. Qui, prima di ogni disegno della scena, si nascondono per quel disegno e si rimettono subito dopo: lo schermo non cambia (non avevano nulla
    da mostrare né ombre da gettare). Non durante RM.prepara, che le disegna apposta per preparare i programmi. ?vuoti=1 lo spegne (per le prove). */
 var preparando=false;
+RM.preparandoOra=function(){ return preparando; };      // per i monumenti fusi (js/monumenti.js): nel disegno di prova di RM.prepara le loro righe non si toccano
 RM.fluido={vuoti:!/[?&]vuoti=1/.test(location.search), istanze:!/[?&]istanze=1/.test(location.search), matrici:!/[?&]matrici=1/.test(location.search), comune:!/[?&]comune=1/.test(location.search)};      // i tre interruttori di questo blocco, anche a pagina aperta (per le prove prima e dopo nella stessa pagina)
 (function(){
   var cand=[], giro=0, nascoste=[];
