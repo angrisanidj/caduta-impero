@@ -89,7 +89,8 @@ var PASSI=[
 ];
 var CASI=[
   {k:'800', n:'800, scena ferma', anno:800, ferma:true, vista:{t:[-236,-112], d:95, az:140, el:28}},
-  {k:'durata', n:'800 fermo per tre minuti a ritmo libero, poi due minuti a 30 al secondo (il telefono rallenta col tempo?)', anno:800, ferma:true, durata:true, vista:{t:[-236,-112], d:95, az:140, el:28}},
+  {k:'800i', n:'800, tutta la città (vista d\'insieme), scena ferma', anno:800, ferma:true, insieme:true},
+  {k:'durata', n:'800 fermo per tre minuti a ritmo libero, poi due minuti a 30 al secondo (il telefono rallenta col tempo?)', anno:800, ferma:true, durata:true, scelta:false, vista:{t:[-236,-112], d:95, az:140, el:28}},
   {k:'439', n:'439, durante la corsa nel Circo', anno:439, ferma:true, mon:'circo', d:36, el:34, scelta:false},
   {k:'846', n:'846, durante la scena', anno:846, scena:846, scelta:false},
   {k:'852', n:'852, durante la scena', anno:852, scena:852, scelta:false}
@@ -117,10 +118,14 @@ async function arriva(anno){ if(Math.round(PG.annoOra())!==anno || (RM_DATI.TAPP
 async function prepara(c){
   if(c.ferma){ await arriva(c.anno); if(RM.scenaProva && RM.scenaProva.finisci) RM.scenaProva.finisci();
     if(c.mon){ var m=(RM.MONUMENTI||[]).filter(function(x){ return x.id===c.mon; })[0]; if(m) guarda(m.x,m.z,c.d,215,c.el); }
+    else if(c.insieme){ RM.controlli.target.set(0,0,5); RM.camera.position.set(-200,255,470); RM.controlli.update(); }      // la vista d'insieme di RM.vistaInsieme (js/base.js), senza il volo
     else guarda(c.vista.t[0],c.vista.t[1],c.vista.d,c.vista.az,c.vista.el);
     var cc=RM.camera.position, tt=RM.controlli.target; base={dx:cc.x-tt.x, dz:cc.z-tt.z};
     gira=true; await dorme(800); return; }
-  gira=false; await arriva(c.anno); }
+  /* le scene: la camera va dove la porta la regia della tappa. Prima (fino al pomeriggio del 28 novembre 2026) restava dove l'aveva lasciata il caso di prima: l'utente
+     ha visto «846, durante la scena» fermo sul Circo Massimo in rovina, cioè la prova misurava un altro posto e non la scena. */
+  gira=false; base=null; await arriva(c.anno);
+  if(RM.regiaTappa){ RM.regiaTappa(RM_DATI.TAPPE[tappa(c.anno)]); await dorme(3500); } }
 async function passo(c,P){
   if(c.scena && RM.scenaProva){ RM.scenaProva.avvia(c.scena); await dorme(2300); }      // la scena da capo: si misura lo stesso tratto (dal mezzo secondo al terzo e mezzo)
   P.su(); await dorme(P.attesa||600); var r=await misura(3000); P.giu(); await dorme(300); return r; }
@@ -128,7 +133,7 @@ async function passo(c,P){
 var esiti=[], corso=null, RITMO0=!!RM.ritmo30, base=null;
 function pannello(){ var d=$('div','pc pc-corso'); d.setAttribute('role','status'); d.setAttribute('aria-live','polite');
   d.appendChild($('h2',null,'Prova delle cause'));
-  var r=$('p','pc-riga','Che cosa rallenta la città su questo dispositivo'), s=$('p','pc-sotto','Alla qualità scelta adesso ('+((RM.qualita&&RM.qualita.stato)?RM.qualita.stato().gradino:'?')+'). Tieni il telefono fermo e lo schermo acceso; non toccare la città. Il primo caso dura un minuto e mezzo, il secondo cinque minuti.');
+  var r=$('p','pc-riga','Che cosa rallenta la città su questo dispositivo'), s=$('p','pc-sotto','Alla qualità scelta adesso ('+((RM.qualita&&RM.qualita.stato)?RM.qualita.stato().gradino:'?')+'). Tieni il telefono fermo e lo schermo acceso; NON toccare la città finché non compare la tabella (se la vista si sposta, le righe non si confrontano più). Un minuto e mezzo per caso; quello dei cinque minuti è a scelta.');
   d.appendChild(r); d.appendChild(s);
   var scelte=CASI.map(function(c){ var l=$('label'), i=$('input'); i.type='checkbox'; i.checked=c.scelta!==false; l.appendChild(i); l.appendChild(document.createTextNode(c.n)); d.appendChild(l); return i; });
   var via=$('button','pc-primo','Avvia'), x=$('button',null,'Interrompi'); via.type=x.type='button'; x.hidden=true; d.appendChild(via); d.appendChild(x);
